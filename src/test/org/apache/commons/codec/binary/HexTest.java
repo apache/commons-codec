@@ -61,11 +61,16 @@ import java.util.Arrays;
 import java.util.Random;
 
 import junit.framework.TestCase;
+import org.apache.commons.codec.DecoderException;
+import org.apache.commons.codec.EncoderException;
 
 /**
+ * Tests {@link org.apache.commons.codec.binary.Hex}.
  * 
  * @author <a href="mailto:siege@preoccupied.net">Christopher O'Brien</a>
  * @author Tim O'Brien
+ * @author Gary Gregory
+ * @version $Id: HexTest.java,v 1.6 2003/11/03 19:04:34 ggregory Exp $
  */
 
 public class HexTest extends TestCase {
@@ -73,13 +78,102 @@ public class HexTest extends TestCase {
     public HexTest(String name) {
         super(name);
     }
-
-    public void testEncodeEmpty() throws Exception {
-        char[] c = Hex.encodeHex(new byte[0]);
-        assertTrue(Arrays.equals(new char[0], c));
+    
+    public void testDecodeArrayOddCharacters() {
+        try {
+            new Hex().decode(new byte[] { 65 });
+            fail("An exception wasn't thrown when trying to decode an odd number of characters");
+        }
+        catch (DecoderException e) {
+            // Expected exception
+        }
     }
 
-    public void testEncodeZeroes() throws Exception {
+    public void testDecodeClassCastException() {
+        try {
+            new Hex().decode(new int[] { 65 });
+            fail("An exception wasn't thrown when trying to decode.");
+        }
+        catch (DecoderException e) {
+            // Expected exception
+        }
+    }
+
+    public void testDecodeHexOddCharacters() {
+        try {
+            Hex.decodeHex(new char[] { 'A' });
+            fail("An exception wasn't thrown when trying to decode an odd number of characters");
+        }
+        catch (DecoderException e) {
+            // Expected exception
+        }
+    }
+
+    public void testDecodeStringOddCharacters() {
+        try {
+            new Hex().decode("6");
+            fail("An exception wasn't thrown when trying to decode an odd number of characters");
+        }
+        catch (DecoderException e) {
+            // Expected exception
+        }
+    }
+
+    public void testDencodeEmpty() throws DecoderException {
+        assertTrue(Arrays.equals(new byte[0], Hex.decodeHex(new char[0])));
+        assertTrue(Arrays.equals(new byte[0], new Hex().decode(new byte[0])));
+        assertTrue(Arrays.equals(new byte[0], (byte[])new Hex().decode("")));
+    }
+    
+    public void testEncodeClassCastException() {
+        try {
+            new Hex().encode(new int[] { 65 });
+            fail("An exception wasn't thrown when trying to encode.");
+        }
+        catch (EncoderException e) {
+            // Expected exception
+        }
+    }
+
+    public void testEncodeDecodeRandom() throws DecoderException, EncoderException {
+        Random random = new Random();
+
+        Hex hex = new Hex();
+        for (int i = 5; i > 0; i--) {
+            byte[] data = new byte[random.nextInt(10000) + 1];
+            random.nextBytes(data);
+
+            // static API
+            char[] encodedChars = Hex.encodeHex(data);
+            byte[] decodedBytes = Hex.decodeHex(encodedChars);
+            assertTrue(Arrays.equals(data, decodedBytes));
+            
+            // instance API with array parameter
+            byte[] encodedStringBytes = hex.encode(data);
+            decodedBytes = hex.decode(encodedStringBytes);
+            assertTrue(Arrays.equals(data, decodedBytes));
+
+            // instance API with char[] (Object) parameter
+            String dataString = new String(encodedChars);
+            char[] encodedStringChars = (char[])hex.encode(dataString);
+            decodedBytes = (byte[])hex.decode(encodedStringChars);
+            assertTrue(Arrays.equals(dataString.getBytes(), decodedBytes));
+
+            // instance API with String (Object) parameter
+            dataString = new String(encodedChars);
+            encodedStringChars = (char[])hex.encode(dataString);
+            decodedBytes = (byte[])hex.decode(new String(encodedStringChars));
+            assertTrue(Arrays.equals(dataString.getBytes(), decodedBytes));
+        }
+    }
+
+    public void testEncodeEmpty() throws EncoderException {
+        assertTrue(Arrays.equals(new char[0], Hex.encodeHex(new byte[0])));
+        assertTrue(Arrays.equals(new byte[0], new Hex().encode(new byte[0])));
+        assertTrue(Arrays.equals(new char[0], (char[])new Hex().encode("")));
+    }
+
+    public void testEncodeZeroes() {
         char[] c = Hex.encodeHex(new byte[36]);
         assertEquals(
             "000000000000000000000000000000000000"
@@ -87,44 +181,9 @@ public class HexTest extends TestCase {
             new String(c));
     }
 
-    public void testHelloWorld() throws Exception {
+    public void testHelloWorld() {
         byte[] b = "Hello World".getBytes();
         char[] c = Hex.encodeHex(b);
         assertEquals("48656c6c6f20576f726c64", new String(c));
     }
-
-    public void testEncodeDecodeRandom() throws Exception {
-        Random random = new Random();
-
-        for (int i = 5; i > 0; i--) {
-            byte[] data = new byte[random.nextInt(10000) + 1];
-            random.nextBytes(data);
-
-            char[] enc = Hex.encodeHex(data);
-            byte[] data2 = Hex.decodeHex(enc);
-
-            assertTrue(Arrays.equals(data, data2));
-        }
-    }
-
-    public void testOddCharacters() throws Exception {
-
-        boolean exceptionThrown = false;
-
-        try {
-            char[] singleChar = new char[1];
-            singleChar[0] = 'a';
-
-            Hex.decodeHex( singleChar );
-        }
-        catch (Exception e) {
-            exceptionThrown = true;
-        }
-
-        assertTrue( "An exception wasn't thrown when trying to " +
-                    "decode an odd number of characters", exceptionThrown );
-
-
-    }
-
 }
