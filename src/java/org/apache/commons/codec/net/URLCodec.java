@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//codec/src/java/org/apache/commons/codec/net/URLCodec.java,v 1.1 2003/07/11 16:53:28 tobrien Exp $
- * $Revision: 1.1 $
- * $Date: 2003/07/11 16:53:28 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//codec/src/java/org/apache/commons/codec/net/URLCodec.java,v 1.2 2003/07/25 22:42:46 ggregory Exp $
+ * $Revision: 1.2 $
+ * $Date: 2003/07/25 22:42:46 $
  *
  * ====================================================================
  *
@@ -87,6 +87,7 @@ import org.apache.commons.codec.StringEncoder;
  * </p>
  * 
  * @author <a href="mailto:oleg@ural.ru">Oleg Kalnichevski</a>
+ * @version $Id: URLCodec.java,v 1.2 2003/07/25 22:42:46 ggregory Exp $
  */
 
 public class URLCodec 
@@ -162,8 +163,8 @@ public class URLCodec
                   Character.forDigit((b >> 4) & 0xF, 16));
                 char hex2 = Character.toUpperCase(
                   Character.forDigit(b & 0xF, 16));
-                buffer.write((int)hex1);
-                buffer.write((int)hex2);
+                buffer.write(hex1);
+                buffer.write(hex2);
             }
         }
         return buffer.toByteArray(); 
