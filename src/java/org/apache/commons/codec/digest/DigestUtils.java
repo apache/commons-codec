@@ -78,7 +78,7 @@ public class DigestUtils {
      * @return An MD5 digest instance.
      * @throws RuntimeException when a {@link java.security.NoSuchAlgorithmException} is caught,
      */
-    protected static MessageDigest getDigest(String algorithm) {
+    static MessageDigest getDigest(String algorithm) {
         try {
             return MessageDigest.getInstance(algorithm);
         } catch (NoSuchAlgorithmException e) {
