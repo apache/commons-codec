@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//codec/src/test/org/apache/commons/codec/net/URLCodecTest.java,v 1.1 2003/07/11 20:14:37 tobrien Exp $
- * $Revision: 1.1 $
- * $Date: 2003/07/11 20:14:37 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//codec/src/test/org/apache/commons/codec/net/URLCodecTest.java,v 1.2 2003/07/31 20:09:21 tobrien Exp $
+ * $Revision: 1.2 $
+ * $Date: 2003/07/31 20:09:21 $
  *
  * ====================================================================
  *
@@ -71,11 +71,46 @@ import junit.framework.TestCase;
  */
 
 public class URLCodecTest extends TestCase {
+    
+    static final int SWISS_GERMAN_STUFF_UNICODE [] = {
+        0x47, 0x72, 0xFC, 0x65, 0x7A, 0x69, 0x5F, 0x7A, 0xE4, 0x6D, 0xE4
+    };
+    
+    static final int RUSSIAN_STUFF_UNICODE [] = {
+        0x412, 0x441, 0x435, 0x43C, 0x5F, 0x43F, 0x440, 0x438, 
+        0x432, 0x435, 0x442 
+    }; 
 
     public URLCodecTest(String name) {
         super(name);
     }
 
+    private String constructString(int [] unicodeChars) {
+        StringBuffer buffer = new StringBuffer();
+        if (unicodeChars != null) {
+            for (int i = 0; i < unicodeChars.length; i++) {
+                buffer.append((char)unicodeChars[i]); 
+            }
+        }
+        return buffer.toString();
+    }
+    
+    public void testUTF8RoundTrip() throws Exception {
+
+        String ru_msg = constructString(RUSSIAN_STUFF_UNICODE); 
+        String ch_msg = constructString(SWISS_GERMAN_STUFF_UNICODE); 
+        
+        URLCodec codec = new URLCodec();
+        
+        assertEquals(
+            "%D0%92%D1%81%D0%B5%D0%BC_%D0%BF%D1%80%D0%B8%D0%B2%D0%B5%D1%82", 
+            codec.encode(ru_msg, "UTF-8")
+        );
+        assertEquals("Gr%C3%BCezi_z%C3%A4m%C3%A4", codec.encode(ch_msg, "UTF-8"));
+        
+        assertEquals(ru_msg, codec.decode(codec.encode(ru_msg, "UTF-8"), "UTF-8"));
+        assertEquals(ch_msg, codec.decode(codec.encode(ch_msg, "UTF-8"), "UTF-8"));
+    }
 
     public void testBasicEncodeDecode() throws Exception {
         URLCodec urlcodec = new URLCodec();
