@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//codec/src/java/org/apache/commons/codec/binary/Base64.java,v 1.2 2003/05/06 20:52:18 ggregory Exp $
- * $Revision: 1.2 $
- * $Date: 2003/05/06 20:52:18 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//codec/src/java/org/apache/commons/codec/binary/Base64.java,v 1.3 2003/05/14 02:40:18 tobrien Exp $
+ * $Revision: 1.3 $
+ * $Date: 2003/05/14 02:40:18 $
   *
   * ====================================================================
   *
@@ -196,19 +196,8 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
     }
 
     public byte[] decode(byte[] pArray) throws DecoderException {
-
         byte[] result;
-
-        if (!isArrayByteBase64(pArray)) {
-            throw new DecoderException(
-                "Parameter supplied to "
-                    + "Base64 "
-                    + "decode is not a valid base64 data.");
-        } 
-        else {
-            result = decodeBase64((byte[]) pArray);
-        }
-
+        result = decodeBase64((byte[]) pArray);
         return (result);
     }
 
@@ -375,9 +364,8 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * @return Array containing decoded data.
      */
     public static byte[] decodeBase64(byte[] base64Data) {
-        // RFC 2045 suggests line wrapping at (no more than) 76
-        // characters -- we may have embedded whitespace.
-        base64Data = discardWhitespace(base64Data);
+        // RFC 2045 requires that we discard ALL non-Base64 characters
+        base64Data = discardNonBase64(base64Data);
 
         // handle the edge case, so we don't have to worry about it later
         if (base64Data.length == 0) {
@@ -468,6 +456,33 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
 
         return packedData;
     }
+    
+	/**
+	 * Discards any characters outside of the base64 alphabet, per
+	 * the requirements on page 25 of RFC 2045 - "Any characters
+	 * outside of the base64 alphabet are to be ignored in base64
+	 * encoded data."
+	 *
+	 * @param data The base-64 encoded data to groom
+	 * @return The data, less non-base64 characters (see RFC 2045).
+	 */
+	static byte[] discardNonBase64(byte[] data) {
+		byte groomedData[] = new byte[data.length];
+		int bytesCopied = 0;
+
+		for (int i = 0; i < data.length; i++) {
+			if( isBase64(data[i]) ) {
+			  groomedData[bytesCopied++] = data[i];
+			}
+		}
+
+		byte packedData[] = new byte[bytesCopied];
+
+		System.arraycopy(groomedData, 0, packedData, 0, bytesCopied);
+
+		return packedData;
+	}
+
 
     // Implementation of the Encoder Interface
 
