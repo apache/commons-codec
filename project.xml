@@ -234,6 +234,7 @@ limitations under the License.
   	</build>
     
     <reports>
+	    <!--<report>maven-announcement-plugin</report>-->
 	    <report>maven-changes-plugin</report>
         <report>maven-changelog-plugin</report>
         <report>maven-checkstyle-plugin</report>
