@@ -127,6 +127,20 @@
 
     </table>
    </subsection>
+
+   <subsection name="Digest Utilites">
+   	<table>
+     <tr>
+      <td width="125">
+       <a href="apidocs/org/apache/commons/codec/digest/DigestUtils.html">
+       	DigestUtils</a>
+      </td>
+      <td>
+        Provides simple static methods for creating a SHA or MD5 digest
+      </td>
+     </tr>
+    </table>
+   </subsection>
    
   </section>
 
