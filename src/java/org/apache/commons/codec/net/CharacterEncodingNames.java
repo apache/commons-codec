@@ -35,9 +35,9 @@ package org.apache.commons.codec.net;
  *          names </a>
  * @author Apache Software Foundation
  * @since 1.4
- * @version $Id: CharacterEncodingNames.java,v 1.1 2004/07/26 22:55:40 ggregory Exp $
+ * @version $Id: CharacterEncodingNames.java,v 1.2 2004/07/27 15:22:10 ggregory Exp $
  */
-interface CharacterEncodingNames {
+class CharacterEncodingNames {
     /**
      * <p>
      * Seven-bit ASCII, also known as ISO646-US, also known as the Basic Latin block of the Unicode character set.
@@ -49,7 +49,7 @@ interface CharacterEncodingNames {
      * @see <a href="http://java.sun.com/j2se/1.3/docs/api/java/lang/package-summary.html#charenc">JRE character
      *          encoding names </a>
      */
-    String US_ASCII = "US-ASCII";
+    static final String US_ASCII = "US-ASCII";
 
     /**
      * <p>
@@ -62,5 +62,5 @@ interface CharacterEncodingNames {
      * @see <a href="http://java.sun.com/j2se/1.3/docs/api/java/lang/package-summary.html#charenc">JRE character
      *          encoding names </a>
      */
-    String UTF8 = "UTF-8";
+    static final String UTF8 = "UTF-8";
 }
