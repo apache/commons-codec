@@ -62,14 +62,13 @@ import java.util.Collections;
 import java.util.List;
 
 import junit.framework.TestCase;
-
 import org.apache.commons.codec.language.DoubleMetaphone;
 import org.apache.commons.codec.language.Soundex;
 
 /**
  * Test cases for the StingEncoderComparator.
  * 
- * @version $Revision: 1.7 $ $Date: 2004/01/02 07:05:36 $
+ * @version $Revision: 1.8 $ $Date: 2004/02/19 05:40:59 $
  * @author Tim O'Brien
  */
 public class StringEncoderComparatorTest extends TestCase {

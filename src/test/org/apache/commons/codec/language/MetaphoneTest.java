@@ -59,12 +59,11 @@ package org.apache.commons.codec.language;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.StringEncoderAbstractTest;
 
 /**
- * @version $Revision: 1.7 $ $Date: 2004/01/02 07:05:36 $
+ * @version $Revision: 1.8 $ $Date: 2004/02/19 05:39:47 $
  * @author Rodney Waldhoff
  * @author Gary Gregory
  */

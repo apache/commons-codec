@@ -57,10 +57,9 @@
 
 package org.apache.commons.codec.net;
 
+import junit.framework.TestCase;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
-
-import junit.framework.TestCase;
 
 /**
  * URL codec test cases
