@@ -67,10 +67,16 @@ import org.apache.commons.codec.StringEncoder;
  * 
  * @author bayard@generationjava.com
  * @author Tim O'Brien
- * @author ggregory@seagullsw.com
- * @version $Id: Soundex.java,v 1.9 2003/10/12 19:48:15 tobrien Exp $
+ * @author Gary Gregory
+ * @version $Id: Soundex.java,v 1.10 2003/11/04 02:43:09 ggregory Exp $
  */
 public class Soundex implements StringEncoder {
+
+    /**
+     * This static variable contains an instance of the
+     * Soundex using the US_ENGLISH mapping.
+     */
+    public static final Soundex US_ENGLISH = new Soundex();
 
     /**
      * This is a default mapping of the 26 letters used
@@ -80,10 +86,10 @@ public class Soundex implements StringEncoder {
         "01230120022455012623010202".toCharArray();
 
     /**
-     * This static variable contains an instance of the
-     * Soundex using the US_ENGLISH mapping.
+     * The maximum length of a Soundex code - Soundex codes are
+     * only four characters by definition.
      */
-    public static final Soundex US_ENGLISH = new Soundex();
+    private int maxLength = 4;
     
     /**
      * Every letter of the alphabet is "mapped" to a numerical 
@@ -92,12 +98,6 @@ public class Soundex implements StringEncoder {
      * map for US_ENGLISH
      */
     private char[] soundexMapping;
-
-    /**
-     * The maximum length of a Soundex code - Soundex codes are
-     * only four characters by definition.
-     */
-    private int maxLength = 4;
 
     /**
      * Creates an instance of the Soundex object using the default
@@ -117,30 +117,7 @@ public class Soundex implements StringEncoder {
      *                code for a given character
      */
     public Soundex(char[] mapping) {
-        this.soundexMapping = mapping;
-    }
-
-    /**
-     * Retreives the Soundex code for a given String object.
-     *
-     * @param str String to encode using the Soundex algorithm
-     * @return A soundex code for the String supplied
-     */
-    public String soundex(String str) {
-        if (null == str || str.length() == 0) { return str; }
-        
-        char out[] = { '0', '0', '0', '0' };
-        char last, mapped;
-        int incount = 1, count = 1;
-        out[0] = Character.toUpperCase(str.charAt(0));
-        last = getMappingCode(str.charAt(0));
-        while ((incount < str.length()) && (mapped = getMappingCode(str.charAt(incount++))) != 0 && (count < maxLength)) {
-                if ((mapped != '0') && (mapped != last)) {
-                    out[count++] = mapped;
-                }
-                last = mapped;
-            }
-        return new String(out);
+        this.setSoundexMapping(mapping);
     }
 
     /**
@@ -174,10 +151,8 @@ public class Soundex implements StringEncoder {
      *
      * @param pString A String object to encode
      * @return A Soundex code corresponding to the String supplied
-     * @throws EncoderException throws exception if there is an
-     *                          encoding-specific problem
      */
-    public String encode(String pString) throws EncoderException {
+    public String encode(String pString) {
         return (soundex(pString));   
     }
 
@@ -191,7 +166,7 @@ public class Soundex implements StringEncoder {
         if (!Character.isLetter(c)) {
             return 0;
         } else {
-            return soundexMapping[Character.toUpperCase(c) - 'A'];
+            return this.getSoundexMapping()[Character.toUpperCase(c) - 'A'];
         }
     }
 
@@ -200,7 +175,14 @@ public class Soundex implements StringEncoder {
      * @return int
      */
     public int getMaxLength() {
-        return maxLength;
+        return this.maxLength;
+    }
+
+    /**
+     * @return Returns the soundexMapping.
+     */
+    private char[] getSoundexMapping() {
+        return this.soundexMapping;
     }
 
     /**
@@ -209,6 +191,36 @@ public class Soundex implements StringEncoder {
      */
     public void setMaxLength(int maxLength) {
         this.maxLength = maxLength;
+    }
+
+    /**
+     * @param soundexMapping The soundexMapping to set.
+     */
+    private void setSoundexMapping(char[] soundexMapping) {
+        this.soundexMapping = soundexMapping;
+    }
+
+    /**
+     * Retreives the Soundex code for a given String object.
+     *
+     * @param str String to encode using the Soundex algorithm
+     * @return A soundex code for the String supplied
+     */
+    public String soundex(String str) {
+        if (null == str || str.length() == 0) { return str; }
+        
+        char out[] = { '0', '0', '0', '0' };
+        char last, mapped;
+        int incount = 1, count = 1;
+        out[0] = Character.toUpperCase(str.charAt(0));
+        last = getMappingCode(str.charAt(0));
+        while ((incount < str.length()) && (mapped = getMappingCode(str.charAt(incount++))) != 0 && (count < this.getMaxLength())) {
+                if ((mapped != '0') && (mapped != last)) {
+                    out[count++] = mapped;
+                }
+                last = mapped;
+            }
+        return new String(out);
     }
 
 }
