@@ -31,7 +31,7 @@ import org.apache.commons.codec.StringEncoder;
  * </p>
  * 
  * @author Apache Software Foundation
- * @version $Id: Metaphone.java,v 1.20 2004/06/05 18:32:04 ggregory Exp $
+ * @version $Id: Metaphone.java,v 1.21 2004/10/08 22:56:22 ggregory Exp $
  */
 public class Metaphone implements StringEncoder {
 
@@ -307,7 +307,7 @@ public class Metaphone implements StringEncoder {
     }
 
 	private boolean isVowel(StringBuffer string, int index) {
-		return (this.vowels.indexOf(string.charAt(index)) >= 0);
+		return this.vowels.indexOf(string.charAt(index)) >= 0;
 	}
 
 	private boolean isPreviousChar(StringBuffer string, int index, char c) {
