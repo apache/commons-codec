@@ -25,7 +25,7 @@ import org.apache.commons.codec.StringEncoder;
  * Margaret Odell and Robert Russell
  * 
  * @author Apache Software Foundation
- * @version $Id: RefinedSoundex.java,v 1.17 2004/03/17 18:30:59 ggregory Exp $
+ * @version $Id: RefinedSoundex.java,v 1.18 2004/04/18 21:31:46 tobrien Exp $
  */
 public class RefinedSoundex implements StringEncoder {
 
@@ -139,7 +139,7 @@ public class RefinedSoundex implements StringEncoder {
 	 *                  char to get mapping for
 	 * @return A character (really a numeral) to return for the given char
 	 */
-    private char getMappingCode(char c) {
+    char getMappingCode(char c) {
         if (!Character.isLetter(c)) {
             return 0;
         } else {
