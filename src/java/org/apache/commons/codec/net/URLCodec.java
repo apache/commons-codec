@@ -86,7 +86,7 @@ import org.apache.commons.codec.StringEncoder;
  * 
  * @author <a href="mailto:oleg@ural.ru">Oleg Kalnichevski</a>
  * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
- * @version $Id: URLCodec.java,v 1.8 2003/10/12 02:17:11 tobrien Exp $
+ * @version $Id: URLCodec.java,v 1.9 2003/10/13 16:49:24 ggregory Exp $
  */
 
 public class URLCodec 
@@ -97,7 +97,7 @@ public class URLCodec
     /**
      * The <code>String</code> encoding used for decoding and encoding.
      */
-    protected String ENCODING = "US-ASCII";
+    protected String encoding = "US-ASCII";
     
     /**
      * BitSet of www-form-url safe characters.
@@ -139,7 +139,7 @@ public class URLCodec
      */
     public URLCodec(String encoding) {
         super();
-        ENCODING = encoding;
+        this.encoding = encoding;
     }
 
     /**
@@ -149,10 +149,8 @@ public class URLCodec
      * @param urlsafe bitset of characters deemed URL safe
      * @param pArray array of bytes to convert to URL safe characters
      * @return array of bytes containing URL safe characters
-     * @throws EncoderException Thrown if URL encoding is unsuccessful
      */
     public static final byte[] encodeUrl(BitSet urlsafe, byte[] pArray) 
-        throws EncoderException
     {
         if (pArray == null) {
             return null;
@@ -228,9 +226,8 @@ public class URLCodec
      *
      * @param pArray array of bytes to convert to URL safe characters
      * @return array of bytes containing URL safe characters
-     * @throws EncoderException Thrown if URL encoding is unsuccessful
      */
-    public byte[] encode(byte[] pArray) throws EncoderException {
+    public byte[] encode(byte[] pArray) {
         return encodeUrl(WWW_FORM_URL, pArray);
     }
 
@@ -255,17 +252,16 @@ public class URLCodec
      *
      * @param pString string to convert to a URL safe form
      * @return URL safe string
-     * @throws EncoderException Thrown if URL encoding is unsuccessful
      * @throws UnsupportedEncodingException Thrown if charset is not
      *                                      supported 
      */
     public String encode(String pString, String charset) 
-        throws EncoderException, UnsupportedEncodingException  
+        throws UnsupportedEncodingException  
     {
         if (pString == null) {
             return null;
         }
-        return new String(encode(pString.getBytes(charset)), ENCODING);
+        return new String(encode(pString.getBytes(charset)), this.getEncoding());
     }
 
 
@@ -282,7 +278,7 @@ public class URLCodec
             return null;
         }
         try {
-            return new String(encode(pString.getBytes()), ENCODING);
+            return new String(encode(pString.getBytes()), this.getEncoding());
         } catch(UnsupportedEncodingException e) {
             throw new EncoderException(e.getMessage());
         }
@@ -306,7 +302,7 @@ public class URLCodec
         if (pString == null) {
             return null;
         }
-        return new String(decode(pString.getBytes(ENCODING)), charset);
+        return new String(decode(pString.getBytes(this.getEncoding())), charset);
     }
 
 
@@ -323,7 +319,7 @@ public class URLCodec
             return null;
         }
         try {
-            return new String(decode(pString.getBytes(ENCODING)));
+            return new String(decode(pString.getBytes(this.getEncoding())));
         } catch(UnsupportedEncodingException e) {
             throw new DecoderException(e.getMessage());
         }
@@ -377,4 +373,14 @@ public class URLCodec
               
         }
     }
+
+    /**
+     * The <code>String</code> encoding used for decoding and encoding.
+     *
+     * @return Returns the encoding.
+     */
+    public String getEncoding() {
+        return this.encoding;
+    }
+
 }
