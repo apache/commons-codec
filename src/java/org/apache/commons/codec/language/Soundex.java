@@ -68,7 +68,8 @@ import org.apache.commons.codec.StringEncoder;
  * @author bayard@generationjava.com
  * @author Tim O'Brien
  * @author Gary Gregory
- * @version $Id: Soundex.java,v 1.16 2003/12/11 01:39:28 ggregory Exp $
+ * @see <a href="http://www.archives.gov/research_room/genealogy/census/soundex.html">NARA, Genealogy, Soundex Indexing</a>
+ * @version $Id: Soundex.java,v 1.17 2003/12/11 23:44:11 ggregory Exp $
  */
 public class Soundex implements StringEncoder {
 
@@ -85,19 +86,19 @@ public class Soundex implements StringEncoder {
     public static final char[] US_ENGLISH_MAPPING = "01230120022455012623010202".toCharArray();
 
     /**
-	 * Returns the difference between the Soundex values of two Strings. For
-	 * Soundex, this return value ranges from 0 through 4: 0 indicates little or
-	 * no similarity, and 4 indicates strong similarity or identical values.
+	 * Encodes the Strings and returns the number of characters in the two
+	 * encoded Strings that are the same. This return value ranges from 0
+	 * through 4: 0 indicates little or no similarity, and 4 indicates strong
+	 * similarity or identical values.
 	 * 
-     * @param s1
-     *                  A String that will be encoded and compared.
-     * @param s2
-     *                  A String that will be encoded and compared.
-	 * @return The return value ranges from 0 through 4: 0 indicates little or
-	 *             no similarity, and 4 indicates strong similarity or identical
-	 *             values.
+	 * @param s1
+	 *                  A String that will be encoded and compared.
+	 * @param s2
+	 *                  A String that will be encoded and compared.
+	 * @return The number of characters in the two encoded Strings that are the
+	 *             same from 0 to 4.
 	 * 
-     * @see #difference(StringEncoder,String,String)
+	 * @see SoundexUtils#difference(StringEncoder,String,String)
 	 * @see <a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_de-dz_8co5.asp">
 	 *          MS T-SQL DIFFERENCE</a>
 	 * 
@@ -105,64 +106,7 @@ public class Soundex implements StringEncoder {
 	 *                  if an error occurs encoding one of the strings
 	 */
     public int difference(String s1, String s2) throws EncoderException {
-        return difference(this, s1, s2);
-    }
-
-    /**
-	 * Returns the difference between the encoded values of two Strings. The
-	 * higher the difference factor, the more similar the strings. For Soundex,
-	 * this return value ranges from 0 through 4: 0 indicates little or no
-	 * similarity, and 4 indicates strong similarity or identical values.
-	 * 
-	 * @param encoder
-	 *                  The encoder to use to encode the String parameters.
-     * @param s1
-     *                  A String that will be encoded and compared.
-     * @param s2
-     *                  A String that will be encoded and compared.
-	 * @return an integer from 0 to the length of the shorter string. The
-	 *             smaller the number, the more different the strings are.
-	 * 
-     * @see #differenceEncoded(String,String)
-	 * @see <a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_de-dz_8co5.asp">
-	 *          MS T-SQL DIFFERENCE</a>
-	 * 
-	 * @throws EncoderException
-	 *                  if an error occurs encoding one of the strings
-	 */
-    public static int difference(StringEncoder encoder, String s1, String s2) throws EncoderException {
-        return differenceEncoded(encoder.encode(s1), encoder.encode(s2));
-    }
-
-    /**
-	 * Returns the difference between the values of two encoded Strings. The
-	 * higher the difference factor, the more similar the strings. For Soundex,
-	 * this return value ranges from 0 through 4: 0 indicates little or no
-	 * similarity, and 4 indicates strong similarity or identical values.
-	 * 
-	 * @param es1
-	 *                  An encoded String.
-	 * @param es2
-	 *                  An encoded String.
-	 * @return an integer from 0 to the length of the shorter string. The
-	 *             smaller the number, the more different the strings are.
-	 * 
-	 * @see <a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_de-dz_8co5.asp">
-	 *          MS T-SQL DIFFERENCE</a>
-	 */
-    public static int differenceEncoded(String es1, String es2) {
-
-        if (es1 == null || es2 == null) {
-            return 0;
-        }
-        int lengthToMatch = Math.min(es1.length(), es2.length());
-        int diff = 0;
-        for (int i = 0; i < lengthToMatch; i++) {
-            if (es1.charAt(i) == es2.charAt(i)) {
-                diff++;
-            }
-        }
-        return diff;
+        return SoundexUtils.difference(this, s1, s2);
     }
 
     /**
@@ -200,32 +144,6 @@ public class Soundex implements StringEncoder {
 	 */
     public Soundex(char[] mapping) {
         this.setSoundexMapping(mapping);
-    }
-
-    /**
-	 * Cleans up the input string before Soundex processing by only returning
-	 * upper case letters.
-	 * 
-	 * @param str
-	 *                  The String to clean
-	 * @return a clean String.
-	 */
-    private String clean(String str) {
-        if (str == null || str.length() == 0) {
-            return str;
-        }
-        int len = str.length();
-        char[] chars = new char[len];
-        int count = 0;
-        for (int i = 0; i < len; i++) {
-            if (Character.isLetter(str.charAt(i))) {
-                chars[count++] = str.charAt(i);
-            }
-        }
-        if (count == len) {
-            return str.toUpperCase();
-        }
-        return new String(chars, 0, count).toUpperCase();
     }
 
     /**
@@ -306,7 +224,8 @@ public class Soundex implements StringEncoder {
     }
 
     /**
-	 * @return Returns the soundexMapping.
+     * Returns the soundex mapping.
+	 * @return soundexMapping.
 	 */
     private char[] getSoundexMapping() {
         return this.soundexMapping;
@@ -336,6 +255,7 @@ public class Soundex implements StringEncoder {
     }
 
     /**
+     * Sets the soundexMapping.
 	 * @param soundexMapping
 	 *                  The soundexMapping to set.
 	 */
@@ -354,7 +274,7 @@ public class Soundex implements StringEncoder {
         if (str == null) {
             return null;
         }
-        str = this.clean(str);
+        str = SoundexUtils.clean(str);
         if (str.length() == 0) {
             return str;
         }
