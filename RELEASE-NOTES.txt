@@ -1,4 +1,4 @@
-$Id: RELEASE-NOTES.txt,v 1.11 2003/11/23 22:16:46 tobrien Exp $
+$Id: RELEASE-NOTES.txt,v 1.12 2003/11/25 05:03:29 tobrien Exp $
 
 			Commons Codec Package
 			    Version 1.2
@@ -9,14 +9,14 @@ INTRODUCTION:
 
 This document contains the release notes for this version of the Commons
 Codec package, and highlights changes since the previous version.  Version
-1.2 contains bug fixes for the 1.1 release, including an issue related
-to the treat of non-Base64 characters, Soundex fixes and adds the 
-org.apache.commons.codec.net package.
-
+1.2 contains bug fixes for the 1.1 release.
 
 NEW FEATURES:
 
-* org.apache.commons.codec.net: A new package with the class URLCodec.
+* URLCodec - Implements the 'www-form-urlencoded' encoding scheme
+
+* DigestUtils - Simple utility class that provides static convenience
+  methods for calculating md5 and hex digests.
 
 
 BUG FIXES:
@@ -24,11 +24,7 @@ BUG FIXES:
 * Fix for Bug 19860: Modified Base64 to remedy non-compliance with RFC
   2045.  Non-Base64 characters were not being discarded during the
   decode.  RFC 2045 explicitly states that all characters outside of the
-  base64 alphabet are to be ignored.  A new function discardNonBase64 is
-  called prior to a decode.  Note that isArrayBase64 only discards
-  white space before testing the contents of an encoded byte array.  Unit
-  tests for Base64 were updated to reflect the changes related to
-  discarding non-Base64 characters.
+  base64 alphabet are to be ignored.  
 
 * Fix for Bug 24360: Hex.decode(Object) throws a ClassCastException 
   when a String argument is passed in.
@@ -42,3 +38,5 @@ BUG FIXES:
   of length 4 by definition (we do not use the '-' in as a letter-nnn 
   separator) the need for a maxLength attribute is not needed.  Deprecate 
   the field and accessor methods.
+
+* Fix in Metaphone relating to the handling of the maximum code length.
