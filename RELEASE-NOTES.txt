@@ -1,7 +1,7 @@
-$Id: RELEASE-NOTES.txt,v 1.12 2003/11/25 05:03:29 tobrien Exp $
+$Id: RELEASE-NOTES.txt,v 1.13 2003/12/10 00:04:46 ggregory Exp $
 
 			Commons Codec Package
-			    Version 1.2
+			    Version 1.3-dev
 			    Release Notes
 
 
@@ -9,34 +9,15 @@ INTRODUCTION:
 
 This document contains the release notes for this version of the Commons
 Codec package, and highlights changes since the previous version.  Version
-1.2 contains bug fixes for the 1.1 release.
+1.3 contains bug fixes for the 1.2 release.
 
 NEW FEATURES:
 
-* URLCodec - Implements the 'www-form-urlencoded' encoding scheme
-
-* DigestUtils - Simple utility class that provides static convenience
-  methods for calculating md5 and hex digests.
-
+* Soundex - Implemented the DIFFERENCE algorithm.
 
 BUG FIXES:
 
-* Fix for Bug 19860: Modified Base64 to remedy non-compliance with RFC
-  2045.  Non-Base64 characters were not being discarded during the
-  decode.  RFC 2045 explicitly states that all characters outside of the
-  base64 alphabet are to be ignored.  
+* Fix for Bug XXXX: ZZZZ
 
-* Fix for Bug 24360: Hex.decode(Object) throws a ClassCastException 
-  when a String argument is passed in.
-  
-* Fix for Bug 24471: Soundex: The HW rule is not applied; hyphens and 
-  apostrophes are not ignored.
-  
-* Fix for Bug 24484: Soundex.setMaxLength causes bugs and is not needed.
-  Calling Soundex.setMaxLength() with a value of 2 or less causes the wrong
-  answer to be returned.  Since the encoding returned by Soundex is always
-  of length 4 by definition (we do not use the '-' in as a letter-nnn 
-  separator) the need for a maxLength attribute is not needed.  Deprecate 
-  the field and accessor methods.
+* Fixes for missing tags in Javadoc comments.  
 
-* Fix in Metaphone relating to the handling of the maximum code length.
