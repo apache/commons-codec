@@ -31,7 +31,7 @@ import org.apache.commons.codec.StringEncoder;
  * </ul>
  * 
  * @author Apache Software Foundation
- * @version $Id: DoubleMetaphone.java,v 1.21 2004/05/24 00:25:22 ggregory Exp $
+ * @version $Id: DoubleMetaphone.java,v 1.22 2004/05/24 00:28:10 ggregory Exp $
  */
 public class DoubleMetaphone implements StringEncoder {
 
@@ -806,28 +806,24 @@ public class DoubleMetaphone implements StringEncoder {
      * Complex condition 0 for 'C'
      */
     private boolean conditionC0(String value, int index) {
-        if (contains(value, index, 4, "CHIA")) {
-            return true;
-        } else if (index <= 1) {
-            return false;
-        } else if (isVowel(charAt(value, index - 2))) {
-            return false;
-        } else if (!contains(value, index - 1, 3, "ACH")) {
-            return false;
-        } else {
-            char c = charAt(value, index + 2);
-            if ((c != 'I' && c != 'E') || contains(value, index - 2, 
-                                                   6, "BACHER", "MACHER" )) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-    }
+		if (contains(value, index, 4, "CHIA")) {
+			return true;
+		} else if (index <= 1) {
+			return false;
+		} else if (isVowel(charAt(value, index - 2))) {
+			return false;
+		} else if (!contains(value, index - 1, 3, "ACH")) {
+			return false;
+		} else {
+			char c = charAt(value, index + 2);
+			return (c != 'I' && c != 'E')
+					|| contains(value, index - 2, 6, "BACHER", "MACHER");
+		}
+	}
     
     /**
-     * Complex condition 0 for 'CH'
-     */
+	 * Complex condition 0 for 'CH'
+	 */
     private boolean conditionCH0(String value, int index) {
         if (index != 0) {
             return false;
