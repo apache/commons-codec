@@ -31,7 +31,7 @@
  *    permission, please contact apache@apache.org.
  *
  * 5. Products derived from this software may not be called "Apache",
- *    "Apache" nor may "Apache" appear in their names without prior 
+ *    "Apache" nor may "Apache" appear in their name without prior 
  *    written permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
@@ -75,7 +75,7 @@ import org.apache.commons.codec.EncoderException;
   * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
   * @author Tim O'Brien
   * @since 1.0-dev
-  * @version $Id: Base64.java,v 1.9 2003/10/05 21:34:21 tobrien Exp $
+  * @version $Id: Base64.java,v 1.10 2003/10/05 21:45:49 tobrien Exp $
   */
 public class Base64 implements BinaryEncoder, BinaryDecoder {
 
