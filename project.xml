@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <extend>../project.xml</extend>
+  <extend>../commons-build/project.xml</extend>
   <name>Codec</name>
   <id>commons-codec</id>
   <currentVersion>1.2</currentVersion>
