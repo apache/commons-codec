@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//codec/src/java/org/apache/commons/codec/net/URLCodec.java,v 1.2 2003/07/25 22:42:46 ggregory Exp $
- * $Revision: 1.2 $
- * $Date: 2003/07/25 22:42:46 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//codec/src/java/org/apache/commons/codec/net/URLCodec.java,v 1.3 2003/07/31 20:09:21 tobrien Exp $
+ * $Revision: 1.3 $
+ * $Date: 2003/07/31 20:09:21 $
  *
  * ====================================================================
  *
@@ -87,7 +87,7 @@ import org.apache.commons.codec.StringEncoder;
  * </p>
  * 
  * @author <a href="mailto:oleg@ural.ru">Oleg Kalnichevski</a>
- * @version $Id: URLCodec.java,v 1.2 2003/07/25 22:42:46 ggregory Exp $
+ * @version $Id: URLCodec.java,v 1.3 2003/07/31 20:09:21 tobrien Exp $
  */
 
 public class URLCodec 
@@ -152,7 +152,7 @@ public class URLCodec
         ByteArrayOutputStream buffer = new ByteArrayOutputStream(); 
         for (int i = 0; i < pArray.length; i++) {
             int b = pArray[i];
-            if (urlsafe.get(b)) {
+            if (b >= 0 && urlsafe.get(b)) {
                 if (b == ' ') {
                     b = '+';
                 }
