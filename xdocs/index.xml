@@ -18,6 +18,14 @@
 
   </section>
 
+  <section name="Releases">
+   <ul>
+    <li>Version 1.1 (from mirror)
+     <a href="http://jakarta.apache.org/site/binindex.cgi">binary</a>
+     <a href="http://jakarta.apache.org/site/sourceindex.cgi">source</a> (latest)</li>
+   </ul>
+  </section>
+
   <section name="Components">
 
    <p>
