@@ -87,7 +87,7 @@ import org.apache.commons.codec.StringEncoder;
  * @author <a href="mailto:oleg@ural.ru">Oleg Kalnichevski</a>
  * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
  * @since 1.2
- * @version $Id: URLCodec.java,v 1.13 2004/01/09 19:02:47 ggregory Exp $
+ * @version $Id: URLCodec.java,v 1.14 2004/01/09 19:23:53 ggregory Exp $
  */
 public class URLCodec 
         implements BinaryEncoder, BinaryDecoder, 
@@ -283,7 +283,7 @@ public class URLCodec
             return null;
         }
         try {
-            return encode(pString, this.encoding);
+            return encode(pString, this.getEncoding());
         } catch(UnsupportedEncodingException e) {
             throw new EncoderException(e.getMessage());
         }
@@ -325,7 +325,7 @@ public class URLCodec
             return null;
         }
         try {
-            return decode(pString, this.encoding);
+            return decode(pString, this.getEncoding());
         } catch(UnsupportedEncodingException e) {
             throw new DecoderException(e.getMessage());
         }
