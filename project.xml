@@ -93,6 +93,10 @@
      <email>steve.zimmermann@heii.com</email>
      <roles>documentation</roles>
    </contributor>
+   <contributor>
+     <name>Benjamin Walstrum</name>
+     <email>ben@walstrum.com</email>
+   </contributor>
   </contributors>  
 
   <dependencies>
