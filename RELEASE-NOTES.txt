@@ -1,4 +1,4 @@
-$Id: RELEASE-NOTES.txt,v 1.18 2004/03/23 19:26:50 ggregory Exp $
+$Id: RELEASE-NOTES.txt,v 1.19 2004/03/24 18:39:25 ggregory Exp $
 
 			Commons Codec Package
 			    Version 1.3-dev
@@ -28,9 +28,14 @@ NEW FEATURES:
 
 BUG FIXES:
 
-* Fix for Bug 25995: [Codec] Default URL encoding logic broken.
-http://nagoya.apache.org/bugzilla/show_bug.cgi?id=25995
+* Fixed Bug 25995
+ Default URL encoding logic broken.
+ http://nagoya.apache.org/bugzilla/show_bug.cgi?id=25995
 
+* Fixed Bug 27781
+ Base64 chunked encoding not compliant with RFC 2045 section 2.1 CRLF
+ http://nagoya.apache.org/bugzilla/show_bug.cgi?id=27781
+	  	
 * Added missing tags in Javadoc comments.  
 
 * General Javadoc improvements.

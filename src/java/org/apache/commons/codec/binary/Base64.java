@@ -31,25 +31,26 @@ import org.apache.commons.codec.EncoderException;
  * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>
  * @author Apache Software Foundation
  * @since 1.0-dev
- * @version $Id: Base64.java,v 1.18 2004/03/18 17:34:56 ggregory Exp $
+ * @version $Id: Base64.java,v 1.19 2004/03/24 18:37:25 ggregory Exp $
  */
 public class Base64 implements BinaryEncoder, BinaryDecoder {
 
     /**
-     * Chunk size according to RFC 2045.
+     * Chunk size per RFC 2045 section 6.8.
      * 
      * <p>The {@value} character limit does not count the trailing CRLF, but counts 
      * all other characters, including any equal signs.</p>
      * 
-     * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045 section 2.1</a>
+     * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045 section 6.8</a>
      */
     static final int CHUNK_SIZE = 76;
 
     /**
-     * Chunk separator, we use a newline to separate chunks
-     * of encoded data (if you ask for it to be chunked).
+     * Chunk separator per RFC 2045 section 2.1.
+     * 
+     * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045 section 2.1</a>
      */
-    static final byte[] CHUNK_SEPARATOR = "\n".getBytes();
+    static final byte[] CHUNK_SEPARATOR = "\r\n".getBytes();
 
     /**
      * The base length.
@@ -167,8 +168,8 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
-     * Encodes binary data using the base64 algorithm (this
-     * does not "chunk" the output).
+     * Encodes binary data using the base64 algorithm but
+     * does not chunk the output.
      *
      * @param binaryData binary data to encode
      * @return Base64 characters
@@ -227,7 +228,8 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
-     * Encodes hex octects into Base64.
+     * Encodes binary data using the base64 algorithm, optionally
+     * chunking the output into 76 character blocks.
      *
      * @param binaryData Array containing binary data to encode.
      * @param isChunked if isChunked is true this encoder will chunk
