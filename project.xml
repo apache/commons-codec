@@ -131,7 +131,7 @@
 
   <reports>
    <report>maven-changelog-plugin</report>
-   <report>maven-changes-plugin</report>
+<!--   <report>maven-changes-plugin</report> -->
    <report>maven-checkstyle-plugin</report>
 <!--   <report>maven-clover-plugin</report> -->
    <report>maven-developer-activity-plugin</report>
@@ -144,6 +144,6 @@
    <report>maven-license-plugin</report>
    <report>maven-linkcheck-plugin</report>
 <!--   <report>maven-statcvs-plugin</report> -->
-   <report>maven-tasklist-plugin</report>
+<!--   <report>maven-tasklist-plugin</report> -->
   </reports>
 </project>
