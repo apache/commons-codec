@@ -55,7 +55,7 @@ import org.apache.commons.codec.StringEncoder;
  * @author bayard@generationjava.com
  * @author Tim O'Brien
  * @author Gary Gregory
- * @version $Id: Soundex.java,v 1.14 2003/12/10 00:04:46 ggregory Exp $
+ * @version $Id: Soundex.java,v 1.15 2003/12/10 02:51:26 ggregory Exp $
  */
 public class Soundex implements StringEncoder {
 
@@ -76,10 +76,10 @@ public class Soundex implements StringEncoder {
 	 * Soundex, this return value ranges from 0 through 4: 0 indicates little or
 	 * no similarity, and 4 indicates strong similarity or identical values.
 	 * 
-	 * @param s1
-	 *                  A String.
-	 * @param s2
-	 *                  A String.
+     * @param s1
+     *                  A String that will be encoded and compared.
+     * @param s2
+     *                  A String that will be encoded and compared.
 	 * @return The return value ranges from 0 through 4: 0 indicates little or
 	 *             no similarity, and 4 indicates strong similarity or identical
 	 *             values.
@@ -102,11 +102,11 @@ public class Soundex implements StringEncoder {
 	 * similarity, and 4 indicates strong similarity or identical values.
 	 * 
 	 * @param encoder
-	 *                  The encoder to use to encode the String parameters with.
-	 * @param s1
-	 *                  A String.
-	 * @param s2
-	 *                  A String.
+	 *                  The encoder to use to encode the String parameters.
+     * @param s1
+     *                  A String that will be encoded and compared.
+     * @param s2
+     *                  A String that will be encoded and compared.
 	 * @return an integer from 0 to the length of the shorter string. The
 	 *             smaller the number, the more different the strings are.
 	 * 
