@@ -24,15 +24,16 @@ import org.apache.commons.codec.EncoderException;
 /**
  * Hex encoder and decoder.
  * 
+ * @since 1.1
  * @author Apache Software Foundation
- * @version $Id: Hex.java,v 1.12 2004/02/29 04:08:31 tobrien Exp $
+ * @version $Id: Hex.java,v 1.13 2004/04/18 18:22:33 ggregory Exp $
  */
 public class Hex implements BinaryEncoder, BinaryDecoder {
 
     /** 
      * Used building output as Hex 
      */
-    private static char[] digits = {
+    private static final char[] DIGITS = {
         '0', '1', '2', '3', '4', '5', '6', '7',
            '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'
     };
@@ -47,36 +48,54 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * @param data An array of characters containing hexidecimal digits
      * @return A byte array containing binary data decoded from
      *         the supplied char array.
-     * @throws DecoderException Thrown if an odd number of characters is supplied
-     *                   to this function
+     * @throws DecoderException Thrown if an odd number or illegal of characters 
+     *         is supplied
      */
     public static byte[] decodeHex(char[] data) throws DecoderException {
 
-        int l = data.length;
+        int len = data.length;
 
-           if ((l & 0x01) != 0) {
-               throw new DecoderException("Odd number of characters.");
-           }
+        if ((len & 0x01) != 0) {
+            throw new DecoderException("Odd number of characters.");
+        }
 
-           byte[] out = new byte[l >> 1];
+        byte[] out = new byte[len >> 1];
 
-           // two characters form the hex value.
-           for (int i = 0, j = 0; j < l; i++) {
-               int f = Character.digit(data[j++], 16) << 4;
-               f = f | Character.digit(data[j++], 16);
-               out[i] = (byte) (f & 0xFF);
-           }
+        // two characters form the hex value.
+        for (int i = 0, j = 0; j < len; i++) {
+            int f = toDigit(data[j], j) << 4;
+            j++;
+            f = f | toDigit(data[j], j);
+            j++;
+            out[i] = (byte) (f & 0xFF);
+        }
 
-           return out;
+        return out;
     }
 
     /**
-     * Converts an array of bytes into an array of characters representing the
-     * hexidecimal values of each byte in order. The returned array will be
-     * double the length of the passed array, as it takes two characters to
-     * represent any given byte.
-     *
-     * @param data a byte[] to convert to Hex characters
+     * Converts a hexadecimal character to an integer.
+     *  
+     * @param ch A character to convert to an integer digit
+     * @param index The index of the character in the source
+     * @return An integer
+     * @throws DecoderException Thrown if ch is an illegal hex character
+     */
+    protected static int toDigit(char ch, int index) throws DecoderException {
+        int digit = Character.digit(ch, 16);
+        if (digit == -1) {
+            throw new DecoderException("Illegal hexadecimal charcter " + ch + " at index " + index);
+        }
+        return digit;
+    }
+
+    /**
+     * Converts an array of bytes into an array of characters representing the hexidecimal values of each byte in order.
+     * The returned array will be double the length of the passed array, as it takes two characters to represent any
+     * given byte.
+     * 
+     * @param data
+     *                  a byte[] to convert to Hex characters
      * @return A char[] containing hexidecimal characters
      */
     public static char[] encodeHex(byte[] data) {
@@ -87,8 +106,8 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
 
            // two characters form the hex value.
            for (int i = 0, j = 0; i < l; i++) {
-               out[j++] = digits[(0xF0 & data[i]) >>> 4 ];
-               out[j++] = digits[ 0x0F & data[i] ];
+               out[j++] = DIGITS[(0xF0 & data[i]) >>> 4 ];
+               out[j++] = DIGITS[ 0x0F & data[i] ];
            }
 
            return out;

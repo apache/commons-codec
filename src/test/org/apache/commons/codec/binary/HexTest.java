@@ -27,7 +27,7 @@ import org.apache.commons.codec.EncoderException;
  * Tests {@link org.apache.commons.codec.binary.Hex}.
  * 
  * @author Apache Software Foundation
- * @version $Id: HexTest.java,v 1.9 2004/03/17 19:28:37 ggregory Exp $
+ * @version $Id: HexTest.java,v 1.10 2004/04/18 18:22:33 ggregory Exp $
  */
 
 public class HexTest extends TestCase {
@@ -40,6 +40,26 @@ public class HexTest extends TestCase {
         try {
             new Hex().decode(new byte[] { 65 });
             fail("An exception wasn't thrown when trying to decode an odd number of characters");
+        }
+        catch (DecoderException e) {
+            // Expected exception
+        }
+    }
+
+    public void testDecodeBadCharacterPos0() {
+        try {
+            new Hex().decode("q0");
+            fail("An exception wasn't thrown when trying to decode an illegal character");
+        }
+        catch (DecoderException e) {
+            // Expected exception
+        }
+    }
+
+    public void testDecodeBadCharacterPos1() {
+        try {
+            new Hex().decode("0q");
+            fail("An exception wasn't thrown when trying to decode an illegal character");
         }
         catch (DecoderException e) {
             // Expected exception
