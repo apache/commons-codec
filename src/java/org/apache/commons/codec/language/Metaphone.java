@@ -67,7 +67,7 @@ import org.apache.commons.codec.StringEncoder;
  * @author wbrogden@bga.com
  * @author bayard@generationjava.com
  * @author Tim O'Brien
- * @version $Id: Metaphone.java,v 1.4 2003/07/30 22:34:18 tobrien Exp $
+ * @version $Id: Metaphone.java,v 1.5 2003/09/04 21:20:02 tobrien Exp $
  */
 public class Metaphone implements StringEncoder {
 
@@ -363,7 +363,7 @@ public class Metaphone implements StringEncoder {
                 } // end switch
                 n++ ;
             } // end else from symb != 'C'
-            if (mtsz > 4) { code.setLength(4); }
+            if (mtsz > maxCodeLen) { code.setLength(maxCodeLen); }
         }
         return code.toString();
     } 
