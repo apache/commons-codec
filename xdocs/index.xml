@@ -46,9 +46,16 @@
 
   <section name="Releases">
    <ul>
-    <li>Version 1.1 (from mirror)
-     <a href="http://jakarta.apache.org/site/binindex.cgi">binary</a>
-     <a href="http://jakarta.apache.org/site/sourceindex.cgi">source</a> (latest)</li>
+    <li>Version 1.2 RC1 (latest, from mirror) 
+	<a href="http://jakarta.apache.org/site/binindex.cgi">binary</a> and 
+	<a href="http://jakarta.apache.org/site/sourceindex.cgi">source</a>
+    </li>
+    <li>
+     Version <a href="http://www.apache.org/dist/jakarta/commons/codec/">1.1</a>
+    </li>
+    <li>
+     Current <a href="http://www.apache.org/dist/jakarta/commons/codec/">nightly build</a>
+    </li>
    </ul>
   </section>
 
@@ -59,7 +66,7 @@
  	simple framework for encoding and decoding both textual and binary data.
    </p>
 
-   <subsection name="Common Encoders">
+   <subsection name="Binary Encoders">
    	<table>
      <tr>
       <td width="125">
@@ -128,7 +135,7 @@
     </table>
    </subsection>
 
-   <subsection name="Digest Utilites">
+   <subsection name="Digest Encoders">
    	<table>
      <tr>
       <td width="125">
@@ -136,7 +143,21 @@
        	DigestUtils</a>
       </td>
       <td>
-        Provides simple static methods for creating a SHA or MD5 digest
+        Provides simple static methods for creating a SHA or MD5 digest.
+      </td>
+     </tr>
+    </table>
+   </subsection>
+   
+   <subsection name="Network Encoders">
+   	<table>
+     <tr>
+      <td width="125">
+       <a href="apidocs/org/apache/commons/codec/net/URLCodec.html">
+       	URLCodec</a>
+      </td>
+      <td>
+        Implements the <code>www-form-urlencoded</code> encoding scheme, also misleadingly known as URL encoding.
       </td>
      </tr>
     </table>
