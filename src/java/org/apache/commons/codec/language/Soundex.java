@@ -62,9 +62,9 @@ import org.apache.commons.codec.StringEncoder;
  * scheme to find word with similar phonemes. 
  * 
  * @author bayard@generationjava.com
- * @author tobrien@transolutions.net
+ * @author Tim O'Brien
  * @author ggregory@seagullsw.com
- * @version $Id: Soundex.java,v 1.5 2003/07/25 22:48:11 ggregory Exp $
+ * @version $Id: Soundex.java,v 1.6 2003/07/30 22:34:18 tobrien Exp $
  */
 public class Soundex implements StringEncoder {
 

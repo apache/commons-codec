@@ -58,8 +58,8 @@ package org.apache.commons.codec;
  * a method parameter and one that produces a String as the
  * output of the decoding process.
  *
- * @author tobrien@transolutions.net
- * @version $Id: StringDecoder.java,v 1.2 2003/07/25 22:48:11 ggregory Exp $
+ * @author Tim O'Brien
+ * @version $Id: StringDecoder.java,v 1.3 2003/07/30 22:34:17 tobrien Exp $
  */
 public interface StringDecoder extends Decoder {
     

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//codec/src/java/org/apache/commons/codec/binary/Base64.java,v 1.6 2003/07/25 22:48:11 ggregory Exp $
- * $Revision: 1.6 $
- * $Date: 2003/07/25 22:48:11 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//codec/src/java/org/apache/commons/codec/binary/Base64.java,v 1.7 2003/07/30 22:34:17 tobrien Exp $
+ * $Revision: 1.7 $
+ * $Date: 2003/07/30 22:34:17 $
   *
   * ====================================================================
   *
@@ -75,12 +75,12 @@ import org.apache.commons.codec.EncoderException;
   * Internet Message Bodies. Reference 1996.
   *
   * @author Jeffrey Rodriguez
-  * @author <a href="dlr@apache.org">Daniel Rall</a>
-  * @author <a href="m.redington@ucl.ac.uk">Martin Redington</a>
+  * @author <a href="mailto:dlr@apache.org">Daniel Rall</a>
+  * @author <a href="mailto:m.redington@ucl.ac.uk">Martin Redington</a>
   * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
-  * @author <a href="mailto:tobrien@apache.org">Tim O'Brien</a>
+  * @author Tim O'Brien
   * @since 1.0-dev
-  * @version $Id: Base64.java,v 1.6 2003/07/25 22:48:11 ggregory Exp $
+  * @version $Id: Base64.java,v 1.7 2003/07/30 22:34:17 tobrien Exp $
   */
 public class Base64 implements BinaryEncoder, BinaryDecoder {
 

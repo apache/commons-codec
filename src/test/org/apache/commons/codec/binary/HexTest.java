@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//codec/src/test/org/apache/commons/codec/binary/HexTest.java,v 1.1 2003/04/25 17:50:56 tobrien Exp $
- * $Revision: 1.1 $
- * $Date: 2003/04/25 17:50:56 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//codec/src/test/org/apache/commons/codec/binary/HexTest.java,v 1.2 2003/07/30 22:34:18 tobrien Exp $
+ * $Revision: 1.2 $
+ * $Date: 2003/07/30 22:34:18 $
  *
  * ====================================================================
  *
@@ -68,7 +68,7 @@ import junit.framework.TestCase;
 /**
  * 
  * @author <a href="mailto:siege@preoccupied.net">Christopher O'Brien</a>
- * @author <a href="mailto:tobrien@apache.org">Tim O'Brien</a>
+ * @author Tim O'Brien
  */
 
 public class HexTest extends TestCase {

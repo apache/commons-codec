@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//codec/src/test/org/apache/commons/codec/StringEncoderAbstractTest.java,v 1.1 2003/04/25 17:50:56 tobrien Exp $
- * $Revision: 1.1 $
- * $Date: 2003/04/25 17:50:56 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//codec/src/test/org/apache/commons/codec/StringEncoderAbstractTest.java,v 1.2 2003/07/30 22:34:18 tobrien Exp $
+ * $Revision: 1.2 $
+ * $Date: 2003/07/30 22:34:18 $
  *
  * ====================================================================
  *
@@ -63,9 +63,9 @@ package org.apache.commons.codec;
 import junit.framework.TestCase;
 
 /**
- * @version $Revision: 1.1 $ $Date: 2003/04/25 17:50:56 $
+ * @version $Revision: 1.2 $ $Date: 2003/07/30 22:34:18 $
  * @author Rodney Waldhoff
- * @author <a href="mailto:tobrien@apache.org">Tim O'Brien</a>
+ * @author Tim O'Brien
  */
 public abstract class StringEncoderAbstractTest extends TestCase {
 

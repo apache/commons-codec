@@ -57,8 +57,8 @@ package org.apache.commons.codec;
  * A binary encoder contains methods common to all
  * encoders for binary data. 
  * 
- * @author <a href="tobrien@apache.org">Tim O'Brien</a>
- * @version $Id: BinaryEncoder.java,v 1.2 2003/07/25 22:48:11 ggregory Exp $
+ * @author Tim O'Brien
+ * @version $Id: BinaryEncoder.java,v 1.3 2003/07/30 22:34:17 tobrien Exp $
  */
 public interface BinaryEncoder extends Encoder {
     

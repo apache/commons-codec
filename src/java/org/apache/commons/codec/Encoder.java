@@ -58,8 +58,8 @@ package org.apache.commons.codec;
  * the highest level of abstraction for Encoders.  All
  * Encoders implement this common generic interface.
  *
- * @author <a href="tobrien@apache.org">Tim O'Brien</a>
- * @version $Id: Encoder.java,v 1.2 2003/07/25 22:48:11 ggregory Exp $
+ * @author Tim O'Brien
+ * @version $Id: Encoder.java,v 1.3 2003/07/30 22:34:17 tobrien Exp $
  */
 public interface Encoder {
     
