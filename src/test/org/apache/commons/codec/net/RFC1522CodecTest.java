@@ -14,18 +14,17 @@
  * limitations under the License.
  */ 
 
-
 package org.apache.commons.codec.net;
 
 import junit.framework.TestCase;
 
 import org.apache.commons.codec.DecoderException;
-import org.apache.commons.codec.EncoderException;
 
 /**
  * RFC 1522 compliant codec test cases
  * 
  * @author <a href="mailto:oleg@ural.ru">Oleg Kalnichevski</a>
+ * @version $Id: RFC1522CodecTest.java,v 1.3 2004/09/08 20:23:51 ggregory Exp $
  */
 public class RFC1522CodecTest extends TestCase {
     
@@ -33,14 +32,13 @@ public class RFC1522CodecTest extends TestCase {
         super(name);
     }
 
-
     class RFC1522TestCodec extends RFC1522Codec { 
 
-        protected byte[] doDecoding(byte[] bytes) throws DecoderException {
+        protected byte[] doDecoding(byte[] bytes) {
             return bytes;
         }
 
-        protected byte[] doEncoding(byte[] bytes) throws EncoderException {
+        protected byte[] doEncoding(byte[] bytes) {
             return bytes;
         }
 
