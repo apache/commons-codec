@@ -1,4 +1,4 @@
-$Id: RELEASE-NOTES.txt,v 1.5 2003/11/03 19:21:36 ggregory Exp $
+$Id: RELEASE-NOTES.txt,v 1.6 2003/11/06 19:15:09 ggregory Exp $
 
 			Commons Codec Package
 			    Version 1.2
@@ -32,4 +32,7 @@ BUG FIXES:
 
 * Fix for Bug 24360: Hex.decode(Object) throws a ClassCastException 
   when a String argument is passed in.
+  
+* Fix for Bug 24471: The HW rule is not applied. Hyphens and apostrophes
+  are not ignored.
 
