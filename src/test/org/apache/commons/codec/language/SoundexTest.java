@@ -64,52 +64,94 @@ import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.StringEncoderAbstractTest;
 
 /**
- * @version $Revision: 1.4 $ $Date: 2003/10/05 21:45:49 $
+ * @version $Revision: 1.5 $ $Date: 2003/11/04 02:43:09 $
  * @author Rodney Waldhoff
+ * @author Gary Gregory
  */
 public class SoundexTest extends StringEncoderAbstractTest {
-
-    public SoundexTest(String name) {
-        super(name);
-    }
 
     public static Test suite() {
         return (new TestSuite(SoundexTest.class));
     }
 
-    public void setUp() throws Exception {        
-        super.setUp();
-        _encoder = new Soundex();
-    }
+    private Soundex _encoder = null;
 
-    public void tearDown() throws Exception {
-        super.tearDown();
-        _encoder = null;
+    public SoundexTest(String name) {
+        super(name);
+    }
+    /**
+     * @return Returns the _encoder.
+     */
+    public Soundex getEncoder() {
+        return this._encoder;
     }
 
     protected StringEncoder makeEncoder() {
         return new Soundex();
     }
 
+    /**
+     * @param _encoder The _encoder to set.
+     */
+    public void setEncoder(Soundex encoder) {
+        this._encoder = encoder;
+    }
+
+    public void setUp() throws Exception {        
+        super.setUp();
+        this.setEncoder(new Soundex());
+    }
+
+    public void tearDown() throws Exception {
+        super.tearDown();
+        this.setEncoder(null);
+    }
+
     // ------------------------------------------------------------------------
 
     public void testEncode() throws Exception {
-        assertEquals("T235",_encoder.encode("testing"));
-        assertEquals("T000",_encoder.encode("The"));
-        assertEquals("Q200",_encoder.encode("quick"));
-        assertEquals("B650",_encoder.encode("brown"));
-        assertEquals("F200",_encoder.encode("fox"));
-        assertEquals("J513",_encoder.encode("jumped"));
-        assertEquals("O160",_encoder.encode("over"));
-        assertEquals("T000",_encoder.encode("the"));
-        assertEquals("L200",_encoder.encode("lazy"));
-        assertEquals("D200",_encoder.encode("dogs"));
+        assertEquals("T235",this.getEncoder().encode("testing"));
+        assertEquals("T000",this.getEncoder().encode("The"));
+        assertEquals("Q200",this.getEncoder().encode("quick"));
+        assertEquals("B650",this.getEncoder().encode("brown"));
+        assertEquals("F200",this.getEncoder().encode("fox"));
+        assertEquals("J513",this.getEncoder().encode("jumped"));
+        assertEquals("O160",this.getEncoder().encode("over"));
+        assertEquals("T000",this.getEncoder().encode("the"));
+        assertEquals("L200",this.getEncoder().encode("lazy"));
+        assertEquals("D200",this.getEncoder().encode("dogs"));
     }
 
+    /**
+     * Examples from
+     * http://www.bradandkathy.com/genealogy/overviewofsoundex.html
+     */
+    public void testEncode2() throws Exception {
+        assertEquals("A462",this.getEncoder().encode("Allricht"));
+        assertEquals("E166",this.getEncoder().encode("Eberhard"));
+        assertEquals("E521",this.getEncoder().encode("Engebrethson"));
+        assertEquals("H512",this.getEncoder().encode("Heimbach"));
+        assertEquals("H524",this.getEncoder().encode("Hanselmann"));
+        assertEquals("H431",this.getEncoder().encode("Hildebrand"));
+        assertEquals("K152",this.getEncoder().encode("Kavanagh"));
+        assertEquals("L530",this.getEncoder().encode("Lind, Van"));
+        assertEquals("L222",this.getEncoder().encode("Lukaschowsky"));
+        assertEquals("M235",this.getEncoder().encode("McDonnell"));
+        assertEquals("M200",this.getEncoder().encode("McGee"));
+        // Fix me?
+        //assertEquals("O165",this.getEncoder().encode("O'Brien"));
+        assertEquals("O155",this.getEncoder().encode("Opnian"));
+        assertEquals("O155",this.getEncoder().encode("Oppenheimer"));
+        // Fix me?
+        //assertEquals("S460",this.getEncoder().encode("Swhgler"));
+        assertEquals("R355",this.getEncoder().encode("Riedemanas"));
+        assertEquals("Z300",this.getEncoder().encode("Zita"));
+        assertEquals("Z325",this.getEncoder().encode("Zitzmeinn"));    
+    }
+    
     public void testMaxLength() throws Exception {
         Soundex soundex = new Soundex();
         soundex.setMaxLength( soundex.getMaxLength() );
     }
 
-    private Soundex _encoder = null;
 }
