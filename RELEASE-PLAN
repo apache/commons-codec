@@ -1,4 +1,4 @@
-$Id: RELEASE-PLAN,v 1.2 2003/05/14 02:53:04 tobrien Exp $
+$Id: RELEASE-PLAN,v 1.3 2004/01/09 19:16:19 ggregory Exp $
 
 Jakarta Commons Codec  
 
@@ -31,5 +31,11 @@ Objective:
    and either integrate or emulate this code.  The community is currently
    in the process of selecting a primary candidate.
 
+*** Codec 1.3 Release Plan
+
+   - Fix bugs. 
+   - Improve Javadocs.
+   - Add DIFFERENCE implementation in language package.
+   - Streamable codecs?
 
 
