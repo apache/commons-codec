@@ -73,7 +73,7 @@ import org.apache.commons.codec.StringEncoder;
  * 
  * @author <a href="mailto:ben@walstrum.com">Benjamin Walstrum</a>
  * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
- * @version $Id: DoubleMetaphone.java,v 1.14 2003/11/07 23:12:54 ggregory Exp $
+ * @version $Id: DoubleMetaphone.java,v 1.15 2003/11/24 00:11:56 ggregory Exp $
  */
 public class DoubleMetaphone implements StringEncoder {
 
@@ -252,11 +252,9 @@ public class DoubleMetaphone implements StringEncoder {
      *
      * @param value String to encode
      * @return An encoded String
-     * @throws EncoderException thrown if there is an exception during
-     *         the encoding process.
      */
     public String encode(String value) {
-        return (doubleMetaphone(value));   
+        return doubleMetaphone(value);   
     }
 
     /**

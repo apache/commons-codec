@@ -75,6 +75,7 @@ public class DigestUtils {
     /**
      * Returns a MessageDigest for the given <code>algorithm</code>.
      *
+     * @param algorithm The MessageDigest algorithm name.
      * @return An MD5 digest instance.
      * @throws RuntimeException when a {@link java.security.NoSuchAlgorithmException} is caught,
      */

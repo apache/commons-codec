@@ -72,7 +72,7 @@ import org.apache.commons.codec.StringEncoder;
  * @author bayard@generationjava.com
  * @author Tim O'Brien
  * @author Gary Gregory
- * @version $Id: Metaphone.java,v 1.10 2003/11/07 23:12:54 ggregory Exp $
+ * @version $Id: Metaphone.java,v 1.11 2003/11/24 00:11:56 ggregory Exp $
  */
 public class Metaphone implements StringEncoder {
 
@@ -373,11 +373,9 @@ public class Metaphone implements StringEncoder {
      *
      * @param pString String object to encode
      * @return The metaphone code corresponding to the String supplied
-     * @throws EncoderException thrown if a Metaphone specific exception
-     *                          is encountered.
      */
     public String encode(String pString) {
-        return (metaphone(pString));   
+        return metaphone(pString);   
     }
 
     /**

@@ -68,7 +68,7 @@ import org.apache.commons.codec.StringEncoder;
  * 
  * @author Tim O'Brien
  * @author ggregory@seagullsw.com
- * @version $Id: RefinedSoundex.java,v 1.11 2003/11/07 22:39:30 ggregory Exp $
+ * @version $Id: RefinedSoundex.java,v 1.12 2003/11/24 00:11:56 ggregory Exp $
  */
 public class RefinedSoundex implements StringEncoder {
 
@@ -154,11 +154,9 @@ public class RefinedSoundex implements StringEncoder {
      *
      * @param pString A String object to encode
      * @return A Soundex code corresponding to the String supplied
-     * @throws EncoderException throws exception if there is an
-     *                          encoding-specific problem
      */
     public String encode(String pString) {
-        return (soundex(pString));   
+        return soundex(pString);   
     }
 
     /**
