@@ -1,2 +1,5 @@
 dist
 target
+junit*.properties
+maven.log
+velocity.log
