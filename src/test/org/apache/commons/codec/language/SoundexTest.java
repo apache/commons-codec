@@ -1,18 +1,18 @@
 /*
  * Copyright 2001-2004 The Apache Software Foundation.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */ 
+ */
 
 // (FYI: Formatted and sorted with Eclipse)
 package org.apache.commons.codec.language;
@@ -26,8 +26,8 @@ import org.apache.commons.codec.StringEncoderAbstractTest;
 
 /**
  * Tests {@link Soundex}
- * 
- * @version $Id: SoundexTest.java,v 1.20 2004/10/08 22:56:22 ggregory Exp $
+ *
+ * @version $Id$
  * @author Apache Software Foundation
  */
 public class SoundexTest extends StringEncoderAbstractTest {
@@ -47,7 +47,7 @@ public class SoundexTest extends StringEncoderAbstractTest {
             assertEquals(expectedEncoding, this.getEncoder().encode(strings[i]));
         }
     }
-    
+
     /**
 	 * @return Returns the _encoder.
 	 */
@@ -139,7 +139,7 @@ public class SoundexTest extends StringEncoderAbstractTest {
         // Examples from http://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_setu-sus_3o6w.asp
         assertEquals(4, this.getEncoder().difference("Smith", "Smythe"));
         assertEquals(4, this.getEncoder().difference("Smithers", "Smythers"));
-        assertEquals(2, this.getEncoder().difference("Anothers", "Brothers"));        
+        assertEquals(2, this.getEncoder().difference("Anothers", "Brothers"));
     }
 
     public void testEncodeBasic() {
@@ -257,7 +257,7 @@ public class SoundexTest extends StringEncoderAbstractTest {
     /**
 	 * Consonants from the same code group separated by W or H are treated as
 	 * one.
-	 * 
+	 *
 	 * Test data from http://www.myatt.demon.co.uk/sxalg.htm
 	 */
     public void testHWRuleEx2() {
@@ -340,8 +340,8 @@ public class SoundexTest extends StringEncoderAbstractTest {
 
     /**
      * Fancy characters are not mapped by the default US mapping.
-     * 
-     * http://nagoya.apache.org/bugzilla/show_bug.cgi?id=29080
+     *
+     * http://issues.apache.org/bugzilla/show_bug.cgi?id=29080
      */
     public void testUsMappingOWithDiaeresis() {
         assertEquals("O000", this.getEncoder().encode("o"));
@@ -355,8 +355,8 @@ public class SoundexTest extends StringEncoderAbstractTest {
 
     /**
      * Fancy characters are not mapped by the default US mapping.
-     * 
-     * http://nagoya.apache.org/bugzilla/show_bug.cgi?id=29080
+     *
+     * http://issues.apache.org/bugzilla/show_bug.cgi?id=29080
      */
     public void testUsMappingEWithAcute() {
         assertEquals("E000", this.getEncoder().encode("e"));
