@@ -22,7 +22,7 @@ import junit.framework.TestCase;
  * TestCase for Binary class.
  *
  * @author Apache Software Foundation
- * @version $Id: BinaryTest.java,v 1.4 2004/03/17 19:28:37 ggregory Exp $
+ * @version $Id: BinaryTest.java,v 1.5 2004/03/17 19:30:19 ggregory Exp $
  */
 public class BinaryTest extends TestCase
 {
@@ -63,7 +63,7 @@ public class BinaryTest extends TestCase
 
     
     /*
-     * Class to test for Object decode(Object)
+     * Tests for Object decode(Object)
      */
     public void testDecodeObject() throws Exception
     {
@@ -208,7 +208,7 @@ public class BinaryTest extends TestCase
 
     
     /*
-     * Class to test for byte[] decode(byte[])
+     * Tests for byte[] decode(byte[])
      */
     public void testDecodebyteArray()
     {
@@ -353,7 +353,7 @@ public class BinaryTest extends TestCase
 
     
     /*
-     * Class to test for byte[] decode(String)
+     * Tests for byte[] decode(String)
      */
     public void testDecodeString()
     {
@@ -498,7 +498,7 @@ public class BinaryTest extends TestCase
 
     
     /*
-     * Class to test for byte[] fromAscii(char[])
+     * Tests for byte[] fromAscii(char[])
      */
     public void testFromAsciicharArray()
     {
@@ -643,7 +643,7 @@ public class BinaryTest extends TestCase
 
     
     /*
-     * Class to test for byte[] fromAscii(byte[])
+     * Tests for byte[] fromAscii(byte[])
      */
     public void testFromAsciibyteArray()
     {
@@ -789,7 +789,7 @@ public class BinaryTest extends TestCase
 
     
     /*
-     * Class to test for byte[] encode(byte[])
+     * Tests for byte[] encode(byte[])
      */
     public void testEncodebyteArray()
     {
@@ -1539,7 +1539,7 @@ public class BinaryTest extends TestCase
 
     
     /*
-     * Class to test for Object encode(Object)
+     * Tests for Object encode(Object)
      */
     public void testEncodeObject() throws Exception
     {
