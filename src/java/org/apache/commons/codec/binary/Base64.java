@@ -64,18 +64,18 @@ import org.apache.commons.codec.EncoderException;
 
 /**
   * Provides encode/decode for RFC 2045 Base64 as 
-  * defined by RFC 2045, by Freed and Borenstein.  <a
-  * href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>:
-  * Multipurpose Internet Mail Extensions (MIME) Part One: Format of
-  * Internet Message Bodies. Reference 1996.
+  * defined by RFC 2045, by Freed and Borenstein.  
   *
+  * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>, by Freed and Borenstein:
+  *    Multipurpose Internet Mail Extensions (MIME) Part One: 
+  *    Format of Internet Message Bodies. Reference 1996.
   * @author Jeffrey Rodriguez
   * @author <a href="mailto:dlr@apache.org">Daniel Rall</a>
   * @author <a href="mailto:m.redington@ucl.ac.uk">Martin Redington</a>
   * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
   * @author Tim O'Brien
   * @since 1.0-dev
-  * @version $Id: Base64.java,v 1.11 2003/10/12 19:48:15 tobrien Exp $
+  * @version $Id: Base64.java,v 1.12 2003/11/03 22:16:54 ggregory Exp $
   */
 public class Base64 implements BinaryEncoder, BinaryDecoder {
 
@@ -263,7 +263,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * @throws DecoderException if there is an Decoder specific exception
      *                          during the decoding process
      */
-    public byte[] decode(byte[] pArray) throws DecoderException {
+    public byte[] decode(byte[] pArray) {
         byte[] result;
         result = decodeBase64(pArray);
         return (result);
@@ -574,7 +574,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * @throws EncoderException if there is an Encoder specific exception
      *                          during the encoding process
      */
-    public byte[] encode(byte[] pArray) throws EncoderException {
+    public byte[] encode(byte[] pArray) {
         return (encodeBase64(pArray, false));
     }
 
