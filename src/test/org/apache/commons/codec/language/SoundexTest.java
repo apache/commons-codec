@@ -26,7 +26,7 @@ import org.apache.commons.codec.StringEncoderAbstractTest;
 /**
  * Tests {@link Soundex}
  * 
- * @version $Id: SoundexTest.java,v 1.17 2004/04/19 01:14:29 ggregory Exp $
+ * @version $Id: SoundexTest.java,v 1.18 2004/06/02 00:55:38 ggregory Exp $
  * @author Apache Software Foundation
  */
 public class SoundexTest extends StringEncoderAbstractTest {
@@ -219,8 +219,6 @@ public class SoundexTest extends StringEncoderAbstractTest {
 
     /**
 	 * Test data from http://www.myatt.demon.co.uk/sxalg.htm
-	 * 
-	 * @throws EncoderException
 	 */
     public void testEncodeIgnoreHyphens() {
         this.encodeAll(
@@ -339,4 +337,33 @@ public class SoundexTest extends StringEncoderAbstractTest {
         assertEquals("A500", this.getEncoder().encode("Anne"));
     }
 
+    /**
+     * Fancy characters are not mapped by the default US mapping.
+     * 
+     * http://nagoya.apache.org/bugzilla/show_bug.cgi?id=29080
+     */
+    public void testUsMappingOWithDiaeresis() {
+        assertEquals("O000", this.getEncoder().encode("o"));
+        try {
+            assertEquals("Ö000", this.getEncoder().encode("ö"));
+            fail("Expected IllegalArgumentException not thrown");
+        } catch (IllegalArgumentException e) {
+            // expected
+        }
+    }
+
+    /**
+     * Fancy characters are not mapped by the default US mapping.
+     * 
+     * http://nagoya.apache.org/bugzilla/show_bug.cgi?id=29080
+     */
+    public void testUsMappingEWithAcute() {
+        assertEquals("E000", this.getEncoder().encode("e"));
+        try {
+            assertEquals("É000", this.getEncoder().encode("é"));
+            fail("Expected IllegalArgumentException not thrown");
+        } catch (IllegalArgumentException e) {
+            // expected
+        }
+    }
 }

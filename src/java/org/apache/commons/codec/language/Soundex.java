@@ -25,7 +25,7 @@ import org.apache.commons.codec.StringEncoder;
  * with similar phonemes.
  * 
  * @author Apache Software Foundation
- * @version $Id: Soundex.java,v 1.21 2004/03/17 18:30:59 ggregory Exp $
+ * @version $Id: Soundex.java,v 1.22 2004/06/02 00:55:29 ggregory Exp $
  */
 public class Soundex implements StringEncoder {
 
@@ -117,17 +117,10 @@ public class Soundex implements StringEncoder {
 	 *                  if the parameter supplied is not of type java.lang.String
 	 */
     public Object encode(Object pObject) throws EncoderException {
-
-        Object result;
-
-        if (!(pObject instanceof java.lang.String)) {
+        if (!(pObject instanceof String)) {
             throw new EncoderException("Parameter supplied to Soundex encode is not of type java.lang.String");
-        } else {
-            result = soundex((String) pObject);
-        }
-
-        return result;
-
+        } 
+        return soundex((String) pObject);
     }
 
     /**
@@ -196,7 +189,11 @@ public class Soundex implements StringEncoder {
 	 * @return A Soundex code.
 	 */
     private char map(char c) {
-        return this.getSoundexMapping()[c - 'A'];
+    	int index = c - 'A';
+    	if (index < 0 || index >= this.getSoundexMapping().length) {
+    		throw new IllegalArgumentException("The character is not mapped: " + c);
+    	}
+        return this.getSoundexMapping()[index];
     }
 
     /**
