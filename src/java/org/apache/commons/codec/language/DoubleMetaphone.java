@@ -61,7 +61,7 @@ import org.apache.commons.codec.StringEncoder;
 
 /**
  * DoubleMetaphone Java Implementation
- * From the algorithm by Lawrence Philips
+ * from the algorithm by Lawrence Philips.
  * <ul>
  * <li>Original Article: <a 
  * href="http://www.cuj.com/documents/s=8038/cuj0006philips/">
@@ -71,7 +71,7 @@ import org.apache.commons.codec.StringEncoder;
  * </ul>
  * 
  * @author <a href="mailto:ben@walstrum.com">Benjamin Walstrum</a>
- * @version $Id: DoubleMetaphone.java,v 1.7 2003/07/25 22:53:53 ggregory Exp $
+ * @version $Id: DoubleMetaphone.java,v 1.8 2003/08/11 19:15:45 ggregory Exp $
  */
 public class DoubleMetaphone implements StringEncoder {
 
