@@ -26,7 +26,7 @@ import org.apache.commons.codec.StringEncoderAbstractTest;
 /**
  * Tests {@link Soundex}
  * 
- * @version $Revision: 1.14 $ $Date: 2004/03/17 19:28:37 $
+ * @version $Revision: 1.15 $ $Date: 2004/04/09 22:46:08 $
  * @author Apache Software Foundation
  */
 public class SoundexTest extends StringEncoderAbstractTest {
@@ -264,8 +264,6 @@ public class SoundexTest extends StringEncoderAbstractTest {
     /**
 	 * Consonants from the same code group separated by W or H are treated as
 	 * one.
-	 * 
-	 * Test data from http://www.myatt.demon.co.uk/sxalg.htm
 	 */
     public void testHWRuleEx3() {
         assertEquals("S460", this.getEncoder().encode("Sgler"));
