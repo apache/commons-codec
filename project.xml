@@ -41,6 +41,7 @@
       <name>Tim OBrien</name>
       <id>tobrien</id>
       <email>tobrien@apache.org</email>
+      <timezone>-6</timezone>
     </developer>
     <developer>
       <name>Scott Sanders</name>
