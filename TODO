@@ -11,8 +11,6 @@ When a task in the TODO list is done, change the changes.xml document in xdocs
 
 * Add a btoa encode and decode to binary package
 
-* Add a BinHex endode and decode to binary package
-
 * Add a uu encode and decode to binary package
 
 * Add a Rot13 implementation to text package 

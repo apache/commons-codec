@@ -62,9 +62,9 @@
    <subsection name="Common Encoders">
    	<table>
      <tr>
-      <td>
+      <td width="125">
        <a href="apidocs/org/apache/commons/codec/binary/Base64.html">
-       	org.apache.commons.codec.binary.Base64</a>
+       	Base64</a>
       </td>
       <td>
        Provides Base64 content-transfer-encoding as defined in 
@@ -72,55 +72,59 @@
        encoder can optionally create 76 character chunked output
        for strict adherence to RFC 2045.
       </td>
-      <td>
-       Production
-      </td>
      </tr>
      <tr>
       <td>
        <a href="apidocs/org/apache/commons/codec/binary/Hex.html">
-       	org.apache.commons.codec.binary.Hex</a>
+       	Hex</a>
       </td>
       <td>
        Converts an array of bytes into an array of characters representing the
        hexadecimal values of each byte in order
-      </td>
-      <td>
-       Production
       </td>
      </tr>
     </table>
    </subsection>
    
    <subsection name="Language Encoders">
-   	<p>
-	 Codec contains a number of commonly used language and phonetic encoders
-    </p>
     <table>
      <tr>
-      <td>
+      <td width="125">
        <a href="apidocs/org/apache/commons/codec/language/Soundex.html">
-       	org.apache.commons.codec.language.Soundex</a>
+       	Soundex</a>
       </td>
       <td>
        Implementation of the Soundex algorithm.
-      </td>
-      <td>
-       Production
       </td>
      </tr>
      <tr>
       <td>
        <a href="apidocs/org/apache/commons/codec/language/Metaphone.html">
-       	org.apache.commons.codec.language.Metaphone</a>
+       	Metaphone</a>
       </td>
       <td>
        Implementation of the Metaphone algorithm.
       </td>
+     </tr>
+     <tr>
       <td>
-       Production
+       <a href="apidocs/org/apache/commons/codec/language/RefinedSoundex.html">
+       	Refined Soundex</a>
+      </td>
+      <td>
+       Alternative implementation of the Soundex algorithm.
       </td>
      </tr>
+     <tr>
+      <td>
+       <a href="apidocs/org/apache/commons/codec/language/DoubleMetaphone.html">
+       	Double Metaphone</a>
+      </td>
+      <td>
+       Alternative implementation of the Metaphone algorithm.
+      </td>
+     </tr>
+
     </table>
    </subsection>
    
