@@ -1,4 +1,4 @@
-$Id: RELEASE-NOTES.txt,v 1.14 2004/01/09 19:15:58 ggregory Exp $
+$Id: RELEASE-NOTES.txt,v 1.15 2004/03/12 19:52:25 ggregory Exp $
 
 			Commons Codec Package
 			    Version 1.3-dev
@@ -10,13 +10,15 @@ INTRODUCTION:
 This document contains the release notes for this version of the Commons
 Codec package, and highlights changes since the previous version.  
 
-Version 1.3 contains bug fixes for the 1.2 release and an implementation of 
-the DIFFERENCE algorithm in Soundex and RefinedSoundex.
+This version is relesed under the Apache License 2.0, please see 
+./LICENSE.txt. Previous versions were released under the Apache 
+License 1.1.
 
 NEW FEATURES:
 
-* Soundex - Implemented the DIFFERENCE algorithm.
-* RefinedSoundex - Implemented the DIFFERENCE algorithm.
+* Binary: Encodes and decodes binary to and from ascii bit Strings.
+* Soundex: Implemented the DIFFERENCE algorithm.
+* RefinedSoundex: Implemented the DIFFERENCE algorithm.
 
 BUG FIXES:
 
