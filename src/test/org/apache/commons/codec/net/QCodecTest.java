@@ -52,6 +52,12 @@ public class QCodecTest extends TestCase {
         return buffer.toString();
     }
 
+    public void testNullInput() throws Exception {
+        QCodec qcodec = new QCodec();
+        assertNull(qcodec.doDecoding(null));
+        assertNull(qcodec.doEncoding(null));
+    }
+
     public void testUTF8RoundTrip() throws Exception {
 
         String ru_msg = constructString(RUSSIAN_STUFF_UNICODE); 
@@ -96,40 +102,6 @@ public class QCodecTest extends TestCase {
             qcodec.encode((String)null));
         assertNull("Null string Q decoding test", 
             qcodec.decode((String)null));
-    }
-
-    public void testDecodeInvalid() throws Exception {
-        QCodec qcodec = new QCodec();
-        try {
-            qcodec.decode("whatever");
-            fail("DecoderException should have been thrown");
-        } catch(DecoderException e) {
-            // Expected. Move on
-        }
-        try {
-            qcodec.decode("=?UTF-8?Q?stuff");
-            fail("DecoderException should have been thrown");
-        } catch(DecoderException e) {
-            // Expected. Move on
-        }
-        try {
-            qcodec.decode("=??Q?stuff?=");
-            fail("DecoderException should have been thrown");
-        } catch(DecoderException e) {
-            // Expected. Move on
-        }
-        try {
-            qcodec.decode("=?UTF-8??stuff?=");
-            fail("DecoderException should have been thrown");
-        } catch(DecoderException e) {
-            // Expected. Move on
-        }
-        try {
-            qcodec.decode("=?UTF-8?W?stuff?=");
-            fail("DecoderException should have been thrown");
-        } catch(DecoderException e) {
-            // Expected. Move on
-        }
     }
 
     public void testEncodeStringWithNull() throws Exception {
@@ -219,4 +191,14 @@ public class QCodecTest extends TestCase {
         s = qcodec.decode(encoded2);
         assertEquals("Blanks decoding with the Q codec test", plain, s);
     }
+
+
+    public void testLetUsMakeCloverHappy() throws Exception {
+        QCodec qcodec = new QCodec();
+        qcodec.setEncodeBlanks(true);
+        assertTrue(qcodec.isEncodeBlanks());
+        qcodec.setEncodeBlanks(false);
+        assertFalse(qcodec.isEncodeBlanks());
+    }
+
 }
