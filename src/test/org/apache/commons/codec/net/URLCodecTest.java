@@ -16,6 +16,8 @@
 
 package org.apache.commons.codec.net;
 
+import java.io.UnsupportedEncodingException;
+
 import junit.framework.TestCase;
 
 import org.apache.commons.codec.DecoderException;
@@ -139,6 +141,18 @@ public class URLCodecTest extends TestCase {
             fail("DecoderException should have been thrown");
         } catch(DecoderException e) {
             // Expected. Move on
+        }
+        this.validateState(urlCodec);
+    }
+
+    public void testDecodeInvalidContent() throws UnsupportedEncodingException, DecoderException {
+        String ch_msg = constructString(SWISS_GERMAN_STUFF_UNICODE); 
+        URLCodec urlCodec = new URLCodec();
+        byte[] input = ch_msg.getBytes("ISO-8859-1");
+        byte[] output = urlCodec.decode(input);
+        assertEquals(input.length, output.length);
+        for (int i = 0; i < input.length; i++) {
+            assertEquals(input[i], output[i]);
         }
         this.validateState(urlCodec);
     }
