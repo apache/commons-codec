@@ -37,7 +37,7 @@
    	<table>
      <tr>
       <td>
-       <a href="apidocs\org\apache\commons\codec\binary\Base64.html">
+       <a href="apidocs/org/apache/commons/codec/binary/Base64.html">
        	org.apache.commons.codec.binary.Base64</a>
       </td>
       <td>
@@ -52,7 +52,7 @@
      </tr>
      <tr>
       <td>
-       <a href="apidocs\org\apache\commons\codec\binary\Hex.html">
+       <a href="apidocs/org/apache/commons/codec/binary/Hex.html">
        	org.apache.commons.codec.binary.Hex</a>
       </td>
       <td>
@@ -73,7 +73,7 @@
     <table>
      <tr>
       <td>
-       <a href="apidocs\org\apache\commons\codec\language\Soundex.html">
+       <a href="apidocs/org/apache/commons/codec/language/Soundex.html">
        	org.apache.commons.codec.language.Soundex</a>
       </td>
       <td>
@@ -85,7 +85,7 @@
      </tr>
      <tr>
       <td>
-       <a href="apidocs\org\apache\commons\codec\language\Metaphone.html">
+       <a href="apidocs/org/apache/commons/codec/language/Metaphone.html">
        	org.apache.commons.codec.language.Metaphone</a>
       </td>
       <td>
