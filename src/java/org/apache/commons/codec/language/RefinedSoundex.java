@@ -62,12 +62,9 @@ import org.apache.commons.codec.StringEncoder;
  * "Soundex" method originally developed by Margaret Odell and 
  * Robert Russell
  * 
- * <!-- This link is broken: -->
- * <!-- @see <a href="http://www.bluepoof.com/Soundex/info2.html">http://www.bluepoof.com/Soundex/info2.html</a> -->
- * 
  * @author tobrien@transolutions.net
  * @author ggregory@seagullsw.com
- * @version $Revision: 1.3 $ $Date: 2003/05/12 17:17:24 $
+ * @version $Revision: 1.4 $ $Date: 2003/05/29 21:14:59 $
  */
 public class RefinedSoundex implements StringEncoder {
 
