@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//codec/src/java/org/apache/commons/codec/binary/Base64.java,v 1.1 2003/04/25 17:50:56 tobrien Exp $
- * $Revision: 1.1 $
- * $Date: 2003/04/25 17:50:56 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//codec/src/java/org/apache/commons/codec/binary/Base64.java,v 1.2 2003/05/06 20:52:18 ggregory Exp $
+ * $Revision: 1.2 $
+ * $Date: 2003/05/06 20:52:18 $
   *
   * ====================================================================
   *
@@ -68,15 +68,16 @@ import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 
 /**
-  * This class provides encode/decode for RFC 2045 Base64 as 
-  * defined by RFC 2045, N. Freed and N. Borenstein.  <a
+  * Provides encode/decode for RFC 2045 Base64 as 
+  * defined by RFC 2045, by Freed and Borenstein.  <a
   * href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>:
   * Multipurpose Internet Mail Extensions (MIME) Part One: Format of
-  * Internet Message Bodies. Reference 1996
+  * Internet Message Bodies. Reference 1996.
   *
   * @author Jeffrey Rodriguez
   * @author <a href="dlr@apache.org">Daniel Rall</a>
   * @author <a href="m.redington@ucl.ac.uk">Martin Redington</a>
+  * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
   * @since 1.0-dev
   *
   * @todo Add more documentation
