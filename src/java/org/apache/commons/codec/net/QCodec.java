@@ -42,7 +42,7 @@ import org.apache.commons.codec.StringEncoder;
  * 
  * @author Apache Software Foundation
  * @since 1.3
- * @version $Id: QCodec.java,v 1.5 2004/04/13 22:46:37 ggregory Exp $
+ * @version $Id: QCodec.java,v 1.6 2004/05/24 00:24:32 ggregory Exp $
  */
 public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder {
     /**
@@ -166,9 +166,8 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
                 }
             }
             return QuotedPrintableCodec.decodeQuotedPrintable(tmp);
-        } else {
-            return QuotedPrintableCodec.decodeQuotedPrintable(bytes);
-        }
+        } 
+        return QuotedPrintableCodec.decodeQuotedPrintable(bytes);       
     }
 
     /**

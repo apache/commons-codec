@@ -31,7 +31,7 @@ import org.apache.commons.codec.EncoderException;
  * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>
  * @author Apache Software Foundation
  * @since 1.0-dev
- * @version $Id: Base64.java,v 1.19 2004/03/24 18:37:25 ggregory Exp $
+ * @version $Id: Base64.java,v 1.20 2004/05/24 00:21:24 ggregory Exp $
  */
 public class Base64 implements BinaryEncoder, BinaryDecoder {
 
@@ -203,17 +203,10 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      *                          of type byte[]
      */
     public Object decode(Object pObject) throws DecoderException {
-
-        Object result;
-
         if (!(pObject instanceof byte[])) {
             throw new DecoderException("Parameter supplied to Base64 decode is not a byte[]");
-        } else {
-            result = decode((byte[]) pObject);
         }
-
-        return result;
-
+        return decode((byte[]) pObject);
     }
 
     /**
@@ -510,18 +503,11 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      *                          of type byte[]
      */
     public Object encode(Object pObject) throws EncoderException {
-
-        Object result;
-
         if (!(pObject instanceof byte[])) {
             throw new EncoderException(
                 "Parameter supplied to Base64 encode is not a byte[]");
-        } else {
-            result = encode((byte[]) pObject);
         }
-
-        return result;
-
+        return encode((byte[]) pObject);
     }
 
     /**
