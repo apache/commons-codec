@@ -1,9 +1,11 @@
+.classpath
+.clover
+.project
+CODEC_1_2.xml
+HEAD.xml
 dist
-target
 junit*.properties
 maven.log
-velocity.log
-.clover
-.classpath
-.project
 pub
+target
+velocity.log
