@@ -31,7 +31,7 @@ import org.apache.commons.codec.EncoderException;
  * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>
  * @author Apache Software Foundation
  * @since 1.0-dev
- * @version $Id: Base64.java,v 1.21 2004/10/20 01:37:54 ggregory Exp $
+ * @version $Id: Base64.java,v 1.22 2004/10/30 00:18:57 ggregory Exp $
  */
 public class Base64 implements BinaryEncoder, BinaryDecoder {
 
@@ -92,9 +92,31 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      */
     static final byte PAD = (byte) '=';
 
-    // Create arrays to hold the base64 characters and a 
-    // lookup for base64 chars
+    /**
+     * Contains the Base64 values <code>0</code> through <code>63</code> accessed by using character encodings as
+     * indices.
+     * <p>
+     * For example, <code>base64Alphabet['+']</code> returns <code>62</code>.
+     * </p>
+     * <p>
+     * The value of undefined encodings is <code>-1</code>.
+     * </p>
+     */
     private static byte[] base64Alphabet = new byte[BASELENGTH];
+    
+    /**
+     * <p>
+     * Contains the Base64 encodings <code>A</code> through <code>Z</code>, followed by <code>a</code> through
+     * <code>z</code>, followed by <code>0</code> through <code>9</code>, followed by <code>+</code>, and
+     * <code>/</code>.
+     * </p>
+     * <p>
+     * This array is accessed by using character values as indices.
+     * </p>
+     * <p>
+     * For example, <code>lookUpBase64Alphabet[62] </code> returns <code>'+'</code>.
+     * </p>
+     */
     private static byte[] lookUpBase64Alphabet = new byte[LOOKUPLENGTH];
 
     // Populating the lookup and character arrays
