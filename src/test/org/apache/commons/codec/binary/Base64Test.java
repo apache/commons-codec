@@ -64,7 +64,7 @@ import java.util.Random;
 import junit.framework.TestCase;
 
 /**
- * @version $Revision: 1.9 $ $Date: 2003/11/03 07:23:33 $
+ * @version $Revision: 1.10 $ $Date: 2003/11/03 17:58:57 $
  * @author <a href="mailto:sanders@apache.org">Scott Sanders</a>
  * @author <a href="mailto:rwaldhoff@apache.org">Rodney Waldhoff</a>
  * @author Tim O'Brien
@@ -116,7 +116,7 @@ public class Base64Test extends TestCase {
     public void testEncodeDecodeSmall() {
         for(int i=0;i<12;i++) {
             byte[] data = new byte[i];
-            _random.nextBytes(data);
+            this.getRandom().nextBytes(data);
             byte[] enc =  Base64.encodeBase64(data);
             assertTrue("\"" + (new String(enc)) + "\" is Base64 data.",Base64.isArrayByteBase64(enc) );
             byte[] data2 = Base64.decodeBase64(enc);
@@ -127,8 +127,8 @@ public class Base64Test extends TestCase {
     // encode/decode a large random array
     public void testEncodeDecodeRandom() {
         for(int i=1;i<5;i++) {
-            byte[] data = new byte[_random.nextInt(10000)+1];
-            _random.nextBytes(data);
+            byte[] data = new byte[this.getRandom().nextInt(10000)+1];
+            this.getRandom().nextBytes(data);
             byte[] enc =  Base64.encodeBase64(data);
             assertTrue(Base64.isArrayByteBase64(enc));
             byte[] data2 = Base64.decodeBase64(enc);
@@ -492,5 +492,12 @@ public class Base64Test extends TestCase {
     // ------------------------------------------------------------------------
 
     private Random _random = new Random();
+
+    /**
+     * @return Returns the _random.
+     */
+    public Random getRandom() {
+        return this._random;
+    }
 
 }
