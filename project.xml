@@ -75,12 +75,13 @@
      <roles>representing xml-rpc</roles>
    </contributor>
    <contributor>
-     <name>Kyle Burton</name>
-     <roles>double metaphone, nysiis</roles>
-   </contributor>
-   <contributor>
      <name>Jeffery Dever</name>
      <roles>representing http-client</roles>
+   </contributor>
+   <contributor>
+     <name>Steve Zimmermann</name>
+     <email>steve.zimmermann@heii.com</email>
+     <roles>documentation</roles>
    </contributor>
   </contributors>  
 
