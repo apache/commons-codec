@@ -23,7 +23,7 @@ import junit.framework.TestSuite;
  * Tests all test cases in this package.
  * 
  * @author Apache Software Foundation
- * @version $Id: AllTests.java,v 1.5 2004/03/17 19:28:37 ggregory Exp $
+ * @version $Id$
  */
 public class AllTests {
 

@@ -23,7 +23,7 @@ package org.apache.commons.codec;
  * generic Object to any Encoder implementation in the codec package.</p>
  *
  * @author Apache Software Foundation
- * @version $Id: Encoder.java,v 1.10 2004/02/29 04:08:31 tobrien Exp $
+ * @version $Id$
  */
 public interface Encoder {
     

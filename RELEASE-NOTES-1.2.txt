@@ -1,6 +1,6 @@
 Please use ./xdocs/changes.xml instead of this file.
 
-$Id: RELEASE-NOTES-1.2.txt,v 1.2 2004/06/22 19:31:57 ggregory Exp $
+$Id$
 
 			Commons Codec Package
 			    Version 1.2

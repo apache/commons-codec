@@ -35,7 +35,7 @@ package org.apache.commons.codec.net;
  *          names </a>
  * @author Apache Software Foundation
  * @since 1.4
- * @version $Id: CharacterEncodingNames.java,v 1.2 2004/07/27 15:22:10 ggregory Exp $
+ * @version $Id$
  */
 class CharacterEncodingNames {
     /**

@@ -28,7 +28,7 @@ import org.apache.commons.codec.language.Soundex;
 /**
  * Test cases for the StingEncoderComparator.
  * 
- * @version $Id: StringEncoderComparatorTest.java,v 1.12 2004/08/05 20:39:39 ggregory Exp $
+ * @version $Id$
  * @author Apache Software Foundation
  */
 public class StringEncoderComparatorTest extends TestCase {

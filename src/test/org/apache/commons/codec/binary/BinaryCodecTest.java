@@ -25,7 +25,7 @@ import org.apache.commons.codec.EncoderException;
  * TestCase for BinaryCodec class.
  * 
  * @author Apache Software Foundation
- * @version $Id: BinaryCodecTest.java,v 1.2 2004/08/05 20:39:39 ggregory Exp $
+ * @version $Id$
  */
 public class BinaryCodecTest extends TestCase {
     /** mask with bit zero based index 0 raised */

@@ -28,7 +28,7 @@ import org.apache.commons.codec.EncoderException;
  * Tests {@link org.apache.commons.codec.binary.Hex}.
  * 
  * @author Apache Software Foundation
- * @version $Id: HexTest.java,v 1.11 2004/08/05 20:39:39 ggregory Exp $
+ * @version $Id$
  */
 
 public class HexTest extends TestCase {

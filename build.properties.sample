@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 
-# $Id: build.properties.sample,v 1.2 2004/02/23 07:32:49 ggregory Exp $
+# $Id$
 
 # junit.jar - JUnit Classpath - http://junit.org/
 junit.jar=/java/junit/junit.jar

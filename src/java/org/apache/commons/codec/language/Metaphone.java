@@ -31,7 +31,7 @@ import org.apache.commons.codec.StringEncoder;
  * </p>
  * 
  * @author Apache Software Foundation
- * @version $Id: Metaphone.java,v 1.22 2004/10/20 01:37:54 ggregory Exp $
+ * @version $Id$
  */
 public class Metaphone implements StringEncoder {
 

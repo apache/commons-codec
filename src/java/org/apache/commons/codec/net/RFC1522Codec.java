@@ -40,7 +40,7 @@ import org.apache.commons.codec.EncoderException;
  * 
  * @author Apache Software Foundation
  * @since 1.3
- * @version $Id: RFC1522Codec.java,v 1.4 2004/10/14 22:16:25 ggregory Exp $
+ * @version $Id$
  */
 abstract class RFC1522Codec {
     

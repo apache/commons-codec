@@ -55,7 +55,7 @@ import org.apache.commons.codec.StringEncoder;
  * 
  * @author Apache Software Foundation
  * @since 1.3
- * @version $Id: QuotedPrintableCodec.java,v 1.12 2004/09/09 16:05:46 ggregory Exp $
+ * @version $Id$
  */
 public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, StringDecoder {
     /**

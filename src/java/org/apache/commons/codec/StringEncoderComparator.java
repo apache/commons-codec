@@ -28,7 +28,7 @@ import java.util.Comparator;
  * form of a name such as Soundex.
  *
  * @author Apache Software Foundation
- * @version $Id: StringEncoderComparator.java,v 1.14 2004/06/21 23:24:17 ggregory Exp $
+ * @version $Id$
  */
 public class StringEncoderComparator implements Comparator {
 

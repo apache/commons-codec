@@ -31,7 +31,7 @@ import org.apache.commons.codec.EncoderException;
  * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>
  * @author Apache Software Foundation
  * @since 1.0-dev
- * @version $Id: Base64.java,v 1.23 2004/11/24 19:23:25 ggregory Exp $
+ * @version $Id$
  */
 public class Base64 implements BinaryEncoder, BinaryDecoder {
 

@@ -26,7 +26,7 @@ import org.apache.commons.codec.EncoderException;
  * 
  * @since 1.1
  * @author Apache Software Foundation
- * @version $Id: Hex.java,v 1.14 2004/07/28 19:27:45 ggregory Exp $
+ * @version $Id$
  */
 public class Hex implements BinaryEncoder, BinaryDecoder {
 
