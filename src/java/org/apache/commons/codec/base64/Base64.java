@@ -1,7 +1,4 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//codec/src/java/org/apache/commons/codec/base64/Attic/Base64.java,v 1.2 2003/05/29 23:03:28 tobrien Exp $
- * $Revision: 1.2 $
- * $Date: 2003/05/29 23:03:28 $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -76,13 +73,16 @@ y * RFC 2045: Multipurpose Internet Mail Extensions (MIME)
  * 1996. Available at: http://www.ietf.org/rfc/rfc2045.txt
  * </p>
  * @author Jeffrey Rodriguez
- * @version $Revision: 1.2 $ $Date: 2003/05/29 23:03:28 $
+ * @version $Revision: 1.3 $ $Date: 2003/06/18 18:43:56 $
  *
  * @deprecated This class has been replaced by 
  *             {@link org.apache.commons.codec.binary.Base64}
  */
 public final class Base64 {
 
+    /**
+     * The default character encoding
+     */
     protected static final String DEFAULT_CHAR_ENCODING = "ISO-8859-1";
 
     /**
@@ -125,10 +125,15 @@ public final class Base64 {
      */
     static final byte PAD = (byte) '=';
 
-    // Create arrays to hold the base64 characters and a 
-    // lookup for base64 chars
+    /**
+     * Create arrays to hold the base64 characters and a 
+     * lookup for base64 chars
+     */
     private static byte[] base64Alphabet = new byte[BASELENGTH];
 
+    /**
+     * An empty array of type byte
+     */
     private static final byte[] EMPTY_BYTE_ARRAY = new byte[0];
     
     /**
@@ -342,6 +347,7 @@ public final class Base64 {
      * @param charEncoding the character encoding to use when converting
      *                     a String to a byte[]
      * @return Base64-encoded String
+     * @throws UnsupportedEncodingException
      */
     public static String encode(String data, String charEncoding)
         throws UnsupportedEncodingException {
