@@ -146,27 +146,4 @@ public class DigestUtilsTest extends TestCase {
 					+ "hijkijkljklmklmnlmnomnopnopq"));
 	}
     
-    public void testMd5NoAvailable() {
-        DigestUtils.setProvider( Security.getProviders()[3]);
-
-        try {        
-            DigestUtils.md5("test");
-            fail( "The provider does not supply the MD5 algorithm, this operation should have failed");
-        } catch( RuntimeException re ) {
-            
-        }
-    
-    }
-
-    public void testSHANoAvailable() {
-        DigestUtils.setProvider( Security.getProviders()[3]);
-
-        try {        
-            DigestUtils.sha("test");
-            fail( "The provider does not supply the SHA algorithm, this operation should have failed");
-        } catch( RuntimeException re ) {
-            
-        }
-    
-    }
 }
