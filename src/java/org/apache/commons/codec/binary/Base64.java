@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//codec/src/java/org/apache/commons/codec/binary/Base64.java,v 1.5 2003/07/25 22:40:36 ggregory Exp $
- * $Revision: 1.5 $
- * $Date: 2003/07/25 22:40:36 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//codec/src/java/org/apache/commons/codec/binary/Base64.java,v 1.6 2003/07/25 22:48:11 ggregory Exp $
+ * $Revision: 1.6 $
+ * $Date: 2003/07/25 22:48:11 $
   *
   * ====================================================================
   *
@@ -80,6 +80,7 @@ import org.apache.commons.codec.EncoderException;
   * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
   * @author <a href="mailto:tobrien@apache.org">Tim O'Brien</a>
   * @since 1.0-dev
+  * @version $Id: Base64.java,v 1.6 2003/07/25 22:48:11 ggregory Exp $
   */
 public class Base64 implements BinaryEncoder, BinaryDecoder {
 
