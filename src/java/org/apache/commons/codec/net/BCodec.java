@@ -41,7 +41,7 @@ import org.apache.commons.codec.binary.Base64;
  * 
  * @author Apache Software Foundation
  * @since 1.3
- * @version $Id: BCodec.java,v 1.8 2004/08/27 17:10:48 ggregory Exp $
+ * @version $Id: BCodec.java,v 1.9 2004/08/27 17:18:17 ggregory Exp $
  */
 public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder {
     /**
@@ -177,18 +177,14 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * Decodes a Base64 object into its original form. Escaped characters are converted back to their original
      * representation.
      * 
-     * <p>
-     * <em>Currently, this method only works with <code>String</code> arguments. 
-     * A <code>DecoderException</code> is thrown if the argument is not a <code>String</code>.</em>
-     * </p>
-     * 
      * @param value
      *                  Base64 object to convert into its original form
      * 
      * @return original object
      * 
      * @throws DecoderException
-     *                  A decoder exception is thrown if a failure condition is encountered during the decode process.
+     *                  Thrown if the argument is not a <code>String</code>. Thrown if a failure condition is
+     *                  encountered during the decode process.
      */
     public Object decode(Object value) throws DecoderException {
         if (value == null) {

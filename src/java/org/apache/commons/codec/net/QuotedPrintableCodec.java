@@ -55,7 +55,7 @@ import org.apache.commons.codec.StringEncoder;
  * 
  * @author Apache Software Foundation
  * @since 1.3
- * @version $Id: QuotedPrintableCodec.java,v 1.10 2004/08/27 17:10:48 ggregory Exp $
+ * @version $Id: QuotedPrintableCodec.java,v 1.11 2004/08/27 17:18:17 ggregory Exp $
  */
 public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, StringDecoder {
     /**
@@ -332,17 +332,12 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * Decodes a quoted-printable object into its original form. Escaped characters are converted back to their original
      * representation.
      * 
-     * <p>
-     * <em>Currently, this method only works with <code>String</code> and <code>byte[]</code> arguments. 
-     * A <code>DecoderException</code> is thrown if the argument is not a <code>String</code> or <code>byte[].</code></em>.
-     * </p>
-     * 
      * @param pObject
      *                  quoted-printable object to convert into its original form
      * @return original object
      * @throws DecoderException
-     *                  Thrown if quoted-printable decoding is not applicable to objects of this type if decoding is
-     *                  unsuccessful
+     *                  Thrown if the argument is not a <code>String</code> or <code>byte[]</code>. Thrown if a failure condition is
+     *                  encountered during the decode process.
      */
     public Object decode(Object pObject) throws DecoderException {
         if (pObject == null) {
