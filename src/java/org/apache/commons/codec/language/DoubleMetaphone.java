@@ -61,8 +61,8 @@ import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
 
 /**
- * DoubleMetaphone Java Implementation
- * from the algorithm by Lawrence Philips.
+ * Encodes a string into a double metaphone value.
+ * This Implementation is based on the algorithm by Lawrence Philips.
  * <ul>
  * <li>Original Article: <a 
  * href="http://www.cuj.com/documents/s=8038/cuj0006philips/">
@@ -73,7 +73,7 @@ import org.apache.commons.codec.StringEncoder;
  * 
  * @author <a href="mailto:ben@walstrum.com">Benjamin Walstrum</a>
  * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
- * @version $Id: DoubleMetaphone.java,v 1.13 2003/11/07 21:32:41 ggregory Exp $
+ * @version $Id: DoubleMetaphone.java,v 1.14 2003/11/07 23:12:54 ggregory Exp $
  */
 public class DoubleMetaphone implements StringEncoder {
 
