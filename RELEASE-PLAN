@@ -1,4 +1,4 @@
-$Id: RELEASE-PLAN,v 1.3 2004/01/09 19:16:19 ggregory Exp $
+$Id: RELEASE-PLAN,v 1.4 2004/01/14 18:05:36 ggregory Exp $
 
 Jakarta Commons Codec  
 
@@ -36,6 +36,9 @@ Objective:
    - Fix bugs. 
    - Improve Javadocs.
    - Add DIFFERENCE implementation in language package.
+
+*** Codec 2.0 Release Plan
+
    - Streamable codecs?
 
 
