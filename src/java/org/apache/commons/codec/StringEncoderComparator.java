@@ -63,14 +63,14 @@ import java.util.Comparator;
  * String are comparable, and this comparator allows 
  * you to configure it with an instance of a class
  * which implements the StringEncoder.  This comparator
- * is used to sort Strings by an encoding shceme such
+ * is used to sort Strings by an encoding scheme such
  * as Soundex, Metaphone, etc.  This class can come in
  * handy if one need to sort Strings by an encoded
  * form of a name such as Soundex.
  *
  * @author Tim O'Brien
  * @author Gary Gregory
- * @version $Id: StringEncoderComparator.java,v 1.9 2003/11/13 06:50:35 ggregory Exp $
+ * @version $Id: StringEncoderComparator.java,v 1.10 2003/11/24 00:11:56 ggregory Exp $
  */
 public class StringEncoderComparator implements Comparator {
 
@@ -87,10 +87,11 @@ public class StringEncoderComparator implements Comparator {
     }
 
     /**
-     * Constructs a new instance with the given soundex algorithm.
+     * Constructs a new instance with the given algorithm.
+     * @param stringEncoder the StringEncoder used for comparisons.
      */
-    public StringEncoderComparator(StringEncoder en) {
-        this.stringEncoder = en;
+    public StringEncoderComparator(StringEncoder stringEncoder) {
+        this.stringEncoder = stringEncoder;
     }
 
     /**
@@ -101,6 +102,9 @@ public class StringEncoderComparator implements Comparator {
      * 
      * If an {@link EncoderException} is encountered, return <code>0</code>.
      * 
+     * @param o1 the object to compare
+     * @param o2 the object to compare to
+     * @return the Comparable.compareTo() return code or 0 if an encoding error was caught.
      * @see Comparable
      */
     public int compare(Object o1, Object o2) {

@@ -73,7 +73,7 @@ import org.apache.commons.codec.EncoderException;
   * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
   * @author Tim O'Brien
   * @since 1.0-dev
-  * @version $Id: Base64.java,v 1.13 2003/11/06 16:32:30 ggregory Exp $
+  * @version $Id: Base64.java,v 1.14 2003/11/24 00:11:56 ggregory Exp $
   */
 public class Base64 implements BinaryEncoder, BinaryDecoder {
 
@@ -258,8 +258,6 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      *
      * @param pArray A byte array containing Base64 character data
      * @return a byte array containing binary data
-     * @throws DecoderException if there is an Decoder specific exception
-     *                          during the decoding process
      */
     public byte[] decode(byte[] pArray) {
         byte[] result;
@@ -569,8 +567,6 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      *
      * @param pArray a byte array containing binary data
      * @return A byte array containing only Base64 character data
-     * @throws EncoderException if there is an Encoder specific exception
-     *                          during the encoding process
      */
     public byte[] encode(byte[] pArray) {
         return (encodeBase64(pArray, false));

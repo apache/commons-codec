@@ -87,7 +87,7 @@ import org.apache.commons.codec.StringEncoder;
  * @author <a href="mailto:oleg@ural.ru">Oleg Kalnichevski</a>
  * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
  * @since 1.2
- * @version $Id: URLCodec.java,v 1.10 2003/11/08 01:52:25 ggregory Exp $
+ * @version $Id: URLCodec.java,v 1.11 2003/11/24 00:11:56 ggregory Exp $
  */
 
 public class URLCodec 
@@ -137,6 +137,8 @@ public class URLCodec
 
     /**
      * Constructor which allows for the selection of an Encoding
+     * 
+     * @param encoding the String encoding to use.
      */
     public URLCodec(String encoding) {
         super();
@@ -249,20 +251,21 @@ public class URLCodec
 
     /**
      * Encodes a string into its URL safe form using the specified
-     * character set. Unsafe characters are escaped.
+     * encoding. Unsafe characters are escaped.
      *
      * @param pString string to convert to a URL safe form
+     * @param encoding the encoding for pString
      * @return URL safe string
      * @throws UnsupportedEncodingException Thrown if charset is not
      *                                      supported 
      */
-    public String encode(String pString, String charset) 
+    public String encode(String pString, String encoding) 
         throws UnsupportedEncodingException  
     {
         if (pString == null) {
             return null;
         }
-        return new String(encode(pString.getBytes(charset)), this.getEncoding());
+        return new String(encode(pString.getBytes(encoding)), this.getEncoding());
     }
 
 
@@ -288,22 +291,23 @@ public class URLCodec
 
     /**
      * Decodes a URL safe string into its original form using the 
-     * specified character set. Escaped characters are converted back 
+     * specified encoding. Escaped characters are converted back 
      * to their original representation.
      *
      * @param pString URL safe string to convert into its original form
+     * @param encoding the original string encoding
      * @return original string 
      * @throws DecoderException Thrown if URL decoding is unsuccessful
      * @throws UnsupportedEncodingException Thrown if charset is not
      *                                      supported 
      */
-    public String decode(String pString, String charset) 
+    public String decode(String pString, String encoding) 
         throws DecoderException, UnsupportedEncodingException 
     {
         if (pString == null) {
             return null;
         }
-        return new String(decode(pString.getBytes(this.getEncoding())), charset);
+        return new String(decode(pString.getBytes(this.getEncoding())), encoding);
     }
 
 
