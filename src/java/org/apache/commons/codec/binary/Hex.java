@@ -26,12 +26,12 @@ import org.apache.commons.codec.EncoderException;
  * 
  * @since 1.1
  * @author Apache Software Foundation
- * @version $Id: Hex.java,v 1.13 2004/04/18 18:22:33 ggregory Exp $
+ * @version $Id: Hex.java,v 1.14 2004/07/28 19:27:45 ggregory Exp $
  */
 public class Hex implements BinaryEncoder, BinaryDecoder {
 
     /** 
-     * Used building output as Hex 
+     * Used to build output as Hex 
      */
     private static final char[] DIGITS = {
         '0', '1', '2', '3', '4', '5', '6', '7',
