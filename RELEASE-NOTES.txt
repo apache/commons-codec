@@ -1,4 +1,4 @@
-$Id: RELEASE-NOTES.txt,v 1.2 2003/04/25 18:07:16 tobrien Exp $
+$Id: RELEASE-NOTES.txt,v 1.3 2003/04/29 22:16:08 tobrien Exp $
 
 			Commons Codec Package
 			     Version 1.1
@@ -8,10 +8,11 @@ $Id: RELEASE-NOTES.txt,v 1.2 2003/04/25 18:07:16 tobrien Exp $
 INTRODUCTION:
 
 This document contains the release notes for this version of the Commons
-Codec package, and highlights changes since the previous version.  The
-current release adds new features and bug fixes, and is being done now to
-follow the release early/release often mentality.
-
+Codec package, and highlights changes since the previous version.  Version
+1.1 is the first official release of Codec.  Numerous projects had been 
+depending on Version 1.0-dev while Codec was in the Sandbox, and backwards
+compatibility has been preserved to ease the transition to this official
+release. 
 
 NEW FEATURES:
 
