@@ -64,29 +64,59 @@ import org.apache.commons.codec.StringEncoder;
  * 
  * @author tobrien@transolutions.net
  * @author ggregory@seagullsw.com
- * @version $Revision: 1.4 $ $Date: 2003/05/29 21:14:59 $
+ * @version $Revision: 1.5 $ $Date: 2003/05/29 23:03:29 $
  */
 public class RefinedSoundex implements StringEncoder {
 
+    /**
+     * RefinedSoundex is *refined* for a number of
+     * reasons one being that the mappings have been
+     * altered.  This implementation contains default
+     * mappings for US English.
+     */
     public static final char[] US_ENGLISH_MAPPING =
         "01360240043788015936020505".toCharArray();
 
+    /**
+     * This static variable contains an instance of the
+     * RefinedSoundex using the US_ENGLISH mapping.
+     */
     public static final RefinedSoundex US_ENGLISH = new RefinedSoundex();
     
+    /**
+     * Every letter of the alphabet is "mapped" to a numerical 
+     * value.  This char array holds the values to which each
+     * letter is mapped.  This implementation contains a default
+     * map for US_ENGLISH
+     */
     private char[] soundexMapping;
 
+    /**
+     * Creates an instance of the RefinedSoundex object using the
+     * default US English mapping.
+     */
     public RefinedSoundex() {
         this(US_ENGLISH_MAPPING);
     }
 
+    /**
+     * Creates a refined soundex instance using a custom mapping.  This
+     * constructor can be used to customize the mapping, and/or possibly
+     * provide an internationalized mapping for a non-Western character
+     * set.
+     *
+     * @param mapping Mapping array to use when finding the corresponding
+     *                code for a given character
+     */
     public RefinedSoundex(char[] mapping) {
         this.soundexMapping = mapping;
     }
 
     /**
-     * Get the SoundEx value of a string.
-     * This implementation is taken from the code-snippers on 
-     * http://www.sourceforge.net/
+     * Retreives the Refined Soundex code for a given String object.
+     *
+     * @param str String to encode using the Refined Soundex algorithm
+     * @return A soundex code for the String supplied
      */
     public String soundex(String str) {
         if (null == str || str.length() == 0) { return str; }
@@ -104,8 +134,7 @@ public class RefinedSoundex implements StringEncoder {
             current = getMappingCode(str.charAt(i));
             if (current == last) {
                 continue;
-            } 
-            else if (current != 0) {
+            } else if (current != 0) {
                 sBuf.append(current);   
             }
             
@@ -116,37 +145,55 @@ public class RefinedSoundex implements StringEncoder {
         return sBuf.toString();
     }
 
+    /**
+     * Encodes a String using the refined soundex algorithm. 
+     *
+     * @param pString A String object to encode
+     * @return A Soundex code corresponding to the String supplied
+     * @throws EncoderException throws exception if there is an
+     *                          encoding-specific problem
+     */
     public String encode(String pString) throws EncoderException {
         return (soundex(pString));   
     }
 
+    /**
+     * Encodes an Object using the refined soundex algorithm.  This method
+     * is provided in order to satisfy the requirements of the
+     * Encoder interface, and will throw an EncoderException if the
+     * supplied object is not of type java.lang.String.
+     *
+     * @param pObject Object to encode
+     * @return An object (or type java.lang.String) containing the 
+     *         refined soundex code which corresponds to the String supplied.
+     * @throws EncoderException if the parameter supplied is not
+     *                          of type java.lang.String
+     */
     public Object encode(Object pObject) throws EncoderException {
-
         Object result;
-
         if (!(pObject instanceof java.lang.String)) {
             throw new EncoderException("Parameter supplied to " 
                                        + "RefinedSoundex " 
                                        + "encode is not of type " 
                                        + "java.lang.String"); 
-        } 
-        else {
+        } else {
             result = soundex((String) pObject);
         }
-
         return result;
-
     }
 
-
     /**
-     * Used internally by the SoundEx algorithm.
+     * Returns the mapping code for a given character.  The mapping
+     * codes are maintained in an internal char array named soundexMapping,
+     * and the default values of these mappings are US English.
+     *
+     * @param c char to get mapping for
+     * @return A character (really a numeral) to return for the given char
      */
     private char getMappingCode(char c) {
         if (!Character.isLetter(c)) {
             return 0;
-        } 
-        else {
+        } else {
             return soundexMapping[Character.toUpperCase(c) - 'A'];
         }
     }

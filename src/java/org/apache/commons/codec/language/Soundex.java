@@ -61,39 +61,66 @@ import org.apache.commons.codec.StringEncoder;
  * relate similar names, but can also be used as a general purpose
  * scheme to find word with similar phonemes. 
  * 
- * <!-- This link is broken: -->
- * <!-- @see <a href="http://www.bluepoof.com/Soundex/info2.html">http://www.bluepoof.com/Soundex/info2.html</a> -->
- * 
  * @author bayard@generationjava.com
  * @author tobrien@transolutions.net
  * @author ggregory@seagullsw.com
- * @version $Revision: 1.3 $ $Date: 2003/05/12 17:17:24 $
- *
- * @todo Internationalize Exception Messages
+ * @version $Revision: 1.4 $ $Date: 2003/05/29 23:03:29 $
  */
 public class Soundex implements StringEncoder {
 
+    /**
+     * This is a default mapping of the 26 letters used
+     * in US english.
+     */
     public static final char[] US_ENGLISH_MAPPING =
         "01230120022455012623010202".toCharArray();
 
+    /**
+     * This static variable contains an instance of the
+     * Soundex using the US_ENGLISH mapping.
+     */
     public static final Soundex US_ENGLISH = new Soundex();
     
+    /**
+     * Every letter of the alphabet is "mapped" to a numerical 
+     * value.  This char array holds the values to which each
+     * letter is mapped.  This implementation contains a default
+     * map for US_ENGLISH
+     */
     private char[] soundexMapping;
+
+    /**
+     * The maximum length of a Soundex code - Soundex codes are
+     * only four characters by definition.
+     */
     private int maxLength = 4;
 
-
+    /**
+     * Creates an instance of the Soundex object using the default
+     * US_ENGLISH mapping.
+     */
     public Soundex() {
         this(US_ENGLISH_MAPPING);
     }
 
+    /**
+     * Creates a soundex instance using a custom mapping.  This
+     * constructor can be used to customize the mapping, and/or possibly
+     * provide an internationalized mapping for a non-Western character
+     * set.
+     *
+     * @param mapping Mapping array to use when finding the corresponding
+     *                code for a given character
+     */
     public Soundex(char[] mapping) {
         this.soundexMapping = mapping;
     }
 
     /**
-     * Get the SoundEx value of a string.
-     * This implementation is taken from the code-snippers on 
-     * http://www.sourceforge.net/
+     * Retreives the Soundex code for a given String object.
+     *
+     * @param str String to encode using the Soundex algorithm
+     * @return A soundex code for the String supplied
      */
     public String soundex(String str) {
         if (null == str || str.length() == 0) { return str; }
@@ -114,6 +141,18 @@ public class Soundex implements StringEncoder {
         return new String(out);
     }
 
+    /**
+     * Encodes an Object using the soundex algorithm.  This method
+     * is provided in order to satisfy the requirements of the
+     * Encoder interface, and will throw an EncoderException if the
+     * supplied object is not of type java.lang.String.
+     *
+     * @param pObject Object to encode
+     * @return An object (or type java.lang.String) containing the 
+     *         soundex code which corresponds to the String supplied.
+     * @throws EncoderException if the parameter supplied is not
+     *                          of type java.lang.String
+     */
     public Object encode(Object pObject) throws EncoderException {
 
         Object result;
@@ -123,8 +162,7 @@ public class Soundex implements StringEncoder {
                                        + "Soundex " 
                                        + "encode is not of type " 
                                        + "java.lang.String"); 
-        } 
-        else {
+        } else {
             result = soundex((String) pObject);
         }
 
@@ -132,19 +170,28 @@ public class Soundex implements StringEncoder {
 
     }
 
-
+    /**
+     * Encodes a String using the soundex algorithm. 
+     *
+     * @param pString A String object to encode
+     * @return A Soundex code corresponding to the String supplied
+     * @throws EncoderException throws exception if there is an
+     *                          encoding-specific problem
+     */
     public String encode(String pString) throws EncoderException {
         return (soundex(pString));   
     }
 
     /**
      * Used internally by the SoundEx algorithm.
+     *
+     * @param c character to use to retrieve mapping code
+     * @return Mapping code for a particular character
      */
     private char getMappingCode(char c) {
         if (!Character.isLetter(c)) {
             return 0;
-        } 
-        else {
+        } else {
             return soundexMapping[Character.toUpperCase(c) - 'A'];
         }
     }

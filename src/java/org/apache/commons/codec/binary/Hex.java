@@ -72,11 +72,14 @@ public class Hex {
 
 
     /**
-       Converts an array of bytes into an array of characters representing the
-       hexidecimal values of each byte in order. The returned array will be
-       double the length of the passed array, as it takes two characters to
-       represent any given byte.
-    */
+     * Converts an array of bytes into an array of characters representing the
+     * hexidecimal values of each byte in order. The returned array will be
+     * double the length of the passed array, as it takes two characters to
+     * represent any given byte.
+     *
+     * @param data array of byte to convert to Hex characters
+     * @return A char[] containing hexidecimal characters
+     */
     public static char[] encodeHex(byte[] data) {
 
         int l = data.length;
@@ -95,12 +98,18 @@ public class Hex {
 
 
     /**
-       Converts an array of characters representing hexidecimal values into an
-       array of bytes of those same values. The returned array will be half the
-       length of the passed array, as it takes two characters to represent any
-       given byte. An exception is thrown if the passed char array has an odd
-       number of elements.
-    */
+     * Converts an array of characters representing hexidecimal values into an
+     * array of bytes of those same values. The returned array will be half the
+     * length of the passed array, as it takes two characters to represent any
+     * given byte. An exception is thrown if the passed char array has an odd
+     * number of elements.
+     * 
+     * @param data An array of characters containing hexidecimal digits
+     * @return A byte array array containing binary data decoded from
+     *         the supplied char array.
+     * @throws Exception Thrown if an odd number of characters is supplied
+     *                   to this function
+     */
     public static byte[] decodeHex(char[] data) throws Exception {
 
         int l = data.length;
