@@ -1,7 +1,7 @@
-$Id: RELEASE-NOTES.txt,v 1.10 2003/11/12 02:16:34 ggregory Exp $
+$Id: RELEASE-NOTES.txt,v 1.11 2003/11/23 22:16:46 tobrien Exp $
 
 			Commons Codec Package
-			    Version 1.2 RC1
+			    Version 1.2
 			    Release Notes
 
 
