@@ -26,25 +26,25 @@ import org.apache.commons.codec.EncoderException;
  * @todo may want to add more bit vector functions like and/or/xor/nand
  * @todo also might be good to generate boolean[] from byte[] et. cetera.
  * @author Apache Software Foundation
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class Binary implements BinaryDecoder, BinaryEncoder
 {
-    /** mask for bit 0 of a byte */
+    /** Mask for bit 0 of a byte. */
     public static final int BIT_0 = 1 ;
-    /** mask for bit 1 of a byte */
+    /** Mask for bit 1 of a byte. */
     public static final int BIT_1 = 1 << 1 ;
-    /** mask for bit 2 of a byte */
+    /** Mask for bit 2 of a byte. */
     public static final int BIT_2 = 1 << 2 ;
-    /** mask for bit 3 of a byte */
+    /** Mask for bit 3 of a byte. */
     public static final int BIT_3 = 1 << 3 ;
-    /** mask for bit 4 of a byte */
+    /** Mask for bit 4 of a byte. */
     public static final int BIT_4 = 1 << 4 ;
-    /** mask for bit 5 of a byte */
+    /** Mask for bit 5 of a byte. */
     public static final int BIT_5 = 1 << 5 ;
-    /** mask for bit 6 of a byte */
+    /** Mask for bit 6 of a byte. */
     public static final int BIT_6 = 1 << 6 ;
-    /** mask for bit 7 of a byte */
+    /** Mask for bit 7 of a byte. */
     public static final int BIT_7 = 1 << 7 ;
     
     public static final int [] BITS = 
