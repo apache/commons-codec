@@ -3,7 +3,7 @@
  * 
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,8 +30,8 @@
  *    from this software without prior written permission. For written 
  *    permission, please contact apache@apache.org.
  *
- * 5. Products derived from this software may not be called "Apache",
- *    "Apache" nor may "Apache" appear in their name without prior 
+ * 5. Products derived from this software may not be called "Apache"
+ *    nor may "Apache" appear in their name without prior 
  *    written permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
@@ -70,7 +70,7 @@ import java.util.Comparator;
  *
  * @author Tim O'Brien
  * @author Gary Gregory
- * @version $Id: StringEncoderComparator.java,v 1.10 2003/11/24 00:11:56 ggregory Exp $
+ * @version $Id: StringEncoderComparator.java,v 1.11 2004/01/02 07:01:47 ggregory Exp $
  */
 public class StringEncoderComparator implements Comparator {
 

@@ -3,7 +3,7 @@
  * 
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -67,7 +67,7 @@ import org.apache.commons.codec.StringEncoder;
  * 
  * @author Tim O'Brien
  * @author Gary D. Gregory
- * @version $Id: RefinedSoundex.java,v 1.13 2003/12/11 23:44:11 ggregory Exp $
+ * @version $Id: RefinedSoundex.java,v 1.14 2004/01/02 07:01:47 ggregory Exp $
  */
 public class RefinedSoundex implements StringEncoder {
 

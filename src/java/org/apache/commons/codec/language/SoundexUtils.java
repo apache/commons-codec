@@ -3,7 +3,7 @@
  * 
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -64,7 +64,7 @@ import org.apache.commons.codec.StringEncoder;
  * Utility methods for {@link Soundex} and {@link RefinedSoundex} classes.
  * 
  * @author Gary D. Gregory
- * @version $Id: SoundexUtils.java,v 1.1 2003/12/11 23:44:11 ggregory Exp $
+ * @version $Id: SoundexUtils.java,v 1.2 2004/01/02 07:01:47 ggregory Exp $
  */
 final class SoundexUtils {
 

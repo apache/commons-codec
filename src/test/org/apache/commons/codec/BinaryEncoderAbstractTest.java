@@ -3,7 +3,7 @@
  * 
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,8 +30,8 @@
  *    from this software without prior written permission. For written 
  *    permission, please contact apache@apache.org.
  *
- * 5. Products derived from this software may not be called "Apache",
- *    "Apache" nor may "Apache" appear in their name without prior 
+ * 5. Products derived from this software may not be called "Apache"
+ *    nor may "Apache" appear in their name without prior 
  *    written permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
@@ -60,7 +60,7 @@ package org.apache.commons.codec;
 import junit.framework.TestCase;
 
 /**
- * @version $Revision: 1.5 $ $Date: 2003/10/05 21:45:49 $
+ * @version $Revision: 1.6 $ $Date: 2004/01/02 07:05:36 $
  * @author Rodney Waldhoff
  * @author Tim O'Brien
  */
