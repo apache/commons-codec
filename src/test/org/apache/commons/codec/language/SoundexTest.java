@@ -26,7 +26,7 @@ import org.apache.commons.codec.StringEncoderAbstractTest;
 /**
  * Tests {@link Soundex}
  * 
- * @version $Revision: 1.15 $ $Date: 2004/04/09 22:46:08 $
+ * @version $Revision: 1.16 $ $Date: 2004/04/18 21:34:16 $
  * @author Apache Software Foundation
  */
 public class SoundexTest extends StringEncoderAbstractTest {
@@ -207,6 +207,11 @@ public class SoundexTest extends StringEncoderAbstractTest {
         assertEquals("S532", this.getEncoder().encode("SAINTJOHN"));
 
     }
+
+	public void testBadCharacters() {
+		assertEquals("H452", this.getEncoder().encode("HOL>MES"));
+
+	}
 
     public void testEncodeIgnoreApostrophes() {
         this.encodeAll(new String[] { "OBrien", "'OBrien", "O'Brien", "OB'rien", "OBr'ien", "OBri'en", "OBrie'n", "OBrien'" }, "O165");

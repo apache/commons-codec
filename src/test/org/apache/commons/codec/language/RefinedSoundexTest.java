@@ -25,7 +25,7 @@ import org.apache.commons.codec.StringEncoderAbstractTest;
 /**
  * Tests RefinedSoundex.
  * 
- * @version $Id: RefinedSoundexTest.java,v 1.9 2004/03/21 01:30:11 ggregory Exp $
+ * @version $Id: RefinedSoundexTest.java,v 1.10 2004/04/18 21:34:16 tobrien Exp $
  * @author Apache Software Foundation
  */
 public class RefinedSoundexTest extends StringEncoderAbstractTest {
@@ -103,4 +103,9 @@ public class RefinedSoundexTest extends StringEncoderAbstractTest {
         assertEquals("L7050", this.getEncoder().encode("lazy"));
         assertEquals("D6043", this.getEncoder().encode("dogs"));
     }
+
+	public void testGetMappingCodeNonLetter() {
+		char code = this.getEncoder().getMappingCode('#');
+		assertEquals( "Code does not equals zero", 0, (int) code);
+	}
 }

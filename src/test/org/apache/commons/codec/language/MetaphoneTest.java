@@ -22,7 +22,7 @@ import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.StringEncoderAbstractTest;
 
 /**
- * @version $Revision: 1.10 $ $Date: 2004/03/17 19:28:37 $
+ * @version $Revision: 1.11 $ $Date: 2004/04/18 21:34:16 $
  * @author Apache Software Foundation
  */
 public class MetaphoneTest extends StringEncoderAbstractTest {
@@ -40,7 +40,8 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
     public void assertIsMetaphoneEqual(String source, String[] matches) {
         // match source to all matches
         for (int i = 0; i < matches.length; i++) {
-            assertTrue(this.getMetaphone().isMetaphoneEqual(source, matches[i]));
+            assertTrue("Source: " + source + ", should have same Metaphone as: " + matches[i],
+                       this.getMetaphone().isMetaphoneEqual(source, matches[i]));
         }
         // match to each other
         for (int i = 0; i < matches.length; i++) {
@@ -374,6 +375,7 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
     }
 
     public void testMetaphone() {
+		assertEquals("HL", this.getMetaphone().metaphone("howl"));
         assertEquals("TSTN", this.getMetaphone().metaphone("testing"));
         assertEquals("0", this.getMetaphone().metaphone("The"));
         assertEquals("KK", this.getMetaphone().metaphone("quick"));
@@ -385,6 +387,77 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
         assertEquals("LS", this.getMetaphone().metaphone("lazy"));
         assertEquals("TKS", this.getMetaphone().metaphone("dogs"));
     }
+	
+	public void testWordEndingInMB() {
+		assertEquals( "KM", this.getMetaphone().metaphone("COMB") );
+		assertEquals( "TM", this.getMetaphone().metaphone("TOMB") );
+		assertEquals( "WM", this.getMetaphone().metaphone("WOMB") );
+	}
+
+	public void testDiscardOfSCEOrSCIOrSCY() {
+		assertEquals( "SNS", this.getMetaphone().metaphone("SCIENCE") );
+		assertEquals( "SN", this.getMetaphone().metaphone("SCENE") );
+		assertEquals( "S", this.getMetaphone().metaphone("SCY") );
+	}
+
+	public void testWordsWithCIA() {
+		assertEquals( "XP", this.getMetaphone().metaphone("CIAPO") );
+	}
+
+	public void testTranslateOfSCHAndCH() {
+		assertEquals( "SKTL", this.getMetaphone().metaphone("SCHEDULE") );
+		assertEquals( "SKMT", this.getMetaphone().metaphone("SCHEMATIC") );
+
+		assertEquals( "KRKT", this.getMetaphone().metaphone("CHARACTER") );
+		assertEquals( "TX", this.getMetaphone().metaphone("TEACH") );
+	}
+
+	public void testTranslateToJOfDGEOrDGIOrDGY() {
+		assertEquals( "TJ", this.getMetaphone().metaphone("DODGY") );
+		assertEquals( "TJ", this.getMetaphone().metaphone("DODGE") );
+		assertEquals( "AJMT", this.getMetaphone().metaphone("ADGIEMTI") );
+	}
+
+	public void testDiscardOfSilentHAfterG() {
+		assertEquals( "KNT", this.getMetaphone().metaphone("GHENT") );
+		assertEquals( "B", this.getMetaphone().metaphone("BAUGH") );
+	}
+
+	public void testDiscardOfSilentGN() {
+		assertEquals( "N", this.getMetaphone().metaphone("GNU") );
+		assertEquals( "SNT", this.getMetaphone().metaphone("SIGNED") );
+	}
+
+	public void testPHTOF() {
+		assertEquals( "FX", this.getMetaphone().metaphone("PHISH") );
+	}
+
+	public void testSHAndSIOAndSIAToX() {
+		assertEquals( "XT", this.getMetaphone().metaphone("SHOT") );
+		assertEquals( "OTXN", this.getMetaphone().metaphone("ODSIAN") );
+		assertEquals( "PLXN", this.getMetaphone().metaphone("PULSION") );
+	}
+
+	public void testTIOAndTIAToX() {
+		assertEquals( "OX", this.getMetaphone().metaphone("OTIA") );
+		assertEquals( "PRXN", this.getMetaphone().metaphone("PORTION") );
+	}
+
+	public void testTCH() {
+		assertEquals( "RX", this.getMetaphone().metaphone("RETCH") );
+		assertEquals( "WX", this.getMetaphone().metaphone("WATCH") );
+	}
+
+	public void testExceedLength() {
+		// should be AKSKS, but istruncated by Max Code Length
+		assertEquals( "AKSK", this.getMetaphone().metaphone("AXEAXE") );
+	}
+
+	public void testSetMaxLengthWithTruncation() {
+		// should be AKSKS, but istruncated by Max Code Length
+		this.getMetaphone().setMaxCodeLen( 6 );
+		assertEquals( "AKSKSK", this.getMetaphone().metaphone("AXEAXEAXE") );
+	}
 
     public void validateFixture(String[][] pairs) {
         if (pairs.length == 0) {
