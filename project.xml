@@ -245,7 +245,6 @@ limitations under the License.
         <report>maven-junit-report-plugin</report>
         <report>maven-jxr-plugin</report>
         <report>maven-license-plugin</report>
-        <!--   <report>maven-changes-plugin</report> -->
         <!--   <report>maven-findbugs-plugin</report> -->
         <!--   <report>maven-jdepend-plugin</report> -->
         <!--   <report>maven-jellydoc-plugin</report> -->
