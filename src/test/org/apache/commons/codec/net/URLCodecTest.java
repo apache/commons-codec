@@ -58,6 +58,7 @@
 package org.apache.commons.codec.net;
 
 import org.apache.commons.codec.DecoderException;
+import org.apache.commons.codec.EncoderException;
 
 import junit.framework.TestCase;
 
@@ -170,6 +171,108 @@ public class URLCodecTest extends TestCase {
             fail("DecoderException should have been thrown");
         } catch(DecoderException e) {
             // Expected. Move on
+        }
+    }
+
+    public void testEncodeNull() throws Exception {
+        URLCodec urlcodec = new URLCodec();
+        byte[] plain = null;
+        byte[] encoded = urlcodec.encode(plain);
+        assertEquals("Encoding a null string should return null", 
+            null, encoded);
+    }
+    
+    public void testEncodeUrlWithNullBitSet() throws Exception {
+        URLCodec urlcodec = new URLCodec();
+        String plain = "Hello there!";
+        String encoded = new String( URLCodec.encodeUrl(null, plain.getBytes()));
+        assertEquals("Basic URL encoding test", 
+            "Hello+there%21", encoded);
+        assertEquals("Basic URL decoding test", 
+            plain, urlcodec.decode(encoded));
+        
+    }
+
+    public void testDecodeWithNullArray() throws Exception {
+        byte[] plain = null;
+        byte[] result = URLCodec.decodeUrl( plain );
+        assertEquals("Result should be null", null, result);
+    }
+
+    public void testEncodeStringWithNull() throws Exception {
+        URLCodec urlcodec = new URLCodec();
+        String test = null;
+        String result = urlcodec.encode( test, "charset" );
+        assertEquals("Result should be null", null, result);
+    }
+
+    public void testDecodeStringWithNull() throws Exception {
+        URLCodec urlcodec = new URLCodec();
+        String test = null;
+        String result = urlcodec.decode( test, "charset" );
+        assertEquals("Result should be null", null, result);
+    }
+    
+    public void testEncodeObjects() throws Exception {
+        URLCodec urlcodec = new URLCodec();
+        String plain = "Hello there!";
+        String encoded = (String) urlcodec.encode((Object) plain);
+        assertEquals("Basic URL encoding test", 
+            "Hello+there%21", encoded);
+
+        byte[] plainBA = plain.getBytes();
+        byte[] encodedBA = (byte[]) urlcodec.encode((Object) plainBA);
+        encoded = new String(encodedBA);
+        assertEquals("Basic URL encoding test", 
+            "Hello+there%21", encoded);
+            
+        Object result = urlcodec.encode((Object) null);
+        assertEquals( "Encoding a null Object should return null", null, result);
+        
+        try {
+            Object dObj = new Double(3.0);
+            urlcodec.encode( dObj );
+            fail( "Trying to url encode a Double object should cause an exception.");
+        } catch( EncoderException ee ) {
+        }
+    }
+    
+    public void testInvalidEncoding() {
+        URLCodec urlcodec = new URLCodec("NONSENSE");
+           String plain = "Hello there!";
+            try {
+               String encoded = urlcodec.encode(plain);
+                fail( "We set the encoding to a bogus NONSENSE vlaue, this shouldn't have worked.");
+            } catch( EncoderException ee ) {
+            }
+            try {
+               String decoded = urlcodec.decode(plain);
+                fail( "We set the encoding to a bogus NONSENSE vlaue, this shouldn't have worked.");
+            } catch( DecoderException ee ) {
+            }
+    }
+
+    public void testDecodeObjects() throws Exception {
+        URLCodec urlcodec = new URLCodec();
+        String plain = "Hello+there%21";
+        String decoded = (String) urlcodec.decode((Object) plain);
+        assertEquals("Basic URL decoding test", 
+            "Hello there!", decoded);
+
+        byte[] plainBA = plain.getBytes();
+        byte[] decodedBA = (byte[]) urlcodec.decode((Object) plainBA);
+        decoded = new String(decodedBA);
+        assertEquals("Basic URL decoding test", 
+            "Hello there!", decoded);
+            
+        Object result = urlcodec.decode((Object) null);
+        assertEquals( "Decoding a null Object should return null", null, result);
+        
+        try {
+            Object dObj = new Double(3.0);
+            urlcodec.decode( dObj );
+            fail( "Trying to url encode a Double object should cause an exception.");
+        } catch( DecoderException ee ) {
         }
     }
 }
