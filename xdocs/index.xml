@@ -81,6 +81,17 @@
       </td>
      </tr>
      <tr>
+      <td width="125">
+       <a href="apidocs/org/apache/commons/codec/binary/Binary.html">
+       	Binary</a>
+      </td>
+      <td>
+       Binary translates between byte arrays and strings of binary digits 
+       "1" and "0".
+      </td>
+     </tr>
+     <tr>
+     <tr>
       <td>
        <a href="apidocs/org/apache/commons/codec/binary/Hex.html">
        	Hex</a>
