@@ -97,16 +97,6 @@ limitations under the License.
       </td>
      </tr>
      <tr>
-      <td width="150">
-       <a href="apidocs/org/apache/commons/codec/binary/BinaryCodec.html">
-       	BinaryCodec</a>
-      </td>
-      <td>
-       Binary translates between byte arrays and strings of binary digits 
-       "1" and "0".
-      </td>
-     </tr>
-     <tr>
       <td>
        <a href="apidocs/org/apache/commons/codec/binary/Hex.html">
        	Hex</a>
@@ -114,6 +104,15 @@ limitations under the License.
       <td>
        Converts an array of bytes into an array of characters representing the
        hexadecimal values of each byte in order
+      </td>
+     </tr>
+     <tr>
+      <td width="150">
+       <a href="apidocs/org/apache/commons/codec/binary/BinaryCodec.html">
+       	BinaryCodec</a>
+      </td>
+      <td>
+       Translates between byte arrays and strings of "0"s and "1"s.
       </td>
      </tr>
     </table>
