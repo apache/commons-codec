@@ -27,7 +27,7 @@ limitations under the License.
   <module name="TreeWalker">
     <!-- Verify that EVERY source file has the appropriate license -->
     <module name="Header">
-      <property name="headerFile" value="LICENSE.txt"/>
+      <property name="headerFile" value="LICENSE-header.txt"/>
     </module>
 
     <module name="OperatorWrap">
