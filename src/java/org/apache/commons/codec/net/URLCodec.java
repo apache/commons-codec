@@ -86,7 +86,8 @@ import org.apache.commons.codec.StringEncoder;
  * 
  * @author <a href="mailto:oleg@ural.ru">Oleg Kalnichevski</a>
  * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
- * @version $Id: URLCodec.java,v 1.9 2003/10/13 16:49:24 ggregory Exp $
+ * @since 1.2
+ * @version $Id: URLCodec.java,v 1.10 2003/11/08 01:52:25 ggregory Exp $
  */
 
 public class URLCodec 

@@ -1,7 +1,7 @@
-$Id: RELEASE-NOTES.txt,v 1.8 2003/11/07 00:14:14 ggregory Exp $
+$Id: RELEASE-NOTES.txt,v 1.9 2003/11/08 01:52:25 ggregory Exp $
 
 			Commons Codec Package
-			    Version 1.2
+			    Version 1.2 RC1
 			    Release Notes
 
 
@@ -33,6 +33,12 @@ BUG FIXES:
 * Fix for Bug 24360: Hex.decode(Object) throws a ClassCastException 
   when a String argument is passed in.
   
-* Fix for Bug 24471: Soundex: The HW rule is not applied; hyphens and apostrophes
-  are not ignored.
-
+* Fix for Bug 24471: Soundex: The HW rule is not applied; hyphens and 
+  apostrophes are not ignored.
+  
+* Fix for Bug 24484: Soundex.setMaxLength causes bugs and is not needed.
+  Calling Soundex.setMaxLength() with a value of 2 or less causes the wrong
+  answer to be returned. Since the encoding returned by Soundex is always
+  of length 4 by definition (we do not use the '-' in as a letter-nnn separator) 
+  the need for a maxLength attribute is not needed. Deprecate the field and 
+  accessor methods.
