@@ -19,9 +19,8 @@ package org.apache.commons.codec;
 /**
  * Defines common decoding methods for byte array decoders.
  *
- * @author Tim O'Brien
- * @author Gary Gregory
- * @version $Id: BinaryDecoder.java,v 1.9 2004/02/23 07:32:49 ggregory Exp $
+ * @author Apache Software Foundation
+ * @version $Id: BinaryDecoder.java,v 1.10 2004/06/15 18:14:15 ggregory Exp $
  */
 public interface BinaryDecoder extends Decoder {
 
