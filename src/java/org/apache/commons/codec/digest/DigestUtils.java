@@ -63,40 +63,47 @@ import java.security.NoSuchAlgorithmException;
 import org.apache.commons.codec.binary.Hex;
 
 /**
- * Operations to simplifiy common <code>MessageDigest</code> tasks.  This
+ * Operations to simplifiy common {@link java.security.MessageDigest} tasks.  This
  * class is thread safe.
  *
  * @author Dave Dribin
  * @author David Graham
+ * @author Gary Gregory
  */
 public class DigestUtils {
 
-	/**
-	 * Returns an MD5 MessageDigest.
-	 *
-	 * @return An MD5 digest instance.
-	 */
-	private static MessageDigest getMd5Digest() {
-		try {
-			return MessageDigest.getInstance("MD5");
+    /**
+     * Returns a MessageDigest for the given <code>algorithm</code>.
+     *
+     * @return An MD5 digest instance.
+     * @throws RuntimeException when a {@link java.security.NoSuchAlgorithmException} is caught,
+     */
+    protected static MessageDigest getDigest(String algorithm) {
+        try {
+            return MessageDigest.getInstance(algorithm);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
 
-		} catch (NoSuchAlgorithmException e) {
-			throw new RuntimeException(e.getMessage());
-		}
-	}
+    /**
+     * Returns an MD5 MessageDigest.
+     *
+     * @return An MD5 digest instance.
+     * @throws RuntimeException when a {@link java.security.NoSuchAlgorithmException} is caught,
+     */
+    private static MessageDigest getMd5Digest() {
+        return getDigest("MD5");
+    }
 
 	/**
 	 * Returns an SHA digest.
 	 *
 	 * @return An SHA digest instance.
+     * @throws RuntimeException when a {@link java.security.NoSuchAlgorithmException} is caught,
 	 */
 	private static MessageDigest getShaDigest() {
-		try {
-			return MessageDigest.getInstance("SHA");
-
-		} catch (NoSuchAlgorithmException e) {
-			throw new RuntimeException(e.getMessage());
-		}
+        return getDigest("SHA");
 	}
 
 	/**
