@@ -58,11 +58,11 @@
 package org.apache.commons.codec;
 
 /**
- * Defines common decoding methods for byte arrays decoders.
+ * Defines common decoding methods for byte array decoders.
  *
  * @author Tim O'Brien
  * @author Gary Gregory
- * @version $Id: BinaryDecoder.java,v 1.6 2003/10/05 21:45:48 tobrien Exp $
+ * @version $Id: BinaryDecoder.java,v 1.7 2003/11/13 06:48:31 ggregory Exp $
  */
 public interface BinaryDecoder extends Decoder {
 
