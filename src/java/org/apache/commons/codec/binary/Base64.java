@@ -31,7 +31,7 @@ import org.apache.commons.codec.EncoderException;
  * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>
  * @author Apache Software Foundation
  * @since 1.0-dev
- * @version $Id: Base64.java,v 1.20 2004/05/24 00:21:24 ggregory Exp $
+ * @version $Id: Base64.java,v 1.21 2004/10/20 01:37:54 ggregory Exp $
  */
 public class Base64 implements BinaryEncoder, BinaryDecoder {
 
@@ -146,7 +146,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * only valid characters within the Base64 alphabet.
      *
      * @param arrayOctect byte array to test
-     * @return true if all bytes are valid characters in the Base64
+     * @return <code>true</code> if all bytes are valid characters in the Base64
      *         alphabet or if the byte array is empty; false, otherwise
      */
     public static boolean isArrayByteBase64(byte[] arrayOctect) {
@@ -225,7 +225,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * chunking the output into 76 character blocks.
      *
      * @param binaryData Array containing binary data to encode.
-     * @param isChunked if isChunked is true this encoder will chunk
+     * @param isChunked if <code>true</code> this encoder will chunk
      *                  the base64 output into 76 character blocks
      * @return Base64-encoded data.
      */
