@@ -31,7 +31,7 @@ import org.apache.commons.codec.EncoderException;
  * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>
  * @author Apache Software Foundation
  * @since 1.0-dev
- * @version $Id: Base64.java,v 1.22 2004/10/30 00:18:57 ggregory Exp $
+ * @version $Id: Base64.java,v 1.23 2004/11/24 19:23:25 ggregory Exp $
  */
 public class Base64 implements BinaryEncoder, BinaryDecoder {
 
@@ -153,10 +153,16 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
         lookUpBase64Alphabet[63] = (byte) '/';
     }
 
+    /**
+     * Returns whether or not the <code>octect</code> is in the base 64 alphabet.
+     * 
+     * @param octect The value to test
+     * @return <code>true</code> if the value is defined in the the base 64 alphabet, <code>false</code> otherwise.
+     */
     private static boolean isBase64(byte octect) {
         if (octect == PAD) {
             return true;
-        } else if (base64Alphabet[octect] == -1) {
+        } else if (octect < 0 || base64Alphabet[octect] == -1) {
             return false;
         } else {
             return true;
