@@ -18,11 +18,12 @@ package org.apache.commons.codec.language;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.StringEncoderAbstractTest;
 
 /**
- * @version $Id: MetaphoneTest.java,v 1.12 2004/04/19 01:14:29 ggregory Exp $
+ * @version $Id: MetaphoneTest.java,v 1.13 2004/08/05 20:39:40 ggregory Exp $
  * @author Apache Software Foundation
  */
 public class MetaphoneTest extends StringEncoderAbstractTest {

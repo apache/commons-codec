@@ -17,6 +17,7 @@
 package org.apache.commons.codec.binary;
 
 import junit.framework.TestCase;
+
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 
@@ -24,7 +25,7 @@ import org.apache.commons.codec.EncoderException;
  * TestCase for BinaryCodec class.
  * 
  * @author Apache Software Foundation
- * @version $Id: BinaryCodecTest.java,v 1.1 2004/03/29 23:04:41 ggregory Exp $
+ * @version $Id: BinaryCodecTest.java,v 1.2 2004/08/05 20:39:39 ggregory Exp $
  */
 public class BinaryCodecTest extends TestCase {
     /** mask with bit zero based index 0 raised */

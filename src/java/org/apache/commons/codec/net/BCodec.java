@@ -17,6 +17,7 @@
 package org.apache.commons.codec.net;
 
 import java.io.UnsupportedEncodingException;
+
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringDecoder;
@@ -40,7 +41,7 @@ import org.apache.commons.codec.binary.Base64;
  * 
  * @author Apache Software Foundation
  * @since 1.3
- * @version $Id: BCodec.java,v 1.6 2004/07/26 22:55:40 ggregory Exp $
+ * @version $Id: BCodec.java,v 1.7 2004/08/05 20:39:39 ggregory Exp $
  */
 public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder {
     /**
