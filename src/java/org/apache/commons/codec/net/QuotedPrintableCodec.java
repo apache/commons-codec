@@ -29,7 +29,8 @@ import org.apache.commons.codec.StringEncoder;
 
 /**
  * <p>
- * Codec for RFC 1521 MIME (Multipurpose Internet Mail Extensions) Part One.
+ * Codec for the Quoted-Printable section of RFC 1521 MIME (Multipurpose Internet Mail Extensions) Part One 
+ * Mechanisms for Specifying and Describing the Format of Internet Message Bodies.
  * </p>
  * <p>
  * The Quoted-Printable encoding is intended to represent data that
@@ -57,11 +58,12 @@ import org.apache.commons.codec.StringEncoder;
  * </p>
  * 
  * @see <a href="http://www.ietf.org/rfc/rfc1521.txt">
- * MIME (Multipurpose Internet Mail Extensions) Part One</a>
+ * RFC 1521 MIME (Multipurpose Internet Mail Extensions) Part One: Mechanisms for Specifying 
+ * and Describing the Format of Internet Message Bodies</a>
  * 
  * @author Apache Software Foundation
  * @since 1.3
- * @version $Id: QuotedPrintableCodec.java,v 1.4 2004/03/28 21:24:46 ggregory Exp $
+ * @version $Id: QuotedPrintableCodec.java,v 1.5 2004/03/29 01:32:07 ggregory Exp $
  */
 public class QuotedPrintableCodec 
         implements BinaryEncoder, BinaryDecoder, 
