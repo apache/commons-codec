@@ -40,13 +40,13 @@ import org.apache.commons.codec.binary.Base64;
  * 
  * @author Apache Software Foundation
  * @since 1.3
- * @version $Id: BCodec.java,v 1.5 2004/04/13 22:46:37 ggregory Exp $
+ * @version $Id: BCodec.java,v 1.6 2004/07/26 22:55:40 ggregory Exp $
  */
 public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder {
     /**
      * The default charset used for string decoding and encoding.
      */
-    private String charset = StringEncodings.UTF8;
+    private String charset = CharacterEncodingNames.UTF8;
 
     /**
      * Default constructor.

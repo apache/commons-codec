@@ -54,13 +54,13 @@ import org.apache.commons.codec.StringEncoder;
  * 
  * @author Apache Software Foundation
  * @since 1.3
- * @version $Id: QuotedPrintableCodec.java,v 1.7 2004/04/09 22:21:07 ggregory Exp $
+ * @version $Id: QuotedPrintableCodec.java,v 1.8 2004/07/26 22:55:40 ggregory Exp $
  */
 public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, StringDecoder {
     /**
      * The default charset used for string decoding and encoding.
      */
-    private String charset = StringEncodings.UTF8;
+    private String charset = CharacterEncodingNames.UTF8;
 
     /**
      * BitSet of printable characters as defined in RFC 1521.
@@ -276,7 +276,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
         if (pString == null) {
             return null;
         }
-        return new String(decode(pString.getBytes(StringEncodings.US_ASCII)), charset);
+        return new String(decode(pString.getBytes(CharacterEncodingNames.US_ASCII)), charset);
     }
 
     /**
@@ -382,6 +382,6 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
         if (pString == null) {
             return null;
         }
-        return new String(encode(pString.getBytes(charset)), StringEncodings.US_ASCII);
+        return new String(encode(pString.getBytes(charset)), CharacterEncodingNames.US_ASCII);
     }
 }

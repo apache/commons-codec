@@ -45,14 +45,14 @@ import org.apache.commons.codec.StringEncoder;
  * 
  * @author Apache Software Foundation
  * @since 1.2
- * @version $Id: URLCodec.java,v 1.19 2004/03/29 07:59:00 ggregory Exp $
+ * @version $Id: URLCodec.java,v 1.20 2004/07/26 22:55:39 ggregory Exp $
  */
 public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, StringDecoder {
     
     /**
      * The default charset used for string decoding and encoding.
      */
-    protected String charset = StringEncodings.UTF8;
+    protected String charset = CharacterEncodingNames.UTF8;
     
     protected static byte ESCAPE_CHAR = '%';
     /**
@@ -223,7 +223,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
         if (pString == null) {
             return null;
         }
-        return new String(encode(pString.getBytes(charset)), StringEncodings.US_ASCII);
+        return new String(encode(pString.getBytes(charset)), CharacterEncodingNames.US_ASCII);
     }
 
 
@@ -267,7 +267,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
         if (pString == null) {
             return null;
         }
-        return new String(decode(pString.getBytes(StringEncodings.US_ASCII)), charset);
+        return new String(decode(pString.getBytes(CharacterEncodingNames.US_ASCII)), charset);
     }
 
 

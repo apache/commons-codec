@@ -40,7 +40,7 @@ import org.apache.commons.codec.EncoderException;
  * 
  * @author Apache Software Foundation
  * @since 1.3
- * @version $Id: RFC1522Codec.java,v 1.2 2004/04/09 22:21:43 ggregory Exp $
+ * @version $Id: RFC1522Codec.java,v 1.3 2004/07/26 22:55:40 ggregory Exp $
  */
 abstract class RFC1522Codec {
     
@@ -75,7 +75,7 @@ abstract class RFC1522Codec {
         buffer.append(getEncoding()); 
         buffer.append('?');
         byte [] rawdata = doEncoding(text.getBytes(charset)); 
-        buffer.append(new String(rawdata, StringEncodings.US_ASCII));
+        buffer.append(new String(rawdata, CharacterEncodingNames.US_ASCII));
         buffer.append("?="); 
         return buffer.toString();
     }
@@ -123,7 +123,7 @@ abstract class RFC1522Codec {
         }
         from = to + 1;
         to = text.indexOf("?", from);
-        byte[] data = text.substring(from, to).getBytes(StringEncodings.US_ASCII);
+        byte[] data = text.substring(from, to).getBytes(CharacterEncodingNames.US_ASCII);
         data = doDecoding(data); 
         return new String(data, charset);
     }

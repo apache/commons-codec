@@ -42,13 +42,13 @@ import org.apache.commons.codec.StringEncoder;
  * 
  * @author Apache Software Foundation
  * @since 1.3
- * @version $Id: QCodec.java,v 1.6 2004/05/24 00:24:32 ggregory Exp $
+ * @version $Id: QCodec.java,v 1.7 2004/07/26 22:55:40 ggregory Exp $
  */
 public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder {
     /**
      * The default charset used for string decoding and encoding.
      */
-    private String charset = StringEncodings.UTF8;
+    private String charset = CharacterEncodingNames.UTF8;
 
     /**
      * BitSet of printable characters as defined in RFC 1522.
