@@ -60,11 +60,13 @@ import org.apache.commons.codec.StringEncoder;
  * Encodes a string into a soundex value.  Sounde is an encoding used to
  * relate similar names, but can also be used as a general purpose
  * scheme to find word with similar phonemes. 
- * More information may be found at: http://www.bluepoof.com/Soundex/info2.html
+ * 
+ * <!-- This link is broken: -->
+ * <!-- @see <a href="http://www.bluepoof.com/Soundex/info2.html">http://www.bluepoof.com/Soundex/info2.html</a> -->
  * 
  * @author tobrien@transolutions.net
  * @author ggregory@seagullsw.com
- * @version $Revision: 1.1 $ $Date: 2003/04/25 17:50:56 $
+ * @version $Revision: 1.2 $ $Date: 2003/05/12 17:09:38 $
  */
 public class RefinedSoundex implements StringEncoder {
 
