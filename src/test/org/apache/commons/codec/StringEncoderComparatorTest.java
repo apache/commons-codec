@@ -31,7 +31,7 @@
  *    permission, please contact apache@apache.org.
  *
  * 5. Products derived from this software may not be called "Apache",
- *    "Apache" nor may "Apache" appear in their names without prior 
+ *    "Apache" nor may "Apache" appear in their name without prior 
  *    written permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
@@ -62,7 +62,7 @@ import junit.framework.TestCase;
 import org.apache.commons.codec.language.Soundex;
 
 /**
- * @version $Revision: 1.4 $ $Date: 2003/10/05 21:34:22 $
+ * @version $Revision: 1.5 $ $Date: 2003/10/05 21:45:49 $
  * @author Tim O'Brien
  */
 public class StringEncoderComparatorTest extends TestCase {

@@ -31,7 +31,7 @@
  *    permission, please contact apache@apache.org.
  *
  * 5. Products derived from this software may not be called "Apache",
- *    "Apache" nor may "Apache" appear in their names without prior 
+ *    "Apache" nor may "Apache" appear in their name without prior 
  *    written permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
@@ -77,7 +77,7 @@ import java.io.UnsupportedEncodingException;
  * @deprecated This class has been replaced by 
  *             {@link org.apache.commons.codec.binary.Base64}
  * 
- * @version $Id: Base64.java,v 1.7 2003/10/05 21:34:22 tobrien Exp $
+ * @version $Id: Base64.java,v 1.8 2003/10/05 21:45:49 tobrien Exp $
  */
 public final class Base64 {
 
