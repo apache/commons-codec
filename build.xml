@@ -3,7 +3,7 @@
 
 <!--
         "Codec" component of the Jakarta Commons Subproject
-        $Id: build.xml,v 1.1 2003/04/25 17:50:55 tobrien Exp $
+        $Id: build.xml,v 1.2 2003/04/29 22:17:49 tobrien Exp $
 -->
 
 
@@ -108,7 +108,7 @@
     <mkdir      dir="${dist.home}"/>
     <copy      file="../LICENSE"
               todir="${dist.home}"/>
-    <copy      file="RELEASE-NOTES.txt"
+    <copy      file="${basedir}/RELEASE-NOTES.txt"
               todir="${dist.home}"/>
     <antcall target="jar"/>
   </target>
