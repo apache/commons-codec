@@ -179,7 +179,12 @@ limitations under the License.
         <contributor>
             <name>Alex Karasulu</name>
             <email>aok123 at bellsouth.net</email>
-            <roles>submitted Binary class and test</roles>
+            <roles>Submitted Binary class and test</roles>
+        </contributor>
+        <contributor>
+            <name>Matthew Inger</name>
+            <email>mattinger at yahoo.com</email>
+            <roles>Submitted DIFFERENCE algorithm for Soundex and RefinedSoundex</roles>
         </contributor>
     </contributors>
     <dependencies>
@@ -229,21 +234,23 @@ limitations under the License.
   	</build>
     
     <reports>
+	    <report>maven-changes-plugin</report>
         <report>maven-changelog-plugin</report>
-        <!--   <report>maven-changes-plugin</report> -->
         <report>maven-checkstyle-plugin</report>
         <report>maven-clover-plugin</report>
         <report>maven-developer-activity-plugin</report>
         <report>maven-file-activity-plugin</report>
         <report>maven-javadoc-plugin</report>
-        <!--   <report>maven-jdepend-plugin</report> -->
-        <!--   <report>maven-jellydoc-plugin</report> -->
+        <report>maven-jdiff-plugin</report>
         <report>maven-junit-report-plugin</report>
         <report>maven-jxr-plugin</report>
         <report>maven-license-plugin</report>
+        <!--   <report>maven-changes-plugin</report> -->
+        <!--   <report>maven-findbugs-plugin</report> -->
+        <!--   <report>maven-jdepend-plugin</report> -->
+        <!--   <report>maven-jellydoc-plugin</report> -->
         <!--   <report>maven-linkcheck-plugin</report> -->
         <!--   <report>maven-statcvs-plugin</report> -->
         <!--   <report>maven-tasklist-plugin</report> -->
-        <!--   <report>maven-findbugs-plugin</report> -->
     </reports>
 </project>
