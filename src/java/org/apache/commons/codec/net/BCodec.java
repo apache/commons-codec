@@ -41,7 +41,7 @@ import org.apache.commons.codec.binary.Base64;
  * 
  * @author Apache Software Foundation
  * @since 1.3
- * @version $Id: BCodec.java,v 1.9 2004/08/27 17:18:17 ggregory Exp $
+ * @version $Id: BCodec.java,v 1.10 2004/09/01 17:34:38 ggregory Exp $
  */
 public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder {
     /**
@@ -74,14 +74,14 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
         return "B";
     }
 
-    protected byte[] doEncoding(byte[] bytes) throws EncoderException {
+    protected byte[] doEncoding(byte[] bytes) {
         if (bytes == null) {
             return null;
         }
         return Base64.encodeBase64(bytes);
     }
 
-    protected byte[] doDecoding(byte[] bytes) throws DecoderException {
+    protected byte[] doDecoding(byte[] bytes) {
         if (bytes == null) {
             return null;
         }
@@ -94,7 +94,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * @param value
      *                  string to convert to Base64 form
      * @param charset
-     *                  the charset for pString
+     *                  the charset for <code>value</code>
      * @return Base64 string
      * 
      * @throws EncoderException
