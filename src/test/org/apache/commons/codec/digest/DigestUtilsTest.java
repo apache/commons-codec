@@ -57,12 +57,6 @@
 
 package org.apache.commons.codec.digest;
 
-import java.security.MessageDigest;
-import java.security.MessageDigestSpi;
-import java.security.Security;
-
-import org.apache.commons.codec.EncoderException;
-
 import junit.framework.TestCase;
 
 /**
