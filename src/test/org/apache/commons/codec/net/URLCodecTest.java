@@ -67,7 +67,6 @@ import junit.framework.TestCase;
  * 
  * @author <a href="mailto:oleg@ural.ru">Oleg Kalnichevski</a>
  */
-
 public class URLCodecTest extends TestCase {
     
     static final int SWISS_GERMAN_STUFF_UNICODE [] = {
@@ -241,12 +240,12 @@ public class URLCodecTest extends TestCase {
         URLCodec urlcodec = new URLCodec("NONSENSE");
            String plain = "Hello there!";
             try {
-               String encoded = urlcodec.encode(plain);
+               urlcodec.encode(plain);
                 fail( "We set the encoding to a bogus NONSENSE vlaue, this shouldn't have worked.");
             } catch( EncoderException ee ) {
             }
             try {
-               String decoded = urlcodec.decode(plain);
+               urlcodec.decode(plain);
                 fail( "We set the encoding to a bogus NONSENSE vlaue, this shouldn't have worked.");
             } catch( DecoderException ee ) {
             }
@@ -275,4 +274,14 @@ public class URLCodecTest extends TestCase {
         } catch( DecoderException ee ) {
         }
     }
+
+    public void testDefaultEncoding() throws Exception {
+        String plain = "Hello there!";
+        URLCodec urlcodec = new URLCodec("UnicodeBig");
+        urlcodec.encode(plain); // To work around a weird quirk in Java 1.2.2
+        String encoded1 = urlcodec.encode(plain, "UnicodeBig");
+        String encoded2 = urlcodec.encode(plain);
+        assertEquals(encoded1, encoded2);
+    }
+
 }
