@@ -1,7 +1,7 @@
-$Id: RELEASE-NOTES.txt,v 1.4 2003/05/29 21:14:58 tobrien Exp $
+$Id: RELEASE-NOTES.txt,v 1.5 2003/11/03 19:21:36 ggregory Exp $
 
 			Commons Codec Package
-			    Version 1.1.1
+			    Version 1.2
 			    Release Notes
 
 
@@ -9,13 +9,15 @@ INTRODUCTION:
 
 This document contains the release notes for this version of the Commons
 Codec package, and highlights changes since the previous version.  Version
-1.1.1 contains a bug fix for the 1.1 release, and addresses an issue related
-to the treat of non-Base64 characters.
+1.2 contains a bug fixes for the 1.1 release, addresses an issue related
+to the treat of non-Base64 characters, and adds the 
+org.apache.commons.codec.net package.
 
 
 NEW FEATURES:
 
-* None
+* org.apache.commons.codec.net: A new package with the class URLCodec.
+
 
 BUG FIXES:
 
@@ -28,5 +30,6 @@ BUG FIXES:
   tests for Base64 were updated to reflect the changes related to
   discarding non-Base64 characters.
 
-
+* Fix for Bug 24360: Hex.decode(Object) throws a ClassCastException 
+  when a String argument is passed in.
 
