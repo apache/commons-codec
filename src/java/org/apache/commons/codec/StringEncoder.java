@@ -54,17 +54,16 @@
 package org.apache.commons.codec;
 
 /**
- * A StringEncoder is an encoder which expects a String as
- * a method parameter and one that produces a String as the
- * output of the Encoding process.
+ * Encodes a String into a String. 
  *
  * @author Tim O'Brien
- * @version $Id: StringEncoder.java,v 1.3 2003/07/30 22:34:17 tobrien Exp $
+ * @author Gary Gregory
+ * @version $Id: StringEncoder.java,v 1.4 2003/08/14 07:40:17 ggregory Exp $
  */
 public interface StringEncoder extends Encoder {
     
     /**
-     * Encode a String and produce a String.
+     * Encodes a String and returns a String.
      * 
      * @param pString a String to encode
      * 

@@ -54,16 +54,16 @@
 package org.apache.commons.codec;
 
 /**
- * A binary encoder contains methods common to all
- * encoders for binary data. 
+ * Defines common encoding methods for byte arrays encoders.
  * 
  * @author Tim O'Brien
- * @version $Id: BinaryEncoder.java,v 1.3 2003/07/30 22:34:17 tobrien Exp $
+ * @author Gary Gregory
+ * @version $Id: BinaryEncoder.java,v 1.4 2003/08/14 07:40:17 ggregory Exp $
  */
 public interface BinaryEncoder extends Encoder {
     
     /**
-     * Encode a byte array and return the encoded data
+     * Encodes a byte array and return the encoded data
      * as a byte array.
      * 
      * @param pArray Data to be encoded

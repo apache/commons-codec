@@ -54,21 +54,25 @@
 package org.apache.commons.codec;
 
 /**
- * Encoder is the sister interface of Decoder, it provides
- * the highest level of abstraction for Encoders.  All
- * Encoders implement this common generic interface.
+ * <p>Provides the highest level of abstraction for Encoders.
+ * This is the sister interface of {@link Decoder}.  All
+ * Encoder implement this common generic interface.</p>
+ * 
+ * <p>Allows a user to pass a generic Object to any Encoder 
+ * implementation in the codec package.</p>
+ * 
+ * <p>One of the two interfaces at the center of the codec package.</p>
  *
  * @author Tim O'Brien
- * @version $Id: Encoder.java,v 1.3 2003/07/30 22:34:17 tobrien Exp $
+ * @author Gary Gregory
+ * @version $Id: Encoder.java,v 1.4 2003/08/14 07:40:17 ggregory Exp $
  */
 public interface Encoder {
     
     /**
-     * All encoders allow a library-user to pass an 
-     * Object and get an Object in return.  This function
-     * encodes an "Object" - returning the encoded content 
-     * as an Object.  The Objects here may just be byte[]
-     * or Strings depending on the implementation used.
+     * Encodes an "Object" and returns the encoded content 
+     * as an Object.  The Objects here may just be <code>byte[]</code>
+     * or <code>String</code>s depending on the implementation used.
      *   
      * @param pObject An object ot encode
      * 

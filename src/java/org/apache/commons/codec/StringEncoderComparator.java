@@ -65,28 +65,31 @@ import java.util.Comparator;
  * form of a name such as Soundex.
  *
  * @author Tim O'Brien
- * @version $Id: StringEncoderComparator.java,v 1.3 2003/07/30 22:34:17 tobrien Exp $
+ * @author Gary Gregory
+ * @version $Id: StringEncoderComparator.java,v 1.4 2003/08/14 07:40:17 ggregory Exp $
  */
 public class StringEncoderComparator implements Comparator {
 
-    // Private encoder instance
+    /**
+     * Internal encoder instance.
+     */
     private StringEncoder stringEncoder;
 
     /**
-     * A no-arg, do-nothing constructor
+     * Constructs a new instance.
      */
     public StringEncoderComparator() {
     }
 
     /**
-     * Use the provided soundex algorithm.
+     * Constructs a new instance with the given soundex algorithm.
      */
     public StringEncoderComparator(StringEncoder en) {
         this.stringEncoder = en;
     }
 
     /**
-     * Compare 2 strings based not on the strings 
+     * Compares 2 strings based not on the strings 
      * themselves, but on an encoding of the two 
      * strings using the StringEncoder this Comparator
      * was created with.
