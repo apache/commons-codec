@@ -20,9 +20,16 @@ package org.apache.commons.codec;
  * Thrown when a Decoder has encountered a failure condition during a decode. 
  * 
  * @author Apache Software Foundation
- * @version $Id: DecoderException.java,v 1.9 2004/02/29 04:08:31 tobrien Exp $
+ * @version $Id: DecoderException.java,v 1.10 2004/09/08 17:45:21 ggregory Exp $
  */
 public class DecoderException extends Exception {
+
+    /**
+     * Declares the Serial Version Uid.
+     * 
+     * @see <a href="http://c2.com/cgi/wiki?AlwaysDeclareSerialVersionUid">Always Declare Serial Version Uid<a>
+     */
+    private static final long serialVersionUID = 1L;
 
     /**
      * Creates a DecoderException
