@@ -21,34 +21,43 @@ import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 
 /**
- * Encodes and decodes binary to and from ascii bit Strings.
+ * Encodes and decodes byte arrays to and from ASCII bit Strings.
  *
  * @todo may want to add more bit vector functions like and/or/xor/nand
  * @todo also might be good to generate boolean[] from byte[] et. cetera.
  * @author Apache Software Foundation
  * @since 1.3
- * @version $Revision: 1.6 $
+ * @version $Id $
  */
 public class Binary implements BinaryDecoder, BinaryEncoder
 {
+    /*
+     * tried to avoid using ArrayUtils to minimize dependencies
+     * while using these empty arrays - dep is just not worth it. 
+     */
+    /** Empty char array. */
+    private static final char[] EMPTY_CHAR_ARRAY = new char[0] ;
+    /** Empty byte array. */
+    private static final byte[] EMPTY_BYTE_ARRAY = new byte[0] ;
+
     /** Mask for bit 0 of a byte. */
-    public static final int BIT_0 = 1 ;
+    private static final int BIT_0 = 1 ;
     /** Mask for bit 1 of a byte. */
-    public static final int BIT_1 = 1 << 1 ;
+    private static final int BIT_1 = 0x02 ;
     /** Mask for bit 2 of a byte. */
-    public static final int BIT_2 = 1 << 2 ;
+    private static final int BIT_2 = 0x04 ;
     /** Mask for bit 3 of a byte. */
-    public static final int BIT_3 = 1 << 3 ;
+    private static final int BIT_3 = 0x08 ;
     /** Mask for bit 4 of a byte. */
-    public static final int BIT_4 = 1 << 4 ;
+    private static final int BIT_4 = 0x10 ;
     /** Mask for bit 5 of a byte. */
-    public static final int BIT_5 = 1 << 5 ;
+    private static final int BIT_5 = 0x20 ;
     /** Mask for bit 6 of a byte. */
-    public static final int BIT_6 = 1 << 6 ;
+    private static final int BIT_6 = 0x40 ;
     /** Mask for bit 7 of a byte. */
-    public static final int BIT_7 = 1 << 7 ;
+    private static final int BIT_7 = 0x80 ;
     
-    public static final int [] BITS = 
+    private static final int [] BITS = 
     {
       BIT_0, BIT_1, BIT_2, BIT_3, BIT_4, BIT_5, BIT_6, BIT_7
     } ;
@@ -99,6 +108,11 @@ public class Binary implements BinaryDecoder, BinaryEncoder
      */
     public Object decode( Object ascii ) throws DecoderException
     {
+        if ( ascii == null )
+        {
+            return EMPTY_BYTE_ARRAY ;
+        }
+    
         if ( ascii instanceof byte[] )
         {
             return fromAscii( ( byte[] ) ascii ) ;
@@ -141,11 +155,20 @@ public class Binary implements BinaryDecoder, BinaryEncoder
      *      the byte array argument 
      * @see org.apache.commons.codec.Decoder#decode(Object)
      */
-    public byte[] decode( String ascii )
+    public byte[] toByteArray( String ascii )
     {
+        if (ascii == null) {
+            return EMPTY_BYTE_ARRAY;
+        }
         return fromAscii( ascii.toCharArray() ) ;
     }
     
+    
+    // ------------------------------------------------------------------------
+    //
+    // static codec operations
+    //
+    // ------------------------------------------------------------------------
     
     /**
      * Decodes a byte array where each char represents an ascii '0' or '1'.
@@ -156,60 +179,28 @@ public class Binary implements BinaryDecoder, BinaryEncoder
      */
     public static byte[] fromAscii( char[] ascii )
     {
+        if ( ascii == null || ascii.length == 0 )
+        {
+            return EMPTY_BYTE_ARRAY ;
+        }
+    
         // get length/8 times bytes with 3 bit shifts to the right of the length
         byte[] l_raw = new byte[ ascii.length >> 3 ] ;
         
         /*
-         * Yah its long and repetitive but I unraveled an internal loop to 
-         * check each bit of a byte for speed using the bit masks that are
-         * precomputed which is another PITA but it makes it faster.
-         * 
-         * We also decr index jj by 8 as we go along to not recompute indices
-         * using multiplication every time inside the loop.
-         * 
-         * @todo might want another nested loop to use BITS[] now that its here
+         * We decr index jj by 8 as we go along to not recompute indices using 
+         * multiplication every time inside the loop.
          */
         for ( int ii=0, jj=ascii.length-1; ii < l_raw.length; ii++, jj-=8 )
         {
-            if ( ascii[jj] == '1' )
+            for ( int bits=0; bits < BITS.length; ++bits) 
             {
-                l_raw[ii] |= BIT_0 ;
-            }
+                if ( ascii[jj-bits] == '1' )
+                {
+                    l_raw[ii] |= BITS[bits] ;
+                }
+            }        
             
-            if ( ascii[jj - 1] == '1' )
-            {
-                l_raw[ii] |= BIT_1 ;
-            }
-
-            if ( ascii[jj - 2] == '1' )
-            {
-                l_raw[ii] |= BIT_2 ;
-            }
-
-            if ( ascii[jj - 3] == '1' )
-            {
-                l_raw[ii] |= BIT_3 ;
-            }
-
-            if ( ascii[jj - 4] == '1' )
-            {
-                l_raw[ii] |= BIT_4 ;
-            }
-
-            if ( ascii[jj - 5] == '1' )
-            {
-                l_raw[ii] |= BIT_5 ;
-            }
-
-            if ( ascii[jj - 6] == '1' )
-            {
-                l_raw[ii] |= BIT_6 ;
-            }
-
-            if ( ascii[jj - 7] == '1' )
-            {
-                l_raw[ii] |= BIT_7 ;
-            }
         }
         
         return l_raw ;
@@ -225,60 +216,27 @@ public class Binary implements BinaryDecoder, BinaryEncoder
      */
     public static byte[] fromAscii( byte[] ascii )
     {
+        if ( ascii == null || ascii.length == 0 )
+        {
+            return EMPTY_BYTE_ARRAY ;
+        }
+    
         // get length/8 times bytes with 3 bit shifts to the right of the length
         byte[] l_raw = new byte[ ascii.length >> 3 ] ;
         
         /*
-         * Yah its long and repetitive but I unraveled an internal loop to 
-         * check each bit of a byte for speed using the bit masks that are
-         * precomputed which is another PITA but it makes it faster.
-         * 
-         * We also decr index jj by 8 as we go along to not recompute indices
-         * using multiplication every time inside the loop.
-         * 
-         * @todo might want another nested loop to use BITS[] now that its here
+         * We decr index jj by 8 as we go along to not recompute indices using 
+         * multiplication every time inside the loop.
          */
         for ( int ii=0, jj=ascii.length-1; ii < l_raw.length; ii++, jj-=8 )
         {
-            if ( ascii[jj] == '1' )
+            for ( int bits=0; bits < BITS.length; ++bits) 
             {
-                l_raw[ii] |= BIT_0 ;
-            }
-            
-            if ( ascii[jj - 1] == '1' )
-            {
-                l_raw[ii] |= BIT_1 ;
-            }
-
-            if ( ascii[jj - 2] == '1' )
-            {
-                l_raw[ii] |= BIT_2 ;
-            }
-
-            if ( ascii[jj - 3] == '1' )
-            {
-                l_raw[ii] |= BIT_3 ;
-            }
-
-            if ( ascii[jj - 4] == '1' )
-            {
-                l_raw[ii] |= BIT_4 ;
-            }
-
-            if ( ascii[jj - 5] == '1' )
-            {
-                l_raw[ii] |= BIT_5 ;
-            }
-
-            if ( ascii[jj - 6] == '1' )
-            {
-                l_raw[ii] |= BIT_6 ;
-            }
-
-            if ( ascii[jj - 7] == '1' )
-            {
-                l_raw[ii] |= BIT_7 ;
-            }
+                if ( ascii[jj-bits] == '1' )
+                {
+                    l_raw[ii] |= BITS[bits] ;
+                }
+            }        
         }
         
         return l_raw ;
@@ -295,92 +253,31 @@ public class Binary implements BinaryDecoder, BinaryEncoder
      */
     public static byte[] toAsciiBytes( byte[] raw )
     {
+        if ( raw == null || raw.length == 0 )
+        {
+            return EMPTY_BYTE_ARRAY ;
+        }
+    
         // get 8 times the bytes with 3 bit shifts to the left of the length
         byte [] l_ascii = new byte[ raw.length << 3 ] ;
         
         /*
-         * Yah its long and repetitive but I unraveled an internal loop to 
-         * check each bit of a byte for speed using the bit masks that are
-         * precomputed which is another PITA but it makes it faster.
-         * 
-         * We also decr index jj by 8 as we go along to not recompute indices
-         * using multiplication every time inside the loop.
-         * 
-         * @todo might want another nested loop to use BITS[] now that its here
+         * We decr index jj by 8 as we go along to not recompute indices using 
+         * multiplication every time inside the loop.
          */
         for ( int ii=0, jj=l_ascii.length-1; ii < raw.length; ii++, jj-=8 )
         {
-            if ( ( raw[ii] & BIT_0 ) == 0 )
+            for ( int bits=0; bits < BITS.length; ++bits) 
             {
-                l_ascii[jj] = '0' ;
-            }
-            else
-            {
-                l_ascii[jj] = '1' ;
-            }
-            
-            if ( ( raw[ii] & BIT_1 ) == 0 )
-            {
-                l_ascii[jj - 1] = '0' ;
-            }
-            else
-            {
-                l_ascii[jj - 1] = '1' ;
-            }
-
-            if ( ( raw[ii] & BIT_2 ) == 0 )
-            {
-                l_ascii[jj - 2] = '0' ;
-            }
-            else
-            {
-                l_ascii[jj - 2] = '1' ;
-            }
-
-            if ( ( raw[ii] & BIT_3 ) == 0 )
-            {
-                l_ascii[jj - 3] = '0' ;
-            }
-            else
-            {
-                l_ascii[jj - 3] = '1' ;
-            }
-
-            if ( ( raw[ii] & BIT_4 ) == 0 )
-            {
-                l_ascii[jj - 4] = '0' ;
-            }
-            else
-            {
-                l_ascii[jj - 4] = '1' ;
-            }
-
-            if ( ( raw[ii] & BIT_5 ) == 0 )
-            {
-                l_ascii[jj - 5] = '0' ;
-            }
-            else
-            {
-                l_ascii[jj - 5] = '1' ;
-            }
-
-            if ( ( raw[ii] & BIT_6 ) == 0 )
-            {
-                l_ascii[jj - 6] = '0' ;
-            }
-            else
-            {
-                l_ascii[jj - 6] = '1' ;
-            }
-
-            if ( ( raw[ii] & BIT_7 ) == 0 )
-            {
-                l_ascii[jj - 7] = '0' ;
-            }
-            else
-            {
-                l_ascii[jj - 7] = '1' ;
-            }
+                if ( ( raw[ii] & BITS[bits] ) == 0 )
+                {
+                    l_ascii[jj-bits] = '0' ;
+                }
+                else
+                {
+                    l_ascii[jj-bits] = '1' ;
+                }
+            }        
         }
         
         return l_ascii ;
@@ -397,91 +294,30 @@ public class Binary implements BinaryDecoder, BinaryEncoder
      */
     public static char[] toAsciiChars( byte[] raw )
     {
+        if ( raw == null || raw.length == 0 )
+        {
+            return EMPTY_CHAR_ARRAY ;
+        }
+        
         // get 8 times the bytes with 3 bit shifts to the left of the length
         char [] l_ascii = new char[ raw.length << 3 ] ;
         
         /*
-         * Yah its long and repetitive but I unraveled an internal loop to 
-         * check each bit of a byte for speed using the bit masks that are
-         * precomputed which is another PITA but it makes it faster.
-         * 
-         * We also grow index jj by 8 as we go along to not recompute indices
-         * using multiplication every time inside the loop.
-         * 
-         * @todo might want another nested loop to use BITS[] now that its here
+         * We decr index jj by 8 as we go along to not recompute indices using 
+         * multiplication every time inside the loop.
          */
         for ( int ii=0, jj=l_ascii.length-1; ii < raw.length; ii++, jj-=8 )
         {
-            if ( ( raw[ii] & BIT_0 ) == 0 )
+            for ( int bits=0; bits < BITS.length; ++bits )
             {
-                l_ascii[jj] = '0' ;
-            }
-            else
-            {
-                l_ascii[jj] = '1' ;
-            }
-            
-            if ( ( raw[ii] & BIT_1 ) == 0 )
-            {
-                l_ascii[jj - 1] = '0' ;
-            }
-            else
-            {
-                l_ascii[jj - 1] = '1' ;
-            }
-
-            if ( ( raw[ii] & BIT_2 ) == 0 )
-            {
-                l_ascii[jj - 2] = '0' ;
-            }
-            else
-            {
-                l_ascii[jj - 2] = '1' ;
-            }
-
-            if ( ( raw[ii] & BIT_3 ) == 0 )
-            {
-                l_ascii[jj - 3] = '0' ;
-            }
-            else
-            {
-                l_ascii[jj - 3] = '1' ;
-            }
-
-            if ( ( raw[ii] & BIT_4 ) == 0 )
-            {
-                l_ascii[jj - 4] = '0' ;
-            }
-            else
-            {
-                l_ascii[jj - 4] = '1' ;
-            }
-
-            if ( ( raw[ii] & BIT_5 ) == 0 )
-            {
-                l_ascii[jj - 5] = '0' ;
-            }
-            else
-            {
-                l_ascii[jj - 5] = '1' ;
-            }
-
-            if ( ( raw[ii] & BIT_6 ) == 0 )
-            {
-                l_ascii[jj - 6] = '0' ;
-            }
-            else
-            {
-                l_ascii[jj - 6] = '1' ;
-            }
-
-            if ( ( raw[ii] & BIT_7 ) == 0 )
-            {
-                l_ascii[jj - 7] = '0' ;
-            }
-            else
-            {
-                l_ascii[jj - 7] = '1' ;
+                if ( ( raw[ii] & BITS[bits] ) == 0 )
+                {
+                    l_ascii[jj-bits] = '0' ;
+                }
+                else
+                {
+                    l_ascii[jj-bits] = '1' ;
+                }
             }
         }
         
