@@ -1,5 +1,5 @@
 /*
- * Copyright 2001-2004 The Apache Software Foundation.
+ * Copyright 2004 The Apache Software Foundation.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -61,7 +61,7 @@ import org.apache.commons.codec.StringEncoder;
  * 
  * @author Apache Software Foundation
  * @since 1.3
- * @version $Id: QuotedPrintableCodec.java,v 1.3 2004/03/28 21:21:58 ggregory Exp $
+ * @version $Id: QuotedPrintableCodec.java,v 1.4 2004/03/28 21:24:46 ggregory Exp $
  */
 public class QuotedPrintableCodec 
         implements BinaryEncoder, BinaryDecoder, 
