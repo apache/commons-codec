@@ -1,4 +1,19 @@
 <?xml version="1.0"?>
+<!--
+Copyright 2002-2004 The Apache Software Foundation.
+ 
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
 
 <document>
 
@@ -33,7 +48,8 @@
      another.  XML-RPC had applied numerous fixes and patches which
      were not applied to the Commons HttpClient Base64.  Different 
      subprojects had differing implementations at various levels
-     of compliance with the RFC 2045.
+     of compliance with the <a href="http://www.ietf.org/rfc/rfc2045.txt">
+     RFC 2045</a>.
    </p>
    <p>
      Out of that confusing duplication of effort sprang this simple
