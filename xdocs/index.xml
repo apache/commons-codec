@@ -12,10 +12,36 @@
   <section name="Commons Codec">
 
    <p>
-    Welcome, to Commons Codec.  Common Codec is an attempt to provide
-    definitive implementations of commonly used encoders and decoders.
+    Welcome.  Commons Codec provides implementations of common
+    encoders and decoders such as Base64, Hex, various phonetic
+    encodings, and URLs.
    </p>
 
+  </section>
+
+  <section name="Impetus">
+   <p>
+     Codec was formed as an attempt to focus development effort on one
+     definitive implementation of the Base64 encoder.  At the time of
+     Codec's proposal, there were approximately 34 different Java
+     classes that dealt with Base64 encoding spread over the
+     Foundation's CVS repository.  Developers in the Jakarta Tomcat
+     project had implemented an original version of the Base64 codec
+     which had been copied by the Commons HttpClient and Apache XML
+     project's XML-RPC subproject.  After almost one year, the two
+     forked versions of Base64 had significantly diverged from one
+     another.  XML-RPC had applied numerous fixes and patches which
+     were not applied to the Commons HttpClient Base64.  Different 
+     subprojects had differing implementations at various levels
+     of compliance with the RFC 2045.
+   </p>
+   <p>
+     Out of that confusing duplication of effort sprang this simple
+     attempt to encourage code reuse among various projects.  While
+     this package contains a abstract framework for the creation
+     encoders and decoders, Codec itself is primarily focused on
+     providing functional utilities for working with common encodings.
+   </p>
   </section>
 
   <section name="Releases">
@@ -30,7 +56,7 @@
 
    <p>
  	Codec is currently comprised of a modest set of utilities and a
- 	simple framework for String encoding and decoding.
+ 	simple framework for encoding and decoding both textual and binary data.
    </p>
 
    <subsection name="Common Encoders">
