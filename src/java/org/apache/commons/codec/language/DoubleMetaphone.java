@@ -71,7 +71,7 @@ import org.apache.commons.codec.StringEncoder;
  * </ul>
  * 
  * @author <a href="mailto:ben@walstrum.com">Benjamin Walstrum</a>
- * @version $Id: DoubleMetaphone.java,v 1.6 2003/07/25 22:52:55 ggregory Exp $
+ * @version $Id: DoubleMetaphone.java,v 1.7 2003/07/25 22:53:53 ggregory Exp $
  */
 public class DoubleMetaphone implements StringEncoder {
 
@@ -95,7 +95,7 @@ public class DoubleMetaphone implements StringEncoder {
     /**
      * Maximum length of an encoding, default is 4
      */
-    private int maxCodeLen = 4;
+    protected int maxCodeLen = 4;
 
     /**
      * Creates an instance of this DoubleMetaphone encoder
