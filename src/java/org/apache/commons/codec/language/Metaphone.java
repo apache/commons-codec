@@ -61,7 +61,7 @@ import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
 
 /**
- * A class to generate phonetic code.
+ * Encodes a string into a metaphone value.
  * The initial Java implementation, William B. Brogden.  December, 1997
  * Permission given by wbrogden for code to be used anywhere.
  * 
@@ -72,7 +72,7 @@ import org.apache.commons.codec.StringEncoder;
  * @author bayard@generationjava.com
  * @author Tim O'Brien
  * @author Gary Gregory
- * @version $Id: Metaphone.java,v 1.9 2003/11/07 22:38:03 ggregory Exp $
+ * @version $Id: Metaphone.java,v 1.10 2003/11/07 23:12:54 ggregory Exp $
  */
 public class Metaphone implements StringEncoder {
 
