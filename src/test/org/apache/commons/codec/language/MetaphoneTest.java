@@ -3,7 +3,7 @@
  * 
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,8 +30,8 @@
  *    from this software without prior written permission. For written 
  *    permission, please contact apache@apache.org.
  *
- * 5. Products derived from this software may not be called "Apache",
- *    "Apache" nor may "Apache" appear in their name without prior 
+ * 5. Products derived from this software may not be called "Apache"
+ *    nor may "Apache" appear in their name without prior 
  *    written permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
@@ -64,7 +64,7 @@ import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.StringEncoderAbstractTest;
 
 /**
- * @version $Revision: 1.6 $ $Date: 2003/11/12 19:32:52 $
+ * @version $Revision: 1.7 $ $Date: 2004/01/02 07:05:36 $
  * @author Rodney Waldhoff
  * @author Gary Gregory
  */

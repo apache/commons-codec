@@ -3,7 +3,7 @@
  * 
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,8 +30,8 @@
  *    from this software without prior written permission. For written 
  *    permission, please contact apache@apache.org.
  *
- * 5. Products derived from this software may not be called "Apache",
- *    "Apache" nor may "Apache" appear in their name without prior 
+ * 5. Products derived from this software may not be called "Apache"
+ *    nor may "Apache" appear in their name without prior 
  *    written permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
@@ -69,7 +69,7 @@ import org.apache.commons.codec.StringEncoderAbstractTest;
  * @see "http://www.cuj.com/documents/s=8038/cuj0006philips/"
  * @author Mindbridge
  * @author Gary Gregory
- * @version $Id: DoubleMetaphoneTest.java,v 1.5 2003/11/12 19:32:52 ggregory Exp $
+ * @version $Id: DoubleMetaphoneTest.java,v 1.6 2004/01/02 07:05:36 ggregory Exp $
  */
 public class DoubleMetaphoneTest extends StringEncoderAbstractTest {
 
