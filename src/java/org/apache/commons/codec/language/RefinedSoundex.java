@@ -68,7 +68,7 @@ import org.apache.commons.codec.StringEncoder;
  * 
  * @author Tim O'Brien
  * @author ggregory@seagullsw.com
- * @version $Id: RefinedSoundex.java,v 1.9 2003/10/05 21:45:48 tobrien Exp $
+ * @version $Id: RefinedSoundex.java,v 1.10 2003/10/12 19:48:14 tobrien Exp $
  */
 public class RefinedSoundex implements StringEncoder {
 
@@ -176,10 +176,7 @@ public class RefinedSoundex implements StringEncoder {
     public Object encode(Object pObject) throws EncoderException {
         Object result;
         if (!(pObject instanceof java.lang.String)) {
-            throw new EncoderException("Parameter supplied to " 
-                                       + "RefinedSoundex " 
-                                       + "encode is not of type " 
-                                       + "java.lang.String"); 
+            throw new EncoderException("Parameter supplied to RefinedSoundex encode is not of type java.lang.String"); 
         } else {
             result = soundex((String) pObject);
         }

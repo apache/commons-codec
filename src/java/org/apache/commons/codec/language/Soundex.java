@@ -68,7 +68,7 @@ import org.apache.commons.codec.StringEncoder;
  * @author bayard@generationjava.com
  * @author Tim O'Brien
  * @author ggregory@seagullsw.com
- * @version $Id: Soundex.java,v 1.8 2003/10/05 21:45:48 tobrien Exp $
+ * @version $Id: Soundex.java,v 1.9 2003/10/12 19:48:15 tobrien Exp $
  */
 public class Soundex implements StringEncoder {
 
@@ -134,9 +134,7 @@ public class Soundex implements StringEncoder {
         int incount = 1, count = 1;
         out[0] = Character.toUpperCase(str.charAt(0));
         last = getMappingCode(str.charAt(0));
-        while ((incount < str.length()) 
-              && (mapped = getMappingCode(str.charAt(incount++))) != 0 
-              && (count < maxLength)) {
+        while ((incount < str.length()) && (mapped = getMappingCode(str.charAt(incount++))) != 0 && (count < maxLength)) {
                 if ((mapped != '0') && (mapped != last)) {
                     out[count++] = mapped;
                 }
@@ -162,10 +160,7 @@ public class Soundex implements StringEncoder {
         Object result;
 
         if (!(pObject instanceof java.lang.String)) {
-            throw new EncoderException("Parameter supplied to " 
-                                       + "Soundex " 
-                                       + "encode is not of type " 
-                                       + "java.lang.String"); 
+            throw new EncoderException("Parameter supplied to Soundex encode is not of type java.lang.String"); 
         } else {
             result = soundex((String) pObject);
         }
