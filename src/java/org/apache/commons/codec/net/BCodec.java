@@ -25,7 +25,7 @@ import org.apache.commons.codec.binary.Base64;
 
 /**
  * <p>
- * The "B" encoding is identical to the Base64 encoding defined by <a href="http://www.ietf.org/rfc/rfc1521.txt">RFC
+ * Identical to the Base64 encoding defined by <a href="http://www.ietf.org/rfc/rfc1521.txt">RFC
  * 1521</a> and allows a character set to be specified.
  * </p>
  * 
@@ -40,7 +40,7 @@ import org.apache.commons.codec.binary.Base64;
  * 
  * @author Apache Software Foundation
  * @since 1.3
- * @version $Id: BCodec.java,v 1.4 2004/04/13 22:02:37 ggregory Exp $
+ * @version $Id: BCodec.java,v 1.5 2004/04/13 22:46:37 ggregory Exp $
  */
 public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder {
     /**

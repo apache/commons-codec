@@ -26,8 +26,8 @@ import org.apache.commons.codec.StringEncoder;
 
 /**
  * <p>
- * The "Q" encoding is similar to the Quoted-Printable content-transfer-encoding defined in <a
- * href="http://www.ietf.org/rfc/rfc1521.txt">RFC 1521</a>. It is designed to allow text containing mostly ASCII
+ * Similar to the Quoted-Printable content-transfer-encoding defined in <a
+ * href="http://www.ietf.org/rfc/rfc1521.txt">RFC 1521</a> and designed to allow text containing mostly ASCII
  * characters to be decipherable on an ASCII terminal without decoding.
  * </p>
  * 
@@ -42,7 +42,7 @@ import org.apache.commons.codec.StringEncoder;
  * 
  * @author Apache Software Foundation
  * @since 1.3
- * @version $Id: QCodec.java,v 1.4 2004/04/13 22:03:11 ggregory Exp $
+ * @version $Id: QCodec.java,v 1.5 2004/04/13 22:46:37 ggregory Exp $
  */
 public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder {
     /**
