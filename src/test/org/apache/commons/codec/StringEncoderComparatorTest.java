@@ -21,13 +21,14 @@ import java.util.Collections;
 import java.util.List;
 
 import junit.framework.TestCase;
+
 import org.apache.commons.codec.language.DoubleMetaphone;
 import org.apache.commons.codec.language.Soundex;
 
 /**
  * Test cases for the StingEncoderComparator.
  * 
- * @version $Id: StringEncoderComparatorTest.java,v 1.11 2004/04/19 01:14:29 ggregory Exp $
+ * @version $Id: StringEncoderComparatorTest.java,v 1.12 2004/08/05 20:39:39 ggregory Exp $
  * @author Apache Software Foundation
  */
 public class StringEncoderComparatorTest extends TestCase {

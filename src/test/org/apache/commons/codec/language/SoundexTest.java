@@ -19,6 +19,7 @@ package org.apache.commons.codec.language;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.StringEncoderAbstractTest;
@@ -26,7 +27,7 @@ import org.apache.commons.codec.StringEncoderAbstractTest;
 /**
  * Tests {@link Soundex}
  * 
- * @version $Id: SoundexTest.java,v 1.18 2004/06/02 00:55:38 ggregory Exp $
+ * @version $Id: SoundexTest.java,v 1.19 2004/08/05 20:39:40 ggregory Exp $
  * @author Apache Software Foundation
  */
 public class SoundexTest extends StringEncoderAbstractTest {

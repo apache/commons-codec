@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 import junit.framework.TestCase;
+
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 
@@ -27,7 +28,7 @@ import org.apache.commons.codec.EncoderException;
  * Tests {@link org.apache.commons.codec.binary.Hex}.
  * 
  * @author Apache Software Foundation
- * @version $Id: HexTest.java,v 1.10 2004/04/18 18:22:33 ggregory Exp $
+ * @version $Id: HexTest.java,v 1.11 2004/08/05 20:39:39 ggregory Exp $
  */
 
 public class HexTest extends TestCase {

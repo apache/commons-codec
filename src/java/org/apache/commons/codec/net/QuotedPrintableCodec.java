@@ -19,6 +19,7 @@ package org.apache.commons.codec.net;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.BitSet;
+
 import org.apache.commons.codec.BinaryDecoder;
 import org.apache.commons.codec.BinaryEncoder;
 import org.apache.commons.codec.DecoderException;
@@ -54,7 +55,7 @@ import org.apache.commons.codec.StringEncoder;
  * 
  * @author Apache Software Foundation
  * @since 1.3
- * @version $Id: QuotedPrintableCodec.java,v 1.8 2004/07/26 22:55:40 ggregory Exp $
+ * @version $Id: QuotedPrintableCodec.java,v 1.9 2004/08/05 20:39:39 ggregory Exp $
  */
 public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, StringDecoder {
     /**

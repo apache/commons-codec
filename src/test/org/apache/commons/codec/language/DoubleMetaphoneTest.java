@@ -18,6 +18,7 @@ package org.apache.commons.codec.language;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.StringEncoderAbstractTest;
@@ -27,7 +28,7 @@ import org.apache.commons.codec.StringEncoderAbstractTest;
  * 
  * @see "http://www.cuj.com/documents/s=8038/cuj0006philips/"
  * @author Apache Software Foundation
- * @version $Id: DoubleMetaphoneTest.java,v 1.9 2004/04/13 23:15:40 ggregory Exp $
+ * @version $Id: DoubleMetaphoneTest.java,v 1.10 2004/08/05 20:39:40 ggregory Exp $
  */
 public class DoubleMetaphoneTest extends StringEncoderAbstractTest {
 
