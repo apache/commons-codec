@@ -54,19 +54,21 @@
 package org.apache.commons.codec;
 
 /**
- * Thrown when there is a failure condition during the encoding process.
+ * Thrown when there is a failure condition during the encoding process.  This
+ * exception is thrown when an Encoder encounters a encoding specific exception
+ * such as invalid data, inability to calculate a checksum, characters outside of the 
+ * expected range.
  * 
  * @author Tim O'Brien
  * @author Gary Gregory
- * @version $Id: EncoderException.java,v 1.4 2003/08/14 07:40:17 ggregory Exp $
+ * @version $Id: EncoderException.java,v 1.5 2003/10/04 16:24:56 tobrien Exp $
  */
 public class EncoderException extends Exception {
 
     /**
-     * Creates a new instance of this exception with
-     * an informative message.
+     * Creates a new instance of this exception with an useful message.
      * 
-     * @param pMessage a human intelligible message
+     * @param pMessage a useful message relating to the encoder specific error.
      */
     public EncoderException(String pMessage) {
         super(pMessage);
