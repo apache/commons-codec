@@ -31,7 +31,7 @@ import org.apache.commons.codec.StringEncoder;
  * </ul>
  * 
  * @author Apache Software Foundation
- * @version $Id: DoubleMetaphone.java,v 1.22 2004/05/24 00:28:10 ggregory Exp $
+ * @version $Id: DoubleMetaphone.java,v 1.23 2004/05/24 04:55:33 ggregory Exp $
  */
 public class DoubleMetaphone implements StringEncoder {
 
@@ -869,21 +869,20 @@ public class DoubleMetaphone implements StringEncoder {
      * Complex condition 0 for 'M'
      */
     private boolean conditionM0(String value, int index) {
-        if (charAt(value, index + 1) == 'M') {
-            return true;
-        } else {
-            return contains(value, index - 1, 3, "UMB") &&
-                ((index + 1) == value.length() - 1 || 
-                 contains(value, index + 2, 2, "ER"));
-        }
-    }
+		if (charAt(value, index + 1) == 'M') {
+			return true;
+		}
+		return contains(value, index - 1, 3, "UMB")
+				&& ((index + 1) == value.length() - 1 || contains(value,
+						index + 2, 2, "ER"));
+	}
     
     //-- BEGIN HELPER FUNCTIONS --//
 
     /**
-     * Determines whether or not a value is of slavo-germanic orgin.  A value is
-     * of slavo-germanic origin if it contians any of 'W', 'K', 'CZ', or 'WITZ'.
-     */
+	 * Determines whether or not a value is of slavo-germanic orgin. A value is
+	 * of slavo-germanic origin if it contians any of 'W', 'K', 'CZ', or 'WITZ'.
+	 */
     private boolean isSlavoGermanic(String value) {
         return value.indexOf('W') > -1 || value.indexOf('K') > -1 || 
             value.indexOf("CZ") > -1 || value.indexOf("WITZ") > -1;
@@ -916,29 +915,26 @@ public class DoubleMetaphone implements StringEncoder {
      * Cleans the input
      */    
     private String cleanInput(String input) {
-        if (input == null) {
-            return null;
-        } else {
-            input = input.trim();
-            if (input.length() == 0) {
-                return null;
-            } else {
-                return input.toUpperCase();
-            }
-        }
-    }
+		if (input == null) {
+			return null;
+		}
+		input = input.trim();
+		if (input.length() == 0) {
+			return null;
+		}
+		return input.toUpperCase();
+	}
 
     /**
-     * Gets the character at index <code>index</code> if available, otherwise it
-     * returns <code>Character.MIN_VALUE</code> so that there is some sort of a
-     * default
-     */    
+	 * Gets the character at index <code>index</code> if available, otherwise
+	 * it returns <code>Character.MIN_VALUE</code> so that there is some sort
+	 * of a default
+	 */    
     protected char charAt(String value, int index) {
         if (index < 0 || index >= value.length()) {
             return Character.MIN_VALUE;
-        } else {
-            return value.charAt(index);
-        }
+        } 
+        return value.charAt(index);
     }
 
     /**
