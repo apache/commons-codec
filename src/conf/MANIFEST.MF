@@ -1,7 +1,7 @@
-Extension-Name: @package@
+Extension-Name: org.apache.commons.codec.*
 Specification-Title: Jakarta Commons Codec
 Specification-Vendor: Apache Software Foundation
-Specification-Version: @version@
-Implementation-Title: @package@
+Specification-Version: 1.2
+Implementation-Title: org.apache.commons.codec.*
 Implementation-Vendor: Apache Software Foundation
-Implementation-Version: @version@
+Implementation-Version: 1.2

@@ -3,11 +3,9 @@
     <extend>../project.xml</extend>
     <name>Codec</name>
     <id>commons-codec</id>
-    <currentVersion>1.2-rc1</currentVersion>
+    <currentVersion>1.2</currentVersion>
     <inceptionYear>2002</inceptionYear>
-    <shortDescription>
-   A collection of simple and common encoders and decoders
-  </shortDescription>
+    <shortDescription>Simple encoders and decoders</shortDescription>
     <description>
    The codec package contains simple encoder and decoders for
    various formats such as Base64 and Hexadecimal.  In addition to these
@@ -29,6 +27,11 @@
             <id>1.2-rc1</id>
             <name>1.2-rc1</name>
             <tag>CODEC_1_2_RC1</tag>
+        </version>
+        <version>
+            <id>1.2</id>
+            <name>1.2</name>
+            <tag>CODEC_1_2</tag>
         </version>
     </versions>
     <branches>
