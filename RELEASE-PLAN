@@ -1,10 +1,14 @@
-$Id: RELEASE-PLAN,v 1.4 2004/01/14 18:05:36 ggregory Exp $
+$Id: RELEASE-PLAN,v 1.5 2004/01/14 18:13:58 ggregory Exp $
 
 Jakarta Commons Codec  
 
 This document outline the current goals for the next release(s).  
 This document defines objectives and action items that should
 be met before the next release.  
+
+*** Codec 1.1
+
+	Status: Codec 1.1 released.
 
 *** Codec 1.1.1 Maintenance Release Plan
 
@@ -23,6 +27,8 @@ Changes to be made before release:
 
    - Still waiting for more bug reports
 
+	Status: Codec 1.1.1 not released.
+
 *** Codec 1.2 Release Candidate
 
 Objective: 
@@ -30,6 +36,8 @@ Objective:
    Identify as *existing* (or set of *existing*) stream Base64 implementation,
    and either integrate or emulate this code.  The community is currently
    in the process of selecting a primary candidate.
+   
+	Status: Codec 1.2 released.
 
 *** Codec 1.3 Release Plan
 
@@ -37,8 +45,11 @@ Objective:
    - Improve Javadocs.
    - Add DIFFERENCE implementation in language package.
 
+	Status:  Items above done.
+
 *** Codec 2.0 Release Plan
 
    - Streamable codecs?
 
+	Status: commons-dev discussions, some sandbox work.
 
