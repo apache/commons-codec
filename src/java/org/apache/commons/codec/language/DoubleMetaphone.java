@@ -62,15 +62,16 @@ import org.apache.commons.codec.StringEncoder;
 /**
  * DoubleMetaphone Java Implementation
  * From the algorithm by Lawrence Philips
- * 
- * Original Article <a 
+ * <ul>
+ * <li>Original Article: <a 
  * href="http://www.cuj.com/documents/s=8038/cuj0006philips/">
- * http://www.cuj.com/documents/s=8038/cuj0006philips/</a>
- * Original Source Code: <a href="ftp://ftp.cuj.com/pub/2000/1806/philips.zip">
- * ftp://ftp.cuj.com/pub/2000/1806/philips.zip</a>
+ * http://www.cuj.com/documents/s=8038/cuj0006philips/</a></li>
+ * <li>Original Source Code: <a href="ftp://ftp.cuj.com/pub/2000/1806/philips.zip">
+ * ftp://ftp.cuj.com/pub/2000/1806/philips.zip</a></li>
+ * </ul>
  * 
  * @author <a href="mailto:ben@walstrum.com">Benjamin Walstrum</a>
- * @version $Id: DoubleMetaphone.java,v 1.5 2003/07/25 22:48:11 ggregory Exp $
+ * @version $Id: DoubleMetaphone.java,v 1.6 2003/07/25 22:52:55 ggregory Exp $
  */
 public class DoubleMetaphone implements StringEncoder {
 
