@@ -1,4 +1,4 @@
-$Id: RELEASE-NOTES.txt,v 1.17 2004/03/17 19:14:40 ggregory Exp $
+$Id: RELEASE-NOTES.txt,v 1.18 2004/03/23 19:26:50 ggregory Exp $
 
 			Commons Codec Package
 			    Version 1.3-dev
@@ -17,7 +17,13 @@ License 1.1.
 NEW FEATURES:
 
 * Binary: Encodes and decodes binary to and from ascii bit Strings.
+
+* QuotedPrintableCodec: Codec for RFC 1521 MIME (Multipurpose Internet 
+ Mail Extensions) Part One. Rules #3, #4, and #5 of the quoted-printable spec 
+ are not implemented yet
+
 * Soundex: Implemented the DIFFERENCE algorithm.
+
 * RefinedSoundex: Implemented the DIFFERENCE algorithm.
 
 BUG FIXES:
@@ -26,7 +32,9 @@ BUG FIXES:
 http://nagoya.apache.org/bugzilla/show_bug.cgi?id=25995
 
 * Added missing tags in Javadoc comments.  
+
 * General Javadoc improvements.
+
 * The Board recommendation to remove Javadoc author tags has been 
 implemented. All author tags are now "Apache Software Foundation".
 
