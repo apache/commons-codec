@@ -200,7 +200,7 @@ limitations under the License.
        	BCodec</a>
       </td>
       <td>
-         The "B" encoding is identical to the Base64 encoding defined by <a href="http://www.ietf.org/rfc/rfc1521.txt">RFC 1521</a> and allows a character set to be specified.
+         Identical to the Base64 encoding defined by <a href="http://www.ietf.org/rfc/rfc1521.txt">RFC 1521</a> and allows a character set to be specified.
       </td>
      </tr>
      <tr>
@@ -209,8 +209,8 @@ limitations under the License.
        	QCodec</a>
       </td>
       <td>
-         The "Q" encoding is similar to the Quoted-Printable content-transfer-encoding defined in <a
-		 href="http://www.ietf.org/rfc/rfc1521.txt">RFC 1521</a>, designed to allow text containing mostly ASCII
+         Similar to the Quoted-Printable content-transfer-encoding defined in <a
+		 href="http://www.ietf.org/rfc/rfc1521.txt">RFC 1521</a> and designed to allow text containing mostly ASCII
  		characters to be decipherable on an ASCII terminal without decoding.
       </td>
      </tr>
