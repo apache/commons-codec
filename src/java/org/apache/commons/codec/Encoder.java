@@ -55,17 +55,13 @@ package org.apache.commons.codec;
 
 /**
  * <p>Provides the highest level of abstraction for Encoders.
- * This is the sister interface of {@link Decoder}.  All
- * Encoder implement this common generic interface.</p>
- * 
- * <p>Allows a user to pass a generic Object to any Encoder 
- * implementation in the codec package.</p>
- * 
- * <p>One of the two interfaces at the center of the codec package.</p>
+ * This is the sister interface of {@link Decoder}.  Every implementation of
+ * Encoder provides this common generic interface whic allows a user to pass a 
+ * generic Object to any Encoder implementation in the codec package.</p>
  *
  * @author Tim O'Brien
  * @author Gary Gregory
- * @version $Id: Encoder.java,v 1.4 2003/08/14 07:40:17 ggregory Exp $
+ * @version $Id: Encoder.java,v 1.5 2003/10/04 16:24:14 tobrien Exp $
  */
 public interface Encoder {
     
