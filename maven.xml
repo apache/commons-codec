@@ -1,0 +1,23 @@
+<project default="java:jar">
+
+  <preGoal name="dist:build-bin">
+    
+    <copy todir="${maven.build.dir}/${maven.final.name}/bin/${maven.final.name}">
+      <fileset dir="${basedir}">
+        <include name="RELEASE-NOTES.txt"/>
+      </fileset>
+    </copy>
+    
+  </preGoal>
+
+  <preGoal name="dist:build-src">
+    
+    <copy todir="${maven.build.dir}/${maven.final.name}/src/${maven.final.name}">
+      <fileset dir="${basedir}">
+        <include name="RELEASE-NOTES.txt"/>
+      </fileset>
+    </copy>
+    
+  </preGoal>
+
+</project>
