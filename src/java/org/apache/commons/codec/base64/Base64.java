@@ -68,12 +68,12 @@ import java.io.UnsupportedEncodingException;
  * This class provides encoding/decoding methods for
  * the Base64 encoding as defined by RFC 2045,
  * N. Freed and N. Borenstein.
-y * RFC 2045: Multipurpose Internet Mail Extensions (MIME)
+ * RFC 2045: Multipurpose Internet Mail Extensions (MIME)
  * Part One: Format of Internet Message Bodies. Reference
  * 1996. Available at: http://www.ietf.org/rfc/rfc2045.txt
  * </p>
  * @author Jeffrey Rodriguez
- * @version $Revision: 1.3 $ $Date: 2003/06/18 18:43:56 $
+ * @version $Revision: 1.4 $ $Date: 2003/07/20 19:09:02 $
  *
  * @deprecated This class has been replaced by 
  *             {@link org.apache.commons.codec.binary.Base64}
