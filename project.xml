@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-    <extend>../project.xml</extend>
-    <name>Codec</name>
-    <id>commons-codec</id>
-    <currentVersion>1.2</currentVersion>
-    <inceptionYear>2002</inceptionYear>
-    <shortDescription>Simple encoders and decoders</shortDescription>
-    <description>
+  <extend>../project.xml</extend>
+  <name>Codec</name>
+  <id>commons-codec</id>
+  <currentVersion>1.2</currentVersion>
+
+  <organization>
+    <name>Apache Software Foundation</name>
+    <url>http://www.apache.org</url>
+    <logo>http://jakarta.apache.org/images/jakarta-logo.gif</logo>
+  </organization>
+
+  <inceptionYear>2002</inceptionYear>
+  <shortDescription>Simple encoders and decoders</shortDescription>
+  <description>
    The codec package contains simple encoder and decoders for
    various formats such as Base64 and Hexadecimal.  In addition to these
    widely used encoders and decoders, the codec package also maintains a
