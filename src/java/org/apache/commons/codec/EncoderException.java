@@ -23,9 +23,16 @@ package org.apache.commons.codec;
  * expected range.
  * 
  * @author Apache Software Foundation
- * @version $Id: EncoderException.java,v 1.10 2004/02/29 04:08:31 tobrien Exp $
+ * @version $Id: EncoderException.java,v 1.11 2004/09/08 17:45:21 ggregory Exp $
  */
 public class EncoderException extends Exception {
+
+    /**
+     * Declares the Serial Version Uid.
+     * 
+     * @see <a href="http://c2.com/cgi/wiki?AlwaysDeclareSerialVersionUid">Always Declare Serial Version Uid<a>
+     */
+    private static final long serialVersionUID = 1L;
 
     /**
      * Creates a new instance of this exception with an useful message.
