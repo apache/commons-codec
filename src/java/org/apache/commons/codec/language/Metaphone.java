@@ -28,7 +28,7 @@ import org.apache.commons.codec.StringEncoder;
  *      <i>Computer Language</i> of Dec. 1990, p 39   
  * 
  * @author Apache Software Foundation
- * @version $Id: Metaphone.java,v 1.18 2004/05/24 00:22:45 ggregory Exp $
+ * @version $Id: Metaphone.java,v 1.19 2004/05/24 04:56:29 ggregory Exp $
  */
 public class Metaphone implements StringEncoder {
 
@@ -141,9 +141,8 @@ public class Metaphone implements StringEncoder {
                     if ( isPreviousChar(local, n, 'M') && 
                          isLastChar(wdsz, n) ) { // B is silent if word ends in MB
 						break;
-                    } else {
-                        code.append(symb);
                     }
+                    code.append(symb);
                     break;
                 case 'C' : // lots of C special cases
                     /* discard if SCI, SCE or SCY */

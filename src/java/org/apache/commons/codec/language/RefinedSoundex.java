@@ -25,7 +25,7 @@ import org.apache.commons.codec.StringEncoder;
  * Margaret Odell and Robert Russell
  * 
  * @author Apache Software Foundation
- * @version $Id: RefinedSoundex.java,v 1.19 2004/05/24 00:23:17 ggregory Exp $
+ * @version $Id: RefinedSoundex.java,v 1.20 2004/05/24 04:57:24 ggregory Exp $
  */
 public class RefinedSoundex implements StringEncoder {
 
@@ -139,9 +139,8 @@ public class RefinedSoundex implements StringEncoder {
     char getMappingCode(char c) {
         if (!Character.isLetter(c)) {
             return 0;
-        } else {
-            return this.soundexMapping[Character.toUpperCase(c) - 'A'];
         }
+        return this.soundexMapping[Character.toUpperCase(c) - 'A'];
     }
 
     /**
