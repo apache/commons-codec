@@ -19,7 +19,7 @@ package org.apache.commons.codec;
 import junit.framework.TestCase;
 
 /**
- * @version $Revision: 1.8 $ $Date: 2004/03/17 19:26:58 $
+ * @version $Id: StringEncoderAbstractTest.java,v 1.9 2004/04/19 01:14:29 ggregory Exp $
  * @author Apache Software Foundation
  */
 public abstract class StringEncoderAbstractTest extends TestCase {
