@@ -24,7 +24,7 @@ import org.apache.commons.codec.StringEncoder;
  * general purpose scheme to find word with similar phonemes.
  * 
  * @author Apache Software Foundation
- * @version $Id: Soundex.java,v 1.25 2004/06/13 23:47:36 ggregory Exp $
+ * @version $Id: Soundex.java,v 1.26 2004/07/07 23:15:24 ggregory Exp $
  */
 public class Soundex implements StringEncoder {
 
@@ -81,7 +81,7 @@ public class Soundex implements StringEncoder {
     /**
      * The maximum length of a Soundex code - Soundex codes are only four characters by definition.
      * 
-     * @deprecated This feature is not needed since the encoding size must be constant.
+     * @deprecated This feature is not needed since the encoding size must be constant. Will be removed in 2.0.
      */
     private int maxLength = 4;
 
@@ -180,7 +180,7 @@ public class Soundex implements StringEncoder {
     /**
      * Returns the maxLength. Standard Soundex
      * 
-     * @deprecated This feature is not needed since the encoding size must be constant.
+     * @deprecated This feature is not needed since the encoding size must be constant. Will be removed in 2.0.
      * @return int
      */
     public int getMaxLength() {
@@ -216,7 +216,7 @@ public class Soundex implements StringEncoder {
     /**
      * Sets the maxLength.
      * 
-     * @deprecated This feature is not needed since the encoding size must be constant.
+     * @deprecated This feature is not needed since the encoding size must be constant. Will be removed in 2.0.
      * @param maxLength
      *                  The maxLength to set
      */
