@@ -42,7 +42,9 @@
       </td>
       <td>
        Provides Base64 content-transfer-encoding as defined in 
-       <a href="http://www.ietf.org/rfc/rfc1521.txt">RFC 1521</a>
+       <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>. This
+       encoder can optionally create 76 character chunked output
+       for strict adherence to RFC 2045.
       </td>
       <td>
        Production
