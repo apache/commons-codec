@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//codec/src/test/org/apache/commons/codec/language/SoundexTest.java,v 1.1 2003/04/25 17:50:57 tobrien Exp $
- * $Revision: 1.1 $
- * $Date: 2003/04/25 17:50:57 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//codec/src/test/org/apache/commons/codec/language/SoundexTest.java,v 1.2 2003/08/18 03:01:14 bayard Exp $
+ * $Revision: 1.2 $
+ * $Date: 2003/08/18 03:01:14 $
  *
  * ====================================================================
  *
@@ -23,11 +23,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgement:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgement may appear in the software itself,
+ *    if and wherever such third-party acknowledgements normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -67,7 +67,7 @@ import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.StringEncoderAbstractTest;
 
 /**
- * @version $Revision: 1.1 $ $Date: 2003/04/25 17:50:57 $
+ * @version $Revision: 1.2 $ $Date: 2003/08/18 03:01:14 $
  * @author Rodney Waldhoff
  */
 public class SoundexTest extends StringEncoderAbstractTest {
