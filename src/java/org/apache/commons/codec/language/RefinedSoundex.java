@@ -25,7 +25,7 @@ import org.apache.commons.codec.StringEncoder;
  * Margaret Odell and Robert Russell
  * 
  * @author Apache Software Foundation
- * @version $Id: RefinedSoundex.java,v 1.16 2004/02/29 04:08:31 tobrien Exp $
+ * @version $Id: RefinedSoundex.java,v 1.17 2004/03/17 18:30:59 ggregory Exp $
  */
 public class RefinedSoundex implements StringEncoder {
 
@@ -90,6 +90,7 @@ public class RefinedSoundex implements StringEncoder {
 	 * 
 	 * @throws EncoderException
 	 *                  if an error occurs encoding one of the strings
+     * @since 1.3
 	 */
     public int difference(String s1, String s2) throws EncoderException {
         return SoundexUtils.difference(this, s1, s2);

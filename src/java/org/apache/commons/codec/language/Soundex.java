@@ -25,7 +25,7 @@ import org.apache.commons.codec.StringEncoder;
  * with similar phonemes.
  * 
  * @author Apache Software Foundation
- * @version $Id: Soundex.java,v 1.20 2004/02/29 04:08:31 tobrien Exp $
+ * @version $Id: Soundex.java,v 1.21 2004/03/17 18:30:59 ggregory Exp $
  */
 public class Soundex implements StringEncoder {
 
@@ -60,6 +60,7 @@ public class Soundex implements StringEncoder {
 	 * 
 	 * @throws EncoderException
 	 *                  if an error occurs encoding one of the strings
+     * @since 1.3
 	 */
     public int difference(String s1, String s2) throws EncoderException {
         return SoundexUtils.difference(this, s1, s2);
