@@ -28,7 +28,7 @@ import org.apache.commons.codec.StringEncoder;
  *      <i>Computer Language</i> of Dec. 1990, p 39   
  * 
  * @author Apache Software Foundation
- * @version $Id: Metaphone.java,v 1.15 2004/02/29 04:08:31 tobrien Exp $
+ * @version $Id: Metaphone.java,v 1.16 2004/04/18 21:33:38 tobrien Exp $
  */
 public class Metaphone implements StringEncoder {
 
@@ -70,7 +70,6 @@ public class Metaphone implements StringEncoder {
      * @return A metaphone code corresponding to the String supplied
      */
     public String metaphone(String txt) {
-        int mtsz = 0  ;
         boolean hard = false ;
         if ((txt == null) || (txt.length() == 0)) {
             return "" ;
@@ -126,99 +125,109 @@ public class Metaphone implements StringEncoder {
         int wdsz = local.length();
         int n = 0 ;
 
-        while ((mtsz < this.getMaxCodeLen()) && (n < wdsz)) { // max code size of 4 works well
+        while ((code.length() < this.getMaxCodeLen()) && 
+        	   (n < wdsz) ) { // max code size of 4 works well
             char symb = local.charAt(n) ;
             // remove duplicate letters except C
-            if ((symb != 'C') && (n > 0) && (local.charAt(n - 1) == symb)) {
+            if ((symb != 'C') && (isPreviousChar( local, n, symb )) ) {
                 n++ ;
             } else { // not dup
                 switch(symb) {
                 case 'A' : case 'E' : case 'I' : case 'O' : case 'U' :
                     if (n == 0) { 
                         code.append(symb);
-                        mtsz++;
                     }
                     break ; // only use vowel if leading char
                 case 'B' :
-                    if ((n > 0) && !(n + 1 == wdsz) && (local.charAt(n - 1) == 'M')) { // not MB at end of word 
-                        code.append(symb);
+                    if ( isPreviousChar(local, n, 'M') && 
+                         isLastChar(wdsz, n) ) { // B is silent if word ends in MB
+						break;
                     } else {
                         code.append(symb);
                     }
-                    mtsz++;
                     break;
                 case 'C' : // lots of C special cases
                     /* discard if SCI, SCE or SCY */
-                    if ((n > 0) && (local.charAt(n - 1) == 'S') && (n + 1 < wdsz) && (this.frontv.indexOf(local.charAt(n + 1)) >= 0)) { 
-                        break ;
+                    if ( isPreviousChar(local, n, 'S') && 
+                         !isLastChar(wdsz, n) && 
+                         (this.frontv.indexOf(local.charAt(n + 1)) >= 0) ) { 
+                        break;
                     }
                     tmpS = local.toString();
-                    if (tmpS.indexOf("CIA", n) == n) { // "CIA" -> X
-                        code.append('X'); mtsz++; break ;
+                    if (regionMatch(local, n, "CIA")) { // "CIA" -> X
+                        code.append('X'); 
+                        break;
                     }
-                    if ((n + 1 < wdsz) && (this.frontv.indexOf(local.charAt(n + 1)) >= 0)) {
+                    if (!isLastChar(wdsz, n) && 
+                        (this.frontv.indexOf(local.charAt(n + 1)) >= 0)) {
                         code.append('S');
-                        mtsz++; 
-                        break ; // CI,CE,CY -> S
+                        break; // CI,CE,CY -> S
                     }
-                    if ((n > 0) && (tmpS.indexOf("SCH", n - 1) == n - 1)) { // SCH->sk
+                    if (isPreviousChar(local, n, 'S') &&
+						isNextChar(local, n, 'H') ) { // SCH->sk
                         code.append('K') ; 
-                        mtsz++;
                         break ;
                     }
-                    if (tmpS.indexOf("CH", n) == n) { // detect CH
-                        if ((n == 0) && (wdsz >= 3) && (this.vowels.indexOf(local.charAt(2)) < 0)) { // CH consonant -> K consonant
+                    if (isNextChar(local, n, 'H')) { // detect CH
+                        if ((n == 0) && 
+                        	(wdsz >= 3) && 
+                            isVowel(local,2) ) { // CH consonant -> K consonant
                             code.append('K');
                         } else { 
                             code.append('X'); // CHvowel -> X
                         }
-                        mtsz++;
                     } else { 
                         code.append('K');
-                        mtsz++;
                     }
                     break ;
                 case 'D' :
-                    if ((n + 2 < wdsz)   && (local.charAt(n + 1) == 'G') && (this.frontv.indexOf(local.charAt(n + 2)) >= 0)) { // DGE DGI DGY -> J 
+                    if (!isLastChar(wdsz, n + 1) && 
+                        isNextChar(local, n, 'G') && 
+                        (this.frontv.indexOf(local.charAt(n + 2)) >= 0)) { // DGE DGI DGY -> J 
                         code.append('J'); n += 2 ;
                     } else { 
                         code.append('T');
                     }
-                    mtsz++;
                     break ;
                 case 'G' : // GH silent at end or before consonant
-                    if ((n + 2 == wdsz) && (local.charAt(n + 1) == 'H')) {
+                    if (isLastChar(wdsz, n + 1) && 
+                        isNextChar(local, n, 'H')) {
                         break;
                     }
-                    if ((n + 2 < wdsz) && (local.charAt(n + 1) == 'H') && (this.vowels.indexOf(local.charAt(n + 2)) < 0)) {
+                    if (!isLastChar(wdsz, n + 1) &&  
+                        isNextChar(local,n,'H') && 
+                        !isVowel(local,n+2)) {
                         break;
                     }
                     tmpS = local.toString();
-                    if ((n > 0) && (tmpS.indexOf("GN", n) == n) || (tmpS.indexOf("GNED", n) == n)) {
+                    if ((n > 0) && 
+                    	( regionMatch(local, n, "GN") ||
+					      regionMatch(local, n, "GNED") ) ) {
                         break; // silent G
                     }
-                    if ((n > 0) && (local.charAt(n - 1) == 'G')) {
+                    if (isPreviousChar(local, n, 'G')) {
                         hard = true ;
                     } else {
                         hard = false ;
                     }
-                    if ((n + 1 < wdsz) && (this.frontv.indexOf(local.charAt(n + 1)) >= 0) && (!hard)) {
+                    if (!isLastChar(wdsz, n) && 
+                        (this.frontv.indexOf(local.charAt(n + 1)) >= 0) && 
+                        (!hard)) {
                         code.append('J');
                     } else {
                         code.append('K');
                     }
-                    mtsz++;
                     break ;
                 case 'H':
-                    if (n + 1 == wdsz) {
+                    if (isLastChar(wdsz, n)) {
                         break ; // terminal H
                     }
-                    if ((n > 0) && (this.varson.indexOf(local.charAt(n - 1)) >= 0)) {
+                    if ((n > 0) && 
+                        (this.varson.indexOf(local.charAt(n - 1)) >= 0)) {
                         break;
                     }
-                    if (this.vowels.indexOf(local.charAt(n + 1)) >= 0) {
-                        code.append('H'); 
-                        mtsz++;// Hvowel
+                    if (isVowel(local,n+1)) {
+                        code.append('H'); // Hvowel
                     }
                     break;
                 case 'F': 
@@ -228,78 +237,111 @@ public class Metaphone implements StringEncoder {
                 case 'N' : 
                 case 'R' :
                     code.append(symb); 
-                    mtsz++; 
                     break;
                 case 'K' :
                     if (n > 0) { // not initial
-                        if (local.charAt(n - 1) != 'C') {
+                        if (!isPreviousChar(local, n, 'C')) {
                             code.append(symb);
                         }
                     } else {
                         code.append(symb); // initial K
                     }
-                    mtsz++ ;
                     break ;
                 case 'P' :
-                    if ((n + 1 < wdsz) && (local.charAt(n + 1) == 'H')) {
+                    if (isNextChar(local,n,'H')) {
                         // PH -> F
                         code.append('F');
                     } else {
                         code.append(symb);
                     }
-                    mtsz++;
                     break ;
                 case 'Q' :
                     code.append('K');
-                    mtsz++; 
                     break;
                 case 'S' :
-                    tmpS = local.toString();
-                    if ((tmpS.indexOf("SH", n) == n) || (tmpS.indexOf("SIO", n) == n) || (tmpS.indexOf("SIA", n) == n)) {
+                    if (regionMatch(local,n,"SH") || 
+					    regionMatch(local,n,"SIO") || 
+					    regionMatch(local,n,"SIA")) {
                         code.append('X');
                     } else {
                         code.append('S');
                     }
-                    mtsz++;
                     break;
                 case 'T' :
-                    tmpS = local.toString(); // TIA TIO -> X
-                    if ((tmpS.indexOf("TIA", n) == n) || (tmpS.indexOf("TIO", n) == n)) {
+                    if (regionMatch(local,n,"TIA") || 
+						regionMatch(local,n,"TIO")) {
                         code.append('X'); 
-                        mtsz++; 
                         break;
                     }
-                    if (tmpS.indexOf("TCH", n) == n) {
+                    if (regionMatch(local,n,"TCH")) {
+						// Silent if in "TCH"
                         break;
                     }
                     // substitute numeral 0 for TH (resembles theta after all)
-                    if (tmpS.indexOf("TH", n) == n) {
+                    if (regionMatch(local,n,"TH")) {
                         code.append('0');
                     } else {
                         code.append('T');
                     }
-                    mtsz++ ;
                     break ;
                 case 'V' :
-                    code.append('F'); mtsz++;break ;
+                    code.append('F'); break ;
                 case 'W' : case 'Y' : // silent if not followed by vowel
-                    if ((n + 1 < wdsz) && (this.vowels.indexOf(local.charAt(n + 1)) >= 0)) {
+                    if (!isLastChar(wdsz,n) && 
+                    	isVowel(local,n+1)) {
                         code.append(symb);
-                        mtsz++;
                     }
                     break ;
                 case 'X' :
-                    code.append('K'); code.append('S');mtsz += 2;
+                    code.append('K'); code.append('S');
                     break ;
                 case 'Z' :
-                    code.append('S'); mtsz++; break ;
+                    code.append('S'); break ;
                 } // end switch
                 n++ ;
             } // end else from symb != 'C'
-            if (mtsz > this.getMaxCodeLen()) { code.setLength(this.getMaxCodeLen()); }
+            if (code.length() > this.getMaxCodeLen()) { 
+            	code.setLength(this.getMaxCodeLen()); 
+            }
         }
         return code.toString();
-    } 
+    }
+
+	private boolean isVowel(StringBuffer string, int index) {
+		return (this.vowels.indexOf(string.charAt(index)) >= 0);
+	}
+
+	private boolean isPreviousChar(StringBuffer string, int index, char c) {
+		boolean matches = false;
+		if( index > 0 &&
+		    index < string.length() ) {
+			matches = string.charAt(index - 1) == c;
+		}
+		return matches;
+	}
+
+	private boolean isNextChar(StringBuffer string, int index, char c) {
+		boolean matches = false;
+		if( index >= 0 &&
+		    index < string.length() - 1 ) {
+			matches = string.charAt(index + 1) == c;
+		}
+		return matches;
+	}
+
+	private boolean regionMatch(StringBuffer string, int index, String test) {
+		boolean matches = false;
+		if( index >= 0 &&
+		    (index + test.length() - 1) < string.length() ) {
+			String substring = string.substring( index, index + test.length());
+			matches = substring.equals( test );
+		}
+		return matches;
+	}
+
+	private boolean isLastChar(int wdsz, int n) {
+		return n + 1 == wdsz;
+	} 
     
     
     /**
