@@ -24,7 +24,7 @@ import org.apache.commons.codec.EncoderException;
  * TestCase for Binary class.
  * 
  * @author Apache Software Foundation
- * @version $Id: BinaryTest.java,v 1.8 2004/03/21 01:26:35 ggregory Exp $
+ * @version $Id: BinaryTest.java,v 1.9 2004/03/21 01:29:09 ggregory Exp $
  */
 public class BinaryTest extends TestCase {
     /** mask with bit zero based index 0 raised */
@@ -183,10 +183,10 @@ public class BinaryTest extends TestCase {
      */
     void assertDecodeObject(byte[] bits, String encodeMe) throws DecoderException {
         byte[] decoded;
-        decoded = (byte[]) instance.decode((Object) encodeMe);
+        decoded = (byte[]) instance.decode(encodeMe);
         assertEquals(new String(bits), new String(decoded));
         if (encodeMe == null) {
-            decoded = (byte[]) instance.decode((byte[]) null);
+            decoded = instance.decode((byte[]) null);
         } else {
             decoded = (byte[]) instance.decode((Object) encodeMe.getBytes());
         }
@@ -194,7 +194,7 @@ public class BinaryTest extends TestCase {
         if (encodeMe == null) {
             decoded = (byte[]) instance.decode((char[]) null);
         } else {
-            decoded = (byte[]) instance.decode((Object) encodeMe.toCharArray());
+            decoded = (byte[]) instance.decode(encodeMe.toCharArray());
         }
         assertEquals(new String(bits), new String(decoded));
     }
