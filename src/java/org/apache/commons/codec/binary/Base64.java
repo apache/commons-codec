@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//codec/src/java/org/apache/commons/codec/binary/Base64.java,v 1.3 2003/05/14 02:40:18 tobrien Exp $
- * $Revision: 1.3 $
- * $Date: 2003/05/14 02:40:18 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//codec/src/java/org/apache/commons/codec/binary/Base64.java,v 1.4 2003/05/29 23:03:28 tobrien Exp $
+ * $Revision: 1.4 $
+ * $Date: 2003/05/29 23:03:28 $
   *
   * ====================================================================
   *
@@ -78,25 +78,60 @@ import org.apache.commons.codec.EncoderException;
   * @author <a href="dlr@apache.org">Daniel Rall</a>
   * @author <a href="m.redington@ucl.ac.uk">Martin Redington</a>
   * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
+  * @author <a href="mailto:tobrien@apache.org">Tim O'Brien</a>
   * @since 1.0-dev
-  *
-  * @todo Add more documentation
   */
 public class Base64 implements BinaryEncoder, BinaryDecoder {
 
-    // Create constants pertaining to the chunk requirement
+    /**
+     * Chunk size according to RFC 2045
+     */
     static final int CHUNK_SIZE = 76;
+
+    /**
+     * Chunk separator, we use a newline to separate chunks
+     * of encoded data (if you ask for it to be chunked)
+     */
     static final byte[] CHUNK_SEPARATOR = "\n".getBytes();
 
-    // Create numerical and byte constants 
+    /**
+     * The bsae length
+     */
     static final int BASELENGTH = 255;
+
+    /**
+     * Lookup length
+     */
     static final int LOOKUPLENGTH = 64;
-    static final int TWENTYFOURBITGROUP = 24;
+
+    /**
+     * Used to calculate the number of bits in a byte.
+     */
     static final int EIGHTBIT = 8;
+
+    /**
+     * Used when encoding something which has fewer than 24 bits
+     */
     static final int SIXTEENBIT = 16;
-    static final int SIXBIT = 6;
+
+    /**
+     * Constant used to determine how many bits data contains
+     */
+    static final int TWENTYFOURBITGROUP = 24;
+
+    /**
+     * Used to get the number of Quadruples
+     */
     static final int FOURBYTE = 4;
+
+    /**
+     * Used to test the sign of a byte
+     */
     static final int SIGN = -128;
+    
+    /**
+     * Byte used to pad output
+     */
     static final byte PAD = (byte) '=';
 
     // Create arrays to hold the base64 characters and a 
@@ -141,15 +176,21 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
     private static boolean isBase64(byte octect) {
         if (octect == PAD) {
             return true;
-        } 
-        else if (base64Alphabet[octect] == -1) {
+        } else if (base64Alphabet[octect] == -1) {
             return false;
-        } 
-        else {
+        } else {
             return true;
         }
     }
 
+    /**
+     * This array tests a given byte array to see if it contains
+     * only valid characters within the Base64 alphabet.
+     *
+     * @param arrayOctect byte array to test
+     * @return true if all bytes are valid characters in the Base64
+     *         alphabet or if the byte array is empty; false, otherwise
+     */
     public static boolean isArrayByteBase64(byte[] arrayOctect) {
 
         arrayOctect = discardWhitespace(arrayOctect);
@@ -168,15 +209,41 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
         return true;
     }
 
-
+    /**
+     * Encodes binary data using the base64 algorithm (this
+     * does not "chunk" the output).
+     *
+     * @param binaryData binary data to encode
+     * @return Base64 characters
+     */
     public static byte[] encodeBase64(byte[] binaryData) {
         return (encodeBase64(binaryData, false));
     }
 
+    /**
+     * Encodes binary data using the base64 algorithm and chunks
+     * the encoded output into 76 character blocks
+     *
+     * @param binaryData binary data to encode
+     * @return Base64 characters chunked in 76 character blocks
+     */
     public static byte[] encodeBase64Chunked(byte[] binaryData) {
         return (encodeBase64(binaryData, true));
     }
 
+
+    /**
+     * Decodes an Object using the base64 algorithm.  This method
+     * is provided in order to satisfy the requirements of the
+     * Decoder interface, and will throw a DecoderException if the
+     * supplied object is not of type byte[].
+     *
+     * @param pObject Object to decode
+     * @return An object (of type byte[]) containing the 
+     *         binary data which corresponds to the byte[] supplied.
+     * @throws DecoderException if the parameter supplied is not
+     *                          of type byte[]
+     */
     public Object decode(Object pObject) throws DecoderException {
 
         Object result;
@@ -186,8 +253,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
                 "Parameter supplied to "
                     + "Base64 "
                     + "decode is not a byte[]");
-        } 
-        else {
+        } else {
             result = decode((byte[]) pObject);
         }
 
@@ -195,6 +261,15 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
 
     }
 
+    /**
+     * Decodes a byte[] containing containing
+     * characters in the Base64 alphabet.
+     *
+     * @param pArray A byte array containing Base64 character data
+     * @return a byte array containing binary data
+     * @throws DecoderException if there is an Decoder specific exception
+     *                          during the decoding process
+     */
     public byte[] decode(byte[] pArray) throws DecoderException {
         byte[] result;
         result = decodeBase64((byte[]) pArray);
@@ -205,6 +280,8 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * Encodes hex octects into Base64.
      *
      * @param binaryData Array containing binary data to encode.
+     * @param isChunked if isChunked is true this encoder will chunk
+     *                  the base64 output into 76 character blocks
      * @return Base64-encoded data.
      */
     public static byte[] encodeBase64(byte[] binaryData, boolean isChunked) {
@@ -218,8 +295,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
         if (fewerThan24bits != 0) {
             //data not divisible by 24 bit
             encodedDataLength = (numberTriplets + 1) * 4;
-        } 
-        else {
+        } else {
             // 16 or 8 bit
             encodedDataLength = numberTriplets * 4;
         }
@@ -318,8 +394,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
             encodedData[encodedIndex + 1] = lookUpBase64Alphabet[k << 4];
             encodedData[encodedIndex + 2] = PAD;
             encodedData[encodedIndex + 3] = PAD;
-        } 
-        else if (fewerThan24bits == SIXTEENBIT) {
+        } else if (fewerThan24bits == SIXTEENBIT) {
 
             b1 = binaryData[dataIndex];
             b2 = binaryData[dataIndex + 1];
@@ -360,7 +435,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
     /**
      * Decodes Base64 data into octects
      *
-     * @param binaryData Byte array containing Base64 data
+     * @param base64Data Byte array containing Base64 data
      * @return Array containing decoded data.
      */
     public static byte[] decodeBase64(byte[] base64Data) {
@@ -391,33 +466,31 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
             }
             decodedData = new byte[lastData - numberQuadruple];
         }
-
+        
         for (int i = 0; i < numberQuadruple; i++) {
             dataIndex = i * 4;
             marker0 = base64Data[dataIndex + 2];
             marker1 = base64Data[dataIndex + 3];
-
+            
             b1 = base64Alphabet[base64Data[dataIndex]];
             b2 = base64Alphabet[base64Data[dataIndex + 1]];
-
+            
             if (marker0 != PAD && marker1 != PAD) {
                 //No PAD e.g 3cQl
                 b3 = base64Alphabet[marker0];
                 b4 = base64Alphabet[marker1];
-
+                
                 decodedData[encodedIndex] = (byte) (b1 << 2 | b2 >> 4);
                 decodedData[encodedIndex + 1] =
                     (byte) (((b2 & 0xf) << 4) | ((b3 >> 2) & 0xf));
                 decodedData[encodedIndex + 2] = (byte) (b3 << 6 | b4);
-            } 
-            else if (marker0 == PAD) {
+            } else if (marker0 == PAD) {
                 //Two PAD e.g. 3c[Pad][Pad]
                 decodedData[encodedIndex] = (byte) (b1 << 2 | b2 >> 4);
-            } 
-            else if (marker1 == PAD) {
+            } else if (marker1 == PAD) {
                 //One PAD e.g. 3cQ[Pad]
                 b3 = base64Alphabet[marker0];
-
+                
                 decodedData[encodedIndex] = (byte) (b1 << 2 | b2 >> 4);
                 decodedData[encodedIndex + 1] =
                     (byte) (((b2 & 0xf) << 4) | ((b3 >> 2) & 0xf));
@@ -426,7 +499,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
         }
         return decodedData;
     }
-
+    
     /**
      * Discards any whitespace from a base-64 encoded block.
      *
@@ -437,15 +510,15 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
     static byte[] discardWhitespace(byte[] data) {
         byte groomedData[] = new byte[data.length];
         int bytesCopied = 0;
-
+        
         for (int i = 0; i < data.length; i++) {
             switch (data[i]) {
-                case (byte) ' ' :
-                case (byte) '\n' :
-                case (byte) '\r' :
-                case (byte) '\t' :
+            case (byte) ' ' :
+            case (byte) '\n' :
+            case (byte) '\r' :
+            case (byte) '\t' :
                     break;
-                default:
+            default:
                     groomedData[bytesCopied++] = data[i];
             }
         }
@@ -456,38 +529,47 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
 
         return packedData;
     }
-    
-	/**
-	 * Discards any characters outside of the base64 alphabet, per
-	 * the requirements on page 25 of RFC 2045 - "Any characters
-	 * outside of the base64 alphabet are to be ignored in base64
-	 * encoded data."
-	 *
-	 * @param data The base-64 encoded data to groom
-	 * @return The data, less non-base64 characters (see RFC 2045).
-	 */
-	static byte[] discardNonBase64(byte[] data) {
-		byte groomedData[] = new byte[data.length];
-		int bytesCopied = 0;
 
-		for (int i = 0; i < data.length; i++) {
-			if( isBase64(data[i]) ) {
-			  groomedData[bytesCopied++] = data[i];
-			}
-		}
+    /**
+     * Discards any characters outside of the base64 alphabet, per
+     * the requirements on page 25 of RFC 2045 - "Any characters
+     * outside of the base64 alphabet are to be ignored in base64
+     * encoded data."
+     *
+     * @param data The base-64 encoded data to groom
+     * @return The data, less non-base64 characters (see RFC 2045).
+     */
+    static byte[] discardNonBase64(byte[] data) {
+        byte groomedData[] = new byte[data.length];
+        int bytesCopied = 0;
 
-		byte packedData[] = new byte[bytesCopied];
+        for (int i = 0; i < data.length; i++) {
+            if (isBase64(data[i])) {
+                groomedData[bytesCopied++] = data[i];
+            }
+        }
 
-		System.arraycopy(groomedData, 0, packedData, 0, bytesCopied);
+        byte packedData[] = new byte[bytesCopied];
 
-		return packedData;
-	}
+        System.arraycopy(groomedData, 0, packedData, 0, bytesCopied);
+
+        return packedData;
+    }
 
 
     // Implementation of the Encoder Interface
 
     /**
-     * encode an Object
+     * Encodes an Object using the base64 algorithm.  This method
+     * is provided in order to satisfy the requirements of the
+     * Encoder interface, and will throw an EncoderException if the
+     * supplied object is not of type byte[].
+     *
+     * @param pObject Object to encode
+     * @return An object (of type byte[]) containing the 
+     *         base64 encoded data which corresponds to the byte[] supplied.
+     * @throws EncoderException if the parameter supplied is not
+     *                          of type byte[]
      */
     public Object encode(Object pObject) throws EncoderException {
 
@@ -498,8 +580,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
                 "Parameter supplied to "
                     + "Base64 "
                     + "encode is not a byte[]");
-        } 
-        else {
+        } else {
             result = encode((byte[]) pObject);
         }
 
@@ -507,6 +588,15 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
 
     }
 
+    /**
+     * Encodes a byte[] containing binary data, into a byte[] containing
+     * characters in the Base64 alphabet.
+     *
+     * @param pArray a byte array containing binary data
+     * @return A byte array containing only Base64 character data
+     * @throws EncoderException if there is an Encoder specific exception
+     *                          during the encoding process
+     */
     public byte[] encode(byte[] pArray) throws EncoderException {
         return (encodeBase64(pArray, false));
     }

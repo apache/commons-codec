@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//codec/src/java/org/apache/commons/codec/base64/Attic/Base64.java,v 1.1 2003/04/25 17:50:56 tobrien Exp $
- * $Revision: 1.1 $
- * $Date: 2003/04/25 17:50:56 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//codec/src/java/org/apache/commons/codec/base64/Attic/Base64.java,v 1.2 2003/05/29 23:03:28 tobrien Exp $
+ * $Revision: 1.2 $
+ * $Date: 2003/05/29 23:03:28 $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -76,7 +76,7 @@ y * RFC 2045: Multipurpose Internet Mail Extensions (MIME)
  * 1996. Available at: http://www.ietf.org/rfc/rfc2045.txt
  * </p>
  * @author Jeffrey Rodriguez
- * @version $Revision: 1.1 $ $Date: 2003/04/25 17:50:56 $
+ * @version $Revision: 1.2 $ $Date: 2003/05/29 23:03:28 $
  *
  * @deprecated This class has been replaced by 
  *             {@link org.apache.commons.codec.binary.Base64}
@@ -84,17 +84,56 @@ y * RFC 2045: Multipurpose Internet Mail Extensions (MIME)
 public final class Base64 {
 
     protected static final String DEFAULT_CHAR_ENCODING = "ISO-8859-1";
-    private static final int BASELENGTH = 255;
-    private static final int LOOKUPLENGTH = 64;
-    private static final int TWENTYFOURBITGROUP = 24;
-    private static final int EIGHTBIT = 8;
-    private static final int SIXTEENBIT = 16;
-    private static final int SIXBIT = 6;
-    private static final int FOURBYTE = 4;
-    private static final int SIGN = -128;
-    private static final byte PAD = (byte) '=';
-    private static final byte[] EMPTY_BYTE_ARRAY = new byte[0];
+
+    /**
+     * The bsae length
+     */
+    static final int BASELENGTH = 255;
+
+    /**
+     * Lookup length
+     */
+    static final int LOOKUPLENGTH = 64;
+
+    /**
+     * Used to calculate the number of bits in a byte.
+     */
+    static final int EIGHTBIT = 8;
+
+    /**
+     * Used when encoding something which has fewer than 24 bits
+     */
+    static final int SIXTEENBIT = 16;
+
+    /**
+     * Constant used to determine how many bits data contains
+     */
+    static final int TWENTYFOURBITGROUP = 24;
+
+    /**
+     * Used to get the number of Quadruples
+     */
+    static final int FOURBYTE = 4;
+
+    /**
+     * Used to test the sign of a byte
+     */
+    static final int SIGN = -128;
+    
+    /**
+     * Byte used to pad output
+     */
+    static final byte PAD = (byte) '=';
+
+    // Create arrays to hold the base64 characters and a 
+    // lookup for base64 chars
     private static byte[] base64Alphabet = new byte[BASELENGTH];
+
+    private static final byte[] EMPTY_BYTE_ARRAY = new byte[0];
+    
+    /**
+     * Lookup table
+     */
     private static byte[] lookUpBase64Alphabet = new byte[LOOKUPLENGTH];
 
     static {
@@ -133,17 +172,37 @@ public final class Base64 {
 
     }
 
+    /**
+     * Tests to see whether the bytes of this string are
+     * Base64
+     *
+     * @param isValidString String to test
+     * @return trus if String is base64
+     */
     public static boolean isBase64(String isValidString) {
         return (isBase64(isValidString.getBytes()));
     }
 
-
+    /**
+     * Tests a byte to see whether it falls within the Base64
+     * alphabet (or if it is a padding character).
+     *
+     * @param octect byte to test
+     * @return true if byte is in alphabet or padding
+     */
     public static boolean isBase64(byte octect) {
         // Should we ignore white space?
         return (octect == PAD || base64Alphabet[octect] != -1);
     }
 
-
+    /**
+     * Tests byte array to see if all characters are within the
+     * Base64 alphabet
+     *
+     * @param arrayOctect A byte[] to test
+     * @return true if all data falls within the Base64 alphabet OR if the
+     *         array is empty.
+     */
     public static boolean isBase64(byte[] arrayOctect) {
         int length = arrayOctect.length;
         if (length == 0) {
@@ -177,8 +236,7 @@ public final class Base64 {
         if (fewerThan24bits != 0) {
             //data not divisible by 24 bit
             encodedData = new byte[(numberTriplets + 1) * 4];
-        }
-        else {
+        } else {
             // 16 or 8 bit 
             encodedData = new byte[numberTriplets * 4];
         }
@@ -212,8 +270,10 @@ public final class Base64 {
                 : (byte) ((b3) >> 6 ^ 0xfc);
 
             encodedData[encodedIndex] = lookUpBase64Alphabet[val1];
-            encodedData[encodedIndex + 1] = lookUpBase64Alphabet[val2 | (k << 4)];
-            encodedData[encodedIndex + 2] = lookUpBase64Alphabet[(l << 2) | val3];
+            encodedData[encodedIndex + 1] = lookUpBase64Alphabet[val2 
+                                                                 | (k << 4)];
+            encodedData[encodedIndex + 2] = lookUpBase64Alphabet[(l << 2) 
+                                                                 | val3];
             encodedData[encodedIndex + 3] = lookUpBase64Alphabet[b3 & 0x3f];
         }
 
@@ -231,8 +291,7 @@ public final class Base64 {
             encodedData[encodedIndex + 1] = lookUpBase64Alphabet[k << 4];
             encodedData[encodedIndex + 2] = PAD;
             encodedData[encodedIndex + 3] = PAD;
-        } 
-        else if (fewerThan24bits == SIXTEENBIT) {
+        } else if (fewerThan24bits == SIXTEENBIT) {
             b1 = binaryData[dataIndex];
             b2 = binaryData[dataIndex + 1];
             l = (byte) (b2 & 0x0f);
@@ -247,7 +306,8 @@ public final class Base64 {
                 : (byte) ((b2) >> 4 ^ 0xf0);
 
             encodedData[encodedIndex] = lookUpBase64Alphabet[val1];
-            encodedData[encodedIndex + 1] = lookUpBase64Alphabet[val2 | (k << 4)];
+            encodedData[encodedIndex + 1] = lookUpBase64Alphabet[val2 
+                                                                 | (k << 4)];
             encodedData[encodedIndex + 2] = lookUpBase64Alphabet[l << 2];
             encodedData[encodedIndex + 3] = PAD;
         }
@@ -266,8 +326,7 @@ public final class Base64 {
     public static String encode(String data) {
          try {
              return encode(data, DEFAULT_CHAR_ENCODING);
-         }
-         catch (UnsupportedEncodingException uee) {
+         } catch (UnsupportedEncodingException uee) {
              throw new IllegalStateException(uee.toString());
          }
      }
@@ -281,12 +340,11 @@ public final class Base64 {
      *
      * @param data String of data to convert
      * @param charEncoding the character encoding to use when converting
-     * a String to a byte[]
+     *                     a String to a byte[]
      * @return Base64-encoded String
      */
     public static String encode(String data, String charEncoding)
-        throws UnsupportedEncodingException 
-    {
+        throws UnsupportedEncodingException {
 
         // Check arguments
         if (data == null) {
@@ -301,8 +359,7 @@ public final class Base64 {
         OutputStreamWriter osw = new OutputStreamWriter(bos, charEncoding);
         try {
             osw.write(data);
-        }
-        catch (IOException ioe) {
+        } catch (IOException ioe) {
             throw new RuntimeException(ioe.toString());
         }
 
@@ -316,8 +373,7 @@ public final class Base64 {
         bos = new ByteArrayOutputStream(encodedData.length);
         try {
             bos.write(encodedData);
-        }
-        catch (IOException ioe) {
+        } catch (IOException ioe) {
             throw new RuntimeException(ioe.toString());
         }
 
@@ -327,7 +383,7 @@ public final class Base64 {
     /**
      * Decodes Base64 data into octects
      *
-     * @param binaryData Byte array containing Base64 data
+     * @param base64Data Byte array containing Base64 data
      * @return Array containing decoded data.
      */
     public static byte[] decode(byte[] base64Data) {
@@ -370,19 +426,19 @@ public final class Base64 {
                 b4 = base64Alphabet[marker1];
 
                 decodedData[encodedIndex] = (byte) (b1 << 2 | b2 >> 4);
-                decodedData[encodedIndex + 1] = (byte) (((b2 & 0xf) << 4) | ((b3 >> 2) & 0xf));
+                decodedData[encodedIndex + 1] = (byte) (((b2 & 0xf) << 4) 
+                                                        | ((b3 >> 2) & 0xf));
                 decodedData[encodedIndex + 2] = (byte) (b3 << 6 | b4);
-            } 
-            else if (marker0 == PAD) {
+            } else if (marker0 == PAD) {
                 //Two PAD e.g. 3c[Pad][Pad]
                 decodedData[encodedIndex] = (byte) (b1 << 2 | b2 >> 4);
-            } 
-            else if (marker1 == PAD) {
+            } else if (marker1 == PAD) {
                 //One PAD e.g. 3cQ[Pad]
                 b3 = base64Alphabet[marker0];
 
                 decodedData[encodedIndex] = (byte) (b1 << 2 | b2 >> 4);
-                decodedData[encodedIndex + 1] = (byte) (((b2 & 0xf) << 4) | ((b3 >> 2) & 0xf));
+                decodedData[encodedIndex + 1] = (byte) (((b2 & 0xf) << 4) 
+                                                        | ((b3 >> 2) & 0xf));
             }
             encodedIndex += 3;
         }
