@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ */ 
 
 package org.apache.commons.codec.language;
 
@@ -24,7 +24,7 @@ import org.apache.commons.codec.StringEncoder;
  * general purpose scheme to find word with similar phonemes.
  * 
  * @author Apache Software Foundation
- * @version $Id: Soundex.java,v 1.24 2004/06/05 18:32:04 ggregory Exp $
+ * @version $Id: Soundex.java,v 1.25 2004/06/13 23:47:36 ggregory Exp $
  */
 public class Soundex implements StringEncoder {
 
