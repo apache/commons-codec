@@ -22,34 +22,42 @@ import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 
 /**
- * Provides encode/decode for RFC 2045 Base64 as 
- * defined by RFC 2045, by Freed and Borenstein.  
+ * Provides Base64 encoding and decoding as defined by RFC 2045.
+ * 
+ * <p>This class implements section <cite>6.8. Base64 Content-Transfer-Encoding</cite> 
+ * from RFC 2045 <cite>Multipurpose Internet Mail Extensions (MIME) Part One: 
+ * Format of Internet Message Bodies</cite> by Freed and Borenstein.</p> 
  *
  * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>
  * @author Apache Software Foundation
  * @since 1.0-dev
- * @version $Id: Base64.java,v 1.17 2004/02/29 04:08:31 tobrien Exp $
+ * @version $Id: Base64.java,v 1.18 2004/03/18 17:34:56 ggregory Exp $
  */
 public class Base64 implements BinaryEncoder, BinaryDecoder {
 
     /**
-     * Chunk size according to RFC 2045
+     * Chunk size according to RFC 2045.
+     * 
+     * <p>The {@value} character limit does not count the trailing CRLF, but counts 
+     * all other characters, including any equal signs.</p>
+     * 
+     * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045 section 2.1</a>
      */
     static final int CHUNK_SIZE = 76;
 
     /**
      * Chunk separator, we use a newline to separate chunks
-     * of encoded data (if you ask for it to be chunked)
+     * of encoded data (if you ask for it to be chunked).
      */
     static final byte[] CHUNK_SEPARATOR = "\n".getBytes();
 
     /**
-     * The bsae length
+     * The base length.
      */
     static final int BASELENGTH = 255;
 
     /**
-     * Lookup length
+     * Lookup length.
      */
     static final int LOOKUPLENGTH = 64;
 
@@ -59,27 +67,27 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
     static final int EIGHTBIT = 8;
 
     /**
-     * Used when encoding something which has fewer than 24 bits
+     * Used when encoding something which has fewer than 24 bits.
      */
     static final int SIXTEENBIT = 16;
 
     /**
-     * Constant used to determine how many bits data contains
+     * Used to determine how many bits data contains.
      */
     static final int TWENTYFOURBITGROUP = 24;
 
     /**
-     * Used to get the number of Quadruples
+     * Used to get the number of Quadruples.
      */
     static final int FOURBYTE = 4;
 
     /**
-     * Used to test the sign of a byte
+     * Used to test the sign of a byte.
      */
     static final int SIGN = -128;
     
     /**
-     * Byte used to pad output
+     * Byte used to pad output.
      */
     static final byte PAD = (byte) '=';
 
@@ -133,7 +141,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
-     * This array tests a given byte array to see if it contains
+     * Tests a given byte array to see if it contains
      * only valid characters within the Base64 alphabet.
      *
      * @param arrayOctect byte array to test
@@ -166,7 +174,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * @return Base64 characters
      */
     public static byte[] encodeBase64(byte[] binaryData) {
-        return (encodeBase64(binaryData, false));
+        return encodeBase64(binaryData, false);
     }
 
     /**
@@ -177,7 +185,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * @return Base64 characters chunked in 76 character blocks
      */
     public static byte[] encodeBase64Chunked(byte[] binaryData) {
-        return (encodeBase64(binaryData, true));
+        return encodeBase64(binaryData, true);
     }
 
 
@@ -215,9 +223,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * @return a byte array containing binary data
      */
     public byte[] decode(byte[] pArray) {
-        byte[] result;
-        result = decodeBase64(pArray);
-        return (result);
+        return decodeBase64(pArray);
     }
 
     /**
@@ -524,7 +530,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * @return A byte array containing only Base64 character data
      */
     public byte[] encode(byte[] pArray) {
-        return (encodeBase64(pArray, false));
+        return encodeBase64(pArray, false);
     }
 
 }
