@@ -1,7 +1,7 @@
-$Id: RELEASE-NOTES.txt,v 1.1 2003/04/25 17:50:55 tobrien Exp $
+$Id: RELEASE-NOTES.txt,v 1.2 2003/04/25 18:07:16 tobrien Exp $
 
 			Commons Codec Package
-			   Version 1.0-dev
+			     Version 1.1
 			    Release Notes
 
 
@@ -15,12 +15,21 @@ follow the release early/release often mentality.
 
 NEW FEATURES:
 
+* A newer version of the Base64 class reflecting improvements from
+  both the commons-httpclient and xml-rpc versions of code forked
+  from catalina.
 * Base64 class from commons-httpclient in org.apache.commons.codec.base64
+  has been retained for backwards compatibility but has been deprecated
 * Soundex class from commons-util in org.apache.commons.codec
 * Metaphone class from commons-util in org.apache.commons.codec
-* SoundexComparator class from commons-util in org.apache.commons.codec
-
+* RefinedSoundex class in org.apache.commons.codec
+* Encoder/Decoder interfaces in org.apache.commons
+* String and Binary specific Encoder/Decoder interfaces in 
+  org.apache.commons
+* StringEncoderComparator replaces the SoundexComparator from the
+  language package.
 
 BUG FIXES:
 
-
+* Base64 now discards whitespace characters when decoding encoded
+  content.

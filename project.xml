@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project>
-  <extend>../../jakarta-commons/project.xml</extend>
+  <extend>../project.xml</extend>
   <name>Codec</name>
   <id>commons-codec</id>
   <currentVersion>1.1-rc1</currentVersion>
