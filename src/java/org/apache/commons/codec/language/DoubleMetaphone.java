@@ -250,7 +250,6 @@ public class DoubleMetaphone implements StringEncoder {
      * @return An encoded Object (will be of type String)
      */
     public Object encode(Object obj) throws EncoderException {
-        Object result;
 
         if (!(obj instanceof String)) {
             throw new EncoderException("Parameter supplied to Metaphone " 
