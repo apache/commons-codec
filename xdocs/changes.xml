@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<document>
+  <properties>
+    <title>Changes</title>
+    <author email="tobrien@apache.org">Tim O'Brien</author>
+  </properties>
+  <body>
+    <release version="development" date="in CVS">
+      <action dev="tobrien" type="update" due-to="Christopher O'Brien"
+        due-to-email="siege@preoccupied.net">
+	2/25/03 - changes to method naming standard 
+	- see http://nagoya.apache.org/wiki/apachewiki.cgi?CodecProjectPages/CodecNaming
+      </action>
+      <action dev="tobrien" type="add" due-to="Christopher O'Brien"
+        due-to-email="siege@preoccupied.net">
+        2/24/03 - Added HEX implementation from Christopher O'Brien
+      </action>
+      <action dev="tobrien" type="update">
+        2/1?/03 - Refactor Base64 to implement both Encoder and Decoder 
+      </action>	 
+      <action dev="tobrien" type="add">
+        2/1?/03 Add a Decoder interface 
+      </action>
+      <action dev="tobrien" type="update"
+              due-to="Jeffery Dever, Martin Redington">
+        2/6/03 Added encodeChunked and optional chunking to the Base64 class 
+	in the "binary" package.  This change was made to reach the goal of 
+	immediate reusability for the xml-rpc and httpclient projects.
+      </action>
+      <action dev="tobrien" type="add"
+              due-to="Martin Redington">
+        2/4/03 Integrated a Base64 impl from xml-rpc - Martin Redington
+      </action>
+      <action dev="tobrien" type="update">
+        2/3/03 Moved phonetic encoders into dedicated "language" package.     
+      </action>
+      <action dev="tobrien" type="add" due-to="Kyle Burton">
+        2/3/03 - Added Nysiis code and tests
+      </action>
+      <action dev="tobrien" type="add" due-to="Kyle Burton">
+        2/3/03 - Added DoubleMetaphone code and tests
+      </action>
+      <action dev="tobrien" type="update">
+        2/2/03 - "language" package created to hold language and 
+	phonetic encodings 
+      </action>
+      <action dev="tobrien" type="update">
+        2/2/03 - All CRLF issues resolved in codec 
+      </action>
+    </release>
+  </body>
+</document>

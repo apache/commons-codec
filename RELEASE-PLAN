@@ -1,0 +1,50 @@
+$Id: RELEASE-PLAN,v 1.1 2003/04/25 17:50:55 tobrien Exp $
+
+Jakarta Commons Codec  
+
+*** Release Plan
+
+This document outline the current goals for the next release.  
+This document defines objectives and action items that should
+be met before the next release.  Longer term goals should be
+placed in the file named ROADMAP.  
+
+Objective: 
+
+   The main objective of 1.1 release is to package a definitive
+   implementation of Base64 and Hex in addition to the phonetic
+   encoders currently implemented in the "language" package. It
+   is the objective of the [codec] project to provide a point
+   of consolidation for [binary|text|language] codecs.
+
+   The 1.1 release will be a foundation for further expansion
+   of the available binary encoders and decoders, but it should
+   be noted that the objective is to provide an implementation
+   of Base64 and Hex - byte[] and IO stream.
+
+Status:
+
+* As described in the TODO
+
+Codec 1.1 Release Candidate`1:
+
+* Code freeze date: Apr 1, 2003
+* Tag date: Apr 8, 2003
+* Goals:
+    * Cut a release which can be used to as the base for performing
+      tests and reporting bugs. 
+    * Evaluate and clean up as many bugs that are there
+      jakarta.apache.org/bugs.
+
+Codec 1.1 Final (Tentative):
+
+* Code freeze date: Apr 15, 2003
+* Tag date: Apr 20, 2003
+* Goals:
+    * Fix bugs reported on the beta and subsequent builds. 
+    * Evaluate after the code freeze date if codec 1.1 is ready to be
+      called "final".
+    * Build out documentation using Forrest
+
+* Release Manager: Tim O'Brien <tobrien@apache.org>
+

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project>
+  <extend>../../jakarta-commons/project.xml</extend>
+  <name>Codec</name>
+  <id>commons-codec</id>
+  <currentVersion>1.1-rc1</currentVersion>
+  <inceptionYear>2002</inceptionYear>
+  <shortDescription>
+   A collection of simple and common encoders and decoders
+  </shortDescription>
+  <description>
+   The codec package contains a few very simple encoder and decoders for
+   various formats such as Base64 and Hexadecimal.  In addition to these
+   widely used encoders and decoders, the codec package also maintains a
+   collection of phonetic encoding utilities.
+  </description>
+
+  <versions>
+    <version>
+      <id>1.1-rc1</id>
+      <name>1.1-rc1</name>
+      <tag>CODEC_1_1_RC1</tag>
+    </version>
+  </versions>
+
+  <developers>
+    <developer>
+      <name>Henri Yandell</name>
+      <id>bayard</id>
+      <email>bayard@generationjava.com</email>
+    </developer>
+    <developer>
+      <name>Tim OBrien</name>
+      <id>tobrien</id>
+      <email>tobrien@apache.org</email>
+    </developer>
+    <developer>
+      <name>Scott Sanders</name>
+      <id>sanders</id>
+      <email>sanders@totalsync.com</email>
+    </developer>
+    <developer>
+      <name>Rodney Waldhoff</name>
+      <id>rwaldhoff</id>
+      <email>rwaldhoff@apache.org</email>
+    </developer>
+    <developer>
+      <name>Daniel Rall</name>
+      <id>dlr</id>
+      <email>dlr@finemaltcoding.com</email>
+    </developer>
+    <developer>
+      <name>Jon S. Stevens</name>
+      <id>jon</id>
+      <email>jon@collab.net</email>
+    </developer>
+  </developers>
+
+  <contributors>
+   <contributor>
+     <name>Christopher O'Brien</name>
+     <email>siege@preoccupied.net</email>
+     <roles>hex, md5, architecture</roles>
+   </contributor>
+   <contributor>
+     <name>Martin Redington</name>
+     <roles>representing xml-rpc</roles>
+   </contributor>
+   <contributor>
+     <name>Kyle Burton</name>
+     <roles>double metaphone, nysiis</roles>
+   </contributor>
+   <contributor>
+     <name>Jeffery Dever</name>
+     <roles>representing http-client</roles>
+   </contributor>
+  </contributors>  
+
+  <dependencies>
+<!--    <dependency>
+      <id>junit</id>
+      <version>3.8</version>
+    </dependency> -->
+  </dependencies>
+
+  <issueTrackingUrl>http://nagoya.apache.org/bugzilla/buglist.cgi?bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;email1=&amp;emailtype1=substring&amp;emailassigned_to1=1&amp;email2=&amp;emailtype2=substring&amp;emailreporter2=1&amp;bugidtype=include&amp;bug_id=&amp;changedin=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;product=Commons&amp;component=Sandbox&amp;short_desc=&amp;short_desc_type=allwordssubstr&amp;long_desc=&amp;long_desc_type=allwordssubstr&amp;bug_file_loc=&amp;bug_file_loc_type=allwordssubstr&amp;keywords=&amp;keywords_type=anywords&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=&amp;cmdtype=doit&amp;order=%27Importance%27</issueTrackingUrl>
+
+  <repository>
+    <connection>scm:cvs:pserver:anoncvs@cvs.apache.org:/home/cvspublic:jakarta-commons-sandbox/${pom.artifactId.substring(8)}</connection>
+    <url>http://cvs.apache.org/viewcvs/jakarta-commons-sandbox/${pom.artifactId.substring(8)}/</url>
+  </repository>
+  
+  <build>
+    <unitTest>
+      <includes>
+        <include>**/*Test.java</include>
+      </includes>
+      <excludes>
+        <exclude>**/*AbstractTest.java</exclude>
+      </excludes>
+      <resources>
+         <resource>
+            <directory>${pom.build.unitTestSourceDirectory}</directory>
+            <includes>
+              <include>**/*.xml</include>
+            </includes>
+         </resource>
+      </resources>
+    </unitTest>
+  </build>
+
+  <reports>
+   <report>maven-changelog-plugin</report>
+   <report>maven-changes-plugin</report>
+   <report>maven-checkstyle-plugin</report>
+   <report>maven-clover-plugin</report>
+   <report>maven-developer-activity-plugin</report>
+   <report>maven-file-activity-plugin</report>
+   <report>maven-javadoc-plugin</report>
+   <report>maven-jdepend-plugin</report>
+   <report>maven-jellydoc-plugin</report>
+   <report>maven-junit-report-plugin</report>
+   <report>maven-jxr-plugin</report>
+   <report>maven-license-plugin</report>
+   <report>maven-linkcheck-plugin</report>
+   <report>maven-statcvs-plugin</report>
+   <report>maven-tasklist-plugin</report>
+  </reports>
+</project>
