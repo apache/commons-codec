@@ -233,6 +233,7 @@ public class URLCodecTest extends TestCase {
             urlcodec.encode( dObj );
             fail( "Trying to url encode a Double object should cause an exception.");
         } catch( EncoderException ee ) {
+            // Exception expected, test segment passes.
         }
     }
     
@@ -243,11 +244,13 @@ public class URLCodecTest extends TestCase {
                urlcodec.encode(plain);
                 fail( "We set the encoding to a bogus NONSENSE vlaue, this shouldn't have worked.");
             } catch( EncoderException ee ) {
+                // Exception expected, test segment passes.
             }
             try {
                urlcodec.decode(plain);
                 fail( "We set the encoding to a bogus NONSENSE vlaue, this shouldn't have worked.");
             } catch( DecoderException ee ) {
+                // Exception expected, test segment passes.
             }
     }
 
@@ -272,6 +275,7 @@ public class URLCodecTest extends TestCase {
             urlcodec.decode( dObj );
             fail( "Trying to url encode a Double object should cause an exception.");
         } catch( DecoderException ee ) {
+            // Exception expected, test segment passes.
         }
     }
 
