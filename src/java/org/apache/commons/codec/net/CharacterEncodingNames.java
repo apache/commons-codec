@@ -12,18 +12,32 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */ 
+ */
 
 package org.apache.commons.codec.net;
 
 /**
- * String encodings used in this package.
+ * Character encoding names required of every implementation of the Java platform.
  * 
+ * According to the Java documentation <a
+ * href="http://java.sun.com/j2se/1.3/docs/api/java/lang/package-summary.html#charenc">JRE character encoding names
+ * </a>:
+ * <p>
+ * <cite>Every implementation of the Java platform is required to support the following character encodings. Consult the
+ * release documentation for your implementation to see if any other encodings are supported. </cite>
+ * </p>
+ * 
+ * This interface is private to the package since it perhaps would best belong in the [lang] project with other required
+ * encoding names. As is, this interface only defines the names used in this package. Even if a similar interface is
+ * defined in [lang], it is not forseen that [codec] would be made to depend on [lang].
+ * 
+ * @see <a href="http://java.sun.com/j2se/1.3/docs/api/java/lang/package-summary.html#charenc">JRE character encoding
+ *          names </a>
  * @author Apache Software Foundation
- * @since 1.3
- * @version $Id: StringEncodings.java,v 1.2 2004/04/09 22:21:07 ggregory Exp $
+ * @since 1.4
+ * @version $Id: CharacterEncodingNames.java,v 1.1 2004/07/26 22:55:40 ggregory Exp $
  */
-interface StringEncodings {
+interface CharacterEncodingNames {
     /**
      * <p>
      * Seven-bit ASCII, also known as ISO646-US, also known as the Basic Latin block of the Unicode character set.
@@ -33,7 +47,7 @@ interface StringEncodings {
      * </p>
      * 
      * @see <a href="http://java.sun.com/j2se/1.3/docs/api/java/lang/package-summary.html#charenc">JRE character
-     *          encoding names</a>
+     *          encoding names </a>
      */
     String US_ASCII = "US-ASCII";
 
@@ -46,7 +60,7 @@ interface StringEncodings {
      * </p>
      * 
      * @see <a href="http://java.sun.com/j2se/1.3/docs/api/java/lang/package-summary.html#charenc">JRE character
-     *          encoding names</a>
+     *          encoding names </a>
      */
     String UTF8 = "UTF-8";
 }
