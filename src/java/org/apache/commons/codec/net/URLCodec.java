@@ -87,18 +87,19 @@ import org.apache.commons.codec.StringEncoder;
  * @author <a href="mailto:oleg@ural.ru">Oleg Kalnichevski</a>
  * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
  * @since 1.2
- * @version $Id: URLCodec.java,v 1.12 2004/01/02 07:01:47 ggregory Exp $
+ * @version $Id: URLCodec.java,v 1.13 2004/01/09 19:02:47 ggregory Exp $
  */
-
 public class URLCodec 
         implements BinaryEncoder, BinaryDecoder, 
                    StringEncoder, StringDecoder 
 {
     
+    private final static String US_ASCII = "US-ASCII";
+    
     /**
      * The <code>String</code> encoding used for decoding and encoding.
      */
-    protected String encoding = "US-ASCII";
+    protected String encoding = "UTF-8";
     
     /**
      * BitSet of www-form-url safe characters.
@@ -265,7 +266,7 @@ public class URLCodec
         if (pString == null) {
             return null;
         }
-        return new String(encode(pString.getBytes(encoding)), this.getEncoding());
+        return new String(encode(pString.getBytes(encoding)), US_ASCII);
     }
 
 
@@ -282,7 +283,7 @@ public class URLCodec
             return null;
         }
         try {
-            return new String(encode(pString.getBytes()), this.getEncoding());
+            return encode(pString, this.encoding);
         } catch(UnsupportedEncodingException e) {
             throw new EncoderException(e.getMessage());
         }
@@ -307,7 +308,7 @@ public class URLCodec
         if (pString == null) {
             return null;
         }
-        return new String(decode(pString.getBytes(this.getEncoding())), encoding);
+        return new String(decode(pString.getBytes(US_ASCII)), encoding);
     }
 
 
@@ -324,12 +325,11 @@ public class URLCodec
             return null;
         }
         try {
-            return new String(decode(pString.getBytes(this.getEncoding())));
+            return decode(pString, this.encoding);
         } catch(UnsupportedEncodingException e) {
             throw new DecoderException(e.getMessage());
         }
     }
-
 
     /**
      * Encodes an object into its URL safe form. Unsafe characters are 
