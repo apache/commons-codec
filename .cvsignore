@@ -3,3 +3,6 @@ target
 junit*.properties
 maven.log
 velocity.log
+.clover
+.classpath
+.project
