@@ -72,7 +72,7 @@ import org.apache.commons.codec.StringEncoder;
  * @author bayard@generationjava.com
  * @author Tim O'Brien
  * @author Gary Gregory
- * @version $Id: Metaphone.java,v 1.11 2003/11/24 00:11:56 ggregory Exp $
+ * @version $Id: Metaphone.java,v 1.12 2003/12/04 17:43:04 ggregory Exp $
  */
 public class Metaphone implements StringEncoder {
 
@@ -193,14 +193,14 @@ public class Metaphone implements StringEncoder {
                     break;
                 case 'C' : // lots of C special cases
                     /* discard if SCI, SCE or SCY */
-                    if ((n > 0) && (local.charAt(n - 1) == 'S') && (n + 1 < wdsz) && (frontv.indexOf(local.charAt(n + 1)) >= 0)) { 
+                    if ((n > 0) && (local.charAt(n - 1) == 'S') && (n + 1 < wdsz) && (this.frontv.indexOf(local.charAt(n + 1)) >= 0)) { 
                         break ;
                     }
                     tmpS = local.toString();
                     if (tmpS.indexOf("CIA", n) == n) { // "CIA" -> X
                         code.append('X'); mtsz++; break ;
                     }
-                    if ((n + 1 < wdsz) && (frontv.indexOf(local.charAt(n + 1)) >= 0)) {
+                    if ((n + 1 < wdsz) && (this.frontv.indexOf(local.charAt(n + 1)) >= 0)) {
                         code.append('S');
                         mtsz++; 
                         break ; // CI,CE,CY -> S
@@ -211,7 +211,7 @@ public class Metaphone implements StringEncoder {
                         break ;
                     }
                     if (tmpS.indexOf("CH", n) == n) { // detect CH
-                        if ((n == 0) && (wdsz >= 3) && (vowels.indexOf(local.charAt(2)) < 0)) { // CH consonant -> K consonant
+                        if ((n == 0) && (wdsz >= 3) && (this.vowels.indexOf(local.charAt(2)) < 0)) { // CH consonant -> K consonant
                             code.append('K');
                         } else { 
                             code.append('X'); // CHvowel -> X
@@ -223,7 +223,7 @@ public class Metaphone implements StringEncoder {
                     }
                     break ;
                 case 'D' :
-                    if ((n + 2 < wdsz)   && (local.charAt(n + 1) == 'G') && (frontv.indexOf(local.charAt(n + 2)) >= 0)) { // DGE DGI DGY -> J 
+                    if ((n + 2 < wdsz)   && (local.charAt(n + 1) == 'G') && (this.frontv.indexOf(local.charAt(n + 2)) >= 0)) { // DGE DGI DGY -> J 
                         code.append('J'); n += 2 ;
                     } else { 
                         code.append('T');
@@ -234,7 +234,7 @@ public class Metaphone implements StringEncoder {
                     if ((n + 2 == wdsz) && (local.charAt(n + 1) == 'H')) {
                         break;
                     }
-                    if ((n + 2 < wdsz) && (local.charAt(n + 1) == 'H') && (vowels.indexOf(local.charAt(n + 2)) < 0)) {
+                    if ((n + 2 < wdsz) && (local.charAt(n + 1) == 'H') && (this.vowels.indexOf(local.charAt(n + 2)) < 0)) {
                         break;
                     }
                     tmpS = local.toString();
@@ -246,7 +246,7 @@ public class Metaphone implements StringEncoder {
                     } else {
                         hard = false ;
                     }
-                    if ((n + 1 < wdsz) && (frontv.indexOf(local.charAt(n + 1)) >= 0) && (!hard)) {
+                    if ((n + 1 < wdsz) && (this.frontv.indexOf(local.charAt(n + 1)) >= 0) && (!hard)) {
                         code.append('J');
                     } else {
                         code.append('K');
@@ -257,10 +257,10 @@ public class Metaphone implements StringEncoder {
                     if (n + 1 == wdsz) {
                         break ; // terminal H
                     }
-                    if ((n > 0) && (varson.indexOf(local.charAt(n - 1)) >= 0)) {
+                    if ((n > 0) && (this.varson.indexOf(local.charAt(n - 1)) >= 0)) {
                         break;
                     }
-                    if (vowels.indexOf(local.charAt(n + 1)) >= 0) {
+                    if (this.vowels.indexOf(local.charAt(n + 1)) >= 0) {
                         code.append('H'); 
                         mtsz++;// Hvowel
                     }
@@ -327,7 +327,7 @@ public class Metaphone implements StringEncoder {
                 case 'V' :
                     code.append('F'); mtsz++;break ;
                 case 'W' : case 'Y' : // silent if not followed by vowel
-                    if ((n + 1 < wdsz) && (vowels.indexOf(local.charAt(n + 1)) >= 0)) {
+                    if ((n + 1 < wdsz) && (this.vowels.indexOf(local.charAt(n + 1)) >= 0)) {
                         code.append(symb);
                         mtsz++;
                     }

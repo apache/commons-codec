@@ -73,7 +73,7 @@ import org.apache.commons.codec.StringEncoder;
  * 
  * @author <a href="mailto:ben@walstrum.com">Benjamin Walstrum</a>
  * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
- * @version $Id: DoubleMetaphone.java,v 1.15 2003/11/24 00:11:56 ggregory Exp $
+ * @version $Id: DoubleMetaphone.java,v 1.16 2003/12/04 17:43:04 ggregory Exp $
  */
 public class DoubleMetaphone implements StringEncoder {
 
@@ -237,11 +237,12 @@ public class DoubleMetaphone implements StringEncoder {
      *
      * @param obj Object to encode (should be of type String)
      * @return An encoded Object (will be of type String)
+     * @throws EncoderException encode parameter is not of type String
      */
     public Object encode(Object obj) throws EncoderException {
 
         if (!(obj instanceof String)) {
-            throw new EncoderException("DoubleMetaphone encode parameter is not of type java.lang.String"); 
+            throw new EncoderException("DoubleMetaphone encode parameter is not of type String"); 
         } else {
             return doubleMetaphone((String) obj);
         }
@@ -259,7 +260,13 @@ public class DoubleMetaphone implements StringEncoder {
 
     /**
      * Check if the Double Metaphone values of two <code>String</code> values
-     * are equal
+     * are equal.
+     * 
+     * @param value1 The left-hand side of the encoded {@link String#equals(Object)}.
+     * @param value2 The right-hand side of the encoded {@link String#equals(Object)}.
+     * @return <code>true</code> if the encoded <code>String</code>s are equal;
+     *          <code>false</code> otherwise.
+     * @see #isDoubleMetaphoneEqual(String,String,boolean)
      */
     public boolean isDoubleMetaphoneEqual(String value1, String value2) {
         return isDoubleMetaphoneEqual(value1, value2, false);
@@ -267,7 +274,13 @@ public class DoubleMetaphone implements StringEncoder {
     
     /**
      * Check if the Double Metaphone values of two <code>String</code> values
-     * are equal, optionally using the alternate value
+     * are equal, optionally using the alternate value.
+     * 
+     * @param value1 The left-hand side of the encoded {@link String#equals(Object)}.
+     * @param value2 The right-hand side of the encoded {@link String#equals(Object)}.
+     * @param alternate use the alternate value if <code>true</code>.
+     * @return <code>true</code> if the encoded <code>String</code>s are equal;
+     *          <code>false</code> otherwise.
      */
     public boolean isDoubleMetaphoneEqual(String value1, 
                                           String value2, 
