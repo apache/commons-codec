@@ -17,12 +17,14 @@
 package org.apache.commons.codec.binary ;
 
 import junit.framework.TestCase;
+import org.apache.commons.codec.DecoderException;
+import org.apache.commons.codec.EncoderException;
 
 /**
  * TestCase for Binary class.
  *
  * @author Apache Software Foundation
- * @version $Id: BinaryTest.java,v 1.5 2004/03/17 19:30:19 ggregory Exp $
+ * @version $Id: BinaryTest.java,v 1.6 2004/03/17 19:54:27 ggregory Exp $
  */
 public class BinaryTest extends TestCase
 {
@@ -34,7 +36,7 @@ public class BinaryTest extends TestCase
     protected void setUp() throws Exception
     {
         super.setUp();
-        instance = new Binary() ;
+        this.instance = new Binary() ;
     }
 
     /*
@@ -43,7 +45,7 @@ public class BinaryTest extends TestCase
     protected void tearDown() throws Exception
     {
         super.tearDown();
-        instance = null ;
+        this.instance = null ;
     }
 
     /**
@@ -61,63 +63,69 @@ public class BinaryTest extends TestCase
     //
     // ------------------------------------------------------------------------
 
+    /**
+     * Tests for Object decode(Object)
+     */
+    public void testDecodeObjectException()
+    {
+        try {
+            this.instance.decode(new Object());
+        } catch (DecoderException e) {
+            // all is well.
+            return;
+        }
+        fail("Expected DecoderException");
+    }
     
-    /*
+    /**
      * Tests for Object decode(Object)
      */
     public void testDecodeObject() throws Exception
-    {
-        // With a single raw binary
+    {        
+        byte [] bits;
         
-        byte [] bits = new byte[1] ;
-        byte [] decoded = ( byte[] ) instance.decode( ( Object ) "00000000" ) ;
-        assertEquals( new String( bits ), new String( decoded ) ) ;
+        // With a single raw binary
+
+        bits = new byte[1] ;
+        assertDecodeObject(bits, "00000000");
 
         bits = new byte[1] ;
         bits[0] = Binary.BIT_0 ;
-        decoded = ( byte[] ) instance.decode( ( Object ) "00000001" ) ;
-        assertEquals( new String( bits ), new String( decoded ) ) ;
+        assertDecodeObject(bits, "00000001");
 
         bits = new byte[1] ;
         bits[0] = Binary.BIT_0 | Binary.BIT_1 ;
-        decoded = ( byte[] ) instance.decode( ( Object ) "00000011" ) ;
-        assertEquals( new String( bits ), new String( decoded ) ) ;
+        assertDecodeObject(bits, "00000011");
 
         bits = new byte[1] ;
         bits[0] = Binary.BIT_0 | Binary.BIT_1 | Binary.BIT_2 ;
-        decoded = ( byte[] ) instance.decode( ( Object ) "00000111" ) ;
-        assertEquals( new String( bits ), new String( decoded ) ) ;
+        assertDecodeObject(bits, "00000111");
 
         bits = new byte[1] ;
         bits[0] = Binary.BIT_0 | Binary.BIT_1 | Binary.BIT_2 
             | Binary.BIT_3 ;
-        decoded = ( byte[] ) instance.decode( ( Object ) "00001111" ) ;
-        assertEquals( new String( bits ), new String( decoded ) ) ;
+        assertDecodeObject(bits, "00001111");
 
         bits = new byte[1] ;
         bits[0] = Binary.BIT_0 | Binary.BIT_1 | Binary.BIT_2 
             | Binary.BIT_3 | Binary.BIT_4 ;
-        decoded = ( byte[] ) instance.decode( ( Object ) "00011111" ) ;
-        assertEquals( new String( bits ), new String( decoded ) ) ;
+        assertDecodeObject(bits, "00011111");
 
         bits = new byte[1] ;
         bits[0] = Binary.BIT_0 | Binary.BIT_1 | Binary.BIT_2 
             | Binary.BIT_3 | Binary.BIT_4 | Binary.BIT_5 ;
-        decoded = ( byte[] ) instance.decode( ( Object ) "00111111" ) ;
-        assertEquals( new String( bits ), new String( decoded ) ) ;
+        assertDecodeObject(bits, "00111111");
 
         bits = new byte[1] ;
         bits[0] = Binary.BIT_0 | Binary.BIT_1 | Binary.BIT_2 
             | Binary.BIT_3 | Binary.BIT_4 | Binary.BIT_5 | Binary.BIT_6 ;
-        decoded = ( byte[] ) instance.decode( ( Object ) "01111111" ) ;
-        assertEquals( new String( bits ), new String( decoded ) ) ;
+        assertDecodeObject(bits, "01111111");
 
         bits = new byte[1] ;
         bits[0] = ( byte ) ( Binary.BIT_0 | Binary.BIT_1 | Binary.BIT_2 
             | Binary.BIT_3 | Binary.BIT_4 | Binary.BIT_5 | Binary.BIT_6 
             | Binary.BIT_7 ) ;
-        decoded = ( byte[] ) instance.decode( ( Object ) "11111111" ) ;
-        assertEquals( new String( bits ), new String( decoded ) ) ;
+        assertDecodeObject(bits, "11111111");
 
         // With a two raw binaries
         
@@ -125,32 +133,28 @@ public class BinaryTest extends TestCase
         bits[0] = ( byte ) ( Binary.BIT_0 | Binary.BIT_1 | Binary.BIT_2 
             | Binary.BIT_3 | Binary.BIT_4 | Binary.BIT_5 | Binary.BIT_6 
             | Binary.BIT_7 ) ;
-        decoded = ( byte[] ) instance.decode( ( Object ) "0000000011111111" ) ;
-        assertEquals( new String( bits ), new String( decoded ) ) ;
+        assertDecodeObject(bits, "0000000011111111");
 
         bits = new byte[2] ;
         bits[1] = Binary.BIT_0 ;
         bits[0] = ( byte ) ( Binary.BIT_0 | Binary.BIT_1 | Binary.BIT_2 
             | Binary.BIT_3 | Binary.BIT_4 | Binary.BIT_5 | Binary.BIT_6 
             | Binary.BIT_7 ) ;
-        decoded = ( byte[] ) instance.decode( ( Object ) "0000000111111111" ) ;
-        assertEquals( new String( bits ), new String( decoded ) ) ;
+        assertDecodeObject(bits, "0000000111111111");
 
         bits = new byte[2] ;
         bits[1] = Binary.BIT_0 | Binary.BIT_1 ;
         bits[0] = ( byte ) ( Binary.BIT_0 | Binary.BIT_1 | Binary.BIT_2 
             | Binary.BIT_3 | Binary.BIT_4 | Binary.BIT_5 | Binary.BIT_6 
             | Binary.BIT_7 ) ;
-        decoded = ( byte[] ) instance.decode( ( Object ) "0000001111111111" ) ;
-        assertEquals( new String( bits ), new String( decoded ) ) ;
+        assertDecodeObject(bits, "0000001111111111");
 
         bits = new byte[2] ;
         bits[1] = Binary.BIT_0 | Binary.BIT_1 | Binary.BIT_2 ;
         bits[0] = ( byte ) ( Binary.BIT_0 | Binary.BIT_1 | Binary.BIT_2 
             | Binary.BIT_3 | Binary.BIT_4 | Binary.BIT_5 | Binary.BIT_6 
             | Binary.BIT_7 ) ;
-        decoded = ( byte[] ) instance.decode( ( Object ) "0000011111111111" ) ;
-        assertEquals( new String( bits ), new String( decoded ) ) ;
+        assertDecodeObject(bits, "0000011111111111");
 
         bits = new byte[2] ;
         bits[1] = Binary.BIT_0 | Binary.BIT_1 | Binary.BIT_2 
@@ -158,8 +162,7 @@ public class BinaryTest extends TestCase
         bits[0] = ( byte ) ( Binary.BIT_0 | Binary.BIT_1 | Binary.BIT_2 
             | Binary.BIT_3 | Binary.BIT_4 | Binary.BIT_5 | Binary.BIT_6 
             | Binary.BIT_7 ) ;
-        decoded = ( byte[] ) instance.decode( ( Object ) "0000111111111111" ) ;
-        assertEquals( new String( bits ), new String( decoded ) ) ;
+        assertDecodeObject(bits, "0000111111111111");
 
         bits = new byte[2] ;
         bits[1] = Binary.BIT_0 | Binary.BIT_1 | Binary.BIT_2 
@@ -167,8 +170,7 @@ public class BinaryTest extends TestCase
         bits[0] = ( byte ) ( Binary.BIT_0 | Binary.BIT_1 | Binary.BIT_2 
             | Binary.BIT_3 | Binary.BIT_4 | Binary.BIT_5 | Binary.BIT_6 
             | Binary.BIT_7 ) ;
-        decoded = ( byte[] ) instance.decode( ( Object ) "0001111111111111" ) ;
-        assertEquals( new String( bits ), new String( decoded ) ) ;
+        assertDecodeObject(bits, "0001111111111111");
 
         bits = new byte[2] ;
         bits[1] = Binary.BIT_0 | Binary.BIT_1 | Binary.BIT_2 
@@ -176,8 +178,7 @@ public class BinaryTest extends TestCase
         bits[0] = ( byte ) ( Binary.BIT_0 | Binary.BIT_1 | Binary.BIT_2 
             | Binary.BIT_3 | Binary.BIT_4 | Binary.BIT_5 | Binary.BIT_6 
             | Binary.BIT_7 ) ;
-        decoded = ( byte[] ) instance.decode( ( Object ) "0011111111111111" ) ;
-        assertEquals( new String( bits ), new String( decoded ) ) ;
+        assertDecodeObject(bits, "0011111111111111");
 
         bits = new byte[2] ;
         bits[1] = Binary.BIT_0 | Binary.BIT_1 | Binary.BIT_2 
@@ -185,8 +186,7 @@ public class BinaryTest extends TestCase
         bits[0] = ( byte ) ( Binary.BIT_0 | Binary.BIT_1 | Binary.BIT_2 
             | Binary.BIT_3 | Binary.BIT_4 | Binary.BIT_5 | Binary.BIT_6 
             | Binary.BIT_7 ) ;
-        decoded = ( byte[] ) instance.decode( ( Object ) "0111111111111111" ) ;
-        assertEquals( new String( bits ), new String( decoded ) ) ;
+        assertDecodeObject(bits, "0111111111111111");
 
         bits = new byte[2] ;
         bits[1] = ( byte ) ( Binary.BIT_0 | Binary.BIT_1 | Binary.BIT_2 
@@ -195,8 +195,7 @@ public class BinaryTest extends TestCase
         bits[0] = ( byte ) ( Binary.BIT_0 | Binary.BIT_1 | Binary.BIT_2 
             | Binary.BIT_3 | Binary.BIT_4 | Binary.BIT_5 | Binary.BIT_6 
             | Binary.BIT_7 ) ;
-        decoded = ( byte[] ) instance.decode( ( Object ) "1111111111111111" ) ;
-        assertEquals( new String( bits ), new String( decoded ) ) ;
+        assertDecodeObject(bits, "1111111111111111");
     }
 
 
@@ -207,6 +206,16 @@ public class BinaryTest extends TestCase
     // ------------------------------------------------------------------------
 
     
+    void assertDecodeObject(byte[] bits, String encodeMe) throws DecoderException {
+        byte[] decoded;
+        decoded = (byte[]) instance.decode((Object) encodeMe);
+        assertEquals(new String(bits), new String(decoded));
+        decoded = (byte[]) instance.decode((Object) encodeMe.getBytes());
+        assertEquals(new String(bits), new String(decoded));
+        decoded = (byte[]) instance.decode((Object) encodeMe.toCharArray());
+        assertEquals(new String(bits), new String(decoded));
+    }
+
     /*
      * Tests for byte[] decode(byte[])
      */
@@ -1537,6 +1546,19 @@ public class BinaryTest extends TestCase
     //
     // ------------------------------------------------------------------------
 
+    /*
+     * Tests for Object encode(Object)
+     */
+    public void testEncodeObjectException()
+    {
+        try {
+            instance.encode("");
+        } catch (EncoderException e) {
+            // all is well.
+            return;
+        }
+        fail("Expected EncoderException");
+    }
     
     /*
      * Tests for Object encode(Object)
