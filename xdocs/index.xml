@@ -62,15 +62,15 @@ limitations under the License.
 
   <section name="Releases">
    <ul>
-    <li>Version 1.3 (latest, from mirror) 
+    <li>Version 1.3 - June 2004 (latest, from mirror)
 	<a href="http://jakarta.apache.org/site/binindex.cgi">binary</a> and 
 	<a href="http://jakarta.apache.org/site/sourceindex.cgi">source</a>
     </li>
     <li>
-     Version <a href="http://www.apache.org/dist/jakarta/commons/codec/">1.2</a>
+     Version <a href="http://www.apache.org/dist/jakarta/commons/codec/">1.2</a> - 7 Nov 2003
     </li>
     <li>
-     Version <a href="http://www.apache.org/dist/jakarta/commons/codec/">1.1</a>
+     Version <a href="http://www.apache.org/dist/jakarta/commons/codec/">1.1</a> - 21 Apr 2003
     </li>
     <li>
      Current <a href="http://cvs.apache.org/builds/jakarta-commons/nightly/commons-codec/"> nightly build</a>
