@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//codec/src/test/org/apache/commons/codec/binary/Base64Test.java,v 1.1 2003/04/25 17:50:56 tobrien Exp $
- * $Revision: 1.1 $
- * $Date: 2003/04/25 17:50:56 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//codec/src/test/org/apache/commons/codec/binary/Base64Test.java,v 1.2 2003/05/06 20:45:16 ggregory Exp $
+ * $Revision: 1.2 $
+ * $Date: 2003/05/06 20:45:16 $
  *
  * ====================================================================
  *
@@ -67,10 +67,11 @@ import java.util.Random;
 import junit.framework.TestCase;
 
 /**
- * @version $Revision: 1.1 $ $Date: 2003/04/25 17:50:56 $
+ * @version $Revision: 1.2 $ $Date: 2003/05/06 20:45:16 $
  * @author <a href="mailto:sanders@apache.org">Scott Sanders</a>
  * @author <a href="mailto:rwaldhoff@apache.org">Rodney Waldhoff</a>
  * @author <a href="mailto:tobrien@apache.org">Tim O'Brien</a>
+ * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
  */
 public class Base64Test extends TestCase {
 
@@ -352,7 +353,6 @@ public class Base64Test extends TestCase {
     }
 
     public void testObjectDecodeWithValidParameter() throws Exception {
-        boolean exceptionThrown = false;
 
         String original = "Hello World!";
         byte[] bArray = 
