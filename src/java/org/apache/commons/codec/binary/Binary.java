@@ -56,10 +56,10 @@
  */ 
 package org.apache.commons.codec.binary ;
 
-import org.apache.commons.codec.BinaryDecoder ; 
-import org.apache.commons.codec.BinaryEncoder ;
-import org.apache.commons.codec.DecoderException ;
-import org.apache.commons.codec.EncoderException ;
+import org.apache.commons.codec.BinaryDecoder;
+import org.apache.commons.codec.BinaryEncoder;
+import org.apache.commons.codec.DecoderException;
+import org.apache.commons.codec.EncoderException;
 
 /**
  * Encodes and decodes binary to and from ascii bit Strings.
@@ -67,8 +67,8 @@ import org.apache.commons.codec.EncoderException ;
  * @todo may want to add more bit vector functions like and/or/xor/nand
  * @todo also might be good to generate boolean[] from byte[] et. cetera.
  * @author <a href="mailto:akarasulu@apache.org">Alex Karasulu</a>
- * @author $Author: tobrien $
- * @version $Revision: 1.1 $
+ * @author $Author: ggregory $
+ * @version $Revision: 1.2 $
  */
 public class Binary implements BinaryDecoder, BinaryEncoder
 {

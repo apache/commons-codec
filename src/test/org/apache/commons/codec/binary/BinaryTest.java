@@ -57,15 +57,13 @@
 
 package org.apache.commons.codec.binary ;
 
-
-import junit.framework.TestCase ;
-
+import junit.framework.TestCase;
 
 /**
  * TestCase for Binary class.
  *
  * @author <a href="mailto:akarasulu@apache.org">Alex Karasulu</a>
- * @author $Author: tobrien $
+ * @author $Author: ggregory $
  * @version $Rev$
  */
 public class BinaryTest extends TestCase

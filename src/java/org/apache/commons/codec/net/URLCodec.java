@@ -63,8 +63,8 @@ import java.util.BitSet;
 
 import org.apache.commons.codec.BinaryDecoder;
 import org.apache.commons.codec.BinaryEncoder;
-import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.DecoderException;
+import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringDecoder;
 import org.apache.commons.codec.StringEncoder;
 
@@ -87,7 +87,7 @@ import org.apache.commons.codec.StringEncoder;
  * @author <a href="mailto:oleg@ural.ru">Oleg Kalnichevski</a>
  * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
  * @since 1.2
- * @version $Id: URLCodec.java,v 1.14 2004/01/09 19:23:53 ggregory Exp $
+ * @version $Id: URLCodec.java,v 1.15 2004/02/19 05:38:20 ggregory Exp $
  */
 public class URLCodec 
         implements BinaryEncoder, BinaryDecoder, 
