@@ -43,10 +43,9 @@ import org.apache.commons.codec.StringEncoder;
  * 1.4 rely on the platform's default charset encoding.
  * </p>
  * 
- * @author <a href="mailto:oleg@ural.ru">Oleg Kalnichevski</a>
- * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
+ * @author Apache Software Foundation
  * @since 1.2
- * @version $Id: URLCodec.java,v 1.16 2004/02/23 07:32:50 ggregory Exp $
+ * @version $Id: URLCodec.java,v 1.17 2004/02/29 04:08:31 tobrien Exp $
  */
 public class URLCodec 
         implements BinaryEncoder, BinaryDecoder, 

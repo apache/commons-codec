@@ -24,9 +24,8 @@ import org.apache.commons.codec.StringEncoder;
  * optimized for spell checking word. "Soundex" method originally developed by
  * Margaret Odell and Robert Russell
  * 
- * @author Tim O'Brien
- * @author Gary D. Gregory
- * @version $Id: RefinedSoundex.java,v 1.15 2004/02/23 07:32:49 ggregory Exp $
+ * @author Apache Software Foundation
+ * @version $Id: RefinedSoundex.java,v 1.16 2004/02/29 04:08:31 tobrien Exp $
  */
 public class RefinedSoundex implements StringEncoder {
 

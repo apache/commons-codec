@@ -22,18 +22,14 @@ import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 
 /**
-  * Provides encode/decode for RFC 2045 Base64 as 
-  * defined by RFC 2045, by Freed and Borenstein.  
-  *
-  * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>
-  * @author Jeffrey Rodriguez
-  * @author <a href="mailto:dlr@apache.org">Daniel Rall</a>
-  * @author <a href="mailto:m.redington@ucl.ac.uk">Martin Redington</a>
-  * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
-  * @author Tim O'Brien
-  * @since 1.0-dev
-  * @version $Id: Base64.java,v 1.16 2004/02/23 07:32:50 ggregory Exp $
-  */
+ * Provides encode/decode for RFC 2045 Base64 as 
+ * defined by RFC 2045, by Freed and Borenstein.  
+ *
+ * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>
+ * @author Apache Software Foundation
+ * @since 1.0-dev
+ * @version $Id: Base64.java,v 1.17 2004/02/29 04:08:31 tobrien Exp $
+ */
 public class Base64 implements BinaryEncoder, BinaryDecoder {
 
     /**

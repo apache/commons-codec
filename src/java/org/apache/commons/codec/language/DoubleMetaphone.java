@@ -30,9 +30,8 @@ import org.apache.commons.codec.StringEncoder;
  * ftp://ftp.cuj.com/pub/2000/1806/philips.zip</a></li>
  * </ul>
  * 
- * @author <a href="mailto:ben@walstrum.com">Benjamin Walstrum</a>
- * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
- * @version $Id: DoubleMetaphone.java,v 1.19 2004/02/23 07:32:49 ggregory Exp $
+ * @author Apache Software Foundation
+ * @version $Id: DoubleMetaphone.java,v 1.20 2004/02/29 04:08:31 tobrien Exp $
  */
 public class DoubleMetaphone implements StringEncoder {
 

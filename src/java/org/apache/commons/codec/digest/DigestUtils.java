@@ -25,9 +25,7 @@ import org.apache.commons.codec.binary.Hex;
  * Operations to simplifiy common {@link java.security.MessageDigest} tasks.  This
  * class is thread safe.
  *
- * @author Dave Dribin
- * @author David Graham
- * @author Gary Gregory
+ * @author Apache Software Foundation
  */
 public class DigestUtils {
 

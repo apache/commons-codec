@@ -24,10 +24,8 @@ import org.apache.commons.codec.EncoderException;
 /**
  * Hex encoder and decoder.
  * 
- * @author <a href="mailto:siege@preoccupied.net">Christopher O'Brien</a>
- * @author Tim O'Brien
- * @author Gary Gregory
- * @version $Id: Hex.java,v 1.11 2004/02/23 07:32:50 ggregory Exp $
+ * @author Apache Software Foundation
+ * @version $Id: Hex.java,v 1.12 2004/02/29 04:08:31 tobrien Exp $
  */
 public class Hex implements BinaryEncoder, BinaryDecoder {
 

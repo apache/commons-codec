@@ -27,11 +27,8 @@ import org.apache.commons.codec.StringEncoder;
  *  "Hanging on the Metaphone" by Lawrence Philips
  *      <i>Computer Language</i> of Dec. 1990, p 39   
  * 
- * @author wbrogden@bga.com
- * @author bayard@generationjava.com
- * @author Tim O'Brien
- * @author Gary Gregory
- * @version $Id: Metaphone.java,v 1.14 2004/02/23 07:32:49 ggregory Exp $
+ * @author Apache Software Foundation
+ * @version $Id: Metaphone.java,v 1.15 2004/02/29 04:08:31 tobrien Exp $
  */
 public class Metaphone implements StringEncoder {
 
