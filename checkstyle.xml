@@ -21,7 +21,6 @@ limitations under the License.
 
 <!-- commons codec customization of default Checkstyle behavior -->
 <module name="Checker">
-  <property name="basedir" value="src/checkstyle"/>
   <property name="localeLanguage" value="en"/>
 
   <module name="TreeWalker">
