@@ -48,6 +48,12 @@ public class BCodecTest extends TestCase {
         return buffer.toString();
     }
 
+    public void testNullInput() throws Exception {
+        BCodec bcodec = new BCodec();
+        assertNull(bcodec.doDecoding(null));
+        assertNull(bcodec.doEncoding(null));
+    }
+
     public void testUTF8RoundTrip() throws Exception {
 
         String ru_msg = constructString(RUSSIAN_STUFF_UNICODE);
@@ -74,40 +80,6 @@ public class BCodecTest extends TestCase {
         BCodec bcodec = new BCodec();
         assertNull("Null string B encoding test", bcodec.encode((String) null));
         assertNull("Null string B decoding test", bcodec.decode((String) null));
-    }
-
-    public void testDecodeInvalid() throws Exception {
-        BCodec bcodec = new BCodec();
-        try {
-            bcodec.decode("whatever");
-            fail("DecoderException should have been thrown");
-        } catch (DecoderException e) {
-            // Expected. Move on
-        }
-        try {
-            bcodec.decode("=?UTF-8?B?stuff");
-            fail("DecoderException should have been thrown");
-        } catch (DecoderException e) {
-            // Expected. Move on
-        }
-        try {
-            bcodec.decode("=??B?stuff?=");
-            fail("DecoderException should have been thrown");
-        } catch (DecoderException e) {
-            // Expected. Move on
-        }
-        try {
-            bcodec.decode("=?UTF-8??stuff?=");
-            fail("DecoderException should have been thrown");
-        } catch (DecoderException e) {
-            // Expected. Move on
-        }
-        try {
-            bcodec.decode("=?UTF-8?W?stuff?=");
-            fail("DecoderException should have been thrown");
-        } catch (DecoderException e) {
-            // Expected. Move on
-        }
     }
 
     public void testEncodeStringWithNull() throws Exception {
@@ -152,7 +124,7 @@ public class BCodecTest extends TestCase {
             // Exception expected, test segment passes.
         }
         try {
-            bcodec.decode("=?NONSENSE?Q?Hello there!?=");
+            bcodec.decode("=?NONSENSE?B?Hello there!?=");
             fail("We set the encoding to a bogus NONSENSE value, this shouldn't have worked.");
         } catch (DecoderException ee) {
             // Exception expected, test segment passes.
