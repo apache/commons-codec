@@ -40,7 +40,7 @@ import org.apache.commons.codec.EncoderException;
  * 
  * @author Apache Software Foundation
  * @since 1.3
- * @version $Id: RFC1522Codec.java,v 1.3 2004/07/26 22:55:40 ggregory Exp $
+ * @version $Id: RFC1522Codec.java,v 1.4 2004/10/14 22:16:25 ggregory Exp $
  */
 abstract class RFC1522Codec {
     
@@ -86,6 +86,7 @@ abstract class RFC1522Codec {
      * {@link #doEncoding(byte [])} method of a concrete class to perform the specific deconding.
      * 
      * @param text a string to decode
+     * @return A new decoded String or <code>null</code> if the input is <code>null</code>.
      * 
      * @throws DecoderException thrown if there is an error conidition during the Decoding 
      *  process.
