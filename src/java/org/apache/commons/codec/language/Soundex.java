@@ -55,7 +55,7 @@ import org.apache.commons.codec.StringEncoder;
  * @author bayard@generationjava.com
  * @author Tim O'Brien
  * @author Gary Gregory
- * @version $Id: Soundex.java,v 1.11 2003/11/06 16:31:47 ggregory Exp $
+ * @version $Id: Soundex.java,v 1.12 2003/11/07 01:20:19 ggregory Exp $
  */
 public class Soundex implements StringEncoder {
 
@@ -66,14 +66,16 @@ public class Soundex implements StringEncoder {
     public static final Soundex US_ENGLISH = new Soundex();
 
     /**
-	 * This is a default mapping of the 26 letters used in US english.
-     * A value of <code>0</code> for a letter position means do not encode.
+	 * This is a default mapping of the 26 letters used in US english. A value
+	 * of <code>0</code> for a letter position means do not encode.
 	 */
     public static final char[] US_ENGLISH_MAPPING = "01230120022455012623010202".toCharArray();
 
     /**
 	 * The maximum length of a Soundex code - Soundex codes are only four
 	 * characters by definition.
+     * 
+     * @deprecated This feature is not needed since the encoding size must be constant.
 	 */
     private int maxLength = 4;
 
@@ -106,8 +108,8 @@ public class Soundex implements StringEncoder {
     }
 
     /**
-	 * Cleans up the input string before Soundex processing by trimming and
-	 * removing punctuation characters. The string is returned in upper-case.
+	 * Cleans up the input string before Soundex processing by only returning
+	 * upper case letters.
 	 */
     private String clean(String str) {
         if (str == null || str.length() == 0) {
@@ -168,38 +170,35 @@ public class Soundex implements StringEncoder {
     /**
 	 * Used internally by the SoundEx algorithm.
 	 * 
-	 * Consonants from the same code group separated by W or H are treated as one.
+	 * Consonants from the same code group separated by W or H are treated as
+	 * one.
 	 * 
 	 * @param str
-	 *                  the whole string
+	 *                  the cleaned working string to encode (in upper case).
 	 * @param index
 	 *                  the character position to encode
 	 * @return Mapping code for a particular character
 	 */
     private char getMappingCode(String str, int index) {
-        char c = str.charAt(index);
-        if (!Character.isLetter(c)) {
-            return 0;
-        } else {
-            char mappedChar = this.map(c);
-            // HW rule check
-            if (index > 1 && mappedChar != '0') {
-                char hwChar = str.charAt(index-1);
-                if ('H' == hwChar || 'W' == hwChar) {
-                    char preHWChar = str.charAt(index - 2);
-                    char firstCode = this.map(preHWChar);
-                    if (firstCode == mappedChar || 'H' == preHWChar || 'W' == preHWChar) {
-                        return 0;
-                    }
-                }              
+        char mappedChar = this.map(str.charAt(index));
+        // HW rule check
+        if (index > 1 && mappedChar != '0') {
+            char hwChar = str.charAt(index - 1);
+            if ('H' == hwChar || 'W' == hwChar) {
+                char preHWChar = str.charAt(index - 2);
+                char firstCode = this.map(preHWChar);
+                if (firstCode == mappedChar || 'H' == preHWChar || 'W' == preHWChar) {
+                    return 0;
+                }
             }
-            return mappedChar;
         }
+        return mappedChar;
     }
 
     /**
 	 * Returns the maxLength. Standard Soundex
 	 * 
+     * @deprecated This feature is not needed since the encoding size must be constant.
 	 * @return int
 	 */
     public int getMaxLength() {
@@ -214,15 +213,16 @@ public class Soundex implements StringEncoder {
     }
 
     /**
-     * Maps the given upper-case character to it's Soudex code.
-     */
+	 * Maps the given upper-case character to it's Soudex code.
+	 */
     private char map(char c) {
-       return this.getSoundexMapping()[c - 'A'];
+        return this.getSoundexMapping()[c - 'A'];
     }
 
     /**
 	 * Sets the maxLength.
 	 * 
+     * @deprecated This feature is not needed since the encoding size must be constant.
 	 * @param maxLength
 	 *                  The maxLength to set
 	 */
@@ -253,14 +253,14 @@ public class Soundex implements StringEncoder {
         if (str.length() == 0) {
             return str;
         }
-
         char out[] = { '0', '0', '0', '0' };
         char last, mapped;
         int incount = 1, count = 1;
         out[0] = str.charAt(0);
         last = getMappingCode(str, 0);
-        while ((incount < str.length()) && (count < this.getMaxLength())) {
-            if ((mapped = getMappingCode(str, incount++)) != 0) {
+        while ((incount < str.length()) && (count < out.length)) {
+            mapped = getMappingCode(str, incount++);
+            if (mapped != 0) {
                 if ((mapped != '0') && (mapped != last)) {
                     out[count++] = mapped;
                 }

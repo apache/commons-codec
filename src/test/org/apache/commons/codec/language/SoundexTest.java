@@ -53,7 +53,7 @@ import org.apache.commons.codec.StringEncoderAbstractTest;
 /**
  * Tests {@link Soundex}
  * 
- * @version $Revision: 1.6 $ $Date: 2003/11/06 16:31:47 $
+ * @version $Revision: 1.7 $ $Date: 2003/11/07 01:21:47 $
  * @author Rodney Waldhoff
  * @author Gary Gregory
  */
@@ -304,6 +304,13 @@ public class SoundexTest extends StringEncoderAbstractTest {
     public void testMaxLength() throws Exception {
         Soundex soundex = new Soundex();
         soundex.setMaxLength(soundex.getMaxLength());
+        assertEquals("S460", this.getEncoder().encode("Sgler"));
+    }
+
+    public void testMaxLengthLessThan3Fix() throws Exception {
+        Soundex soundex = new Soundex();
+        soundex.setMaxLength(2);
+        assertEquals("S460", soundex.encode("SCHELLER"));
     }
 
 }
