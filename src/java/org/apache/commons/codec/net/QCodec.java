@@ -42,7 +42,7 @@ import org.apache.commons.codec.StringEncoder;
  * 
  * @author Apache Software Foundation
  * @since 1.3
- * @version $Id: QCodec.java,v 1.9 2004/08/27 17:18:17 ggregory Exp $
+ * @version $Id: QCodec.java,v 1.10 2004/09/01 17:38:48 ggregory Exp $
  */
 public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder {
     /**
@@ -129,7 +129,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
         return "Q";
     }
 
-    protected byte[] doEncoding(byte[] bytes) throws EncoderException {
+    protected byte[] doEncoding(byte[] bytes) {
         if (bytes == null) {
             return null;
         }
