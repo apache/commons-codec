@@ -1,50 +1,35 @@
-$Id: RELEASE-PLAN,v 1.1 2003/04/25 17:50:55 tobrien Exp $
+$Id: RELEASE-PLAN,v 1.2 2003/05/14 02:53:04 tobrien Exp $
 
 Jakarta Commons Codec  
 
-*** Release Plan
-
-This document outline the current goals for the next release.  
+This document outline the current goals for the next release(s).  
 This document defines objectives and action items that should
-be met before the next release.  Longer term goals should be
-placed in the file named ROADMAP.  
+be met before the next release.  
+
+*** Codec 1.1.1 Maintenance Release Plan
 
 Objective: 
 
-   The main objective of 1.1 release is to package a definitive
-   implementation of Base64 and Hex in addition to the phonetic
-   encoders currently implemented in the "language" package. It
-   is the objective of the [codec] project to provide a point
-   of consolidation for [binary|text|language] codecs.
+   The main objective of 1.1.1 release is to fix any bugs identified
+   in the 1.1 release of codec.
 
-   The 1.1 release will be a foundation for further expansion
-   of the available binary encoders and decoders, but it should
-   be noted that the objective is to provide an implementation
-   of Base64 and Hex - byte[] and IO stream.
+Changes Made since 1.1:
 
-Status:
+   - Fix for Bug 19860 - Base64 is not RFC 2045 compliant because it was
+     ONLY discarding whitespace.  The RFC requires that all non-base64
+     characters be ignored, and Base64 was changed to reflect this.
 
-* As described in the TODO
+Changes to be made before release:
 
-Codec 1.1 Release Candidate`1:
+   - Still waiting for more bug reports
 
-* Code freeze date: Apr 1, 2003
-* Tag date: Apr 8, 2003
-* Goals:
-    * Cut a release which can be used to as the base for performing
-      tests and reporting bugs. 
-    * Evaluate and clean up as many bugs that are there
-      jakarta.apache.org/bugs.
+*** Codec 1.2 Release Candidate
 
-Codec 1.1 Final (Tentative):
+Objective: 
 
-* Code freeze date: Apr 15, 2003
-* Tag date: Apr 20, 2003
-* Goals:
-    * Fix bugs reported on the beta and subsequent builds. 
-    * Evaluate after the code freeze date if codec 1.1 is ready to be
-      called "final".
-    * Build out documentation using Forrest
+   Identify as *existing* (or set of *existing*) stream Base64 implementation,
+   and either integrate or emulate this code.  The community is currently
+   in the process of selecting a primary candidate.
 
-* Release Manager: Tim O'Brien <tobrien@apache.org>
+
 
