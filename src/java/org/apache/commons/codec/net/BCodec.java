@@ -26,21 +26,21 @@ import org.apache.commons.codec.binary.Base64;
 /**
  * <p>
  * The "B" encoding is identical to the Base64 encoding defined by <a href="http://www.ietf.org/rfc/rfc1521.txt">RFC
- * 1521 </a> and allows a character set to be specified.
+ * 1521</a> and allows a character set to be specified.
  * </p>
  * 
  * <p>
- * <a href="http://www.ietf.org/rfc/rfc1522.txt">RFC 1522 </a> describes techniques to allow the encoding of non-ASCII
+ * <a href="http://www.ietf.org/rfc/rfc1522.txt">RFC 1522</a> describes techniques to allow the encoding of non-ASCII
  * text in various portions of a RFC 822 [2] message header, in a manner which is unlikely to confuse existing message
  * handling software.
  * </p>
  * 
- * @see <a href="http://www.ietf.org/rfc/rfc1522.txt"> MIME (Multipurpose Internet Mail Extensions) Part Two: Message
- *          Header Extensions for Non-ASCII Text </a>
+ * @see <a href="http://www.ietf.org/rfc/rfc1522.txt">MIME (Multipurpose Internet Mail Extensions) Part Two: Message
+ *          Header Extensions for Non-ASCII Text</a>
  * 
  * @author Apache Software Foundation
  * @since 1.3
- * @version $Id: BCodec.java,v 1.3 2004/04/09 22:21:07 ggregory Exp $
+ * @version $Id: BCodec.java,v 1.4 2004/04/13 22:02:37 ggregory Exp $
  */
 public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder {
     /**
@@ -62,7 +62,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      *                  the default string charset to use.
      * 
      * @see <a href="http://java.sun.com/j2se/1.3/docs/api/java/lang/package-summary.html#charenc">JRE character
-     *          encoding names </a>
+     *          encoding names</a>
      */
     public BCodec(final String charset) {
         super();
