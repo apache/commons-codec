@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//codec/src/java/org/apache/commons/codec/language/DoubleMetaphone.java,v 1.1 2003/06/11 03:23:26 tobrien Exp $
- * $Revision: 1.1 $
- * $Date: 2003/06/11 03:23:26 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//codec/src/java/org/apache/commons/codec/language/DoubleMetaphone.java,v 1.2 2003/06/18 17:46:38 tobrien Exp $
+ * $Revision: 1.2 $
+ * $Date: 2003/06/18 17:46:38 $
  *
  * ====================================================================
  *
@@ -129,10 +129,12 @@ public class DoubleMetaphone implements StringEncoder {
                 result.append('P');
                 index = charAt(value, index + 1) == 'B' ? index + 2 : index + 1;
                 break;
-            case 'Ç':
+                // FIXME: Removed support for this character until 
+                // Unicode code is found.
+                /*            case 'Ç':
                 result.append('S');
                 index++;
-                break;
+                break; */
             case 'C':
                 index = handleC(value, result, index);
                 break;
@@ -167,10 +169,13 @@ public class DoubleMetaphone implements StringEncoder {
                 result.append('N');
                 index = charAt(value, index + 1) == 'N' ? index + 2 : index + 1;
                 break;
+                // FIXME: Removed support for this character until we
+                // find the Unicode code
+                /*
             case 'Ñ':
                 result.append('N');
                 index++;
-                break;
+                break; */
             case 'P':
                 index = handleP(value, result, index);
                 break;
