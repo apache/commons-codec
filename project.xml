@@ -97,6 +97,11 @@
      <name>Benjamin Walstrum</name>
      <email>ben@walstrum.com</email>
    </contributor>
+   <contributor>
+     <name>Oleg Kalnichevski</name>
+     <email>oleg@ural.ru</email>
+     <roles>representing http-client</roles>
+   </contributor>
   </contributors>  
 
   <dependencies>
