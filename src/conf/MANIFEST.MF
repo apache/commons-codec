@@ -1,5 +1,7 @@
 Extension-Name: @package@
+Specification-Title: Jakarta Commons Codec
 Specification-Vendor: Apache Software Foundation
-Specification-Version: 1.0
+Specification-Version: @version@
+Implementation-Title: @package@
 Implementation-Vendor: Apache Software Foundation
 Implementation-Version: @version@
