@@ -25,9 +25,8 @@ import org.apache.commons.codec.StringEncoderAbstractTest;
 /**
  * Tests RefinedSoundex.
  * 
- * @version $Id: RefinedSoundexTest.java,v 1.7 2004/02/23 07:32:50 ggregory Exp $
- * @author Rodney Waldhoff
- * @author Gary D. Gregory
+ * @version $Id: RefinedSoundexTest.java,v 1.8 2004/03/17 19:28:37 ggregory Exp $
+ * @author Apache Software Foundation
  */
 public class RefinedSoundexTest extends StringEncoderAbstractTest {
 

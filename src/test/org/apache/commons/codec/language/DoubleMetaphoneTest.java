@@ -26,9 +26,8 @@ import org.apache.commons.codec.StringEncoderAbstractTest;
  * Tests {@link DoubleMetaphone}.
  * 
  * @see "http://www.cuj.com/documents/s=8038/cuj0006philips/"
- * @author Mindbridge
- * @author Gary Gregory
- * @version $Id: DoubleMetaphoneTest.java,v 1.7 2004/02/23 07:32:50 ggregory Exp $
+ * @author Apache Software Foundation
+ * @version $Id: DoubleMetaphoneTest.java,v 1.8 2004/03/17 19:28:37 ggregory Exp $
  */
 public class DoubleMetaphoneTest extends StringEncoderAbstractTest {
 

@@ -23,11 +23,8 @@ import java.util.Random;
 import junit.framework.TestCase;
 
 /**
- * @version $Revision: 1.12 $ $Date: 2004/02/23 07:32:50 $
- * @author <a href="mailto:sanders@apache.org">Scott Sanders</a>
- * @author <a href="mailto:rwaldhoff@apache.org">Rodney Waldhoff</a>
- * @author Tim O'Brien
- * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
+ * @version $Revision: 1.13 $ $Date: 2004/03/17 19:28:37 $
+ * @author Apache Software Foundation
  */
 public class Base64Test extends TestCase {
 

@@ -22,9 +22,8 @@ import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.StringEncoderAbstractTest;
 
 /**
- * @version $Revision: 1.9 $ $Date: 2004/02/23 07:32:50 $
- * @author Rodney Waldhoff
- * @author Gary Gregory
+ * @version $Revision: 1.10 $ $Date: 2004/03/17 19:28:37 $
+ * @author Apache Software Foundation
  */
 public class MetaphoneTest extends StringEncoderAbstractTest {
 

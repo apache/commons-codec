@@ -21,9 +21,7 @@ import junit.framework.TestCase;
 /**
  * Tests Digest methods.
  * 
- * @author Dave Dribin
- * @author David Graham
- * @author Gary Gregory
+ * @author Apache Software Foundation
  */
 public class DigestUtilsTest extends TestCase {
 

@@ -26,10 +26,8 @@ import org.apache.commons.codec.EncoderException;
 /**
  * Tests {@link org.apache.commons.codec.binary.Hex}.
  * 
- * @author <a href="mailto:siege@preoccupied.net">Christopher O'Brien</a>
- * @author Tim O'Brien
- * @author Gary Gregory
- * @version $Id: HexTest.java,v 1.8 2004/02/23 07:32:50 ggregory Exp $
+ * @author Apache Software Foundation
+ * @version $Id: HexTest.java,v 1.9 2004/03/17 19:28:37 ggregory Exp $
  */
 
 public class HexTest extends TestCase {
