@@ -70,7 +70,7 @@ import java.util.Comparator;
  *
  * @author Tim O'Brien
  * @author Gary Gregory
- * @version $Id: StringEncoderComparator.java,v 1.7 2003/10/12 01:34:06 tobrien Exp $
+ * @version $Id: StringEncoderComparator.java,v 1.8 2003/10/29 02:30:41 ggregory Exp $
  */
 public class StringEncoderComparator implements Comparator {
 
@@ -83,6 +83,7 @@ public class StringEncoderComparator implements Comparator {
      * Constructs a new instance.
      */
     public StringEncoderComparator() {
+        // no init.
     }
 
     /**
@@ -93,10 +94,14 @@ public class StringEncoderComparator implements Comparator {
     }
 
     /**
-     * Compares 2 strings based not on the strings 
+     * Compares two strings based not on the strings 
      * themselves, but on an encoding of the two 
      * strings using the StringEncoder this Comparator
      * was created with.
+     * 
+     * If an {@link EncoderException} is encountered, return <code>0</code>.
+     * 
+     * @see Comparable
      */
     public int compare(Object o1, Object o2) {
 
@@ -110,7 +115,7 @@ public class StringEncoderComparator implements Comparator {
         catch (EncoderException ee) {
             compareCode = 0;
         }
-        return (compareCode);
+        return compareCode;
     }
 
 }
