@@ -57,10 +57,9 @@ import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
 
 /**
- * Encodes a string into a refined soundex value.  
- * A refined soundex code is optimized for spell checking word. 
- * "Soundex" method originally developed by Margaret Odell and 
- * Robert Russell
+ * Encodes a string into a soundex value.  Soundex is an encoding used to
+ * relate similar names, but can also be used as a general purpose
+ * scheme to find word with similar phonemes. 
  * 
  * <!-- This link is broken: -->
  * <!-- @see <a href="http://www.bluepoof.com/Soundex/info2.html">http://www.bluepoof.com/Soundex/info2.html</a> -->
@@ -68,7 +67,7 @@ import org.apache.commons.codec.StringEncoder;
  * @author bayard@generationjava.com
  * @author tobrien@transolutions.net
  * @author ggregory@seagullsw.com
- * @version $Revision: 1.2 $ $Date: 2003/05/12 17:09:38 $
+ * @version $Revision: 1.3 $ $Date: 2003/05/12 17:17:24 $
  *
  * @todo Internationalize Exception Messages
  */
