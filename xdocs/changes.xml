@@ -74,7 +74,7 @@
             General Javadoc improvements.
        	    </action>
         </release>
-        <release version="1.2" date="Dec 9 2003" description="Feature and fix release.">
+        <release version="1.2" date="24 Nov 2003" description="Feature and fix release.">
             <action dev="tobrien" type="add" due-to="Oleg Kalnichevski" due-to-email="olegk@apache.org">
             URLCodec: Implements the www-form-urlencoded encoding scheme.
       	    </action>
@@ -101,40 +101,40 @@
             separator) the need for a maxLength attribute is not needed.  Deprecate 
             the field and accessor methods.
       	    </action>
-            <action type="fix">
+            <action dev="Members" type="fix">
             Fix in Metaphone relating to the handling of the maximum code length.
       	    </action>
         </release>
-        <release version="1.1" date="May 29 2003" description="The first official release. Numerous projects had been depending on version 1.0-dev while in the Sandbox.">
-            <action type="add">
+        <release version="1.1" date="29 April 2003" description="The first official release. Numerous projects had been depending on version 1.0-dev while in the Sandbox.">
+            <action dev="Members" type="add">
       	    A newer version of the Base64 class reflecting improvements from
             both the commons-httpclient and xml-rpc versions of code forked
             from catalina.
             </action>        
-            <action type="add">
+            <action dev="Members" type="add">
       	    Base64 class from commons-httpclient in org.apache.commons.codec.base64
             has been retained for backwards compatibility but has been deprecated.
             </action>        
-            <action type="add">
+            <action dev="Members" type="add">
       	    Soundex class from commons-util in org.apache.commons.codec.
       	    </action>        
-            <action type="add">
+            <action dev="Members" type="add">
       	    Metaphone class from commons-util in org.apache.commons.codec.
       	    </action>        
             <action dev="tobrien" type="add">
       	    RefinedSoundex class in org.apache.commons.codec.
       	    </action>        
-            <action type="add">
+            <action dev="Members" type="add">
       	    Encoder/Decoder interfaces in org.apache.commons.
       	    </action>        
-            <action type="add">
+            <action dev="Members" type="add">
       	    String and Binary specific Encoder/Decoder interfaces in org.apache.commons.</action>        
-            <action type="add">
+            <action dev="Members" type="add">
       	    StringEncoderComparator replaces the SoundexComparator from the language package.</action>        
-            <action type="fix">
+            <action dev="Members" type="fix">
       	    Base64 now discards whitespace characters when decoding encoded content.</action>
         </release>
-        <release version="1.0-dev" date="April 25 2003" description="Last release from the Sandbox.">
+        <release version="1.0-dev" date="25 April 2003" description="Last release from the Sandbox.">
             <action dev="tobrien" type="add">
             Base64 class from commons-httpclient in org.apache.commons.codec.base64.
             </action>        
@@ -144,7 +144,7 @@
             <action dev="tobrien" type="add">
             Metaphone class from commons-util in org.apache.commons.codec.
             </action>        
-            <action type="add">
+            <action dev="Members" type="add">
             SoundexComparator class from commons-util in org.apache.commons.codec.
             </action>        
         </release>
