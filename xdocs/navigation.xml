@@ -12,23 +12,153 @@
             img="http://jakarta.apache.org/images/logos/ac2003-150.gif"/>
     </menu>
     
-    <menu name="Codec">
+    <menu name="Commons Codec">
       <item name="Overview"                
             href="/index.html"/>
           
     </menu>
     
+    <menu name="Jakarta Commons">
+        <item name="Home" href="http://jakarta.apache.org/commons/index.html"/>
+	<item name="Contributors" 
+              href="http://jakarta.apache.org/commons/contributors.html"/>
+        <item name="License"
+              href="http://jakarta.apache.org/commons/license.html"/>
+        <item name="Components"
+              href="http://jakarta.apache.org/commons/components.html"/>
+        <item name="On Volunteering"
+              href="http://jakarta.apache.org/commons/volunteering.html"/>
+        <item name="Contribute Patches"
+              href="http://jakarta.apache.org/commons/patches.html"/>
+        <item name="Project Charter"
+              href="http://jakarta.apache.org/commons/charter.html"/>
+        <item name="Releases"
+              href="http://jakarta.apache.org/commons/releases/index.html"/>
+        <item name="Versioning"
+              href="http://jakarta.apache.org/commons/versioning.html"/>
+    </menu>
+
+    <menu name="Download">
+        <item name="Binary"
+              href="http://jakarta.apache.org/site/binindex.cgi"/>
+        <item name="Source Code"
+              href="http://jakarta.apache.org/site/sourceindex.cgi"/>
+        <item name="Nightly"
+              href="http://cvs.apache.org/builds/jakarta-commons/nightly/"/>
+    </menu>
+
+    <menu name="View CVS">
+        <item name="Components"
+              href="http://cvs.apache.org/viewcvs/jakarta-commons/"/>
+        <item name="Sandbox"
+              href="http://cvs.apache.org/viewcvs/jakarta-commons-sandbox/"/>
+    </menu>
+
+
     <menu name="Jakarta Community">
      <item name="Get Involved"            
            href="http://jakarta.apache.org/site/getinvolved.html"/>
-     <item name="License"                 
-           href="http://jakarta.apache.org/commons/license.html"/>
      <item name="Mailing Lists"           
            href="http://jakarta.apache.org/site/mail.html"/>
      <item name="CVS Repositories"        
            href="http://jakarta.apache.org/site/cvsindex.html"/>
-     <item name="Who We Are"              
-           href="http://jakarta.apache.org/site/whoweare.html"/>
+     <item name="Wiki"              
+           href="http://nagoya.apache.org/wiki/apachewiki.cgi?JakartaCommonsProjectPages"/>
     </menu>
+
+    <menu name="Commons Components">
+      <item name="BeanUtils"
+            href="http://jakarta.apache.org/commons/beanutils.html"/>
+      <item name="Betwixt"
+            href="http://jakarta.apache.org/commons/betwixt/index.html"/>
+      <item name="CLI"
+            href="http://jakarta.apache.org/commons/cli/index.html"/>
+      <item name="Codec"
+            href="http://jakarta.apache.org/commons/codec/index.html"/>
+      <item name="Collections"
+            href="http://jakarta.apache.org/commons/collections.html"/>
+      <item name="Daemon"
+            href="http://jakarta.apache.org/commons/daemon"/>
+      <item name="DBCP"
+            href="http://jakarta.apache.org/commons/dbcp"/>
+      <item name="Digester"
+            href="http://jakarta.apache.org/commons/digester.html"/>
+      <item name="Discovery"
+            href="http://jakarta.apache.org/commons/discovery.html"/>
+      <item name="EL"
+            href="http://jakarta.apache.org/commons/el.html"/>
+      <item name="FileUpload"
+            href="http://jakarta.apache.org/commons/fileupload/index.html"/>
+      <item name="HttpClient"
+            href="http://jakarta.apache.org/commons/httpclient/index.html"/>
+      <item name="Jelly"
+            href="http://jakarta.apache.org/commons/jelly/index.html"/>
+      <item name="Jexl"
+            href="http://jakarta.apache.org/commons/jexl.html"/>
+      <item name="JXPath"
+            href="http://jakarta.apache.org/commons/jxpath/index.html"/>
+      <item name="Lang"
+            href="http://jakarta.apache.org/commons/lang.html"/>
+      <item name="Latka"
+            href="http://jakarta.apache.org/commons/latka/index.html"/>
+      <item name="Logging"
+            href="http://jakarta.apache.org/commons/logging.html"/>
+      <item name="Modeler"
+            href="http://jakarta.apache.org/commons/modeler.html"/>
+      <item name="Net"
+            href="http://jakarta.apache.org/commons/net/index.html"/>
+      <item name="Pool"
+            href="http://jakarta.apache.org/commons/pool"/>
+      <item name="Validator"
+            href="http://jakarta.apache.org/commons/validator/index.html"/>
+    </menu>
+
+    <menu name="Sandbox Components">
+      <item name="Attributes"
+            href="http://jakarta.apache.org/commons/sandbox/attributes/index.html"/>
+      <item name="Cache"
+            href="http://cvs.apache.org/viewcvs/jakarta-commons-sandbox/cache/"/>
+      <item name="Clazz"
+            href="http://jakarta.apache.org/commons/sandbox/clazz/"/>
+      <item name="Configuration"
+            href="http://jakarta.apache.org/commons/sandbox/configuration/index.html"/>
+      <item name="DbUtils"
+            href="http://cvs.apache.org/viewcvs/jakarta-commons-sandbox/dbutils/"/>
+      <item name="Functor"
+            href="http://jakarta.apache.org/commons/sandbox/functor/"/>
+      <item name="HiveMind"
+            href="http://jakarta.apache.org/commons/sandbox/hivemind/"/>
+      <item name="IO"
+            href="http://cvs.apache.org/viewcvs/jakarta-commons-sandbox/io/"/>
+      <item name="JJAR"
+            href="http://cvs.apache.org/viewcvs/jakarta-commons-sandbox/jjar/"/>
+      <item name="Math"
+            href="http://jakarta.apache.org/commons/sandbox/math/index.html"/>
+      <item name="Messenger"
+            href="http://jakarta.apache.org/commons/sandbox/messenger/index.html"/>
+      <item name="Resources"
+            href="http://jakarta.apache.org/commons/sandbox/resources/index.html"/>
+      <item name="Scaffold"
+            href="http://cvs.apache.org/viewcvs/jakarta-commons-sandbox/scaffold/"/>
+      <item name="SQL"
+            href="http://jakarta.apache.org/commons/sandbox/sql/index.html"/>
+      <item name="ThreadPool"
+            href="http://jakarta.apache.org/commons/sandbox/threadpool/index.html"/>
+      <item name="VFS"
+            href="http://jakarta.apache.org/commons/sandbox/vfs/index.html"/>
+      <item name="Workflow"
+            href="http://cvs.apache.org/viewcvs/jakarta-commons-sandbox/workflow/"/>
+    </menu>
+
+    <menu name="Related Projects">
+      <item name="DB Commons" 
+            href="http://db.apache.org/commons/"/>
+      <item name="XML Commons"
+            href="http://xml.apache.org/commons/"/>
+      <item name="Apache Commons"
+            href="http://commons.apache.org"/>
+    </menu>
+
+
   </body>
 </project>
