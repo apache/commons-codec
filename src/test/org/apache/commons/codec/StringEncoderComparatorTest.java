@@ -57,12 +57,19 @@
 
 package org.apache.commons.codec;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import junit.framework.TestCase;
 
+import org.apache.commons.codec.language.DoubleMetaphone;
 import org.apache.commons.codec.language.Soundex;
 
 /**
- * @version $Revision: 1.5 $ $Date: 2003/10/05 21:45:49 $
+ * Test cases for the StingEncoderComparator.
+ * 
+ * @version $Revision: 1.6 $ $Date: 2003/10/12 01:35:17 $
  * @author Tim O'Brien
  */
 public class StringEncoderComparatorTest extends TestCase {
@@ -82,7 +89,33 @@ public class StringEncoderComparatorTest extends TestCase {
         assertTrue( "O'Brien and O'Brian didn't come out with " +
                     "the same Soundex, something must be wrong here",
                     0 == sCompare.compare( "O'Brien", "O'Brian" ) );
+    }
+    
+    public void testComparatorWithDoubleMetaphone() throws Exception {
+        StringEncoderComparator sCompare =
+            new StringEncoderComparator( new DoubleMetaphone() );
+            
+        String[] testArray = { "Jordan", "Sosa", "Prior", "Pryor" };
+        List testList = Arrays.asList( testArray );        
+        
+        String[] controlArray = { "Jordan", "Prior", "Pryor", "Sosa" };
 
+        Collections.sort( testList, sCompare);            
+        
+        String[] resultArray = (String[]) testList.toArray(new String[0]);
+        
+        for( int i = 0; i < resultArray.length; i++) {
+            assertEquals( "Result Array not Equal to Control Array at index: " + i, controlArray[i], resultArray[i] );
+        }
     }
 
+    public void testComparatorWithDoubleMetaphoneAndInvalidInput() throws Exception {
+        StringEncoderComparator sCompare =
+            new StringEncoderComparator( new DoubleMetaphone() );
+           
+        int compare = sCompare.compare(new Double(3.0), new Long(3));
+        assertEquals( "Trying to compare objects that make no sense to the underlying encoder should return a zero compare code",
+                                0, compare);        
+        
+    }
 }
