@@ -40,7 +40,7 @@ import org.apache.commons.codec.EncoderException;
  * 
  * @author Apache Software Foundation
  * @since 1.3
- * @version $Id: RFC1522Codec.java,v 1.1 2004/03/29 07:59:57 ggregory Exp $
+ * @version $Id: RFC1522Codec.java,v 1.2 2004/04/09 22:21:43 ggregory Exp $
  */
 abstract class RFC1522Codec {
     
@@ -99,19 +99,22 @@ abstract class RFC1522Codec {
             return null;
         }
         if ((!text.startsWith("=?")) || (!text.endsWith("?="))) {
-            throw new DecoderException("RFC 1521 violation: malformed encoded content");
+            throw new DecoderException("RFC 1522 violation: malformed encoded content");
         }
         int termnator = text.length() - 2;
         int from = 2;
         int to = text.indexOf("?", from);
         if ((to == -1) || (to == termnator)) {
-            throw new DecoderException("RFC 1521 violation: charset token not found");
+            throw new DecoderException("RFC 1522 violation: charset token not found");
         }
         String charset = text.substring(from, to);
+        if (charset.equals("")) {
+            throw new DecoderException("RFC 1522 violation: charset not specified");
+        }
         from = to + 1;
         to = text.indexOf("?", from);
         if ((to == -1) || (to == termnator)) {
-            throw new DecoderException("RFC 1521 violation: encoding token not found");
+            throw new DecoderException("RFC 1522 violation: encoding token not found");
         }
         String encoding = text.substring(from, to);
         if (!getEncoding().equalsIgnoreCase(encoding)) {
@@ -120,9 +123,6 @@ abstract class RFC1522Codec {
         }
         from = to + 1;
         to = text.indexOf("?", from);
-        if ((to == -1) || (to != termnator)) {
-            throw new DecoderException("RFC 1521 violation: encoded content not found");
-        }
         byte[] data = text.substring(from, to).getBytes(StringEncodings.US_ASCII);
         data = doDecoding(data); 
         return new String(data, charset);
