@@ -121,6 +121,11 @@
             <email>apache@dave.dribin.org</email>
             <roles>digest util</roles>
         </contributor>
+        <contributor>
+            <name>Alex Karasulu</name>
+            <email>aok123 at bellsouth.net</email>
+            <roles>submitted Binary class and test</roles>
+        </contributor>
     </contributors>
     <dependencies>
         <!-- <dependency>
