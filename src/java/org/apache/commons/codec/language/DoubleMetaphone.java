@@ -70,6 +70,7 @@ import org.apache.commons.codec.StringEncoder;
  * ftp://ftp.cuj.com/pub/2000/1806/philips.zip</a>
  * 
  * @author <a href="mailto:ben@walstrum.com">Benjamin Walstrum</a>
+ * @version $Id: DoubleMetaphone.java,v 1.5 2003/07/25 22:48:11 ggregory Exp $
  */
 public class DoubleMetaphone implements StringEncoder {
 

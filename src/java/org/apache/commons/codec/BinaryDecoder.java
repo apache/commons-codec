@@ -60,7 +60,7 @@ package org.apache.commons.codec;
  * which decode byte arrays.
  *
  * @author <a href="mailto:tobrien@apache.org">Tim O'Brien</a>
- * @version $Revision: 1.1 $ $Date: 2003/04/25 17:50:56 $
+ * @version $Id: BinaryDecoder.java,v 1.2 2003/07/25 22:48:11 ggregory Exp $
  */
 public interface BinaryDecoder extends Decoder {
 

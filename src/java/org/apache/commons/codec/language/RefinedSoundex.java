@@ -64,7 +64,7 @@ import org.apache.commons.codec.StringEncoder;
  * 
  * @author tobrien@transolutions.net
  * @author ggregory@seagullsw.com
- * @version $Revision: 1.5 $ $Date: 2003/05/29 23:03:29 $
+ * @version $Id: RefinedSoundex.java,v 1.6 2003/07/25 22:48:11 ggregory Exp $
  */
 public class RefinedSoundex implements StringEncoder {
 

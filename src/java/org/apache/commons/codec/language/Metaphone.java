@@ -64,10 +64,10 @@ import org.apache.commons.codec.StringEncoder;
  *  "Hanging on the Metaphone" by Lawrence Philips
  *      <i>Computer Language</i> of Dec. 1990, p 39   
  * 
- * @version $Revision: 1.2 $ $Date: 2003/05/29 23:03:29 $
  * @author wbrogden@bga.com
  * @author bayard@generationjava.com
  * @author tobrien@transolutions.net
+ * @version $Id: Metaphone.java,v 1.3 2003/07/25 22:48:11 ggregory Exp $
  */
 public class Metaphone implements StringEncoder {
 

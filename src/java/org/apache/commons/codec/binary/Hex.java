@@ -64,6 +64,7 @@ import org.apache.commons.codec.EncoderException;
  * 
  * @author <a href="mailto:siege@preoccupied.net">Christopher O'Brien</a>
  * @author <a href="mailto:tobrien@apache.org">Tim O'Brien</a>
+ * @version $Id: Hex.java,v 1.4 2003/07/25 22:48:11 ggregory Exp $
  */
 public class Hex implements BinaryEncoder, BinaryDecoder {
 

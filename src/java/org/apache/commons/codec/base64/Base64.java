@@ -73,10 +73,11 @@ import java.io.UnsupportedEncodingException;
  * 1996. Available at: http://www.ietf.org/rfc/rfc2045.txt
  * </p>
  * @author Jeffrey Rodriguez
- * @version $Revision: 1.4 $ $Date: 2003/07/20 19:09:02 $
  *
  * @deprecated This class has been replaced by 
  *             {@link org.apache.commons.codec.binary.Base64}
+ * 
+ * @version $Id: Base64.java,v 1.5 2003/07/25 22:48:11 ggregory Exp $
  */
 public final class Base64 {
 

@@ -59,7 +59,7 @@ package org.apache.commons.codec;
  * output of the decoding process.
  *
  * @author tobrien@transolutions.net
- * @version $Revision: 1.1 $
+ * @version $Id: StringDecoder.java,v 1.2 2003/07/25 22:48:11 ggregory Exp $
  */
 public interface StringDecoder extends Decoder {
     
