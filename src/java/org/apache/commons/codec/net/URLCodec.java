@@ -45,7 +45,7 @@ import org.apache.commons.codec.StringEncoder;
  * 
  * @author Apache Software Foundation
  * @since 1.2
- * @version $Id: URLCodec.java,v 1.20 2004/07/26 22:55:39 ggregory Exp $
+ * @version $Id: URLCodec.java,v 1.21 2004/08/27 17:10:48 ggregory Exp $
  */
 public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, StringDecoder {
     
@@ -318,32 +318,36 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
     }
 
     /**
-     * Decodes a URL safe object into its original form. Escaped 
-     * characters are converted back to their original representation.
-     *
-     * @param pObject URL safe object to convert into its original form
-     * @return original object 
-     * @throws DecoderException Thrown if URL decoding is not 
-     *                          applicable to objects of this type
-     *                          if decoding is unsuccessful
+     * Decodes a URL safe object into its original form. Escaped characters are converted back to their original
+     * representation.
+     * 
+     * <p>
+     * <em>Currently, this method only works with <code>String</code> and <code>byte[]</code> arguments. 
+     * A <code>DecoderException</code> is thrown if the argument is not a <code>String</code> or <code>byte[].</code></em>.
+     * </p>
+     * 
+     * @param pObject
+     *                  URL safe object to convert into its original form
+     * @return original object
+     * @throws DecoderException
+     *                  Thrown if URL decoding is not applicable to objects of this type if decoding is unsuccessful
      */
     public Object decode(Object pObject) throws DecoderException {
         if (pObject == null) {
             return null;
         } else if (pObject instanceof byte[]) {
-            return decode((byte[])pObject);
+            return decode((byte[]) pObject);
         } else if (pObject instanceof String) {
-            return decode((String)pObject);
+            return decode((String) pObject);
         } else {
-            throw new DecoderException("Objects of type " +
-                pObject.getClass().getName() + " cannot be URL decoded"); 
-              
+            throw new DecoderException("Objects of type " + pObject.getClass().getName() + " cannot be URL decoded");
+
         }
     }
 
     /**
      * The <code>String</code> encoding used for decoding and encoding.
-     *
+     * 
      * @return Returns the encoding.
      * 
      * @deprecated use #getDefaultCharset()

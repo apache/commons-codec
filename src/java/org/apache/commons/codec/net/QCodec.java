@@ -42,7 +42,7 @@ import org.apache.commons.codec.StringEncoder;
  * 
  * @author Apache Software Foundation
  * @since 1.3
- * @version $Id: QCodec.java,v 1.7 2004/07/26 22:55:40 ggregory Exp $
+ * @version $Id: QCodec.java,v 1.8 2004/08/27 17:10:48 ggregory Exp $
  */
 public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder {
     /**
@@ -258,6 +258,12 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     /**
      * Decodes a quoted-printable object into its original form. Escaped characters are converted back to their original
      * representation.
+     * 
+     * <p>
+     * <em>Currently, this method only works with <code>String</code> arguments. 
+     * A <code>DecoderException</code> is thrown if the argument is not a <code>String</code>.</em>
+     * </p>
+     * 
      * 
      * @param pObject
      *                  quoted-printable object to convert into its original form
