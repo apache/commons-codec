@@ -1,7 +1,7 @@
-$Id: RELEASE-NOTES.txt,v 1.3 2003/04/29 22:16:08 tobrien Exp $
+$Id: RELEASE-NOTES.txt,v 1.4 2003/05/29 21:14:58 tobrien Exp $
 
 			Commons Codec Package
-			     Version 1.1
+			    Version 1.1.1
 			    Release Notes
 
 
@@ -9,28 +9,24 @@ INTRODUCTION:
 
 This document contains the release notes for this version of the Commons
 Codec package, and highlights changes since the previous version.  Version
-1.1 is the first official release of Codec.  Numerous projects had been 
-depending on Version 1.0-dev while Codec was in the Sandbox, and backwards
-compatibility has been preserved to ease the transition to this official
-release. 
+1.1.1 contains a bug fix for the 1.1 release, and addresses an issue related
+to the treat of non-Base64 characters.
+
 
 NEW FEATURES:
 
-* A newer version of the Base64 class reflecting improvements from
-  both the commons-httpclient and xml-rpc versions of code forked
-  from catalina.
-* Base64 class from commons-httpclient in org.apache.commons.codec.base64
-  has been retained for backwards compatibility but has been deprecated
-* Soundex class from commons-util in org.apache.commons.codec
-* Metaphone class from commons-util in org.apache.commons.codec
-* RefinedSoundex class in org.apache.commons.codec
-* Encoder/Decoder interfaces in org.apache.commons
-* String and Binary specific Encoder/Decoder interfaces in 
-  org.apache.commons
-* StringEncoderComparator replaces the SoundexComparator from the
-  language package.
+* None
 
 BUG FIXES:
 
-* Base64 now discards whitespace characters when decoding encoded
-  content.
+* Fix for Bug 19860: Modified Base64 to remedy non-compliance with RFC
+  2045.  Non-Base64 characters were not being discarded during the
+  decode.  RFC 2045 explicitly states that all characters outside of the
+  base64 alphabet are to be ignored.  A new function discardNonBase64 is
+  called prior to a decode.  Note that isArrayBase64 only discards
+  whitespace before testing the contents of an encoded byte array.  Unit
+  tests for Base64 were updated to reflect the changes related to
+  discarding non-Base64 characters.
+
+
+
