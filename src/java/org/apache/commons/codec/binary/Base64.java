@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//codec/src/java/org/apache/commons/codec/binary/Base64.java,v 1.4 2003/05/29 23:03:28 tobrien Exp $
- * $Revision: 1.4 $
- * $Date: 2003/05/29 23:03:28 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//codec/src/java/org/apache/commons/codec/binary/Base64.java,v 1.5 2003/07/25 22:40:36 ggregory Exp $
+ * $Revision: 1.5 $
+ * $Date: 2003/07/25 22:40:36 $
   *
   * ====================================================================
   *
@@ -272,7 +272,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      */
     public byte[] decode(byte[] pArray) throws DecoderException {
         byte[] result;
-        result = decodeBase64((byte[]) pArray);
+        result = decodeBase64(pArray);
         return (result);
     }
 
