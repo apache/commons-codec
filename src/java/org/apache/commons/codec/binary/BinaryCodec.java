@@ -32,7 +32,7 @@ import org.apache.commons.codec.EncoderException;
  * @since 1.3
  * @version $Id $
  */
-public class Binary implements BinaryDecoder, BinaryEncoder {
+public class BinaryCodec implements BinaryDecoder, BinaryEncoder {
     /*
      * tried to avoid using ArrayUtils to minimize dependencies while using these empty arrays - dep is just not worth
      * it.

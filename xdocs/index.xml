@@ -98,8 +98,8 @@ limitations under the License.
      </tr>
      <tr>
       <td width="150">
-       <a href="apidocs/org/apache/commons/codec/binary/Binary.html">
-       	Binary</a>
+       <a href="apidocs/org/apache/commons/codec/binary/BinaryCodec.html">
+       	BinaryCodec</a>
       </td>
       <td>
        Binary translates between byte arrays and strings of binary digits 
