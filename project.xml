@@ -62,6 +62,11 @@
       <id>jon</id>
       <email>jon@collab.net</email>
     </developer>
+    <developer>
+      <name>Gary D. Gregory</name>
+      <id>ggregory</id>
+      <email>ggregory@seagullsw.com</email>
+    </developer>
   </developers>
 
   <contributors>
