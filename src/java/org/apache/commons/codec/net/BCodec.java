@@ -1,18 +1,15 @@
 /*
  * Copyright 2001-2004 The Apache Software Foundation.
  * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
  * 
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */ 
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations under the License.
+ */
 
 package org.apache.commons.codec.net;
 
@@ -40,7 +37,7 @@ import org.apache.commons.codec.binary.Base64;
  * 
  * @author Apache Software Foundation
  * @since 1.3
- * @version $Id: BCodec.java,v 1.1 2004/03/29 07:59:57 ggregory Exp $
+ * @version $Id: BCodec.java,v 1.2 2004/04/09 21:45:47 ggregory Exp $
  */
 public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder {
     /**
@@ -62,7 +59,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      *                  the default string charset to use.
      * 
      * @see <a href="http://java.sun.com/j2se/1.3/docs/api/java/lang/package-summary.html#charenc">JRE character
-     *          encoding names</a>
+     *          encoding names </a>
      */
     public BCodec(final String charset) {
         super();
