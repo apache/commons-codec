@@ -62,9 +62,9 @@ import org.apache.commons.codec.StringEncoder;
  * "Soundex" method originally developed by Margaret Odell and 
  * Robert Russell
  * 
- * @author tobrien@transolutions.net
+ * @author Tim O'Brien
  * @author ggregory@seagullsw.com
- * @version $Id: RefinedSoundex.java,v 1.6 2003/07/25 22:48:11 ggregory Exp $
+ * @version $Id: RefinedSoundex.java,v 1.7 2003/07/30 22:34:18 tobrien Exp $
  */
 public class RefinedSoundex implements StringEncoder {
 

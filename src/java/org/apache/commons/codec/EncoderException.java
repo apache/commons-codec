@@ -57,8 +57,8 @@ package org.apache.commons.codec;
  * An EncoderException is thrown when there is a
  * failure condition during the encoding process.
  * 
- * @author <a href="tobrien@apache.org">Tim O'Brien</a>
- * @version $Id: EncoderException.java,v 1.2 2003/07/25 22:48:11 ggregory Exp $
+ * @author Tim O'Brien
+ * @version $Id: EncoderException.java,v 1.3 2003/07/30 22:34:17 tobrien Exp $
  */
 public class EncoderException extends Exception {
 

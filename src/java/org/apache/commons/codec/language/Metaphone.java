@@ -66,8 +66,8 @@ import org.apache.commons.codec.StringEncoder;
  * 
  * @author wbrogden@bga.com
  * @author bayard@generationjava.com
- * @author tobrien@transolutions.net
- * @version $Id: Metaphone.java,v 1.3 2003/07/25 22:48:11 ggregory Exp $
+ * @author Tim O'Brien
+ * @version $Id: Metaphone.java,v 1.4 2003/07/30 22:34:18 tobrien Exp $
  */
 public class Metaphone implements StringEncoder {
 

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//codec/src/test/org/apache/commons/codec/binary/Base64Test.java,v 1.4 2003/07/25 22:57:35 ggregory Exp $
- * $Revision: 1.4 $
- * $Date: 2003/07/25 22:57:35 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//codec/src/test/org/apache/commons/codec/binary/Base64Test.java,v 1.5 2003/07/30 22:34:18 tobrien Exp $
+ * $Revision: 1.5 $
+ * $Date: 2003/07/30 22:34:18 $
  *
  * ====================================================================
  *
@@ -67,10 +67,10 @@ import java.util.Random;
 import junit.framework.TestCase;
 
 /**
- * @version $Revision: 1.4 $ $Date: 2003/07/25 22:57:35 $
+ * @version $Revision: 1.5 $ $Date: 2003/07/30 22:34:18 $
  * @author <a href="mailto:sanders@apache.org">Scott Sanders</a>
  * @author <a href="mailto:rwaldhoff@apache.org">Rodney Waldhoff</a>
- * @author <a href="mailto:tobrien@apache.org">Tim O'Brien</a>
+ * @author Tim O'Brien
  * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
  */
 public class Base64Test extends TestCase {
