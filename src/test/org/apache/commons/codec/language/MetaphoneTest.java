@@ -23,13 +23,13 @@ import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.StringEncoderAbstractTest;
 
 /**
- * @version $Id: MetaphoneTest.java,v 1.13 2004/08/05 20:39:40 ggregory Exp $
+ * @version $Id: MetaphoneTest.java,v 1.14 2004/10/08 22:56:22 ggregory Exp $
  * @author Apache Software Foundation
  */
 public class MetaphoneTest extends StringEncoderAbstractTest {
 
     public static Test suite() {
-        return (new TestSuite(MetaphoneTest.class));
+        return new TestSuite(MetaphoneTest.class);
     }
 
     private Metaphone metaphone = null;

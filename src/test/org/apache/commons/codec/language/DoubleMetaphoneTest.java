@@ -28,7 +28,7 @@ import org.apache.commons.codec.StringEncoderAbstractTest;
  * 
  * @see "http://www.cuj.com/documents/s=8038/cuj0006philips/"
  * @author Apache Software Foundation
- * @version $Id: DoubleMetaphoneTest.java,v 1.10 2004/08/05 20:39:40 ggregory Exp $
+ * @version $Id: DoubleMetaphoneTest.java,v 1.11 2004/10/08 22:56:22 ggregory Exp $
  */
 public class DoubleMetaphoneTest extends StringEncoderAbstractTest {
 
@@ -1001,7 +1001,7 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest {
             "yeild", "yield" }, };
 
     public static Test suite() {
-        return (new TestSuite(DoubleMetaphoneTest.class));
+        return new TestSuite(DoubleMetaphoneTest.class);
     }
 
     private DoubleMetaphone doubleMetaphone = null;

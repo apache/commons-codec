@@ -27,13 +27,13 @@ import org.apache.commons.codec.StringEncoderAbstractTest;
 /**
  * Tests {@link Soundex}
  * 
- * @version $Id: SoundexTest.java,v 1.19 2004/08/05 20:39:40 ggregory Exp $
+ * @version $Id: SoundexTest.java,v 1.20 2004/10/08 22:56:22 ggregory Exp $
  * @author Apache Software Foundation
  */
 public class SoundexTest extends StringEncoderAbstractTest {
 
     public static Test suite() {
-        return (new TestSuite(SoundexTest.class));
+        return new TestSuite(SoundexTest.class);
     }
 
     private Soundex encoder = null;
