@@ -19,16 +19,16 @@ package org.apache.commons.codec;
 import java.util.Comparator;
 
 /**
- * String are comparable, and this comparator allows 
+ * Strings are comparable, and this comparator allows 
  * you to configure it with an instance of a class
- * which implements the StringEncoder.  This comparator
+ * which implements StringEncoder.  This comparator
  * is used to sort Strings by an encoding scheme such
  * as Soundex, Metaphone, etc.  This class can come in
  * handy if one need to sort Strings by an encoded
  * form of a name such as Soundex.
  *
  * @author Apache Software Foundation
- * @version $Id: StringEncoderComparator.java,v 1.13 2004/02/29 04:08:31 tobrien Exp $
+ * @version $Id: StringEncoderComparator.java,v 1.14 2004/06/21 23:24:17 ggregory Exp $
  */
 public class StringEncoderComparator implements Comparator {
 
