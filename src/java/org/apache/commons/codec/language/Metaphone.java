@@ -71,7 +71,8 @@ import org.apache.commons.codec.StringEncoder;
  * @author wbrogden@bga.com
  * @author bayard@generationjava.com
  * @author Tim O'Brien
- * @version $Id: Metaphone.java,v 1.8 2003/10/12 19:48:14 tobrien Exp $
+ * @author Gary Gregory
+ * @version $Id: Metaphone.java,v 1.9 2003/11/07 22:38:03 ggregory Exp $
  */
 public class Metaphone implements StringEncoder {
 
@@ -169,7 +170,7 @@ public class Metaphone implements StringEncoder {
         int wdsz = local.length();
         int n = 0 ;
 
-        while ((mtsz < maxCodeLen) && (n < wdsz)) { // max code size of 4 works well
+        while ((mtsz < this.getMaxCodeLen()) && (n < wdsz)) { // max code size of 4 works well
             char symb = local.charAt(n) ;
             // remove duplicate letters except C
             if ((symb != 'C') && (n > 0) && (local.charAt(n - 1) == symb)) {
@@ -339,7 +340,7 @@ public class Metaphone implements StringEncoder {
                 } // end switch
                 n++ ;
             } // end else from symb != 'C'
-            if (mtsz > maxCodeLen) { code.setLength(maxCodeLen); }
+            if (mtsz > this.getMaxCodeLen()) { code.setLength(this.getMaxCodeLen()); }
         }
         return code.toString();
     } 
@@ -375,7 +376,7 @@ public class Metaphone implements StringEncoder {
      * @throws EncoderException thrown if a Metaphone specific exception
      *                          is encountered.
      */
-    public String encode(String pString) throws EncoderException {
+    public String encode(String pString) {
         return (metaphone(pString));   
     }
 
@@ -395,7 +396,7 @@ public class Metaphone implements StringEncoder {
      * Returns the maxCodeLen.
      * @return int
      */
-    public int getMaxCodeLen() { return maxCodeLen; }
+    public int getMaxCodeLen() { return this.maxCodeLen; }
 
     /**
      * Sets the maxCodeLen.
