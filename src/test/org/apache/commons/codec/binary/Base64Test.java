@@ -23,7 +23,7 @@ import java.util.Random;
 import junit.framework.TestCase;
 
 /**
- * @version $Revision: 1.13 $ $Date: 2004/03/17 19:28:37 $
+ * @version $Revision: 1.14 $ $Date: 2004/03/24 18:37:25 $
  * @author Apache Software Foundation
  */
 public class Base64Test extends TestCase {
@@ -68,6 +68,11 @@ public class Base64Test extends TestCase {
         assertEquals("", new String(Base64.decodeBase64("====".getBytes())));
     }
     
+    public void testDecodePadOnlyChunked() {
+        assertTrue(Base64.decodeBase64("====\n".getBytes()).length == 0);
+        assertEquals("", new String(Base64.decodeBase64("====\n".getBytes())));
+    }
+    
     // encode/decode random arrays from size 0 to size 11
     public void testEncodeDecodeSmall() {
         for(int i=0;i<12;i++) {
@@ -90,6 +95,20 @@ public class Base64Test extends TestCase {
             byte[] data2 = Base64.decodeBase64(enc);
             assertTrue(Arrays.equals(data,data2));
         }
+    }
+
+    /**
+     * Tests RFC 2045 section 2.1 CRLF definition.
+     */
+    public void testRfc2045Section2Dot1CrLfDefinition() {
+        assertTrue(Arrays.equals(new byte[] {13, 10}, Base64.CHUNK_SEPARATOR));
+    }
+
+    /**
+     * Tests RFC 2045 section 6.8 chuck size definition.
+     */
+    public void testRfc2045Section6Dot8ChunkSizeDefinition() {
+        assertEquals(76, Base64.CHUNK_SIZE);
     }
 
     public void testSingletons() {
@@ -200,6 +219,114 @@ public class Base64Test extends TestCase {
         assertEquals("aA==",new String(Base64.encodeBase64(new byte[] { (byte)104 })));
     }
 
+    public void testSingletonsChunked() {
+        assertEquals("AA==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0 })));
+        assertEquals("AQ==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)1 })));
+        assertEquals("Ag==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)2 })));
+        assertEquals("Aw==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)3 })));
+        assertEquals("BA==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)4 })));
+        assertEquals("BQ==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)5 })));
+        assertEquals("Bg==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)6 })));
+        assertEquals("Bw==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)7 })));
+        assertEquals("CA==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)8 })));
+        assertEquals("CQ==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)9 })));
+        assertEquals("Cg==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)10 })));
+        assertEquals("Cw==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)11 })));
+        assertEquals("DA==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)12 })));
+        assertEquals("DQ==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)13 })));
+        assertEquals("Dg==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)14 })));
+        assertEquals("Dw==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)15 })));
+        assertEquals("EA==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)16 })));
+        assertEquals("EQ==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)17 })));
+        assertEquals("Eg==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)18 })));
+        assertEquals("Ew==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)19 })));
+        assertEquals("FA==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)20 })));
+        assertEquals("FQ==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)21 })));
+        assertEquals("Fg==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)22 })));
+        assertEquals("Fw==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)23 })));
+        assertEquals("GA==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)24 })));
+        assertEquals("GQ==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)25 })));
+        assertEquals("Gg==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)26 })));
+        assertEquals("Gw==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)27 })));
+        assertEquals("HA==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)28 })));
+        assertEquals("HQ==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)29 })));
+        assertEquals("Hg==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)30 })));
+        assertEquals("Hw==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)31 })));
+        assertEquals("IA==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)32 })));
+        assertEquals("IQ==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)33 })));
+        assertEquals("Ig==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)34 })));
+        assertEquals("Iw==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)35 })));
+        assertEquals("JA==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)36 })));
+        assertEquals("JQ==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)37 })));
+        assertEquals("Jg==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)38 })));
+        assertEquals("Jw==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)39 })));
+        assertEquals("KA==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)40 })));
+        assertEquals("KQ==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)41 })));
+        assertEquals("Kg==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)42 })));
+        assertEquals("Kw==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)43 })));
+        assertEquals("LA==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)44 })));
+        assertEquals("LQ==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)45 })));
+        assertEquals("Lg==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)46 })));
+        assertEquals("Lw==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)47 })));
+        assertEquals("MA==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)48 })));
+        assertEquals("MQ==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)49 })));
+        assertEquals("Mg==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)50 })));
+        assertEquals("Mw==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)51 })));
+        assertEquals("NA==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)52 })));
+        assertEquals("NQ==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)53 })));
+        assertEquals("Ng==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)54 })));
+        assertEquals("Nw==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)55 })));
+        assertEquals("OA==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)56 })));
+        assertEquals("OQ==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)57 })));
+        assertEquals("Og==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)58 })));
+        assertEquals("Ow==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)59 })));
+        assertEquals("PA==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)60 })));
+        assertEquals("PQ==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)61 })));
+        assertEquals("Pg==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)62 })));
+        assertEquals("Pw==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)63 })));
+        assertEquals("QA==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)64 })));
+        assertEquals("QQ==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)65 })));
+        assertEquals("Qg==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)66 })));
+        assertEquals("Qw==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)67 })));
+        assertEquals("RA==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)68 })));
+        assertEquals("RQ==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)69 })));
+        assertEquals("Rg==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)70 })));
+        assertEquals("Rw==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)71 })));
+        assertEquals("SA==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)72 })));
+        assertEquals("SQ==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)73 })));
+        assertEquals("Sg==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)74 })));
+        assertEquals("Sw==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)75 })));
+        assertEquals("TA==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)76 })));
+        assertEquals("TQ==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)77 })));
+        assertEquals("Tg==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)78 })));
+        assertEquals("Tw==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)79 })));
+        assertEquals("UA==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)80 })));
+        assertEquals("UQ==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)81 })));
+        assertEquals("Ug==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)82 })));
+        assertEquals("Uw==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)83 })));
+        assertEquals("VA==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)84 })));
+        assertEquals("VQ==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)85 })));
+        assertEquals("Vg==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)86 })));
+        assertEquals("Vw==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)87 })));
+        assertEquals("WA==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)88 })));
+        assertEquals("WQ==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)89 })));
+        assertEquals("Wg==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)90 })));
+        assertEquals("Ww==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)91 })));
+        assertEquals("XA==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)92 })));
+        assertEquals("XQ==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)93 })));
+        assertEquals("Xg==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)94 })));
+        assertEquals("Xw==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)95 })));
+        assertEquals("YA==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)96 })));
+        assertEquals("YQ==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)97 })));
+        assertEquals("Yg==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)98 })));
+        assertEquals("Yw==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)99 })));
+        assertEquals("ZA==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)100 })));
+        assertEquals("ZQ==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)101 })));
+        assertEquals("Zg==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)102 })));
+        assertEquals("Zw==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)103 })));
+        assertEquals("aA==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)104 })));
+    }
+
     public void testTriplets() {
         assertEquals("AAAA",new String(Base64.encodeBase64(new byte[] { (byte)0, (byte)0, (byte)0 })));
         assertEquals("AAAB",new String(Base64.encodeBase64(new byte[] { (byte)0, (byte)0, (byte)1 })));
@@ -267,9 +394,76 @@ public class Base64Test extends TestCase {
         assertEquals("AAA/",new String(Base64.encodeBase64(new byte[] { (byte)0, (byte)0, (byte)63 })));
     }
 
+    public void testTripletsChunked() {
+        assertEquals("AAAA\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)0 })));
+        assertEquals("AAAB\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)1 })));
+        assertEquals("AAAC\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)2 })));
+        assertEquals("AAAD\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)3 })));
+        assertEquals("AAAE\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)4 })));
+        assertEquals("AAAF\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)5 })));
+        assertEquals("AAAG\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)6 })));
+        assertEquals("AAAH\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)7 })));
+        assertEquals("AAAI\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)8 })));
+        assertEquals("AAAJ\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)9 })));
+        assertEquals("AAAK\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)10 })));
+        assertEquals("AAAL\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)11 })));
+        assertEquals("AAAM\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)12 })));
+        assertEquals("AAAN\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)13 })));
+        assertEquals("AAAO\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)14 })));
+        assertEquals("AAAP\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)15 })));
+        assertEquals("AAAQ\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)16 })));
+        assertEquals("AAAR\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)17 })));
+        assertEquals("AAAS\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)18 })));
+        assertEquals("AAAT\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)19 })));
+        assertEquals("AAAU\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)20 })));
+        assertEquals("AAAV\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)21 })));
+        assertEquals("AAAW\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)22 })));
+        assertEquals("AAAX\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)23 })));
+        assertEquals("AAAY\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)24 })));
+        assertEquals("AAAZ\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)25 })));
+        assertEquals("AAAa\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)26 })));
+        assertEquals("AAAb\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)27 })));
+        assertEquals("AAAc\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)28 })));
+        assertEquals("AAAd\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)29 })));
+        assertEquals("AAAe\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)30 })));
+        assertEquals("AAAf\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)31 })));
+        assertEquals("AAAg\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)32 })));
+        assertEquals("AAAh\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)33 })));
+        assertEquals("AAAi\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)34 })));
+        assertEquals("AAAj\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)35 })));
+        assertEquals("AAAk\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)36 })));
+        assertEquals("AAAl\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)37 })));
+        assertEquals("AAAm\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)38 })));
+        assertEquals("AAAn\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)39 })));
+        assertEquals("AAAo\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)40 })));
+        assertEquals("AAAp\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)41 })));
+        assertEquals("AAAq\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)42 })));
+        assertEquals("AAAr\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)43 })));
+        assertEquals("AAAs\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)44 })));
+        assertEquals("AAAt\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)45 })));
+        assertEquals("AAAu\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)46 })));
+        assertEquals("AAAv\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)47 })));
+        assertEquals("AAAw\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)48 })));
+        assertEquals("AAAx\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)49 })));
+        assertEquals("AAAy\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)50 })));
+        assertEquals("AAAz\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)51 })));
+        assertEquals("AAA0\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)52 })));
+        assertEquals("AAA1\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)53 })));
+        assertEquals("AAA2\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)54 })));
+        assertEquals("AAA3\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)55 })));
+        assertEquals("AAA4\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)56 })));
+        assertEquals("AAA5\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)57 })));
+        assertEquals("AAA6\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)58 })));
+        assertEquals("AAA7\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)59 })));
+        assertEquals("AAA8\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)60 })));
+        assertEquals("AAA9\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)61 })));
+        assertEquals("AAA+\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)62 })));
+        assertEquals("AAA/\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)0, (byte)0, (byte)63 })));
+    }
+
     public void testKnownEncodings() {
         assertEquals("VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2dzLg==",new String(Base64.encodeBase64("The quick brown fox jumped over the lazy dogs.".getBytes())));
-	assertEquals("YmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJs\nYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFo\nIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBi\nbGFoIGJsYWg=\n",new String(Base64.encodeBase64Chunked("blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah".getBytes())));
+	assertEquals("YmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJs\r\nYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFo\r\nIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBi\r\nbGFoIGJsYWg=\r\n",new String(Base64.encodeBase64Chunked("blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah".getBytes())));
         assertEquals("SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN0IG9mIHRpbWVzLg==",new String(Base64.encodeBase64("It was the best of times, it was the worst of times.".getBytes())));
         assertEquals("aHR0cDovL2pha2FydGEuYXBhY2hlLm9yZy9jb21tbW9ucw==",new String(Base64.encodeBase64("http://jakarta.apache.org/commmons".getBytes())));
         assertEquals("QWFCYkNjRGRFZUZmR2dIaElpSmpLa0xsTW1Obk9vUHBRcVJyU3NUdFV1VnZXd1h4WXlaeg==",new String(Base64.encodeBase64("AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz".getBytes())));
@@ -401,7 +595,7 @@ public class Base64Test extends TestCase {
 
         String dest = new String( decodedWithWS );
 
-        assertTrue( "Dest string doesn't eausl original", 
+        assertTrue( "Dest string doesn't equals the original", 
                     dest.equals( orig ) );
     }
 
