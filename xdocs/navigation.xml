@@ -29,9 +29,8 @@ limitations under the License.
     </links>
 
     <menu name="Commons Codec">
-      <item name="Overview"
-            href="/index.html"/>
-          
+      <item name="Overview" href="/index.html"/>
+      <item name="Release Notes" href="/changes-report.html"/>          
     </menu>
     
     &common-menus;
