@@ -54,17 +54,16 @@
 package org.apache.commons.codec;
 
 /**
- * A StringDecoder is a decoder which expects a String as
- * a method parameter and one that produces a String as the
- * output of the decoding process.
+ * Decodes a String into a String. 
  *
  * @author Tim O'Brien
- * @version $Id: StringDecoder.java,v 1.3 2003/07/30 22:34:17 tobrien Exp $
+ * @author Gary Gregory
+ * @version $Id: StringDecoder.java,v 1.4 2003/08/14 07:40:17 ggregory Exp $
  */
 public interface StringDecoder extends Decoder {
     
     /**
-     * Decode a String and produce a String.
+     * Decodes a String and returns a String.
      * 
      * @param pString a String to encode
      * 

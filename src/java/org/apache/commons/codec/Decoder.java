@@ -54,22 +54,27 @@
 package org.apache.commons.codec;
 
 /**
- * Forms one of the two interfaces at the center of the
- * codec package.  All decoders implement this interface
- * which allows a user to pass a generic Object to any
- * Decoder implementation in the codec package.
+ * <p>Provides the highest level of abstraction for Decoders.
+ * This is the sister interface of {@link Encoder}.  All
+ * Decoders implement this common generic interface.</p>
+ * 
+ * <p>Allows a user to pass a generic Object to any Decoder 
+ * implementation in the codec package.</p>
+ * 
+ * <p>One of the two interfaces at the center of the codec package.</p>
  * 
  * @author Tim O'Brien
- * @version $Id: Decoder.java,v 1.3 2003/07/30 22:34:17 tobrien Exp $
+ * @author Gary Gregory
+ * @version $Id: Decoder.java,v 1.4 2003/08/14 07:40:17 ggregory Exp $
  */
 public interface Decoder {
 
     /**
-     * Decode an "encoded" Object and return a "decoded"
+     * Decodes an "encoded" Object and returns a "decoded"
      * Object.  Note that the implementation of this
      * interface will try to cast the Object parameter
      * to the specific type expected by a particular Decoder
-     * implementation.  If a ClassCastException occurs
+     * implementation.  If a {@link java.lang.ClassCastException} occurs
      * this decode method will throw a DecoderException.
      * 
      * @param pObject an object to "decode"

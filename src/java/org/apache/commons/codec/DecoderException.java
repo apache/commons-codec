@@ -54,16 +54,16 @@
 package org.apache.commons.codec;
 
 /**
- * The DecoderException is thrown when a Decoder has
- * encounter a failure condition during a decode. 
+ * Thrown when a Decoder has encountered a failure condition during a decode. 
  * 
  * @author Tim O'Brien
- * @version $Id: DecoderException.java,v 1.3 2003/07/30 22:34:17 tobrien Exp $
+ * @author Gary Gregory
+ * @version $Id: DecoderException.java,v 1.4 2003/08/14 07:40:17 ggregory Exp $
  */
 public class DecoderException extends Exception {
 
     /**
-     * Create a DecoderException
+     * Creates a DecoderException
      * 
      * @param pMessage A message with meaning to a human
      */
