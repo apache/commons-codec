@@ -26,7 +26,7 @@ import org.apache.commons.codec.StringEncoderAbstractTest;
 /**
  * Tests {@link Soundex}
  * 
- * @version $Revision: 1.16 $ $Date: 2004/04/18 21:34:16 $
+ * @version $Id: SoundexTest.java,v 1.17 2004/04/19 01:14:29 ggregory Exp $
  * @author Apache Software Foundation
  */
 public class SoundexTest extends StringEncoderAbstractTest {
