@@ -20,12 +20,12 @@ import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
 
 /**
- * Encodes a string into a refined soundex value. A refined soundex code is
- * optimized for spell checking word. "Soundex" method originally developed by
- * Margaret Odell and Robert Russell
+ * Encodes a string into a Refined Soundex value. A refined soundex code is
+ * optimized for spell checking words. Soundex method originally developed by
+ * <CITE>Margaret Odell</CITE> and <CITE>Robert Russell</CITE>.
  * 
  * @author Apache Software Foundation
- * @version $Id: RefinedSoundex.java,v 1.20 2004/05/24 04:57:24 ggregory Exp $
+ * @version $Id: RefinedSoundex.java,v 1.21 2004/06/05 18:32:04 ggregory Exp $
  */
 public class RefinedSoundex implements StringEncoder {
 

@@ -20,11 +20,11 @@ import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
 
 /**
- * Encodes a string into a soundex value. Soundex is an encoding used to relate similar names, but can also be used as a
+ * Encodes a string into a Soundex value. Soundex is an encoding used to relate similar names, but can also be used as a
  * general purpose scheme to find word with similar phonemes.
  * 
  * @author Apache Software Foundation
- * @version $Id: Soundex.java,v 1.23 2004/06/05 00:43:32 ggregory Exp $
+ * @version $Id: Soundex.java,v 1.24 2004/06/05 18:32:04 ggregory Exp $
  */
 public class Soundex implements StringEncoder {
 
@@ -38,10 +38,22 @@ public class Soundex implements StringEncoder {
     /**
      * This is a default mapping of the 26 letters used in US English. A value of <code>0</code> for a letter position
      * means do not encode.
+     * <p>
+     * (This constant is provided as both an implementation convenience and to allow Javadoc to pick
+     * up the value for the constant values page.)
+     * </p>
+     * 
+     * @see #US_ENGLISH_MAPPING
+     */
+    public static final String US_ENGLISH_MAPPING_STRING = "01230120022455012623010202";
+
+    /**
+     * This is a default mapping of the 26 letters used in US English. A value of <code>0</code> for a letter position
+     * means do not encode.
      * 
      * @see Soundex#Soundex(char[])
      */
-    public static final char[] US_ENGLISH_MAPPING = "01230120022455012623010202".toCharArray();
+    public static final char[] US_ENGLISH_MAPPING = US_ENGLISH_MAPPING_STRING.toCharArray();
 
     /**
      * Encodes the Strings and returns the number of characters in the two encoded Strings that are the same. This
@@ -90,8 +102,8 @@ public class Soundex implements StringEncoder {
     }
 
     /**
-     * Creates a soundex instance using the given mapping. This constructor can be used to customize the mapping, and/or
-     * possibly provide an internationalized mapping for a non-Western character set.
+     * Creates a soundex instance using the given mapping. This constructor can be used to provide an internationalized
+     * mapping for a non-Western character set.
      * 
      * Every letter of the alphabet is "mapped" to a numerical value. This char array holds the values to which each
      * letter is mapped. This implementation contains a default map for US_ENGLISH

@@ -20,15 +20,18 @@ import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
 
 /**
- * Encodes a string into a metaphone value.
- * The initial Java implementation, William B. Brogden.  December, 1997
- * Permission given by wbrogden for code to be used anywhere.
- * 
- *  "Hanging on the Metaphone" by Lawrence Philips
- *      <i>Computer Language</i> of Dec. 1990, p 39   
+ * Encodes a string into a metaphone value. 
+ * <p>
+ * Initial Java implementation by <CITE>William B. Brogden. December, 1997</CITE>. 
+ * Permission given by <CITE>wbrogden</CITE> for code to be used anywhere.
+ * </p>
+ * <p>
+ * <CITE>Hanging on the Metaphone</CITE> by <CITE>Lawrence Philips</CITE> in <CITE>Computer Language of Dec. 1990, p
+ * 39.</CITE>
+ * </p>
  * 
  * @author Apache Software Foundation
- * @version $Id: Metaphone.java,v 1.19 2004/05/24 04:56:29 ggregory Exp $
+ * @version $Id: Metaphone.java,v 1.20 2004/06/05 18:32:04 ggregory Exp $
  */
 public class Metaphone implements StringEncoder {
 

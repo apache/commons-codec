@@ -21,7 +21,7 @@ import org.apache.commons.codec.StringEncoder;
 
 /**
  * Encodes a string into a double metaphone value.
- * This Implementation is based on the algorithm by Lawrence Philips.
+ * This Implementation is based on the algorithm by <CITE>Lawrence Philips</CITE>.
  * <ul>
  * <li>Original Article: <a 
  * href="http://www.cuj.com/documents/s=8038/cuj0006philips/">
@@ -31,7 +31,7 @@ import org.apache.commons.codec.StringEncoder;
  * </ul>
  * 
  * @author Apache Software Foundation
- * @version $Id: DoubleMetaphone.java,v 1.23 2004/05/24 04:55:33 ggregory Exp $
+ * @version $Id: DoubleMetaphone.java,v 1.24 2004/06/05 18:32:04 ggregory Exp $
  */
 public class DoubleMetaphone implements StringEncoder {
 
