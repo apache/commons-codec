@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//codec/src/test/org/apache/commons/codec/binary/Base64Test.java,v 1.3 2003/05/14 02:40:18 tobrien Exp $
- * $Revision: 1.3 $
- * $Date: 2003/05/14 02:40:18 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//codec/src/test/org/apache/commons/codec/binary/Base64Test.java,v 1.4 2003/07/25 22:57:35 ggregory Exp $
+ * $Revision: 1.4 $
+ * $Date: 2003/07/25 22:57:35 $
  *
  * ====================================================================
  *
@@ -67,7 +67,7 @@ import java.util.Random;
 import junit.framework.TestCase;
 
 /**
- * @version $Revision: 1.3 $ $Date: 2003/05/14 02:40:18 $
+ * @version $Revision: 1.4 $ $Date: 2003/07/25 22:57:35 $
  * @author <a href="mailto:sanders@apache.org">Scott Sanders</a>
  * @author <a href="mailto:rwaldhoff@apache.org">Rodney Waldhoff</a>
  * @author <a href="mailto:tobrien@apache.org">Tim O'Brien</a>
@@ -367,10 +367,10 @@ public class Base64Test extends TestCase {
         String original = "Hello World!";
         byte[] bArray = 
             Base64.encodeBase64( (new String(original)).getBytes() );
-        Object o = (Object) bArray;
+        Object o = bArray;
         
         Base64 b64 = new Base64();
-        Object oDecoded = (Object) b64.decode( o );
+        Object oDecoded = b64.decode( o );
         byte[] baDecoded = (byte[]) oDecoded;
         String dest = new String( baDecoded );
 
@@ -398,7 +398,7 @@ public class Base64Test extends TestCase {
 
         String original = "Hello World!";
         byte[] origBytes = original.getBytes();
-        Object origObj = (Object) origBytes;
+        Object origObj = origBytes;
 
         Base64 b64 = new Base64();
         Object oEncoded = b64.encode( origObj );
