@@ -14,14 +14,14 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<!-- $Id: -->
+<!-- $Id: changes.xml,v 1.5 2004/07/10 23:07:10 ggregory Exp $ -->
 <document>
     <properties>
         <title>Changes</title>
         <author>Gary D. Gregory</author>
     </properties>
     <body>
-        <release version="1.3" date="June 2004" description="Feature and fix release.">
+        <release version="1.3" date="10 July 2004" description="Feature and fix release.">
             <action dev="ggregory, tobrien" type="add" issue="27813" due-to="Alex Karasulu">
             BinaryCodec: Encodes and decodes binary to and from Strings of 0s and 1s.
       	    </action>
