@@ -7,6 +7,11 @@
   </organizationLogo>
 
   <body>
+    <menu name="Apache">
+      <item name="ApacheCon" href="http://apachecon.com/2003/US/index.html" 
+            img="http://jakarta.apache.org/images/logos/ac2003-150.gif"/>
+    </menu>
+    
     <menu name="Codec">
       <item name="Overview"                
             href="/index.html"/>
