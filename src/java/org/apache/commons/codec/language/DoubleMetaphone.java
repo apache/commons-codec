@@ -72,7 +72,8 @@ import org.apache.commons.codec.StringEncoder;
  * </ul>
  * 
  * @author <a href="mailto:ben@walstrum.com">Benjamin Walstrum</a>
- * @version $Id: DoubleMetaphone.java,v 1.12 2003/10/12 19:56:13 tobrien Exp $
+ * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
+ * @version $Id: DoubleMetaphone.java,v 1.13 2003/11/07 21:32:41 ggregory Exp $
  */
 public class DoubleMetaphone implements StringEncoder {
 
@@ -132,7 +133,7 @@ public class DoubleMetaphone implements StringEncoder {
         boolean slavoGermanic = isSlavoGermanic(value);
         int index = isSilentStart(value) ? 1 : 0;
         
-        DoubleMetaphoneResult result = new DoubleMetaphoneResult(maxCodeLen);
+        DoubleMetaphoneResult result = new DoubleMetaphoneResult(this.getMaxCodeLen());
         
         while (!result.isComplete() && index <= value.length() - 1) {
             switch (value.charAt(index)) {
@@ -240,7 +241,7 @@ public class DoubleMetaphone implements StringEncoder {
     public Object encode(Object obj) throws EncoderException {
 
         if (!(obj instanceof String)) {
-            throw new EncoderException("Parameter supplied to Metaphone encode is not of type java.lang.String"); 
+            throw new EncoderException("DoubleMetaphone encode parameter is not of type java.lang.String"); 
         } else {
             return doubleMetaphone((String) obj);
         }
@@ -254,7 +255,7 @@ public class DoubleMetaphone implements StringEncoder {
      * @throws EncoderException thrown if there is an exception during
      *         the encoding process.
      */
-    public String encode(String value) throws EncoderException {
+    public String encode(String value) {
         return (doubleMetaphone(value));   
     }
 
@@ -282,7 +283,7 @@ public class DoubleMetaphone implements StringEncoder {
      * @return int
      */
     public int getMaxCodeLen() {
-        return maxCodeLen;
+        return this.maxCodeLen;
     }
 
     /**
@@ -1069,8 +1070,8 @@ public class DoubleMetaphone implements StringEncoder {
      */
     public class DoubleMetaphoneResult {
 
-        private StringBuffer primary = new StringBuffer(maxCodeLen);
-        private StringBuffer alternate = new StringBuffer(maxCodeLen);
+        private StringBuffer primary = new StringBuffer(getMaxCodeLen());
+        private StringBuffer alternate = new StringBuffer(getMaxCodeLen());
         private int maxLength;
 
         public DoubleMetaphoneResult(int maxLength) {
@@ -1128,11 +1129,11 @@ public class DoubleMetaphone implements StringEncoder {
         }
 
         public String getPrimary() {
-            return primary.toString();
+            return this.primary.toString();
         }
 
         public String getAlternate() {
-            return alternate.toString();
+            return this.alternate.toString();
         }
 
         public boolean isComplete() {
