@@ -38,7 +38,7 @@
    <p>
      Out of that confusing duplication of effort sprang this simple
      attempt to encourage code reuse among various projects.  While
-     this package contains a abstract framework for the creation
+     this package contains a abstract framework for the creation of
      encoders and decoders, Codec itself is primarily focused on
      providing functional utilities for working with common encodings.
    </p>
@@ -83,7 +83,7 @@
       </td>
       <td>
        Converts an array of bytes into an array of characters representing the
-       hexidecimal values of each byte in order
+       hexadecimal values of each byte in order
       </td>
       <td>
        Production
