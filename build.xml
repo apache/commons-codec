@@ -1,7 +1,7 @@
 <project name="Codec" default="compile" basedir=".">
     <!--
         "Codec" component of the Jakarta Commons Subproject
-        $Id: build.xml,v 1.10 2003/11/13 06:37:19 ggregory Exp $
+        $Id: build.xml,v 1.11 2003/11/14 01:43:38 ggregory Exp $
     -->
     <!-- ========== Initialize Properties ===================================== -->
     <property file="${user.home}/${component.name}.build.properties"/>
@@ -49,6 +49,7 @@
     <target name="clean" description="Clean build and distribution directories">
         <delete dir="${build.home}"/>
         <delete dir="${dist.home}"/>
+        <delete dir="${pub.home}"/>
     </target>
     <target name="all" depends="clean,compile" description="Clean and compile all components"/>
     <target name="javadoc" depends="compile" description="Create component Javadoc documentation">
@@ -90,6 +91,64 @@
                 <include name="${final.name}.jar"/>
             </fileset>
         </copy>
+    </target>
+    <target name="pub-bin" depends="dist" description="Create binary distribution (compressed) ready for publication">
+        <mkdir dir="${pub.home}"/>
+        <!-- Binary properties -->
+        <property name="final.path" value="${pub.home}/${final.name}"/>
+        <property name="zip.path" value="${final.path}.zip"/>
+        <property name="tar.path" value="${final.path}.tar"/>
+        <property name="gz.path" value="${tar.path}.gz"/>
+        <!-- Zip binary dist -->
+        <zip destfile="${zip.path}">
+           <zipfileset dir="${dist.home}" prefix="${final.name}/"/>
+        </zip>
+        <checksum algorithm="md5" file="${zip.path}" fileext=".md5"/>
+        <checksum algorithm="sha" file="${zip.path}" fileext=".sha"/>
+        <!-- Tar & gzip binary dist -->
+        <tar tarfile="${tar.path}" basedir="${dist.home}"/>
+        <gzip zipfile="${gz.path}" src="${tar.path}"/>
+        <checksum algorithm="md5" file="${gz.path}" fileext=".md5"/>
+        <checksum algorithm="sha" file="${gz.path}" fileext=".sha"/>
+        <delete file="${tar.path}"/>
+        <!-- Delete old signatures -->
+        <delete file="${zip.path}.asc"/>
+        <delete file="${gz.path}.asc"/>
+    </target>
+    <target name="pub-src" depends="dist" description="Create source distribution (compressed) ready for publication based on your LOCAL CVS sources">
+        <mkdir dir="${pub.home}"/>
+        <echo>Warning: The source files used to create this source distribution come from your local copy of the source files.</echo>
+        <!-- Source properties -->
+        <property name="final-src.path" value="${pub.home}/${final.name}-src"/>
+        <property name="zip-src.path" value="${final-src.path}.zip"/>
+        <property name="tar-src.path" value="${final-src.path}.tar"/>
+        <property name="gz-src.path" value="${tar-src.path}.gz"/>
+        <property name="excludes" value="${pub.home}/**, ${dist.home}/**, target/**, xdocs/**"/>
+        <!-- Zip source dist -->
+        <zip destfile="${zip-src.path}">
+           <zipfileset dir="src" prefix="${final.name}/src/"/>
+           <zipfileset dir="." includes="build.xml" prefix="${final.name}/"/>
+           <zipfileset dir="." includes="checkstyle.xml" prefix="${final.name}/"/>
+           <zipfileset dir="." includes="default.properties" prefix="${final.name}/"/>
+           <zipfileset dir="." includes="LICENSE.TXT" prefix="${final.name}/"/>
+           <zipfileset dir="." includes="maven.xml" prefix="${final.name}/"/>
+           <zipfileset dir="." includes="project.properties" prefix="${final.name}/"/>
+           <zipfileset dir="." includes="project.xml" prefix="${final.name}/"/>
+           <zipfileset dir="." includes="RELEASE-NOTES.txt" prefix="${final.name}/"/>
+        </zip>
+        <checksum algorithm="md5" file="${zip-src.path}" fileext=".md5"/>
+        <checksum algorithm="sha" file="${zip-src.path}" fileext=".sha"/>
+        <!-- Tar & gzip source dist -->
+        <tar tarfile="${tar-src.path}" basedir="." excludes="${excludes}" excludesfile=".cvsignore"/>
+        <gzip zipfile="${gz-src.path}" src="${tar-src.path}"/>
+        <checksum algorithm="md5" file="${gz-src.path}" fileext=".md5"/>
+        <checksum algorithm="sha" file="${gz-src.path}" fileext=".sha"/>
+        <delete file="${tar-src.path}"/>
+        <!-- Delete old signatures -->
+        <delete file="${zip-src.path}.asc"/>
+        <delete file="${gz-src.path}.asc"/>
+    </target>
+    <target name="pub" depends="pub-bin, pub-src" description="Create binary and source distribution (compressed) ready for publication">
     </target>
     <!-- ========== Unit Test Targets ========================================= -->
     <target name="compile.tests" depends="compile" description="Compile unit test cases">
