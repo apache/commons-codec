@@ -47,8 +47,8 @@ import org.apache.commons.codec.StringEncoder;
  * Note:
  * </p>
  * <p>
- * Not implemented: rule #3, rule #4, rule #5 of the quoted-printable
- * spec, because the complete quoted-printable spec does not lend itself well
+ * Rules #3, #4, and #5 of the quoted-printable spec are not implemented yet 
+ * because the complete quoted-printable spec does not lend itself well
  * into the byte[] oriented codec framework. Complete the codec once the
  * steamable codec framework is ready. The motivation behind providing the codec in
  * a partial form is that it can already come in handy for those applications that
@@ -61,7 +61,7 @@ import org.apache.commons.codec.StringEncoder;
  * 
  * @author Apache Software Foundation
  * @since 1.3
- * @version $Id: QuotedPrintableCodec.java,v 1.1 2004/03/21 02:20:25 ggregory Exp $
+ * @version $Id: QuotedPrintableCodec.java,v 1.2 2004/03/23 19:22:34 ggregory Exp $
  */
 public class QuotedPrintableCodec 
         implements BinaryEncoder, BinaryDecoder, 
