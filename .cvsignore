@@ -1,7 +1,7 @@
 .classpath
 .clover
 .project
-CODEC_1_2.xml
+CODEC_1_*.xml
 HEAD.xml
 dist
 junit*.properties
