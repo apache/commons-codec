@@ -59,6 +59,8 @@ package org.apache.commons.codec.digest;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.Provider;
+import java.security.Security;
 
 import org.apache.commons.codec.binary.Hex;
 
@@ -70,6 +72,13 @@ import org.apache.commons.codec.binary.Hex;
  * @author David Graham
  */
 public class DigestUtils {
+    
+    /**
+     * This is the provider which DigestUtils uses to get instances of the MD5 and SHA 
+     * algorithms.  This variable is altered if a users wishes to customize the implementation
+     * of an algorithm.
+     */
+    private static Provider provider = null;
 
 	/**
 	 * Returns an MD5 MessageDigest.
@@ -78,10 +87,13 @@ public class DigestUtils {
 	 */
 	private static MessageDigest getMd5Digest() {
 		try {
-			return MessageDigest.getInstance("MD5");
-
+            if( provider != null ) {
+    			return MessageDigest.getInstance("MD5", provider);
+            } else {
+                return MessageDigest.getInstance("MD5");
+            }
 		} catch (NoSuchAlgorithmException e) {
-			throw new InternalError(e.getMessage());
+			throw new RuntimeException("Unable to get instance of MD5 message digest in DigestUtils" + e.getMessage());
 		}
 	}
 
@@ -92,10 +104,13 @@ public class DigestUtils {
 	 */
 	private static MessageDigest getShaDigest() {
 		try {
-			return MessageDigest.getInstance("SHA");
-
+            if( provider != null) {
+                return MessageDigest.getInstance("SHA", provider);
+            } else {
+                return MessageDigest.getInstance("SHA");
+            }
 		} catch (NoSuchAlgorithmException e) {
-			throw new InternalError(e.getMessage());
+            throw new RuntimeException("Unable to get instance of SHA message digest in DigestUtils" + e.getMessage());
 		}
 	}
 
@@ -184,5 +199,14 @@ public class DigestUtils {
 	public static String shaHex(String data) {
 		return new String(Hex.encodeHex(sha(data)));
 	}
-
+    
+    /**
+     * Allows for the replacement of the default Provider from which the DigestUtils
+     * retrieves the implementations of MD5 and SHA.
+     * 
+     * @param provider an instance of a Provider
+     */
+    public static void setProvider(Provider pProvider) {
+        provider = pProvider;
+    }
 }

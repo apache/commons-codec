@@ -57,6 +57,12 @@
 
 package org.apache.commons.codec.digest;
 
+import java.security.MessageDigest;
+import java.security.MessageDigestSpi;
+import java.security.Security;
+
+import org.apache.commons.codec.EncoderException;
+
 import junit.framework.TestCase;
 
 /**
@@ -129,11 +135,38 @@ public class DigestUtilsTest extends TestCase {
 			"a9993e364706816aba3e25717850c26c9cd0d89d",
 			DigestUtils.shaHex("abc"));
 
+        assertEquals(
+            "a9993e364706816aba3e25717850c26c9cd0d89d",
+            DigestUtils.shaHex("abc".getBytes()));
+
 		assertEquals(
 			"84983e441c3bd26ebaae4aa1f95129e5e54670f1",
 			DigestUtils.shaHex(
 				"abcdbcdecdefdefgefghfghighij"
 					+ "hijkijkljklmklmnlmnomnopnopq"));
 	}
+    
+    public void testMd5NoAvailable() {
+        DigestUtils.setProvider( Security.getProviders()[3]);
 
+        try {        
+            DigestUtils.md5("test");
+            fail( "The provider does not supply the MD5 algorithm, this operation should have failed");
+        } catch( RuntimeException re ) {
+            
+        }
+    
+    }
+
+    public void testSHANoAvailable() {
+        DigestUtils.setProvider( Security.getProviders()[3]);
+
+        try {        
+            DigestUtils.sha("test");
+            fail( "The provider does not supply the SHA algorithm, this operation should have failed");
+        } catch( RuntimeException re ) {
+            
+        }
+    
+    }
 }
