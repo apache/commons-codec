@@ -56,12 +56,12 @@ import org.apache.commons.codec.StringEncoder;
  * Q codec.
  * </p>
  * 
- * @see <a href="http://http://www.ietf.org/rfc/rfc1521.txt">
+ * @see <a href="http://www.ietf.org/rfc/rfc1521.txt">
  * MIME (Multipurpose Internet Mail Extensions) Part One</a>
  * 
  * @author Apache Software Foundation
  * @since 1.3
- * @version $Id: QuotedPrintableCodec.java,v 1.2 2004/03/23 19:22:34 ggregory Exp $
+ * @version $Id: QuotedPrintableCodec.java,v 1.3 2004/03/28 21:21:58 ggregory Exp $
  */
 public class QuotedPrintableCodec 
         implements BinaryEncoder, BinaryDecoder, 
