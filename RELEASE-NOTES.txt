@@ -1,4 +1,4 @@
-$Id: RELEASE-NOTES.txt,v 1.7 2003/11/07 00:12:29 ggregory Exp $
+$Id: RELEASE-NOTES.txt,v 1.8 2003/11/07 00:14:14 ggregory Exp $
 
 			Commons Codec Package
 			    Version 1.2
@@ -9,8 +9,8 @@ INTRODUCTION:
 
 This document contains the release notes for this version of the Commons
 Codec package, and highlights changes since the previous version.  Version
-1.2 contains a bug fixes for the 1.1 release, addresses an issue related
-to the treat of non-Base64 characters, and adds the 
+1.2 contains bug fixes for the 1.1 release, including an issue related
+to the treat of non-Base64 characters, Soundex fixes and adds the 
 org.apache.commons.codec.net package.
 
 
@@ -26,7 +26,7 @@ BUG FIXES:
   decode.  RFC 2045 explicitly states that all characters outside of the
   base64 alphabet are to be ignored.  A new function discardNonBase64 is
   called prior to a decode.  Note that isArrayBase64 only discards
-  whitespace before testing the contents of an encoded byte array.  Unit
+  white space before testing the contents of an encoded byte array.  Unit
   tests for Base64 were updated to reflect the changes related to
   discarding non-Base64 characters.
 
