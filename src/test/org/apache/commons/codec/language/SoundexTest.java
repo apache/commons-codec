@@ -66,7 +66,7 @@ import org.apache.commons.codec.StringEncoderAbstractTest;
 /**
  * Tests {@link Soundex}
  * 
- * @version $Revision: 1.8 $ $Date: 2003/11/12 19:32:52 $
+ * @version $Revision: 1.9 $ $Date: 2003/12/04 23:32:39 $
  * @author Rodney Waldhoff
  * @author Gary Gregory
  */
@@ -324,6 +324,39 @@ public class SoundexTest extends StringEncoderAbstractTest {
         Soundex soundex = new Soundex();
         soundex.setMaxLength(2);
         assertEquals("S460", soundex.encode("SCHELLER"));
+    }
+
+    /**
+     * Examples for MS SQLServer from
+     * http://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_setu-sus_3o6w.asp
+     */
+    public void testMsSqlServer1() {
+        assertEquals("S530", this.getEncoder().encode("Smith"));
+        assertEquals("S530", this.getEncoder().encode("Smythe"));
+    }
+
+    /**
+     * Examples for MS SQLServer from
+     * http://support.microsoft.com/default.aspx?scid=http://support.microsoft.com:80/support/kb/articles/Q100/3/65.asp&NoWebContent=1
+     */
+    public void testMsSqlServer2() {
+        this.encodeAll(new String[]{"Erickson", "Erickson", "Erikson", "Ericson", "Ericksen", "Ericsen"}, "E625");
+    }
+    
+    /**
+     * Examples for MS SQLServer from
+     * http://databases.about.com/library/weekly/aa042901a.htm
+     */
+    public void testMsSqlServer3() {
+        assertEquals("A500", this.getEncoder().encode("Ann"));
+        assertEquals("A536", this.getEncoder().encode("Andrew"));
+        assertEquals("J530", this.getEncoder().encode("Janet"));
+        assertEquals("M626", this.getEncoder().encode("Margaret"));
+        assertEquals("S315", this.getEncoder().encode("Steven"));
+        assertEquals("M240", this.getEncoder().encode("Michael"));
+        assertEquals("R163", this.getEncoder().encode("Robert"));
+        assertEquals("L600", this.getEncoder().encode("Laura"));
+        assertEquals("A500", this.getEncoder().encode("Anne"));
     }
 
 }
