@@ -25,7 +25,7 @@ import org.apache.commons.codec.StringEncoderAbstractTest;
 /**
  * Tests RefinedSoundex.
  * 
- * @version $Id: RefinedSoundexTest.java,v 1.8 2004/03/17 19:28:37 ggregory Exp $
+ * @version $Id: RefinedSoundexTest.java,v 1.9 2004/03/21 01:30:11 ggregory Exp $
  * @author Apache Software Foundation
  */
 public class RefinedSoundexTest extends StringEncoderAbstractTest {
@@ -90,7 +90,7 @@ public class RefinedSoundexTest extends StringEncoderAbstractTest {
         assertEquals(5, this.getEncoder().difference("Anothers", "Brothers"));
     }
 
-    public void testEncode() throws EncoderException {
+    public void testEncode() {
         assertEquals("T6036084", this.getEncoder().encode("testing"));
         assertEquals("T6036084", this.getEncoder().encode("TESTING"));
         assertEquals("T60", this.getEncoder().encode("The"));
