@@ -67,7 +67,7 @@ import org.apache.commons.codec.StringEncoderAbstractTest;
 /**
  * Tests {@link Soundex}
  * 
- * @version $Revision: 1.10 $ $Date: 2003/12/10 00:04:46 $
+ * @version $Revision: 1.11 $ $Date: 2003/12/10 04:25:15 $
  * @author Rodney Waldhoff
  * @author Gary Gregory
  */
@@ -166,21 +166,21 @@ public class SoundexTest extends StringEncoderAbstractTest {
 
     public void testDifference() throws EncoderException {
         // Edge cases
-        assertEquals(this.getEncoder().difference(null, null), 0);
-        assertEquals(this.getEncoder().difference("", ""), 0);
-        assertEquals(this.getEncoder().difference(" ", " "), 0);
+        assertEquals(0, this.getEncoder().difference(null, null));
+        assertEquals(0, this.getEncoder().difference("", ""));
+        assertEquals(0, this.getEncoder().difference(" ", " "));
         // Normal cases
-        assertEquals(this.getEncoder().difference("Smith", "Smythe"), 4);
-        assertEquals(this.getEncoder().difference("Ann", "Andrew"), 2);
-        assertEquals(this.getEncoder().difference("Margaret", "Andrew"), 1);
-        assertEquals(this.getEncoder().difference("Janet", "Margaret"), 0);
+        assertEquals(4, this.getEncoder().difference("Smith", "Smythe"));
+        assertEquals(2, this.getEncoder().difference("Ann", "Andrew"));
+        assertEquals(1, this.getEncoder().difference("Margaret", "Andrew"));
+        assertEquals(0, this.getEncoder().difference("Janet", "Margaret"));
         // Examples from http://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_de-dz_8co5.asp
-        assertEquals(this.getEncoder().difference("Green", "Greene"), 4);
-        assertEquals(this.getEncoder().difference("Blotchet-Halls", "Greene"), 0);
+        assertEquals(4, this.getEncoder().difference("Green", "Greene"));
+        assertEquals(0, this.getEncoder().difference("Blotchet-Halls", "Greene"));
         // Examples from http://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_setu-sus_3o6w.asp
-        assertEquals(this.getEncoder().difference("Smith", "Smythe"), 4);
-        assertEquals(this.getEncoder().difference("Smithers", "Smythers"), 4);
-        assertEquals(this.getEncoder().difference("Anothers", "Brothers"), 2);        
+        assertEquals(4, this.getEncoder().difference("Smith", "Smythe"));
+        assertEquals(4, this.getEncoder().difference("Smithers", "Smythers"));
+        assertEquals(2, this.getEncoder().difference("Anothers", "Brothers"));        
     }
 
     public void testEncodeBasic() {
