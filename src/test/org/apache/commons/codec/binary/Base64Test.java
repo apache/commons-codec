@@ -64,7 +64,7 @@ import java.util.Random;
 import junit.framework.TestCase;
 
 /**
- * @version $Revision: 1.8 $ $Date: 2003/10/05 21:45:49 $
+ * @version $Revision: 1.9 $ $Date: 2003/11/03 07:23:33 $
  * @author <a href="mailto:sanders@apache.org">Scott Sanders</a>
  * @author <a href="mailto:rwaldhoff@apache.org">Rodney Waldhoff</a>
  * @author Tim O'Brien
@@ -92,6 +92,26 @@ public class Base64Test extends TestCase {
         assertTrue("encoding hello world", encodedContent.equals("SGVsbG8gV29ybGQ="));
     }
 
+    /**
+     * Tests conditional true branch for "marker0" test.
+     */
+    public void testDecodePadMarkerIndex2() {
+        assertEquals("A", new String(Base64.decodeBase64("QQ==".getBytes())));
+    }
+    
+    /**
+     * Tests conditional branches for "marker1" test.
+     */
+    public void testDecodePadMarkerIndex3() {
+        assertEquals("AA", new String(Base64.decodeBase64("QUE=".getBytes())));
+        assertEquals("AAA", new String(Base64.decodeBase64("QUFB".getBytes())));
+    }
+    
+    public void testDecodePadOnly() {
+        assertTrue(Base64.decodeBase64("====".getBytes()).length == 0);
+        assertEquals("", new String(Base64.decodeBase64("====".getBytes())));
+    }
+    
     // encode/decode random arrays from size 0 to size 11
     public void testEncodeDecodeSmall() {
         for(int i=0;i<12;i++) {
@@ -100,7 +120,7 @@ public class Base64Test extends TestCase {
             byte[] enc =  Base64.encodeBase64(data);
             assertTrue("\"" + (new String(enc)) + "\" is Base64 data.",Base64.isArrayByteBase64(enc) );
             byte[] data2 = Base64.decodeBase64(enc);
-            assertTrue(toString(data) + " equals " + toString(data2),Arrays.equals(data,data2));
+            assertTrue(toString(data) + " equals " + toString(data2), Arrays.equals(data,data2));
         }
     }
 
@@ -407,7 +427,7 @@ public class Base64Test extends TestCase {
                     dest.equals( original ) );
     }
 
-    public void testDiscardingOfWhiteSpace() throws Exception {
+    public void testDecodeWithWhitespace() throws Exception {
 
         String orig = "I am a late night coder.";
 
@@ -429,6 +449,32 @@ public class Base64Test extends TestCase {
                     dest.equals( orig ) );
     }
 
+    public void testDiscardWhitespace() throws Exception {
+
+        String orig = "I am a late night coder.";
+
+        byte[] encodedArray = Base64.encodeBase64( orig.getBytes() );
+        StringBuffer intermediate = 
+            new StringBuffer( new String(encodedArray) );
+
+        intermediate.insert( 2, ' ' );
+        intermediate.insert( 5, '\t' );
+        intermediate.insert( 10, '\r' );
+        intermediate.insert( 15, '\n' );
+
+        byte[] encodedWithWS = intermediate.toString().getBytes();
+        byte[] encodedNoWS = Base64.discardWhitespace( encodedWithWS );
+        byte[] decodedWithWS = Base64.decodeBase64( encodedWithWS );
+        byte[] decodedNoWS = Base64.decodeBase64( encodedNoWS );
+
+        String destFromWS = new String( decodedWithWS );
+        String destFromNoWS = new String( decodedNoWS );
+
+        assertTrue( "Dest string doesn't eausl original", 
+                destFromWS.equals( orig ) );
+        assertTrue( "Dest string doesn't eausl original", 
+                destFromNoWS.equals( orig ) );
+    }
 
     // -------------------------------------------------------- Private Methods
 
