@@ -19,9 +19,8 @@ package org.apache.commons.codec;
 /**
  * Decodes a String into a String. 
  *
- * @author Tim O'Brien
- * @author Gary Gregory
- * @version $Id: StringDecoder.java,v 1.8 2004/02/23 07:32:49 ggregory Exp $
+ * @author Apache Software Foundation
+ * @version $Id: StringDecoder.java,v 1.9 2004/02/29 04:08:31 tobrien Exp $
  */
 public interface StringDecoder extends Decoder {
     

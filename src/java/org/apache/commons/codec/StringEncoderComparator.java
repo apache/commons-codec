@@ -27,9 +27,8 @@ import java.util.Comparator;
  * handy if one need to sort Strings by an encoded
  * form of a name such as Soundex.
  *
- * @author Tim O'Brien
- * @author Gary Gregory
- * @version $Id: StringEncoderComparator.java,v 1.12 2004/02/23 07:32:49 ggregory Exp $
+ * @author Apache Software Foundation
+ * @version $Id: StringEncoderComparator.java,v 1.13 2004/02/29 04:08:31 tobrien Exp $
  */
 public class StringEncoderComparator implements Comparator {
 

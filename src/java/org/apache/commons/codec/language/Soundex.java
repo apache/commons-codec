@@ -24,11 +24,8 @@ import org.apache.commons.codec.StringEncoder;
  * similar names, but can also be used as a general purpose scheme to find word
  * with similar phonemes.
  * 
- * @author bayard@generationjava.com
- * @author Tim O'Brien
- * @author Gary Gregory
- * @see <a href="http://www.archives.gov/research_room/genealogy/census/soundex.html">NARA, Genealogy, Soundex Indexing</a>
- * @version $Id: Soundex.java,v 1.19 2004/02/23 07:32:49 ggregory Exp $
+ * @author Apache Software Foundation
+ * @version $Id: Soundex.java,v 1.20 2004/02/29 04:08:31 tobrien Exp $
  */
 public class Soundex implements StringEncoder {
 
