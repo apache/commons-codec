@@ -24,7 +24,7 @@ import org.apache.commons.codec.StringEncoder;
  * general purpose scheme to find word with similar phonemes.
  * 
  * @author Apache Software Foundation
- * @version $Id: Soundex.java,v 1.27 2004/09/08 17:44:41 ggregory Exp $
+ * @version $Id$
  */
 public class Soundex implements StringEncoder {
 

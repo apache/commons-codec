@@ -23,7 +23,7 @@ import org.apache.commons.codec.StringEncoder;
  * Utility methods for {@link Soundex} and {@link RefinedSoundex} classes.
  * 
  * @author Apache Software Foundation
- * @version $Id: SoundexUtils.java,v 1.5 2004/03/17 18:31:35 ggregory Exp $
+ * @version $Id$
  * @since 1.3
  */
 final class SoundexUtils {

@@ -45,7 +45,7 @@ import org.apache.commons.codec.StringEncoder;
  * 
  * @author Apache Software Foundation
  * @since 1.2
- * @version $Id: URLCodec.java,v 1.22 2004/08/27 17:18:17 ggregory Exp $
+ * @version $Id$
  */
 public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, StringDecoder {
     

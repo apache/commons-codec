@@ -23,7 +23,7 @@ import java.util.Random;
 import junit.framework.TestCase;
 
 /**
- * @version $Id: Base64Test.java,v 1.16 2004/11/24 19:23:25 ggregory Exp $
+ * @version $Id$
  * @author Apache Software Foundation
  */
 public class Base64Test extends TestCase {

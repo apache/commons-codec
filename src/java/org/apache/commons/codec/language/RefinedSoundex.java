@@ -25,7 +25,7 @@ import org.apache.commons.codec.StringEncoder;
  * <CITE>Margaret Odell</CITE> and <CITE>Robert Russell</CITE>.
  * 
  * @author Apache Software Foundation
- * @version $Id: RefinedSoundex.java,v 1.21 2004/06/05 18:32:04 ggregory Exp $
+ * @version $Id$
  */
 public class RefinedSoundex implements StringEncoder {
 

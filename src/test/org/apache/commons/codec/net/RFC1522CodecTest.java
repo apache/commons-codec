@@ -24,7 +24,7 @@ import org.apache.commons.codec.DecoderException;
  * RFC 1522 compliant codec test cases
  * 
  * @author <a href="mailto:oleg@ural.ru">Oleg Kalnichevski</a>
- * @version $Id: RFC1522CodecTest.java,v 1.3 2004/09/08 20:23:51 ggregory Exp $
+ * @version $Id$
  */
 public class RFC1522CodecTest extends TestCase {
     

@@ -20,7 +20,7 @@ package org.apache.commons.codec;
  * Encodes a String into a String. 
  *
  * @author Apache Software Foundation
- * @version $Id: StringEncoder.java,v 1.9 2004/02/29 04:08:31 tobrien Exp $
+ * @version $Id$
  */
 public interface StringEncoder extends Encoder {
     

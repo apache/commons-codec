@@ -31,7 +31,7 @@ import org.apache.commons.codec.StringEncoder;
  * </ul>
  * 
  * @author Apache Software Foundation
- * @version $Id: DoubleMetaphone.java,v 1.24 2004/06/05 18:32:04 ggregory Exp $
+ * @version $Id$
  */
 public class DoubleMetaphone implements StringEncoder {
 
