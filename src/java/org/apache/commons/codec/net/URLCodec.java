@@ -86,7 +86,7 @@ import org.apache.commons.codec.StringEncoder;
  * 
  * @author <a href="mailto:oleg@ural.ru">Oleg Kalnichevski</a>
  * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
- * @version $Id: URLCodec.java,v 1.7 2003/10/05 21:45:49 tobrien Exp $
+ * @version $Id: URLCodec.java,v 1.8 2003/10/12 02:17:11 tobrien Exp $
  */
 
 public class URLCodec 
@@ -97,7 +97,7 @@ public class URLCodec
     /**
      * The <code>String</code> encoding used for decoding and encoding.
      */
-    protected static final String ENCODING = "US-ASCII";
+    protected String ENCODING = "US-ASCII";
     
     /**
      * BitSet of www-form-url safe characters.
@@ -132,6 +132,14 @@ public class URLCodec
      */
     public URLCodec() {
         super();
+    }
+
+    /**
+     * Constructor which allows for the selection of an Encoding
+     */
+    public URLCodec(String encoding) {
+        super();
+        ENCODING = encoding;
     }
 
     /**
