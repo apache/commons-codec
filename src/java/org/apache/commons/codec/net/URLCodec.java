@@ -45,19 +45,14 @@ import org.apache.commons.codec.StringEncoder;
  * 
  * @author Apache Software Foundation
  * @since 1.2
- * @version $Id: URLCodec.java,v 1.18 2004/03/21 01:58:40 ggregory Exp $
+ * @version $Id: URLCodec.java,v 1.19 2004/03/29 07:59:00 ggregory Exp $
  */
-public class URLCodec 
-        implements BinaryEncoder, BinaryDecoder, 
-                   StringEncoder, StringDecoder 
-{
-    
-    private final static String US_ASCII = "US-ASCII";
+public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, StringDecoder {
     
     /**
      * The default charset used for string decoding and encoding.
      */
-    protected String charset = "UTF-8";
+    protected String charset = StringEncodings.UTF8;
     
     protected static byte ESCAPE_CHAR = '%';
     /**
@@ -110,12 +105,12 @@ public class URLCodec
      * characters. Unsafe characters are escaped.
      *
      * @param urlsafe bitset of characters deemed URL safe
-     * @param pArray array of bytes to convert to URL safe characters
+     * @param bytes array of bytes to convert to URL safe characters
      * @return array of bytes containing URL safe characters
      */
-    public static final byte[] encodeUrl(BitSet urlsafe, byte[] pArray) 
+    public static final byte[] encodeUrl(BitSet urlsafe, byte[] bytes) 
     {
-        if (pArray == null) {
+        if (bytes == null) {
             return null;
         }
         if (urlsafe == null) {
@@ -123,8 +118,8 @@ public class URLCodec
         }
         
         ByteArrayOutputStream buffer = new ByteArrayOutputStream(); 
-        for (int i = 0; i < pArray.length; i++) {
-            int b = pArray[i];
+        for (int i = 0; i < bytes.length; i++) {
+            int b = bytes[i];
             if (b < 0) {
                 b = 256 + b;
             }
@@ -152,25 +147,25 @@ public class URLCodec
      * original bytes. Escaped characters are converted back to their 
      * original representation.
      *
-     * @param pArray array of URL safe characters
+     * @param bytes array of URL safe characters
      * @return array of original bytes 
      * @throws DecoderException Thrown if URL decoding is unsuccessful
      */
-    public static final byte[] decodeUrl(byte[] pArray) 
+    public static final byte[] decodeUrl(byte[] bytes) 
          throws DecoderException
     {
-        if (pArray == null) {
+        if (bytes == null) {
             return null;
         }
         ByteArrayOutputStream buffer = new ByteArrayOutputStream(); 
-        for (int i = 0; i < pArray.length; i++) {
-            int b = pArray[i];
+        for (int i = 0; i < bytes.length; i++) {
+            int b = bytes[i];
             if (b == '+') {
                 buffer.write(' ');
             } else if (b == '%') {
                 try {
-                    int u = Character.digit((char)pArray[++i], 16);
-                    int l = Character.digit((char)pArray[++i], 16);
+                    int u = Character.digit((char)bytes[++i], 16);
+                    int l = Character.digit((char)bytes[++i], 16);
                     if (u == -1 || l == -1) {
                         throw new DecoderException("Invalid URL encoding");
                     }
@@ -190,11 +185,11 @@ public class URLCodec
      * Encodes an array of bytes into an array of URL safe 7-bit 
      * characters. Unsafe characters are escaped.
      *
-     * @param pArray array of bytes to convert to URL safe characters
+     * @param bytes array of bytes to convert to URL safe characters
      * @return array of bytes containing URL safe characters
      */
-    public byte[] encode(byte[] pArray) {
-        return encodeUrl(WWW_FORM_URL, pArray);
+    public byte[] encode(byte[] bytes) {
+        return encodeUrl(WWW_FORM_URL, bytes);
     }
 
 
@@ -203,12 +198,12 @@ public class URLCodec
      * original bytes. Escaped characters are converted back to their 
      * original representation.
      *
-     * @param pArray array of URL safe characters
+     * @param bytes array of URL safe characters
      * @return array of original bytes 
      * @throws DecoderException Thrown if URL decoding is unsuccessful
      */
-    public byte[] decode(byte[] pArray) throws DecoderException {
-        return decodeUrl(pArray);
+    public byte[] decode(byte[] bytes) throws DecoderException {
+        return decodeUrl(bytes);
     }
 
 
@@ -228,7 +223,7 @@ public class URLCodec
         if (pString == null) {
             return null;
         }
-        return new String(encode(pString.getBytes(charset)), US_ASCII);
+        return new String(encode(pString.getBytes(charset)), StringEncodings.US_ASCII);
     }
 
 
@@ -272,7 +267,7 @@ public class URLCodec
         if (pString == null) {
             return null;
         }
-        return new String(decode(pString.getBytes(US_ASCII)), charset);
+        return new String(decode(pString.getBytes(StringEncodings.US_ASCII)), charset);
     }
 
 
