@@ -40,6 +40,10 @@ public class URLCodecTest extends TestCase {
         super(name);
     }
 
+    private void validateState(URLCodec urlCodec) {
+        assertEquals(urlCodec.getEncoding(), urlCodec.getDefaultCharset());        
+    }
+    
     private String constructString(int [] unicodeChars) {
         StringBuffer buffer = new StringBuffer();
         if (unicodeChars != null) {
@@ -55,99 +59,107 @@ public class URLCodecTest extends TestCase {
         String ru_msg = constructString(RUSSIAN_STUFF_UNICODE); 
         String ch_msg = constructString(SWISS_GERMAN_STUFF_UNICODE); 
         
-        URLCodec codec = new URLCodec();
+        URLCodec urlCodec = new URLCodec();
+        this.validateState(urlCodec);
         
         assertEquals(
             "%D0%92%D1%81%D0%B5%D0%BC_%D0%BF%D1%80%D0%B8%D0%B2%D0%B5%D1%82", 
-            codec.encode(ru_msg, "UTF-8")
+            urlCodec.encode(ru_msg, "UTF-8")
         );
-        assertEquals("Gr%C3%BCezi_z%C3%A4m%C3%A4", codec.encode(ch_msg, "UTF-8"));
+        assertEquals("Gr%C3%BCezi_z%C3%A4m%C3%A4", urlCodec.encode(ch_msg, "UTF-8"));
         
-        assertEquals(ru_msg, codec.decode(codec.encode(ru_msg, "UTF-8"), "UTF-8"));
-        assertEquals(ch_msg, codec.decode(codec.encode(ch_msg, "UTF-8"), "UTF-8"));
+        assertEquals(ru_msg, urlCodec.decode(urlCodec.encode(ru_msg, "UTF-8"), "UTF-8"));
+        assertEquals(ch_msg, urlCodec.decode(urlCodec.encode(ch_msg, "UTF-8"), "UTF-8"));
+        this.validateState(urlCodec);
     }
 
     public void testBasicEncodeDecode() throws Exception {
-        URLCodec urlcodec = new URLCodec();
+        URLCodec urlCodec = new URLCodec();
         String plain = "Hello there!";
-        String encoded = urlcodec.encode(plain);
+        String encoded = urlCodec.encode(plain);
         assertEquals("Basic URL encoding test", 
             "Hello+there%21", encoded);
         assertEquals("Basic URL decoding test", 
-            plain, urlcodec.decode(encoded));
+            plain, urlCodec.decode(encoded));
+        this.validateState(urlCodec);
     }
 
 
     public void testSafeCharEncodeDecode() throws Exception {
-        URLCodec urlcodec = new URLCodec();
+        URLCodec urlCodec = new URLCodec();
         String plain = "abc123_-.*";
-        String encoded = urlcodec.encode(plain);
+        String encoded = urlCodec.encode(plain);
         assertEquals("Safe chars URL encoding test", 
             plain, encoded);
         assertEquals("Safe chars URL decoding test", 
-            plain, urlcodec.decode(encoded));
+            plain, urlCodec.decode(encoded));
+        this.validateState(urlCodec);
     }
 
 
     public void testUnsafeEncodeDecode() throws Exception {
-        URLCodec urlcodec = new URLCodec();
+        URLCodec urlCodec = new URLCodec();
         String plain = "~!@#$%^&()+{}\"\\;:`,/[]";
-        String encoded = urlcodec.encode(plain);
+        String encoded = urlCodec.encode(plain);
         assertEquals("Unsafe chars URL encoding test", 
             "%7E%21%40%23%24%25%5E%26%28%29%2B%7B%7D%22%5C%3B%3A%60%2C%2F%5B%5D", encoded);
         assertEquals("Unsafe chars URL decoding test", 
-            plain, urlcodec.decode(encoded));
+            plain, urlCodec.decode(encoded));
+        this.validateState(urlCodec);
     }
 
 
     public void testEncodeDecodeNull() throws Exception {
-        URLCodec urlcodec = new URLCodec();
+        URLCodec urlCodec = new URLCodec();
         assertNull("Null string URL encoding test", 
-            urlcodec.encode((String)null));
+            urlCodec.encode((String)null));
         assertNull("Null string URL decoding test", 
-            urlcodec.decode((String)null));
+            urlCodec.decode((String)null));
+        this.validateState(urlCodec);
     }
 
 
     public void testDecodeInvalid() throws Exception {
-        URLCodec urlcodec = new URLCodec();
+        URLCodec urlCodec = new URLCodec();
         try {
-            urlcodec.decode("%");
+            urlCodec.decode("%");
             fail("DecoderException should have been thrown");
         } catch(DecoderException e) {
             // Expected. Move on
         }
         try {
-            urlcodec.decode("%A");
+            urlCodec.decode("%A");
             fail("DecoderException should have been thrown");
         } catch(DecoderException e) {
             // Expected. Move on
         }
         try {
-            urlcodec.decode("%WW");
+            urlCodec.decode("%WW");
             fail("DecoderException should have been thrown");
         } catch(DecoderException e) {
             // Expected. Move on
         }
+        this.validateState(urlCodec);
     }
 
     public void testEncodeNull() throws Exception {
-        URLCodec urlcodec = new URLCodec();
+        URLCodec urlCodec = new URLCodec();
         byte[] plain = null;
-        byte[] encoded = urlcodec.encode(plain);
+        byte[] encoded = urlCodec.encode(plain);
         assertEquals("Encoding a null string should return null", 
             null, encoded);
+        this.validateState(urlCodec);
     }
     
     public void testEncodeUrlWithNullBitSet() throws Exception {
-        URLCodec urlcodec = new URLCodec();
+        URLCodec urlCodec = new URLCodec();
         String plain = "Hello there!";
         String encoded = new String( URLCodec.encodeUrl(null, plain.getBytes()));
         assertEquals("Basic URL encoding test", 
             "Hello+there%21", encoded);
         assertEquals("Basic URL decoding test", 
-            plain, urlcodec.decode(encoded));
-        
+            plain, urlCodec.decode(encoded));
+        this.validateState(urlCodec);        
     }
 
     public void testDecodeWithNullArray() throws Exception {
@@ -157,93 +169,96 @@ public class URLCodecTest extends TestCase {
     }
 
     public void testEncodeStringWithNull() throws Exception {
-        URLCodec urlcodec = new URLCodec();
+        URLCodec urlCodec = new URLCodec();
         String test = null;
-        String result = urlcodec.encode( test, "charset" );
+        String result = urlCodec.encode( test, "charset" );
         assertEquals("Result should be null", null, result);
     }
 
     public void testDecodeStringWithNull() throws Exception {
-        URLCodec urlcodec = new URLCodec();
+        URLCodec urlCodec = new URLCodec();
         String test = null;
-        String result = urlcodec.decode( test, "charset" );
+        String result = urlCodec.decode( test, "charset" );
         assertEquals("Result should be null", null, result);
     }
     
     public void testEncodeObjects() throws Exception {
-        URLCodec urlcodec = new URLCodec();
+        URLCodec urlCodec = new URLCodec();
         String plain = "Hello there!";
-        String encoded = (String) urlcodec.encode((Object) plain);
+        String encoded = (String) urlCodec.encode((Object) plain);
         assertEquals("Basic URL encoding test", 
             "Hello+there%21", encoded);
 
         byte[] plainBA = plain.getBytes();
-        byte[] encodedBA = (byte[]) urlcodec.encode((Object) plainBA);
+        byte[] encodedBA = (byte[]) urlCodec.encode((Object) plainBA);
         encoded = new String(encodedBA);
         assertEquals("Basic URL encoding test", 
             "Hello+there%21", encoded);
             
-        Object result = urlcodec.encode((Object) null);
+        Object result = urlCodec.encode((Object) null);
         assertEquals( "Encoding a null Object should return null", null, result);
         
         try {
             Object dObj = new Double(3.0);
-            urlcodec.encode( dObj );
+            urlCodec.encode( dObj );
             fail( "Trying to url encode a Double object should cause an exception.");
         } catch( EncoderException ee ) {
             // Exception expected, test segment passes.
         }
+        this.validateState(urlCodec);
     }
     
     public void testInvalidEncoding() {
-        URLCodec urlcodec = new URLCodec("NONSENSE");
-           String plain = "Hello there!";
-            try {
-               urlcodec.encode(plain);
-                fail( "We set the encoding to a bogus NONSENSE vlaue, this shouldn't have worked.");
-            } catch( EncoderException ee ) {
-                // Exception expected, test segment passes.
-            }
-            try {
-               urlcodec.decode(plain);
-                fail( "We set the encoding to a bogus NONSENSE vlaue, this shouldn't have worked.");
-            } catch( DecoderException ee ) {
-                // Exception expected, test segment passes.
-            }
+        URLCodec urlCodec = new URLCodec("NONSENSE");
+        String plain = "Hello there!";
+        try {
+            urlCodec.encode(plain);
+            fail("We set the encoding to a bogus NONSENSE vlaue, this shouldn't have worked.");
+        } catch (EncoderException ee) {
+            // Exception expected, test segment passes.
+        }
+        try {
+            urlCodec.decode(plain);
+            fail("We set the encoding to a bogus NONSENSE vlaue, this shouldn't have worked.");
+        } catch (DecoderException ee) {
+            // Exception expected, test segment passes.
+        }
+        this.validateState(urlCodec);
     }
 
     public void testDecodeObjects() throws Exception {
-        URLCodec urlcodec = new URLCodec();
+        URLCodec urlCodec = new URLCodec();
         String plain = "Hello+there%21";
-        String decoded = (String) urlcodec.decode((Object) plain);
+        String decoded = (String) urlCodec.decode((Object) plain);
         assertEquals("Basic URL decoding test", 
             "Hello there!", decoded);
 
         byte[] plainBA = plain.getBytes();
-        byte[] decodedBA = (byte[]) urlcodec.decode((Object) plainBA);
+        byte[] decodedBA = (byte[]) urlCodec.decode((Object) plainBA);
         decoded = new String(decodedBA);
         assertEquals("Basic URL decoding test", 
             "Hello there!", decoded);
             
-        Object result = urlcodec.decode((Object) null);
+        Object result = urlCodec.decode((Object) null);
         assertEquals( "Decoding a null Object should return null", null, result);
         
         try {
             Object dObj = new Double(3.0);
-            urlcodec.decode( dObj );
+            urlCodec.decode( dObj );
             fail( "Trying to url encode a Double object should cause an exception.");
         } catch( DecoderException ee ) {
             // Exception expected, test segment passes.
         }
+        this.validateState(urlCodec);
     }
 
     public void testDefaultEncoding() throws Exception {
         String plain = "Hello there!";
-        URLCodec urlcodec = new URLCodec("UnicodeBig");
-        urlcodec.encode(plain); // To work around a weird quirk in Java 1.2.2
-        String encoded1 = urlcodec.encode(plain, "UnicodeBig");
-        String encoded2 = urlcodec.encode(plain);
+        URLCodec urlCodec = new URLCodec("UnicodeBig");
+        urlCodec.encode(plain); // To work around a weird quirk in Java 1.2.2
+        String encoded1 = urlCodec.encode(plain, "UnicodeBig");
+        String encoded2 = urlCodec.encode(plain);
         assertEquals(encoded1, encoded2);
+        this.validateState(urlCodec);
     }
-
 }
