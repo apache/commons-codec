@@ -27,7 +27,7 @@ import org.apache.commons.codec.StringEncoderAbstractTest;
  * 
  * @see "http://www.cuj.com/documents/s=8038/cuj0006philips/"
  * @author Apache Software Foundation
- * @version $Id: DoubleMetaphoneTest.java,v 1.8 2004/03/17 19:28:37 ggregory Exp $
+ * @version $Id: DoubleMetaphoneTest.java,v 1.9 2004/04/13 23:15:40 ggregory Exp $
  */
 public class DoubleMetaphoneTest extends StringEncoderAbstractTest {
 
@@ -1199,6 +1199,14 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest {
         doubleMetaphoneNotEqualTest(true);
     }
 
+    public void testCCedilla() {
+        this.getDoubleMetaphone().isDoubleMetaphoneEqual("ç", "S");
+    }
+    
+    public void testNTilde() {
+        this.getDoubleMetaphone().isDoubleMetaphoneEqual("ñ", "N");
+    }
+    
     public void validateFixture(String[][] pairs) {
         if (pairs.length == 0) {
             fail("Test fixture is empty");
