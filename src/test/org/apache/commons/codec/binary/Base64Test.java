@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//codec/src/test/org/apache/commons/codec/binary/Base64Test.java,v 1.2 2003/05/06 20:45:16 ggregory Exp $
- * $Revision: 1.2 $
- * $Date: 2003/05/06 20:45:16 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//codec/src/test/org/apache/commons/codec/binary/Base64Test.java,v 1.3 2003/05/14 02:40:18 tobrien Exp $
+ * $Revision: 1.3 $
+ * $Date: 2003/05/14 02:40:18 $
  *
  * ====================================================================
  *
@@ -67,7 +67,7 @@ import java.util.Random;
 import junit.framework.TestCase;
 
 /**
- * @version $Revision: 1.2 $ $Date: 2003/05/06 20:45:16 $
+ * @version $Revision: 1.3 $ $Date: 2003/05/14 02:40:18 $
  * @author <a href="mailto:sanders@apache.org">Scott Sanders</a>
  * @author <a href="mailto:rwaldhoff@apache.org">Rodney Waldhoff</a>
  * @author <a href="mailto:tobrien@apache.org">Tim O'Brien</a>
@@ -313,28 +313,38 @@ public class Base64Test extends TestCase {
         assertEquals("xyzzy!",new String(Base64.decodeBase64("eHl6enkh".getBytes())));
         } 
 
-    public void testNonBase64() throws Exception {
+	public void testNonBase64Test() throws Exception {
 
-        byte[] bArray = { '%' };
+		byte[] bArray = { '%' };
 
-        assertFalse( "Invalid Base64 array was incorrectly validated as " +
-                     "an array of Base64 encoded data", 
-                     Base64.isArrayByteBase64( bArray ) );
+		assertFalse( "Invalid Base64 array was incorrectly validated as " +
+					 "an array of Base64 encoded data", 
+					 Base64.isArrayByteBase64( bArray ) );
         
-        boolean exceptionThrown = false;
+		boolean exceptionThrown = false;
 
-        try {
-            Base64 b64 = new Base64();
-            b64.decode( bArray );
-        } 
-        catch( Exception e ) {
-            exceptionThrown = true;
-        }
+		try {
+			Base64 b64 = new Base64();
+			byte[] result = b64.decode( bArray );
+            
+			assertTrue( "The result should be empty as the test encoded content did " +
+				"not contain any valid base 64 characters", result.length == 0);
+		} 
+		catch( Exception e ) {
+			exceptionThrown = true;
+		}
 
-        assertTrue( "Exception wasn't thrown when trying to decode " +
-                    "invalid base64 encoded data", exceptionThrown );
+		assertFalse( "Exception was thrown when trying to decode " +
+					"invalid base64 encoded data - RFC 2045 requires that all " +
+					"non base64 character be discarded, an exception should not" +
+					" have been thrown", exceptionThrown );
+          
 
-    }
+	}
+    
+	public void testIgnoringNonBase64InDecode() throws Exception {
+		assertEquals("The quick brown fox jumped over the lazy dogs.",new String(Base64.decodeBase64("VGhlIH@$#$@%F1aWN@#@#@@rIGJyb3duIGZve\n\r\t%#%#%#%CBqd##$#$W1wZWQgb3ZlciB0aGUgbGF6eSBkb2dzLg==".getBytes())));
+	}
 
     public void testObjectDecodeWithInvalidParameter() throws Exception {
         boolean exceptionThrown = false;
