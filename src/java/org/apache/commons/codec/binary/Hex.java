@@ -54,13 +54,18 @@
 
 package org.apache.commons.codec.binary;
 
+import org.apache.commons.codec.BinaryDecoder;
+import org.apache.commons.codec.BinaryEncoder;
+import org.apache.commons.codec.DecoderException;
+import org.apache.commons.codec.EncoderException;
+
 /**
  * Hex encoder/decoder
  * 
  * @author <a href="mailto:siege@preoccupied.net">Christopher O'Brien</a>
  * @author <a href="mailto:tobrien@apache.org">Tim O'Brien</a>
  */
-public class Hex {
+public class Hex implements BinaryEncoder, BinaryDecoder {
 
 
     /** for building output as Hex */
@@ -69,7 +74,39 @@ public class Hex {
            '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'
     };
 
-
+	public Object encode(Object pObject) throws EncoderException {
+		if(pObject instanceof String) {
+		    pObject = ((String) pObject).getBytes();
+		}
+	
+		try {
+			return encodeHex((byte[]) pObject);
+		} catch(Exception e) {
+			throw new EncoderException(e.getMessage());
+		}
+	}
+	
+	public byte[] encode(byte[] pArray) {
+		return new String(encodeHex(pArray)).getBytes();
+	}
+	
+	public Object decode(Object pObject) throws DecoderException {
+		if(pObject instanceof String) {
+		    pObject = ((String) pObject).getBytes();
+		}
+	
+		try {
+		    return decodeHex((char[]) pObject);
+		} catch(Exception e) {
+		    throw new DecoderException(e.getMessage());
+		}
+	}
+	
+	
+	
+	public byte[] decode(byte[] pArray) throws DecoderException {
+		return decodeHex(new String(pArray).toCharArray());
+	}
 
     /**
      * Converts an array of bytes into an array of characters representing the
@@ -110,12 +147,12 @@ public class Hex {
      * @throws Exception Thrown if an odd number of characters is supplied
      *                   to this function
      */
-    public static byte[] decodeHex(char[] data) throws Exception {
+    public static byte[] decodeHex(char[] data) throws DecoderException {
 
         int l = data.length;
 
            if ((l & 0x01) != 0) {
-               throw new Exception("odd number of characters.");
+               throw new DecoderException("odd number of characters.");
            }
 
            byte[] out = new byte[l >> 1];
