@@ -75,7 +75,7 @@ import org.apache.commons.codec.EncoderException;
   * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
   * @author Tim O'Brien
   * @since 1.0-dev
-  * @version $Id: Base64.java,v 1.10 2003/10/05 21:45:49 tobrien Exp $
+  * @version $Id: Base64.java,v 1.11 2003/10/12 19:48:15 tobrien Exp $
   */
 public class Base64 implements BinaryEncoder, BinaryDecoder {
 
@@ -245,10 +245,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
         Object result;
 
         if (!(pObject instanceof byte[])) {
-            throw new DecoderException(
-                "Parameter supplied to "
-                    + "Base64 "
-                    + "decode is not a byte[]");
+            throw new DecoderException("Parameter supplied to Base64 decode is not a byte[]");
         } else {
             result = decode((byte[]) pObject);
         }
@@ -302,9 +299,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
         if (isChunked) {
 
             nbrChunks =
-                (CHUNK_SEPARATOR.length == 0
-                    ? 0
-                    : (int) Math.ceil((float) encodedDataLength / CHUNK_SIZE));
+                (CHUNK_SEPARATOR.length == 0 ? 0 : (int) Math.ceil((float) encodedDataLength / CHUNK_SIZE));
             encodedDataLength += nbrChunks * CHUNK_SEPARATOR.length;
         }
 
@@ -331,17 +326,11 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
             k = (byte) (b1 & 0x03);
 
             byte val1 =
-                ((b1 & SIGN) == 0)
-                    ? (byte) (b1 >> 2)
-                    : (byte) ((b1) >> 2 ^ 0xc0);
+                ((b1 & SIGN) == 0) ? (byte) (b1 >> 2) : (byte) ((b1) >> 2 ^ 0xc0);
             byte val2 =
-                ((b2 & SIGN) == 0)
-                    ? (byte) (b2 >> 4)
-                    : (byte) ((b2) >> 4 ^ 0xf0);
+                ((b2 & SIGN) == 0) ? (byte) (b2 >> 4) : (byte) ((b2) >> 4 ^ 0xf0);
             byte val3 =
-                ((b3 & SIGN) == 0)
-                    ? (byte) (b3 >> 6)
-                    : (byte) ((b3) >> 6 ^ 0xfc);
+                ((b3 & SIGN) == 0) ? (byte) (b3 >> 6) : (byte) ((b3) >> 6 ^ 0xfc);
 
             encodedData[encodedIndex] = lookUpBase64Alphabet[val1];
             //log.debug( "val2 = " + val2 );
@@ -367,8 +356,8 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
                         CHUNK_SEPARATOR.length);
                     chunksSoFar++;
                     nextSeparatorIndex =
-                        (CHUNK_SIZE * (chunksSoFar + 1))
-                            + (chunksSoFar * CHUNK_SEPARATOR.length);
+                        (CHUNK_SIZE * (chunksSoFar + 1)) + 
+                        (chunksSoFar * CHUNK_SEPARATOR.length);
                     encodedIndex += CHUNK_SEPARATOR.length;
                 }
             }
@@ -383,9 +372,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
             //log.debug("b1=" + b1);
             //log.debug("b1<<2 = " + (b1>>2) );
             byte val1 =
-                ((b1 & SIGN) == 0)
-                    ? (byte) (b1 >> 2)
-                    : (byte) ((b1) >> 2 ^ 0xc0);
+                ((b1 & SIGN) == 0) ? (byte) (b1 >> 2) : (byte) ((b1) >> 2 ^ 0xc0);
             encodedData[encodedIndex] = lookUpBase64Alphabet[val1];
             encodedData[encodedIndex + 1] = lookUpBase64Alphabet[k << 4];
             encodedData[encodedIndex + 2] = PAD;
@@ -398,13 +385,9 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
             k = (byte) (b1 & 0x03);
 
             byte val1 =
-                ((b1 & SIGN) == 0)
-                    ? (byte) (b1 >> 2)
-                    : (byte) ((b1) >> 2 ^ 0xc0);
+                ((b1 & SIGN) == 0) ? (byte) (b1 >> 2) : (byte) ((b1) >> 2 ^ 0xc0);
             byte val2 =
-                ((b2 & SIGN) == 0)
-                    ? (byte) (b2 >> 4)
-                    : (byte) ((b2) >> 4 ^ 0xf0);
+                ((b2 & SIGN) == 0) ? (byte) (b2 >> 4) : (byte) ((b2) >> 4 ^ 0xf0);
 
             encodedData[encodedIndex] = lookUpBase64Alphabet[val1];
             encodedData[encodedIndex + 1] =
@@ -573,9 +556,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
 
         if (!(pObject instanceof byte[])) {
             throw new EncoderException(
-                "Parameter supplied to "
-                    + "Base64 "
-                    + "encode is not a byte[]");
+                "Parameter supplied to Base64 encode is not a byte[]");
         } else {
             result = encode((byte[]) pObject);
         }
