@@ -55,7 +55,7 @@ import org.apache.commons.codec.StringEncoder;
  * 
  * @author Apache Software Foundation
  * @since 1.3
- * @version $Id: QuotedPrintableCodec.java,v 1.11 2004/08/27 17:18:17 ggregory Exp $
+ * @version $Id: QuotedPrintableCodec.java,v 1.12 2004/09/09 16:05:46 ggregory Exp $
  */
 public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, StringDecoder {
     /**
@@ -288,9 +288,8 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      *                  quoted-printable string to convert into its original form
      * @return original string
      * @throws DecoderException
-     *                  Thrown if quoted-printable decoding is unsuccessful
-     * @throws UnsupportedEncodingException
-     *                  Thrown if charset is not supported
+     *                  Thrown if quoted-printable decoding is unsuccessful.
+     *                  Thrown if charset is not supported.
      * @see #getDefaultCharset()
      */
     public String decode(String pString) throws DecoderException {
