@@ -21,9 +21,8 @@ import junit.framework.TestCase;
 /**
  * TestCase for Binary class.
  *
- * @author <a href="mailto:akarasulu@apache.org">Alex Karasulu</a>
- * @author $Author: ggregory $
- * @version $Rev$
+ * @author Apache Software Foundation
+ * @version $Id: BinaryTest.java,v 1.4 2004/03/17 19:28:37 ggregory Exp $
  */
 public class BinaryTest extends TestCase
 {

@@ -23,7 +23,7 @@ import org.apache.commons.codec.EncoderException;
 /**
  * URL codec test cases
  * 
- * @author <a href="mailto:oleg@ural.ru">Oleg Kalnichevski</a>
+ * @author Apache Software Foundation
  */
 public class URLCodecTest extends TestCase {
     

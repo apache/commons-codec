@@ -22,8 +22,8 @@ import junit.framework.TestSuite;
 /**
  * Tests all test cases in this package.
  * 
- * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
- * @version $Id: AllTests.java,v 1.4 2004/02/23 07:32:50 ggregory Exp $
+ * @author Apache Software Foundation
+ * @version $Id: AllTests.java,v 1.5 2004/03/17 19:28:37 ggregory Exp $
  */
 public class AllTests {
 
