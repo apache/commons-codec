@@ -72,6 +72,11 @@
         <role>Java Developer</role>
       </roles>
       </developer>
+    <developer>
+      <name>David Graham</name>
+      <id>dgraham</id>
+      <email>dgraham@apache.org</email>
+     </developer>
   </developers>
 
   <contributors>
@@ -101,6 +106,11 @@
      <name>Oleg Kalnichevski</name>
      <email>oleg@ural.ru</email>
      <roles>representing http-client</roles>
+   </contributor>
+   <contributor>
+     <name>Dave Dribin</name>
+     <email>apache@dave.dribin.org</email>
+     <roles>digest util</roles>
    </contributor>
   </contributors>  
 
@@ -137,11 +147,11 @@
    <report>maven-changelog-plugin</report>
 <!--   <report>maven-changes-plugin</report> -->
    <report>maven-checkstyle-plugin</report>
-<!--   <report>maven-clover-plugin</report> -->
+   <report>maven-clover-plugin</report>
    <report>maven-developer-activity-plugin</report>
    <report>maven-file-activity-plugin</report>
    <report>maven-javadoc-plugin</report>
-   <report>maven-jdepend-plugin</report>
+<!--   <report>maven-jdepend-plugin</report> -->
 <!--   <report>maven-jellydoc-plugin</report> -->
    <report>maven-junit-report-plugin</report>
    <report>maven-jxr-plugin</report>
