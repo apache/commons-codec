@@ -4,7 +4,7 @@
 <!ENTITY commons-nav SYSTEM "../../incl_nav.xml">
 ]>
 
-<project name="Digester">
+<project name="Codec">
 
   <title>Codec</title>
   <organizationLogo href="/images/jakarta-logo-blue.gif">
