@@ -60,13 +60,14 @@ package org.apache.commons.codec.language;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.StringEncoderAbstractTest;
 
 /**
  * Tests {@link Soundex}
  * 
- * @version $Revision: 1.9 $ $Date: 2003/12/04 23:32:39 $
+ * @version $Revision: 1.10 $ $Date: 2003/12/10 00:04:46 $
  * @author Rodney Waldhoff
  * @author Gary Gregory
  */
@@ -80,6 +81,12 @@ public class SoundexTest extends StringEncoderAbstractTest {
 
     public SoundexTest(String name) {
         super(name);
+    }
+
+    void encodeAll(String[] strings, String expectedEncoding) {
+        for (int i = 0; i < strings.length; i++) {
+            assertEquals(expectedEncoding, this.getEncoder().encode(strings[i]));
+        }
     }
     
     /**
@@ -109,12 +116,6 @@ public class SoundexTest extends StringEncoderAbstractTest {
     public void tearDown() throws Exception {
         super.tearDown();
         this.setEncoder(null);
-    }
-
-    void encodeAll(String[] strings, String expectedEncoding) {
-        for (int i = 0; i < strings.length; i++) {
-            assertEquals(expectedEncoding, this.getEncoder().encode(strings[i]));
-        }
     }
 
     public void testB650() {
@@ -161,6 +162,25 @@ public class SoundexTest extends StringEncoderAbstractTest {
                 "BYRON",
                 "BYRUM" },
             "B650");
+    }
+
+    public void testDifference() throws EncoderException {
+        // Edge cases
+        assertEquals(this.getEncoder().difference(null, null), 0);
+        assertEquals(this.getEncoder().difference("", ""), 0);
+        assertEquals(this.getEncoder().difference(" ", " "), 0);
+        // Normal cases
+        assertEquals(this.getEncoder().difference("Smith", "Smythe"), 4);
+        assertEquals(this.getEncoder().difference("Ann", "Andrew"), 2);
+        assertEquals(this.getEncoder().difference("Margaret", "Andrew"), 1);
+        assertEquals(this.getEncoder().difference("Janet", "Margaret"), 0);
+        // Examples from http://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_de-dz_8co5.asp
+        assertEquals(this.getEncoder().difference("Green", "Greene"), 4);
+        assertEquals(this.getEncoder().difference("Blotchet-Halls", "Greene"), 0);
+        // Examples from http://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_setu-sus_3o6w.asp
+        assertEquals(this.getEncoder().difference("Smith", "Smythe"), 4);
+        assertEquals(this.getEncoder().difference("Smithers", "Smythers"), 4);
+        assertEquals(this.getEncoder().difference("Anothers", "Brothers"), 2);        
     }
 
     public void testEncodeBasic() {
@@ -342,7 +362,6 @@ public class SoundexTest extends StringEncoderAbstractTest {
     public void testMsSqlServer2() {
         this.encodeAll(new String[]{"Erickson", "Erickson", "Erikson", "Ericson", "Ericksen", "Ericsen"}, "E625");
     }
-    
     /**
      * Examples for MS SQLServer from
      * http://databases.about.com/library/weekly/aa042901a.htm
