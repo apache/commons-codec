@@ -73,7 +73,7 @@ import org.apache.commons.codec.StringEncoder;
  * 
  * @author <a href="mailto:ben@walstrum.com">Benjamin Walstrum</a>
  * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
- * @version $Id: DoubleMetaphone.java,v 1.17 2004/01/02 07:01:47 ggregory Exp $
+ * @version $Id: DoubleMetaphone.java,v 1.18 2004/01/08 19:22:22 ggregory Exp $
  */
 public class DoubleMetaphone implements StringEncoder {
 
@@ -1100,14 +1100,14 @@ public class DoubleMetaphone implements StringEncoder {
         }
 
         public void appendPrimary(char value) {
-            if (primary.length() < maxLength) {
-                primary.append(value);
+            if (this.primary.length() < this.maxLength) {
+                this.primary.append(value);
             }
         }
 
         public void appendAlternate(char value) {
-            if (alternate.length() < maxLength) {
-                alternate.append(value);
+            if (this.alternate.length() < this.maxLength) {
+                this.alternate.append(value);
             }
         }
 
@@ -1122,20 +1122,20 @@ public class DoubleMetaphone implements StringEncoder {
         }
 
         public void appendPrimary(String value) {
-            int addChars = maxLength - primary.length();
+            int addChars = this.maxLength - this.primary.length();
             if (value.length() <= addChars) {
-                primary.append(value);
+                this.primary.append(value);
             } else {
-                primary.append(value.substring(0, addChars));
+                this.primary.append(value.substring(0, addChars));
             }
         }
 
         public void appendAlternate(String value) {
-            int addChars = maxLength - alternate.length();
+            int addChars = this.maxLength - this.alternate.length();
             if (value.length() <= addChars) {
-                alternate.append(value);
+                this.alternate.append(value);
             } else {
-                alternate.append(value.substring(0, addChars));
+                this.alternate.append(value.substring(0, addChars));
             }
         }
 
@@ -1148,8 +1148,8 @@ public class DoubleMetaphone implements StringEncoder {
         }
 
         public boolean isComplete() {
-            return primary.length() >= maxLength && 
-                alternate.length() >= maxLength;
+            return this.primary.length() >= this.maxLength && 
+                this.alternate.length() >= this.maxLength;
         }
     }
 }
