@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+
+<document>
+
+ <properties>
+  <title>Commons Codec</title>
+  <author email="tobrien@apache.org">Tim O'Brien</author>
+ </properties>
+
+ <body>
+
+  <section name="Commons Codec">
+
+   <p>
+    Welcome, to Commons Codec.  Common Codec is an attempt to provide
+    definitive implementations of commonly used encoders and decoders.
+   </p>
+
+  </section>
+
+  <section name="Components">
+
+   <p>
+ 	Codec is currently comprised of a modest set of utilities and a
+ 	simple framework for String encoding and decoding.
+   </p>
+
+   <subsection name="Common Encoders">
+   	<table>
+     <tr>
+      <td>
+       <a href="apidocs\org\apache\commons\codec\binary\Base64.html">
+       	org.apache.commons.codec.binary.Base64</a>
+      </td>
+      <td>
+       Provides Base64 content-transfer-encoding as defined in 
+       <a href="http://www.ietf.org/rfc/rfc1521.txt">RFC 1521</a>
+      </td>
+      <td>
+       Production
+      </td>
+     </tr>
+     <tr>
+      <td>
+       <a href="apidocs\org\apache\commons\codec\binary\Hex.html">
+       	org.apache.commons.codec.binary.Hex</a>
+      </td>
+      <td>
+       Converts an array of bytes into an array of characters representing the
+       hexidecimal values of each byte in order
+      </td>
+      <td>
+       Production
+      </td>
+     </tr>
+    </table>
+   </subsection>
+   
+   <subsection name="Language Encoders">
+   	<p>
+	 Codec contains a number of commonly used language and phonetic encoders
+    </p>
+    <table>
+     <tr>
+      <td>
+       <a href="apidocs\org\apache\commons\codec\language\Soundex.html">
+       	org.apache.commons.codec.language.Soundex</a>
+      </td>
+      <td>
+       Implementation of the Soundex algorithm.
+      </td>
+      <td>
+       Production
+      </td>
+     </tr>
+     <tr>
+      <td>
+       <a href="apidocs\org\apache\commons\codec\language\Metaphone.html">
+       	org.apache.commons.codec.language.Metaphone</a>
+      </td>
+      <td>
+       Implementation of the Metaphone algorithm.
+      </td>
+      <td>
+       Production
+      </td>
+     </tr>
+    </table>
+   </subsection>
+   
+  </section>
+
+ </body>
+</document>

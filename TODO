@@ -1,0 +1,28 @@
+This is a list of action items to be finished in the [codec] project.  
+This TODO list reflects the current direction of development, and
+should be updated by all committers when a known issues or task
+is identified.  
+
+When a task in the TODO list is done, change the changes.xml document in xdocs
+
+** TODO List
+
+* Add a ship encode and decode to binary package
+
+* Add a btoa encode and decode to binary package
+
+* Add a BinHex endode and decode to binary package
+
+* Add a uu encode and decode to binary package
+
+* Add a Rot13 implementation to text package 
+
+* figure out a better way to supply test data and expected input/output
+  to the JUNIT test cases
+
+* develop multiple distributions for projects that only wish to use 
+  a specific class, and are worried about footprint (memory and diskspace).
+
+
+
+
