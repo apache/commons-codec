@@ -66,7 +66,11 @@
       <name>Gary D. Gregory</name>
       <id>ggregory</id>
       <email>ggregory@seagullsw.com</email>
-    </developer>
+      <organization>SEAGULL Software</organization>
+      <roles>
+        <role>Java Developer</role>
+      </roles>
+      </developer>
   </developers>
 
   <contributors>
