@@ -4,7 +4,7 @@
   <extend>../project.xml</extend>
   <name>Codec</name>
   <id>commons-codec</id>
-  <currentVersion>1.1</currentVersion>
+  <currentVersion>1.1.1-dev</currentVersion>
   <inceptionYear>2002</inceptionYear>
   <shortDescription>
    A collection of simple and common encoders and decoders
