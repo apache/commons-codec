@@ -28,7 +28,7 @@ import org.apache.commons.codec.StringEncoder;
  *      <i>Computer Language</i> of Dec. 1990, p 39   
  * 
  * @author Apache Software Foundation
- * @version $Id: Metaphone.java,v 1.16 2004/04/18 21:33:38 tobrien Exp $
+ * @version $Id: Metaphone.java,v 1.17 2004/05/24 00:19:13 ggregory Exp $
  */
 public class Metaphone implements StringEncoder {
 
@@ -81,7 +81,6 @@ public class Metaphone implements StringEncoder {
       
         char[] inwd = txt.toUpperCase().toCharArray() ;
       
-        String tmpS ;
         StringBuffer local = new StringBuffer(40); // manipulate
         StringBuffer code = new StringBuffer(10) ; //   output
         // handle initial 2 characters exceptions
@@ -153,7 +152,6 @@ public class Metaphone implements StringEncoder {
                          (this.frontv.indexOf(local.charAt(n + 1)) >= 0) ) { 
                         break;
                     }
-                    tmpS = local.toString();
                     if (regionMatch(local, n, "CIA")) { // "CIA" -> X
                         code.append('X'); 
                         break;
@@ -199,7 +197,6 @@ public class Metaphone implements StringEncoder {
                         !isVowel(local,n+2)) {
                         break;
                     }
-                    tmpS = local.toString();
                     if ((n > 0) && 
                     	( regionMatch(local, n, "GN") ||
 					      regionMatch(local, n, "GNED") ) ) {
