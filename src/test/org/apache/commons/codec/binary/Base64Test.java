@@ -23,7 +23,7 @@ import java.util.Random;
 import junit.framework.TestCase;
 
 /**
- * @version $Id: Base64Test.java,v 1.15 2004/04/19 01:14:29 ggregory Exp $
+ * @version $Id: Base64Test.java,v 1.16 2004/11/24 19:23:25 ggregory Exp $
  * @author Apache Software Foundation
  */
 public class Base64Test extends TestCase {
@@ -512,6 +512,17 @@ public class Base64Test extends TestCase {
 	public void testIgnoringNonBase64InDecode() throws Exception {
 		assertEquals("The quick brown fox jumped over the lazy dogs.",new String(Base64.decodeBase64("VGhlIH@$#$@%F1aWN@#@#@@rIGJyb3duIGZve\n\r\t%#%#%#%CBqd##$#$W1wZWQgb3ZlciB0aGUgbGF6eSBkb2dzLg==".getBytes())));
 	}
+
+    public void testIsArrayByteBase64() {        
+        assertFalse(Base64.isArrayByteBase64(new byte[] {Byte.MIN_VALUE}));
+        assertFalse(Base64.isArrayByteBase64(new byte[] {-125}));
+        assertFalse(Base64.isArrayByteBase64(new byte[] {-10}));
+        assertFalse(Base64.isArrayByteBase64(new byte[] {0}));
+        assertFalse(Base64.isArrayByteBase64(new byte[] {64, Byte.MAX_VALUE}));
+        assertFalse(Base64.isArrayByteBase64(new byte[] {Byte.MAX_VALUE}));
+        assertTrue(Base64.isArrayByteBase64(new byte[] {'A'}));
+        assertFalse(Base64.isArrayByteBase64(new byte[] {'A', Byte.MIN_VALUE}));
+    }
 
     public void testObjectDecodeWithInvalidParameter() throws Exception {
         boolean exceptionThrown = false;
