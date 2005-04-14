@@ -1,5 +1,5 @@
 /*
- * Copyright 2001-2004 The Apache Software Foundation.
+ * Copyright 2001-2005 The Apache Software Foundation.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */ 
+ */
 
 package org.apache.commons.codec.digest;
 
@@ -22,19 +22,25 @@ import java.security.NoSuchAlgorithmException;
 import org.apache.commons.codec.binary.Hex;
 
 /**
- * Operations to simplifiy common {@link java.security.MessageDigest} tasks.  This
- * class is thread safe.
- *
+ * Operations to simplifiy common {@link java.security.MessageDigest} tasks. This class is thread safe.
+ * 
  * @author Apache Software Foundation
+ * @version $Id$
  */
 public class DigestUtils {
 
     /**
-     * Returns a MessageDigest for the given <code>algorithm</code>.
-     *
-     * @param algorithm The MessageDigest algorithm name.
+     * Returns a <code>MessageDigest</code> for the given <code>algorithm</code>.
+     * 
+     * @param algorithm
+     *            the name of the algorithm requested. See <a
+     *            href="http://java.sun.com/j2se/1.3/docs/guide/security/CryptoSpec.html#AppA">Appendix A in the Java
+     *            Cryptography Architecture API Specification & Reference</a> for information about standard algorithm
+     *            names.
      * @return An MD5 digest instance.
-     * @throws RuntimeException when a {@link java.security.NoSuchAlgorithmException} is caught,
+     * @see MessageDigest#getInstance(String)
+     * @throws RuntimeException
+     *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
     static MessageDigest getDigest(String algorithm) {
         try {
@@ -46,29 +52,73 @@ public class DigestUtils {
 
     /**
      * Returns an MD5 MessageDigest.
-     *
+     * 
      * @return An MD5 digest instance.
-     * @throws RuntimeException when a {@link java.security.NoSuchAlgorithmException} is caught,
+     * @throws RuntimeException
+     *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
     private static MessageDigest getMd5Digest() {
         return getDigest("MD5");
     }
 
     /**
-     * Returns an SHA digest.
-     *
-     * @return An SHA digest instance.
-     * @throws RuntimeException when a {@link java.security.NoSuchAlgorithmException} is caught,
+     * Returns an SHA-256 digest.
+     * <p>
+     * Throws a <code>RuntimeException</code> on JRE versions prior to 1.4.0.
+     * </p>
+     * 
+     * @return An SHA-256 digest instance.
+     * @throws RuntimeException
+     *             when a {@link java.security.NoSuchAlgorithmException} is caught.
+     */
+    private static MessageDigest getSha256Digest() {
+        return getDigest("SHA-256");
+    }
+
+    /**
+     * Returns an SHA-384 digest.
+     * <p>
+     * Throws a <code>RuntimeException</code> on JRE versions prior to 1.4.0.
+     * </p>
+     * 
+     * @return An SHA-384 digest instance.
+     * @throws RuntimeException
+     *             when a {@link java.security.NoSuchAlgorithmException} is caught.
+     */
+    private static MessageDigest getSha384Digest() {
+        return getDigest("SHA-384");
+    }
+
+    /**
+     * Returns an SHA-512 digest.
+     * <p>
+     * Throws a <code>RuntimeException</code> on JRE versions prior to 1.4.0.
+     * </p>
+     * 
+     * @return An SHA-512 digest instance.
+     * @throws RuntimeException
+     *             when a {@link java.security.NoSuchAlgorithmException} is caught.
+     */
+    private static MessageDigest getSha512Digest() {
+        return getDigest("SHA-512");
+    }
+
+    /**
+     * Returns an SHA-1 digest.
+     * 
+     * @return An SHA-1 digest instance.
+     * @throws RuntimeException
+     *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
     private static MessageDigest getShaDigest() {
         return getDigest("SHA");
     }
 
     /**
-     * Calculates the MD5 digest and returns the value as a 16 element 
-     * <code>byte[]</code>.
-     *
-     * @param data Data to digest
+     * Calculates the MD5 digest and returns the value as a 16 element <code>byte[]</code>.
+     * 
+     * @param data
+     *            Data to digest
      * @return MD5 digest
      */
     public static byte[] md5(byte[] data) {
@@ -76,10 +126,10 @@ public class DigestUtils {
     }
 
     /**
-     * Calculates the MD5 digest and returns the value as a 16 element 
-     * <code>byte[]</code>.
-     *
-     * @param data Data to digest
+     * Calculates the MD5 digest and returns the value as a 16 element <code>byte[]</code>.
+     * 
+     * @param data
+     *            Data to digest
      * @return MD5 digest
      */
     public static byte[] md5(String data) {
@@ -87,10 +137,10 @@ public class DigestUtils {
     }
 
     /**
-     * Calculates the MD5 digest and returns the value as a 32 character 
-     * hex string.
-     *
-     * @param data Data to digest
+     * Calculates the MD5 digest and returns the value as a 32 character hex string.
+     * 
+     * @param data
+     *            Data to digest
      * @return MD5 digest as a hex string
      */
     public static String md5Hex(byte[] data) {
@@ -98,10 +148,10 @@ public class DigestUtils {
     }
 
     /**
-     * Calculates the MD5 digest and returns the value as a 32 character 
-     * hex string.
-     *
-     * @param data Data to digest
+     * Calculates the MD5 digest and returns the value as a 32 character hex string.
+     * 
+     * @param data
+     *            Data to digest
      * @return MD5 digest as a hex string
      */
     public static String md5Hex(String data) {
@@ -109,45 +159,215 @@ public class DigestUtils {
     }
 
     /**
-     * Calculates the SHA digest and returns the value as a 
-     * <code>byte[]</code>.
-     *
-     * @param data Data to digest
-     * @return SHA digest
+     * Calculates the SHA-1 digest and returns the value as a <code>byte[]</code>.
+     * 
+     * @param data
+     *            Data to digest
+     * @return SHA-1 digest
      */
     public static byte[] sha(byte[] data) {
         return getShaDigest().digest(data);
     }
 
     /**
-     * Calculates the SHA digest and returns the value as a 
-     * <code>byte[]</code>.
-     *
-     * @param data Data to digest
-     * @return SHA digest
+     * Calculates the SHA-1 digest and returns the value as a <code>byte[]</code>.
+     * 
+     * @param data
+     *            Data to digest
+     * @return SHA-1 digest
      */
     public static byte[] sha(String data) {
         return sha(data.getBytes());
     }
 
     /**
-     * Calculates the SHA digest and returns the value as a hex string.
-     *
-     * @param data Data to digest
-     * @return SHA digest as a hex string
+     * Calculates the SHA-256 digest and returns the value as a <code>byte[]</code>.
+     * <p>
+     * Throws a <code>RuntimeException</code> on JRE versions prior to 1.4.0.
+     * </p>
+     * 
+     * @param data
+     *            Data to digest
+     * @return SHA-256 digest
+     */
+    public static byte[] sha256(byte[] data) {
+        return getSha256Digest().digest(data);
+    }
+
+    /**
+     * Calculates the SHA-256 digest and returns the value as a <code>byte[]</code>.
+     * <p>
+     * Throws a <code>RuntimeException</code> on JRE versions prior to 1.4.0.
+     * </p>
+     * 
+     * @param data
+     *            Data to digest
+     * @return SHA-256 digest
+     */
+    public static byte[] sha256(String data) {
+        return sha256(data.getBytes());
+    }
+
+    /**
+     * Calculates the SHA-256 digest and returns the value as a hex string.
+     * <p>
+     * Throws a <code>RuntimeException</code> on JRE versions prior to 1.4.0.
+     * </p>
+     * 
+     * @param data
+     *            Data to digest
+     * @return SHA-256 digest as a hex string
+     */
+    public static String sha256Hex(byte[] data) {
+        return new String(Hex.encodeHex(sha256(data)));
+    }
+
+    /**
+     * Calculates the SHA-256 digest and returns the value as a hex string.
+     * <p>
+     * Throws a <code>RuntimeException</code> on JRE versions prior to 1.4.0.
+     * </p>
+     * 
+     * @param data
+     *            Data to digest
+     * @return SHA-256 digest as a hex string
+     */
+    public static String sha256Hex(String data) {
+        return new String(Hex.encodeHex(sha256(data)));
+    }
+
+    /**
+     * Calculates the SHA-384 digest and returns the value as a <code>byte[]</code>.
+     * <p>
+     * Throws a <code>RuntimeException</code> on JRE versions prior to 1.4.0.
+     * </p>
+     * 
+     * @param data
+     *            Data to digest
+     * @return SHA-384 digest
+     */
+    public static byte[] sha384(byte[] data) {
+        // FIXME: check Sun docs for how to get a sha 384 digest
+        return getSha384Digest().digest(data);
+    }
+
+    /**
+     * Calculates the SHA-384 digest and returns the value as a <code>byte[]</code>.
+     * <p>
+     * Throws a <code>RuntimeException</code> on JRE versions prior to 1.4.0.
+     * </p>
+     * 
+     * @param data
+     *            Data to digest
+     * @return SHA-384 digest
+     */
+    public static byte[] sha384(String data) {
+        return sha384(data.getBytes());
+    }
+
+    /**
+     * Calculates the SHA-384 digest and returns the value as a hex string.
+     * <p>
+     * Throws a <code>RuntimeException</code> on JRE versions prior to 1.4.0.
+     * </p>
+     * 
+     * @param data
+     *            Data to digest
+     * @return SHA-384 digest as a hex string
+     */
+    public static String sha384Hex(byte[] data) {
+        return new String(Hex.encodeHex(sha384(data)));
+    }
+
+    /**
+     * Calculates the SHA-384 digest and returns the value as a hex string.
+     * <p>
+     * Throws a <code>RuntimeException</code> on JRE versions prior to 1.4.0.
+     * </p>
+     * 
+     * @param data
+     *            Data to digest
+     * @return SHA-384 digest as a hex string
+     */
+    public static String sha384Hex(String data) {
+        return new String(Hex.encodeHex(sha384(data)));
+    }
+
+    /**
+     * Calculates the SHA-512 digest and returns the value as a <code>byte[]</code>.
+     * <p>
+     * Throws a <code>RuntimeException</code> on JRE versions prior to 1.4.0.
+     * </p>
+     * 
+     * @param data
+     *            Data to digest
+     * @return SHA-512 digest
+     */
+    public static byte[] sha512(byte[] data) {
+        return getSha512Digest().digest(data);
+    }
+
+    /**
+     * Calculates the SHA-512 digest and returns the value as a <code>byte[]</code>.
+     * <p>
+     * Throws a <code>RuntimeException</code> on JRE versions prior to 1.4.0.
+     * </p>
+     * 
+     * @param data
+     *            Data to digest
+     * @return SHA-512 digest
+     */
+    public static byte[] sha512(String data) {
+        return sha512(data.getBytes());
+    }
+
+    /**
+     * Calculates the SHA-512 digest and returns the value as a hex string.
+     * <p>
+     * Throws a <code>RuntimeException</code> on JRE versions prior to 1.4.0.
+     * </p>
+     * 
+     * @param data
+     *            Data to digest
+     * @return SHA-512 digest as a hex string
+     */
+    public static String sha512Hex(byte[] data) {
+        return new String(Hex.encodeHex(sha512(data)));
+    }
+
+    /**
+     * Calculates the SHA-512 digest and returns the value as a hex string.
+     * <p>
+     * Throws a <code>RuntimeException</code> on JRE versions prior to 1.4.0.
+     * </p>
+     * 
+     * @param data
+     *            Data to digest
+     * @return SHA-512 digest as a hex string
+     */
+    public static String sha512Hex(String data) {
+        return new String(Hex.encodeHex(sha512(data)));
+    }
+
+    /**
+     * Calculates the SHA-1 digest and returns the value as a hex string.
+     * 
+     * @param data
+     *            Data to digest
+     * @return SHA-1 digest as a hex string
      */
     public static String shaHex(byte[] data) {
         return new String(Hex.encodeHex(sha(data)));
     }
 
     /**
-     * Calculates the SHA digest and returns the value as a hex string.
-     *
-     * @param data Data to digest
-     * @return SHA digest as a hex string
+     * Calculates the SHA-1 digest and returns the value as a hex string.
+     * 
+     * @param data
+     *            Data to digest
+     * @return SHA-1 digest as a hex string
      */
     public static String shaHex(String data) {
         return new String(Hex.encodeHex(sha(data)));
     }
-
 }
