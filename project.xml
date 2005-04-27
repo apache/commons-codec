@@ -138,20 +138,24 @@ limitations under the License.
         <contributor>
             <name>Christopher O'Brien</name>
             <email>siege@preoccupied.net</email>
-            <roles>hex, md5, architecture</roles>
+            <roles>
+                <role>hex</role>
+                <role>md5</role>
+                <role>architecture</role>
+            </roles>
         </contributor>
         <contributor>
             <name>Martin Redington</name>
-            <roles>representing xml-rpc</roles>
+            <roles><role>representing xml-rpc</role></roles>
         </contributor>
         <contributor>
             <name>Jeffery Dever</name>
-            <roles>representing http-client</roles>
+            <roles><role>representing http-client</role></roles>
         </contributor>
         <contributor>
             <name>Steve Zimmermann</name>
             <email>steve.zimmermann@heii.com</email>
-            <roles>documentation</roles>
+            <roles><role>documentation</role></roles>
         </contributor>
         <contributor>
             <name>Benjamin Walstrum</name>
@@ -160,22 +164,22 @@ limitations under the License.
         <contributor>
             <name>Oleg Kalnichevski</name>
             <email>oleg@ural.ru</email>
-            <roles>representing http-client</roles>
+            <roles><role>representing http-client</role></roles>
         </contributor>
         <contributor>
             <name>Dave Dribin</name>
             <email>apache@dave.dribin.org</email>
-            <roles>digest util</roles>
+            <roles><role>digest util</role></roles>
         </contributor>
         <contributor>
             <name>Alex Karasulu</name>
             <email>aok123 at bellsouth.net</email>
-            <roles>Submitted Binary class and test</roles>
+            <roles><role>Submitted Binary class and test</role></roles>
         </contributor>
         <contributor>
             <name>Matthew Inger</name>
             <email>mattinger at yahoo.com</email>
-            <roles>Submitted DIFFERENCE algorithm for Soundex and RefinedSoundex</roles>
+            <roles><role>Submitted DIFFERENCE algorithm for Soundex and RefinedSoundex</role></roles>
         </contributor>
     </contributors>
     <dependencies>
