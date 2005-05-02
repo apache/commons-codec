@@ -30,7 +30,7 @@ import org.apache.commons.codec.EncoderException;
  * 
  * @author Apache Software Foundation
  * @since 1.3
- * @version $Id $
+ * @version $Id$
  */
 public class BinaryCodec implements BinaryDecoder, BinaryEncoder {
     /*
