@@ -23,8 +23,8 @@ import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.StringEncoderAbstractTest;
 
 /**
- * @version $Id$
  * @author Apache Software Foundation
+ * @version $Id$
  */
 public class MetaphoneTest extends StringEncoderAbstractTest {
 

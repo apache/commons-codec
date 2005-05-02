@@ -23,8 +23,8 @@ import java.util.Random;
 import junit.framework.TestCase;
 
 /**
- * @version $Id$
  * @author Apache Software Foundation
+ * @version $Id$
  */
 public class Base64Test extends TestCase {
 
