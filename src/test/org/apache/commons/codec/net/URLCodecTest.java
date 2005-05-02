@@ -27,6 +27,7 @@ import org.apache.commons.codec.EncoderException;
  * URL codec test cases
  * 
  * @author Apache Software Foundation
+ * @version $Id$
  */
 public class URLCodecTest extends TestCase {
     

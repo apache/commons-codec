@@ -28,8 +28,8 @@ import org.apache.commons.codec.language.Soundex;
 /**
  * Test cases for the StingEncoderComparator.
  * 
- * @version $Id$
  * @author Apache Software Foundation
+ * @version $Id$
  */
 public class StringEncoderComparatorTest extends TestCase {
 

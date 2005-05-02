@@ -25,6 +25,7 @@ import org.apache.commons.codec.EncoderException;
  * Quoted-printable codec test cases
  * 
  * @author <a href="mailto:oleg@ural.ru">Oleg Kalnichevski</a>
+ * @version $Id$
  */
 public class QuotedPrintableCodecTest extends TestCase {
     

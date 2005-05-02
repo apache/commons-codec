@@ -27,8 +27,8 @@ import org.apache.commons.codec.StringEncoderAbstractTest;
 /**
  * Tests {@link Soundex}
  *
- * @version $Id$
  * @author Apache Software Foundation
+ * @version $Id$
  */
 public class SoundexTest extends StringEncoderAbstractTest {
 
