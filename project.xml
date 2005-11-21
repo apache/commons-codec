@@ -16,8 +16,9 @@ limitations under the License.
 -->
 <project>
     <pomVersion>3</pomVersion>
-    <id>commons-codec</id>
-    <currentVersion>1.3</currentVersion>
+    <groupId>commons-codec</groupId>
+    <artifactId>commons-codec</artifactId>
+    <currentVersion>1.4-SNAPSHOT</currentVersion>
     <inceptionYear>2002</inceptionYear>
     <name>Codec</name>
     <shortDescription>Simple encoders and decoders</shortDescription>
