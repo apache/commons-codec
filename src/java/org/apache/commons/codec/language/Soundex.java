@@ -29,13 +29,6 @@ import org.apache.commons.codec.StringEncoder;
 public class Soundex implements StringEncoder {
 
     /**
-     * An instance of Soundex using the US_ENGLISH_MAPPING mapping.
-     * 
-     * @see #US_ENGLISH_MAPPING
-     */
-    public static final Soundex US_ENGLISH = new Soundex();
-
-    /**
      * This is a default mapping of the 26 letters used in US English. A value of <code>0</code> for a letter position
      * means do not encode.
      * <p>
@@ -54,6 +47,14 @@ public class Soundex implements StringEncoder {
      * @see Soundex#Soundex(char[])
      */
     public static final char[] US_ENGLISH_MAPPING = US_ENGLISH_MAPPING_STRING.toCharArray();
+
+    /**
+     * An instance of Soundex using the US_ENGLISH_MAPPING mapping.
+     * 
+     * @see #US_ENGLISH_MAPPING
+     */
+    public static final Soundex US_ENGLISH = new Soundex();
+
 
     /**
      * Encodes the Strings and returns the number of characters in the two encoded Strings that are the same. This
