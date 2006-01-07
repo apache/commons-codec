@@ -1,0 +1,53 @@
+The commons-codec team is pleased to announce the Codec 1.3 release! 
+
+http://jakarta.apache.org/commons/codec/
+
+The codec package contains simple encoder and decoders for various formats 
+such as Base64 and Hexadecimal. In addition to these widely used encoders and 
+decoders, the codec package also maintains a collection of phonetic encoding 
+utilities. 
+
+Changes in this version include:
+
+  New Features:
+
+o BinaryCodec: Encodes and decodes binary to and from Strings of 0s and 1s. 
+  Issue: 27813. Thanks to Alex Karasulu. 
+o QuotedPrintableCodec: Codec for RFC 1521 MIME (Multipurpose Internet Mail 
+  Extensions) Part One. Rules #3, #4, and #5 of the quoted-printable spec are 
+  not implemented yet. See also issue 27789. Issue: 26617. Thanks to Oleg 
+  Kalnichevski. 
+o BCodec: Identical to the Base64 encoding defined by RFC 1521 and allows a 
+  character set to be specified. Issue: 26617. Thanks to Oleg Kalnichevski. 
+o QCodec: Similar to the Quoted-Printable content-transfer-encoding defined 
+  in RFC 1521 and designed to allow text containing mostly ASCII characters 
+  to be decipherable on an ASCII terminal without decoding. Issue: 26617. 
+  Thanks to Oleg Kalnichevski. 
+o Soundex: Implemented the DIFFERENCE algorithm. Issue: 25243. Thanks to 
+  Matthew Inger. 
+o RefinedSoundex: Implemented the DIFFERENCE algorithm. Issue: 25243. Thanks 
+  to Matthew Inger. 
+
+  Fixed bugs:
+
+o The default URL encoding logic was broken. Issue: 25995. Thanks to Oleg 
+  Kalnichevski. 
+o Base64 chunked encoding not compliant with RFC 2045 section 2.1 CRLF. 
+  Issue: 27781. Thanks to Gary D. Gregory. 
+o Hex converts illegal characters to 255. Issue: 28455. 
+o Metaphone now correctly handles a silent B in a word that ends in MB. 
+  "COMB" is encoded as "KM", before this fix "COMB" was encoded as "KMB". 
+  Issue: 28457. 
+o Added missing tags in Javadoc comments. 
+o General Javadoc improvements. 
+
+  Changes:
+
+o This version is relesed under the Apache License 2.0 , please see 
+  LICENSE.txt. Previous versions were released under the Apache License 1.1. 
+o The Board recommendation to remove Javadoc author tags has been 
+  implemented. All author tags are now "Apache Software Foundation".  
+
+Have fun!
+-The commons-codec team
+      
