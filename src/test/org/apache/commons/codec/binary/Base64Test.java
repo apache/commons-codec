@@ -20,6 +20,8 @@ package org.apache.commons.codec.binary;
 import java.util.Arrays;
 import java.util.Random;
 
+import org.apache.commons.codec.binary.Base64;
+
 import junit.framework.TestCase;
 
 /**
@@ -27,6 +29,64 @@ import junit.framework.TestCase;
  * @version $Id$
  */
 public class Base64Test extends TestCase {
+
+    /**
+     * Chunk size per RFC 2045 section 6.8.
+     * 
+     * <p>The {@value} character limit does not count the trailing CRLF, but counts 
+     * all other characters, including any equal signs.</p>
+     * 
+     * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045 section 6.8</a>
+     */
+    final int CHUNK_SIZE = 76;
+
+    /**
+     * Chunk separator per RFC 2045 section 2.1.
+     * 
+     * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045 section 2.1</a>
+     */
+    final byte[] CHUNK_SEPARATOR = "\r\n".getBytes();
+
+    /**
+     * The base length.
+     */
+    final int BASELENGTH = 255;
+
+    /**
+     * Lookup length.
+     */
+    final int LOOKUPLENGTH = 64;
+
+    /**
+     * Used to calculate the number of bits in a byte.
+     */
+    final int EIGHTBIT = 8;
+
+    /**
+     * Used when encoding something which has fewer than 24 bits.
+     */
+    final int SIXTEENBIT = 16;
+
+    /**
+     * Used to determine how many bits data contains.
+     */
+    final int TWENTYFOURBITGROUP = 24;
+
+    /**
+     * Used to get the number of Quadruples.
+     */
+    final int FOURBYTE = 4;
+
+    /**
+     * Used to test the sign of a byte.
+     */
+    final int SIGN = -128;
+    
+    /**
+     * Byte used to pad output.
+     */
+    final byte PAD = (byte) '=';
+
 
     /**
      * Construct a new instance of this test case.
@@ -101,14 +161,14 @@ public class Base64Test extends TestCase {
      * Tests RFC 2045 section 2.1 CRLF definition.
      */
     public void testRfc2045Section2Dot1CrLfDefinition() {
-        assertTrue(Arrays.equals(new byte[] {13, 10}, Base64.CHUNK_SEPARATOR));
+        assertTrue(Arrays.equals(new byte[] {13, 10}, CHUNK_SEPARATOR));
     }
 
     /**
      * Tests RFC 2045 section 6.8 chuck size definition.
      */
     public void testRfc2045Section6Dot8ChunkSizeDefinition() {
-        assertEquals(76, Base64.CHUNK_SIZE);
+        assertEquals(76, CHUNK_SIZE);
     }
 
     public void testSingletons() {
@@ -624,17 +684,12 @@ public class Base64Test extends TestCase {
         intermediate.insert( 15, '\n' );
 
         byte[] encodedWithWS = intermediate.toString().getBytes();
-        byte[] encodedNoWS = Base64.discardWhitespace( encodedWithWS );
         byte[] decodedWithWS = Base64.decodeBase64( encodedWithWS );
-        byte[] decodedNoWS = Base64.decodeBase64( encodedNoWS );
 
         String destFromWS = new String( decodedWithWS );
-        String destFromNoWS = new String( decodedNoWS );
 
         assertTrue( "Dest string doesn't eausl original", 
                 destFromWS.equals( orig ) );
-        assertTrue( "Dest string doesn't eausl original", 
-                destFromNoWS.equals( orig ) );
     }
 
     // -------------------------------------------------------- Private Methods
