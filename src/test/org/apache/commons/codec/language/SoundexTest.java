@@ -367,4 +367,16 @@ public class SoundexTest extends StringEncoderAbstractTest {
             // expected
         }
     }
+    
+    // This test fails.
+    public void testUsEnglishStatic()
+    {
+        assertEquals( Soundex.US_ENGLISH.soundex( "Williams" ), "W452" );
+    }
+
+    // This test succeeds.
+    public void testNewInstance()
+    {
+        assertEquals( new Soundex().soundex( "Williams" ), "W452" );
+    }
 }
