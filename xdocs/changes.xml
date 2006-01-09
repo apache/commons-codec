@@ -21,11 +21,15 @@
 		<author>Gary D. Gregory</author>
 	</properties>
 	<body>
-		<release version="1.4-dev" date="4 May 2005" description="Feature and fix release.">
+		<release version="1-4-SNAPSHOT" date="4 May 2005" description="Feature and fix release.">
 			<action dev="ggregory," type="add" issue="34157 " due-to="Jamie Flournoy" due-to-email="jamie@white-mountain.org">
              DigestUtils: Add methods for SHA-256, SHA-384, and SHA-512.</action>
 			<action dev="ggregory," type="fix" issue="30825" due-to="Piero Ottuzzi " due-to-email="ottuzzi@libero.it">
-             Base64.isArrayByteBase64() throws an ArrayIndexOutOfBoundsException for negative octets.</action>
+				Base64.isArrayByteBase64() throws an ArrayIndexOutOfBoundsException for negative octets.</action>
+			<action dev="tobrien" type="fix" issue="37894" due-to="Reggie Riser" due-to-email="rriser@informs.com">
+			  Using US_ENGLISH in Soundex caused an NullPointerException.  Issue has been
+			  addressed by changing the order of static variables in Soundex.
+			</action>
 		</release>
 		<release version="1.3" date="10 July 2004" description="Feature and fix release.">
 			<action dev="ggregory, tobrien" type="add" issue="27813" due-to="Alex Karasulu">
