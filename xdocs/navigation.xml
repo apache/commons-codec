@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!--
-Copyright 2002-2005 The Apache Software Foundation.
+Copyright 2002-2006 The Apache Software Foundation.
  
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,21 +18,31 @@ limitations under the License.
 <project name="Codec">
 
   <title>Codec</title>
-  <organizationLogo href="/images/jakarta-logo-blue.gif">
-   Jakarta
-  </organizationLogo>
 
   <body>
     <links>
-      <item name="Jakarta Commons"                   
-            href="http://jakarta.apache.org/commons/"/>
+      <item name="Jakarta Commons" href="http://jakarta.apache.org/commons/"/>
     </links>
 
     <menu name="Commons Codec">
       <item name="Overview" href="/index.html"/>
-      <item name="Release Notes" href="/changes-report.html"/>          
+      <item name="Download" href="http://jakarta.apache.org/site/downloads/downloads_commons-codec.cgi"/>
+      <item name="Users guide" href="/userguide.html"/>
+      <item name="Javadoc (1.3 release)" href="api-release/index.html"/>
     </menu>
-    
+
+    <menu name="Development">
+	  <!-- remove release notes when building.html added -->
+      <item name="Release notes" href="/changes-report.html"/>          
+      <!--item name="Building" href="/building.html"/-->
+      <item name="Mailing lists" href="/mail-lists.html"/>
+      <item name="Team" href="/team-list.html"/>
+      <!--item name="Tasks" href="/tasks.html"/-->
+      <item name="Proposal" href="/proposal.html"/>
+      <item name="SVN repository" href="http://svn.apache.org/viewcvs.cgi/jakarta/commons/proper/codec/trunk/"/>
+      <item name="Javadoc (SVN latest)" href="apidocs/index.html"/>
+    </menu>
+
     &commons;
 
   </body>
