@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-Copyright 2002-2005 The Apache Software Foundation.
+Copyright 2002-2006 The Apache Software Foundation.
  
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,216 +14,97 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-
 <document>
-
  <properties>
-  <title>Commons Codec</title>
-  <author email="tobrien@apache.org">Tim O'Brien</author>
+  <title>Home</title>
+  <author email="commons-dev@jakarta.apache.org">Commons Documentation Team</author>
  </properties>
-
- <body>
-
-  <section name="Commons Codec">
-
-   <p>
-    Welcome.  Commons Codec provides implementations of common
-    encoders and decoders such as Base64, Hex, various phonetic
-    encodings, and URLs.
-   </p>
-
-  </section>
-
-  <section name="Impetus">
-   <p>
-     Codec was formed as an attempt to focus development effort on one
-     definitive implementation of the Base64 encoder.  At the time of
-     Codec's proposal, there were approximately 34 different Java
-     classes that dealt with Base64 encoding spread over the
-     Foundation's CVS repository.  Developers in the Jakarta Tomcat
-     project had implemented an original version of the Base64 codec
-     which had been copied by the Commons HttpClient and Apache XML
-     project's XML-RPC subproject.  After almost one year, the two
-     forked versions of Base64 had significantly diverged from one
-     another.  XML-RPC had applied numerous fixes and patches which
-     were not applied to the Commons HttpClient Base64.  Different 
-     subprojects had differing implementations at various levels
-     of compliance with the <a href="http://www.ietf.org/rfc/rfc2045.txt">
-     RFC 2045</a>.
-   </p>
-   <p>
-     Out of that confusing duplication of effort sprang this simple
-     attempt to encourage code reuse among various projects.  While
-     this package contains a abstract framework for the creation of
-     encoders and decoders, Codec itself is primarily focused on
-     providing functional utilities for working with common encodings.
-   </p>
-  </section>
-
-  <section name="Releases">
-   <ul>
-    <li>Version 1.3 - 10 July 2004 (latest, from mirror)
-	<a href="http://jakarta.apache.org/site/binindex.cgi">binary</a> and 
-	<a href="http://jakarta.apache.org/site/sourceindex.cgi">source</a>
-    </li>
-    <li>
-     Version <a href="http://www.apache.org/dist/jakarta/commons/codec/">1.2</a> - 24 Nov 2003
-    </li>
-    <li>
-     Version <a href="http://www.apache.org/dist/jakarta/commons/codec/">1.1</a> - 29 April 2003
-    </li>
-    <li>
-     Current <a href="http://cvs.apache.org/builds/jakarta-commons/nightly/commons-codec/"> nightly build</a>
-    </li>
-    <li>
-     All <a href="changes-report.html">Release Notes</a>
-    </li>
-   </ul>
-  </section>
-
-  <section name="Components">
-
-   <p>
- 	Codec is currently comprised of a modest set of utilities and a
- 	simple framework for encoding and decoding both textual and binary data.
-   </p>
-
-   <subsection name="Binary Encoders">
-   	<table>
-     <tr>
-      <td width="150">
-       <a href="apidocs/org/apache/commons/codec/binary/Base64.html">
-       	Base64</a>
-      </td>
-      <td>
-       Provides Base64 content-transfer-encoding as defined in 
-       <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>. This
-       encoder can optionally create 76 character chunked output
-       for strict adherence to RFC 2045.
-      </td>
-     </tr>
-     <tr>
-      <td>
-       <a href="apidocs/org/apache/commons/codec/binary/Hex.html">
-       	Hex</a>
-      </td>
-      <td>
-       Converts an array of bytes into an array of characters representing the
-       hexadecimal values of each byte in order
-      </td>
-     </tr>
-     <tr>
-      <td width="150">
-       <a href="apidocs/org/apache/commons/codec/binary/BinaryCodec.html">
-       	BinaryCodec</a>
-      </td>
-      <td>
-       Translates between byte arrays and strings of "0"s and "1"s.
-      </td>
-     </tr>
-    </table>
-   </subsection>
-   
-   <subsection name="Language Encoders">
-    <table>
-     <tr>
-      <td width="150">
-       <a href="apidocs/org/apache/commons/codec/language/Soundex.html">
-       	Soundex</a>
-      </td>
-      <td>
-       Implementation of the Soundex algorithm.
-      </td>
-     </tr>
-     <tr>
-      <td>
-       <a href="apidocs/org/apache/commons/codec/language/Metaphone.html">
-       	Metaphone</a>
-      </td>
-      <td>
-       Implementation of the Metaphone algorithm.
-      </td>
-     </tr>
-     <tr>
-      <td>
-       <a href="apidocs/org/apache/commons/codec/language/RefinedSoundex.html">
-       	Refined Soundex</a>
-      </td>
-      <td>
-       Alternative implementation of the Soundex algorithm.
-      </td>
-     </tr>
-     <tr>
-      <td>
-       <a href="apidocs/org/apache/commons/codec/language/DoubleMetaphone.html">
-       	Double Metaphone</a>
-      </td>
-      <td>
-       Alternative implementation of the Metaphone algorithm.
-      </td>
-     </tr>
-
-    </table>
-   </subsection>
-
-   <subsection name="Digest Encoders">
-   	<table>
-     <tr>
-      <td width="150">
-       <a href="apidocs/org/apache/commons/codec/digest/DigestUtils.html">
-       	DigestUtils</a>
-      </td>
-      <td>
-        Provides simple static methods for creating a SHA or MD5 digest.
-      </td>
-     </tr>
-    </table>
-   </subsection>
-   
-   <subsection name="Network Encoders">
-   	<table>
-     <tr>
-      <td width="150">
-       <a href="apidocs/org/apache/commons/codec/net/URLCodec.html">
-       	URLCodec</a>
-      </td>
-      <td>
-        Implements the <code>www-form-urlencoded</code> encoding scheme, also misleadingly known as URL encoding.
-      </td>
-     </tr>
-     <tr>
-      <td width="150">
-       <a href="apidocs/org/apache/commons/codec/net/QuotedPrintableCodec.html">
-       	QuotedPrintableCodec</a>
-      </td>
-      <td>
-         Codec for RFC 1521 MIME (Multipurpose Internet Mail Extensions) Part One. Rules #3, #4, and #5 of the quoted-printable spec are not implemented yet
-      </td>
-     </tr>
-     <tr>
-      <td width="150">
-       <a href="apidocs/org/apache/commons/codec/net/BCodec.html">
-       	BCodec</a>
-      </td>
-      <td>
-         Identical to the Base64 encoding defined by <a href="http://www.ietf.org/rfc/rfc1521.txt">RFC 1521</a> and allows a character set to be specified.
-      </td>
-     </tr>
-     <tr>
-      <td width="150">
-       <a href="apidocs/org/apache/commons/codec/net/QCodec.html">
-       	QCodec</a>
-      </td>
-      <td>
-         Similar to the Quoted-Printable content-transfer-encoding defined in <a
-		 href="http://www.ietf.org/rfc/rfc1521.txt">RFC 1521</a> and designed to allow text containing mostly ASCII
- 		characters to be decipherable on an ASCII terminal without decoding.
-      </td>
-     </tr>
-    </table>
-   </subsection>
-   
-  </section>
-
+<body>
+<!-- ================================================== -->
+<section name="Commons Codec">
+<p>
+Commons Codec provides implementations of common encoders and decoders
+such as Base64, Hex, Phonetic and URLs.
+<!--ul>
+<li>Base64</li>
+<li>Hex</li>
+<li>Phonetic</li>
+<li>URL</li>
+</ul-->
+</p>
+</section>
+<!-- ================================================== -->
+<section name="Impetus">
+<p>
+Codec was formed as an attempt to focus development effort on one
+definitive implementation of the Base64 encoder.  At the time of
+Codec's proposal, there were approximately 34 different Java
+classes that dealt with Base64 encoding spread over the
+Foundation's CVS repository.  Developers in the Jakarta Tomcat
+project had implemented an original version of the Base64 codec
+which had been copied by the Commons HttpClient and Apache XML
+project's XML-RPC subproject.  After almost one year, the two
+forked versions of Base64 had significantly diverged from one
+another.  XML-RPC had applied numerous fixes and patches which
+were not applied to the Commons HttpClient Base64.  Different 
+subprojects had differing implementations at various levels
+of compliance with the <a href="http://www.ietf.org/rfc/rfc2045.txt">
+RFC 2045</a>.
+</p>
+<p>
+Out of that confusing duplication of effort sprang this simple
+attempt to encourage code reuse among various projects.  While
+this package contains a abstract framework for the creation of
+encoders and decoders, Codec itself is primarily focused on
+providing functional utilities for working with common encodings.
+</p>
+</section>
+<!-- ================================================== -->
+<section name="Documentation">
+<p>
+An overview of the functionality is provided in the
+<a href="userguide.html">user guide</a>.
+Various <a href="maven-reports.html">project reports</a> are also available.
+</p>
+<p>
+The JavaDoc API documents are available online:
+</p>
+<ul>
+<li>The <a href="api-release/index.html">current release 1.3</a></li>
+<!--li>The <a href="api-1.1/index.html">previous version 1.1</a></li-->
+<li>The <a href="apidocs/index.html">latest SVN</a></li>
+</ul>
+<p>
+The <a href="cvs-usage.html">subversion repository</a> can be
+<a href="http://svn.apache.org/viewcvs.cgi/jakarta/commons/proper/codec/trunk/">browsed</a>.
+</p>
+</section>
+<!-- ================================================== -->
+<section name="Releases">
+<p>
+The latest version is v1.3. - 
+<a href="http://jakarta.apache.org/site/downloads/downloads_commons-codec.cgi">Download now!</a><br />
+The <a href="changes-report.html">upgrade notes</a> are also available.
+</p>
+<p>
+For previous releases, see the <a href="http://archive.apache.org/dist/jakarta/commons/codec/">Apache Archive</a>
+</p>
+</section>
+<!-- ================================================== -->
+<section name="Support">
+<p>
+The <a href="mail-lists.html">commons mailing lists</a> act as the main support forum.
+The user list is suitable for most library usage queries.
+The dev list is intended for the development discussion.
+Please remember that the lists are shared between all commons components,
+so prefix your email by [codec].
+</p>
+<p>
+Issues may be reported via <a href="issue-tracking.html">ASF Bugzilla</a>.
+Please remember that Bugzilla is shared between all commons components,
+so prefix your issue by [codec].
+</p>
+</section>
+<!-- ================================================== -->
  </body>
 </document>
