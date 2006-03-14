@@ -29,8 +29,8 @@ limitations under the License.
    collection of phonetic encoding utilities.
   </description>
     <logo>/images/logo.png</logo>
-    <url>http://jakarta.apache.org/commons/${pom.artifactId.substring(8)}/</url>
-    <package>org.apache.commons.${pom.artifactId.substring(8)}</package>
+    <url>http://jakarta.apache.org/commons/codec/</url>
+    <package>org.apache.commons.codec</package>
     <organization>
         <name>The Apache Software Foundation</name>
         <url>http://jakarta.apache.org</url>
@@ -45,12 +45,12 @@ limitations under the License.
     </licenses>
     <gumpRepositoryId>jakarta</gumpRepositoryId>
     <issueTrackingUrl>http://issues.apache.org/bugzilla/</issueTrackingUrl>
-    <siteAddress>jakarta.apache.org</siteAddress>
-    <siteDirectory>/www/jakarta.apache.org/commons/${pom.artifactId.substring(8)}/</siteDirectory>
-    <distributionDirectory>/www/jakarta.apache.org/builds/jakarta-commons/${pom.artifactId.substring(8)}/</distributionDirectory>
+    <siteAddress>people.apache.org</siteAddress>
+    <siteDirectory>/www/jakarta.apache.org/commons/codec/</siteDirectory>
+    <distributionDirectory>/www/jakarta.apache.org/builds/jakarta-commons/codec/</distributionDirectory>
     <repository>
-        <connection>scm:svn:http://svn.apache.org/repos/asf/jakarta/commons/proper/${pom.artifactId.substring(8)}/trunk</connection>
-        <url>http://svn.apache.org/repos/asf/jakarta/commons/proper/${pom.artifactId.substring(8)}/trunk</url>
+        <connection>scm:svn:http://svn.apache.org/repos/asf/jakarta/commons/proper/codec/trunk</connection>
+        <url>http://svn.apache.org/repos/asf/jakarta/commons/proper/codec/trunk</url>
     </repository>
     <mailingLists>
         <mailingList>
@@ -184,25 +184,30 @@ limitations under the License.
         </contributor>
     </contributors>
     <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <url>http://www.junit.org</url>
-            <properties>
-              <scope>test</scope>
-            </properties>
-        </dependency>
-        <dependency>
-            <groupId>maven-plugins</groupId>
-            <artifactId>maven-cobertura-plugin</artifactId>
-            <version>1.1.1</version>
-            <url>http://maven-plugins.sourceforge.net/maven-cobertura-plugin/</url>
-            <type>plugin</type>
-            <properties>
-              <comment>Site generation</comment>
-            </properties>
-        </dependency>
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>3.8.1</version>
+        <properties>
+         <scope>test</scope>
+         <comment>
+          Required only for testing.
+         </comment>
+        </properties>
+      </dependency>
+      <dependency>
+        <groupId>maven-plugins</groupId>
+        <artifactId>maven-cobertura-plugin</artifactId>
+        <version>1.1.1</version>
+        <url>http://maven-plugins.sourceforge.net/maven-cobertura-plugin/</url>
+        <type>plugin</type>
+        <properties>
+         <scope>test</scope>
+         <comment>
+          Required only for generating test coverage reports.
+         </comment>
+        </properties>
+      </dependency>
     </dependencies>
     <issueTrackingUrl>http://issues.apache.org/bugzilla/buglist.cgi?bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;email1=&amp;emailtype1=substring&amp;emailassigned_to1=1&amp;email2=&amp;emailtype2=substring&amp;emailreporter2=1&amp;bugidtype=include&amp;bug_id=&amp;changedin=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;product=Commons&amp;component=Codec&amp;short_desc=&amp;short_desc_type=allwordssubstr&amp;long_desc=&amp;long_desc_type=allwordssubstr&amp;bug_file_loc=&amp;bug_file_loc_type=allwordssubstr&amp;keywords=&amp;keywords_type=anywords&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=&amp;cmdtype=doit&amp;newqueryname=&amp;order=Reuse+same+sort+as+last+time</issueTrackingUrl>
     <build>
@@ -231,23 +236,14 @@ limitations under the License.
         </unitTest>
     </build>
     <reports>
-        <report>maven-changes-plugin</report>
-        <report>maven-changelog-plugin</report>
-        <report>maven-checkstyle-plugin</report>
-        <!--   <report>maven-clover-plugin</report> -->
-        <report>maven-cobertura-plugin</report>
-        <report>maven-developer-activity-plugin</report>
-        <report>maven-file-activity-plugin</report>
-        <!--   <report>maven-findbugs-plugin</report> -->
-        <report>maven-javadoc-plugin</report>
-        <report>maven-jdepend-plugin</report>
-        <report>maven-jdiff-plugin</report>
-        <report>maven-junit-report-plugin</report>
-        <report>maven-jxr-plugin</report>
-        <report>maven-license-plugin</report>
-        <!--   <report>maven-linkcheck-plugin</report> -->
-        <!--   <report>maven-jellydoc-plugin</report> -->
-        <!--   <report>maven-statcvs-plugin</report> -->
-        <!--   <report>maven-tasklist-plugin</report> -->
+      <report>maven-changes-plugin</report>
+      <report>maven-checkstyle-plugin</report>
+      <report>maven-javadoc-plugin</report>
+      <report>maven-jdepend-plugin</report>
+      <report>maven-junit-report-plugin</report>
+      <report>maven-jxr-plugin</report>
+      <report>maven-license-plugin</report>
+      <report>maven-cobertura-plugin</report>
+      <report>maven-jdiff-plugin</report>
     </reports>
 </project>

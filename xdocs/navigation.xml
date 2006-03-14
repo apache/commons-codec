@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<!DOCTYPE org.apache.commons.menus SYSTEM '../../commons-build/menus/menus.dtd'>
+<!DOCTYPE org.apache.commons.menus SYSTEM 'http://jakarta.apache.org/commons/build/maven-build.dtd'>
 <project name="Codec">
 
   <title>Codec</title>
@@ -33,7 +33,7 @@ limitations under the License.
       <item name="Release Notes" href="/changes-report.html"/>          
     </menu>
     
-    &common-menus;
+    &commons;
 
   </body>
 </project>
