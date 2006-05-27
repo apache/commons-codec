@@ -14,9 +14,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<project>
+<project xmlns="http://maven.apache.org/POM/3.0.0">
     <pomVersion>3</pomVersion>
-    <groupId>commons-codec</groupId>
+    <groupId>org.apache.commons</groupId>
     <artifactId>commons-codec</artifactId>
     <currentVersion>1.4-SNAPSHOT</currentVersion>
     <inceptionYear>2002</inceptionYear>
@@ -88,8 +88,6 @@ limitations under the License.
             <tag>CODEC_1_2</tag>
         </version>
     </versions>
-    <branches>
-  </branches>
     <developers>
         <developer>
             <name>Henri Yandell</name>
@@ -209,7 +207,6 @@ limitations under the License.
         </properties>
       </dependency>
     </dependencies>
-    <issueTrackingUrl>http://issues.apache.org/bugzilla/buglist.cgi?bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;email1=&amp;emailtype1=substring&amp;emailassigned_to1=1&amp;email2=&amp;emailtype2=substring&amp;emailreporter2=1&amp;bugidtype=include&amp;bug_id=&amp;changedin=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;product=Commons&amp;component=Codec&amp;short_desc=&amp;short_desc_type=allwordssubstr&amp;long_desc=&amp;long_desc_type=allwordssubstr&amp;bug_file_loc=&amp;bug_file_loc_type=allwordssubstr&amp;keywords=&amp;keywords_type=anywords&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=&amp;cmdtype=doit&amp;newqueryname=&amp;order=Reuse+same+sort+as+last+time</issueTrackingUrl>
     <build>
         <nagEmailAddress>commons-dev@jakarta.apache.org</nagEmailAddress>
         <sourceDirectory>src/java</sourceDirectory>
