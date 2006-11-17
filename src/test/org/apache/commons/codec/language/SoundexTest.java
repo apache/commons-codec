@@ -345,11 +345,15 @@ public class SoundexTest extends StringEncoderAbstractTest {
      */
     public void testUsMappingOWithDiaeresis() {
         assertEquals("O000", this.getEncoder().encode("o"));
-        try {
-            assertEquals("Ö000", this.getEncoder().encode("ö"));
-            fail("Expected IllegalArgumentException not thrown");
-        } catch (IllegalArgumentException e) {
-            // expected
+        if ( Character.isLetter('ö') ) {
+            try {
+                assertEquals("Ö000", this.getEncoder().encode("ö"));
+                fail("Expected IllegalArgumentException not thrown");
+            } catch (IllegalArgumentException e) {
+                // expected
+            }
+        } else {
+            assertEquals("", this.getEncoder().encode("ö"));
         }
     }
 
@@ -360,11 +364,15 @@ public class SoundexTest extends StringEncoderAbstractTest {
      */
     public void testUsMappingEWithAcute() {
         assertEquals("E000", this.getEncoder().encode("e"));
-        try {
-            assertEquals("É000", this.getEncoder().encode("é"));
-            fail("Expected IllegalArgumentException not thrown");
-        } catch (IllegalArgumentException e) {
-            // expected
+        if ( Character.isLetter('é') ) {
+            try {
+                assertEquals("É000", this.getEncoder().encode("é"));
+                fail("Expected IllegalArgumentException not thrown");
+            } catch (IllegalArgumentException e) {
+                // expected
+            }
+        } else {
+            assertEquals("", this.getEncoder().encode("é"));
         }
     }
     
