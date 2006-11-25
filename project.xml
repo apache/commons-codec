@@ -16,7 +16,7 @@ limitations under the License.
 -->
 <project>
     <pomVersion>3</pomVersion>
-    <groupId>org.apache.commons</groupId>
+    <groupId>commons-codec</groupId>
     <artifactId>commons-codec</artifactId>
     <currentVersion>1.4-SNAPSHOT</currentVersion>
     <inceptionYear>2002</inceptionYear>
