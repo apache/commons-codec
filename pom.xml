@@ -38,7 +38,7 @@
      collection of phonetic encoding utilities.
     </description>
 
-  <url>http://jakarta.apache.org/commons/codec/</url>
+  <url>http://commons.apache.org/codec/</url>
 
   <issueManagement>
     <system>jira</system>
@@ -46,9 +46,9 @@
   </issueManagement>
 
   <scm>
-    <connection>scm:svn:https://svn.apache.org/repos/asf/jakarta/commons/proper/codec/trunk</connection>
-    <developerConnection>scm:svn:https://svn.apache.org/repos/asf/jakarta/commons/proper/codec/trunk</developerConnection>
-    <url>http://svn.apache.org/viewvc/jakarta/commons/proper/codec/trunk</url>
+    <connection>scm:svn:https://svn.apache.org/repos/asf/commons/proper/codec/trunk</connection>
+    <developerConnection>scm:svn:https://svn.apache.org/repos/asf/commons/proper/codec/trunk</developerConnection>
+    <url>http://svn.apache.org/viewvc/commons/proper/codec/trunk</url>
   </scm>
 
     <developers>
