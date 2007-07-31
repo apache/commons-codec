@@ -16,7 +16,7 @@ limitations under the License.
 -->
 <project name="Codec" default="compile" basedir=".">
     <!--
-        "Codec" component of the Jakarta Commons Subproject
+        "Codec" component of the Apache Commons Subproject
         $Id$
     -->
     <!-- ========== Initialize Properties ===================================== -->
