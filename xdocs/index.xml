@@ -77,7 +77,7 @@ The JavaDoc API documents are available online:
 </ul>
 <p>
 The <a href="cvs-usage.html">subversion repository</a> can be
-<a href="http://svn.apache.org/viewcvs.cgi/commons/proper/codec/trunk/">browsed</a>.
+<a href="http://svn.apache.org/viewvc/commons/proper/codec/trunk/">browsed</a>.
 </p>
 </section>
 <!-- ================================================== -->
