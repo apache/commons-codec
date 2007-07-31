@@ -18,8 +18,8 @@
   </description>
     <repository>
       <SVNRepository>
-        <browse rdf:resource="http://svn.apache.org/repos/asf/jakarta/commons/proper/codec/trunk"/>
-        <location rdf:resource="http://svn.apache.org/repos/asf/jakarta/commons/proper/codec"/>
+        <browse rdf:resource="http://svn.apache.org/repos/asf/commons/proper/codec/trunk"/>
+        <location rdf:resource="http://svn.apache.org/repos/asf/commons/proper/codec"/>
       </SVNRepository>
     </repository>
     <release>
