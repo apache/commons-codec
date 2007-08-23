@@ -28,7 +28,7 @@
   <groupId>commons-codec</groupId>
   <artifactId>commons-codec</artifactId>
   <version>1.4-SNAPSHOT</version>
-  <name>Codec</name>
+  <name>Commons Codec</name>
 
   <inceptionYear>2002</inceptionYear>
     <description>
