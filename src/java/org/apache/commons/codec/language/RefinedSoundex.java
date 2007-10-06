@@ -48,7 +48,7 @@ public class RefinedSoundex implements StringEncoder {
 	 * array holds the values to which each letter is mapped. This
 	 * implementation contains a default map for US_ENGLISH
 	 */
-    private char[] soundexMapping;
+    private final char[] soundexMapping;
 
     /**
 	 * Creates an instance of the RefinedSoundex object using the default US
