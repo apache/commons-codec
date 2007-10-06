@@ -99,9 +99,9 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
         PRINTABLE_CHARS.set('~');
     }
 
-    private static byte BLANK = 32;
+    private static final byte BLANK = 32;
 
-    private static byte UNDERSCORE = 95;
+    private static final byte UNDERSCORE = 95;
 
     private boolean encodeBlanks = false;
 
