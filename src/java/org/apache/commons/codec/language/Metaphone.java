@@ -39,17 +39,17 @@ public class Metaphone implements StringEncoder {
     /**
      * Five values in the English language 
      */
-    private String vowels = "AEIOU" ;
+    private static final String VOWELS = "AEIOU" ;
 
     /**
      * Variable used in Metaphone algorithm
      */
-    private String frontv = "EIY"   ;
+    private static final String FRONTV = "EIY"   ;
 
     /**
      * Variable used in Metaphone algorithm
      */
-    private String varson = "CSPTG" ;
+    private static final String VARSON = "CSPTG" ;
 
     /**
      * The max code length for metaphone is 4
@@ -152,7 +152,7 @@ public class Metaphone implements StringEncoder {
                     /* discard if SCI, SCE or SCY */
                     if ( isPreviousChar(local, n, 'S') && 
                          !isLastChar(wdsz, n) && 
-                         (this.frontv.indexOf(local.charAt(n + 1)) >= 0) ) { 
+                         (FRONTV.indexOf(local.charAt(n + 1)) >= 0) ) { 
                         break;
                     }
                     if (regionMatch(local, n, "CIA")) { // "CIA" -> X
@@ -160,7 +160,7 @@ public class Metaphone implements StringEncoder {
                         break;
                     }
                     if (!isLastChar(wdsz, n) && 
-                        (this.frontv.indexOf(local.charAt(n + 1)) >= 0)) {
+                        (FRONTV.indexOf(local.charAt(n + 1)) >= 0)) {
                         code.append('S');
                         break; // CI,CE,CY -> S
                     }
@@ -184,7 +184,7 @@ public class Metaphone implements StringEncoder {
                 case 'D' :
                     if (!isLastChar(wdsz, n + 1) && 
                         isNextChar(local, n, 'G') && 
-                        (this.frontv.indexOf(local.charAt(n + 2)) >= 0)) { // DGE DGI DGY -> J 
+                        (FRONTV.indexOf(local.charAt(n + 2)) >= 0)) { // DGE DGI DGY -> J 
                         code.append('J'); n += 2 ;
                     } else { 
                         code.append('T');
@@ -211,7 +211,7 @@ public class Metaphone implements StringEncoder {
                         hard = false ;
                     }
                     if (!isLastChar(wdsz, n) && 
-                        (this.frontv.indexOf(local.charAt(n + 1)) >= 0) && 
+                        (FRONTV.indexOf(local.charAt(n + 1)) >= 0) && 
                         (!hard)) {
                         code.append('J');
                     } else {
@@ -223,7 +223,7 @@ public class Metaphone implements StringEncoder {
                         break ; // terminal H
                     }
                     if ((n > 0) && 
-                        (this.varson.indexOf(local.charAt(n - 1)) >= 0)) {
+                        (VARSON.indexOf(local.charAt(n - 1)) >= 0)) {
                         break;
                     }
                     if (isVowel(local,n+1)) {
@@ -308,7 +308,7 @@ public class Metaphone implements StringEncoder {
     }
 
 	private boolean isVowel(StringBuffer string, int index) {
-		return this.vowels.indexOf(string.charAt(index)) >= 0;
+		return VOWELS.indexOf(string.charAt(index)) >= 0;
 	}
 
 	private boolean isPreviousChar(StringBuffer string, int index, char c) {
