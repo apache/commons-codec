@@ -36,13 +36,15 @@ public class StringEncoderComparator implements Comparator {
     /**
      * Internal encoder instance.
      */
-    private StringEncoder stringEncoder;
+    private final StringEncoder stringEncoder;
 
     /**
      * Constructs a new instance.
+     * @deprecated as creating without a StringEncoder will lead to a 
+     *             broken NullPointerException creating comparator.
      */
     public StringEncoderComparator() {
-        // no init.
+        stringEncoder = null;   // Trying to use this will cause things to break
     }
 
     /**
@@ -71,8 +73,8 @@ public class StringEncoderComparator implements Comparator {
         int compareCode = 0;
 
         try {
-            Comparable s1 = (Comparable) ((Encoder) this.stringEncoder).encode(o1);
-            Comparable s2 = (Comparable) ((Encoder) this.stringEncoder).encode(o2);
+            Comparable s1 = (Comparable) this.stringEncoder.encode(o1);
+            Comparable s2 = (Comparable) this.stringEncoder.encode(o2);
             compareCode = s1.compareTo(s2);
         } 
         catch (EncoderException ee) {
