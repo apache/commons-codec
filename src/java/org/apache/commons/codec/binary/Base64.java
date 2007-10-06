@@ -56,42 +56,42 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
     /**
      * The base length.
      */
-    static final int BASELENGTH = 255;
+    private static final int BASELENGTH = 255;
 
     /**
      * Lookup length.
      */
-    static final int LOOKUPLENGTH = 64;
+    private static final int LOOKUPLENGTH = 64;
 
     /**
      * Used to calculate the number of bits in a byte.
      */
-    static final int EIGHTBIT = 8;
+    private static final int EIGHTBIT = 8;
 
     /**
      * Used when encoding something which has fewer than 24 bits.
      */
-    static final int SIXTEENBIT = 16;
+    private static final int SIXTEENBIT = 16;
 
     /**
      * Used to determine how many bits data contains.
      */
-    static final int TWENTYFOURBITGROUP = 24;
+    private static final int TWENTYFOURBITGROUP = 24;
 
     /**
      * Used to get the number of Quadruples.
      */
-    static final int FOURBYTE = 4;
+    private static final int FOURBYTE = 4;
 
     /**
      * Used to test the sign of a byte.
      */
-    static final int SIGN = -128;
+    private static final int SIGN = -128;
     
     /**
      * Byte used to pad output.
      */
-    static final byte PAD = (byte) '=';
+    private static final byte PAD = (byte) '=';
 
     /**
      * Contains the Base64 values <code>0</code> through <code>63</code> accessed by using character encodings as
@@ -103,7 +103,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * The value of undefined encodings is <code>-1</code>.
      * </p>
      */
-    private static byte[] base64Alphabet = new byte[BASELENGTH];
+    private static final byte[] base64Alphabet = new byte[BASELENGTH];
     
     /**
      * <p>
@@ -118,7 +118,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * For example, <code>lookUpBase64Alphabet[62] </code> returns <code>'+'</code>.
      * </p>
      */
-    private static byte[] lookUpBase64Alphabet = new byte[LOOKUPLENGTH];
+    private static final byte[] lookUpBase64Alphabet = new byte[LOOKUPLENGTH];
 
     // Populating the lookup and character arrays
     static {
