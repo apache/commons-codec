@@ -69,11 +69,11 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      */
     private static final BitSet PRINTABLE_CHARS = new BitSet(256);
 
-    private static byte ESCAPE_CHAR = '=';
+    private static final byte ESCAPE_CHAR = '=';
 
-    private static byte TAB = 9;
+    private static final byte TAB = 9;
 
-    private static byte SPACE = 32;
+    private static final byte SPACE = 32;
     // Static initializer for printable chars collection
     static {
         // alpha characters
