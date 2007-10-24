@@ -402,9 +402,16 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
 		assertEquals( "S", this.getMetaphone().metaphone("SCY") );
 	}
 
-	public void testWordsWithCIA() {
-		assertEquals( "XP", this.getMetaphone().metaphone("CIAPO") );
-	}
+    /**
+     * Tests (CODEC-57) Metaphone.metaphone(String) returns an empty string when passed the word "why"
+     */
+    public void testWhy() {
+        assertEquals("H", this.getMetaphone().metaphone("WHY"));
+    }
+
+    public void testWordsWithCIA() {
+        assertEquals( "XP", this.getMetaphone().metaphone("CIAPO") );
+    }
 
 	public void testTranslateOfSCHAndCH() {
 		assertEquals( "SKTL", this.getMetaphone().metaphone("SCHEDULE") );
