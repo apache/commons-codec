@@ -30,13 +30,7 @@ import org.apache.commons.codec.StringEncoder;
  */
 public class RefinedSoundex implements StringEncoder {
 
-    /**
-	 * This static variable contains an instance of the RefinedSoundex using
-	 * the US_ENGLISH mapping.
-	 */
-    public static final RefinedSoundex US_ENGLISH = new RefinedSoundex();
-
-    /**
+   /**
 	 * RefinedSoundex is *refined* for a number of reasons one being that the
 	 * mappings have been altered. This implementation contains default
 	 * mappings for US English.
@@ -51,6 +45,12 @@ public class RefinedSoundex implements StringEncoder {
     private final char[] soundexMapping;
 
     /**
+	 * This static variable contains an instance of the RefinedSoundex using
+	 * the US_ENGLISH mapping.
+	 */
+    public static final RefinedSoundex US_ENGLISH = new RefinedSoundex();
+
+     /**
 	 * Creates an instance of the RefinedSoundex object using the default US
 	 * English mapping.
 	 */
