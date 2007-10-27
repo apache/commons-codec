@@ -104,6 +104,9 @@ public class RefinedSoundexTest extends StringEncoderAbstractTest {
         assertEquals("T60", this.getEncoder().encode("the"));
         assertEquals("L7050", this.getEncoder().encode("lazy"));
         assertEquals("D6043", this.getEncoder().encode("dogs"));
+
+        // Testing CODEC-56
+        assertEquals("D6043", RefinedSoundex.US_ENGLISH.encode("dogs"));
     }
 
 	public void testGetMappingCodeNonLetter() {
