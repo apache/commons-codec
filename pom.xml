@@ -22,7 +22,7 @@
   <parent>
     <groupId>org.apache.commons</groupId>
     <artifactId>commons-parent</artifactId>
-    <version>4</version>
+    <version>5</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>commons-codec</groupId>
@@ -182,7 +182,45 @@
               </excludes>
           </configuration>
         </plugin>
+        <plugin>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <configuration>
+            <descriptors>
+              <descriptor>src/assembly/bin.xml</descriptor>
+              <descriptor>src/assembly/src.xml</descriptor>
+            </descriptors>
+            <tarLongFileMode>gnu</tarLongFileMode>
+          </configuration>
+        </plugin>
       </plugins>
     </build>
+
+    <reporting>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-changes-plugin</artifactId>
+          <configuration>
+            <xmlPath>${basedir}/xdocs/changes.xml</xmlPath>
+            <issueLinkTemplate>%URL%/%ISSUE%</issueLinkTemplate>
+          </configuration>
+          <reportSets>
+            <reportSet>
+              <reports>
+                 <report>changes-report</report>
+              </reports>
+            </reportSet>
+          </reportSets>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-checkstyle-plugin</artifactId>
+          <configuration>
+            <configLocation>checkstyle.xml</configLocation>
+            <enableRulesSummary>false</enableRulesSummary>
+          </configuration>
+        </plugin>
+      </plugins>
+    </reporting>
 
 </project>
