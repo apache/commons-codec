@@ -72,6 +72,10 @@ limitations under the License.
         <mkdir dir="${dist.home}"/>
         <mkdir dir="${dist.home}/docs"/>
         <mkdir dir="${dist.home}/docs/api"/>
+        <mkdir dir="${build.home}/apidocs"/>
+        <tstamp>
+            <format property="current.year" pattern="yyyy"/>
+        </tstamp>
          <!-- The Sun 1.2 docs are no-longer on-line, point to 1.3. -->
         <javadoc 
         	sourcepath="${source.home}" 
@@ -83,7 +87,7 @@ limitations under the License.
         	version="true" 
         	doctitle="&lt;h1&gt;${component.title}&lt;/h1&gt;" 
         	windowtitle="${component.title} (Version ${component.version})" 
-        	bottom="${component.name} version ${component.version} - Copyright &amp;copy; 2002-2008 - Apache Software Foundation" 
+        	bottom="${component.name} version ${component.version} - Copyright &amp;copy; 2002-${current.year} - Apache Software Foundation" 
         	use="true" 
         	link="http://java.sun.com/products/jdk/1.3/docs/api/">
             <classpath refid="compile.classpath"/>
