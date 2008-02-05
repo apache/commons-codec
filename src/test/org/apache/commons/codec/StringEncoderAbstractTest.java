@@ -42,12 +42,12 @@ public abstract class StringEncoderAbstractTest extends TestCase {
 
     public void testEncodeNull() throws Exception {
         StringEncoder encoder = makeEncoder();
-	
-	try {
-	    encoder.encode(null);
-	} catch( EncoderException ee ) {
-	    // An exception should be thrown
-	}
+        
+        try {
+            encoder.encode(null);
+        } catch( EncoderException ee ) {
+            // An exception should be thrown
+        }
     }        
 
     public void testEncodeWithInvalidObject() throws Exception {
