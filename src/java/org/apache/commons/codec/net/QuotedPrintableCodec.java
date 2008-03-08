@@ -322,9 +322,9 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
         } else if (pObject instanceof String) {
             return encode((String) pObject);
         } else {
-            throw new EncoderException("Objects of type "
-                + pObject.getClass().getName()
-                + " cannot be quoted-printable encoded");
+            throw new EncoderException("Objects of type " + 
+                  pObject.getClass().getName() + 
+                  " cannot be quoted-printable encoded");
         }
     }
 
@@ -347,9 +347,9 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
         } else if (pObject instanceof String) {
             return decode((String) pObject);
         } else {
-            throw new DecoderException("Objects of type "
-                + pObject.getClass().getName()
-                + " cannot be quoted-printable decoded");
+            throw new DecoderException("Objects of type " + 
+                  pObject.getClass().getName() + 
+                  " cannot be quoted-printable decoded");
         }
     }
 

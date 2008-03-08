@@ -817,8 +817,8 @@ public class DoubleMetaphone implements StringEncoder {
 			return false;
 		} else {
 			char c = charAt(value, index + 2);
-			return (c != 'I' && c != 'E')
-					|| contains(value, index - 2, 6, "BACHER", "MACHER");
+			return (c != 'I' && c != 'E') ||
+					contains(value, index - 2, 6, "BACHER", "MACHER");
 		}
 	}
     
@@ -873,8 +873,8 @@ public class DoubleMetaphone implements StringEncoder {
 		if (charAt(value, index + 1) == 'M') {
 			return true;
 		}
-		return contains(value, index - 1, 3, "UMB")
-				&& ((index + 1) == value.length() - 1 || contains(value,
+		return contains(value, index - 1, 3, "UMB") &&
+				((index + 1) == value.length() - 1 || contains(value,
 						index + 2, 2, "ER"));
 	}
     
