@@ -22,6 +22,8 @@ import org.apache.commons.codec.BinaryEncoder;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 
+import java.math.BigInteger;
+
 /**
  * Provides Base64 encoding and decoding as defined by RFC 2045.
  * 
@@ -532,4 +534,67 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
         return encodeBase64(pArray, false);
     }
 
+    // Implementation of integer encoding used for crypto
+    /**
+     * Decode a byte64-encoded integer according to crypto
+     * standards such as W3C's XML-Signature
+     * 
+     * @param pArray a byte array containing base64 character data
+     * @return A BigInteger
+     */
+    public static BigInteger decodeInteger(byte[] pArray) {
+        return new BigInteger(1, decodeBase64(pArray));
+    }
+
+    /**
+     * Encode to a byte64-encoded integer according to crypto
+     * standards such as W3C's XML-Signature
+     * 
+     * @param bigInt a BigInteger
+     * @return A byte array containing base64 character data
+     * @throws NullPointerException if null is passed in
+     */
+    public static byte[] encodeInteger(BigInteger bigInt) {
+        if(bigInt == null)  {
+            throw new NullPointerException("encodeInteger called with null parameter");
+        }
+
+        return encodeBase64(toIntegerBytes(bigInt), false);
+    }
+
+    /**
+     * Returns a byte-array representation of a <code>BigInteger</code>
+     * without sign bit.
+     *
+     * @param bigInt <code>BigInteger</code> to be converted
+     * @return a byte array representation of the BigInteger parameter
+     */
+     static byte[] toIntegerBytes(BigInteger bigInt) {
+        int bitlen = bigInt.bitLength();
+        // round bitlen
+        bitlen = ((bitlen + 7) >> 3) << 3;
+        byte[] bigBytes = bigInt.toByteArray();
+
+        if(((bigInt.bitLength() % 8) != 0)
+            && (((bigInt.bitLength() / 8) + 1) == (bitlen / 8))) {
+            return bigBytes;
+        }
+
+        // set up params for copying everything but sign bit
+        int startSrc = 0;
+        int len = bigBytes.length;
+
+        // if bigInt is exactly byte-aligned, just skip signbit in copy
+        if((bigInt.bitLength() % 8) == 0) {
+            startSrc = 1;
+            len--;
+        }
+
+        int startDst = bitlen / 8 - len; // to pad w/ nulls as per spec
+        byte[] resizedBytes = new byte[bitlen / 8];
+
+        System.arraycopy(bigBytes, startSrc, resizedBytes, startDst, len);
+
+        return resizedBytes;
+    }
 }
