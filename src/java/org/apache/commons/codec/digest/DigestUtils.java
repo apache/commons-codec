@@ -17,6 +17,8 @@
 
 package org.apache.commons.codec.digest;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -29,6 +31,8 @@ import org.apache.commons.codec.binary.Hex;
  * @version $Id$
  */
 public class DigestUtils {
+
+    private static final int STREAM_BUFFER_LENGTH = 1024;
 
     /**
      * Returns a <code>MessageDigest</code> for the given <code>algorithm</code>.
@@ -116,6 +120,26 @@ public class DigestUtils {
     }
 
     /**
+     * Read through an InputStream and returns the digest for the data
+     * 
+     * @param digest The MessageDigest to use (e.g. MD5)
+     * @param data Data to digest
+     * @return MD5 digest
+     * @throws IOException On error reading from the stream
+     */
+    private static byte[] digest(MessageDigest digest, InputStream data) throws IOException {
+        byte[] buffer = new byte[STREAM_BUFFER_LENGTH];
+        int read = data.read(buffer, 0, STREAM_BUFFER_LENGTH);
+        
+        while(read > -1) {
+            digest.update(buffer, 0, read);
+            read = data.read(buffer, 0, STREAM_BUFFER_LENGTH);
+        }
+        
+        return digest.digest();
+    }
+    
+    /**
      * Calculates the MD5 digest and returns the value as a 16 element <code>byte[]</code>.
      * 
      * @param data
@@ -124,6 +148,18 @@ public class DigestUtils {
      */
     public static byte[] md5(byte[] data) {
         return getMd5Digest().digest(data);
+    }
+
+    /**
+     * Calculates the MD5 digest and returns the value as a 16 element <code>byte[]</code>.
+     * 
+     * @param data
+     *            Data to digest
+     * @return MD5 digest
+     * @throws IOException On error reading from the stream
+     */
+    public static byte[] md5(InputStream data) throws IOException {
+        return digest(getMd5Digest(), data);
     }
 
     /**
@@ -160,6 +196,18 @@ public class DigestUtils {
     }
 
     /**
+     * Calculates the MD5 digest and returns the value as a 32 character hex string.
+     * 
+     * @param data
+     *            Data to digest
+     * @return MD5 digest as a hex string
+     * @throws IOException On error reading from the stream
+     */
+    public static String md5Hex(InputStream data) throws IOException {
+        return new String(Hex.encodeHex(md5(data)));
+    }
+
+    /**
      * Calculates the SHA-1 digest and returns the value as a <code>byte[]</code>.
      * 
      * @param data
@@ -179,6 +227,18 @@ public class DigestUtils {
      */
     public static byte[] sha(String data) {
         return sha(data.getBytes());
+    }
+
+    /**
+     * Calculates the SHA-1 digest and returns the value as a <code>byte[]</code>.
+     * 
+     * @param data
+     *            Data to digest
+     * @return SHA-1 digest
+     * @throws IOException On error reading from the stream
+     */
+    public static byte[] sha(InputStream data) throws IOException {
+        return digest(getShaDigest(), data);
     }
 
     /**
@@ -210,6 +270,21 @@ public class DigestUtils {
     }
 
     /**
+     * Calculates the SHA-256 digest and returns the value as a <code>byte[]</code>.
+     * <p>
+     * Throws a <code>RuntimeException</code> on JRE versions prior to 1.4.0.
+     * </p>
+     * 
+     * @param data
+     *            Data to digest
+     * @return SHA-256 digest
+     * @throws IOException On error reading from the stream
+     */
+    public static byte[] sha256(InputStream data) throws IOException {
+        return digest(getSha256Digest(), data);
+    }
+
+    /**
      * Calculates the SHA-256 digest and returns the value as a hex string.
      * <p>
      * Throws a <code>RuntimeException</code> on JRE versions prior to 1.4.0.
@@ -234,6 +309,21 @@ public class DigestUtils {
      * @return SHA-256 digest as a hex string
      */
     public static String sha256Hex(String data) {
+        return new String(Hex.encodeHex(sha256(data)));
+    }
+
+    /**
+     * Calculates the SHA-256 digest and returns the value as a hex string.
+     * <p>
+     * Throws a <code>RuntimeException</code> on JRE versions prior to 1.4.0.
+     * </p>
+     * 
+     * @param data
+     *            Data to digest
+     * @return SHA-256 digest as a hex string
+     * @throws IOException On error reading from the stream
+     */
+    public static String sha256Hex(InputStream data) throws IOException {
         return new String(Hex.encodeHex(sha256(data)));
     }
 
@@ -265,6 +355,21 @@ public class DigestUtils {
     public static byte[] sha384(String data) {
         return sha384(data.getBytes());
     }
+    
+    /**
+     * Calculates the SHA-384 digest and returns the value as a <code>byte[]</code>.
+     * <p>
+     * Throws a <code>RuntimeException</code> on JRE versions prior to 1.4.0.
+     * </p>
+     * 
+     * @param data
+     *            Data to digest
+     * @return SHA-384 digest
+     * @throws IOException On error reading from the stream
+     */
+    public static byte[] sha384(InputStream data) throws IOException {
+        return digest(getSha384Digest(), data);
+    }
 
     /**
      * Calculates the SHA-384 digest and returns the value as a hex string.
@@ -291,6 +396,21 @@ public class DigestUtils {
      * @return SHA-384 digest as a hex string
      */
     public static String sha384Hex(String data) {
+        return new String(Hex.encodeHex(sha384(data)));
+    }
+
+    /**
+     * Calculates the SHA-384 digest and returns the value as a hex string.
+     * <p>
+     * Throws a <code>RuntimeException</code> on JRE versions prior to 1.4.0.
+     * </p>
+     * 
+     * @param data
+     *            Data to digest
+     * @return SHA-384 digest as a hex string
+     * @throws IOException On error reading from the stream
+     */
+    public static String sha384Hex(InputStream data) throws IOException {
         return new String(Hex.encodeHex(sha384(data)));
     }
 
@@ -323,6 +443,21 @@ public class DigestUtils {
     }
 
     /**
+     * Calculates the SHA-512 digest and returns the value as a <code>byte[]</code>.
+     * <p>
+     * Throws a <code>RuntimeException</code> on JRE versions prior to 1.4.0.
+     * </p>
+     * 
+     * @param data
+     *            Data to digest
+     * @return SHA-512 digest
+     * @throws IOException On error reading from the stream
+     */
+    public static byte[] sha512(InputStream data) throws IOException {
+        return digest(getSha512Digest(), data);
+    }
+
+    /**
      * Calculates the SHA-512 digest and returns the value as a hex string.
      * <p>
      * Throws a <code>RuntimeException</code> on JRE versions prior to 1.4.0.
@@ -351,6 +486,21 @@ public class DigestUtils {
     }
 
     /**
+     * Calculates the SHA-512 digest and returns the value as a hex string.
+     * <p>
+     * Throws a <code>RuntimeException</code> on JRE versions prior to 1.4.0.
+     * </p>
+     * 
+     * @param data
+     *            Data to digest
+     * @return SHA-512 digest as a hex string
+     * @throws IOException On error reading from the stream
+     */
+    public static String sha512Hex(InputStream data) throws IOException {
+        return new String(Hex.encodeHex(sha512(data)));
+    }
+
+    /**
      * Calculates the SHA-1 digest and returns the value as a hex string.
      * 
      * @param data
@@ -369,6 +519,18 @@ public class DigestUtils {
      * @return SHA-1 digest as a hex string
      */
     public static String shaHex(String data) {
+        return new String(Hex.encodeHex(sha(data)));
+    }
+
+    /**
+     * Calculates the SHA-1 digest and returns the value as a hex string.
+     * 
+     * @param data
+     *            Data to digest
+     * @return SHA-1 digest as a hex string
+     * @throws IOException On error reading from the stream
+     */
+    public static String shaHex(InputStream data) throws IOException {
         return new String(Hex.encodeHex(sha(data)));
     }
 }
