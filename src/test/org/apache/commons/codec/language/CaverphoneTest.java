@@ -41,7 +41,7 @@ public class CaverphoneTest extends StringEncoderAbstractTest {
         return new Caverphone();
     }
 
-    public void testWikipediaExamples() {
+    public void testSpecificationExamples() {
         Caverphone caverphone = new Caverphone();
         String[][] data = {
             {"Stevenson", "STFNSN1111"},
