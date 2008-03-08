@@ -62,16 +62,16 @@ public class Caverphone implements StringEncoder {
         txt = txt.replaceAll("[^a-z]", "");
 
         // 2.5. Remove final e
-        txt = txt.replace("e$", "");             // 2.0 only
+        txt = txt.replaceAll("e$", "");             // 2.0 only
 
         // 3. Handle various start options
-        txt = txt.replace("^cough", "cou2f");
-        txt = txt.replace("^rough", "rou2f");
-        txt = txt.replace("^tough", "tou2f");
-        txt = txt.replace("^enough", "enou2f");  // 2.0 only
-        txt = txt.replace("^trough", "trou2f");  // 2.0 only - note the spec says ^enough here again, c+p error I assume
-        txt = txt.replace("^gn", "2n");
-        txt = txt.replace("^mb", "m2");
+        txt = txt.replaceAll("^cough", "cou2f");
+        txt = txt.replaceAll("^rough", "rou2f");
+        txt = txt.replaceAll("^tough", "tou2f");
+        txt = txt.replaceAll("^enough", "enou2f");  // 2.0 only
+        txt = txt.replaceAll("^trough", "trou2f");  // 2.0 only - note the spec says ^enough here again, c+p error I assume
+        txt = txt.replaceAll("^gn", "2n");
+        txt = txt.replaceAll("^mb", "m2");
 
         // 4. Handle replacements
         txt = txt.replaceAll("cq", "2q");
@@ -91,7 +91,7 @@ public class Caverphone implements StringEncoder {
         txt = txt.replaceAll("b", "p");
         txt = txt.replaceAll("sh", "s2");
         txt = txt.replaceAll("z", "s");
-        txt = txt.replace("^[aeiou]", "A");
+        txt = txt.replaceAll("^[aeiou]", "A");
         txt = txt.replaceAll("[aeiou]", "3");
         txt = txt.replaceAll("j", "y");        // 2.0 only
         txt = txt.replaceAll("^y3", "Y3");     // 2.0 only
@@ -113,7 +113,7 @@ public class Caverphone implements StringEncoder {
         txt = txt.replaceAll("w$", "3");       // 2.0 only
         //txt = txt.replaceAll("why", "Why");  // 1.0 only
         txt = txt.replaceAll("w", "2");
-        txt = txt.replace("^h", "A");
+        txt = txt.replaceAll("^h", "A");
         txt = txt.replaceAll("h", "2");
         txt = txt.replaceAll("r3", "R3");
         txt = txt.replaceAll("r$", "3");       // 2.0 only
