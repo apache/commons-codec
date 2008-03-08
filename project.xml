@@ -243,5 +243,7 @@ limitations under the License.
       <report>maven-license-plugin</report>
       <report>maven-cobertura-plugin</report>
       <report>maven-jdiff-plugin</report>
+      <report>maven-pmd-plugin</report>
+      <report>maven-findbugs-plugin</report>
     </reports>
 </project>
