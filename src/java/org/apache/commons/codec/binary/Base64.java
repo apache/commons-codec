@@ -575,8 +575,8 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
         bitlen = ((bitlen + 7) >> 3) << 3;
         byte[] bigBytes = bigInt.toByteArray();
 
-        if(((bigInt.bitLength() % 8) != 0)
-            && (((bigInt.bitLength() / 8) + 1) == (bitlen / 8))) {
+        if(((bigInt.bitLength() % 8) != 0) &&
+            (((bigInt.bitLength() / 8) + 1) == (bitlen / 8))) {
             return bigBytes;
         }
 

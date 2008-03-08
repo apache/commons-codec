@@ -168,9 +168,9 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
         } else if (value instanceof String) {
             return encode((String) value);
         } else {
-            throw new EncoderException("Objects of type "
-                + value.getClass().getName()
-                + " cannot be encoded using BCodec");
+            throw new EncoderException("Objects of type " +
+                  value.getClass().getName() +
+                  " cannot be encoded using BCodec");
         }
     }
 
@@ -193,9 +193,9 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
         } else if (value instanceof String) {
             return decode((String) value);
         } else {
-            throw new DecoderException("Objects of type "
-                + value.getClass().getName()
-                + " cannot be decoded using BCodec");
+            throw new DecoderException("Objects of type " +
+                  value.getClass().getName() +
+                  " cannot be decoded using BCodec");
         }
     }
 
