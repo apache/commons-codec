@@ -17,6 +17,10 @@
 
 package org.apache.commons.codec.digest;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.Random;
+
 import junit.framework.TestCase;
 
 /**
@@ -27,6 +31,15 @@ import junit.framework.TestCase;
  */
 public class DigestUtilsTest extends TestCase {
 
+    private byte[] testData = new byte[1024*1024];
+    
+    /* (non-Javadoc)
+     * @see junit.framework.TestCase#setUp()
+     */
+    protected void setUp() throws Exception {
+        new Random().nextBytes(testData);
+    }
+
     public void testInternalNoSuchAlgorithmException() {
         try {
             DigestUtils.getDigest("Bogus Bogus");
@@ -36,7 +49,7 @@ public class DigestUtilsTest extends TestCase {
         }
     }
 
-    public void testMd5Hex() {
+    public void testMd5Hex() throws IOException {
         // Examples from RFC 1321
         assertEquals("d41d8cd98f00b204e9800998ecf8427e", DigestUtils.md5Hex(""));
 
@@ -55,8 +68,11 @@ public class DigestUtilsTest extends TestCase {
         assertEquals(
             "57edf4a22be3c955ac49da2e2107b67a",
             DigestUtils.md5Hex("1234567890123456789012345678901234567890" + "1234567890123456789012345678901234567890"));
-    }
 
+        assertEquals(DigestUtils.md5Hex(testData),
+                DigestUtils.md5Hex(new ByteArrayInputStream(testData)));
+    }
+    
     /**
 	 * An MD5 hash converted to hex should always be 32 characters.
 	 */
@@ -83,7 +99,7 @@ public class DigestUtilsTest extends TestCase {
         assertEquals(16, hash.length);
     }
 
-    public void testSha256() {
+    public void testSha256() throws IOException {
 	// Examples from FIPS 180-2
 	assertEquals("ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
 		     DigestUtils.sha256Hex("abc"));
@@ -91,9 +107,12 @@ public class DigestUtilsTest extends TestCase {
 		     DigestUtils.sha256Hex("abc".getBytes()));
 	assertEquals("248d6a61d20638b8e5c026930c3e6039a33ce45964ff2167f6ecedd419db06c1",
 		     DigestUtils.sha256Hex("abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq"));
+    
+    assertEquals(DigestUtils.sha256Hex(testData),
+            DigestUtils.sha256Hex(new ByteArrayInputStream(testData)));
     }
 
-    public void testSha384() {
+    public void testSha384() throws IOException {
 	// Examples from FIPS 180-2
 	assertEquals("cb00753f45a35e8bb5a03d699ac65007272c32ab0eded1631a8b605a43ff5bed" + 
 		     "8086072ba1e7cc2358baeca134c825a7",
@@ -105,9 +124,11 @@ public class DigestUtilsTest extends TestCase {
 	        "fcc7c71a557e2db966c3e9fa91746039",
 		     DigestUtils.sha384Hex("abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmn" +
 					   "hijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu"));
+    assertEquals(DigestUtils.sha384Hex(testData),
+            DigestUtils.sha384Hex(new ByteArrayInputStream(testData)));
     }    
 
-    public void testSha512() {
+    public void testSha512() throws IOException {
 	// Examples from FIPS 180-2
 	assertEquals("ddaf35a193617abacc417349ae20413112e6fa4e89a97ea20a9eeee64b55d39a" +
 	        "2192992a274fc1a836ba3c23a3feebbd454d4423643ce80e2a9ac94fa54ca49f",
@@ -119,9 +140,11 @@ public class DigestUtilsTest extends TestCase {
 		     "501d289e4900f7e4331b99dec4b5433ac7d329eeb6dd26545e96e55b874be909",
 		     DigestUtils.sha512Hex("abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmn" + 
 					   "hijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu"));
-    }
+    assertEquals(DigestUtils.sha512Hex(testData),
+            DigestUtils.sha512Hex(new ByteArrayInputStream(testData)));
+}
 
-    public void testShaHex() {
+    public void testShaHex() throws IOException {
         // Examples from FIPS 180-1
         assertEquals("a9993e364706816aba3e25717850c26c9cd0d89d", DigestUtils.shaHex("abc"));
 
@@ -130,5 +153,8 @@ public class DigestUtilsTest extends TestCase {
         assertEquals(
             "84983e441c3bd26ebaae4aa1f95129e5e54670f1",
             DigestUtils.shaHex("abcdbcdecdefdefgefghfghighij" + "hijkijkljklmklmnlmnomnopnopq"));
+        assertEquals(DigestUtils.shaHex(testData),
+                DigestUtils.shaHex(new ByteArrayInputStream(testData)));
+
     }    
 }
