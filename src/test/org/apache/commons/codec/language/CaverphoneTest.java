@@ -25,7 +25,7 @@ import org.apache.commons.codec.StringEncoderAbstractTest;
 
 /**
  * @author Apache Software Foundation
- * @version $Id: CaverphoneTest.java 588074 2007-10-24 23:04:56Z ggregory $
+ * @version $Id$
  */
 public class CaverphoneTest extends StringEncoderAbstractTest {
 

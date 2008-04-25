@@ -28,7 +28,7 @@ import org.apache.commons.codec.StringEncoder;
  *
  *
  * @author Apache Software Foundation
- * @version $Id: Caverphone.java 582447 2007-10-06 04:14:43Z bayard $
+ * @version $Id$
  * @see <a href="http://en.wikipedia.org/wiki/Caverphone">Wikipedia - Caverphone</a>
  * @see <a href="http://caversham.otago.ac.nz/files/working/ctp150804.pdf">Caverphone 2.0 specification</a>
  */
