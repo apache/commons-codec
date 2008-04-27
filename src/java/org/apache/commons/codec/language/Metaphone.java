@@ -34,6 +34,7 @@ import org.apache.commons.codec.StringEncoder;
  * Note, that this does not match the algorithm that ships with PHP, or the algorithm 
  * found in the Perl <a href="http://search.cpan.org/~mschwern/Text-Metaphone-1.96/Metaphone.pm">Text:Metaphone-1.96</a>.
  * They have had undocumented changes from the originally published algorithm. 
+ * For more information, see <a href="https://issues.apache.org/jira/browse/CODEC-57">CODEC-57</a>.
  * </p>
  * 
  * @author Apache Software Foundation
