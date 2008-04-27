@@ -17,6 +17,8 @@
 
 package org.apache.commons.codec;
 
+import java.util.Locale;
+
 import junit.framework.TestCase;
 
 /**
@@ -63,4 +65,36 @@ public abstract class StringEncoderAbstractTest extends TestCase {
         assertTrue( "An exception was not thrown when we tried to encode " +
                     "a Float object", exceptionThrown );
     }
+
+    public void testLocaleIndependence() throws Exception {
+        StringEncoder encoder = makeEncoder();
+
+        String[] data = { "I", "i", };
+
+        Locale orig = Locale.getDefault();
+        Locale[] locales = { Locale.ENGLISH, new Locale("tr"), Locale.getDefault() };
+
+        try {
+            for (int i = 0; i < data.length; i++) {
+                String ref = null;
+                for (int j = 0; j < locales.length; j++) {
+                    Locale.setDefault(locales[j]);
+                    if (j <= 0) {
+                        ref = encoder.encode(data[i]);
+                    } else {
+                        String cur = null;
+                        try {
+                            cur = encoder.encode(data[i]);
+                        } catch (Exception e) {
+                            fail(Locale.getDefault().toString() + ": " + e.getMessage());
+                        }
+                        assertEquals(Locale.getDefault().toString() + ": ", ref, cur);
+                    }
+                }
+            }
+        } finally {
+            Locale.setDefault(orig);
+        }
+    }
+
 }

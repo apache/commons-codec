@@ -923,7 +923,7 @@ public class DoubleMetaphone implements StringEncoder {
 		if (input.length() == 0) {
 			return null;
 		}
-		return input.toUpperCase();
+		return input.toUpperCase(java.util.Locale.ENGLISH);
 	}
 
     /**

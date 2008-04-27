@@ -85,10 +85,10 @@ public class Metaphone implements StringEncoder {
         }
         // single character is itself
         if (txt.length() == 1) {
-            return txt.toUpperCase() ;
+            return txt.toUpperCase(java.util.Locale.ENGLISH) ;
         }
       
-        char[] inwd = txt.toUpperCase().toCharArray() ;
+        char[] inwd = txt.toUpperCase(java.util.Locale.ENGLISH).toCharArray() ;
       
         StringBuffer local = new StringBuffer(40); // manipulate
         StringBuffer code = new StringBuffer(10) ; //   output
