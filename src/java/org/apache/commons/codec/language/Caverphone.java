@@ -56,7 +56,7 @@ public class Caverphone implements StringEncoder {
         }
 
         // 1. Convert to lowercase
-        txt = txt.toLowerCase();
+        txt = txt.toLowerCase(java.util.Locale.ENGLISH);
 
         // 2. Remove anything not A-Z
         txt = txt.replaceAll("[^a-z]", "");
