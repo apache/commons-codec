@@ -30,6 +30,11 @@ import org.apache.commons.codec.StringEncoder;
  * <CITE>Hanging on the Metaphone</CITE> by <CITE>Lawrence Philips</CITE> in <CITE>Computer Language of Dec. 1990, p
  * 39.</CITE>
  * </p>
+ * <p>
+ * Note, that this does not match the algorithm that ships with PHP, or the algorithm 
+ * found in the Perl <a href="http://search.cpan.org/~mschwern/Text-Metaphone-1.96/Metaphone.pm">Text:Metaphone-1.96</a>.
+ * They have had undocumented changes from the originally published algorithm. 
+ * </p>
  * 
  * @author Apache Software Foundation
  * @version $Id$
