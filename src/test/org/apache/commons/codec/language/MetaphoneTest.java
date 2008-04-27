@@ -406,7 +406,8 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
      * Tests (CODEC-57) Metaphone.metaphone(String) returns an empty string when passed the word "why"
      */
     public void testWhy() {
-        assertEquals("H", this.getMetaphone().metaphone("WHY"));
+        // PHP returns "H". The original metaphone returns an empty string. 
+        assertEquals("", this.getMetaphone().metaphone("WHY"));
     }
 
     public void testWordsWithCIA() {
