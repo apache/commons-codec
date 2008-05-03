@@ -711,4 +711,12 @@ public class Base64Test extends TestCase {
         return this._random;
     }
 
+    /**
+     * CODEC-68: isBase64 throws ArrayIndexOutOfBoundsException on some non-BASE64 bytes
+     */
+    public void testCodec68() {
+        byte[] x = new byte[] { 'n', 'A', '=', '=', (byte) 0x9c };
+        Base64.decodeBase64(x);
+    }
+
 }
