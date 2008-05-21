@@ -50,8 +50,8 @@ public class SoundexTest extends StringEncoderAbstractTest {
     }
 
     /**
-	 * @return Returns the _encoder.
-	 */
+     * @return Returns the _encoder.
+     */
     public Soundex getEncoder() {
         return this.encoder;
     }
@@ -61,9 +61,9 @@ public class SoundexTest extends StringEncoderAbstractTest {
     }
 
     /**
-	 * @param encoder
-	 *                  The encoder to set.
-	 */
+     * @param encoder
+     *                  The encoder to set.
+     */
     public void setEncoder(Soundex encoder) {
         this.encoder = encoder;
     }
@@ -157,9 +157,9 @@ public class SoundexTest extends StringEncoderAbstractTest {
     }
 
     /**
-	 * Examples from
-	 * http://www.bradandkathy.com/genealogy/overviewofsoundex.html
-	 */
+     * Examples from
+     * http://www.bradandkathy.com/genealogy/overviewofsoundex.html
+     */
     public void testEncodeBatch2() {
         assertEquals("A462", this.getEncoder().encode("Allricht"));
         assertEquals("E166", this.getEncoder().encode("Eberhard"));
@@ -180,9 +180,9 @@ public class SoundexTest extends StringEncoderAbstractTest {
     }
 
     /**
-	 * Examples from
-	 * http://www.archives.gov/research_room/genealogy/census/soundex.html
-	 */
+     * Examples from
+     * http://www.archives.gov/research_room/genealogy/census/soundex.html
+     */
     public void testEncodeBatch3() {
         assertEquals("W252", this.getEncoder().encode("Washington"));
         assertEquals("L000", this.getEncoder().encode("Lee"));
@@ -196,8 +196,8 @@ public class SoundexTest extends StringEncoderAbstractTest {
     }
 
     /**
-	 * Examples from: http://www.myatt.demon.co.uk/sxalg.htm
-	 */
+     * Examples from: http://www.myatt.demon.co.uk/sxalg.htm
+     */
     public void testEncodeBatch4() {
         assertEquals("H452", this.getEncoder().encode("HOLMES"));
         assertEquals("A355", this.getEncoder().encode("ADOMOMI"));
@@ -210,18 +210,18 @@ public class SoundexTest extends StringEncoderAbstractTest {
 
     }
 
-	public void testBadCharacters() {
-		assertEquals("H452", this.getEncoder().encode("HOL>MES"));
+    public void testBadCharacters() {
+        assertEquals("H452", this.getEncoder().encode("HOL>MES"));
 
-	}
+    }
 
     public void testEncodeIgnoreApostrophes() {
         this.encodeAll(new String[] { "OBrien", "'OBrien", "O'Brien", "OB'rien", "OBr'ien", "OBri'en", "OBrie'n", "OBrien'" }, "O165");
     }
 
     /**
-	 * Test data from http://www.myatt.demon.co.uk/sxalg.htm
-	 */
+     * Test data from http://www.myatt.demon.co.uk/sxalg.htm
+     */
     public void testEncodeIgnoreHyphens() {
         this.encodeAll(
             new String[] {
@@ -244,9 +244,9 @@ public class SoundexTest extends StringEncoderAbstractTest {
     }
 
     /**
-	 * Consonants from the same code group separated by W or H are treated as
-	 * one.
-	 */
+     * Consonants from the same code group separated by W or H are treated as
+     * one.
+     */
     public void testHWRuleEx1() {
         // From
         // http://www.archives.gov/research_room/genealogy/census/soundex.html:
@@ -256,20 +256,20 @@ public class SoundexTest extends StringEncoderAbstractTest {
     }
 
     /**
-	 * Consonants from the same code group separated by W or H are treated as
-	 * one.
-	 *
-	 * Test data from http://www.myatt.demon.co.uk/sxalg.htm
-	 */
+     * Consonants from the same code group separated by W or H are treated as
+     * one.
+     *
+     * Test data from http://www.myatt.demon.co.uk/sxalg.htm
+     */
     public void testHWRuleEx2() {
         assertEquals("B312", this.getEncoder().encode("BOOTHDAVIS"));
         assertEquals("B312", this.getEncoder().encode("BOOTH-DAVIS"));
     }
 
     /**
-	 * Consonants from the same code group separated by W or H are treated as
-	 * one.
-	 */
+     * Consonants from the same code group separated by W or H are treated as
+     * one.
+     */
     public void testHWRuleEx3() {
         assertEquals("S460", this.getEncoder().encode("Sgler"));
         assertEquals("S460", this.getEncoder().encode("Swhgler"));

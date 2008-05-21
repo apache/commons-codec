@@ -43,8 +43,8 @@ public class RefinedSoundexTest extends StringEncoderAbstractTest {
     }
 
     /**
-	 * @return Returns the encoder.
-	 */
+     * @return Returns the encoder.
+     */
     private RefinedSoundex getEncoder() {
         return this.encoder;
     }
@@ -54,9 +54,9 @@ public class RefinedSoundexTest extends StringEncoderAbstractTest {
     }
 
     /**
-	 * @param encoder
-	 *                  The encoder to set.
-	 */
+     * @param encoder
+     *                  The encoder to set.
+     */
     private void setEncoder(RefinedSoundex encoder) {
         this.encoder = encoder;
     }
@@ -82,11 +82,11 @@ public class RefinedSoundexTest extends StringEncoderAbstractTest {
         assertEquals(1, this.getEncoder().difference("Margaret", "Andrew"));
         assertEquals(1, this.getEncoder().difference("Janet", "Margaret"));
         // Examples from
-		// http://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_de-dz_8co5.asp
+        // http://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_de-dz_8co5.asp
         assertEquals(5, this.getEncoder().difference("Green", "Greene"));
         assertEquals(1, this.getEncoder().difference("Blotchet-Halls", "Greene"));
         // Examples from
-		// http://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_setu-sus_3o6w.asp
+        // http://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_setu-sus_3o6w.asp
         assertEquals(6, this.getEncoder().difference("Smith", "Smythe"));
         assertEquals(8, this.getEncoder().difference("Smithers", "Smythers"));
         assertEquals(5, this.getEncoder().difference("Anothers", "Brothers"));
@@ -109,8 +109,8 @@ public class RefinedSoundexTest extends StringEncoderAbstractTest {
         assertEquals("D6043", RefinedSoundex.US_ENGLISH.encode("dogs"));
     }
 
-	public void testGetMappingCodeNonLetter() {
-		char code = this.getEncoder().getMappingCode('#');
-		assertEquals("Code does not equals zero", 0, code);
-	}
+    public void testGetMappingCodeNonLetter() {
+        char code = this.getEncoder().getMappingCode('#');
+        assertEquals("Code does not equals zero", 0, code);
+    }
 }

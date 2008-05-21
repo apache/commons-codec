@@ -74,8 +74,8 @@ public class DigestUtilsTest extends TestCase {
     }
     
     /**
-	 * An MD5 hash converted to hex should always be 32 characters.
-	 */
+     * An MD5 hash converted to hex should always be 32 characters.
+     */
     public void testMD5HexLength() {
         String hashMe = "this is some string that is longer than 32 characters";
         String hash = DigestUtils.md5Hex(hashMe.getBytes());
@@ -87,8 +87,8 @@ public class DigestUtilsTest extends TestCase {
     }
 
     /**
-	 * An MD5 hash should always be a 16 element byte[].
-	 */
+     * An MD5 hash should always be a 16 element byte[].
+     */
     public void testMD5Length() {
         String hashMe = "this is some string that is longer than 16 characters";
         byte[] hash = DigestUtils.md5(hashMe.getBytes());
@@ -100,46 +100,46 @@ public class DigestUtilsTest extends TestCase {
     }
 
     public void testSha256() throws IOException {
-	// Examples from FIPS 180-2
-	assertEquals("ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
-		     DigestUtils.sha256Hex("abc"));
-	assertEquals("ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
-		     DigestUtils.sha256Hex("abc".getBytes()));
-	assertEquals("248d6a61d20638b8e5c026930c3e6039a33ce45964ff2167f6ecedd419db06c1",
-		     DigestUtils.sha256Hex("abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq"));
+    // Examples from FIPS 180-2
+    assertEquals("ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+             DigestUtils.sha256Hex("abc"));
+    assertEquals("ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+             DigestUtils.sha256Hex("abc".getBytes()));
+    assertEquals("248d6a61d20638b8e5c026930c3e6039a33ce45964ff2167f6ecedd419db06c1",
+             DigestUtils.sha256Hex("abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq"));
     
     assertEquals(DigestUtils.sha256Hex(testData),
             DigestUtils.sha256Hex(new ByteArrayInputStream(testData)));
     }
 
     public void testSha384() throws IOException {
-	// Examples from FIPS 180-2
-	assertEquals("cb00753f45a35e8bb5a03d699ac65007272c32ab0eded1631a8b605a43ff5bed" + 
-		     "8086072ba1e7cc2358baeca134c825a7",
-		     DigestUtils.sha384Hex("abc"));
-	assertEquals("cb00753f45a35e8bb5a03d699ac65007272c32ab0eded1631a8b605a43ff5bed" + 
-		     "8086072ba1e7cc2358baeca134c825a7",
-		     DigestUtils.sha384Hex("abc".getBytes()));
-	assertEquals("09330c33f71147e83d192fc782cd1b4753111b173b3b05d22fa08086e3b0f712" +
-	        "fcc7c71a557e2db966c3e9fa91746039",
-		     DigestUtils.sha384Hex("abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmn" +
-					   "hijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu"));
+    // Examples from FIPS 180-2
+    assertEquals("cb00753f45a35e8bb5a03d699ac65007272c32ab0eded1631a8b605a43ff5bed" + 
+             "8086072ba1e7cc2358baeca134c825a7",
+             DigestUtils.sha384Hex("abc"));
+    assertEquals("cb00753f45a35e8bb5a03d699ac65007272c32ab0eded1631a8b605a43ff5bed" + 
+             "8086072ba1e7cc2358baeca134c825a7",
+             DigestUtils.sha384Hex("abc".getBytes()));
+    assertEquals("09330c33f71147e83d192fc782cd1b4753111b173b3b05d22fa08086e3b0f712" +
+            "fcc7c71a557e2db966c3e9fa91746039",
+             DigestUtils.sha384Hex("abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmn" +
+                       "hijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu"));
     assertEquals(DigestUtils.sha384Hex(testData),
             DigestUtils.sha384Hex(new ByteArrayInputStream(testData)));
     }    
 
     public void testSha512() throws IOException {
-	// Examples from FIPS 180-2
-	assertEquals("ddaf35a193617abacc417349ae20413112e6fa4e89a97ea20a9eeee64b55d39a" +
-	        "2192992a274fc1a836ba3c23a3feebbd454d4423643ce80e2a9ac94fa54ca49f",
-		     DigestUtils.sha512Hex("abc"));
-	assertEquals("ddaf35a193617abacc417349ae20413112e6fa4e89a97ea20a9eeee64b55d39a" +
-		     "2192992a274fc1a836ba3c23a3feebbd454d4423643ce80e2a9ac94fa54ca49f",
-		     DigestUtils.sha512Hex("abc".getBytes()));
-	assertEquals("8e959b75dae313da8cf4f72814fc143f8f7779c6eb9f7fa17299aeadb6889018" + 
-		     "501d289e4900f7e4331b99dec4b5433ac7d329eeb6dd26545e96e55b874be909",
-		     DigestUtils.sha512Hex("abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmn" + 
-					   "hijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu"));
+    // Examples from FIPS 180-2
+    assertEquals("ddaf35a193617abacc417349ae20413112e6fa4e89a97ea20a9eeee64b55d39a" +
+            "2192992a274fc1a836ba3c23a3feebbd454d4423643ce80e2a9ac94fa54ca49f",
+             DigestUtils.sha512Hex("abc"));
+    assertEquals("ddaf35a193617abacc417349ae20413112e6fa4e89a97ea20a9eeee64b55d39a" +
+             "2192992a274fc1a836ba3c23a3feebbd454d4423643ce80e2a9ac94fa54ca49f",
+             DigestUtils.sha512Hex("abc".getBytes()));
+    assertEquals("8e959b75dae313da8cf4f72814fc143f8f7779c6eb9f7fa17299aeadb6889018" + 
+             "501d289e4900f7e4331b99dec4b5433ac7d329eeb6dd26545e96e55b874be909",
+             DigestUtils.sha512Hex("abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmn" + 
+                       "hijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu"));
     assertEquals(DigestUtils.sha512Hex(testData),
             DigestUtils.sha512Hex(new ByteArrayInputStream(testData)));
 }

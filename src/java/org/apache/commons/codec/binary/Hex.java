@@ -113,7 +113,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
 
            return out;
     }
-	
+
     /**
      * Converts an array of character bytes representing hexidecimal values into an
      * array of bytes of those same values. The returned array will be half the
@@ -128,10 +128,10 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      *                   to this function
      * @see #decodeHex(char[])
      */
-	public byte[] decode(byte[] array) throws DecoderException {
-		return decodeHex(new String(array).toCharArray());
-	}
-	
+    public byte[] decode(byte[] array) throws DecoderException {
+        return decodeHex(new String(array).toCharArray());
+    }
+    
     /**
      * Converts a String or an array of character bytes representing hexidecimal values into an
      * array of bytes of those same values. The returned array will be half the
@@ -146,15 +146,15 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      *                   to this function or the object is not a String or char[]
      * @see #decodeHex(char[])
      */
-	public Object decode(Object object) throws DecoderException {
-		try {
+    public Object decode(Object object) throws DecoderException {
+        try {
             char[] charArray = object instanceof String ? ((String) object).toCharArray() : (char[]) object;
-		    return decodeHex(charArray);
-		} catch (ClassCastException e) {
-		    throw new DecoderException(e.getMessage());
-		}
-	}
-	
+            return decodeHex(charArray);
+        } catch (ClassCastException e) {
+            throw new DecoderException(e.getMessage());
+        }
+    }
+
     /**
      * Converts an array of bytes into an array of bytes for the characters representing the
      * hexidecimal values of each byte in order. The returned array will be
@@ -165,9 +165,9 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * @return A byte[] containing the bytes of the hexidecimal characters
      * @see #encodeHex(byte[])
      */
-	public byte[] encode(byte[] array) {
-		return new String(encodeHex(array)).getBytes();
-	}
+    public byte[] encode(byte[] array) {
+        return new String(encodeHex(array)).getBytes();
+    }
 
     /**
      * Converts a String or an array of bytes into an array of characters representing the
@@ -180,14 +180,14 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * @throws EncoderException Thrown if the given object is not a String or byte[]
      * @see #encodeHex(byte[])
      */
-	public Object encode(Object object) throws EncoderException {	
-		try {
+    public Object encode(Object object) throws EncoderException {    
+        try {
             byte[] byteArray = object instanceof String ? ((String) object).getBytes() : (byte[]) object;
-			return encodeHex(byteArray);
-		} catch (ClassCastException e) {
-			throw new EncoderException(e.getMessage());
-		}
-	}
+            return encodeHex(byteArray);
+        } catch (ClassCastException e) {
+            throw new EncoderException(e.getMessage());
+        }
+    }
 
 }
 

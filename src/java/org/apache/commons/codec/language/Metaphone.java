@@ -135,7 +135,7 @@ public class Metaphone implements StringEncoder {
         int n = 0 ;
 
         while ((code.length() < this.getMaxCodeLen()) && 
-        	   (n < wdsz) ) { // max code size of 4 works well
+               (n < wdsz) ) { // max code size of 4 works well
             char symb = local.charAt(n) ;
             // remove duplicate letters except C
             if ((symb != 'C') && (isPreviousChar( local, n, symb )) ) {
@@ -150,7 +150,7 @@ public class Metaphone implements StringEncoder {
                 case 'B' :
                     if ( isPreviousChar(local, n, 'M') && 
                          isLastChar(wdsz, n) ) { // B is silent if word ends in MB
-						break;
+                        break;
                     }
                     code.append(symb);
                     break;
@@ -171,13 +171,13 @@ public class Metaphone implements StringEncoder {
                         break; // CI,CE,CY -> S
                     }
                     if (isPreviousChar(local, n, 'S') &&
-						isNextChar(local, n, 'H') ) { // SCH->sk
+                        isNextChar(local, n, 'H') ) { // SCH->sk
                         code.append('K') ; 
                         break ;
                     }
                     if (isNextChar(local, n, 'H')) { // detect CH
                         if ((n == 0) && 
-                        	(wdsz >= 3) && 
+                            (wdsz >= 3) && 
                             isVowel(local,2) ) { // CH consonant -> K consonant
                             code.append('K');
                         } else { 
@@ -207,8 +207,8 @@ public class Metaphone implements StringEncoder {
                         break;
                     }
                     if ((n > 0) && 
-                    	( regionMatch(local, n, "GN") ||
-					      regionMatch(local, n, "GNED") ) ) {
+                        ( regionMatch(local, n, "GN") ||
+                          regionMatch(local, n, "GNED") ) ) {
                         break; // silent G
                     }
                     if (isPreviousChar(local, n, 'G')) {
@@ -266,8 +266,8 @@ public class Metaphone implements StringEncoder {
                     break;
                 case 'S' :
                     if (regionMatch(local,n,"SH") || 
-					    regionMatch(local,n,"SIO") || 
-					    regionMatch(local,n,"SIA")) {
+                        regionMatch(local,n,"SIO") || 
+                        regionMatch(local,n,"SIA")) {
                         code.append('X');
                     } else {
                         code.append('S');
@@ -275,12 +275,12 @@ public class Metaphone implements StringEncoder {
                     break;
                 case 'T' :
                     if (regionMatch(local,n,"TIA") || 
-						regionMatch(local,n,"TIO")) {
+                        regionMatch(local,n,"TIO")) {
                         code.append('X'); 
                         break;
                     }
                     if (regionMatch(local,n,"TCH")) {
-						// Silent if in "TCH"
+                        // Silent if in "TCH"
                         break;
                     }
                     // substitute numeral 0 for TH (resembles theta after all)
@@ -294,7 +294,7 @@ public class Metaphone implements StringEncoder {
                     code.append('F'); break ;
                 case 'W' : case 'Y' : // silent if not followed by vowel
                     if (!isLastChar(wdsz,n) && 
-                    	isVowel(local,n+1)) {
+                        isVowel(local,n+1)) {
                         code.append(symb);
                     }
                     break ;
@@ -307,47 +307,47 @@ public class Metaphone implements StringEncoder {
                 n++ ;
             } // end else from symb != 'C'
             if (code.length() > this.getMaxCodeLen()) { 
-            	code.setLength(this.getMaxCodeLen()); 
+                code.setLength(this.getMaxCodeLen()); 
             }
         }
         return code.toString();
     }
 
-	private boolean isVowel(StringBuffer string, int index) {
-		return VOWELS.indexOf(string.charAt(index)) >= 0;
-	}
+    private boolean isVowel(StringBuffer string, int index) {
+        return VOWELS.indexOf(string.charAt(index)) >= 0;
+    }
 
-	private boolean isPreviousChar(StringBuffer string, int index, char c) {
-		boolean matches = false;
-		if( index > 0 &&
-		    index < string.length() ) {
-			matches = string.charAt(index - 1) == c;
-		}
-		return matches;
-	}
+    private boolean isPreviousChar(StringBuffer string, int index, char c) {
+        boolean matches = false;
+        if( index > 0 &&
+            index < string.length() ) {
+            matches = string.charAt(index - 1) == c;
+        }
+        return matches;
+    }
 
-	private boolean isNextChar(StringBuffer string, int index, char c) {
-		boolean matches = false;
-		if( index >= 0 &&
-		    index < string.length() - 1 ) {
-			matches = string.charAt(index + 1) == c;
-		}
-		return matches;
-	}
+    private boolean isNextChar(StringBuffer string, int index, char c) {
+        boolean matches = false;
+        if( index >= 0 &&
+            index < string.length() - 1 ) {
+            matches = string.charAt(index + 1) == c;
+        }
+        return matches;
+    }
 
-	private boolean regionMatch(StringBuffer string, int index, String test) {
-		boolean matches = false;
-		if( index >= 0 &&
-		    (index + test.length() - 1) < string.length() ) {
-			String substring = string.substring( index, index + test.length());
-			matches = substring.equals( test );
-		}
-		return matches;
-	}
+    private boolean regionMatch(StringBuffer string, int index, String test) {
+        boolean matches = false;
+        if( index >= 0 &&
+            (index + test.length() - 1) < string.length() ) {
+            String substring = string.substring( index, index + test.length());
+            matches = substring.equals( test );
+        }
+        return matches;
+    }
 
-	private boolean isLastChar(int wdsz, int n) {
-		return n + 1 == wdsz;
-	} 
+    private boolean isLastChar(int wdsz, int n) {
+        return n + 1 == wdsz;
+    } 
     
     
     /**

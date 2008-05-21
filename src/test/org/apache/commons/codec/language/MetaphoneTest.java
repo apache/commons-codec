@@ -64,8 +64,8 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
         }
     }
     /**
-	 * @return Returns the metaphone.
-	 */
+     * @return Returns the metaphone.
+     */
     private Metaphone getMetaphone() {
         return this.metaphone;
     }
@@ -75,9 +75,9 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
     }
 
     /**
-	 * @param metaphone
-	 *                  The metaphone to set.
-	 */
+     * @param metaphone
+     *                  The metaphone to set.
+     */
     private void setMetaphone(Metaphone metaphone) {
         this.metaphone = metaphone;
     }
@@ -101,27 +101,27 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
     }
 
     /**
-	 * Matches computed from http://www.lanw.com/java/phonetic/default.htm
-	 */
+     * Matches computed from http://www.lanw.com/java/phonetic/default.htm
+     */
     public void testIsMetaphoneEqual2() {
         this.assertMetaphoneEqual(new String[][] { { "Lawrence", "Lorenza" }, {
                 "Gary", "Cahra" }, });
     }
 
     /**
-	 * Initial AE case.
-	 * 
-	 * Match data computed from http://www.lanw.com/java/phonetic/default.htm
-	 */
+     * Initial AE case.
+     * 
+     * Match data computed from http://www.lanw.com/java/phonetic/default.htm
+     */
     public void testIsMetaphoneEqualAero() {
         this.assertIsMetaphoneEqual("Aero", new String[] { "Eure" });
     }
 
     /**
-	 * Initial WH case.
-	 * 
-	 * Match data computed from http://www.lanw.com/java/phonetic/default.htm
-	 */
+     * Initial WH case.
+     * 
+     * Match data computed from http://www.lanw.com/java/phonetic/default.htm
+     */
     public void testIsMetaphoneEqualWhite() {
         this.assertIsMetaphoneEqual(
             "White",
@@ -129,17 +129,17 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
     }
 
     /**
-	 * Initial A, not followed by an E case.
-	 * 
-	 * Match data computed from http://www.lanw.com/java/phonetic/default.htm
-	 */
+     * Initial A, not followed by an E case.
+     * 
+     * Match data computed from http://www.lanw.com/java/phonetic/default.htm
+     */
     public void testIsMetaphoneEqualAlbert() {
         this.assertIsMetaphoneEqual("Albert", new String[] { "Ailbert", "Alberik", "Albert", "Alberto", "Albrecht" });
     }
 
     /**
-	 * Match data computed from http://www.lanw.com/java/phonetic/default.htm
-	 */
+     * Match data computed from http://www.lanw.com/java/phonetic/default.htm
+     */
     public void testIsMetaphoneEqualGary() {
         this.assertIsMetaphoneEqual(
             "Gary",
@@ -191,8 +191,8 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
     }
 
     /**
-	 * Match data computed from http://www.lanw.com/java/phonetic/default.htm
-	 */
+     * Match data computed from http://www.lanw.com/java/phonetic/default.htm
+     */
     public void testIsMetaphoneEqualJohn() {
         this.assertIsMetaphoneEqual(
             "John",
@@ -259,10 +259,10 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
     }
 
     /**
-	 * Initial KN case.
-	 * 
-	 * Match data computed from http://www.lanw.com/java/phonetic/default.htm
-	 */
+     * Initial KN case.
+     * 
+     * Match data computed from http://www.lanw.com/java/phonetic/default.htm
+     */
     public void testIsMetaphoneEqualKnight() {
         this.assertIsMetaphoneEqual(
             "Knight",
@@ -285,8 +285,8 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
                 "Nydia" });
     }
     /**
-	 * Match data computed from http://www.lanw.com/java/phonetic/default.htm
-	 */
+     * Match data computed from http://www.lanw.com/java/phonetic/default.htm
+     */
     public void testIsMetaphoneEqualMary() {
         this.assertIsMetaphoneEqual(
             "Mary",
@@ -315,15 +315,15 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
     }
 
     /**
-	 * Match data computed from http://www.lanw.com/java/phonetic/default.htm
-	 */
+     * Match data computed from http://www.lanw.com/java/phonetic/default.htm
+     */
     public void testIsMetaphoneEqualParis() {
         this.assertIsMetaphoneEqual("Paris", new String[] { "Pearcy", "Perris", "Piercy", "Pierz", "Pryse" });
     }
 
     /**
-	 * Match data computed from http://www.lanw.com/java/phonetic/default.htm
-	 */
+     * Match data computed from http://www.lanw.com/java/phonetic/default.htm
+     */
     public void testIsMetaphoneEqualPeter() {
         this.assertIsMetaphoneEqual(
             "Peter",
@@ -331,15 +331,15 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
     }
 
     /**
-	 * Match data computed from http://www.lanw.com/java/phonetic/default.htm
-	 */
+     * Match data computed from http://www.lanw.com/java/phonetic/default.htm
+     */
     public void testIsMetaphoneEqualRay() {
         this.assertIsMetaphoneEqual("Ray", new String[] { "Ray", "Rey", "Roi", "Roy", "Ruy" });
     }
 
     /**
-	 * Match data computed from http://www.lanw.com/java/phonetic/default.htm
-	 */
+     * Match data computed from http://www.lanw.com/java/phonetic/default.htm
+     */
     public void testIsMetaphoneEqualSusan() {
         this.assertIsMetaphoneEqual(
             "Susan",
@@ -359,17 +359,17 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
     }
 
     /**
-	 * Initial WR case.
-	 * 
-	 * Match data computed from http://www.lanw.com/java/phonetic/default.htm
-	 */
+     * Initial WR case.
+     * 
+     * Match data computed from http://www.lanw.com/java/phonetic/default.htm
+     */
     public void testIsMetaphoneEqualWright() {
         this.assertIsMetaphoneEqual("Wright", new String[] { "Rota", "Rudd", "Ryde" });
     }
 
     /**
-	 * Match data computed from http://www.lanw.com/java/phonetic/default.htm
-	 */
+     * Match data computed from http://www.lanw.com/java/phonetic/default.htm
+     */
     public void testIsMetaphoneEqualXalan() {
         this.assertIsMetaphoneEqual(
             "Xalan",
@@ -377,7 +377,7 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
     }
 
     public void testMetaphone() {
-		assertEquals("HL", this.getMetaphone().metaphone("howl"));
+        assertEquals("HL", this.getMetaphone().metaphone("howl"));
         assertEquals("TSTN", this.getMetaphone().metaphone("testing"));
         assertEquals("0", this.getMetaphone().metaphone("The"));
         assertEquals("KK", this.getMetaphone().metaphone("quick"));
@@ -389,18 +389,18 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
         assertEquals("LS", this.getMetaphone().metaphone("lazy"));
         assertEquals("TKS", this.getMetaphone().metaphone("dogs"));
     }
-	
-	public void testWordEndingInMB() {
-		assertEquals( "KM", this.getMetaphone().metaphone("COMB") );
-		assertEquals( "TM", this.getMetaphone().metaphone("TOMB") );
-		assertEquals( "WM", this.getMetaphone().metaphone("WOMB") );
-	}
+    
+    public void testWordEndingInMB() {
+        assertEquals( "KM", this.getMetaphone().metaphone("COMB") );
+        assertEquals( "TM", this.getMetaphone().metaphone("TOMB") );
+        assertEquals( "WM", this.getMetaphone().metaphone("WOMB") );
+    }
 
-	public void testDiscardOfSCEOrSCIOrSCY() {
-		assertEquals( "SNS", this.getMetaphone().metaphone("SCIENCE") );
-		assertEquals( "SN", this.getMetaphone().metaphone("SCENE") );
-		assertEquals( "S", this.getMetaphone().metaphone("SCY") );
-	}
+    public void testDiscardOfSCEOrSCIOrSCY() {
+        assertEquals( "SNS", this.getMetaphone().metaphone("SCIENCE") );
+        assertEquals( "SN", this.getMetaphone().metaphone("SCENE") );
+        assertEquals( "S", this.getMetaphone().metaphone("SCY") );
+    }
 
     /**
      * Tests (CODEC-57) Metaphone.metaphone(String) returns an empty string when passed the word "why"
@@ -414,60 +414,60 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
         assertEquals( "XP", this.getMetaphone().metaphone("CIAPO") );
     }
 
-	public void testTranslateOfSCHAndCH() {
-		assertEquals( "SKTL", this.getMetaphone().metaphone("SCHEDULE") );
-		assertEquals( "SKMT", this.getMetaphone().metaphone("SCHEMATIC") );
+    public void testTranslateOfSCHAndCH() {
+        assertEquals( "SKTL", this.getMetaphone().metaphone("SCHEDULE") );
+        assertEquals( "SKMT", this.getMetaphone().metaphone("SCHEMATIC") );
 
-		assertEquals( "KRKT", this.getMetaphone().metaphone("CHARACTER") );
-		assertEquals( "TX", this.getMetaphone().metaphone("TEACH") );
-	}
+        assertEquals( "KRKT", this.getMetaphone().metaphone("CHARACTER") );
+        assertEquals( "TX", this.getMetaphone().metaphone("TEACH") );
+    }
 
-	public void testTranslateToJOfDGEOrDGIOrDGY() {
-		assertEquals( "TJ", this.getMetaphone().metaphone("DODGY") );
-		assertEquals( "TJ", this.getMetaphone().metaphone("DODGE") );
-		assertEquals( "AJMT", this.getMetaphone().metaphone("ADGIEMTI") );
-	}
+    public void testTranslateToJOfDGEOrDGIOrDGY() {
+        assertEquals( "TJ", this.getMetaphone().metaphone("DODGY") );
+        assertEquals( "TJ", this.getMetaphone().metaphone("DODGE") );
+        assertEquals( "AJMT", this.getMetaphone().metaphone("ADGIEMTI") );
+    }
 
-	public void testDiscardOfSilentHAfterG() {
-		assertEquals( "KNT", this.getMetaphone().metaphone("GHENT") );
-		assertEquals( "B", this.getMetaphone().metaphone("BAUGH") );
-	}
+    public void testDiscardOfSilentHAfterG() {
+        assertEquals( "KNT", this.getMetaphone().metaphone("GHENT") );
+        assertEquals( "B", this.getMetaphone().metaphone("BAUGH") );
+    }
 
-	public void testDiscardOfSilentGN() {
-		assertEquals( "N", this.getMetaphone().metaphone("GNU") );
-		assertEquals( "SNT", this.getMetaphone().metaphone("SIGNED") );
-	}
+    public void testDiscardOfSilentGN() {
+        assertEquals( "N", this.getMetaphone().metaphone("GNU") );
+        assertEquals( "SNT", this.getMetaphone().metaphone("SIGNED") );
+    }
 
-	public void testPHTOF() {
-		assertEquals( "FX", this.getMetaphone().metaphone("PHISH") );
-	}
+    public void testPHTOF() {
+        assertEquals( "FX", this.getMetaphone().metaphone("PHISH") );
+    }
 
-	public void testSHAndSIOAndSIAToX() {
-		assertEquals( "XT", this.getMetaphone().metaphone("SHOT") );
-		assertEquals( "OTXN", this.getMetaphone().metaphone("ODSIAN") );
-		assertEquals( "PLXN", this.getMetaphone().metaphone("PULSION") );
-	}
+    public void testSHAndSIOAndSIAToX() {
+        assertEquals( "XT", this.getMetaphone().metaphone("SHOT") );
+        assertEquals( "OTXN", this.getMetaphone().metaphone("ODSIAN") );
+        assertEquals( "PLXN", this.getMetaphone().metaphone("PULSION") );
+    }
 
-	public void testTIOAndTIAToX() {
-		assertEquals( "OX", this.getMetaphone().metaphone("OTIA") );
-		assertEquals( "PRXN", this.getMetaphone().metaphone("PORTION") );
-	}
+    public void testTIOAndTIAToX() {
+        assertEquals( "OX", this.getMetaphone().metaphone("OTIA") );
+        assertEquals( "PRXN", this.getMetaphone().metaphone("PORTION") );
+    }
 
-	public void testTCH() {
-		assertEquals( "RX", this.getMetaphone().metaphone("RETCH") );
-		assertEquals( "WX", this.getMetaphone().metaphone("WATCH") );
-	}
+    public void testTCH() {
+        assertEquals( "RX", this.getMetaphone().metaphone("RETCH") );
+        assertEquals( "WX", this.getMetaphone().metaphone("WATCH") );
+    }
 
-	public void testExceedLength() {
-		// should be AKSKS, but istruncated by Max Code Length
-		assertEquals( "AKSK", this.getMetaphone().metaphone("AXEAXE") );
-	}
+    public void testExceedLength() {
+        // should be AKSKS, but istruncated by Max Code Length
+        assertEquals( "AKSK", this.getMetaphone().metaphone("AXEAXE") );
+    }
 
-	public void testSetMaxLengthWithTruncation() {
-		// should be AKSKS, but istruncated by Max Code Length
-		this.getMetaphone().setMaxCodeLen( 6 );
-		assertEquals( "AKSKSK", this.getMetaphone().metaphone("AXEAXEAXE") );
-	}
+    public void testSetMaxLengthWithTruncation() {
+        // should be AKSKS, but istruncated by Max Code Length
+        this.getMetaphone().setMaxCodeLen( 6 );
+        assertEquals( "AKSKSK", this.getMetaphone().metaphone("AXEAXEAXE") );
+    }
 
     public void validateFixture(String[][] pairs) {
         if (pairs.length == 0) {

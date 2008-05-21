@@ -807,24 +807,24 @@ public class DoubleMetaphone implements StringEncoder {
      * Complex condition 0 for 'C'
      */
     private boolean conditionC0(String value, int index) {
-		if (contains(value, index, 4, "CHIA")) {
-			return true;
-		} else if (index <= 1) {
-			return false;
-		} else if (isVowel(charAt(value, index - 2))) {
-			return false;
-		} else if (!contains(value, index - 1, 3, "ACH")) {
-			return false;
-		} else {
-			char c = charAt(value, index + 2);
-			return (c != 'I' && c != 'E') ||
-					contains(value, index - 2, 6, "BACHER", "MACHER");
-		}
-	}
+        if (contains(value, index, 4, "CHIA")) {
+            return true;
+        } else if (index <= 1) {
+            return false;
+        } else if (isVowel(charAt(value, index - 2))) {
+            return false;
+        } else if (!contains(value, index - 1, 3, "ACH")) {
+            return false;
+        } else {
+            char c = charAt(value, index + 2);
+            return (c != 'I' && c != 'E') ||
+                    contains(value, index - 2, 6, "BACHER", "MACHER");
+        }
+    }
     
     /**
-	 * Complex condition 0 for 'CH'
-	 */
+     * Complex condition 0 for 'CH'
+     */
     private boolean conditionCH0(String value, int index) {
         if (index != 0) {
             return false;
@@ -870,20 +870,20 @@ public class DoubleMetaphone implements StringEncoder {
      * Complex condition 0 for 'M'
      */
     private boolean conditionM0(String value, int index) {
-		if (charAt(value, index + 1) == 'M') {
-			return true;
-		}
-		return contains(value, index - 1, 3, "UMB") &&
-				((index + 1) == value.length() - 1 || contains(value,
-						index + 2, 2, "ER"));
-	}
+        if (charAt(value, index + 1) == 'M') {
+            return true;
+        }
+        return contains(value, index - 1, 3, "UMB") &&
+                ((index + 1) == value.length() - 1 || contains(value,
+                        index + 2, 2, "ER"));
+    }
     
     //-- BEGIN HELPER FUNCTIONS --//
 
     /**
-	 * Determines whether or not a value is of slavo-germanic orgin. A value is
-	 * of slavo-germanic origin if it contians any of 'W', 'K', 'CZ', or 'WITZ'.
-	 */
+     * Determines whether or not a value is of slavo-germanic orgin. A value is
+     * of slavo-germanic origin if it contians any of 'W', 'K', 'CZ', or 'WITZ'.
+     */
     private boolean isSlavoGermanic(String value) {
         return value.indexOf('W') > -1 || value.indexOf('K') > -1 || 
             value.indexOf("CZ") > -1 || value.indexOf("WITZ") > -1;
@@ -916,21 +916,21 @@ public class DoubleMetaphone implements StringEncoder {
      * Cleans the input
      */    
     private String cleanInput(String input) {
-		if (input == null) {
-			return null;
-		}
-		input = input.trim();
-		if (input.length() == 0) {
-			return null;
-		}
-		return input.toUpperCase(java.util.Locale.ENGLISH);
-	}
+        if (input == null) {
+            return null;
+        }
+        input = input.trim();
+        if (input.length() == 0) {
+            return null;
+        }
+        return input.toUpperCase(java.util.Locale.ENGLISH);
+    }
 
     /**
-	 * Gets the character at index <code>index</code> if available, otherwise
-	 * it returns <code>Character.MIN_VALUE</code> so that there is some sort
-	 * of a default
-	 */    
+     * Gets the character at index <code>index</code> if available, otherwise
+     * it returns <code>Character.MIN_VALUE</code> so that there is some sort
+     * of a default
+     */    
     protected char charAt(String value, int index) {
         if (index < 0 || index >= value.length()) {
             return Character.MIN_VALUE;

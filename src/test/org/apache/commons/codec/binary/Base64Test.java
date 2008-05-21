@@ -464,7 +464,7 @@ public class Base64Test extends TestCase {
 
     public void testKnownEncodings() {
         assertEquals("VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2dzLg==",new String(Base64.encodeBase64("The quick brown fox jumped over the lazy dogs.".getBytes())));
-	assertEquals("YmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJs\r\nYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFo\r\nIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBi\r\nbGFoIGJsYWg=\r\n",new String(Base64.encodeBase64Chunked("blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah".getBytes())));
+        assertEquals("YmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJs\r\nYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFo\r\nIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBi\r\nbGFoIGJsYWg=\r\n",new String(Base64.encodeBase64Chunked("blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah".getBytes())));
         assertEquals("SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN0IG9mIHRpbWVzLg==",new String(Base64.encodeBase64("It was the best of times, it was the worst of times.".getBytes())));
         assertEquals("aHR0cDovL2pha2FydGEuYXBhY2hlLm9yZy9jb21tbW9ucw==",new String(Base64.encodeBase64("http://jakarta.apache.org/commmons".getBytes())));
         assertEquals("QWFCYkNjRGRFZUZmR2dIaElpSmpLa0xsTW1Obk9vUHBRcVJyU3NUdFV1VnZXd1h4WXlaeg==",new String(Base64.encodeBase64("AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz".getBytes())));
@@ -481,38 +481,38 @@ public class Base64Test extends TestCase {
         assertEquals("xyzzy!",new String(Base64.decodeBase64("eHl6enkh".getBytes())));
         } 
 
-	public void testNonBase64Test() throws Exception {
+    public void testNonBase64Test() throws Exception {
 
-		byte[] bArray = { '%' };
+        byte[] bArray = { '%' };
 
-		assertFalse( "Invalid Base64 array was incorrectly validated as " +
-					 "an array of Base64 encoded data", 
-					 Base64.isArrayByteBase64( bArray ) );
+        assertFalse( "Invalid Base64 array was incorrectly validated as " +
+                     "an array of Base64 encoded data", 
+                     Base64.isArrayByteBase64( bArray ) );
         
-		boolean exceptionThrown = false;
+        boolean exceptionThrown = false;
 
-		try {
-			Base64 b64 = new Base64();
-			byte[] result = b64.decode( bArray );
+        try {
+            Base64 b64 = new Base64();
+            byte[] result = b64.decode( bArray );
             
-			assertTrue( "The result should be empty as the test encoded content did " +
-				"not contain any valid base 64 characters", result.length == 0);
-		} 
-		catch( Exception e ) {
-			exceptionThrown = true;
-		}
+            assertTrue( "The result should be empty as the test encoded content did " +
+                "not contain any valid base 64 characters", result.length == 0);
+        } 
+        catch( Exception e ) {
+            exceptionThrown = true;
+        }
 
-		assertFalse( "Exception was thrown when trying to decode " +
-					"invalid base64 encoded data - RFC 2045 requires that all " +
-					"non base64 character be discarded, an exception should not" +
-					" have been thrown", exceptionThrown );
+        assertFalse( "Exception was thrown when trying to decode " +
+                    "invalid base64 encoded data - RFC 2045 requires that all " +
+                    "non base64 character be discarded, an exception should not" +
+                    " have been thrown", exceptionThrown );
           
 
-	}
+    }
     
-	public void testIgnoringNonBase64InDecode() throws Exception {
-		assertEquals("The quick brown fox jumped over the lazy dogs.",new String(Base64.decodeBase64("VGhlIH@$#$@%F1aWN@#@#@@rIGJyb3duIGZve\n\r\t%#%#%#%CBqd##$#$W1wZWQgb3ZlciB0aGUgbGF6eSBkb2dzLg==".getBytes())));
-	}
+    public void testIgnoringNonBase64InDecode() throws Exception {
+        assertEquals("The quick brown fox jumped over the lazy dogs.",new String(Base64.decodeBase64("VGhlIH@$#$@%F1aWN@#@#@@rIGJyb3duIGZve\n\r\t%#%#%#%CBqd##$#$W1wZWQgb3ZlciB0aGUgbGF6eSBkb2dzLg==".getBytes())));
+    }
 
     public void testIsArrayByteBase64() {        
         assertFalse(Base64.isArrayByteBase64(new byte[] {Byte.MIN_VALUE}));
@@ -643,7 +643,7 @@ public class Base64Test extends TestCase {
         BigInteger bigInt1 = new BigInteger("85739377120809420210425962799" +
             "0318636601332086981");
 
-    	assertEquals(encodedInt1, new String(Base64.encodeInteger(bigInt1)));
+        assertEquals(encodedInt1, new String(Base64.encodeInteger(bigInt1)));
         assertEquals(bigInt1, Base64.decodeInteger(encodedInt1.getBytes()));
     }
 

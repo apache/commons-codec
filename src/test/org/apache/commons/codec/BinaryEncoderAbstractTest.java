@@ -40,10 +40,10 @@ public abstract class BinaryEncoderAbstractTest extends TestCase {
 
     public void testEncodeNull() throws Exception {
         BinaryEncoder encoder = makeEncoder();
-	try {
-	    encoder.encode(null);
-	} catch( EncoderException ee ) {
-	    // An exception should be thrown
-	}
+        try {
+            encoder.encode(null);
+        } catch( EncoderException ee ) {
+            // An exception should be thrown
+        }
     }        
 }
