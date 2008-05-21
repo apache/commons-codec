@@ -30,13 +30,13 @@ import org.apache.commons.codec.StringEncoder;
 final class SoundexUtils {
 
     /**
-	 * Cleans up the input string before Soundex processing by only returning
-	 * upper case letters.
-	 * 
-	 * @param str
-	 *                  The String to clean.
-	 * @return A clean String.
-	 */
+     * Cleans up the input string before Soundex processing by only returning
+     * upper case letters.
+     * 
+     * @param str
+     *                  The String to clean.
+     * @return A clean String.
+     */
     static String clean(String str) {
         if (str == null || str.length() == 0) {
             return str;
@@ -56,55 +56,55 @@ final class SoundexUtils {
     }
 
     /**
-	 * Encodes the Strings and returns the number of characters in the two
-	 * encoded Strings that are the same.
-	 * <ul>
-	 * <li>For Soundex, this return value ranges from 0 through 4: 0 indicates
-	 * little or no similarity, and 4 indicates strong similarity or identical
-	 * values.</li>
-	 * <li>For refined Soundex, the return value can be greater than 4.</li>
-	 * </ul>
-	 * 
-	 * @param encoder
-	 *                  The encoder to use to encode the Strings.
-	 * @param s1
-	 *                  A String that will be encoded and compared.
-	 * @param s2
-	 *                  A String that will be encoded and compared.
-	 * @return The number of characters in the two Soundex encoded Strings that
-	 *             are the same.
-	 * 
-	 * @see #differenceEncoded(String,String)
-	 * @see <a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_de-dz_8co5.asp">
-	 *          MS T-SQL DIFFERENCE</a>
-	 * 
-	 * @throws EncoderException
-	 *                  if an error occurs encoding one of the strings
-	 */
+     * Encodes the Strings and returns the number of characters in the two
+     * encoded Strings that are the same.
+     * <ul>
+     * <li>For Soundex, this return value ranges from 0 through 4: 0 indicates
+     * little or no similarity, and 4 indicates strong similarity or identical
+     * values.</li>
+     * <li>For refined Soundex, the return value can be greater than 4.</li>
+     * </ul>
+     * 
+     * @param encoder
+     *                  The encoder to use to encode the Strings.
+     * @param s1
+     *                  A String that will be encoded and compared.
+     * @param s2
+     *                  A String that will be encoded and compared.
+     * @return The number of characters in the two Soundex encoded Strings that
+     *             are the same.
+     * 
+     * @see #differenceEncoded(String,String)
+     * @see <a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_de-dz_8co5.asp">
+     *          MS T-SQL DIFFERENCE</a>
+     * 
+     * @throws EncoderException
+     *                  if an error occurs encoding one of the strings
+     */
     static int difference(StringEncoder encoder, String s1, String s2) throws EncoderException {
         return differenceEncoded(encoder.encode(s1), encoder.encode(s2));
     }
 
     /**
-	 * Returns the number of characters in the two Soundex encoded Strings that
-	 * are the same.
-	 * <ul>
-	 * <li>For Soundex, this return value ranges from 0 through 4: 0 indicates
-	 * little or no similarity, and 4 indicates strong similarity or identical
-	 * values.</li>
-	 * <li>For refined Soundex, the return value can be greater than 4.</li>
-	 * </ul>
-	 * 
-	 * @param es1
-	 *                  An encoded String.
-	 * @param es2
-	 *                  An encoded String.
-	 * @return The number of characters in the two Soundex encoded Strings that
-	 *             are the same.
-	 * 
-	 * @see <a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_de-dz_8co5.asp">
-	 *          MS T-SQL DIFFERENCE</a>
-	 */
+     * Returns the number of characters in the two Soundex encoded Strings that
+     * are the same.
+     * <ul>
+     * <li>For Soundex, this return value ranges from 0 through 4: 0 indicates
+     * little or no similarity, and 4 indicates strong similarity or identical
+     * values.</li>
+     * <li>For refined Soundex, the return value can be greater than 4.</li>
+     * </ul>
+     * 
+     * @param es1
+     *                  An encoded String.
+     * @param es2
+     *                  An encoded String.
+     * @return The number of characters in the two Soundex encoded Strings that
+     *             are the same.
+     * 
+     * @see <a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_de-dz_8co5.asp">
+     *          MS T-SQL DIFFERENCE</a>
+     */
     static int differenceEncoded(String es1, String es2) {
 
         if (es1 == null || es2 == null) {
