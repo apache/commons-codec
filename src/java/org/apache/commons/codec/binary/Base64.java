@@ -22,6 +22,7 @@ import org.apache.commons.codec.BinaryEncoder;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 
 /**
@@ -38,7 +39,6 @@ import java.math.BigInteger;
  * @version $Id$
  */
 public class Base64 implements BinaryEncoder, BinaryDecoder {
-
     /**
      * Chunk size per RFC 2045 section 6.8.
      * 
@@ -59,104 +59,392 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
     static final byte[] CHUNK_SEPARATOR = "\r\n".getBytes();
 
     /**
-     * The base length.
-     */
-    private static final int BASELENGTH = 255;
-
-    /**
-     * Lookup length.
-     */
-    private static final int LOOKUPLENGTH = 64;
-
-    /**
-     * Used to calculate the number of bits in a byte.
-     */
-    private static final int EIGHTBIT = 8;
-
-    /**
-     * Used when encoding something which has fewer than 24 bits.
-     */
-    private static final int SIXTEENBIT = 16;
-
-    /**
-     * Used to determine how many bits data contains.
-     */
-    private static final int TWENTYFOURBITGROUP = 24;
-
-    /**
-     * Used to get the number of Quadruples.
-     */
-    private static final int FOURBYTE = 4;
-
-    /**
-     * Used to test the sign of a byte.
-     */
-    private static final int SIGN = -128;
-
-    /**
      * Byte used to pad output.
      */
     private static final byte PAD = (byte) '=';
 
-    /**
-     * Contains the Base64 values <code>0</code> through <code>63</code> accessed by using character encodings as
-     * indices.
-     * <p>
-     * For example, <code>base64Alphabet['+']</code> returns <code>62</code>.
-     * </p>
-     * <p>
-     * The value of undefined encodings is <code>-1</code>.
-     * </p>
-     */
-    private static final byte[] base64Alphabet = new byte[BASELENGTH];
+
+    // The static final fields above are used for the original static byte[] methods on Base64.
+    // The private member fields below are used with the new streaming approach, which requires
+    // some state be preserved between calls of encode() and decode().
+
 
     /**
-     * <p>
-     * Contains the Base64 encodings <code>A</code> through <code>Z</code>, followed by <code>a</code> through
-     * <code>z</code>, followed by <code>0</code> through <code>9</code>, followed by <code>+</code>, and
-     * <code>/</code>.
-     * </p>
-     * <p>
-     * This array is accessed by using character values as indices.
-     * </p>
-     * <p>
-     * For example, <code>lookUpBase64Alphabet[62] </code> returns <code>'+'</code>.
-     * </p>
+     * Line length for encoding.  Not used when decoding.  Any value of zero or less implies
+     * so chunking of the base64 encoded data.
      */
-    private static final byte[] lookUpBase64Alphabet = new byte[LOOKUPLENGTH];
+    private final int lineLength;
 
-    // Populating the lookup and character arrays
-    static {
-        for (int i = 0; i < BASELENGTH; i++) {
-            base64Alphabet[i] = (byte) -1;
+    /**
+     * Line separator for encoding.  Not used when decoding.  Only used if lineLength >= 1.
+     */
+    private final byte[] lineSeparator;
+
+    /**
+     * Convenience variable to help us determine when our buffer is going to run out of
+     * room and needs resizing.  <code>decodeSize = 3 + lineSeparator.length;</code>
+     */
+    private final int decodeSize;
+
+    /**
+     * Convenience variable to help us determine when our buffer is going to run out of
+     * room and needs resizing.  <code>encodeSize = 4 + lineSeparator.length;</code>
+     */
+    private final int encodeSize;
+
+    /**
+     * Buffer for streaming. 
+     */
+    private byte[] buf;
+
+    /**
+     * Position where next character should be written in the buffer.
+     */
+    private int pos;
+
+    /**
+     * Position where next character should be read from the buffer.
+     */
+    private int readPos;
+
+    /**
+     * Variable tracks how many characters have been written to the current line.
+     * Only used when encoding.  We use it to make sure each encoded line never
+     * goes beyond lineLength (if lineLength >= 0).
+     */
+    private int currentLinePos;
+
+    /**
+     * Writes to the buffer only occur after every 3 reads when encoding, an
+     * every 4 reads when decoding.  This variable helps track that.
+     */
+    private int modulus;
+
+    /**
+     * Boolean flag to indicate the EOF has been reached.  Once EOF has been
+     * reached, this Base64 object becomes useless, and must be thrown away.
+     */
+    private boolean eof;
+
+    /**
+     * Place holder for the 3 bytes we're dealing with for our base64 logic.
+     * Bitwise operations store and extract the base64 encoding or decoding from
+     * this variable.
+     */
+    private int x;
+
+    /**
+     * Default constructor:  lineLength is 76, and the lineSeparator is CRLF
+     * when encoding, and all forms can be decoded.
+     */
+    Base64() {
+        this(CHUNK_SIZE, CHUNK_SEPARATOR);
+    }
+
+    /**
+     * <p>
+     * Consumer can use this constructor to choose a different lineLength
+     * when encoding (lineSeparator is still CRLF).  All forms of data can
+     * be decoded.
+     * </p><p>
+     * Note:  lineLengths that aren't multiples of 4 will still essentially
+     * end up being multiples of 4 in the encoded data.
+     * </p>
+     *
+     * @param lineLength each line of encoded data will be at most this long
+     * (rounded up to nearest multiple of 4).  Ignored when decoding.
+     */
+    Base64(int lineLength) {
+        this(lineLength, CHUNK_SEPARATOR);
+    }
+
+    /**
+     * <p>
+     * Consumer can use this constructor to choose a different lineLength
+     * and lineSeparator when encoding.  All forms of data can
+     * be decoded.
+     * </p><p>
+     * Note:  lineLengths that aren't multiples of 4 will still essentially
+     * end up being multiples of 4 in the encoded data.
+     * </p>
+     * @param lineLength    Each line of encoded data will be at most this long
+     *                      (rounded up to nearest multiple of 4).  Ignored when decoding.
+     * @param lineSeparator Each line of encoded data will end with this
+     *                      sequence of bytes.
+     * @throws IllegalArgumentException The provided lineSeparator included
+     *                                  some base64 characters.  That's not going to work!
+     */
+    Base64(int lineLength, byte[] lineSeparator) {
+        this.lineLength = lineLength;
+        this.lineSeparator = lineSeparator;
+        if (lineLength > 0) {
+            this.encodeSize = (byte) (4 + lineSeparator.length);
+        } else {
+            this.encodeSize = 4;
         }
-        for (int i = 'Z'; i >= 'A'; i--) {
-            base64Alphabet[i] = (byte) (i - 'A');
+        this.decodeSize = encodeSize - 1;
+        byte[] separator = discardWhitespace(lineSeparator);
+        if (separator.length > 0 && isArrayByteBase64(separator)) {
+            String sep;
+            try {
+                sep = new String(lineSeparator, "UTF-8");
+            } catch (UnsupportedEncodingException uee) {
+                sep = new String(lineSeparator);
+            }
+            throw new IllegalArgumentException("lineSeperator must not contain base64 characters: [" + sep + "]");
         }
-        for (int i = 'z'; i >= 'a'; i--) {
-            base64Alphabet[i] = (byte) (i - 'a' + 26);
+    }
+
+    /**
+     * This array is a lookup table that translates 6-bit positive integer
+     * index values into their "Base64 Alphabet" equivalents as specified
+     * in Table 1 of RFC 2045.
+     *
+     * Thanks to "commons" project in ws.apache.org for this code. 
+     * http://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/
+     */
+    private static final byte[] intToBase64 = {
+            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+            'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+            'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '/'
+    };
+
+    /**
+     * This array is a lookup table that translates unicode characters
+     * drawn from the "Base64 Alphabet" (as specified in Table 1 of RFC 2045)
+     * into their 6-bit positive integer equivalents.  Characters that
+     * are not in the Base64 alphabet but fall within the bounds of the
+     * array are translated to -1.
+     *
+     * Thanks to "commons" project in ws.apache.org for this code.
+     * http://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/ 
+     */
+    private static final byte[] base64ToInt = {
+            -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+            -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+            -1, -1, -1, -1, -1, -1, -1, -1, -1, 62, -1, -1, -1, 63, 52, 53, 54,
+            55, 56, 57, 58, 59, 60, 61, -1, -1, -1, -1, -1, -1, -1, 0, 1, 2, 3, 4,
+            5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23,
+            24, 25, -1, -1, -1, -1, -1, -1, 26, 27, 28, 29, 30, 31, 32, 33, 34,
+            35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51
+    };
+
+    /**
+     * Returns true if this Base64 object has buffered data for reading.
+     *
+     * @return true if there is Base64 object still available for reading.
+     */
+    boolean hasData() { return buf != null; }
+
+    /**
+     * Returns the amount of buffered data available for reading.
+     *
+     * @return The amount of buffered data available for reading.
+     */
+    int avail() { return buf != null ? pos - readPos : 0; }
+
+    /** Doubles our buffer. */
+    private void resizeBuf() {
+        if (buf == null) {
+            buf = new byte[8192];
+            pos = 0;
+            readPos = 0;
+        } else {
+            byte[] b = new byte[buf.length * 2];
+            System.arraycopy(buf, 0, b, 0, buf.length);
+            buf = b;
         }
-        for (int i = '9'; i >= '0'; i--) {
-            base64Alphabet[i] = (byte) (i - '0' + 52);
+    }
+
+    /**
+     * Extracts buffered data into the provided byte[] array, starting
+     * at position bPos, up to a maximum of bAvail bytes.  Returns how
+     * many bytes were actually extracted.
+     *
+     * @param b      byte[] array to extract the buffered data into.
+     * @param bPos   position in byte[] array to start extraction at.
+     * @param bAvail amount of bytes we're allowed to extract.  We may extract
+     *               fewer (if fewer are available).
+     * @return The number of bytes successfully extracted into the provided
+     *         byte[] array.
+     */
+    int readResults(byte[] b, int bPos, int bAvail) {
+        if (buf != null) {
+            int len = Math.min(avail(), bAvail);
+            if (buf != b) {
+                System.arraycopy(buf, readPos, b, bPos, len);
+                readPos += len;
+                if (readPos >= pos) {
+                    buf = null;
+                }
+            } else {
+                // Re-using the original consumer's output array is only
+                // allowed for one round.
+                buf = null;
+            }
+            return len;
+        } else {
+            return eof ? -1 : 0;
+        }
+    }
+
+    /**
+     * Small optimization where we try to buffer directly to the consumer's
+     * output array for one round (if consumer calls this method first!) instead
+     * of starting our own buffer.
+     *
+     * @param out byte[] array to buffer directly to.
+     * @param outPos Position to start buffering into.
+     * @param outAvail Amount of bytes available for direct buffering.
+     */
+    void setInitialBuffer(byte[] out, int outPos, int outAvail) {
+        // We can re-use consumer's original output array under
+        // special circumstances, saving on some System.arraycopy().
+        if (out != null && out.length == outAvail) {
+            buf = out;
+            pos = outPos;
+            readPos = outPos;
+        }
+    }
+
+    /**
+     * <p>
+     * Encodes all of the provided data, starting at inPos, for inAvail bytes.
+     * Must be called at least twice:  once with the data to encode, and once
+     * with inAvail set to "-1" to alert encoder that EOF has been reached,
+     * so flush last remaining bytes (if not multiple of 3).
+     * </p><p>
+     * Thanks to "commons" project in ws.apache.org for the bitwise operations,
+     * and general approach.
+     * http://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/
+     * </p>
+     *
+     * @param in byte[] array of binary data to base64 encode.
+     * @param inPos Position to start reading data from.
+     * @param inAvail Amount of bytes available from input for encoding.
+     */
+    void encode(byte[] in, int inPos, int inAvail) {
+        if (eof) {
+            return;
         }
 
-        base64Alphabet['+'] = 62;
-        base64Alphabet['/'] = 63;
+        // inAvail < 0 is how we're informed of EOF in the underlying data we're
+        // encoding.
+        if (inAvail < 0) {
+            eof = true;
+            if (buf == null || buf.length - pos < encodeSize) {
+                resizeBuf();
+            }
+            switch (modulus) {
+                case 1:
+                    buf[pos++] = intToBase64[(x >> 2) & 0x3f];
+                    buf[pos++] = intToBase64[(x << 4) & 0x3f];
+                    buf[pos++] = PAD;
+                    buf[pos++] = PAD;
+                    break;
 
-        for (int i = 0; i <= 25; i++) {
-            lookUpBase64Alphabet[i] = (byte) ('A' + i);
+                case 2:
+                    buf[pos++] = intToBase64[(x >> 10) & 0x3f];
+                    buf[pos++] = intToBase64[(x >> 4) & 0x3f];
+                    buf[pos++] = intToBase64[(x << 2) & 0x3f];
+                    buf[pos++] = PAD;
+                    break;
+            }
+            if (lineLength > 0) {
+                System.arraycopy(lineSeparator, 0, buf, pos, lineSeparator.length);
+                pos += lineSeparator.length;
+            }
+        } else {
+            for (int i = 0; i < inAvail; i++) {
+                if (buf == null || buf.length - pos < encodeSize) {
+                    resizeBuf();
+                }
+                modulus = (++modulus) % 3;
+                int b = in[inPos++];
+                if (b < 0) { b += 256; }
+                x = (x << 8) + b;
+                if (0 == modulus) {
+                    buf[pos++] = intToBase64[(x >> 18) & 0x3f];
+                    buf[pos++] = intToBase64[(x >> 12) & 0x3f];
+                    buf[pos++] = intToBase64[(x >> 6) & 0x3f];
+                    buf[pos++] = intToBase64[x & 0x3f];
+                    currentLinePos += 4;
+                    if (lineLength > 0 && lineLength <= currentLinePos) {
+                        System.arraycopy(lineSeparator, 0, buf, pos, lineSeparator.length);
+                        pos += lineSeparator.length;
+                        currentLinePos = 0;
+                    }
+                }
+            }
         }
+    }
 
-        for (int i = 26, j = 0; i <= 51; i++, j++) {
-            lookUpBase64Alphabet[i] = (byte) ('a' + j);
+    /**
+     * <p>
+     * Decodes all of the provided data, starting at inPos, for inAvail bytes.
+     * Should be called at least twice:  once with the data to decode, and once
+     * with inAvail set to "-1" to alert decoder that EOF has been reached.
+     * The "-1" call is not necessary when decoding, but it doesn't hurt, either.
+     * </p><p>
+     * Ignores all non-base64 characters.  This is how chunked (e.g. 76 character)
+     * data is handled, since CR and LF are silently ignored, but has implications
+     * for other bytes, too.  This method subscribes to the garbage-in, garbage-out
+     * philosophy:  it will not check the provided data for validity.
+     * </p><p>
+     * Thanks to "commons" project in ws.apache.org for the bitwise operations,
+     * and general approach.
+     * http://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/
+     * </p>
+
+     * @param in byte[] array of ascii data to base64 decode.
+     * @param inPos Position to start reading data from.
+     * @param inAvail Amount of bytes available from input for encoding.
+     */    
+    void decode(byte[] in, int inPos, int inAvail) {
+        if (eof) {
+            return;
         }
-
-        for (int i = 52, j = 0; i <= 61; i++, j++) {
-            lookUpBase64Alphabet[i] = (byte) ('0' + j);
+        if (inAvail < 0) {
+            eof = true;
         }
-
-        lookUpBase64Alphabet[62] = (byte) '+';
-        lookUpBase64Alphabet[63] = (byte) '/';
+        for (int i = 0; i < inAvail; i++) {
+            if (buf == null || buf.length - pos < decodeSize) {
+                resizeBuf();
+            }
+            byte b = in[inPos++];
+            if (b == PAD) {
+                modulus = (++modulus) % 4;
+                x = x << 6;
+                switch (modulus) {
+                    case 3:
+                        x = x << 6;
+                    case 0:
+                        buf[pos++] = (byte) ((x >> 16) & 0xff);
+                        if (modulus == 0) {
+                            buf[pos++] = (byte) ((x >> 8) & 0xff);
+                        }
+                    default:
+                        // WE'RE DONE!!!!
+                        eof = true;
+                        return;
+                }
+            } else {
+                if (b >= 0 && b < base64ToInt.length) {
+                    int result = base64ToInt[b];
+                    if (result >= 0) {
+                        modulus = (byte) ((++modulus) % 4);
+                        x = (x << 6) + result;
+                        if (modulus == 0) {
+                            buf[pos++] = (byte) ((x >> 16) & 0xff);
+                            buf[pos++] = (byte) ((x >> 8) & 0xff);
+                            buf[pos++] = (byte) (x & 0xff);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -167,13 +455,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * @return <code>true</code> if the value is defined in the the base 64 alphabet, <code>false</code> otherwise.
      */
     private static boolean isBase64(byte octect) {
-        if (octect == PAD) {
-            return true;
-        } else if (octect < 0 || base64Alphabet[octect] == -1) {
-            return false;
-        } else {
-            return true;
-        }
+        return octect == PAD || (octect >= 0 && octect < base64ToInt.length && base64ToInt[octect] != -1);
     }
 
     /**
@@ -264,189 +546,59 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      *             Thrown when the input array needs an output array bigger than {@link Integer#MAX_VALUE}
      */
     public static byte[] encodeBase64(byte[] binaryData, boolean isChunked) {
-        long binaryDataLength = binaryData.length;
-        long lengthDataBits = binaryDataLength * EIGHTBIT;
-        long fewerThan24bits = lengthDataBits % TWENTYFOURBITGROUP;
-        long tripletCount = lengthDataBits / TWENTYFOURBITGROUP;
-        long encodedDataLengthLong = 0;
-        int chunckCount = 0;
-
-        if (fewerThan24bits != 0) {
-            // data not divisible by 24 bit
-            encodedDataLengthLong = (tripletCount + 1) * 4;
-        } else {
-            // 16 or 8 bit
-            encodedDataLengthLong = tripletCount * 4;
+        if (binaryData == null || binaryData.length == 0) {
+            return binaryData;
         }
+        Base64 b64 = isChunked ? new Base64() : new Base64(0);
 
-        // If the output is to be "chunked" into 76 character sections,
-        // for compliance with RFC 2045 MIME, then it is important to
-        // allow for extra length to account for the separator(s)
+        long len = (binaryData.length * 4) / 3;
+        long mod = len % 4;
+        if (mod != 0) {
+            len += 4 - mod;
+        }
         if (isChunked) {
-
-            chunckCount = (CHUNK_SEPARATOR.length == 0 ? 0 : (int) Math
-                    .ceil((float) encodedDataLengthLong / CHUNK_SIZE));
-            encodedDataLengthLong += chunckCount * CHUNK_SEPARATOR.length;
+            len += (1 + (len / CHUNK_SIZE)) * CHUNK_SEPARATOR.length;
         }
 
-        if (encodedDataLengthLong > Integer.MAX_VALUE) {
+        if (len > Integer.MAX_VALUE) {
             throw new IllegalArgumentException(
                     "Input array too big, output array would be bigger than Integer.MAX_VALUE=" + Integer.MAX_VALUE);
         }
-        int encodedDataLength = (int) encodedDataLengthLong;
-        byte encodedData[] = new byte[encodedDataLength];
+        byte[] buf = new byte[(int) len];
+        b64.setInitialBuffer(buf, 0, buf.length);
+        b64.encode(binaryData, 0, binaryData.length);
+        b64.encode(binaryData, 0, -1); // Notify encoder of EOF.
 
-        byte k = 0, l = 0, b1 = 0, b2 = 0, b3 = 0;
-
-        int encodedIndex = 0;
-        int dataIndex = 0;
-        int i = 0;
-        int nextSeparatorIndex = CHUNK_SIZE;
-        int chunksSoFar = 0;
-
-        // log.debug("number of triplets = " + numberTriplets);
-        for (i = 0; i < tripletCount; i++) {
-            dataIndex = i * 3;
-            b1 = binaryData[dataIndex];
-            b2 = binaryData[dataIndex + 1];
-            b3 = binaryData[dataIndex + 2];
-
-            // log.debug("b1= " + b1 +", b2= " + b2 + ", b3= " + b3);
-
-            l = (byte) (b2 & 0x0f);
-            k = (byte) (b1 & 0x03);
-
-            byte val1 = ((b1 & SIGN) == 0) ? (byte) (b1 >> 2) : (byte) ((b1) >> 2 ^ 0xc0);
-            byte val2 = ((b2 & SIGN) == 0) ? (byte) (b2 >> 4) : (byte) ((b2) >> 4 ^ 0xf0);
-            byte val3 = ((b3 & SIGN) == 0) ? (byte) (b3 >> 6) : (byte) ((b3) >> 6 ^ 0xfc);
-
-            encodedData[encodedIndex] = lookUpBase64Alphabet[val1];
-            // log.debug( "val2 = " + val2 );
-            // log.debug( "k4 = " + (k<<4) );
-            // log.debug( "vak = " + (val2 | (k<<4)) );
-            encodedData[encodedIndex + 1] = lookUpBase64Alphabet[val2 | (k << 4)];
-            encodedData[encodedIndex + 2] = lookUpBase64Alphabet[(l << 2) | val3];
-            encodedData[encodedIndex + 3] = lookUpBase64Alphabet[b3 & 0x3f];
-
-            encodedIndex += 4;
-
-            // If we are chunking, let's put a chunk separator down.
-            if (isChunked) {
-                // this assumes that CHUNK_SIZE % 4 == 0
-                if (encodedIndex == nextSeparatorIndex) {
-                    System.arraycopy(CHUNK_SEPARATOR, 0, encodedData, encodedIndex, CHUNK_SEPARATOR.length);
-                    chunksSoFar++;
-                    nextSeparatorIndex = (CHUNK_SIZE * (chunksSoFar + 1)) + (chunksSoFar * CHUNK_SEPARATOR.length);
-                    encodedIndex += CHUNK_SEPARATOR.length;
-                }
-            }
+        // Encoder might have resized, even though it was unnecessary.
+        if (b64.buf != buf) {
+            b64.readResults(buf, 0, buf.length);
         }
-
-        // form integral number of 6-bit groups
-        dataIndex = i * 3;
-
-        if (fewerThan24bits == EIGHTBIT) {
-            b1 = binaryData[dataIndex];
-            k = (byte) (b1 & 0x03);
-            // log.debug("b1=" + b1);
-            // log.debug("b1<<2 = " + (b1>>2) );
-            byte val1 = ((b1 & SIGN) == 0) ? (byte) (b1 >> 2) : (byte) ((b1) >> 2 ^ 0xc0);
-            encodedData[encodedIndex] = lookUpBase64Alphabet[val1];
-            encodedData[encodedIndex + 1] = lookUpBase64Alphabet[k << 4];
-            encodedData[encodedIndex + 2] = PAD;
-            encodedData[encodedIndex + 3] = PAD;
-        } else if (fewerThan24bits == SIXTEENBIT) {
-
-            b1 = binaryData[dataIndex];
-            b2 = binaryData[dataIndex + 1];
-            l = (byte) (b2 & 0x0f);
-            k = (byte) (b1 & 0x03);
-
-            byte val1 = ((b1 & SIGN) == 0) ? (byte) (b1 >> 2) : (byte) ((b1) >> 2 ^ 0xc0);
-            byte val2 = ((b2 & SIGN) == 0) ? (byte) (b2 >> 4) : (byte) ((b2) >> 4 ^ 0xf0);
-
-            encodedData[encodedIndex] = lookUpBase64Alphabet[val1];
-            encodedData[encodedIndex + 1] = lookUpBase64Alphabet[val2 | (k << 4)];
-            encodedData[encodedIndex + 2] = lookUpBase64Alphabet[l << 2];
-            encodedData[encodedIndex + 3] = PAD;
-        }
-
-        if (isChunked) {
-            // we also add a separator to the end of the final chunk.
-            if (chunksSoFar < chunckCount) {
-                System.arraycopy(CHUNK_SEPARATOR, 0, encodedData, encodedDataLength - CHUNK_SEPARATOR.length,
-                        CHUNK_SEPARATOR.length);
-            }
-        }
-
-        return encodedData;
+        return buf;
     }
 
     /**
      * Decodes Base64 data into octects
-     * 
-     * @param base64Data
-     *            Byte array containing Base64 data
+     *
+     * @param base64Data Byte array containing Base64 data
      * @return Array containing decoded data.
      */
     public static byte[] decodeBase64(byte[] base64Data) {
-        // RFC 2045 requires that we discard ALL non-Base64 characters
-        base64Data = discardNonBase64(base64Data);
-
-        // handle the edge case, so we don't have to worry about it later
-        if (base64Data.length == 0) {
-            return new byte[0];
+        if (base64Data == null || base64Data.length == 0) {
+            return base64Data;
         }
+        Base64 b64 = new Base64();
 
-        int numberQuadruple = base64Data.length / FOURBYTE;
-        byte decodedData[] = null;
-        byte b1 = 0, b2 = 0, b3 = 0, b4 = 0, marker0 = 0, marker1 = 0;
+        long len = (base64Data.length * 3) / 4;
+        byte[] buf = new byte[(int) len];
+        b64.setInitialBuffer(buf, 0, buf.length);
+        b64.decode(base64Data, 0, base64Data.length);
+        b64.decode(base64Data, 0, -1); // Notify decoder of EOF.
 
-        // Throw away anything not in base64Data
-
-        int encodedIndex = 0;
-        int dataIndex = 0;
-        {
-            // this sizes the output array properly - rlw
-            int lastData = base64Data.length;
-            // ignore the '=' padding
-            while (base64Data[lastData - 1] == PAD) {
-                if (--lastData == 0) {
-                    return new byte[0];
-                }
-            }
-            decodedData = new byte[lastData - numberQuadruple];
-        }
-
-        for (int i = 0; i < numberQuadruple; i++) {
-            dataIndex = i * 4;
-            marker0 = base64Data[dataIndex + 2];
-            marker1 = base64Data[dataIndex + 3];
-
-            b1 = base64Alphabet[base64Data[dataIndex]];
-            b2 = base64Alphabet[base64Data[dataIndex + 1]];
-
-            if (marker0 != PAD && marker1 != PAD) {
-                // No PAD e.g 3cQl
-                b3 = base64Alphabet[marker0];
-                b4 = base64Alphabet[marker1];
-
-                decodedData[encodedIndex] = (byte) (b1 << 2 | b2 >> 4);
-                decodedData[encodedIndex + 1] = (byte) (((b2 & 0xf) << 4) | ((b3 >> 2) & 0xf));
-                decodedData[encodedIndex + 2] = (byte) (b3 << 6 | b4);
-            } else if (marker0 == PAD) {
-                // Two PAD e.g. 3c[Pad][Pad]
-                decodedData[encodedIndex] = (byte) (b1 << 2 | b2 >> 4);
-            } else if (marker1 == PAD) {
-                // One PAD e.g. 3cQ[Pad]
-                b3 = base64Alphabet[marker0];
-
-                decodedData[encodedIndex] = (byte) (b1 << 2 | b2 >> 4);
-                decodedData[encodedIndex + 1] = (byte) (((b2 & 0xf) << 4) | ((b3 >> 2) & 0xf));
-            }
-            encodedIndex += 3;
-        }
-        return decodedData;
+        // We have no idea what the line-length was, so we
+        // cannot know how much of our array wasn't used.
+        byte[] result = new byte[b64.pos];
+        b64.readResults(result, 0, result.length);
+        return result;
     }
 
     /**
