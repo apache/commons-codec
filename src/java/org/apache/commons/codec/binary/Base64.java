@@ -71,12 +71,12 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
 
     /**
      * Line length for encoding.  Not used when decoding.  Any value of zero or less implies
-     * so chunking of the base64 encoded data.
+     * no chunking of the base64 encoded data.
      */
     private final int lineLength;
 
     /**
-     * Line separator for encoding.  Not used when decoding.  Only used if lineLength >= 1.
+     * Line separator for encoding.  Not used when decoding.  Only used if lineLength > 0.
      */
     private final byte[] lineSeparator;
 
@@ -110,7 +110,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
     /**
      * Variable tracks how many characters have been written to the current line.
      * Only used when encoding.  We use it to make sure each encoded line never
-     * goes beyond lineLength (if lineLength >= 0).
+     * goes beyond lineLength (if lineLength > 0).
      */
     private int currentLinePos;
 
@@ -152,7 +152,9 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * </p>
      *
      * @param lineLength each line of encoded data will be at most this long
-     * (rounded up to nearest multiple of 4).  Ignored when decoding.
+     * (rounded up to nearest multiple of 4). 
+     * If lineLength <= 0, then the output will not be divided into lines (chunks).  
+     * Ignored when decoding.
      */
     public Base64(int lineLength) {
         this(lineLength, CHUNK_SEPARATOR);
@@ -169,8 +171,10 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * </p>
      * @param lineLength    Each line of encoded data will be at most this long
      *                      (rounded up to nearest multiple of 4).  Ignored when decoding.
+     *                      If <= 0, then output will not be divided into lines (chunks).
      * @param lineSeparator Each line of encoded data will end with this
      *                      sequence of bytes.
+     *                      If lineLength <= 0, then the lineSeparator is not used.
      * @throws IllegalArgumentException The provided lineSeparator included
      *                                  some base64 characters.  That's not going to work!
      */
