@@ -523,6 +523,9 @@ public class Base64Test extends TestCase {
         assertFalse(Base64.isArrayByteBase64(new byte[] {Byte.MAX_VALUE}));
         assertTrue(Base64.isArrayByteBase64(new byte[] {'A'}));
         assertFalse(Base64.isArrayByteBase64(new byte[] {'A', Byte.MIN_VALUE}));
+        assertTrue(Base64.isArrayByteBase64(new byte[] {'A', 'Z', 'a'}));
+        assertTrue(Base64.isArrayByteBase64(new byte[] {'/','=','+'}));
+        assertFalse(Base64.isArrayByteBase64(new byte[] {'$'}));
     }
 
     public void testObjectDecodeWithInvalidParameter() throws Exception {
@@ -531,7 +534,7 @@ public class Base64Test extends TestCase {
         Base64 b64 = new Base64();
 
         try {
-            Object o = new String( "Yadayadayada" );
+            Object o = "Yadayadayada";
             b64.decode( o );
         } catch( Exception e ) {
             exceptionThrown = true;
@@ -545,7 +548,7 @@ public class Base64Test extends TestCase {
 
         String original = "Hello World!";
         byte[] bArray = 
-            Base64.encodeBase64( (new String(original)).getBytes() );
+            Base64.encodeBase64(original.getBytes() );
         Object o = bArray;
         
         Base64 b64 = new Base64();
@@ -563,7 +566,7 @@ public class Base64Test extends TestCase {
         Base64 b64 = new Base64();
 
         try {
-            Object o = new String( "Yadayadayada" );
+            Object o = "Yadayadayada";
             b64.encode( o );
         } catch( Exception e ) {
             exceptionThrown = true;
@@ -607,7 +610,7 @@ public class Base64Test extends TestCase {
 
         String dest = new String( decodedWithWS );
 
-        assertTrue( "Dest string doesn't equals the original", 
+        assertTrue( "Dest string doesn't equal the original", 
                     dest.equals( orig ) );
     }
 
@@ -632,9 +635,9 @@ public class Base64Test extends TestCase {
         String destFromWS = new String( decodedWithWS );
         String destFromNoWS = new String( decodedNoWS );
 
-        assertTrue( "Dest string doesn't eausl original", 
+        assertTrue( "Dest string doesn't equal original", 
                 destFromWS.equals( orig ) );
-        assertTrue( "Dest string doesn't eausl original", 
+        assertTrue( "Dest string doesn't equal original", 
                 destFromNoWS.equals( orig ) );
     }
 
