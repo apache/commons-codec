@@ -21,9 +21,15 @@ package org.apache.commons.codec.binary;
 import java.util.Arrays;
 import java.util.Random;
 import java.math.BigInteger;
+
+import org.apache.commons.codec.DecoderException;
+import org.apache.commons.codec.EncoderException;
+
 import junit.framework.TestCase;
 
 /**
+ * Testcases for Base64 class.
+ * 
  * @author Apache Software Foundation
  * @version $Id$
  */
@@ -489,8 +495,6 @@ public class Base64Test extends TestCase {
                      "an array of Base64 encoded data", 
                      Base64.isArrayByteBase64( bArray ) );
         
-        boolean exceptionThrown = false;
-
         try {
             Base64 b64 = new Base64();
             byte[] result = b64.decode( bArray );
@@ -499,15 +503,11 @@ public class Base64Test extends TestCase {
                 "not contain any valid base 64 characters", result.length == 0);
         } 
         catch( Exception e ) {
-            exceptionThrown = true;
-        }
-
-        assertFalse( "Exception was thrown when trying to decode " +
+            fail( "Exception was thrown when trying to decode " +
                     "invalid base64 encoded data - RFC 2045 requires that all " +
                     "non base64 character be discarded, an exception should not" +
-                    " have been thrown", exceptionThrown );
-          
-
+                    " have been thrown");
+        }
     }
     
     public void testIgnoringNonBase64InDecode() throws Exception {
@@ -529,19 +529,15 @@ public class Base64Test extends TestCase {
     }
 
     public void testObjectDecodeWithInvalidParameter() throws Exception {
-        boolean exceptionThrown = false;
-
         Base64 b64 = new Base64();
 
         try {
-            Object o = "Yadayadayada";
-            b64.decode( o );
-        } catch( Exception e ) {
-            exceptionThrown = true;
+            b64.decode( "Yadayadayada");
+            fail( "decode(Object) didn't throw an exception when passed a String object");
+        } catch( DecoderException e ) {
+            // ignored
         }
 
-        assertTrue( "decode(Object) didn't throw an exception when passed a " +
-                    "String object", exceptionThrown );
     }
 
     public void testObjectDecodeWithValidParameter() throws Exception {
@@ -556,24 +552,18 @@ public class Base64Test extends TestCase {
         byte[] baDecoded = (byte[]) oDecoded;
         String dest = new String( baDecoded );
 
-        assertTrue( "dest string down not equal original",
+        assertTrue( "dest string does not equal original",
                     dest.equals( original ) );
     }
 
     public void testObjectEncodeWithInvalidParameter() throws Exception {
-        boolean exceptionThrown = false;
-
         Base64 b64 = new Base64();
 
         try {
-            Object o = "Yadayadayada";
-            b64.encode( o );
-        } catch( Exception e ) {
-            exceptionThrown = true;
+            b64.encode( "Yadayadayada" );
+            fail( "encode(Object) didn't throw an exception when passed a String object");
+        } catch( EncoderException e ) {
         }
-
-        assertTrue( "encode(Object) didn't throw an exception when passed a " +
-                    "String object", exceptionThrown );
     }
 
     public void testObjectEncodeWithValidParameter() throws Exception {
@@ -588,7 +578,7 @@ public class Base64Test extends TestCase {
             Base64.decodeBase64( (byte[]) oEncoded );
         String dest = new String( bArray );
 
-        assertTrue( "dest string down not equal original",
+        assertTrue( "dest string does not equal original",
                     dest.equals( original ) );
     }
 
