@@ -32,7 +32,7 @@ public class Base64TestData {
 
     // OpenSSL doesn't include the final \n, but it would be annoying beyond belief
     // to further parameterize commons-codec to support this pointless variation.
-    public final static String ENCODED
+    final static String ENCODED
             = "9IPNKwUvdLiIAp6ctz12SiQmOGstWyYvSPeevufDhrzaws65voykKjbIj33YWTa9\n"
             + "xA7c/FHypWclrZhQ7onfc3JE93BJ5fT4R9zAEdjbjy1hv4ZYNnET4WJeXMLJ/5p+\n"
             + "qBpTsPpepW8DNVYy1c02/1wyC+kgA6CvRUd9cSr/lt88AEdsTV4GMCn1+EwuAiYd\n"
@@ -56,7 +56,7 @@ public class Base64TestData {
             + "/6YAHZilo8at0OpkkNdNFuhwuGlkBqrZKNUj/gSiYYc06gF/r/z6iWAjpXJRW1qq\n"
             + "3CLZXdZFZ/VrqXeVjtOAu2A=\n";
 
-    public final static byte[] DECODED
+    final static byte[] DECODED
             = {-12, -125, -51, 43, 5, 47, 116, -72, -120, 2, -98, -100, -73, 61, 118, 74, 36, 38, 56, 107, 45, 91, 38,
             47, 72, -9, -98, -66, -25, -61, -122, -68, -38, -62, -50, -71, -66, -116, -92, 42, 54, -56, -113, 125,
             -40, 89, 54, -67, -60, 14, -36, -4, 81, -14, -91, 103, 37, -83, -104, 80, -18, -119, -33, 115, 114, 68,
