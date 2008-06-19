@@ -61,7 +61,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
     /**
      * Byte used to pad output.
      */
-    private static final byte PAD = (byte) '=';
+    private static final byte PAD = '=';
 
 
     // The static final fields above are used for the original static byte[] methods on Base64.
@@ -434,7 +434,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
                 if (b >= 0 && b < base64ToInt.length) {
                     int result = base64ToInt[b];
                     if (result >= 0) {
-                        modulus = (byte) ((++modulus) % 4);
+                        modulus = (++modulus) % 4;
                         x = (x << 6) + result;
                         if (modulus == 0) {
                             buf[pos++] = (byte) ((x >> 16) & 0xff);
@@ -614,10 +614,10 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
 
         for (int i = 0; i < data.length; i++) {
             switch (data[i]) {
-                case (byte) ' ' :
-                case (byte) '\n' :
-                case (byte) '\r' :
-                case (byte) '\t' :
+                case ' ' :
+                case '\n' :
+                case '\r' :
+                case '\t' :
                     break;
                 default :
                     groomedData[bytesCopied++] = data[i];
