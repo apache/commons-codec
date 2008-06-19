@@ -178,7 +178,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
         this.lineLength = lineLength;
         this.lineSeparator = lineSeparator;
         if (lineLength > 0) {
-            this.encodeSize = (byte) (4 + lineSeparator.length);
+            this.encodeSize = 4 + lineSeparator.length;
         } else {
             this.encodeSize = 4;
         }
