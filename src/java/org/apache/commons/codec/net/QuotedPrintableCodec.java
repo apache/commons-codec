@@ -62,7 +62,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
     /**
      * The default charset used for string decoding and encoding.
      */
-    private String charset = CharacterEncodingNames.UTF8;
+    private final String charset;
 
     /**
      * BitSet of printable characters as defined in RFC 1521.
@@ -91,7 +91,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * Default constructor.
      */
     public QuotedPrintableCodec() {
-        super();
+        this(CharacterEncodingNames.UTF8);
     }
 
     /**
