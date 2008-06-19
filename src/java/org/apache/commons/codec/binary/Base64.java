@@ -137,7 +137,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * Default constructor:  lineLength is 76, and the lineSeparator is CRLF
      * when encoding, and all forms can be decoded.
      */
-    Base64() {
+    public Base64() {
         this(CHUNK_SIZE, CHUNK_SEPARATOR);
     }
 
@@ -154,7 +154,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * @param lineLength each line of encoded data will be at most this long
      * (rounded up to nearest multiple of 4).  Ignored when decoding.
      */
-    Base64(int lineLength) {
+    public Base64(int lineLength) {
         this(lineLength, CHUNK_SEPARATOR);
     }
 
@@ -174,7 +174,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * @throws IllegalArgumentException The provided lineSeparator included
      *                                  some base64 characters.  That's not going to work!
      */
-    Base64(int lineLength, byte[] lineSeparator) {
+    public Base64(int lineLength, byte[] lineSeparator) {
         this.lineLength = lineLength;
         this.lineSeparator = lineSeparator;
         if (lineLength > 0) {
