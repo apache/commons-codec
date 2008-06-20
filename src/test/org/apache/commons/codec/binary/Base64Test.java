@@ -698,6 +698,12 @@ public class Base64Test extends TestCase {
         } catch (IllegalArgumentException ignored){
             
         }
+        try {
+            base64 = new Base64(64,new byte[]{'='});
+            fail("Should have rejected attempt to use '=' as a line separator");
+        } catch (IllegalArgumentException ignored){
+            
+        }
         base64 = new Base64(64,new byte[]{'$'}); // OK
         try {
             base64 = new Base64(64,new byte[]{'A','$'});
@@ -705,6 +711,7 @@ public class Base64Test extends TestCase {
         } catch (IllegalArgumentException ignored){
             
         }
+        base64 = new Base64(64,new byte[]{' ','$','\n','\r','\t'}); // OK
     }
     // -------------------------------------------------------- Private Methods
 
