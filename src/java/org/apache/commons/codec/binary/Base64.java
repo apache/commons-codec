@@ -457,7 +457,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      *            The value to test
      * @return <code>true</code> if the value is defined in the the base 64 alphabet, <code>false</code> otherwise.
      */
-    private static boolean isBase64(byte octet) {
+    public static boolean isBase64(byte octet) {
         return octet == PAD || (octet >= 0 && octet < base64ToInt.length && base64ToInt[octet] != -1);
     }
 
