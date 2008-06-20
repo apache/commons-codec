@@ -144,5 +144,11 @@ public class Base64InputStream extends FilterInputStream {
         }
     }
 
-
+    /**
+     * {@inheritDoc}
+     * @return false
+     */
+    public boolean markSupported() {
+        return false; // not an easy job to support marks
+    }
 }
