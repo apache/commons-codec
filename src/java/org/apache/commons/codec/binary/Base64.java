@@ -56,13 +56,54 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * 
      * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045 section 2.1</a>
      */
-    static final byte[] CHUNK_SEPARATOR = "\r\n".getBytes();
+    static final byte[] CHUNK_SEPARATOR = {'\r','\n'};
+
+    /**
+     * This array is a lookup table that translates 6-bit positive integer
+     * index values into their "Base64 Alphabet" equivalents as specified
+     * in Table 1 of RFC 2045.
+     *
+     * Thanks to "commons" project in ws.apache.org for this code. 
+     * http://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/
+     */
+    private static final byte[] intToBase64 = {
+            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+            'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+            'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '/'
+    };
 
     /**
      * Byte used to pad output.
      */
     private static final byte PAD = '=';
 
+    /**
+     * This array is a lookup table that translates unicode characters
+     * drawn from the "Base64 Alphabet" (as specified in Table 1 of RFC 2045)
+     * into their 6-bit positive integer equivalents.  Characters that
+     * are not in the Base64 alphabet but fall within the bounds of the
+     * array are translated to -1.
+     *
+     * Thanks to "commons" project in ws.apache.org for this code.
+     * http://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/ 
+     */
+    private static final byte[] base64ToInt = {
+            -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+            -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+            -1, -1, -1, -1, -1, -1, -1, -1, -1, 62, -1, -1, -1, 63, 52, 53, 54,
+            55, 56, 57, 58, 59, 60, 61, -1, -1, -1, -1, -1, -1, -1, 0, 1, 2, 3, 4,
+            5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23,
+            24, 25, -1, -1, -1, -1, -1, -1, 26, 27, 28, 29, 30, 31, 32, 33, 34,
+            35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51
+    };
+
+    /** Mask used to extract 6 bits, used when encoding */
+    private static final int MASK_6BITS = 0x3f;
+
+    /** Mask used to extract 8 bits, used in decoding base64 bytes */
+    private static final int MASK_8BITS = 0xff;
 
     // The static final fields above are used for the original static byte[] methods on Base64.
     // The private member fields below are used with the new streaming approach, which requires
@@ -70,7 +111,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
 
 
     /**
-     * Line length for encoding.  Not used when decoding.  Any value of zero or less implies
+     * Line length for encoding.  Not used when decoding.  A value of zero or less implies
      * no chunking of the base64 encoded data.
      */
     private final int lineLength;
@@ -199,42 +240,6 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
-     * This array is a lookup table that translates 6-bit positive integer
-     * index values into their "Base64 Alphabet" equivalents as specified
-     * in Table 1 of RFC 2045.
-     *
-     * Thanks to "commons" project in ws.apache.org for this code. 
-     * http://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/
-     */
-    private static final byte[] intToBase64 = {
-            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-            'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
-            'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '/'
-    };
-
-    /**
-     * This array is a lookup table that translates unicode characters
-     * drawn from the "Base64 Alphabet" (as specified in Table 1 of RFC 2045)
-     * into their 6-bit positive integer equivalents.  Characters that
-     * are not in the Base64 alphabet but fall within the bounds of the
-     * array are translated to -1.
-     *
-     * Thanks to "commons" project in ws.apache.org for this code.
-     * http://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/ 
-     */
-    private static final byte[] base64ToInt = {
-            -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-            -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-            -1, -1, -1, -1, -1, -1, -1, -1, -1, 62, -1, -1, -1, 63, 52, 53, 54,
-            55, 56, 57, 58, 59, 60, 61, -1, -1, -1, -1, -1, -1, -1, 0, 1, 2, 3, 4,
-            5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23,
-            24, 25, -1, -1, -1, -1, -1, -1, 26, 27, 28, 29, 30, 31, 32, 33, 34,
-            35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51
-    };
-
-    /**
      * Returns true if this Base64 object has buffered data for reading.
      *
      * @return true if there is Base64 object still available for reading.
@@ -342,16 +347,16 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
             }
             switch (modulus) {
                 case 1:
-                    buf[pos++] = intToBase64[(x >> 2) & 0x3f];
-                    buf[pos++] = intToBase64[(x << 4) & 0x3f];
+                    buf[pos++] = intToBase64[(x >> 2) & MASK_6BITS];
+                    buf[pos++] = intToBase64[(x << 4) & MASK_6BITS];
                     buf[pos++] = PAD;
                     buf[pos++] = PAD;
                     break;
 
                 case 2:
-                    buf[pos++] = intToBase64[(x >> 10) & 0x3f];
-                    buf[pos++] = intToBase64[(x >> 4) & 0x3f];
-                    buf[pos++] = intToBase64[(x << 2) & 0x3f];
+                    buf[pos++] = intToBase64[(x >> 10) & MASK_6BITS];
+                    buf[pos++] = intToBase64[(x >> 4) & MASK_6BITS];
+                    buf[pos++] = intToBase64[(x << 2) & MASK_6BITS];
                     buf[pos++] = PAD;
                     break;
             }
@@ -369,10 +374,10 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
                 if (b < 0) { b += 256; }
                 x = (x << 8) + b;
                 if (0 == modulus) {
-                    buf[pos++] = intToBase64[(x >> 18) & 0x3f];
-                    buf[pos++] = intToBase64[(x >> 12) & 0x3f];
-                    buf[pos++] = intToBase64[(x >> 6) & 0x3f];
-                    buf[pos++] = intToBase64[x & 0x3f];
+                    buf[pos++] = intToBase64[(x >> 18) & MASK_6BITS];
+                    buf[pos++] = intToBase64[(x >> 12) & MASK_6BITS];
+                    buf[pos++] = intToBase64[(x >> 6) & MASK_6BITS];
+                    buf[pos++] = intToBase64[x & MASK_6BITS];
                     currentLinePos += 4;
                     if (lineLength > 0 && lineLength <= currentLinePos) {
                         System.arraycopy(lineSeparator, 0, buf, pos, lineSeparator.length);
@@ -424,9 +429,9 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
                     case 3:
                         x = x << 6;
                     case 0:
-                        buf[pos++] = (byte) ((x >> 16) & 0xff);
+                        buf[pos++] = (byte) ((x >> 16) & MASK_8BITS);
                         if (modulus == 0) {
-                            buf[pos++] = (byte) ((x >> 8) & 0xff);
+                            buf[pos++] = (byte) ((x >> 8) & MASK_8BITS);
                         }
                     default:
                         // WE'RE DONE!!!!
@@ -440,9 +445,9 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
                         modulus = (++modulus) % 4;
                         x = (x << 6) + result;
                         if (modulus == 0) {
-                            buf[pos++] = (byte) ((x >> 16) & 0xff);
-                            buf[pos++] = (byte) ((x >> 8) & 0xff);
-                            buf[pos++] = (byte) (x & 0xff);
+                            buf[pos++] = (byte) ((x >> 16) & MASK_8BITS);
+                            buf[pos++] = (byte) ((x >> 8) & MASK_8BITS);
+                            buf[pos++] = (byte) (x & MASK_8BITS);
                         }
                     }
                 }
