@@ -49,7 +49,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     /**
      * The default charset used for string decoding and encoding.
      */
-    private String charset = CharacterEncodingNames.UTF8;
+    private final String charset;
 
     /**
      * BitSet of printable characters as defined in RFC 1522.
@@ -109,7 +109,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * Default constructor.
      */
     public QCodec() {
-        super();
+        this(CharacterEncodingNames.UTF8);
     }
 
     /**

@@ -91,7 +91,7 @@ public class Soundex implements StringEncoder {
      * Every letter of the alphabet is "mapped" to a numerical value. This char array holds the values to which each
      * letter is mapped. This implementation contains a default map for US_ENGLISH
      */
-    private char[] soundexMapping;
+    private final char[] soundexMapping;
 
     /**
      * Creates an instance using US_ENGLISH_MAPPING
@@ -114,7 +114,7 @@ public class Soundex implements StringEncoder {
      *                  Mapping array to use when finding the corresponding code for a given character
      */
     public Soundex(char[] mapping) {
-        this.setSoundexMapping(mapping);
+        this.soundexMapping= mapping;
     }
 
     /**
@@ -228,17 +228,7 @@ public class Soundex implements StringEncoder {
     }
 
     /**
-     * Sets the soundexMapping.
-     * 
-     * @param soundexMapping
-     *                  The soundexMapping to set.
-     */
-    private void setSoundexMapping(char[] soundexMapping) {
-        this.soundexMapping = soundexMapping;
-    }
-
-    /**
-     * Retreives the Soundex code for a given String object.
+     * Retrieves the Soundex code for a given String object.
      * 
      * @param str
      *                  String to encode using the Soundex algorithm

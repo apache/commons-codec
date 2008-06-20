@@ -48,13 +48,13 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     /**
      * The default charset used for string decoding and encoding.
      */
-    private String charset = CharacterEncodingNames.UTF8;
+    private final String charset;
 
     /**
      * Default constructor.
      */
     public BCodec() {
-        super();
+        this(CharacterEncodingNames.UTF8);
     }
 
     /**
