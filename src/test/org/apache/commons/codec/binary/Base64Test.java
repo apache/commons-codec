@@ -680,6 +680,32 @@ public class Base64Test extends TestCase {
         // TODO
     }
 
+    public void testConstructors(){
+        Base64 base64;
+        base64 = new Base64();
+        base64 = new Base64(-1);
+        base64 = new Base64(-1,new byte[]{});
+        base64 = new Base64(64,new byte[]{});
+        try {
+            base64 = new Base64(-1,new byte[]{'A'});
+            fail("Should have rejected attempt to use 'A' as a line separator");
+        } catch (IllegalArgumentException ignored){
+            
+        }
+        try {
+            base64 = new Base64(64,new byte[]{'A'});
+            fail("Should have rejected attempt to use 'A' as a line separator");
+        } catch (IllegalArgumentException ignored){
+            
+        }
+        base64 = new Base64(64,new byte[]{'$'}); // OK
+        try {
+            base64 = new Base64(64,new byte[]{'A','$'});
+            fail("Should have rejected attempt to use 'A$' as a line separator");
+        } catch (IllegalArgumentException ignored){
+            
+        }
+    }
     // -------------------------------------------------------- Private Methods
 
     private String toString(byte[] data) {
