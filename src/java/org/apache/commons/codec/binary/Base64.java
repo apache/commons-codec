@@ -187,8 +187,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
             this.encodeSize = 4;
         }
         this.decodeSize = encodeSize - 1;
-        byte[] separator = discardWhitespace(lineSeparator);
-        if (separator.length > 0 && isArrayByteBase64(separator)) {
+        if (containsBase64Byte(lineSeparator)) {
             String sep;
             try {
                 sep = new String(lineSeparator, "UTF-8");
@@ -452,40 +451,55 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
-     * Returns whether or not the <code>octect</code> is in the base 64 alphabet.
+     * Returns whether or not the <code>octet</code> is in the base 64 alphabet.
      * 
-     * @param octect
+     * @param octet
      *            The value to test
      * @return <code>true</code> if the value is defined in the the base 64 alphabet, <code>false</code> otherwise.
      */
-    private static boolean isBase64(byte octect) {
-        return octect == PAD || (octect >= 0 && octect < base64ToInt.length && base64ToInt[octect] != -1);
+    private static boolean isBase64(byte octet) {
+        return octet == PAD || (octet >= 0 && octet < base64ToInt.length && base64ToInt[octet] != -1);
     }
 
     /**
      * Tests a given byte array to see if it contains only valid characters within the Base64 alphabet.
+     * Currently the method treats whitespace as valid.
      * 
-     * @param arrayOctect
+     * @param arrayOctet
      *            byte array to test
      * @return <code>true</code> if all bytes are valid characters in the Base64 alphabet or if the byte array is
      *         empty; false, otherwise
      */
-    public static boolean isArrayByteBase64(byte[] arrayOctect) {
+    public static boolean isArrayByteBase64(byte[] arrayOctet) {
 
-        arrayOctect = discardWhitespace(arrayOctect);
+        arrayOctet = discardWhitespace(arrayOctet);
 
-        int length = arrayOctect.length;
+        int length = arrayOctet.length;
         if (length == 0) {
-            // shouldn't a 0 length array be valid base64 data?
-            // return false;
-            return true;
+             return true;
         }
         for (int i = 0; i < length; i++) {
-            if (!isBase64(arrayOctect[i])) {
+            if (!isBase64(arrayOctet[i])) {
                 return false;
             }
         }
         return true;
+    }
+
+    /*
+     * Tests a given byte array to see if it contains only valid characters within the Base64 alphabet.
+     * 
+     * @param arrayOctet
+     *            byte array to test
+     * @return <code>true</code> if any byte is a valid character in the Base64 alphabet; false herwise
+     */
+    private static boolean containsBase64Byte(byte[] arrayOctet) {
+        for (int i = 0; i < arrayOctet.length; i++) {
+            if (isBase64(arrayOctet[i])) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -581,7 +595,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
-     * Decodes Base64 data into octects
+     * Decodes Base64 data into octets
      *
      * @param base64Data Byte array containing Base64 data
      * @return Array containing decoded data.
