@@ -224,6 +224,10 @@ public class Base64Test extends TestCase {
         assertEquals("Zg==",new String(Base64.encodeBase64(new byte[] { (byte)102 })));
         assertEquals("Zw==",new String(Base64.encodeBase64(new byte[] { (byte)103 })));
         assertEquals("aA==",new String(Base64.encodeBase64(new byte[] { (byte)104 })));
+        for (int i = -128; i<=127; i++){
+            byte test[]= {(byte)i};
+            assertTrue(Arrays.equals(test,Base64.decodeBase64(Base64.encodeBase64(test))));
+        }
     }
 
     public void testSingletonsChunked() {
@@ -332,6 +336,14 @@ public class Base64Test extends TestCase {
         assertEquals("Zg==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)102 })));
         assertEquals("Zw==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)103 })));
         assertEquals("aA==\r\n",new String(Base64.encodeBase64Chunked(new byte[] { (byte)104 })));
+    }
+
+    public void testPairs(){
+        assertEquals("AAA=",new String(Base64.encodeBase64(new byte[] { 0, 0 })));
+        for (int i = -128; i<=127; i++){
+            byte test[]= {(byte)i, (byte)i};
+            assertTrue(Arrays.equals(test,Base64.decodeBase64(Base64.encodeBase64(test))));
+        }
     }
 
     public void testTriplets() {
