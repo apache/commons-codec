@@ -73,11 +73,21 @@ public class Base64Test extends TestCase {
     public void testDecodePadOnly() {
         assertTrue(Base64.decodeBase64("====".getBytes()).length == 0);
         assertEquals("", new String(Base64.decodeBase64("====".getBytes())));
+        // Test truncated padding
+        assertTrue(Base64.decodeBase64("===".getBytes()).length == 0);
+        assertTrue(Base64.decodeBase64("==".getBytes()).length == 0);
+        assertTrue(Base64.decodeBase64("=".getBytes()).length == 0);
+        assertTrue(Base64.decodeBase64("".getBytes()).length == 0);
     }
     
     public void testDecodePadOnlyChunked() {
         assertTrue(Base64.decodeBase64("====\n".getBytes()).length == 0);
         assertEquals("", new String(Base64.decodeBase64("====\n".getBytes())));
+        // Test truncated padding
+        assertTrue(Base64.decodeBase64("===\n".getBytes()).length == 0);
+        assertTrue(Base64.decodeBase64("==\n".getBytes()).length == 0);
+        assertTrue(Base64.decodeBase64("=\n".getBytes()).length == 0);
+        assertTrue(Base64.decodeBase64("\n".getBytes()).length == 0);
     }
     
     // encode/decode random arrays from size 0 to size 11
