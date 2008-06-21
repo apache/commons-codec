@@ -77,12 +77,13 @@ public class Base64OutputStream extends FilterOutputStream {
      * @param doEncode      true if we should encode all data written to us,
      *                      false if we should decode.
      * @param lineLength    If doEncode is true, each line of encoded
-     *                      data will contain lineLength characters.  If
-     *                      doEncode is false, lineLength is ignored.
+     *                      data will contain lineLength characters.  
+     *                      If lineLength <=0, the encoded data is not divided into lines.
+     *                      If doEncode is false, lineLength is ignored.
      * @param lineSeparator If doEncode is true, each line of encoded
-     *                      data will be terminated with this byte sequence
-     *                      (e.g. \r\n).  If doEncode is false lineSeparator
-     *                      is ignored.
+     *                      data will be terminated with this byte sequence (e.g. \r\n).  
+     *                      If lineLength <= 0, the lineSeparator is not used.
+     *                      If doEncode is false lineSeparator is ignored.
      */
     public Base64OutputStream(OutputStream out, boolean doEncode, int lineLength, byte[] lineSeparator) {
         super(out);
@@ -103,7 +104,13 @@ public class Base64OutputStream extends FilterOutputStream {
      * <code>b</code> array starting at <code>offset</code> to
      * this output stream.
      *
+     * @param b source byte array
+     * @param offset where to start reading the bytes
+     * @param len maximum number of bytes to write
+     * 
      * @throws IOException if an I/O error occurs.
+     * @throws NullPointerException if the byte array parameter is null
+     * @throws IndexOutOfBoundsException if offset, len or buffer size are invalid
      */
     public void write(byte b[], int offset, int len) throws IOException {
         if (b == null) {
@@ -151,7 +158,9 @@ public class Base64OutputStream extends FilterOutputStream {
      *
      * @throws IOException if an I/O error occurs.
      */
-    public void flush() throws IOException { flush(true); }
+    public void flush() throws IOException {
+        flush(true); 
+    }
 
     /**
      * Closes this output stream and releases any system resources

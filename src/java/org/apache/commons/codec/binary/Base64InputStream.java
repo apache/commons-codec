@@ -78,12 +78,13 @@ public class Base64InputStream extends FilterInputStream {
      * @param doEncode      true if we should encode all data read from us,
      *                      false if we should decode.
      * @param lineLength    If doEncode is true, each line of encoded
-     *                      data will contain lineLength characters.  If
-     *                      doEncode is false, lineLength is ignored.
+     *                      data will contain lineLength characters.
+     *                      If lineLength <=0, the encoded data is not divided into lines.
+     *                      If doEncode is false, lineLength is ignored.
      * @param lineSeparator If doEncode is true, each line of encoded
-     *                      data will be terminated with this byte sequence
-     *                      (e.g. \r\n).  If doEncode is false lineSeparator
-     *                      is ignored.
+     *                      data will be terminated with this byte sequence (e.g. \r\n).
+     *                      If lineLength <= 0, the lineSeparator is not used.  
+     *                      If doEncode is false lineSeparator is ignored.
      */
     public Base64InputStream(InputStream in, boolean doEncode, int lineLength, byte[] lineSeparator) {
         super(in);
@@ -93,6 +94,8 @@ public class Base64InputStream extends FilterInputStream {
 
     /**
      * Reads one <code>byte</code> from this input stream.
+     * 
+     * @return the byte as an integer in the range 0 to 255
      * Returns -1 if EOF has been reached.
      */
     public int read() throws IOException {
@@ -111,8 +114,15 @@ public class Base64InputStream extends FilterInputStream {
      * Attempts to read <code>len</code> bytes into the specified
      * <code>b</code> array starting at <code>offset</code> from
      * this InputStream.
-     *
+     * 
+     * @param b destination byte array
+     * @param offset where to start writing the bytes
+     * @param len maximum number of bytes to read
+     * 
+     * @return number of bytes read
      * @throws IOException if an I/O error occurs.
+     * @throws NullPointerException if the byte array parameter is null
+     * @throws IndexOutOfBoundsException if offset, len or buffer size are invalid
      */
     public int read(byte b[], int offset, int len) throws IOException {
         if (b == null) {
