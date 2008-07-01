@@ -476,15 +476,8 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      *         empty; false, otherwise
      */
     public static boolean isArrayByteBase64(byte[] arrayOctet) {
-
-        arrayOctet = discardWhitespace(arrayOctet);
-
-        int length = arrayOctet.length;
-        if (length == 0) {
-             return true;
-        }
-        for (int i = 0; i < length; i++) {
-            if (!isBase64(arrayOctet[i])) {
+        for (int i = 0; i < arrayOctet.length; i++) {
+            if (!isBase64(arrayOctet[i]) && !isWhiteSpace(arrayOctet[i])) {
                 return false;
             }
         }
@@ -630,6 +623,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * @param data
      *            The base-64 encoded data to discard the whitespace from.
      * @return The data, less whitespace (see RFC 2045).
+     * @deprecated This method is no longer needed
      */
     static byte[] discardWhitespace(byte[] data) {
         byte groomedData[] = new byte[data.length];
@@ -652,6 +646,25 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
         System.arraycopy(groomedData, 0, packedData, 0, bytesCopied);
 
         return packedData;
+    }
+
+
+    /**
+     * Check if a byte value is whitespace or not.
+     * 
+     * @param byteToCheck the byte to check
+     * @return true if byte is whitespace, false otherwise
+     */
+    private static boolean isWhiteSpace(byte byteToCheck){
+        switch (byteToCheck) {
+        case ' ' :
+        case '\n' :
+        case '\r' :
+        case '\t' :
+            return true;
+        default :
+            return false;
+        }
     }
 
     /**
