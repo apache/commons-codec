@@ -53,9 +53,9 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
     /**
      * The default charset used for string decoding and encoding.
      */
-    protected String charset = CharacterEncodingNames.UTF8;
+    protected final String charset;
     
-    protected static byte ESCAPE_CHAR = '%';
+    protected static final byte ESCAPE_CHAR = '%';
     /**
      * BitSet of www-form-url safe characters.
      */
@@ -88,7 +88,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      * Default constructor.
      */
     public URLCodec() {
-        super();
+        this(CharacterEncodingNames.UTF8);
     }
 
     /**
