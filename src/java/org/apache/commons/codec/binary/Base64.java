@@ -221,7 +221,8 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      */
     public Base64(int lineLength, byte[] lineSeparator) {
         this.lineLength = lineLength;
-        this.lineSeparator = lineSeparator;
+        this.lineSeparator = new byte[lineSeparator.length];
+        System.arraycopy(lineSeparator, 0, this.lineSeparator, 0, lineSeparator.length);
         if (lineLength > 0) {
             this.encodeSize = 4 + lineSeparator.length;
         } else {
