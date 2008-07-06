@@ -33,7 +33,7 @@ public class RFC1522CodecTest extends TestCase {
         super(name);
     }
 
-    class RFC1522TestCodec extends RFC1522Codec { 
+    static class RFC1522TestCodec extends RFC1522Codec { 
 
         protected byte[] doDecoding(byte[] bytes) {
             return bytes;
