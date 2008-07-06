@@ -200,7 +200,7 @@ public class Soundex implements StringEncoder {
     }
 
     /**
-     * Maps the given upper-case character to it's Soudex code.
+     * Maps the given upper-case character to it's Soundex code.
      * 
      * @param ch
      *                  An upper-case character.
