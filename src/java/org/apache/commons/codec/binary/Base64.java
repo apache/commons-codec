@@ -423,21 +423,20 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
             }
             byte b = in[inPos++];
             if (b == PAD) {
-                modulus = (++modulus) % 4;
                 x = x << 6;
                 switch (modulus) {
-                    case 3:
+                    case 2:
                         x = x << 6;
-                    case 0:
                         buf[pos++] = (byte) ((x >> 16) & MASK_8BITS);
-                        if (modulus == 0) {
-                            buf[pos++] = (byte) ((x >> 8) & MASK_8BITS);
-                        }
-                    default:
-                        // WE'RE DONE!!!!
-                        eof = true;
-                        return;
+                        break;
+                    case 3:
+                        buf[pos++] = (byte) ((x >> 16) & MASK_8BITS);
+                        buf[pos++] = (byte) ((x >> 8) & MASK_8BITS);
+                        break;
                 }
+                // WE'RE DONE!!!!
+                eof = true;
+                return;
             } else {
                 if (b >= 0 && b < base64ToInt.length) {
                     int result = base64ToInt[b];
