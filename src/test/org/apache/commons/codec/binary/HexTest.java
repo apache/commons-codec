@@ -160,9 +160,27 @@ public class HexTest extends TestCase {
             new String(c));
     }
 
-    public void testHelloWorld() {
+    public void testHelloWorldLowerCaseHex() {
         byte[] b = "Hello World".getBytes();
-        char[] c = Hex.encodeHex(b);
-        assertEquals("48656c6c6f20576f726c64", new String(c));
+        final String expected = "48656c6c6f20576f726c64";
+        char[] actual;
+        actual = Hex.encodeHex(b);
+        assertTrue(expected.equals(new String(actual)));
+        actual = Hex.encodeHex(b, true);
+        assertTrue(expected.equals(new String(actual)));
+        actual = Hex.encodeHex(b, false);
+        assertFalse(expected.equals(new String(actual)));
+    }
+
+    public void testHelloWorldUpperCaseHex() {
+        byte[] b = "Hello World".getBytes();
+        final String expected = "48656C6C6F20576F726C64";
+        char[] actual;
+        actual = Hex.encodeHex(b);
+        assertFalse(expected.equals(new String(actual)));
+        actual = Hex.encodeHex(b, true);
+        assertFalse(expected.equals(new String(actual)));
+        actual = Hex.encodeHex(b, false);
+        assertTrue(expected.equals(new String(actual)));
     }
 }
