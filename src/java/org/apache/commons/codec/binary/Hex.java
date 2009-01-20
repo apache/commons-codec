@@ -40,13 +40,13 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
     };
 
     /**
-     * Converts an array of characters representing hexidecimal values into an
+     * Converts an array of characters representing hexadecimal values into an
      * array of bytes of those same values. The returned array will be half the
      * length of the passed array, as it takes two characters to represent any
      * given byte. An exception is thrown if the passed char array has an odd
      * number of elements.
      * 
-     * @param data An array of characters containing hexidecimal digits
+     * @param data An array of characters containing hexadecimal digits
      * @return A byte array containing binary data decoded from
      *         the supplied char array.
      * @throws DecoderException Thrown if an odd number or illegal of characters 
@@ -91,13 +91,13 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
-     * Converts an array of bytes into an array of characters representing the hexidecimal values of each byte in order.
+     * Converts an array of bytes into an array of characters representing the hexadecimal values of each byte in order.
      * The returned array will be double the length of the passed array, as it takes two characters to represent any
      * given byte.
      * 
      * @param data
      *                  a byte[] to convert to Hex characters
-     * @return A char[] containing hexidecimal characters
+     * @return A char[] containing hexadecimal characters
      */
     public static char[] encodeHex(byte[] data) {
 
@@ -115,13 +115,13 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
-     * Converts an array of character bytes representing hexidecimal values into an
+     * Converts an array of character bytes representing hexadecimal values into an
      * array of bytes of those same values. The returned array will be half the
      * length of the passed array, as it takes two characters to represent any
      * given byte. An exception is thrown if the passed char array has an odd
      * number of elements.
      * 
-     * @param array An array of character bytes containing hexidecimal digits
+     * @param array An array of character bytes containing hexadecimal digits
      * @return A byte array containing binary data decoded from
      *         the supplied byte array (representing characters).
      * @throws DecoderException Thrown if an odd number of characters is supplied
@@ -133,13 +133,13 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
     }
     
     /**
-     * Converts a String or an array of character bytes representing hexidecimal values into an
+     * Converts a String or an array of character bytes representing hexadecimal values into an
      * array of bytes of those same values. The returned array will be half the
      * length of the passed String or array, as it takes two characters to represent any
      * given byte. An exception is thrown if the passed char array has an odd
      * number of elements.
      * 
-     * @param object A String or, an array of character bytes containing hexidecimal digits
+     * @param object A String or, an array of character bytes containing hexadecimal digits
      * @return A byte array containing binary data decoded from
      *         the supplied byte array (representing characters).
      * @throws DecoderException Thrown if an odd number of characters is supplied
@@ -157,12 +157,12 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
 
     /**
      * Converts an array of bytes into an array of bytes for the characters representing the
-     * hexidecimal values of each byte in order. The returned array will be
+     * hexadecimal values of each byte in order. The returned array will be
      * double the length of the passed array, as it takes two characters to
      * represent any given byte.
      *
      * @param array a byte[] to convert to Hex characters
-     * @return A byte[] containing the bytes of the hexidecimal characters
+     * @return A byte[] containing the bytes of the hexadecimal characters
      * @see #encodeHex(byte[])
      */
     public byte[] encode(byte[] array) {
@@ -171,12 +171,12 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
 
     /**
      * Converts a String or an array of bytes into an array of characters representing the
-     * hexidecimal values of each byte in order. The returned array will be
+     * hexadecimal values of each byte in order. The returned array will be
      * double the length of the passed String or array, as it takes two characters to
      * represent any given byte.
      *
      * @param object a String, or byte[] to convert to Hex characters
-     * @return A char[] containing hexidecimal characters
+     * @return A char[] containing hexadecimal characters
      * @throws EncoderException Thrown if the given object is not a String or byte[]
      * @see #encodeHex(byte[])
      */
