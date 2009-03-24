@@ -382,7 +382,7 @@ public class SoundexTest extends StringEncoderAbstractTest {
      * https://issues.apache.org/jira/browse/CODEC-56
      */
     public void testUsEnglishStatic() {
-        assertEquals(Soundex.US_ENGLISH.soundex("Williams"), "W452");
+        assertEquals("W452", Soundex.US_ENGLISH.soundex("Williams"));
     }
 
     /**
@@ -390,6 +390,14 @@ public class SoundexTest extends StringEncoderAbstractTest {
      * https://issues.apache.org/jira/browse/CODEC-56
      */
     public void testNewInstance() {
-        assertEquals(new Soundex().soundex("Williams"), "W452");
+        assertEquals("W452", new Soundex().soundex("Williams"));
+    }
+    
+    public void testNewInstance2() {
+        assertEquals("W452", new Soundex(Soundex.US_ENGLISH_MAPPING_STRING.toCharArray()).soundex("Williams"));
+    }
+    
+    public void testNewInstance3() {
+        assertEquals("W452", new Soundex(Soundex.US_ENGLISH_MAPPING_STRING).soundex("Williams"));
     }
 }
