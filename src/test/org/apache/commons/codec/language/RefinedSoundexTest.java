@@ -113,4 +113,16 @@ public class RefinedSoundexTest extends StringEncoderAbstractTest {
         char code = this.getEncoder().getMappingCode('#');
         assertEquals("Code does not equals zero", 0, code);
     }
+    
+    public void testNewInstance() {
+        assertEquals("D6043", new RefinedSoundex().soundex("dogs"));
+    }
+    
+    public void testNewInstance2() {
+        assertEquals("D6043", new RefinedSoundex(RefinedSoundex.US_ENGLISH_MAPPING_STRING.toCharArray()).soundex("dogs"));
+    }
+    
+    public void testNewInstance3() {
+        assertEquals("D6043", new RefinedSoundex(RefinedSoundex.US_ENGLISH_MAPPING_STRING).soundex("dogs"));
+    }
 }

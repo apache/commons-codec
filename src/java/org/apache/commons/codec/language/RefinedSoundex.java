@@ -30,12 +30,14 @@ import org.apache.commons.codec.StringEncoder;
  */
 public class RefinedSoundex implements StringEncoder {
 
+    public static final String US_ENGLISH_MAPPING_STRING = "01360240043788015936020505";
+
    /**
      * RefinedSoundex is *refined* for a number of reasons one being that the
      * mappings have been altered. This implementation contains default
      * mappings for US English.
      */
-    public static final char[] US_ENGLISH_MAPPING = "01360240043788015936020505".toCharArray();
+    private static final char[] US_ENGLISH_MAPPING = US_ENGLISH_MAPPING_STRING.toCharArray();
 
     /**
      * Every letter of the alphabet is "mapped" to a numerical value. This char
@@ -55,7 +57,7 @@ public class RefinedSoundex implements StringEncoder {
      * English mapping.
      */
     public RefinedSoundex() {
-        this(US_ENGLISH_MAPPING);
+        this.soundexMapping = US_ENGLISH_MAPPING;
     }
 
     /**
@@ -68,7 +70,21 @@ public class RefinedSoundex implements StringEncoder {
      *                  a given character
      */
     public RefinedSoundex(char[] mapping) {
-        this.soundexMapping = mapping;
+        this.soundexMapping = new char[mapping.length];
+        System.arraycopy(mapping, 0, this.soundexMapping, 0, mapping.length);
+    }
+
+    /**
+     * Creates a refined soundex instance using a custom mapping. This
+     * constructor can be used to customize the mapping, and/or possibly
+     * provide an internationalized mapping for a non-Western character set.
+     * 
+     * @param mapping
+     *                  Mapping string to use when finding the corresponding code for
+     *                  a given character
+     */
+    public RefinedSoundex(String mapping) {
+        this.soundexMapping = mapping.toCharArray();
     }
 
     /**

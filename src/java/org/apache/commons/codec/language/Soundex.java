@@ -47,7 +47,7 @@ public class Soundex implements StringEncoder {
      * 
      * @see Soundex#Soundex(char[])
      */
-    public static final char[] US_ENGLISH_MAPPING = US_ENGLISH_MAPPING_STRING.toCharArray();
+    private static final char[] US_ENGLISH_MAPPING = US_ENGLISH_MAPPING_STRING.toCharArray();
 
     /**
      * An instance of Soundex using the US_ENGLISH_MAPPING mapping.
@@ -100,7 +100,7 @@ public class Soundex implements StringEncoder {
      * @see Soundex#US_ENGLISH_MAPPING
      */
     public Soundex() {
-        this(US_ENGLISH_MAPPING);
+        this.soundexMapping = US_ENGLISH_MAPPING;
     }
 
     /**
@@ -114,7 +114,21 @@ public class Soundex implements StringEncoder {
      *                  Mapping array to use when finding the corresponding code for a given character
      */
     public Soundex(char[] mapping) {
-        this.soundexMapping= mapping;
+        this.soundexMapping = new char[mapping.length];
+        System.arraycopy(mapping, 0, this.soundexMapping, 0, mapping.length);
+    }
+
+    /**
+     * Creates a refined soundex instance using a custom mapping. This
+     * constructor can be used to customize the mapping, and/or possibly
+     * provide an internationalized mapping for a non-Western character set.
+     * 
+     * @param mapping
+     *                  Mapping string to use when finding the corresponding code for
+     *                  a given character
+     */
+    public Soundex(String mapping) {
+        this.soundexMapping = mapping.toCharArray();
     }
 
     /**
