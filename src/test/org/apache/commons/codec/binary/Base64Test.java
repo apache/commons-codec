@@ -698,6 +698,17 @@ public class Base64Test extends TestCase {
         assertEquals(bigInt4, Base64.decodeInteger(encodedInt4.getBytes()));
     }
 
+    public void testCodeIntegerNull() {
+        try {
+            Base64.encodeInteger(null);
+            fail("Exception not thrown when passing in null to encodeInteger(BigInteger)");
+        } catch(NullPointerException npe) {
+            // expected
+        } catch(Exception e) {
+            fail("Incorrect Exception caught when passing in null to encodeInteger(BigInteger)");
+        }
+    }
+
     public void testCodeIntegerEdgeCases() {
         // TODO
     }
