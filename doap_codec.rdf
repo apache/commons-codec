@@ -23,11 +23,11 @@
       </SVNRepository>
     </repository>
     <release>
-      <revision>
+      <Version>
         <name>commons-codec</name>
         <created>2004-07-10</created>
-        <version>1.3</version>
-      </revision>
+        <revision>1.3</version>
+      </Version>
     </release>
     <mailing-list rdf:resource="http://commons.apache.org/mail-lists.html"/>
   </Project>
