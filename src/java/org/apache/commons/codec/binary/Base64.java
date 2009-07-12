@@ -300,10 +300,9 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
-     * Small optimization where we try to buffer directly to the consumer's
-     * output array for one round (if consumer calls this method first!) instead
-     * of starting our own buffer.
-     *
+     * Sets the streaming buffer. This is a small optimization where we try to buffer directly to the consumer's output
+     * array for one round (if the consumer calls this method first) instead of starting our own buffer.
+     * 
      * @param out byte[] array to buffer directly to.
      * @param outPos Position to start buffering into.
      * @param outAvail Amount of bytes available for direct buffering.
