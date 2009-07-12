@@ -44,7 +44,7 @@ public class StringEncoderComparator implements Comparator {
      *             broken NullPointerException creating comparator.
      */
     public StringEncoderComparator() {
-        stringEncoder = null;   // Trying to use this will cause things to break
+        this.stringEncoder = null;   // Trying to use this will cause things to break
     }
 
     /**
