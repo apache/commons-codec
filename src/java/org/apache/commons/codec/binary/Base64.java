@@ -219,6 +219,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * 
      * @param urlSafe
      *            true if URL-SAFE encoding should be performed. In most situations this should be set to false.
+     * @since 1.4
      */
     public Base64(boolean urlSafe) {
         this(CHUNK_SIZE, CHUNK_SEPARATOR, urlSafe);
@@ -236,6 +237,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * @param lineLength
      *            each line of encoded data will be at most this long (rounded up to nearest multiple of 4). If
      *            lineLength <= 0, then the output will not be divided into lines (chunks). Ignored when decoding.
+     * @since 1.4
      */
     public Base64(int lineLength) {
         this(lineLength, CHUNK_SEPARATOR);
@@ -257,6 +259,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      *            Each line of encoded data will end with this sequence of bytes.
      * @throws IllegalArgumentException
      *             The provided lineSeparator included some base64 characters. That's not going to work!
+     * @since 1.4
      */
     public Base64(int lineLength, byte[] lineSeparator) {
         this(lineLength, lineSeparator, false);
@@ -283,6 +286,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      *
      * @throws IllegalArgumentException The provided lineSeparator included
      *                                  some base64 characters.  That's not going to work!
+     * @since 1.4
      */
     public Base64(int lineLength, byte[] lineSeparator, boolean urlSafe) {
         this.lineLength = lineLength;
@@ -310,6 +314,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * Returns our current encode mode. True if we're URL-SAFE, false otherwise.
      * 
      * @return true if we're in URL-SAFE mode, false otherwise.
+     * @since 1.4
      */
     public boolean isUrlSafe() {
         return this.encodeTable == URL_SAFE_ENCODE_TABLE;
@@ -549,6 +554,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * @param octet
      *            The value to test
      * @return <code>true</code> if the value is defined in the the base 64 alphabet, <code>false</code> otherwise.
+     * @since 1.4
      */
     public static boolean isBase64(byte octet) {
         return octet == PAD || (octet >= 0 && octet < DECODE_TABLE.length && DECODE_TABLE[octet] != -1);
@@ -606,6 +612,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * @param binaryData
      *            binary data to encode
      * @return Base64 characters
+     * @since 1.4
      */
     public static byte[] encodeBase64URLSafe(byte[] binaryData) {
         return encodeBase64(binaryData, false, true);
@@ -678,6 +685,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * @return Base64-encoded data.
      * @throws IllegalArgumentException
      *             Thrown when the input array needs an output array bigger than {@link Integer#MAX_VALUE}
+     * @since 1.4
      */
     public static byte[] encodeBase64(byte[] binaryData, boolean isChunked, boolean urlSafe) {
         if (binaryData == null || binaryData.length == 0) {
@@ -842,6 +850,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * 
      * @param pArray a byte array containing base64 character data
      * @return A BigInteger
+     * @since 1.4
      */
     public static BigInteger decodeInteger(byte[] pArray) {
         return new BigInteger(1, decodeBase64(pArray));
@@ -854,6 +863,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * @param bigInt a BigInteger
      * @return A byte array containing base64 character data
      * @throws NullPointerException if null is passed in
+     * @since 1.4
      */
     public static byte[] encodeInteger(BigInteger bigInt) {
         if(bigInt == null)  {
