@@ -19,14 +19,14 @@ package org.apache.commons.codec.binary;
 
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Random;
-import java.math.BigInteger;
+
+import junit.framework.TestCase;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
-
-import junit.framework.TestCase;
 
 /**
  * Test cases for Base64 class.

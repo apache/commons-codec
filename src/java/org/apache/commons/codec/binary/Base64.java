@@ -17,13 +17,13 @@
 
 package org.apache.commons.codec.binary;
 
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+
 import org.apache.commons.codec.BinaryDecoder;
 import org.apache.commons.codec.BinaryEncoder;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
-
-import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
 
 /**
  * Provides Base64 encoding and decoding as defined by RFC 2045.

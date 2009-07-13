@@ -18,11 +18,11 @@
 package org.apache.commons.codec.binary;
 
 
-import junit.framework.TestCase;
-
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.Arrays;
+
+import junit.framework.TestCase;
 
 /**
  * @author Apache Software Foundation
