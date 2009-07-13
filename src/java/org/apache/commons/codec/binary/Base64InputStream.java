@@ -105,9 +105,8 @@ public class Base64InputStream extends FilterInputStream {
         }
         if (r > 0) {
             return singleByte[0] < 0 ? 256 + singleByte[0] : singleByte[0];
-        } else {
-            return -1;
         }
+        return -1;
     }
 
     /**
