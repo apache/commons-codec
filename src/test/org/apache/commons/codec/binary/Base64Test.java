@@ -29,7 +29,7 @@ import org.apache.commons.codec.EncoderException;
 import junit.framework.TestCase;
 
 /**
- * Testcases for Base64 class.
+ * Test cases for Base64 class.
  * 
  * @author Apache Software Foundation
  * @version $Id$
@@ -828,6 +828,19 @@ public class Base64Test extends TestCase {
             assertTrue("url-safe2 decode uuid", Arrays.equals(decodedUrlSafe2, ids[i]));
             assertTrue("url-safe3 decode uuid", Arrays.equals(decodedUrlSafe3, ids[i]));
         }
+    }
+
+    /**
+     * Test encode and decode of empty byte array.
+     */
+    public void testEmptyBase64() {
+        byte[] empty = new byte[0];
+        byte[] result = Base64.encodeBase64(empty);
+        assertEquals("empty base64 encode", 0, result.length);
+
+        empty = new byte[0];
+        result = Base64.decodeBase64(empty);        
+        assertEquals("empty base64 decode", 0, result.length);        
     }
 
     // -------------------------------------------------------- Private Methods

@@ -43,6 +43,18 @@ public class Base64InputStreamTest extends TestCase {
     }
 
     /**
+     * Test the Base64InputStream implementation against empty input.
+     *
+     * @throws Exception for some failure scenarios.
+     */    
+    public void testBase64EmptyInputStream() throws Exception {
+        byte[] emptyEncoded = new byte[0];
+        byte[] emptyDecoded = new byte[0];
+        testByteByByte(emptyEncoded, emptyDecoded, 76, CRLF);
+        testByChunk(emptyEncoded, emptyDecoded, 76, CRLF);
+    }
+
+    /**
      * Test the Base64InputStream implementation.
      *
      * @throws Exception for some failure scenarios.

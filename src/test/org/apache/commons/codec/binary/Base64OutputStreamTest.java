@@ -43,11 +43,23 @@ public class Base64OutputStreamTest extends TestCase {
     }
 
     /**
+     * Test the Base64OutputStream implementation against empty input.
+     *
+     * @throws Exception for some failure scenarios.
+     */
+    public void testBase64EmptyOutputStream() throws Exception {
+        byte[] emptyEncoded = new byte[0];
+        byte[] emptyDecoded = new byte[0];
+        testByteByByte(emptyEncoded, emptyDecoded, 76, CRLF);
+        testByChunk(emptyEncoded, emptyDecoded, 76, CRLF);
+    }    
+
+    /**
      * Test the Base64OutputStream implementation
      *
      * @throws Exception for some failure scenarios.
      */
-    public void testBase64InputStreamByteByByte() throws Exception {
+    public void testBase64OutputStreamByteByByte() throws Exception {
         // Hello World test.
         byte[] encoded = "SGVsbG8gV29ybGQ=\r\n".getBytes("UTF-8");
         byte[] decoded = "Hello World".getBytes("UTF-8");
@@ -75,7 +87,7 @@ public class Base64OutputStreamTest extends TestCase {
      *
      * @throws Exception for some failure scenarios.
      */
-    public void testBase64InputStreamByChunk() throws Exception {
+    public void testBase64OutputStreamByChunk() throws Exception {
         // Hello World test.
         byte[] encoded = "SGVsbG8gV29ybGQ=\r\n".getBytes("UTF-8");
         byte[] decoded = "Hello World".getBytes("UTF-8");

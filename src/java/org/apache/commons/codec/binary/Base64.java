@@ -443,7 +443,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
                     }
                     break;
             }
-            if (lineLength > 0) {
+            if (lineLength > 0 && pos > 0) {
                 System.arraycopy(lineSeparator, 0, buf, pos, lineSeparator.length);
                 pos += lineSeparator.length;
             }
