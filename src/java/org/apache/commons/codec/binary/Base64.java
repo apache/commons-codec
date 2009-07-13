@@ -66,7 +66,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * Thanks to "commons" project in ws.apache.org for this code. 
      * http://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/
      */
-    private static final byte[] intToBase64 = {
+    private static final byte[] STANDARD_ENCODE_TABLE = {
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
             'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
             'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
@@ -75,27 +75,44 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
     };
 
     /**
+     * This is a copy of the STANDARD_ENCODE_TABLE above, but with + and /
+     * changed to - and _ to make the encoded Base64 results more URL-SAFE.
+     * This table is only used when the Base64's mode is set to URL-SAFE.
+     */    
+    private static final byte[] URL_SAFE_ENCODE_TABLE = {
+            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+            'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+            'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-', '_'
+    };
+
+    /**
      * Byte used to pad output.
      */
     private static final byte PAD = '=';
 
     /**
-     * This array is a lookup table that translates unicode characters
+     * This array is a lookup table that translates Unicode characters
      * drawn from the "Base64 Alphabet" (as specified in Table 1 of RFC 2045)
      * into their 6-bit positive integer equivalents.  Characters that
      * are not in the Base64 alphabet but fall within the bounds of the
      * array are translated to -1.
      *
+     * Note:  '+' and '-' both decode to 62.  '/' and '_' both decode to 63.
+     * This means decoder seamlessly handles both URL_SAFE and STANDARD base64.
+     * (The encoder, on the other hand, needs to know ahead of time what to emit).
+     *
      * Thanks to "commons" project in ws.apache.org for this code.
      * http://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/ 
      */
-    private static final byte[] base64ToInt = {
+    private static final byte[] DECODE_TABLE = {
             -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
             -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-            -1, -1, -1, -1, -1, -1, -1, -1, -1, 62, -1, -1, -1, 63, 52, 53, 54,
+            -1, -1, -1, -1, -1, -1, -1, -1, -1, 62, -1, 62, -1, 63, 52, 53, 54,
             55, 56, 57, 58, 59, 60, 61, -1, -1, -1, -1, -1, -1, -1, 0, 1, 2, 3, 4,
             5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23,
-            24, 25, -1, -1, -1, -1, -1, -1, 26, 27, 28, 29, 30, 31, 32, 33, 34,
+            24, 25, -1, -1, -1, -1, 63, -1, 26, 27, 28, 29, 30, 31, 32, 33, 34,
             35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51
     };
 
@@ -109,6 +126,12 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
     // The private member fields below are used with the new streaming approach, which requires
     // some state be preserved between calls of encode() and decode().
 
+    /**
+     * Encode table to use:  either STANDARD or URL_SAFE.  Note:  the DECODE_TABLE above remains static
+     * because it is able to decode both STANDARD and URL_SAFE streams, but the encodeTable must be a member
+     * variable so we can switch between the two modes.
+     */
+    private final byte[] encodeTable;
 
     /**
      * Line length for encoding.  Not used when decoding.  A value of zero or less implies
@@ -175,27 +198,44 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
     private int x;
 
     /**
-     * Default constructor:  lineLength is 76, and the lineSeparator is CRLF
-     * when encoding, and all forms can be decoded.
+     * Sets state for decoding and encoding.
+     * <p>
+     * When encoding the line length is 76, the line separator is CRLF, and we use the STANDARD_ENCODE_TABLE.
+     * </p>
+     * 
+     * <p>
+     * When decoding all variants can be decoded.
+     * </p>
      */
     public Base64() {
-        this(CHUNK_SIZE, CHUNK_SEPARATOR);
+        this(false);
+    }
+
+    /**
+     * Same as default constructor (line length is 76, line separator is CRLF), but URL-SAFE mode for encoding is
+     * supplied.
+     * 
+     * When decoding: all variants can be decoded.
+     * 
+     * @param urlSafe
+     *            true if URL-SAFE encoding should be performed. In most situations this should be set to false.
+     */
+    public Base64(boolean urlSafe) {
+        this(CHUNK_SIZE, CHUNK_SEPARATOR, urlSafe);
     }
 
     /**
      * <p>
-     * Consumer can use this constructor to choose a different lineLength
-     * when encoding (lineSeparator is still CRLF).  All forms of data can
-     * be decoded.
-     * </p><p>
-     * Note:  lineLengths that aren't multiples of 4 will still essentially
-     * end up being multiples of 4 in the encoded data.
+     * Sets the line length when encoding (line separator is still CRLF). All forms of data can be decoded.
      * </p>
-     *
-     * @param lineLength each line of encoded data will be at most this long
-     * (rounded up to nearest multiple of 4). 
-     * If lineLength <= 0, then the output will not be divided into lines (chunks).  
-     * Ignored when decoding.
+     * <p>
+     * Note: line lengths that aren't multiples of 4 will still essentially end up being multiples of 4 in the encoded
+     * data.
+     * </p>
+     * 
+     * @param lineLength
+     *            each line of encoded data will be at most this long (rounded up to nearest multiple of 4). If
+     *            lineLength <= 0, then the output will not be divided into lines (chunks). Ignored when decoding.
      */
     public Base64(int lineLength) {
         this(lineLength, CHUNK_SEPARATOR);
@@ -203,9 +243,30 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
 
     /**
      * <p>
-     * Consumer can use this constructor to choose a different lineLength
-     * and lineSeparator when encoding.  All forms of data can
-     * be decoded.
+     * Sets the line length and line separator when encoding. All forms of data can be decoded.
+     * </p>
+     * <p>
+     * Note: line lengths that aren't multiples of 4 will still essentially end up being multiples of 4 in the encoded
+     * data.
+     * </p>
+     * 
+     * @param lineLength
+     *            Each line of encoded data will be at most this long (rounded up to nearest multiple of 4). Ignored
+     *            when decoding. If <= 0, then output will not be divided into lines (chunks).
+     * @param lineSeparator
+     *            Each line of encoded data will end with this sequence of bytes.
+     * @throws IllegalArgumentException
+     *             The provided lineSeparator included some base64 characters. That's not going to work!
+     */
+    public Base64(int lineLength, byte[] lineSeparator) {
+        this(lineLength, lineSeparator, false);
+    }
+
+    /**
+     * <p>
+     * Consumer can use this constructor to choose a different lineLength,
+     * lineSeparator, and whether to use URL-SAFE mode when encoding.
+     * All forms of data can be decoded.
      * </p><p>
      * Note:  lineLengths that aren't multiples of 4 will still essentially
      * end up being multiples of 4 in the encoded data.
@@ -216,10 +277,14 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * @param lineSeparator Each line of encoded data will end with this
      *                      sequence of bytes.
      *                      If lineLength <= 0, then the lineSeparator is not used.
+     * @param urlSafe       Instead of emitting '+' and '/' we emit '-' and '_' respectively.
+     *                      urlSafe is only applied to "encode" operations.  Decoding seamlessly
+     *                      handles both modes.
+     *
      * @throws IllegalArgumentException The provided lineSeparator included
      *                                  some base64 characters.  That's not going to work!
      */
-    public Base64(int lineLength, byte[] lineSeparator) {
+    public Base64(int lineLength, byte[] lineSeparator, boolean urlSafe) {
         this.lineLength = lineLength;
         this.lineSeparator = new byte[lineSeparator.length];
         System.arraycopy(lineSeparator, 0, this.lineSeparator, 0, lineSeparator.length);
@@ -228,7 +293,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
         } else {
             this.encodeSize = 4;
         }
-        this.decodeSize = encodeSize - 1;
+        this.decodeSize = this.encodeSize - 1;
         if (containsBase64Byte(lineSeparator)) {
             String sep;
             try {
@@ -238,21 +303,35 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
             }
             throw new IllegalArgumentException("lineSeperator must not contain base64 characters: [" + sep + "]");
         }
+        this.encodeTable = urlSafe ? URL_SAFE_ENCODE_TABLE : STANDARD_ENCODE_TABLE;
+    }
+
+    /**
+     * Returns our current encode mode. True if we're URL-SAFE, false otherwise.
+     * 
+     * @return true if we're in URL-SAFE mode, false otherwise.
+     */
+    public boolean isUrlSafe() {
+        return this.encodeTable == URL_SAFE_ENCODE_TABLE;
     }
 
     /**
      * Returns true if this Base64 object has buffered data for reading.
-     *
+     * 
      * @return true if there is Base64 object still available for reading.
      */
-    boolean hasData() { return buf != null; }
+    boolean hasData() {
+        return this.buf != null;
+    }
 
     /**
      * Returns the amount of buffered data available for reading.
-     *
+     * 
      * @return The amount of buffered data available for reading.
      */
-    int avail() { return buf != null ? pos - readPos : 0; }
+    int avail() {
+        return buf != null ? pos - readPos : 0;
+    }
 
     /** Doubles our buffer. */
     private void resizeBuf() {
@@ -294,9 +373,8 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
                 buf = null;
             }
             return len;
-        } else {
-            return eof ? -1 : 0;
         }
+        return eof ? -1 : 0;
     }
 
     /**
@@ -337,7 +415,6 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
         if (eof) {
             return;
         }
-
         // inAvail < 0 is how we're informed of EOF in the underlying data we're
         // encoding.
         if (inAvail < 0) {
@@ -347,17 +424,23 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
             }
             switch (modulus) {
                 case 1:
-                    buf[pos++] = intToBase64[(x >> 2) & MASK_6BITS];
-                    buf[pos++] = intToBase64[(x << 4) & MASK_6BITS];
-                    buf[pos++] = PAD;
-                    buf[pos++] = PAD;
+                    buf[pos++] = encodeTable[(x >> 2) & MASK_6BITS];
+                    buf[pos++] = encodeTable[(x << 4) & MASK_6BITS];
+                    // URL-SAFE skips the padding to further reduce size.
+                    if (encodeTable == STANDARD_ENCODE_TABLE) {
+                        buf[pos++] = PAD;
+                        buf[pos++] = PAD;
+                    }
                     break;
 
                 case 2:
-                    buf[pos++] = intToBase64[(x >> 10) & MASK_6BITS];
-                    buf[pos++] = intToBase64[(x >> 4) & MASK_6BITS];
-                    buf[pos++] = intToBase64[(x << 2) & MASK_6BITS];
-                    buf[pos++] = PAD;
+                    buf[pos++] = encodeTable[(x >> 10) & MASK_6BITS];
+                    buf[pos++] = encodeTable[(x >> 4) & MASK_6BITS];
+                    buf[pos++] = encodeTable[(x << 2) & MASK_6BITS];
+                    // URL-SAFE skips the padding to further reduce size.
+                    if (encodeTable == STANDARD_ENCODE_TABLE) {
+                        buf[pos++] = PAD;
+                    }
                     break;
             }
             if (lineLength > 0) {
@@ -374,10 +457,10 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
                 if (b < 0) { b += 256; }
                 x = (x << 8) + b;
                 if (0 == modulus) {
-                    buf[pos++] = intToBase64[(x >> 18) & MASK_6BITS];
-                    buf[pos++] = intToBase64[(x >> 12) & MASK_6BITS];
-                    buf[pos++] = intToBase64[(x >> 6) & MASK_6BITS];
-                    buf[pos++] = intToBase64[x & MASK_6BITS];
+                    buf[pos++] = encodeTable[(x >> 18) & MASK_6BITS];
+                    buf[pos++] = encodeTable[(x >> 12) & MASK_6BITS];
+                    buf[pos++] = encodeTable[(x >> 6) & MASK_6BITS];
+                    buf[pos++] = encodeTable[x & MASK_6BITS];
                     currentLinePos += 4;
                     if (lineLength > 0 && lineLength <= currentLinePos) {
                         System.arraycopy(lineSeparator, 0, buf, pos, lineSeparator.length);
@@ -423,23 +506,12 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
             }
             byte b = in[inPos++];
             if (b == PAD) {
-                x = x << 6;
-                switch (modulus) {
-                    case 2:
-                        x = x << 6;
-                        buf[pos++] = (byte) ((x >> 16) & MASK_8BITS);
-                        break;
-                    case 3:
-                        buf[pos++] = (byte) ((x >> 16) & MASK_8BITS);
-                        buf[pos++] = (byte) ((x >> 8) & MASK_8BITS);
-                        break;
-                }
                 // WE'RE DONE!!!!
                 eof = true;
-                return;
+                break;
             } else {
-                if (b >= 0 && b < base64ToInt.length) {
-                    int result = base64ToInt[b];
+                if (b >= 0 && b < DECODE_TABLE.length) {
+                    int result = DECODE_TABLE[b];
                     if (result >= 0) {
                         modulus = (++modulus) % 4;
                         x = (x << 6) + result;
@@ -452,6 +524,23 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
                 }
             }
         }
+
+        // Two forms of EOF as far as base64 decoder is concerned:  actual
+        // EOF (-1) and first time '=' character is encountered in stream.
+        // This approach makes the '=' padding characters completely optional.
+        if (eof && modulus != 0) {
+            x = x << 6;
+            switch (modulus) {
+                case 2:
+                    x = x << 6;
+                    buf[pos++] = (byte) ((x >> 16) & MASK_8BITS);
+                    break;
+                case 3:
+                    buf[pos++] = (byte) ((x >> 16) & MASK_8BITS);
+                    buf[pos++] = (byte) ((x >> 8) & MASK_8BITS);
+                    break;
+            }
+        }
     }
 
     /**
@@ -462,7 +551,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * @return <code>true</code> if the value is defined in the the base 64 alphabet, <code>false</code> otherwise.
      */
     public static boolean isBase64(byte octet) {
-        return octet == PAD || (octet >= 0 && octet < base64ToInt.length && base64ToInt[octet] != -1);
+        return octet == PAD || (octet >= 0 && octet < DECODE_TABLE.length && DECODE_TABLE[octet] != -1);
     }
 
     /**
@@ -483,7 +572,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
         return true;
     }
 
-    /*
+    /**
      * Tests a given byte array to see if it contains only valid characters within the Base64 alphabet.
      * 
      * @param arrayOctet
@@ -509,6 +598,19 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
     public static byte[] encodeBase64(byte[] binaryData) {
         return encodeBase64(binaryData, false);
     }
+
+    /**
+     * Encodes binary data using a url-safe variation of the base64 algorithm but does not chunk the output.
+     * The url-safe variation emits - and _ instead of + and / characters.
+     *
+     * @param binaryData
+     *            binary data to encode
+     * @return Base64 characters
+     */
+    public static byte[] encodeBase64URLSafe(byte[] binaryData) {
+        return encodeBase64(binaryData, false, true);
+    }
+    
 
     /**
      * Encodes binary data using the base64 algorithm and chunks the encoded output into 76 character blocks
@@ -561,11 +663,27 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      *             Thrown when the input array needs an output array bigger than {@link Integer#MAX_VALUE}
      */
     public static byte[] encodeBase64(byte[] binaryData, boolean isChunked) {
+        return encodeBase64(binaryData, isChunked, false);
+    }
+
+    /**
+     * Encodes binary data using the base64 algorithm, optionally chunking the output into 76 character blocks.
+     *
+     * @param binaryData
+     *            Array containing binary data to encode.
+     * @param isChunked
+     *            if <code>true</code> this encoder will chunk the base64 output into 76 character blocks
+     * @param urlSafe
+     *            if <code>true</code> this encoder will emit - and _ instead of the usual + and / characters.
+     * @return Base64-encoded data.
+     * @throws IllegalArgumentException
+     *             Thrown when the input array needs an output array bigger than {@link Integer#MAX_VALUE}
+     */
+    public static byte[] encodeBase64(byte[] binaryData, boolean isChunked, boolean urlSafe) {
         if (binaryData == null || binaryData.length == 0) {
             return binaryData;
         }
-        Base64 b64 = isChunked ? new Base64() : new Base64(0);
-
+        Base64 b64 = isChunked ? new Base64(urlSafe) : new Base64(0, CHUNK_SEPARATOR, urlSafe);
         long len = (binaryData.length * 4) / 3;
         long mod = len % 4;
         if (mod != 0) {
@@ -574,7 +692,6 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
         if (isChunked) {
             len += (1 + (len / CHUNK_SIZE)) * CHUNK_SEPARATOR.length;
         }
-
         if (len > Integer.MAX_VALUE) {
             throw new IllegalArgumentException(
                     "Input array too big, output array would be bigger than Integer.MAX_VALUE=" + Integer.MAX_VALUE);
@@ -583,10 +700,16 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
         b64.setInitialBuffer(buf, 0, buf.length);
         b64.encode(binaryData, 0, binaryData.length);
         b64.encode(binaryData, 0, -1); // Notify encoder of EOF.
-
         // Encoder might have resized, even though it was unnecessary.
         if (b64.buf != buf) {
             b64.readResults(buf, 0, buf.length);
+        }
+        // In URL-SAFE mode we skip the padding characters, so sometimes our
+        // final length is a bit smaller.
+        if (urlSafe && b64.pos < buf.length) {
+            byte[] smallerBuf = new byte[b64.pos];
+            System.arraycopy(buf, 0, smallerBuf, 0, b64.pos);
+            buf = smallerBuf;
         }
         return buf;
     }
@@ -602,13 +725,11 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
             return base64Data;
         }
         Base64 b64 = new Base64();
-
         long len = (base64Data.length * 3) / 4;
         byte[] buf = new byte[(int) len];
         b64.setInitialBuffer(buf, 0, buf.length);
         b64.decode(base64Data, 0, base64Data.length);
         b64.decode(base64Data, 0, -1); // Notify decoder of EOF.
-
         // We have no idea what the line-length was, so we
         // cannot know how much of our array wasn't used.
         byte[] result = new byte[b64.pos];
@@ -627,7 +748,6 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
     static byte[] discardWhitespace(byte[] data) {
         byte groomedData[] = new byte[data.length];
         int bytesCopied = 0;
-
         for (int i = 0; i < data.length; i++) {
             switch (data[i]) {
                 case ' ' :
@@ -639,30 +759,28 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
                     groomedData[bytesCopied++] = data[i];
             }
         }
-
         byte packedData[] = new byte[bytesCopied];
-
         System.arraycopy(groomedData, 0, packedData, 0, bytesCopied);
-
         return packedData;
     }
 
 
     /**
-     * Check if a byte value is whitespace or not.
+     * Checks if a byte value is whitespace or not.
      * 
-     * @param byteToCheck the byte to check
+     * @param byteToCheck
+     *            the byte to check
      * @return true if byte is whitespace, false otherwise
      */
-    private static boolean isWhiteSpace(byte byteToCheck){
+    private static boolean isWhiteSpace(byte byteToCheck) {
         switch (byteToCheck) {
-        case ' ' :
-        case '\n' :
-        case '\r' :
-        case '\t' :
-            return true;
-        default :
-            return false;
+            case ' ' :
+            case '\n' :
+            case '\r' :
+            case '\t' :
+                return true;
+            default :
+                return false;
         }
     }
 
@@ -677,17 +795,13 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
     static byte[] discardNonBase64(byte[] data) {
         byte groomedData[] = new byte[data.length];
         int bytesCopied = 0;
-
         for (int i = 0; i < data.length; i++) {
             if (isBase64(data[i])) {
                 groomedData[bytesCopied++] = data[i];
             }
         }
-
         byte packedData[] = new byte[bytesCopied];
-
         System.arraycopy(groomedData, 0, packedData, 0, bytesCopied);
-
         return packedData;
     }
 
@@ -718,12 +832,12 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * @return A byte array containing only Base64 character data
      */
     public byte[] encode(byte[] pArray) {
-        return encodeBase64(pArray, false);
+        return encodeBase64(pArray, false, isUrlSafe());
     }
 
     // Implementation of integer encoding used for crypto
     /**
-     * Decode a byte64-encoded integer according to crypto
+     * Decodes a byte64-encoded integer according to crypto
      * standards such as W3C's XML-Signature
      * 
      * @param pArray a byte array containing base64 character data
@@ -734,7 +848,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
-     * Encode to a byte64-encoded integer according to crypto
+     * Encodes to a byte64-encoded integer according to crypto
      * standards such as W3C's XML-Signature
      * 
      * @param bigInt a BigInteger
@@ -745,7 +859,6 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
         if(bigInt == null)  {
             throw new NullPointerException("encodeInteger called with null parameter");
         }
-
         return encodeBase64(toIntegerBytes(bigInt), false);
     }
 
@@ -766,7 +879,6 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
             (((bigInt.bitLength() / 8) + 1) == (bitlen / 8))) {
             return bigBytes;
         }
-
         // set up params for copying everything but sign bit
         int startSrc = 0;
         int len = bigBytes.length;
@@ -776,12 +888,9 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
             startSrc = 1;
             len--;
         }
-
         int startDst = bitlen / 8 - len; // to pad w/ nulls as per spec
         byte[] resizedBytes = new byte[bitlen / 8];
-
         System.arraycopy(bigBytes, startSrc, resizedBytes, startDst, len);
-
         return resizedBytes;
     }
 }

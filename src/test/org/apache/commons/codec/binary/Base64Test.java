@@ -18,6 +18,7 @@
 package org.apache.commons.codec.binary;
 
 
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.Random;
 import java.math.BigInteger;
@@ -746,6 +747,89 @@ public class Base64Test extends TestCase {
         }
         base64 = new Base64(64,new byte[]{' ','$','\n','\r','\t'}); // OK
     }
+
+    /**
+     * Base64 encoding of UUID's is a common use-case, especially in URL-SAFE
+     * mode.  This test case ends up being the "URL-SAFE" JUnit's.
+     *
+     * @throws DecoderException if Hex.decode() fails - a serious problem since
+     * Hex comes from our own commons-codec!
+     *
+     * @throws UnsupportedEncodingException if "UTF-8" character set is not
+     * available.  Unlikely.
+     */
+    public void testUUID() throws DecoderException, UnsupportedEncodingException {
+        // The 4 UUID's below contains mixtures of + and / to help us test the
+        // URL-SAFE encoding mode.
+        byte[][] ids = new byte[4][];
+
+        // ids[0] was chosen so that it encodes with at least one +.
+        ids[0] = Hex.decodeHex("94ed8d0319e4493399560fb67404d370".toCharArray());
+
+        // ids[1] was chosen so that it encodes with both / and +.
+        ids[1] = Hex.decodeHex("2bf7cc2701fe4397b49ebeed5acc7090".toCharArray());
+
+        // ids[2] was chosen so that it encodes with at least one /.
+        ids[2] = Hex.decodeHex("64be154b6ffa40258d1a01288e7c31ca".toCharArray());
+
+        // ids[3] was chosen so that it encodes with both / and +, with /
+        // right at the beginning.
+        ids[3] = Hex.decodeHex("ff7f8fc01cdb471a8c8b5a9306183fe8".toCharArray());
+
+        byte[][] standard = new byte[4][];
+        standard[0] = "lO2NAxnkSTOZVg+2dATTcA==".getBytes("UTF-8");
+        standard[1] = "K/fMJwH+Q5e0nr7tWsxwkA==".getBytes("UTF-8");
+        standard[2] = "ZL4VS2/6QCWNGgEojnwxyg==".getBytes("UTF-8");
+        standard[3] = "/3+PwBzbRxqMi1qTBhg/6A==".getBytes("UTF-8");
+
+        byte[][] urlSafe1 = new byte[4][];
+        // regular padding (two '==' signs).
+        urlSafe1[0] = "lO2NAxnkSTOZVg-2dATTcA==".getBytes("UTF-8");
+        urlSafe1[1] = "K_fMJwH-Q5e0nr7tWsxwkA==".getBytes("UTF-8");
+        urlSafe1[2] = "ZL4VS2_6QCWNGgEojnwxyg==".getBytes("UTF-8");
+        urlSafe1[3] = "_3-PwBzbRxqMi1qTBhg_6A==".getBytes("UTF-8");
+
+        byte[][] urlSafe2 = new byte[4][];
+        // single padding (only one '=' sign).
+        urlSafe2[0] = "lO2NAxnkSTOZVg-2dATTcA=".getBytes("UTF-8");
+        urlSafe2[1] = "K_fMJwH-Q5e0nr7tWsxwkA=".getBytes("UTF-8");
+        urlSafe2[2] = "ZL4VS2_6QCWNGgEojnwxyg=".getBytes("UTF-8");
+        urlSafe2[3] = "_3-PwBzbRxqMi1qTBhg_6A=".getBytes("UTF-8");
+
+        byte[][] urlSafe3 = new byte[4][];
+        // no padding (no '=' signs).        
+        urlSafe3[0] = "lO2NAxnkSTOZVg-2dATTcA".getBytes("UTF-8");
+        urlSafe3[1] = "K_fMJwH-Q5e0nr7tWsxwkA".getBytes("UTF-8");
+        urlSafe3[2] = "ZL4VS2_6QCWNGgEojnwxyg".getBytes("UTF-8");
+        urlSafe3[3] = "_3-PwBzbRxqMi1qTBhg_6A".getBytes("UTF-8");
+
+        for (int i = 0; i < 4; i++) {
+            byte[] encodedStandard = Base64.encodeBase64(ids[i]);
+            byte[] encodedUrlSafe = Base64.encodeBase64URLSafe(ids[i]);
+            byte[] decodedStandard = Base64.decodeBase64(standard[i]);
+            byte[] decodedUrlSafe1 = Base64.decodeBase64(urlSafe1[i]);
+            byte[] decodedUrlSafe2 =Base64.decodeBase64(urlSafe2[i]);
+            byte[] decodedUrlSafe3 =Base64.decodeBase64(urlSafe3[i]);             
+
+            // Very important debugging output should anyone
+            // ever need to delve closely into this stuff.
+            if (false) {
+                System.out.println("reference: [" + new String(Hex.encodeHex(ids[i])) + "]");
+                System.out.println("standard:  [" + new String(Hex.encodeHex(decodedStandard)) + "] From: [" + new String(standard[i], "UTF-8") + "]");
+                System.out.println("safe1:     [" + new String(Hex.encodeHex(decodedUrlSafe1)) + "] From: [" + new String(urlSafe1[i], "UTF-8") + "]");
+                System.out.println("safe2:     [" + new String(Hex.encodeHex(decodedUrlSafe2)) + "] From: [" + new String(urlSafe2[i], "UTF-8") + "]");
+                System.out.println("safe3:     [" + new String(Hex.encodeHex(decodedUrlSafe3)) + "] From: [" + new String(urlSafe3[i], "UTF-8") + "]");
+            }
+
+            assertTrue("standard encode uuid", Arrays.equals(encodedStandard, standard[i]));
+            assertTrue("url-safe encode uuid", Arrays.equals(encodedUrlSafe, urlSafe3[i]));
+            assertTrue("standard decode uuid", Arrays.equals(decodedStandard, ids[i]));
+            assertTrue("url-safe1 decode uuid", Arrays.equals(decodedUrlSafe1, ids[i]));
+            assertTrue("url-safe2 decode uuid", Arrays.equals(decodedUrlSafe2, ids[i]));
+            assertTrue("url-safe3 decode uuid", Arrays.equals(decodedUrlSafe3, ids[i]));
+        }
+    }
+
     // -------------------------------------------------------- Private Methods
 
     private String toString(byte[] data) {
