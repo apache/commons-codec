@@ -24,13 +24,16 @@
 	<body>
 		<release version="1-4-SNAPSHOT" date="13 July 2009" description="Feature and fix release.">
 			<action dev="ggregory" type="add" issue="CODEC-77" due-to="Julius Davies">
-             Base64 bug with empty input (new byte[0])</action>
+             Base64 bug with empty input (new byte[0]).
+             </action>
 			<action dev="ggregory" type="add" issue="CODEC-75" due-to="Julius Davies">
-             Make Base64 URL-safe</action>
+             Make Base64 URL-safe.
+             </action>
 			<action dev="ggregory" type="add" issue="CODEC-74">
-             Allow for uppercase letters output in Hex.encodeHex()</action>
+             Allow for uppercase letters output in Hex.encodeHex().
+             </action>
 			<action dev="bayard" type="fix" issue="CODEC-72" due-to="Sebb">
-			Soundex and RefinedSoundex issues with character arrays
+			Soundex and RefinedSoundex issues with character arrays.
 			</action>
 			<action dev="bayard" type="fix" issue="CODEC-71" due-to="Sebb">
 			Base64.isArrayByteBase64() method is inefficient for large byte arrays.
@@ -39,10 +42,10 @@
 			Thread safety and malicious code safety improvements.
 			</action>
 			<action dev="bayard" type="fix" issue="CODEC-68" due-to="Robert Rodewald">
-			isBase64 throws ArrayIndexOutOfBoundsException on some non-BASE64 bytes
+			isBase64 throws ArrayIndexOutOfBoundsException on some non-BASE64 bytes.
 			</action>
 			<action dev="bayard" type="fix" issue="CODEC-65" due-to="Benjamin Bentmann">
-			Fix case-insensitive string handling
+			Fix case-insensitive string handling.
 			</action>
 			<action dev="ggregory" type="fix" issue="CODEC-61" due-to="Igor Slepchin">
 			Base64.encodeBase64() throws NegativeArraySizeException on large files.
@@ -51,22 +54,22 @@
 			Implement Caverphone.
 			</action>
 			<action dev="bayard" type="fix" issue="CODEC-56" due-to="Sebb ">
-			RefinedSoundex creates instance before al fields have been initialized
+			RefinedSoundex creates instance before al fields have been initialized.
 			</action>
 			<action dev="bayard" type="add" issue="CODEC-52" due-to="Niklas Gustavsson">
-			Digest on InputStreams
+			Digest on InputStreams.
 			</action>
 			<action dev="bayard" type="fix" issue="CODEC-51">
-			2 Test failures in SoundexTest
+			2 Test failures in SoundexTest.
 			</action>
 			<action dev="bayard" type="add" issue="CODEC-40" due-to="Chris Black">
-			Patch to add crypto-compatible BigInteger encoding support to Base64
+			Patch to add crypto-compatible BigInteger encoding support to Base64.
 			</action>
 			<action dev="ggregory" type="add" issue="CODEC-39" due-to="Jamie Flournoy" due-to-email="jamie@white-mountain.org">
-            DigestUtils: Add methods for SHA-256, SHA-384, and SHA-512.</action>
+            DigestUtils: Add methods for SHA-256, SHA-384, and SHA-512.
+            </action>
 			<action dev="tobrien" type="fix" issue="CODEC-10" due-to="Reggie Riser" due-to-email="rriser@informs.com">
-			 Using US_ENGLISH in Soundex caused an NullPointerException.  Issue has been
-			 addressed by changing the order of static variables in Soundex.
+			 Using US_ENGLISH in Soundex caused an NullPointerException.
 			</action>
 			<action dev="tobrien" type="fix" issue="CODEC-6" due-to="David Tonhofer">
 			Source tarball spews files all over the place.
