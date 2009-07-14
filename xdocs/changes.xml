@@ -59,6 +59,9 @@
 			<action dev="bayard" type="fix" issue="CODEC-51">
 			2 Test failures in SoundexTest
 			</action>
+			<action dev="bayard" type="add" issue="CODEC-40" due-to="Chris Black">
+			Patch to add crypto-compatible BigInteger encoding support to Base64
+			</action>
 			<action dev="ggregory" type="add" issue="CODEC-39" due-to="Jamie Flournoy" due-to-email="jamie@white-mountain.org">
             DigestUtils: Add methods for SHA-256, SHA-384, and SHA-512.</action>
 			<action dev="tobrien" type="fix" issue="CODEC-10" due-to="Reggie Riser" due-to-email="rriser@informs.com">
