@@ -30,6 +30,9 @@ import org.apache.commons.codec.StringEncoder;
  */
 public class RefinedSoundex implements StringEncoder {
 
+    /**
+     * @since 1.4
+     */
     public static final String US_ENGLISH_MAPPING_STRING = "01360240043788015936020505";
 
    /**
@@ -75,13 +78,12 @@ public class RefinedSoundex implements StringEncoder {
     }
 
     /**
-     * Creates a refined soundex instance using a custom mapping. This
-     * constructor can be used to customize the mapping, and/or possibly
-     * provide an internationalized mapping for a non-Western character set.
+     * Creates a refined Soundex instance using a custom mapping. This constructor can be used to customize the mapping,
+     * and/or possibly provide an internationalized mapping for a non-Western character set.
      * 
      * @param mapping
-     *                  Mapping string to use when finding the corresponding code for
-     *                  a given character
+     *            Mapping string to use when finding the corresponding code for a given character
+     * @since 1.4
      */
     public RefinedSoundex(String mapping) {
         this.soundexMapping = mapping.toCharArray();

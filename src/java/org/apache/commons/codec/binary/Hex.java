@@ -121,6 +121,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * @param toLowerCase
      *            <code>true</code> converts to lowercase, <code>false</code> to uppercase
      * @return A char[] containing hexadecimal characters
+     * @since 1.4
      */
     public static char[] encodeHex(byte[] data, boolean toLowerCase) {
         return encodeHex(data, toLowerCase ? DIGITS_LOWER : DIGITS_UPPER);
@@ -136,19 +137,16 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * @param toDigits
      *            the output alphabet
      * @return A char[] containing hexadecimal characters
+     * @since 1.4
      */
     protected static char[] encodeHex(byte[] data, char[] toDigits) {
-
         int l = data.length;
-
         char[] out = new char[l << 1];
-
         // two characters form the hex value.
         for (int i = 0, j = 0; i < l; i++) {
             out[j++] = toDigits[(0xF0 & data[i]) >>> 4];
             out[j++] = toDigits[0x0F & data[i]];
         }
-
         return out;
     }
 

@@ -21,16 +21,16 @@ import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
 
 /**
- * Encodes a string into a caverphone value. 
- *
- * This is an algorithm created the Caversham Project at the University of Otago. 
- * It implements the Caverphone 2.0 algorithm:
- *
- *
+ * Encodes a string into a Caverphone value.
+ * 
+ * This is an algorithm created the Caversham Project at the University of Otago. It implements the Caverphone 2.0
+ * algorithm:
+ * 
  * @author Apache Software Foundation
  * @version $Id$
  * @see <a href="http://en.wikipedia.org/wiki/Caverphone">Wikipedia - Caverphone</a>
  * @see <a href="http://caversham.otago.ac.nz/files/working/ctp150804.pdf">Caverphone 2.0 specification</a>
+ * @since 1.4
  */
 public class Caverphone implements StringEncoder {
 

@@ -119,13 +119,12 @@ public class Soundex implements StringEncoder {
     }
 
     /**
-     * Creates a refined soundex instance using a custom mapping. This
-     * constructor can be used to customize the mapping, and/or possibly
-     * provide an internationalized mapping for a non-Western character set.
+     * Creates a refined soundex instance using a custom mapping. This constructor can be used to customize the mapping,
+     * and/or possibly provide an internationalized mapping for a non-Western character set.
      * 
      * @param mapping
-     *                  Mapping string to use when finding the corresponding code for
-     *                  a given character
+     *            Mapping string to use when finding the corresponding code for a given character
+     * @since 1.4
      */
     public Soundex(String mapping) {
         this.soundexMapping = mapping.toCharArray();
