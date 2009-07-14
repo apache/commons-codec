@@ -38,7 +38,7 @@ import java.io.InputStream;
  * @author Apache Software Foundation
  * @version $Id $
  * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>
- * @since 1.0-dev
+ * @since 1.4
  */
 public class Base64InputStream extends FilterInputStream {
 
