@@ -40,7 +40,7 @@ public class RefinedSoundex implements StringEncoder {
      * mappings have been altered. This implementation contains default
      * mappings for US English.
      */
-    private static final char[] US_ENGLISH_MAPPING = US_ENGLISH_MAPPING_STRING.toCharArray();
+    public static final char[] US_ENGLISH_MAPPING = US_ENGLISH_MAPPING_STRING.toCharArray();
 
     /**
      * Every letter of the alphabet is "mapped" to a numerical value. This char
