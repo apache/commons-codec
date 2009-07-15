@@ -101,8 +101,9 @@
       	    </action>
 			<action dev="ggregory" type="update">
           	This version is relesed under the 
-          	<a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>
-          	, please see LICENSE.txt. Previous versions were released under the Apache License 1.1.
+          	&lt;a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0&lt;/a>
+          	, please see LICENSE.txt. Previous versions were released under the 
+          	&lt;a href="http://www.apache.org/licenses/LICENSE-1.1">Apache License 1.1&lt;/a>
       	    </action>
 			<action dev="ggregory" type="update">
       	    The Board recommendation to remove Javadoc author tags has been 
