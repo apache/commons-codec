@@ -51,11 +51,15 @@ import org.apache.commons.codec.StringEncoder;
 public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, StringDecoder {
     
     /**
-     * The default charset used for string decoding and encoding.
+     * The default charset used for string decoding and encoding. Consider this field final. The next major release may
+     * break compatibility and make this field be final.
      */
-    protected final String charset;
+    protected String charset;
     
-    protected static final byte ESCAPE_CHAR = '%';
+    /**
+     * Consider this field final. The next major release may break compatibility and make this field be final.
+     */
+    protected static byte ESCAPE_CHAR = '%';
     /**
      * BitSet of www-form-url safe characters.
      */
