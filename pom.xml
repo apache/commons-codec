@@ -86,7 +86,7 @@
         <developer>
             <name>Gary D. Gregory</name>
             <id>ggregory</id>
-            <email>ggregory@seagullsw.com</email>
+            <email>gary@garygregory.com</email>
             <organization>Seagull Software</organization>
             <timezone>-8</timezone>
         </developer>
@@ -108,16 +108,16 @@
         </contributor>
         <contributor>
             <name>Martin Redington</name>
-            <roles><role>representing xml-rpc</role></roles>
+            <roles><role>Representing xml-rpc</role></roles>
         </contributor>
         <contributor>
             <name>Jeffery Dever</name>
-            <roles><role>representing http-client</role></roles>
+            <roles><role>Representing http-client</role></roles>
         </contributor>
         <contributor>
             <name>Steve Zimmermann</name>
             <email>steve.zimmermann@heii.com</email>
-            <roles><role>documentation</role></roles>
+            <roles><role>Documentation</role></roles>
         </contributor>
         <contributor>
             <name>Benjamin Walstrum</name>
@@ -126,12 +126,12 @@
         <contributor>
             <name>Oleg Kalnichevski</name>
             <email>oleg@ural.ru</email>
-            <roles><role>representing http-client</role></roles>
+            <roles><role>Representing http-client</role></roles>
         </contributor>
         <contributor>
             <name>Dave Dribin</name>
             <email>apache@dave.dribin.org</email>
-            <roles><role>digest util</role></roles>
+            <roles><role>DigestUtil</role></roles>
         </contributor>
         <contributor>
             <name>Alex Karasulu</name>
@@ -143,7 +143,25 @@
             <email>mattinger at yahoo.com</email>
             <roles><role>Submitted DIFFERENCE algorithm for Soundex and RefinedSoundex</role></roles>
         </contributor>
-    </contributors>
+        <contributor>
+            <name>Jochen Wiedmann</name>
+            <email>jochen@apache.org</email>
+            <roles><role>Base64 code [CODEC-69]</role></roles>
+        </contributor>
+        <contributor>
+            <name>Julius Davies</name>
+            <email>juliusdavies@gmail.com</email>
+            <roles>
+               <role>Base64InputStream</role>
+               <role>Base64OutputStream</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Sebastian Bazley</name>
+            <email>sebb@apache.org</email>
+            <roles><role>Streaming Base64</role></roles>
+        </contributor>
+    </contributors>    
 
   <!-- Codec should depend on very little -->
   <dependencies>
