@@ -212,6 +212,7 @@ public class Metaphone implements StringEncoder {
                         break; // silent G
                     }
                     if (isPreviousChar(local, n, 'G')) {
+                        // NOTE: Given that duplicated chars are removed, I don't see how this can ever be true
                         hard = true ;
                     } else {
                         hard = false ;
