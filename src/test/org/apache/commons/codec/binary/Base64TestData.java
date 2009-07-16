@@ -19,14 +19,15 @@ package org.apache.commons.codec.binary;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Random;
 
 /**
- * This random data was encoded by OpenSSL.  Java had nothing to do with it.
- * This data helps us test interop between Commons-Codec and OpenSSL.  Notice
- * that OpenSSL creates 64 character lines instead of the 76 of Commons-Codec.
- *
+ * This random data was encoded by OpenSSL. Java had nothing to do with it. This data helps us test interop between
+ * Commons-Codec and OpenSSL. Notice that OpenSSL creates 64 character lines instead of the 76 of Commons-Codec.
+ * 
  * @author Apache Software Foundation
  * @version $Id $
+ * @since 1.4
  */
 public class Base64TestData {
 
@@ -154,6 +155,22 @@ public class Base64TestData {
         byte[] biggerBytes = new byte[bytes.length * 2];
         System.arraycopy(bytes, 0, biggerBytes, 0, bytes.length);
         return biggerBytes;
+    }
+
+
+    /**
+     * Returns an encoded and decoded copy of the same random data.
+     * 
+     * @param size amount of random data to generate and encode
+     * @param urlSafe true if encoding be urlSafe
+     * @return two byte[] arrays:  [0] = decoded, [1] = encoded 
+     */
+    public static byte[][] randomData(int size, boolean urlSafe) {
+        Random r = new Random();
+        byte[] decoded = new byte[size];
+        r.nextBytes(decoded);
+        byte[] encoded = urlSafe ? Base64.encodeBase64URLSafe(decoded) : Base64.encodeBase64(decoded);
+        return new byte[][] {decoded, encoded};
     }
 
 }

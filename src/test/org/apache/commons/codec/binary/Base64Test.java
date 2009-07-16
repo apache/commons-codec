@@ -723,27 +723,27 @@ public class Base64Test extends TestCase {
         try {
             base64 = new Base64(-1,new byte[]{'A'});
             fail("Should have rejected attempt to use 'A' as a line separator");
-        } catch (IllegalArgumentException ignored){
-            
+        } catch (IllegalArgumentException ignored) {
+            // Expected
         }
         try {
             base64 = new Base64(64,new byte[]{'A'});
             fail("Should have rejected attempt to use 'A' as a line separator");
-        } catch (IllegalArgumentException ignored){
-            
+        } catch (IllegalArgumentException ignored) {
+            // Expected            
         }
         try {
             base64 = new Base64(64,new byte[]{'='});
             fail("Should have rejected attempt to use '=' as a line separator");
-        } catch (IllegalArgumentException ignored){
-            
+        } catch (IllegalArgumentException ignored) {
+            // Expected
         }
         base64 = new Base64(64,new byte[]{'$'}); // OK
         try {
             base64 = new Base64(64,new byte[]{'A','$'});
             fail("Should have rejected attempt to use 'A$' as a line separator");
-        } catch (IllegalArgumentException ignored){
-            
+        } catch (IllegalArgumentException ignored) {
+            // Expected
         }
         base64 = new Base64(64,new byte[]{' ','$','\n','\r','\t'}); // OK
     }
@@ -831,16 +831,47 @@ public class Base64Test extends TestCase {
     }
 
     /**
+     * Tests url-safe Base64 against random data, sizes 0 to 150.
+     */
+    public void testUrlSafe() {
+        // test random data of sizes 0 thru 150
+        for (int i = 0; i <= 150; i++) {
+            byte[][] randomData = Base64TestData.randomData(i, true);
+            byte[] encoded = randomData[1];
+            byte[] decoded = randomData[0];
+            byte[] result = Base64.decodeBase64(encoded);
+            assertTrue("url-safe i=" + i, Arrays.equals(decoded, result));
+        }
+
+    }
+
+    /**
+     * Tests isUrlSafe.
+     */    
+    public void testIsUrlSafe() {
+        Base64 base64Standard = new Base64(false);        
+        Base64 base64URLSafe = new Base64(true);
+
+        assertFalse("Base64.isUrlSafe=false", base64Standard.isUrlSafe());
+        assertTrue("Base64.isUrlSafe=true", base64URLSafe.isUrlSafe());
+
+        byte[] whiteSpace = {' ', '\n', '\r', '\t'};
+        assertTrue("Base64.isArrayByteBase64(whiteSpace)=true", Base64.isArrayByteBase64(whiteSpace)); 
+    }
+
+    /**
      * Test encode and decode of empty byte array.
      */
     public void testEmptyBase64() {
         byte[] empty = new byte[0];
         byte[] result = Base64.encodeBase64(empty);
         assertEquals("empty base64 encode", 0, result.length);
-
+        assertEquals("empty base64 encode", null, Base64.encodeBase64(null));
+        
         empty = new byte[0];
         result = Base64.decodeBase64(empty);        
         assertEquals("empty base64 decode", 0, result.length);        
+        assertEquals("empty base64 encode", null, Base64.decodeBase64(null));
     }
 
     // -------------------------------------------------------- Private Methods
