@@ -59,4 +59,10 @@ public class CaverphoneTest extends StringEncoderAbstractTest {
         }
     }
 
+    public void testIsCaverphoneEquals() {
+        Caverphone caverphone = new Caverphone();
+        assertFalse("Caverphone encodings should not be equal", caverphone.isCaverphoneEqual("Peter", "Stevenson"));
+        assertTrue("Caverphone encodings should be equal", caverphone.isCaverphoneEqual("Peter", "Peady"));
+    }
+
 }

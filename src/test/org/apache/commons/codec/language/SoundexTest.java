@@ -400,4 +400,14 @@ public class SoundexTest extends StringEncoderAbstractTest {
     public void testNewInstance3() {
         assertEquals("W452", new Soundex(Soundex.US_ENGLISH_MAPPING_STRING).soundex("Williams"));
     }
+
+    public void testSoundexUtilsNullBehaviour() {
+        assertEquals(null, SoundexUtils.clean(null));
+        assertEquals("", SoundexUtils.clean(""));
+        assertEquals(0, SoundexUtils.differenceEncoded(null, ""));
+        assertEquals(0, SoundexUtils.differenceEncoded("", null));
+    }
+    public void testSoundexUtilsConstructable() {
+        new SoundexUtils();
+    }
 }

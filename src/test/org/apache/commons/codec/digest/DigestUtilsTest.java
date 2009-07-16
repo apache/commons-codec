@@ -157,4 +157,8 @@ public class DigestUtilsTest extends TestCase {
                 DigestUtils.shaHex(new ByteArrayInputStream(testData)));
 
     }    
+
+    public void testConstructable() {
+        new DigestUtils();
+    }
 }
