@@ -82,7 +82,7 @@
 			<action dev="ggregory" type="add" issue="CODEC-41" due-to="Oleg Kalnichevski" due-to-email="olegk@apache.org">
       	    QuotedPrintableCodec: Codec for RFC 1521 MIME (Multipurpose Internet 
             Mail Extensions) Part One. Rules #3, #4, and #5 of the quoted-printable spec 
-            are not implemented yet. See also issue 27789.
+            are not implemented yet. See also issue CODEC-46.
             </action>
 			<action dev="ggregory" type="add" issue="CODEC-41" due-to="Oleg Kalnichevski" due-to-email="olegk@apache.org">
       	    BCodec: Identical to the Base64 encoding defined by RFC 1521 and allows a 
@@ -136,19 +136,19 @@
 			<action dev="tobrien" type="add" due-to="Dave Dribin, David Graham">
             DigestUtils: Calculates MD5 and SHA digests.
       	    </action>
-			<action dev="tobrien" type="fix" issue="19860" due-to="Brian Ewins">
+			<action dev="tobrien" type="fix" issue="CODEC-26" due-to="Brian Ewins">
             Modified Base64 to remedy non-compliance with RFC
             2045.  Non-Base64 characters were not being discarded during the
             decode.  RFC 2045 explicitly states that all characters outside of the
             base64 alphabet are to be ignored.  
       	    </action>
-			<action dev="ggregory" type="fix" issue="24360">
+			<action dev="ggregory" type="fix" issue="CODEC-4">
             Hex.decode(Object) throws a ClassCastException when a String argument is passed in.
       	    </action>
-			<action dev="ggregory" type="fix" issue="24471">
+			<action dev="ggregory" type="fix" issue="CODEC-3">
             Soundex: The HW rule is not applied; hyphens and apostrophes are not ignored.
       	    </action>
-			<action dev="ggregory" type="fix" issue="24484">
+			<action dev="ggregory" type="fix" issue="CODEC-29">
             Soundex.setMaxLength causes bugs and is not needed.
             Calling Soundex.setMaxLength() with a value of 2 or less causes the wrong
             answer to be returned.  Since the encoding returned by Soundex is always
