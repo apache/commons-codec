@@ -792,26 +792,6 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
         }
     }
 
-    /**
-     * Discards any characters outside of the base64 alphabet, per the requirements on page 25 of RFC 2045 - "Any
-     * characters outside of the base64 alphabet are to be ignored in base64 encoded data."
-     * 
-     * @param data
-     *            The base-64 encoded data to groom
-     * @return The data, less non-base64 characters (see RFC 2045).
-     */
-    static byte[] discardNonBase64(byte[] data) {
-        byte groomedData[] = new byte[data.length];
-        int bytesCopied = 0;
-        for (int i = 0; i < data.length; i++) {
-            if (isBase64(data[i])) {
-                groomedData[bytesCopied++] = data[i];
-            }
-        }
-        byte packedData[] = new byte[bytesCopied];
-        System.arraycopy(groomedData, 0, packedData, 0, bytesCopied);
-        return packedData;
-    }
 
     // Implementation of the Encoder Interface
 
