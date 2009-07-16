@@ -434,7 +434,10 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
     }
 
     public void testDiscardOfSilentGN() {
+        // NOTE: This does not test for silent GN, but for starting with GN
         assertEquals( "N", this.getMetaphone().metaphone("GNU") );
+
+        // NOTE: Trying to test for GNED, but expected code does not appear to execute
         assertEquals( "SNT", this.getMetaphone().metaphone("SIGNED") );
     }
 
