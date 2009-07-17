@@ -165,12 +165,26 @@ public class Base64TestData {
      * @param urlSafe true if encoding be urlSafe
      * @return two byte[] arrays:  [0] = decoded, [1] = encoded 
      */
-    public static byte[][] randomData(int size, boolean urlSafe) {
+    static byte[][] randomData(int size, boolean urlSafe) {
         Random r = new Random();
         byte[] decoded = new byte[size];
         r.nextBytes(decoded);
         byte[] encoded = urlSafe ? Base64.encodeBase64URLSafe(decoded) : Base64.encodeBase64(decoded);
         return new byte[][] {decoded, encoded};
+    }
+
+    /**
+     * Tests the supplied byte[] array to see if it contains the specified byte c.
+     *
+     * @param bytes byte[] array to test
+     * @param c byte to look for
+     * @return true if bytes contains c, false otherwise
+     */
+    static boolean bytesContain(byte[] bytes, byte c) {
+        for (int i = 0; i < bytes.length; i++) {
+            if (bytes[i] == c) { return true; }
+        }
+        return false;
     }
 
 }

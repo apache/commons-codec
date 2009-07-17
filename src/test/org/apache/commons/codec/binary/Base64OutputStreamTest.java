@@ -34,6 +34,10 @@ public class Base64OutputStreamTest extends TestCase {
 
     private final static byte[] LF = {(byte) '\n'};
 
+    private static final String STRING_FIXTURE = "Hello World";
+
+    private static final String UTF_8_NAME = "UTF-8";
+
     /**
      * Construct a new instance of this test case.
      * 
@@ -65,23 +69,23 @@ public class Base64OutputStreamTest extends TestCase {
      */
     public void testBase64OutputStreamByChunk() throws Exception {
         // Hello World test.
-        byte[] encoded = "SGVsbG8gV29ybGQ=\r\n".getBytes("UTF-8");
-        byte[] decoded = "Hello World".getBytes("UTF-8");
+        byte[] encoded = "SGVsbG8gV29ybGQ=\r\n".getBytes(UTF_8_NAME);
+        byte[] decoded = STRING_FIXTURE.getBytes(UTF_8_NAME);
         testByChunk(encoded, decoded, 76, CRLF);
 
         // Single Byte test.
-        encoded = "AA==\r\n".getBytes("UTF-8");
+        encoded = "AA==\r\n".getBytes(UTF_8_NAME);
         decoded = new byte[]{(byte) 0};
         testByChunk(encoded, decoded, 76, CRLF);
 
         // OpenSSL interop test.
-        encoded = Base64TestData.ENCODED.getBytes("UTF-8");
+        encoded = Base64TestData.ENCODED.getBytes(UTF_8_NAME);
         decoded = Base64TestData.DECODED;
         testByChunk(encoded, decoded, 64, LF);
 
         // Single Line test.
         String singleLine = Base64TestData.ENCODED.replaceAll("\n", "");
-        encoded = singleLine.getBytes("UTF-8");
+        encoded = singleLine.getBytes(UTF_8_NAME);
         decoded = Base64TestData.DECODED;
         testByChunk(encoded, decoded, 0, LF);
 
@@ -102,8 +106,8 @@ public class Base64OutputStreamTest extends TestCase {
      */
     public void testBase64OutputStreamByteByByte() throws Exception {
         // Hello World test.
-        byte[] encoded = "SGVsbG8gV29ybGQ=\r\n".getBytes("UTF-8");
-        byte[] decoded = "Hello World".getBytes("UTF-8");
+        byte[] encoded = "SGVsbG8gV29ybGQ=\r\n".getBytes(UTF_8_NAME);
+        byte[] decoded = STRING_FIXTURE.getBytes(UTF_8_NAME);
         testByteByByte(encoded, decoded, 76, CRLF);
 
         // Single Byte test.
@@ -112,13 +116,13 @@ public class Base64OutputStreamTest extends TestCase {
         testByteByByte(encoded, decoded, 76, CRLF);
 
         // OpenSSL interop test.
-        encoded = Base64TestData.ENCODED.getBytes("UTF-8");
+        encoded = Base64TestData.ENCODED.getBytes(UTF_8_NAME);
         decoded = Base64TestData.DECODED;
         testByteByByte(encoded, decoded, 64, LF);
 
         // Single Line test.
         String singleLine = Base64TestData.ENCODED.replaceAll("\n", "");
-        encoded = singleLine.getBytes("UTF-8");
+        encoded = singleLine.getBytes(UTF_8_NAME);
         decoded = Base64TestData.DECODED;
         testByteByByte(encoded, decoded, 0, LF);
 
@@ -157,7 +161,7 @@ public class Base64OutputStreamTest extends TestCase {
         out.write(decoded);
         out.close();
         byte[] output = byteOut.toByteArray();
-        assertTrue("Streaming base64 encode", Arrays.equals(output, encoded));
+        assertTrue("Streaming chunked base64 encode", Arrays.equals(output, encoded));
 
         // Now let's try decode.
         byteOut = new ByteArrayOutputStream();
@@ -165,7 +169,7 @@ public class Base64OutputStreamTest extends TestCase {
         out.write(encoded);
         out.close();
         output = byteOut.toByteArray();
-        assertTrue("Streaming base64 decode", Arrays.equals(output, decoded));
+        assertTrue("Streaming chunked base64 decode", Arrays.equals(output, decoded));
 
         // I always wanted to do this! (wrap encoder with decoder etc etc).
         byteOut = new ByteArrayOutputStream();
@@ -178,7 +182,7 @@ public class Base64OutputStreamTest extends TestCase {
         out.close();
         output = byteOut.toByteArray();
 
-        assertTrue("Streaming base64 wrap-wrap-wrap!", Arrays.equals(output, decoded));
+        assertTrue("Streaming chunked base64 wrap-wrap-wrap!", Arrays.equals(output, decoded));
     }
 
     /**
@@ -209,7 +213,7 @@ public class Base64OutputStreamTest extends TestCase {
         }
         out.close();
         byte[] output = byteOut.toByteArray();
-        assertTrue("Streaming base64 encode", Arrays.equals(output, encoded));
+        assertTrue("Streaming byte-by-byte base64 encode", Arrays.equals(output, encoded));
 
         // Now let's try decode.
         byteOut = new ByteArrayOutputStream();
@@ -219,7 +223,18 @@ public class Base64OutputStreamTest extends TestCase {
         }
         out.close();
         output = byteOut.toByteArray();
-        assertTrue("Streaming base64 decode", Arrays.equals(output, decoded));
+        assertTrue("Streaming byte-by-byte base64 decode", Arrays.equals(output, decoded));
+
+        // Now let's try decode with tonnes of flushes.
+        byteOut = new ByteArrayOutputStream();
+        out = new Base64OutputStream(byteOut, false);
+        for (int i = 0; i < encoded.length; i++) {
+            out.write(encoded[i]);
+            out.flush();
+        }                      
+        out.close();
+        output = byteOut.toByteArray();
+        assertTrue("Streaming byte-by-byte flush() base64 decode", Arrays.equals(output, decoded));        
 
         // I always wanted to do this! (wrap encoder with decoder etc etc).
         byteOut = new ByteArrayOutputStream();
@@ -234,7 +249,7 @@ public class Base64OutputStreamTest extends TestCase {
         out.close();
         output = byteOut.toByteArray();
 
-        assertTrue("Streaming base64 wrap-wrap-wrap!", Arrays.equals(output, decoded));
+        assertTrue("Streaming byte-by-byte base64 wrap-wrap-wrap!", Arrays.equals(output, decoded));
     }
 
     /**
@@ -249,8 +264,15 @@ public class Base64OutputStreamTest extends TestCase {
         Base64OutputStream out = new Base64OutputStream(bout);
 
         try {
-            out.write(buf, -1, 0);
-            fail("Expected Base64OutputStream.write(buf, -1, 0) to throw a IndexOutOfBoundsException");
+            out.write(buf, -1, 1);
+            fail("Expected Base64OutputStream.write(buf, -1, 1) to throw a IndexOutOfBoundsException");
+        } catch (IndexOutOfBoundsException ioobe) {
+            // Expected
+        }
+
+        try {
+            out.write(buf, 1, -1);
+            fail("Expected Base64OutputStream.write(buf, 1, -1) to throw a IndexOutOfBoundsException");
         } catch (IndexOutOfBoundsException ioobe) {
             // Expected
         }
@@ -261,6 +283,13 @@ public class Base64OutputStreamTest extends TestCase {
         } catch (IndexOutOfBoundsException ioobe) {
             // Expected
         }
+
+        try {
+            out.write(buf, buf.length - 1, 2);
+            fail("Expected Base64OutputStream.write(buf, buf.length - 1, 2) to throw a IndexOutOfBoundsException");
+        } catch (IndexOutOfBoundsException ioobe) {
+            // Expected
+        }        
     }
 
     /**

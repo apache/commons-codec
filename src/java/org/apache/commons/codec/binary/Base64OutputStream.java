@@ -115,7 +115,7 @@ public class Base64OutputStream extends FilterOutputStream {
     public void write(byte b[], int offset, int len) throws IOException {
         if (b == null) {
             throw new NullPointerException();
-        } else if (offset < 0 || len < 0 || offset + len < 0) {
+        } else if (offset < 0 || len < 0) {
             throw new IndexOutOfBoundsException();
         } else if (offset > b.length || offset + len > b.length) {
             throw new IndexOutOfBoundsException();

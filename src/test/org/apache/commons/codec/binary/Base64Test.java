@@ -841,6 +841,9 @@ public class Base64Test extends TestCase {
             byte[] decoded = randomData[0];
             byte[] result = Base64.decodeBase64(encoded);
             assertTrue("url-safe i=" + i, Arrays.equals(decoded, result));
+            assertFalse("url-safe i=" + i + " no '='", Base64TestData.bytesContain(encoded, (byte) '='));
+            assertFalse("url-safe i=" + i + " no '\\'", Base64TestData.bytesContain(encoded, (byte) '\\'));
+            assertFalse("url-safe i=" + i + " no '+'", Base64TestData.bytesContain(encoded, (byte) '+'));            
         }
 
     }

@@ -311,10 +311,24 @@ public class Base64InputStreamTest extends TestCase {
         }
 
         try {
+            in.read(buf, 0, -1);
+            fail("Expected Base64InputStream.read(buf, 0, -1) to throw IndexOutOfBoundsException");
+        } catch (IndexOutOfBoundsException e) {
+            // Expected
+        }
+
+        try {
             in.read(buf, buf.length + 1, 0);
             fail("Base64InputStream.read(buf, buf.length + 1, 0) throws IndexOutOfBoundsException");
         } catch (IndexOutOfBoundsException e) {
             // Expected
         }
+
+        try {
+            in.read(buf, buf.length - 1, 2);
+            fail("Base64InputStream.read(buf, buf.length - 1, 2) throws IndexOutOfBoundsException");
+        } catch (IndexOutOfBoundsException e) {
+            // Expected
+        }        
     }
 }
