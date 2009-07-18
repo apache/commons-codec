@@ -33,8 +33,10 @@ import java.io.InputStream;
  * </p><p>
  * This class implements section <cite>6.8. Base64 Content-Transfer-Encoding</cite> from RFC 2045 <cite>Multipurpose
  * Internet Mail Extensions (MIME) Part One: Format of Internet Message Bodies</cite> by Freed and Borenstein.
+ * </p><p>
+ * Since this class operates directly on byte streams, and not character streams, it is hard-coded to only encode/decode
+ * character encodings which are compatible with the lower 127 ASCII chart (ISO-8859-1, Windows-1252, UTF-8, etc). 
  * </p>
- *
  * @author Apache Software Foundation
  * @version $Id $
  * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>
