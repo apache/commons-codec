@@ -53,7 +53,10 @@
 			<action dev="bayard" type="fix" issue="CODEC-60">
 			Implement Caverphone.
 			</action>
-			<action dev="bayard" type="fix" issue="CODEC-56" due-to="Sebb ">
+			<action dev="ggregory" type="fix" issue="CODEC-58" due-to="Julius Davies">
+			Character set used by Base64 not documented.
+			</action>
+			<action dev="bayard" type="fix" issue="CODEC-56" due-to="Sebb">
 			RefinedSoundex creates instance before al fields have been initialized.
 			</action>
 			<action dev="bayard" type="add" issue="CODEC-52" due-to="Niklas Gustavsson">
