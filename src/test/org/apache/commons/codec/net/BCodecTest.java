@@ -21,6 +21,7 @@ import junit.framework.TestCase;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
+import org.apache.commons.codec.RequiredCharsetNames;
 
 /**
  * Quoted-printable codec test cases
@@ -61,7 +62,7 @@ public class BCodecTest extends TestCase {
         String ru_msg = constructString(RUSSIAN_STUFF_UNICODE);
         String ch_msg = constructString(SWISS_GERMAN_STUFF_UNICODE);
 
-        BCodec bcodec = new BCodec("UTF-8");
+        BCodec bcodec = new BCodec(RequiredCharsetNames.UTF_8);
 
         assertEquals("=?UTF-8?B?0JLRgdC10Lxf0L/RgNC40LLQtdGC?=", bcodec.encode(ru_msg));
         assertEquals("=?UTF-8?B?R3LDvGV6aV96w6Rtw6Q=?=", bcodec.encode(ch_msg));

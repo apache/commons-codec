@@ -36,8 +36,6 @@ public class Base64OutputStreamTest extends TestCase {
 
     private static final String STRING_FIXTURE = "Hello World";
 
-    private static final String UTF_8_NAME = "UTF-8";
-
     /**
      * Construct a new instance of this test case.
      * 
@@ -69,23 +67,23 @@ public class Base64OutputStreamTest extends TestCase {
      */
     public void testBase64OutputStreamByChunk() throws Exception {
         // Hello World test.
-        byte[] encoded = "SGVsbG8gV29ybGQ=\r\n".getBytes(UTF_8_NAME);
-        byte[] decoded = STRING_FIXTURE.getBytes(UTF_8_NAME);
+        byte[] encoded = StringBytesUtils.getBytesUtf8("SGVsbG8gV29ybGQ=\r\n");
+        byte[] decoded = StringBytesUtils.getBytesUtf8(STRING_FIXTURE);
         testByChunk(encoded, decoded, 76, CRLF);
 
         // Single Byte test.
-        encoded = "AA==\r\n".getBytes(UTF_8_NAME);
+        encoded = StringBytesUtils.getBytesUtf8("AA==\r\n");
         decoded = new byte[]{(byte) 0};
         testByChunk(encoded, decoded, 76, CRLF);
 
         // OpenSSL interop test.
-        encoded = Base64TestData.ENCODED.getBytes(UTF_8_NAME);
+        encoded = StringBytesUtils.getBytesUtf8(Base64TestData.ENCODED);
         decoded = Base64TestData.DECODED;
         testByChunk(encoded, decoded, 64, LF);
 
         // Single Line test.
         String singleLine = Base64TestData.ENCODED.replaceAll("\n", "");
-        encoded = singleLine.getBytes(UTF_8_NAME);
+        encoded = StringBytesUtils.getBytesUtf8(singleLine);
         decoded = Base64TestData.DECODED;
         testByChunk(encoded, decoded, 0, LF);
 
@@ -106,23 +104,23 @@ public class Base64OutputStreamTest extends TestCase {
      */
     public void testBase64OutputStreamByteByByte() throws Exception {
         // Hello World test.
-        byte[] encoded = "SGVsbG8gV29ybGQ=\r\n".getBytes(UTF_8_NAME);
-        byte[] decoded = STRING_FIXTURE.getBytes(UTF_8_NAME);
+        byte[] encoded = StringBytesUtils.getBytesUtf8("SGVsbG8gV29ybGQ=\r\n");
+        byte[] decoded = StringBytesUtils.getBytesUtf8(STRING_FIXTURE);
         testByteByByte(encoded, decoded, 76, CRLF);
 
         // Single Byte test.
-        encoded = "AA==\r\n".getBytes("UTF-8");
+        encoded = StringBytesUtils.getBytesUtf8("AA==\r\n");
         decoded = new byte[]{(byte) 0};
         testByteByByte(encoded, decoded, 76, CRLF);
 
         // OpenSSL interop test.
-        encoded = Base64TestData.ENCODED.getBytes(UTF_8_NAME);
+        encoded = StringBytesUtils.getBytesUtf8(Base64TestData.ENCODED);
         decoded = Base64TestData.DECODED;
         testByteByByte(encoded, decoded, 64, LF);
 
         // Single Line test.
         String singleLine = Base64TestData.ENCODED.replaceAll("\n", "");
-        encoded = singleLine.getBytes(UTF_8_NAME);
+        encoded = StringBytesUtils.getBytesUtf8(singleLine);
         decoded = Base64TestData.DECODED;
         testByteByByte(encoded, decoded, 0, LF);
 
@@ -231,10 +229,10 @@ public class Base64OutputStreamTest extends TestCase {
         for (int i = 0; i < encoded.length; i++) {
             out.write(encoded[i]);
             out.flush();
-        }                      
+        }
         out.close();
         output = byteOut.toByteArray();
-        assertTrue("Streaming byte-by-byte flush() base64 decode", Arrays.equals(output, decoded));        
+        assertTrue("Streaming byte-by-byte flush() base64 decode", Arrays.equals(output, decoded));
 
         // I always wanted to do this! (wrap encoder with decoder etc etc).
         byteOut = new ByteArrayOutputStream();
@@ -289,7 +287,7 @@ public class Base64OutputStreamTest extends TestCase {
             fail("Expected Base64OutputStream.write(buf, buf.length - 1, 2) to throw a IndexOutOfBoundsException");
         } catch (IndexOutOfBoundsException ioobe) {
             // Expected
-        }        
+        }
     }
 
     /**

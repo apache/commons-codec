@@ -25,8 +25,10 @@ import org.apache.commons.codec.BinaryDecoder;
 import org.apache.commons.codec.BinaryEncoder;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
+import org.apache.commons.codec.RequiredCharsetNames;
 import org.apache.commons.codec.StringDecoder;
 import org.apache.commons.codec.StringEncoder;
+import org.apache.commons.codec.binary.StringBytesUtils;
 
 /**
  * <p>
@@ -91,7 +93,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * Default constructor.
      */
     public QuotedPrintableCodec() {
-        this(CharacterEncodingNames.UTF8);
+        this(RequiredCharsetNames.UTF_8);
     }
 
     /**
@@ -278,7 +280,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
         if (pString == null) {
             return null;
         }
-        return new String(decode(pString.getBytes(CharacterEncodingNames.US_ASCII)), charset);
+        return new String(decode(StringBytesUtils.getBytesUsAscii(pString)), charset);
     }
 
     /**
@@ -383,6 +385,6 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
         if (pString == null) {
             return null;
         }
-        return new String(encode(pString.getBytes(charset)), CharacterEncodingNames.US_ASCII);
+        return StringBytesUtils.newStringUsAscii(encode(pString.getBytes(charset)));
     }
 }

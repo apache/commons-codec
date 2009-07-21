@@ -17,7 +17,6 @@
 
 package org.apache.commons.codec.binary;
 
-import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 
 import org.apache.commons.codec.BinaryDecoder;
@@ -328,12 +327,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
         }
         this.decodeSize = this.encodeSize - 1;
         if (containsBase64Byte(lineSeparator)) {
-            String sep;
-            try {
-                sep = new String(lineSeparator, "UTF-8");
-            } catch (UnsupportedEncodingException uee) {
-                sep = new String(lineSeparator);
-            }
+            String sep = StringBytesUtils.newStringUtf8(lineSeparator);
             throw new IllegalArgumentException("lineSeperator must not contain base64 characters: [" + sep + "]");
         }
         this.encodeTable = urlSafe ? URL_SAFE_ENCODE_TABLE : STANDARD_ENCODE_TABLE;
@@ -738,8 +732,8 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
             len += (1 + (len / CHUNK_SIZE)) * CHUNK_SEPARATOR.length;
         }
         if (len > Integer.MAX_VALUE) {
-            throw new IllegalArgumentException("Input array too big, output array would be bigger than Integer.MAX_VALUE="
-                + Integer.MAX_VALUE);
+            throw new IllegalArgumentException("Input array too big, output array would be bigger than Integer.MAX_VALUE=" + 
+                    Integer.MAX_VALUE);
         }
         byte[] buf = new byte[(int) len];
         b64.setInitialBuffer(buf, 0, buf.length);

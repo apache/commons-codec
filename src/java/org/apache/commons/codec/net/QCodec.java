@@ -22,6 +22,7 @@ import java.util.BitSet;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
+import org.apache.commons.codec.RequiredCharsetNames;
 import org.apache.commons.codec.StringDecoder;
 import org.apache.commons.codec.StringEncoder;
 
@@ -109,7 +110,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * Default constructor.
      */
     public QCodec() {
-        this(CharacterEncodingNames.UTF8);
+        this(RequiredCharsetNames.UTF_8);
     }
 
     /**
