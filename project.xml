@@ -19,7 +19,7 @@ limitations under the License.
     <pomVersion>3</pomVersion>
     <groupId>commons-codec</groupId>
     <artifactId>commons-codec</artifactId>
-    <currentVersion>1.4-SNAPSHOT</currentVersion>
+    <currentVersion>1.4</currentVersion>
     <inceptionYear>2002</inceptionYear>
     <name>Commons Codec</name>
     <shortDescription>Simple encoders and decoders</shortDescription>
