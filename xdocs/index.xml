@@ -71,7 +71,7 @@ Various <a href="project-reports.html">project reports</a> are also available.
 The JavaDoc API documents are available online:
 </p>
 <ul>
-<li>The <a href="api-release/index.html">current release 1.3</a></li>
+<li>The <a href="api-release/index.html">current release</a></li>
 <!--li>The <a href="api-1.1/index.html">previous version 1.1</a></li-->
 <li>The <a href="apidocs/index.html">latest SVN</a></li>
 </ul>
@@ -83,8 +83,9 @@ The <a href="cvs-usage.html">subversion repository</a> can be
 <!-- ================================================== -->
 <section name="Releases">
 <p>
-The latest version is v1.3. - 
-<a href="http://commons.apache.org/downloads/download_codec.cgi">Download now!</a><br />
+See the
+<a href="http://commons.apache.org/codec/download_codec.cgi">Download Page</a>
+for the latest releases.<br />
 The <a href="changes-report.html">upgrade notes</a> are also available.
 </p>
 <p>
