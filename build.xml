@@ -96,6 +96,7 @@ limitations under the License.
     <target name="dist" depends="compile,javadoc" description="Create binary distribution">
         <mkdir dir="${dist.home}"/>
         <copy file="${basedir}/LICENSE.txt" todir="${dist.home}"/>
+        <copy file="${basedir}/NOTICE.txt" todir="${dist.home}"/>
         <copy file="${basedir}/RELEASE-NOTES.txt" todir="${dist.home}"/>
         <antcall target="jar"/>
     </target>
@@ -103,7 +104,18 @@ limitations under the License.
         <mkdir dir="${dist.home}"/>
         <mkdir dir="${build.home}/classes/META-INF"/>
         <copy file="${basedir}/LICENSE.txt" tofile="${build.home}/classes/META-INF/LICENSE.txt"/>
-        <jar jarfile="${dist.home}/${final.name}.jar" basedir="${build.home}/classes" manifest="${build.home}/conf/MANIFEST.MF"/>
+        <copy file="${basedir}/LICENSE.txt" tofile="${build.home}/classes/META-INF/NOTICE.txt"/>
+        <jar jarfile="${dist.home}/${final.name}.jar" basedir="${build.home}/classes">
+            <manifest>
+                <attribute name="Specification-Title" value="Commons Codec"/>
+                <attribute name="Specification-Version" value="${component.version}"/>
+                <attribute name="Specification-Vendor" value="The Apache Software Foundation"/>
+                <attribute name="Implementation-Title" value="Commons Codec"/>
+                <attribute name="Implementation-Version" value="${component.version}"/> 
+                <attribute name="Implementation-Vendor" value="The Apache Software Foundation"/>
+                <attribute name="Implementation-Vendor-Id" value="org.apache"/>
+            </manifest>
+        </jar>
     </target>
     <target name="install-jar" depends="jar" description="--> Installs jar file in ${lib.repo}">
         <copy todir="${lib.repo}" filtering="no">
@@ -143,23 +155,26 @@ limitations under the License.
         <property name="zip-src.path" value="${final-src.path}.zip"/>
         <property name="tar-src.path" value="${final-src.path}.tar"/>
         <property name="gz-src.path" value="${tar-src.path}.gz"/>
-        <property name="excludes" value="${pub.home}/**, ${dist.home}/**, target/**, xdocs/**"/>
+        <property name="excludes" value="${pub.home}/**, ${dist.home}/**, target/**"/>
         <!-- Zip source dist -->
         <zip destfile="${zip-src.path}">
            <zipfileset dir="src" prefix="${final.name}/src/"/>
+           <zipfileset dir="xdocs" prefix="${final.name}/xdocs/"/>
            <zipfileset dir="." includes="build.xml" prefix="${final.name}/"/>
            <zipfileset dir="." includes="checkstyle.xml" prefix="${final.name}/"/>
            <zipfileset dir="." includes="default.properties" prefix="${final.name}/"/>
-           <zipfileset dir="." includes="LICENSE.TXT" prefix="${final.name}/"/>
+           <zipfileset dir="." includes="LICENSE*.txt" prefix="${final.name}/"/>
            <zipfileset dir="." includes="maven.xml" prefix="${final.name}/"/>
+           <zipfileset dir="." includes="NOTICE.txt" prefix="${final.name}/"/>
+           <zipfileset dir="." includes="pom.xml" prefix="${final.name}/"/>
            <zipfileset dir="." includes="project.properties" prefix="${final.name}/"/>
            <zipfileset dir="." includes="project.xml" prefix="${final.name}/"/>
-           <zipfileset dir="." includes="RELEASE-NOTES.txt" prefix="${final.name}/"/>
+           <zipfileset dir="." includes="RELEASE-NOTES*.txt" prefix="${final.name}/"/>
         </zip>
         <checksum algorithm="md5" file="${zip-src.path}" fileext=".md5"/>
         <checksum algorithm="sha" file="${zip-src.path}" fileext=".sha"/>
         <!-- Tar & gzip source dist -->
-        <tar tarfile="${tar-src.path}" basedir="." excludes="${excludes}" excludesfile=".cvsignore"/>
+        <tar tarfile="${tar-src.path}" basedir="." excludes="${excludes}"/>
         <gzip zipfile="${gz-src.path}" src="${tar-src.path}"/>
         <checksum algorithm="md5" file="${gz-src.path}" fileext=".md5"/>
         <checksum algorithm="sha" file="${gz-src.path}" fileext=".sha"/>
