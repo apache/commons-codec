@@ -164,11 +164,8 @@ limitations under the License.
            <zipfileset dir="." includes="checkstyle.xml" prefix="${final.name}/"/>
            <zipfileset dir="." includes="default.properties" prefix="${final.name}/"/>
            <zipfileset dir="." includes="LICENSE*.txt" prefix="${final.name}/"/>
-           <zipfileset dir="." includes="maven.xml" prefix="${final.name}/"/>
            <zipfileset dir="." includes="NOTICE.txt" prefix="${final.name}/"/>
            <zipfileset dir="." includes="pom.xml" prefix="${final.name}/"/>
-           <zipfileset dir="." includes="project.properties" prefix="${final.name}/"/>
-           <zipfileset dir="." includes="project.xml" prefix="${final.name}/"/>
            <zipfileset dir="." includes="RELEASE-NOTES*.txt" prefix="${final.name}/"/>
         </zip>
         <checksum algorithm="md5" file="${zip-src.path}" fileext=".md5"/>
