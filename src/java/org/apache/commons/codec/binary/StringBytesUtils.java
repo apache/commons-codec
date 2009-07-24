@@ -22,9 +22,12 @@ import java.io.UnsupportedEncodingException;
 import org.apache.commons.codec.RequiredCharsetNames;
 
 /**
- * Converts String to bytes using the encodings required by the Java specification.
+ * Converts String to bytes using the encodings required by the Java specification. These encodings are specified in <a
+ * href="http://java.sun.com/j2se/1.3/docs/api/java/lang/package-summary.html#charenc">JRE character encoding names</a>
  * 
  * @see RequiredCharsetNames
+ * @see <a href="http://java.sun.com/j2se/1.3/docs/api/java/lang/package-summary.html#charenc">JRE character encoding
+ *      names </a>
  * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
  * @version $Id: $
  * @since 1.4
