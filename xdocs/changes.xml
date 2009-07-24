@@ -23,6 +23,9 @@
 	</properties>
 	<body>
 		<release version="1-4-SNAPSHOT" date="13 July 2009" description="Feature and fix release.">
+			<action dev="ggregory" type="fix" issue="CODEC-80" due-to="Julius Davies">
+             Regression: Base64.encode(chunk=true) has bug when input length is multiple of 76.
+             </action>
 			<action dev="ggregory" type="fix" issue="CODEC-77" due-to="Julius Davies">
              Base64 bug with empty input (new byte[0]).
              </action>
