@@ -18,7 +18,7 @@
 package org.apache.commons.codec;
 
 /**
- * Thrown when a Decoder has encountered a failure condition during a decode. 
+ * Thrown when a Decoder has encountered a failure condition during a decode.
  * 
  * @author Apache Software Foundation
  * @version $Id$
@@ -33,13 +33,38 @@ public class DecoderException extends Exception {
     private static final long serialVersionUID = 1L;
 
     /**
-     * Creates a DecoderException
+     * Creates a DecoderException.
      * 
-     * @param message A message with meaning to a human
+     * @param message
+     *            The detail message which is saved for later retrieval by the {@link #getMessage()} method.
      */
     public DecoderException(String message) {
         super(message);
     }
 
-}  
+    /**
+     * Creates a DecoderException.
+     * 
+     * @param cause
+     *            The cause which is saved for later retrieval by the {@link #getCause()} method. A <code>null</code>
+     *            value is permitted, and indicates that the cause is nonexistent or unknown.
+     * @since 1.4
+     */
+    public DecoderException(Throwable cause) {
+        super(cause);
+    }
 
+    /**
+     * Creates a DecoderException.
+     * 
+     * @param message
+     *            The detail message which is saved for later retrieval by the {@link #getMessage()} method.
+     * @param cause
+     *            The cause which is saved for later retrieval by the {@link #getCause()} method. A <code>null</code>
+     *            value is permitted, and indicates that the cause is nonexistent or unknown.
+     * @since 1.4
+     */
+    public DecoderException(String message, Throwable cause) {
+        super(message, cause);
+    }
+}

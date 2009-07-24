@@ -178,7 +178,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
                     int l = toCharacterDigit(bytes[++i]);
                     buffer.write((char) ((u << 4) + l));
                 } catch (ArrayIndexOutOfBoundsException e) {
-                    throw new DecoderException("Invalid URL encoding: ");
+                    throw new DecoderException("Invalid URL encoding: ", e);
                 }
             } else {
                 buffer.write(b);
