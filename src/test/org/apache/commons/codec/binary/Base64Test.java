@@ -35,6 +35,8 @@ import org.apache.commons.codec.EncoderException;
  */
 public class Base64Test extends TestCase {
 
+    private Random _random = new Random();
+
     /**
      * Construct a new instance of this test case.
      * 
@@ -46,6 +48,13 @@ public class Base64Test extends TestCase {
     }
 
     /**
+     * @return Returns the _random.
+     */
+    public Random getRandom() {
+        return this._random;
+    }
+
+    /**
      * Test the Base64 implementation
      */
     public void testBase64() {
@@ -53,6 +62,119 @@ public class Base64Test extends TestCase {
         String encodedContent;
         encodedContent = new String(Base64.encodeBase64(content.getBytes()));
         assertTrue("encoding hello world", encodedContent.equals("SGVsbG8gV29ybGQ="));
+    }
+
+    /**
+     * Tests Base64.encodeBase64().
+     * 
+     * @throws Exception
+     */
+    public void testChunkedEncodeMultipleOf76() throws Exception {
+        byte[] expectedEncode = Base64.encodeBase64(Base64TestData.DECODED, true);
+        // convert to "\r\n" so we're equal to the old openssl encoding test stored
+        // in Base64TestData.ENCODED_76_CHARS_PER_LINE:
+        String actualResult = Base64TestData.ENCODED_76_CHARS_PER_LINE.replaceAll("\n", "\r\n");
+        byte[] actualEncode = actualResult.getBytes("UTF-8");
+        assertTrue("chunkedEncodeMultipleOf76", Arrays.equals(expectedEncode, actualEncode));
+    }
+
+    /**
+     * CODEC-68: isBase64 throws ArrayIndexOutOfBoundsException on some non-BASE64 bytes
+     */
+    public void testCodec68() {
+        byte[] x = new byte[]{'n', 'A', '=', '=', (byte) 0x9c};
+        Base64.decodeBase64(x);
+    }
+
+    public void testCodeInteger1() {
+        String encodedInt1 = "li7dzDacuo67Jg7mtqEm2TRuOMU=";
+        BigInteger bigInt1 = new BigInteger("85739377120809420210425962799" + "0318636601332086981");
+
+        assertEquals(encodedInt1, new String(Base64.encodeInteger(bigInt1)));
+        assertEquals(bigInt1, Base64.decodeInteger(encodedInt1.getBytes()));
+    }
+
+    public void testCodeInteger2() {
+        String encodedInt2 = "9B5ypLY9pMOmtxCeTDHgwdNFeGs=";
+        BigInteger bigInt2 = new BigInteger("13936727572861167254666467268" + "91466679477132949611");
+
+        assertEquals(encodedInt2, new String(Base64.encodeInteger(bigInt2)));
+        assertEquals(bigInt2, Base64.decodeInteger(encodedInt2.getBytes()));
+    }
+
+    public void testCodeInteger3() {
+        String encodedInt3 = "FKIhdgaG5LGKiEtF1vHy4f3y700zaD6QwDS3IrNVGzNp2" + "rY+1LFWTK6D44AyiC1n8uWz1itkYMZF0/aKDK0Yjg==";
+        BigInteger bigInt3 = new BigInteger("10806548154093873461951748545"
+            + "1196989136416448805819079363524309897749044958112417136240557"
+            + "4495062430572478766856090958495998158114332651671116876320938126");
+
+        assertEquals(encodedInt3, new String(Base64.encodeInteger(bigInt3)));
+        assertEquals(bigInt3, Base64.decodeInteger(encodedInt3.getBytes()));
+    }
+
+    public void testCodeInteger4() {
+        String encodedInt4 = "ctA8YGxrtngg/zKVvqEOefnwmViFztcnPBYPlJsvh6yKI"
+            + "4iDm68fnp4Mi3RrJ6bZAygFrUIQLxLjV+OJtgJAEto0xAs+Mehuq1DkSFEpP3o"
+            + "DzCTOsrOiS1DwQe4oIb7zVk/9l7aPtJMHW0LVlMdwZNFNNJoqMcT2ZfCPrfvYv"
+            + "Q0=";
+        BigInteger bigInt4 = new BigInteger("80624726256040348115552042320"
+            + "6968135001872753709424419772586693950232350200555646471175944"
+            + "519297087885987040810778908507262272892702303774422853675597"
+            + "748008534040890923814202286633163248086055216976551456088015"
+            + "338880713818192088877057717530169381044092839402438015097654"
+            + "53542091716518238707344493641683483917");
+
+        assertEquals(encodedInt4, new String(Base64.encodeInteger(bigInt4)));
+        assertEquals(bigInt4, Base64.decodeInteger(encodedInt4.getBytes()));
+    }
+
+    public void testCodeIntegerEdgeCases() {
+        // TODO
+    }
+
+    public void testCodeIntegerNull() {
+        try {
+            Base64.encodeInteger(null);
+            fail("Exception not thrown when passing in null to encodeInteger(BigInteger)");
+        } catch (NullPointerException npe) {
+            // expected
+        } catch (Exception e) {
+            fail("Incorrect Exception caught when passing in null to encodeInteger(BigInteger)");
+        }
+    }
+
+    public void testConstructors() {
+        Base64 base64;
+        base64 = new Base64();
+        base64 = new Base64(-1);
+        base64 = new Base64(-1, new byte[]{});
+        base64 = new Base64(64, new byte[]{});
+        try {
+            base64 = new Base64(-1, new byte[]{'A'});
+            fail("Should have rejected attempt to use 'A' as a line separator");
+        } catch (IllegalArgumentException ignored) {
+            // Expected
+        }
+        try {
+            base64 = new Base64(64, new byte[]{'A'});
+            fail("Should have rejected attempt to use 'A' as a line separator");
+        } catch (IllegalArgumentException ignored) {
+            // Expected
+        }
+        try {
+            base64 = new Base64(64, new byte[]{'='});
+            fail("Should have rejected attempt to use '=' as a line separator");
+        } catch (IllegalArgumentException ignored) {
+            // Expected
+        }
+        base64 = new Base64(64, new byte[]{'$'}); // OK
+        try {
+            base64 = new Base64(64, new byte[]{'A', '$'});
+            fail("Should have rejected attempt to use 'A$' as a line separator");
+        } catch (IllegalArgumentException ignored) {
+            // Expected
+        }
+        base64 = new Base64(64, new byte[]{' ', '$', '\n', '\r', '\t'}); // OK
     }
 
     /**
@@ -90,6 +212,77 @@ public class Base64Test extends TestCase {
         assertTrue(Base64.decodeBase64("\n".getBytes()).length == 0);
     }
 
+    public void testDecodeWithWhitespace() throws Exception {
+
+        String orig = "I am a late night coder.";
+
+        byte[] encodedArray = Base64.encodeBase64(orig.getBytes());
+        StringBuffer intermediate = new StringBuffer(new String(encodedArray));
+
+        intermediate.insert(2, ' ');
+        intermediate.insert(5, '\t');
+        intermediate.insert(10, '\r');
+        intermediate.insert(15, '\n');
+
+        byte[] encodedWithWS = intermediate.toString().getBytes();
+        byte[] decodedWithWS = Base64.decodeBase64(encodedWithWS);
+
+        String dest = new String(decodedWithWS);
+
+        assertTrue("Dest string doesn't equal the original", dest.equals(orig));
+    }
+
+    public void testDiscardWhitespace() throws Exception {
+
+        String orig = "I am a late night coder.";
+
+        byte[] encodedArray = Base64.encodeBase64(orig.getBytes());
+        StringBuffer intermediate = new StringBuffer(new String(encodedArray));
+
+        intermediate.insert(2, ' ');
+        intermediate.insert(5, '\t');
+        intermediate.insert(10, '\r');
+        intermediate.insert(15, '\n');
+
+        byte[] encodedWithWS = intermediate.toString().getBytes();
+        byte[] encodedNoWS = Base64.discardWhitespace(encodedWithWS);
+        byte[] decodedWithWS = Base64.decodeBase64(encodedWithWS);
+        byte[] decodedNoWS = Base64.decodeBase64(encodedNoWS);
+
+        String destFromWS = new String(decodedWithWS);
+        String destFromNoWS = new String(decodedNoWS);
+
+        assertTrue("Dest string doesn't equal original", destFromWS.equals(orig));
+        assertTrue("Dest string doesn't equal original", destFromNoWS.equals(orig));
+    }
+
+    /**
+     * Test encode and decode of empty byte array.
+     */
+    public void testEmptyBase64() {
+        byte[] empty = new byte[0];
+        byte[] result = Base64.encodeBase64(empty);
+        assertEquals("empty base64 encode", 0, result.length);
+        assertEquals("empty base64 encode", null, Base64.encodeBase64(null));
+
+        empty = new byte[0];
+        result = Base64.decodeBase64(empty);
+        assertEquals("empty base64 decode", 0, result.length);
+        assertEquals("empty base64 encode", null, Base64.decodeBase64(null));
+    }
+
+    // encode/decode a large random array
+    public void testEncodeDecodeRandom() {
+        for (int i = 1; i < 5; i++) {
+            byte[] data = new byte[this.getRandom().nextInt(10000) + 1];
+            this.getRandom().nextBytes(data);
+            byte[] enc = Base64.encodeBase64(data);
+            assertTrue(Base64.isArrayByteBase64(enc));
+            byte[] data2 = Base64.decodeBase64(enc);
+            assertTrue(Arrays.equals(data, data2));
+        }
+    }
+
     // encode/decode random arrays from size 0 to size 11
     public void testEncodeDecodeSmall() {
         for (int i = 0; i < 12; i++) {
@@ -102,15 +295,165 @@ public class Base64Test extends TestCase {
         }
     }
 
-    // encode/decode a large random array
-    public void testEncodeDecodeRandom() {
-        for (int i = 1; i < 5; i++) {
-            byte[] data = new byte[this.getRandom().nextInt(10000) + 1];
-            this.getRandom().nextBytes(data);
-            byte[] enc = Base64.encodeBase64(data);
-            assertTrue(Base64.isArrayByteBase64(enc));
-            byte[] data2 = Base64.decodeBase64(enc);
-            assertTrue(Arrays.equals(data, data2));
+    public void testEncodeOverMaxSize() throws Exception {
+        testEncodeOverMaxSize(-1);
+        testEncodeOverMaxSize(0);
+        testEncodeOverMaxSize(1);
+        testEncodeOverMaxSize(2);
+    }
+
+    private void testEncodeOverMaxSize(int maxSize) throws Exception {
+        try {
+            Base64.encodeBase64(Base64TestData.DECODED, true, false, maxSize);
+            fail("Expected " + IllegalArgumentException.class.getName());
+        } catch (IllegalArgumentException e) {
+            // Expceted
+        }
+    }
+
+    public void testIgnoringNonBase64InDecode() throws Exception {
+        assertEquals("The quick brown fox jumped over the lazy dogs.", new String(Base64
+                .decodeBase64("VGhlIH@$#$@%F1aWN@#@#@@rIGJyb3duIGZve\n\r\t%#%#%#%CBqd##$#$W1wZWQgb3ZlciB0aGUgbGF6eSBkb2dzLg==".getBytes())));
+    }
+
+    public void testIsArrayByteBase64() {
+        assertFalse(Base64.isArrayByteBase64(new byte[]{Byte.MIN_VALUE}));
+        assertFalse(Base64.isArrayByteBase64(new byte[]{-125}));
+        assertFalse(Base64.isArrayByteBase64(new byte[]{-10}));
+        assertFalse(Base64.isArrayByteBase64(new byte[]{0}));
+        assertFalse(Base64.isArrayByteBase64(new byte[]{64, Byte.MAX_VALUE}));
+        assertFalse(Base64.isArrayByteBase64(new byte[]{Byte.MAX_VALUE}));
+        assertTrue(Base64.isArrayByteBase64(new byte[]{'A'}));
+        assertFalse(Base64.isArrayByteBase64(new byte[]{'A', Byte.MIN_VALUE}));
+        assertTrue(Base64.isArrayByteBase64(new byte[]{'A', 'Z', 'a'}));
+        assertTrue(Base64.isArrayByteBase64(new byte[]{'/', '=', '+'}));
+        assertFalse(Base64.isArrayByteBase64(new byte[]{'$'}));
+    }
+
+    /**
+     * Tests isUrlSafe.
+     */
+    public void testIsUrlSafe() {
+        Base64 base64Standard = new Base64(false);
+        Base64 base64URLSafe = new Base64(true);
+
+        assertFalse("Base64.isUrlSafe=false", base64Standard.isUrlSafe());
+        assertTrue("Base64.isUrlSafe=true", base64URLSafe.isUrlSafe());
+
+        byte[] whiteSpace = {' ', '\n', '\r', '\t'};
+        assertTrue("Base64.isArrayByteBase64(whiteSpace)=true", Base64.isArrayByteBase64(whiteSpace));
+    }
+
+    public void testKnownDecodings() {
+        assertEquals("The quick brown fox jumped over the lazy dogs.", new String(Base64
+                .decodeBase64("VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2dzLg==".getBytes())));
+        assertEquals("It was the best of times, it was the worst of times.", new String(Base64
+                .decodeBase64("SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN0IG9mIHRpbWVzLg==".getBytes())));
+        assertEquals("http://jakarta.apache.org/commmons", new String(Base64
+                .decodeBase64("aHR0cDovL2pha2FydGEuYXBhY2hlLm9yZy9jb21tbW9ucw==".getBytes())));
+        assertEquals("AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz", new String(Base64
+                .decodeBase64("QWFCYkNjRGRFZUZmR2dIaElpSmpLa0xsTW1Obk9vUHBRcVJyU3NUdFV1VnZXd1h4WXlaeg==".getBytes())));
+        assertEquals("{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }", new String(Base64.decodeBase64("eyAwLCAxLCAyLCAzLCA0LCA1LCA2LCA3LCA4LCA5IH0="
+                .getBytes())));
+        assertEquals("xyzzy!", new String(Base64.decodeBase64("eHl6enkh".getBytes())));
+    }
+
+    public void testKnownEncodings() {
+        assertEquals("VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2dzLg==", new String(Base64
+                .encodeBase64("The quick brown fox jumped over the lazy dogs.".getBytes())));
+        assertEquals(
+                "YmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJs\r\nYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFo\r\nIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBi\r\nbGFoIGJsYWg=\r\n",
+                new String(
+                        Base64
+                                .encodeBase64Chunked("blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah"
+                                        .getBytes())));
+        assertEquals("SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN0IG9mIHRpbWVzLg==", new String(Base64
+                .encodeBase64("It was the best of times, it was the worst of times.".getBytes())));
+        assertEquals("aHR0cDovL2pha2FydGEuYXBhY2hlLm9yZy9jb21tbW9ucw==", new String(Base64
+                .encodeBase64("http://jakarta.apache.org/commmons".getBytes())));
+        assertEquals("QWFCYkNjRGRFZUZmR2dIaElpSmpLa0xsTW1Obk9vUHBRcVJyU3NUdFV1VnZXd1h4WXlaeg==", new String(Base64
+                .encodeBase64("AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz".getBytes())));
+        assertEquals("eyAwLCAxLCAyLCAzLCA0LCA1LCA2LCA3LCA4LCA5IH0=", new String(Base64.encodeBase64("{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }"
+                .getBytes())));
+        assertEquals("eHl6enkh", new String(Base64.encodeBase64("xyzzy!".getBytes())));
+    }
+
+    public void testNonBase64Test() throws Exception {
+
+        byte[] bArray = {'%'};
+
+        assertFalse("Invalid Base64 array was incorrectly validated as " + "an array of Base64 encoded data", Base64
+                .isArrayByteBase64(bArray));
+
+        try {
+            Base64 b64 = new Base64();
+            byte[] result = b64.decode(bArray);
+
+            assertTrue("The result should be empty as the test encoded content did " + "not contain any valid base 64 characters",
+                    result.length == 0);
+        } catch (Exception e) {
+            fail("Exception was thrown when trying to decode "
+                + "invalid base64 encoded data - RFC 2045 requires that all "
+                + "non base64 character be discarded, an exception should not"
+                + " have been thrown");
+        }
+    }
+
+    public void testObjectDecodeWithInvalidParameter() throws Exception {
+        Base64 b64 = new Base64();
+
+        try {
+            b64.decode("Yadayadayada");
+            fail("decode(Object) didn't throw an exception when passed a String object");
+        } catch (DecoderException e) {
+            // ignored
+        }
+
+    }
+
+    public void testObjectDecodeWithValidParameter() throws Exception {
+
+        String original = "Hello World!";
+        byte[] bArray = Base64.encodeBase64(original.getBytes());
+        Object o = bArray;
+
+        Base64 b64 = new Base64();
+        Object oDecoded = b64.decode(o);
+        byte[] baDecoded = (byte[]) oDecoded;
+        String dest = new String(baDecoded);
+
+        assertTrue("dest string does not equal original", dest.equals(original));
+    }
+
+    public void testObjectEncodeWithInvalidParameter() throws Exception {
+        Base64 b64 = new Base64();
+        try {
+            b64.encode("Yadayadayada");
+            fail("encode(Object) didn't throw an exception when passed a String object");
+        } catch (EncoderException e) {
+            // Expected
+        }
+    }
+
+    public void testObjectEncodeWithValidParameter() throws Exception {
+
+        String original = "Hello World!";
+        byte[] origBytes = original.getBytes();
+        Object origObj = origBytes;
+
+        Base64 b64 = new Base64();
+        Object oEncoded = b64.encode(origObj);
+        byte[] bArray = Base64.decodeBase64((byte[]) oEncoded);
+        String dest = new String(bArray);
+
+        assertTrue("dest string does not equal original", dest.equals(original));
+    }
+
+    public void testPairs() {
+        assertEquals("AAA=", new String(Base64.encodeBase64(new byte[]{0, 0})));
+        for (int i = -128; i <= 127; i++) {
+            byte test[] = {(byte) i, (byte) i};
+            assertTrue(Arrays.equals(test, Base64.decodeBase64(Base64.encodeBase64(test))));
         }
     }
 
@@ -348,14 +691,6 @@ public class Base64Test extends TestCase {
         assertEquals("aA==\r\n", new String(Base64.encodeBase64Chunked(new byte[]{(byte) 104})));
     }
 
-    public void testPairs() {
-        assertEquals("AAA=", new String(Base64.encodeBase64(new byte[]{0, 0})));
-        for (int i = -128; i <= 127; i++) {
-            byte test[] = {(byte) i, (byte) i};
-            assertTrue(Arrays.equals(test, Base64.decodeBase64(Base64.encodeBase64(test))));
-        }
-    }
-
     public void testTriplets() {
         assertEquals("AAAA", new String(Base64.encodeBase64(new byte[]{(byte) 0, (byte) 0, (byte) 0})));
         assertEquals("AAAB", new String(Base64.encodeBase64(new byte[]{(byte) 0, (byte) 0, (byte) 1})));
@@ -490,263 +825,22 @@ public class Base64Test extends TestCase {
         assertEquals("AAA/\r\n", new String(Base64.encodeBase64Chunked(new byte[]{(byte) 0, (byte) 0, (byte) 63})));
     }
 
-    public void testKnownEncodings() {
-        assertEquals("VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2dzLg==", new String(Base64
-                .encodeBase64("The quick brown fox jumped over the lazy dogs.".getBytes())));
-        assertEquals(
-                "YmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJs\r\nYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFo\r\nIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBi\r\nbGFoIGJsYWg=\r\n",
-                new String(
-                        Base64
-                                .encodeBase64Chunked("blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah"
-                                        .getBytes())));
-        assertEquals("SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN0IG9mIHRpbWVzLg==", new String(Base64
-                .encodeBase64("It was the best of times, it was the worst of times.".getBytes())));
-        assertEquals("aHR0cDovL2pha2FydGEuYXBhY2hlLm9yZy9jb21tbW9ucw==", new String(Base64
-                .encodeBase64("http://jakarta.apache.org/commmons".getBytes())));
-        assertEquals("QWFCYkNjRGRFZUZmR2dIaElpSmpLa0xsTW1Obk9vUHBRcVJyU3NUdFV1VnZXd1h4WXlaeg==", new String(Base64
-                .encodeBase64("AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz".getBytes())));
-        assertEquals("eyAwLCAxLCAyLCAzLCA0LCA1LCA2LCA3LCA4LCA5IH0=", new String(Base64.encodeBase64("{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }"
-                .getBytes())));
-        assertEquals("eHl6enkh", new String(Base64.encodeBase64("xyzzy!".getBytes())));
-    }
-
-    public void testKnownDecodings() {
-        assertEquals("The quick brown fox jumped over the lazy dogs.", new String(Base64
-                .decodeBase64("VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2dzLg==".getBytes())));
-        assertEquals("It was the best of times, it was the worst of times.", new String(Base64
-                .decodeBase64("SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN0IG9mIHRpbWVzLg==".getBytes())));
-        assertEquals("http://jakarta.apache.org/commmons", new String(Base64
-                .decodeBase64("aHR0cDovL2pha2FydGEuYXBhY2hlLm9yZy9jb21tbW9ucw==".getBytes())));
-        assertEquals("AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz", new String(Base64
-                .decodeBase64("QWFCYkNjRGRFZUZmR2dIaElpSmpLa0xsTW1Obk9vUHBRcVJyU3NUdFV1VnZXd1h4WXlaeg==".getBytes())));
-        assertEquals("{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }", new String(Base64.decodeBase64("eyAwLCAxLCAyLCAzLCA0LCA1LCA2LCA3LCA4LCA5IH0="
-                .getBytes())));
-        assertEquals("xyzzy!", new String(Base64.decodeBase64("eHl6enkh".getBytes())));
-    }
-
-    public void testNonBase64Test() throws Exception {
-
-        byte[] bArray = {'%'};
-
-        assertFalse("Invalid Base64 array was incorrectly validated as " + "an array of Base64 encoded data", Base64
-                .isArrayByteBase64(bArray));
-
-        try {
-            Base64 b64 = new Base64();
-            byte[] result = b64.decode(bArray);
-
-            assertTrue("The result should be empty as the test encoded content did " + "not contain any valid base 64 characters",
-                    result.length == 0);
-        } catch (Exception e) {
-            fail("Exception was thrown when trying to decode "
-                + "invalid base64 encoded data - RFC 2045 requires that all "
-                + "non base64 character be discarded, an exception should not"
-                + " have been thrown");
-        }
-    }
-
-    public void testIgnoringNonBase64InDecode() throws Exception {
-        assertEquals("The quick brown fox jumped over the lazy dogs.", new String(Base64
-                .decodeBase64("VGhlIH@$#$@%F1aWN@#@#@@rIGJyb3duIGZve\n\r\t%#%#%#%CBqd##$#$W1wZWQgb3ZlciB0aGUgbGF6eSBkb2dzLg==".getBytes())));
-    }
-
-    public void testIsArrayByteBase64() {
-        assertFalse(Base64.isArrayByteBase64(new byte[]{Byte.MIN_VALUE}));
-        assertFalse(Base64.isArrayByteBase64(new byte[]{-125}));
-        assertFalse(Base64.isArrayByteBase64(new byte[]{-10}));
-        assertFalse(Base64.isArrayByteBase64(new byte[]{0}));
-        assertFalse(Base64.isArrayByteBase64(new byte[]{64, Byte.MAX_VALUE}));
-        assertFalse(Base64.isArrayByteBase64(new byte[]{Byte.MAX_VALUE}));
-        assertTrue(Base64.isArrayByteBase64(new byte[]{'A'}));
-        assertFalse(Base64.isArrayByteBase64(new byte[]{'A', Byte.MIN_VALUE}));
-        assertTrue(Base64.isArrayByteBase64(new byte[]{'A', 'Z', 'a'}));
-        assertTrue(Base64.isArrayByteBase64(new byte[]{'/', '=', '+'}));
-        assertFalse(Base64.isArrayByteBase64(new byte[]{'$'}));
-    }
-
-    public void testObjectDecodeWithInvalidParameter() throws Exception {
-        Base64 b64 = new Base64();
-
-        try {
-            b64.decode("Yadayadayada");
-            fail("decode(Object) didn't throw an exception when passed a String object");
-        } catch (DecoderException e) {
-            // ignored
+    /**
+     * Tests url-safe Base64 against random data, sizes 0 to 150.
+     */
+    public void testUrlSafe() {
+        // test random data of sizes 0 thru 150
+        for (int i = 0; i <= 150; i++) {
+            byte[][] randomData = Base64TestData.randomData(i, true);
+            byte[] encoded = randomData[1];
+            byte[] decoded = randomData[0];
+            byte[] result = Base64.decodeBase64(encoded);
+            assertTrue("url-safe i=" + i, Arrays.equals(decoded, result));
+            assertFalse("url-safe i=" + i + " no '='", Base64TestData.bytesContain(encoded, (byte) '='));
+            assertFalse("url-safe i=" + i + " no '\\'", Base64TestData.bytesContain(encoded, (byte) '\\'));
+            assertFalse("url-safe i=" + i + " no '+'", Base64TestData.bytesContain(encoded, (byte) '+'));
         }
 
-    }
-
-    public void testObjectDecodeWithValidParameter() throws Exception {
-
-        String original = "Hello World!";
-        byte[] bArray = Base64.encodeBase64(original.getBytes());
-        Object o = bArray;
-
-        Base64 b64 = new Base64();
-        Object oDecoded = b64.decode(o);
-        byte[] baDecoded = (byte[]) oDecoded;
-        String dest = new String(baDecoded);
-
-        assertTrue("dest string does not equal original", dest.equals(original));
-    }
-
-    public void testObjectEncodeWithInvalidParameter() throws Exception {
-        Base64 b64 = new Base64();
-        try {
-            b64.encode("Yadayadayada");
-            fail("encode(Object) didn't throw an exception when passed a String object");
-        } catch (EncoderException e) {
-            // Expected
-        }
-    }
-
-    public void testObjectEncodeWithValidParameter() throws Exception {
-
-        String original = "Hello World!";
-        byte[] origBytes = original.getBytes();
-        Object origObj = origBytes;
-
-        Base64 b64 = new Base64();
-        Object oEncoded = b64.encode(origObj);
-        byte[] bArray = Base64.decodeBase64((byte[]) oEncoded);
-        String dest = new String(bArray);
-
-        assertTrue("dest string does not equal original", dest.equals(original));
-    }
-
-    public void testDecodeWithWhitespace() throws Exception {
-
-        String orig = "I am a late night coder.";
-
-        byte[] encodedArray = Base64.encodeBase64(orig.getBytes());
-        StringBuffer intermediate = new StringBuffer(new String(encodedArray));
-
-        intermediate.insert(2, ' ');
-        intermediate.insert(5, '\t');
-        intermediate.insert(10, '\r');
-        intermediate.insert(15, '\n');
-
-        byte[] encodedWithWS = intermediate.toString().getBytes();
-        byte[] decodedWithWS = Base64.decodeBase64(encodedWithWS);
-
-        String dest = new String(decodedWithWS);
-
-        assertTrue("Dest string doesn't equal the original", dest.equals(orig));
-    }
-
-    public void testDiscardWhitespace() throws Exception {
-
-        String orig = "I am a late night coder.";
-
-        byte[] encodedArray = Base64.encodeBase64(orig.getBytes());
-        StringBuffer intermediate = new StringBuffer(new String(encodedArray));
-
-        intermediate.insert(2, ' ');
-        intermediate.insert(5, '\t');
-        intermediate.insert(10, '\r');
-        intermediate.insert(15, '\n');
-
-        byte[] encodedWithWS = intermediate.toString().getBytes();
-        byte[] encodedNoWS = Base64.discardWhitespace(encodedWithWS);
-        byte[] decodedWithWS = Base64.decodeBase64(encodedWithWS);
-        byte[] decodedNoWS = Base64.decodeBase64(encodedNoWS);
-
-        String destFromWS = new String(decodedWithWS);
-        String destFromNoWS = new String(decodedNoWS);
-
-        assertTrue("Dest string doesn't equal original", destFromWS.equals(orig));
-        assertTrue("Dest string doesn't equal original", destFromNoWS.equals(orig));
-    }
-
-    public void testCodeInteger1() {
-        String encodedInt1 = "li7dzDacuo67Jg7mtqEm2TRuOMU=";
-        BigInteger bigInt1 = new BigInteger("85739377120809420210425962799" + "0318636601332086981");
-
-        assertEquals(encodedInt1, new String(Base64.encodeInteger(bigInt1)));
-        assertEquals(bigInt1, Base64.decodeInteger(encodedInt1.getBytes()));
-    }
-
-    public void testCodeInteger2() {
-        String encodedInt2 = "9B5ypLY9pMOmtxCeTDHgwdNFeGs=";
-        BigInteger bigInt2 = new BigInteger("13936727572861167254666467268" + "91466679477132949611");
-
-        assertEquals(encodedInt2, new String(Base64.encodeInteger(bigInt2)));
-        assertEquals(bigInt2, Base64.decodeInteger(encodedInt2.getBytes()));
-    }
-
-    public void testCodeInteger3() {
-        String encodedInt3 = "FKIhdgaG5LGKiEtF1vHy4f3y700zaD6QwDS3IrNVGzNp2" + "rY+1LFWTK6D44AyiC1n8uWz1itkYMZF0/aKDK0Yjg==";
-        BigInteger bigInt3 = new BigInteger("10806548154093873461951748545"
-            + "1196989136416448805819079363524309897749044958112417136240557"
-            + "4495062430572478766856090958495998158114332651671116876320938126");
-
-        assertEquals(encodedInt3, new String(Base64.encodeInteger(bigInt3)));
-        assertEquals(bigInt3, Base64.decodeInteger(encodedInt3.getBytes()));
-    }
-
-    public void testCodeInteger4() {
-        String encodedInt4 = "ctA8YGxrtngg/zKVvqEOefnwmViFztcnPBYPlJsvh6yKI"
-            + "4iDm68fnp4Mi3RrJ6bZAygFrUIQLxLjV+OJtgJAEto0xAs+Mehuq1DkSFEpP3o"
-            + "DzCTOsrOiS1DwQe4oIb7zVk/9l7aPtJMHW0LVlMdwZNFNNJoqMcT2ZfCPrfvYv"
-            + "Q0=";
-        BigInteger bigInt4 = new BigInteger("80624726256040348115552042320"
-            + "6968135001872753709424419772586693950232350200555646471175944"
-            + "519297087885987040810778908507262272892702303774422853675597"
-            + "748008534040890923814202286633163248086055216976551456088015"
-            + "338880713818192088877057717530169381044092839402438015097654"
-            + "53542091716518238707344493641683483917");
-
-        assertEquals(encodedInt4, new String(Base64.encodeInteger(bigInt4)));
-        assertEquals(bigInt4, Base64.decodeInteger(encodedInt4.getBytes()));
-    }
-
-    public void testCodeIntegerNull() {
-        try {
-            Base64.encodeInteger(null);
-            fail("Exception not thrown when passing in null to encodeInteger(BigInteger)");
-        } catch (NullPointerException npe) {
-            // expected
-        } catch (Exception e) {
-            fail("Incorrect Exception caught when passing in null to encodeInteger(BigInteger)");
-        }
-    }
-
-    public void testCodeIntegerEdgeCases() {
-        // TODO
-    }
-
-    public void testConstructors() {
-        Base64 base64;
-        base64 = new Base64();
-        base64 = new Base64(-1);
-        base64 = new Base64(-1, new byte[]{});
-        base64 = new Base64(64, new byte[]{});
-        try {
-            base64 = new Base64(-1, new byte[]{'A'});
-            fail("Should have rejected attempt to use 'A' as a line separator");
-        } catch (IllegalArgumentException ignored) {
-            // Expected
-        }
-        try {
-            base64 = new Base64(64, new byte[]{'A'});
-            fail("Should have rejected attempt to use 'A' as a line separator");
-        } catch (IllegalArgumentException ignored) {
-            // Expected
-        }
-        try {
-            base64 = new Base64(64, new byte[]{'='});
-            fail("Should have rejected attempt to use '=' as a line separator");
-        } catch (IllegalArgumentException ignored) {
-            // Expected
-        }
-        base64 = new Base64(64, new byte[]{'$'}); // OK
-        try {
-            base64 = new Base64(64, new byte[]{'A', '$'});
-            fail("Should have rejected attempt to use 'A$' as a line separator");
-        } catch (IllegalArgumentException ignored) {
-            // Expected
-        }
-        base64 = new Base64(64, new byte[]{' ', '$', '\n', '\r', '\t'}); // OK
     }
 
     /**
@@ -846,69 +940,6 @@ public class Base64Test extends TestCase {
         }
     }
 
-    /**
-     * Tests url-safe Base64 against random data, sizes 0 to 150.
-     */
-    public void testUrlSafe() {
-        // test random data of sizes 0 thru 150
-        for (int i = 0; i <= 150; i++) {
-            byte[][] randomData = Base64TestData.randomData(i, true);
-            byte[] encoded = randomData[1];
-            byte[] decoded = randomData[0];
-            byte[] result = Base64.decodeBase64(encoded);
-            assertTrue("url-safe i=" + i, Arrays.equals(decoded, result));
-            assertFalse("url-safe i=" + i + " no '='", Base64TestData.bytesContain(encoded, (byte) '='));
-            assertFalse("url-safe i=" + i + " no '\\'", Base64TestData.bytesContain(encoded, (byte) '\\'));
-            assertFalse("url-safe i=" + i + " no '+'", Base64TestData.bytesContain(encoded, (byte) '+'));
-        }
-
-    }
-
-    /**
-     * Tests isUrlSafe.
-     */
-    public void testIsUrlSafe() {
-        Base64 base64Standard = new Base64(false);
-        Base64 base64URLSafe = new Base64(true);
-
-        assertFalse("Base64.isUrlSafe=false", base64Standard.isUrlSafe());
-        assertTrue("Base64.isUrlSafe=true", base64URLSafe.isUrlSafe());
-
-        byte[] whiteSpace = {' ', '\n', '\r', '\t'};
-        assertTrue("Base64.isArrayByteBase64(whiteSpace)=true", Base64.isArrayByteBase64(whiteSpace));
-    }
-
-    /**
-     * Test encode and decode of empty byte array.
-     */
-    public void testEmptyBase64() {
-        byte[] empty = new byte[0];
-        byte[] result = Base64.encodeBase64(empty);
-        assertEquals("empty base64 encode", 0, result.length);
-        assertEquals("empty base64 encode", null, Base64.encodeBase64(null));
-
-        empty = new byte[0];
-        result = Base64.decodeBase64(empty);
-        assertEquals("empty base64 decode", 0, result.length);
-        assertEquals("empty base64 encode", null, Base64.decodeBase64(null));
-    }
-
-    /**
-     * Tests Base64.encodeToString() and Base64.decodeFromString() methods.
-     * 
-     * @throws Exception
-     */
-    public void testChunkedEncodeMultipleOf76() throws Exception {
-        byte[] expectedEncode = Base64.encodeBase64(Base64TestData.DECODED, true);
-        // convert to "\n" so we're 100% equal to the old openssl encoding test stored
-        // in Base64TestData.ENCODED_76_CHARS_PER_LINE:
-        String actualResult = Base64TestData.ENCODED_76_CHARS_PER_LINE.replaceAll("\n", "\r\n");
-        byte[] actualEncode = actualResult.getBytes("UTF-8");
-        assertTrue("chunkedEncodeMultipleOf76", Arrays.equals(expectedEncode, actualEncode));
-    }
-
-    // -------------------------------------------------------- Private Methods
-
     private String toString(byte[] data) {
         StringBuffer buf = new StringBuffer();
         for (int i = 0; i < data.length; i++) {
@@ -918,25 +949,6 @@ public class Base64Test extends TestCase {
             }
         }
         return buf.toString();
-    }
-
-    // ------------------------------------------------------------------------
-
-    private Random _random = new Random();
-
-    /**
-     * @return Returns the _random.
-     */
-    public Random getRandom() {
-        return this._random;
-    }
-
-    /**
-     * CODEC-68: isBase64 throws ArrayIndexOutOfBoundsException on some non-BASE64 bytes
-     */
-    public void testCodec68() {
-        byte[] x = new byte[]{'n', 'A', '=', '=', (byte) 0x9c};
-        Base64.decodeBase64(x);
     }
 
 }
