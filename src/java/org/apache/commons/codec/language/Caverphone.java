@@ -152,7 +152,7 @@ public class Caverphone implements StringEncoder {
      *                          of type java.lang.String
      */
     public Object encode(Object pObject) throws EncoderException {
-        if (!(pObject instanceof java.lang.String)) {
+        if (!(pObject instanceof String)) {
             throw new EncoderException("Parameter supplied to Caverphone encode is not of type java.lang.String"); 
         }
         return caverphone((String) pObject);

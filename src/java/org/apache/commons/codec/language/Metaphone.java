@@ -364,7 +364,7 @@ public class Metaphone implements StringEncoder {
      *                          of type java.lang.String
      */
     public Object encode(Object pObject) throws EncoderException {
-        if (!(pObject instanceof java.lang.String)) {
+        if (!(pObject instanceof String)) {
             throw new EncoderException("Parameter supplied to Metaphone encode is not of type java.lang.String"); 
         }
         return metaphone((String) pObject);

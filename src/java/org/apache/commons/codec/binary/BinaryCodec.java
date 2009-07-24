@@ -89,7 +89,7 @@ public class BinaryCodec implements BinaryDecoder, BinaryEncoder {
      * @return 0 and 1 ASCII character chars one for each bit of the argument
      * @throws EncoderException
      *                  if the argument is not a byte[]
-     * @see org.apache.commons.codec.Encoder#encode(java.lang.Object)
+     * @see org.apache.commons.codec.Encoder#encode(Object)
      */
     public Object encode(Object raw) throws EncoderException {
         if (!(raw instanceof byte[])) {
@@ -106,7 +106,7 @@ public class BinaryCodec implements BinaryDecoder, BinaryEncoder {
      * @return the raw encoded binary where each bit corresponds to a byte in the byte array argument
      * @throws DecoderException
      *                  if argument is not a byte[], char[] or String
-     * @see org.apache.commons.codec.Decoder#decode(java.lang.Object)
+     * @see org.apache.commons.codec.Decoder#decode(Object)
      */
     public Object decode(Object ascii) throws DecoderException {
         if (ascii == null) {

@@ -37,7 +37,7 @@ public interface Decoder {
      * Object.  Note that the implementation of this
      * interface will try to cast the Object parameter
      * to the specific type expected by a particular Decoder
-     * implementation.  If a {@link java.lang.ClassCastException} occurs
+     * implementation.  If a {@link ClassCastException} occurs
      * this decode method will throw a DecoderException.
      * 
      * @param pObject an object to "decode"
