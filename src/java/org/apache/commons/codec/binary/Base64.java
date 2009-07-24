@@ -753,10 +753,10 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
             }
         }
         if (len > maxResultSize) {
-            throw new IllegalArgumentException("Input array too big, the output array would be bigger ("
-                + len
-                + ") than the specified maxium size of "
-                + maxResultSize);
+            throw new IllegalArgumentException("Input array too big, the output array would be bigger (" +
+                len +
+                ") than the specified maxium size of " +
+                maxResultSize);
         }
         byte[] buf = new byte[(int) len];
         b64.setInitialBuffer(buf, 0, buf.length);
