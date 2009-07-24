@@ -35,8 +35,8 @@ import org.apache.commons.codec.EncoderException;
  * The class can be parameterized in the following manner with various constructors:
  * <ul>
  * <li>URL-safe mode: Default off.</li>
- * <li>Line length: Default 76. Line length that aren't multiples of 4 will still essentially end up being multiples of 4 in the
- * encoded data. 
+ * <li>Line length: Default 76. Line length that aren't multiples of 4 will still essentially end up being multiples of
+ * 4 in the encoded data.
  * <li>Line separator: Default is CRLF ("\r\n")</li>
  * </ul>
  * </p>
@@ -75,11 +75,10 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
     static final byte[] CHUNK_SEPARATOR = {'\r', '\n'};
 
     /**
-     * This array is a lookup table that translates 6-bit positive integer
-     * index values into their "Base64 Alphabet" equivalents as specified
-     * in Table 1 of RFC 2045.
-     *
-     * Thanks to "commons" project in ws.apache.org for this code. 
+     * This array is a lookup table that translates 6-bit positive integer index values into their "Base64 Alphabet"
+     * equivalents as specified in Table 1 of RFC 2045.
+     * 
+     * Thanks to "commons" project in ws.apache.org for this code.
      * http://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/
      */
     private static final byte[] STANDARD_ENCODE_TABLE = {
@@ -109,18 +108,15 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
     private static final byte PAD = '=';
 
     /**
-     * This array is a lookup table that translates Unicode characters
-     * drawn from the "Base64 Alphabet" (as specified in Table 1 of RFC 2045)
-     * into their 6-bit positive integer equivalents.  Characters that
-     * are not in the Base64 alphabet but fall within the bounds of the
-     * array are translated to -1.
-     *
-     * Note:  '+' and '-' both decode to 62.  '/' and '_' both decode to 63.
-     * This means decoder seamlessly handles both URL_SAFE and STANDARD base64.
-     * (The encoder, on the other hand, needs to know ahead of time what to emit).
-     *
+     * This array is a lookup table that translates Unicode characters drawn from the "Base64 Alphabet" (as specified in
+     * Table 1 of RFC 2045) into their 6-bit positive integer equivalents. Characters that are not in the Base64
+     * alphabet but fall within the bounds of the array are translated to -1.
+     * 
+     * Note: '+' and '-' both decode to 62. '/' and '_' both decode to 63. This means decoder seamlessly handles both
+     * URL_SAFE and STANDARD base64. (The encoder, on the other hand, needs to know ahead of time what to emit).
+     * 
      * Thanks to "commons" project in ws.apache.org for this code.
-     * http://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/ 
+     * http://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/
      */
     private static final byte[] DECODE_TABLE = {
             -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
@@ -236,7 +232,8 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * </p>
      * 
      * @param urlSafe
-     *            if <code>true</code>, URL-safe encoding is used. In most cases this should be set to <code>false</code>.
+     *            if <code>true</code>, URL-safe encoding is used. In most cases this should be set to
+     *            <code>false</code>.
      * @since 1.4
      */
     public Base64(boolean urlSafe) {
@@ -284,7 +281,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * @param lineSeparator
      *            Each line of encoded data will end with this sequence of bytes.
      * @throws IllegalArgumentException
-     *             Thrown when the provided lineSeparator included some base64 characters. 
+     *             Thrown when the provided lineSeparator included some base64 characters.
      * @since 1.4
      */
     public Base64(int lineLength, byte[] lineSeparator) {
