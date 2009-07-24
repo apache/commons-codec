@@ -38,10 +38,10 @@ public class EncoderException extends Exception {
     /**
      * Creates a new instance of this exception with an useful message.
      * 
-     * @param pMessage a useful message relating to the encoder specific error.
+     * @param message a useful message relating to the encoder specific error.
      */
-    public EncoderException(String pMessage) {
-        super(pMessage);
+    public EncoderException(String message) {
+        super(message);
     }
 }  
 
