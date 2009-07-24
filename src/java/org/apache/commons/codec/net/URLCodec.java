@@ -55,7 +55,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
     /**
      * Radix used in encoding and decoding.
      */
-    private static final int RADIX = 16;
+    static final int RADIX = 16;
     
     /**
      * The default charset used for string decoding and encoding. Consider this field final. The next major release may
@@ -113,23 +113,23 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
     }
 
     /**
-     * Encodes an array of bytes into an array of URL safe 7-bit 
-     * characters. Unsafe characters are escaped.
-     *
-     * @param urlsafe bitset of characters deemed URL safe
-     * @param bytes array of bytes to convert to URL safe characters
+     * Encodes an array of bytes into an array of URL safe 7-bit characters. Unsafe characters are escaped.
+     * 
+     * @param urlsafe
+     *            bitset of characters deemed URL safe
+     * @param bytes
+     *            array of bytes to convert to URL safe characters
      * @return array of bytes containing URL safe characters
      */
-    public static final byte[] encodeUrl(BitSet urlsafe, byte[] bytes) 
-    {
+    public static final byte[] encodeUrl(BitSet urlsafe, byte[] bytes) {
         if (bytes == null) {
             return null;
         }
         if (urlsafe == null) {
             urlsafe = WWW_FORM_URL;
         }
-        
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream(); 
+
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         for (int i = 0; i < bytes.length; i++) {
             int b = bytes[i];
             if (b < 0) {
@@ -142,17 +142,14 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
                 buffer.write(b);
             } else {
                 buffer.write('%');
-                char hex1 = Character.toUpperCase(
-                  Character.forDigit((b >> 4) & 0xF, RADIX));
-                char hex2 = Character.toUpperCase(
-                  Character.forDigit(b & 0xF, RADIX));
+                char hex1 = Character.toUpperCase(Character.forDigit((b >> 4) & 0xF, RADIX));
+                char hex2 = Character.toUpperCase(Character.forDigit(b & 0xF, RADIX));
                 buffer.write(hex1);
                 buffer.write(hex2);
             }
         }
-        return buffer.toByteArray(); 
+        return buffer.toByteArray();
     }
-
 
     /**
      * Decodes an array of URL safe 7-bit characters into an array of 
@@ -174,8 +171,8 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
                 buffer.write(' ');
             } else if (b == '%') {
                 try {
-                    int u = toCharacterDigit(bytes[++i]);
-                    int l = toCharacterDigit(bytes[++i]);
+                    int u = Utils.digit16(bytes[++i]);
+                    int l = Utils.digit16(bytes[++i]);
                     buffer.write((char) ((u << 4) + l));
                 } catch (ArrayIndexOutOfBoundsException e) {
                     throw new DecoderException("Invalid URL encoding: ", e);
@@ -187,13 +184,6 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
         return buffer.toByteArray();
     }
 
-    private static int toCharacterDigit(byte b) throws DecoderException {
-        int i = Character.digit((char) b, RADIX);
-        if (i == -1) {
-            throw new DecoderException("Invalid URL encoding: not a valid digit (radix " + RADIX + "): " + b);
-        }
-        return i;
-    }
     /**
      * Encodes an array of bytes into an array of URL safe 7-bit 
      * characters. Unsafe characters are escaped.

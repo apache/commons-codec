@@ -183,14 +183,11 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
             int b = bytes[i];
             if (b == ESCAPE_CHAR) {
                 try {
-                    int u = Character.digit((char) bytes[++i], 16);
-                    int l = Character.digit((char) bytes[++i], 16);
-                    if (u == -1 || l == -1) {
-                        throw new DecoderException("Invalid quoted-printable encoding");
-                    }
+                    int u = Utils.digit16(bytes[++i]);
+                    int l = Utils.digit16(bytes[++i]);
                     buffer.write((char) ((u << 4) + l));
                 } catch (ArrayIndexOutOfBoundsException e) {
-                    throw new DecoderException("Invalid quoted-printable encoding");
+                    throw new DecoderException("Invalid quoted-printable encoding", e);
                 }
             } else {
                 buffer.write(b);
