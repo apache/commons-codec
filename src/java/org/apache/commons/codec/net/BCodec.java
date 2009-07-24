@@ -134,12 +134,10 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * representation.
      * 
      * @param value
-     *                  Base64 string to convert into its original form
-     * 
+     *            Base64 string to convert into its original form
      * @return original string
-     * 
      * @throws DecoderException
-     *                  A decoder exception is thrown if a failure condition is encountered during the decode process.
+     *             A decoder exception is thrown if a failure condition is encountered during the decode process.
      */
     public String decode(String value) throws DecoderException {
         if (value == null) {
@@ -148,7 +146,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
         try {
             return decodeText(value);
         } catch (UnsupportedEncodingException e) {
-            throw new DecoderException(e.getMessage());
+            throw new DecoderException(e.getMessage(), e);
         }
     }
 

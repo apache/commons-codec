@@ -302,7 +302,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
         try {
             return decode(pString, getDefaultCharset());
         } catch (UnsupportedEncodingException e) {
-            throw new DecoderException(e.getMessage());
+            throw new DecoderException(e.getMessage(), e);
         }
     }
 

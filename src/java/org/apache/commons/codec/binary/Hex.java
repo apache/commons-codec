@@ -187,7 +187,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
             char[] charArray = object instanceof String ? ((String) object).toCharArray() : (char[]) object;
             return decodeHex(charArray);
         } catch (ClassCastException e) {
-            throw new DecoderException(e.getMessage());
+            throw new DecoderException(e.getMessage(), e);
         }
     }
 
