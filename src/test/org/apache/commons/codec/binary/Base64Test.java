@@ -592,11 +592,11 @@ public class Base64Test extends TestCase {
 
     public void testObjectEncodeWithInvalidParameter() throws Exception {
         Base64 b64 = new Base64();
-
         try {
             b64.encode("Yadayadayada");
             fail("encode(Object) didn't throw an exception when passed a String object");
         } catch (EncoderException e) {
+            // Expected
         }
     }
 
@@ -891,6 +891,20 @@ public class Base64Test extends TestCase {
         result = Base64.decodeBase64(empty);
         assertEquals("empty base64 decode", 0, result.length);
         assertEquals("empty base64 encode", null, Base64.decodeBase64(null));
+    }
+
+    /**
+     * Tests Base64.encodeToString() and Base64.decodeFromString() methods.
+     * 
+     * @throws Exception
+     */
+    public void testChunkedEncodeMultipleOf76() throws Exception {
+        byte[] expectedEncode = Base64.encodeBase64(Base64TestData.DECODED, true);
+        // convert to "\n" so we're 100% equal to the old openssl encoding test stored
+        // in Base64TestData.ENCODED_76_CHARS_PER_LINE:
+        String actualResult = Base64TestData.ENCODED_76_CHARS_PER_LINE.replaceAll("\n", "\r\n");
+        byte[] actualEncode = actualResult.getBytes("UTF-8");
+        assertTrue("chunkedEncodeMultipleOf76", Arrays.equals(expectedEncode, actualEncode));
     }
 
     // -------------------------------------------------------- Private Methods

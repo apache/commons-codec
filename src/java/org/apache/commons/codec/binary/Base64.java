@@ -729,7 +729,11 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
             len += 4 - mod;
         }
         if (isChunked) {
-            len += (1 + (len / CHUNK_SIZE)) * CHUNK_SEPARATOR.length;
+            boolean lenChunksPerfectly = len % CHUNK_SIZE == 0;
+            len += (len / CHUNK_SIZE) * CHUNK_SEPARATOR.length;
+            if (!lenChunksPerfectly) {
+                len += CHUNK_SEPARATOR.length;
+            }
         }
         if (len > Integer.MAX_VALUE) {
             throw new IllegalArgumentException("Input array too big, output array would be bigger than Integer.MAX_VALUE=" + 
