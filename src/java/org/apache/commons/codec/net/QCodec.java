@@ -190,7 +190,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
         try {
             return encodeText(pString, charset);
         } catch (UnsupportedEncodingException e) {
-            throw new EncoderException(e.getMessage());
+            throw new EncoderException(e.getMessage(), e);
         }
     }
 

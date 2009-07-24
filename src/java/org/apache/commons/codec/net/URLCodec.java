@@ -244,7 +244,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
         try {
             return encode(pString, getDefaultCharset());
         } catch (UnsupportedEncodingException e) {
-            throw new EncoderException(e.getMessage());
+            throw new EncoderException(e.getMessage(), e);
         }
     }
 
