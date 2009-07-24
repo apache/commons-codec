@@ -44,15 +44,11 @@ limitations under the License.
     <target name="prepare" depends="init" description="Prepare build directory">
         <mkdir dir="${build.home}"/>
         <mkdir dir="${build.home}/classes"/>
-        <mkdir dir="${build.home}/conf"/>
         <mkdir dir="${build.home}/tests"/>
         <mkdir dir="${build.home}/test-reports"/>
     </target>
     <target name="static" depends="prepare" description="Copy static files to build directory">
         <tstamp/>
-        <copy todir="${build.home}/conf" filtering="on">
-            <fileset dir="${conf.home}" includes="*.MF"/>
-        </copy>
     </target>
     <target name="compile" depends="static" description="Compile shareable components">
         <javac srcdir="${source.home}" destdir="${build.home}/classes" debug="${compile.debug}" deprecation="${compile.deprecation}" optimize="${compile.optimize}">
