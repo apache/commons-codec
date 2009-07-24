@@ -61,8 +61,7 @@ abstract class RFC1522Codec {
      *  process.
      * @throws UnsupportedEncodingException thrown if charset is not supported 
      * 
-     * @see <a href="http://java.sun.com/j2se/1.3/docs/api/java/lang/package-summary.html#charenc">JRE character
-     *          encoding names</a>
+     * @see <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      */
     protected String encodeText(final String text, final String charset)
      throws EncoderException, UnsupportedEncodingException  

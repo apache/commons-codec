@@ -64,8 +64,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * @param charset
      *                  the default string charset to use.
      * 
-     * @see <a href="http://java.sun.com/j2se/1.3/docs/api/java/lang/package-summary.html#charenc">JRE character
-     *          encoding names</a>
+     * @see <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      */
     public BCodec(final String charset) {
         super();

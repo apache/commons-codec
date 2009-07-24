@@ -23,11 +23,10 @@ import org.apache.commons.codec.RequiredCharsetNames;
 
 /**
  * Converts String to bytes using the encodings required by the Java specification. These encodings are specified in <a
- * href="http://java.sun.com/j2se/1.3/docs/api/java/lang/package-summary.html#charenc">JRE character encoding names</a>
+ * href="http://java.sun.com/j2se/1.4.2/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
  * 
  * @see RequiredCharsetNames
- * @see <a href="http://java.sun.com/j2se/1.3/docs/api/java/lang/package-summary.html#charenc">JRE character encoding
- *      names </a>
+ * @see <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
  * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
  * @version $Id: $
  * @since 1.4
@@ -43,8 +42,7 @@ public class StringBytesUtils {
      * @return encoded bytes
      * @throws IllegalStateException
      *             Thrown when the charset is missing, which should be never according the the Java specification.
-     * @see <a href="http://java.sun.com/j2se/1.3/docs/api/java/lang/package-summary.html#charenc">JRE character
-     *      encoding names </a>
+     * @see <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      * @see #getSupportedBytes(String, String)
      */
     public static byte[] getBytesIso8859_1(String string) {
@@ -60,8 +58,7 @@ public class StringBytesUtils {
      * @return encoded bytes
      * @throws IllegalStateException
      *             Thrown when the charset is missing, which should be never according the the Java specification.
-     * @see <a href="http://java.sun.com/j2se/1.3/docs/api/java/lang/package-summary.html#charenc">JRE character
-     *      encoding names </a>
+     * @see <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      * @see #getSupportedBytes(String, String)
      */
     public static byte[] getBytesUsAscii(String string) {
@@ -77,8 +74,7 @@ public class StringBytesUtils {
      * @return encoded bytes
      * @throws IllegalStateException
      *             Thrown when the charset is missing, which should be never according the the Java specification.
-     * @see <a href="http://java.sun.com/j2se/1.3/docs/api/java/lang/package-summary.html#charenc">JRE character
-     *      encoding names </a>
+     * @see <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      * @see #getSupportedBytes(String, String)
      */
     public static byte[] getBytesUtf16(String string) {
@@ -94,8 +90,7 @@ public class StringBytesUtils {
      * @return encoded bytes
      * @throws IllegalStateException
      *             Thrown when the charset is missing, which should be never according the the Java specification.
-     * @see <a href="http://java.sun.com/j2se/1.3/docs/api/java/lang/package-summary.html#charenc">JRE character
-     *      encoding names </a>
+     * @see <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      * @see #getSupportedBytes(String, String)
      */
     public static byte[] getBytesUtf16Be(String string) {
@@ -111,8 +106,7 @@ public class StringBytesUtils {
      * @return encoded bytes
      * @throws IllegalStateException
      *             Thrown when the charset is missing, which should be never according the the Java specification.
-     * @see <a href="http://java.sun.com/j2se/1.3/docs/api/java/lang/package-summary.html#charenc">JRE character
-     *      encoding names </a>
+     * @see <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      * @see #getSupportedBytes(String, String)
      */
     public static byte[] getBytesUtf16Le(String string) {
@@ -128,8 +122,7 @@ public class StringBytesUtils {
      * @return encoded bytes
      * @throws IllegalStateException
      *             Thrown when the charset is missing, which should be never according the the Java specification.
-     * @see <a href="http://java.sun.com/j2se/1.3/docs/api/java/lang/package-summary.html#charenc">JRE character
-     *      encoding names </a>
+     * @see <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      * @see #getSupportedBytes(String, String)
      */
     public static byte[] getBytesUtf8(String string) {
