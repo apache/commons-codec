@@ -61,43 +61,43 @@ public class RFC1522CodecTest extends TestCase {
         try {
             testcodec.decodeText("whatever");
             fail("DecoderException should have been thrown");
-        } catch(DecoderException e) {
+        } catch (DecoderException e) {
             // Expected. Move on
         }
         try {
             testcodec.decodeText("=?stuff?=");
             fail("DecoderException should have been thrown");
-        } catch(DecoderException e) {
+        } catch (DecoderException e) {
             // Expected. Move on
         }
         try {
             testcodec.decodeText("=?UTF-8?stuff?=");
             fail("DecoderException should have been thrown");
-        } catch(DecoderException e) {
+        } catch (DecoderException e) {
             // Expected. Move on
         }
         try {
             testcodec.decodeText("=?UTF-8?T?stuff");
             fail("DecoderException should have been thrown");
-        } catch(DecoderException e) {
+        } catch (DecoderException e) {
             // Expected. Move on
         }
         try {
             testcodec.decodeText("=??T?stuff?=");
             fail("DecoderException should have been thrown");
-        } catch(DecoderException e) {
+        } catch (DecoderException e) {
             // Expected. Move on
         }
         try {
             testcodec.decodeText("=?UTF-8??stuff?=");
             fail("DecoderException should have been thrown");
-        } catch(DecoderException e) {
+        } catch (DecoderException e) {
             // Expected. Move on
         }
         try {
             testcodec.decodeText("=?UTF-8?W?stuff?=");
             fail("DecoderException should have been thrown");
-        } catch(DecoderException e) {
+        } catch (DecoderException e) {
             // Expected. Move on
         }
     }

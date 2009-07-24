@@ -130,19 +130,19 @@ public class URLCodecTest extends TestCase {
         try {
             urlCodec.decode("%");
             fail("DecoderException should have been thrown");
-        } catch(DecoderException e) {
+        } catch (DecoderException e) {
             // Expected. Move on
         }
         try {
             urlCodec.decode("%A");
             fail("DecoderException should have been thrown");
-        } catch(DecoderException e) {
+        } catch (DecoderException e) {
             // Expected. Move on
         }
         try {
             urlCodec.decode("%WW");
             fail("DecoderException should have been thrown");
-        } catch(DecoderException e) {
+        } catch (DecoderException e) {
             // Expected. Move on
         }
         this.validateState(urlCodec);
@@ -220,7 +220,7 @@ public class URLCodecTest extends TestCase {
             Object dObj = new Double(3.0);
             urlCodec.encode( dObj );
             fail( "Trying to url encode a Double object should cause an exception.");
-        } catch( EncoderException ee ) {
+        } catch (EncoderException ee) {
             // Exception expected, test segment passes.
         }
         this.validateState(urlCodec);
@@ -264,7 +264,7 @@ public class URLCodecTest extends TestCase {
             Object dObj = new Double(3.0);
             urlCodec.decode( dObj );
             fail( "Trying to url encode a Double object should cause an exception.");
-        } catch( DecoderException ee ) {
+        } catch (DecoderException ee) {
             // Exception expected, test segment passes.
         }
         this.validateState(urlCodec);

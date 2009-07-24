@@ -136,7 +136,7 @@ public class QCodecTest extends TestCase {
             Object dObj = new Double(3.0);
             qcodec.encode( dObj );
             fail( "Trying to url encode a Double object should cause an exception.");
-        } catch( EncoderException ee ) {
+        } catch (EncoderException ee) {
             // Exception expected, test segment passes.
         }
     }
@@ -147,13 +147,13 @@ public class QCodecTest extends TestCase {
             try {
                qcodec.encode("Hello there!");
                 fail( "We set the encoding to a bogus NONSENSE vlaue, this shouldn't have worked.");
-            } catch( EncoderException ee ) {
+            } catch (EncoderException ee) {
                 // Exception expected, test segment passes.
             }
             try {
                qcodec.decode("=?NONSENSE?Q?Hello there!?=");
                 fail( "We set the encoding to a bogus NONSENSE vlaue, this shouldn't have worked.");
-            } catch( DecoderException ee ) {
+            } catch (DecoderException ee) {
                 // Exception expected, test segment passes.
             }
     }
@@ -172,7 +172,7 @@ public class QCodecTest extends TestCase {
             Object dObj = new Double(3.0);
             qcodec.decode( dObj );
             fail( "Trying to url encode a Double object should cause an exception.");
-        } catch( DecoderException ee ) {
+        } catch (DecoderException ee) {
             // Exception expected, test segment passes.
         }
     }

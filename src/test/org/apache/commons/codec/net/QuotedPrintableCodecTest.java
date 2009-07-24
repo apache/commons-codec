@@ -116,19 +116,19 @@ public class QuotedPrintableCodecTest extends TestCase {
         try {
             qpcodec.decode("=");
             fail("DecoderException should have been thrown");
-        } catch(DecoderException e) {
+        } catch (DecoderException e) {
             // Expected. Move on
         }
         try {
             qpcodec.decode("=A");
             fail("DecoderException should have been thrown");
-        } catch(DecoderException e) {
+        } catch (DecoderException e) {
             // Expected. Move on
         }
         try {
             qpcodec.decode("=WW");
             fail("DecoderException should have been thrown");
-        } catch(DecoderException e) {
+        } catch (DecoderException e) {
             // Expected. Move on
         }
     }
@@ -193,7 +193,7 @@ public class QuotedPrintableCodecTest extends TestCase {
             Object dObj = new Double(3.0);
             qpcodec.encode( dObj );
             fail( "Trying to url encode a Double object should cause an exception.");
-        } catch( EncoderException ee ) {
+        } catch (EncoderException ee) {
             // Exception expected, test segment passes.
         }
     }
@@ -204,13 +204,13 @@ public class QuotedPrintableCodecTest extends TestCase {
             try {
                qpcodec.encode(plain);
                 fail( "We set the encoding to a bogus NONSENSE vlaue, this shouldn't have worked.");
-            } catch( EncoderException ee ) {
+            } catch (EncoderException ee) {
                 // Exception expected, test segment passes.
             }
             try {
                qpcodec.decode(plain);
                 fail( "We set the encoding to a bogus NONSENSE vlaue, this shouldn't have worked.");
-            } catch( DecoderException ee ) {
+            } catch (DecoderException ee) {
                 // Exception expected, test segment passes.
             }
     }
@@ -235,7 +235,7 @@ public class QuotedPrintableCodecTest extends TestCase {
             Object dObj = new Double(3.0);
             qpcodec.decode( dObj );
             fail( "Trying to url encode a Double object should cause an exception.");
-        } catch( DecoderException ee ) {
+        } catch (DecoderException ee) {
             // Exception expected, test segment passes.
         }
     }

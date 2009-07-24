@@ -42,7 +42,7 @@ public abstract class BinaryEncoderAbstractTest extends TestCase {
         BinaryEncoder encoder = makeEncoder();
         try {
             encoder.encode(null);
-        } catch( EncoderException ee ) {
+        } catch (EncoderException ee) {
             // An exception should be thrown
         }
     }        

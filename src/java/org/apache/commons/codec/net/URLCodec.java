@@ -177,7 +177,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
                         throw new DecoderException("Invalid URL encoding");
                     }
                     buffer.write((char)((u << 4) + l));
-                } catch(ArrayIndexOutOfBoundsException e) {
+                } catch (ArrayIndexOutOfBoundsException e) {
                     throw new DecoderException("Invalid URL encoding");
                 }
             } else {
@@ -247,7 +247,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
         }
         try {
             return encode(pString, getDefaultCharset());
-        } catch(UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException e) {
             throw new EncoderException(e.getMessage());
         }
     }
@@ -289,7 +289,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
         }
         try {
             return decode(pString, getDefaultCharset());
-        } catch(UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException e) {
             throw new DecoderException(e.getMessage());
         }
     }

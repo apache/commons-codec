@@ -47,7 +47,7 @@ public abstract class StringEncoderAbstractTest extends TestCase {
         
         try {
             encoder.encode(null);
-        } catch( EncoderException ee ) {
+        } catch (EncoderException ee) {
             // An exception should be thrown
         }
     }        
@@ -58,7 +58,7 @@ public abstract class StringEncoderAbstractTest extends TestCase {
         try {
             StringEncoder encoder = makeEncoder();
             encoder.encode( new Float( 3.4 ) );
-        } catch( Exception e ) {
+        } catch (Exception e) {
             exceptionThrown = true;
         }
 
