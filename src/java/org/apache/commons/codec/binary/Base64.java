@@ -719,6 +719,26 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * @since 1.4
      */
     public static byte[] encodeBase64(byte[] binaryData, boolean isChunked, boolean urlSafe) {
+        return encodeBase64(binaryData, isChunked, urlSafe, Integer.MAX_VALUE);
+    }
+
+    /**
+     * Encodes binary data using the base64 algorithm, optionally chunking the output into 76 character blocks.
+     * 
+     * @param binaryData
+     *            Array containing binary data to encode.
+     * @param isChunked
+     *            if <code>true</code> this encoder will chunk the base64 output into 76 character blocks
+     * @param urlSafe
+     *            if <code>true</code> this encoder will emit - and _ instead of the usual + and / characters.
+     * @param maxResultSize
+     *            The maximum result size to accept.
+     * @return Base64-encoded data.
+     * @throws IllegalArgumentException
+     *             Thrown when the input array needs an output array bigger than maxResultSize
+     * @since 1.4
+     */
+    public static byte[] encodeBase64(byte[] binaryData, boolean isChunked, boolean urlSafe, int maxResultSize) {
         if (binaryData == null || binaryData.length == 0) {
             return binaryData;
         }
@@ -735,9 +755,11 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
                 len += CHUNK_SEPARATOR.length;
             }
         }
-        if (len > Integer.MAX_VALUE) {
-            throw new IllegalArgumentException("Input array too big, output array would be bigger than Integer.MAX_VALUE=" + 
-                    Integer.MAX_VALUE);
+        if (len > maxResultSize) {
+            throw new IllegalArgumentException("Input array too big, the output array would be bigger ("
+                + len
+                + ") than the specified maxium size of "
+                + maxResultSize);
         }
         byte[] buf = new byte[(int) len];
         b64.setInitialBuffer(buf, 0, buf.length);
