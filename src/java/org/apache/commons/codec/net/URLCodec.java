@@ -53,6 +53,11 @@ import org.apache.commons.codec.binary.StringBytesUtils;
 public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, StringDecoder {
     
     /**
+     * Radix used in encoding and decoding.
+     */
+    private static final int RADIX = 16;
+    
+    /**
      * The default charset used for string decoding and encoding. Consider this field final. The next major release may
      * break compatibility and make this field be final.
      */
@@ -138,9 +143,9 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
             } else {
                 buffer.write('%');
                 char hex1 = Character.toUpperCase(
-                  Character.forDigit((b >> 4) & 0xF, 16));
+                  Character.forDigit((b >> 4) & 0xF, RADIX));
                 char hex2 = Character.toUpperCase(
-                  Character.forDigit(b & 0xF, 16));
+                  Character.forDigit(b & 0xF, RADIX));
                 buffer.write(hex1);
                 buffer.write(hex2);
             }
@@ -158,36 +163,37 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      * @return array of original bytes 
      * @throws DecoderException Thrown if URL decoding is unsuccessful
      */
-    public static final byte[] decodeUrl(byte[] bytes) 
-         throws DecoderException
-    {
+    public static final byte[] decodeUrl(byte[] bytes) throws DecoderException {
         if (bytes == null) {
             return null;
         }
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream(); 
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         for (int i = 0; i < bytes.length; i++) {
             int b = bytes[i];
             if (b == '+') {
                 buffer.write(' ');
             } else if (b == '%') {
                 try {
-                    int u = Character.digit((char)bytes[++i], 16);
-                    int l = Character.digit((char)bytes[++i], 16);
-                    if (u == -1 || l == -1) {
-                        throw new DecoderException("Invalid URL encoding");
-                    }
-                    buffer.write((char)((u << 4) + l));
+                    int u = toCharacterDigit(bytes[++i]);
+                    int l = toCharacterDigit(bytes[++i]);
+                    buffer.write((char) ((u << 4) + l));
                 } catch (ArrayIndexOutOfBoundsException e) {
-                    throw new DecoderException("Invalid URL encoding");
+                    throw new DecoderException("Invalid URL encoding: ");
                 }
             } else {
                 buffer.write(b);
             }
         }
-        return buffer.toByteArray(); 
+        return buffer.toByteArray();
     }
 
-
+    private static int toCharacterDigit(byte b) throws DecoderException {
+        int i = Character.digit((char) b, RADIX);
+        if (i == -1) {
+            throw new DecoderException("Invalid URL encoding: not a valid digit (radix " + RADIX + "): " + b);
+        }
+        return i;
+    }
     /**
      * Encodes an array of bytes into an array of URL safe 7-bit 
      * characters. Unsafe characters are escaped.
