@@ -138,9 +138,17 @@ public class URLCodecTest extends TestCase {
             fail("DecoderException should have been thrown");
         } catch (DecoderException e) {
             // Expected. Move on
+        }        
+        try {
+            // Bad 1st char after %
+            urlCodec.decode("%WW");
+            fail("DecoderException should have been thrown");
+        } catch (DecoderException e) {
+            // Expected. Move on
         }
         try {
-            urlCodec.decode("%WW");
+            // Bad 2nd char after %
+            urlCodec.decode("%0W");
             fail("DecoderException should have been thrown");
         } catch (DecoderException e) {
             // Expected. Move on
