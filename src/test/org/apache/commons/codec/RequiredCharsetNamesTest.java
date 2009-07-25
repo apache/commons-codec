@@ -28,6 +28,13 @@ import junit.framework.TestCase;
  */
 public class RequiredCharsetNamesTest extends TestCase {
 
+    /**
+     * We could make the constructor private in the future, it's a matter a style.
+     */
+    public void testConstructor() {
+        new RequiredCharsetNames();
+    }
+
     public void testIso8859_1() {
         Assert.assertEquals("ISO-8859-1", RequiredCharsetNames.ISO_8859_1);
     }
