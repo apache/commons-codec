@@ -22,7 +22,7 @@ import junit.framework.TestCase;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
-import org.apache.commons.codec.RequiredCharsetNames;
+import org.apache.commons.codec.CharEncoding;
 
 /**
  * Quoted-printable codec test cases
@@ -66,7 +66,7 @@ public class QCodecTest extends TestCase {
         String ru_msg = constructString(RUSSIAN_STUFF_UNICODE); 
         String ch_msg = constructString(SWISS_GERMAN_STUFF_UNICODE); 
         
-        QCodec qcodec = new QCodec(RequiredCharsetNames.UTF_8);
+        QCodec qcodec = new QCodec(CharEncoding.UTF_8);
         
         assertEquals(
             "=?UTF-8?Q?=D0=92=D1=81=D0=B5=D0=BC=5F=D0=BF=D1=80=D0=B8=D0=B2=D0=B5=D1=82?=", 

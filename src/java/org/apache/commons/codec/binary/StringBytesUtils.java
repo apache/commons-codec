@@ -19,13 +19,13 @@ package org.apache.commons.codec.binary;
 
 import java.io.UnsupportedEncodingException;
 
-import org.apache.commons.codec.RequiredCharsetNames;
+import org.apache.commons.codec.CharEncoding;
 
 /**
  * Converts String to bytes using the encodings required by the Java specification. These encodings are specified in <a
  * href="http://java.sun.com/j2se/1.4.2/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
  * 
- * @see RequiredCharsetNames
+ * @see CharEncoding
  * @see <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
  * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
  * @version $Id: $
@@ -46,7 +46,7 @@ public class StringBytesUtils {
      * @see #getSupportedBytes(String, String)
      */
     public static byte[] getBytesIso8859_1(String string) {
-        return StringBytesUtils.getSupportedBytes(string, RequiredCharsetNames.ISO_8859_1);
+        return StringBytesUtils.getSupportedBytes(string, CharEncoding.ISO_8859_1);
     }
 
     /**
@@ -62,7 +62,7 @@ public class StringBytesUtils {
      * @see #getSupportedBytes(String, String)
      */
     public static byte[] getBytesUsAscii(String string) {
-        return StringBytesUtils.getSupportedBytes(string, RequiredCharsetNames.US_ASCII);
+        return StringBytesUtils.getSupportedBytes(string, CharEncoding.US_ASCII);
     }
 
     /**
@@ -78,7 +78,7 @@ public class StringBytesUtils {
      * @see #getSupportedBytes(String, String)
      */
     public static byte[] getBytesUtf16(String string) {
-        return StringBytesUtils.getSupportedBytes(string, RequiredCharsetNames.UTF_16);
+        return StringBytesUtils.getSupportedBytes(string, CharEncoding.UTF_16);
     }
 
     /**
@@ -94,7 +94,7 @@ public class StringBytesUtils {
      * @see #getSupportedBytes(String, String)
      */
     public static byte[] getBytesUtf16Be(String string) {
-        return StringBytesUtils.getSupportedBytes(string, RequiredCharsetNames.UTF_16BE);
+        return StringBytesUtils.getSupportedBytes(string, CharEncoding.UTF_16BE);
     }
 
     /**
@@ -110,7 +110,7 @@ public class StringBytesUtils {
      * @see #getSupportedBytes(String, String)
      */
     public static byte[] getBytesUtf16Le(String string) {
-        return StringBytesUtils.getSupportedBytes(string, RequiredCharsetNames.UTF_16LE);
+        return StringBytesUtils.getSupportedBytes(string, CharEncoding.UTF_16LE);
     }
 
     /**
@@ -126,7 +126,7 @@ public class StringBytesUtils {
      * @see #getSupportedBytes(String, String)
      */
     public static byte[] getBytesUtf8(String string) {
-        return StringBytesUtils.getSupportedBytes(string, RequiredCharsetNames.UTF_8);
+        return StringBytesUtils.getSupportedBytes(string, CharEncoding.UTF_8);
     }
 
     /**
@@ -145,7 +145,7 @@ public class StringBytesUtils {
      * @throws IllegalStateException
      *             Thrown when a {@link UnsupportedEncodingException} is caught, which should never happen for a
      *             required charset name.
-     * @see RequiredCharsetNames
+     * @see CharEncoding
      * @see String#getBytes(String)
      */
     public static byte[] getSupportedBytes(String string, String charsetName) {
@@ -174,7 +174,7 @@ public class StringBytesUtils {
      * @throws IllegalStateException
      *             Thrown when a {@link UnsupportedEncodingException} is caught, which should never happen for a
      *             required charset name.
-     * @see RequiredCharsetNames
+     * @see CharEncoding
      * @see String#String(byte[], String)
      */
     public static String newString(byte[] bytes, String charsetName) {
@@ -195,7 +195,7 @@ public class StringBytesUtils {
      *             charset is required.
      */
     public static String newStringIso8859_1(byte[] bytes) {
-        return StringBytesUtils.newString(bytes, RequiredCharsetNames.ISO_8859_1);
+        return StringBytesUtils.newString(bytes, CharEncoding.ISO_8859_1);
     }
 
     /**
@@ -208,7 +208,7 @@ public class StringBytesUtils {
      *             charset is required.
      */
     public static String newStringUsAscii(byte[] bytes) {
-        return StringBytesUtils.newString(bytes, RequiredCharsetNames.US_ASCII);
+        return StringBytesUtils.newString(bytes, CharEncoding.US_ASCII);
     }
 
     /**
@@ -221,7 +221,7 @@ public class StringBytesUtils {
      *             charset is required.
      */
     public static String newStringUtf16(byte[] bytes) {
-        return StringBytesUtils.newString(bytes, RequiredCharsetNames.UTF_16);
+        return StringBytesUtils.newString(bytes, CharEncoding.UTF_16);
     }
 
     /**
@@ -234,7 +234,7 @@ public class StringBytesUtils {
      *             charset is required.
      */
     public static String newStringUtf16Be(byte[] bytes) {
-        return StringBytesUtils.newString(bytes, RequiredCharsetNames.UTF_16BE);
+        return StringBytesUtils.newString(bytes, CharEncoding.UTF_16BE);
     }
 
     /**
@@ -247,7 +247,7 @@ public class StringBytesUtils {
      *             charset is required.
      */
     public static String newStringUtf16Le(byte[] bytes) {
-        return StringBytesUtils.newString(bytes, RequiredCharsetNames.UTF_16LE);
+        return StringBytesUtils.newString(bytes, CharEncoding.UTF_16LE);
     }
 
     /**
@@ -260,7 +260,7 @@ public class StringBytesUtils {
      *             charset is required.
      */
     public static String newStringUtf8(byte[] bytes) {
-        return StringBytesUtils.newString(bytes, RequiredCharsetNames.UTF_8);
+        return StringBytesUtils.newString(bytes, CharEncoding.UTF_8);
     }
 
     private StringBytesUtils() {

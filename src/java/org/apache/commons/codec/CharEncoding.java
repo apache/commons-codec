@@ -20,8 +20,8 @@ package org.apache.commons.codec;
 /**
  * Character encoding names required of every implementation of the Java platform.
  * 
- * From the Java documentation <a
- * href="http://java.sun.com/j2se/1.4.2/docs/api/java/nio/charset/Charset.html">Standard charsets</a>:
+ * From the Java documentation <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/nio/charset/Charset.html">Standard
+ * charsets</a>:
  * <p>
  * <cite>Every implementation of the Java platform is required to support the following character encodings. Consult the
  * release documentation for your implementation to see if any other encodings are supported. Consult the release
@@ -52,11 +52,9 @@ package org.apache.commons.codec;
  * @since 1.4
  * @version $Id$
  */
-public class RequiredCharsetNames {
+public class CharEncoding {
     /**
-     * <p>
-     * ISO Latin Alphabet No. 1, a.k.a. ISO-LATIN-1.
-     * </p>
+     * CharEncodingISO Latin Alphabet No. 1, a.k.a. ISO-LATIN-1. </p>
      * <p>
      * Every implementation of the Java platform is required to support this character encoding.
      * </p>

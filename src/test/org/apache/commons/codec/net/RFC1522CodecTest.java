@@ -20,7 +20,7 @@ package org.apache.commons.codec.net;
 import junit.framework.TestCase;
 
 import org.apache.commons.codec.DecoderException;
-import org.apache.commons.codec.RequiredCharsetNames;
+import org.apache.commons.codec.CharEncoding;
 
 /**
  * RFC 1522 compliant codec test cases
@@ -53,7 +53,7 @@ public class RFC1522CodecTest extends TestCase {
     public void testNullInput() throws Exception {
         RFC1522TestCodec testcodec = new RFC1522TestCodec();
         assertNull(testcodec.decodeText(null));
-        assertNull(testcodec.encodeText(null, RequiredCharsetNames.UTF_8));
+        assertNull(testcodec.encodeText(null, CharEncoding.UTF_8));
     }
 
     public void testDecodeInvalid() throws Exception {

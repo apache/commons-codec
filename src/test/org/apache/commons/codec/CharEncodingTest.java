@@ -26,37 +26,37 @@ import junit.framework.TestCase;
  * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
  * @version $Id: $
  */
-public class RequiredCharsetNamesTest extends TestCase {
+public class CharEncodingTest extends TestCase {
 
     /**
      * We could make the constructor private in the future, it's a matter a style.
      */
     public void testConstructor() {
-        new RequiredCharsetNames();
+        new CharEncoding();
     }
 
     public void testIso8859_1() {
-        Assert.assertEquals("ISO-8859-1", RequiredCharsetNames.ISO_8859_1);
+        Assert.assertEquals("ISO-8859-1", CharEncoding.ISO_8859_1);
     }
 
     public void testUsAscii() {
-        Assert.assertEquals("US-ASCII", RequiredCharsetNames.US_ASCII);
+        Assert.assertEquals("US-ASCII", CharEncoding.US_ASCII);
     }
 
     public void testUtf16() {
-        Assert.assertEquals("UTF-16", RequiredCharsetNames.UTF_16);
+        Assert.assertEquals("UTF-16", CharEncoding.UTF_16);
     }
 
     public void testUtf16Be() {
-        Assert.assertEquals("UTF-16BE", RequiredCharsetNames.UTF_16BE);
+        Assert.assertEquals("UTF-16BE", CharEncoding.UTF_16BE);
     }
 
     public void testUtf16Le() {
-        Assert.assertEquals("UTF-16LE", RequiredCharsetNames.UTF_16LE);
+        Assert.assertEquals("UTF-16LE", CharEncoding.UTF_16LE);
     }
 
     public void testUtf8() {
-        Assert.assertEquals("UTF-8", RequiredCharsetNames.UTF_8);
+        Assert.assertEquals("UTF-8", CharEncoding.UTF_8);
     }
 
 }

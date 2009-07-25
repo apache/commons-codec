@@ -21,7 +21,7 @@ import junit.framework.TestCase;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
-import org.apache.commons.codec.RequiredCharsetNames;
+import org.apache.commons.codec.CharEncoding;
 
 /**
  * Quoted-printable codec test cases
@@ -63,12 +63,12 @@ public class QuotedPrintableCodecTest extends TestCase {
         
         assertEquals(
             "=D0=92=D1=81=D0=B5=D0=BC_=D0=BF=D1=80=D0=B8=D0=B2=D0=B5=D1=82", 
-        qpcodec.encode(ru_msg, RequiredCharsetNames.UTF_8)
+        qpcodec.encode(ru_msg, CharEncoding.UTF_8)
         );
-        assertEquals("Gr=C3=BCezi_z=C3=A4m=C3=A4", qpcodec.encode(ch_msg, RequiredCharsetNames.UTF_8));
+        assertEquals("Gr=C3=BCezi_z=C3=A4m=C3=A4", qpcodec.encode(ch_msg, CharEncoding.UTF_8));
         
-        assertEquals(ru_msg, qpcodec.decode(qpcodec.encode(ru_msg, RequiredCharsetNames.UTF_8), RequiredCharsetNames.UTF_8));
-        assertEquals(ch_msg, qpcodec.decode(qpcodec.encode(ch_msg, RequiredCharsetNames.UTF_8), RequiredCharsetNames.UTF_8));
+        assertEquals(ru_msg, qpcodec.decode(qpcodec.encode(ru_msg, CharEncoding.UTF_8), CharEncoding.UTF_8));
+        assertEquals(ch_msg, qpcodec.decode(qpcodec.encode(ch_msg, CharEncoding.UTF_8), CharEncoding.UTF_8));
     }
 
     public void testBasicEncodeDecode() throws Exception {
