@@ -51,7 +51,9 @@ limitations under the License.
         <tstamp/>
     </target>
     <target name="compile" depends="static" description="Compile shareable components">
-        <javac srcdir="${source.home}" destdir="${build.home}/classes" debug="${compile.debug}" deprecation="${compile.deprecation}" optimize="${compile.optimize}">
+        <javac srcdir="${source.home}" destdir="${build.home}/classes"
+            source="${compile.source}" target="${compile.target}"
+        	debug="${compile.debug}" deprecation="${compile.deprecation}" optimize="${compile.optimize}">
             <classpath refid="compile.classpath"/>
         </javac>
         <copy todir="${build.home}/classes" filtering="on">
@@ -110,6 +112,8 @@ limitations under the License.
                 <attribute name="Implementation-Version" value="${component.version}"/> 
                 <attribute name="Implementation-Vendor" value="The Apache Software Foundation"/>
                 <attribute name="Implementation-Vendor-Id" value="org.apache"/>
+            	<attribute name="X-Compile-Source-JDK" value="${compile.source}"/>
+            	<attribute name="X-Compile-Target-JDK" value="${compile.target}"/>
             </manifest>
         </jar>
     </target>
@@ -180,7 +184,9 @@ limitations under the License.
     </target>
     <!-- ========== Unit Test Targets ========================================= -->
     <target name="compile.tests" depends="compile" description="Compile unit test cases">
-        <javac srcdir="${test.home}" destdir="${build.home}/tests" debug="${compile.debug}" deprecation="${compile.deprecation}" optimize="${compile.optimize}">
+        <javac srcdir="${test.home}" destdir="${build.home}/tests"
+        	source="${compile.source}" target="${compile.target}"
+        	debug="${compile.debug}" deprecation="${compile.deprecation}" optimize="${compile.optimize}">
             <classpath refid="test.classpath"/>
         </javac>
         <copy todir="${build.home}/tests" filtering="on">
