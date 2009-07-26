@@ -157,7 +157,7 @@ public class BinaryCodec implements BinaryDecoder, BinaryEncoder {
     //
     // ------------------------------------------------------------------------
     /**
-     * Decodes a byte array where each char represents an ASCII '0' or '1'.
+     * Decodes a char array where each char represents an ASCII '0' or '1'.
      * 
      * @param ascii
      *                  each char represents an ASCII '0' or '1'
