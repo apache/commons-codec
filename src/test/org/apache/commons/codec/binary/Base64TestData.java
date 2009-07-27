@@ -25,6 +25,7 @@ import java.util.Random;
  * This random data was encoded by OpenSSL. Java had nothing to do with it. This data helps us test interop between
  * Commons-Codec and OpenSSL. Notice that OpenSSL creates 64 character lines instead of the 76 of Commons-Codec.
  * 
+ * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>
  * @author Apache Software Foundation
  * @version $Id $
  * @since 1.4

@@ -28,7 +28,7 @@ import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.CharEncoding;
 import org.apache.commons.codec.StringDecoder;
 import org.apache.commons.codec.StringEncoder;
-import org.apache.commons.codec.binary.StringBytesUtils;
+import org.apache.commons.codec.binary.StringUtils;
 
 /**
  * <p>Implements the 'www-form-urlencoded' encoding scheme, 
@@ -224,7 +224,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
         if (pString == null) {
             return null;
         }
-        return StringBytesUtils.newStringUsAscii(encode(pString.getBytes(charset)));
+        return StringUtils.newStringUsAscii(encode(pString.getBytes(charset)));
     }
 
     /**
@@ -265,7 +265,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
         if (pString == null) {
             return null;
         }
-        return new String(decode(StringBytesUtils.getBytesUsAscii(pString)), charset);
+        return new String(decode(StringUtils.getBytesUsAscii(pString)), charset);
     }
 
     /**

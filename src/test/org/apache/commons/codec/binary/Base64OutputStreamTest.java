@@ -67,23 +67,23 @@ public class Base64OutputStreamTest extends TestCase {
      */
     public void testBase64OutputStreamByChunk() throws Exception {
         // Hello World test.
-        byte[] encoded = StringBytesUtils.getBytesUtf8("SGVsbG8gV29ybGQ=\r\n");
-        byte[] decoded = StringBytesUtils.getBytesUtf8(STRING_FIXTURE);
+        byte[] encoded = StringUtils.getBytesUtf8("SGVsbG8gV29ybGQ=\r\n");
+        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
         testByChunk(encoded, decoded, 76, CRLF);
 
         // Single Byte test.
-        encoded = StringBytesUtils.getBytesUtf8("AA==\r\n");
+        encoded = StringUtils.getBytesUtf8("AA==\r\n");
         decoded = new byte[]{(byte) 0};
         testByChunk(encoded, decoded, 76, CRLF);
 
         // OpenSSL interop test.
-        encoded = StringBytesUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE);
+        encoded = StringUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE);
         decoded = Base64TestData.DECODED;
         testByChunk(encoded, decoded, 64, LF);
 
         // Single Line test.
         String singleLine = Base64TestData.ENCODED_64_CHARS_PER_LINE.replaceAll("\n", "");
-        encoded = StringBytesUtils.getBytesUtf8(singleLine);
+        encoded = StringUtils.getBytesUtf8(singleLine);
         decoded = Base64TestData.DECODED;
         testByChunk(encoded, decoded, 0, LF);
 
@@ -104,23 +104,23 @@ public class Base64OutputStreamTest extends TestCase {
      */
     public void testBase64OutputStreamByteByByte() throws Exception {
         // Hello World test.
-        byte[] encoded = StringBytesUtils.getBytesUtf8("SGVsbG8gV29ybGQ=\r\n");
-        byte[] decoded = StringBytesUtils.getBytesUtf8(STRING_FIXTURE);
+        byte[] encoded = StringUtils.getBytesUtf8("SGVsbG8gV29ybGQ=\r\n");
+        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
         testByteByByte(encoded, decoded, 76, CRLF);
 
         // Single Byte test.
-        encoded = StringBytesUtils.getBytesUtf8("AA==\r\n");
+        encoded = StringUtils.getBytesUtf8("AA==\r\n");
         decoded = new byte[]{(byte) 0};
         testByteByByte(encoded, decoded, 76, CRLF);
 
         // OpenSSL interop test.
-        encoded = StringBytesUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE);
+        encoded = StringUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE);
         decoded = Base64TestData.DECODED;
         testByteByByte(encoded, decoded, 64, LF);
 
         // Single Line test.
         String singleLine = Base64TestData.ENCODED_64_CHARS_PER_LINE.replaceAll("\n", "");
-        encoded = StringBytesUtils.getBytesUtf8(singleLine);
+        encoded = StringUtils.getBytesUtf8(singleLine);
         decoded = Base64TestData.DECODED;
         testByteByByte(encoded, decoded, 0, LF);
 

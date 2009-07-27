@@ -27,7 +27,7 @@ import junit.framework.TestCase;
  * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
  * @version $Id: $
  */
-public class StringBytesUtilsTest extends TestCase {
+public class StringUtilsTest extends TestCase {
 
     private static byte[] BYTES_FIXTURE;
 
@@ -44,7 +44,7 @@ public class StringBytesUtilsTest extends TestCase {
         String charsetName = "ISO-8859-1";
         testGetSupportedBytes(charsetName);
         byte[] expected = STRING_FIXTURE.getBytes(charsetName);
-        byte[] actual = StringBytesUtils.getBytesIso8859_1(STRING_FIXTURE);
+        byte[] actual = StringUtils.getBytesIso8859_1(STRING_FIXTURE);
         Assert.assertTrue(Arrays.equals(expected, actual));
     }
 
@@ -52,7 +52,7 @@ public class StringBytesUtilsTest extends TestCase {
         String charsetName = "US-ASCII";
         testGetSupportedBytes(charsetName);
         byte[] expected = STRING_FIXTURE.getBytes(charsetName);
-        byte[] actual = StringBytesUtils.getBytesUsAscii(STRING_FIXTURE);
+        byte[] actual = StringUtils.getBytesUsAscii(STRING_FIXTURE);
         Assert.assertTrue(Arrays.equals(expected, actual));
     }
 
@@ -60,7 +60,7 @@ public class StringBytesUtilsTest extends TestCase {
         String charsetName = "UTF-16";
         testGetSupportedBytes(charsetName);
         byte[] expected = STRING_FIXTURE.getBytes(charsetName);
-        byte[] actual = StringBytesUtils.getBytesUtf16(STRING_FIXTURE);
+        byte[] actual = StringUtils.getBytesUtf16(STRING_FIXTURE);
         Assert.assertTrue(Arrays.equals(expected, actual));
     }
 
@@ -68,7 +68,7 @@ public class StringBytesUtilsTest extends TestCase {
         String charsetName = "UTF-16BE";
         testGetSupportedBytes(charsetName);
         byte[] expected = STRING_FIXTURE.getBytes(charsetName);
-        byte[] actual = StringBytesUtils.getBytesUtf16Be(STRING_FIXTURE);
+        byte[] actual = StringUtils.getBytesUtf16Be(STRING_FIXTURE);
         Assert.assertTrue(Arrays.equals(expected, actual));
     }
 
@@ -76,7 +76,7 @@ public class StringBytesUtilsTest extends TestCase {
         String charsetName = "UTF-16LE";
         testGetSupportedBytes(charsetName);
         byte[] expected = STRING_FIXTURE.getBytes(charsetName);
-        byte[] actual = StringBytesUtils.getBytesUtf16Le(STRING_FIXTURE);
+        byte[] actual = StringUtils.getBytesUtf16Le(STRING_FIXTURE);
         Assert.assertTrue(Arrays.equals(expected, actual));
     }
 
@@ -84,19 +84,19 @@ public class StringBytesUtilsTest extends TestCase {
         String charsetName = "UTF-8";
         testGetSupportedBytes(charsetName);
         byte[] expected = STRING_FIXTURE.getBytes(charsetName);
-        byte[] actual = StringBytesUtils.getBytesUtf8(STRING_FIXTURE);
+        byte[] actual = StringUtils.getBytesUtf8(STRING_FIXTURE);
         Assert.assertTrue(Arrays.equals(expected, actual));
     }
 
     private void testGetSupportedBytes(String charsetName) throws UnsupportedEncodingException {
         byte[] expected = STRING_FIXTURE.getBytes(charsetName);
-        byte[] actual = StringBytesUtils.getSupportedBytes(STRING_FIXTURE, charsetName);
+        byte[] actual = StringUtils.getSupportedBytes(STRING_FIXTURE, charsetName);
         Assert.assertTrue(Arrays.equals(expected, actual));
     }
 
     public void testGetSupportedBytesBadEnc() {
         try {
-            StringBytesUtils.getSupportedBytes(STRING_FIXTURE, "UNKNOWN");
+            StringUtils.getSupportedBytes(STRING_FIXTURE, "UNKNOWN");
             Assert.fail("Expected " + IllegalStateException.class.getName());
         } catch (IllegalStateException e) {
             // Expected
@@ -105,13 +105,13 @@ public class StringBytesUtilsTest extends TestCase {
 
     private void testNewString(String charsetName) throws UnsupportedEncodingException {
         String expected = new String(BYTES_FIXTURE, charsetName);
-        String actual = StringBytesUtils.newString(BYTES_FIXTURE, charsetName);
+        String actual = StringUtils.newString(BYTES_FIXTURE, charsetName);
         Assert.assertEquals(expected, actual);
     }
 
     public void testNewStringBadEnc() {
         try {
-            StringBytesUtils.newString(BYTES_FIXTURE, "UNKNOWN");
+            StringUtils.newString(BYTES_FIXTURE, "UNKNOWN");
             Assert.fail("Expected " + IllegalStateException.class.getName());
         } catch (IllegalStateException e) {
             // Expected
@@ -122,7 +122,7 @@ public class StringBytesUtilsTest extends TestCase {
         String charsetName = "ISO-8859-1";
         testNewString(charsetName);
         String expected = new String(BYTES_FIXTURE, charsetName);
-        String actual = StringBytesUtils.newStringIso8859_1(BYTES_FIXTURE);
+        String actual = StringUtils.newStringIso8859_1(BYTES_FIXTURE);
         Assert.assertEquals(expected, actual);
     }
 
@@ -130,7 +130,7 @@ public class StringBytesUtilsTest extends TestCase {
         String charsetName = "US-ASCII";
         testNewString(charsetName);
         String expected = new String(BYTES_FIXTURE, charsetName);
-        String actual = StringBytesUtils.newStringUsAscii(BYTES_FIXTURE);
+        String actual = StringUtils.newStringUsAscii(BYTES_FIXTURE);
         Assert.assertEquals(expected, actual);
     }
 
@@ -138,7 +138,7 @@ public class StringBytesUtilsTest extends TestCase {
         String charsetName = "UTF-16";
         testNewString(charsetName);
         String expected = new String(BYTES_FIXTURE, charsetName);
-        String actual = StringBytesUtils.newStringUtf16(BYTES_FIXTURE);
+        String actual = StringUtils.newStringUtf16(BYTES_FIXTURE);
         Assert.assertEquals(expected, actual);
     }
 
@@ -146,7 +146,7 @@ public class StringBytesUtilsTest extends TestCase {
         String charsetName = "UTF-16BE";
         testNewString(charsetName);
         String expected = new String(BYTES_FIXTURE, charsetName);
-        String actual = StringBytesUtils.newStringUtf16Be(BYTES_FIXTURE);
+        String actual = StringUtils.newStringUtf16Be(BYTES_FIXTURE);
         Assert.assertEquals(expected, actual);
     }
 
@@ -154,7 +154,7 @@ public class StringBytesUtilsTest extends TestCase {
         String charsetName = "UTF-16LE";
         testNewString(charsetName);
         String expected = new String(BYTES_FIXTURE, charsetName);
-        String actual = StringBytesUtils.newStringUtf16Le(BYTES_FIXTURE);
+        String actual = StringUtils.newStringUtf16Le(BYTES_FIXTURE);
         Assert.assertEquals(expected, actual);
     }
 
@@ -162,7 +162,7 @@ public class StringBytesUtilsTest extends TestCase {
         String charsetName = "UTF-8";
         testNewString(charsetName);
         String expected = new String(BYTES_FIXTURE, charsetName);
-        String actual = StringBytesUtils.newStringUtf8(BYTES_FIXTURE);
+        String actual = StringUtils.newStringUtf8(BYTES_FIXTURE);
         Assert.assertEquals(expected, actual);
     }
 

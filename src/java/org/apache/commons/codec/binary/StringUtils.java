@@ -31,7 +31,7 @@ import org.apache.commons.codec.CharEncoding;
  * @version $Id: $
  * @since 1.4
  */
-public class StringBytesUtils {
+public class StringUtils {
 
     /**
      * Encodes the given string into a sequence of bytes using the ISO-8859-1 charset, storing the result into a new
@@ -46,7 +46,7 @@ public class StringBytesUtils {
      * @see #getSupportedBytes(String, String)
      */
     public static byte[] getBytesIso8859_1(String string) {
-        return StringBytesUtils.getSupportedBytes(string, CharEncoding.ISO_8859_1);
+        return StringUtils.getSupportedBytes(string, CharEncoding.ISO_8859_1);
     }
 
     /**
@@ -62,7 +62,7 @@ public class StringBytesUtils {
      * @see #getSupportedBytes(String, String)
      */
     public static byte[] getBytesUsAscii(String string) {
-        return StringBytesUtils.getSupportedBytes(string, CharEncoding.US_ASCII);
+        return StringUtils.getSupportedBytes(string, CharEncoding.US_ASCII);
     }
 
     /**
@@ -78,7 +78,7 @@ public class StringBytesUtils {
      * @see #getSupportedBytes(String, String)
      */
     public static byte[] getBytesUtf16(String string) {
-        return StringBytesUtils.getSupportedBytes(string, CharEncoding.UTF_16);
+        return StringUtils.getSupportedBytes(string, CharEncoding.UTF_16);
     }
 
     /**
@@ -94,7 +94,7 @@ public class StringBytesUtils {
      * @see #getSupportedBytes(String, String)
      */
     public static byte[] getBytesUtf16Be(String string) {
-        return StringBytesUtils.getSupportedBytes(string, CharEncoding.UTF_16BE);
+        return StringUtils.getSupportedBytes(string, CharEncoding.UTF_16BE);
     }
 
     /**
@@ -110,7 +110,7 @@ public class StringBytesUtils {
      * @see #getSupportedBytes(String, String)
      */
     public static byte[] getBytesUtf16Le(String string) {
-        return StringBytesUtils.getSupportedBytes(string, CharEncoding.UTF_16LE);
+        return StringUtils.getSupportedBytes(string, CharEncoding.UTF_16LE);
     }
 
     /**
@@ -126,7 +126,7 @@ public class StringBytesUtils {
      * @see #getSupportedBytes(String, String)
      */
     public static byte[] getBytesUtf8(String string) {
-        return StringBytesUtils.getSupportedBytes(string, CharEncoding.UTF_8);
+        return StringUtils.getSupportedBytes(string, CharEncoding.UTF_8);
     }
 
     /**
@@ -152,7 +152,7 @@ public class StringBytesUtils {
         try {
             return string.getBytes(charsetName);
         } catch (UnsupportedEncodingException e) {
-            throw StringBytesUtils.newIllegalStateException(charsetName, e);
+            throw StringUtils.newIllegalStateException(charsetName, e);
         }
     }
 
@@ -171,6 +171,7 @@ public class StringBytesUtils {
      *            The bytes to be decoded into characters
      * @param charsetName
      *            The name of a required {@link java.nio.charset.Charset}
+     * @return A new <code>String</code> decoded from the specified array of bytes using the given charset.
      * @throws IllegalStateException
      *             Thrown when a {@link UnsupportedEncodingException} is caught, which should never happen for a
      *             required charset name.
@@ -181,7 +182,7 @@ public class StringBytesUtils {
         try {
             return new String(bytes, charsetName);
         } catch (UnsupportedEncodingException e) {
-            throw StringBytesUtils.newIllegalStateException(charsetName, e);
+            throw StringUtils.newIllegalStateException(charsetName, e);
         }
     }
 
@@ -190,12 +191,13 @@ public class StringBytesUtils {
      * 
      * @param bytes
      *            The bytes to be decoded into characters
+     * @return A new <code>String</code> decoded from the specified array of bytes using the given charset.
      * @throws IllegalStateException
      *             Thrown when a {@link UnsupportedEncodingException} is caught, which should never happen since the
      *             charset is required.
      */
     public static String newStringIso8859_1(byte[] bytes) {
-        return StringBytesUtils.newString(bytes, CharEncoding.ISO_8859_1);
+        return StringUtils.newString(bytes, CharEncoding.ISO_8859_1);
     }
 
     /**
@@ -203,12 +205,13 @@ public class StringBytesUtils {
      * 
      * @param bytes
      *            The bytes to be decoded into characters
+     * @return A new <code>String</code> decoded from the specified array of bytes using the given charset.
      * @throws IllegalStateException
      *             Thrown when a {@link UnsupportedEncodingException} is caught, which should never happen since the
      *             charset is required.
      */
     public static String newStringUsAscii(byte[] bytes) {
-        return StringBytesUtils.newString(bytes, CharEncoding.US_ASCII);
+        return StringUtils.newString(bytes, CharEncoding.US_ASCII);
     }
 
     /**
@@ -216,12 +219,13 @@ public class StringBytesUtils {
      * 
      * @param bytes
      *            The bytes to be decoded into characters
+     * @return A new <code>String</code> decoded from the specified array of bytes using the given charset.
      * @throws IllegalStateException
      *             Thrown when a {@link UnsupportedEncodingException} is caught, which should never happen since the
      *             charset is required.
      */
     public static String newStringUtf16(byte[] bytes) {
-        return StringBytesUtils.newString(bytes, CharEncoding.UTF_16);
+        return StringUtils.newString(bytes, CharEncoding.UTF_16);
     }
 
     /**
@@ -229,12 +233,13 @@ public class StringBytesUtils {
      * 
      * @param bytes
      *            The bytes to be decoded into characters
+     * @return A new <code>String</code> decoded from the specified array of bytes using the given charset.
      * @throws IllegalStateException
      *             Thrown when a {@link UnsupportedEncodingException} is caught, which should never happen since the
      *             charset is required.
      */
     public static String newStringUtf16Be(byte[] bytes) {
-        return StringBytesUtils.newString(bytes, CharEncoding.UTF_16BE);
+        return StringUtils.newString(bytes, CharEncoding.UTF_16BE);
     }
 
     /**
@@ -242,12 +247,13 @@ public class StringBytesUtils {
      * 
      * @param bytes
      *            The bytes to be decoded into characters
+     * @return A new <code>String</code> decoded from the specified array of bytes using the given charset.
      * @throws IllegalStateException
      *             Thrown when a {@link UnsupportedEncodingException} is caught, which should never happen since the
      *             charset is required.
      */
     public static String newStringUtf16Le(byte[] bytes) {
-        return StringBytesUtils.newString(bytes, CharEncoding.UTF_16LE);
+        return StringUtils.newString(bytes, CharEncoding.UTF_16LE);
     }
 
     /**
@@ -255,15 +261,16 @@ public class StringBytesUtils {
      * 
      * @param bytes
      *            The bytes to be decoded into characters
+     * @return A new <code>String</code> decoded from the specified array of bytes using the given charset.
      * @throws IllegalStateException
      *             Thrown when a {@link UnsupportedEncodingException} is caught, which should never happen since the
      *             charset is required.
      */
     public static String newStringUtf8(byte[] bytes) {
-        return StringBytesUtils.newString(bytes, CharEncoding.UTF_8);
+        return StringUtils.newString(bytes, CharEncoding.UTF_8);
     }
 
-    private StringBytesUtils() {
-        // noop, cannot instantiate.
+    private StringUtils() {
+        // noop, cannot instantiate. Can always relax later.
     }
 }

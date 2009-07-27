@@ -254,7 +254,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * </p>
      * 
      * @param lineLength
-     *            Each line of encoded data will be at most of the given length (rounded up to nearest multiple of 4).
+     *            Each line of encoded data will be at most of the given length (rounded down to nearest multiple of 4).
      *            If lineLength <= 0, then the output will not be divided into lines (chunks). Ignored when decoding.
      * @since 1.4
      */
@@ -276,7 +276,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * </p>
      * 
      * @param lineLength
-     *            Each line of encoded data will be at most of the given length (rounded up to nearest multiple of 4).
+     *            Each line of encoded data will be at most of the given length (rounded down to nearest multiple of 4).
      *            If lineLength <= 0, then the output will not be divided into lines (chunks). Ignored when decoding.
      * @param lineSeparator
      *            Each line of encoded data will end with this sequence of bytes.
@@ -302,7 +302,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * </p>
      * 
      * @param lineLength
-     *            Each line of encoded data will be at most of the given length (rounded up to nearest multiple of 4).
+     *            Each line of encoded data will be at most of the given length (rounded down to nearest multiple of 4).
      *            If lineLength <= 0, then the output will not be divided into lines (chunks). Ignored when decoding.
      * @param lineSeparator
      *            Each line of encoded data will end with this sequence of bytes.
@@ -314,7 +314,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * @since 1.4
      */
     public Base64(int lineLength, byte[] lineSeparator, boolean urlSafe) {
-        this.lineLength = lineLength;
+        this.lineLength = lineLength > 0 ? (lineLength / 4) * 4 : 0;
         this.lineSeparator = new byte[lineSeparator.length];
         System.arraycopy(lineSeparator, 0, this.lineSeparator, 0, lineSeparator.length);
         if (lineLength > 0) {
@@ -324,7 +324,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
         }
         this.decodeSize = this.encodeSize - 1;
         if (containsBase64Byte(lineSeparator)) {
-            String sep = StringBytesUtils.newStringUtf8(lineSeparator);
+            String sep = StringUtils.newStringUtf8(lineSeparator);
             throw new IllegalArgumentException("lineSeperator must not contain base64 characters: [" + sep + "]");
         }
         this.encodeTable = urlSafe ? URL_SAFE_ENCODE_TABLE : STANDARD_ENCODE_TABLE;
@@ -669,10 +669,11 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      *             if the parameter supplied is not of type byte[]
      */
     public Object decode(Object pObject) throws DecoderException {
-        if (!(pObject instanceof byte[])) {
+        if (pObject instanceof byte[]) {
+            return decode((byte[]) pObject);
+        } else {
             throw new DecoderException("Parameter supplied to Base64 decode is not a byte[]");
         }
-        return decode((byte[]) pObject);
     }
 
     /**
@@ -683,7 +684,24 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * @return a byte array containing binary data
      */
     public byte[] decode(byte[] pArray) {
-        return decodeBase64(pArray);
+        if (pArray == null || pArray.length == 0) {
+            return pArray;
+        }
+        long len = (pArray.length * 3) / 4;
+        byte[] buf = new byte[(int) len];
+        setInitialBuffer(buf, 0, buf.length);
+        decode(pArray, 0, pArray.length);
+        decode(pArray, 0, -1); // Notify decoder of EOF.
+
+        // Would be nice to just return buf (like we sometimes do in the encode
+        // logic), but we have no idea what the line-length was (could even be
+        // variable).  So we cannot determine ahead of time exactly how big an
+        // array is necessary.  Hence the need to construct a 2nd byte array to
+        // hold the final result:
+
+        byte[] result = new byte[pos];
+        readResults(result, 0, result.length);
+        return result;
     }
 
     /**
@@ -739,41 +757,17 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
         if (binaryData == null || binaryData.length == 0) {
             return binaryData;
         }
-        Base64 b64 = isChunked ? new Base64(urlSafe) : new Base64(0, CHUNK_SEPARATOR, urlSafe);
-        long len = (binaryData.length * 4) / 3;
-        long mod = len % 4;
-        if (mod != 0) {
-            len += 4 - mod;
-        }
-        if (isChunked) {
-            boolean lenChunksPerfectly = len % CHUNK_SIZE == 0;
-            len += (len / CHUNK_SIZE) * CHUNK_SEPARATOR.length;
-            if (!lenChunksPerfectly) {
-                len += CHUNK_SEPARATOR.length;
-            }
-        }
+
+        long len = getEncodeLength(binaryData, CHUNK_SIZE, CHUNK_SEPARATOR);
         if (len > maxResultSize) {
             throw new IllegalArgumentException("Input array too big, the output array would be bigger (" +
                 len +
                 ") than the specified maxium size of " +
                 maxResultSize);
         }
-        byte[] buf = new byte[(int) len];
-        b64.setInitialBuffer(buf, 0, buf.length);
-        b64.encode(binaryData, 0, binaryData.length);
-        b64.encode(binaryData, 0, -1); // Notify encoder of EOF.
-        // Encoder might have resized, even though it was unnecessary.
-        if (b64.buffer != buf) {
-            b64.readResults(buf, 0, buf.length);
-        }
-        // In URL-SAFE mode we skip the padding characters, so sometimes our
-        // final length is a bit smaller.
-        if (urlSafe && b64.pos < buf.length) {
-            byte[] smallerBuf = new byte[b64.pos];
-            System.arraycopy(buf, 0, smallerBuf, 0, b64.pos);
-            buf = smallerBuf;
-        }
-        return buf;
+                
+        Base64 b64 = isChunked ? new Base64(urlSafe) : new Base64(0, CHUNK_SEPARATOR, urlSafe);
+        return b64.encode(binaryData);
     }
 
     /**
@@ -784,20 +778,8 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * @return Array containing decoded data.
      */
     public static byte[] decodeBase64(byte[] base64Data) {
-        if (base64Data == null || base64Data.length == 0) {
-            return base64Data;
-        }
         Base64 b64 = new Base64();
-        long len = (base64Data.length * 3) / 4;
-        byte[] buf = new byte[(int) len];
-        b64.setInitialBuffer(buf, 0, buf.length);
-        b64.decode(base64Data, 0, base64Data.length);
-        b64.decode(base64Data, 0, -1); // Notify decoder of EOF.
-        // We have no idea what the line-length was, so we
-        // cannot know how much of our array wasn't used.
-        byte[] result = new byte[b64.pos];
-        b64.readResults(result, 0, result.length);
-        return result;
+        return b64.decode(base64Data);
     }
 
     /**
@@ -873,7 +855,53 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * @return A byte array containing only Base64 character data
      */
     public byte[] encode(byte[] pArray) {
-        return encodeBase64(pArray, false, isUrlSafe());
+        long len = getEncodeLength(pArray, lineLength, lineSeparator);
+        byte[] buf = new byte[(int) len];
+        setInitialBuffer(buf, 0, buf.length);
+        encode(pArray, 0, pArray.length);
+        encode(pArray, 0, -1); // Notify encoder of EOF.
+        // Encoder might have resized, even though it was unnecessary.
+        if (buffer != buf) {
+            readResults(buf, 0, buf.length);
+        }
+        // In URL-SAFE mode we skip the padding characters, so sometimes our
+        // final length is a bit smaller.
+        if (isUrlSafe() && pos < buf.length) {
+            byte[] smallerBuf = new byte[pos];
+            System.arraycopy(buf, 0, smallerBuf, 0, pos);
+            buf = smallerBuf;
+        }
+        return buf;        
+    }
+
+    /**
+     * Pre-calculates the amount of space needed to base64-encode the supplied array.
+     *
+     * @param pArray byte[] array which will later be encoded
+     * @param chunkSize line-length of the output (<= 0 means no chunking) between each
+     *        chunkSeparator (e.g. CRLF).
+     * @param chunkSeparator the sequence of bytes used to separate chunks of output (e.g. CRLF).
+     *
+     * @return amount of space needed to encoded the supplied array.  Returns
+     *         a long since a max-len array will require Integer.MAX_VALUE + 33%.
+     */
+    private static long getEncodeLength(byte[] pArray, int chunkSize, byte[] chunkSeparator) {
+        // base64 always encodes to multiples of 4.
+        chunkSize = (chunkSize / 4) * 4;
+
+        long len = (pArray.length * 4) / 3;
+        long mod = len % 4;
+        if (mod != 0) {
+            len += 4 - mod;
+        }
+        if (chunkSize > 0 && chunkSeparator != null) {
+            boolean lenChunksPerfectly = len % chunkSize == 0;
+            len += (len / chunkSize) * chunkSeparator.length;
+            if (!lenChunksPerfectly) {
+                len += chunkSeparator.length;
+            }
+        }
+        return len;
     }
 
     // Implementation of integer encoding used for crypto

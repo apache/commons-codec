@@ -67,23 +67,23 @@ public class Base64InputStreamTest extends TestCase {
      */
     public void testBase64InputStreamByChunk() throws Exception {
         // Hello World test.
-        byte[] encoded = StringBytesUtils.getBytesUtf8("SGVsbG8gV29ybGQ=\r\n");
-        byte[] decoded = StringBytesUtils.getBytesUtf8(STRING_FIXTURE);
+        byte[] encoded = StringUtils.getBytesUtf8("SGVsbG8gV29ybGQ=\r\n");
+        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
         testByChunk(encoded, decoded, 76, CRLF);
 
         // Single Byte test.
-        encoded = StringBytesUtils.getBytesUtf8("AA==\r\n");
+        encoded = StringUtils.getBytesUtf8("AA==\r\n");
         decoded = new byte[]{(byte) 0};
         testByChunk(encoded, decoded, 76, CRLF);
 
         // OpenSSL interop test.
-        encoded = StringBytesUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE);
+        encoded = StringUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE);
         decoded = Base64TestData.DECODED;
         testByChunk(encoded, decoded, 64, LF);
 
         // Single Line test.
         String singleLine = Base64TestData.ENCODED_64_CHARS_PER_LINE.replaceAll("\n", "");
-        encoded = StringBytesUtils.getBytesUtf8(singleLine);
+        encoded = StringUtils.getBytesUtf8(singleLine);
         decoded = Base64TestData.DECODED;
         testByChunk(encoded, decoded, 0, LF);
 
@@ -104,23 +104,23 @@ public class Base64InputStreamTest extends TestCase {
      */
     public void testBase64InputStreamByteByByte() throws Exception {
         // Hello World test.
-        byte[] encoded = StringBytesUtils.getBytesUtf8("SGVsbG8gV29ybGQ=\r\n");
-        byte[] decoded = StringBytesUtils.getBytesUtf8(STRING_FIXTURE);
+        byte[] encoded = StringUtils.getBytesUtf8("SGVsbG8gV29ybGQ=\r\n");
+        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
         testByteByByte(encoded, decoded, 76, CRLF);
 
         // Single Byte test.
-        encoded = StringBytesUtils.getBytesUtf8("AA==\r\n");
+        encoded = StringUtils.getBytesUtf8("AA==\r\n");
         decoded = new byte[]{(byte) 0};
         testByteByByte(encoded, decoded, 76, CRLF);
 
         // OpenSSL interop test.
-        encoded = StringBytesUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE);
+        encoded = StringUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE);
         decoded = Base64TestData.DECODED;
         testByteByByte(encoded, decoded, 64, LF);
 
         // Single Line test.
         String singleLine = Base64TestData.ENCODED_64_CHARS_PER_LINE.replaceAll("\n", "");
-        encoded = StringBytesUtils.getBytesUtf8(singleLine);
+        encoded = StringUtils.getBytesUtf8(singleLine);
         decoded = Base64TestData.DECODED;
         testByteByByte(encoded, decoded, 0, LF);
 
@@ -250,7 +250,7 @@ public class Base64InputStreamTest extends TestCase {
      * @throws Exception
      */
     public void testMarkSupported() throws Exception {
-        byte[] decoded = StringBytesUtils.getBytesUtf8(STRING_FIXTURE);
+        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
         ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
         Base64InputStream in = new Base64InputStream(bin, true, 4, new byte[]{0, 0, 0});
         // Always returns false for now.
@@ -263,7 +263,7 @@ public class Base64InputStreamTest extends TestCase {
      * @throws Exception
      */
     public void testRead0() throws Exception {
-        byte[] decoded = StringBytesUtils.getBytesUtf8(STRING_FIXTURE);
+        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
         byte[] buf = new byte[1024];
         int bytesRead = 0;
         ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
@@ -279,7 +279,7 @@ public class Base64InputStreamTest extends TestCase {
      *             for some failure scenarios.
      */
     public void testReadNull() throws Exception {
-        byte[] decoded = StringBytesUtils.getBytesUtf8(STRING_FIXTURE);
+        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
         ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
         Base64InputStream in = new Base64InputStream(bin, true, 4, new byte[]{0, 0, 0});
         try {
@@ -296,7 +296,7 @@ public class Base64InputStreamTest extends TestCase {
      * @throws Exception
      */
     public void testReadOutOfBounds() throws Exception {
-        byte[] decoded = StringBytesUtils.getBytesUtf8(STRING_FIXTURE);
+        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
         byte[] buf = new byte[1024];
         ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
         Base64InputStream in = new Base64InputStream(bin, true, 4, new byte[]{0, 0, 0});

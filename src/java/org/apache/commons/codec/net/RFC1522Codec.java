@@ -21,7 +21,7 @@ import java.io.UnsupportedEncodingException;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
-import org.apache.commons.codec.binary.StringBytesUtils;
+import org.apache.commons.codec.binary.StringUtils;
 
 /**
  * <p>
@@ -76,7 +76,7 @@ abstract class RFC1522Codec {
         buffer.append(getEncoding()); 
         buffer.append('?');
         byte [] rawdata = doEncoding(text.getBytes(charset)); 
-        buffer.append(StringBytesUtils.newStringUsAscii(rawdata));
+        buffer.append(StringUtils.newStringUsAscii(rawdata));
         buffer.append("?="); 
         return buffer.toString();
     }
@@ -125,7 +125,7 @@ abstract class RFC1522Codec {
         }
         from = to + 1;
         to = text.indexOf("?", from);
-        byte[] data = StringBytesUtils.getBytesUsAscii(text.substring(from, to));
+        byte[] data = StringUtils.getBytesUsAscii(text.substring(from, to));
         data = doDecoding(data); 
         return new String(data, charset);
     }

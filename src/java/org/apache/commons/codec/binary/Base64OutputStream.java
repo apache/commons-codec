@@ -22,21 +22,22 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /**
- * Provides Base64 encoding and decoding in a streaming fashion (unlimited size).
- * When encoding the default lineLength is 76 characters and the default
- * lineEnding is CRLF, but these can be overridden by using the appropriate
+ * Provides Base64 encoding and decoding in a streaming fashion (unlimited size). When encoding the default lineLength
+ * is 76 characters and the default lineEnding is CRLF, but these can be overridden by using the appropriate
  * constructor.
  * <p>
- * The default behaviour of the Base64OutputStream is to ENCODE, whereas the
- * default behaviour of the Base64InputStream is to DECODE.  But this behaviour
- * can be overridden by using a different constructor.
- * </p><p>
+ * The default behaviour of the Base64OutputStream is to ENCODE, whereas the default behaviour of the Base64InputStream
+ * is to DECODE. But this behaviour can be overridden by using a different constructor.
+ * </p>
+ * <p>
  * This class implements section <cite>6.8. Base64 Content-Transfer-Encoding</cite> from RFC 2045 <cite>Multipurpose
  * Internet Mail Extensions (MIME) Part One: Format of Internet Message Bodies</cite> by Freed and Borenstein.
- * </p><p>
+ * </p>
+ * <p>
  * Since this class operates directly on byte streams, and not character streams, it is hard-coded to only encode/decode
  * character encodings which are compatible with the lower 127 ASCII chart (ISO-8859-1, Windows-1252, UTF-8, etc).
- * </p> 
+ * </p>
+ * 
  * @author Apache Software Foundation
  * @version $Id $
  * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>
@@ -44,26 +45,29 @@ import java.io.OutputStream;
  */
 public class Base64OutputStream extends FilterOutputStream {
     private final boolean doEncode;
+
     private final Base64 base64;
+
     private final byte[] singleByte = new byte[1];
 
     /**
-     * Creates a Base64OutputStream such that all data written is Base64-encoded
-     * to the original provided OutputStream.
-     *
-     * @param out OutputStream to wrap.
+     * Creates a Base64OutputStream such that all data written is Base64-encoded to the original provided OutputStream.
+     * 
+     * @param out
+     *            OutputStream to wrap.
      */
     public Base64OutputStream(OutputStream out) {
         this(out, true);
     }
 
     /**
-     * Creates a Base64OutputStream such that all data written is either
-     * Base64-encoded or Base64-decoded to the original provided OutputStream.
-     *
-     * @param out      OutputStream to wrap.
-     * @param doEncode true if we should encode all data written to us,
-     *                 false if we should decode.
+     * Creates a Base64OutputStream such that all data written is either Base64-encoded or Base64-decoded to the
+     * original provided OutputStream.
+     * 
+     * @param out
+     *            OutputStream to wrap.
+     * @param doEncode
+     *            true if we should encode all data written to us, false if we should decode.
      */
     public Base64OutputStream(OutputStream out, boolean doEncode) {
         super(out);
@@ -72,20 +76,20 @@ public class Base64OutputStream extends FilterOutputStream {
     }
 
     /**
-     * Creates a Base64OutputStream such that all data written is either
-     * Base64-encoded or Base64-decoded to the original provided OutputStream.
-     *
-     * @param out           OutputStream to wrap.
-     * @param doEncode      true if we should encode all data written to us,
-     *                      false if we should decode.
-     * @param lineLength    If doEncode is true, each line of encoded
-     *                      data will contain lineLength characters.  
-     *                      If lineLength <=0, the encoded data is not divided into lines.
-     *                      If doEncode is false, lineLength is ignored.
-     * @param lineSeparator If doEncode is true, each line of encoded
-     *                      data will be terminated with this byte sequence (e.g. \r\n).  
-     *                      If lineLength <= 0, the lineSeparator is not used.
-     *                      If doEncode is false lineSeparator is ignored.
+     * Creates a Base64OutputStream such that all data written is either Base64-encoded or Base64-decoded to the
+     * original provided OutputStream.
+     * 
+     * @param out
+     *            OutputStream to wrap.
+     * @param doEncode
+     *            true if we should encode all data written to us, false if we should decode.
+     * @param lineLength
+     *            If doEncode is true, each line of encoded data will contain lineLength characters (rounded down to
+     *            nearest multiple of 4). If lineLength <=0, the encoded data is not divided into lines. If doEncode is
+     *            false, lineLength is ignored.
+     * @param lineSeparator
+     *            If doEncode is true, each line of encoded data will be terminated with this byte sequence (e.g. \r\n).
+     *            If lineLength <= 0, the lineSeparator is not used. If doEncode is false lineSeparator is ignored.
      */
     public Base64OutputStream(OutputStream out, boolean doEncode, int lineLength, byte[] lineSeparator) {
         super(out);
@@ -95,6 +99,11 @@ public class Base64OutputStream extends FilterOutputStream {
 
     /**
      * Writes the specified <code>byte</code> to this output stream.
+     * 
+     * @param i
+     *            source byte
+     * @throws IOException
+     *             if an I/O error occurs.
      */
     public void write(int i) throws IOException {
         singleByte[0] = (byte) i;
@@ -102,17 +111,22 @@ public class Base64OutputStream extends FilterOutputStream {
     }
 
     /**
-     * Writes <code>len</code> bytes from the specified
-     * <code>b</code> array starting at <code>offset</code> to
-     * this output stream.
-     *
-     * @param b source byte array
-     * @param offset where to start reading the bytes
-     * @param len maximum number of bytes to write
+     * Writes <code>len</code> bytes from the specified <code>b</code> array starting at <code>offset</code> to this
+     * output stream.
      * 
-     * @throws IOException if an I/O error occurs.
-     * @throws NullPointerException if the byte array parameter is null
-     * @throws IndexOutOfBoundsException if offset, len or buffer size are invalid
+     * @param b
+     *            source byte array
+     * @param offset
+     *            where to start reading the bytes
+     * @param len
+     *            maximum number of bytes to write
+     * 
+     * @throws IOException
+     *             if an I/O error occurs.
+     * @throws NullPointerException
+     *             if the byte array parameter is null
+     * @throws IndexOutOfBoundsException
+     *             if offset, len or buffer size are invalid
      */
     public void write(byte b[], int offset, int len) throws IOException {
         if (b == null) {
@@ -132,13 +146,13 @@ public class Base64OutputStream extends FilterOutputStream {
     }
 
     /**
-     * Flushes this output stream and forces any buffered output bytes
-     * to be written out to the stream.  If propogate is true, the wrapped
-     * stream will also be flushed.
-     *
-     * @param propogate boolean flag to indicate whether the wrapped
-     *                  OutputStream should also be flushed.
-     * @throws IOException if an I/O error occurs.
+     * Flushes this output stream and forces any buffered output bytes to be written out to the stream. If propogate is
+     * true, the wrapped stream will also be flushed.
+     * 
+     * @param propogate
+     *            boolean flag to indicate whether the wrapped OutputStream should also be flushed.
+     * @throws IOException
+     *             if an I/O error occurs.
      */
     private void flush(boolean propogate) throws IOException {
         int avail = base64.avail();
@@ -155,18 +169,20 @@ public class Base64OutputStream extends FilterOutputStream {
     }
 
     /**
-     * Flushes this output stream and forces any buffered output bytes
-     * to be written out to the stream.
-     *
-     * @throws IOException if an I/O error occurs.
+     * Flushes this output stream and forces any buffered output bytes to be written out to the stream.
+     * 
+     * @throws IOException
+     *             if an I/O error occurs.
      */
     public void flush() throws IOException {
-        flush(true); 
+        flush(true);
     }
 
     /**
-     * Closes this output stream and releases any system resources
-     * associated with the stream.
+     * Closes this output stream and releases any system resources associated with the stream.
+     * 
+     * @throws IOException
+     *             if an I/O error occurs.
      */
     public void close() throws IOException {
         // Notify encoder of EOF (-1).
