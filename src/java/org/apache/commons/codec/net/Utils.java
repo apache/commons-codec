@@ -24,6 +24,7 @@ import org.apache.commons.codec.DecoderException;
  * 
  * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
  * @version $Id$
+ * @since 1.4
  */
 class Utils {
 
