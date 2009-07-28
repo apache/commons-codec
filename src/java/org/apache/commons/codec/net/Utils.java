@@ -23,7 +23,7 @@ import org.apache.commons.codec.DecoderException;
  * Utility methods for this package.
  * 
  * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
- * @version $Id: $
+ * @version $Id$
  */
 class Utils {
 
