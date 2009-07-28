@@ -22,7 +22,7 @@ import java.io.UnsupportedEncodingException;
 import org.apache.commons.codec.CharEncoding;
 
 /**
- * Converts String to bytes using the encodings required by the Java specification. These encodings are specified in <a
+ * Converts String to and from bytes using the encodings required by the Java specification. These encodings are specified in <a
  * href="http://java.sun.com/j2se/1.4.2/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
  * 
  * @see CharEncoding
