@@ -17,13 +17,15 @@
 
 package org.apache.commons.codec.net;
 
+import junit.framework.TestCase;
+
 /**
  * Tests Utils. Methods currently get 100%/100% line/branch code coverage from other tests classes.
  * 
  * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
  * @version $Id: $
  */
-public class UtilsTest {
+public class UtilsTest extends TestCase {
 
     /**
      * We could make the constructor private but there does not seem to be a point to jumping through extra code hoops
