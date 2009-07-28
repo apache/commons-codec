@@ -130,7 +130,7 @@ abstract class RFC1522Codec {
         }
         from = to + 1;
         to = text.indexOf(SEP, from);
-        if ((to == -1) || (to == termnator)) {
+        if (to == termnator) {
             throw new DecoderException("RFC 1522 violation: encoding token not found");
         }
         String encoding = text.substring(from, to);

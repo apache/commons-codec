@@ -29,12 +29,12 @@ import org.apache.commons.codec.CharEncoding;
  * @version $Id$
  */
 public class RFC1522CodecTest extends TestCase {
-    
+
     public RFC1522CodecTest(String name) {
         super(name);
     }
 
-    static class RFC1522TestCodec extends RFC1522Codec { 
+    static class RFC1522TestCodec extends RFC1522Codec {
 
         protected byte[] doDecoding(byte[] bytes) {
             return bytes;
@@ -56,50 +56,29 @@ public class RFC1522CodecTest extends TestCase {
         assertNull(testcodec.encodeText(null, CharEncoding.UTF_8));
     }
 
-    public void testDecodeInvalid() throws Exception {
+    private void assertExpectedDecoderException(String s) throws Exception {
         RFC1522TestCodec testcodec = new RFC1522TestCodec();
         try {
-            testcodec.decodeText("whatever");
+            testcodec.decodeText(s);
             fail("DecoderException should have been thrown");
         } catch (DecoderException e) {
-            // Expected. Move on
+            // Expected.
         }
-        try {
-            testcodec.decodeText("=?stuff?=");
-            fail("DecoderException should have been thrown");
-        } catch (DecoderException e) {
-            // Expected. Move on
-        }
-        try {
-            testcodec.decodeText("=?UTF-8?stuff?=");
-            fail("DecoderException should have been thrown");
-        } catch (DecoderException e) {
-            // Expected. Move on
-        }
-        try {
-            testcodec.decodeText("=?UTF-8?T?stuff");
-            fail("DecoderException should have been thrown");
-        } catch (DecoderException e) {
-            // Expected. Move on
-        }
-        try {
-            testcodec.decodeText("=??T?stuff?=");
-            fail("DecoderException should have been thrown");
-        } catch (DecoderException e) {
-            // Expected. Move on
-        }
-        try {
-            testcodec.decodeText("=?UTF-8??stuff?=");
-            fail("DecoderException should have been thrown");
-        } catch (DecoderException e) {
-            // Expected. Move on
-        }
-        try {
-            testcodec.decodeText("=?UTF-8?W?stuff?=");
-            fail("DecoderException should have been thrown");
-        } catch (DecoderException e) {
-            // Expected. Move on
-        }
+    }
+
+    public void testDecodeInvalid() throws Exception {
+        assertExpectedDecoderException("whatever");
+        assertExpectedDecoderException("=?");
+        assertExpectedDecoderException("?=");
+        assertExpectedDecoderException("==");
+        assertExpectedDecoderException("=??=");
+        assertExpectedDecoderException("=?stuff?=");
+        assertExpectedDecoderException("=?UTF-8??=");
+        assertExpectedDecoderException("=?UTF-8?stuff?=");
+        assertExpectedDecoderException("=?UTF-8?T?stuff");
+        assertExpectedDecoderException("=??T?stuff?=");
+        assertExpectedDecoderException("=?UTF-8??stuff?=");
+        assertExpectedDecoderException("=?UTF-8?W?stuff?=");
     }
 
 }
