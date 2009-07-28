@@ -118,10 +118,10 @@ abstract class RFC1522Codec {
         if ((!text.startsWith(PREFIX)) || (!text.endsWith(POSTFIX))) {
             throw new DecoderException("RFC 1522 violation: malformed encoded content");
         }
-        int termnator = text.length() - 2;
+        int terminator = text.length() - 2;
         int from = 2;
         int to = text.indexOf(SEP, from);
-        if (to == termnator) {
+        if (to == terminator) {
             throw new DecoderException("RFC 1522 violation: charset token not found");
         }
         String charset = text.substring(from, to);
@@ -130,7 +130,7 @@ abstract class RFC1522Codec {
         }
         from = to + 1;
         to = text.indexOf(SEP, from);
-        if (to == termnator) {
+        if (to == terminator) {
             throw new DecoderException("RFC 1522 violation: encoding token not found");
         }
         String encoding = text.substring(from, to);
