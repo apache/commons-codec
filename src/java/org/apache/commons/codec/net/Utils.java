@@ -31,8 +31,8 @@ class Utils {
      * Returns the numeric value of the character <code>b</code> in radix 16.
      * 
      * @param b
-     *            the byte to be converted.
-     * @return the numeric value represented by the character in radix 16.
+     *            The byte to be converted.
+     * @return The numeric value represented by the character in radix 16.
      * 
      * @throws DecoderException
      *             Thrown when the byte is not valid per {@link Character#digit(char,int)}

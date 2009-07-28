@@ -20,7 +20,7 @@ package org.apache.commons.codec;
 import junit.framework.TestCase;
 
 /**
- * Tests EncoderException.
+ * Tests {@link EncoderException}.
  * 
  * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
  * @version $Id: $

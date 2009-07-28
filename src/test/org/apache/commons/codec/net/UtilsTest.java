@@ -20,7 +20,10 @@ package org.apache.commons.codec.net;
 import junit.framework.TestCase;
 
 /**
- * Tests Utils. Methods currently get 100%/100% line/branch code coverage from other tests classes.
+ * Tests Utils.
+ * <p>
+ * Methods currently get 100%/100% line/branch code coverage from other tests classes.
+ * </p>
  * 
  * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
  * @version $Id: $

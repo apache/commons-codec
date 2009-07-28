@@ -21,7 +21,7 @@ import junit.framework.Assert;
 import junit.framework.TestCase;
 
 /**
- * Sanity checks.
+ * Sanity checks for {@link CharEncoding}.
  * 
  * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
  * @version $Id: $
