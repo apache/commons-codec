@@ -32,12 +32,21 @@ public class StringUtilsTest extends TestCase {
     private static byte[] BYTES_FIXTURE;
 
     private static final String STRING_FIXTURE = "ABC";
+
     {
         try {
             BYTES_FIXTURE = "abc".getBytes("US-ASCII");
         } catch (UnsupportedEncodingException e) {
             throw new IllegalArgumentException(e.toString());
         }
+    }
+
+    /**
+     * We could make the constructor private but there does not seem to be a point to jumping through extra code hoops
+     * to restrict instantiation right now.
+     */
+    public void testConstructor() {
+        new StringUtils();
     }
 
     public void testGetBytesIso8859_1() throws UnsupportedEncodingException {
@@ -165,5 +174,4 @@ public class StringUtilsTest extends TestCase {
         String actual = StringUtils.newStringUtf8(BYTES_FIXTURE);
         Assert.assertEquals(expected, actual);
     }
-
 }

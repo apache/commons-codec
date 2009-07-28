@@ -270,7 +270,4 @@ public class StringUtils {
         return StringUtils.newString(bytes, CharEncoding.UTF_8);
     }
 
-    private StringUtils() {
-        // noop, cannot instantiate. Can always relax later.
-    }
 }
