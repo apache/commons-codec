@@ -141,7 +141,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
                 }
                 buffer.write(b);
             } else {
-                buffer.write('%');
+                buffer.write(ESCAPE_CHAR);
                 char hex1 = Character.toUpperCase(Character.forDigit((b >> 4) & 0xF, RADIX));
                 char hex2 = Character.toUpperCase(Character.forDigit(b & 0xF, RADIX));
                 buffer.write(hex1);
@@ -169,7 +169,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
             int b = bytes[i];
             if (b == '+') {
                 buffer.write(' ');
-            } else if (b == '%') {
+            } else if (b == ESCAPE_CHAR) {
                 try {
                     int u = Utils.digit16(bytes[++i]);
                     int l = Utils.digit16(bytes[++i]);
