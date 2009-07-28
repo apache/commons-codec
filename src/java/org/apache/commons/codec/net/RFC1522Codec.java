@@ -121,7 +121,7 @@ abstract class RFC1522Codec {
         int termnator = text.length() - 2;
         int from = 2;
         int to = text.indexOf(SEP, from);
-        if ((to == -1) || (to == termnator)) {
+        if (to == termnator) {
             throw new DecoderException("RFC 1522 violation: charset token not found");
         }
         String charset = text.substring(from, to);
