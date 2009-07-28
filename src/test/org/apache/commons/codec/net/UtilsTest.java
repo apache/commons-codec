@@ -26,7 +26,7 @@ import junit.framework.TestCase;
  * </p>
  * 
  * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
- * @version $Id: $
+ * @version $Id$
  */
 public class UtilsTest extends TestCase {
 

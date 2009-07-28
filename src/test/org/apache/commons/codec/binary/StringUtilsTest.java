@@ -27,7 +27,7 @@ import junit.framework.TestCase;
  * Tests {@link StringUtils}
  * 
  * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
- * @version $Id: $
+ * @version $Id$
  */
 public class StringUtilsTest extends TestCase {
 
