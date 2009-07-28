@@ -47,6 +47,21 @@ import org.apache.commons.codec.binary.StringUtils;
 abstract class RFC1522Codec {
     
     /**
+     * Separator.
+     */
+    protected static final char SEP = '?';
+
+    /**
+     * Prefix
+     */
+    protected static final String POSTFIX = "?=";
+
+    /**
+     * Postfix
+     */
+    protected static final String PREFIX = "=?";
+
+    /**
      * Applies an RFC 1522 compliant encoding scheme to the given string of text with the 
      * given charset. This method constructs the "encoded-word" header common to all the 
      * RFC 1522 codecs and then invokes {@link #doEncoding(byte [])} method of a concrete 
@@ -70,14 +85,14 @@ abstract class RFC1522Codec {
             return null;
         }
         StringBuffer buffer = new StringBuffer();
-        buffer.append("=?"); 
-        buffer.append(charset); 
-        buffer.append('?'); 
-        buffer.append(getEncoding()); 
-        buffer.append('?');
+        buffer.append(PREFIX); 
+        buffer.append(charset);
+        buffer.append(SEP);
+        buffer.append(getEncoding());
+        buffer.append(SEP);
         byte [] rawdata = doEncoding(text.getBytes(charset)); 
         buffer.append(StringUtils.newStringUsAscii(rawdata));
-        buffer.append("?="); 
+        buffer.append(POSTFIX); 
         return buffer.toString();
     }
     
@@ -100,12 +115,12 @@ abstract class RFC1522Codec {
         if (text == null) {
             return null;
         }
-        if ((!text.startsWith("=?")) || (!text.endsWith("?="))) {
+        if ((!text.startsWith(PREFIX)) || (!text.endsWith(POSTFIX))) {
             throw new DecoderException("RFC 1522 violation: malformed encoded content");
         }
         int termnator = text.length() - 2;
         int from = 2;
-        int to = text.indexOf("?", from);
+        int to = text.indexOf(SEP, from);
         if ((to == -1) || (to == termnator)) {
             throw new DecoderException("RFC 1522 violation: charset token not found");
         }
@@ -114,7 +129,7 @@ abstract class RFC1522Codec {
             throw new DecoderException("RFC 1522 violation: charset not specified");
         }
         from = to + 1;
-        to = text.indexOf("?", from);
+        to = text.indexOf(SEP, from);
         if ((to == -1) || (to == termnator)) {
             throw new DecoderException("RFC 1522 violation: encoding token not found");
         }
@@ -124,7 +139,7 @@ abstract class RFC1522Codec {
                 encoding + " encoded content");
         }
         from = to + 1;
-        to = text.indexOf("?", from);
+        to = text.indexOf(SEP, from);
         byte[] data = StringUtils.getBytesUsAscii(text.substring(from, to));
         data = doDecoding(data); 
         return new String(data, charset);
