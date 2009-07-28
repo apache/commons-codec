@@ -191,7 +191,7 @@ public class BinaryCodec implements BinaryDecoder, BinaryEncoder {
      * @return the raw encoded binary where each bit corresponds to a byte in the byte array argument
      */
     public static byte[] fromAscii(byte[] ascii) {
-        if (ascii == null || ascii.length == 0) {
+        if (isEmpty(ascii)) {
             return EMPTY_BYTE_ARRAY;
         }
         // get length/8 times bytes with 3 bit shifts to the right of the length
@@ -211,6 +211,17 @@ public class BinaryCodec implements BinaryDecoder, BinaryEncoder {
     }
 
     /**
+     * Returns <code>true</code> if the given array is <code>null</code> or empty (size 0.)
+     * 
+     * @param array
+     *            the source array
+     * @return <code>true</code> if the given array is <code>null</code> or empty (size 0.)
+     */
+    private static boolean isEmpty(byte[] array) {
+        return array == null || array.length == 0;
+    }
+
+    /**
      * Converts an array of raw binary data into an array of ASCII 0 and 1 character bytes - each byte is a truncated
      * char.
      * 
@@ -220,7 +231,7 @@ public class BinaryCodec implements BinaryDecoder, BinaryEncoder {
      * @see org.apache.commons.codec.BinaryEncoder#encode(byte[])
      */
     public static byte[] toAsciiBytes(byte[] raw) {
-        if (raw == null || raw.length == 0) {
+        if (isEmpty(raw)) {
             return EMPTY_BYTE_ARRAY;
         }
         // get 8 times the bytes with 3 bit shifts to the left of the length
@@ -250,7 +261,7 @@ public class BinaryCodec implements BinaryDecoder, BinaryEncoder {
      * @see org.apache.commons.codec.BinaryEncoder#encode(byte[])
      */
     public static char[] toAsciiChars(byte[] raw) {
-        if (raw == null || raw.length == 0) {
+        if (isEmpty(raw)) {
             return EMPTY_CHAR_ARRAY;
         }
         // get 8 times the bytes with 3 bit shifts to the left of the length

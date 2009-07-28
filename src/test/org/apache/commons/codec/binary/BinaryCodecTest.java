@@ -179,9 +179,9 @@ public class BinaryCodecTest extends TestCase {
      * Utility used to assert the encoded and decoded values.
      * 
      * @param bits
-     *                  the pre-encoded data
+     *            the pre-encoded data
      * @param encodeMe
-     *                  data to encode and compare
+     *            data to encode and compare
      */
     void assertDecodeObject(byte[] bits, String encodeMe) throws DecoderException {
         byte[] decoded;
@@ -204,7 +204,7 @@ public class BinaryCodecTest extends TestCase {
     /*
      * Tests for byte[] decode(byte[])
      */
-    public void testDecodebyteArray() {
+    public void testDecodeByteArray() {
         // With a single raw binary
         byte[] bits = new byte[1];
         byte[] decoded = instance.decode("00000000".getBytes());
@@ -389,7 +389,9 @@ public class BinaryCodecTest extends TestCase {
     /*
      * Tests for byte[] fromAscii(char[])
      */
-    public void testFromAsciicharArray() {
+    public void testFromAsciiCharArray() {
+        assertEquals(0, BinaryCodec.fromAscii((char[]) null).length);
+        assertEquals(0, BinaryCodec.fromAscii(new char[0]).length);
         // With a single raw binary
         byte[] bits = new byte[1];
         byte[] decoded = BinaryCodec.fromAscii("00000000".toCharArray());
@@ -482,7 +484,9 @@ public class BinaryCodecTest extends TestCase {
     /*
      * Tests for byte[] fromAscii(byte[])
      */
-    public void testFromAsciibyteArray() {
+    public void testFromAsciiByteArray() {
+        assertEquals(0, BinaryCodec.fromAscii((byte[]) null).length);
+        assertEquals(0, BinaryCodec.fromAscii(new byte[0]).length);
         // With a single raw binary
         byte[] bits = new byte[1];
         byte[] decoded = BinaryCodec.fromAscii("00000000".getBytes());
@@ -575,7 +579,7 @@ public class BinaryCodecTest extends TestCase {
     /*
      * Tests for byte[] encode(byte[])
      */
-    public void testEncodebyteArray() {
+    public void testEncodeByteArray() {
         // With a single raw binary
         byte[] bits = new byte[1];
         String l_encoded = new String(instance.encode(bits));
