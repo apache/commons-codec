@@ -149,6 +149,9 @@ public class StringUtils {
      * @see String#getBytes(String)
      */
     public static byte[] getSupportedBytes(String string, String charsetName) {
+        if (string == null) {
+            return null;
+        }
         try {
             return string.getBytes(charsetName);
         } catch (UnsupportedEncodingException e) {
@@ -179,6 +182,9 @@ public class StringUtils {
      * @see String#String(byte[], String)
      */
     public static String newString(byte[] bytes, String charsetName) {
+        if (bytes == null) {
+            return null;
+        }
         try {
             return new String(bytes, charsetName);
         } catch (UnsupportedEncodingException e) {

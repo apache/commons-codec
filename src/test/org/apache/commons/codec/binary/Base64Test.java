@@ -60,7 +60,8 @@ public class Base64Test extends TestCase {
     public void testBase64() {
         String content = "Hello World";
         String encodedContent;
-        encodedContent = new String(Base64.encodeBase64(content.getBytes()));
+        byte[] encodedBytes = Base64.encodeBase64(StringUtils.getBytesUtf8(content));
+        encodedContent = StringUtils.newStringUtf8(encodedBytes);
         assertTrue("encoding hello world", encodedContent.equals("SGVsbG8gV29ybGQ="));
     }
 
@@ -288,7 +289,7 @@ public class Base64Test extends TestCase {
         empty = new byte[0];
         result = Base64.decodeBase64(empty);
         assertEquals("empty base64 decode", 0, result.length);
-        assertEquals("empty base64 encode", null, Base64.decodeBase64(null));
+        assertEquals("empty base64 encode", null, Base64.decodeBase64((byte[]) null));
     }
 
     // encode/decode a large random array
@@ -423,8 +424,8 @@ public class Base64Test extends TestCase {
         Base64 b64 = new Base64();
 
         try {
-            b64.decode("Yadayadayada");
-            fail("decode(Object) didn't throw an exception when passed a String object");
+            b64.decode(new Integer(5));
+            fail("decode(Object) didn't throw an exception when passed an Integer object");
         } catch (DecoderException e) {
             // ignored
         }
@@ -954,6 +955,45 @@ public class Base64Test extends TestCase {
             assertTrue("url-safe2 decode uuid", Arrays.equals(decodedUrlSafe2, ids[i]));
             assertTrue("url-safe3 decode uuid", Arrays.equals(decodedUrlSafe3, ids[i]));
         }
+    }
+
+    public void testByteToStringVariations() throws DecoderException {
+        Base64 base64 = new Base64(0);
+        byte[] b1 = StringUtils.getBytesUtf8("Hello World");
+        byte[] b2 = new byte[0];
+        byte[] b3 = null;
+        byte[] b4 = Hex.decodeHex("2bf7cc2701fe4397b49ebeed5acc7090".toCharArray());  // for url-safe tests
+
+        assertEquals("byteToString Hello World", "SGVsbG8gV29ybGQ=", base64.encodeToString(b1));
+        assertEquals("byteToString static Hello World", "SGVsbG8gV29ybGQ=\r\n", Base64.encodeBase64String(b1));
+        assertEquals("byteToString \"\"", "", base64.encodeToString(b2));
+        assertEquals("byteToString static \"\"", "", Base64.encodeBase64String(b2));
+        assertEquals("byteToString null", null, base64.encodeToString(b3));
+        assertEquals("byteToString static null", null, Base64.encodeBase64String(b3));
+        assertEquals("byteToString UUID", "K/fMJwH+Q5e0nr7tWsxwkA==", base64.encodeToString(b4));
+        assertEquals("byteToString static UUID", "K/fMJwH+Q5e0nr7tWsxwkA==\r\n", Base64.encodeBase64String(b4));
+        assertEquals("byteToString static-url-safe UUID", "K_fMJwH-Q5e0nr7tWsxwkA", Base64.encodeBase64URLSafeString(b4));
+    }
+
+    public void testStringToByteVariations() throws DecoderException {
+        Base64 base64 = new Base64();
+        String s1 = "SGVsbG8gV29ybGQ=\r\n";
+        String s2 = "";
+        String s3 = null;
+        String s4a = "K/fMJwH+Q5e0nr7tWsxwkA==\r\n";
+        String s4b = "K_fMJwH-Q5e0nr7tWsxwkA";
+        byte[] b4 = Hex.decodeHex("2bf7cc2701fe4397b49ebeed5acc7090".toCharArray());  // for url-safe tests
+
+        assertEquals("StringToByte Hello World", "Hello World", StringUtils.newStringUtf8(base64.decode(s1)));
+        assertEquals("StringToByte Hello World", "Hello World", StringUtils.newStringUtf8((byte[])base64.decode((Object)s1)));
+        assertEquals("StringToByte static Hello World", "Hello World", StringUtils.newStringUtf8(Base64.decodeBase64(s1)));
+        assertEquals("StringToByte \"\"", "", StringUtils.newStringUtf8(base64.decode(s2)));
+        assertEquals("StringToByte static \"\"", "", StringUtils.newStringUtf8(Base64.decodeBase64(s2)));
+        assertEquals("StringToByte null", null, StringUtils.newStringUtf8(base64.decode(s3)));
+        assertEquals("StringToByte static null", null, StringUtils.newStringUtf8(Base64.decodeBase64(s3)));
+        assertTrue("StringToByte UUID", Arrays.equals(b4, base64.decode(s4b)));
+        assertTrue("StringToByte static UUID", Arrays.equals(b4, Base64.decodeBase64(s4a)));
+        assertTrue("StringToByte static-url-safe UUID", Arrays.equals(b4, Base64.decodeBase64(s4b)));
     }
 
     private String toString(byte[] data) {
