@@ -95,6 +95,9 @@
              <action dev="ggregory" type="fix" issue="CODEC-81" due-to="Julius Davies">
                  Base64's new constructor parameters ignored
              </action>
+             <action dev="niallp" type="fix" issue="CODEC-83">
+                 Improve Double Metaphone test coverage
+             </action>
 		</release>
 		<release version="1.3" date="10 July 2004" description="Feature and fix release.">
 			<action dev="ggregory, tobrien" type="add" issue="CODEC-21" due-to="Alex Karasulu">

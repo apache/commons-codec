@@ -1116,6 +1116,26 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest {
         assertEquals(null, this.getDoubleMetaphone().doubleMetaphone("\t\n\r "));
     }
 
+    /**
+     * Test setting maximum length
+     */
+    public void testSetMaxCodeLength() {
+        String value = "jumped";
+        
+        DoubleMetaphone doubleMetaphone = new DoubleMetaphone();
+
+        // Sanity check of default settings
+        assertEquals("Default Max Code Length", 4, doubleMetaphone.getMaxCodeLen());
+        assertEquals("Default Primary",   "JMPT", doubleMetaphone.doubleMetaphone(value, false));
+        assertEquals("Default Alternate", "AMPT", doubleMetaphone.doubleMetaphone(value, true));
+
+        // Check setting Max Code Length
+        doubleMetaphone.setMaxCodeLen(3);
+        assertEquals("Set Max Code Length", 3, doubleMetaphone.getMaxCodeLen());
+        assertEquals("Max=3 Primary",   "JMP", doubleMetaphone.doubleMetaphone(value, false));
+        assertEquals("Max=3 Alternate", "AMP", doubleMetaphone.doubleMetaphone(value, true));
+    }
+
     public void testIsDoubleMetaphoneEqualBasic() {
         String[][] testFixture = new String[][] { { "Case", "case" }, {
                 "CASE", "Case" }, {
