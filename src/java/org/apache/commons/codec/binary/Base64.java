@@ -314,6 +314,10 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * @since 1.4
      */
     public Base64(int lineLength, byte[] lineSeparator, boolean urlSafe) {
+        if (lineSeparator == null) {
+            lineLength = 0;  // disable chunk-separating
+            lineSeparator = CHUNK_SEPARATOR;  // this just gets ignored
+        }
         this.lineLength = lineLength > 0 ? (lineLength / 4) * 4 : 0;
         this.lineSeparator = new byte[lineSeparator.length];
         System.arraycopy(lineSeparator, 0, this.lineSeparator, 0, lineSeparator.length);
@@ -957,7 +961,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
         if (mod != 0) {
             len += 4 - mod;
         }
-        if (chunkSize > 0 && chunkSeparator != null) {
+        if (chunkSize > 0) {
             boolean lenChunksPerfectly = len % chunkSize == 0;
             len += (len / chunkSize) * chunkSeparator.length;
             if (!lenChunksPerfectly) {
