@@ -1093,6 +1093,9 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest {
         assertDoubleMetaphone("MKFR", "MacCafferey");
         assertDoubleMetaphone("STFN", "Stephan");
         assertDoubleMetaphone("KSSK", "Kuczewski");
+        assertDoubleMetaphone("MKLL", "McClelland");
+        assertDoubleMetaphone("SNHS", "san jose");
+        assertDoubleMetaphone("SNFP", "xenophobia");
 
         assertDoubleMetaphoneAlt("TSTN", "testing");
         assertDoubleMetaphoneAlt("T", "The");
@@ -1107,6 +1110,9 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest {
         assertDoubleMetaphoneAlt("MKFR", "MacCafferey");
         assertDoubleMetaphoneAlt("STFN", "Stephan");
         assertDoubleMetaphoneAlt("KXFS", "Kutchefski");
+        assertDoubleMetaphoneAlt("MKLL", "McClelland");
+        assertDoubleMetaphoneAlt("SNHS", "san jose");
+        assertDoubleMetaphoneAlt("SNFP", "xenophobia");
     }
 
     public void testEmpty() {
