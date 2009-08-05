@@ -644,6 +644,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * @param binaryData
      *            binary data to encode
      * @return String containing Base64 characters.
+     * @since 1.4
      */    
     public static String encodeBase64String(byte[] binaryData) {
         return StringUtils.newStringUtf8(encodeBase64(binaryData, true));
@@ -712,6 +713,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * @param pArray
      *            A String containing Base64 character data
      * @return a byte array containing binary data
+     * @since 1.4
      */
     public byte[] decode(String pArray) {
         return decode(StringUtils.getBytesUtf8(pArray));
@@ -818,6 +820,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * @param base64String
      *            String containing Base64 data
      * @return Array containing decoded data.
+     * @since 1.4
      */
     public static byte[] decodeBase64(String base64String) {
         return new Base64().decode(base64String);
@@ -905,6 +908,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * @param pArray
      *            a byte array containing binary data
      * @return A String containing only Base64 character data
+     * @since 1.4
      */    
     public String encodeToString(byte[] pArray) {
         return StringUtils.newStringUtf8(encode(pArray));

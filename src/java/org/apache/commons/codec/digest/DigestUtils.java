@@ -245,6 +245,7 @@ public class DigestUtils {
      * @return SHA-1 digest
      * @throws IOException
      *             On error reading from the stream
+     * @since 1.4
      */
     public static byte[] sha(InputStream data) throws IOException {
         return digest(getShaDigest(), data);
@@ -562,6 +563,7 @@ public class DigestUtils {
      * @return SHA-1 digest as a hex string
      * @throws IOException
      *             On error reading from the stream
+     * @since 1.4
      */
     public static String shaHex(InputStream data) throws IOException {
         return new String(Hex.encodeHex(sha(data)));
