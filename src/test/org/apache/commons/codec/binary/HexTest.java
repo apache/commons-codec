@@ -39,10 +39,61 @@ import org.apache.commons.codec.EncoderException;
  */
 public class HexTest extends TestCase {
 
+    private static final String BAD_ENCODING_NAME = "UNKNOWN";
     private final static boolean LOG = true;
 
     public HexTest(String name) {
         super(name);
+    }
+
+    private boolean charsetSanityCheck(String name) {
+        final String source = "the quick brown dog jumped over the lazy fox";
+        try {
+            byte[] bytes = source.getBytes(name);
+            String str = new String(bytes, name);
+            boolean equals = source.equals(str);
+            if (equals == false) {
+                // Here with:
+                //
+                // Java Sun 1.4.2_19 x86 32-bits on Windows XP
+                // JIS_X0212-1990
+                // x-JIS0208
+                //
+                // Java Sun 1.5.0_17 x86 32-bits on Windows XP
+                // JIS_X0212-1990
+                // x-IBM834
+                // x-JIS0208
+                // x-MacDingbat
+                // x-MacSymbol
+                //
+                // Java Sun 1.6.0_14 x86 32-bits
+                // JIS_X0212-1990
+                // x-IBM834
+                // x-JIS0208
+                // x-MacDingbat
+                // x-MacSymbol
+                // 
+                log("FAILED charsetSanityCheck=Interesting Java charset oddity: Roundtrip failed for " + name);
+            }
+            return equals;
+        } catch (UnsupportedEncodingException e) {
+            // Should NEVER happen since we are getting the name from the Charset class.
+            if (LOG) {
+                log("FAILED charsetSanityCheck=" + name + ", e=" + e);
+                log(e);
+            }
+            return false;
+        } catch (UnsupportedOperationException e) {
+            // Caught here with:
+            // x-JISAutoDetect on Windows XP and Java Sun 1.4.2_19 x86 32-bits
+            // x-JISAutoDetect on Windows XP and Java Sun 1.5.0_17 x86 32-bits
+            // x-JISAutoDetect on Windows XP and Java Sun 1.6.0_14 x86 32-bits
+            if (LOG) {
+                log("FAILED charsetSanityCheck=" + name + ", e=" + e);
+                log(e);
+            }
+            return false;
+        }
     }
 
     /**
@@ -123,54 +174,35 @@ public class HexTest extends TestCase {
         assertEquals(name, sourceString, actualStringFromBytes);
     }
 
-    private boolean charsetSanityCheck(String name) {
-        final String source = "the quick brown dog jumped over the lazy fox";
+    public void testCustomCharsetBadNameEncodeByteArray() {
         try {
-            byte[] bytes = source.getBytes(name);
-            String str = new String(bytes, name);
-            boolean equals = source.equals(str);
-            if (equals == false) {
-                // Here with:
-                //
-                // Java Sun 1.4.2_19 x86 32-bits on Windows XP
-                // JIS_X0212-1990
-                // x-JIS0208
-                //
-                // Java Sun 1.5.0_17 x86 32-bits on Windows XP
-                // JIS_X0212-1990
-                // x-IBM834
-                // x-JIS0208
-                // x-MacDingbat
-                // x-MacSymbol
-                //
-                // Java Sun 1.6.0_14 x86 32-bits
-                // JIS_X0212-1990
-                // x-IBM834
-                // x-JIS0208
-                // x-MacDingbat
-                // x-MacSymbol
-                // 
-                log("FAILED charsetSanityCheck=Interesting Java charset oddity: Roundtrip failed for " + name);
-            }
-            return equals;
-        } catch (UnsupportedEncodingException e) {
-            // Should NEVER happen since we are getting the name from the Charset class.
-            if (LOG) {
-                log("FAILED charsetSanityCheck=" + name + ", e=" + e);
-                log(e);
-            }
-            return false;
-        } catch (UnsupportedOperationException e) {
-            // Caught here with:
-            // x-JISAutoDetect on Windows XP and Java Sun 1.4.2_19 x86 32-bits
-            // x-JISAutoDetect on Windows XP and Java Sun 1.5.0_17 x86 32-bits
-            // x-JISAutoDetect on Windows XP and Java Sun 1.6.0_14 x86 32-bits
-            if (LOG) {
-                log("FAILED charsetSanityCheck=" + name + ", e=" + e);
-                log(e);
-            }
-            return false;
+            new Hex(BAD_ENCODING_NAME).encode("Hello World".getBytes());
+            fail("Expected " + IllegalStateException.class.getName());
+        } catch (IllegalStateException e) {
+            // Expected
         }
+    }
+
+    public void testCustomCharsetBadNameEncodeObject() {
+        try {
+            new Hex(BAD_ENCODING_NAME).encode("Hello World");
+            fail("Expected " + EncoderException.class.getName());
+        } catch (EncoderException e) {
+            // Expected
+        }
+    }
+
+    public void testCustomCharsetBadNameDecodeObject() {
+        try {
+            new Hex(BAD_ENCODING_NAME).decode("Hello World".getBytes());
+            fail("Expected " + DecoderException.class.getName());
+        } catch (DecoderException e) {
+            // Expected
+        }
+    }
+
+    public void testCustomCharsetToString() {
+        assertTrue(new Hex().toString().indexOf(Hex.DEFAULT_CHARSET_NAME) >= 0);
     }
 
     public void testDecodeArrayOddCharacters() {
