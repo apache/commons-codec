@@ -43,10 +43,10 @@ public class StringUtils {
      * @throws IllegalStateException
      *             Thrown when the charset is missing, which should be never according the the Java specification.
      * @see <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
-     * @see #getSupportedBytes(String, String)
+     * @see #getBytesUnchecked(String, String)
      */
     public static byte[] getBytesIso8859_1(String string) {
-        return StringUtils.getSupportedBytes(string, CharEncoding.ISO_8859_1);
+        return StringUtils.getBytesUnchecked(string, CharEncoding.ISO_8859_1);
     }
 
     /**
@@ -59,10 +59,10 @@ public class StringUtils {
      * @throws IllegalStateException
      *             Thrown when the charset is missing, which should be never according the the Java specification.
      * @see <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
-     * @see #getSupportedBytes(String, String)
+     * @see #getBytesUnchecked(String, String)
      */
     public static byte[] getBytesUsAscii(String string) {
-        return StringUtils.getSupportedBytes(string, CharEncoding.US_ASCII);
+        return StringUtils.getBytesUnchecked(string, CharEncoding.US_ASCII);
     }
 
     /**
@@ -75,10 +75,10 @@ public class StringUtils {
      * @throws IllegalStateException
      *             Thrown when the charset is missing, which should be never according the the Java specification.
      * @see <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
-     * @see #getSupportedBytes(String, String)
+     * @see #getBytesUnchecked(String, String)
      */
     public static byte[] getBytesUtf16(String string) {
-        return StringUtils.getSupportedBytes(string, CharEncoding.UTF_16);
+        return StringUtils.getBytesUnchecked(string, CharEncoding.UTF_16);
     }
 
     /**
@@ -91,10 +91,10 @@ public class StringUtils {
      * @throws IllegalStateException
      *             Thrown when the charset is missing, which should be never according the the Java specification.
      * @see <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
-     * @see #getSupportedBytes(String, String)
+     * @see #getBytesUnchecked(String, String)
      */
     public static byte[] getBytesUtf16Be(String string) {
-        return StringUtils.getSupportedBytes(string, CharEncoding.UTF_16BE);
+        return StringUtils.getBytesUnchecked(string, CharEncoding.UTF_16BE);
     }
 
     /**
@@ -107,10 +107,10 @@ public class StringUtils {
      * @throws IllegalStateException
      *             Thrown when the charset is missing, which should be never according the the Java specification.
      * @see <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
-     * @see #getSupportedBytes(String, String)
+     * @see #getBytesUnchecked(String, String)
      */
     public static byte[] getBytesUtf16Le(String string) {
-        return StringUtils.getSupportedBytes(string, CharEncoding.UTF_16LE);
+        return StringUtils.getBytesUnchecked(string, CharEncoding.UTF_16LE);
     }
 
     /**
@@ -123,10 +123,10 @@ public class StringUtils {
      * @throws IllegalStateException
      *             Thrown when the charset is missing, which should be never according the the Java specification.
      * @see <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
-     * @see #getSupportedBytes(String, String)
+     * @see #getBytesUnchecked(String, String)
      */
     public static byte[] getBytesUtf8(String string) {
-        return StringUtils.getSupportedBytes(string, CharEncoding.UTF_8);
+        return StringUtils.getBytesUnchecked(string, CharEncoding.UTF_8);
     }
 
     /**
@@ -148,7 +148,7 @@ public class StringUtils {
      * @see CharEncoding
      * @see String#getBytes(String)
      */
-    public static byte[] getSupportedBytes(String string, String charsetName) {
+    public static byte[] getBytesUnchecked(String string, String charsetName) {
         if (string == null) {
             return null;
         }

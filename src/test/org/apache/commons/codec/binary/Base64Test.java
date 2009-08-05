@@ -940,24 +940,24 @@ public class Base64Test extends TestCase {
             // Very important debugging output should anyone
             // ever need to delve closely into this stuff.
             if (false) {
-                System.out.println("reference: [" + new String(Hex.encodeHex(ids[i])) + "]");
+                System.out.println("reference: [" + Hex.encodeHexString(ids[i]) + "]");
                 System.out.println("standard:  [" +
-                    new String(Hex.encodeHex(decodedStandard)) +
+                        Hex.encodeHexString(decodedStandard) +
                     "] From: [" +
                     StringUtils.newStringUtf8(standard[i]) +
                     "]");
                 System.out.println("safe1:     [" +
-                    new String(Hex.encodeHex(decodedUrlSafe1)) +
+                        Hex.encodeHexString(decodedUrlSafe1) +
                     "] From: [" +
                     StringUtils.newStringUtf8(urlSafe1[i]) +
                     "]");
                 System.out.println("safe2:     [" +
-                    new String(Hex.encodeHex(decodedUrlSafe2)) +
+                        Hex.encodeHexString(decodedUrlSafe2) +
                     "] From: [" +
                     StringUtils.newStringUtf8(urlSafe2[i]) +
                     "]");
                 System.out.println("safe3:     [" +
-                    new String(Hex.encodeHex(decodedUrlSafe3)) +
+                        Hex.encodeHexString(decodedUrlSafe3) +
                     "] From: [" +
                     StringUtils.newStringUtf8(urlSafe3[i]) +
                     "]");

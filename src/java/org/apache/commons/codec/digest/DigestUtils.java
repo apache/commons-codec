@@ -198,7 +198,7 @@ public class DigestUtils {
      * @return MD5 digest as a hex string
      */
     public static String md5Hex(byte[] data) {
-        return new String(Hex.encodeHex(md5(data)));
+        return Hex.encodeHexString(md5(data));
     }
 
     /**
@@ -212,7 +212,7 @@ public class DigestUtils {
      * @since 1.4
      */
     public static String md5Hex(InputStream data) throws IOException {
-        return new String(Hex.encodeHex(md5(data)));
+        return Hex.encodeHexString(md5(data));
     }
 
     /**
@@ -223,7 +223,7 @@ public class DigestUtils {
      * @return MD5 digest as a hex string
      */
     public static String md5Hex(String data) {
-        return new String(Hex.encodeHex(md5(data)));
+        return Hex.encodeHexString(md5(data));
     }
 
     /**
@@ -321,7 +321,7 @@ public class DigestUtils {
      * @since 1.4
      */
     public static String sha256Hex(byte[] data) {
-        return new String(Hex.encodeHex(sha256(data)));
+        return Hex.encodeHexString(sha256(data));
     }
 
     /**
@@ -338,7 +338,7 @@ public class DigestUtils {
      * @since 1.4
      */
     public static String sha256Hex(InputStream data) throws IOException {
-        return new String(Hex.encodeHex(sha256(data)));
+        return Hex.encodeHexString(sha256(data));
     }
 
     /**
@@ -353,7 +353,7 @@ public class DigestUtils {
      * @since 1.4
      */
     public static String sha256Hex(String data) {
-        return new String(Hex.encodeHex(sha256(data)));
+        return Hex.encodeHexString(sha256(data));
     }
 
     /**
@@ -415,7 +415,7 @@ public class DigestUtils {
      * @since 1.4
      */
     public static String sha384Hex(byte[] data) {
-        return new String(Hex.encodeHex(sha384(data)));
+        return Hex.encodeHexString(sha384(data));
     }
 
     /**
@@ -432,7 +432,7 @@ public class DigestUtils {
      * @since 1.4
      */
     public static String sha384Hex(InputStream data) throws IOException {
-        return new String(Hex.encodeHex(sha384(data)));
+        return Hex.encodeHexString(sha384(data));
     }
 
     /**
@@ -447,7 +447,7 @@ public class DigestUtils {
      * @since 1.4
      */
     public static String sha384Hex(String data) {
-        return new String(Hex.encodeHex(sha384(data)));
+        return Hex.encodeHexString(sha384(data));
     }
 
     /**
@@ -509,7 +509,7 @@ public class DigestUtils {
      * @since 1.4
      */
     public static String sha512Hex(byte[] data) {
-        return new String(Hex.encodeHex(sha512(data)));
+        return Hex.encodeHexString(sha512(data));
     }
 
     /**
@@ -526,7 +526,7 @@ public class DigestUtils {
      * @since 1.4
      */
     public static String sha512Hex(InputStream data) throws IOException {
-        return new String(Hex.encodeHex(sha512(data)));
+        return Hex.encodeHexString(sha512(data));
     }
 
     /**
@@ -541,7 +541,7 @@ public class DigestUtils {
      * @since 1.4
      */
     public static String sha512Hex(String data) {
-        return new String(Hex.encodeHex(sha512(data)));
+        return Hex.encodeHexString(sha512(data));
     }
 
     /**
@@ -552,7 +552,7 @@ public class DigestUtils {
      * @return SHA-1 digest as a hex string
      */
     public static String shaHex(byte[] data) {
-        return new String(Hex.encodeHex(sha(data)));
+        return Hex.encodeHexString(sha(data));
     }
 
     /**
@@ -566,7 +566,7 @@ public class DigestUtils {
      * @since 1.4
      */
     public static String shaHex(InputStream data) throws IOException {
-        return new String(Hex.encodeHex(sha(data)));
+        return Hex.encodeHexString(sha(data));
     }
 
     /**
@@ -577,6 +577,6 @@ public class DigestUtils {
      * @return SHA-1 digest as a hex string
      */
     public static String shaHex(String data) {
-        return new String(Hex.encodeHex(sha(data)));
+        return Hex.encodeHexString(sha(data));
     }
 }
