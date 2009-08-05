@@ -39,7 +39,7 @@ import org.apache.commons.codec.EncoderException;
  */
 public class HexTest extends TestCase {
 
-    private final static boolean LOG = false;
+    private final static boolean LOG = true;
 
     public HexTest(String name) {
         super(name);
@@ -60,6 +60,14 @@ public class HexTest extends TestCase {
     private void log(String s) {
         if (LOG) {
             System.out.println(s);
+            System.out.flush();
+        }
+    }
+
+    private void log(Throwable t) {
+        if (LOG) {
+            t.printStackTrace(System.out);
+            System.out.flush();
         }
     }
 
@@ -83,7 +91,6 @@ public class HexTest extends TestCase {
      */
     private void testCustomCharset(String name, String parent) throws UnsupportedEncodingException, DecoderException {
         if (charsetSanityCheck(name) == false) {
-            log("Interesting Java charset oddity: Charset sanity check failed for " + name);
             return;
         }
         log(parent + "=" + name);
@@ -121,18 +128,46 @@ public class HexTest extends TestCase {
         try {
             byte[] bytes = source.getBytes(name);
             String str = new String(bytes, name);
-            return source.equals(str);
+            boolean equals = source.equals(str);
+            if (equals == false) {
+                // Here with:
+                //
+                // Java Sun 1.4.2_19 x86 32-bits on Windows XP
+                // JIS_X0212-1990
+                // x-JIS0208
+                //
+                // Java Sun 1.5.0_17 x86 32-bits on Windows XP
+                // JIS_X0212-1990
+                // x-IBM834
+                // x-JIS0208
+                // x-MacDingbat
+                // x-MacSymbol
+                //
+                // Java Sun 1.6.0_14 x86 32-bits
+                // JIS_X0212-1990
+                // x-IBM834
+                // x-JIS0208
+                // x-MacDingbat
+                // x-MacSymbol
+                // 
+                log("FAILED charsetSanityCheck=Interesting Java charset oddity: Roundtrip failed for " + name);
+            }
+            return equals;
         } catch (UnsupportedEncodingException e) {
             // Should NEVER happen since we are getting the name from the Charset class.
             if (LOG) {
-                e.printStackTrace();
+                log("FAILED charsetSanityCheck=" + name + ", e=" + e);
+                log(e);
             }
             return false;
         } catch (UnsupportedOperationException e) {
-            // Happens with:
-            // x-JIS0208 on Windows XP and Java Sun 1.6.0_14
+            // Caught here with:
+            // x-JISAutoDetect on Windows XP and Java Sun 1.4.2_19 x86 32-bits
+            // x-JISAutoDetect on Windows XP and Java Sun 1.5.0_17 x86 32-bits
+            // x-JISAutoDetect on Windows XP and Java Sun 1.6.0_14 x86 32-bits
             if (LOG) {
-                e.printStackTrace();
+                log("FAILED charsetSanityCheck=" + name + ", e=" + e);
+                log(e);
             }
             return false;
         }
