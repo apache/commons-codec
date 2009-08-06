@@ -61,7 +61,7 @@ public class DigestUtils {
     /**
      * Calls {@link StringUtils#getBytesUtf8(String)}
      * 
-     * @param string
+     * @param data
      *            the String to encode
      * @return encoded bytes
      */
