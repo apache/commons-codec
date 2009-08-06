@@ -40,7 +40,8 @@ import org.apache.commons.codec.EncoderException;
 public class HexTest extends TestCase {
 
     private static final String BAD_ENCODING_NAME = "UNKNOWN";
-    private final static boolean LOG = true;
+    
+    private final static boolean LOG = false;
 
     public HexTest(String name) {
         super(name);
