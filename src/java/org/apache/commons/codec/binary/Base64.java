@@ -69,6 +69,10 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
 
     /**
      * Chunk separator per RFC 2045 section 2.1.
+     *
+     * <p>
+     * N.B. The next major release may break compatibility and make this field private.
+     * </p>
      * 
      * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045 section 2.1</a>
      */
