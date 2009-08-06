@@ -167,13 +167,14 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
         return digit;
     }
 
-    private String charsetName = DEFAULT_CHARSET_NAME;
+    private final String charsetName;
 
     /**
      * Creates a new codec with the default charset name {@link #DEFAULT_CHARSET_NAME}
      */
     public Hex() {
         // use default encoding
+        this.charsetName = DEFAULT_CHARSET_NAME;
     }
 
     /**
@@ -181,9 +182,10 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * 
      * @param csName
      *            the charset name.
+     * @since 1.4
      */
     public Hex(String csName) {
-        setCharsetName(csName);
+        this.charsetName = csName;
     }
 
     /**
@@ -280,19 +282,10 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * Gets the charset name.
      * 
      * @return the charset name.
+     * @since 1.4
      */
     public String getCharsetName() {
         return this.charsetName;
-    }
-
-    /**
-     * Sets the charset name.
-     * 
-     * @param charsetName
-     *            the charset name.
-     */
-    private void setCharsetName(String charsetName) {
-        this.charsetName = charsetName;
     }
 
     /**
