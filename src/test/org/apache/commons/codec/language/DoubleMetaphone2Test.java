@@ -24,9 +24,9 @@ import junit.framework.TestSuite;
  * Tests {@link DoubleMetaphone}.
  * <p>
  * The test data was extracted from Stephen Woodbridge's
- * <a href="http://swoodbridge.com/DoubleMetaPhone/surnames.txt">php test program</a>.
+ * <a href="http://swoodbridge.com/DoubleMetaPhone/surnames.txt">PHP test program</a>.
  * 
- * @see http://swoodbridge.com/DoubleMetaPhone/surnames.txt
+ * @see <a href="http://swoodbridge.com/DoubleMetaPhone/surnames.txt">PHP test program</a>
  * @version $Id$
  */
 public class DoubleMetaphone2Test extends TestCase {
