@@ -295,6 +295,9 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
         this.charsetName = charsetName;
     }
 
+    /**
+     * Returns a string representation of the object, which includes the charset name.
+     */
     public String toString() {
         return super.toString() + "[charsetName=" + this.charsetName + "]";
     }
