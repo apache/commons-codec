@@ -291,7 +291,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * @param charsetName
      *            the charset name.
      */
-    public void setCharsetName(String charsetName) {
+    private void setCharsetName(String charsetName) {
         this.charsetName = charsetName;
     }
 
