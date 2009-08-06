@@ -44,6 +44,7 @@ o [CODEC-78] Base64: Improve Code Coverage
 o [CODEC-81] Base64's new constructor parameters ignored
 o [CODEC-83] Improve Double Metaphone test coverage
 o [CODEC-84] Double Metaphone bugs in alternative encoding
+o [CODEC-73] Make string2byte conversions indepedent of platform default encoding
 
   Changes:
 

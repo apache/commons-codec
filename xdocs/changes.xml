@@ -22,7 +22,7 @@
 		<author>Gary D. Gregory</author>
 	</properties>
 	<body>
-		<release version="1-4-SNAPSHOT" date="13 July 2009" description="Feature and fix release.">
+		<release version="1.4" date="9 August 2009" description="Feature and fix release.">
 			<action dev="ggregory" type="fix" issue="CODEC-80" due-to="Julius Davies">
              Regression: Base64.encode(chunk=true) has bug when input length is multiple of 76.
              </action>
@@ -100,6 +100,9 @@
              </action>
              <action dev="niallp" type="fix" issue="CODEC-84">
                  Double Metaphone bugs in alternative encoding
+             </action>
+             <action dev="ggregory" type="fix" issue="CODEC-73" due-to="Benjamin Bentmann">
+                 Make string2byte conversions indepedent of platform default encoding
              </action>
 		</release>
 		<release version="1.3" date="10 July 2004" description="Feature and fix release.">

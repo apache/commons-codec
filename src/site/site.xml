@@ -27,7 +27,7 @@
             <item name="Overview"      href="/index.html"/>
             <item name="Download"      href="http://commons.apache.org/codec/download_codec.cgi"/>
             <item name="Users guide"   href="/userguide.html"/>
-            <item name="Javadoc (1.3 release)" href="api-release/index.html"/>
+            <item name="Javadoc (1.4 release)" href="api-release/index.html"/>
         </menu>
 
         <menu name="Development">
