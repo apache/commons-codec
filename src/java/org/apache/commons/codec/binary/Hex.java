@@ -37,6 +37,8 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
 
     /**
      * Default charset name is {@link CharEncoding#UTF_8}
+     * 
+     * @since 1.4
      */
     public static final String DEFAULT_CHARSET_NAME = CharEncoding.UTF_8;
 
