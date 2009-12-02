@@ -31,17 +31,9 @@ import junit.framework.TestCase;
  */
 public class StringUtilsTest extends TestCase {
 
-    private static byte[] BYTES_FIXTURE;
+    private static final byte[] BYTES_FIXTURE = {'a','b','c'};
 
     private static final String STRING_FIXTURE = "ABC";
-
-    {
-        try {
-            BYTES_FIXTURE = "abc".getBytes("US-ASCII");
-        } catch (UnsupportedEncodingException e) {
-            throw new IllegalArgumentException(e.toString());
-        }
-    }
 
     /**
      * We could make the constructor private but there does not seem to be a point to jumping through extra code hoops
