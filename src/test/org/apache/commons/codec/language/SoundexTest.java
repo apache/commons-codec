@@ -18,9 +18,6 @@
 // (FYI: Formatted and sorted with Eclipse)
 package org.apache.commons.codec.language;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.StringEncoderAbstractTest;
@@ -32,10 +29,6 @@ import org.apache.commons.codec.StringEncoderAbstractTest;
  * @version $Id$
  */
 public class SoundexTest extends StringEncoderAbstractTest {
-
-    public static Test suite() {
-        return new TestSuite(SoundexTest.class);
-    }
 
     private Soundex encoder = null;
 

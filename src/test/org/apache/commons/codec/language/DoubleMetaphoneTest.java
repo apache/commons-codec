@@ -17,9 +17,6 @@
 
 package org.apache.commons.codec.language;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.StringEncoderAbstractTest;
@@ -1000,10 +997,6 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest {
             "writting", "writing" }, {
             "wundeews", "windows" }, {
             "yeild", "yield" }, };
-
-    public static Test suite() {
-        return new TestSuite(DoubleMetaphoneTest.class);
-    }
 
     private DoubleMetaphone doubleMetaphone = null;
 
