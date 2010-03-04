@@ -198,8 +198,10 @@ limitations under the License.
         <record name="${build.home}/test-output.txt" append="no" action="start"/>
         <junit printsummary="yes" haltonfailure="yes">
             <classpath refid="test.classpath"/>
-            <formatter type="plain"/>
-            <batchtest fork="yes" todir="${build.home}/test-reports">
+        	<formatter type="plain" usefile="true" />
+            <!-- If test.entry is defined, run a single test, otherwise run all valid tests -->
+            <test name="${test.entry}" todir="${build.home}/test-reports" if="test.entry"/>
+            <batchtest fork="yes" todir="${build.home}/test-reports" unless="test.entry">
                 <fileset dir="${test.home}">
                     <include name="**/*Test.java"/>
                     <exclude name="**/*AbstractTest.java"/>
