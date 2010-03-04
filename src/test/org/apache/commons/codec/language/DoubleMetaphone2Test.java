@@ -16,9 +16,7 @@
  */
 package org.apache.commons.codec.language;
 
-import junit.framework.Test;
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 /**
  * Tests {@link DoubleMetaphone}.
@@ -30,11 +28,6 @@ import junit.framework.TestSuite;
  * @version $Id$
  */
 public class DoubleMetaphone2Test extends TestCase {
-
-
-    public static Test suite() {
-        return new TestSuite(DoubleMetaphone2Test.class);
-    }
 
     private DoubleMetaphone doubleMetaphone = null;
 

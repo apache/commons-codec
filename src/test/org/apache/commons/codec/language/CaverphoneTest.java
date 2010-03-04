@@ -17,9 +17,6 @@
 
 package org.apache.commons.codec.language;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.StringEncoderAbstractTest;
 
@@ -28,10 +25,6 @@ import org.apache.commons.codec.StringEncoderAbstractTest;
  * @version $Id$
  */
 public class CaverphoneTest extends StringEncoderAbstractTest {
-
-    public static Test suite() {
-        return new TestSuite(CaverphoneTest.class);
-    }
 
     public CaverphoneTest(String name) {
         super(name);
