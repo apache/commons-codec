@@ -495,7 +495,7 @@ public class Base64Codec13Test extends TestCase {
         try {
             return s != null ? s.getBytes("UTF-8") : null;
         } catch (UnsupportedEncodingException uee) {
-            throw new IllegalStateException(uee);
+            throw new IllegalStateException(uee.toString());
         }
     }
 
