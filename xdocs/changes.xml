@@ -22,6 +22,11 @@
         <author>Gary D. Gregory</author>
     </properties>
     <body>
+        <release version="TBA" date="TBA" description="TBC">
+            <action dev="sebb" type="add" issue="CODEC-93" due-to="Julius Davies">
+             Add test(s) to check that encodeBase64() does not chunk output.
+             </action>
+        </release>
         <release version="1.4" date="9 August 2009" description="Feature and fix release.">
             <action dev="ggregory" type="fix" issue="CODEC-80" due-to="Julius Davies">
              Regression: Base64.encode(chunk=true) has bug when input length is multiple of 76.
