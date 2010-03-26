@@ -53,7 +53,7 @@ limitations under the License.
     <target name="compile" depends="static" description="Compile shareable components">
         <javac srcdir="${source.home}" destdir="${build.home}/classes"
             source="${compile.source}" target="${compile.target}"
-        	debug="${compile.debug}" deprecation="${compile.deprecation}" optimize="${compile.optimize}">
+            debug="${compile.debug}" deprecation="${compile.deprecation}" optimize="${compile.optimize}">
             <classpath refid="compile.classpath"/>
         </javac>
         <copy todir="${build.home}/classes" filtering="on">
@@ -75,19 +75,19 @@ limitations under the License.
             <format property="current.year" pattern="yyyy"/>
         </tstamp>
          <!-- The Sun 1.2 docs are no-longer on-line, point to 1.3. -->
-        <javadoc 
-        	sourcepath="${source.home}" 
-        	destdir="${dist.home}/docs/api" 
-        	packagenames="org.apache.commons.*" 
-	        overview="${source.home}/org/apache/commons/codec/overview.html"
-        	author="true" 
-        	private="true" 
-        	version="true" 
-        	doctitle="&lt;h1&gt;${component.title}&lt;/h1&gt;" 
-        	windowtitle="${component.title} (Version ${component.version})" 
-        	bottom="${component.name} version ${component.version} - Copyright &amp;copy; 2002-${current.year} - Apache Software Foundation" 
-        	use="true" 
-        	link="http://java.sun.com/products/jdk/1.3/docs/api/">
+        <javadoc
+            sourcepath="${source.home}"
+            destdir="${dist.home}/docs/api"
+            packagenames="org.apache.commons.*"
+            overview="${source.home}/org/apache/commons/codec/overview.html"
+            author="true"
+            private="true"
+            version="true"
+            doctitle="&lt;h1&gt;${component.title}&lt;/h1&gt;"
+            windowtitle="${component.title} (Version ${component.version})"
+            bottom="${component.name} version ${component.version} - Copyright &amp;copy; 2002-${current.year} - Apache Software Foundation"
+            use="true"
+            link="http://java.sun.com/products/jdk/1.3/docs/api/">
             <classpath refid="compile.classpath"/>
         </javadoc>
     </target>
@@ -109,11 +109,11 @@ limitations under the License.
                 <attribute name="Specification-Version" value="${component.version}"/>
                 <attribute name="Specification-Vendor" value="The Apache Software Foundation"/>
                 <attribute name="Implementation-Title" value="Commons Codec"/>
-                <attribute name="Implementation-Version" value="${component.version}"/> 
+                <attribute name="Implementation-Version" value="${component.version}"/>
                 <attribute name="Implementation-Vendor" value="The Apache Software Foundation"/>
                 <attribute name="Implementation-Vendor-Id" value="org.apache"/>
-            	<attribute name="X-Compile-Source-JDK" value="${compile.source}"/>
-            	<attribute name="X-Compile-Target-JDK" value="${compile.target}"/>
+                <attribute name="X-Compile-Source-JDK" value="${compile.source}"/>
+                <attribute name="X-Compile-Target-JDK" value="${compile.target}"/>
             </manifest>
         </jar>
     </target>
@@ -185,8 +185,8 @@ limitations under the License.
     <!-- ========== Unit Test Targets ========================================= -->
     <target name="compile.tests" depends="compile" description="Compile unit test cases">
         <javac srcdir="${test.home}" destdir="${build.home}/tests"
-        	source="${compile.source}" target="${compile.target}"
-        	debug="${compile.debug}" deprecation="${compile.deprecation}" optimize="${compile.optimize}">
+            source="${compile.source}" target="${compile.target}"
+            debug="${compile.debug}" deprecation="${compile.deprecation}" optimize="${compile.optimize}">
             <classpath refid="test.classpath"/>
         </javac>
         <copy todir="${build.home}/tests" filtering="on">
@@ -198,7 +198,7 @@ limitations under the License.
         <record name="${build.home}/test-output.txt" append="no" action="start"/>
         <junit printsummary="yes" haltonfailure="yes">
             <classpath refid="test.classpath"/>
-        	<formatter type="plain" usefile="true" />
+            <formatter type="plain" usefile="true" />
             <!-- If test.entry is defined, run a single test, otherwise run all valid tests -->
             <test name="${test.entry}" todir="${build.home}/test-reports" if="test.entry"/>
             <batchtest fork="yes" todir="${build.home}/test-reports" unless="test.entry">

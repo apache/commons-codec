@@ -27,19 +27,19 @@
 <!-- ================================================== -->
 <section name="User guide">
    <p>
- 	Codec is comprised of a modest set of utilities and a
- 	simple framework for encoding and decoding both textual and binary data.
+     Codec is comprised of a modest set of utilities and a
+     simple framework for encoding and decoding both textual and binary data.
    </p>
 
    <subsection name="Binary Encoders">
-   	<table>
+       <table>
      <tr>
       <td width="150">
        <a href="apidocs/org/apache/commons/codec/binary/Base64.html">
-       	Base64</a>
+           Base64</a>
       </td>
       <td>
-       Provides Base64 content-transfer-encoding as defined in 
+       Provides Base64 content-transfer-encoding as defined in
        <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>. This
        encoder can optionally create 76 character chunked output
        for strict adherence to RFC 2045.
@@ -48,7 +48,7 @@
      <tr>
       <td>
        <a href="apidocs/org/apache/commons/codec/binary/Hex.html">
-       	Hex</a>
+           Hex</a>
       </td>
       <td>
        Converts an array of bytes into an array of characters representing the
@@ -58,7 +58,7 @@
      <tr>
       <td width="150">
        <a href="apidocs/org/apache/commons/codec/binary/BinaryCodec.html">
-       	BinaryCodec</a>
+           BinaryCodec</a>
       </td>
       <td>
        Translates between byte arrays and strings of "0"s and "1"s.
@@ -66,13 +66,13 @@
      </tr>
     </table>
    </subsection>
-   
+
    <subsection name="Language Encoders">
     <table>
      <tr>
       <td width="150">
        <a href="apidocs/org/apache/commons/codec/language/Soundex.html">
-       	Soundex</a>
+           Soundex</a>
       </td>
       <td>
        Implementation of the Soundex algorithm.
@@ -81,7 +81,7 @@
      <tr>
       <td>
        <a href="apidocs/org/apache/commons/codec/language/Metaphone.html">
-       	Metaphone</a>
+           Metaphone</a>
       </td>
       <td>
        Implementation of the Metaphone algorithm.
@@ -90,7 +90,7 @@
      <tr>
       <td>
        <a href="apidocs/org/apache/commons/codec/language/RefinedSoundex.html">
-       	Refined Soundex</a>
+           Refined Soundex</a>
       </td>
       <td>
        Alternative implementation of the Soundex algorithm.
@@ -99,7 +99,7 @@
      <tr>
       <td>
        <a href="apidocs/org/apache/commons/codec/language/DoubleMetaphone.html">
-       	Double Metaphone</a>
+           Double Metaphone</a>
       </td>
       <td>
        Alternative implementation of the Metaphone algorithm.
@@ -110,11 +110,11 @@
    </subsection>
 
    <subsection name="Digest Encoders">
-   	<table>
+       <table>
      <tr>
       <td width="150">
        <a href="apidocs/org/apache/commons/codec/digest/DigestUtils.html">
-       	DigestUtils</a>
+           DigestUtils</a>
       </td>
       <td>
         Provides simple static methods for creating a SHA or MD5 digest.
@@ -122,13 +122,13 @@
      </tr>
     </table>
    </subsection>
-   
+
    <subsection name="Network Encoders">
-   	<table>
+       <table>
      <tr>
       <td width="150">
        <a href="apidocs/org/apache/commons/codec/net/URLCodec.html">
-       	URLCodec</a>
+           URLCodec</a>
       </td>
       <td>
         Implements the <code>www-form-urlencoded</code> encoding scheme, also misleadingly known as URL encoding.
@@ -137,7 +137,7 @@
      <tr>
       <td width="150">
        <a href="apidocs/org/apache/commons/codec/net/QuotedPrintableCodec.html">
-       	QuotedPrintableCodec</a>
+           QuotedPrintableCodec</a>
       </td>
       <td>
          Codec for RFC 1521 MIME (Multipurpose Internet Mail Extensions) Part One. Rules #3, #4, and #5 of the quoted-printable spec are not implemented yet
@@ -146,7 +146,7 @@
      <tr>
       <td width="150">
        <a href="apidocs/org/apache/commons/codec/net/BCodec.html">
-       	BCodec</a>
+           BCodec</a>
       </td>
       <td>
          Identical to the Base64 encoding defined by <a href="http://www.ietf.org/rfc/rfc1521.txt">RFC 1521</a> and allows a character set to be specified.
@@ -155,17 +155,17 @@
      <tr>
       <td width="150">
        <a href="apidocs/org/apache/commons/codec/net/QCodec.html">
-       	QCodec</a>
+           QCodec</a>
       </td>
       <td>
          Similar to the Quoted-Printable content-transfer-encoding defined in <a
-		 href="http://www.ietf.org/rfc/rfc1521.txt">RFC 1521</a> and designed to allow text containing mostly ASCII
- 		characters to be decipherable on an ASCII terminal without decoding.
+         href="http://www.ietf.org/rfc/rfc1521.txt">RFC 1521</a> and designed to allow text containing mostly ASCII
+         characters to be decipherable on an ASCII terminal without decoding.
       </td>
      </tr>
     </table>
    </subsection>
-   
+
 </section>
 <!-- ================================================== -->
 </body>

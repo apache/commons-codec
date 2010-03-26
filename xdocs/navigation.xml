@@ -33,8 +33,8 @@ limitations under the License.
     </menu>
 
     <menu name="Development">
-	  <!-- remove release notes when building.html added -->
-      <item name="Release notes" href="/changes-report.html"/>          
+      <!-- remove release notes when building.html added -->
+      <item name="Release notes" href="/changes-report.html"/>
       <!--item name="Building" href="/building.html"/-->
       <item name="Mailing lists" href="/mail-lists.html"/>
       <item name="Team" href="/team-list.html"/>
