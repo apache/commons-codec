@@ -23,6 +23,9 @@
     </properties>
     <body>
         <release version="TBA" date="TBA" description="TBC">
+            <action dev="sebb" type="fix" issue="CODEC-97">
+             Base64 default constructor behaviour changed to enable chunking in 1.4
+            </action>
             <action dev="sebb" type="fix" issue="CODEC-89">
              new Base64().encode() appends a CRLF, and chunks results into 76 character lines
             </action>
