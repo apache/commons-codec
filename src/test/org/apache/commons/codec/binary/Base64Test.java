@@ -529,7 +529,7 @@ public class Base64Test extends TestCase {
      * <li>BASE64("foobar") = "Zm9vYmFy"</li>
      * </ul>
      * 
-     * @see http://tools.ietf.org/html/rfc4648
+     * @see <a href="http://tools.ietf.org/html/rfc4648">http://tools.ietf.org/html/rfc4648</a>
      */
     public void testRfc4648Section10Decode() {
         assertEquals("", StringUtils.newStringUsAscii(Base64.decodeBase64("")));
@@ -563,9 +563,10 @@ public class Base64Test extends TestCase {
      * <li>BASE64("foobar") = "Zm9vYmFy"</li>
      * </ul>
      * 
-     * @see http://tools.ietf.org/html/rfc4648
+     * @see <a href="http://tools.ietf.org/html/rfc4648">http://tools.ietf.org/html/rfc4648</a>
      */
     public void testRfc4648Section10Encode() {
+        assertEquals("", Base64.encodeBase64String(StringUtils.getBytesUtf8("")));
         //assertEquals("Zg==", Base64.encodeBase64String(StringUtils.getBytesUtf8("f")));
         //assertEquals("Zm8=", Base64.encodeBase64String(StringUtils.getBytesUtf8("fo")));
         //assertEquals("Zm9v", Base64.encodeBase64String(StringUtils.getBytesUtf8("foo")));
