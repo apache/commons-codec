@@ -541,6 +541,20 @@ public class Base64Test extends TestCase {
         assertEquals("foobar", StringUtils.newStringUsAscii(Base64.decodeBase64("Zm9vYmFy")));
     }
     
+    /**
+     * Tests RFC 4648 section 10 test vectors.
+     * <ul>
+     * <li>BASE64("") = ""</li>
+     * <li>BASE64("f") = "Zg=="</li>
+     * <li>BASE64("fo") = "Zm8="</li>
+     * <li>BASE64("foo") = "Zm9v"</li>
+     * <li>BASE64("foob") = "Zm9vYg=="</li>
+     * <li>BASE64("fooba") = "Zm9vYmE="</li>
+     * <li>BASE64("foobar") = "Zm9vYmFy"</li>
+     * </ul>
+     * 
+     * @see <a href="http://tools.ietf.org/html/rfc4648">http://tools.ietf.org/html/rfc4648</a>
+     */
     public void testRfc4648Section10DecodeWithCrLf() {
         assertEquals("", StringUtils.newStringUsAscii(Base64.decodeBase64("")));
         assertEquals("f", StringUtils.newStringUsAscii(Base64.decodeBase64("Zg==" + Base64.CHUNK_SEPARATOR)));
