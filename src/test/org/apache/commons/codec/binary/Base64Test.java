@@ -483,6 +483,11 @@ public class Base64Test extends TestCase {
         assertTrue("dest string does not equal original", dest.equals(original));
     }
 
+    public void testObjectEncode() throws Exception {
+        Base64 b64 = new Base64();
+        assertEquals("SGVsbG8gV29ybGQ=", new String(b64.encode("Hello World".getBytes("UTF-8"))));
+    }
+
     public void testPairs() {
         assertEquals("AAA=", new String(Base64.encodeBase64(new byte[]{0, 0})));
         for (int i = -128; i <= 127; i++) {

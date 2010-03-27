@@ -547,8 +547,4 @@ public class Base64Codec13Test extends TestCase {
         }
 
     }
-    public void testObjectEncode() throws Exception {
-        Base64 b64 = new Base64();
-        assertEquals("SGVsbG8gV29ybGQ=", new String(b64.encode("Hello World".getBytes("UTF-8"))));
-    }
 }
