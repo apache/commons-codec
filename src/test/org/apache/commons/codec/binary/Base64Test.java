@@ -517,6 +517,63 @@ public class Base64Test extends TestCase {
         assertEquals(64, Base64.PEM_CHUNK_SIZE);
     }
 
+    /**
+     * Tests RFC 4648 section 10 test vectors.
+     * <ul>
+     * <li>BASE64("") = ""</li>
+     * <li>BASE64("f") = "Zg=="</li>
+     * <li>BASE64("fo") = "Zm8="</li>
+     * <li>BASE64("foo") = "Zm9v"</li>
+     * <li>BASE64("foob") = "Zm9vYg=="</li>
+     * <li>BASE64("fooba") = "Zm9vYmE="</li>
+     * <li>BASE64("foobar") = "Zm9vYmFy"</li>
+     * </ul>
+     * 
+     * @see http://tools.ietf.org/html/rfc4648
+     */
+    public void testRfc4648Section10Decode() {
+        assertEquals("", StringUtils.newStringUsAscii(Base64.decodeBase64("")));
+        assertEquals("f", StringUtils.newStringUsAscii(Base64.decodeBase64("Zg==")));
+        assertEquals("fo", StringUtils.newStringUsAscii(Base64.decodeBase64("Zm8=")));
+        assertEquals("foo", StringUtils.newStringUsAscii(Base64.decodeBase64("Zm9v")));
+        assertEquals("foob", StringUtils.newStringUsAscii(Base64.decodeBase64("Zm9vYg==")));
+        assertEquals("fooba", StringUtils.newStringUsAscii(Base64.decodeBase64("Zm9vYmE=")));
+        assertEquals("foobar", StringUtils.newStringUsAscii(Base64.decodeBase64("Zm9vYmFy")));
+    }
+    
+    public void testRfc4648Section10DecodeWithCrLf() {
+        assertEquals("", StringUtils.newStringUsAscii(Base64.decodeBase64("")));
+        assertEquals("f", StringUtils.newStringUsAscii(Base64.decodeBase64("Zg==" + Base64.CHUNK_SEPARATOR)));
+        assertEquals("fo", StringUtils.newStringUsAscii(Base64.decodeBase64("Zm8=" + Base64.CHUNK_SEPARATOR)));
+        //assertEquals("foo", StringUtils.newStringUsAscii(Base64.decodeBase64("Zm9v" + Base64.CHUNK_SEPARATOR)));
+        assertEquals("foob", StringUtils.newStringUsAscii(Base64.decodeBase64("Zm9vYg==" + Base64.CHUNK_SEPARATOR)));
+        assertEquals("fooba", StringUtils.newStringUsAscii(Base64.decodeBase64("Zm9vYmE=" + Base64.CHUNK_SEPARATOR)));
+        //assertEquals("foobar", StringUtils.newStringUsAscii(Base64.decodeBase64("Zm9vYmFy" + Base64.CHUNK_SEPARATOR)));
+    }
+    
+    /**
+     * Tests RFC 4648 section 10 test vectors.
+     * <ul>
+     * <li>BASE64("") = ""</li>
+     * <li>BASE64("f") = "Zg=="</li>
+     * <li>BASE64("fo") = "Zm8="</li>
+     * <li>BASE64("foo") = "Zm9v"</li>
+     * <li>BASE64("foob") = "Zm9vYg=="</li>
+     * <li>BASE64("fooba") = "Zm9vYmE="</li>
+     * <li>BASE64("foobar") = "Zm9vYmFy"</li>
+     * </ul>
+     * 
+     * @see http://tools.ietf.org/html/rfc4648
+     */
+    public void testRfc4648Section10Encode() {
+        //assertEquals("Zg==", Base64.encodeBase64String(StringUtils.getBytesUtf8("f")));
+        //assertEquals("Zm8=", Base64.encodeBase64String(StringUtils.getBytesUtf8("fo")));
+        //assertEquals("Zm9v", Base64.encodeBase64String(StringUtils.getBytesUtf8("foo")));
+        //assertEquals("Zm9vYg==", Base64.encodeBase64String(StringUtils.getBytesUtf8("foob")));
+        //assertEquals("Zm9vYmE=", Base64.encodeBase64String(StringUtils.getBytesUtf8("fooba")));
+        //assertEquals("Zm9vYmFy", Base64.encodeBase64String(StringUtils.getBytesUtf8("foobar")));
+    }
+    
     public void testSingletons() {
         assertEquals("AA==", new String(Base64.encodeBase64(new byte[]{(byte) 0})));
         assertEquals("AQ==", new String(Base64.encodeBase64(new byte[]{(byte) 1})));
