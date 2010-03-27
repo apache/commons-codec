@@ -73,7 +73,7 @@ public class Base64InputStream extends FilterInputStream {
     public Base64InputStream(InputStream in, boolean doEncode) {
         super(in);
         this.doEncode = doEncode;
-        this.base64 = new Base64();
+        this.base64 = new Base64(false);
     }
 
     /**

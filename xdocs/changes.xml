@@ -23,6 +23,9 @@
     </properties>
     <body>
         <release version="TBA" date="TBA" description="TBC">
+            <action dev="sebb" type="fix" issue="CODEC-89">
+             new Base64().encode() appends a CRLF, and chunks results into 76 character lines
+            </action>
             <action dev="sebb" type="add" issue="CODEC-93" due-to="Julius Davies">
              Add test(s) to check that encodeBase64() does not chunk output.
              </action>

@@ -214,7 +214,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
     /**
      * Creates a Base64 codec used for decoding (all modes) and encoding in URL-unsafe mode.
      * <p>
-     * When encoding the line length is 76, the line separator is CRLF, and the encoding table is STANDARD_ENCODE_TABLE.
+     * When encoding the line length is 0 (no chunking), and the encoding table is STANDARD_ENCODE_TABLE.
      * </p>
      * 
      * <p>
@@ -222,7 +222,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * </p>
      */
     public Base64() {
-        this(false);
+        this(0);
     }
 
     /**
