@@ -64,7 +64,7 @@ public class Base64Test extends TestCase {
         encodedContent = StringUtils.newStringUtf8(encodedBytes);
         assertTrue("encoding hello world", encodedContent.equals("SGVsbG8gV29ybGQ="));
 
-        Base64 b64 = new Base64(76, null);  // null lineSeparator same as saying no-chunking
+        Base64 b64 = new Base64(Base64.MIME_CHUNK_SIZE, null);  // null lineSeparator same as saying no-chunking
         encodedBytes = b64.encode(StringUtils.getBytesUtf8(content));
         encodedContent = StringUtils.newStringUtf8(encodedBytes);
         assertTrue("encoding hello world", encodedContent.equals("SGVsbG8gV29ybGQ="));
@@ -507,7 +507,14 @@ public class Base64Test extends TestCase {
      * Tests RFC 2045 section 6.8 chuck size definition.
      */
     public void testRfc2045Section6Dot8ChunkSizeDefinition() {
-        assertEquals(76, Base64.CHUNK_SIZE);
+        assertEquals(76, Base64.MIME_CHUNK_SIZE);
+    }
+
+    /**
+     * Tests RFC 1421 section 4.3.2.4 chuck size definition.
+     */
+    public void testRfc1421Section6Dot8ChunkSizeDefinition() {
+        assertEquals(64, Base64.PEM_CHUNK_SIZE);
     }
 
     public void testSingletons() {
