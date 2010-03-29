@@ -17,6 +17,7 @@
 
 package org.apache.commons.codec.binary;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Random;
@@ -100,33 +101,33 @@ public class Base64Test extends TestCase {
         Base64.decodeBase64(x);
     }
 
-    public void testCodeInteger1() {
+    public void testCodeInteger1() throws UnsupportedEncodingException {
         String encodedInt1 = "li7dzDacuo67Jg7mtqEm2TRuOMU=";
         BigInteger bigInt1 = new BigInteger("85739377120809420210425962799" + "0318636601332086981");
 
         assertEquals(encodedInt1, new String(Base64.encodeInteger(bigInt1)));
-        assertEquals(bigInt1, Base64.decodeInteger(encodedInt1.getBytes()));
+        assertEquals(bigInt1, Base64.decodeInteger(encodedInt1.getBytes("UTF-8")));
     }
 
-    public void testCodeInteger2() {
+    public void testCodeInteger2() throws UnsupportedEncodingException {
         String encodedInt2 = "9B5ypLY9pMOmtxCeTDHgwdNFeGs=";
         BigInteger bigInt2 = new BigInteger("13936727572861167254666467268" + "91466679477132949611");
 
         assertEquals(encodedInt2, new String(Base64.encodeInteger(bigInt2)));
-        assertEquals(bigInt2, Base64.decodeInteger(encodedInt2.getBytes()));
+        assertEquals(bigInt2, Base64.decodeInteger(encodedInt2.getBytes("UTF-8")));
     }
 
-    public void testCodeInteger3() {
+    public void testCodeInteger3() throws UnsupportedEncodingException {
         String encodedInt3 = "FKIhdgaG5LGKiEtF1vHy4f3y700zaD6QwDS3IrNVGzNp2" + "rY+1LFWTK6D44AyiC1n8uWz1itkYMZF0/aKDK0Yjg==";
         BigInteger bigInt3 = new BigInteger("10806548154093873461951748545"
             + "1196989136416448805819079363524309897749044958112417136240557"
             + "4495062430572478766856090958495998158114332651671116876320938126");
 
         assertEquals(encodedInt3, new String(Base64.encodeInteger(bigInt3)));
-        assertEquals(bigInt3, Base64.decodeInteger(encodedInt3.getBytes()));
+        assertEquals(bigInt3, Base64.decodeInteger(encodedInt3.getBytes("UTF-8")));
     }
 
-    public void testCodeInteger4() {
+    public void testCodeInteger4() throws UnsupportedEncodingException {
         String encodedInt4 = "ctA8YGxrtngg/zKVvqEOefnwmViFztcnPBYPlJsvh6yKI"
             + "4iDm68fnp4Mi3RrJ6bZAygFrUIQLxLjV+OJtgJAEto0xAs+Mehuq1DkSFEpP3o"
             + "DzCTOsrOiS1DwQe4oIb7zVk/9l7aPtJMHW0LVlMdwZNFNNJoqMcT2ZfCPrfvYv"
@@ -139,7 +140,7 @@ public class Base64Test extends TestCase {
             + "53542091716518238707344493641683483917");
 
         assertEquals(encodedInt4, new String(Base64.encodeInteger(bigInt4)));
-        assertEquals(bigInt4, Base64.decodeInteger(encodedInt4.getBytes()));
+        assertEquals(bigInt4, Base64.decodeInteger(encodedInt4.getBytes("UTF-8")));
     }
 
     public void testCodeIntegerEdgeCases() {
@@ -216,43 +217,43 @@ public class Base64Test extends TestCase {
     /**
      * Tests conditional true branch for "marker0" test.
      */
-    public void testDecodePadMarkerIndex2() {
-        assertEquals("A", new String(Base64.decodeBase64("QQ==".getBytes())));
+    public void testDecodePadMarkerIndex2() throws UnsupportedEncodingException {
+        assertEquals("A", new String(Base64.decodeBase64("QQ==".getBytes("UTF-8"))));
     }
 
     /**
      * Tests conditional branches for "marker1" test.
      */
-    public void testDecodePadMarkerIndex3() {
-        assertEquals("AA", new String(Base64.decodeBase64("QUE=".getBytes())));
-        assertEquals("AAA", new String(Base64.decodeBase64("QUFB".getBytes())));
+    public void testDecodePadMarkerIndex3() throws UnsupportedEncodingException {
+        assertEquals("AA", new String(Base64.decodeBase64("QUE=".getBytes("UTF-8"))));
+        assertEquals("AAA", new String(Base64.decodeBase64("QUFB".getBytes("UTF-8"))));
     }
 
-    public void testDecodePadOnly() {
-        assertTrue(Base64.decodeBase64("====".getBytes()).length == 0);
-        assertEquals("", new String(Base64.decodeBase64("====".getBytes())));
+    public void testDecodePadOnly() throws UnsupportedEncodingException {
+        assertTrue(Base64.decodeBase64("====".getBytes("UTF-8")).length == 0);
+        assertEquals("", new String(Base64.decodeBase64("====".getBytes("UTF-8"))));
         // Test truncated padding
-        assertTrue(Base64.decodeBase64("===".getBytes()).length == 0);
-        assertTrue(Base64.decodeBase64("==".getBytes()).length == 0);
-        assertTrue(Base64.decodeBase64("=".getBytes()).length == 0);
-        assertTrue(Base64.decodeBase64("".getBytes()).length == 0);
+        assertTrue(Base64.decodeBase64("===".getBytes("UTF-8")).length == 0);
+        assertTrue(Base64.decodeBase64("==".getBytes("UTF-8")).length == 0);
+        assertTrue(Base64.decodeBase64("=".getBytes("UTF-8")).length == 0);
+        assertTrue(Base64.decodeBase64("".getBytes("UTF-8")).length == 0);
     }
 
-    public void testDecodePadOnlyChunked() {
-        assertTrue(Base64.decodeBase64("====\n".getBytes()).length == 0);
-        assertEquals("", new String(Base64.decodeBase64("====\n".getBytes())));
+    public void testDecodePadOnlyChunked() throws UnsupportedEncodingException {
+        assertTrue(Base64.decodeBase64("====\n".getBytes("UTF-8")).length == 0);
+        assertEquals("", new String(Base64.decodeBase64("====\n".getBytes("UTF-8"))));
         // Test truncated padding
-        assertTrue(Base64.decodeBase64("===\n".getBytes()).length == 0);
-        assertTrue(Base64.decodeBase64("==\n".getBytes()).length == 0);
-        assertTrue(Base64.decodeBase64("=\n".getBytes()).length == 0);
-        assertTrue(Base64.decodeBase64("\n".getBytes()).length == 0);
+        assertTrue(Base64.decodeBase64("===\n".getBytes("UTF-8")).length == 0);
+        assertTrue(Base64.decodeBase64("==\n".getBytes("UTF-8")).length == 0);
+        assertTrue(Base64.decodeBase64("=\n".getBytes("UTF-8")).length == 0);
+        assertTrue(Base64.decodeBase64("\n".getBytes("UTF-8")).length == 0);
     }
 
     public void testDecodeWithWhitespace() throws Exception {
 
         String orig = "I am a late night coder.";
 
-        byte[] encodedArray = Base64.encodeBase64(orig.getBytes());
+        byte[] encodedArray = Base64.encodeBase64(orig.getBytes("UTF-8"));
         StringBuffer intermediate = new StringBuffer(new String(encodedArray));
 
         intermediate.insert(2, ' ');
@@ -260,7 +261,7 @@ public class Base64Test extends TestCase {
         intermediate.insert(10, '\r');
         intermediate.insert(15, '\n');
 
-        byte[] encodedWithWS = intermediate.toString().getBytes();
+        byte[] encodedWithWS = intermediate.toString().getBytes("UTF-8");
         byte[] decodedWithWS = Base64.decodeBase64(encodedWithWS);
 
         String dest = new String(decodedWithWS);
@@ -272,7 +273,7 @@ public class Base64Test extends TestCase {
 
         String orig = "I am a late night coder.";
 
-        byte[] encodedArray = Base64.encodeBase64(orig.getBytes());
+        byte[] encodedArray = Base64.encodeBase64(orig.getBytes("UTF-8"));
         StringBuffer intermediate = new StringBuffer(new String(encodedArray));
 
         intermediate.insert(2, ' ');
@@ -280,7 +281,7 @@ public class Base64Test extends TestCase {
         intermediate.insert(10, '\r');
         intermediate.insert(15, '\n');
 
-        byte[] encodedWithWS = intermediate.toString().getBytes();
+        byte[] encodedWithWS = intermediate.toString().getBytes("UTF-8");
         byte[] encodedNoWS = Base64.discardWhitespace(encodedWithWS);
         byte[] decodedWithWS = Base64.decodeBase64(encodedWithWS);
         byte[] decodedNoWS = Base64.decodeBase64(encodedNoWS);
@@ -349,7 +350,7 @@ public class Base64Test extends TestCase {
 
     public void testIgnoringNonBase64InDecode() throws Exception {
         assertEquals("The quick brown fox jumped over the lazy dogs.", new String(Base64
-                .decodeBase64("VGhlIH@$#$@%F1aWN@#@#@@rIGJyb3duIGZve\n\r\t%#%#%#%CBqd##$#$W1wZWQgb3ZlciB0aGUgbGF6eSBkb2dzLg==".getBytes())));
+                .decodeBase64("VGhlIH@$#$@%F1aWN@#@#@@rIGJyb3duIGZve\n\r\t%#%#%#%CBqd##$#$W1wZWQgb3ZlciB0aGUgbGF6eSBkb2dzLg==".getBytes("UTF-8"))));
     }
 
     public void testIsArrayByteBase64() {
@@ -380,38 +381,38 @@ public class Base64Test extends TestCase {
         assertTrue("Base64.isArrayByteBase64(whiteSpace)=true", Base64.isArrayByteBase64(whiteSpace));
     }
 
-    public void testKnownDecodings() {
+    public void testKnownDecodings() throws UnsupportedEncodingException {
         assertEquals("The quick brown fox jumped over the lazy dogs.", new String(Base64
-                .decodeBase64("VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2dzLg==".getBytes())));
+                .decodeBase64("VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2dzLg==".getBytes("UTF-8"))));
         assertEquals("It was the best of times, it was the worst of times.", new String(Base64
-                .decodeBase64("SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN0IG9mIHRpbWVzLg==".getBytes())));
+                .decodeBase64("SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN0IG9mIHRpbWVzLg==".getBytes("UTF-8"))));
         assertEquals("http://jakarta.apache.org/commmons", new String(Base64
-                .decodeBase64("aHR0cDovL2pha2FydGEuYXBhY2hlLm9yZy9jb21tbW9ucw==".getBytes())));
+                .decodeBase64("aHR0cDovL2pha2FydGEuYXBhY2hlLm9yZy9jb21tbW9ucw==".getBytes("UTF-8"))));
         assertEquals("AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz", new String(Base64
-                .decodeBase64("QWFCYkNjRGRFZUZmR2dIaElpSmpLa0xsTW1Obk9vUHBRcVJyU3NUdFV1VnZXd1h4WXlaeg==".getBytes())));
+                .decodeBase64("QWFCYkNjRGRFZUZmR2dIaElpSmpLa0xsTW1Obk9vUHBRcVJyU3NUdFV1VnZXd1h4WXlaeg==".getBytes("UTF-8"))));
         assertEquals("{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }", new String(Base64.decodeBase64("eyAwLCAxLCAyLCAzLCA0LCA1LCA2LCA3LCA4LCA5IH0="
-                .getBytes())));
-        assertEquals("xyzzy!", new String(Base64.decodeBase64("eHl6enkh".getBytes())));
+                .getBytes("UTF-8"))));
+        assertEquals("xyzzy!", new String(Base64.decodeBase64("eHl6enkh".getBytes("UTF-8"))));
     }
 
-    public void testKnownEncodings() {
+    public void testKnownEncodings() throws UnsupportedEncodingException {
         assertEquals("VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2dzLg==", new String(Base64
-                .encodeBase64("The quick brown fox jumped over the lazy dogs.".getBytes())));
+                .encodeBase64("The quick brown fox jumped over the lazy dogs.".getBytes("UTF-8"))));
         assertEquals(
                 "YmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJs\r\nYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFo\r\nIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBi\r\nbGFoIGJsYWg=\r\n",
                 new String(
                         Base64
                                 .encodeBase64Chunked("blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah"
-                                        .getBytes())));
+                                        .getBytes("UTF-8"))));
         assertEquals("SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN0IG9mIHRpbWVzLg==", new String(Base64
-                .encodeBase64("It was the best of times, it was the worst of times.".getBytes())));
+                .encodeBase64("It was the best of times, it was the worst of times.".getBytes("UTF-8"))));
         assertEquals("aHR0cDovL2pha2FydGEuYXBhY2hlLm9yZy9jb21tbW9ucw==", new String(Base64
-                .encodeBase64("http://jakarta.apache.org/commmons".getBytes())));
+                .encodeBase64("http://jakarta.apache.org/commmons".getBytes("UTF-8"))));
         assertEquals("QWFCYkNjRGRFZUZmR2dIaElpSmpLa0xsTW1Obk9vUHBRcVJyU3NUdFV1VnZXd1h4WXlaeg==", new String(Base64
-                .encodeBase64("AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz".getBytes())));
+                .encodeBase64("AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz".getBytes("UTF-8"))));
         assertEquals("eyAwLCAxLCAyLCAzLCA0LCA1LCA2LCA3LCA4LCA5IH0=", new String(Base64.encodeBase64("{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }"
-                .getBytes())));
-        assertEquals("eHl6enkh", new String(Base64.encodeBase64("xyzzy!".getBytes())));
+                .getBytes("UTF-8"))));
+        assertEquals("eHl6enkh", new String(Base64.encodeBase64("xyzzy!".getBytes("UTF-8"))));
     }
 
     public void testNonBase64Test() throws Exception {
@@ -450,7 +451,7 @@ public class Base64Test extends TestCase {
     public void testObjectDecodeWithValidParameter() throws Exception {
 
         String original = "Hello World!";
-        Object o = Base64.encodeBase64(original.getBytes());
+        Object o = Base64.encodeBase64(original.getBytes("UTF-8"));
 
         Base64 b64 = new Base64();
         Object oDecoded = b64.decode(o);
@@ -473,7 +474,7 @@ public class Base64Test extends TestCase {
     public void testObjectEncodeWithValidParameter() throws Exception {
 
         String original = "Hello World!";
-        Object origObj = original.getBytes();
+        Object origObj = original.getBytes("UTF-8");
 
         Base64 b64 = new Base64();
         Object oEncoded = b64.encode(origObj);

@@ -175,9 +175,9 @@ public class HexTest extends TestCase {
         assertEquals(name, sourceString, actualStringFromBytes);
     }
 
-    public void testCustomCharsetBadNameEncodeByteArray() {
+    public void testCustomCharsetBadNameEncodeByteArray() throws UnsupportedEncodingException {
         try {
-            new Hex(BAD_ENCODING_NAME).encode("Hello World".getBytes());
+            new Hex(BAD_ENCODING_NAME).encode("Hello World".getBytes("UTF-8"));
             fail("Expected " + IllegalStateException.class.getName());
         } catch (IllegalStateException e) {
             // Expected
@@ -193,9 +193,9 @@ public class HexTest extends TestCase {
         }
     }
 
-    public void testCustomCharsetBadNameDecodeObject() {
+    public void testCustomCharsetBadNameDecodeObject() throws UnsupportedEncodingException {
         try {
-            new Hex(BAD_ENCODING_NAME).decode("Hello World".getBytes());
+            new Hex(BAD_ENCODING_NAME).decode("Hello World".getBytes("UTF-8"));
             fail("Expected " + DecoderException.class.getName());
         } catch (DecoderException e) {
             // Expected

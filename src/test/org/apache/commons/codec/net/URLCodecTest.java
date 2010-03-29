@@ -180,7 +180,7 @@ public class URLCodecTest extends TestCase {
     public void testEncodeUrlWithNullBitSet() throws Exception {
         URLCodec urlCodec = new URLCodec();
         String plain = "Hello there!";
-        String encoded = new String( URLCodec.encodeUrl(null, plain.getBytes()));
+        String encoded = new String( URLCodec.encodeUrl(null, plain.getBytes("UTF-8")));
         assertEquals("Basic URL encoding test", 
             "Hello+there%21", encoded);
         assertEquals("Basic URL decoding test", 
@@ -215,7 +215,7 @@ public class URLCodecTest extends TestCase {
         assertEquals("Basic URL encoding test", 
             "Hello+there%21", encoded);
 
-        byte[] plainBA = plain.getBytes();
+        byte[] plainBA = plain.getBytes("UTF-8");
         byte[] encodedBA = (byte[]) urlCodec.encode((Object) plainBA);
         encoded = new String(encodedBA);
         assertEquals("Basic URL encoding test", 
@@ -259,7 +259,7 @@ public class URLCodecTest extends TestCase {
         assertEquals("Basic URL decoding test", 
             "Hello there!", decoded);
 
-        byte[] plainBA = plain.getBytes();
+        byte[] plainBA = plain.getBytes("UTF-8");
         byte[] decodedBA = (byte[]) urlCodec.decode((Object) plainBA);
         decoded = new String(decodedBA);
         assertEquals("Basic URL decoding test", 
