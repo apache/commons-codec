@@ -1106,6 +1106,10 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest {
         assertDoubleMetaphoneAlt("MKLL", "McClelland");
         assertDoubleMetaphoneAlt("SNHS", "san jose");
         assertDoubleMetaphoneAlt("SNFP", "xenophobia");
+        assertDoubleMetaphoneAlt("FKR", "Fokker");
+        assertDoubleMetaphoneAlt("AK", "Joqqi");
+        assertDoubleMetaphoneAlt("HF", "Hovvi");
+        assertDoubleMetaphoneAlt("XRN", "Czerny");
     }
 
     public void testEmpty() {
