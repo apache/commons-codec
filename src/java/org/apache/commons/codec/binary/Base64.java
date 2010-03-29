@@ -724,7 +724,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
-     * Decodes a String containing containing characters in the Base64 alphabet.
+     * Decodes a String containing characters in the Base64 alphabet.
      *
      * @param pArray
      *            A String containing Base64 character data
@@ -736,7 +736,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
-     * Decodes a byte[] containing containing characters in the Base64 alphabet.
+     * Decodes a byte[] containing characters in the Base64 alphabet.
      * 
      * @param pArray
      *            A byte array containing Base64 character data
