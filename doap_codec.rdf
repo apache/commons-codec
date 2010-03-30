@@ -23,7 +23,7 @@ limitations under the License.
     <category rdf:resource="http://projects.apache.org/category/library"/>
     <license rdf:resource="http://usefulinc.com/doap/licenses/asl20"/>
     <bug-database rdf:resource="http://issues.apache.org/jira/browse/CODEC"/>
-    <download-page rdf:resource="http://jakarta.apache.org/site/downloads/downloads_commons-codec.cgi"/>
+    <download-page rdf:resource="http://commons.apache.org/codec/download_codec.cgi"/>
     <asfext:pmc rdf:resource="http://commons.apache.org/"/>
     <shortdesc xml:lang="en">Simple encoders and decoders</shortdesc>
     <description xml:lang="en">
