@@ -97,6 +97,13 @@
             <id>dgraham</id>
             <email>dgraham@apache.org</email>
         </developer>
+        <developer>
+            <name>Julius Davies</name>
+            <id>julius</id>
+            <email>julius@apache.org</email>
+            <organizationUrl>http://juliusdavies.ca/</organizationUrl>
+            <timezone>-8</timezone>
+        </developer>
     </developers>
     <contributors>
         <contributor>
@@ -149,14 +156,6 @@
             <name>Jochen Wiedmann</name>
             <email>jochen@apache.org</email>
             <roles><role>Base64 code [CODEC-69]</role></roles>
-        </contributor>
-        <contributor>
-            <name>Julius Davies</name>
-            <email>juliusdavies@gmail.com</email>
-            <roles>
-               <role>Base64InputStream</role>
-               <role>Base64OutputStream</role>
-            </roles>
         </contributor>
         <contributor>
             <name>Sebastian Bazley</name>
