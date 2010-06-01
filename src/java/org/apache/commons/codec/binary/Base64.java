@@ -583,6 +583,10 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
         // EOF (-1) and first time '=' character is encountered in stream.
         // This approach makes the '=' padding characters completely optional.
         if (eof && modulus != 0) {
+            if (buffer == null || buffer.length - pos < decodeSize) {
+                resizeBuffer();
+            }
+            
             x = x << 6;
             switch (modulus) {
                 case 2 :

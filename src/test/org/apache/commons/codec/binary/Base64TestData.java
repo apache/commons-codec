@@ -32,6 +32,13 @@ import java.util.Random;
  */
 public class Base64TestData {
 
+    public static final String CODEC_98_NPE
+        = "YWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWjAxMjM";
+
+    public static final String CODEC_98_NPE_DECODED
+        = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123";
+
+
     // OpenSSL doesn't include the final \n, but it would be annoying beyond belief
     // to further parameterize commons-codec to support this pointless variation.
     final static String ENCODED_64_CHARS_PER_LINE
@@ -133,7 +140,10 @@ public class Base64TestData {
 
     static byte[] streamToBytes(final InputStream in) throws IOException {
         // new byte[7] is obviously quite slow, but helps exercise the code.
-        byte[] buf = new byte[7];
+        return streamToBytes(in, new byte[7]);
+    }
+
+    static byte[] streamToBytes(final InputStream in, byte[] buf) throws IOException {
         try {
             int[] status = fill(buf, 0, in);
             int size = status[SIZE_KEY];
