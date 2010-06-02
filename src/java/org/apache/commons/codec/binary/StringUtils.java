@@ -38,8 +38,8 @@ public class StringUtils {
      * byte array.
      * 
      * @param string
-     *            the String to encode
-     * @return encoded bytes
+     *            the String to encode, may be <code>null</code>
+     * @return encoded bytes, or <code>null</code> if the input string was <code>null</code>
      * @throws IllegalStateException
      *             Thrown when the charset is missing, which should be never according the the Java specification.
      * @see <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
@@ -54,8 +54,8 @@ public class StringUtils {
      * array.
      * 
      * @param string
-     *            the String to encode
-     * @return encoded bytes
+     *            the String to encode, may be <code>null</code>
+     * @return encoded bytes, or <code>null</code> if the input string was <code>null</code>
      * @throws IllegalStateException
      *             Thrown when the charset is missing, which should be never according the the Java specification.
      * @see <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
@@ -70,8 +70,8 @@ public class StringUtils {
      * array.
      * 
      * @param string
-     *            the String to encode
-     * @return encoded bytes
+     *            the String to encode, may be <code>null</code>
+     * @return encoded bytes, or <code>null</code> if the input string was <code>null</code>
      * @throws IllegalStateException
      *             Thrown when the charset is missing, which should be never according the the Java specification.
      * @see <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
@@ -86,8 +86,8 @@ public class StringUtils {
      * array.
      * 
      * @param string
-     *            the String to encode
-     * @return encoded bytes
+     *            the String to encode, may be <code>null</code>
+     * @return encoded bytes, or <code>null</code> if the input string was <code>null</code>
      * @throws IllegalStateException
      *             Thrown when the charset is missing, which should be never according the the Java specification.
      * @see <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
@@ -102,8 +102,8 @@ public class StringUtils {
      * array.
      * 
      * @param string
-     *            the String to encode
-     * @return encoded bytes
+     *            the String to encode, may be <code>null</code>
+     * @return encoded bytes, or <code>null</code> if the input string was <code>null</code>
      * @throws IllegalStateException
      *             Thrown when the charset is missing, which should be never according the the Java specification.
      * @see <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
@@ -118,8 +118,8 @@ public class StringUtils {
      * array.
      * 
      * @param string
-     *            the String to encode
-     * @return encoded bytes
+     *            the String to encode, may be <code>null</code>
+     * @return encoded bytes, or <code>null</code> if the input string was <code>null</code>
      * @throws IllegalStateException
      *             Thrown when the charset is missing, which should be never according the the Java specification.
      * @see <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
@@ -138,10 +138,10 @@ public class StringUtils {
      * </p>
      * 
      * @param string
-     *            the String to encode
+     *            the String to encode, may be <code>null</code>
      * @param charsetName
      *            The name of a required {@link java.nio.charset.Charset}
-     * @return encoded bytes
+     * @return encoded bytes, or <code>null</code> if the input string was <code>null</code>
      * @throws IllegalStateException
      *             Thrown when a {@link UnsupportedEncodingException} is caught, which should never happen for a
      *             required charset name.
@@ -171,10 +171,11 @@ public class StringUtils {
      * </p>
      * 
      * @param bytes
-     *            The bytes to be decoded into characters
+     *            The bytes to be decoded into characters, may be <code>null</code>
      * @param charsetName
      *            The name of a required {@link java.nio.charset.Charset}
-     * @return A new <code>String</code> decoded from the specified array of bytes using the given charset.
+     * @return A new <code>String</code> decoded from the specified array of bytes using the given charset,
+     *         or <code>null</code> if the input byte arrray was <code>null</code>.
      * @throws IllegalStateException
      *             Thrown when a {@link UnsupportedEncodingException} is caught, which should never happen for a
      *             required charset name.
@@ -196,8 +197,9 @@ public class StringUtils {
      * Constructs a new <code>String</code> by decoding the specified array of bytes using the ISO-8859-1 charset.
      * 
      * @param bytes
-     *            The bytes to be decoded into characters
-     * @return A new <code>String</code> decoded from the specified array of bytes using the given charset.
+     *            The bytes to be decoded into characters, may be <code>null</code>
+     * @return A new <code>String</code> decoded from the specified array of bytes using the ISO-8859-1 charset,
+     *         or <code>null</code> if the input byte array was <code>null</code>.
      * @throws IllegalStateException
      *             Thrown when a {@link UnsupportedEncodingException} is caught, which should never happen since the
      *             charset is required.
@@ -211,7 +213,8 @@ public class StringUtils {
      * 
      * @param bytes
      *            The bytes to be decoded into characters
-     * @return A new <code>String</code> decoded from the specified array of bytes using the given charset.
+     * @return A new <code>String</code> decoded from the specified array of bytes using the US-ASCII charset,
+     *         or <code>null</code> if the input byte array was <code>null</code>.
      * @throws IllegalStateException
      *             Thrown when a {@link UnsupportedEncodingException} is caught, which should never happen since the
      *             charset is required.
@@ -225,7 +228,8 @@ public class StringUtils {
      * 
      * @param bytes
      *            The bytes to be decoded into characters
-     * @return A new <code>String</code> decoded from the specified array of bytes using the given charset.
+     * @return A new <code>String</code> decoded from the specified array of bytes using the UTF-16 charset
+     *         or <code>null</code> if the input byte array was <code>null</code>.
      * @throws IllegalStateException
      *             Thrown when a {@link UnsupportedEncodingException} is caught, which should never happen since the
      *             charset is required.
@@ -239,7 +243,8 @@ public class StringUtils {
      * 
      * @param bytes
      *            The bytes to be decoded into characters
-     * @return A new <code>String</code> decoded from the specified array of bytes using the given charset.
+     * @return A new <code>String</code> decoded from the specified array of bytes using the UTF-16BE charset,
+     *         or <code>null</code> if the input byte array was <code>null</code>.
      * @throws IllegalStateException
      *             Thrown when a {@link UnsupportedEncodingException} is caught, which should never happen since the
      *             charset is required.
@@ -253,7 +258,8 @@ public class StringUtils {
      * 
      * @param bytes
      *            The bytes to be decoded into characters
-     * @return A new <code>String</code> decoded from the specified array of bytes using the given charset.
+     * @return A new <code>String</code> decoded from the specified array of bytes using the UTF-16LE charset,
+     *         or <code>null</code> if the input byte array was <code>null</code>.
      * @throws IllegalStateException
      *             Thrown when a {@link UnsupportedEncodingException} is caught, which should never happen since the
      *             charset is required.
@@ -267,7 +273,8 @@ public class StringUtils {
      * 
      * @param bytes
      *            The bytes to be decoded into characters
-     * @return A new <code>String</code> decoded from the specified array of bytes using the given charset.
+     * @return A new <code>String</code> decoded from the specified array of bytes using the UTF-8 charset,
+     *         or <code>null</code> if the input byte array was <code>null</code>.
      * @throws IllegalStateException
      *             Thrown when a {@link UnsupportedEncodingException} is caught, which should never happen since the
      *             charset is required.
