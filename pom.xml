@@ -90,7 +90,7 @@
             <url>http://www.garygregory.com</url>
             <organization>Seagull Software</organization>
             <organizationUrl>http://www.seagullsoftware.com</organizationUrl>
-            <timezone>-8</timezone>
+            <timezone>-5</timezone>
         </developer>
         <developer>
             <name>David Graham</name>
