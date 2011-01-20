@@ -24,11 +24,12 @@ limitations under the License.
 <module name="Checker">
   <property name="localeLanguage" value="en"/>
 
+  <!-- Verify that EVERY source file has the appropriate license -->
+  <module name="Header">
+    <property name="headerFile" value="${checkstyle.header.file}"/>
+  </module>
+
   <module name="TreeWalker">
-    <!-- Verify that EVERY source file has the appropriate license -->
-    <module name="Header">
-      <property name="headerFile" value="${checkstyle.header.file}"/>
-    </module>
 
     <module name="OperatorWrap">
       <property name="option" value="eol"/>
