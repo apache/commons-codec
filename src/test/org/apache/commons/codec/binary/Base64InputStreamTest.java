@@ -17,8 +17,10 @@
 
 package org.apache.commons.codec.binary;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 
 import junit.framework.TestCase;
@@ -62,6 +64,35 @@ public class Base64InputStreamTest extends TestCase {
 
         c = in.read(result);
         assertTrue("Codec101: Second read should report end-of-stream [c=" + c + "]", c < 0);
+    }
+
+    /**
+     * Another test for the CODEC-101 bug:
+     * In commons-codec-1.4 this test shows InputStreamReader explicitly hating an
+     * InputStream.read(byte[]) return of 0:
+     *
+     * java.io.IOException: Underlying input stream returned zero bytes
+     * at sun.nio.cs.StreamDecoder.readBytes(StreamDecoder.java:268)
+     * at sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:306)
+     * at sun.nio.cs.StreamDecoder.read(StreamDecoder.java:158)
+     * at java.io.InputStreamReader.read(InputStreamReader.java:167)
+     * at java.io.BufferedReader.fill(BufferedReader.java:136)
+     * at java.io.BufferedReader.readLine(BufferedReader.java:299)
+     * at java.io.BufferedReader.readLine(BufferedReader.java:362)
+     * at org.apache.commons.codec.binary.Base64InputStreamTest.testInputStreamReader(Base64InputStreamTest.java:75)
+     *
+     * But in commons-codec-1.5 it's fixed.  :-)
+     *
+     * @throws Exception for some failure scenarios.
+     */
+    public void testInputStreamReader() throws Exception {
+        byte[] codec101 = StringUtils.getBytesUtf8(Base64TestData.CODEC_101_MULTIPLE_OF_3);
+        ByteArrayInputStream bais = new ByteArrayInputStream(codec101);
+        Base64InputStream in = new Base64InputStream(bais);
+        InputStreamReader isr = new InputStreamReader(in);
+        BufferedReader br = new BufferedReader(isr);
+        String line = br.readLine();
+        assertNotNull("Codec101:  InputStreamReader works!", line);
     }
 
     /**
