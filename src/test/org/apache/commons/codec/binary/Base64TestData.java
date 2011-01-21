@@ -32,6 +32,8 @@ import java.util.Random;
  */
 public class Base64TestData {
 
+    public static final String CODEC_101_MULTIPLE_OF_3 = "123";
+
     public static final String CODEC_98_NPE
         = "YWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWjAxMjM";
 
