@@ -1,7 +1,7 @@
 $Id$
 
 			 Commons Codec Package
-			    Version 1.4.1
+			    Version 1.5
 			   Release Notes
 
 http://commons.apache.org/codec/
@@ -12,10 +12,10 @@ decoders, the codec package also maintains a collection of phonetic encoding
 utilities. 
 
 Compatibility
-o Codec 1.4.1 is binary compatible with Codec 1.3
-o Codec 1.4.1 fixes some accidental binary incompatibilities between
+o Codec 1.5 is binary compatible with Codec 1.3
+o Codec 1.5 fixes some accidental binary incompatibilities between
   1.4 and 1.3, and thus it is NOT binary compatible with Codec-1.4.
-o Codec 1.4.1 has a minimum requirement of JDK 1.4
+o Codec 1.5 has a minimum requirement of JDK 1.4
 
 Changes in this version include:
 
