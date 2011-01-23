@@ -189,7 +189,7 @@ import org.apache.commons.codec.StringEncoder;
  *          class</li> </ul>
  * 
  * @author Apache Software Foundation
- * @version beta 2010/9/13
+ * @version 1.5
  */
 
 public class ColognePhonetic implements StringEncoder {
