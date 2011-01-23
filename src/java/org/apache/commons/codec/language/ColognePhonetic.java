@@ -188,7 +188,7 @@ import org.apache.commons.codec.StringEncoder;
  *          {@linkplain StringEncoder}—for the interface implemented by this
  *          class</li> </ul>
  * 
- * @author Falk Meyer, IT2media
+ * @author Apache Software Foundation
  * @version beta 2010/9/13
  */
 
