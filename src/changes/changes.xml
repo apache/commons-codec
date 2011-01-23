@@ -22,16 +22,31 @@
         <author>Gary D. Gregory</author>
     </properties>
     <body>
-        <release version="TBA" date="TBA" description="TBC">
-            <action dev="sebb" type="fix" issue="CODEC-97">
-             Base64 default constructor behaviour changed to enable chunking in 1.4
-            </action>
+        <release version="1.5" date="TBA" description="Feature and fix release.">
             <action dev="sebb" type="fix" issue="CODEC-89">
-             new Base64().encode() appends a CRLF, and chunks results into 76 character lines
+             new Base64().encode() appends a CRLF, and chunks results into 76 character lines.
             </action>
-            <action dev="sebb" type="add" issue="CODEC-93" due-to="Julius Davies">
+            <action dev="sebb" type="fix" issue="CODEC-92">
+             Many test cases use getBytes() which uses the default platform encoding so tests may fail on some platforms.
+            </action>
+            <action dev="sebb, julius, ggregory" type="add" issue="CODEC-93" due-to="sebb">
              Add test(s) to check that encodeBase64() does not chunk output.
              </action>
+            <action dev="sebb" type="fix" issue="CODEC-97" due-to="mjryall">
+             Base64 default constructor behaviour changed to enable chunking in 1.4.
+            </action>
+            <action dev="ggregory" type="fix" issue="CODEC-99" due-to="julius">
+             Base64.encodeBase64String() shouldn't chunk.
+            </action>
+            <action dev="julius" type="fix" issue="CODEC-101" due-to="balusc">
+             Base64InputStream#read(byte[]) incorrectly returns 0 at end of any stream which is multiple of 3 bytes long.
+            </action>
+            <action dev="bayard" type="fix" issue="CODEC-103" due-to="gnuf">
+             Typo in DecoderException message thrown from Hex.decodeHex.
+            </action>
+            <action dev="bayard" type="add" issue="CODEC-106" due-to="it2mmeyerfa">
+             Add the "Kölner Phonetik" encoder (cologne phonetic) to codec.lang.
+            </action>
         </release>
         <release version="1.4" date="9 August 2009" description="Feature and fix release.">
             <action dev="ggregory" type="fix" issue="CODEC-80" due-to="Julius Davies">
