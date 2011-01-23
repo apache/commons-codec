@@ -667,7 +667,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * @since 1.4
      */    
     public static String encodeBase64String(byte[] binaryData) {
-        return StringUtils.newStringUtf8(encodeBase64(binaryData, true));
+        return StringUtils.newStringUtf8(encodeBase64(binaryData, false));
     }
     
     /**
