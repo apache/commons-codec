@@ -23,18 +23,14 @@ import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
 
 /**
- * <h1>ColognePhonetic</h1>
- * 
  * <p>
- * <b>ColognePhonetic</b> provides an implementation of the <a
- * href="http://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik">“Kölner
- * Phonetic”</a> (cologne phonetic) algorithm issued by Hans Joachim Postel in
- * 1969.
+ * Implements of the <a href="http://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik">“Kölner Phonetic”</a> (cologne
+ * phonetic) algorithm issued by Hans Joachim Postel in 1969.
  * </p>
  * 
  * <p>
- * The <i>Kölner Phonetik</i> is a phonetic algorithm which is optimized for the
- * German language. It is related to the well-known soundex algorithm.
+ * The <i>Kölner Phonetik</i> is a phonetic algorithm which is optimized for the German language. It is related to the
+ * well-known soundex algorithm.
  * </p>
  * 
  * <h2>Algorithm</h2>
@@ -44,9 +40,8 @@ import org.apache.commons.codec.StringEncoder;
  * <li>
  * <h3>First step:</h3>
  * After a preprocessing (convertion to upper case, transcription of <a
- * href="http://en.wikipedia.org/wiki/Germanic_umlaut">germanic umlauts</a>,
- * removal of non alphabetical characters) the letters of the supplied text are
- * replaced by their phonetic code according to the folowing table.
+ * href="http://en.wikipedia.org/wiki/Germanic_umlaut">germanic umlauts</a>, removal of non alphabetical characters) the
+ * letters of the supplied text are replaced by their phonetic code according to the folowing table.
  * <table border="1">
  * <tbody>
  * <tr>
@@ -152,9 +147,8 @@ import org.apache.commons.codec.StringEncoder;
  * </tbody>
  * </table>
  * <p>
- * <small><i>(Source: <a href=
- * "http://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik#Buchstabencodes"
- * >Wikipedia (de): Kölner Phonetik – Buchstabencodes</a>)</i></small>
+ * <small><i>(Source: <a href= "http://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik#Buchstabencodes" >Wikipedia (de):
+ * Kölner Phonetik – Buchstabencodes</a>)</i></small>
  * </p>
  * 
  * <h4>Example:</h4>
@@ -178,20 +172,12 @@ import org.apache.commons.codec.StringEncoder;
  * 
  * </ul>
  * 
- * @see<ul> <li><a
- *          href="http://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik"><span
- *          style="font-variant:small-caps">Wikipedia</span> (de): <i>Kölner
- *          Phonetik</i></a>—for German description of the algorithm and more
- *          sources.</li> <li>{@linkplain #colognePhonetic(String)}—for the
- *          description of the actual implementation</li> <li>
- *          {@linkplain #isCologneEqual(String, String)}</li> <li>
- *          {@linkplain StringEncoder}—for the interface implemented by this
- *          class</li> </ul>
- * 
+ * @see <a href="http://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik"><span
+ *      style="font-variant:small-caps">Wikipedia</span> (de): <i>Kölner Phonetik</i></a> (a German description of the
+ *      algorithm and more sources)
  * @author Apache Software Foundation
- * @version 1.5
+ * @since 1.5
  */
-
 public class ColognePhonetic implements StringEncoder {
 
     private class CologneLeftBuffer implements CharSequence {
