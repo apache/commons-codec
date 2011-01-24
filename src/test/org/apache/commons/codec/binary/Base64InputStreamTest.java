@@ -19,6 +19,7 @@ package org.apache.commons.codec.binary;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
@@ -46,6 +47,16 @@ public class Base64InputStreamTest extends TestCase {
      */
     public Base64InputStreamTest(String name) {
         super(name);
+    }
+
+    /**
+     * Tests the bug reported in CODEC-105. Bad interactions with InputStream when reading one byte at a time.
+     */
+    public void testCodec105() throws IOException {
+        Base64InputStream in = new Base64InputStream(new Codec105ErrorInputStream(), true, 0, null);
+        for (int i = 0; i < 5; i++) {
+            in.read();
+        }
     }
 
     /**

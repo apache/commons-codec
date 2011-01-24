@@ -166,11 +166,6 @@ public class Base64InputStream extends FilterInputStream {
                 if (!base64.hasData()) {
                     byte[] buf = new byte[doEncode ? 4096 : 8192];
                     int c = in.read(buf);
-                    // A little optimization to avoid System.arraycopy()
-                    // when possible.
-                    if (c > 0 && b.length == len) {
-                        base64.setInitialBuffer(b, offset, len);
-                    }
                     if (doEncode) {
                         base64.encode(buf, 0, c);
                     } else {

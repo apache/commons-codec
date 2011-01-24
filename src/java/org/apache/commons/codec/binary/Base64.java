@@ -406,41 +406,14 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
     int readResults(byte[] b, int bPos, int bAvail) {
         if (buffer != null) {
             int len = Math.min(avail(), bAvail);
-            if (buffer != b) {
-                System.arraycopy(buffer, readPos, b, bPos, len);
-                readPos += len;
-                if (readPos >= pos) {
-                    buffer = null;
-                }
-            } else {
-                // Re-using the original consumer's output array is only
-                // allowed for one round.
+            System.arraycopy(buffer, readPos, b, bPos, len);
+            readPos += len;
+            if (readPos >= pos) {
                 buffer = null;
             }
             return len;
         }
         return eof ? -1 : 0;
-    }
-
-    /**
-     * Sets the streaming buffer. This is a small optimization where we try to buffer directly to the consumer's output
-     * array for one round (if the consumer calls this method first) instead of starting our own buffer.
-     * 
-     * @param out
-     *            byte[] array to buffer directly to.
-     * @param outPos
-     *            Position to start buffering into.
-     * @param outAvail
-     *            Amount of bytes available for direct buffering.
-     */
-    void setInitialBuffer(byte[] out, int outPos, int outAvail) {
-        // We can re-use consumer's original output array under
-        // special circumstances, saving on some System.arraycopy().
-        if (out != null && out.length == outAvail) {
-            buffer = out;
-            pos = outPos;
-            readPos = outPos;
-        }
     }
 
     /**
@@ -493,7 +466,10 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
                     }
                     break;
             }
-            if (lineLength > 0 && pos > 0) {
+            // Don't want to append the CRLF two times in a row, so make sure previous
+            // character is not from CRLF!
+            byte b = lineSeparator[lineSeparator.length - 1];
+            if (lineLength > 0 && pos > 0 && buffer[pos-1] != b) {
                 System.arraycopy(lineSeparator, 0, buffer, pos, lineSeparator.length);
                 pos += lineSeparator.length;
             }
@@ -751,18 +727,8 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
         if (pArray == null || pArray.length == 0) {
             return pArray;
         }
-        long len = (pArray.length * 3) / 4;
-        byte[] buf = new byte[(int) len];
-        setInitialBuffer(buf, 0, buf.length);
         decode(pArray, 0, pArray.length);
         decode(pArray, 0, -1); // Notify decoder of EOF.
-
-        // Would be nice to just return buf (like we sometimes do in the encode
-        // logic), but we have no idea what the line-length was (could even be
-        // variable).  So we cannot determine ahead of time exactly how big an
-        // array is necessary.  Hence the need to construct a 2nd byte array to
-        // hold the final result:
-
         byte[] result = new byte[pos];
         readResults(result, 0, result.length);
         return result;
@@ -946,23 +912,11 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
         if (pArray == null || pArray.length == 0) {
             return pArray;
         }
-        long len = getEncodeLength(pArray, lineLength, lineSeparator);
-        byte[] buf = new byte[(int) len];
-        setInitialBuffer(buf, 0, buf.length);
         encode(pArray, 0, pArray.length);
         encode(pArray, 0, -1); // Notify encoder of EOF.
-        // Encoder might have resized, even though it was unnecessary.
-        if (buffer != buf) {
-            readResults(buf, 0, buf.length);
-        }
-        // In URL-SAFE mode we skip the padding characters, so sometimes our
-        // final length is a bit smaller.
-        if (isUrlSafe() && pos < buf.length) {
-            byte[] smallerBuf = new byte[pos];
-            System.arraycopy(buf, 0, smallerBuf, 0, pos);
-            buf = smallerBuf;
-        }
-        return buf;        
+        byte[] buf = new byte[pos - readPos];
+        readResults(buf, 0, buf.length);
+        return buf;
     }
 
     /**
