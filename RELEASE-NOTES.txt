@@ -12,9 +12,10 @@ decoders, the codec package also maintains a collection of phonetic encoding
 utilities. 
 
 Compatibility
-o Codec 1.5 is binary compatible with Codec 1.3
+o Codec 1.5 is binary compatible with Codec 1.3 with the exception of 
+  [CODEC-111]: org.apache.commons.codec.net.URLCodec.ESCAPE_CHAR isn't final but should be.
 o Codec 1.5 fixes some accidental binary incompatibilities between
-  1.4 and 1.3, and thus it is NOT binary compatible with Codec-1.4.
+  1.4 and 1.3, and thus it is NOT binary compatible with 1.4.
 o Codec 1.5 has a minimum requirement of JDK 1.4
 
 Changes in this version include:
@@ -27,6 +28,7 @@ o [CODEC-XYZ] TBD
 
 o [CODEC-89]  new Base64().encode() appends a CRLF, and chunks results into 76 character lines
 o [CODEC-98]  Base64InputStream causes NullPointerException on some input.
+o [CODEC-111] org.apache.commons.codec.net.URLCodec.ESCAPE_CHAR isn't final but should be.
 
   Changes:
 

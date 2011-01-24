@@ -50,6 +50,9 @@
             <action dev="bayard" type="add" issue="CODEC-106" due-to="it2mmeyerfa">
              Add the "Kölner Phonetik" encoder (cologne phonetic) to codec.lang.
             </action>
+            <action dev="ggregory" type="add" issue="CODEC-111" due-to="ggregory">
+             org.apache.commons.codec.net.URLCodec.ESCAPE_CHAR isn't final but should be.
+            </action>
         </release>
         <release version="1.4" date="9 August 2009" description="Feature and fix release.">
             <action dev="ggregory" type="fix" issue="CODEC-80" due-to="Julius Davies">
