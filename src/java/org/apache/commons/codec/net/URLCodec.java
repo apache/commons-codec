@@ -64,9 +64,9 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
     protected String charset;
     
     /**
-     * Consider this field final. The next major release may break compatibility and make this field be final.
+     * Release 1.5 made this field final.
      */
-    protected static byte ESCAPE_CHAR = '%';
+    protected static final byte ESCAPE_CHAR = '%';
     /**
      * BitSet of www-form-url safe characters.
      */
