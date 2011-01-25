@@ -610,9 +610,24 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * @param arrayOctet
      *            byte array to test
      * @return <code>true</code> if all bytes are valid characters in the Base64 alphabet or if the byte array is empty;
-     *         false, otherwise
+     *         <code>false</code>, otherwise
+     * @deprecated Use {@link #isBase64(byte[])}
      */
     public static boolean isArrayByteBase64(byte[] arrayOctet) {
+        return isBase64(arrayOctet);
+    }
+    
+    /**
+     * Tests a given byte array to see if it contains only valid characters within the Base64 alphabet. Currently the
+     * method treats whitespace as valid.
+     * 
+     * @param arrayOctet
+     *            byte array to test
+     * @return <code>true</code> if all bytes are valid characters in the Base64 alphabet or if the byte array is empty;
+     *         <code>false</code>, otherwise
+     * @since 1.5
+     */    
+    public static boolean isBase64(byte[] arrayOctet) {
         for (int i = 0; i < arrayOctet.length; i++) {
             if (!isBase64(arrayOctet[i]) && !isWhiteSpace(arrayOctet[i])) {
                 return false;
@@ -626,7 +641,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      * 
      * @param arrayOctet
      *            byte array to test
-     * @return <code>true</code> if any byte is a valid character in the Base64 alphabet; false herwise
+     * @return <code>true</code> if any byte is a valid character in the Base64 alphabet; <code>false</code> otherwise
      */
     private static boolean containsBase64Byte(byte[] arrayOctet) {
         for (int i = 0; i < arrayOctet.length; i++) {
