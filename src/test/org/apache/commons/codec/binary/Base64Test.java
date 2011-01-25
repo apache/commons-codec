@@ -65,15 +65,15 @@ public class Base64Test extends TestCase {
         String invalidString = validString + ((char)0); // append null character
         
         try {
-            Base64.isStringBase64(nullString);
+            Base64.isBase64(nullString);
             fail("Base64.isStringBase64() should not be null-safe.");
         } catch (NullPointerException npe) {
             assertNotNull("Base64.isStringBase64() should not be null-safe.", npe);
         }
         
-        assertTrue("Base64.isStringBase64(empty-string) is true", Base64.isStringBase64(emptyString));
-        assertTrue("Base64.isStringBase64(valid-string) is true", Base64.isStringBase64(validString));        
-        assertFalse("Base64.isStringBase64(invalid-string) is false", Base64.isStringBase64(invalidString));        
+        assertTrue("Base64.isStringBase64(empty-string) is true", Base64.isBase64(emptyString));
+        assertTrue("Base64.isStringBase64(valid-string) is true", Base64.isBase64(validString));        
+        assertFalse("Base64.isStringBase64(invalid-string) is false", Base64.isBase64(invalidString));        
     }
     
     /**
