@@ -648,12 +648,15 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
-     * Encodes binary data using the base64 algorithm into 76 character blocks separated by CRLF.
+     * Encodes binary data using the base64 algorithm but does not chunk the output.
      *
+     * NOTE:  We changed the behaviour of this method from multi-line chunking (commons-codec-1.4) to
+     * single-line non-chunking (commons-codec-1.5). 
+     * 
      * @param binaryData
      *            binary data to encode
      * @return String containing Base64 characters.
-     * @since 1.4
+     * @since 1.4 (NOTE:  1.4 chunked the output, whereas 1.5 does not).
      */    
     public static String encodeBase64String(byte[] binaryData) {
         return StringUtils.newStringUtf8(encodeBase64(binaryData, false));
