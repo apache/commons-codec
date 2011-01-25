@@ -208,10 +208,6 @@ public class ColognePhonetic implements StringEncoder {
 
     private class CologneLeftBuffer extends CologneBuffer {
 
-        public CologneLeftBuffer(char[] data) {
-            super(data);
-        }
-
         public CologneLeftBuffer(int buffSize) {
             super(buffSize);
         }
