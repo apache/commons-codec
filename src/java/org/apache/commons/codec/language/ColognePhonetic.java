@@ -298,7 +298,7 @@ public class ColognePhonetic implements StringEncoder {
             return null;
         }
 
-        text = preProcess(text);
+        text = preprocess(text);
 
         CologneLeftBuffer left = new CologneLeftBuffer(text.length() * 2);
         CologneRightBuffer right = new CologneRightBuffer(text.toCharArray());
@@ -401,7 +401,7 @@ public class ColognePhonetic implements StringEncoder {
      * Converts the string to upper case and replaces germanic umlauts, and the
      * “ß”.
      */
-    private String preProcess(String text) {
+    private String preprocess(String text) {
         text = text.toUpperCase(Locale.GERMAN);
 
         char[] chrs = text.toCharArray();
