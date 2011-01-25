@@ -56,6 +56,27 @@ public class Base64Test extends TestCase {
     }
 
     /**
+     * Test the isStringBase64 method.
+     */
+    public void testIsStringBase64() {
+        String nullString = null;
+        String emptyString = "";
+        String validString = "abc===defg\n\r123456\r789\r\rABC\n\nDEF==GHI\r\nJKL==============";
+        String invalidString = validString + ((char)0); // append null character
+        
+        try {
+            Base64.isStringBase64(nullString);
+            fail("Base64.isStringBase64() should not be null-safe.");
+        } catch (NullPointerException npe) {
+            assertNotNull("Base64.isStringBase64() should not be null-safe.", npe);
+        }
+        
+        assertTrue("Base64.isStringBase64(empty-string) is true", Base64.isStringBase64(emptyString));
+        assertTrue("Base64.isStringBase64(valid-string) is true", Base64.isStringBase64(validString));        
+        assertFalse("Base64.isStringBase64(invalid-string) is false", Base64.isStringBase64(invalidString));        
+    }
+    
+    /**
      * Test the Base64 implementation
      */
     public void testBase64() {

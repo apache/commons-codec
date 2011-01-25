@@ -608,6 +608,19 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
+     * Tests a given String to see if it contains only valid characters within the Base64 alphabet. Currently the
+     * method treats whitespace as valid.
+     * 
+     * @param base64
+     *            String of (presumably) base64 characters to test
+     * @return <code>true</code> if all characters in the String are valid characters in the Base64 alphabet or if
+     *         the String is empty; false, otherwise
+     */
+    public static boolean isStringBase64(String base64) {
+        return isArrayByteBase64(StringUtils.getBytesUtf8(base64));
+    }
+    
+    /**
      * Tests a given byte array to see if it contains only valid characters within the Base64 alphabet.
      * 
      * @param arrayOctet
