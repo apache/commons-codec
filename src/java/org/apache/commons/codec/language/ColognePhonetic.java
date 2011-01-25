@@ -180,7 +180,7 @@ import org.apache.commons.codec.StringEncoder;
  */
 public class ColognePhonetic implements StringEncoder {
 
-    private abstract class CologneBuffer implements CharSequence {
+    private abstract class CologneBuffer {
 
         protected final char[] data;
         protected int length = 0;
@@ -191,15 +191,8 @@ public class ColognePhonetic implements StringEncoder {
         }
 
         public CologneBuffer(int buffSize) {
-            data = new char[buffSize];
-        }
-
-        public char charAt(int index) {
-            if (index < length) {
-                return data[index];
-            } else {
-                throw new IndexOutOfBoundsException();
-            }
+            this.data = new char[buffSize];
+            this.length = 0;
         }
 
         protected abstract char[] copyData(int start, final int length);
@@ -208,12 +201,6 @@ public class ColognePhonetic implements StringEncoder {
 
         public int length() {
             return length;
-        }
-
-        public CharSequence subSequence(int start, int end) {
-            final int length = end - start;
-            char[] newData = copyData(start, length);
-            return createCologneBuffer(newData);
         }
 
         public String toString() {
