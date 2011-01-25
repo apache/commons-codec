@@ -197,8 +197,6 @@ public class ColognePhonetic implements StringEncoder {
 
         protected abstract char[] copyData(int start, final int length);
 
-        protected abstract CologneBuffer createCologneBuffer(char[] data);
-
         public int length() {
             return length;
         }
@@ -224,10 +222,6 @@ public class ColognePhonetic implements StringEncoder {
             return retData;
         }
 
-        protected CologneBuffer createCologneBuffer(char[] data) {
-            return new CologneLeftBuffer(data);
-        }
-
         public void putRight(char chr) {
             data[length] = chr;
             length++;
@@ -244,10 +238,6 @@ public class ColognePhonetic implements StringEncoder {
             char[] newData = new char[length];
             System.arraycopy(data, data.length - this.length + start, newData, 0, length);
             return newData;
-        }
-
-        protected CologneBuffer createCologneBuffer(char[] data) {
-            return new CologneRightBuffer(data);
         }
 
         public char dropNext() {
