@@ -97,7 +97,7 @@ public class Base64Test extends TestCase {
         assertTrue("encoding hello world", encodedContent.equals("SGVsbG8gV29ybGQ="));
 
         // bogus characters to decode (to skip actually)
-        byte[] decode = b64.decode("SGVsbG{éééééé}8gV29ybGQ=");
+        byte[] decode = b64.decode("SGVsbG{ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½}8gV29ybGQ=");
         String decodeString = StringUtils.newStringUtf8(decode);
         assertTrue("decode hello world", decodeString.equals("Hello World"));        
     }
@@ -335,7 +335,7 @@ public class Base64Test extends TestCase {
             byte[] data = new byte[this.getRandom().nextInt(10000) + 1];
             this.getRandom().nextBytes(data);
             byte[] enc = Base64.encodeBase64(data);
-            assertTrue(Base64.isArrayByteBase64(enc));
+            assertTrue(Base64.isBase64(enc));
             byte[] data2 = Base64.decodeBase64(enc);
             assertTrue(Arrays.equals(data, data2));
         }
@@ -347,7 +347,7 @@ public class Base64Test extends TestCase {
             byte[] data = new byte[i];
             this.getRandom().nextBytes(data);
             byte[] enc = Base64.encodeBase64(data);
-            assertTrue("\"" + (new String(enc)) + "\" is Base64 data.", Base64.isArrayByteBase64(enc));
+            assertTrue("\"" + (new String(enc)) + "\" is Base64 data.", Base64.isBase64(enc));
             byte[] data2 = Base64.decodeBase64(enc);
             assertTrue(toString(data) + " equals " + toString(data2), Arrays.equals(data, data2));
         }
@@ -375,17 +375,17 @@ public class Base64Test extends TestCase {
     }
 
     public void testIsArrayByteBase64() {
-        assertFalse(Base64.isArrayByteBase64(new byte[]{Byte.MIN_VALUE}));
-        assertFalse(Base64.isArrayByteBase64(new byte[]{-125}));
-        assertFalse(Base64.isArrayByteBase64(new byte[]{-10}));
-        assertFalse(Base64.isArrayByteBase64(new byte[]{0}));
-        assertFalse(Base64.isArrayByteBase64(new byte[]{64, Byte.MAX_VALUE}));
-        assertFalse(Base64.isArrayByteBase64(new byte[]{Byte.MAX_VALUE}));
-        assertTrue(Base64.isArrayByteBase64(new byte[]{'A'}));
-        assertFalse(Base64.isArrayByteBase64(new byte[]{'A', Byte.MIN_VALUE}));
-        assertTrue(Base64.isArrayByteBase64(new byte[]{'A', 'Z', 'a'}));
-        assertTrue(Base64.isArrayByteBase64(new byte[]{'/', '=', '+'}));
-        assertFalse(Base64.isArrayByteBase64(new byte[]{'$'}));
+        assertFalse(Base64.isBase64(new byte[]{Byte.MIN_VALUE}));
+        assertFalse(Base64.isBase64(new byte[]{-125}));
+        assertFalse(Base64.isBase64(new byte[]{-10}));
+        assertFalse(Base64.isBase64(new byte[]{0}));
+        assertFalse(Base64.isBase64(new byte[]{64, Byte.MAX_VALUE}));
+        assertFalse(Base64.isBase64(new byte[]{Byte.MAX_VALUE}));
+        assertTrue(Base64.isBase64(new byte[]{'A'}));
+        assertFalse(Base64.isBase64(new byte[]{'A', Byte.MIN_VALUE}));
+        assertTrue(Base64.isBase64(new byte[]{'A', 'Z', 'a'}));
+        assertTrue(Base64.isBase64(new byte[]{'/', '=', '+'}));
+        assertFalse(Base64.isBase64(new byte[]{'$'}));
     }
 
     /**
@@ -399,7 +399,7 @@ public class Base64Test extends TestCase {
         assertTrue("Base64.isUrlSafe=true", base64URLSafe.isUrlSafe());
 
         byte[] whiteSpace = {' ', '\n', '\r', '\t'};
-        assertTrue("Base64.isArrayByteBase64(whiteSpace)=true", Base64.isArrayByteBase64(whiteSpace));
+        assertTrue("Base64.isBase64(whiteSpace)=true", Base64.isBase64(whiteSpace));
     }
 
     public void testKnownDecodings() throws UnsupportedEncodingException {
@@ -441,7 +441,7 @@ public class Base64Test extends TestCase {
         byte[] bArray = {'%'};
 
         assertFalse("Invalid Base64 array was incorrectly validated as " + "an array of Base64 encoded data", Base64
-                .isArrayByteBase64(bArray));
+                .isBase64(bArray));
 
         try {
             Base64 b64 = new Base64();
