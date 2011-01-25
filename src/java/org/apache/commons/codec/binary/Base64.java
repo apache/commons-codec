@@ -600,7 +600,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      *  @since 1.5
      */
     public static boolean isBase64(String base64) {
-        return isArrayByteBase64(StringUtils.getBytesUtf8(base64));
+        return isBase64(StringUtils.getBytesUtf8(base64));
     }
 
     /**
@@ -611,7 +611,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
      *            byte array to test
      * @return <code>true</code> if all bytes are valid characters in the Base64 alphabet or if the byte array is empty;
      *         <code>false</code>, otherwise
-     * @deprecated Use {@link #isBase64(byte[])}
+     * @deprecated 1.5 Use {@link #isBase64(byte[])}
      */
     public static boolean isArrayByteBase64(byte[] arrayOctet) {
         return isBase64(arrayOctet);
