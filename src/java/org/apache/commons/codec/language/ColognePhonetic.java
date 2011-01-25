@@ -183,6 +183,7 @@ public class ColognePhonetic implements StringEncoder {
     private abstract class CologneBuffer {
 
         protected final char[] data;
+        
         protected int length = 0;
 
         public CologneBuffer(char[] data) {
@@ -212,15 +213,15 @@ public class ColognePhonetic implements StringEncoder {
             super(buffSize);
         }
 
+        public void addRight(char chr) {
+            data[length] = chr;
+            length++;
+        }
+
         protected char[] copyData(int start, final int length) {
             char[] retData = new char[length];
             System.arraycopy(data, start, retData, 0, length);
             return retData;
-        }
-
-        public void putRight(char chr) {
-            data[length] = chr;
-            length++;
         }
     }
 
@@ -230,25 +231,29 @@ public class ColognePhonetic implements StringEncoder {
             super(data);
         }
 
+        public void addLeft(char ch) {
+            length++;
+            data[getNextPos()] = ch;
+        }
+
         protected char[] copyData(int start, final int length) {
             char[] newData = new char[length];
             System.arraycopy(data, data.length - this.length + start, newData, 0, length);
             return newData;
         }
 
-        public char dropNext() {
-            char ch = data[data.length - length];
-            length--;
-            return ch;
+        public char getNextChar() {
+            return data[getNextPos()];
         }
 
-        public char getNext() {
-            return data[data.length - length];
+        protected int getNextPos() {
+            return data.length - length;
         }
         
-        public void putLeft(char ch) {
-            length++;
-            data[data.length - length] = ch;
+        public char removeNext() {
+            char ch = getNextChar();
+            length--;
+            return ch;
         }
     }
 
@@ -259,16 +264,15 @@ public class ColognePhonetic implements StringEncoder {
             new char[] { '\u00DF', 'S' }      // ß
     };
 
-    public Object encode(Object pObject) throws EncoderException {
-        if (!(pObject instanceof String)) {
+    public Object encode(Object object) throws EncoderException {
+        if (!(object instanceof String)) {
             throw new EncoderException(
                     "This method’s parameter was expected to be of the type "
                             + String.class.getName()
                             + ". But actually it was of the type "
-                            + pObject.getClass().getName() + ".");
+                            + object.getClass().getName() + ".");
         }
-
-        return encode((String) pObject);
+        return encode((String) object);
     }
 
     public String encode(String text) {
@@ -309,10 +313,10 @@ public class ColognePhonetic implements StringEncoder {
         int rightLength = right.length();
 
         while (rightLength > 0) {
-            chr = right.dropNext();
+            chr = right.removeNext();
 
             if ((rightLength = right.length()) > 0) {
-                nextChar = right.getNext();
+                nextChar = right.getNextChar();
             } else {
                 nextChar = '-';
             }
@@ -336,7 +340,7 @@ public class ColognePhonetic implements StringEncoder {
             } else if (chr == 'X'
                     && !arrayContains(new char[] { 'C', 'K', 'Q' }, lastChar)) {
                 code = '4';
-                right.putLeft('S');
+                right.addLeft('S');
                 rightLength++;
             } else if (chr == 'S' || chr == 'Z') {
                 code = '8';
@@ -372,7 +376,7 @@ public class ColognePhonetic implements StringEncoder {
             if (code != '-'
                     && (lastCode != code && (code != '0' || lastCode == '/')
                             || code < '0' || code > '8')) {
-                left.putRight(code);
+                left.addRight(code);
             }
 
             lastChar = chr;
