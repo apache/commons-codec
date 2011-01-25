@@ -180,22 +180,18 @@ import org.apache.commons.codec.StringEncoder;
  */
 public class ColognePhonetic implements StringEncoder {
 
-    private class CologneLeftBuffer implements CharSequence {
+    private abstract class CologneBuffer implements CharSequence {
 
-        private final char[] data;
-        private int length = 0;
+        protected final char[] data;
+        protected int length = 0;
 
-        public CologneLeftBuffer(int buffSize) {
-            data = new char[buffSize];
-        }
-
-        public CologneLeftBuffer(char[] data) {
+        public CologneBuffer(char[] data) {
             this.data = data;
             this.length = data.length;
         }
 
-        public int length() {
-            return length;
+        public CologneBuffer(int buffSize) {
+            data = new char[buffSize];
         }
 
         public char charAt(int index) {
@@ -206,33 +202,18 @@ public class ColognePhonetic implements StringEncoder {
             }
         }
 
+        protected abstract char[] copyData(int start, final int length);
+
+        protected abstract CologneBuffer createCologneBuffer(char[] data);
+
+        public int length() {
+            return length;
+        }
+
         public CharSequence subSequence(int start, int end) {
             final int length = end - start;
-
-            char[] retData = copyData(start, length);
-
-            return new CologneLeftBuffer(retData);
-        }
-
-        private char[] copyData(int start, final int length) {
-            char[] retData = new char[length];
-
-            System.arraycopy(data, start, retData, 0, length);
-            return retData;
-        }
-
-        public char getLast() {
-            return data[length - 1];
-        }
-
-        public void putRight(char chr) {
-            data[length] = chr;
-            length++;
-        }
-
-        public char dropLast() {
-            length--;
-            return data[length];
+            char[] newData = copyData(start, length);
+            return createCologneBuffer(newData);
         }
 
         public String toString() {
@@ -240,67 +221,62 @@ public class ColognePhonetic implements StringEncoder {
         }
     }
 
-    private class CologneRightBuffer implements CharSequence {
+    private class CologneLeftBuffer extends CologneBuffer {
 
-        private int length = 0;
-        private final char[] data;
-
-        public CologneRightBuffer(int buffSize) {
-            data = new char[buffSize];
+        public CologneLeftBuffer(char[] data) {
+            super(data);
         }
+
+        public CologneLeftBuffer(int buffSize) {
+            super(buffSize);
+        }
+
+        protected char[] copyData(int start, final int length) {
+            char[] retData = new char[length];
+            System.arraycopy(data, start, retData, 0, length);
+            return retData;
+        }
+
+        protected CologneBuffer createCologneBuffer(char[] data) {
+            return new CologneLeftBuffer(data);
+        }
+
+        public void putRight(char chr) {
+            data[length] = chr;
+            length++;
+        }
+    }
+
+    private class CologneRightBuffer extends CologneBuffer {
 
         public CologneRightBuffer(char[] data) {
-            this.data = data;
-            this.length = data.length;
+            super(data);
         }
 
-        public int length() {
-            return length;
-        }
-
-        public char charAt(int index) {
-            if (index < length) {
-                return data[data.length - length + index];
-            } else {
-                throw new IndexOutOfBoundsException();
-            }
-        }
-
-        public CharSequence subSequence(int start, int end) {
-            final int length = end - start;
-            char[] newData = copyData(start, length);
-
-            return new CologneRightBuffer(newData);
-        }
-
-        private char[] copyData(int start, final int length) {
+        protected char[] copyData(int start, final int length) {
             char[] newData = new char[length];
-
-            System.arraycopy(data, data.length - this.length + start, newData,
-                    0, length);
+            System.arraycopy(data, data.length - this.length + start, newData, 0, length);
             return newData;
         }
 
-        public void putLeft(char chr) {
-            length++;
-            data[data.length - length] = chr;
+        protected CologneBuffer createCologneBuffer(char[] data) {
+            return new CologneRightBuffer(data);
+        }
+
+        public char dropNext() {
+            char ch = data[data.length - length];
+            length--;
+            return ch;
         }
 
         public char getNext() {
             return data[data.length - length];
         }
-
-        public char dropNext() {
-            char ret = data[data.length - length];
-            length--;
-
-            return ret;
+        
+        public void putLeft(char ch) {
+            length++;
+            data[data.length - length] = ch;
         }
-
-        public String toString() {
-            return new String(copyData(0, length));
-        }
-
     }
 
     private static final char[][] PRE_REPLACEMENTS = new char[][] {
@@ -340,7 +316,6 @@ public class ColognePhonetic implements StringEncoder {
      * @return the corresponding encoding according to the <i>Kölner
      *         Phonetik</i> algorithm
      */
-
     public String colognePhonetic(String text) {
         if (text == null) {
             return null;
@@ -430,7 +405,6 @@ public class ColognePhonetic implements StringEncoder {
             lastChar = chr;
             lastCode = code;
         }
-
         return left.toString();
     }
 
@@ -443,7 +417,6 @@ public class ColognePhonetic implements StringEncoder {
                 return true;
             }
         }
-
         return false;
     }
 
