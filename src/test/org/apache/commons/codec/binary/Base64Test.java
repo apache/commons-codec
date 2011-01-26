@@ -211,6 +211,7 @@ public class Base64Test extends TestCase {
             // Expected
         }
         base64 = new Base64(64, new byte[]{' ', '$', '\n', '\r', '\t'}); // OK
+        assertNotNull(base64);
     }
 
     public void testConstructor_Int_ByteArray_Boolean() {
@@ -288,30 +289,6 @@ public class Base64Test extends TestCase {
         String dest = new String(decodedWithWS);
 
         assertTrue("Dest string doesn't equal the original", dest.equals(orig));
-    }
-
-    public void testDiscardWhitespace() throws Exception {
-
-        String orig = "I am a late night coder.";
-
-        byte[] encodedArray = Base64.encodeBase64(orig.getBytes("UTF-8"));
-        StringBuffer intermediate = new StringBuffer(new String(encodedArray));
-
-        intermediate.insert(2, ' ');
-        intermediate.insert(5, '\t');
-        intermediate.insert(10, '\r');
-        intermediate.insert(15, '\n');
-
-        byte[] encodedWithWS = intermediate.toString().getBytes("UTF-8");
-        byte[] encodedNoWS = Base64.discardWhitespace(encodedWithWS);
-        byte[] decodedWithWS = Base64.decodeBase64(encodedWithWS);
-        byte[] decodedNoWS = Base64.decodeBase64(encodedNoWS);
-
-        String destFromWS = new String(decodedWithWS);
-        String destFromNoWS = new String(decodedNoWS);
-
-        assertTrue("Dest string doesn't equal original", destFromWS.equals(orig));
-        assertTrue("Dest string doesn't equal original", destFromNoWS.equals(orig));
     }
 
     /**
