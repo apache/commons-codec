@@ -31,19 +31,19 @@ public abstract class StringEncoderAbstractTest extends TestCase {
         super(name);
     }
 
-    protected abstract StringEncoder makeEncoder();
+    protected abstract StringEncoder createEncoder();
 
     // ------------------------------------------------------------------------
 
     public void testEncodeEmpty() throws Exception {
-        Encoder encoder = makeEncoder();
+        Encoder encoder = createEncoder();
         encoder.encode("");
         encoder.encode(" ");
         encoder.encode("\t");
     }        
 
     public void testEncodeNull() throws Exception {
-        StringEncoder encoder = makeEncoder();
+        StringEncoder encoder = createEncoder();
         
         try {
             encoder.encode(null);
@@ -56,7 +56,7 @@ public abstract class StringEncoderAbstractTest extends TestCase {
 
         boolean exceptionThrown = false;
         try {
-            StringEncoder encoder = makeEncoder();
+            StringEncoder encoder = createEncoder();
             encoder.encode( new Float( 3.4 ) );
         } catch (Exception e) {
             exceptionThrown = true;
@@ -67,7 +67,7 @@ public abstract class StringEncoderAbstractTest extends TestCase {
     }
 
     public void testLocaleIndependence() throws Exception {
-        StringEncoder encoder = makeEncoder();
+        StringEncoder encoder = createEncoder();
 
         String[] data = { "I", "i", };
 

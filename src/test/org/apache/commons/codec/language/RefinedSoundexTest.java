@@ -42,7 +42,7 @@ public class RefinedSoundexTest extends StringEncoderAbstractTest {
         return this.encoder;
     }
 
-    protected StringEncoder makeEncoder() {
+    protected StringEncoder createEncoder() {
         return new RefinedSoundex();
     }
 

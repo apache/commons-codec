@@ -49,7 +49,7 @@ public class SoundexTest extends StringEncoderAbstractTest {
         return this.encoder;
     }
 
-    protected StringEncoder makeEncoder() {
+    protected StringEncoder createEncoder() {
         return new Soundex();
     }
 

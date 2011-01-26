@@ -63,7 +63,7 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
         return this.metaphone;
     }
 
-    protected StringEncoder makeEncoder() {
+    protected StringEncoder createEncoder() {
         return new Metaphone();
     }
 

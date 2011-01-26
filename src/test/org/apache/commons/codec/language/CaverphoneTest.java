@@ -30,7 +30,7 @@ public class CaverphoneTest extends StringEncoderAbstractTest {
         super(name);
     }
 
-    protected StringEncoder makeEncoder() {
+    protected StringEncoder createEncoder() {
         return new Caverphone();
     }
 

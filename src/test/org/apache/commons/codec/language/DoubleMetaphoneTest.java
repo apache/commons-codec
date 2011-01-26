@@ -1054,7 +1054,7 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest {
         return this.doubleMetaphone;
     }
 
-    protected StringEncoder makeEncoder() {
+    protected StringEncoder createEncoder() {
         return new Metaphone();
     }
 

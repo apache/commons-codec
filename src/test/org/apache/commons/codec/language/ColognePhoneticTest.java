@@ -26,7 +26,7 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
         super(name);
     }
 
-    protected StringEncoder makeEncoder() {
+    protected StringEncoder createEncoder() {
         return new ColognePhonetic();
     }
 
