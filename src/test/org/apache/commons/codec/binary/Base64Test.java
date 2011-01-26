@@ -336,13 +336,19 @@ public class Base64Test extends TestCase {
         testEncodeOverMaxSize(1);
         testEncodeOverMaxSize(2);
     }
+    
+    public void testCodec112() { // size calculation assumes always chunked
+        byte[] in = new byte[] {0};
+        byte[] out=Base64.encodeBase64(in);
+        Base64.encodeBase64(in, false, false, out.length);
+    }
 
     private void testEncodeOverMaxSize(int maxSize) throws Exception {
         try {
             Base64.encodeBase64(Base64TestData.DECODED, true, false, maxSize);
             fail("Expected " + IllegalArgumentException.class.getName());
         } catch (IllegalArgumentException e) {
-            // Expceted
+            // Expected
         }
     }
 
