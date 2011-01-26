@@ -41,7 +41,7 @@ import java.io.OutputStream;
  * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>
  * @since 1.4
  */
-public class Base32OutputStream extends BasedCodecOutputStream {
+public class Base32OutputStream extends BaseNCodecOutputStream {
 
     /**
      * Creates a Base64OutputStream such that all data written is Base64-encoded to the original provided OutputStream.

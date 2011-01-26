@@ -22,15 +22,15 @@ import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class BasedCodecInputStream extends FilterInputStream {
+public class BaseNCodecInputStream extends FilterInputStream {
 
     private final boolean doEncode;
 
-    private final BasedCodec basedCodec;
+    private final BaseNCodec basedCodec;
 
     private final byte[] singleByte = new byte[1];
 
-    protected BasedCodecInputStream(InputStream in, BasedCodec basedCodec, boolean doEncode) {
+    protected BaseNCodecInputStream(InputStream in, BaseNCodec basedCodec, boolean doEncode) {
         super(in);
         this.doEncode = doEncode;
         this.basedCodec = basedCodec;

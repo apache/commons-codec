@@ -36,7 +36,7 @@ import java.io.InputStream;
  * @see <a href="http://www.ietf.org/rfc/rfc4648.txt">RFC 4648</a>
  * @since 1.5
  */
-public class Base32InputStream extends BasedCodecInputStream {
+public class Base32InputStream extends BaseNCodecInputStream {
 
     /**
      * Creates a Base32InputStream such that all data read is Base32-decoded from the original provided InputStream.

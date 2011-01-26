@@ -41,7 +41,7 @@ package org.apache.commons.codec.binary;
  * @since 1.5
  * @version $Revision$
  */
-public class Base32 extends BasedCodec {
+public class Base32 extends BaseNCodec {
 
     /**
      * BASE32 characters are 5 bits in length. 

@@ -23,7 +23,7 @@ import org.apache.commons.codec.BinaryEncoder;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 
-public abstract class BasedCodec implements BinaryEncoder, BinaryDecoder {
+public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
 
     /**
      *  MIME chunk size per RFC 2045 section 6.8.
@@ -91,7 +91,7 @@ public abstract class BasedCodec implements BinaryEncoder, BinaryDecoder {
      */
     protected int modulus;
 
-    protected BasedCodec(){
+    protected BaseNCodec(){
     }
 
     /**
