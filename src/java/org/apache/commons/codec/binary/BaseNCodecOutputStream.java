@@ -26,13 +26,13 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
 
     private final boolean doEncode;
 
-    private final BaseNCodec basedCodec;
+    private final BaseNCodec baseNCodec;
 
     private final byte[] singleByte = new byte[1];
 
     public BaseNCodecOutputStream(OutputStream out, BaseNCodec basedCodec, boolean doEncode) {
         super(out);
-        this.basedCodec = basedCodec;
+        this.baseNCodec = basedCodec;
         this.doEncode = doEncode;
     }
 
@@ -76,9 +76,9 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
             throw new IndexOutOfBoundsException();
         } else if (len > 0) {
             if (doEncode) {
-                basedCodec.encode(b, offset, len);
+                baseNCodec.encode(b, offset, len);
             } else {
-                basedCodec.decode(b, offset, len);
+                baseNCodec.decode(b, offset, len);
             }
             flush(false);
         }
@@ -94,10 +94,10 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
      *             if an I/O error occurs.
      */
     private void flush(boolean propogate) throws IOException {
-        int avail = basedCodec.avail();
+        int avail = baseNCodec.avail();
         if (avail > 0) {
             byte[] buf = new byte[avail];
-            int c = basedCodec.readResults(buf, 0, avail);
+            int c = baseNCodec.readResults(buf, 0, avail);
             if (c > 0) {
                 out.write(buf, 0, c);
             }
@@ -126,9 +126,9 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
     public void close() throws IOException {
         // Notify encoder of EOF (-1).
         if (doEncode) {
-            basedCodec.encode(singleByte, 0, -1);
+            baseNCodec.encode(singleByte, 0, -1);
         } else {
-            basedCodec.decode(singleByte, 0, -1);
+            baseNCodec.decode(singleByte, 0, -1);
         }
         flush();
         out.close();

@@ -26,14 +26,14 @@ public class BaseNCodecInputStream extends FilterInputStream {
 
     private final boolean doEncode;
 
-    private final BaseNCodec basedCodec;
+    private final BaseNCodec baseNCodec;
 
     private final byte[] singleByte = new byte[1];
 
-    protected BaseNCodecInputStream(InputStream in, BaseNCodec basedCodec, boolean doEncode) {
+    protected BaseNCodecInputStream(InputStream in, BaseNCodec baseNCodec, boolean doEncode) {
         super(in);
         this.doEncode = doEncode;
-        this.basedCodec = basedCodec;
+        this.baseNCodec = baseNCodec;
     }
 
     /**
@@ -101,16 +101,16 @@ public class BaseNCodecInputStream extends FilterInputStream {
              This is a fix for CODEC-101
             */
             while (readLen == 0) {
-                if (!basedCodec.hasData()) {
+                if (!baseNCodec.hasData()) {
                     byte[] buf = new byte[doEncode ? 4096 : 8192];
                     int c = in.read(buf);
                     if (doEncode) {
-                        basedCodec.encode(buf, 0, c);
+                        baseNCodec.encode(buf, 0, c);
                     } else {
-                        basedCodec.decode(buf, 0, c);
+                        baseNCodec.decode(buf, 0, c);
                     }
                 }
-                readLen = basedCodec.readResults(b, offset, len);
+                readLen = baseNCodec.readResults(b, offset, len);
             }
             return readLen;
         }
