@@ -563,15 +563,19 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
                 resizeBuffer();
             }
             
-            x = x << 6;
+            // We have some spare bits remaining
+            // Output all whole multiples of 8 bits and ignore the rest
             switch (modulus) {
-                case 2 :
-                    x = x << 6;
-                    buffer[pos++] = (byte) ((x >> 16) & MASK_8BITS);
+           //   case 1: // 6 bits - ignore entirely
+           //       break;
+                case 2 : // 12 bits = 8 + 4
+                    x = x >> 4;
+                    buffer[pos++] = (byte) ((x) & MASK_8BITS);
                     break;
-                case 3 :
-                    buffer[pos++] = (byte) ((x >> 16) & MASK_8BITS);
+                case 3 : // 18 bits = 8 + 8 + 2
+                    x = x >> 2;
                     buffer[pos++] = (byte) ((x >> 8) & MASK_8BITS);
+                    buffer[pos++] = (byte) ((x) & MASK_8BITS);
                     break;
             }
         }
