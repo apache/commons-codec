@@ -51,7 +51,7 @@ public class Base32Test extends TestCase {
 
     public void testBase32HexSamples() throws Exception {
         for (int i = 0; i < BASE32HEX_TEST_CASES.length; i++) {
-//                assertEquals(BASE32HEX_TEST_CASES[i][1], Base32.encodeBase32HexString(BASE32HEX_TEST_CASES[i][0].getBytes("UTF-8")));
+                assertEquals(BASE32HEX_TEST_CASES[i][1], Base32.encodeBase32HexString(BASE32HEX_TEST_CASES[i][0].getBytes("UTF-8")));
         }
     }
 

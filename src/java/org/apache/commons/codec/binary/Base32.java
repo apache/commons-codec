@@ -101,10 +101,20 @@ public class Base32 implements BinaryEncoder, BinaryDecoder {
      * This array is a lookup table that translates 5-bit positive integer index values into their "Base32 Alphabet"
      * equivalents as specified in Table 3 of RFC 2045.
      */
-    private static final byte[] STANDARD_ENCODE_TABLE = {
+    private static final byte[] BASE32_ENCODE_TABLE = {
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
             'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
             '2', '3', '4', '5', '6', '7',
+    };
+
+    /**
+     * This array is a lookup table that translates 5-bit positive integer index values into their "Base32 Hex Alphabet"
+     * equivalents as specified in Table 3 of RFC 2045.
+     */
+    private static final byte[] BASE32HEX_ENCODE_TABLE = {
+            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 
+            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+            'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
     };
 
     /**
@@ -118,7 +128,7 @@ public class Base32 implements BinaryEncoder, BinaryDecoder {
      * alphabet but fall within the bounds of the array are translated to -1.
      * 
      */
-    private static final byte[] DECODE_TABLE = {
+    private static final byte[] BASE32_DECODE_TABLE = {
          //  0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
             -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 00-0f
             -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 10-1f
@@ -126,6 +136,22 @@ public class Base32 implements BinaryEncoder, BinaryDecoder {
             -1, -1, 26, 27, 28, 29, 30, 31, -1, -1, -1, -1, -1, -1, -1, -1, // 30-3f 2-7
             -1,  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, // 40-4f A-N
             15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25,                     // 50-5a O-Z
+    };
+
+    /**
+     * This array is a lookup table that translates Unicode characters drawn from the "Base32 |Hex Alphabet" (as specified in
+     * Table 3 of RFC 2045) into their 5-bit positive integer equivalents. Characters that are not in the Base32 Hex
+     * alphabet but fall within the bounds of the array are translated to -1.
+     * 
+     */
+    private static final byte[] BASE32HEX_DECODE_TABLE = {
+         //  0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
+            -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 00-0f
+            -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 10-1f
+            -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 63, // 20-2f
+             0,  1,  2,  3,  4,  5,  6,  7,  8,  9, -1, -1, -1, -1, -1, -1, // 30-3f 2-7
+            -1, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, // 40-4f A-N
+            25, 26, 27, 28, 29, 30, 31, 32,                                 // 50-57 O-V
     };
 
     /** Mask used to extract 5 bits, used when encoding Base32 bytes */
@@ -142,6 +168,8 @@ public class Base32 implements BinaryEncoder, BinaryDecoder {
      * Encode table to use.
      */
     private final byte[] encodeTable;
+    
+    private final byte[] decodeTable; // need different decode table to support Hex version
 
     /**
      * Line length for encoding. Not used when decoding. A value of zero or less implies no chunking of the Base32
@@ -215,7 +243,18 @@ public class Base32 implements BinaryEncoder, BinaryDecoder {
      * 
      */
     public Base32() {
-        this(0);
+        this(false);
+    }
+
+    /**
+     * Creates a Base32 codec used for decoding and encoding.
+     * <p>
+     * When encoding the line length is 0 (no chunking).
+     * </p>
+     * @param useHex if <code>true</code> then use Base32 Hex alphabet
+     */
+    public Base32(boolean useHex) {
+        this(0, null, useHex);
     }
 
     /**
@@ -250,6 +289,28 @@ public class Base32 implements BinaryEncoder, BinaryDecoder {
      *             The provided lineSeparator included some Base32 characters. That's not going to work!
      */
     public Base32(int lineLength, byte[] lineSeparator) {
+        this(lineLength, lineSeparator, false);
+    }
+    
+    /**
+     * Creates a Base32 / Base32 Hex codec used for decoding and encoding.
+     * <p>
+     * When encoding the line length and line separator are given in the constructor.
+     * </p>
+     * <p>
+     * Line lengths that aren't multiples of 8 will still essentially end up being multiples of 8 in the encoded data.
+     * </p>
+     * 
+     * @param lineLength
+     *            Each line of encoded data will be at most of the given length (rounded down to nearest multiple of 8).
+     *            If lineLength <= 0, then the output will not be divided into lines (chunks). Ignored when decoding.
+     * @param lineSeparator
+     *            Each line of encoded data will end with this sequence of bytes.
+     * @param useHex if <code>true</code>, then use Base32 Hex alphabet, otherwise use Base32 alphabet
+     * @throws IllegalArgumentException
+     *             The provided lineSeparator included some Base32 characters. That's not going to work!
+     */
+    public Base32(int lineLength, byte[] lineSeparator, boolean useHex) {
         if (lineSeparator == null) {
             lineLength = 0;  // disable chunk-separating
             lineSeparator = CHUNK_SEPARATOR;  // this just gets ignored
@@ -267,7 +328,13 @@ public class Base32 implements BinaryEncoder, BinaryDecoder {
             String sep = StringUtils.newStringUtf8(lineSeparator);
             throw new IllegalArgumentException("lineSeperator must not contain Base32 characters: [" + sep + "]");
         }
-        this.encodeTable = STANDARD_ENCODE_TABLE; // TODO - encodeTable could perhaps be removed, but might be useful if merging with Base64
+        if (useHex){
+            this.encodeTable = BASE32HEX_ENCODE_TABLE;
+            this.decodeTable = BASE32HEX_DECODE_TABLE;            
+        } else {
+            this.encodeTable = BASE32_ENCODE_TABLE;
+            this.decodeTable = BASE32_DECODE_TABLE;            
+        }
     }
 
     /**
@@ -470,8 +537,8 @@ public class Base32 implements BinaryEncoder, BinaryDecoder {
                 eof = true;
                 break;
             } else {
-                if (b >= 0 && b < DECODE_TABLE.length) {
-                    int result = DECODE_TABLE[b];
+                if (b >= 0 && b < this.decodeTable.length) {
+                    int result = this.decodeTable[b];
                     if (result >= 0) {
                         modulus = (++modulus) % BYTES_PER_ENCODED_BLOCK;
                         x = (x << BITS_PER_ENCODED_CHAR) + result; // collect decoded bytes
@@ -539,7 +606,18 @@ public class Base32 implements BinaryEncoder, BinaryDecoder {
      * @return <code>true</code> if the value is defined in the the Base32 alphabet (or pad), <code>false</code> otherwise.
      */
     public static boolean isBase32(byte octet) {
-        return octet == PAD || (octet >= 0 && octet < DECODE_TABLE.length && DECODE_TABLE[octet] != -1);
+        return octet == PAD || (octet >= 0 && octet < BASE32_DECODE_TABLE.length && BASE32_DECODE_TABLE[octet] != -1);
+    }
+
+    /**
+     * Returns whether or not the <code>octet</code> is in the Base32 Hex alphabet.
+     * 
+     * @param octet
+     *            The value to test
+     * @return <code>true</code> if the value is defined in the the Base32 Hex alphabet (or pad), <code>false</code> otherwise.
+     */
+    public static boolean isBase32Hex(byte octet) {
+        return octet == PAD || (octet >= 0 && octet < BASE32HEX_DECODE_TABLE.length && BASE32HEX_DECODE_TABLE[octet] != -1);
     }
 
     /**
@@ -613,6 +691,17 @@ public class Base32 implements BinaryEncoder, BinaryDecoder {
     }
     
     /**
+     * Encodes binary data using the Base32 algorithm but does not chunk the output.
+     *
+     * @param binaryData
+     *            binary data to encode
+     * @return String containing Base32Hex characters.
+     */    
+    public static String encodeBase32HexString(byte[] binaryData) {
+        return StringUtils.newStringUtf8(encodeBase32Hex(binaryData, false));
+    }
+    
+    /**
      * Encodes binary data using the Base32 algorithm and chunks the encoded output into 76 character blocks
      * 
      * @param binaryData
@@ -649,7 +738,6 @@ public class Base32 implements BinaryEncoder, BinaryDecoder {
      * @param pArray
      *            A String containing Base32 character data
      * @return a byte array containing binary data
-     * @since 1.4
      */
     public byte[] decode(String pArray) {
         return decode(StringUtils.getBytesUtf8(pArray));
@@ -690,6 +778,21 @@ public class Base32 implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
+     * Encodes binary data using the Base32 Hex algorithm, optionally chunking the output into 76 character blocks.
+     * 
+     * @param binaryData
+     *            Array containing binary data to encode.
+     * @param isChunked
+     *            if <code>true</code> this encoder will chunk the Base32 output into 76 character blocks
+     * @return Base32Hex-encoded data.
+     * @throws IllegalArgumentException
+     *             Thrown when the input array needs an output array bigger than {@link Integer#MAX_VALUE}
+     */
+    public static byte[] encodeBase32Hex(byte[] binaryData, boolean isChunked) {
+        return encodeBase32Hex(binaryData, isChunked, Integer.MAX_VALUE);
+    }
+
+    /**
      * Encodes binary data using the Base32 algorithm, optionally chunking the output into 76 character blocks.
      * 
      * @param binaryData
@@ -701,7 +804,6 @@ public class Base32 implements BinaryEncoder, BinaryDecoder {
      * @return Base32-encoded data.
      * @throws IllegalArgumentException
      *             Thrown when the input array needs an output array bigger than maxResultSize
-     * @since 1.4
      */
     public static byte[] encodeBase32(byte[] binaryData, boolean isChunked, int maxResultSize) {
         if (binaryData == null || binaryData.length == 0) {
@@ -716,7 +818,37 @@ public class Base32 implements BinaryEncoder, BinaryDecoder {
                 maxResultSize);
         }
                 
-        Base32 b64 = isChunked ? new Base32(MIME_CHUNK_SIZE, CHUNK_SEPARATOR) : new Base32(0, CHUNK_SEPARATOR);
+        Base32 b64 = isChunked ? new Base32(MIME_CHUNK_SIZE, CHUNK_SEPARATOR) : new Base32();
+        return b64.encode(binaryData);
+    }
+
+    /**
+     * Encodes binary data using the Base32Hex algorithm, optionally chunking the output into 76 character blocks.
+     * 
+     * @param binaryData
+     *            Array containing binary data to encode.
+     * @param isChunked
+     *            if <code>true</code> this encoder will chunk the Base32 output into 76 character blocks
+     * @param maxResultSize
+     *            The maximum result size to accept.
+     * @return Base32Hex-encoded data.
+     * @throws IllegalArgumentException
+     *             Thrown when the input array needs an output array bigger than maxResultSize
+     */
+    public static byte[] encodeBase32Hex(byte[] binaryData, boolean isChunked, int maxResultSize) {
+        if (binaryData == null || binaryData.length == 0) {
+            return binaryData;
+        }
+
+        long len = getEncodeLength(binaryData, MIME_CHUNK_SIZE, CHUNK_SEPARATOR);
+        if (len > maxResultSize) {
+            throw new IllegalArgumentException("Input array too big, the output array would be bigger (" +
+                len +
+                ") than the specified maxium size of " +
+                maxResultSize);
+        }
+                
+        Base32 b64 = isChunked ? new Base32(MIME_CHUNK_SIZE, CHUNK_SEPARATOR, true) : new Base32(true);
         return b64.encode(binaryData);
     }
 
@@ -740,6 +872,28 @@ public class Base32 implements BinaryEncoder, BinaryDecoder {
      */
     public static byte[] decodeBase32(byte[] base32Data) {
         return new Base32().decode(base32Data);
+    }
+
+    /**
+     * Decodes a Base32 Hex String into octets
+     *
+     * @param base32HexString
+     *            String containing Base32Hex data
+     * @return Array containing decoded data.
+     */
+    public static byte[] decodeBase32Hex(String base32HexString) {
+        return new Base32(true).decode(base32HexString);
+    }
+
+    /**
+     * Decodes Base32 Hex data into octets
+     * 
+     * @param base32HexData
+     *            Byte array containing Base32Hex data
+     * @return Array containing decoded data.
+     */
+    public static byte[] decodeBase32Hex(byte[] base32HexData) {
+        return new Base32(true).decode(base32HexData);
     }
 
     /**
