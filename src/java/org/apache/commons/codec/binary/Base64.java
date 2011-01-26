@@ -641,7 +641,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
     }
     
     /**
-     * Tests a given byte array to see if it contains only valid characters within the Base64 alphabet.
+     * Tests a given byte array to see if it contains any characters fromn the Base64 alphabet.
      * 
      * @param arrayOctet
      *            byte array to test
