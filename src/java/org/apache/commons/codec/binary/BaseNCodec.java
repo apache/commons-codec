@@ -156,7 +156,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * 
      * @return The amount of buffered data available for reading.
      */
-    int avail() {  // package protected for access from I/O streams
+    int available() {  // package protected for access from I/O streams
         return buffer != null ? pos - readPos : 0;
     }
 
@@ -207,7 +207,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      */
     int readResults(byte[] b, int bPos, int bAvail) {  // package protected for access from I/O streams
         if (buffer != null) {
-            int len = Math.min(avail(), bAvail);
+            int len = Math.min(available(), bAvail);
             System.arraycopy(buffer, readPos, b, bPos, len);
             readPos += len;
             if (readPos >= pos) {

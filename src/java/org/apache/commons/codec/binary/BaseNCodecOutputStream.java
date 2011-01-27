@@ -94,7 +94,7 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
      *             if an I/O error occurs.
      */
     private void flush(boolean propogate) throws IOException {
-        int avail = baseNCodec.avail();
+        int avail = baseNCodec.available();
         if (avail > 0) {
             byte[] buf = new byte[avail];
             int c = baseNCodec.readResults(buf, 0, avail);
