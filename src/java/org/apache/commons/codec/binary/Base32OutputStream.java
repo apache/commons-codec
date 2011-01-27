@@ -20,31 +20,26 @@ package org.apache.commons.codec.binary;
 import java.io.OutputStream;
 
 /**
- * Provides Base64 encoding and decoding in a streaming fashion (unlimited size). When encoding the default lineLength
+ * Provides Base32 encoding and decoding in a streaming fashion (unlimited size). When encoding the default lineLength
  * is 76 characters and the default lineEnding is CRLF, but these can be overridden by using the appropriate
  * constructor.
  * <p>
- * The default behaviour of the Base64OutputStream is to ENCODE, whereas the default behaviour of the Base64InputStream
+ * The default behaviour of the Base32OutputStream is to ENCODE, whereas the default behaviour of the Base32InputStream
  * is to DECODE. But this behaviour can be overridden by using a different constructor.
- * </p>
- * <p>
- * This class implements section <cite>6.8. Base64 Content-Transfer-Encoding</cite> from RFC 2045 <cite>Multipurpose
- * Internet Mail Extensions (MIME) Part One: Format of Internet Message Bodies</cite> by Freed and Borenstein.
  * </p>
  * <p>
  * Since this class operates directly on byte streams, and not character streams, it is hard-coded to only encode/decode
  * character encodings which are compatible with the lower 127 ASCII chart (ISO-8859-1, Windows-1252, UTF-8, etc).
  * </p>
  * 
- * @author Apache Software Foundation
- * @version $Id$
- * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>
- * @since 1.4
+ * @version $Revision$
+ * @see <a href="http://www.ietf.org/rfc/rfc4648.txt">RFC 4648</a>
+ * @since 1.5
  */
 public class Base32OutputStream extends BaseNCodecOutputStream {
 
     /**
-     * Creates a Base64OutputStream such that all data written is Base64-encoded to the original provided OutputStream.
+     * Creates a Base32OutputStream such that all data written is Base32-encoded to the original provided OutputStream.
      * 
      * @param out
      *            OutputStream to wrap.
@@ -54,7 +49,7 @@ public class Base32OutputStream extends BaseNCodecOutputStream {
     }
 
     /**
-     * Creates a Base64OutputStream such that all data written is either Base64-encoded or Base64-decoded to the
+     * Creates a Base32OutputStream such that all data written is either Base32-encoded or Base32-decoded to the
      * original provided OutputStream.
      * 
      * @param out
@@ -67,7 +62,7 @@ public class Base32OutputStream extends BaseNCodecOutputStream {
     }
 
     /**
-     * Creates a Base64OutputStream such that all data written is either Base64-encoded or Base64-decoded to the
+     * Creates a Base32OutputStream such that all data written is either Base32-encoded or Base32-decoded to the
      * original provided OutputStream.
      * 
      * @param out
