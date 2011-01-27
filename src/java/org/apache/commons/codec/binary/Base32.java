@@ -20,20 +20,17 @@ package org.apache.commons.codec.binary;
 /**
  * Provides Base32 encoding and decoding as defined by RFC 4648.
  * 
- *                               <b>Initial implementation. API may change. Incomplete.</b>
- *  
  * <p>
  * The class can be parameterized in the following manner with various constructors:
  * <ul>
+ * <li>Whether to use the "base32hex" variant instead of the default "base32"</li>
  * <li>Line length: Default 76. Line length that aren't multiples of 8 will still essentially end up being multiples of
  * 8 in the encoded data.
- * 
  * <li>Line separator: Default is CRLF ("\r\n")</li>
  * </ul>
  * </p>
  * <p>
- * Since this class operates directly on byte streams, and not character streams, it is hard-coded to only encode/decode
- * character encodings which are compatible with the lower 127 ASCII chart (ISO-8859-1, Windows-1252, UTF-8, etc).
+ * This class operates directly on byte streams, and not character streams.
  * </p>
  * 
  * @see <a href="http://www.ietf.org/rfc/rfc4648.txt">RFC 4648</a>
@@ -48,7 +45,7 @@ public class Base32 extends BaseNCodec {
      * They are formed by taking a block of five octets to form a 40-bit string, 
      * which is converted into eight BASE32 characters.
      */
-    private static final int BITS_PER_ENCODED_CHAR = 5;
+    private static final int BITS_PER_ENCODED_BYTE = 5;
     private static final int BYTES_PER_UNENCODED_BLOCK = 5;
     private static final int BYTES_PER_ENCODED_BLOCK = 8;
 
@@ -338,7 +335,7 @@ public class Base32 extends BaseNCodec {
         } else {
             for (int i = 0; i < inAvail; i++) {
                 ensureBufferSize(encodeSize);
-                modulus = (++modulus) % BITS_PER_ENCODED_CHAR;
+                modulus = (++modulus) % BITS_PER_ENCODED_BYTE;
                 int b = in[inPos++];
                 if (b < 0) {
                     b += 256;
@@ -404,7 +401,7 @@ public class Base32 extends BaseNCodec {
                     int result = this.decodeTable[b];
                     if (result >= 0) {
                         modulus = (++modulus) % BYTES_PER_ENCODED_BLOCK;
-                        bitWorkArea = (bitWorkArea << BITS_PER_ENCODED_CHAR) + result; // collect decoded bytes
+                        bitWorkArea = (bitWorkArea << BITS_PER_ENCODED_BYTE) + result; // collect decoded bytes
                         if (modulus == 0) { // we can output the 5 bytes
                             buffer[pos++] = (byte) ((bitWorkArea >> 32) & MASK_8BITS);
                             buffer[pos++] = (byte) ((bitWorkArea >> 24) & MASK_8BITS);
