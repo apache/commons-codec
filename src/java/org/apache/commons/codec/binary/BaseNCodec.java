@@ -23,6 +23,12 @@ import org.apache.commons.codec.BinaryEncoder;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 
+/**
+ * Implements common Base-N codec functions.
+ * 
+ * This class is not thread-safe.
+ * Each thread should use its own instance.
+ */
 public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
 
     /**
@@ -424,12 +430,13 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      *
      * @param pArray byte[] array which will later be encoded
      *
-     * @return amount of space needed to encoded the supplied array.  Returns
-     *         a long since a max-len array will require > Integer.MAX_VALUE
+     * @return amount of space needed to encoded the supplied array.  
+     * Returns a long since a max-len array will require > Integer.MAX_VALUE
      */
     public long getEncodedLength(byte[] pArray) {
         // Calculate non-chunked size - rounded up to allow for padding
-        long len = ((pArray.length + unencodedBlockSize-1)  / unencodedBlockSize) * encodedBlockSize;
+        // cast to long is needed to avoid possibility of overflow
+        long len = ((pArray.length + unencodedBlockSize-1)  / unencodedBlockSize) * (long) encodedBlockSize;
         if (lineLength > 0) { // We're using chunking
             // Round up to nearest multiple
             len += ((len + lineLength-1) / lineLength) * chunkSeparatorLength;
