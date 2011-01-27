@@ -114,8 +114,9 @@ public class Base32OutputStreamTest extends TestCase {
 //        testByChunk(encoded, decoded, 0, LF);
 
         // test random data of sizes 0 thru 150
+        BaseNCodec codec = new Base32();
         for (int i = 0; i <= 150; i++) {
-            byte[][] randomData = Base32TestData.randomData(i, false);
+            byte[][] randomData = Base32TestData.randomData(codec, i);
             encoded = randomData[1];
             decoded = randomData[0];
             testByChunk(encoded, decoded, 0, LF);
@@ -147,8 +148,9 @@ public class Base32OutputStreamTest extends TestCase {
 //        testByteByByte(encoded, decoded, 0, LF);
 
         // test random data of sizes 0 thru 150
+        BaseNCodec codec = new Base32();
         for (int i = 0; i <= 150; i++) {
-            byte[][] randomData = Base32TestData.randomData(i, false);
+            byte[][] randomData = Base32TestData.randomData(codec, i);
             encoded = randomData[1];
             decoded = randomData[0];
             testByteByByte(encoded, decoded, 0, LF);
