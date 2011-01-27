@@ -96,15 +96,15 @@ public class Base32TestData {
     /**
      * Returns an encoded and decoded copy of the same random data.
      * 
+     * @param codec the codec to use
      * @param size amount of random data to generate and encode
-     * @param useHex true if encoding be hex
      * @return two byte[] arrays:  [0] = decoded, [1] = encoded 
      */
-    static byte[][] randomData(int size, boolean useHex) {
+    static byte[][] randomData(BaseNCodec codec, int size) {
         Random r = new Random();
         byte[] decoded = new byte[size];
         r.nextBytes(decoded);
-        byte[] encoded = new Base32(useHex).encode(decoded);
+        byte[] encoded = codec.encode(decoded);
         return new byte[][] {decoded, encoded};
     }
 
