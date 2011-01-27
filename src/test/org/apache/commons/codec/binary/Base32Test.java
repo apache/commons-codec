@@ -18,6 +18,8 @@
 
 package org.apache.commons.codec.binary;
 
+import java.util.Arrays;
+
 import junit.framework.TestCase;
 
 public class Base32Test extends TestCase {
@@ -44,15 +46,59 @@ public class Base32Test extends TestCase {
 
 
     public void testBase32Samples() throws Exception {
+        Base32 codec = new Base32();
         for (int i = 0; i < BASE32_TEST_CASES.length; i++) {
-                assertEquals(BASE32_TEST_CASES[i][1], Base32.encodeBase32String(BASE32_TEST_CASES[i][0].getBytes("UTF-8")));
+                assertEquals(BASE32_TEST_CASES[i][1], codec.encodeAsString(BASE32_TEST_CASES[i][0].getBytes("UTF-8")));
         }
     }
 
     public void testBase32HexSamples() throws Exception {
+        Base32 codec = new Base32(true);
         for (int i = 0; i < BASE32HEX_TEST_CASES.length; i++) {
-                assertEquals(BASE32HEX_TEST_CASES[i][1], Base32.encodeBase32HexString(BASE32HEX_TEST_CASES[i][0].getBytes("UTF-8")));
+                assertEquals(BASE32HEX_TEST_CASES[i][1], codec.encodeAsString(BASE32HEX_TEST_CASES[i][0].getBytes("UTF-8")));
         }
     }
 
+    public void testSingleCharEncoding() {
+        for (int i = 0; i < 20; i++) {
+            Base32 codec = new Base32();
+            byte unencoded[] = new byte[i];
+            byte allInOne[] = codec.encode(unencoded);
+            codec = new Base32();
+            for (int j=0; j< unencoded.length; j++) {
+                codec.encode(unencoded, j, 1);
+            }
+            codec.encode(unencoded, 0, -1);
+            byte singly[] = new byte[allInOne.length];
+            int bytes = codec.readResults(singly, 0, 100);
+            if (!Arrays.equals(allInOne, singly)){
+                fail();
+            }
+        }
+    }
+
+    public void testRandomBytes() {
+        for (int i = 0; i < 20; i++) {
+            Base32 codec = new Base32();
+            byte[][] b = Base32TestData.randomData(codec, i);
+            assertEquals(""+i+" "+codec.lineLength,b[1].length,codec.getEncodedLength(b[0]));
+            //assertEquals(b[0],codec.decode(b[1]));
+        }
+    }
+    public void testRandomBytesChunked() {
+        for (int i = 0; i < 20; i++) {
+            Base32 codec = new Base32(10);
+            byte[][] b = Base32TestData.randomData(codec, i);
+            assertEquals(""+i+" "+codec.lineLength,b[1].length,codec.getEncodedLength(b[0]));
+            //assertEquals(b[0],codec.decode(b[1]));
+        }
+    }
+    public void testRandomBytesHex() {
+        for (int i = 0; i < 20; i++) {
+            Base32 codec = new Base32(true);
+            byte[][] b = Base32TestData.randomData(codec, i);
+            assertEquals(""+i+" "+codec.lineLength,b[1].length,codec.getEncodedLength(b[0]));
+            //assertEquals(b[0],codec.decode(b[1]));
+        }
+    }
 }

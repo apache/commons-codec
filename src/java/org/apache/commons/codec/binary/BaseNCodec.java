@@ -51,7 +51,38 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
 
     private static final int DEFAULT_BUFFER_RESIZE_FACTOR = 2;
 
+    /**
+     * Defines the default buffer size - currently {@value}
+     * - must be large enough for at least one encoded block+separator
+     */
     private static final int DEFAULT_BUFFER_SIZE = 8192;
+
+    /** Mask used to extract 8 bits, used in decoding bytes */
+    protected static final int MASK_8BITS = 0xff;
+
+    /**
+     * Byte used to pad output.
+     */
+    protected final byte PAD = '='; // instance variable just in case it needs to vary later
+
+    /** Number of bytes in each full block of unencoded data, e.g. 4 for Base64 and 5 for Base32 */
+    private final int unencodedBlockSize;
+
+    /** Number of bytes in each full block of encoded data, e.g. 3 for Base64 and 8 for Base32 */
+    private final int encodedBlockSize;
+
+    /**
+     * Chunksize for encoding. Not used when decoding. 
+     * A value of zero or less implies no chunking of the encoded data.
+     * Rounded down to nearest multiple of encodedBlockSize.
+     */
+    protected final int lineLength;
+    
+    /**
+     * Size of chunk separator. Not used unless {@link #lineLength} > 0. 
+     */
+    private final int chunkSeparatorLength;
+
     /**
      * Buffer for streaming.
      */
@@ -74,10 +105,10 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     protected boolean eof;
 
     /**
-     * Place holder for the bytes we're dealing with for our based logic. Bitwise operations store and extract the
-     * encoding or decoding from this variable.
+     * Place holder for the bytes we're dealing with for our based logic. 
+     * Bitwise operations store and extract the encoding or decoding from this variable.
      */
-    protected long x;
+    protected long bitWorkArea;
 
     /**
      * Variable tracks how many characters have been written to the current line. Only used when encoding. We use it to
@@ -91,7 +122,18 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      */
     protected int modulus;
 
-    protected BaseNCodec(){
+    /**
+     * Note <code>lineLength</code> is rounded down to the nearest multiple of {@link encodedBlockSize}
+     * @param unencodedBlockSize the size of an unencoded block (e.g. Base64 = 3)
+     * @param encodedBlockSize the size of an encoded block (e.g. Base64 = 4)
+     * @param lineLength if &gt; 0, use chunking with a length <code>lineLength</code>
+     * @param chunkSeparatorLength the chunk separator length, if relevant
+     */
+    protected BaseNCodec(int unencodedBlockSize, int encodedBlockSize, int lineLength, int chunkSeparatorLength){
+        this.unencodedBlockSize = unencodedBlockSize;
+        this.encodedBlockSize = encodedBlockSize;
+        this.lineLength = (lineLength > 0  && chunkSeparatorLength > 0) ? (lineLength / encodedBlockSize) * encodedBlockSize : 0;
+        this.chunkSeparatorLength = chunkSeparatorLength;
     }
 
     /**
@@ -112,10 +154,19 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         return buffer != null ? pos - readPos : 0;
     }
 
-    /** Doubles our buffer. */
-    protected void resizeBuffer() {
+    /**
+     * Get the default buffer size. Can be overridden.
+     * 
+     * @return {@link DEFAULT_BUFFER_RESIZE_SIZE}
+     */
+    protected int getDefaultBufferSize() {
+        return DEFAULT_BUFFER_SIZE;
+    }
+
+    /** Increases our buffer by the {@link DEFAULT_BUFFER_RESIZE_FACTOR}. */
+    private void resizeBuffer() {
         if (buffer == null) {
-            buffer = new byte[DEFAULT_BUFFER_SIZE];
+            buffer = new byte[getDefaultBufferSize()];
             pos = 0;
             readPos = 0;
         } else {
@@ -126,8 +177,19 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
-     * Extracts buffered data into the provided byte[] array, starting at position bPos, up to a maximum of bAvail
-     * bytes. Returns how many bytes were actually extracted.
+     * Ensure that the buffer has room for <code>size</code> bytes
+     * 
+     * @param size minimum spare space required
+     */
+    protected void ensureBufferSize(int size){
+        if ((buffer == null) || (buffer.length < pos + size)){
+            resizeBuffer();
+        }
+    }
+
+    /**
+     * Extracts buffered data into the provided byte[] array, starting at position bPos, 
+     * up to a maximum of bAvail bytes. Returns how many bytes were actually extracted.
      * 
      * @param b
      *            byte[] array to extract the buffered data into.
@@ -143,7 +205,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
             System.arraycopy(buffer, readPos, b, bPos, len);
             readPos += len;
             if (readPos >= pos) {
-                buffer = null;
+                buffer = null; // so hasData() will return false, and this method can return -1
             }
             return len;
         }
@@ -170,7 +232,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
-     * Resets this Base32 object to its initial newly constructed state.
+     * Resets this object to its initial newly constructed state.
      */
     private void reset() {
         buffer = null;
@@ -180,34 +242,37 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         modulus = 0;
         eof = false;
     }
+
     /**
-     * Encodes an Object using the Base32 algorithm. This method is provided in order to satisfy the requirements of the
+     * Encodes an Object using the Base-N algorithm. This method is provided in order to satisfy the requirements of the
      * Encoder interface, and will throw an EncoderException if the supplied object is not of type byte[].
      * 
      * @param pObject
      *            Object to encode
-     * @return An object (of type byte[]) containing the Base32 encoded data which corresponds to the byte[] supplied.
+     * @return An object (of type byte[]) containing the Base-N encoded data which corresponds to the byte[] supplied.
      * @throws EncoderException
      *             if the parameter supplied is not of type byte[]
      */
     public Object encode(Object pObject) throws EncoderException {
         if (!(pObject instanceof byte[])) {
-            throw new EncoderException("Parameter supplied to Base32 encode is not a byte[]");
+            throw new EncoderException("Parameter supplied to Base-N encode is not a byte[]");
         }
         return encode((byte[]) pObject);
     }
+
     /**
-     * Encodes a byte[] containing binary data, into a String containing characters in the Base32 alphabet.
+     * Encodes a byte[] containing binary data, into a String containing characters in the Base-N alphabet.
      *
      * @param pArray
      *            a byte array containing binary data
-     * @return A String containing only Base32 character data
+     * @return A String containing only Base-N character data
      */
     public String encodeToString(byte[] pArray) {
         return StringUtils.newStringUtf8(encode(pArray));
     }
+
     /**
-     * Decodes an Object using the Base32 algorithm. This method is provided in order to satisfy the requirements of the
+     * Decodes an Object using the Base-N algorithm. This method is provided in order to satisfy the requirements of the
      * Decoder interface, and will throw a DecoderException if the supplied object is not of type byte[] or String.
      * 
      * @param pObject
@@ -222,24 +287,26 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         } else if (pObject instanceof String) {
             return decode((String) pObject);
         } else {
-            throw new DecoderException("Parameter supplied to Base32 decode is not a byte[] or a String");
+            throw new DecoderException("Parameter supplied to Base-N decode is not a byte[] or a String");
         }
     }
+
     /**
-     * Decodes a String containing characters in the Base32 alphabet.
+     * Decodes a String containing characters in the Base-N alphabet.
      *
      * @param pArray
-     *            A String containing Base32 character data
+     *            A String containing Base-N character data
      * @return a byte array containing binary data
      */
     public byte[] decode(String pArray) {
         return decode(StringUtils.getBytesUtf8(pArray));
     }
+
     /**
-     * Decodes a byte[] containing characters in the Base32 alphabet.
+     * Decodes a byte[] containing characters in the Base-N alphabet.
      * 
      * @param pArray
-     *            A byte array containing Base32 character data
+     *            A byte array containing Base-N character data
      * @return a byte array containing binary data
      */
     public byte[] decode(byte[] pArray) {
@@ -253,12 +320,13 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         readResults(result, 0, result.length);
         return result;
     }
+
     /**
-     * Encodes a byte[] containing binary data, into a byte[] containing characters in the Base32 alphabet.
+     * Encodes a byte[] containing binary data, into a byte[] containing characters in the alphabet.
      * 
      * @param pArray
      *            a byte array containing binary data
-     * @return A byte array containing only Base32 character data
+     * @return A byte array containing only the basen alphabetic character data
      */
     public byte[] encode(byte[] pArray) {
         reset();        
@@ -272,7 +340,100 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         return buf;
     }
     
+    /**
+     * Encodes a byte[] containing binary data, into a String containing characters in the appropriate alphabet.
+     * Uses UTF8 encoding.
+     * 
+     * @param pArray a byte array containing binary data
+     * @return String containing only character data in the appropriate alphabet.
+    */
+    public String encodeAsString(byte[] pArray){
+        return StringUtils.newStringUtf8(encode(pArray));
+    }
+
     abstract void encode(byte[] pArray, int i, int length);  // package protected for access from I/O streams
 
     abstract void decode(byte[] pArray, int i, int length); // package protected for access from I/O streams
+    
+    /**
+     * Returns whether or not the <code>octet</code> is in the current alphabet.
+     * Does not allow whitespace or pad.
+     * 
+     * @param octet The value to test
+     * 
+     * @return <code>true</code> if the value is defined in the current alphabet, <code>false</code> otherwise.
+     */
+    protected abstract boolean isInAlphabet(byte b);
+    
+    /**
+     * Tests a given byte array to see if it contains only valid characters within the alphabet.
+     * The method optionally treats whitespace and pad as valid.
+     * 
+     * @param arrayOctet byte array to test
+     * @param allowWSPad if <code>true</code>, then whitespace and PAD are also allowed
+     * 
+     * @return <code>true</code> if all bytes are valid characters in the alphabet or if the byte array is empty;
+     *         <code>false</code>, otherwise
+     */    
+    public boolean isInAlphabet(byte[] arrayOctet, boolean allowWSPad) {
+        for (int i = 0; i < arrayOctet.length; i++) {
+            if (!isInAlphabet(arrayOctet[i]) &&
+                    (!allowWSPad || (arrayOctet[i] != PAD) && !isWhiteSpace(arrayOctet[i]))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Tests a given String to see if it contains only valid characters within the alphabet. 
+     * The method treats whitespace and PAD as valid.
+     * 
+     * @param basen String to test
+     * @return <code>true</code> if all characters in the String are valid characters in the alphabet or if
+     *         the String is empty; <code>false</code>, otherwise
+     * @see #isInAlphabet(byte[], boolean)
+     */
+    public boolean isInAlphabet(String basen) {
+        return isInAlphabet(StringUtils.getBytesUtf8(basen), true);
+    }
+
+    /**
+     * Tests a given byte array to see if it contains any characters within the alphabet or PAD.
+     * 
+     * Intended for use in checking line-ending arrays
+     * 
+     * @param arrayOctet
+     *            byte array to test
+     * @return <code>true</code> if any byte is a valid character in the alphabet or PAD; <code>false</code> otherwise
+     */
+    protected boolean containsAlphabetOrPad(byte[] arrayOctet) {
+        if (arrayOctet == null) {
+            return false;
+        }
+        for (int i = 0; i < arrayOctet.length; i++) {
+            if (PAD == arrayOctet[i] || isInAlphabet(arrayOctet[i])) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Calculates the amount of space needed to encode the supplied array.
+     *
+     * @param pArray byte[] array which will later be encoded
+     *
+     * @return amount of space needed to encoded the supplied array.  Returns
+     *         a long since a max-len array will require > Integer.MAX_VALUE
+     */
+    public long getEncodedLength(byte[] pArray) {
+        // Calculate non-chunked size - rounded up to allow for padding
+        long len = ((pArray.length + unencodedBlockSize-1)  / unencodedBlockSize) * encodedBlockSize;
+        if (lineLength > 0) { // We're using chunking
+            // Round up to nearest multiple
+            len += ((len + lineLength-1) / lineLength) * chunkSeparatorLength;
+        }
+        return len;
+    }
 }
