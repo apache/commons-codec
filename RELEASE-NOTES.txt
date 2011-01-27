@@ -29,6 +29,7 @@ o [CODEC-XYZ] TBD
 o [CODEC-89]  new Base64().encode() appends a CRLF, and chunks results into 76 character lines
 o [CODEC-98]  Base64InputStream causes NullPointerException on some input.
 o [CODEC-111] org.apache.commons.codec.net.URLCodec.ESCAPE_CHAR isn't final but should be.
+o [CODEC-112] Base64.encodeBase64(byte[] binaryData, boolean isChunked, boolean urlSafe, int maxResultSize) throws IAE for valid maxResultSize if isChunked is false
 
   Changes:
 
