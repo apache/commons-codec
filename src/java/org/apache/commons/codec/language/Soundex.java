@@ -47,7 +47,7 @@ public class Soundex implements StringEncoder {
      * 
      * @see Soundex#Soundex(char[])
      */
-    public static final char[] US_ENGLISH_MAPPING = US_ENGLISH_MAPPING_STRING.toCharArray();
+    static final char[] US_ENGLISH_MAPPING = US_ENGLISH_MAPPING_STRING.toCharArray();
 
     /**
      * An instance of Soundex using the US_ENGLISH_MAPPING mapping.
