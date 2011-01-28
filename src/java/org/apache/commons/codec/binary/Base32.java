@@ -242,7 +242,7 @@ public class Base32 extends BaseNCodec {
             // Must be done after initialising the tables
             if (containsAlphabetOrPad(lineSeparator)) {
                 String sep = StringUtils.newStringUtf8(lineSeparator);
-                throw new IllegalArgumentException("lineSeperator must not contain Base32 characters: [" + sep + "]");
+                throw new IllegalArgumentException("lineSeparator must not contain Base32 characters: [" + sep + "]");
             }
             this.encodeSize = BYTES_PER_ENCODED_BLOCK + lineSeparator.length;
             this.lineSeparator = new byte[lineSeparator.length];
@@ -349,7 +349,7 @@ public class Base32 extends BaseNCodec {
                 if (b < 0) {
                     b += 256;
                 }
-                bitWorkArea = (bitWorkArea << 8) + b; // ??
+                bitWorkArea = (bitWorkArea << 8) + b; // BITS_PER_BYTE
                 if (0 == modulus) { // we have enough bytes to create our output 
                     buffer[pos++] = encodeTable[(int)(bitWorkArea >> 35) & MASK_5BITS];
                     buffer[pos++] = encodeTable[(int)(bitWorkArea >> 30) & MASK_5BITS];
