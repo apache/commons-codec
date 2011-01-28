@@ -218,7 +218,9 @@
     <maven.compile.source>1.4</maven.compile.source>
     <maven.compile.target>1.4</maven.compile.target>
     <commons.componentid>codec</commons.componentid>
-    <commons.release.version>1.4</commons.release.version>
+    <commons.release.version>1.5</commons.release.version>
+    <!-- The RC version used in the staging repository URL. -->
+    <commons.rc.version>RC1</commons.rc.version>
     <commons.jira.id>CODEC</commons.jira.id>
     <commons.jira.pid>12310464</commons.jira.pid>
     <!-- Ensure copies work OK (can be removed later when this is in parent POM) -->
