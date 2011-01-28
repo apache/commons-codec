@@ -46,8 +46,8 @@ public class Base32 extends BaseNCodec {
      * which is converted into eight BASE32 characters.
      */
     private static final int BITS_PER_ENCODED_BYTE = 5;
-    private static final int BYTES_PER_UNENCODED_BLOCK = 5;
     private static final int BYTES_PER_ENCODED_BLOCK = 8;
+    private static final int BYTES_PER_UNENCODED_BLOCK = 5;
 
     /**
      * Chunk separator per RFC 2045 section 2.1.
@@ -57,32 +57,12 @@ public class Base32 extends BaseNCodec {
     private static final byte[] CHUNK_SEPARATOR = {'\r', '\n'};
 
     /**
-     * This array is a lookup table that translates 5-bit positive integer index values into their "Base32 Alphabet"
-     * equivalents as specified in Table 3 of RFC 2045.
-     */
-    private static final byte[] BASE32_ENCODE_TABLE = {
-            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-            'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-            '2', '3', '4', '5', '6', '7',
-    };
-
-    /**
-     * This array is a lookup table that translates 5-bit positive integer index values into their "Base32 Hex Alphabet"
-     * equivalents as specified in Table 3 of RFC 2045.
-     */
-    private static final byte[] BASE32HEX_ENCODE_TABLE = {
-            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 
-            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-            'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
-    };
-
-    /**
      * This array is a lookup table that translates Unicode characters drawn from the "Base32 Alphabet" (as specified in
      * Table 3 of RFC 2045) into their 5-bit positive integer equivalents. Characters that are not in the Base32
      * alphabet but fall within the bounds of the array are translated to -1.
      * 
      */
-    private static final byte[] BASE32_DECODE_TABLE = {
+    private static final byte[] DECODE_TABLE = {
          //  0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
             -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 00-0f
             -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 10-1f
@@ -93,12 +73,22 @@ public class Base32 extends BaseNCodec {
     };
 
     /**
+     * This array is a lookup table that translates 5-bit positive integer index values into their "Base32 Alphabet"
+     * equivalents as specified in Table 3 of RFC 2045.
+     */
+    private static final byte[] ENCODE_TABLE = {
+            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+            'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+            '2', '3', '4', '5', '6', '7',
+    };
+
+    /**
      * This array is a lookup table that translates Unicode characters drawn from the "Base32 |Hex Alphabet" (as specified in
      * Table 3 of RFC 2045) into their 5-bit positive integer equivalents. Characters that are not in the Base32 Hex
      * alphabet but fall within the bounds of the array are translated to -1.
      * 
      */
-    private static final byte[] BASE32HEX_DECODE_TABLE = {
+    private static final byte[] HEX_DECODE_TABLE = {
          //  0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
             -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 00-0f
             -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 10-1f
@@ -106,6 +96,16 @@ public class Base32 extends BaseNCodec {
              0,  1,  2,  3,  4,  5,  6,  7,  8,  9, -1, -1, -1, -1, -1, -1, // 30-3f 2-7
             -1, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, // 40-4f A-N
             25, 26, 27, 28, 29, 30, 31, 32,                                 // 50-57 O-V
+    };
+
+    /**
+     * This array is a lookup table that translates 5-bit positive integer index values into their "Base32 Hex Alphabet"
+     * equivalents as specified in Table 3 of RFC 2045.
+     */
+    private static final byte[] HEX_ENCODE_TABLE = {
+            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 
+            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+            'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
     };
 
     /** Mask used to extract 5 bits, used when encoding Base32 bytes */
@@ -116,19 +116,10 @@ public class Base32 extends BaseNCodec {
     // some state be preserved between calls of encode() and decode().
 
     /**
-     * Encode table to use.
+     * Place holder for the bytes we're dealing with for our based logic. 
+     * Bitwise operations store and extract the encoding or decoding from this variable.
      */
-    private final byte[] encodeTable;
-
-    /**
-     * Decode table to use.
-     */
-    private final byte[] decodeTable;
-
-    /**
-     * Line separator for encoding. Not used when decoding. Only used if lineLength > 0.
-     */
-    private final byte[] lineSeparator;
+    private long bitWorkArea;
 
     /**
      * Convenience variable to help us determine when our buffer is going to run out of room and needs resizing.
@@ -137,16 +128,25 @@ public class Base32 extends BaseNCodec {
     private final int decodeSize;
 
     /**
+     * Decode table to use.
+     */
+    private final byte[] decodeTable;
+
+    /**
      * Convenience variable to help us determine when our buffer is going to run out of room and needs resizing.
      * <code>encodeSize = {@link BYTES_PER_ENCODED_BLOCK} + lineSeparator.length;</code>
      */
     private final int encodeSize;
 
     /**
-     * Place holder for the bytes we're dealing with for our based logic. 
-     * Bitwise operations store and extract the encoding or decoding from this variable.
+     * Encode table to use.
      */
-    private long bitWorkArea;
+    private final byte[] encodeTable;
+
+    /**
+     * Line separator for encoding. Not used when decoding. Only used if lineLength > 0.
+     */
+    private final byte[] lineSeparator;
 
     /**
      * Creates a Base32 codec used for decoding and encoding.
@@ -229,11 +229,11 @@ public class Base32 extends BaseNCodec {
                 lineLength, 
                 lineSeparator == null ? 0 : lineSeparator.length);
         if (useHex){
-            this.encodeTable = BASE32HEX_ENCODE_TABLE;
-            this.decodeTable = BASE32HEX_DECODE_TABLE;            
+            this.encodeTable = HEX_ENCODE_TABLE;
+            this.decodeTable = HEX_DECODE_TABLE;            
         } else {
-            this.encodeTable = BASE32_ENCODE_TABLE;
-            this.decodeTable = BASE32_DECODE_TABLE;            
+            this.encodeTable = ENCODE_TABLE;
+            this.decodeTable = DECODE_TABLE;            
         }
         if (lineLength > 0) {
             if (lineSeparator == null) {
@@ -255,14 +255,98 @@ public class Base32 extends BaseNCodec {
     }
 
     /**
-     * Returns whether or not the <code>octet</code> is in the Base32 alphabet.
+     * <p>
+     * Decodes all of the provided data, starting at inPos, for inAvail bytes. Should be called at least twice: once
+     * with the data to decode, and once with inAvail set to "-1" to alert decoder that EOF has been reached. The "-1"
+     * call is not necessary when decoding, but it doesn't hurt, either.
+     * </p>
+     * <p>
+     * Ignores all non-Base32 characters. This is how chunked (e.g. 76 character) data is handled, since CR and LF are
+     * silently ignored, but has implications for other bytes, too. This method subscribes to the garbage-in,
+     * garbage-out philosophy: it will not check the provided data for validity.
+     * </p>
      * 
-     * @param octet
-     *            The value to test
-     * @return <code>true</code> if the value is defined in the the Base32 alphabet <code>false</code> otherwise.
+     * @param in
+     *            byte[] array of ascii data to Base32 decode.
+     * @param inPos
+     *            Position to start reading data from.
+     * @param inAvail
+     *            Amount of bytes available from input for encoding.
+     *
+     * Output is written to {@link #buffer} as 8-bit octets, using {@link pos} as the buffer position
      */
-    public boolean isInAlphabet(byte octet) {
-        return (octet >= 0 && octet < decodeTable.length && decodeTable[octet] != -1);
+    void decode(byte[] in, int inPos, int inAvail) { // package protected for access from I/O streams
+        if (eof) {
+            return;
+        }
+        if (inAvail < 0) {
+            eof = true;
+        }
+        for (int i = 0; i < inAvail; i++) {
+            byte b = in[inPos++];
+            if (b == PAD) {
+                // We're done.
+                eof = true;
+                break;
+            } else {
+                ensureBufferSize(decodeSize);
+                if (b >= 0 && b < this.decodeTable.length) {
+                    int result = this.decodeTable[b];
+                    if (result >= 0) {
+                        modulus = (modulus+1) % BYTES_PER_ENCODED_BLOCK;
+                        bitWorkArea = (bitWorkArea << BITS_PER_ENCODED_BYTE) + result; // collect decoded bytes
+                        if (modulus == 0) { // we can output the 5 bytes
+                            buffer[pos++] = (byte) ((bitWorkArea >> 32) & MASK_8BITS);
+                            buffer[pos++] = (byte) ((bitWorkArea >> 24) & MASK_8BITS);
+                            buffer[pos++] = (byte) ((bitWorkArea >> 16) & MASK_8BITS);
+                            buffer[pos++] = (byte) ((bitWorkArea >> 8) & MASK_8BITS);
+                            buffer[pos++] = (byte) (bitWorkArea & MASK_8BITS);
+                        }
+                    }
+                }
+            }
+        }
+    
+        // Two forms of EOF as far as Base32 decoder is concerned: actual
+        // EOF (-1) and first time '=' character is encountered in stream.
+        // This approach makes the '=' padding characters completely optional.
+        if (eof && modulus >= 2) { // if modulus < 2, nothing to do
+            ensureBufferSize(decodeSize);
+    
+            //  we ignore partial bytes, i.e. only multiples of 8 count
+            switch (modulus) {
+                case 2 : // 10 bits, drop 2 and output one byte
+                    buffer[pos++] = (byte) ((bitWorkArea >> 2) & MASK_8BITS);
+                    break;
+                case 3 : // 15 bits, drop 7 and output 1 byte
+                    buffer[pos++] = (byte) ((bitWorkArea >> 7) & MASK_8BITS);
+                    break;
+                case 4 : // 20 bits = 2*8 + 4
+                    bitWorkArea = bitWorkArea >> 4; // drop 4 bits
+                    buffer[pos++] = (byte) ((bitWorkArea >> 8) & MASK_8BITS);
+                    buffer[pos++] = (byte) ((bitWorkArea) & MASK_8BITS);
+                    break;
+                case 5 : // 25bits = 3*8 + 1
+                    bitWorkArea = bitWorkArea >> 1;
+                    buffer[pos++] = (byte) ((bitWorkArea >> 16) & MASK_8BITS);
+                    buffer[pos++] = (byte) ((bitWorkArea >> 8) & MASK_8BITS);
+                    buffer[pos++] = (byte) ((bitWorkArea) & MASK_8BITS);
+                    break;
+                case 6 : // 30bits = 3*8 + 6
+                    bitWorkArea = bitWorkArea >> 6;
+                    buffer[pos++] = (byte) ((bitWorkArea >> 16) & MASK_8BITS);
+                    buffer[pos++] = (byte) ((bitWorkArea >> 8) & MASK_8BITS);
+                    buffer[pos++] = (byte) ((bitWorkArea) & MASK_8BITS);
+                    break;
+                case 7 : // 35 = 4*8 +3
+                    bitWorkArea = bitWorkArea >> 3;
+                    buffer[pos++] = (byte) ((bitWorkArea >> 24) & MASK_8BITS);
+                    buffer[pos++] = (byte) ((bitWorkArea >> 16) & MASK_8BITS);
+                    buffer[pos++] = (byte) ((bitWorkArea >> 8) & MASK_8BITS);
+                    buffer[pos++] = (byte) ((bitWorkArea) & MASK_8BITS);
+                    break;
+            }
+        }
     }
 
     /**
@@ -371,97 +455,13 @@ public class Base32 extends BaseNCodec {
     }
 
     /**
-     * <p>
-     * Decodes all of the provided data, starting at inPos, for inAvail bytes. Should be called at least twice: once
-     * with the data to decode, and once with inAvail set to "-1" to alert decoder that EOF has been reached. The "-1"
-     * call is not necessary when decoding, but it doesn't hurt, either.
-     * </p>
-     * <p>
-     * Ignores all non-Base32 characters. This is how chunked (e.g. 76 character) data is handled, since CR and LF are
-     * silently ignored, but has implications for other bytes, too. This method subscribes to the garbage-in,
-     * garbage-out philosophy: it will not check the provided data for validity.
-     * </p>
+     * Returns whether or not the <code>octet</code> is in the Base32 alphabet.
      * 
-     * @param in
-     *            byte[] array of ascii data to Base32 decode.
-     * @param inPos
-     *            Position to start reading data from.
-     * @param inAvail
-     *            Amount of bytes available from input for encoding.
-     *
-     * Output is written to {@link #buffer} as 8-bit octets, using {@link pos} as the buffer position
+     * @param octet
+     *            The value to test
+     * @return <code>true</code> if the value is defined in the the Base32 alphabet <code>false</code> otherwise.
      */
-    void decode(byte[] in, int inPos, int inAvail) { // package protected for access from I/O streams
-        if (eof) {
-            return;
-        }
-        if (inAvail < 0) {
-            eof = true;
-        }
-        for (int i = 0; i < inAvail; i++) {
-            byte b = in[inPos++];
-            if (b == PAD) {
-                // We're done.
-                eof = true;
-                break;
-            } else {
-                ensureBufferSize(decodeSize);
-                if (b >= 0 && b < this.decodeTable.length) {
-                    int result = this.decodeTable[b];
-                    if (result >= 0) {
-                        modulus = (modulus+1) % BYTES_PER_ENCODED_BLOCK;
-                        bitWorkArea = (bitWorkArea << BITS_PER_ENCODED_BYTE) + result; // collect decoded bytes
-                        if (modulus == 0) { // we can output the 5 bytes
-                            buffer[pos++] = (byte) ((bitWorkArea >> 32) & MASK_8BITS);
-                            buffer[pos++] = (byte) ((bitWorkArea >> 24) & MASK_8BITS);
-                            buffer[pos++] = (byte) ((bitWorkArea >> 16) & MASK_8BITS);
-                            buffer[pos++] = (byte) ((bitWorkArea >> 8) & MASK_8BITS);
-                            buffer[pos++] = (byte) (bitWorkArea & MASK_8BITS);
-                        }
-                    }
-                }
-            }
-        }
-    
-        // Two forms of EOF as far as Base32 decoder is concerned: actual
-        // EOF (-1) and first time '=' character is encountered in stream.
-        // This approach makes the '=' padding characters completely optional.
-        if (eof && modulus >= 2) { // if modulus < 2, nothing to do
-            ensureBufferSize(decodeSize);
-    
-            //  we ignore partial bytes, i.e. only multiples of 8 count
-            switch (modulus) {
-                case 2 : // 10 bits, drop 2 and output one byte
-                    buffer[pos++] = (byte) ((bitWorkArea >> 2) & MASK_8BITS);
-                    break;
-                case 3 : // 15 bits, drop 7 and output 1 byte
-                    buffer[pos++] = (byte) ((bitWorkArea >> 7) & MASK_8BITS);
-                    break;
-                case 4 : // 20 bits = 2*8 + 4
-                    bitWorkArea = bitWorkArea >> 4; // drop 4 bits
-                    buffer[pos++] = (byte) ((bitWorkArea >> 8) & MASK_8BITS);
-                    buffer[pos++] = (byte) ((bitWorkArea) & MASK_8BITS);
-                    break;
-                case 5 : // 25bits = 3*8 + 1
-                    bitWorkArea = bitWorkArea >> 1;
-                    buffer[pos++] = (byte) ((bitWorkArea >> 16) & MASK_8BITS);
-                    buffer[pos++] = (byte) ((bitWorkArea >> 8) & MASK_8BITS);
-                    buffer[pos++] = (byte) ((bitWorkArea) & MASK_8BITS);
-                    break;
-                case 6 : // 30bits = 3*8 + 6
-                    bitWorkArea = bitWorkArea >> 6;
-                    buffer[pos++] = (byte) ((bitWorkArea >> 16) & MASK_8BITS);
-                    buffer[pos++] = (byte) ((bitWorkArea >> 8) & MASK_8BITS);
-                    buffer[pos++] = (byte) ((bitWorkArea) & MASK_8BITS);
-                    break;
-                case 7 : // 35 = 4*8 +3
-                    bitWorkArea = bitWorkArea >> 3;
-                    buffer[pos++] = (byte) ((bitWorkArea >> 24) & MASK_8BITS);
-                    buffer[pos++] = (byte) ((bitWorkArea >> 16) & MASK_8BITS);
-                    buffer[pos++] = (byte) ((bitWorkArea >> 8) & MASK_8BITS);
-                    buffer[pos++] = (byte) ((bitWorkArea) & MASK_8BITS);
-                    break;
-            }
-        }
+    public boolean isInAlphabet(byte octet) {
+        return (octet >= 0 && octet < decodeTable.length && decodeTable[octet] != -1);
     }
 }
