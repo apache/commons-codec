@@ -26,8 +26,10 @@ import org.apache.commons.codec.EncoderException;
 /**
  * Implements common Base-N codec functions.
  * 
+ * <p>
  * This class is not thread-safe.
  * Each thread should use its own instance.
+ * </p>
  */
 public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
 

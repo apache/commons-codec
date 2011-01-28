@@ -39,6 +39,10 @@ import java.math.BigInteger;
  * Since this class operates directly on byte streams, and not character streams, it is hard-coded to only encode/decode
  * character encodings which are compatible with the lower 127 ASCII chart (ISO-8859-1, Windows-1252, UTF-8, etc).
  * </p>
+ * <p>
+ * This class is not thread-safe.
+ * Each thread should use its own instance.
+ * </p>
  * 
  * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>
  * @author Apache Software Foundation

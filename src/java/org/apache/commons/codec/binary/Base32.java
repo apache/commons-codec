@@ -32,6 +32,10 @@ package org.apache.commons.codec.binary;
  * <p>
  * This class operates directly on byte streams, and not character streams.
  * </p>
+ * <p>
+ * This class is not thread-safe.
+ * Each thread should use its own instance.
+ * </p>
  * 
  * @see <a href="http://www.ietf.org/rfc/rfc4648.txt">RFC 4648</a>
  * 
