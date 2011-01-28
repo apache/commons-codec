@@ -22,6 +22,11 @@ import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * Common base class for Base-N input streams.
+ * 
+ * @since 1.5
+ */
 public class BaseNCodecInputStream extends FilterInputStream {
 
     private final boolean doEncode;
