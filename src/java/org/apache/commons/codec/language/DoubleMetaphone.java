@@ -56,7 +56,7 @@ public class DoubleMetaphone implements StringEncoder {
     /**
      * Maximum length of an encoding, default is 4
      */
-    protected int maxCodeLen = 4;
+    private int maxCodeLen = 4;
 
     /**
      * Creates an instance of this DoubleMetaphone encoder
