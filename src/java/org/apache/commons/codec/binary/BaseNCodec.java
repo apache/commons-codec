@@ -125,7 +125,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     protected int modulus;
 
     /**
-     * Note <code>lineLength</code> is rounded down to the nearest multiple of {@link encodedBlockSize}
+     * Note <code>lineLength</code> is rounded down to the nearest multiple of {@link #encodedBlockSize}
      * If <code>chunkSeparatorLength</code> is zero, then chunking is disabled.
      * @param unencodedBlockSize the size of an unencoded block (e.g. Base64 = 3)
      * @param encodedBlockSize the size of an encoded block (e.g. Base64 = 4)
