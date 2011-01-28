@@ -69,7 +69,9 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     /**
      * Byte used to pad output.
      */
-    protected final byte PAD = '='; // instance variable just in case it needs to vary later
+    protected static final byte PAD_DEFAULT = '='; // Allow static access to default
+    
+    protected final byte PAD = PAD_DEFAULT; // instance variable just in case it needs to vary later
 
     /** Number of bytes in each full block of unencoded data, e.g. 4 for Base64 and 5 for Base32 */
     private final int unencodedBlockSize;
@@ -109,12 +111,6 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * and must be thrown away.
      */
     protected boolean eof;
-
-    /**
-     * Place holder for the bytes we're dealing with for our based logic. 
-     * Bitwise operations store and extract the encoding or decoding from this variable.
-     */
-    protected long bitWorkArea;
 
     /**
      * Variable tracks how many characters have been written to the current line. Only used when encoding. We use it to

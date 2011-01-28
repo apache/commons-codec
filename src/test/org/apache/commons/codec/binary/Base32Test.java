@@ -45,6 +45,16 @@ public class Base32Test extends TestCase {
     };
 
 
+    private static final String [][] BASE32_TEST_CASES_CHUNKED = { //Chunked
+        {""       ,""},
+        {"f"      ,"MY======\r\n"},
+        {"fo"     ,"MZXQ====\r\n"},
+        {"foo"    ,"MZXW6===\r\n"},
+        {"foob"   ,"MZXW6YQ=\r\n"},
+        {"fooba"  ,"MZXW6YTB\r\n"},
+        {"foobar" ,"MZXW6YTBOI======\r\n"},
+    };
+
     public void testBase32Samples() throws Exception {
         Base32 codec = new Base32();
         for (int i = 0; i < BASE32_TEST_CASES.length; i++) {
@@ -57,6 +67,13 @@ public class Base32Test extends TestCase {
         for (int i = 0; i < BASE32HEX_TEST_CASES.length; i++) {
                 assertEquals(BASE32HEX_TEST_CASES[i][1], codec.encodeAsString(BASE32HEX_TEST_CASES[i][0].getBytes("UTF-8")));
         }
+    }
+
+    public void testBase32Chunked () throws Exception {
+        Base32 codec = new Base32(20);
+        for (int i = 0; i < BASE32_TEST_CASES_CHUNKED.length; i++) {
+                assertEquals(BASE32_TEST_CASES_CHUNKED[i][1], codec.encodeAsString(BASE32_TEST_CASES_CHUNKED[i][0].getBytes("UTF-8")));
+        }        
     }
 
     public void testSingleCharEncoding() {
