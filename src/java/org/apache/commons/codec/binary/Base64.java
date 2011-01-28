@@ -363,7 +363,7 @@ public class Base64 extends BaseNCodec {
         } else {
             for (int i = 0; i < inAvail; i++) {
                 ensureBufferSize(encodeSize);
-                modulus = (++modulus) % BYTES_PER_UNENCODED_BLOCK;
+                modulus = (modulus+1) % BYTES_PER_UNENCODED_BLOCK;
                 int b = in[inPos++];
                 if (b < 0) {
                     b += 256;
@@ -426,7 +426,7 @@ public class Base64 extends BaseNCodec {
                 if (b >= 0 && b < DECODE_TABLE.length) {
                     int result = DECODE_TABLE[b];
                     if (result >= 0) {
-                        modulus = (++modulus) % BYTES_PER_ENCODED_BLOCK;
+                        modulus = (modulus+1) % BYTES_PER_ENCODED_BLOCK;
                         bitWorkArea = (bitWorkArea << BITS_PER_ENCODED_BYTE) + result;
                         if (modulus == 0) {
                             buffer[pos++] = (byte) ((bitWorkArea >> 16) & MASK_8BITS);
