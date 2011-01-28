@@ -17,8 +17,6 @@
 
 package org.apache.commons.codec.binary;
 
-import java.io.FilterOutputStream;
-import java.io.IOException;
 import java.io.OutputStream;
 
 /**
@@ -43,12 +41,7 @@ import java.io.OutputStream;
  * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>
  * @since 1.4
  */
-public class Base64OutputStream extends FilterOutputStream {
-    private final boolean doEncode;
-
-    private final Base64 base64;
-
-    private final byte[] singleByte = new byte[1];
+public class Base64OutputStream extends BaseNCodecOutputStream {
 
     /**
      * Creates a Base64OutputStream such that all data written is Base64-encoded to the original provided OutputStream.
@@ -70,9 +63,7 @@ public class Base64OutputStream extends FilterOutputStream {
      *            true if we should encode all data written to us, false if we should decode.
      */
     public Base64OutputStream(OutputStream out, boolean doEncode) {
-        super(out);
-        this.doEncode = doEncode;
-        this.base64 = new Base64(false);
+        super(out,new Base64(false), doEncode);
     }
 
     /**
@@ -92,107 +83,6 @@ public class Base64OutputStream extends FilterOutputStream {
      *            If lineLength <= 0, the lineSeparator is not used. If doEncode is false lineSeparator is ignored.
      */
     public Base64OutputStream(OutputStream out, boolean doEncode, int lineLength, byte[] lineSeparator) {
-        super(out);
-        this.doEncode = doEncode;
-        this.base64 = new Base64(lineLength, lineSeparator);
+        super(out, new Base64(lineLength, lineSeparator), doEncode);
     }
-
-    /**
-     * Writes the specified <code>byte</code> to this output stream.
-     * 
-     * @param i
-     *            source byte
-     * @throws IOException
-     *             if an I/O error occurs.
-     */
-    public void write(int i) throws IOException {
-        singleByte[0] = (byte) i;
-        write(singleByte, 0, 1);
-    }
-
-    /**
-     * Writes <code>len</code> bytes from the specified <code>b</code> array starting at <code>offset</code> to this
-     * output stream.
-     * 
-     * @param b
-     *            source byte array
-     * @param offset
-     *            where to start reading the bytes
-     * @param len
-     *            maximum number of bytes to write
-     * 
-     * @throws IOException
-     *             if an I/O error occurs.
-     * @throws NullPointerException
-     *             if the byte array parameter is null
-     * @throws IndexOutOfBoundsException
-     *             if offset, len or buffer size are invalid
-     */
-    public void write(byte b[], int offset, int len) throws IOException {
-        if (b == null) {
-            throw new NullPointerException();
-        } else if (offset < 0 || len < 0) {
-            throw new IndexOutOfBoundsException();
-        } else if (offset > b.length || offset + len > b.length) {
-            throw new IndexOutOfBoundsException();
-        } else if (len > 0) {
-            if (doEncode) {
-                base64.encode(b, offset, len);
-            } else {
-                base64.decode(b, offset, len);
-            }
-            flush(false);
-        }
-    }
-
-    /**
-     * Flushes this output stream and forces any buffered output bytes to be written out to the stream. If propogate is
-     * true, the wrapped stream will also be flushed.
-     * 
-     * @param propogate
-     *            boolean flag to indicate whether the wrapped OutputStream should also be flushed.
-     * @throws IOException
-     *             if an I/O error occurs.
-     */
-    private void flush(boolean propogate) throws IOException {
-        int avail = base64.available();
-        if (avail > 0) {
-            byte[] buf = new byte[avail];
-            int c = base64.readResults(buf, 0, avail);
-            if (c > 0) {
-                out.write(buf, 0, c);
-            }
-        }
-        if (propogate) {
-            out.flush();
-        }
-    }
-
-    /**
-     * Flushes this output stream and forces any buffered output bytes to be written out to the stream.
-     * 
-     * @throws IOException
-     *             if an I/O error occurs.
-     */
-    public void flush() throws IOException {
-        flush(true);
-    }
-
-    /**
-     * Closes this output stream and releases any system resources associated with the stream.
-     * 
-     * @throws IOException
-     *             if an I/O error occurs.
-     */
-    public void close() throws IOException {
-        // Notify encoder of EOF (-1).
-        if (doEncode) {
-            base64.encode(singleByte, 0, -1);
-        } else {
-            base64.decode(singleByte, 0, -1);
-        }
-        flush();
-        out.close();
-    }
-
 }

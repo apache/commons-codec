@@ -17,8 +17,6 @@
 
 package org.apache.commons.codec.binary;
 
-import java.io.FilterInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -43,13 +41,7 @@ import java.io.InputStream;
  * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>
  * @since 1.4
  */
-public class Base64InputStream extends FilterInputStream {
-
-    private final boolean doEncode;
-
-    private final Base64 base64;
-
-    private final byte[] singleByte = new byte[1];
+public class Base64InputStream extends BaseNCodecInputStream {
 
     /**
      * Creates a Base64InputStream such that all data read is Base64-decoded from the original provided InputStream.
@@ -71,9 +63,7 @@ public class Base64InputStream extends FilterInputStream {
      *            true if we should encode all data read from us, false if we should decode.
      */
     public Base64InputStream(InputStream in, boolean doEncode) {
-        super(in);
-        this.doEncode = doEncode;
-        this.base64 = new Base64(false);
+        super(in, new Base64(false), doEncode);
     }
 
     /**
@@ -93,97 +83,6 @@ public class Base64InputStream extends FilterInputStream {
      *            If lineLength <= 0, the lineSeparator is not used. If doEncode is false lineSeparator is ignored.
      */
     public Base64InputStream(InputStream in, boolean doEncode, int lineLength, byte[] lineSeparator) {
-        super(in);
-        this.doEncode = doEncode;
-        this.base64 = new Base64(lineLength, lineSeparator);
-    }
-
-    /**
-     * Reads one <code>byte</code> from this input stream.
-     * 
-     * @return the byte as an integer in the range 0 to 255. Returns -1 if EOF has been reached.
-     * @throws IOException
-     *             if an I/O error occurs.
-     */
-    public int read() throws IOException {
-        int r = read(singleByte, 0, 1);
-        while (r == 0) {
-            r = read(singleByte, 0, 1);
-        }
-        if (r > 0) {
-            return singleByte[0] < 0 ? 256 + singleByte[0] : singleByte[0];
-        }
-        return -1;
-    }
-
-    /**
-     * Attempts to read <code>len</code> bytes into the specified <code>b</code> array starting at <code>offset</code>
-     * from this InputStream.
-     * 
-     * @param b
-     *            destination byte array
-     * @param offset
-     *            where to start writing the bytes
-     * @param len
-     *            maximum number of bytes to read
-     * 
-     * @return number of bytes read
-     * @throws IOException
-     *             if an I/O error occurs.
-     * @throws NullPointerException
-     *             if the byte array parameter is null
-     * @throws IndexOutOfBoundsException
-     *             if offset, len or buffer size are invalid
-     */
-    public int read(byte b[], int offset, int len) throws IOException {
-        if (b == null) {
-            throw new NullPointerException();
-        } else if (offset < 0 || len < 0) {
-            throw new IndexOutOfBoundsException();
-        } else if (offset > b.length || offset + len > b.length) {
-            throw new IndexOutOfBoundsException();
-        } else if (len == 0) {
-            return 0;
-        } else {
-            int readLen = 0;
-            /*
-             Rationale for while-loop on (readLen == 0):
-             -----
-             Base64.readResults() usually returns > 0 or EOF (-1).  In the
-             rare case where it returns 0, we just keep trying.
-
-             This is essentially an undocumented contract for InputStream
-             implementors that want their code to work properly with
-             java.io.InputStreamReader, since the latter hates it when
-             InputStream.read(byte[]) returns a zero.  Unfortunately our
-             readResults() call must return 0 if a large amount of the data
-             being decoded was non-base64, so this while-loop enables proper
-             interop with InputStreamReader for that scenario.
-             -----
-             This is a fix for CODEC-101
-            */
-            while (readLen == 0) {
-                if (!base64.hasData()) {
-                    byte[] buf = new byte[doEncode ? 4096 : 8192];
-                    int c = in.read(buf);
-                    if (doEncode) {
-                        base64.encode(buf, 0, c);
-                    } else {
-                        base64.decode(buf, 0, c);
-                    }
-                }
-                readLen = base64.readResults(b, offset, len);
-            }
-            return readLen;
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @return false
-     */
-    public boolean markSupported() {
-        return false; // not an easy job to support marks
+        super(in, new Base64(lineLength, lineSeparator), doEncode);
     }
 }
