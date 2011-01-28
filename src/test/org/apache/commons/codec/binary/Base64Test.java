@@ -186,7 +186,7 @@ public class Base64Test extends TestCase {
         base64 = new Base64(-1, new byte[]{});
         base64 = new Base64(64, new byte[]{});
         try {
-            base64 = new Base64(-1, new byte[]{'A'});
+            base64 = new Base64(-1, new byte[]{'A'}); // TODO do we need to check sep if len = -1?
             fail("Should have rejected attempt to use 'A' as a line separator");
         } catch (IllegalArgumentException ignored) {
             // Expected

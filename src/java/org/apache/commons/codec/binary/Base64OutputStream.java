@@ -155,7 +155,7 @@ public class Base64OutputStream extends FilterOutputStream {
      *             if an I/O error occurs.
      */
     private void flush(boolean propogate) throws IOException {
-        int avail = base64.avail();
+        int avail = base64.available();
         if (avail > 0) {
             byte[] buf = new byte[avail];
             int c = base64.readResults(buf, 0, avail);
