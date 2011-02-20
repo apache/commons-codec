@@ -65,6 +65,9 @@
             <action dev="ggregory" type="add" issue="CODEC-115" due-to="sebb">
              DoubleMetaphone.maxCodeLen should probably be private.
             </action>
+            <action dev="ggregory" type="remove" issue="CODEC-116" due-to="ggregory">
+             Remove deprecated package private method Base64.discardWhitespace(byte[])
+            </action>
         </release>
         <release version="1.4" date="9 August 2009" description="Feature and fix release.">
             <action dev="ggregory" type="fix" issue="CODEC-80" due-to="Julius Davies">
