@@ -412,9 +412,6 @@ public class ColognePhonetic implements StringEncoder {
                 }
             }
         }
-
-        text = new String(chrs);
-
-        return text;
+        return new String(chrs);
     }
 }
