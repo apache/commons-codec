@@ -5,15 +5,14 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
  */
 
 package org.apache.commons.codec.binary;
@@ -25,7 +24,7 @@ import org.apache.commons.codec.EncoderException;
 
 /**
  * Implements common Base-N codec functions.
- * 
+ *
  * <p>
  * This class is not thread-safe.
  * Each thread should use its own instance.
@@ -35,24 +34,24 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
 
     /**
      *  MIME chunk size per RFC 2045 section 6.8.
-     * 
+     *
      * <p>
      * The {@value} character limit does not count the trailing CRLF, but counts all other characters, including any
      * equal signs.
      * </p>
-     * 
+     *
      * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045 section 6.8</a>
      */
     public static final int MIME_CHUNK_SIZE = 76;
 
     /**
      * PEM chunk size per RFC 1421 section 4.3.2.4.
-     * 
+     *
      * <p>
      * The {@value} character limit does not count the trailing CRLF, but counts all other characters, including any
      * equal signs.
      * </p>
-     * 
+     *
      * @see <a href="http://tools.ietf.org/html/rfc1421">RFC 1421 section 4.3.2.4</a>
      */
     public static final int PEM_CHUNK_SIZE = 64;
@@ -143,7 +142,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
 
     /**
      * Returns true if this object has buffered data for reading.
-     * 
+     *
      * @return true if there is data still available for reading.
      */
     boolean hasData() {  // package protected for access from I/O streams
@@ -152,7 +151,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
 
     /**
      * Returns the amount of buffered data available for reading.
-     * 
+     *
      * @return The amount of buffered data available for reading.
      */
     int available() {  // package protected for access from I/O streams
@@ -161,7 +160,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
 
     /**
      * Get the default buffer size. Can be overridden.
-     * 
+     *
      * @return {@link DEFAULT_BUFFER_RESIZE_SIZE}
      */
     protected int getDefaultBufferSize() {
@@ -183,7 +182,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
 
     /**
      * Ensure that the buffer has room for <code>size</code> bytes
-     * 
+     *
      * @param size minimum spare space required
      */
     protected void ensureBufferSize(int size){
@@ -195,7 +194,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     /**
      * Extracts buffered data into the provided byte[] array, starting at position bPos, 
      * up to a maximum of bAvail bytes. Returns how many bytes were actually extracted.
-     * 
+     *
      * @param b
      *            byte[] array to extract the buffered data into.
      * @param bPos
@@ -251,7 +250,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     /**
      * Encodes an Object using the Base-N algorithm. This method is provided in order to satisfy the requirements of the
      * Encoder interface, and will throw an EncoderException if the supplied object is not of type byte[].
-     * 
+     *
      * @param pObject
      *            Object to encode
      * @return An object (of type byte[]) containing the Base-N encoded data which corresponds to the byte[] supplied.
@@ -279,7 +278,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     /**
      * Decodes an Object using the Base-N algorithm. This method is provided in order to satisfy the requirements of the
      * Decoder interface, and will throw a DecoderException if the supplied object is not of type byte[] or String.
-     * 
+     *
      * @param pObject
      *            Object to decode
      * @return An object (of type byte[]) containing the binary data which corresponds to the byte[] or String supplied.
@@ -328,7 +327,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
 
     /**
      * Encodes a byte[] containing binary data, into a byte[] containing characters in the alphabet.
-     * 
+     *
      * @param pArray
      *            a byte array containing binary data
      * @return A byte array containing only the basen alphabetic character data
@@ -348,7 +347,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     /**
      * Encodes a byte[] containing binary data, into a String containing characters in the appropriate alphabet.
      * Uses UTF8 encoding.
-     * 
+     *
      * @param pArray a byte array containing binary data
      * @return String containing only character data in the appropriate alphabet.
     */
@@ -363,9 +362,9 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     /**
      * Returns whether or not the <code>octet</code> is in the current alphabet.
      * Does not allow whitespace or pad.
-     * 
+     *
      * @param octet The value to test
-     * 
+     *
      * @return <code>true</code> if the value is defined in the current alphabet, <code>false</code> otherwise.
      */
     protected abstract boolean isInAlphabet(byte b);
@@ -373,10 +372,10 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     /**
      * Tests a given byte array to see if it contains only valid characters within the alphabet.
      * The method optionally treats whitespace and pad as valid.
-     * 
+     *
      * @param arrayOctet byte array to test
      * @param allowWSPad if <code>true</code>, then whitespace and PAD are also allowed
-     * 
+     *
      * @return <code>true</code> if all bytes are valid characters in the alphabet or if the byte array is empty;
      *         <code>false</code>, otherwise
      */    
@@ -393,7 +392,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     /**
      * Tests a given String to see if it contains only valid characters within the alphabet. 
      * The method treats whitespace and PAD as valid.
-     * 
+     *
      * @param basen String to test
      * @return <code>true</code> if all characters in the String are valid characters in the alphabet or if
      *         the String is empty; <code>false</code>, otherwise
@@ -405,9 +404,9 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
 
     /**
      * Tests a given byte array to see if it contains any characters within the alphabet or PAD.
-     * 
+     *
      * Intended for use in checking line-ending arrays
-     * 
+     *
      * @param arrayOctet
      *            byte array to test
      * @return <code>true</code> if any byte is a valid character in the alphabet or PAD; <code>false</code> otherwise
