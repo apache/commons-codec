@@ -102,7 +102,7 @@ public class DoubleMetaphone implements StringEncoder {
             case 'O':
             case 'U':
             case 'Y':
-                index = handleAEIOUY(value, result, index);
+                index = handleAEIOUY(result, index);
                 break;
             case 'B':
                 result.append('P');
@@ -267,7 +267,7 @@ public class DoubleMetaphone implements StringEncoder {
     /**
      * Handles 'A', 'E', 'I', 'O', 'U', and 'Y' cases
      */
-    private int handleAEIOUY(String value, DoubleMetaphoneResult result, int 
+    private int handleAEIOUY(DoubleMetaphoneResult result, int 
                              index) {
         if (index == 0) {
             result.append('A');
