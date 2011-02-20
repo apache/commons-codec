@@ -258,10 +258,10 @@ public class ColognePhonetic implements StringEncoder {
     }
 
     private static final char[][] PRE_REPLACEMENTS = new char[][] {
-            new char[] { '\u00C4', 'A' },     // Ä
-            new char[] { '\u00DC', 'U' },     // Ü
-            new char[] { '\u00D6', 'O' },     // Ö
-            new char[] { '\u00DF', 'S' }      // ß
+            { '\u00C4', 'A' },     // Ä
+            { '\u00DC', 'U' },     // Ü
+            { '\u00D6', 'O' },     // Ö
+            { '\u00DF', 'S' }      // ß
     };
 
     /*
