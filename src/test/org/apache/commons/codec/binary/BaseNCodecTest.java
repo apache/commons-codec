@@ -125,6 +125,8 @@ public class BaseNCodecTest extends TestCase {
     }
 
     public void testContainsAlphabetOrPad() {
+        assertFalse(codec.containsAlphabetOrPad(null));
+        assertFalse(codec.containsAlphabetOrPad(new byte[]{}));
         assertTrue(codec.containsAlphabetOrPad("OK".getBytes()));
         assertTrue(codec.containsAlphabetOrPad("OK ".getBytes()));
         assertFalse(codec.containsAlphabetOrPad("ok ".getBytes()));
