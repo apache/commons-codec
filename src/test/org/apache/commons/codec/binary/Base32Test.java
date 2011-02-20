@@ -87,7 +87,7 @@ public class Base32Test extends TestCase {
             }
             codec.encode(unencoded, 0, -1);
             byte singly[] = new byte[allInOne.length];
-            int bytes = codec.readResults(singly, 0, 100);
+            codec.readResults(singly, 0, 100);
             if (!Arrays.equals(allInOne, singly)){
                 fail();
             }
