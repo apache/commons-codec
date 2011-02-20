@@ -466,6 +466,6 @@ public class Base32 extends BaseNCodec {
      * @return <code>true</code> if the value is defined in the the Base32 alphabet <code>false</code> otherwise.
      */
     public boolean isInAlphabet(byte octet) {
-        return (octet >= 0 && octet < decodeTable.length && decodeTable[octet] != -1);
+        return octet >= 0 && octet < decodeTable.length && decodeTable[octet] != -1;
     }
 }
