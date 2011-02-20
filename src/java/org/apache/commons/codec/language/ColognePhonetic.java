@@ -327,15 +327,13 @@ public class ColognePhonetic implements StringEncoder {
                 code = '-';
             } else if (chr == 'B' || (chr == 'P' && nextChar != 'H')) {
                 code = '1';
-            } else if ((chr == 'D' || chr == 'T')
-                    && !arrayContains(new char[] { 'S', 'C', 'Z' }, nextChar)) {
+            } else if ((chr == 'D' || chr == 'T') && !arrayContains(new char[] { 'S', 'C', 'Z' }, nextChar)) {
                 code = '2';
             } else if (arrayContains(new char[] { 'W', 'F', 'P', 'V' }, chr)) {
                 code = '3';
             } else if (arrayContains(new char[] { 'G', 'K', 'Q' }, chr)) {
                 code = '4';
-            } else if (chr == 'X'
-                    && !arrayContains(new char[] { 'C', 'K', 'Q' }, lastChar)) {
+            } else if (chr == 'X' && !arrayContains(new char[] { 'C', 'K', 'Q' }, lastChar)) {
                 code = '4';
                 right.addLeft('S');
                 rightLength++;
@@ -343,16 +341,14 @@ public class ColognePhonetic implements StringEncoder {
                 code = '8';
             } else if (chr == 'C') {
                 if (lastCode == '/') {
-                    if (arrayContains(new char[] { 'A', 'H', 'L', 'O', 'R',
-                            'U', 'K', 'X', 'Q' }, nextChar)) {
+                    if (arrayContains(new char[] { 'A', 'H', 'L', 'O', 'R', 'U', 'K', 'X', 'Q' }, nextChar)) {
                         code = '4';
                     } else {
                         code = '8';
                     }
                 } else {
-                    if (arrayContains(new char[] { 'S', 'Z' }, lastChar)
-                            || !arrayContains(new char[] { 'A', 'H', 'O', 'U',
-                                    'K', 'Q', 'X' }, nextChar)) {
+                    if (arrayContains(new char[] { 'S', 'Z' }, lastChar) || 
+                            !arrayContains(new char[] { 'A', 'H', 'O', 'U', 'K', 'Q', 'X' }, nextChar)) {
                         code = '8';
                     } else {
                         code = '4';
@@ -370,9 +366,7 @@ public class ColognePhonetic implements StringEncoder {
                 code = chr;
             }
 
-            if (code != '-'
-                    && (lastCode != code && (code != '0' || lastCode == '/')
-                            || code < '0' || code > '8')) {
+            if (code != '-' && (lastCode != code && (code != '0' || lastCode == '/') || code < '0' || code > '8')) {
                 left.addRight(code);
             }
 
@@ -385,10 +379,8 @@ public class ColognePhonetic implements StringEncoder {
     public Object encode(Object object) throws EncoderException {
         if (!(object instanceof String)) {
             throw new EncoderException(
-                    "This method’s parameter was expected to be of the type "
-                            + String.class.getName()
-                            + ". But actually it was of the type "
-                            + object.getClass().getName() + ".");
+                    "This method’s parameter was expected to be of the type " + String.class.getName() + 
+                    ". But actually it was of the type " + object.getClass().getName() + ".");
         }
         return encode((String) object);
     }
