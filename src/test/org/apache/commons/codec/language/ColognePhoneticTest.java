@@ -34,6 +34,18 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
         Assert.assertEquals("Source: " + source, expected, this.colognePhonetic.encode(source));
     }
 
+    private void checkEncodings(String[][] data) {
+        for (int i = 0; i < data.length; i++) {
+            this.checkEncoding(data[i][1], data[i][0]);
+        }
+    }
+
+    private void checkEncodingVariations(String expected, String data[]) {
+        for (int i = 0; i < data.length; i++) {
+            this.checkEncoding(expected, data[i]);
+        }
+    }
+
     protected StringEncoder createEncoder() {
         return new ColognePhonetic();
     }
@@ -77,18 +89,12 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
             {"acl", "085"},
             {"mn", "6"},
             {"r", "7"}};
-
-        for (int i = 0; i < data.length; i++) {
-            Assert.assertEquals("Failed to correctly convert element of index: " + i, data[i][1],
-                    this.colognePhonetic.colognePhonetic(data[i][0]));
-        }
+        this.checkEncodings(data);
     }
 
     public void testExamples() {
         String[][] data = {{"Müller-Lüdenscheidt", "65752682"}, {"Breschnew", "17863"}, {"Wikipedia", "3412"}};
-        for (int i = 0; i < data.length; i++) {
-            this.checkEncoding(data[i][1], data[i][0]);
-        }
+        this.checkEncodings(data);
     }
 
     public void testHyphen() {
@@ -119,28 +125,27 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
      * Test data from http://repo.magdev.de/src/Text_ColognePhonetic-0.2.2/test/Text_ColognePhoneticTest.php
      */
     public void testPhpData() {
-        String[][] data = {
-            {"peter", "127"},
-            {"pharma", "376"},
-            {"bergisch-gladbach", "174845214"},
-            {"mönchengladbach", "664645214"},
-           // {"deutsch", "288"}, // Probably a bug
+        String[][] data = {{"peter", "127"}, {"pharma", "376"}, {"bergisch-gladbach", "174845214"}, {"mönchengladbach", "664645214"},
+            // {"deutsch", "288"}, // Probably a bug
             {"deutz", "28"},
-           // {"hamburg", "6174"},
-           // {"hannover", "637"},
-           // {"christstollen", "4788256"},
+            // {"hamburg", "6174"},
+            // {"hannover", "637"},
+            // {"christstollen", "4788256"},
             {"Xanthippe", "48621"},
             {"Zacharias", "8478"},
-           // {"Holzbau", "581"},
-           // {"matsch", "688"},
+            // {"Holzbau", "581"},
+            // {"matsch", "688"},
             {"matz", "68"},
             {"Arbeitsamt", "071862"},
             {"Eberhard", "01772"},
             {"Eberhardt", "01772"},
-           // {"heithabu", "21"},
+            // {"heithabu", "21"},
             {"Müller-Lüdenscheidt", "65752682"},};
-        for (int i = 0; i < data.length; i++) {
-            this.checkEncoding(data[i][1], data[i][0]);
-        }
+        this.checkEncodings(data);
+    }
+
+    public void testVariations() {
+        String data[] = {"Meier", "Maier", "Mair", "Meyer", "Meyr", "Mejer", "Major"};
+        this.checkEncodingVariations("67", data);
     }
 }
