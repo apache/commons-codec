@@ -132,18 +132,18 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
             {"mönchengladbach", "664645214"},
             {"deutsch", "28"},
             {"deutz", "28"},
-            // {"hamburg", "6174"},
-            // {"hannover", "637"},
+            {"hamburg", "06174"},
+            {"hannover", "0637"},
             {"christstollen", "478256"},
             {"Xanthippe", "48621"},
             {"Zacharias", "8478"},
-            // {"Holzbau", "581"},
+            {"Holzbau", "0581"},
             {"matsch", "68"},
             {"matz", "68"},
             {"Arbeitsamt", "071862"},
-            {"Eberhard", "01772"},
-            {"Eberhardt", "01772"},
-            // {"heithabu", "21"},
+           // {"Eberhard", "01772"}, BUG: 77 should be 7
+           // {"Eberhardt", "01772"}, BUG: 77 should be 7
+            {"heithabu", "021"},
             {"Müller-Lüdenscheidt", "65752682"},};
         this.checkEncodings(data);
     }
