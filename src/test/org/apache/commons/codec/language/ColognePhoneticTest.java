@@ -93,6 +93,8 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
 
     public void testHyphen() {
         this.checkEncoding("174845214", "bergisch-gladbach");
+        // From the Javadoc example:
+        this.checkEncoding("65752682", "Müller-Lüdenscheidt");
     }
 
     public void testIsCologneEquals() {
