@@ -165,7 +165,8 @@ import org.apache.commons.codec.StringEncoder;
  * 
  * <li>
  * <h3>Third step:</h3>
- * Removal of all codes “0” except at the beginning
+ * Removal of all codes “0” except at the beginning. This means that two or more identical consecutive digits can occur
+ *  if they occur after removing the "0" digits.
  * 
  * <h4>Example:</h4>
  * {@code "6050750206802" => "65752682"}</li>
@@ -368,10 +369,10 @@ public class ColognePhonetic implements StringEncoder {
 
             if (code != '-' && (lastCode != code && (code != '0' || lastCode == '/') || code < '0' || code > '8')) {
                 left.addRight(code);
-                lastCode = code;
             }
 
             lastChar = chr;
+            lastCode = code;
         }
         return left.toString();
     }

@@ -100,13 +100,13 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
             {"weber", "317"},
             // {"wagner", "357"},
             {"becker", "147"},
-            {"hoffmann", "036"},
+            {"hoffmann", "0366"},
             {"sch\u00C4fer", "837"},
             {"Breschnew", "17863"},
             {"Wikipedia", "3412"},
             {"peter", "127"},
             {"pharma", "376"},
-            {"mönchengladbach", "64645214"},
+            {"mönchengladbach", "664645214"},
             {"deutsch", "28"},
             {"deutz", "28"},
             {"hamburg", "06174"},
@@ -118,8 +118,8 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
             {"matsch", "68"},
             {"matz", "68"},
             {"Arbeitsamt", "071862"},
-            {"Eberhard", "0172"},
-            {"Eberhardt", "0172"},
+            {"Eberhard", "01772"},
+            {"Eberhardt", "01772"},
             {"heithabu", "021"}};
         this.checkEncodings(data);
     }
@@ -147,8 +147,14 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
         }
     }
 
-    public void testVariations() {
+    public void testVariationsMeyer() {
         String data[] = {"Meier", "Maier", "Mair", "Meyer", "Meyr", "Mejer", "Major"};
         this.checkEncodingVariations("67", data);
+
+    }
+
+    public void testVariationsMella() {
+        String data[] = {"mella", "milah", "moulla", "mellah", "muehle", "mule"};
+        this.checkEncodingVariations("65", data);
     }
 }
