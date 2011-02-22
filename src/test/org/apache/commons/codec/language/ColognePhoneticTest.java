@@ -93,42 +93,11 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
     }
 
     public void testExamples() {
-        String[][] data = {{"Müller-Lüdenscheidt", "65752682"}, {"Breschnew", "17863"}, {"Wikipedia", "3412"}};
-        this.checkEncodings(data);
-    }
-
-    public void testHyphen() {
-        this.checkEncoding("174845214", "bergisch-gladbach");
-        // From the Javadoc example:
-        this.checkEncoding("65752682", "M�ller-L�denscheidt");
-    }
-
-    public void testIsCologneEquals() {
-        Assert.assertFalse("Cologne-phonetic encodings should not be equal", this.colognePhonetic.isCologneEqual("Meyer", "Müller"));
-        Assert.assertTrue("Cologne-phonetic encodings should be equal", this.colognePhonetic.isCologneEqual("Meyer", "Mayr"));
-    }
-
-    public void testIsCologneEqualsPhpData() {
         String[][] data = {
-            {"house", "house"},
-            {"House", "house"},
-            {"Haus", "house"},
-            {"ganz", "Gans"},
-            {"ganz", "Gänse"},
-            {"Miyagi", "Miyako"}};
-        for (int i = 0; i < data.length; i++) {
-            this.colognePhonetic.isCologneEqual(data[i][1], data[i][0]);
-        }
-    }
-
-    /**
-     * Test data from http://repo.magdev.de/src/Text_ColognePhonetic-0.2.2/test/Text_ColognePhoneticTest.php
-     */
-    public void testPhpData() {
-        String[][] data = {
+            {"Breschnew", "17863"},
+            {"Wikipedia", "3412"},
             {"peter", "127"},
             {"pharma", "376"},
-            {"bergisch-gladbach", "174845214"},
             {"mönchengladbach", "64645214"},
             {"deutsch", "28"},
             {"deutz", "28"},
@@ -143,9 +112,31 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
             {"Arbeitsamt", "071862"},
             {"Eberhard", "0172"},
             {"Eberhardt", "0172"},
-            {"heithabu", "021"},
-            {"Müller-Lüdenscheidt", "65752682"},};
+            {"heithabu", "021"}};
         this.checkEncodings(data);
+    }
+
+    public void testHyphen() {
+        String[][] data = {{"bergisch-gladbach", "174845214"}, {"Müller-Lüdenscheidt", "65752682"},
+            // From the Javadoc example:
+            {"M�ller-L�denscheidt", "65752682"}};
+        this.checkEncodings(data);
+
+    }
+
+    public void testIsCologneEquals() {
+        String[][] data = {
+            {"Meyer", "Müller"},
+            {"Meyer", "Mayr"},
+            {"house", "house"},
+            {"House", "house"},
+            {"Haus", "house"},
+            {"ganz", "Gans"},
+            {"ganz", "Gänse"},
+            {"Miyagi", "Miyako"}};
+        for (int i = 0; i < data.length; i++) {
+            this.colognePhonetic.isCologneEqual(data[i][1], data[i][0]);
+        }
     }
 
     public void testVariations() {
