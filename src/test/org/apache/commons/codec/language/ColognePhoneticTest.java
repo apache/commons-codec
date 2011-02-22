@@ -30,16 +30,6 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
         return new ColognePhonetic();
     }
 
-    public void testExamples() {
-        ColognePhonetic koellePhon = new ColognePhonetic();
-        String[][] data = { { "Müller-Lüdenscheidt", "65752682" },
-                { "Breschnew", "17863" }, { "Wikipedia", "3412" } };
-
-        for (int i = 0; i < data.length; i++) {
-            assertEquals(data[i][1], koellePhon.colognePhonetic(data[i][0]));
-        }
-    }
-
     public void testBorderCases() {
         ColognePhonetic koellePhon = new ColognePhonetic();
 
@@ -55,6 +45,16 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
         for (int i = 0; i < data.length; i++) {
             assertEquals("Failed to correctly convert element of index: " + i,
                          data[i][1], koellePhon.colognePhonetic(data[i][0]));
+        }
+    }
+
+    public void testExamples() {
+        ColognePhonetic koellePhon = new ColognePhonetic();
+        String[][] data = { { "Müller-Lüdenscheidt", "65752682" },
+                { "Breschnew", "17863" }, { "Wikipedia", "3412" } };
+
+        for (int i = 0; i < data.length; i++) {
+            assertEquals(data[i][1], koellePhon.colognePhonetic(data[i][0]));
         }
     }
 
