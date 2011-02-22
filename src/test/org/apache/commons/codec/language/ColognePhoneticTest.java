@@ -17,13 +17,21 @@
 
 package org.apache.commons.codec.language;
 
+import junit.framework.Assert;
+
 import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.StringEncoderAbstractTest;
 
 public class ColognePhoneticTest extends StringEncoderAbstractTest {
 
+    private ColognePhonetic colognePhonetic = new ColognePhonetic();
+
     public ColognePhoneticTest(String name) {
         super(name);
+    }
+
+    public void checkEncoding(String expected, String source) {
+        Assert.assertEquals("Source: " + source, expected, this.colognePhonetic.encode(source));
     }
 
     protected StringEncoder createEncoder() {
@@ -31,12 +39,14 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
     }
 
     public void testAabjoe() {
-        assertEquals("01", new ColognePhonetic().encode("Aabjoe"));
+        this.checkEncoding("01", "Aabjoe");
     }
 
-    public void testBorderCases() {
-        ColognePhonetic koellePhon = new ColognePhonetic();
+    public void testAaclan() {
+        this.checkEncoding("0856", "Aaclan");
+    }
 
+    public void testEdgeCases() {
         String[][] data = {
             {"a", "0"},
             {"e", "0"},
@@ -69,21 +79,66 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
             {"r", "7"}};
 
         for (int i = 0; i < data.length; i++) {
-            assertEquals("Failed to correctly convert element of index: " + i, data[i][1], koellePhon.colognePhonetic(data[i][0]));
+            Assert.assertEquals("Failed to correctly convert element of index: " + i, data[i][1],
+                    this.colognePhonetic.colognePhonetic(data[i][0]));
         }
     }
 
     public void testExamples() {
-        ColognePhonetic koellePhon = new ColognePhonetic();
         String[][] data = {{"Müller-Lüdenscheidt", "65752682"}, {"Breschnew", "17863"}, {"Wikipedia", "3412"}};
         for (int i = 0; i < data.length; i++) {
-            assertEquals(data[i][1], koellePhon.colognePhonetic(data[i][0]));
+            this.checkEncoding(data[i][1], data[i][0]);
         }
     }
 
+    public void testHyphen() {
+        this.checkEncoding("174845214", "bergisch-gladbach");
+    }
+
     public void testIsCologneEquals() {
-        ColognePhonetic koellePhon = new ColognePhonetic();
-        assertFalse("Cologne-phonetic encodings should not be equal", koellePhon.isCologneEqual("Meyer", "Müller"));
-        assertTrue("Cologne-phonetic encodings should be equal", koellePhon.isCologneEqual("Meyer", "Mayr"));
+        Assert.assertFalse("Cologne-phonetic encodings should not be equal", this.colognePhonetic.isCologneEqual("Meyer", "Müller"));
+        Assert.assertTrue("Cologne-phonetic encodings should be equal", this.colognePhonetic.isCologneEqual("Meyer", "Mayr"));
+    }
+
+    public void testIsCologneEqualsPhpData() {
+        String[][] data = {
+            {"house", "house"},
+            {"House", "house"},
+            {"Haus", "house"},
+            {"ganz", "Gans"},
+            {"ganz", "Gänse"},
+            {"Miyagi", "Miyako"}};
+        for (int i = 0; i < data.length; i++) {
+            this.colognePhonetic.isCologneEqual(data[i][1], data[i][0]);
+        }
+    }
+
+    /**
+     * Test data from http://repo.magdev.de/src/Text_ColognePhonetic-0.2.2/test/Text_ColognePhoneticTest.php
+     */
+    public void testPhpData() {
+        String[][] data = {
+            {"peter", "127"},
+            {"pharma", "376"},
+            {"bergisch-gladbach", "174845214"},
+            {"mönchengladbach", "664645214"},
+           // {"deutsch", "288"}, // Probably a bug
+            {"deutz", "28"},
+           // {"hamburg", "6174"},
+           // {"hannover", "637"},
+           // {"christstollen", "4788256"},
+            {"Xanthippe", "48621"},
+            {"Zacharias", "8478"},
+           // {"Holzbau", "581"},
+           // {"matsch", "688"},
+            {"matz", "68"},
+            {"Arbeitsamt", "071862"},
+            {"Eberhard", "01772"},
+            {"Eberhardt", "01772"},
+           // {"heithabu", "21"},
+            {"Müller-Lüdenscheidt", "65752682"},};
+        for (int i = 0; i < data.length; i++) {
+            this.checkEncoding(data[i][1], data[i][0]);
+        }
     }
 }
