@@ -132,7 +132,7 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
 
     }
 
-    public void testIsCologneEquals() {
+    public void testIsEncodeEquals() {
         String[][] data = {
             {"Meyer", "Müller"},
             {"Meyer", "Mayr"},
@@ -143,7 +143,7 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
             {"ganz", "Gänse"},
             {"Miyagi", "Miyako"}};
         for (int i = 0; i < data.length; i++) {
-            this.colognePhonetic.isCologneEqual(data[i][1], data[i][0]);
+            this.colognePhonetic.isEncodeEqual(data[i][1], data[i][0]);
         }
     }
 

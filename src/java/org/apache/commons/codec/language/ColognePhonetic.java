@@ -390,7 +390,7 @@ public class ColognePhonetic implements StringEncoder {
         return colognePhonetic(text);
     }
 
-    public boolean isCologneEqual(String text1, String text2) {
+    public boolean isEncodeEqual(String text1, String text2) {
         return colognePhonetic(text1).equals(colognePhonetic(text2));
     }
 
