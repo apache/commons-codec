@@ -161,13 +161,13 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     /**
      * Get the default buffer size. Can be overridden.
      *
-     * @return {@link DEFAULT_BUFFER_RESIZE_SIZE}
+     * @return {@link #DEFAULT_BUFFER_SIZE}
      */
     protected int getDefaultBufferSize() {
         return DEFAULT_BUFFER_SIZE;
     }
 
-    /** Increases our buffer by the {@link DEFAULT_BUFFER_RESIZE_FACTOR}. */
+    /** Increases our buffer by the {@link #DEFAULT_BUFFER_RESIZE_FACTOR}. */
     private void resizeBuffer() {
         if (buffer == null) {
             buffer = new byte[getDefaultBufferSize()];
@@ -363,11 +363,11 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * Returns whether or not the <code>octet</code> is in the current alphabet.
      * Does not allow whitespace or pad.
      *
-     * @param octet The value to test
+     * @param value The value to test
      *
      * @return <code>true</code> if the value is defined in the current alphabet, <code>false</code> otherwise.
      */
-    protected abstract boolean isInAlphabet(byte b);
+    protected abstract boolean isInAlphabet(byte value);
     
     /**
      * Tests a given byte array to see if it contains only valid characters within the alphabet.
