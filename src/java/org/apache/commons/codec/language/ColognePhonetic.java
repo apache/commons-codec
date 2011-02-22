@@ -159,7 +159,7 @@ import org.apache.commons.codec.StringEncoder;
  * 
  * <li>
  * <h3>Second step:</h3>
- * Removal of all double codes.
+ * Collapse of all multiple consecutive code digits.
  * <h4>Example:</h4>
  * {@code "6005507500206880022" => "6050750206802"}</li>
  * 
