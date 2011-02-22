@@ -318,7 +318,7 @@ public class ColognePhonetic implements StringEncoder {
                 nextChar = '-';
             }
 
-            if (arrayContains(new char[] { 'E', 'I', 'A', 'U', 'O', 'Y' }, chr)) {
+            if (arrayContains(new char[] { 'A', 'E', 'I', 'J', 'O', 'U', 'Y' }, chr)) {
                 code = '0';
             } else if (chr == 'H' || chr < 'A' || chr > 'Z') {
                 if (lastCode == '/') {

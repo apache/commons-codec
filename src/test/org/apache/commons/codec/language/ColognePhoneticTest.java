@@ -30,6 +30,10 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
         return new ColognePhonetic();
     }
 
+    public void testAabjoe() {
+        assertEquals("01", new ColognePhonetic().encode("Aabjoe"));
+    }
+
     public void testBorderCases() {
         ColognePhonetic koellePhon = new ColognePhonetic();
 
