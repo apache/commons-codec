@@ -125,8 +125,12 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
      * Test data from http://repo.magdev.de/src/Text_ColognePhonetic-0.2.2/test/Text_ColognePhoneticTest.php
      */
     public void testPhpData() {
-        String[][] data = {{"peter", "127"}, {"pharma", "376"}, {"bergisch-gladbach", "174845214"}, {"mönchengladbach", "664645214"},
-            // {"deutsch", "288"}, // Probably a bug
+        String[][] data = {
+            {"peter", "127"},
+            {"pharma", "376"},
+            {"bergisch-gladbach", "174845214"},
+            {"mönchengladbach", "664645214"},
+            {"deutsch", "28"},
             {"deutz", "28"},
             // {"hamburg", "6174"},
             // {"hannover", "637"},
