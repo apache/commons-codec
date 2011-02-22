@@ -93,7 +93,15 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
     }
 
     public void testExamples() {
-        String[][] data = {
+        String[][] data = {{"m\u00DCller", "657"},
+            // {"schmidt", "8628"},
+            {"schneider", "8627"},
+            {"fischer", "387"},
+            {"weber", "317"},
+            // {"wagner", "357"},
+            {"becker", "147"},
+            {"hoffmann", "036"},
+            {"sch\u00C4fer", "837"},
             {"Breschnew", "17863"},
             {"Wikipedia", "3412"},
             {"peter", "127"},
