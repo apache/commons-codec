@@ -33,26 +33,45 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
     public void testBorderCases() {
         ColognePhonetic koellePhon = new ColognePhonetic();
 
-        String[][] data = { { "a", "0" }, { "e", "0" }, { "i", "0" },
-                { "o", "0" }, { "u", "0" }, { "\u00E4", "0" }, { "\u00F6", "0" },
-                { "\u00FC", "0" }, { "aa", "0" }, { "ha", "0" }, { "h", "" },
-                { "aha", "0" }, { "b", "1" }, { "p", "1" }, { "ph", "3" },
-                { "f", "3" }, { "v", "3" }, { "w", "3" }, { "g", "4" },
-                { "k", "4" }, { "q", "4" }, { "x", "48" }, { "ax", "048" },
-                { "cx", "48" }, { "l", "5" }, { "cl", "45" }, { "acl", "085" },
-                { "mn", "6" }, { "r", "7" } };
+        String[][] data = {
+            {"a", "0"},
+            {"e", "0"},
+            {"i", "0"},
+            {"o", "0"},
+            {"u", "0"},
+            {"\u00E4", "0"},
+            {"\u00F6", "0"},
+            {"\u00FC", "0"},
+            {"aa", "0"},
+            {"ha", "0"},
+            {"h", ""},
+            {"aha", "0"},
+            {"b", "1"},
+            {"p", "1"},
+            {"ph", "3"},
+            {"f", "3"},
+            {"v", "3"},
+            {"w", "3"},
+            {"g", "4"},
+            {"k", "4"},
+            {"q", "4"},
+            {"x", "48"},
+            {"ax", "048"},
+            {"cx", "48"},
+            {"l", "5"},
+            {"cl", "45"},
+            {"acl", "085"},
+            {"mn", "6"},
+            {"r", "7"}};
 
         for (int i = 0; i < data.length; i++) {
-            assertEquals("Failed to correctly convert element of index: " + i,
-                         data[i][1], koellePhon.colognePhonetic(data[i][0]));
+            assertEquals("Failed to correctly convert element of index: " + i, data[i][1], koellePhon.colognePhonetic(data[i][0]));
         }
     }
 
     public void testExamples() {
         ColognePhonetic koellePhon = new ColognePhonetic();
-        String[][] data = { { "Müller-Lüdenscheidt", "65752682" },
-                { "Breschnew", "17863" }, { "Wikipedia", "3412" } };
-
+        String[][] data = {{"Müller-Lüdenscheidt", "65752682"}, {"Breschnew", "17863"}, {"Wikipedia", "3412"}};
         for (int i = 0; i < data.length; i++) {
             assertEquals(data[i][1], koellePhon.colognePhonetic(data[i][0]));
         }
@@ -60,9 +79,7 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
 
     public void testIsCologneEquals() {
         ColognePhonetic koellePhon = new ColognePhonetic();
-        assertFalse("Cologne-phonetic encodings should not be equal",
-                koellePhon.isCologneEqual("Meyer", "Müller"));
-        assertTrue("Cologne-phonetic encodings should be equal",
-                koellePhon.isCologneEqual("Meyer", "Mayr"));
+        assertFalse("Cologne-phonetic encodings should not be equal", koellePhon.isCologneEqual("Meyer", "Müller"));
+        assertTrue("Cologne-phonetic encodings should be equal", koellePhon.isCologneEqual("Meyer", "Mayr"));
     }
 }
