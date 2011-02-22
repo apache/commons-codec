@@ -129,7 +129,7 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
             {"peter", "127"},
             {"pharma", "376"},
             {"bergisch-gladbach", "174845214"},
-            {"mönchengladbach", "664645214"},
+            {"mönchengladbach", "64645214"},
             {"deutsch", "28"},
             {"deutz", "28"},
             {"hamburg", "06174"},
@@ -141,8 +141,8 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
             {"matsch", "68"},
             {"matz", "68"},
             {"Arbeitsamt", "071862"},
-           // {"Eberhard", "01772"}, BUG: 77 should be 7
-           // {"Eberhardt", "01772"}, BUG: 77 should be 7
+            {"Eberhard", "0172"},
+            {"Eberhardt", "0172"},
             {"heithabu", "021"},
             {"Müller-Lüdenscheidt", "65752682"},};
         this.checkEncodings(data);

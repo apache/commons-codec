@@ -368,10 +368,10 @@ public class ColognePhonetic implements StringEncoder {
 
             if (code != '-' && (lastCode != code && (code != '0' || lastCode == '/') || code < '0' || code > '8')) {
                 left.addRight(code);
+                lastCode = code;
             }
 
             lastChar = chr;
-            lastCode = code;
         }
         return left.toString();
     }
