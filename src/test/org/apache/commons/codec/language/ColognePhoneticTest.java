@@ -130,7 +130,6 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
             // From the Javadoc example:
             {"Müller-Lüdenscheidt", "65752682"}};
         this.checkEncodings(data);
-
     }
 
     public void testIsEncodeEquals() {
@@ -151,7 +150,6 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
     public void testVariationsMeyer() {
         String data[] = {"Meier", "Maier", "Mair", "Meyer", "Meyr", "Mejer", "Major"};
         this.checkEncodingVariations("67", data);
-
     }
 
     public void testVariationsMella() {
