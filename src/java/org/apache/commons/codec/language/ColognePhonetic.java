@@ -220,9 +220,9 @@ public class ColognePhonetic implements StringEncoder {
         }
 
         protected char[] copyData(int start, final int length) {
-            char[] retData = new char[length];
-            System.arraycopy(data, start, retData, 0, length);
-            return retData;
+            char[] newData = new char[length];
+            System.arraycopy(data, start, newData, 0, length);
+            return newData;
         }
     }
 
