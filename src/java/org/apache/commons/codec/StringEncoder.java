@@ -28,13 +28,13 @@ public interface StringEncoder extends Encoder {
     /**
      * Encodes a String and returns a String.
      * 
-     * @param pString a String to encode
+     * @param source the String to encode
      * 
      * @return the encoded String
      * 
      * @throws EncoderException thrown if there is
      *  an error conidition during the Encoding process.
      */
-    String encode(String pString) throws EncoderException;
+    String encode(String source) throws EncoderException;
 }  
 
