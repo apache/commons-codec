@@ -17,48 +17,30 @@
 
 package org.apache.commons.codec.language;
 
-import junit.framework.Assert;
 
+import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.StringEncoderAbstractTest;
 
 public class ColognePhoneticTest extends StringEncoderAbstractTest {
 
-    private ColognePhonetic colognePhonetic = new ColognePhonetic();
-
     public ColognePhoneticTest(String name) {
         super(name);
-    }
-
-    public void checkEncoding(String expected, String source) {
-        Assert.assertEquals("Source: " + source, expected, this.colognePhonetic.encode(source));
-    }
-
-    private void checkEncodings(String[][] data) {
-        for (int i = 0; i < data.length; i++) {
-            this.checkEncoding(data[i][1], data[i][0]);
-        }
-    }
-
-    private void checkEncodingVariations(String expected, String data[]) {
-        for (int i = 0; i < data.length; i++) {
-            this.checkEncoding(expected, data[i]);
-        }
     }
 
     protected StringEncoder createEncoder() {
         return new ColognePhonetic();
     }
 
-    public void testAabjoe() {
+    public void testAabjoe() throws EncoderException {
         this.checkEncoding("01", "Aabjoe");
     }
 
-    public void testAaclan() {
+    public void testAaclan() throws EncoderException {
         this.checkEncoding("0856", "Aaclan");
     }
 
-    public void testEdgeCases() {
+    public void testEdgeCases() throws EncoderException {
         String[][] data = {
             {"a", "0"},
             {"e", "0"},
@@ -92,7 +74,7 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
         this.checkEncodings(data);
     }
 
-    public void testExamples() {
+    public void testExamples() throws EncoderException {
         String[][] data = {
             {"m\u00DCller", "657"},
             {"schmidt", "862"},
@@ -125,7 +107,7 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
         this.checkEncodings(data);
     }
 
-    public void testHyphen() {
+    public void testHyphen() throws EncoderException {
         String[][] data = {{"bergisch-gladbach", "174845214"}, {"MÃ¼ller-LÃ¼denscheidt", "65752682"},
             // From the Javadoc example:
             {"Müller-Lüdenscheidt", "65752682"}};
@@ -143,17 +125,17 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
             {"ganz", "GÃ¤nse"},
             {"Miyagi", "Miyako"}};
         for (int i = 0; i < data.length; i++) {
-            this.colognePhonetic.isEncodeEqual(data[i][1], data[i][0]);
+            ((ColognePhonetic) this.stringEncoder).isEncodeEqual(data[i][1], data[i][0]);
         }
     }
 
-    public void testVariationsMeyer() {
-        String data[] = {"Meier", "Maier", "Mair", "Meyer", "Meyr", "Mejer", "Major"};
-        this.checkEncodingVariations("67", data);
-    }
-
-    public void testVariationsMella() {
+    public void testVariationsMella() throws EncoderException {
         String data[] = {"mella", "milah", "moulla", "mellah", "muehle", "mule"};
         this.checkEncodingVariations("65", data);
+    }
+
+    public void testVariationsMeyer() throws EncoderException {
+        String data[] = {"Meier", "Maier", "Mair", "Meyer", "Meyr", "Mejer", "Major"};
+        this.checkEncodingVariations("67", data);
     }
 }

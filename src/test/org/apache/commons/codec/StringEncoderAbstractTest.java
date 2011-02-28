@@ -19,6 +19,7 @@ package org.apache.commons.codec;
 
 import java.util.Locale;
 
+import junit.framework.Assert;
 import junit.framework.TestCase;
 
 /**
@@ -26,6 +27,8 @@ import junit.framework.TestCase;
  * @version $Id$
  */
 public abstract class StringEncoderAbstractTest extends TestCase {
+
+    protected StringEncoder stringEncoder = createEncoder();
 
     public StringEncoderAbstractTest(String name) {
         super(name);
@@ -95,6 +98,22 @@ public abstract class StringEncoderAbstractTest extends TestCase {
         } finally {
             Locale.setDefault(orig);
         }
+    }
+
+    protected void checkEncodings(String[][] data) throws EncoderException {
+        for (int i = 0; i < data.length; i++) {
+            this.checkEncoding(data[i][1], data[i][0]);
+        }
+    }
+
+    protected void checkEncodingVariations(String expected, String data[]) throws EncoderException {
+        for (int i = 0; i < data.length; i++) {
+            this.checkEncoding(expected, data[i]);
+        }
+    }
+
+    public void checkEncoding(String expected, String source) throws EncoderException {
+        Assert.assertEquals("Source: " + source, expected, this.stringEncoder.encode(source));
     }
 
 }

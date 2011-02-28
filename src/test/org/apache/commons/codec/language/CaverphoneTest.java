@@ -17,6 +17,7 @@
 
 package org.apache.commons.codec.language;
 
+import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.StringEncoderAbstractTest;
 
@@ -34,24 +35,19 @@ public class CaverphoneTest extends StringEncoderAbstractTest {
         return new Caverphone();
     }
 
-    public void testSpecificationExamples() {
-        Caverphone caverphone = new Caverphone();
+    public void testSpecificationExamples() throws EncoderException {
         String[][] data = {
-            {"Stevenson", "STFNSN1111"},
-            {"Peter",     "PTA1111111"},
-            {"ready",     "RTA1111111"},
-            {"social",    "SSA1111111"},
-            {"able",      "APA1111111"},
-            {"Tedder",    "TTA1111111"},
-            {"Karleen",   "KLN1111111"},
-            {"Dyun",      "TN11111111"},
-        };
-
-        for(int i=0; i<data.length; i++) {
-            assertEquals( data[i][1], caverphone.caverphone(data[i][0]) );
-        }
+            {"Peter", "PTA1111111"},
+            {"ready", "RTA1111111"},
+            {"social", "SSA1111111"},
+            {"able", "APA1111111"},
+            {"Tedder", "TTA1111111"},
+            {"Karleen", "KLN1111111"},
+            {"Dyun", "TN11111111"},};
+        this.checkEncodings(data);
     }
 
+    // Caverphone Revisited
     public void testIsCaverphoneEquals() {
         Caverphone caverphone = new Caverphone();
         assertFalse("Caverphone encodings should not be equal", caverphone.isCaverphoneEqual("Peter", "Stevenson"));
