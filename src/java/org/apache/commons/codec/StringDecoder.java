@@ -28,13 +28,13 @@ public interface StringDecoder extends Decoder {
     /**
      * Decodes a String and returns a String.
      * 
-     * @param pString a String to encode
+     * @param source the String to decode
      * 
      * @return the encoded String
      * 
      * @throws DecoderException thrown if there is
-     *  an error conidition during the Encoding process.
+     *  an error condition during the Encoding process.
      */
-    String decode(String pString) throws DecoderException;
+    String decode(String source) throws DecoderException;
 }  
 
