@@ -26,8 +26,6 @@ import org.apache.commons.codec.StringEncoderAbstractTest;
  */
 public class MetaphoneTest extends StringEncoderAbstractTest {
 
-    private Metaphone metaphone = null;
-
     public MetaphoneTest(String name) {
         super(name);
     }
@@ -56,33 +54,16 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
             assertTrue(failMsg, this.getMetaphone().isMetaphoneEqual(name1, name0));
         }
     }
+    
     /**
      * @return Returns the metaphone.
      */
     private Metaphone getMetaphone() {
-        return this.metaphone;
+        return (Metaphone) this.getStringEncoder();
     }
 
-    protected StringEncoder createEncoder() {
+    protected StringEncoder createStringEncoder() {
         return new Metaphone();
-    }
-
-    /**
-     * @param metaphone
-     *                  The metaphone to set.
-     */
-    private void setMetaphone(Metaphone metaphone) {
-        this.metaphone = metaphone;
-    }
-
-    public void setUp() throws Exception {
-        super.setUp();
-        this.setMetaphone(new Metaphone());
-    }
-
-    public void tearDown() throws Exception {
-        super.tearDown();
-        this.setMetaphone(null);
     }
 
     public void testIsMetaphoneEqual1() {

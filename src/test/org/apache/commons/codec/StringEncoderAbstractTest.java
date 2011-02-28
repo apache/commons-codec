@@ -28,76 +28,14 @@ import junit.framework.TestCase;
  */
 public abstract class StringEncoderAbstractTest extends TestCase {
 
-    protected StringEncoder stringEncoder = createEncoder();
+    protected StringEncoder stringEncoder = this.createStringEncoder();
 
     public StringEncoderAbstractTest(String name) {
         super(name);
     }
 
-    protected abstract StringEncoder createEncoder();
-
-    // ------------------------------------------------------------------------
-
-    public void testEncodeEmpty() throws Exception {
-        Encoder encoder = createEncoder();
-        encoder.encode("");
-        encoder.encode(" ");
-        encoder.encode("\t");
-    }        
-
-    public void testEncodeNull() throws Exception {
-        StringEncoder encoder = createEncoder();
-        
-        try {
-            encoder.encode(null);
-        } catch (EncoderException ee) {
-            // An exception should be thrown
-        }
-    }        
-
-    public void testEncodeWithInvalidObject() throws Exception {
-
-        boolean exceptionThrown = false;
-        try {
-            StringEncoder encoder = createEncoder();
-            encoder.encode( new Float( 3.4 ) );
-        } catch (Exception e) {
-            exceptionThrown = true;
-        }
-
-        assertTrue( "An exception was not thrown when we tried to encode " +
-                    "a Float object", exceptionThrown );
-    }
-
-    public void testLocaleIndependence() throws Exception {
-        StringEncoder encoder = createEncoder();
-
-        String[] data = { "I", "i", };
-
-        Locale orig = Locale.getDefault();
-        Locale[] locales = { Locale.ENGLISH, new Locale("tr"), Locale.getDefault() };
-
-        try {
-            for (int i = 0; i < data.length; i++) {
-                String ref = null;
-                for (int j = 0; j < locales.length; j++) {
-                    Locale.setDefault(locales[j]);
-                    if (j <= 0) {
-                        ref = encoder.encode(data[i]);
-                    } else {
-                        String cur = null;
-                        try {
-                            cur = encoder.encode(data[i]);
-                        } catch (Exception e) {
-                            fail(Locale.getDefault().toString() + ": " + e.getMessage());
-                        }
-                        assertEquals(Locale.getDefault().toString() + ": ", ref, cur);
-                    }
-                }
-            }
-        } finally {
-            Locale.setDefault(orig);
-        }
+    public void checkEncoding(String expected, String source) throws EncoderException {
+        Assert.assertEquals("Source: " + source, expected, this.getStringEncoder().encode(source));
     }
 
     protected void checkEncodings(String[][] data) throws EncoderException {
@@ -112,8 +50,70 @@ public abstract class StringEncoderAbstractTest extends TestCase {
         }
     }
 
-    public void checkEncoding(String expected, String source) throws EncoderException {
-        Assert.assertEquals("Source: " + source, expected, this.stringEncoder.encode(source));
+    protected abstract StringEncoder createStringEncoder();
+
+    public StringEncoder getStringEncoder() {
+        return this.stringEncoder;
+    }
+
+    public void testEncodeEmpty() throws Exception {
+        Encoder encoder = this.getStringEncoder();
+        encoder.encode("");
+        encoder.encode(" ");
+        encoder.encode("\t");
+    }
+
+    public void testEncodeNull() throws Exception {
+        StringEncoder encoder = this.getStringEncoder();
+        try {
+            encoder.encode(null);
+        } catch (EncoderException ee) {
+            // An exception should be thrown
+        }
+    }
+
+    public void testEncodeWithInvalidObject() throws Exception {
+
+        boolean exceptionThrown = false;
+        try {
+            StringEncoder encoder = this.getStringEncoder();
+            encoder.encode(new Float(3.4));
+        } catch (Exception e) {
+            exceptionThrown = true;
+        }
+
+        Assert.assertTrue("An exception was not thrown when we tried to encode " + "a Float object", exceptionThrown);
+    }
+
+    public void testLocaleIndependence() throws Exception {
+        StringEncoder encoder = this.getStringEncoder();
+
+        String[] data = {"I", "i",};
+
+        Locale orig = Locale.getDefault();
+        Locale[] locales = {Locale.ENGLISH, new Locale("tr"), Locale.getDefault()};
+
+        try {
+            for (int i = 0; i < data.length; i++) {
+                String ref = null;
+                for (int j = 0; j < locales.length; j++) {
+                    Locale.setDefault(locales[j]);
+                    if (j <= 0) {
+                        ref = encoder.encode(data[i]);
+                    } else {
+                        String cur = null;
+                        try {
+                            cur = encoder.encode(data[i]);
+                        } catch (Exception e) {
+                            Assert.fail(Locale.getDefault().toString() + ": " + e.getMessage());
+                        }
+                        Assert.assertEquals(Locale.getDefault().toString() + ": ", ref, cur);
+                    }
+                }
+            }
+        } finally {
+            Locale.setDefault(orig);
+        }
     }
 
 }

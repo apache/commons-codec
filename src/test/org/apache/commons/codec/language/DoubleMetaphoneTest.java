@@ -998,8 +998,6 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest {
             "wundeews", "windows" }, {
             "yeild", "yield" }, };
 
-    private DoubleMetaphone doubleMetaphone = null;
-
     public DoubleMetaphoneTest(String name) {
         super(name);
     }
@@ -1051,25 +1049,11 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest {
     }
 
     private DoubleMetaphone getDoubleMetaphone() {
-        return this.doubleMetaphone;
+        return (DoubleMetaphone) this.getStringEncoder();
     }
 
-    protected StringEncoder createEncoder() {
-        return new Metaphone();
-    }
-
-    private void setDoubleMetaphone(DoubleMetaphone doubleMetaphone) {
-        this.doubleMetaphone = doubleMetaphone;
-    }
-
-    public void setUp() throws Exception {
-        super.setUp();
-        this.setDoubleMetaphone(new DoubleMetaphone());
-    }
-
-    public void tearDown() throws Exception {
-        super.tearDown();
-        this.setDoubleMetaphone(null);
+    protected StringEncoder createStringEncoder() {
+        return new DoubleMetaphone();
     }
 
     public void testDoubleMetaphone() {

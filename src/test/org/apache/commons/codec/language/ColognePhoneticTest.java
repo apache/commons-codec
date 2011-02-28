@@ -28,7 +28,7 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
         super(name);
     }
 
-    protected StringEncoder createEncoder() {
+    protected StringEncoder createStringEncoder() {
         return new ColognePhonetic();
     }
 
@@ -125,7 +125,7 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
             {"ganz", "Gänse"},
             {"Miyagi", "Miyako"}};
         for (int i = 0; i < data.length; i++) {
-            ((ColognePhonetic) this.stringEncoder).isEncodeEqual(data[i][1], data[i][0]);
+            ((ColognePhonetic) this.getStringEncoder()).isEncodeEqual(data[i][1], data[i][0]);
         }
     }
 
