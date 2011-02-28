@@ -33,7 +33,7 @@ public interface Encoder {
      * as an Object.  The Objects here may just be <code>byte[]</code>
      * or <code>String</code>s depending on the implementation used.
      *   
-     * @param pObject An object ot encode
+     * @param source An object ot encode
      * 
      * @return An "encoded" Object
      * 
@@ -41,6 +41,6 @@ public interface Encoder {
      *  thrown if the encoder experiences a failure
      *  condition during the encoding process.
      */
-    Object encode(Object pObject) throws EncoderException;
+    Object encode(Object source) throws EncoderException;
 }  
 
