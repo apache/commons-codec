@@ -17,6 +17,8 @@
 
 package org.apache.commons.codec.language;
 
+import junit.framework.Assert;
+
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.StringEncoderAbstractTest;
@@ -33,6 +35,306 @@ public class CaverphoneTest extends StringEncoderAbstractTest {
 
     protected StringEncoder createStringEncoder() {
         return new Caverphone();
+    }
+
+    /**
+     * See http://caversham.otago.ac.nz/files/working/ctp150804.pdf
+     * 
+     * AT11111111 words: add, aid, at, art, eat, earth, head, hit, hot, hold, hard, heart, it, out, old
+     * 
+     * @throws EncoderException
+     */
+    public void testDavidHoodRevisitedCommonCodeAT11111111() throws EncoderException {
+        this.checkEncodingVariations("AT11111111", new String[]{
+            "add",
+            "aid",
+            "at",
+            "art",
+            "eat",
+            "earth",
+            "head",
+            "hit",
+            "hot",
+            "hold",
+            "hard",
+            "heart",
+            "it",
+            "out",
+            "old"});
+    }
+
+    /**
+     * See http://caversham.otago.ac.nz/files/working/ctp150804.pdf
+     * 
+     * @throws EncoderException
+     */
+    public void testDavidHoodRevisitedExamples() throws EncoderException {
+        String[][] data = {{"Stevenson", "STFNSN1111"}, {"Peter", "PTA1111111"}};
+        this.checkEncodings(data);
+    }
+
+    /**
+     * See http://caversham.otago.ac.nz/files/working/ctp150804.pdf
+     * 
+     * @throws EncoderException
+     */
+    public void testDavidHoodRevisitedRandomNameKLN1111111() throws EncoderException {
+        this.checkEncodingVariations("KLN1111111", new String[]{
+            "Cailean",
+            "Calan",
+            "Calen",
+            "Callahan",
+            "Callan",
+            "Callean",
+            "Carleen",
+            "Carlen",
+            "Carlene",
+            "Carlin",
+            "Carline",
+            "Carlyn",
+            "Carlynn",
+            "Carlynne",
+            "Charlean",
+            "Charleen",
+            "Charlene",
+            "Charline",
+            "Cherlyn",
+            "Chirlin",
+            "Clein",
+            "Cleon",
+            "Cline",
+            "Cohleen",
+            "Colan",
+            "Coleen",
+            "Colene",
+            "Colin",
+            "Colleen",
+            "Collen",
+            "Collin",
+            "Colline",
+            "Colon",
+            "Cullan",
+            "Cullen",
+            "Cullin",
+            "Gaelan",
+            "Galan",
+            "Galen",
+            "Garlan",
+            "Garlen",
+            "Gaulin",
+            "Gayleen",
+            "Gaylene",
+            "Giliane",
+            "Gillan",
+            "Gillian",
+            "Glen",
+            "Glenn",
+            "Glyn",
+            "Glynn",
+            "Gollin",
+            "Gorlin",
+            "Kalin",
+            "Karlan",
+            "Karleen",
+            "Karlen",
+            "Karlene",
+            "Karlin",
+            "Karlyn",
+            "Kaylyn",
+            "Keelin",
+            "Kellen",
+            "Kellene",
+            "Kellyann",
+            "Kellyn",
+            "Khalin",
+            "Kilan",
+            "Kilian",
+            "Killen",
+            "Killian",
+            "Killion",
+            "Klein",
+            "Kleon",
+            "Kline",
+            "Koerlin",
+            "Kylen",
+            "Kylynn",
+            "Quillan",
+            "Quillon",
+            "Qulllon",
+            "Xylon"});
+    }
+
+    /**
+     * See http://caversham.otago.ac.nz/files/working/ctp150804.pdf
+     * 
+     * @throws EncoderException
+     */
+    public void testDavidHoodRevisitedRandomNameTTA1111111() throws EncoderException {
+        this.checkEncodingVariations("TTA1111111", new String[]{
+            "Darda",
+            "Datha",
+            "Dedie",
+            "Deedee",
+            "Deerdre",
+            "Deidre",
+            "Deirdre",
+            "Detta",
+            "Didi",
+            "Didier",
+            "Dido",
+            "Dierdre",
+            "Dieter",
+            "Dita",
+            "Ditter",
+            "Dodi",
+            "Dodie",
+            "Dody",
+            "Doherty",
+            "Dorthea",
+            "Dorthy",
+            "Doti",
+            "Dotti",
+            "Dottie",
+            "Dotty",
+            "Doty",
+            "Doughty",
+            "Douty",
+            "Dowdell",
+            "Duthie",
+            "Tada",
+            "Taddeo",
+            "Tadeo",
+            "Tadio",
+            "Tati",
+            "Teador",
+            "Tedda",
+            "Tedder",
+            "Teddi",
+            "Teddie",
+            "Teddy",
+            "Tedi",
+            "Tedie",
+            "Teeter",
+            "Teodoor",
+            "Teodor",
+            "Terti",
+            "Theda",
+            "Theodor",
+            "Theodore",
+            "Theta",
+            "Thilda",
+            "Thordia",
+            "Tilda",
+            "Tildi",
+            "Tildie",
+            "Tildy",
+            "Tita",
+            "Tito",
+            "Tjader",
+            "Toddie",
+            "Toddy",
+            "Torto",
+            "Tuddor",
+            "Tudor",
+            "Turtle",
+            "Tuttle",
+            "Tutto"});
+    }
+
+    /**
+     * See http://caversham.otago.ac.nz/files/working/ctp150804.pdf
+     * 
+     * @throws EncoderException
+     */
+    public void testDavidHoodRevisitedRandomNameTN11111111() throws EncoderException {
+        this.checkEncodingVariations("TN11111111", new String[]{
+            "Dan",
+            "Dane",
+            "Dann",
+            "Darn",
+            "Daune",
+            "Dawn",
+            "Ddene",
+            "Dean",
+            "Deane",
+            "Deanne",
+            "DeeAnn",
+            "Deeann",
+            "Deeanne",
+            "Deeyn",
+            "Den",
+            "Dene",
+            "Denn",
+            "Deonne",
+            "Diahann",
+            "Dian",
+            "Diane",
+            "Diann",
+            "Dianne",
+            "Diannne",
+            "Dine",
+            "Dion",
+            "Dione",
+            "Dionne",
+            "Doane",
+            "Doehne",
+            "Don",
+            "Donn",
+            "Doone",
+            "Dorn",
+            "Down",
+            "Downe",
+            "Duane",
+            "Dun",
+            "Dunn",
+            "Duyne",
+            "Dyan",
+            "Dyane",
+            "Dyann",
+            "Dyanne",
+            "Dyun",
+            "Tan",
+            "Tann",
+            "Teahan",
+            "Ten",
+            "Tenn",
+            "Terhune",
+            "Thain",
+            "Thaine",
+            "Thane",
+            "Thanh",
+            "Thayne",
+            "Theone",
+            "Thin",
+            "Thorn",
+            "Thorne",
+            "Thun",
+            "Thynne",
+            "Tien",
+            "Tine",
+            "Tjon",
+            "Town",
+            "Towne",
+            "Turne",
+            "Tyne"});
+    }
+
+    /**
+     * See http://caversham.otago.ac.nz/files/working/ctp150804.pdf
+     * 
+     * @throws EncoderException
+     */
+    public void testDavidHoodRevisitedRandomWords() throws EncoderException {
+        this.checkEncodingVariations("RTA1111111", new String[]{"rather", "ready", "writer"});
+        this.checkEncoding("SSA1111111", "social");
+        this.checkEncodingVariations("APA1111111", new String[]{"able", "appear"});
+    }
+
+    // Caverphone Revisited
+    public void testIsCaverphoneEquals() {
+        Caverphone caverphone = new Caverphone();
+        Assert.assertFalse("Caverphone encodings should not be equal", caverphone.isCaverphoneEqual("Peter", "Stevenson"));
+        Assert.assertTrue("Caverphone encodings should be equal", caverphone.isCaverphoneEqual("Peter", "Peady"));
     }
 
     public void testSpecificationExamples() throws EncoderException {
@@ -56,13 +358,6 @@ public class CaverphoneTest extends StringEncoderAbstractTest {
         // Is this a bug of a Caverphone 1.0 vs 2.0 issue?
         // String[][] data = {{"Lee", "L11111"}, {"Thompson", "TMPSN1"}};
         // this.checkEncodings(data);
-    }
-
-    // Caverphone Revisited
-    public void testIsCaverphoneEquals() {
-        Caverphone caverphone = new Caverphone();
-        assertFalse("Caverphone encodings should not be equal", caverphone.isCaverphoneEqual("Peter", "Stevenson"));
-        assertTrue("Caverphone encodings should be equal", caverphone.isCaverphoneEqual("Peter", "Peady"));
     }
 
 }
