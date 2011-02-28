@@ -40,7 +40,7 @@ public interface Decoder {
      * implementation.  If a {@link ClassCastException} occurs
      * this decode method will throw a DecoderException.
      * 
-     * @param pObject an object to "decode"
+     * @param source the object to decode
      * 
      * @return a 'decoded" object
      * 
@@ -50,6 +50,6 @@ public interface Decoder {
      * method is null, a param cannot be cast to the
      * appropriate type for a specific encoder.
      */
-    Object decode(Object pObject) throws DecoderException;
+    Object decode(Object source) throws DecoderException;
 }  
 
