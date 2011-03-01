@@ -68,6 +68,9 @@
             <action dev="ggregory" type="remove" issue="CODEC-116" due-to="ggregory">
              Remove deprecated package private method Base64.discardWhitespace(byte[])
             </action>
+            <action dev="ggregory" type="fix" issue="CODEC-117" due-to="ggregory">
+             Caverphone encodes names starting and ending with "mb" incorrectly.
+            </action>
         </release>
         <release version="1.4" date="9 August 2009" description="Feature and fix release.">
             <action dev="ggregory" type="fix" issue="CODEC-80" due-to="Julius Davies">
