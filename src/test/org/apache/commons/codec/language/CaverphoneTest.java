@@ -349,15 +349,4 @@ public class CaverphoneTest extends StringEncoderAbstractTest {
         this.checkEncodings(data);
     }
 
-    /**
-     * Tests examples from http://en.wikipedia.org/wiki/Caverphone
-     * 
-     * @throws EncoderException
-     */
-    public void testWikipediaExamples() throws EncoderException {
-        // Is this a bug or a Caverphone 1.0 vs 2.0 issue?
-        // String[][] data = {{"Lee", "L11111"}, {"Thompson", "TMPSN1"}};
-        // this.checkEncodings(data);
-    }
-
 }
