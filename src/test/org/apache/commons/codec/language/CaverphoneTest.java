@@ -169,83 +169,6 @@ public class CaverphoneTest extends StringEncoderAbstractTest {
      * 
      * @throws EncoderException
      */
-    public void testDavidHoodRevisitedRandomNameTTA1111111() throws EncoderException {
-        this.checkEncodingVariations("TTA1111111", new String[]{
-            "Darda",
-            "Datha",
-            "Dedie",
-            "Deedee",
-            "Deerdre",
-            "Deidre",
-            "Deirdre",
-            "Detta",
-            "Didi",
-            "Didier",
-            "Dido",
-            "Dierdre",
-            "Dieter",
-            "Dita",
-            "Ditter",
-            "Dodi",
-            "Dodie",
-            "Dody",
-            "Doherty",
-            "Dorthea",
-            "Dorthy",
-            "Doti",
-            "Dotti",
-            "Dottie",
-            "Dotty",
-            "Doty",
-            "Doughty",
-            "Douty",
-            "Dowdell",
-            "Duthie",
-            "Tada",
-            "Taddeo",
-            "Tadeo",
-            "Tadio",
-            "Tati",
-            "Teador",
-            "Tedda",
-            "Tedder",
-            "Teddi",
-            "Teddie",
-            "Teddy",
-            "Tedi",
-            "Tedie",
-            "Teeter",
-            "Teodoor",
-            "Teodor",
-            "Terti",
-            "Theda",
-            "Theodor",
-            "Theodore",
-            "Theta",
-            "Thilda",
-            "Thordia",
-            "Tilda",
-            "Tildi",
-            "Tildie",
-            "Tildy",
-            "Tita",
-            "Tito",
-            "Tjader",
-            "Toddie",
-            "Toddy",
-            "Torto",
-            "Tuddor",
-            "Tudor",
-            "Turtle",
-            "Tuttle",
-            "Tutto"});
-    }
-
-    /**
-     * See http://caversham.otago.ac.nz/files/working/ctp150804.pdf
-     * 
-     * @throws EncoderException
-     */
     public void testDavidHoodRevisitedRandomNameTN11111111() throws EncoderException {
         this.checkEncodingVariations("TN11111111", new String[]{
             "Dan",
@@ -324,10 +247,92 @@ public class CaverphoneTest extends StringEncoderAbstractTest {
      * 
      * @throws EncoderException
      */
+    public void testDavidHoodRevisitedRandomNameTTA1111111() throws EncoderException {
+        this.checkEncodingVariations("TTA1111111", new String[]{
+            "Darda",
+            "Datha",
+            "Dedie",
+            "Deedee",
+            "Deerdre",
+            "Deidre",
+            "Deirdre",
+            "Detta",
+            "Didi",
+            "Didier",
+            "Dido",
+            "Dierdre",
+            "Dieter",
+            "Dita",
+            "Ditter",
+            "Dodi",
+            "Dodie",
+            "Dody",
+            "Doherty",
+            "Dorthea",
+            "Dorthy",
+            "Doti",
+            "Dotti",
+            "Dottie",
+            "Dotty",
+            "Doty",
+            "Doughty",
+            "Douty",
+            "Dowdell",
+            "Duthie",
+            "Tada",
+            "Taddeo",
+            "Tadeo",
+            "Tadio",
+            "Tati",
+            "Teador",
+            "Tedda",
+            "Tedder",
+            "Teddi",
+            "Teddie",
+            "Teddy",
+            "Tedi",
+            "Tedie",
+            "Teeter",
+            "Teodoor",
+            "Teodor",
+            "Terti",
+            "Theda",
+            "Theodor",
+            "Theodore",
+            "Theta",
+            "Thilda",
+            "Thordia",
+            "Tilda",
+            "Tildi",
+            "Tildie",
+            "Tildy",
+            "Tita",
+            "Tito",
+            "Tjader",
+            "Toddie",
+            "Toddy",
+            "Torto",
+            "Tuddor",
+            "Tudor",
+            "Turtle",
+            "Tuttle",
+            "Tutto"});
+    }
+
+    /**
+     * See http://caversham.otago.ac.nz/files/working/ctp150804.pdf
+     * 
+     * @throws EncoderException
+     */
     public void testDavidHoodRevisitedRandomWords() throws EncoderException {
         this.checkEncodingVariations("RTA1111111", new String[]{"rather", "ready", "writer"});
         this.checkEncoding("SSA1111111", "social");
         this.checkEncodingVariations("APA1111111", new String[]{"able", "appear"});
+    }
+
+    public void testEndMb() throws EncoderException {
+        String[][] data = {{"mb", "M111111111"}, {"mbmb", "MPM1111111"}};
+        this.checkEncodings(data);
     }
 
     // Caverphone Revisited

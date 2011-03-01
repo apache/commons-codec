@@ -71,7 +71,9 @@ public class Caverphone implements StringEncoder {
         txt = txt.replaceAll("^enough", "enou2f");  // 2.0 only
         txt = txt.replaceAll("^trough", "trou2f");  // 2.0 only - note the spec says ^enough here again, c+p error I assume
         txt = txt.replaceAll("^gn", "2n");
-        txt = txt.replaceAll("^mb", "m2");
+
+        // End 
+        txt = txt.replaceAll("mb$", "m2");
 
         // 4. Handle replacements
         txt = txt.replaceAll("cq", "2q");
