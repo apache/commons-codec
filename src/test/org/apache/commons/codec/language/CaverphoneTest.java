@@ -44,7 +44,7 @@ public class CaverphoneTest extends StringEncoderAbstractTest {
      * 
      * @throws EncoderException
      */
-    public void testDavidHoodRevisitedCommonCodeAT11111111() throws EncoderException {
+    public void testCaverphoneRevisitedCommonCodeAT11111111() throws EncoderException {
         this.checkEncodingVariations("AT11111111", new String[]{
             "add",
             "aid",
@@ -68,7 +68,7 @@ public class CaverphoneTest extends StringEncoderAbstractTest {
      * 
      * @throws EncoderException
      */
-    public void testDavidHoodRevisitedExamples() throws EncoderException {
+    public void testCaverphoneRevisitedExamples() throws EncoderException {
         String[][] data = {{"Stevenson", "STFNSN1111"}, {"Peter", "PTA1111111"}};
         this.checkEncodings(data);
     }
@@ -78,7 +78,7 @@ public class CaverphoneTest extends StringEncoderAbstractTest {
      * 
      * @throws EncoderException
      */
-    public void testDavidHoodRevisitedRandomNameKLN1111111() throws EncoderException {
+    public void testCaverphoneRevisitedRandomNameKLN1111111() throws EncoderException {
         this.checkEncodingVariations("KLN1111111", new String[]{
             "Cailean",
             "Calan",
@@ -169,7 +169,7 @@ public class CaverphoneTest extends StringEncoderAbstractTest {
      * 
      * @throws EncoderException
      */
-    public void testDavidHoodRevisitedRandomNameTN11111111() throws EncoderException {
+    public void testCaverphoneRevisitedRandomNameTN11111111() throws EncoderException {
         this.checkEncodingVariations("TN11111111", new String[]{
             "Dan",
             "Dane",
@@ -247,7 +247,7 @@ public class CaverphoneTest extends StringEncoderAbstractTest {
      * 
      * @throws EncoderException
      */
-    public void testDavidHoodRevisitedRandomNameTTA1111111() throws EncoderException {
+    public void testCaverphoneRevisitedRandomNameTTA1111111() throws EncoderException {
         this.checkEncodingVariations("TTA1111111", new String[]{
             "Darda",
             "Datha",
@@ -324,7 +324,7 @@ public class CaverphoneTest extends StringEncoderAbstractTest {
      * 
      * @throws EncoderException
      */
-    public void testDavidHoodRevisitedRandomWords() throws EncoderException {
+    public void testCaverphoneRevisitedRandomWords() throws EncoderException {
         this.checkEncodingVariations("RTA1111111", new String[]{"rather", "ready", "writer"});
         this.checkEncoding("SSA1111111", "social");
         this.checkEncodingVariations("APA1111111", new String[]{"able", "appear"});
