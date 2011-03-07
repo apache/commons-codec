@@ -71,6 +71,9 @@
             <action dev="ggregory" type="fix" issue="CODEC-117" due-to="ggregory">
              Caverphone encodes names starting and ending with "mb" incorrectly.
             </action>
+            <action dev="ggregory" type="add" issue="CODEC-118" due-to="ggregory">
+             Split Caverphone class into two classes for Caverphone 1.0 and 2.0.
+            </action>
         </release>
         <release version="1.4" date="9 August 2009" description="Feature and fix release.">
             <action dev="ggregory" type="fix" issue="CODEC-80" due-to="Julius Davies">
