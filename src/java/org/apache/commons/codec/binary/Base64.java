@@ -500,7 +500,7 @@ public class Base64 extends BaseNCodec {
      *            byte array to test
      * @return <code>true</code> if all bytes are valid characters in the Base64 alphabet or if the byte array is empty;
      *         <code>false</code>, otherwise
-     * @deprecated 1.5 Use {@link #isBase64(byte[])}
+     * @deprecated 1.5 Use {@link #isBase64(byte[])}, will be removed in 2.0.
      */
     public static boolean isArrayByteBase64(byte[] arrayOctet) {
         return isBase64(arrayOctet);

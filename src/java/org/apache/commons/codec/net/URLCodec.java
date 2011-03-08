@@ -343,7 +343,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      * 
      * @return Returns the encoding.
      * 
-     * @deprecated use #getDefaultCharset()
+     * @deprecated Use {@link #getDefaultCharset()}, will be removed in 2.0.
      */
     public String getEncoding() {
         return this.charset;
