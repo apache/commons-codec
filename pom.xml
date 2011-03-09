@@ -25,7 +25,7 @@
     <version>18</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.apache.commons</groupId>
+  <groupId>commons-codec</groupId>
   <artifactId>commons-codec</artifactId>
   <version>1.5-SNAPSHOT</version>
   <name>Commons Codec</name>
