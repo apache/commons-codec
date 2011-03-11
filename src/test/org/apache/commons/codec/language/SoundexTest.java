@@ -26,7 +26,9 @@ import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.StringEncoderAbstractTest;
 
 /**
- * Tests {@link Soundex}
+ * Tests {@link Soundex}.
+ * 
+ * <p>Keep this file in UTF-8 encoding for proper Javadoc processing.</p>
  * 
  * @author Apache Software Foundation
  * @version $Id$
@@ -353,15 +355,15 @@ public class SoundexTest extends StringEncoderAbstractTest {
      */
     public void testUsMappingEWithAcute() {
         Assert.assertEquals("E000", this.getSoundexEncoder().encode("e"));
-        if (Character.isLetter('é')) {
+        if (Character.isLetter('ï¿½')) {
             try {
-                Assert.assertEquals("É000", this.getSoundexEncoder().encode("é"));
+                Assert.assertEquals("ï¿½000", this.getSoundexEncoder().encode("ï¿½"));
                 Assert.fail("Expected IllegalArgumentException not thrown");
             } catch (IllegalArgumentException e) {
                 // expected
             }
         } else {
-            Assert.assertEquals("", this.getSoundexEncoder().encode("é"));
+            Assert.assertEquals("", this.getSoundexEncoder().encode("ï¿½"));
         }
     }
 
@@ -372,15 +374,15 @@ public class SoundexTest extends StringEncoderAbstractTest {
      */
     public void testUsMappingOWithDiaeresis() {
         Assert.assertEquals("O000", this.getSoundexEncoder().encode("o"));
-        if (Character.isLetter('ö')) {
+        if (Character.isLetter('ï¿½')) {
             try {
-                Assert.assertEquals("Ö000", this.getSoundexEncoder().encode("ö"));
+                Assert.assertEquals("ï¿½000", this.getSoundexEncoder().encode("ï¿½"));
                 Assert.fail("Expected IllegalArgumentException not thrown");
             } catch (IllegalArgumentException e) {
                 // expected
             }
         } else {
-            Assert.assertEquals("", this.getSoundexEncoder().encode("ö"));
+            Assert.assertEquals("", this.getSoundexEncoder().encode("ï¿½"));
         }
     }
 }

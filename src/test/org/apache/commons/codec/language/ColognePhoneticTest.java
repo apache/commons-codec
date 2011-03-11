@@ -22,6 +22,13 @@ import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.StringEncoderAbstractTest;
 
+/**
+ * Tests the deprecated class {@link ColognePhonetic}.
+ * 
+ * <p>Keep this file in UTF-8 encoding for proper Javadoc processing.</p>
+ * 
+ * @author ggregory
+ */
 public class ColognePhoneticTest extends StringEncoderAbstractTest {
 
     public ColognePhoneticTest(String name) {
@@ -110,7 +117,7 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
     public void testHyphen() throws EncoderException {
         String[][] data = {{"bergisch-gladbach", "174845214"}, {"MÃ¼ller-LÃ¼denscheidt", "65752682"},
             // From the Javadoc example:
-            {"Müller-Lüdenscheidt", "65752682"}};
+            {"Mï¿½ller-Lï¿½denscheidt", "65752682"}};
         this.checkEncodings(data);
     }
 

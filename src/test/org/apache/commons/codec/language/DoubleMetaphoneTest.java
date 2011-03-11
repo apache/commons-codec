@@ -24,6 +24,8 @@ import org.apache.commons.codec.StringEncoderAbstractTest;
 /**
  * Tests {@link DoubleMetaphone}.
  * 
+ * <p>Keep this file in UTF-8 encoding for proper Javadoc processing.</p>
+ * 
  * @see "http://www.cuj.com/documents/s=8038/cuj0006philips/"
  * @author Apache Software Foundation
  * @version $Id$
@@ -1157,7 +1159,7 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest {
 
     /**
      * Used to generate the MATCHES array and test possible matches from the
-     * FIXTURE arrary.
+     * FIXTURE array.
      */
     public void testIsDoubleMetaphoneEqualExtended3() {
         this.validateFixture(FIXTURE);
@@ -1209,11 +1211,11 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest {
     }
 
     public void testCCedilla() {
-        this.getDoubleMetaphone().isDoubleMetaphoneEqual("ç", "S");
+        this.getDoubleMetaphone().isDoubleMetaphoneEqual("ï¿½", "S");
     }
     
     public void testNTilde() {
-        this.getDoubleMetaphone().isDoubleMetaphoneEqual("ñ", "N");
+        this.getDoubleMetaphone().isDoubleMetaphoneEqual("ï¿½", "N");
     }
     
     public void validateFixture(String[][] pairs) {
