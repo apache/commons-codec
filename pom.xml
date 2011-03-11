@@ -50,46 +50,6 @@
     <developerConnection>scm:svn:https://svn.apache.org/repos/asf/commons/proper/codec/trunk</developerConnection>
     <url>http://svn.apache.org/viewvc/commons/proper/codec/trunk</url>
   </scm>
-
-  <profiles>
-	<!-- 
-	  Use maven-site-plugin 2.x with Maven 2.x and maven-site-plugin 3.x with Maven 3.x  
-	  See http://maven.apache.org/plugins/maven-site-plugin-3.0-beta-3/maven-3.html 
-	-->
-    <profile>
-      <id>maven-3</id>
-      <activation>
-        <file>
-          <!--  The basedir expression is only recognized by Maven 3.x (see MNG-2363) -->
-          <exists>${basedir}</exists>
-        </file>
-      </activation>
-      <build>
-        <pluginManagement>
-          <plugins>
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-site-plugin</artifactId>
-              <version>3.0-beta-3</version>
-            </plugin>
-          </plugins>
-        </pluginManagement>
-        <plugins>
-          <plugin>
-            <artifactId>maven-site-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>attach-descriptor</id>
-                <goals>
-                  <goal>attach-descriptor</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>    
-  </profiles>
   
     <developers>
         <developer>
@@ -231,15 +191,6 @@
   <build>
     <sourceDirectory>src/java</sourceDirectory>
     <testSourceDirectory>src/test</testSourceDirectory>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-site-plugin</artifactId>
-          <version>2.2</version>
-        </plugin>        
-      </plugins>
-    </pluginManagement>    
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
