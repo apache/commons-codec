@@ -38,7 +38,7 @@ import org.apache.commons.codec.StringEncoder;
  * <ul>
  * 
  * <li>
- * <h3>First step:</h3>
+ * <h3>Step 1:</h3>
  * After preprocessing (convertion to upper case, transcription of <a
  * href="http://en.wikipedia.org/wiki/Germanic_umlaut">germanic umlauts</a>, removal of non alphabetical characters) the
  * letters of the supplied text are replaced by their phonetic code according to the folowing table.
@@ -158,13 +158,13 @@ import org.apache.commons.codec.StringEncoder;
  * </li>
  * 
  * <li>
- * <h3>Second step:</h3>
+ * <h3>Step 2:</h3>
  * Collapse of all multiple consecutive code digits.
  * <h4>Example:</h4>
  * {@code "6005507500206880022" => "6050750206802"}</li>
  * 
  * <li>
- * <h3>Third step:</h3>
+ * <h3>Step 3:</h3>
  * Removal of all codes “0” except at the beginning. This means that two or more identical consecutive digits can occur
  *  if they occur after removing the "0" digits.
  * 
