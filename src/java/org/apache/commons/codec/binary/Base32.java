@@ -18,7 +18,7 @@
 package org.apache.commons.codec.binary;
 
 /**
- * Provides Base32 encoding and decoding as defined by RFC 4648.
+ * Provides Base32 encoding and decoding as defined by <a href="http://www.ietf.org/rfc/rfc4648.txt">RFC 4648</a>.
  * 
  * <p>
  * The class can be parameterized in the following manner with various constructors:
@@ -33,8 +33,7 @@ package org.apache.commons.codec.binary;
  * This class operates directly on byte streams, and not character streams.
  * </p>
  * <p>
- * This class is not thread-safe.
- * Each thread should use its own instance.
+ * This class is not thread-safe. Each thread should use its own instance.
  * </p>
  * 
  * @see <a href="http://www.ietf.org/rfc/rfc4648.txt">RFC 4648</a>

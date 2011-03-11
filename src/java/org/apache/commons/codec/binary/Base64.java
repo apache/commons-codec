@@ -20,7 +20,7 @@ package org.apache.commons.codec.binary;
 import java.math.BigInteger;
 
 /**
- * Provides Base64 encoding and decoding as defined by RFC 2045.
+ * Provides Base64 encoding and decoding as defined by <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>.
  * 
  * <p>
  * This class implements section <cite>6.8. Base64 Content-Transfer-Encoding</cite> from RFC 2045 <cite>Multipurpose
@@ -40,8 +40,7 @@ import java.math.BigInteger;
  * character encodings which are compatible with the lower 127 ASCII chart (ISO-8859-1, Windows-1252, UTF-8, etc).
  * </p>
  * <p>
- * This class is not thread-safe.
- * Each thread should use its own instance.
+ * This class is not thread-safe. Each thread should use its own instance.
  * </p>
  * 
  * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>

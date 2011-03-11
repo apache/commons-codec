@@ -32,7 +32,7 @@ import org.apache.commons.codec.binary.StringUtils;
 
 /**
  * <p>
- * Codec for the Quoted-Printable section of <a href="http://www.ietf.org/rfc/rfc1521.txt">RFC 1521 </a>.
+ * Codec for the Quoted-Printable section of <a href="http://www.ietf.org/rfc/rfc1521.txt">RFC 1521</a>.
  * </p>
  * <p>
  * The Quoted-Printable encoding is intended to represent data that largely consists of octets that correspond to
