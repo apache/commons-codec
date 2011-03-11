@@ -166,16 +166,14 @@ import org.apache.commons.codec.StringEncoder;
  * <li>
  * <h3>Step 3:</h3>
  * Removal of all codes “0” except at the beginning. This means that two or more identical consecutive digits can occur
- *  if they occur after removing the "0" digits.
+ * if they occur after removing the "0" digits.
  * 
  * <h4>Example:</h4>
  * {@code "6050750206802" => "65752682"}</li>
  * 
  * </ul>
  * 
- * @see <a href="http://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik"><span
- *      style="font-variant:small-caps">Wikipedia</span> (de): <i>Kölner Phonetik</i></a> (a German description of the
- *      algorithm and more sources)
+ * @see <a href="http://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik">Wikipedia (de): Kölner Phonetik (in German)</a>
  * @author Apache Software Foundation
  * @since 1.5
  */
@@ -184,7 +182,7 @@ public class ColognePhonetic implements StringEncoder {
     private abstract class CologneBuffer {
 
         protected final char[] data;
-        
+
         protected int length = 0;
 
         public CologneBuffer(char[] data) {
@@ -250,7 +248,7 @@ public class ColognePhonetic implements StringEncoder {
         protected int getNextPos() {
             return data.length - length;
         }
-        
+
         public char removeNext() {
             char ch = getNextChar();
             length--;
@@ -258,11 +256,10 @@ public class ColognePhonetic implements StringEncoder {
         }
     }
 
-    private static final char[][] PREPROCESS_MAP = new char[][] {
-            { '\u00C4', 'A' },     // Ä
-            { '\u00DC', 'U' },     // Ü
-            { '\u00D6', 'O' },     // Ö
-            { '\u00DF', 'S' }      // ß
+    private static final char[][] PREPROCESS_MAP = new char[][]{{'\u00C4', 'A'}, // Ä
+        {'\u00DC', 'U'}, // Ü
+        {'\u00D6', 'O'}, // Ö
+        {'\u00DF', 'S'} // ß
     };
 
     /*
@@ -279,17 +276,14 @@ public class ColognePhonetic implements StringEncoder {
 
     /**
      * <p>
-     * <b>colognePhonetic()</b> is the actual implementations of the <i>Kölner
-     * Phonetik</i> algorithm.
+     * <b>colognePhonetic()</b> is the actual implementations of the <i>Kölner Phonetik</i> algorithm.
      * </p>
      * <p>
-     * In contrast to the initial description of the algorithm, this
-     * implementation does the encoding in one pass.
+     * In contrast to the initial description of the algorithm, this implementation does the encoding in one pass.
      * </p>
      * 
      * @param text
-     * @return the corresponding encoding according to the <i>Kölner
-     *         Phonetik</i> algorithm
+     * @return the corresponding encoding according to the <i>Kölner Phonetik</i> algorithm
      */
     public String colognePhonetic(String text) {
         if (text == null) {
@@ -319,7 +313,7 @@ public class ColognePhonetic implements StringEncoder {
                 nextChar = '-';
             }
 
-            if (arrayContains(new char[] { 'A', 'E', 'I', 'J', 'O', 'U', 'Y' }, chr)) {
+            if (arrayContains(new char[]{'A', 'E', 'I', 'J', 'O', 'U', 'Y'}, chr)) {
                 code = '0';
             } else if (chr == 'H' || chr < 'A' || chr > 'Z') {
                 if (lastCode == '/') {
@@ -328,13 +322,13 @@ public class ColognePhonetic implements StringEncoder {
                 code = '-';
             } else if (chr == 'B' || (chr == 'P' && nextChar != 'H')) {
                 code = '1';
-            } else if ((chr == 'D' || chr == 'T') && !arrayContains(new char[] { 'S', 'C', 'Z' }, nextChar)) {
+            } else if ((chr == 'D' || chr == 'T') && !arrayContains(new char[]{'S', 'C', 'Z'}, nextChar)) {
                 code = '2';
-            } else if (arrayContains(new char[] { 'W', 'F', 'P', 'V' }, chr)) {
+            } else if (arrayContains(new char[]{'W', 'F', 'P', 'V'}, chr)) {
                 code = '3';
-            } else if (arrayContains(new char[] { 'G', 'K', 'Q' }, chr)) {
+            } else if (arrayContains(new char[]{'G', 'K', 'Q'}, chr)) {
                 code = '4';
-            } else if (chr == 'X' && !arrayContains(new char[] { 'C', 'K', 'Q' }, lastChar)) {
+            } else if (chr == 'X' && !arrayContains(new char[]{'C', 'K', 'Q'}, lastChar)) {
                 code = '4';
                 input.addLeft('S');
                 rightLength++;
@@ -342,20 +336,20 @@ public class ColognePhonetic implements StringEncoder {
                 code = '8';
             } else if (chr == 'C') {
                 if (lastCode == '/') {
-                    if (arrayContains(new char[] { 'A', 'H', 'K', 'L', 'O', 'Q', 'R', 'U', 'X' }, nextChar)) {
+                    if (arrayContains(new char[]{'A', 'H', 'K', 'L', 'O', 'Q', 'R', 'U', 'X'}, nextChar)) {
                         code = '4';
                     } else {
                         code = '8';
                     }
                 } else {
-                    if (arrayContains(new char[] { 'S', 'Z' }, lastChar) || 
-                            !arrayContains(new char[] { 'A', 'H', 'O', 'U', 'K', 'Q', 'X' }, nextChar)) {
+                    if (arrayContains(new char[]{'S', 'Z'}, lastChar) ||
+                        !arrayContains(new char[]{'A', 'H', 'O', 'U', 'K', 'Q', 'X'}, nextChar)) {
                         code = '8';
                     } else {
                         code = '4';
                     }
                 }
-            } else if (arrayContains(new char[] { 'T', 'D', 'X' }, chr)) {
+            } else if (arrayContains(new char[]{'T', 'D', 'X'}, chr)) {
                 code = '8';
             } else if (chr == 'R') {
                 code = '7';
@@ -379,9 +373,11 @@ public class ColognePhonetic implements StringEncoder {
 
     public Object encode(Object object) throws EncoderException {
         if (!(object instanceof String)) {
-            throw new EncoderException(
-                    "This method’s parameter was expected to be of the type " + String.class.getName() + 
-                    ". But actually it was of the type " + object.getClass().getName() + ".");
+            throw new EncoderException("This method’s parameter was expected to be of the type " +
+                String.class.getName() +
+                ". But actually it was of the type " +
+                object.getClass().getName() +
+                ".");
         }
         return encode((String) object);
     }
@@ -395,8 +391,7 @@ public class ColognePhonetic implements StringEncoder {
     }
 
     /*
-     * Converts the string to upper case and replaces germanic umlauts, and the
-     * “ß”.
+     * Converts the string to upper case and replaces germanic umlauts, and the “ß”.
      */
     private String preprocess(String text) {
         text = text.toUpperCase(Locale.GERMAN);
