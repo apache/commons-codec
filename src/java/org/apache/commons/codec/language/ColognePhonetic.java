@@ -24,8 +24,11 @@ import org.apache.commons.codec.StringEncoder;
 
 /**
  * <p>
- * Implements of the <a href="http://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik">“Kölner Phonetic”</a> (Cologne
- * phonetic) algorithm issued by Hans Joachim Postel in 1969.
+ * Encodes a string into a Cologne Phonetic value.
+ * </p>
+ * <p>
+ * Implements the <a href="http://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik">“Kölner Phonetic”</a> (Cologne Phonetic)
+ * algorithm issued by Hans Joachim Postel in 1969.
  * </p>
  * 
  * <p>

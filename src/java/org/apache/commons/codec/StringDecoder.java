@@ -18,7 +18,7 @@
 package org.apache.commons.codec;
 
 /**
- * Decodes a String into a String. 
+ * Defines common decoding methods for String decoders.
  *
  * @author Apache Software Foundation
  * @version $Id$

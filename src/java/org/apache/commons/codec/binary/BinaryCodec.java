@@ -23,10 +23,10 @@ import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 
 /**
- * Translates between byte arrays and strings of "0"s and "1"s.
+ * Converts between byte arrays and strings of "0"s and "1"s.
  * 
  * TODO: may want to add more bit vector functions like and/or/xor/nand 
- * TODO: also might be good to generate boolean[] from byte[] et. cetera.
+ * TODO: also might be good to generate boolean[] from byte[] et cetera.
  * 
  * @author Apache Software Foundation
  * @since 1.3

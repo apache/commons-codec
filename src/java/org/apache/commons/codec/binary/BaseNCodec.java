@@ -23,7 +23,7 @@ import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 
 /**
- * Implements common Base-N codec functions.
+ * Abstract superclass for Base-N encoders and decoders.
  *
  * <p>
  * This class is not thread-safe.

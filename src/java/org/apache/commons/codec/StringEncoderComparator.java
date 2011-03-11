@@ -20,14 +20,10 @@ package org.apache.commons.codec;
 import java.util.Comparator;
 
 /**
- * Strings are comparable, and this comparator allows 
- * you to configure it with an instance of a class
- * which implements StringEncoder.  This comparator
- * is used to sort Strings by an encoding scheme such
- * as Soundex, Metaphone, etc.  This class can come in
- * handy if one need to sort Strings by an encoded
- * form of a name such as Soundex.
- *
+ * Compares Strings using a {@link StringEncoder}. This comparator is used to sort Strings by an encoding scheme such as
+ * Soundex, Metaphone, etc. This class can come in handy if one need to sort Strings by an encoded form of a name such
+ * as Soundex.
+ * 
  * @author Apache Software Foundation
  * @version $Id$
  */
@@ -50,22 +46,24 @@ public class StringEncoderComparator implements Comparator {
 
     /**
      * Constructs a new instance with the given algorithm.
-     * @param stringEncoder the StringEncoder used for comparisons.
+     * 
+     * @param stringEncoder
+     *            the StringEncoder used for comparisons.
      */
     public StringEncoderComparator(StringEncoder stringEncoder) {
         this.stringEncoder = stringEncoder;
     }
 
     /**
-     * Compares two strings based not on the strings 
-     * themselves, but on an encoding of the two 
-     * strings using the StringEncoder this Comparator
-     * was created with.
+     * Compares two strings based not on the strings themselves, but on an encoding of the two strings using the
+     * StringEncoder this Comparator was created with.
      * 
      * If an {@link EncoderException} is encountered, return <code>0</code>.
      * 
-     * @param o1 the object to compare
-     * @param o2 the object to compare to
+     * @param o1
+     *            the object to compare
+     * @param o2
+     *            the object to compare to
      * @return the Comparable.compareTo() return code or 0 if an encoding error was caught.
      * @see Comparable
      */
@@ -77,8 +75,7 @@ public class StringEncoderComparator implements Comparator {
             Comparable s1 = (Comparable) this.stringEncoder.encode(o1);
             Comparable s2 = (Comparable) this.stringEncoder.encode(o2);
             compareCode = s1.compareTo(s2);
-        } 
-        catch (EncoderException ee) {
+        } catch (EncoderException ee) {
             compareCode = 0;
         }
         return compareCode;

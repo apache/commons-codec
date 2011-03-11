@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * Common base class for Base-N input streams.
+ * Abstract superclass for Base-N input streams.
  * 
  * @since 1.5
  */

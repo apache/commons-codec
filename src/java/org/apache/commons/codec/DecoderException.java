@@ -18,7 +18,8 @@
 package org.apache.commons.codec;
 
 /**
- * Thrown when a Decoder has encountered a failure condition during a decode.
+ * Thrown when there is a failure condition during the decoding process. This exception is thrown when a {@link Decoder}
+ * encounters a decoding specific exception such as invalid data, or characters outside of the expected range.
  * 
  * @author Apache Software Foundation
  * @version $Id$

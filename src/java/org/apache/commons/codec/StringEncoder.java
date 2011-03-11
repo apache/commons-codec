@@ -18,7 +18,7 @@
 package org.apache.commons.codec;
 
 /**
- * Encodes a String into a String. 
+ * Defines common encoding methods for String encoders.
  *
  * @author Apache Software Foundation
  * @version $Id$
