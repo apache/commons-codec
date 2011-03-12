@@ -82,12 +82,17 @@ The <a href="source-repository.html">subversion repository</a> can be
 </section>
 <!-- ================================================== -->
 <section name="Releases">
-<p>Codec 1.4+ requires a minimum of JDK 1.4</p>
+<ul>
+<li>Codec 1.4 requires Java 1.4</li>
+<li>Codec 1.5 requires Java 1.4</li>
+</ul>
 <p>
 See the
 <a href="http://commons.apache.org/codec/download_codec.cgi">Download Page</a>
 for the latest releases.<br />
-The <a href="changes-report.html">upgrade notes</a> are also available.
+</p>
+<p>
+<a href="changes-report.html">Upgrade notes</a> are also available.
 </p>
 <p>
 For previous releases, see the <a href="http://archive.apache.org/dist/commons/codec/">Apache Archive</a>
