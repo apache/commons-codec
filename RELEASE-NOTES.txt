@@ -12,7 +12,7 @@ Changes in this version include:
 New features:
 o Add test(s) to check that encodeBase64() does not chunk output.  Issue: CODEC-93. Thanks to sebb. 
 o ArrayIndexOutOfBoundsException when doing multiple reads() on encoding Base64InputStream.  Issue: CODEC-105. Thanks to zak. 
-o Add the "Kölner Phonetik" encoder (cologne phonetic) to codec.lang.  Issue: CODEC-106. Thanks to it2mmeyerfa. 
+o Add the Cologne Phonetic to codec.lang.  Issue: CODEC-106. Thanks to it2mmeyerfa. 
 o org.apache.commons.codec.net.URLCodec.ESCAPE_CHAR isn't final but should be.  Issue: CODEC-111. Thanks to ggregory. 
 o Base64.encodeBase64(byte[] binaryData, boolean isChunked, boolean urlSafe, int maxResultSize) throws IAE for valid maxResultSize if isChunked is false.  Issue: CODEC-112. Thanks to sebb. 
 o org.apache.commons.codec.language.RefinedSoundex.US_ENGLISH_MAPPING should be package protected MALICIOUS_CODE.  Issue: CODEC-113. Thanks to ggregory. 
