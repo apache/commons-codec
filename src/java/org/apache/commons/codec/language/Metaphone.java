@@ -21,7 +21,7 @@ import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
 
 /**
- * Encodes a string into a metaphone value. 
+ * Encodes a string into a Metaphone value. 
  * <p>
  * Initial Java implementation by <CITE>William B. Brogden. December, 1997</CITE>. 
  * Permission given by <CITE>wbrogden</CITE> for code to be used anywhere.
