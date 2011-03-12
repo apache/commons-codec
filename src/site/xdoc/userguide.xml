@@ -27,23 +27,42 @@
         <table>
           <tr>
             <td width="150">
+              <a href="apidocs/org/apache/commons/codec/binary/Base32.html">Base32
+              </a>
+            </td>
+            <td>
+              Provides Base32 encoding and decoding as defined by
+              <a href="http://www.ietf.org/rfc/rfc4648.txt">RFC 4648</a>
+            </td>
+          </tr>
+          <tr>
+            <td width="150">
+              <a
+                href="apidocs/org/apache/commons/codec/binary/Base32InputStream.html">Base32InputStream
+              </a>
+            </td>
+            <td>Provides Base32 encoding and decoding in a streaming
+              fashion (unlimited size).
+            </td>
+          </tr>
+          <tr>
+            <td width="150">
               <a href="apidocs/org/apache/commons/codec/binary/Base64.html"> Base64
               </a>
             </td>
             <td>
               Provides Base64 encoding and decoding as defined by
               <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>
-              . This encoder can optionally create 76 character chunked
-              output for strict adherence to RFC 2045.
             </td>
           </tr>
           <tr>
-            <td>
-              <a href="apidocs/org/apache/commons/codec/binary/Hex.html"> Hex
+            <td width="150">
+              <a
+                href="apidocs/org/apache/commons/codec/binary/Base64InputStream.html">Base64InputStream
               </a>
             </td>
-            <td> Converts an array of bytes into an array of characters
-              representing the hexadecimal values of each byte in order
+            <td>Provides Base64 encoding and decoding in a streaming
+              fashion (unlimited size).
             </td>
           </tr>
           <tr>
@@ -52,48 +71,16 @@
                 href="apidocs/org/apache/commons/codec/binary/BinaryCodec.html"> BinaryCodec
               </a>
             </td>
-            <td> Translates between byte arrays and strings of "0"s and
+            <td>Converts between byte arrays and strings of "0"s and
               "1"s.
             </td>
           </tr>
-        </table>
-      </subsection>
-      <subsection name="Language Encoders">
-        <table>
-          <tr>
-            <td width="150">
-              <a
-                href="apidocs/org/apache/commons/codec/language/Soundex.html"> Soundex
-              </a>
-            </td>
-            <td> Implementation of the Soundex algorithm.
-            </td>
-          </tr>
           <tr>
             <td>
-              <a
-                href="apidocs/org/apache/commons/codec/language/Metaphone.html"> Metaphone
+              <a href="apidocs/org/apache/commons/codec/binary/Hex.html"> Hex
               </a>
             </td>
-            <td> Implementation of the Metaphone algorithm.
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <a
-                href="apidocs/org/apache/commons/codec/language/RefinedSoundex.html"> Refined Soundex
-              </a>
-            </td>
-            <td> Alternative implementation of the Soundex algorithm.
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <a
-                href="apidocs/org/apache/commons/codec/language/DoubleMetaphone.html"> Double Metaphone
-              </a>
-            </td>
-            <td> Alternative implementation of the Metaphone algorithm.
+            <td>Converts hexadecimal Strings.
             </td>
           </tr>
         </table>
@@ -103,39 +90,87 @@
           <tr>
             <td width="150">
               <a
-                href="apidocs/org/apache/commons/codec/digest/DigestUtils.html"> DigestUtils
+                href="apidocs/org/apache/commons/codec/digest/DigestUtils.html">DigestUtils
               </a>
             </td>
-            <td> Provides simple static methods for creating a SHA or
-              MD5 digest.
+            <td>
+              Simplifies common
+              <a
+                href="http://download.oracle.com/javase/1.4.2/docs/api/java/security/MessageDigest.html">MessageDigest</a>
+              tasks.
+            </td>
+          </tr>
+        </table>
+      </subsection>
+      <subsection name="Language Encoders">
+        <table>
+          <tr>
+            <td width="150">
+              <a
+                href="apidocs/org/apache/commons/codec/language/Caverphone1.html">Caverphone 1.0
+              </a>
+            </td>
+            <td>Encodes a string into a Caverphone 1.0 value.
+            </td>
+          </tr>
+          <tr>
+            <td width="150">
+              <a
+                href="apidocs/org/apache/commons/codec/language/Caverphone2.html">Caverphone 2.0
+              </a>
+            </td>
+            <td>Encodes a string into a Caverphone 2.0 value.
+            </td>
+          </tr>
+          <tr>
+            <td width="150">
+              <a
+                href="apidocs/org/apache/commons/codec/language/ColognePhonetic.html">Cologne Phonetic
+              </a>
+            </td>
+            <td>Encodes a string into a Cologne Phonetic value.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a
+                href="apidocs/org/apache/commons/codec/language/DoubleMetaphone.html">Double Metaphone
+              </a>
+            </td>
+            <td>Encodes a string into a double metaphone value.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a
+                href="apidocs/org/apache/commons/codec/language/Metaphone.html">Metaphone
+              </a>
+            </td>
+            <td>Encodes a string into a Metaphone value.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a
+                href="apidocs/org/apache/commons/codec/language/RefinedSoundex.html">Refined Soundex
+              </a>
+            </td>
+            <td>Encodes a string into a Refined Soundex value.
+            </td>
+          </tr>
+          <tr>
+            <td width="150">
+              <a
+                href="apidocs/org/apache/commons/codec/language/Soundex.html">Soundex
+              </a>
+            </td>
+            <td>Encodes a string into a Soundex value.
             </td>
           </tr>
         </table>
       </subsection>
       <subsection name="Network Encoders">
         <table>
-          <tr>
-            <td width="150">
-              <a href="apidocs/org/apache/commons/codec/net/URLCodec.html"> URLCodec
-              </a>
-            </td>
-            <td>
-              Implements the
-              <code>www-form-urlencoded</code>
-              encoding scheme, also misleadingly known as URL encoding.
-            </td>
-          </tr>
-          <tr>
-            <td width="150">
-              <a
-                href="apidocs/org/apache/commons/codec/net/QuotedPrintableCodec.html"> QuotedPrintableCodec
-              </a>
-            </td>
-            <td> Codec for RFC 1521 MIME (Multipurpose Internet Mail
-              Extensions) Part One. Rules #3, #4, and #5 of the
-              quoted-printable spec are not implemented yet
-            </td>
-          </tr>
           <tr>
             <td width="150">
               <a href="apidocs/org/apache/commons/codec/net/BCodec.html"> BCodec
@@ -159,6 +194,29 @@
               and designed to allow text containing mostly ASCII
               characters to be decipherable on an ASCII terminal without
               decoding.
+            </td>
+          </tr>
+          <tr>
+            <td width="150">
+              <a
+                href="apidocs/org/apache/commons/codec/net/QuotedPrintableCodec.html"> QuotedPrintableCodec
+              </a>
+            </td>
+            <td>
+              Codec for the Quoted-Printable section of
+              <a href="http://www.ietf.org/rfc/rfc1521.txt">RFC 1521</a>
+              .
+            </td>
+          </tr>
+          <tr>
+            <td width="150">
+              <a href="apidocs/org/apache/commons/codec/net/URLCodec.html"> URLCodec
+              </a>
+            </td>
+            <td>
+              Implements the
+              <code>www-form-urlencoded</code>
+              encoding scheme, also misleadingly known as URL encoding.
             </td>
           </tr>
         </table>
