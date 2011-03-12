@@ -27,11 +27,13 @@
 <!-- ================================================== -->
 <section name="User guide">
    <p>
-     Codec is comprised of a modest set of utilities and a
-     simple framework for encoding and decoding both textual and binary data.
+     Codec is comprised of a set of utilities and a
+     simple framework for encoding and decoding text and binary data.
    </p>
 
    <subsection name="Binary Encoders">
+   <p>Interfaces and classes used by the various implementations in the sub-packages.
+   </p>
        <table>
      <tr>
       <td width="150">
@@ -39,7 +41,7 @@
            Base64</a>
       </td>
       <td>
-       Provides Base64 content-transfer-encoding as defined in
+       Provides Base64 encoding and decoding as defined by
        <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>. This
        encoder can optionally create 76 character chunked output
        for strict adherence to RFC 2045.
