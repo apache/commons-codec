@@ -48,7 +48,7 @@
              ArrayIndexOutOfBoundsException when doing multiple reads() on encoding Base64InputStream.
             </action>
             <action dev="bayard" type="add" issue="CODEC-106" due-to="it2mmeyerfa">
-             Add the "Kölner Phonetik" encoder (cologne phonetic) to codec.lang.
+             Add the "Kölner Phonetik" encoder (Cologne Phonetic) to codec.lang.
             </action>
             <action dev="ggregory" type="add" issue="CODEC-111" due-to="ggregory">
              org.apache.commons.codec.net.URLCodec.ESCAPE_CHAR isn't final but should be.
