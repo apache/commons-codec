@@ -1,174 +1,169 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
- <!--
-   Licensed to the Apache Software Foundation (ASF) under one or more
-  contributor license agreements.  See the NOTICE file distributed with
-  this work for additional information regarding copyright ownership.
-  The ASF licenses this file to You under the Apache License, Version 2.0
-  (the "License"); you may not use this file except in compliance with
-  the License.  You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-  -->
-
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor 
+  license agreements. See the NOTICE file distributed with this work for additional 
+  information regarding copyright ownership. The ASF licenses this file to 
+  You under the Apache License, Version 2.0 (the "License"); you may not use 
+  this file except in compliance with the License. You may obtain a copy of 
+  the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required 
+  by applicable law or agreed to in writing, software distributed under the 
+  License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
+  OF ANY KIND, either express or implied. See the License for the specific 
+  language governing permissions and limitations under the License. -->
 <document>
-
- <properties>
-  <title>Commons Codec - User guide</title>
-  <author email="dev@commons.apache.org">Commons Documentation Team</author>
- </properties>
-
- <body>
-<!-- ================================================== -->
-<section name="User guide">
-   <p>
-     Codec is comprised of a set of utilities and a
-     simple framework for encoding and decoding text and binary data.
-   </p>
-
-   <subsection name="Binary Encoders">
-   <p>Interfaces and classes used by the various implementations in the sub-packages.
-   </p>
-       <table>
-     <tr>
-      <td width="150">
-       <a href="apidocs/org/apache/commons/codec/binary/Base64.html">
-           Base64</a>
-      </td>
-      <td>
-       Provides Base64 encoding and decoding as defined by
-       <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>. This
-       encoder can optionally create 76 character chunked output
-       for strict adherence to RFC 2045.
-      </td>
-     </tr>
-     <tr>
-      <td>
-       <a href="apidocs/org/apache/commons/codec/binary/Hex.html">
-           Hex</a>
-      </td>
-      <td>
-       Converts an array of bytes into an array of characters representing the
-       hexadecimal values of each byte in order
-      </td>
-     </tr>
-     <tr>
-      <td width="150">
-       <a href="apidocs/org/apache/commons/codec/binary/BinaryCodec.html">
-           BinaryCodec</a>
-      </td>
-      <td>
-       Translates between byte arrays and strings of "0"s and "1"s.
-      </td>
-     </tr>
-    </table>
-   </subsection>
-
-   <subsection name="Language Encoders">
-    <table>
-     <tr>
-      <td width="150">
-       <a href="apidocs/org/apache/commons/codec/language/Soundex.html">
-           Soundex</a>
-      </td>
-      <td>
-       Implementation of the Soundex algorithm.
-      </td>
-     </tr>
-     <tr>
-      <td>
-       <a href="apidocs/org/apache/commons/codec/language/Metaphone.html">
-           Metaphone</a>
-      </td>
-      <td>
-       Implementation of the Metaphone algorithm.
-      </td>
-     </tr>
-     <tr>
-      <td>
-       <a href="apidocs/org/apache/commons/codec/language/RefinedSoundex.html">
-           Refined Soundex</a>
-      </td>
-      <td>
-       Alternative implementation of the Soundex algorithm.
-      </td>
-     </tr>
-     <tr>
-      <td>
-       <a href="apidocs/org/apache/commons/codec/language/DoubleMetaphone.html">
-           Double Metaphone</a>
-      </td>
-      <td>
-       Alternative implementation of the Metaphone algorithm.
-      </td>
-     </tr>
-
-    </table>
-   </subsection>
-
-   <subsection name="Digest Encoders">
-       <table>
-     <tr>
-      <td width="150">
-       <a href="apidocs/org/apache/commons/codec/digest/DigestUtils.html">
-           DigestUtils</a>
-      </td>
-      <td>
-        Provides simple static methods for creating a SHA or MD5 digest.
-      </td>
-     </tr>
-    </table>
-   </subsection>
-
-   <subsection name="Network Encoders">
-       <table>
-     <tr>
-      <td width="150">
-       <a href="apidocs/org/apache/commons/codec/net/URLCodec.html">
-           URLCodec</a>
-      </td>
-      <td>
-        Implements the <code>www-form-urlencoded</code> encoding scheme, also misleadingly known as URL encoding.
-      </td>
-     </tr>
-     <tr>
-      <td width="150">
-       <a href="apidocs/org/apache/commons/codec/net/QuotedPrintableCodec.html">
-           QuotedPrintableCodec</a>
-      </td>
-      <td>
-         Codec for RFC 1521 MIME (Multipurpose Internet Mail Extensions) Part One. Rules #3, #4, and #5 of the quoted-printable spec are not implemented yet
-      </td>
-     </tr>
-     <tr>
-      <td width="150">
-       <a href="apidocs/org/apache/commons/codec/net/BCodec.html">
-           BCodec</a>
-      </td>
-      <td>
-         Identical to the Base64 encoding defined by <a href="http://www.ietf.org/rfc/rfc1521.txt">RFC 1521</a> and allows a character set to be specified.
-      </td>
-     </tr>
-     <tr>
-      <td width="150">
-       <a href="apidocs/org/apache/commons/codec/net/QCodec.html">
-           QCodec</a>
-      </td>
-      <td>
-         Similar to the Quoted-Printable content-transfer-encoding defined in <a
-         href="http://www.ietf.org/rfc/rfc1521.txt">RFC 1521</a> and designed to allow text containing mostly ASCII
-         characters to be decipherable on an ASCII terminal without decoding.
-      </td>
-     </tr>
-    </table>
-   </subsection>
-
-</section>
-<!-- ================================================== -->
-</body>
+  <properties>
+    <title>Commons Codec - User guide</title>
+    <author email="dev@commons.apache.org">Commons Documentation Team</author>
+  </properties>
+  <body>
+    <!-- ================================================== -->
+    <section name="User guide">
+      <p> Codec is comprised of a set of utilities and a simple
+        framework for encoding and decoding text and binary data.
+      </p>
+      <subsection name="Binary Encoders">
+        <p>Interfaces and classes used by the various implementations in
+          the sub-packages.
+        </p>
+        <table>
+          <tr>
+            <td width="150">
+              <a href="apidocs/org/apache/commons/codec/binary/Base64.html"> Base64
+              </a>
+            </td>
+            <td>
+              Provides Base64 encoding and decoding as defined by
+              <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>
+              . This encoder can optionally create 76 character chunked
+              output for strict adherence to RFC 2045.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="apidocs/org/apache/commons/codec/binary/Hex.html"> Hex
+              </a>
+            </td>
+            <td> Converts an array of bytes into an array of characters
+              representing the hexadecimal values of each byte in order
+            </td>
+          </tr>
+          <tr>
+            <td width="150">
+              <a
+                href="apidocs/org/apache/commons/codec/binary/BinaryCodec.html"> BinaryCodec
+              </a>
+            </td>
+            <td> Translates between byte arrays and strings of "0"s and
+              "1"s.
+            </td>
+          </tr>
+        </table>
+      </subsection>
+      <subsection name="Language Encoders">
+        <table>
+          <tr>
+            <td width="150">
+              <a
+                href="apidocs/org/apache/commons/codec/language/Soundex.html"> Soundex
+              </a>
+            </td>
+            <td> Implementation of the Soundex algorithm.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a
+                href="apidocs/org/apache/commons/codec/language/Metaphone.html"> Metaphone
+              </a>
+            </td>
+            <td> Implementation of the Metaphone algorithm.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a
+                href="apidocs/org/apache/commons/codec/language/RefinedSoundex.html"> Refined Soundex
+              </a>
+            </td>
+            <td> Alternative implementation of the Soundex algorithm.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a
+                href="apidocs/org/apache/commons/codec/language/DoubleMetaphone.html"> Double Metaphone
+              </a>
+            </td>
+            <td> Alternative implementation of the Metaphone algorithm.
+            </td>
+          </tr>
+        </table>
+      </subsection>
+      <subsection name="Digest Encoders">
+        <table>
+          <tr>
+            <td width="150">
+              <a
+                href="apidocs/org/apache/commons/codec/digest/DigestUtils.html"> DigestUtils
+              </a>
+            </td>
+            <td> Provides simple static methods for creating a SHA or
+              MD5 digest.
+            </td>
+          </tr>
+        </table>
+      </subsection>
+      <subsection name="Network Encoders">
+        <table>
+          <tr>
+            <td width="150">
+              <a href="apidocs/org/apache/commons/codec/net/URLCodec.html"> URLCodec
+              </a>
+            </td>
+            <td>
+              Implements the
+              <code>www-form-urlencoded</code>
+              encoding scheme, also misleadingly known as URL encoding.
+            </td>
+          </tr>
+          <tr>
+            <td width="150">
+              <a
+                href="apidocs/org/apache/commons/codec/net/QuotedPrintableCodec.html"> QuotedPrintableCodec
+              </a>
+            </td>
+            <td> Codec for RFC 1521 MIME (Multipurpose Internet Mail
+              Extensions) Part One. Rules #3, #4, and #5 of the
+              quoted-printable spec are not implemented yet
+            </td>
+          </tr>
+          <tr>
+            <td width="150">
+              <a href="apidocs/org/apache/commons/codec/net/BCodec.html"> BCodec
+              </a>
+            </td>
+            <td>
+              Identical to the Base64 encoding defined by
+              <a href="http://www.ietf.org/rfc/rfc1521.txt">RFC 1521</a>
+              and allows a character set to be specified.
+            </td>
+          </tr>
+          <tr>
+            <td width="150">
+              <a href="apidocs/org/apache/commons/codec/net/QCodec.html"> QCodec
+              </a>
+            </td>
+            <td>
+              Similar to the Quoted-Printable content-transfer-encoding
+              defined in
+              <a href="http://www.ietf.org/rfc/rfc1521.txt">RFC 1521</a>
+              and designed to allow text containing mostly ASCII
+              characters to be decipherable on an ASCII terminal without
+              decoding.
+            </td>
+          </tr>
+        </table>
+      </subsection>
+    </section>
+    <!-- ================================================== -->
+  </body>
 </document>
