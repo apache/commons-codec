@@ -24,7 +24,7 @@ limitations under the License.
 <!-- ================================================== -->
 <section name="Commons Codec">
 <p>
-Apache Commons Codec (TM) provides implementations of common encoders and decoders
+Apache Commons Codec (TM) software provides implementations of common encoders and decoders
 such as Base64, Hex, Phonetic and URLs.
 <!--ul>
 <li>Base64</li>
