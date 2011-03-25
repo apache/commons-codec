@@ -24,7 +24,7 @@ limitations under the License.
 <!-- ================================================== -->
 <section name="Commons Codec">
 <p>
-Commons Codec provides implementations of common encoders and decoders
+Apache Commons Codec (TM) provides implementations of common encoders and decoders
 such as Base64, Hex, Phonetic and URLs.
 <!--ul>
 <li>Base64</li>
@@ -83,8 +83,8 @@ The <a href="source-repository.html">subversion repository</a> can be
 <!-- ================================================== -->
 <section name="Releases">
 <ul>
-<li>Codec 1.4 requires Java 1.4</li>
 <li>Codec 1.5 requires Java 1.4</li>
+<li>Codec 1.4 requires Java 1.4</li>
 </ul>
 <p>
 See the
