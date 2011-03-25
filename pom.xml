@@ -38,6 +38,13 @@
     <developerConnection>scm:svn:https://svn.apache.org/repos/asf/commons/proper/codec/trunk</developerConnection>
     <url>http://svn.apache.org/viewvc/commons/proper/codec/trunk</url>
   </scm>
+  <distributionManagement>
+    <site>
+      <id>stagingSite</id>
+      <name>Apache Staging Website</name>
+      <url>scp://people.apache.org/www/commons.apache.org/codec/</url>
+    </site>
+  </distributionManagement>  
   <developers>
     <developer>
       <name>Henri Yandell</name>
