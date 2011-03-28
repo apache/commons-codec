@@ -126,7 +126,7 @@ public class Base32 extends BaseNCodec {
 
     /**
      * Convenience variable to help us determine when our buffer is going to run out of room and needs resizing.
-     * <code>decodeSize = {@link BYTES_PER_ENCODED_BLOCK} - 1 + lineSeparator.length;</code>
+     * <code>decodeSize = {@link #BYTES_PER_ENCODED_BLOCK} - 1 + lineSeparator.length;</code>
      */
     private final int decodeSize;
 
@@ -137,7 +137,7 @@ public class Base32 extends BaseNCodec {
 
     /**
      * Convenience variable to help us determine when our buffer is going to run out of room and needs resizing.
-     * <code>encodeSize = {@link BYTES_PER_ENCODED_BLOCK} + lineSeparator.length;</code>
+     * <code>encodeSize = {@link #BYTES_PER_ENCODED_BLOCK} + lineSeparator.length;</code>
      */
     private final int encodeSize;
 
@@ -276,7 +276,7 @@ public class Base32 extends BaseNCodec {
      * @param inAvail
      *            Amount of bytes available from input for encoding.
      *
-     * Output is written to {@link #buffer} as 8-bit octets, using {@link pos} as the buffer position
+     * Output is written to {@link #buffer} as 8-bit octets, using {@link #pos} as the buffer position
      */
     void decode(byte[] in, int inPos, int inAvail) { // package protected for access from I/O streams
         if (eof) {
