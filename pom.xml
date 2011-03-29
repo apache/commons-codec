@@ -188,7 +188,7 @@
     <maven.compile.source>1.4</maven.compile.source>
     <maven.compile.target>1.4</maven.compile.target>
     <commons.componentid>codec</commons.componentid>
-    <commons.release.version>1.5</commons.release.version>
+    <commons.release.version>1.6</commons.release.version>
     <!-- The RC version used in the staging repository URL. -->
     <commons.rc.version>RC1</commons.rc.version>
     <commons.jira.id>CODEC</commons.jira.id>
