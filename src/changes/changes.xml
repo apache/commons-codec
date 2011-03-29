@@ -22,7 +22,7 @@
         <author>Gary D. Gregory</author>
     </properties>
     <body>
-        <release version="1.5" date="TBA" description="Feature and fix release.">
+        <release version="1.5" date="29 March 2011" description="Feature and fix release.">
             <action dev="sebb" type="fix" issue="CODEC-89">
              new Base64().encode() appends a CRLF, and chunks results into 76 character lines.
             </action>
