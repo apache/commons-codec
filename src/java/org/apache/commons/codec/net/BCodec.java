@@ -19,9 +19,9 @@ package org.apache.commons.codec.net;
 
 import java.io.UnsupportedEncodingException;
 
+import org.apache.commons.codec.CharEncoding;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
-import org.apache.commons.codec.CharEncoding;
 import org.apache.commons.codec.StringDecoder;
 import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.binary.Base64;
