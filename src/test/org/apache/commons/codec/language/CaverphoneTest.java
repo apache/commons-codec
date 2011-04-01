@@ -30,6 +30,7 @@ import org.junit.Test;
  */
 public class CaverphoneTest extends StringEncoderAbstractTest {
 
+    @Override
     protected StringEncoder createStringEncoder() {
         return new Caverphone();
     }

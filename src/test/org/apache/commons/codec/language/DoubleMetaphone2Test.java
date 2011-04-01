@@ -1269,6 +1269,7 @@ public class DoubleMetaphone2Test extends StringEncoderAbstractTest {
         }
     }
 
+    @Override
     protected StringEncoder createStringEncoder() {
         return new DoubleMetaphone();
     }

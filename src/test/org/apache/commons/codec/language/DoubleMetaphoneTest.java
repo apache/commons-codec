@@ -1056,6 +1056,7 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest {
         return (DoubleMetaphone) this.getStringEncoder();
     }
 
+    @Override
     protected StringEncoder createStringEncoder() {
         return new DoubleMetaphone();
     }

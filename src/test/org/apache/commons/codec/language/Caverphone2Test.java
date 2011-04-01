@@ -28,6 +28,7 @@ import org.apache.commons.codec.StringEncoder;
  */
 public class Caverphone2Test extends CaverphoneTest {
 
+    @Override
     protected StringEncoder createStringEncoder() {
         return new Caverphone2();
     }

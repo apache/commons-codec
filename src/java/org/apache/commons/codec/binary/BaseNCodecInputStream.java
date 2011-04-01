@@ -47,6 +47,7 @@ public class BaseNCodecInputStream extends FilterInputStream {
      * @throws IOException
      *             if an I/O error occurs.
      */
+    @Override
     public int read() throws IOException {
         int r = read(singleByte, 0, 1);
         while (r == 0) {
@@ -77,6 +78,7 @@ public class BaseNCodecInputStream extends FilterInputStream {
      * @throws IndexOutOfBoundsException
      *             if offset, len or buffer size are invalid
      */
+    @Override
     public int read(byte b[], int offset, int len) throws IOException {
         if (b == null) {
             throw new NullPointerException();
@@ -124,6 +126,7 @@ public class BaseNCodecInputStream extends FilterInputStream {
      * 
      * @return false
      */
+    @Override
     public boolean markSupported() {
         return false; // not an easy job to support marks
     }

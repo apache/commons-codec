@@ -34,6 +34,7 @@ public class Codec105ErrorInputStream extends InputStream {
 
     int countdown = 3;
 
+    @Override
     public int read() throws IOException {
         if (this.countdown-- > 0) {
             return '\n';
@@ -42,6 +43,7 @@ public class Codec105ErrorInputStream extends InputStream {
         }
     }
 
+    @Override
     public int read(byte b[], int pos, int len) throws IOException {
         if (this.countdown-- > 0) {
             b[pos] = '\n';

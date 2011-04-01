@@ -71,10 +71,12 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
         this.charset = charset;
     }
 
+    @Override
     protected String getEncoding() {
         return "B";
     }
 
+    @Override
     protected byte[] doEncoding(byte[] bytes) {
         if (bytes == null) {
             return null;
@@ -82,6 +84,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
         return Base64.encodeBase64(bytes);
     }
 
+    @Override
     protected byte[] doDecoding(byte[] bytes) {
         if (bytes == null) {
             return null;

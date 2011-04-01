@@ -36,6 +36,7 @@ import org.junit.Test;
  */
 public class SoundexTest extends StringEncoderAbstractTest {
 
+    @Override
     protected StringEncoder createStringEncoder() {
         return new Soundex();
     }

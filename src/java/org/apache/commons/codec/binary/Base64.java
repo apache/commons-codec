@@ -323,6 +323,7 @@ public class Base64 extends BaseNCodec {
      * @param inAvail
      *            Amount of bytes available from input for encoding.
      */
+    @Override
     void encode(byte[] in, int inPos, int inAvail) {
         if (eof) {
             return;
@@ -411,6 +412,7 @@ public class Base64 extends BaseNCodec {
      * @param inAvail
      *            Amount of bytes available from input for encoding.
      */
+    @Override
     void decode(byte[] in, int inPos, int inAvail) {
         if (eof) {
             return;
@@ -501,6 +503,7 @@ public class Base64 extends BaseNCodec {
      *         <code>false</code>, otherwise
      * @deprecated 1.5 Use {@link #isBase64(byte[])}, will be removed in 2.0.
      */
+    @Deprecated
     public static boolean isArrayByteBase64(byte[] arrayOctet) {
         return isBase64(arrayOctet);
     }
@@ -748,6 +751,7 @@ public class Base64 extends BaseNCodec {
      *            The value to test
      * @return <code>true</code> if the value is defined in the the Base32 alphabet <code>false</code> otherwise.
      */
+    @Override
     protected boolean isInAlphabet(byte octet) {
         return octet >= 0 && octet < decodeTable.length && decodeTable[octet] != -1;
     }

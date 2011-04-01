@@ -32,6 +32,7 @@ import org.junit.Test;
  */
 public class RefinedSoundexTest extends StringEncoderAbstractTest {
 
+    @Override
     protected StringEncoder createStringEncoder() {
         return new RefinedSoundex();
     }

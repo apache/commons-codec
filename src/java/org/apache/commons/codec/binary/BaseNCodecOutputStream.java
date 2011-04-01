@@ -48,6 +48,7 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
      * @throws IOException
      *             if an I/O error occurs.
      */
+    @Override
     public void write(int i) throws IOException {
         singleByte[0] = (byte) i;
         write(singleByte, 0, 1);
@@ -71,6 +72,7 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
      * @throws IndexOutOfBoundsException
      *             if offset, len or buffer size are invalid
      */
+    @Override
     public void write(byte b[], int offset, int len) throws IOException {
         if (b == null) {
             throw new NullPointerException();
@@ -117,6 +119,7 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
      * @throws IOException
      *             if an I/O error occurs.
      */
+    @Override
     public void flush() throws IOException {
         flush(true);
     }
@@ -127,6 +130,7 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
      * @throws IOException
      *             if an I/O error occurs.
      */
+    @Override
     public void close() throws IOException {
         // Notify encoder of EOF (-1).
         if (doEncode) {

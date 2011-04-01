@@ -32,13 +32,16 @@ public class BaseNCodecTest {
     @Before
     public void setUp() {
         codec = new BaseNCodec(0, 0, 0, 0) {
+            @Override
             protected boolean isInAlphabet(byte b) {
                 return b=='O' || b == 'K'; // allow OK
             }
             
+            @Override
             void encode(byte[] pArray, int i, int length) {
             }
             
+            @Override
             void decode(byte[] pArray, int i, int length) {
             }
         };        

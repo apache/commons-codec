@@ -27,12 +27,12 @@ import org.apache.commons.codec.StringEncoder;
  * Encodes a string into a Cologne Phonetic value.
  * </p>
  * <p>
- * Implements the <a href="http://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik">“Kölner Phonetic”</a> (Cologne Phonetic)
+ * Implements the <a href="http://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik">â€œKÃ¶lner Phoneticâ€�</a> (Cologne Phonetic)
  * algorithm issued by Hans Joachim Postel in 1969.
  * </p>
  * 
  * <p>
- * The <i>Kölner Phonetik</i> is a phonetic algorithm which is optimized for the German language. It is related to the
+ * The <i>KÃ¶lner Phonetik</i> is a phonetic algorithm which is optimized for the German language. It is related to the
  * well-known soundex algorithm.
  * </p>
  * 
@@ -151,12 +151,12 @@ import org.apache.commons.codec.StringEncoder;
  * </table>
  * <p>
  * <small><i>(Source: <a href= "http://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik#Buchstabencodes" >Wikipedia (de):
- * Kölner Phonetik – Buchstabencodes</a>)</i></small>
+ * KÃ¶lner Phonetik â€“ Buchstabencodes</a>)</i></small>
  * </p>
  * 
  * <h4>Example:</h4>
  * 
- * {@code "Müller-Lüdenscheidt" => "MULLERLUDENSCHEIDT" => "6005507500206880022"}
+ * {@code "MÃ¼ller-LÃ¼denscheidt" => "MULLERLUDENSCHEIDT" => "6005507500206880022"}
  * 
  * </li>
  * 
@@ -168,7 +168,7 @@ import org.apache.commons.codec.StringEncoder;
  * 
  * <li>
  * <h3>Step 3:</h3>
- * Removal of all codes “0” except at the beginning. This means that two or more identical consecutive digits can occur
+ * Removal of all codes â€œ0â€� except at the beginning. This means that two or more identical consecutive digits can occur
  * if they occur after removing the "0" digits.
  * 
  * <h4>Example:</h4>
@@ -176,7 +176,7 @@ import org.apache.commons.codec.StringEncoder;
  * 
  * </ul>
  * 
- * @see <a href="http://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik">Wikipedia (de): Kölner Phonetik (in German)</a>
+ * @see <a href="http://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik">Wikipedia (de): KÃ¶lner Phonetik (in German)</a>
  * @author Apache Software Foundation
  * @since 1.5
  */
@@ -204,6 +204,7 @@ public class ColognePhonetic implements StringEncoder {
             return length;
         }
 
+        @Override
         public String toString() {
             return new String(copyData(0, length));
         }
@@ -220,6 +221,7 @@ public class ColognePhonetic implements StringEncoder {
             length++;
         }
 
+        @Override
         protected char[] copyData(int start, final int length) {
             char[] newData = new char[length];
             System.arraycopy(data, start, newData, 0, length);
@@ -238,6 +240,7 @@ public class ColognePhonetic implements StringEncoder {
             data[getNextPos()] = ch;
         }
 
+        @Override
         protected char[] copyData(int start, final int length) {
             char[] newData = new char[length];
             System.arraycopy(data, data.length - this.length + start, newData, 0, length);
@@ -259,10 +262,10 @@ public class ColognePhonetic implements StringEncoder {
         }
     }
 
-    private static final char[][] PREPROCESS_MAP = new char[][]{{'\u00C4', 'A'}, // Ä
-        {'\u00DC', 'U'}, // Ü
-        {'\u00D6', 'O'}, // Ö
-        {'\u00DF', 'S'} // ß
+    private static final char[][] PREPROCESS_MAP = new char[][]{{'\u00C4', 'A'}, // Ã„
+        {'\u00DC', 'U'}, // Ãœ
+        {'\u00D6', 'O'}, // Ã–
+        {'\u00DF', 'S'} // ÃŸ
     };
 
     /*
@@ -279,14 +282,14 @@ public class ColognePhonetic implements StringEncoder {
 
     /**
      * <p>
-     * <b>colognePhonetic()</b> is the actual implementations of the <i>Kölner Phonetik</i> algorithm.
+     * <b>colognePhonetic()</b> is the actual implementations of the <i>KÃ¶lner Phonetik</i> algorithm.
      * </p>
      * <p>
      * In contrast to the initial description of the algorithm, this implementation does the encoding in one pass.
      * </p>
      * 
      * @param text
-     * @return the corresponding encoding according to the <i>Kölner Phonetik</i> algorithm
+     * @return the corresponding encoding according to the <i>KÃ¶lner Phonetik</i> algorithm
      */
     public String colognePhonetic(String text) {
         if (text == null) {
@@ -376,7 +379,7 @@ public class ColognePhonetic implements StringEncoder {
 
     public Object encode(Object object) throws EncoderException {
         if (!(object instanceof String)) {
-            throw new EncoderException("This method’s parameter was expected to be of the type " +
+            throw new EncoderException("This methodâ€™s parameter was expected to be of the type " +
                 String.class.getName() +
                 ". But actually it was of the type " +
                 object.getClass().getName() +
@@ -394,7 +397,7 @@ public class ColognePhonetic implements StringEncoder {
     }
 
     /*
-     * Converts the string to upper case and replaces germanic umlauts, and the “ß”.
+     * Converts the string to upper case and replaces germanic umlauts, and the â€œÃŸâ€�.
      */
     private String preprocess(String text) {
         text = text.toUpperCase(Locale.GERMAN);

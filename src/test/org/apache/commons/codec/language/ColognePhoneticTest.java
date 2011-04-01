@@ -31,6 +31,7 @@ import org.junit.Test;
  */
 public class ColognePhoneticTest extends StringEncoderAbstractTest {
 
+    @Override
     protected StringEncoder createStringEncoder() {
         return new ColognePhonetic();
     }

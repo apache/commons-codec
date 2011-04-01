@@ -126,10 +126,12 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
         this.charset = charset;
     }
 
+    @Override
     protected String getEncoding() {
         return "Q";
     }
 
+    @Override
     protected byte[] doEncoding(byte[] bytes) {
         if (bytes == null) {
             return null;
@@ -145,6 +147,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
         return data;
     }
 
+    @Override
     protected byte[] doDecoding(byte[] bytes) throws DecoderException {
         if (bytes == null) {
             return null;

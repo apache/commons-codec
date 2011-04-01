@@ -34,14 +34,17 @@ public class RFC1522CodecTest {
 
     static class RFC1522TestCodec extends RFC1522Codec {
 
+        @Override
         protected byte[] doDecoding(byte[] bytes) {
             return bytes;
         }
 
+        @Override
         protected byte[] doEncoding(byte[] bytes) {
             return bytes;
         }
 
+        @Override
         protected String getEncoding() {
             return "T";
         }
