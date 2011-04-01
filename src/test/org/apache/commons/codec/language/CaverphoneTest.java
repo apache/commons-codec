@@ -22,16 +22,13 @@ import junit.framework.Assert;
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.StringEncoderAbstractTest;
+import org.junit.Test;
 
 /**
  * @author Apache Software Foundation
  * @version $Id$
  */
 public class CaverphoneTest extends StringEncoderAbstractTest {
-
-    public CaverphoneTest(String name) {
-        super(name);
-    }
 
     protected StringEncoder createStringEncoder() {
         return new Caverphone();
@@ -44,6 +41,7 @@ public class CaverphoneTest extends StringEncoderAbstractTest {
      * 
      * @throws EncoderException
      */
+    @Test
     public void testCaverphoneRevisitedCommonCodeAT11111111() throws EncoderException {
         this.checkEncodingVariations("AT11111111", new String[]{
             "add",
@@ -68,6 +66,7 @@ public class CaverphoneTest extends StringEncoderAbstractTest {
      * 
      * @throws EncoderException
      */
+    @Test
     public void testCaverphoneRevisitedExamples() throws EncoderException {
         String[][] data = {{"Stevenson", "STFNSN1111"}, {"Peter", "PTA1111111"}};
         this.checkEncodings(data);
@@ -78,6 +77,7 @@ public class CaverphoneTest extends StringEncoderAbstractTest {
      * 
      * @throws EncoderException
      */
+    @Test
     public void testCaverphoneRevisitedRandomNameKLN1111111() throws EncoderException {
         this.checkEncodingVariations("KLN1111111", new String[]{
             "Cailean",
@@ -169,6 +169,7 @@ public class CaverphoneTest extends StringEncoderAbstractTest {
      * 
      * @throws EncoderException
      */
+    @Test
     public void testCaverphoneRevisitedRandomNameTN11111111() throws EncoderException {
         this.checkEncodingVariations("TN11111111", new String[]{
             "Dan",
@@ -247,6 +248,7 @@ public class CaverphoneTest extends StringEncoderAbstractTest {
      * 
      * @throws EncoderException
      */
+    @Test
     public void testCaverphoneRevisitedRandomNameTTA1111111() throws EncoderException {
         this.checkEncodingVariations("TTA1111111", new String[]{
             "Darda",
@@ -324,24 +326,28 @@ public class CaverphoneTest extends StringEncoderAbstractTest {
      * 
      * @throws EncoderException
      */
+    @Test
     public void testCaverphoneRevisitedRandomWords() throws EncoderException {
         this.checkEncodingVariations("RTA1111111", new String[]{"rather", "ready", "writer"});
         this.checkEncoding("SSA1111111", "social");
         this.checkEncodingVariations("APA1111111", new String[]{"able", "appear"});
     }
 
+    @Test
     public void testEndMb() throws EncoderException {
         String[][] data = {{"mb", "M111111111"}, {"mbmb", "MPM1111111"}};
         this.checkEncodings(data);
     }
 
     // Caverphone Revisited
+    @Test
     public void testIsCaverphoneEquals() {
         Caverphone caverphone = new Caverphone();
         Assert.assertFalse("Caverphone encodings should not be equal", caverphone.isCaverphoneEqual("Peter", "Stevenson"));
         Assert.assertTrue("Caverphone encodings should be equal", caverphone.isCaverphoneEqual("Peter", "Peady"));
     }
 
+    @Test
     public void testSpecificationExamples() throws EncoderException {
         String[][] data = {
             {"Peter", "PTA1111111"},

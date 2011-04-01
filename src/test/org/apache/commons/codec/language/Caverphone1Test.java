@@ -22,6 +22,7 @@ import junit.framework.Assert;
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.StringEncoderAbstractTest;
+import org.junit.Test;
 
 /**
  * Tests Caverphone1.
@@ -31,10 +32,6 @@ import org.apache.commons.codec.StringEncoderAbstractTest;
  * @since 1.5
  */
 public class Caverphone1Test extends StringEncoderAbstractTest {
-
-    public Caverphone1Test(String name) {
-        super(name);
-    }
 
     protected StringEncoder createStringEncoder() {
         return new Caverphone1();
@@ -47,6 +44,7 @@ public class Caverphone1Test extends StringEncoderAbstractTest {
      * 
      * @throws EncoderException
      */
+    @Test
     public void testCaverphoneRevisitedCommonCodeAT1111() throws EncoderException {
         this.checkEncodingVariations("AT1111", new String[]{
             "add",
@@ -66,6 +64,7 @@ public class Caverphone1Test extends StringEncoderAbstractTest {
             "old"});
     }
 
+    @Test
     public void testEndMb() throws EncoderException {
         String[][] data = {{"mb", "M11111"}, {"mbmb", "MPM111"}};
         this.checkEncodings(data);
@@ -76,6 +75,7 @@ public class Caverphone1Test extends StringEncoderAbstractTest {
      * 
      * @throws EncoderException
      */
+    @Test
     public void testIsCaverphoneEquals() throws EncoderException {
         Caverphone1 caverphone = new Caverphone1();
         Assert.assertFalse("Caverphone encodings should not be equal", caverphone.isEncodeEqual("Peter", "Stevenson"));
@@ -87,6 +87,7 @@ public class Caverphone1Test extends StringEncoderAbstractTest {
      * 
      * @throws EncoderException
      */
+    @Test
     public void testSpecificationV1Examples() throws EncoderException {
         String[][] data = {{"David", "TFT111"}, {"Whittle", "WTL111"}};
         this.checkEncodings(data);
@@ -97,6 +98,7 @@ public class Caverphone1Test extends StringEncoderAbstractTest {
      * 
      * @throws EncoderException
      */
+    @Test
     public void testWikipediaExamples() throws EncoderException {
         String[][] data = {{"Lee", "L11111"}, {"Thompson", "TMPSN1"}};
         this.checkEncodings(data);

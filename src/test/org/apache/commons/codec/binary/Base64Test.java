@@ -17,15 +17,20 @@
 
 package org.apache.commons.codec.binary;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Random;
 
-import junit.framework.TestCase;
-
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
+import org.junit.Test;
 
 /**
  * Test cases for Base64 class.
@@ -34,19 +39,9 @@ import org.apache.commons.codec.EncoderException;
  * @author Apache Software Foundation
  * @version $Id$
  */
-public class Base64Test extends TestCase {
+public class Base64Test {
 
     private Random _random = new Random();
-
-    /**
-     * Construct a new instance of this test case.
-     * 
-     * @param name
-     *            Name of the test case
-     */
-    public Base64Test(String name) {
-        super(name);
-    }
 
     /**
      * @return Returns the _random.
@@ -58,6 +53,7 @@ public class Base64Test extends TestCase {
     /**
      * Test the isStringBase64 method.
      */
+    @Test
     public void testIsStringBase64() {
         String nullString = null;
         String emptyString = "";
@@ -79,6 +75,7 @@ public class Base64Test extends TestCase {
     /**
      * Test the Base64 implementation
      */
+    @Test
     public void testBase64() {
         String content = "Hello World";
         String encodedContent;
@@ -105,6 +102,7 @@ public class Base64Test extends TestCase {
     /**
      * Tests Base64.encodeBase64().
      */
+    @Test
     public void testChunkedEncodeMultipleOf76() {
         byte[] expectedEncode = Base64.encodeBase64(Base64TestData.DECODED, true);
         // convert to "\r\n" so we're equal to the old openssl encoding test stored
@@ -117,11 +115,13 @@ public class Base64Test extends TestCase {
     /**
      * CODEC-68: isBase64 throws ArrayIndexOutOfBoundsException on some non-BASE64 bytes
      */
+    @Test
     public void testCodec68() {
         byte[] x = new byte[]{'n', 'A', '=', '=', (byte) 0x9c};
         Base64.decodeBase64(x);
     }
 
+    @Test
     public void testCodeInteger1() throws UnsupportedEncodingException {
         String encodedInt1 = "li7dzDacuo67Jg7mtqEm2TRuOMU=";
         BigInteger bigInt1 = new BigInteger("85739377120809420210425962799" + "0318636601332086981");
@@ -130,6 +130,7 @@ public class Base64Test extends TestCase {
         assertEquals(bigInt1, Base64.decodeInteger(encodedInt1.getBytes("UTF-8")));
     }
 
+    @Test
     public void testCodeInteger2() throws UnsupportedEncodingException {
         String encodedInt2 = "9B5ypLY9pMOmtxCeTDHgwdNFeGs=";
         BigInteger bigInt2 = new BigInteger("13936727572861167254666467268" + "91466679477132949611");
@@ -138,6 +139,7 @@ public class Base64Test extends TestCase {
         assertEquals(bigInt2, Base64.decodeInteger(encodedInt2.getBytes("UTF-8")));
     }
 
+    @Test
     public void testCodeInteger3() throws UnsupportedEncodingException {
         String encodedInt3 = "FKIhdgaG5LGKiEtF1vHy4f3y700zaD6QwDS3IrNVGzNp2" + "rY+1LFWTK6D44AyiC1n8uWz1itkYMZF0/aKDK0Yjg==";
         BigInteger bigInt3 = new BigInteger("10806548154093873461951748545"
@@ -148,6 +150,7 @@ public class Base64Test extends TestCase {
         assertEquals(bigInt3, Base64.decodeInteger(encodedInt3.getBytes("UTF-8")));
     }
 
+    @Test
     public void testCodeInteger4() throws UnsupportedEncodingException {
         String encodedInt4 = "ctA8YGxrtngg/zKVvqEOefnwmViFztcnPBYPlJsvh6yKI"
             + "4iDm68fnp4Mi3RrJ6bZAygFrUIQLxLjV+OJtgJAEto0xAs+Mehuq1DkSFEpP3o"
@@ -164,10 +167,12 @@ public class Base64Test extends TestCase {
         assertEquals(bigInt4, Base64.decodeInteger(encodedInt4.getBytes("UTF-8")));
     }
 
+    @Test
     public void testCodeIntegerEdgeCases() {
         // TODO
     }
 
+    @Test
     public void testCodeIntegerNull() {
         try {
             Base64.encodeInteger(null);
@@ -179,6 +184,7 @@ public class Base64Test extends TestCase {
         }
     }
 
+    @Test
     public void testConstructors() {
         Base64 base64;
         base64 = new Base64();
@@ -214,6 +220,7 @@ public class Base64Test extends TestCase {
         assertNotNull(base64);
     }
 
+    @Test
     public void testConstructor_Int_ByteArray_Boolean() {
         Base64 base64 = new Base64(65, new byte[]{'\t'}, false);
         byte[] encoded = base64.encode(Base64TestData.DECODED);
@@ -223,6 +230,7 @@ public class Base64Test extends TestCase {
         assertEquals("new Base64(65, \\t, false)", expectedResult, result);
     }
 
+    @Test
     public void testConstructor_Int_ByteArray_Boolean_UrlSafe() {
         // url-safe variation
         Base64 base64 = new Base64(64, new byte[]{'\t'}, true);
@@ -239,6 +247,7 @@ public class Base64Test extends TestCase {
     /**
      * Tests conditional true branch for "marker0" test.
      */
+    @Test
     public void testDecodePadMarkerIndex2() throws UnsupportedEncodingException {
         assertEquals("A", new String(Base64.decodeBase64("QQ==".getBytes("UTF-8"))));
     }
@@ -246,11 +255,13 @@ public class Base64Test extends TestCase {
     /**
      * Tests conditional branches for "marker1" test.
      */
+    @Test
     public void testDecodePadMarkerIndex3() throws UnsupportedEncodingException {
         assertEquals("AA", new String(Base64.decodeBase64("QUE=".getBytes("UTF-8"))));
         assertEquals("AAA", new String(Base64.decodeBase64("QUFB".getBytes("UTF-8"))));
     }
 
+    @Test
     public void testDecodePadOnly() throws UnsupportedEncodingException {
         assertTrue(Base64.decodeBase64("====".getBytes("UTF-8")).length == 0);
         assertEquals("", new String(Base64.decodeBase64("====".getBytes("UTF-8"))));
@@ -261,6 +272,7 @@ public class Base64Test extends TestCase {
         assertTrue(Base64.decodeBase64("".getBytes("UTF-8")).length == 0);
     }
 
+    @Test
     public void testDecodePadOnlyChunked() throws UnsupportedEncodingException {
         assertTrue(Base64.decodeBase64("====\n".getBytes("UTF-8")).length == 0);
         assertEquals("", new String(Base64.decodeBase64("====\n".getBytes("UTF-8"))));
@@ -271,6 +283,7 @@ public class Base64Test extends TestCase {
         assertTrue(Base64.decodeBase64("\n".getBytes("UTF-8")).length == 0);
     }
 
+    @Test
     public void testDecodeWithWhitespace() throws Exception {
 
         String orig = "I am a late night coder.";
@@ -294,6 +307,7 @@ public class Base64Test extends TestCase {
     /**
      * Test encode and decode of empty byte array.
      */
+    @Test
     public void testEmptyBase64() {
         byte[] empty = new byte[0];
         byte[] result = Base64.encodeBase64(empty);
@@ -307,6 +321,7 @@ public class Base64Test extends TestCase {
     }
 
     // encode/decode a large random array
+    @Test
     public void testEncodeDecodeRandom() {
         for (int i = 1; i < 5; i++) {
             byte[] data = new byte[this.getRandom().nextInt(10000) + 1];
@@ -319,6 +334,7 @@ public class Base64Test extends TestCase {
     }
 
     // encode/decode random arrays from size 0 to size 11
+    @Test
     public void testEncodeDecodeSmall() {
         for (int i = 0; i < 12; i++) {
             byte[] data = new byte[i];
@@ -330,6 +346,7 @@ public class Base64Test extends TestCase {
         }
     }
 
+    @Test
     public void testEncodeOverMaxSize() throws Exception {
         testEncodeOverMaxSize(-1);
         testEncodeOverMaxSize(0);
@@ -337,6 +354,7 @@ public class Base64Test extends TestCase {
         testEncodeOverMaxSize(2);
     }
     
+    @Test
     public void testCodec112() { // size calculation assumes always chunked
         byte[] in = new byte[] {0};
         byte[] out=Base64.encodeBase64(in);
@@ -352,11 +370,13 @@ public class Base64Test extends TestCase {
         }
     }
 
+    @Test
     public void testIgnoringNonBase64InDecode() throws Exception {
         assertEquals("The quick brown fox jumped over the lazy dogs.", new String(Base64
                 .decodeBase64("VGhlIH@$#$@%F1aWN@#@#@@rIGJyb3duIGZve\n\r\t%#%#%#%CBqd##$#$W1wZWQgb3ZlciB0aGUgbGF6eSBkb2dzLg==".getBytes("UTF-8"))));
     }
 
+    @Test
     public void testIsArrayByteBase64() {
         assertFalse(Base64.isBase64(new byte[]{Byte.MIN_VALUE}));
         assertFalse(Base64.isBase64(new byte[]{-125}));
@@ -374,6 +394,7 @@ public class Base64Test extends TestCase {
     /**
      * Tests isUrlSafe.
      */
+    @Test
     public void testIsUrlSafe() {
         Base64 base64Standard = new Base64(false);
         Base64 base64URLSafe = new Base64(true);
@@ -385,6 +406,7 @@ public class Base64Test extends TestCase {
         assertTrue("Base64.isBase64(whiteSpace)=true", Base64.isBase64(whiteSpace));
     }
 
+    @Test
     public void testKnownDecodings() throws UnsupportedEncodingException {
         assertEquals("The quick brown fox jumped over the lazy dogs.", new String(Base64
                 .decodeBase64("VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2dzLg==".getBytes("UTF-8"))));
@@ -399,6 +421,7 @@ public class Base64Test extends TestCase {
         assertEquals("xyzzy!", new String(Base64.decodeBase64("eHl6enkh".getBytes("UTF-8"))));
     }
 
+    @Test
     public void testKnownEncodings() throws UnsupportedEncodingException {
         assertEquals("VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2dzLg==", new String(Base64
                 .encodeBase64("The quick brown fox jumped over the lazy dogs.".getBytes("UTF-8"))));
@@ -419,6 +442,7 @@ public class Base64Test extends TestCase {
         assertEquals("eHl6enkh", new String(Base64.encodeBase64("xyzzy!".getBytes("UTF-8"))));
     }
 
+    @Test
     public void testNonBase64Test() throws Exception {
 
         byte[] bArray = {'%'};
@@ -440,6 +464,7 @@ public class Base64Test extends TestCase {
         }
     }
 
+    @Test
     public void testObjectDecodeWithInvalidParameter() throws Exception {
         Base64 b64 = new Base64();
 
@@ -452,6 +477,7 @@ public class Base64Test extends TestCase {
 
     }
 
+    @Test
     public void testObjectDecodeWithValidParameter() throws Exception {
 
         String original = "Hello World!";
@@ -465,6 +491,7 @@ public class Base64Test extends TestCase {
         assertTrue("dest string does not equal original", dest.equals(original));
     }
 
+    @Test
     public void testObjectEncodeWithInvalidParameter() throws Exception {
         Base64 b64 = new Base64();
         try {
@@ -475,6 +502,7 @@ public class Base64Test extends TestCase {
         }
     }
 
+    @Test
     public void testObjectEncodeWithValidParameter() throws Exception {
 
         String original = "Hello World!";
@@ -488,11 +516,13 @@ public class Base64Test extends TestCase {
         assertTrue("dest string does not equal original", dest.equals(original));
     }
 
+    @Test
     public void testObjectEncode() throws Exception {
         Base64 b64 = new Base64();
         assertEquals("SGVsbG8gV29ybGQ=", new String(b64.encode("Hello World".getBytes("UTF-8"))));
     }
 
+    @Test
     public void testPairs() {
         assertEquals("AAA=", new String(Base64.encodeBase64(new byte[]{0, 0})));
         for (int i = -128; i <= 127; i++) {
@@ -504,6 +534,7 @@ public class Base64Test extends TestCase {
     /**
      * Tests RFC 2045 section 2.1 CRLF definition.
      */
+    @Test
     public void testRfc2045Section2Dot1CrLfDefinition() {
         assertTrue(Arrays.equals(new byte[]{13, 10}, Base64.CHUNK_SEPARATOR));
     }
@@ -511,6 +542,7 @@ public class Base64Test extends TestCase {
     /**
      * Tests RFC 2045 section 6.8 chuck size definition.
      */
+    @Test
     public void testRfc2045Section6Dot8ChunkSizeDefinition() {
         assertEquals(76, Base64.MIME_CHUNK_SIZE);
     }
@@ -518,6 +550,7 @@ public class Base64Test extends TestCase {
     /**
      * Tests RFC 1421 section 4.3.2.4 chuck size definition.
      */
+    @Test
     public void testRfc1421Section6Dot8ChunkSizeDefinition() {
         assertEquals(64, Base64.PEM_CHUNK_SIZE);
     }
@@ -536,6 +569,7 @@ public class Base64Test extends TestCase {
      * 
      * @see <a href="http://tools.ietf.org/html/rfc4648">http://tools.ietf.org/html/rfc4648</a>
      */
+    @Test
     public void testRfc4648Section10Decode() {
         assertEquals("", StringUtils.newStringUsAscii(Base64.decodeBase64("")));
         assertEquals("f", StringUtils.newStringUsAscii(Base64.decodeBase64("Zg==")));
@@ -560,6 +594,7 @@ public class Base64Test extends TestCase {
      * 
      * @see <a href="http://tools.ietf.org/html/rfc4648">http://tools.ietf.org/html/rfc4648</a>
      */
+    @Test
     public void testRfc4648Section10DecodeWithCrLf() {
         String CRLF = StringUtils.newStringUsAscii(Base64.CHUNK_SEPARATOR);
         assertEquals("", StringUtils.newStringUsAscii(Base64.decodeBase64("" + CRLF)));
@@ -585,6 +620,7 @@ public class Base64Test extends TestCase {
      * 
      * @see <a href="http://tools.ietf.org/html/rfc4648">http://tools.ietf.org/html/rfc4648</a>
      */
+    @Test
     public void testRfc4648Section10Encode() {
         assertEquals("", Base64.encodeBase64String(StringUtils.getBytesUtf8("")));
         assertEquals("Zg==", Base64.encodeBase64String(StringUtils.getBytesUtf8("f")));
@@ -609,6 +645,7 @@ public class Base64Test extends TestCase {
      * 
      * @see <a href="http://tools.ietf.org/html/rfc4648">http://tools.ietf.org/html/rfc4648</a>
      */
+    @Test
     public void testRfc4648Section10DecodeEncode() {
         testDecodeEncode("");
         //testDecodeEncode("Zg==");
@@ -639,6 +676,7 @@ public class Base64Test extends TestCase {
      * 
      * @see <a href="http://tools.ietf.org/html/rfc4648">http://tools.ietf.org/html/rfc4648</a>
      */
+    @Test
     public void testRfc4648Section10EncodeDecode() {
         testEncodeDecode("");
         testEncodeDecode("f");
@@ -655,6 +693,7 @@ public class Base64Test extends TestCase {
         assertEquals(plainText, decodedText);
     }
     
+    @Test
     public void testSingletons() {
         assertEquals("AA==", new String(Base64.encodeBase64(new byte[]{(byte) 0})));
         assertEquals("AQ==", new String(Base64.encodeBase64(new byte[]{(byte) 1})));
@@ -767,6 +806,7 @@ public class Base64Test extends TestCase {
         }
     }
 
+    @Test
     public void testSingletonsChunked() {
         assertEquals("AA==\r\n", new String(Base64.encodeBase64Chunked(new byte[]{(byte) 0})));
         assertEquals("AQ==\r\n", new String(Base64.encodeBase64Chunked(new byte[]{(byte) 1})));
@@ -875,6 +915,7 @@ public class Base64Test extends TestCase {
         assertEquals("aA==\r\n", new String(Base64.encodeBase64Chunked(new byte[]{(byte) 104})));
     }
 
+    @Test
     public void testTriplets() {
         assertEquals("AAAA", new String(Base64.encodeBase64(new byte[]{(byte) 0, (byte) 0, (byte) 0})));
         assertEquals("AAAB", new String(Base64.encodeBase64(new byte[]{(byte) 0, (byte) 0, (byte) 1})));
@@ -942,6 +983,7 @@ public class Base64Test extends TestCase {
         assertEquals("AAA/", new String(Base64.encodeBase64(new byte[]{(byte) 0, (byte) 0, (byte) 63})));
     }
 
+    @Test
     public void testTripletsChunked() {
         assertEquals("AAAA\r\n", new String(Base64.encodeBase64Chunked(new byte[]{(byte) 0, (byte) 0, (byte) 0})));
         assertEquals("AAAB\r\n", new String(Base64.encodeBase64Chunked(new byte[]{(byte) 0, (byte) 0, (byte) 1})));
@@ -1012,6 +1054,7 @@ public class Base64Test extends TestCase {
     /**
      * Tests url-safe Base64 against random data, sizes 0 to 150.
      */
+    @Test
     public void testUrlSafe() {
         // test random data of sizes 0 thru 150
         for (int i = 0; i <= 150; i++) {
@@ -1034,6 +1077,7 @@ public class Base64Test extends TestCase {
      * @throws DecoderException
      *             if Hex.decode() fails - a serious problem since Hex comes from our own commons-codec!
      */
+    @Test
     public void testUUID() throws DecoderException {
         // The 4 UUID's below contains mixtures of + and / to help us test the
         // URL-SAFE encoding mode.
@@ -1122,6 +1166,7 @@ public class Base64Test extends TestCase {
         }
     }
 
+    @Test
     public void testByteToStringVariations() throws DecoderException {
         Base64 base64 = new Base64(0);
         byte[] b1 = StringUtils.getBytesUtf8("Hello World");
@@ -1140,6 +1185,7 @@ public class Base64Test extends TestCase {
         assertEquals("byteToString static-url-safe UUID", "K_fMJwH-Q5e0nr7tWsxwkA", Base64.encodeBase64URLSafeString(b4));
     }
 
+    @Test
     public void testStringToByteVariations() throws DecoderException {
         Base64 base64 = new Base64();
         String s1 = "SGVsbG8gV29ybGQ=\r\n";

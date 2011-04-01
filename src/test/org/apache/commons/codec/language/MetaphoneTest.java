@@ -17,18 +17,19 @@
 
 package org.apache.commons.codec.language;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.StringEncoderAbstractTest;
+import org.junit.Test;
 
 /**
  * @author Apache Software Foundation
  * @version $Id$
  */
 public class MetaphoneTest extends StringEncoderAbstractTest {
-
-    public MetaphoneTest(String name) {
-        super(name);
-    }
 
     public void assertIsMetaphoneEqual(String source, String[] matches) {
         // match source to all matches
@@ -66,6 +67,7 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
         return new Metaphone();
     }
 
+    @Test
     public void testIsMetaphoneEqual1() {
         this.assertMetaphoneEqual(new String[][] { { "Case", "case" }, {
                 "CASE", "Case" }, {
@@ -77,6 +79,7 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
     /**
      * Matches computed from http://www.lanw.com/java/phonetic/default.htm
      */
+    @Test
     public void testIsMetaphoneEqual2() {
         this.assertMetaphoneEqual(new String[][] { { "Lawrence", "Lorenza" }, {
                 "Gary", "Cahra" }, });
@@ -87,6 +90,7 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
      * 
      * Match data computed from http://www.lanw.com/java/phonetic/default.htm
      */
+    @Test
     public void testIsMetaphoneEqualAero() {
         this.assertIsMetaphoneEqual("Aero", new String[] { "Eure" });
     }
@@ -96,6 +100,7 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
      * 
      * Match data computed from http://www.lanw.com/java/phonetic/default.htm
      */
+    @Test
     public void testIsMetaphoneEqualWhite() {
         this.assertIsMetaphoneEqual(
             "White",
@@ -107,6 +112,7 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
      * 
      * Match data computed from http://www.lanw.com/java/phonetic/default.htm
      */
+    @Test
     public void testIsMetaphoneEqualAlbert() {
         this.assertIsMetaphoneEqual("Albert", new String[] { "Ailbert", "Alberik", "Albert", "Alberto", "Albrecht" });
     }
@@ -114,6 +120,7 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
     /**
      * Match data computed from http://www.lanw.com/java/phonetic/default.htm
      */
+    @Test
     public void testIsMetaphoneEqualGary() {
         this.assertIsMetaphoneEqual(
             "Gary",
@@ -167,6 +174,7 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
     /**
      * Match data computed from http://www.lanw.com/java/phonetic/default.htm
      */
+    @Test
     public void testIsMetaphoneEqualJohn() {
         this.assertIsMetaphoneEqual(
             "John",
@@ -237,6 +245,7 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
      * 
      * Match data computed from http://www.lanw.com/java/phonetic/default.htm
      */
+    @Test
     public void testIsMetaphoneEqualKnight() {
         this.assertIsMetaphoneEqual(
             "Knight",
@@ -261,6 +270,7 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
     /**
      * Match data computed from http://www.lanw.com/java/phonetic/default.htm
      */
+    @Test
     public void testIsMetaphoneEqualMary() {
         this.assertIsMetaphoneEqual(
             "Mary",
@@ -291,6 +301,7 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
     /**
      * Match data computed from http://www.lanw.com/java/phonetic/default.htm
      */
+    @Test
     public void testIsMetaphoneEqualParis() {
         this.assertIsMetaphoneEqual("Paris", new String[] { "Pearcy", "Perris", "Piercy", "Pierz", "Pryse" });
     }
@@ -298,6 +309,7 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
     /**
      * Match data computed from http://www.lanw.com/java/phonetic/default.htm
      */
+    @Test
     public void testIsMetaphoneEqualPeter() {
         this.assertIsMetaphoneEqual(
             "Peter",
@@ -307,6 +319,7 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
     /**
      * Match data computed from http://www.lanw.com/java/phonetic/default.htm
      */
+    @Test
     public void testIsMetaphoneEqualRay() {
         this.assertIsMetaphoneEqual("Ray", new String[] { "Ray", "Rey", "Roi", "Roy", "Ruy" });
     }
@@ -314,6 +327,7 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
     /**
      * Match data computed from http://www.lanw.com/java/phonetic/default.htm
      */
+    @Test
     public void testIsMetaphoneEqualSusan() {
         this.assertIsMetaphoneEqual(
             "Susan",
@@ -337,6 +351,7 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
      * 
      * Match data computed from http://www.lanw.com/java/phonetic/default.htm
      */
+    @Test
     public void testIsMetaphoneEqualWright() {
         this.assertIsMetaphoneEqual("Wright", new String[] { "Rota", "Rudd", "Ryde" });
     }
@@ -344,12 +359,14 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
     /**
      * Match data computed from http://www.lanw.com/java/phonetic/default.htm
      */
+    @Test
     public void testIsMetaphoneEqualXalan() {
         this.assertIsMetaphoneEqual(
             "Xalan",
             new String[] { "Celene", "Celina", "Celine", "Selena", "Selene", "Selina", "Seline", "Suellen", "Xylina" });
     }
 
+    @Test
     public void testMetaphone() {
         assertEquals("HL", this.getMetaphone().metaphone("howl"));
         assertEquals("TSTN", this.getMetaphone().metaphone("testing"));
@@ -364,12 +381,14 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
         assertEquals("TKS", this.getMetaphone().metaphone("dogs"));
     }
     
+    @Test
     public void testWordEndingInMB() {
         assertEquals( "KM", this.getMetaphone().metaphone("COMB") );
         assertEquals( "TM", this.getMetaphone().metaphone("TOMB") );
         assertEquals( "WM", this.getMetaphone().metaphone("WOMB") );
     }
 
+    @Test
     public void testDiscardOfSCEOrSCIOrSCY() {
         assertEquals( "SNS", this.getMetaphone().metaphone("SCIENCE") );
         assertEquals( "SN", this.getMetaphone().metaphone("SCENE") );
@@ -379,15 +398,18 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
     /**
      * Tests (CODEC-57) Metaphone.metaphone(String) returns an empty string when passed the word "why"
      */
+    @Test
     public void testWhy() {
         // PHP returns "H". The original metaphone returns an empty string. 
         assertEquals("", this.getMetaphone().metaphone("WHY"));
     }
 
+    @Test
     public void testWordsWithCIA() {
         assertEquals( "XP", this.getMetaphone().metaphone("CIAPO") );
     }
 
+    @Test
     public void testTranslateOfSCHAndCH() {
         assertEquals( "SKTL", this.getMetaphone().metaphone("SCHEDULE") );
         assertEquals( "SKMT", this.getMetaphone().metaphone("SCHEMATIC") );
@@ -396,17 +418,20 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
         assertEquals( "TX", this.getMetaphone().metaphone("TEACH") );
     }
 
+    @Test
     public void testTranslateToJOfDGEOrDGIOrDGY() {
         assertEquals( "TJ", this.getMetaphone().metaphone("DODGY") );
         assertEquals( "TJ", this.getMetaphone().metaphone("DODGE") );
         assertEquals( "AJMT", this.getMetaphone().metaphone("ADGIEMTI") );
     }
 
+    @Test
     public void testDiscardOfSilentHAfterG() {
         assertEquals( "KNT", this.getMetaphone().metaphone("GHENT") );
         assertEquals( "B", this.getMetaphone().metaphone("BAUGH") );
     }
 
+    @Test
     public void testDiscardOfSilentGN() {
         // NOTE: This does not test for silent GN, but for starting with GN
         assertEquals( "N", this.getMetaphone().metaphone("GNU") );
@@ -415,31 +440,37 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
         assertEquals( "SNT", this.getMetaphone().metaphone("SIGNED") );
     }
 
+    @Test
     public void testPHTOF() {
         assertEquals( "FX", this.getMetaphone().metaphone("PHISH") );
     }
 
+    @Test
     public void testSHAndSIOAndSIAToX() {
         assertEquals( "XT", this.getMetaphone().metaphone("SHOT") );
         assertEquals( "OTXN", this.getMetaphone().metaphone("ODSIAN") );
         assertEquals( "PLXN", this.getMetaphone().metaphone("PULSION") );
     }
 
+    @Test
     public void testTIOAndTIAToX() {
         assertEquals( "OX", this.getMetaphone().metaphone("OTIA") );
         assertEquals( "PRXN", this.getMetaphone().metaphone("PORTION") );
     }
 
+    @Test
     public void testTCH() {
         assertEquals( "RX", this.getMetaphone().metaphone("RETCH") );
         assertEquals( "WX", this.getMetaphone().metaphone("WATCH") );
     }
 
+    @Test
     public void testExceedLength() {
         // should be AKSKS, but istruncated by Max Code Length
         assertEquals( "AKSK", this.getMetaphone().metaphone("AXEAXE") );
     }
 
+    @Test
     public void testSetMaxLengthWithTruncation() {
         // should be AKSKS, but istruncated by Max Code Length
         this.getMetaphone().setMaxCodeLen( 6 );

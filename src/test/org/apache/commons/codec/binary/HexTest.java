@@ -17,6 +17,11 @@
 
 package org.apache.commons.codec.binary;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.Arrays;
@@ -26,10 +31,10 @@ import java.util.Set;
 import java.util.SortedMap;
 
 import junit.framework.Assert;
-import junit.framework.TestCase;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
+import org.junit.Test;
 
 /**
  * Tests {@link org.apache.commons.codec.binary.Hex}.
@@ -37,15 +42,11 @@ import org.apache.commons.codec.EncoderException;
  * @author Apache Software Foundation
  * @version $Id$
  */
-public class HexTest extends TestCase {
+public class HexTest {
 
     private static final String BAD_ENCODING_NAME = "UNKNOWN";
     
     private final static boolean LOG = false;
-
-    public HexTest(String name) {
-        super(name);
-    }
 
     private boolean charsetSanityCheck(String name) {
         final String source = "the quick brown dog jumped over the lazy fox";
@@ -123,6 +124,7 @@ public class HexTest extends TestCase {
         }
     }
 
+    @Test
     public void testCustomCharset() throws UnsupportedEncodingException, DecoderException {
         SortedMap map = Charset.availableCharsets();
         Set keys = map.keySet();
@@ -175,6 +177,7 @@ public class HexTest extends TestCase {
         assertEquals(name, sourceString, actualStringFromBytes);
     }
 
+    @Test
     public void testCustomCharsetBadNameEncodeByteArray() throws UnsupportedEncodingException {
         try {
             new Hex(BAD_ENCODING_NAME).encode("Hello World".getBytes("UTF-8"));
@@ -184,6 +187,7 @@ public class HexTest extends TestCase {
         }
     }
 
+    @Test
     public void testCustomCharsetBadNameEncodeObject() {
         try {
             new Hex(BAD_ENCODING_NAME).encode("Hello World");
@@ -193,6 +197,7 @@ public class HexTest extends TestCase {
         }
     }
 
+    @Test
     public void testCustomCharsetBadNameDecodeObject() throws UnsupportedEncodingException {
         try {
             new Hex(BAD_ENCODING_NAME).decode("Hello World".getBytes("UTF-8"));
@@ -202,10 +207,12 @@ public class HexTest extends TestCase {
         }
     }
 
+    @Test
     public void testCustomCharsetToString() {
         assertTrue(new Hex().toString().indexOf(Hex.DEFAULT_CHARSET_NAME) >= 0);
     }
 
+    @Test
     public void testDecodeArrayOddCharacters() {
         try {
             new Hex().decode(new byte[]{65});
@@ -215,6 +222,7 @@ public class HexTest extends TestCase {
         }
     }
 
+    @Test
     public void testDecodeBadCharacterPos0() {
         try {
             new Hex().decode("q0");
@@ -224,6 +232,7 @@ public class HexTest extends TestCase {
         }
     }
 
+    @Test
     public void testDecodeBadCharacterPos1() {
         try {
             new Hex().decode("0q");
@@ -233,6 +242,7 @@ public class HexTest extends TestCase {
         }
     }
 
+    @Test
     public void testDecodeClassCastException() {
         try {
             new Hex().decode(new int[]{65});
@@ -242,18 +252,22 @@ public class HexTest extends TestCase {
         }
     }
 
+    @Test
     public void testDecodeHexOddCharacters1() {
         checkDecodeHexOddCharacters(new char[]{'A'});
     }
 
+    @Test
     public void testDecodeHexOddCharacters3() {
         checkDecodeHexOddCharacters(new char[]{'A', 'B', 'C'});
     }
 
+    @Test
     public void testDecodeHexOddCharacters5() {
         checkDecodeHexOddCharacters(new char[]{'A', 'B', 'C', 'D', 'E'});
     }
 
+    @Test
     public void testDecodeStringOddCharacters() {
         try {
             new Hex().decode("6");
@@ -263,12 +277,14 @@ public class HexTest extends TestCase {
         }
     }
 
+    @Test
     public void testDencodeEmpty() throws DecoderException {
         assertTrue(Arrays.equals(new byte[0], Hex.decodeHex(new char[0])));
         assertTrue(Arrays.equals(new byte[0], new Hex().decode(new byte[0])));
         assertTrue(Arrays.equals(new byte[0], (byte[]) new Hex().decode("")));
     }
 
+    @Test
     public void testEncodeClassCastException() {
         try {
             new Hex().encode(new int[]{65});
@@ -278,6 +294,7 @@ public class HexTest extends TestCase {
         }
     }
 
+    @Test
     public void testEncodeDecodeRandom() throws DecoderException, EncoderException {
         Random random = new Random();
 
@@ -310,17 +327,20 @@ public class HexTest extends TestCase {
         }
     }
 
+    @Test
     public void testEncodeEmpty() throws EncoderException {
         assertTrue(Arrays.equals(new char[0], Hex.encodeHex(new byte[0])));
         assertTrue(Arrays.equals(new byte[0], new Hex().encode(new byte[0])));
         assertTrue(Arrays.equals(new char[0], (char[]) new Hex().encode("")));
     }
 
+    @Test
     public void testEncodeZeroes() {
         char[] c = Hex.encodeHex(new byte[36]);
         assertEquals("000000000000000000000000000000000000000000000000000000000000000000000000", new String(c));
     }
 
+    @Test
     public void testHelloWorldLowerCaseHex() {
         byte[] b = StringUtils.getBytesUtf8("Hello World");
         final String expected = "48656c6c6f20576f726c64";
@@ -333,6 +353,7 @@ public class HexTest extends TestCase {
         assertFalse(expected.equals(new String(actual)));
     }
 
+    @Test
     public void testHelloWorldUpperCaseHex() {
         byte[] b = StringUtils.getBytesUtf8("Hello World");
         final String expected = "48656C6C6F20576F726C64";
@@ -345,6 +366,7 @@ public class HexTest extends TestCase {
         assertTrue(expected.equals(new String(actual)));
     }
 
+    @Test
     public void testRequiredCharset() throws UnsupportedEncodingException, DecoderException {
         testCustomCharset("UTF-8", "testRequiredCharset");
         testCustomCharset("UTF-16", "testRequiredCharset");

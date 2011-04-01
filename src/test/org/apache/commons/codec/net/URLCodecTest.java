@@ -17,13 +17,16 @@
 
 package org.apache.commons.codec.net;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
+
 import java.io.UnsupportedEncodingException;
 
-import junit.framework.TestCase;
-
+import org.apache.commons.codec.CharEncoding;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
-import org.apache.commons.codec.CharEncoding;
+import org.junit.Test;
 
 /**
  * URL codec test cases
@@ -31,7 +34,7 @@ import org.apache.commons.codec.CharEncoding;
  * @author Apache Software Foundation
  * @version $Id$
  */
-public class URLCodecTest extends TestCase {
+public class URLCodecTest {
     
     static final int SWISS_GERMAN_STUFF_UNICODE [] = {
         0x47, 0x72, 0xFC, 0x65, 0x7A, 0x69, 0x5F, 0x7A, 0xE4, 0x6D, 0xE4
@@ -41,10 +44,6 @@ public class URLCodecTest extends TestCase {
         0x412, 0x441, 0x435, 0x43C, 0x5F, 0x43F, 0x440, 0x438, 
         0x432, 0x435, 0x442 
     }; 
-
-    public URLCodecTest(String name) {
-        super(name);
-    }
 
     private void validateState(URLCodec urlCodec) {
         assertEquals(urlCodec.getEncoding(), urlCodec.getDefaultCharset());        
@@ -60,6 +59,7 @@ public class URLCodecTest extends TestCase {
         return buffer.toString();
     }
     
+    @Test
     public void testUTF8RoundTrip() throws Exception {
 
         String ru_msg = constructString(RUSSIAN_STUFF_UNICODE); 
@@ -79,6 +79,7 @@ public class URLCodecTest extends TestCase {
         this.validateState(urlCodec);
     }
 
+    @Test
     public void testBasicEncodeDecode() throws Exception {
         URLCodec urlCodec = new URLCodec();
         String plain = "Hello there!";
@@ -91,6 +92,7 @@ public class URLCodecTest extends TestCase {
     }
 
 
+    @Test
     public void testSafeCharEncodeDecode() throws Exception {
         URLCodec urlCodec = new URLCodec();
         String plain = "abc123_-.*";
@@ -103,6 +105,7 @@ public class URLCodecTest extends TestCase {
     }
 
 
+    @Test
     public void testUnsafeEncodeDecode() throws Exception {
         URLCodec urlCodec = new URLCodec();
         String plain = "~!@#$%^&()+{}\"\\;:`,/[]";
@@ -115,6 +118,7 @@ public class URLCodecTest extends TestCase {
     }
 
 
+    @Test
     public void testEncodeDecodeNull() throws Exception {
         URLCodec urlCodec = new URLCodec();
         assertNull("Null string URL encoding test", 
@@ -125,6 +129,7 @@ public class URLCodecTest extends TestCase {
     }
 
 
+    @Test
     public void testDecodeInvalid() throws Exception {
         URLCodec urlCodec = new URLCodec();
         try {
@@ -156,6 +161,7 @@ public class URLCodecTest extends TestCase {
         this.validateState(urlCodec);
     }
 
+    @Test
     public void testDecodeInvalidContent() throws UnsupportedEncodingException, DecoderException {
         String ch_msg = constructString(SWISS_GERMAN_STUFF_UNICODE); 
         URLCodec urlCodec = new URLCodec();
@@ -168,6 +174,7 @@ public class URLCodecTest extends TestCase {
         this.validateState(urlCodec);
     }
 
+    @Test
     public void testEncodeNull() throws Exception {
         URLCodec urlCodec = new URLCodec();
         byte[] plain = null;
@@ -177,6 +184,7 @@ public class URLCodecTest extends TestCase {
         this.validateState(urlCodec);
     }
     
+    @Test
     public void testEncodeUrlWithNullBitSet() throws Exception {
         URLCodec urlCodec = new URLCodec();
         String plain = "Hello there!";
@@ -188,12 +196,14 @@ public class URLCodecTest extends TestCase {
         this.validateState(urlCodec);        
     }
 
+    @Test
     public void testDecodeWithNullArray() throws Exception {
         byte[] plain = null;
         byte[] result = URLCodec.decodeUrl( plain );
         assertEquals("Result should be null", null, result);
     }
 
+    @Test
     public void testEncodeStringWithNull() throws Exception {
         URLCodec urlCodec = new URLCodec();
         String test = null;
@@ -201,6 +211,7 @@ public class URLCodecTest extends TestCase {
         assertEquals("Result should be null", null, result);
     }
 
+    @Test
     public void testDecodeStringWithNull() throws Exception {
         URLCodec urlCodec = new URLCodec();
         String test = null;
@@ -208,6 +219,7 @@ public class URLCodecTest extends TestCase {
         assertEquals("Result should be null", null, result);
     }
     
+    @Test
     public void testEncodeObjects() throws Exception {
         URLCodec urlCodec = new URLCodec();
         String plain = "Hello there!";
@@ -234,6 +246,7 @@ public class URLCodecTest extends TestCase {
         this.validateState(urlCodec);
     }
     
+    @Test
     public void testInvalidEncoding() {
         URLCodec urlCodec = new URLCodec("NONSENSE");
         String plain = "Hello there!";
@@ -252,6 +265,7 @@ public class URLCodecTest extends TestCase {
         this.validateState(urlCodec);
     }
 
+    @Test
     public void testDecodeObjects() throws Exception {
         URLCodec urlCodec = new URLCodec();
         String plain = "Hello+there%21";
@@ -278,6 +292,7 @@ public class URLCodecTest extends TestCase {
         this.validateState(urlCodec);
     }
 
+    @Test
     public void testDefaultEncoding() throws Exception {
         String plain = "Hello there!";
         URLCodec urlCodec = new URLCodec("UnicodeBig");

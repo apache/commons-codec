@@ -17,12 +17,16 @@
 
 package org.apache.commons.codec.binary;
 
-import java.io.UnsupportedEncodingException;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
-import junit.framework.TestCase;
+import java.io.UnsupportedEncodingException;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * TestCase for BinaryCodec class.
@@ -30,7 +34,7 @@ import org.apache.commons.codec.EncoderException;
  * @author Apache Software Foundation
  * @version $Id$
  */
-public class BinaryCodecTest extends TestCase {
+public class BinaryCodecTest {
     /** mask with bit zero based index 0 raised */
     private static final int BIT_0 = 0x01;
 
@@ -58,29 +62,14 @@ public class BinaryCodecTest extends TestCase {
     /** an instance of the binary codec */
     BinaryCodec instance = null;
 
-    /*
-     * @see TestCase#setUp()
-     */
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         this.instance = new BinaryCodec();
     }
 
-    /*
-     * @see TestCase#tearDown()
-     */
-    protected void tearDown() throws Exception {
-        super.tearDown();
+    @After
+    public void tearDown() throws Exception {
         this.instance = null;
-    }
-
-    /**
-     * Constructor for BinaryTest.
-     * 
-     * @param arg0
-     */
-    public BinaryCodecTest(String arg0) {
-        super(arg0);
     }
 
     // ------------------------------------------------------------------------
@@ -91,6 +80,7 @@ public class BinaryCodecTest extends TestCase {
     /**
      * Tests for Object decode(Object)
      */
+    @Test
     public void testDecodeObjectException() {
         try {
             this.instance.decode(new Object());
@@ -104,6 +94,7 @@ public class BinaryCodecTest extends TestCase {
     /**
      * Tests for Object decode(Object)
      */
+    @Test
     public void testDecodeObject() throws Exception {
         byte[] bits;
         // With a single raw binary
@@ -206,6 +197,7 @@ public class BinaryCodecTest extends TestCase {
     /*
      * Tests for byte[] decode(byte[])
      */
+    @Test
     public void testDecodeByteArray() throws UnsupportedEncodingException {
         // With a single raw binary
         byte[] bits = new byte[1];
@@ -298,6 +290,7 @@ public class BinaryCodecTest extends TestCase {
     /*
      * Tests for byte[] toByteArray(String)
      */
+    @Test
     public void testToByteArrayFromString() {
         // With a single raw binary
         byte[] bits = new byte[1];
@@ -391,6 +384,7 @@ public class BinaryCodecTest extends TestCase {
     /*
      * Tests for byte[] fromAscii(char[])
      */
+    @Test
     public void testFromAsciiCharArray() {
         assertEquals(0, BinaryCodec.fromAscii((char[]) null).length);
         assertEquals(0, BinaryCodec.fromAscii(new char[0]).length);
@@ -486,6 +480,7 @@ public class BinaryCodecTest extends TestCase {
     /*
      * Tests for byte[] fromAscii(byte[])
      */
+    @Test
     public void testFromAsciiByteArray() throws UnsupportedEncodingException {
         assertEquals(0, BinaryCodec.fromAscii((byte[]) null).length);
         assertEquals(0, BinaryCodec.fromAscii(new byte[0]).length);
@@ -581,6 +576,7 @@ public class BinaryCodecTest extends TestCase {
     /*
      * Tests for byte[] encode(byte[])
      */
+    @Test
     public void testEncodeByteArray() {
         // With a single raw binary
         byte[] bits = new byte[1];
@@ -703,6 +699,7 @@ public class BinaryCodecTest extends TestCase {
     // Test toAsciiBytes
     //
     // ------------------------------------------------------------------------
+    @Test
     public void testToAsciiBytes() {
         // With a single raw binary
         byte[] bits = new byte[1];
@@ -825,6 +822,7 @@ public class BinaryCodecTest extends TestCase {
     // Test toAsciiChars
     //
     // ------------------------------------------------------------------------
+    @Test
     public void testToAsciiChars() {
         // With a single raw binary
         byte[] bits = new byte[1];
@@ -950,6 +948,7 @@ public class BinaryCodecTest extends TestCase {
     /**
      * Tests the toAsciiString(byte[]) method
      */
+    @Test
     public void testToAsciiString() {
         // With a single raw binary
         byte[] bits = new byte[1];
@@ -1074,6 +1073,7 @@ public class BinaryCodecTest extends TestCase {
     /*
      * Tests for Object encode(Object)
      */
+    @Test
     public void testEncodeObjectNull() throws Exception {
         Object obj = new byte[0];
         assertEquals(0, ((char[]) instance.encode(obj)).length);
@@ -1082,6 +1082,7 @@ public class BinaryCodecTest extends TestCase {
     /*
      * Tests for Object encode(Object)
      */
+    @Test
     public void testEncodeObjectException() {
         try {
             instance.encode("");
@@ -1095,6 +1096,7 @@ public class BinaryCodecTest extends TestCase {
     /*
      * Tests for Object encode(Object)
      */
+    @Test
     public void testEncodeObject() throws Exception {
         // With a single raw binary
         byte[] bits = new byte[1];

@@ -17,10 +17,12 @@
 
 package org.apache.commons.codec.net;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
-import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.CharEncoding;
+import org.apache.commons.codec.DecoderException;
+import org.junit.Test;
 
 /**
  * RFC 1522 compliant codec test cases
@@ -28,11 +30,7 @@ import org.apache.commons.codec.CharEncoding;
  * @author <a href="mailto:oleg@ural.ru">Oleg Kalnichevski</a>
  * @version $Id$
  */
-public class RFC1522CodecTest extends TestCase {
-
-    public RFC1522CodecTest(String name) {
-        super(name);
-    }
+public class RFC1522CodecTest {
 
     static class RFC1522TestCodec extends RFC1522Codec {
 
@@ -50,6 +48,7 @@ public class RFC1522CodecTest extends TestCase {
 
     }
 
+    @Test
     public void testNullInput() throws Exception {
         RFC1522TestCodec testcodec = new RFC1522TestCodec();
         assertNull(testcodec.decodeText(null));
@@ -66,6 +65,7 @@ public class RFC1522CodecTest extends TestCase {
         }
     }
 
+    @Test
     public void testDecodeInvalid() throws Exception {
         assertExpectedDecoderException("whatever");
         assertExpectedDecoderException("=?");

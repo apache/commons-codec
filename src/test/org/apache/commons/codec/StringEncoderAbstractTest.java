@@ -20,19 +20,16 @@ package org.apache.commons.codec;
 import java.util.Locale;
 
 import junit.framework.Assert;
-import junit.framework.TestCase;
+
+import org.junit.Test;
 
 /**
  * @author Apache Software Foundation
  * @version $Id$
  */
-public abstract class StringEncoderAbstractTest extends TestCase {
+public abstract class StringEncoderAbstractTest {
 
     protected StringEncoder stringEncoder = this.createStringEncoder();
-
-    public StringEncoderAbstractTest(String name) {
-        super(name);
-    }
 
     public void checkEncoding(String expected, String source) throws EncoderException {
         Assert.assertEquals("Source: " + source, expected, this.getStringEncoder().encode(source));
@@ -56,6 +53,7 @@ public abstract class StringEncoderAbstractTest extends TestCase {
         return this.stringEncoder;
     }
 
+    @Test
     public void testEncodeEmpty() throws Exception {
         Encoder encoder = this.getStringEncoder();
         encoder.encode("");
@@ -63,6 +61,7 @@ public abstract class StringEncoderAbstractTest extends TestCase {
         encoder.encode("\t");
     }
 
+    @Test
     public void testEncodeNull() throws Exception {
         StringEncoder encoder = this.getStringEncoder();
         try {
@@ -72,8 +71,8 @@ public abstract class StringEncoderAbstractTest extends TestCase {
         }
     }
 
+    @Test
     public void testEncodeWithInvalidObject() throws Exception {
-
         boolean exceptionThrown = false;
         try {
             StringEncoder encoder = this.getStringEncoder();
@@ -81,10 +80,10 @@ public abstract class StringEncoderAbstractTest extends TestCase {
         } catch (Exception e) {
             exceptionThrown = true;
         }
-
         Assert.assertTrue("An exception was not thrown when we tried to encode " + "a Float object", exceptionThrown);
     }
 
+    @Test
     public void testLocaleIndependence() throws Exception {
         StringEncoder encoder = this.getStringEncoder();
 

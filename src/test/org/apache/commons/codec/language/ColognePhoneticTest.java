@@ -17,10 +17,10 @@
 
 package org.apache.commons.codec.language;
 
-
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.StringEncoderAbstractTest;
+import org.junit.Test;
 
 /**
  * Tests the deprecated class {@link ColognePhonetic}.
@@ -31,22 +31,21 @@ import org.apache.commons.codec.StringEncoderAbstractTest;
  */
 public class ColognePhoneticTest extends StringEncoderAbstractTest {
 
-    public ColognePhoneticTest(String name) {
-        super(name);
-    }
-
     protected StringEncoder createStringEncoder() {
         return new ColognePhonetic();
     }
 
+    @Test
     public void testAabjoe() throws EncoderException {
         this.checkEncoding("01", "Aabjoe");
     }
 
+    @Test
     public void testAaclan() throws EncoderException {
         this.checkEncoding("0856", "Aaclan");
     }
 
+    @Test
     public void testEdgeCases() throws EncoderException {
         String[][] data = {
             {"a", "0"},
@@ -81,6 +80,7 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
         this.checkEncodings(data);
     }
 
+    @Test
     public void testExamples() throws EncoderException {
         String[][] data = {
             {"m\u00DCller", "657"},
@@ -114,6 +114,7 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
         this.checkEncodings(data);
     }
 
+    @Test
     public void testHyphen() throws EncoderException {
         String[][] data = {{"bergisch-gladbach", "174845214"}, {"Müller-Lüdenscheidt", "65752682"},
             // From the Javadoc example:
@@ -121,6 +122,7 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
         this.checkEncodings(data);
     }
 
+    @Test
     public void testIsEncodeEquals() {
         String[][] data = {
             {"Meyer", "Müller"},
@@ -136,11 +138,13 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
         }
     }
 
+    @Test
     public void testVariationsMella() throws EncoderException {
         String data[] = {"mella", "milah", "moulla", "mellah", "muehle", "mule"};
         this.checkEncodingVariations("65", data);
     }
 
+    @Test
     public void testVariationsMeyer() throws EncoderException {
         String data[] = {"Meier", "Maier", "Mair", "Meyer", "Meyr", "Mejer", "Major"};
         this.checkEncodingVariations("67", data);

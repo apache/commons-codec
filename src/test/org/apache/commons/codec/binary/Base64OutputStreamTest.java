@@ -17,18 +17,22 @@
 
 package org.apache.commons.codec.binary;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.util.Arrays;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * @author Apache Software Foundation
  * @version $Id $
  * @since 1.4
  */
-public class Base64OutputStreamTest extends TestCase {
+public class Base64OutputStreamTest {
 
     private final static byte[] CRLF = {(byte) '\r', (byte) '\n'};
 
@@ -37,21 +41,12 @@ public class Base64OutputStreamTest extends TestCase {
     private static final String STRING_FIXTURE = "Hello World";
 
     /**
-     * Construct a new instance of this test case.
-     * 
-     * @param name
-     *            Name of the test case
-     */
-    public Base64OutputStreamTest(String name) {
-        super(name);
-    }
-
-    /**
      * Test the Base64OutputStream implementation against the special NPE inducing input
      * identified in the CODEC-98 bug.
      *
      * @throws Exception for some failure scenarios.
      */
+    @Test
     public void testCodec98NPE() throws Exception {
         byte[] codec98 = StringUtils.getBytesUtf8(Base64TestData.CODEC_98_NPE);
         byte[] codec98_1024 = new byte[1024];
@@ -75,6 +70,7 @@ public class Base64OutputStreamTest extends TestCase {
      * @throws Exception
      *             for some failure scenarios.
      */
+    @Test
     public void testBase64EmptyOutputStreamMimeChunkSize() throws Exception {
         testBase64EmptyOutputStream(Base64.MIME_CHUNK_SIZE);
     }
@@ -85,6 +81,7 @@ public class Base64OutputStreamTest extends TestCase {
      * @throws Exception
      *             for some failure scenarios.
      */
+    @Test
     public void testBase64EmptyOutputStreamPemChunkSize() throws Exception {
         testBase64EmptyOutputStream(Base64.PEM_CHUNK_SIZE);
     }
@@ -102,6 +99,7 @@ public class Base64OutputStreamTest extends TestCase {
      * @throws Exception
      *             for some failure scenarios.
      */
+    @Test
     public void testBase64OutputStreamByChunk() throws Exception {
         // Hello World test.
         byte[] encoded = StringUtils.getBytesUtf8("SGVsbG8gV29ybGQ=\r\n");
@@ -139,6 +137,7 @@ public class Base64OutputStreamTest extends TestCase {
      * @throws Exception
      *             for some failure scenarios.
      */
+    @Test
     public void testBase64OutputStreamByteByByte() throws Exception {
         // Hello World test.
         byte[] encoded = StringUtils.getBytesUtf8("SGVsbG8gV29ybGQ=\r\n");
@@ -293,6 +292,7 @@ public class Base64OutputStreamTest extends TestCase {
      * @throws Exception
      *             for some failure scenarios.
      */
+    @Test
     public void testWriteOutOfBounds() throws Exception {
         byte[] buf = new byte[1024];
         ByteArrayOutputStream bout = new ByteArrayOutputStream();
@@ -333,6 +333,7 @@ public class Base64OutputStreamTest extends TestCase {
      * @throws Exception
      *             for some failure scenarios.
      */
+    @Test
     public void testWriteToNullCoverage() throws Exception {
         ByteArrayOutputStream bout = new ByteArrayOutputStream();
         Base64OutputStream out = new Base64OutputStream(bout);

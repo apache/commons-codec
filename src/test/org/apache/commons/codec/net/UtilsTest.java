@@ -17,7 +17,7 @@
 
 package org.apache.commons.codec.net;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * Tests Utils.
@@ -29,12 +29,13 @@ import junit.framework.TestCase;
  * @version $Id$
  * @since 1.4
  */
-public class UtilsTest extends TestCase {
+public class UtilsTest {
 
     /**
      * We could make the constructor private but there does not seem to be a point to jumping through extra code hoops
      * to restrict instantiation right now.
      */
+    @Test
     public void testConstructor() {
         new Utils();
     }

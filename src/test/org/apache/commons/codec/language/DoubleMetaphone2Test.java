@@ -17,8 +17,11 @@
 
 package org.apache.commons.codec.language;
 
+import static org.junit.Assert.assertEquals;
+
 import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.StringEncoderAbstractTest;
+import org.junit.Test;
 
 /**
  * Tests {@link DoubleMetaphone}.
@@ -1259,16 +1262,6 @@ public class DoubleMetaphone2Test extends StringEncoderAbstractTest {
         {"weikersheim", "AKRS", "FKRS"},
         {"zhao", "J", "J"}};
 
-    /**
-     * Construct a new test case.
-     * 
-     * @param name
-     *            The name of the test
-     */
-    public DoubleMetaphone2Test(String name) {
-        super(name);
-    }
-
     private void checkDoubleMetaphone(int typeIndex, boolean alternate) {
         for (int i = 0; i < TEST_DATA.length; i++) {
             String value = TEST_DATA[i][0];
@@ -1290,6 +1283,7 @@ public class DoubleMetaphone2Test extends StringEncoderAbstractTest {
     /**
      * Test alternative encoding.
      */
+    @Test
     public void testDoubleMetaphoneAlternate() {
         this.checkDoubleMetaphone(ALTERNATE_INDEX, true);
     }
@@ -1297,6 +1291,7 @@ public class DoubleMetaphone2Test extends StringEncoderAbstractTest {
     /**
      * Test primary encoding.
      */
+    @Test
     public void testDoubleMetaphonePrimary() {
         this.checkDoubleMetaphone(PRIMARY_INDEX, false);
     }

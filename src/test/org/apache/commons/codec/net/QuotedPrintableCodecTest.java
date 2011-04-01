@@ -17,11 +17,14 @@
 
 package org.apache.commons.codec.net;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
+import org.apache.commons.codec.CharEncoding;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
-import org.apache.commons.codec.CharEncoding;
+import org.junit.Test;
 
 /**
  * Quoted-printable codec test cases
@@ -29,7 +32,7 @@ import org.apache.commons.codec.CharEncoding;
  * @author <a href="mailto:oleg@ural.ru">Oleg Kalnichevski</a>
  * @version $Id$
  */
-public class QuotedPrintableCodecTest extends TestCase {
+public class QuotedPrintableCodecTest {
     
     static final int SWISS_GERMAN_STUFF_UNICODE [] = {
         0x47, 0x72, 0xFC, 0x65, 0x7A, 0x69, 0x5F, 0x7A, 0xE4, 0x6D, 0xE4
@@ -39,10 +42,6 @@ public class QuotedPrintableCodecTest extends TestCase {
         0x412, 0x441, 0x435, 0x43C, 0x5F, 0x43F, 0x440, 0x438, 
         0x432, 0x435, 0x442 
     }; 
-
-    public QuotedPrintableCodecTest(String name) {
-        super(name);
-    }
 
     private String constructString(int [] unicodeChars) {
         StringBuffer buffer = new StringBuffer();
@@ -54,6 +53,7 @@ public class QuotedPrintableCodecTest extends TestCase {
         return buffer.toString();
     }
 
+    @Test
     public void testUTF8RoundTrip() throws Exception {
 
         String ru_msg = constructString(RUSSIAN_STUFF_UNICODE); 
@@ -71,6 +71,7 @@ public class QuotedPrintableCodecTest extends TestCase {
         assertEquals(ch_msg, qpcodec.decode(qpcodec.encode(ch_msg, CharEncoding.UTF_8), CharEncoding.UTF_8));
     }
 
+    @Test
     public void testBasicEncodeDecode() throws Exception {
         QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
         String plain = "= Hello there =\r\n";
@@ -81,6 +82,7 @@ public class QuotedPrintableCodecTest extends TestCase {
             plain, qpcodec.decode(encoded));
     }
 
+    @Test
     public void testSafeCharEncodeDecode() throws Exception {
         QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
         String plain = "abc123_-.*~!@#$%^&()+{}\"\\;:`,/[]";
@@ -92,6 +94,7 @@ public class QuotedPrintableCodecTest extends TestCase {
     }
 
 
+    @Test
     public void testUnsafeEncodeDecode() throws Exception {
         QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
         String plain = "=\r\n";
@@ -102,6 +105,7 @@ public class QuotedPrintableCodecTest extends TestCase {
             plain, qpcodec.decode(encoded));
     }
 
+    @Test
     public void testEncodeDecodeNull() throws Exception {
         QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
         assertNull("Null string quoted-printable encoding test", 
@@ -111,6 +115,7 @@ public class QuotedPrintableCodecTest extends TestCase {
     }
 
 
+    @Test
     public void testDecodeInvalid() throws Exception {
         QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
         try {
@@ -133,6 +138,7 @@ public class QuotedPrintableCodecTest extends TestCase {
         }
     }
 
+    @Test
     public void testEncodeNull() throws Exception {
         QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
         byte[] plain = null;
@@ -141,6 +147,7 @@ public class QuotedPrintableCodecTest extends TestCase {
             null, encoded);
     }
     
+    @Test
     public void testEncodeUrlWithNullBitSet() throws Exception {
         QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
         String plain = "1+1 = 2";
@@ -153,12 +160,14 @@ public class QuotedPrintableCodecTest extends TestCase {
         
     }
 
+    @Test
     public void testDecodeWithNullArray() throws Exception {
         byte[] plain = null;
         byte[] result = QuotedPrintableCodec.decodeQuotedPrintable( plain );
         assertEquals("Result should be null", null, result);
     }
 
+    @Test
     public void testEncodeStringWithNull() throws Exception {
         QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
         String test = null;
@@ -166,6 +175,7 @@ public class QuotedPrintableCodecTest extends TestCase {
         assertEquals("Result should be null", null, result);
     }
 
+    @Test
     public void testDecodeStringWithNull() throws Exception {
         QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
         String test = null;
@@ -173,6 +183,7 @@ public class QuotedPrintableCodecTest extends TestCase {
         assertEquals("Result should be null", null, result);
     }
     
+    @Test
     public void testEncodeObjects() throws Exception {
         QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
         String plain = "1+1 = 2";
@@ -198,6 +209,7 @@ public class QuotedPrintableCodecTest extends TestCase {
         }
     }
     
+    @Test
     public void testInvalidEncoding() {
         QuotedPrintableCodec qpcodec = new QuotedPrintableCodec("NONSENSE");
            String plain = "Hello there!";
@@ -215,6 +227,7 @@ public class QuotedPrintableCodecTest extends TestCase {
             }
     }
 
+    @Test
     public void testDecodeObjects() throws Exception {
         QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
         String plain = "1+1 =3D 2";
@@ -240,6 +253,7 @@ public class QuotedPrintableCodecTest extends TestCase {
         }
     }
 
+    @Test
     public void testDefaultEncoding() throws Exception {
         String plain = "Hello there!";
         QuotedPrintableCodec qpcodec = new QuotedPrintableCodec("UnicodeBig");

@@ -17,9 +17,12 @@
 
 package org.apache.commons.codec.language;
 
+import static org.junit.Assert.assertEquals;
+
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.StringEncoderAbstractTest;
+import org.junit.Test;
 
 /**
  * Tests RefinedSoundex.
@@ -28,10 +31,6 @@ import org.apache.commons.codec.StringEncoderAbstractTest;
  * @version $Id$
  */
 public class RefinedSoundexTest extends StringEncoderAbstractTest {
-
-    public RefinedSoundexTest(String name) {
-        super(name);
-    }
 
     protected StringEncoder createStringEncoder() {
         return new RefinedSoundex();
@@ -44,6 +43,7 @@ public class RefinedSoundexTest extends StringEncoderAbstractTest {
         return (RefinedSoundex)this.getStringEncoder();
     }
 
+    @Test
     public void testDifference() throws EncoderException {
         // Edge cases
         assertEquals(0, this.getRefinedSoundex().difference(null, null));
@@ -65,6 +65,7 @@ public class RefinedSoundexTest extends StringEncoderAbstractTest {
         assertEquals(5, this.getRefinedSoundex().difference("Anothers", "Brothers"));
     }
 
+    @Test
     public void testEncode() {
         assertEquals("T6036084", this.getRefinedSoundex().encode("testing"));
         assertEquals("T6036084", this.getRefinedSoundex().encode("TESTING"));
@@ -82,19 +83,23 @@ public class RefinedSoundexTest extends StringEncoderAbstractTest {
         assertEquals("D6043", RefinedSoundex.US_ENGLISH.encode("dogs"));
     }
 
+    @Test
     public void testGetMappingCodeNonLetter() {
         char code = this.getRefinedSoundex().getMappingCode('#');
         assertEquals("Code does not equals zero", 0, code);
     }
     
+    @Test
     public void testNewInstance() {
         assertEquals("D6043", new RefinedSoundex().soundex("dogs"));
     }
     
+    @Test
     public void testNewInstance2() {
         assertEquals("D6043", new RefinedSoundex(RefinedSoundex.US_ENGLISH_MAPPING_STRING.toCharArray()).soundex("dogs"));
     }
     
+    @Test
     public void testNewInstance3() {
         assertEquals("D6043", new RefinedSoundex(RefinedSoundex.US_ENGLISH_MAPPING_STRING).soundex("dogs"));
     }

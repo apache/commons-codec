@@ -17,6 +17,12 @@
 
 package org.apache.commons.codec.binary;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -24,14 +30,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * @author Apache Software Foundation
  * @version $Id $
  * @since 1.4
  */
-public class Base64InputStreamTest extends TestCase {
+public class Base64InputStreamTest {
 
     private final static byte[] CRLF = {(byte) '\r', (byte) '\n'};
 
@@ -40,18 +46,9 @@ public class Base64InputStreamTest extends TestCase {
     private static final String STRING_FIXTURE = "Hello World";
 
     /**
-     * Construct a new instance of this test case.
-     * 
-     * @param name
-     *            Name of the test case
-     */
-    public Base64InputStreamTest(String name) {
-        super(name);
-    }
-
-    /**
      * Tests the bug reported in CODEC-105. Bad interactions with InputStream when reading one byte at a time.
      */
+    @Test
     public void testCodec105() throws IOException {
         Base64InputStream in = new Base64InputStream(new Codec105ErrorInputStream(), true, 0, null);
         for (int i = 0; i < 5; i++) {
@@ -65,6 +62,7 @@ public class Base64InputStreamTest extends TestCase {
      *
      * @throws Exception for some failure scenarios.
      */
+    @Test
     public void testCodec101() throws Exception {
         byte[] codec101 = StringUtils.getBytesUtf8(Base64TestData.CODEC_101_MULTIPLE_OF_3);
         ByteArrayInputStream bais = new ByteArrayInputStream(codec101);
@@ -96,6 +94,7 @@ public class Base64InputStreamTest extends TestCase {
      *
      * @throws Exception for some failure scenarios.
      */
+    @Test
     public void testInputStreamReader() throws Exception {
         byte[] codec101 = StringUtils.getBytesUtf8(Base64TestData.CODEC_101_MULTIPLE_OF_3);
         ByteArrayInputStream bais = new ByteArrayInputStream(codec101);
@@ -112,6 +111,7 @@ public class Base64InputStreamTest extends TestCase {
      *
      * @throws Exception for some failure scenarios.
      */
+    @Test
     public void testCodec98NPE() throws Exception {
         byte[] codec98 = StringUtils.getBytesUtf8(Base64TestData.CODEC_98_NPE);
         ByteArrayInputStream data = new ByteArrayInputStream(codec98);
@@ -132,6 +132,7 @@ public class Base64InputStreamTest extends TestCase {
      * @throws Exception
      *             for some failure scenarios.
      */
+    @Test
     public void testBase64EmptyInputStreamMimeChuckSize() throws Exception {
         testBase64EmptyInputStream(Base64.MIME_CHUNK_SIZE);
     }
@@ -142,6 +143,7 @@ public class Base64InputStreamTest extends TestCase {
      * @throws Exception
      *             for some failure scenarios.
      */
+    @Test
     public void testBase64EmptyInputStreamPemChuckSize() throws Exception {
         testBase64EmptyInputStream(Base64.PEM_CHUNK_SIZE);
     }
@@ -159,6 +161,7 @@ public class Base64InputStreamTest extends TestCase {
      * @throws Exception
      *             for some failure scenarios.
      */
+    @Test
     public void testBase64InputStreamByChunk() throws Exception {
         // Hello World test.
         byte[] encoded = StringUtils.getBytesUtf8("SGVsbG8gV29ybGQ=\r\n");
@@ -196,6 +199,7 @@ public class Base64InputStreamTest extends TestCase {
      * @throws Exception
      *             for some failure scenarios.
      */
+    @Test
     public void testBase64InputStreamByteByByte() throws Exception {
         // Hello World test.
         byte[] encoded = StringUtils.getBytesUtf8("SGVsbG8gV29ybGQ=\r\n");
@@ -343,6 +347,7 @@ public class Base64InputStreamTest extends TestCase {
      * 
      * @throws Exception
      */
+    @Test
     public void testMarkSupported() throws Exception {
         byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
         ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
@@ -356,6 +361,7 @@ public class Base64InputStreamTest extends TestCase {
      * 
      * @throws Exception
      */
+    @Test
     public void testRead0() throws Exception {
         byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
         byte[] buf = new byte[1024];
@@ -372,6 +378,7 @@ public class Base64InputStreamTest extends TestCase {
      * @throws Exception
      *             for some failure scenarios.
      */
+    @Test
     public void testReadNull() throws Exception {
         byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
         ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
@@ -389,6 +396,7 @@ public class Base64InputStreamTest extends TestCase {
      * 
      * @throws Exception
      */
+    @Test
     public void testReadOutOfBounds() throws Exception {
         byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
         byte[] buf = new byte[1024];

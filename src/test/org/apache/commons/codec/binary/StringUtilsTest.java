@@ -21,7 +21,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 
 import junit.framework.Assert;
-import junit.framework.TestCase;
+
+import org.junit.Test;
 
 /**
  * Tests {@link StringUtils}
@@ -29,7 +30,7 @@ import junit.framework.TestCase;
  * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
  * @version $Id$
  */
-public class StringUtilsTest extends TestCase {
+public class StringUtilsTest {
 
     private static final byte[] BYTES_FIXTURE = {'a','b','c'};
 
@@ -39,10 +40,12 @@ public class StringUtilsTest extends TestCase {
      * We could make the constructor private but there does not seem to be a point to jumping through extra code hoops
      * to restrict instantiation right now.
      */
+    @Test
     public void testConstructor() {
         new StringUtils();
     }
 
+    @Test
     public void testGetBytesIso8859_1() throws UnsupportedEncodingException {
         String charsetName = "ISO-8859-1";
         testGetBytesUnchecked(charsetName);
@@ -57,6 +60,7 @@ public class StringUtilsTest extends TestCase {
         Assert.assertTrue(Arrays.equals(expected, actual));
     }
 
+    @Test
     public void testGetBytesUsAscii() throws UnsupportedEncodingException {
         String charsetName = "US-ASCII";
         testGetBytesUnchecked(charsetName);
@@ -65,6 +69,7 @@ public class StringUtilsTest extends TestCase {
         Assert.assertTrue(Arrays.equals(expected, actual));
     }
 
+    @Test
     public void testGetBytesUtf16() throws UnsupportedEncodingException {
         String charsetName = "UTF-16";
         testGetBytesUnchecked(charsetName);
@@ -73,6 +78,7 @@ public class StringUtilsTest extends TestCase {
         Assert.assertTrue(Arrays.equals(expected, actual));
     }
 
+    @Test
     public void testGetBytesUtf16Be() throws UnsupportedEncodingException {
         String charsetName = "UTF-16BE";
         testGetBytesUnchecked(charsetName);
@@ -81,6 +87,7 @@ public class StringUtilsTest extends TestCase {
         Assert.assertTrue(Arrays.equals(expected, actual));
     }
 
+    @Test
     public void testGetBytesUtf16Le() throws UnsupportedEncodingException {
         String charsetName = "UTF-16LE";
         testGetBytesUnchecked(charsetName);
@@ -89,6 +96,7 @@ public class StringUtilsTest extends TestCase {
         Assert.assertTrue(Arrays.equals(expected, actual));
     }
 
+    @Test
     public void testGetBytesUtf8() throws UnsupportedEncodingException {
         String charsetName = "UTF-8";
         testGetBytesUnchecked(charsetName);
@@ -97,6 +105,7 @@ public class StringUtilsTest extends TestCase {
         Assert.assertTrue(Arrays.equals(expected, actual));
     }
 
+    @Test
     public void testGetBytesUncheckedBadName() {
         try {
             StringUtils.getBytesUnchecked(STRING_FIXTURE, "UNKNOWN");
@@ -112,6 +121,7 @@ public class StringUtilsTest extends TestCase {
         Assert.assertEquals(expected, actual);
     }
 
+    @Test
     public void testNewStringBadEnc() {
         try {
             StringUtils.newString(BYTES_FIXTURE, "UNKNOWN");
@@ -121,6 +131,7 @@ public class StringUtilsTest extends TestCase {
         }
     }
 
+    @Test
     public void testNewStringIso8859_1() throws UnsupportedEncodingException {
         String charsetName = "ISO-8859-1";
         testNewString(charsetName);
@@ -129,6 +140,7 @@ public class StringUtilsTest extends TestCase {
         Assert.assertEquals(expected, actual);
     }
 
+    @Test
     public void testNewStringUsAscii() throws UnsupportedEncodingException {
         String charsetName = "US-ASCII";
         testNewString(charsetName);
@@ -137,6 +149,7 @@ public class StringUtilsTest extends TestCase {
         Assert.assertEquals(expected, actual);
     }
 
+    @Test
     public void testNewStringUtf16() throws UnsupportedEncodingException {
         String charsetName = "UTF-16";
         testNewString(charsetName);
@@ -145,6 +158,7 @@ public class StringUtilsTest extends TestCase {
         Assert.assertEquals(expected, actual);
     }
 
+    @Test
     public void testNewStringUtf16Be() throws UnsupportedEncodingException {
         String charsetName = "UTF-16BE";
         testNewString(charsetName);
@@ -153,6 +167,7 @@ public class StringUtilsTest extends TestCase {
         Assert.assertEquals(expected, actual);
     }
 
+    @Test
     public void testNewStringUtf16Le() throws UnsupportedEncodingException {
         String charsetName = "UTF-16LE";
         testNewString(charsetName);
@@ -161,6 +176,7 @@ public class StringUtilsTest extends TestCase {
         Assert.assertEquals(expected, actual);
     }
 
+    @Test
     public void testNewStringUtf8() throws UnsupportedEncodingException {
         String charsetName = "UTF-8";
         testNewString(charsetName);

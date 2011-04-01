@@ -24,6 +24,7 @@ import junit.framework.Assert;
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.StringEncoderAbstractTest;
+import org.junit.Test;
 
 /**
  * Tests {@link Soundex}.
@@ -34,10 +35,6 @@ import org.apache.commons.codec.StringEncoderAbstractTest;
  * @version $Id$
  */
 public class SoundexTest extends StringEncoderAbstractTest {
-
-    public SoundexTest(String name) {
-        super(name);
-    }
 
     protected StringEncoder createStringEncoder() {
         return new Soundex();
@@ -50,6 +47,7 @@ public class SoundexTest extends StringEncoderAbstractTest {
         return (Soundex)this.getStringEncoder();
     }
 
+    @Test
     public void testB650() throws EncoderException {
         this.checkEncodingVariations("B650", (new String[]{
             "BARHAM",
@@ -94,11 +92,13 @@ public class SoundexTest extends StringEncoderAbstractTest {
             "BYRUM"}));
     }
 
+    @Test
     public void testBadCharacters() {
         Assert.assertEquals("H452", this.getSoundexEncoder().encode("HOL>MES"));
 
     }
 
+    @Test
     public void testDifference() throws EncoderException {
         // Edge cases
         Assert.assertEquals(0, this.getSoundexEncoder().difference(null, null));
@@ -118,6 +118,7 @@ public class SoundexTest extends StringEncoderAbstractTest {
         Assert.assertEquals(2, this.getSoundexEncoder().difference("Anothers", "Brothers"));
     }
 
+    @Test
     public void testEncodeBasic() {
         Assert.assertEquals("T235", this.getSoundexEncoder().encode("testing"));
         Assert.assertEquals("T000", this.getSoundexEncoder().encode("The"));
@@ -134,6 +135,7 @@ public class SoundexTest extends StringEncoderAbstractTest {
     /**
      * Examples from http://www.bradandkathy.com/genealogy/overviewofsoundex.html
      */
+    @Test
     public void testEncodeBatch2() {
         Assert.assertEquals("A462", this.getSoundexEncoder().encode("Allricht"));
         Assert.assertEquals("E166", this.getSoundexEncoder().encode("Eberhard"));
@@ -156,6 +158,7 @@ public class SoundexTest extends StringEncoderAbstractTest {
     /**
      * Examples from http://www.archives.gov/research_room/genealogy/census/soundex.html
      */
+    @Test
     public void testEncodeBatch3() {
         Assert.assertEquals("W252", this.getSoundexEncoder().encode("Washington"));
         Assert.assertEquals("L000", this.getSoundexEncoder().encode("Lee"));
@@ -171,6 +174,7 @@ public class SoundexTest extends StringEncoderAbstractTest {
     /**
      * Examples from: http://www.myatt.demon.co.uk/sxalg.htm
      */
+    @Test
     public void testEncodeBatch4() {
         Assert.assertEquals("H452", this.getSoundexEncoder().encode("HOLMES"));
         Assert.assertEquals("A355", this.getSoundexEncoder().encode("ADOMOMI"));
@@ -183,6 +187,7 @@ public class SoundexTest extends StringEncoderAbstractTest {
 
     }
 
+    @Test
     public void testEncodeIgnoreApostrophes() throws EncoderException {
         this.checkEncodingVariations("O165", (new String[]{
             "OBrien",
@@ -200,6 +205,7 @@ public class SoundexTest extends StringEncoderAbstractTest {
      * 
      * @throws EncoderException
      */
+    @Test
     public void testEncodeIgnoreHyphens() throws EncoderException {
         this.checkEncodingVariations("K525", (new String[]{
             "KINGSMITH",
@@ -215,6 +221,7 @@ public class SoundexTest extends StringEncoderAbstractTest {
             "KINGSMITH-"}));
     }
 
+    @Test
     public void testEncodeIgnoreTrimmable() {
         Assert.assertEquals("W252", this.getSoundexEncoder().encode(" \t\n\r Washington \t\n\r "));
     }
@@ -222,6 +229,7 @@ public class SoundexTest extends StringEncoderAbstractTest {
     /**
      * Consonants from the same code group separated by W or H are treated as one.
      */
+    @Test
     public void testHWRuleEx1() {
         // From
         // http://www.archives.gov/research_room/genealogy/census/soundex.html:
@@ -235,6 +243,7 @@ public class SoundexTest extends StringEncoderAbstractTest {
      * 
      * Test data from http://www.myatt.demon.co.uk/sxalg.htm
      */
+    @Test
     public void testHWRuleEx2() {
         Assert.assertEquals("B312", this.getSoundexEncoder().encode("BOOTHDAVIS"));
         Assert.assertEquals("B312", this.getSoundexEncoder().encode("BOOTH-DAVIS"));
@@ -245,6 +254,7 @@ public class SoundexTest extends StringEncoderAbstractTest {
      * 
      * @throws EncoderException
      */
+    @Test
     public void testHWRuleEx3() throws EncoderException {
         Assert.assertEquals("S460", this.getSoundexEncoder().encode("Sgler"));
         Assert.assertEquals("S460", this.getSoundexEncoder().encode("Swhgler"));
@@ -268,12 +278,14 @@ public class SoundexTest extends StringEncoderAbstractTest {
             "SILLER"}));
     }
 
+    @Test
     public void testMaxLength() throws Exception {
         Soundex soundex = new Soundex();
         soundex.setMaxLength(soundex.getMaxLength());
         Assert.assertEquals("S460", this.getSoundexEncoder().encode("Sgler"));
     }
 
+    @Test
     public void testMaxLengthLessThan3Fix() throws Exception {
         Soundex soundex = new Soundex();
         soundex.setMaxLength(2);
@@ -284,6 +296,7 @@ public class SoundexTest extends StringEncoderAbstractTest {
      * Examples for MS SQLServer from
      * http://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_setu-sus_3o6w.asp
      */
+    @Test
     public void testMsSqlServer1() {
         Assert.assertEquals("S530", this.getSoundexEncoder().encode("Smith"));
         Assert.assertEquals("S530", this.getSoundexEncoder().encode("Smythe"));
@@ -296,6 +309,7 @@ public class SoundexTest extends StringEncoderAbstractTest {
      * 
      * @throws EncoderException
      */
+    @Test
     public void testMsSqlServer2() throws EncoderException {
         this.checkEncodingVariations("E625", (new String[]{"Erickson", "Erickson", "Erikson", "Ericson", "Ericksen", "Ericsen"}));
     }
@@ -303,6 +317,7 @@ public class SoundexTest extends StringEncoderAbstractTest {
     /**
      * Examples for MS SQLServer from http://databases.about.com/library/weekly/aa042901a.htm
      */
+    @Test
     public void testMsSqlServer3() {
         Assert.assertEquals("A500", this.getSoundexEncoder().encode("Ann"));
         Assert.assertEquals("A536", this.getSoundexEncoder().encode("Andrew"));
@@ -318,22 +333,27 @@ public class SoundexTest extends StringEncoderAbstractTest {
     /**
      * https://issues.apache.org/jira/browse/CODEC-54 https://issues.apache.org/jira/browse/CODEC-56
      */
+    @Test
     public void testNewInstance() {
         Assert.assertEquals("W452", new Soundex().soundex("Williams"));
     }
 
+    @Test
     public void testNewInstance2() {
         Assert.assertEquals("W452", new Soundex(Soundex.US_ENGLISH_MAPPING_STRING.toCharArray()).soundex("Williams"));
     }
 
+    @Test
     public void testNewInstance3() {
         Assert.assertEquals("W452", new Soundex(Soundex.US_ENGLISH_MAPPING_STRING).soundex("Williams"));
     }
 
+    @Test
     public void testSoundexUtilsConstructable() {
         new SoundexUtils();
     }
 
+    @Test
     public void testSoundexUtilsNullBehaviour() {
         Assert.assertEquals(null, SoundexUtils.clean(null));
         Assert.assertEquals("", SoundexUtils.clean(""));
@@ -344,6 +364,7 @@ public class SoundexTest extends StringEncoderAbstractTest {
     /**
      * https://issues.apache.org/jira/browse/CODEC-54 https://issues.apache.org/jira/browse/CODEC-56
      */
+    @Test
     public void testUsEnglishStatic() {
         Assert.assertEquals("W452", Soundex.US_ENGLISH.soundex("Williams"));
     }
@@ -353,6 +374,7 @@ public class SoundexTest extends StringEncoderAbstractTest {
      * 
      * http://issues.apache.org/bugzilla/show_bug.cgi?id=29080
      */
+    @Test
     public void testUsMappingEWithAcute() {
         Assert.assertEquals("E000", this.getSoundexEncoder().encode("e"));
         if (Character.isLetter('�')) {
@@ -372,6 +394,7 @@ public class SoundexTest extends StringEncoderAbstractTest {
      * 
      * http://issues.apache.org/bugzilla/show_bug.cgi?id=29080
      */
+    @Test
     public void testUsMappingOWithDiaeresis() {
         Assert.assertEquals("O000", this.getSoundexEncoder().encode("o"));
         if (Character.isLetter('�')) {

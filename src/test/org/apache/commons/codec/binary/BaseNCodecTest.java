@@ -18,13 +18,19 @@
 
 package org.apache.commons.codec.binary;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
-public class BaseNCodecTest extends TestCase {
+import org.junit.Before;
+import org.junit.Test;
+
+public class BaseNCodecTest {
 
     BaseNCodec codec;
     
-    public void setUp(){
+    @Before
+    public void setUp() {
         codec = new BaseNCodec(0, 0, 0, 0) {
             protected boolean isInAlphabet(byte b) {
                 return b=='O' || b == 'K'; // allow OK
@@ -38,26 +44,32 @@ public class BaseNCodecTest extends TestCase {
         };        
     }
 
+    @Test
     public void testBaseNCodec() {
         assertNotNull(codec);
     }
 
+//    @Test
 //    public void testHasData() {
 //        fail("Not yet implemented");
 //    }
 //
+//    @Test
 //    public void testAvail() {
 //        fail("Not yet implemented");
 //    }
 //
+//    @Test
 //    public void testEnsureBufferSize() {
 //        fail("Not yet implemented");
 //    }
 //
+//    @Test
 //    public void testReadResults() {
 //        fail("Not yet implemented");
 //    }
 //
+    @Test
     public void testIsWhiteSpace() {
         assertTrue(BaseNCodec.isWhiteSpace((byte) ' '));
         assertTrue(BaseNCodec.isWhiteSpace((byte) '\n'));
@@ -65,42 +77,52 @@ public class BaseNCodecTest extends TestCase {
         assertTrue(BaseNCodec.isWhiteSpace((byte) '\t'));
     }
 //
+//    @Test
 //    public void testEncodeObject() {
 //        fail("Not yet implemented");
 //    }
 //
+//    @Test
 //    public void testEncodeToString() {
 //        fail("Not yet implemented");
 //    }
 //
+//    @Test
 //    public void testDecodeObject() {
 //        fail("Not yet implemented");
 //    }
 //
+//    @Test
 //    public void testDecodeString() {
 //        fail("Not yet implemented");
 //    }
 //
+//    @Test
 //    public void testDecodeByteArray() {
 //        fail("Not yet implemented");
 //    }
 //
+//    @Test
 //    public void testEncodeByteArray() {
 //        fail("Not yet implemented");
 //    }
 //
+//    @Test
 //    public void testEncodeAsString() {
 //        fail("Not yet implemented");
 //    }
 //
+//    @Test
 //    public void testEncodeByteArrayIntInt() {
 //        fail("Not yet implemented");
 //    }
 //
+//    @Test
 //    public void testDecodeByteArrayIntInt() {
 //        fail("Not yet implemented");
 //    }
 //
+    @Test
     public void testIsInAlphabetByte() {
         assertFalse(codec.isInAlphabet((byte) 0));
         assertFalse(codec.isInAlphabet((byte) 'a'));
@@ -108,6 +130,7 @@ public class BaseNCodecTest extends TestCase {
         assertTrue(codec.isInAlphabet((byte) 'K'));
     }
 
+    @Test
     public void testIsInAlphabetByteArrayBoolean() {
         assertTrue(codec.isInAlphabet(new byte[]{}, false));
         assertTrue(codec.isInAlphabet(new byte[]{'O'}, false));
@@ -119,11 +142,13 @@ public class BaseNCodecTest extends TestCase {
         assertTrue(codec.isInAlphabet(new byte[]{' '}, true));
     }
 
+    @Test
     public void testIsInAlphabetString() {
         assertTrue(codec.isInAlphabet("OK"));
         assertTrue(codec.isInAlphabet("O=K= \t\n\r"));
     }
 
+    @Test
     public void testContainsAlphabetOrPad() {
         assertFalse(codec.containsAlphabetOrPad(null));
         assertFalse(codec.containsAlphabetOrPad(new byte[]{}));
@@ -133,6 +158,7 @@ public class BaseNCodecTest extends TestCase {
         assertTrue(codec.containsAlphabetOrPad(new byte[]{codec.PAD}));
     }
 
+//    @Test
 //    public void testGetEncodedLength() {
 //        fail("Not yet implemented");
 //    }

@@ -17,20 +17,18 @@
 
 package org.apache.commons.codec.binary;
 
-import junit.framework.TestCase;
-import junit.framework.TestFailure;
-import junit.framework.TestResult;
-import junit.framework.TestSuite;
+import static org.junit.Assert.assertTrue;
+
+import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
+
 import org.apache.commons.codec.BinaryDecoder;
 import org.apache.commons.codec.BinaryEncoder;
 import org.apache.commons.codec.Decoder;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.Encoder;
 import org.apache.commons.codec.EncoderException;
-
-import java.io.UnsupportedEncodingException;
-import java.util.Arrays;
-import java.util.Enumeration;
+import org.junit.Test;
 
 /**
  * Tests to make sure future versions of commons-codec.jar have identical Base64
@@ -39,11 +37,7 @@ import java.util.Enumeration;
  * @author Julius Davies
  * @since Mar 25, 2010
  */
-public class Base64Codec13Test extends TestCase {
-
-    public Base64Codec13Test(String name) {
-        super(name);
-    }
+public class Base64Codec13Test {
 
     private final static String[] STRINGS = new String[181];
     private final static String[] CHUNKED_STRINGS = new String[STRINGS.length];
@@ -368,6 +362,7 @@ public class Base64Codec13Test extends TestCase {
      * 
      * @throws EncoderException problem
      */
+    @Test
     public void testEncoder() throws EncoderException {
         Encoder enc = new Base64();
         for (int i = 0; i < STRINGS.length; i++) {
@@ -386,6 +381,7 @@ public class Base64Codec13Test extends TestCase {
      *
      * @throws DecoderException problem
      */    
+    @Test
     public void testDecoder() throws DecoderException {
         Decoder dec = new Base64();
         for (int i = 0; i < STRINGS.length; i++) {
@@ -404,6 +400,7 @@ public class Base64Codec13Test extends TestCase {
      *
      * @throws EncoderException problem
      */        
+    @Test
     public void testBinaryEncoder() throws EncoderException {
         BinaryEncoder enc = new Base64();
         for (int i = 0; i < STRINGS.length; i++) {
@@ -422,6 +419,7 @@ public class Base64Codec13Test extends TestCase {
      *
      * @throws DecoderException problem
      */    
+    @Test
     public void testBinaryDecoder() throws DecoderException {
         BinaryDecoder dec = new Base64();
         for (int i = 0; i < STRINGS.length; i++) {
@@ -440,6 +438,7 @@ public class Base64Codec13Test extends TestCase {
      *
      * @throws EncoderException problem
      */        
+    @Test
     public void testStaticEncode() throws EncoderException {
         for (int i = 0; i < STRINGS.length; i++) {
             if (STRINGS[i] != null) {
@@ -457,6 +456,7 @@ public class Base64Codec13Test extends TestCase {
      *
      * @throws DecoderException problem
      */            
+    @Test
     public void testStaticDecode() throws DecoderException {
         for (int i = 0; i < STRINGS.length; i++) {
             if (STRINGS[i] != null) {
@@ -474,6 +474,7 @@ public class Base64Codec13Test extends TestCase {
      *
      * @throws EncoderException problem
      */                
+    @Test
     public void testStaticEncodeChunked() throws EncoderException {
         for (int i = 0; i < STRINGS.length; i++) {
             if (STRINGS[i] != null) {
@@ -492,6 +493,7 @@ public class Base64Codec13Test extends TestCase {
      *
      * @throws DecoderException problem
      */                
+    @Test
     public void testStaticDecodeChunked() throws DecoderException {
         for (int i = 0; i < STRINGS.length; i++) {
             if (STRINGS[i] != null) {
@@ -514,37 +516,5 @@ public class Base64Codec13Test extends TestCase {
         } catch (UnsupportedEncodingException uee) {
             throw new IllegalStateException(uee.toString());
         }
-    }
-
-    /**
-     * This main() method can be run with just commons-codec-1.3.jar and junit-3.8.1.jar
-     * on the classpath to make sure these tests truly capture the behaviour of
-     * commons-codec-1.3.jar.
-     *
-     * @param args command-line args
-     */
-    public static void main(String[] args) {
-        TestSuite suite = new TestSuite(Base64Codec13Test.class);
-
-        TestResult r = new TestResult();
-        suite.run(r);
-        int runCount = r.runCount();
-        int failureCount = r.failureCount();
-        System.out.println((runCount - failureCount) + "/" + runCount + " tests succeeded!");
-        if (!r.wasSuccessful()) {
-            Enumeration en = r.errors();
-            while (en.hasMoreElements()) {
-                TestFailure tf = (TestFailure) en.nextElement();
-                System.out.println(tf.toString());
-            }
-
-            en = r.failures();
-            while (en.hasMoreElements()) {
-                TestFailure tf = (TestFailure) en.nextElement();
-                System.out.println(tf.toString());
-            }
-
-        }
-
     }
 }

@@ -17,7 +17,10 @@
 
 package org.apache.commons.codec;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
+import org.junit.Test;
 
 /**
  * Tests {@link DecoderException}.
@@ -25,30 +28,34 @@ import junit.framework.TestCase;
  * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
  * @version $Id$
  */
-public class DecoderExceptionTest extends TestCase {
+public class DecoderExceptionTest {
 
     private static final String MSG = "TEST";
 
     private static final Throwable t = new Exception();
 
+    @Test
     public void testConstructor0() {
         DecoderException e = new DecoderException();
         assertNull(e.getMessage());
         assertNull(e.getCause());
     }
 
+    @Test
     public void testConstructorString() {
         DecoderException e = new DecoderException(MSG);
         assertEquals(MSG, e.getMessage());
         assertNull(e.getCause());
     }
 
+    @Test
     public void testConstructorStringThrowable() {
         DecoderException e = new DecoderException(MSG, t);
         assertEquals(MSG, e.getMessage());
         assertEquals(t, e.getCause());
     }
 
+    @Test
     public void testConstructorThrowable() {
         DecoderException e = new DecoderException(t);
         assertEquals(t.getClass().getName(), e.getMessage());

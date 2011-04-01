@@ -18,11 +18,16 @@
 
 package org.apache.commons.codec.net;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
+import org.apache.commons.codec.CharEncoding;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
-import org.apache.commons.codec.CharEncoding;
+import org.junit.Test;
 
 /**
  * Quoted-printable codec test cases
@@ -30,7 +35,7 @@ import org.apache.commons.codec.CharEncoding;
  * @author <a href="mailto:oleg@ural.ru">Oleg Kalnichevski</a>
  * @version $Id$
  */
-public class QCodecTest extends TestCase {
+public class QCodecTest {
     
     static final int SWISS_GERMAN_STUFF_UNICODE [] = {
         0x47, 0x72, 0xFC, 0x65, 0x7A, 0x69, 0x5F, 0x7A, 0xE4, 0x6D, 0xE4
@@ -40,10 +45,6 @@ public class QCodecTest extends TestCase {
         0x412, 0x441, 0x435, 0x43C, 0x5F, 0x43F, 0x440, 0x438, 
         0x432, 0x435, 0x442 
     }; 
-
-    public QCodecTest(String name) {
-        super(name);
-    }
 
     private String constructString(int [] unicodeChars) {
         StringBuffer buffer = new StringBuffer();
@@ -55,12 +56,14 @@ public class QCodecTest extends TestCase {
         return buffer.toString();
     }
 
+    @Test
     public void testNullInput() throws Exception {
         QCodec qcodec = new QCodec();
         assertNull(qcodec.doDecoding(null));
         assertNull(qcodec.doEncoding(null));
     }
 
+    @Test
     public void testUTF8RoundTrip() throws Exception {
 
         String ru_msg = constructString(RUSSIAN_STUFF_UNICODE); 
@@ -79,6 +82,7 @@ public class QCodecTest extends TestCase {
     }
 
 
+    @Test
     public void testBasicEncodeDecode() throws Exception {
         QCodec qcodec = new QCodec();
         String plain = "= Hello there =\r\n";
@@ -89,6 +93,7 @@ public class QCodecTest extends TestCase {
             plain, qcodec.decode(encoded));
     }
 
+    @Test
     public void testUnsafeEncodeDecode() throws Exception {
         QCodec qcodec = new QCodec();
         String plain = "?_=\r\n";
@@ -99,6 +104,7 @@ public class QCodecTest extends TestCase {
             plain, qcodec.decode(encoded));
     }
 
+    @Test
     public void testEncodeDecodeNull() throws Exception {
         QCodec qcodec = new QCodec();
         assertNull("Null string Q encoding test", 
@@ -107,6 +113,7 @@ public class QCodecTest extends TestCase {
             qcodec.decode((String)null));
     }
 
+    @Test
     public void testEncodeStringWithNull() throws Exception {
         QCodec qcodec = new QCodec();
         String test = null;
@@ -114,6 +121,7 @@ public class QCodecTest extends TestCase {
         assertEquals("Result should be null", null, result);
     }
 
+    @Test
     public void testDecodeStringWithNull() throws Exception {
         QCodec qcodec = new QCodec();
         String test = null;
@@ -122,6 +130,7 @@ public class QCodecTest extends TestCase {
     }
     
 
+    @Test
     public void testEncodeObjects() throws Exception {
         QCodec qcodec = new QCodec();
         String plain = "1+1 = 2";
@@ -142,6 +151,7 @@ public class QCodecTest extends TestCase {
     }
     
 
+    @Test
     public void testInvalidEncoding() {
         QCodec qcodec = new QCodec("NONSENSE");
             try {
@@ -158,6 +168,7 @@ public class QCodecTest extends TestCase {
             }
     }
 
+    @Test
     public void testDecodeObjects() throws Exception {
         QCodec qcodec = new QCodec();
         String decoded = "=?UTF-8?Q?1+1 =3D 2?=";
@@ -178,6 +189,7 @@ public class QCodecTest extends TestCase {
     }
 
 
+    @Test
     public void testEncodeDecodeBlanks() throws Exception {
         String plain = "Mind those pesky blanks";
         String encoded1 = "=?UTF-8?Q?Mind those pesky blanks?=";
@@ -196,6 +208,7 @@ public class QCodecTest extends TestCase {
     }
 
 
+    @Test
     public void testLetUsMakeCloverHappy() throws Exception {
         QCodec qcodec = new QCodec();
         qcodec.setEncodeBlanks(true);

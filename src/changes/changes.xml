@@ -23,6 +23,12 @@
     </properties>
     <body>
         <release version="2.0" date="TBA" description="Feature and fix release.">
+            <action dev="ggregory" type="update" issue="CODEC-119">
+             Migrate to Java 5.
+            </action>
+            <action dev="ggregory" type="update" issue="CODEC-120">
+             Migrate to JUnit 4.
+            </action>
 		</release>
         <release version="1.5" date="29 March 2011" description="Feature and fix release.">
             <action dev="sebb" type="fix" issue="CODEC-89">

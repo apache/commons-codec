@@ -17,27 +17,22 @@
 
 package org.apache.commons.codec.binary;
 
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.util.Arrays;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
-public class Base32OutputStreamTest extends TestCase {
+public class Base32OutputStreamTest {
 
     private final static byte[] CRLF = {(byte) '\r', (byte) '\n'};
 
     private final static byte[] LF = {(byte) '\n'};
 
-    /**
-     * Construct a new instance of this test case.
-     * 
-     * @param name
-     *            Name of the test case
-     */
-    public Base32OutputStreamTest(String name) {
-        super(name);
-    }
+    
 
 //    /**
 //     * Test the Base32OutputStream implementation against the special NPE inducing input
@@ -45,6 +40,7 @@ public class Base32OutputStreamTest extends TestCase {
 //     *
 //     * @throws Exception for some failure scenarios.
 //     */
+//    @Test
 //    public void testCodec98NPE() throws Exception {
 //        byte[] codec98 = StringUtils.getBytesUtf8(Base32TestData.CODEC_98_NPE);
 //        byte[] codec98_1024 = new byte[1024];
@@ -68,6 +64,7 @@ public class Base32OutputStreamTest extends TestCase {
      * @throws Exception
      *             for some failure scenarios.
      */
+    @Test
     public void testBase32EmptyOutputStreamMimeChunkSize() throws Exception {
         testBase32EmptyOutputStream(Base32.MIME_CHUNK_SIZE);
     }
@@ -78,6 +75,7 @@ public class Base32OutputStreamTest extends TestCase {
      * @throws Exception
      *             for some failure scenarios.
      */
+    @Test
     public void testBase32EmptyOutputStreamPemChunkSize() throws Exception {
         testBase32EmptyOutputStream(Base32.PEM_CHUNK_SIZE);
     }
@@ -95,6 +93,7 @@ public class Base32OutputStreamTest extends TestCase {
      * @throws Exception
      *             for some failure scenarios.
      */
+    @Test
     public void testBase32OutputStreamByChunk() throws Exception {
         // Hello World test.
         byte[] encoded = StringUtils.getBytesUtf8(Base32TestData.BASE32_FIXTURE);
@@ -129,6 +128,7 @@ public class Base32OutputStreamTest extends TestCase {
      * @throws Exception
      *             for some failure scenarios.
      */
+    @Test
     public void testBase32OutputStreamByteByByte() throws Exception {
         // Hello World test.
         byte[] encoded = StringUtils.getBytesUtf8(Base32TestData.BASE32_FIXTURE);
@@ -280,6 +280,7 @@ public class Base32OutputStreamTest extends TestCase {
      * @throws Exception
      *             for some failure scenarios.
      */
+    @Test
     public void testWriteOutOfBounds() throws Exception {
         byte[] buf = new byte[1024];
         ByteArrayOutputStream bout = new ByteArrayOutputStream();
@@ -320,6 +321,7 @@ public class Base32OutputStreamTest extends TestCase {
      * @throws Exception
      *             for some failure scenarios.
      */
+    @Test
     public void testWriteToNullCoverage() throws Exception {
         ByteArrayOutputStream bout = new ByteArrayOutputStream();
         Base32OutputStream out = new Base32OutputStream(bout);

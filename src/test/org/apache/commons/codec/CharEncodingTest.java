@@ -18,7 +18,8 @@
 package org.apache.commons.codec;
 
 import junit.framework.Assert;
-import junit.framework.TestCase;
+
+import org.junit.Test;
 
 /**
  * Sanity checks for {@link CharEncoding}.
@@ -26,35 +27,42 @@ import junit.framework.TestCase;
  * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
  * @version $Id$
  */
-public class CharEncodingTest extends TestCase {
+public class CharEncodingTest {
 
     /**
      * We could make the constructor private in the future, it's a matter a style.
      */
+    @Test
     public void testConstructor() {
         new CharEncoding();
     }
 
+    @Test
     public void testIso8859_1() {
         Assert.assertEquals("ISO-8859-1", CharEncoding.ISO_8859_1);
     }
 
+    @Test
     public void testUsAscii() {
         Assert.assertEquals("US-ASCII", CharEncoding.US_ASCII);
     }
 
+    @Test
     public void testUtf16() {
         Assert.assertEquals("UTF-16", CharEncoding.UTF_16);
     }
 
+    @Test
     public void testUtf16Be() {
         Assert.assertEquals("UTF-16BE", CharEncoding.UTF_16BE);
     }
 
+    @Test
     public void testUtf16Le() {
         Assert.assertEquals("UTF-16LE", CharEncoding.UTF_16LE);
     }
 
+    @Test
     public void testUtf8() {
         Assert.assertEquals("UTF-8", CharEncoding.UTF_8);
     }

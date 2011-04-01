@@ -17,13 +17,15 @@
 
 package org.apache.commons.codec.digest;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Random;
 
 import org.apache.commons.codec.binary.StringUtils;
-
-import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * Tests DigestUtils methods.
@@ -31,7 +33,7 @@ import junit.framework.TestCase;
  * @author Apache Software Foundation
  * @version $Id$
  */
-public class DigestUtilsTest extends TestCase {
+public class DigestUtilsTest {
 
     private byte[] testData = new byte[1024*1024];
     
@@ -46,10 +48,12 @@ public class DigestUtilsTest extends TestCase {
         new Random().nextBytes(testData);
     }
 
+    @Test
     public void testConstructable() {
         new DigestUtils();
     }
     
+    @Test
     public void testInternalNoSuchAlgorithmException() {
         try {
             DigestUtils.getDigest("Bogus Bogus");
@@ -59,6 +63,7 @@ public class DigestUtilsTest extends TestCase {
         }
     }
 
+    @Test
     public void testMd5Hex() throws IOException {
         // Examples from RFC 1321
         assertEquals("d41d8cd98f00b204e9800998ecf8427e", DigestUtils.md5Hex(""));
@@ -86,6 +91,7 @@ public class DigestUtilsTest extends TestCase {
     /**
      * An MD5 hash converted to hex should always be 32 characters.
      */
+    @Test
     public void testMD5HexLength() {
         String hashMe = "this is some string that is longer than 32 characters";
         String hash = DigestUtils.md5Hex(getBytesUtf8(hashMe));
@@ -99,6 +105,7 @@ public class DigestUtilsTest extends TestCase {
     /**
      * An MD5 hash should always be a 16 element byte[].
      */
+    @Test
     public void testMD5Length() {
         String hashMe = "this is some string that is longer than 16 characters";
         byte[] hash = DigestUtils.md5(getBytesUtf8(hashMe));
@@ -109,6 +116,7 @@ public class DigestUtilsTest extends TestCase {
         assertEquals(16, hash.length);
     }
 
+    @Test
     public void testSha256() throws IOException {
     // Examples from FIPS 180-2
     assertEquals("ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
@@ -122,6 +130,7 @@ public class DigestUtilsTest extends TestCase {
             DigestUtils.sha256Hex(new ByteArrayInputStream(testData)));
     }    
 
+    @Test
     public void testSha384() throws IOException {
     // Examples from FIPS 180-2
     assertEquals("cb00753f45a35e8bb5a03d699ac65007272c32ab0eded1631a8b605a43ff5bed" + 
@@ -138,6 +147,7 @@ public class DigestUtilsTest extends TestCase {
             DigestUtils.sha384Hex(new ByteArrayInputStream(testData)));
     }
 
+    @Test
     public void testSha512() throws IOException {
     // Examples from FIPS 180-2
     assertEquals("ddaf35a193617abacc417349ae20413112e6fa4e89a97ea20a9eeee64b55d39a" +
@@ -154,6 +164,7 @@ public class DigestUtilsTest extends TestCase {
             DigestUtils.sha512Hex(new ByteArrayInputStream(testData)));
 }    
 
+    @Test
     public void testShaHex() throws IOException {
         // Examples from FIPS 180-1
         assertEquals("a9993e364706816aba3e25717850c26c9cd0d89d", DigestUtils.shaHex("abc"));

@@ -18,11 +18,14 @@
 
 package org.apache.commons.codec.binary;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
 import java.util.Arrays;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
-public class Base32Test extends TestCase {
+public class Base32Test {
     
     private static final String [][] BASE32_TEST_CASES = { // RFC 4648
         {""       ,""},
@@ -55,6 +58,7 @@ public class Base32Test extends TestCase {
         {"foobar" ,"MZXW6YTBOI======\r\n"},
     };
 
+    @Test
     public void testBase32Samples() throws Exception {
         Base32 codec = new Base32();
         for (int i = 0; i < BASE32_TEST_CASES.length; i++) {
@@ -62,6 +66,7 @@ public class Base32Test extends TestCase {
         }
     }
 
+    @Test
     public void testBase32HexSamples() throws Exception {
         Base32 codec = new Base32(true);
         for (int i = 0; i < BASE32HEX_TEST_CASES.length; i++) {
@@ -69,6 +74,7 @@ public class Base32Test extends TestCase {
         }
     }
 
+    @Test
     public void testBase32Chunked () throws Exception {
         Base32 codec = new Base32(20);
         for (int i = 0; i < BASE32_TEST_CASES_CHUNKED.length; i++) {
@@ -76,6 +82,7 @@ public class Base32Test extends TestCase {
         }        
     }
 
+    @Test
     public void testSingleCharEncoding() {
         for (int i = 0; i < 20; i++) {
             Base32 codec = new Base32();
@@ -94,6 +101,7 @@ public class Base32Test extends TestCase {
         }
     }
 
+    @Test
     public void testRandomBytes() {
         for (int i = 0; i < 20; i++) {
             Base32 codec = new Base32();
@@ -102,6 +110,8 @@ public class Base32Test extends TestCase {
             //assertEquals(b[0],codec.decode(b[1]));
         }
     }
+
+    @Test
     public void testRandomBytesChunked() {
         for (int i = 0; i < 20; i++) {
             Base32 codec = new Base32(10);
@@ -110,6 +120,8 @@ public class Base32Test extends TestCase {
             //assertEquals(b[0],codec.decode(b[1]));
         }
     }
+    
+    @Test
     public void testRandomBytesHex() {
         for (int i = 0; i < 20; i++) {
             Base32 codec = new Base32(true);

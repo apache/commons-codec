@@ -17,27 +17,23 @@
 
 package org.apache.commons.codec;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * @author Apache Software Foundation
  * @version $Id$
  */
-public abstract class BinaryEncoderAbstractTest extends TestCase {
-
-    public BinaryEncoderAbstractTest(String name) {
-        super(name);
-    }
+public abstract class BinaryEncoderAbstractTest {
 
     protected abstract BinaryEncoder makeEncoder();
 
-    // ------------------------------------------------------------------------
-
+    @Test
     public void testEncodeEmpty() throws Exception {
         BinaryEncoder encoder = makeEncoder();
         encoder.encode(new byte[0]);
-    }        
+    }
 
+    @Test
     public void testEncodeNull() throws Exception {
         BinaryEncoder encoder = makeEncoder();
         try {
@@ -45,5 +41,5 @@ public abstract class BinaryEncoderAbstractTest extends TestCase {
         } catch (EncoderException ee) {
             // An exception should be thrown
         }
-    }        
+    }
 }

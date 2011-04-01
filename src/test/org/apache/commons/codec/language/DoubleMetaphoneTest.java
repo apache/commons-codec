@@ -17,9 +17,15 @@
 
 package org.apache.commons.codec.language;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.StringEncoderAbstractTest;
+import org.junit.Test;
 
 /**
  * Tests {@link DoubleMetaphone}.
@@ -1000,10 +1006,6 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest {
             "wundeews", "windows" }, {
             "yeild", "yield" }, };
 
-    public DoubleMetaphoneTest(String name) {
-        super(name);
-    }
-
     /**
      * Tests encoding APIs in one place.
      */
@@ -1058,6 +1060,7 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest {
         return new DoubleMetaphone();
     }
 
+    @Test
     public void testDoubleMetaphone() {
         assertDoubleMetaphone("TSTN", "testing");
         assertDoubleMetaphone("0", "The");
@@ -1098,6 +1101,7 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest {
         assertDoubleMetaphoneAlt("XRN", "Czerny");
     }
 
+    @Test
     public void testEmpty() {
         assertEquals(null, this.getDoubleMetaphone().doubleMetaphone(null));
         assertEquals(null, this.getDoubleMetaphone().doubleMetaphone(""));
@@ -1108,6 +1112,7 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest {
     /**
      * Test setting maximum length
      */
+    @Test
     public void testSetMaxCodeLength() {
         String value = "jumped";
         
@@ -1125,6 +1130,7 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest {
         assertEquals("Max=3 Alternate", "AMP", doubleMetaphone.doubleMetaphone(value, true));
     }
 
+    @Test
     public void testIsDoubleMetaphoneEqualBasic() {
         String[][] testFixture = new String[][] { { "Case", "case" }, {
                 "CASE", "Case" }, {
@@ -1143,6 +1149,7 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest {
     /**
      * Example in the original article but failures in this Java impl:
      */
+    @Test
     public void testIsDoubleMetaphoneEqualExtended1() {
         //        String[][] testFixture = new String[][] { { "Smith", "Schmidt" }
         //        };
@@ -1150,6 +1157,7 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest {
         //        doubleMetaphoneEqualTest(testFixture, true);
     }
 
+    @Test
     public void testIsDoubleMetaphoneEqualExtended2() {
         String[][] testFixture = new String[][] { { "Jablonski", "Yablonsky" }
         };
@@ -1161,6 +1169,7 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest {
      * Used to generate the MATCHES array and test possible matches from the
      * FIXTURE array.
      */
+    @Test
     public void testIsDoubleMetaphoneEqualExtended3() {
         this.validateFixture(FIXTURE);
         StringBuffer failures = new StringBuffer();
@@ -1192,6 +1201,7 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest {
         }
     }
 
+    @Test
     public void testIsDoubleMetaphoneEqualWithMATCHES() {
         this.validateFixture(MATCHES);
         for (int i = 0; i < MATCHES.length; i++) {
@@ -1205,15 +1215,18 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest {
         }
     }
 
+    @Test
     public void testIsDoubleMetaphoneNotEqual() {
         doubleMetaphoneNotEqualTest(false);
         doubleMetaphoneNotEqualTest(true);
     }
 
+    @Test
     public void testCCedilla() {
         this.getDoubleMetaphone().isDoubleMetaphoneEqual("�", "S");
     }
     
+    @Test
     public void testNTilde() {
         this.getDoubleMetaphone().isDoubleMetaphoneEqual("�", "N");
     }

@@ -28,10 +28,6 @@ import org.apache.commons.codec.StringEncoder;
  */
 public class Caverphone2Test extends CaverphoneTest {
 
-    public Caverphone2Test(String name) {
-        super(name);
-    }
-
     protected StringEncoder createStringEncoder() {
         return new Caverphone2();
     }

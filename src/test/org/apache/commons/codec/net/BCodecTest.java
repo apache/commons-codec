@@ -17,11 +17,14 @@
 
 package org.apache.commons.codec.net;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
+import org.apache.commons.codec.CharEncoding;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
-import org.apache.commons.codec.CharEncoding;
+import org.junit.Test;
 
 /**
  * Quoted-printable codec test cases
@@ -29,17 +32,13 @@ import org.apache.commons.codec.CharEncoding;
  * @author <a href="mailto:oleg@ural.ru">Oleg Kalnichevski</a>
  * @version $Id$
  */
-public class BCodecTest extends TestCase {
+public class BCodecTest {
 
     static final int SWISS_GERMAN_STUFF_UNICODE[] =
         { 0x47, 0x72, 0xFC, 0x65, 0x7A, 0x69, 0x5F, 0x7A, 0xE4, 0x6D, 0xE4 };
 
     static final int RUSSIAN_STUFF_UNICODE[] =
         { 0x412, 0x441, 0x435, 0x43C, 0x5F, 0x43F, 0x440, 0x438, 0x432, 0x435, 0x442 };
-
-    public BCodecTest(String name) {
-        super(name);
-    }
 
     private String constructString(int[] unicodeChars) {
         StringBuffer buffer = new StringBuffer();
@@ -51,12 +50,14 @@ public class BCodecTest extends TestCase {
         return buffer.toString();
     }
 
+    @Test
     public void testNullInput() throws Exception {
         BCodec bcodec = new BCodec();
         assertNull(bcodec.doDecoding(null));
         assertNull(bcodec.doEncoding(null));
     }
 
+    @Test
     public void testUTF8RoundTrip() throws Exception {
 
         String ru_msg = constructString(RUSSIAN_STUFF_UNICODE);
@@ -71,6 +72,7 @@ public class BCodecTest extends TestCase {
         assertEquals(ch_msg, bcodec.decode(bcodec.encode(ch_msg)));
     }
 
+    @Test
     public void testBasicEncodeDecode() throws Exception {
         BCodec bcodec = new BCodec();
         String plain = "Hello there";
@@ -79,12 +81,14 @@ public class BCodecTest extends TestCase {
         assertEquals("Basic B decoding test", plain, bcodec.decode(encoded));
     }
 
+    @Test
     public void testEncodeDecodeNull() throws Exception {
         BCodec bcodec = new BCodec();
         assertNull("Null string B encoding test", bcodec.encode((String) null));
         assertNull("Null string B decoding test", bcodec.decode((String) null));
     }
 
+    @Test
     public void testEncodeStringWithNull() throws Exception {
         BCodec bcodec = new BCodec();
         String test = null;
@@ -92,6 +96,7 @@ public class BCodecTest extends TestCase {
         assertEquals("Result should be null", null, result);
     }
 
+    @Test
     public void testDecodeStringWithNull() throws Exception {
         BCodec bcodec = new BCodec();
         String test = null;
@@ -99,6 +104,7 @@ public class BCodecTest extends TestCase {
         assertEquals("Result should be null", null, result);
     }
 
+    @Test
     public void testEncodeObjects() throws Exception {
         BCodec bcodec = new BCodec();
         String plain = "what not";
@@ -118,6 +124,7 @@ public class BCodecTest extends TestCase {
         }
     }
 
+    @Test
     public void testInvalidEncoding() {
         BCodec bcodec = new BCodec("NONSENSE");
         try {
@@ -134,6 +141,7 @@ public class BCodecTest extends TestCase {
         }
     }
 
+    @Test
     public void testDecodeObjects() throws Exception {
         BCodec bcodec = new BCodec();
         String decoded = "=?UTF-8?B?d2hhdCBub3Q=?=";
