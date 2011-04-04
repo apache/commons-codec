@@ -53,20 +53,19 @@ public class StringEncoderComparatorTest {
     
     @Test
     public void testComparatorWithDoubleMetaphone() throws Exception {
-        StringEncoderComparator sCompare =
-            new StringEncoderComparator( new DoubleMetaphone() );
-            
+        StringEncoderComparator sCompare = new StringEncoderComparator(new DoubleMetaphone());
+
         String[] testArray = { "Jordan", "Sosa", "Prior", "Pryor" };
-        List testList = Arrays.asList( testArray );        
-        
+        List<String> testList = Arrays.asList(testArray);
+
         String[] controlArray = { "Jordan", "Prior", "Pryor", "Sosa" };
 
-        Collections.sort( testList, sCompare);            
-        
+        Collections.sort(testList, sCompare);
+
         String[] resultArray = (String[]) testList.toArray(new String[0]);
-        
-        for( int i = 0; i < resultArray.length; i++) {
-            assertEquals( "Result Array not Equal to Control Array at index: " + i, controlArray[i], resultArray[i] );
+
+        for (int i = 0; i < resultArray.length; i++) {
+            assertEquals("Result Array not Equal to Control Array at index: " + i, controlArray[i], resultArray[i]);
         }
     }
 

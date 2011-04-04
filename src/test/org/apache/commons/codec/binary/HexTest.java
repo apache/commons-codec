@@ -25,10 +25,7 @@ import static org.junit.Assert.fail;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.Random;
-import java.util.Set;
-import java.util.SortedMap;
 
 import junit.framework.Assert;
 
@@ -126,13 +123,8 @@ public class HexTest {
 
     @Test
     public void testCustomCharset() throws UnsupportedEncodingException, DecoderException {
-        SortedMap map = Charset.availableCharsets();
-        Set keys = map.keySet();
-        Iterator iterator = keys.iterator();
-        log("testCustomCharset: Checking " + keys.size() + " charsets...");
-        while (iterator.hasNext()) {
-            String name = (String) iterator.next();
-            testCustomCharset(name, "testCustomCharset");
+        for (String name : Charset.availableCharsets().keySet()) {
+            testCustomCharset(name, "testCustomCharset");            
         }
     }
 
