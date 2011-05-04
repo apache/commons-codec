@@ -48,7 +48,7 @@ import org.apache.commons.codec.binary.StringUtils;
  * </p>
  * <p>
  * Rules #3, #4, and #5 of the quoted-printable spec are not implemented yet because the complete quoted-printable spec
- * does not lend itself well into the byte[] oriented codec framework. Complete the codec once the steamable codec
+ * does not lend itself well into the byte[] oriented codec framework. Complete the codec once the streamable codec
  * framework is ready. The motivation behind providing the codec in a partial form is that it can already come in handy
  * for those applications that do not require quoted-printable line formatting (rules #3, #4, #5), for instance Q codec.
  * </p>
