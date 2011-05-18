@@ -127,9 +127,7 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
 
     @Test
     public void testHyphen() throws EncoderException {
-        String[][] data = {{"bergisch-gladbach", "174845214"}, {"Müller-Lüdenscheidt", "65752682"},
-            // From the Javadoc example:
-            {"M�ller-L�denscheidt", "65752682"}};
+        String[][] data = {{"bergisch-gladbach", "174845214"}, {"Müller-Lüdenscheidt", "65752682"}};
         this.checkEncodings(data);
     }
 
