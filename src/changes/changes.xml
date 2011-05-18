@@ -29,6 +29,9 @@
             <action dev="ggregory" type="update" issue="CODEC-120">
              Migrate to JUnit 4.
             </action>
+            <action dev="ggregory" type="fix" issue="CODEC-123">
+             ColognePhonetic Javadoc should use HTML entities for special characters.
+            </action>
 		</release>
         <release version="1.5" date="29 March 2011" description="Feature and fix release.">
             <action dev="sebb" type="fix" issue="CODEC-89">
