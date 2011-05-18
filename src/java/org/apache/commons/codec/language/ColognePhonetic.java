@@ -27,12 +27,12 @@ import org.apache.commons.codec.StringEncoder;
  * Encodes a string into a Cologne Phonetic value.
  * </p>
  * <p>
- * Implements the <a href="http://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik">â€œKÃ¶lner Phoneticâ€�</a> (Cologne Phonetic)
+ * Implements the <a href="http://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik">K&ouml;lner Phonetik</a> (Cologne Phonetic)
  * algorithm issued by Hans Joachim Postel in 1969.
  * </p>
  * 
  * <p>
- * The <i>KÃ¶lner Phonetik</i> is a phonetic algorithm which is optimized for the German language. It is related to the
+ * The <i>K&ouml;lner Phonetik</i> is a phonetic algorithm which is optimized for the German language. It is related to the
  * well-known soundex algorithm.
  * </p>
  * 
@@ -151,12 +151,12 @@ import org.apache.commons.codec.StringEncoder;
  * </table>
  * <p>
  * <small><i>(Source: <a href= "http://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik#Buchstabencodes" >Wikipedia (de):
- * KÃ¶lner Phonetik â€“ Buchstabencodes</a>)</i></small>
+ * K&ouml;lner Phonetik -- Buchstabencodes</a>)</i></small>
  * </p>
  * 
  * <h4>Example:</h4>
  * 
- * {@code "MÃ¼ller-LÃ¼denscheidt" => "MULLERLUDENSCHEIDT" => "6005507500206880022"}
+ * {@code "M}&uuml;{@code ller-L}&uuml;{@code denscheidt" => "MULLERLUDENSCHEIDT" => "6005507500206880022"}
  * 
  * </li>
  * 
@@ -168,7 +168,7 @@ import org.apache.commons.codec.StringEncoder;
  * 
  * <li>
  * <h3>Step 3:</h3>
- * Removal of all codes â€œ0â€� except at the beginning. This means that two or more identical consecutive digits can occur
+ * Removal of all codes "0" except at the beginning. This means that two or more identical consecutive digits can occur
  * if they occur after removing the "0" digits.
  * 
  * <h4>Example:</h4>
@@ -176,7 +176,7 @@ import org.apache.commons.codec.StringEncoder;
  * 
  * </ul>
  * 
- * @see <a href="http://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik">Wikipedia (de): KÃ¶lner Phonetik (in German)</a>
+ * @see <a href="http://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik">Wikipedia (de): K&ouml;lner Phonetik (in German)</a>
  * @author Apache Software Foundation
  * @since 1.5
  */
@@ -282,7 +282,7 @@ public class ColognePhonetic implements StringEncoder {
 
     /**
      * <p>
-     * <b>colognePhonetic()</b> is the actual implementations of the <i>KÃ¶lner Phonetik</i> algorithm.
+     * Implements the <i>K&ouml;lner Phonetik</i> algorithm.
      * </p>
      * <p>
      * In contrast to the initial description of the algorithm, this implementation does the encoding in one pass.
