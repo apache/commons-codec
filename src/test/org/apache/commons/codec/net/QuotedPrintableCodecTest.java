@@ -24,6 +24,7 @@ import static org.junit.Assert.fail;
 import org.apache.commons.codec.CharEncoding;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -261,5 +262,33 @@ public class QuotedPrintableCodecTest {
         String encoded1 = qpcodec.encode(plain, "UnicodeBig");
         String encoded2 = qpcodec.encode(plain);
         assertEquals(encoded1, encoded2);
+    }
+
+    @Test
+    @Ignore
+    /**
+     * The QuotedPrintableCodec documentation states that this is not supported.
+     *  
+     * @throws Exception
+     * @see <a href="https://issues.apache.org/jira/browse/CODEC-121">CODEC-121</a>
+     */
+    public void testSoftLineBreakDecode() throws Exception {
+        String qpdata = "If you believe that truth=3Dbeauty, then surely=20=\r\nmathematics is the most beautiful branch of philosophy.";
+        String expected = "If you believe that truth=beauty, then surely mathematics is the most beautiful branch of philosophy.";
+        assertEquals(expected, new QuotedPrintableCodec().decode(qpdata));
+    }
+
+    @Test
+    @Ignore
+    /**
+     * The QuotedPrintableCodec documentation states that this is not supported.
+     *  
+     * @throws Exception
+     * @see <a href="https://issues.apache.org/jira/browse/CODEC-121">CODEC-121</a>
+     */
+    public void testSoftLineBreakEncode() throws Exception {
+        String qpdata = "If you believe that truth=3Dbeauty, then surely=20=\r\nmathematics is the most beautiful branch of philosophy.";
+        String expected = "If you believe that truth=beauty, then surely mathematics is the most beautiful branch of philosophy.";
+        assertEquals(qpdata, new QuotedPrintableCodec().encode(expected));
     }
 }
