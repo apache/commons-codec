@@ -23,7 +23,7 @@ import org.apache.commons.codec.StringEncoderAbstractTest;
 import org.junit.Test;
 
 /**
- * Tests the deprecated class {@link ColognePhonetic}.
+ * Tests the {@code ColognePhonetic} class.
  * 
  * <p>Keep this file in UTF-8 encoding for proper Javadoc processing.</p>
  * 
@@ -44,6 +44,16 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
     @Test
     public void testAaclan() throws EncoderException {
         this.checkEncoding("0856", "Aaclan");
+    }
+    
+    /**
+     * Tests [CODEC-122]
+     * 
+     * @throws EncoderException
+     */
+    @Test
+    public void testAychlmajrForCodec122() throws EncoderException {
+        this.checkEncoding("04567", "Aychlmajr");
     }
 
     @Test
