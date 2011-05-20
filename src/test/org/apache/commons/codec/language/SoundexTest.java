@@ -279,20 +279,6 @@ public class SoundexTest extends StringEncoderAbstractTest {
             "SILLER"}));
     }
 
-    @Test
-    public void testMaxLength() throws Exception {
-        Soundex soundex = new Soundex();
-        soundex.setMaxLength(soundex.getMaxLength());
-        Assert.assertEquals("S460", this.getSoundexEncoder().encode("Sgler"));
-    }
-
-    @Test
-    public void testMaxLengthLessThan3Fix() throws Exception {
-        Soundex soundex = new Soundex();
-        soundex.setMaxLength(2);
-        Assert.assertEquals("S460", soundex.encode("SCHELLER"));
-    }
-
     /**
      * Examples for MS SQLServer from
      * http://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_setu-sus_3o6w.asp

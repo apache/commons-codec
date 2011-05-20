@@ -249,6 +249,7 @@
         <configuration>
           <xmlPath>${basedir}/src/changes/changes.xml</xmlPath>
           <issueLinkTemplate>%URL%/%ISSUE%</issueLinkTemplate>
+          <!-- TODO: <onlyCurrentVersion>true</onlyCurrentVersion> -->
         </configuration>
         <reportSets>
           <reportSet>

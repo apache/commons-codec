@@ -81,14 +81,6 @@ public class Soundex implements StringEncoder {
     }
 
     /**
-     * The maximum length of a Soundex code - Soundex codes are only four characters by definition.
-     * 
-     * @deprecated This feature is not needed since the encoding size must be constant. Will be removed in 2.0.
-     */
-    @Deprecated
-    private int maxLength = 4;
-
-    /**
      * Every letter of the alphabet is "mapped" to a numerical value. This char array holds the values to which each
      * letter is mapped. This implementation contains a default map for US_ENGLISH
      */
@@ -195,17 +187,6 @@ public class Soundex implements StringEncoder {
     }
 
     /**
-     * Returns the maxLength. Standard Soundex
-     * 
-     * @deprecated This feature is not needed since the encoding size must be constant. Will be removed in 2.0.
-     * @return int
-     */
-    @Deprecated
-    public int getMaxLength() {
-        return this.maxLength;
-    }
-
-    /**
      * Returns the soundex mapping.
      * 
      * @return soundexMapping.
@@ -229,18 +210,6 @@ public class Soundex implements StringEncoder {
             throw new IllegalArgumentException("The character is not mapped: " + ch);
         }
         return this.getSoundexMapping()[index];
-    }
-
-    /**
-     * Sets the maxLength.
-     * 
-     * @deprecated This feature is not needed since the encoding size must be constant. Will be removed in 2.0.
-     * @param maxLength
-     *                  The maxLength to set
-     */
-    @Deprecated
-    public void setMaxLength(int maxLength) {
-        this.maxLength = maxLength;
     }
 
     /**

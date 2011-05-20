@@ -37,11 +37,6 @@ import org.junit.Test;
 public class StringEncoderComparatorTest {
 
     @Test
-    public void testComparatorNoArgCon() throws Exception {
-        new StringEncoderComparator();
-    }        
-
-    @Test
     public void testComparatorWithSoundex() throws Exception {
         StringEncoderComparator sCompare = 
             new StringEncoderComparator( new Soundex() );

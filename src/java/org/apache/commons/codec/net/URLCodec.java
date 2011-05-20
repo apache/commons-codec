@@ -339,18 +339,6 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
     }
 
     /**
-     * The <code>String</code> encoding used for decoding and encoding.
-     * 
-     * @return Returns the encoding.
-     * 
-     * @deprecated Use {@link #getDefaultCharset()}, will be removed in 2.0.
-     */
-    @Deprecated
-    public String getEncoding() {
-        return this.charset;
-    }
-
-    /**
      * The default charset used for string decoding and encoding.
      *
      * @return the default string charset.
