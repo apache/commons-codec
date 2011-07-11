@@ -1031,9 +1031,9 @@ public class DoubleMetaphone implements StringEncoder {
      */
     public class DoubleMetaphoneResult {
 
-        private StringBuffer primary = new StringBuffer(getMaxCodeLen());
-        private StringBuffer alternate = new StringBuffer(getMaxCodeLen());
-        private int maxLength;
+        private final StringBuffer primary = new StringBuffer(getMaxCodeLen());
+        private final StringBuffer alternate = new StringBuffer(getMaxCodeLen());
+        private final int maxLength;
 
         public DoubleMetaphoneResult(int maxLength) {
             this.maxLength = maxLength;

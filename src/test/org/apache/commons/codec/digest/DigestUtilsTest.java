@@ -35,7 +35,7 @@ import org.junit.Test;
  */
 public class DigestUtilsTest {
 
-    private byte[] testData = new byte[1024*1024];
+    private final byte[] testData = new byte[1024*1024];
     
     private byte[] getBytesUtf8(String hashMe) {
         return StringUtils.getBytesUtf8(hashMe);

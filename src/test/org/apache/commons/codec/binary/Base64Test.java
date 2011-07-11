@@ -41,7 +41,7 @@ import org.junit.Test;
  */
 public class Base64Test {
 
-    private Random _random = new Random();
+    private final Random _random = new Random();
 
     /**
      * @return Returns the _random.
