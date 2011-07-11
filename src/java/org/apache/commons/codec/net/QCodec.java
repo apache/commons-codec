@@ -153,8 +153,8 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
             return null;
         }
         boolean hasUnderscores = false;
-        for (int i = 0; i < bytes.length; i++) {
-            if (bytes[i] == UNDERSCORE) {
+        for (byte b : bytes) {
+            if (b == UNDERSCORE) {
                 hasUnderscores = true;
                 break;
             }

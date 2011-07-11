@@ -1029,9 +1029,9 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest {
 
     public void doubleMetaphoneEqualTest(String[][] pairs, boolean useAlternate) {
         this.validateFixture(pairs);
-        for (int i = 0; i < pairs.length; i++) {
-            String name0 = pairs[i][0];
-            String name1 = pairs[i][1];
+        for (String[] pair : pairs) {
+            String name0 = pair[0];
+            String name1 = pair[1];
             String failMsg = "Expected match between " + name0 + " and " + name1 + " (use alternate: " + useAlternate + ")";
             assertTrue(failMsg, this.getDoubleMetaphone().isDoubleMetaphoneEqual(name0, name1, useAlternate));
             assertTrue(failMsg, this.getDoubleMetaphone().isDoubleMetaphoneEqual(name1, name0, useAlternate));

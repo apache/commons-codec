@@ -116,8 +116,8 @@ public class Base32TestData {
      * @return true if bytes contains c, false otherwise
      */
     static boolean bytesContain(byte[] bytes, byte c) {
-        for (int i = 0; i < bytes.length; i++) {
-            if (bytes[i] == c) { return true; }
+        for (byte b : bytes) {
+            if (b == c) { return true; }
         }
         return false;
     }

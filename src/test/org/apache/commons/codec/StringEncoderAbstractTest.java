@@ -36,14 +36,14 @@ public abstract class StringEncoderAbstractTest {
     }
 
     protected void checkEncodings(String[][] data) throws EncoderException {
-        for (int i = 0; i < data.length; i++) {
-            this.checkEncoding(data[i][1], data[i][0]);
+        for (String[] element : data) {
+            this.checkEncoding(element[1], element[0]);
         }
     }
 
     protected void checkEncodingVariations(String expected, String data[]) throws EncoderException {
-        for (int i = 0; i < data.length; i++) {
-            this.checkEncoding(expected, data[i]);
+        for (String element : data) {
+            this.checkEncoding(expected, element);
         }
     }
 
@@ -93,16 +93,16 @@ public abstract class StringEncoderAbstractTest {
         Locale[] locales = {Locale.ENGLISH, new Locale("tr"), Locale.getDefault()};
 
         try {
-            for (int i = 0; i < data.length; i++) {
+            for (String element : data) {
                 String ref = null;
                 for (int j = 0; j < locales.length; j++) {
                     Locale.setDefault(locales[j]);
                     if (j <= 0) {
-                        ref = encoder.encode(data[i]);
+                        ref = encoder.encode(element);
                     } else {
                         String cur = null;
                         try {
-                            cur = encoder.encode(data[i]);
+                            cur = encoder.encode(element);
                         } catch (Exception e) {
                             Assert.fail(Locale.getDefault().toString() + ": " + e.getMessage());
                         }

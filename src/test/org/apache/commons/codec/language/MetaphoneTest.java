@@ -33,23 +33,23 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
 
     public void assertIsMetaphoneEqual(String source, String[] matches) {
         // match source to all matches
-        for (int i = 0; i < matches.length; i++) {
-            assertTrue("Source: " + source + ", should have same Metaphone as: " + matches[i],
-                       this.getMetaphone().isMetaphoneEqual(source, matches[i]));
+        for (String matche : matches) {
+            assertTrue("Source: " + source + ", should have same Metaphone as: " + matche,
+                       this.getMetaphone().isMetaphoneEqual(source, matche));
         }
         // match to each other
-        for (int i = 0; i < matches.length; i++) {
-            for (int j = 0; j < matches.length; j++) {
-                assertTrue(this.getMetaphone().isMetaphoneEqual(matches[i], matches[j]));
+        for (String matche : matches) {
+            for (String matche2 : matches) {
+                assertTrue(this.getMetaphone().isMetaphoneEqual(matche, matche2));
             }
         }
     }
 
     public void assertMetaphoneEqual(String[][] pairs) {
         this.validateFixture(pairs);
-        for (int i = 0; i < pairs.length; i++) {
-            String name0 = pairs[i][0];
-            String name1 = pairs[i][1];
+        for (String[] pair : pairs) {
+            String name0 = pair[0];
+            String name1 = pair[1];
             String failMsg = "Expected match between " + name0 + " and " + name1;
             assertTrue(failMsg, this.getMetaphone().isMetaphoneEqual(name0, name1));
             assertTrue(failMsg, this.getMetaphone().isMetaphoneEqual(name1, name0));

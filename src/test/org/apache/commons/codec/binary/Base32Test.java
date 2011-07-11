@@ -61,24 +61,24 @@ public class Base32Test {
     @Test
     public void testBase32Samples() throws Exception {
         Base32 codec = new Base32();
-        for (int i = 0; i < BASE32_TEST_CASES.length; i++) {
-                assertEquals(BASE32_TEST_CASES[i][1], codec.encodeAsString(BASE32_TEST_CASES[i][0].getBytes("UTF-8")));
+        for (String[] element : BASE32_TEST_CASES) {
+                assertEquals(element[1], codec.encodeAsString(element[0].getBytes("UTF-8")));
         }
     }
 
     @Test
     public void testBase32HexSamples() throws Exception {
         Base32 codec = new Base32(true);
-        for (int i = 0; i < BASE32HEX_TEST_CASES.length; i++) {
-                assertEquals(BASE32HEX_TEST_CASES[i][1], codec.encodeAsString(BASE32HEX_TEST_CASES[i][0].getBytes("UTF-8")));
+        for (String[] element : BASE32HEX_TEST_CASES) {
+                assertEquals(element[1], codec.encodeAsString(element[0].getBytes("UTF-8")));
         }
     }
 
     @Test
     public void testBase32Chunked () throws Exception {
         Base32 codec = new Base32(20);
-        for (int i = 0; i < BASE32_TEST_CASES_CHUNKED.length; i++) {
-                assertEquals(BASE32_TEST_CASES_CHUNKED[i][1], codec.encodeAsString(BASE32_TEST_CASES_CHUNKED[i][0].getBytes("UTF-8")));
+        for (String[] element : BASE32_TEST_CASES_CHUNKED) {
+                assertEquals(element[1], codec.encodeAsString(element[0].getBytes("UTF-8")));
         }        
     }
 

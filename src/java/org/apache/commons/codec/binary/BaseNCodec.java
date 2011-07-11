@@ -415,8 +415,8 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         if (arrayOctet == null) {
             return false;
         }
-        for (int i = 0; i < arrayOctet.length; i++) {
-            if (PAD == arrayOctet[i] || isInAlphabet(arrayOctet[i])) {
+        for (byte element : arrayOctet) {
+            if (PAD == element || isInAlphabet(element)) {
                 return true;
             }
         }

@@ -272,8 +272,8 @@ public class ColognePhonetic implements StringEncoder {
      * Returns whether the array contains the key, or not.
      */
     private static boolean arrayContains(char[] arr, char key) {
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i] == key) {
+        for (char element : arr) {
+            if (element == key) {
                 return true;
             }
         }
@@ -406,9 +406,9 @@ public class ColognePhonetic implements StringEncoder {
 
         for (int index = 0; index < chrs.length; index++) {
             if (chrs[index] > 'Z') {
-                for (int replacement = 0; replacement < PREPROCESS_MAP.length; replacement++) {
-                    if (chrs[index] == PREPROCESS_MAP[replacement][0]) {
-                        chrs[index] = PREPROCESS_MAP[replacement][1];
+                for (char[] element : PREPROCESS_MAP) {
+                    if (chrs[index] == element[0]) {
+                        chrs[index] = element[1];
                         break;
                     }
                 }

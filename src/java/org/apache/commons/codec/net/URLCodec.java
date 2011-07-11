@@ -130,8 +130,8 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
         }
 
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        for (int i = 0; i < bytes.length; i++) {
-            int b = bytes[i];
+        for (byte c : bytes) {
+            int b = c;
             if (b < 0) {
                 b = 256 + b;
             }

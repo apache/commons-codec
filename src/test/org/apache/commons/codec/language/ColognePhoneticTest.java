@@ -142,8 +142,8 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
             {"ganz", "Gans"},
             {"ganz", "Gänse"},
             {"Miyagi", "Miyako"}};
-        for (int i = 0; i < data.length; i++) {
-            ((ColognePhonetic) this.getStringEncoder()).isEncodeEqual(data[i][1], data[i][0]);
+        for (String[] element : data) {
+            ((ColognePhonetic) this.getStringEncoder()).isEncodeEqual(element[1], element[0]);
         }
     }
 

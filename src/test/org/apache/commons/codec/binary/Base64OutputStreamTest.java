@@ -242,8 +242,8 @@ public class Base64OutputStreamTest {
         // Start with encode.
         ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
         OutputStream out = new Base64OutputStream(byteOut, true, chunkSize, seperator);
-        for (int i = 0; i < decoded.length; i++) {
-            out.write(decoded[i]);
+        for (byte element : decoded) {
+            out.write(element);
         }
         out.close();
         byte[] output = byteOut.toByteArray();
@@ -252,8 +252,8 @@ public class Base64OutputStreamTest {
         // Now let's try decode.
         byteOut = new ByteArrayOutputStream();
         out = new Base64OutputStream(byteOut, false);
-        for (int i = 0; i < encoded.length; i++) {
-            out.write(encoded[i]);
+        for (byte element : encoded) {
+            out.write(element);
         }
         out.close();
         output = byteOut.toByteArray();
@@ -262,8 +262,8 @@ public class Base64OutputStreamTest {
         // Now let's try decode with tonnes of flushes.
         byteOut = new ByteArrayOutputStream();
         out = new Base64OutputStream(byteOut, false);
-        for (int i = 0; i < encoded.length; i++) {
-            out.write(encoded[i]);
+        for (byte element : encoded) {
+            out.write(element);
             out.flush();
         }
         out.close();
@@ -277,8 +277,8 @@ public class Base64OutputStreamTest {
             out = new Base64OutputStream(out, false);
             out = new Base64OutputStream(out, true, chunkSize, seperator);
         }
-        for (int i = 0; i < decoded.length; i++) {
-            out.write(decoded[i]);
+        for (byte element : decoded) {
+            out.write(element);
         }
         out.close();
         output = byteOut.toByteArray();

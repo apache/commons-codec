@@ -905,8 +905,8 @@ public class DoubleMetaphone implements StringEncoder {
      */    
     private boolean isSilentStart(String value) {
         boolean result = false;
-        for (int i = 0; i < SILENT_START.length; i++) {
-            if (value.startsWith(SILENT_START[i])) {
+        for (String element : SILENT_START) {
+            if (value.startsWith(element)) {
                 result = true;
                 break;
             }
@@ -1013,8 +1013,8 @@ public class DoubleMetaphone implements StringEncoder {
         if (start >= 0 && start + length <= value.length()) {
             String target = value.substring(start, start + length);
 
-            for (int i = 0; i < criteria.length; i++) {
-                if (target.equals(criteria[i])) {
+            for (String element : criteria) {
+                if (target.equals(element)) {
                     result = true;
                     break;
                 }
