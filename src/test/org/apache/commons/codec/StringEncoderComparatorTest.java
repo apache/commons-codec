@@ -57,7 +57,7 @@ public class StringEncoderComparatorTest {
 
         Collections.sort(testList, sCompare);
 
-        String[] resultArray = (String[]) testList.toArray(new String[0]);
+        String[] resultArray = testList.toArray(new String[0]);
 
         for (int i = 0; i < resultArray.length; i++) {
             assertEquals("Result Array not Equal to Control Array at index: " + i, controlArray[i], resultArray[i]);
