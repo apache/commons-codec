@@ -241,17 +241,17 @@ public class Rule {
         return str;
     }
 
-    private Set<String> language;
+    private final Set<String> language;
 
-    private Pattern lContext;
+    private final Pattern lContext;
 
-    private String logical;
+    private final String logical;
 
-    private String pattern;
+    private final String pattern;
 
-    private String phoneme;
+    private final String phoneme;
 
-    private Pattern rContext;
+    private final Pattern rContext;
 
     /**
      * Creates a new rule.
