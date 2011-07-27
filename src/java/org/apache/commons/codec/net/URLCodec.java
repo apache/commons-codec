@@ -58,10 +58,9 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
     static final int RADIX = 16;
     
     /**
-     * The default charset used for string decoding and encoding. Consider this field final. The next major release may
-     * break compatibility and make this field be final.
+     * The default charset used for string decoding and encoding.
      */
-    protected String charset;
+    protected final String charset;
     
     /**
      * Release 1.5 made this field final.
