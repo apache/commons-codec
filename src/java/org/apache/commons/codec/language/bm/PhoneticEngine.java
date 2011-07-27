@@ -132,8 +132,8 @@ public class PhoneticEngine {
      * @return the encoding of the input
      */
     public String encode(String input) {
-        Set<String> languageArg = this.lang.guessLanguages(input);
-        return phoneticUtf8(input, languageArg);
+        Set<String> languageSet = this.lang.guessLanguages(input);
+        return phoneticUtf8(input, languageSet);
     }
 
     /**
@@ -141,13 +141,13 @@ public class PhoneticEngine {
      * 
      * @param input
      *            String to phoneticise; a String with dashes or spaces separating each word
-     * @param languageArg
+     * @param languageSet
      * @return a phonetic representation of the input; a String containing '-'-separated phonetic representations of the input
      */
-    public String phoneticUtf8(String input, final Set<String> languageArg) {
-        List<Rule> rules = Rule.instance(this.nameType, RuleType.RULES, languageArg);
+    public String phoneticUtf8(String input, final Set<String> languageSet) {
+        List<Rule> rules = Rule.instance(this.nameType, RuleType.RULES, languageSet);
         List<Rule> finalRules1 = Rule.instance(this.nameType, this.ruleType, "common");
-        List<Rule> finalRules2 = Rule.instance(this.nameType, this.ruleType, languageArg);
+        List<Rule> finalRules2 = Rule.instance(this.nameType, this.ruleType, languageSet);
 
         // tidy the input
         // lower case is a locale-dependent operation
@@ -215,13 +215,13 @@ public class PhoneticEngine {
 
         // loop over each char in the input - we will handle the increment manually
         for (int i = 0; i < input.length();) {
-            RulesApplication rulesApplication = new RulesApplication(rules, languageArg, input, phonetic, i).invoke();
+            RulesApplication rulesApplication = new RulesApplication(rules, languageSet, input, phonetic, i).invoke();
             i = rulesApplication.getI();
             phonetic = rulesApplication.getPhonetic();
         }
 
-        phonetic = applyFinalRules(phonetic, finalRules1, languageArg, false);
-        phonetic = applyFinalRules(phonetic, finalRules2, languageArg, true);
+        phonetic = applyFinalRules(phonetic, finalRules1, languageSet, false);
+        phonetic = applyFinalRules(phonetic, finalRules2, languageSet, true);
 
         return phonetic;
     }
