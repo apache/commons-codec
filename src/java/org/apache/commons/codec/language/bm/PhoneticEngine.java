@@ -49,14 +49,14 @@ import java.util.Set;
  * @since 2.0
  */
 public class PhoneticEngine {
-    private static final Map<NameType, Set<String>> namePfxs = new EnumMap<NameType, Set<String>>(NameType.class);
+    private static final Map<NameType, Set<String>> NAME_PREFIXES = new EnumMap<NameType, Set<String>>(NameType.class);
 
     static {
-        namePfxs.put(NameType.ASHKENAZI,
+        NAME_PREFIXES.put(NameType.ASHKENAZI,
                 Collections.unmodifiableSet(new HashSet<String>(Arrays.asList("bar", "ben", "da", "de", "van", "von"))));
-        namePfxs.put(NameType.SEPHARDIC, Collections.unmodifiableSet(new HashSet<String>(Arrays.asList("al", "el", "da", "dal", "de",
+        NAME_PREFIXES.put(NameType.SEPHARDIC, Collections.unmodifiableSet(new HashSet<String>(Arrays.asList("al", "el", "da", "dal", "de",
                 "del", "dela", "de la", "della", "des", "di", "do", "dos", "du", "van", "von"))));
-        namePfxs.put(NameType.GENERIC, Collections.unmodifiableSet(new HashSet<String>(Arrays.asList("da", "dal", "de", "del", "dela",
+        NAME_PREFIXES.put(NameType.GENERIC, Collections.unmodifiableSet(new HashSet<String>(Arrays.asList("da", "dal", "de", "del", "dela",
                 "de la", "della", "des", "di", "do", "dos", "du", "van", "von"))));
     }
 
@@ -154,7 +154,7 @@ public class PhoneticEngine {
         input = input.toLowerCase(Locale.ENGLISH).replace('-', ' ').trim();
 
         if (this.nameType == NameType.GENERIC) {
-            for (String l : namePfxs.get(this.nameType)) {
+            for (String l : NAME_PREFIXES.get(this.nameType)) {
                 // handle generic prefixes
                 if (input.startsWith(l + " ")) {
                     // check for any prefix in the words list
@@ -182,11 +182,11 @@ public class PhoneticEngine {
                 String lastPart = parts[parts.length - 1];
                 words2.add(lastPart);
             }
-            words2.removeAll(namePfxs.get(this.nameType));
+            words2.removeAll(NAME_PREFIXES.get(this.nameType));
             break;
         case ASHKENAZI:
             words2.addAll(words);
-            words2.removeAll(namePfxs.get(this.nameType));
+            words2.removeAll(NAME_PREFIXES.get(this.nameType));
             break;
         case GENERIC:
             words2.addAll(words);
@@ -241,8 +241,8 @@ public class PhoneticEngine {
     }
 
     /**
-     * Applied to a single alternative at a time -- not to a parenthisized list it removes all embedded bracketed attributes,
-     * logically-ands them together, and places them at the end.
+     * Applied to a single alternative at a time -- not to a parenthisized list it removes all embedded bracketed attributes, logically-ands
+     * them together, and places them at the end.
      * 
      * However if strip is true, this can indeed remove embedded bracketed attributes from a parenthesized list
      * 
