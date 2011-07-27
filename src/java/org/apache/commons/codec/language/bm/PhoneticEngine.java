@@ -271,7 +271,7 @@ public class PhoneticEngine {
         } else if (langs.contains(Languages.ANY)) {
             return "[" + Languages.ANY + "]";
         } else {
-            return text + "[" + (join(langs, "+")) + "]";
+            return text + "[" + join(langs, "+") + "]";
         }
     }
 
