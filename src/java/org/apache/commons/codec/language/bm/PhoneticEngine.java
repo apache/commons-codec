@@ -30,7 +30,7 @@ import java.util.Set;
 
 /**
  * <p>
- * Conversion of words into potential phonetic representations.
+ * Converts words into potential phonetic representations.
  * </p>
  * <p>
  * This is a two-stage process. Firstly, the word is converted into a phonetic representation that takes into account the likely source
