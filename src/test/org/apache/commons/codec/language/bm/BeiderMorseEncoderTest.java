@@ -70,6 +70,15 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
         Languages.instance("thereIsNoSuchLanguage");
     }
 
+    @Ignore
+    @Test
+    public void testLongestEnglishSurname() throws EncoderException {
+        BeiderMorseEncoder bmpm = new BeiderMorseEncoder();
+        bmpm.setNameType(NameType.GENERIC);
+        bmpm.setRuleType(RuleType.APPROX);
+        bmpm.encode("MacGhilleseatheanaich");
+    }
+
     @Test(expected = IndexOutOfBoundsException.class)
     public void testNegativeIndexForRuleMatchIndexOutOfBoundsException() {
         Rule r = new Rule("a", "", "", "", Collections.<String> emptySet(), "bob");
