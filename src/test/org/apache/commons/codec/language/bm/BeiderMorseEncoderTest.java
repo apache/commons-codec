@@ -46,7 +46,7 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
      * 
      * @throws EncoderException
      */
-    @Ignore
+    // @Ignore
     @Test
     public void testEncodeGna() throws EncoderException {
         BeiderMorseEncoder bmpm = new BeiderMorseEncoder();
@@ -71,7 +71,7 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
     }
 
     @Ignore
-    @Test
+    @Test(timeout = 10000L)
     public void testLongestEnglishSurname() throws EncoderException {
         BeiderMorseEncoder bmpm = new BeiderMorseEncoder();
         bmpm.setNameType(NameType.GENERIC);
@@ -113,7 +113,7 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
     }
 
     @Ignore
-    @Test
+    @Test(timeout = 10000L)
     public void testSpeedCheck() throws EncoderException {
         char[] chars = new char[] { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'o', 'u' };
         BeiderMorseEncoder bmpm = new BeiderMorseEncoder();

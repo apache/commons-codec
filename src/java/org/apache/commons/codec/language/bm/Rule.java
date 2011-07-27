@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.Stack;
 import java.util.regex.Pattern;
 
 /**
@@ -77,9 +78,9 @@ import java.util.regex.Pattern;
  * @since 2.0
  */
 public class Rule {
-    private static final String DOUBLE_QUOTE = "\"";
-
     public static final String ALL = "ALL";
+
+    private static final String DOUBLE_QUOTE = "\"";
 
     private static final String HASH_INCLUDE = "#include";
 
@@ -95,10 +96,14 @@ public class Rule {
 
                 Languages ls = Languages.instance(s);
                 for (String l : ls.getLanguages()) {
-                    rs.put(l, parseRules(mkScanner(s, rt, l)));
+                    try {
+                        rs.put(l, parseRules(createScanner(s, rt, l)));
+                    } catch (IllegalStateException e) {
+                        throw new IllegalStateException("Problem processing " + createResourceName(s, rt, l), e);
+                    }
                 }
                 if (!rt.equals(RuleType.RULES)) {
-                    rs.put("common", parseRules(mkScanner(s, rt, "common")));
+                    rs.put("common", parseRules(createScanner(s, rt, "common")));
                 }
 
                 rts.put(rt, Collections.unmodifiableMap(rs));
@@ -106,6 +111,32 @@ public class Rule {
 
             RULES.put(s, Collections.unmodifiableMap(rts));
         }
+    }
+
+    private static String createResourceName(NameType nameType, RuleType rt, String lang) {
+        return String.format("org/apache/commons/codec/language/bm/%s_%s_%s.txt", nameType.getName(), rt.getName(), lang);
+    }
+
+    private static Scanner createScanner(NameType nameType, RuleType rt, String lang) {
+        String resName = createResourceName(nameType, rt, lang);
+        InputStream rulesIS = Languages.class.getClassLoader().getResourceAsStream(resName);
+
+        if (rulesIS == null) {
+            throw new IllegalArgumentException("Unable to load resource: " + resName);
+        }
+
+        return new Scanner(rulesIS, ResourceConstants.ENCODING);
+    }
+
+    private static Scanner createScanner(String lang) {
+        String resName = String.format("org/apache/commons/codec/language/bm/%s.txt", lang);
+        InputStream rulesIS = Languages.class.getClassLoader().getResourceAsStream(resName);
+
+        if (rulesIS == null) {
+            throw new IllegalArgumentException("Unable to load resource: " + resName);
+        }
+
+        return new Scanner(rulesIS, ResourceConstants.ENCODING);
     }
 
     /**
@@ -148,33 +179,13 @@ public class Rule {
         return rules;
     }
 
-    private static Scanner mkScanner(NameType nameType, RuleType rt, String lang) {
-        String resName = String.format("org/apache/commons/codec/language/bm/%s_%s_%s.txt", nameType.getName(), rt.getName(), lang);
-        InputStream rulesIS = Languages.class.getClassLoader().getResourceAsStream(resName);
-
-        if (rulesIS == null) {
-            throw new IllegalArgumentException("Unable to load resource: " + resName);
-        }
-
-        return new Scanner(rulesIS, ResourceConstants.ENCODING);
-    }
-
-    private static Scanner mkScanner(String lang) {
-        String resName = String.format("org/apache/commons/codec/language/bm/%s.txt", lang);
-        InputStream rulesIS = Languages.class.getClassLoader().getResourceAsStream(resName);
-
-        if (rulesIS == null) {
-            throw new IllegalArgumentException("Unable to load resource: " + resName);
-        }
-
-        return new Scanner(rulesIS, ResourceConstants.ENCODING);
-    }
-
     private static List<Rule> parseRules(Scanner scanner) {
         List<Rule> lines = new ArrayList<Rule>();
+        int currentLine = 0;
 
         boolean inMultilineComment = false;
         while (scanner.hasNextLine()) {
+            currentLine++;
             String rawLine = scanner.nextLine();
             String line = rawLine;
 
@@ -206,7 +217,7 @@ public class Rule {
                         if (incl.contains(" ")) {
                             System.err.println("Warining: malformed import statement: " + rawLine);
                         } else {
-                            lines.addAll(parseRules(mkScanner(incl)));
+                            lines.addAll(parseRules(createScanner(incl)));
                         }
                     } else {
                         // rule
@@ -218,6 +229,11 @@ public class Rule {
                             String lCon = stripQuotes(parts[1]);
                             String rCon = stripQuotes(parts[2]);
                             String ph = stripQuotes(parts[3]);
+                            try {
+                                validatePhenome(ph);
+                            } catch (IllegalArgumentException e) {
+                                throw new IllegalStateException("Problem parsing line " + currentLine, e);
+                            }
                             Rule r = new Rule(pat, lCon, rCon, ph, Collections.<String> emptySet(), ""); // guessing last 2 parameters
                             lines.add(r);
                         }
@@ -239,6 +255,40 @@ public class Rule {
         }
 
         return str;
+    }
+
+    private static void validatePhenome(CharSequence ph) {
+        Stack<Character> stack = new Stack<Character>();
+        for (int i = 0; i < ph.length(); i++) {
+            switch (ph.charAt(i)) {
+            case '(':
+                stack.push('(');
+                break;
+            case '[':
+                stack.push('[');
+                break;
+            case ')': {
+                if (stack.isEmpty())
+                    throw new IllegalArgumentException("Closing ')' at " + i + " without an opening '('" + " in " + ph);
+                char c = stack.pop();
+                if (c != '(')
+                    throw new IllegalArgumentException("Closing ')' does not pair with opening '" + c + "' at " + i + " in " + ph);
+                break;
+            }
+            case ']': {
+                if (stack.isEmpty())
+                    throw new IllegalArgumentException("Closing ']' at " + i + " without an opening '['" + " in " + ph);
+                char c = stack.pop();
+                if (c != '[')
+                    throw new IllegalArgumentException("Closing ']' does not pair with opening '" + c + "' at " + i + " in " + ph);
+                break;
+            }
+            default:
+                break;
+            }
+        }
+        if (!stack.isEmpty())
+            throw new IllegalArgumentException("Bracket(s) opened without corresponding closes: " + stack + " in " + ph);
     }
 
     private final Set<String> languages;

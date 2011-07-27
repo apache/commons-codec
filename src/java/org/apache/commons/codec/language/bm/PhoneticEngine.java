@@ -145,9 +145,11 @@ public class PhoneticEngine {
      * @return a phonetic representation of the input; a String containing '-'-separated phonetic representations of the input
      */
     public String phoneticUtf8(String input, final Set<String> languageSet) {
-        List<Rule> rules = Rule.instance(this.nameType, RuleType.RULES, languageSet);
-        List<Rule> finalRules1 = Rule.instance(this.nameType, this.ruleType, "common");
-        List<Rule> finalRules2 = Rule.instance(this.nameType, this.ruleType, languageSet);
+        final List<Rule> rules = Rule.instance(this.nameType, RuleType.RULES, languageSet);
+        final List<Rule> finalRules1 = Rule.instance(this.nameType, this.ruleType, "common");
+        final List<Rule> finalRules2 = Rule.instance(this.nameType, this.ruleType, languageSet);
+        // System.err.println("Languages: " + languageSet);
+        // System.err.println("Rules: " + rules);
 
         // tidy the input
         // lower case is a locale-dependent operation
@@ -345,6 +347,11 @@ public class PhoneticEngine {
         String prefix = phonetic.substring(0, altStart);
         altStart++;
         int altEnd = phonetic.indexOf(')');
+
+        if (altEnd < altStart) {
+            throw new IllegalArgumentException("Phonetic string has a close-bracket before the first open-bracket");
+        }
+        
         String altString = phonetic.substring(altStart, altEnd);
         altEnd++;
         String suffix = phonetic.substring(altEnd);
