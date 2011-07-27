@@ -213,8 +213,8 @@ public class Lang {
      *            the word
      * @return a Set of Strings of language names that are potential matches for the word
      */
-    public Set<String> guessLanguages(String text) {
-        text = text.toLowerCase(); // todo: locale?
+    public Set<String> guessLanguages(String input) {
+        String text = input.toLowerCase(); // todo: locale?
         // System.out.println("Testing text: '" + text + "'");
 
         Set<String> langs = new HashSet<String>(this.languages.getLanguages());
