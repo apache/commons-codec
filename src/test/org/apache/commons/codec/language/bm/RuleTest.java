@@ -61,7 +61,7 @@ public class RuleTest {
     }
 
     @Test
-    public void rule() {
+    public void testRuleLanguageMatches() {
         assertEquals(this.caseName, this.expected, this.rule.languageMatches(this.langs));
     }
 
