@@ -240,12 +240,18 @@ public class PhoneticEngine {
         return result;
     }
 
-    private String normalizeLanguageAttributes(String text, final boolean strip) {
-        // this is applied to a single alternative at a time -- not to a parenthisized list
-        // it removes all embedded bracketed attributes, logically-ands them together, and places them at the end.
-
-        // however if strip is true, this can indeed remove embedded bracketed attributes from a parenthesized list
-
+    /**
+     * Applied to a single alternative at a time -- not to a parenthisized list it removes all embedded bracketed attributes,
+     * logically-ands them together, and places them at the end.
+     * 
+     * However if strip is true, this can indeed remove embedded bracketed attributes from a parenthesized list
+     * 
+     * @param input
+     * @param strip
+     * @return
+     */
+    private String normalizeLanguageAttributes(final String input, final boolean strip) {
+        String text = input;
         Set<String> langs = new HashSet<String>();
 
         int bracketStart;
