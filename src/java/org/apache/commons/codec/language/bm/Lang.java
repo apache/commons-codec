@@ -72,9 +72,9 @@ import java.util.regex.Pattern;
 public class Lang {
 
     private static class LangRule {
-        private boolean acceptOnMatch;
-        private Set<String> languages;
-        private Pattern pattern;
+        private final boolean acceptOnMatch;
+        private final Set<String> languages;
+        private final Pattern pattern;
 
         private LangRule(Pattern pattern, Set<String> languages, boolean acceptOnMatch) {
             this.pattern = pattern;
