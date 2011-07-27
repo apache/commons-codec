@@ -21,8 +21,10 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Collections;
 
+import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.StringEncoderAbstractTest;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -37,14 +39,29 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
         return new BeiderMorseEncoder();
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void testInvalidLangIllegalStateException() {
-        Lang.loadFromResource("thisIsAMadeUpResourceName", Languages.instance(NameType.GENERIC));
+    /**
+     * Tests https://issues.apache.org/jira/browse/CODEC-125?focusedCommentId=13071566&page=com.atlassian.jira.plugin.system.issuetabpanels:
+     * comment-tabpanel#comment-13071566
+     * 
+     * @throws EncoderException
+     */
+    @Ignore
+    @Test
+    public void encodeGna() throws EncoderException {
+        BeiderMorseEncoder bmpm = new BeiderMorseEncoder();
+        bmpm.setNameType(NameType.GENERIC);
+        bmpm.setRuleType(RuleType.APPROX);
+        bmpm.encode("gna");
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testInvalidLangIllegalArgumentException() {
         Rule.instance(NameType.GENERIC, RuleType.APPROX, "noSuchLanguage");
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testInvalidLangIllegalStateException() {
+        Lang.loadFromResource("thisIsAMadeUpResourceName", Languages.instance(NameType.GENERIC));
     }
 
     @Test(expected = IllegalArgumentException.class)
