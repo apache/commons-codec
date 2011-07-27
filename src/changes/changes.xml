@@ -23,6 +23,9 @@
     </properties>
     <body>
         <release version="2.0" date="TBA" description="Feature and fix release.">
+            <action dev="ggregory" type="update" issue="CODEC-126">
+             Make org.apache.commons.codec.net.URLCodec charset field final.
+            </action>
             <action dev="ggregory, matthewpocock" type="update" issue="CODEC-125">
              Implement a Beider-Morse phonetic matching codec.
             </action>
