@@ -46,7 +46,7 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
      * 
      * @throws EncoderException
      */
-    @Ignore
+    // @Ignore
     @Test
     public void testEncodeGna() throws EncoderException {
         BeiderMorseEncoder bmpm = new BeiderMorseEncoder();
@@ -102,11 +102,11 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
         BeiderMorseEncoder bmpm = new BeiderMorseEncoder();
         bmpm.setRuleType(RuleType.RULES);
     }
-    
+
     @Ignore
     @Test
     public void testSpeedCheck() throws EncoderException {
-        char[] chars = new char[] { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'o','u' };
+        char[] chars = new char[] { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'o', 'u' };
         BeiderMorseEncoder bmpm = new BeiderMorseEncoder();
         bmpm.setNameType(NameType.GENERIC);
         bmpm.setRuleType(RuleType.APPROX);
@@ -119,8 +119,7 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
             System.out.println("String to encode:" + stringBuffer.toString());
             bmpm.encode(stringBuffer.toString());
             stringBuffer.append(chars[rand.nextInt(chars.length)]);
-            System.out.println("Elapsed time in ms:"
-                    + (System.currentTimeMillis() - start));
+            System.out.println("Elapsed time in ms:" + (System.currentTimeMillis() - start));
         }
     }
 }
