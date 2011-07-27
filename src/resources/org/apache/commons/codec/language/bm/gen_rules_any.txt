@@ -183,8 +183,8 @@
 "guy" "" "" "gi"  // french
     
 "gli" "" "" "(glI|l[italian])" 
-"gni" "" "" "(gnI|ni[italian+french)])"
-"gn" "" "[aeou]" "(n[italian+french)]|nj[italian+french]|gn)" 
+"gni" "" "" "(gnI|ni[italian+french])"
+"gn" "" "[aeou]" "(n[italian+french]|nj[italian+french]|gn)"
     
 "ggie" "" "" "(je[greeklatin]|dZe)" // dZ is Italian
 "ggi" "" "[aou]" "(j[greeklatin]|dZ)" // dZ is Italian
