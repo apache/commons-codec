@@ -20,6 +20,7 @@ package org.apache.commons.codec.language.bm;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Collections;
+import java.util.Random;
 
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
@@ -47,7 +48,7 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
      */
     @Ignore
     @Test
-    public void encodeGna() throws EncoderException {
+    public void testEncodeGna() throws EncoderException {
         BeiderMorseEncoder bmpm = new BeiderMorseEncoder();
         bmpm.setNameType(NameType.GENERIC);
         bmpm.setRuleType(RuleType.APPROX);
@@ -100,5 +101,26 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
     public void testSetRuleTypeToRulesIllegalArgumentException() {
         BeiderMorseEncoder bmpm = new BeiderMorseEncoder();
         bmpm.setRuleType(RuleType.RULES);
+    }
+    
+    @Ignore
+    @Test
+    public void testSpeedCheck() throws EncoderException {
+        char[] chars = new char[] { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'o','u' };
+        BeiderMorseEncoder bmpm = new BeiderMorseEncoder();
+        bmpm.setNameType(NameType.GENERIC);
+        bmpm.setRuleType(RuleType.APPROX);
+        StringBuffer stringBuffer = new StringBuffer();
+        Random rand = new Random();
+        stringBuffer.append(chars[rand.nextInt(chars.length)]);
+        long start;
+        for (int i = 0; i < 20; i++) {
+            start = System.currentTimeMillis();
+            System.out.println("String to encode:" + stringBuffer.toString());
+            bmpm.encode(stringBuffer.toString());
+            stringBuffer.append(chars[rand.nextInt(chars.length)]);
+            System.out.println("Elapsed time in ms:"
+                    + (System.currentTimeMillis() - start));
+        }
     }
 }
