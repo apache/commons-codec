@@ -241,7 +241,7 @@ public class Rule {
         return str;
     }
 
-    private final Set<String> language;
+    private final Set<String> languages;
 
     private final Pattern lContext;
 
@@ -264,17 +264,17 @@ public class Rule {
      *            the right context
      * @param phoneme
      *            the resulting phoneme
-     * @param language
+     * @param languages
      *            the required languages
      * @param logical
      *            flag to indicate if all or only some languages must be in scope
      */
-    public Rule(String pattern, String lContext, String rContext, String phoneme, Set<String> language, String logical) {
+    public Rule(String pattern, String lContext, String rContext, String phoneme, Set<String> languages, String logical) {
         this.pattern = pattern;
         this.lContext = Pattern.compile(lContext + "$");
         this.rContext = Pattern.compile("^" + rContext + ".*");
         this.phoneme = phoneme;
-        this.language = language;
+        this.languages = languages;
         this.logical = logical;
     }
 
@@ -283,8 +283,8 @@ public class Rule {
      * 
      * @return a Set of Strings giving the relevant languages
      */
-    public Set<String> getLanguage() {
-        return this.language;
+    public Set<String> getLanguages() {
+        return this.languages;
     }
 
     /**
@@ -341,12 +341,12 @@ public class Rule {
      * @return true if these satistfy the language and logical restrictions on this rule, false otherwise
      */
     public boolean languageMatches(Set<String> languageArg) {
-        if (!languageArg.contains(Languages.ANY) && !this.language.isEmpty()) {
-            if (ALL.equals(this.logical) && !languageArg.containsAll(this.language)) {
+        if (!languageArg.contains(Languages.ANY) && !this.languages.isEmpty()) {
+            if (ALL.equals(this.logical) && !languageArg.containsAll(this.languages)) {
                 return false;
             } else {
                 Set<String> isect = new HashSet<String>(languageArg);
-                isect.retainAll(this.language);
+                isect.retainAll(this.languages);
                 return !isect.isEmpty();
             }
         } else {
