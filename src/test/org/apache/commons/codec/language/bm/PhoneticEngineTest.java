@@ -66,7 +66,7 @@ public class PhoneticEngineTest {
     }
 
     @Test(timeout = 10000L)
-    public void testPhonetic() {
+    public void testEncode() {
         PhoneticEngine engine = new PhoneticEngine(this.nameType, this.ruleType, this.concat);
 
         String phoneticActual = engine.encode(this.name);
