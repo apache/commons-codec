@@ -358,13 +358,17 @@ public class PhoneticEngine {
         return result;
     }
 
+    /**
+     * Tests for compatible language rules to do so, apply the rule, expand the results, and detect alternatives with incompatible
+     * attributes then drop each alternative that has incompatible attributes and keep those that are compatible if there are no compatible
+     * alternatives left, return false otherwise return the compatible alternatives
+     * 
+     * @param phonetic
+     * @param target
+     * @param languageArg
+     * @return a String or null.
+     */
     private String applyRuleIfCompatible(String phonetic, String target, Set<String> languageArg) {
-        // tests for compatible language rules
-        // to do so, apply the rule, expand the results, and detect alternatives with incompatible attributes
-        // then drop each alternative that has incompatible attributes and keep those that are compatible
-        // if there are no compatible alternatives left, return false
-        // otherwise return the compatible alternatives
-
         String candidate = phonetic + target;
         if (!candidate.contains("[")) {
             return candidate;
