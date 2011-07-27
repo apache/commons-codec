@@ -116,10 +116,10 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
         long start;
         for (int i = 0; i < 20; i++) {
             start = System.currentTimeMillis();
-            System.out.println("String to encode:" + stringBuffer.toString());
+            System.out.println(i + " String to encode:" + stringBuffer.toString());
             bmpm.encode(stringBuffer.toString());
             stringBuffer.append(chars[rand.nextInt(chars.length)]);
-            System.out.println("Elapsed time in ms:" + (System.currentTimeMillis() - start));
+            System.out.println(i + " Elapsed time in ms:" + (System.currentTimeMillis() - start));
         }
     }
 }

@@ -123,7 +123,7 @@ public class Rule {
         if (langs.size() == 1) {
             return instance(nameType, rt, langs.iterator().next());
         } else {
-            return instance(nameType, rt, "any");
+            return instance(nameType, rt, Languages.ANY);
         }
     }
 
