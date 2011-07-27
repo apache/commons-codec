@@ -38,49 +38,49 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
     }
 
     @Test(expected = IllegalStateException.class)
-    public void invalidLangResourceShouldRaiseException() {
+    public void testInvalidLangIllegalStateException() {
         Lang.loadFromResource("thisIsAMadeUpResourceName", Languages.instance(NameType.GENERIC));
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void invalidLangShouldRaiseException() {
+    public void testInvalidLangIllegalArgumentException() {
         Rule.instance(NameType.GENERIC, RuleType.APPROX, "noSuchLanguage");
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void invalidLanguageResourceShouldRaiseException() {
+    public void testInvalidLanguageIllegalArgumentException() {
         Languages.instance("thereIsNoSuchLanguage");
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
-    public void negativeIndexForRuleMatchShouldRaiseException() {
+    public void testNegativeIndexForRuleMatchIndexOutOfBoundsException() {
         Rule r = new Rule("a", "", "", "", Collections.<String> emptySet(), "bob");
         r.patternAndContextMatches("bob", -1);
     }
 
     @Test
-    public void setConcat() {
+    public void testSetConcat() {
         BeiderMorseEncoder bmpm = new BeiderMorseEncoder();
         bmpm.setConcat(false);
         assertEquals("Should be able to set concat to false", false, bmpm.isConcat());
     }
 
     @Test
-    public void setNameTypeAsh() {
+    public void testSetNameTypeAsh() {
         BeiderMorseEncoder bmpm = new BeiderMorseEncoder();
         bmpm.setNameType(NameType.ASHKENAZI);
         assertEquals("Name type should have been set to ash", NameType.ASHKENAZI, bmpm.getNameType());
     }
 
     @Test
-    public void setRuleTypeExact() {
+    public void testSetRuleTypeExact() {
         BeiderMorseEncoder bmpm = new BeiderMorseEncoder();
         bmpm.setRuleType(RuleType.EXACT);
         assertEquals("Rule type should have been set to exact", RuleType.EXACT, bmpm.getRuleType());
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void setRuleTypeToRulesShouldRaiseException() {
+    public void testSetRuleTypeToRulesIllegalArgumentException() {
         BeiderMorseEncoder bmpm = new BeiderMorseEncoder();
         bmpm.setRuleType(RuleType.RULES);
     }

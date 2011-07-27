@@ -33,7 +33,7 @@ import org.junit.runners.Parameterized;
  * @since 2.0
  */
 @RunWith(Parameterized.class)
-public class PhoneticTest {
+public class PhoneticEngineTest {
 
     @Parameterized.Parameters
     public static List<Object[]> data() {
@@ -57,7 +57,7 @@ public class PhoneticTest {
     private final String phoneticExpected;
     private final RuleType ruleType;
 
-    public PhoneticTest(String name, String phoneticExpected, NameType nameType, RuleType ruleType, boolean concat) {
+    public PhoneticEngineTest(String name, String phoneticExpected, NameType nameType, RuleType ruleType, boolean concat) {
         this.name = name;
         this.phoneticExpected = phoneticExpected;
         this.nameType = nameType;
