@@ -46,7 +46,6 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
      * 
      * @throws EncoderException
      */
-    // @Ignore
     @Test
     public void testEncodeGna() throws EncoderException {
         BeiderMorseEncoder bmpm = new BeiderMorseEncoder();
