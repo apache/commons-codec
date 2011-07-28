@@ -141,7 +141,7 @@ public class Languages {
     /**
      * No languages at all.
      */
-    public static LanguageSet NO_LANGUAGES = new LanguageSet() {
+    public static final LanguageSet NO_LANGUAGES = new LanguageSet() {
         @Override
         public LanguageSet restrictTo(LanguageSet other) {
             return this;
@@ -171,7 +171,7 @@ public class Languages {
     /**
      * Any/all languages.
      */
-    public static LanguageSet ANY_LANGUAGE = new LanguageSet() {
+    public static final LanguageSet ANY_LANGUAGE = new LanguageSet() {
         @Override
         public LanguageSet restrictTo(LanguageSet other) {
             return other;
