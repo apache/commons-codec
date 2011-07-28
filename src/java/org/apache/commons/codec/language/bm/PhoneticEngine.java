@@ -286,7 +286,7 @@ public class PhoneticEngine {
         return sb.toString();
     }
 
-    private class RulesApplication {
+    private static class RulesApplication {
         private final List<Rule> finalRules;
         private final Languages.LanguageSet languageSet;
         private final String input;
