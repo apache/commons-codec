@@ -19,6 +19,7 @@ package org.apache.commons.codec.language.bm;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashMap;
@@ -27,7 +28,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
-import java.util.Stack;
 import java.util.regex.Pattern;
 
 /**
@@ -150,9 +150,9 @@ public class Rule {
      *            the set of languages to consider
      * @return a list of Rules that apply
      */
-    public static List<Rule> instance(NameType nameType, RuleType rt, Set<String> langs) {
-        if (langs.size() == 1) {
-            return instance(nameType, rt, langs.iterator().next());
+    public static List<Rule> instance(NameType nameType, RuleType rt, Languages.LanguageSet langs) {
+        if (langs.isSingleton()) {
+            return instance(nameType, rt, langs.getAny());
         } else {
             return instance(nameType, rt, Languages.ANY);
         }
@@ -225,17 +225,16 @@ public class Rule {
                         if (parts.length != 4) {
                             System.err.println("Warning: malformed rule statement split into " + parts.length + " parts: " + rawLine);
                         } else {
-                            String pat = stripQuotes(parts[0]);
-                            String lCon = stripQuotes(parts[1]);
-                            String rCon = stripQuotes(parts[2]);
-                            String ph = stripQuotes(parts[3]);
                             try {
-                                validatePhenome(ph);
+                                String pat = stripQuotes(parts[0]);
+                                String lCon = stripQuotes(parts[1]);
+                                String rCon = stripQuotes(parts[2]);
+                                PhonemeExpr ph = parsePhonemeExpr(stripQuotes(parts[3]));
+                                Rule r = new Rule(pat, lCon, rCon, ph);
+                                lines.add(r);
                             } catch (IllegalArgumentException e) {
                                 throw new IllegalStateException("Problem parsing line " + currentLine, e);
                             }
-                            Rule r = new Rule(pat, lCon, rCon, ph, Collections.<String> emptySet(), ""); // guessing last 2 parameters
-                            lines.add(r);
                         }
                     }
                 }
@@ -257,49 +256,48 @@ public class Rule {
         return str;
     }
 
-    private static void validatePhenome(CharSequence ph) {
-        Stack<Character> stack = new Stack<Character>();
-        for (int i = 0; i < ph.length(); i++) {
-            switch (ph.charAt(i)) {
-            case '(':
-                stack.push('(');
-                break;
-            case '[':
-                stack.push('[');
-                break;
-            case ')': {
-                if (stack.isEmpty())
-                    throw new IllegalArgumentException("Closing ')' at " + i + " without an opening '('" + " in " + ph);
-                char c = stack.pop();
-                if (c != '(')
-                    throw new IllegalArgumentException("Closing ')' does not pair with opening '" + c + "' at " + i + " in " + ph);
-                break;
+    private static PhonemeExpr parsePhonemeExpr(String ph) {
+        if (ph.startsWith("(")) { // we have a bracketed list of options
+            if (!ph.endsWith(")")) {
+                throw new IllegalArgumentException("Phoneme starts with '(' so must end with ')'");
             }
-            case ']': {
-                if (stack.isEmpty())
-                    throw new IllegalArgumentException("Closing ']' at " + i + " without an opening '['" + " in " + ph);
-                char c = stack.pop();
-                if (c != '[')
-                    throw new IllegalArgumentException("Closing ']' does not pair with opening '" + c + "' at " + i + " in " + ph);
-                break;
+
+            List<Phoneme> phs = new ArrayList<Phoneme>();
+            String body = ph.substring(1, ph.length() - 1);
+            for (String part : body.split("[|]")) {
+                phs.add(parsePhoneme(part));
             }
-            default:
-                break;
+            if (body.startsWith("|") || body.endsWith("|")) {
+                phs.add(new Phoneme("", Languages.ANY_LANGUAGE));
             }
+
+            return new PhonemeList(phs);
+        } else {
+            return parsePhoneme(ph);
         }
-        if (!stack.isEmpty())
-            throw new IllegalArgumentException("Bracket(s) opened without corresponding closes: " + stack + " in " + ph);
     }
 
-    private final Set<String> languages;
+    private static Phoneme parsePhoneme(String ph) {
+        int open = ph.indexOf("[");
+        if (open >= 0) {
+            if (!ph.endsWith("]")) {
+                throw new IllegalArgumentException("Phoneme expression contains a '[' but does not end in ']'");
+            }
+            String before = ph.substring(0, open);
+            String in = ph.substring(open + 1, ph.length() - 1);
+            Set<String> langs = new HashSet<String>(Arrays.asList(in.split("[+]")));
+
+            return new Phoneme(before, Languages.LanguageSet.from(langs));
+        } else {
+            return new Phoneme(ph, Languages.ANY_LANGUAGE);
+        }
+    }
 
     private final Pattern lContext;
 
-    private final String logical;
-
     private final String pattern;
 
-    private final String phoneme;
+    private final PhonemeExpr phoneme;
 
     private final Pattern rContext;
 
@@ -314,27 +312,12 @@ public class Rule {
      *            the right context
      * @param phoneme
      *            the resulting phoneme
-     * @param languages
-     *            the required languages
-     * @param logical
-     *            flag to indicate if all or only some languages must be in scope
      */
-    public Rule(String pattern, String lContext, String rContext, String phoneme, Set<String> languages, String logical) {
+    public Rule(String pattern, String lContext, String rContext, PhonemeExpr phoneme) {
         this.pattern = pattern;
         this.lContext = Pattern.compile(lContext + "$");
         this.rContext = Pattern.compile("^" + rContext + ".*");
         this.phoneme = phoneme;
-        this.languages = languages;
-        this.logical = logical;
-    }
-
-    /**
-     * Gets the languages that must be in scope. Not all rules apply in every language.
-     * 
-     * @return a Set of Strings giving the relevant languages
-     */
-    public Set<String> getLanguages() {
-        return this.languages;
     }
 
     /**
@@ -344,16 +327,6 @@ public class Rule {
      */
     public Pattern getLContext() {
         return this.lContext;
-    }
-
-    /**
-     * Gets the logical combinator for the languages. ALL means all languages must be in scope for the rule to apply. Any other value means
-     * that any one language must be in scope for the rule to apply.
-     * 
-     * @return the logical combinator String
-     */
-    public String getLogical() {
-        return this.logical;
     }
 
     /**
@@ -370,7 +343,7 @@ public class Rule {
      * 
      * @return the phoneme
      */
-    public String getPhoneme() {
+    public PhonemeExpr getPhoneme() {
         return this.phoneme;
     }
 
@@ -383,26 +356,26 @@ public class Rule {
         return this.rContext;
     }
 
-    /**
-     * Decides if the language restriction for this rule applies.
-     * 
-     * @param languageArg
-     *            a Set of Strings giving the names of the languages in scope
-     * @return true if these satistfy the language and logical restrictions on this rule, false otherwise
-     */
-    public boolean languageMatches(Set<String> languageArg) {
-        if (!languageArg.contains(Languages.ANY) && !this.languages.isEmpty()) {
-            if (ALL.equals(this.logical) && !languageArg.containsAll(this.languages)) {
-                return false;
-            } else {
-                Set<String> isect = new HashSet<String>(languageArg);
-                isect.retainAll(this.languages);
-                return !isect.isEmpty();
-            }
-        } else {
-            return true;
-        }
-    }
+    // /**
+    // * Decides if the language restriction for this rule applies.
+    // *
+    // * @param languageArg
+    // * a Set of Strings giving the names of the languages in scope
+    // * @return true if these satistfy the language and logical restrictions on this rule, false otherwise
+    // */
+    // public boolean languageMatches(Set<String> languageArg) {
+    // if (!languageArg.contains(Languages.ANY) && !this.languages.isEmpty()) {
+    // if (ALL.equals(this.logical) && !languageArg.containsAll(this.languages)) {
+    // return false;
+    // } else {
+    // Set<String> isect = new HashSet<String>(languageArg);
+    // isect.retainAll(this.languages);
+    // return !isect.isEmpty();
+    // }
+    // } else {
+    // return true;
+    // }
+    // }
 
     /**
      * Decides if the pattern and context match the input starting at a position.
@@ -432,4 +405,49 @@ public class Rule {
         return patternMatches && rContextMatches && lContextMatches;
     }
 
+    public interface PhonemeExpr {
+        Iterable<Phoneme> getPhonemes();
+    }
+
+    public static class Phoneme implements PhonemeExpr {
+        private final String phonemeText;
+        private final Languages.LanguageSet languages;
+
+        public Phoneme(String phonemeText, Languages.LanguageSet languages) {
+            this.phonemeText = phonemeText;
+            this.languages = languages;
+        }
+
+        public String getPhonemeText() {
+            return this.phonemeText;
+        }
+
+        public Languages.LanguageSet getLanguages() {
+            return this.languages;
+        }
+
+        public Iterable<Phoneme> getPhonemes() {
+            return Collections.singleton(this);
+        }
+
+        public Phoneme join(Phoneme right) {
+            return new Phoneme(this.phonemeText + right.phonemeText, this.languages.restrictTo(right.languages));
+        }
+
+        public Phoneme append(String str) {
+            return new Phoneme(this.phonemeText + str, this.languages);
+        }
+    }
+
+    public static class PhonemeList implements PhonemeExpr {
+        private final List<Phoneme> phonemes;
+
+        public PhonemeList(List<Phoneme> phonemes) {
+            this.phonemes = phonemes;
+        }
+
+        public List<Phoneme> getPhonemes() {
+            return this.phonemes;
+        }
+    }
 }

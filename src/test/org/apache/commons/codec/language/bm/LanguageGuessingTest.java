@@ -17,12 +17,10 @@
 
 package org.apache.commons.codec.language.bm;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -67,17 +65,10 @@ public class LanguageGuessingTest {
 
     @Test
     public void testLanguageGuessing() {
-        Set<String> guesses = this.lang.guessLanguages(this.name);
-        String guess = this.lang.guessLanguage(this.name);
+        Languages.LanguageSet guesses = this.lang.guessLanguages(this.name);
 
         assertTrue("language predicted for name '" + this.name + "' is wrong: " + guesses + " should contain '" + this.language + "'",
                 guesses.contains(this.language));
 
-        if (this.exactness.equals(EXACT)) {
-            assertEquals("language predicted for name '" + this.name + "' is wrong", this.language, guess);
-        } else {
-            // System.out.println("warning: test case that maps to multiple languages: '" +
-            // name + "':" + language + " ~> " + guesses);
-        }
     }
 }

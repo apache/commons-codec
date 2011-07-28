@@ -19,13 +19,11 @@ package org.apache.commons.codec.language.bm;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Collections;
 import java.util.Random;
 
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.StringEncoderAbstractTest;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -69,7 +67,6 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
         Languages.instance("thereIsNoSuchLanguage");
     }
 
-    @Ignore
     @Test(timeout = 10000L)
     public void testLongestEnglishSurname() throws EncoderException {
         BeiderMorseEncoder bmpm = new BeiderMorseEncoder();
@@ -80,7 +77,7 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void testNegativeIndexForRuleMatchIndexOutOfBoundsException() {
-        Rule r = new Rule("a", "", "", "", Collections.<String> emptySet(), "bob");
+        Rule r = new Rule("a", "", "", new Rule.Phoneme("", Languages.ANY_LANGUAGE));
         r.patternAndContextMatches("bob", -1);
     }
 
@@ -111,7 +108,6 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
         bmpm.setRuleType(RuleType.RULES);
     }
 
-    @Ignore
     @Test(timeout = 10000L)
     public void testSpeedCheck() throws EncoderException {
         char[] chars = new char[] { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'o', 'u' };
@@ -122,12 +118,12 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
         Random rand = new Random();
         stringBuffer.append(chars[rand.nextInt(chars.length)]);
         long start;
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 40; i++) {
             start = System.currentTimeMillis();
-            System.out.println(i + " String to encode:" + stringBuffer.toString());
+            // System.out.println(i + " String to encode:" + stringBuffer.toString());
             bmpm.encode(stringBuffer.toString());
             stringBuffer.append(chars[rand.nextInt(chars.length)]);
-            System.out.println(i + " Elapsed time in ms:" + (System.currentTimeMillis() - start));
+            // System.out.println(i + " Elapsed time in ms:" + (System.currentTimeMillis() - start));
         }
     }
 }

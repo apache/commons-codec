@@ -38,16 +38,16 @@ public class PhoneticEngineTest {
     @Parameterized.Parameters
     public static List<Object[]> data() {
         return Arrays
-                .asList(new Object[] { "Renault", "rinolt|rino|rinDlt|rinalt|rinult|rinD|rina|rinu", NameType.GENERIC, RuleType.APPROX,
+                .asList(new Object[] { "Renault", "rinD|rinDlt|rina|rinalt|rino|rinolt|rinu|rinult", NameType.GENERIC, RuleType.APPROX,
                         true },
                         new Object[] { "Renault", "rYnDlt|rYnalt|rYnult|rinDlt|rinalt|rinult", NameType.ASHKENAZI, RuleType.APPROX, true },
-                        new Object[] { "Renault", "(rinDlt)", NameType.SEPHARDIC, RuleType.APPROX, true },
-                        new Object[] { "SntJohn-Smith", "(sntjonsmit)", NameType.GENERIC, RuleType.EXACT, true },
-                        new Object[] { "d'ortley", "ortlaj|ortlej|ortlaj|ortlej-dortlaj|dortlej|dortlaj|dortlej", NameType.GENERIC,
+                        new Object[] { "Renault", "rinDlt", NameType.SEPHARDIC, RuleType.APPROX, true },
+                        new Object[] { "SntJohn-Smith", "sntjonsmit", NameType.GENERIC, RuleType.EXACT, true },
+                        new Object[] { "d'ortley", "ortlaj|ortlaj|ortlej|ortlej-dortlaj|dortlaj|dortlej|dortlej", NameType.GENERIC,
                                 RuleType.EXACT, true },
                         new Object[] {
                                 "van helsing",
-                                "helSink|helsink|helzink|xelSink|xelsink|xelzink|HelSink|Helsink|Helzink-vanhelSink|vanhelsink|vanhelzink|vanjelSink|vanjelsink|vanjelzink|fanhelSink|fanhelsink|fanhelzink|fanjelSink|fanjelsink|fanjelzink|banhelSink|banhelsink|banhelzink|banjelSink|banjelsink|banjelzink",
+                                "elSink|elsink|helSink|helsink|helzink|xelsink-banhelsink|fanhelsink|fanhelzink|vanhelsink|vanhelzink|vanjelsink",
                                 NameType.GENERIC, RuleType.EXACT, false });
     }
 
@@ -71,6 +71,8 @@ public class PhoneticEngineTest {
 
         String phoneticActual = engine.encode(this.name);
 
+        System.err.println("expecting: " + this.phoneticExpected);
+        System.err.println("actual: " + phoneticActual);
         assertEquals("phoneme incorrect", this.phoneticExpected, phoneticActual);
     }
 }

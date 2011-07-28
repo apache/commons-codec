@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -114,43 +115,135 @@ public class Languages {
         return this.languages;
     }
 
-    // // The original code mapped sets of languages to unique numerical codes - this doesn't seem to be needed in this impl
-    // public static Languages instance(String languagesResourceName)
-    // {
-    // // read languages list
-    // Map<String, Integer> ls = new HashMap<String, Integer>();
-    // InputStream langIS = Languages.class.getClassLoader().getResourceAsStream(languagesResourceName);
-    //
-    // if(langIS == null)
-    // throw new IllegalArgumentException("Unable to resolve required resource: " + languagesResourceName);
-    //
-    // Scanner lsScanner = new Scanner(langIS);
-    // int i = 0;
-    // while(lsScanner.hasNextLine()) {
-    // String line = lsScanner.nextLine();
-    // i++;
-    // ls.put(line.trim(), i^2);
-    // }
-    //
-    // return new Languages(Collections.unmodifiableSet(ls.keySet()), Collections.unmodifiableMap(ls));
-    // }
-    //
-    // // todo: phoneticutils.php: LanguageIndex, LanguageName, LanguageCode, LanguageIndexFromCode
-    //
-    //
-    // private final Set<String> languages;
-    // private final Map<String, Integer> language_codes;
-    //
-    // private Languages(Set<String> languages, Map<String, Integer> language_codes) {
-    // this.languages = languages;
-    // this.language_codes = language_codes;
-    // }
-    //
-    // public Set<String> getLanguages() {
-    // return languages;
-    // }
-    //
-    // public Map<String, Integer> getLanguage_codes() {
-    // return language_codes;
-    // }
+    /**
+     * A set of languages.
+     */
+    public static abstract class LanguageSet {
+        public abstract LanguageSet restrictTo(LanguageSet other);
+
+        public static LanguageSet from(Set<String> langs) {
+            if (langs.isEmpty()) {
+                return NO_LANGUAGES;
+            } else {
+                return new SomeLanguages(langs);
+            }
+        }
+
+        public abstract boolean contains(String language);
+
+        public abstract boolean isSingleton();
+
+        public abstract String getAny();
+
+        public abstract boolean isEmpty();
+    }
+
+    /**
+     * No languages at all.
+     */
+    public static LanguageSet NO_LANGUAGES = new LanguageSet() {
+        @Override
+        public LanguageSet restrictTo(LanguageSet other) {
+            return this;
+        }
+
+        @Override
+        public boolean contains(String language) {
+            return false;
+        }
+
+        @Override
+        public boolean isSingleton() {
+            return false;
+        }
+
+        @Override
+        public String getAny() {
+            throw new NoSuchElementException("Can't fetch any language from the empty language set.");
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return true;
+        }
+    };
+
+    /**
+     * Any/all languages.
+     */
+    public static LanguageSet ANY_LANGUAGE = new LanguageSet() {
+        @Override
+        public LanguageSet restrictTo(LanguageSet other) {
+            return other;
+        }
+
+        @Override
+        public boolean contains(String language) {
+            return true;
+        }
+
+        @Override
+        public boolean isSingleton() {
+            return false;
+        }
+
+        @Override
+        public String getAny() {
+            throw new NoSuchElementException("Can't fetch any language from the any language set.");
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return false;
+        }
+    };
+
+    /**
+     * Some languages, explicitly enumerated.
+     */
+    public static class SomeLanguages extends LanguageSet {
+        private final Set<String> languages;
+
+        private SomeLanguages(Set<String> languages) {
+            this.languages = Collections.unmodifiableSet(languages);
+        }
+
+        public Set<String> getLanguages() {
+            return this.languages;
+        }
+
+        @Override
+        public LanguageSet restrictTo(LanguageSet other) {
+            if (other == NO_LANGUAGES) {
+                return other;
+            } else if (other == ANY_LANGUAGE) {
+                return this;
+            } else {
+                SomeLanguages sl = (SomeLanguages) other;
+                Set<String> ls = new HashSet<String>(this.languages);
+                ls.retainAll(sl.languages);
+                return from(ls);
+            }
+        }
+
+        @Override
+        public boolean contains(String language) {
+            return this.languages.contains(language);
+        }
+
+        @Override
+        public boolean isSingleton() {
+            return this.languages.size() == 1;
+        }
+
+        @Override
+        public String getAny() {
+            return this.languages.iterator().next();
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return this.languages.isEmpty();
+        }
+    }
 }

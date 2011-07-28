@@ -132,7 +132,7 @@ public class PhoneticEngine {
      * @return the encoding of the input
      */
     public String encode(String input) {
-        Set<String> languageSet = this.lang.guessLanguages(input);
+        Languages.LanguageSet languageSet = this.lang.guessLanguages(input);
         return phoneticUtf8(input, languageSet);
     }
 
@@ -144,7 +144,7 @@ public class PhoneticEngine {
      * @param languageSet
      * @return a phonetic representation of the input; a String containing '-'-separated phonetic representations of the input
      */
-    public String phoneticUtf8(String input, final Set<String> languageSet) {
+    public String phoneticUtf8(String input, final Languages.LanguageSet languageSet) {
         final List<Rule> rules = Rule.instance(this.nameType, RuleType.RULES, languageSet);
         final List<Rule> finalRules1 = Rule.instance(this.nameType, this.ruleType, "common");
         final List<Rule> finalRules2 = Rule.instance(this.nameType, this.ruleType, languageSet);
@@ -213,208 +213,64 @@ public class PhoneticEngine {
             return result.substring(1);
         }
 
-        String phonetic = "";
+        PhonemeBuilder phonemeBuilder = PhonemeBuilder.empty(languageSet);
 
         // loop over each char in the input - we will handle the increment manually
         for (int i = 0; i < input.length();) {
-            RulesApplication rulesApplication = new RulesApplication(rules, languageSet, input, phonetic, i).invoke();
+            RulesApplication rulesApplication = new RulesApplication(rules, languageSet, input, phonemeBuilder, i).invoke();
             i = rulesApplication.getI();
-            phonetic = rulesApplication.getPhonetic();
+            phonemeBuilder = rulesApplication.getPhonemeBuilder();
+            // System.err.println(input + " " + i + ": " + phonemeBuilder.makeString());
         }
 
-        phonetic = applyFinalRules(phonetic, finalRules1, languageSet, false);
-        phonetic = applyFinalRules(phonetic, finalRules2, languageSet, true);
+        // System.err.println("Applying general rules");
+        phonemeBuilder = applyFinalRules(phonemeBuilder, finalRules1, languageSet, false);
+        // System.err.println("Now got: " + phonemeBuilder.makeString());
+        // System.err.println("Applying language-specific rules");
+        phonemeBuilder = applyFinalRules(phonemeBuilder, finalRules2, languageSet, true);
+        // System.err.println("Now got: " + phonemeBuilder.makeString());
+        // System.err.println("Done");
 
-        return phonetic;
+        return phonemeBuilder.makeString();
     }
 
-    private String removeDuplicateAlternates(final String phonetic) {
-        List<String> altArray = splitOnPipe(phonetic);
-
-        String result = "|";
-        for (String alt : altArray) {
-            if (!result.contains("|" + alt + "|")) {
-                result += (alt + "|");
-            }
-        }
-
-        result = result.substring(1, result.length() - 1);
-        return result;
-    }
-
-    /**
-     * Applied to a single alternative at a time -- not to a parenthisized list it removes all embedded bracketed attributes, logically-ands
-     * them together, and places them at the end.
-     * 
-     * However if strip is true, this can indeed remove embedded bracketed attributes from a parenthesized list
-     * 
-     * @param input
-     * @param strip
-     * @return
-     */
-    private String normalizeLanguageAttributes(final String input, final boolean strip) {
-        String text = input;
-        Set<String> langs = new HashSet<String>();
-
-        int bracketStart;
-        while ((bracketStart = text.indexOf('[')) != -1) {
-            int bracketEnd = text.indexOf(']', bracketStart);
-            if (bracketEnd == -1) {
-                throw new IllegalArgumentException("no closing square bracket in: " + text);
-            }
-
-            String body = text.substring(bracketStart + 1, bracketEnd);
-            langs.addAll(Arrays.asList(body.split("[+]")));
-            text = text.substring(0, bracketStart) + text.substring(bracketEnd + 1);
-        }
-
-        if (langs.isEmpty() || strip) {
-            return text;
-        } else if (langs.contains(Languages.ANY)) {
-            return "[" + Languages.ANY + "]";
-        } else {
-            return text + "[" + join(langs, "+") + "]";
-        }
-    }
-
-    private String applyFinalRules(String phonetic, List<Rule> finalRules, Set<String> languageArg, boolean strip) {
+    private PhonemeBuilder applyFinalRules(PhonemeBuilder phonemeBuilder, List<Rule> finalRules, Languages.LanguageSet languageSet,
+            boolean strip) {
         if (finalRules == null) {
             throw new NullPointerException("finalRules can not be null");
         }
         if (finalRules.isEmpty()) {
-            return phonetic;
+            return phonemeBuilder;
         }
 
-        phonetic = expand(phonetic);
-        // must protect | in [] as split takes a regex, not a string literal
-        List<String> phoneticArray = splitOnPipe(phonetic);
+        Set<Rule.Phoneme> phonemes = new HashSet<Rule.Phoneme>();
 
-        for (int k = 0; k < phoneticArray.size(); k++) {
-            // log("k: " + k);
+        for (Rule.Phoneme phoneme : phonemeBuilder.getPhonemes()) {
+            PhonemeBuilder subBuilder = PhonemeBuilder.empty(phoneme.getLanguages());
+            String phonemeText = phoneme.getPhonemeText();
+            // System.err.println("Expanding: " + phonemeText);
 
-            String aPhonetic = phoneticArray.get(k);
-            String phonetic2 = "";
-
-            String phoneticx = normalizeLanguageAttributes(aPhonetic, true);
-            for (int i = 0; i < aPhonetic.length();) {
-                // we will handle the increment manually
-                if (aPhonetic.substring(i, i + 1).equals("[")) {
-                    int attribStart = i;
-                    i++;
-                    while (true) {
-                        i++;
-                        String nextChar = aPhonetic.substring(i, i + 1);
-                        if (nextChar.equals("]")) {
-                            phonetic2 += aPhonetic.substring(attribStart, i);
-                            break;
-                        }
-                    }
-
-                    continue;
-                }
-
-                RulesApplication rulesApplication = new RulesApplication(finalRules, languageArg, phoneticx, phonetic2, i).invoke();
+            for (int i = 0; i < phonemeText.length();) {
+                RulesApplication rulesApplication = new RulesApplication(finalRules, languageSet, phonemeText, subBuilder, i).invoke();
                 boolean found = rulesApplication.isFound();
-                phonetic2 = rulesApplication.getPhonetic();
+                subBuilder = rulesApplication.getPhonemeBuilder();
 
                 if (!found) {
-                    phonetic2 += aPhonetic.substring(i, i + 1);
+                    // System.err.println("Not found. Appending as-is");
+                    subBuilder = subBuilder.append(phonemeText.substring(i, i + 1));
                 }
 
                 i = rulesApplication.getI();
+
+                // System.err.println(phonemeText + " " + i + ": " + subBuilder.makeString());
             }
 
-            phoneticArray.set(k, expand(phonetic2));
+            // System.err.println("Expanded to: " + subBuilder.makeString());
+
+            phonemes.addAll(subBuilder.getPhonemes());
         }
 
-        phonetic = join(phoneticArray, "|");
-        if (strip) {
-            phonetic = normalizeLanguageAttributes(phonetic, true);
-        }
-        if (!phonetic.contains("|")) {
-            phonetic = "(" + removeDuplicateAlternates(phonetic) + ")";
-        }
-
-        return phonetic;
-    }
-
-    private String expand(String phonetic) {
-        int altStart = phonetic.indexOf('(');
-        if (altStart == -1) {
-            return normalizeLanguageAttributes(phonetic, false);
-        }
-
-        String prefix = phonetic.substring(0, altStart);
-        altStart++;
-        int altEnd = phonetic.indexOf(')');
-
-        if (altEnd < altStart) {
-            throw new IllegalArgumentException("Phonetic string has a close-bracket before the first open-bracket");
-        }
-        
-        String altString = phonetic.substring(altStart, altEnd);
-        altEnd++;
-        String suffix = phonetic.substring(altEnd);
-        List<String> altArray = splitOnPipe(altString);
-
-        String result = "";
-        for (String alt : altArray) {
-            String alternate = expand(prefix + alt + suffix);
-            if (alternate.length() != 0 && !alternate.equals("[any]")) {
-                if (result.length() > 0) {
-                    result += "|";
-                }
-                result += alternate;
-            }
-        }
-
-        return result;
-    }
-
-    /**
-     * Tests for compatible language rules to do so, apply the rule, expand the results, and detect alternatives with incompatible
-     * attributes then drop each alternative that has incompatible attributes and keep those that are compatible if there are no compatible
-     * alternatives left, return false otherwise return the compatible alternatives
-     * 
-     * @param phonetic
-     * @param target
-     * @param languageArg
-     * @return a String or null.
-     */
-    private String applyRuleIfCompatible(String phonetic, String target, Set<String> languageArg) {
-        String candidate = phonetic + target;
-        if (!candidate.contains("[")) {
-            return candidate;
-        }
-
-        candidate = expand(candidate);
-        List<String> candidateArray = splitOnPipe(candidate);
-
-        candidate = "";
-        boolean found = false;
-
-        for (String thisCandidate : candidateArray) {
-            if (!languageArg.contains(Languages.ANY)) {
-                thisCandidate = normalizeLanguageAttributes(thisCandidate + "[" + languageArg + "]", false);
-            }
-
-            if (!thisCandidate.equals("[0]")) {
-                found = true;
-                if (candidate.length() != 0) {
-                    candidate += "|";
-                }
-                candidate += thisCandidate;
-            }
-        }
-
-        if (!found) {
-            return null; // eugh!
-        }
-        if (candidate.contains("|")) {
-            candidate = "(" + candidate + ")";
-        }
-
-        return candidate;
+        return new PhonemeBuilder(phonemes);
     }
 
     private static String join(Iterable<String> strings, String sep) {
@@ -430,45 +286,28 @@ public class PhoneticEngine {
         return sb.toString();
     }
 
-    private static List<String> splitOnPipe(String str) {
-        List<String> res = new ArrayList<String>();
-
-        while (true) {
-            int i = str.indexOf('|');
-            if (i < 0) {
-                res.add(str);
-                break;
-            }
-
-            res.add(str.substring(0, i));
-            str = str.substring(i + 1);
-        }
-
-        return res;
-    }
-
     private class RulesApplication {
         private final List<Rule> finalRules;
-        private final Set<String> languageArg;
+        private final Languages.LanguageSet languageSet;
         private final String input;
 
-        private String phonetic;
+        private PhonemeBuilder phonemeBuilder;
         private int i;
         private boolean found;
 
-        public RulesApplication(List<Rule> finalRules, Set<String> languageArg, String input, String phonetic, int i) {
+        public RulesApplication(List<Rule> finalRules, Languages.LanguageSet languageSet, String input, PhonemeBuilder phonemeBuilder, int i) {
             if (finalRules == null) {
                 throw new NullPointerException("The finalRules argument must not be null");
             }
             this.finalRules = finalRules;
-            this.languageArg = languageArg;
-            this.phonetic = phonetic;
+            this.languageSet = languageSet;
+            this.phonemeBuilder = phonemeBuilder;
             this.input = input;
             this.i = i;
         }
 
-        public String getPhonetic() {
-            return this.phonetic;
+        public PhonemeBuilder getPhonemeBuilder() {
+            return this.phonemeBuilder;
         }
 
         public int getI() {
@@ -487,18 +326,12 @@ public class PhoneticEngine {
                 patternLength = pattern.length();
                 // log("trying pattern: " + pattern);
 
-                if (!rule.patternAndContextMatches(this.input, this.i) || !rule.languageMatches(this.languageArg)) {
+                if (!rule.patternAndContextMatches(this.input, this.i)) {
                     // log("no match");
                     continue RULES;
                 }
 
-                String candidate = applyRuleIfCompatible(this.phonetic, rule.getPhoneme(), this.languageArg);
-
-                if (candidate == null || candidate.length() == 0) {
-                    // log("no candidate");
-                    continue RULES;
-                }
-                this.phonetic = candidate;
+                this.phonemeBuilder = this.phonemeBuilder.apply(rule.getPhoneme());
                 this.found = true;
                 break RULES;
             }
@@ -509,6 +342,67 @@ public class PhoneticEngine {
 
             this.i += patternLength;
             return this;
+        }
+    }
+
+    static class PhonemeBuilder {
+
+        public static PhonemeBuilder empty(Languages.LanguageSet languages) {
+            return new PhonemeBuilder(Collections.singleton(new Rule.Phoneme("", languages)));
+        }
+
+        private final Set<Rule.Phoneme> phonemes;
+
+        private PhonemeBuilder(Set<Rule.Phoneme> phonemes) {
+            this.phonemes = phonemes;
+        }
+
+        public Set<Rule.Phoneme> getPhonemes() {
+            return this.phonemes;
+        }
+
+        public PhonemeBuilder apply(Rule.PhonemeExpr phonemeExpr) {
+            Set<Rule.Phoneme> newPhonemes = new HashSet<Rule.Phoneme>();
+
+            for (Rule.Phoneme left : this.phonemes) {
+                for (Rule.Phoneme right : phonemeExpr.getPhonemes()) {
+                    Rule.Phoneme join = left.join(right);
+                    if (!join.getLanguages().isEmpty()) {
+                        newPhonemes.add(join);
+                    }
+                }
+            }
+
+            return new PhonemeBuilder(newPhonemes);
+        }
+
+        public String makeString() {
+            List<String> sorted = new ArrayList<String>();
+
+            for (Rule.Phoneme ph : this.phonemes) {
+                sorted.add(ph.getPhonemeText());
+            }
+
+            Collections.sort(sorted);
+            StringBuilder sb = new StringBuilder();
+
+            for (String ph : sorted) {
+                if (sb.length() > 0)
+                    sb.append("|");
+                sb.append(ph);
+            }
+
+            return sb.toString();
+        }
+
+        public PhonemeBuilder append(String str) {
+            Set<Rule.Phoneme> newPhonemes = new HashSet<Rule.Phoneme>();
+
+            for (Rule.Phoneme ph : this.phonemes) {
+                newPhonemes.add(ph.append(str));
+            }
+
+            return new PhonemeBuilder(newPhonemes);
         }
     }
 }
