@@ -217,7 +217,7 @@ public class PhoneticEngine {
 
         // loop over each char in the input - we will handle the increment manually
         for (int i = 0; i < input.length();) {
-            RulesApplication rulesApplication = new RulesApplication(rules, languageSet, input, phonemeBuilder, i).invoke();
+            RulesApplication rulesApplication = new RulesApplication(rules, input, phonemeBuilder, i).invoke();
             i = rulesApplication.getI();
             phonemeBuilder = rulesApplication.getPhonemeBuilder();
             // System.err.println(input + " " + i + ": " + phonemeBuilder.makeString());
@@ -251,7 +251,7 @@ public class PhoneticEngine {
             // System.err.println("Expanding: " + phonemeText);
 
             for (int i = 0; i < phonemeText.length();) {
-                RulesApplication rulesApplication = new RulesApplication(finalRules, languageSet, phonemeText, subBuilder, i).invoke();
+                RulesApplication rulesApplication = new RulesApplication(finalRules, phonemeText, subBuilder, i).invoke();
                 boolean found = rulesApplication.isFound();
                 subBuilder = rulesApplication.getPhonemeBuilder();
 
@@ -288,19 +288,17 @@ public class PhoneticEngine {
 
     private static class RulesApplication {
         private final List<Rule> finalRules;
-        private final Languages.LanguageSet languageSet;
         private final String input;
 
         private PhonemeBuilder phonemeBuilder;
         private int i;
         private boolean found;
 
-        public RulesApplication(List<Rule> finalRules, Languages.LanguageSet languageSet, String input, PhonemeBuilder phonemeBuilder, int i) {
+        public RulesApplication(List<Rule> finalRules, String input, PhonemeBuilder phonemeBuilder, int i) {
             if (finalRules == null) {
                 throw new NullPointerException("The finalRules argument must not be null");
             }
             this.finalRules = finalRules;
-            this.languageSet = languageSet;
             this.phonemeBuilder = phonemeBuilder;
             this.input = input;
             this.i = i;
