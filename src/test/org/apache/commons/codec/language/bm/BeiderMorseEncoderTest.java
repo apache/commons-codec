@@ -24,6 +24,8 @@ import java.util.Random;
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.StringEncoderAbstractTest;
+import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -36,6 +38,16 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
     @Override
     protected StringEncoder createStringEncoder() {
         return new BeiderMorseEncoder();
+    }
+
+    @Ignore
+    @Test
+    public void testEncodeAtz() throws EncoderException {
+        BeiderMorseEncoder bmpm = new BeiderMorseEncoder();
+        bmpm.setNameType(NameType.GENERIC);
+        bmpm.setRuleType(RuleType.APPROX);
+        Assert.assertFalse(bmpm.encode("ácz").equals(""));
+        Assert.assertFalse(bmpm.encode("átz").equals(""));
     }
 
     /**
