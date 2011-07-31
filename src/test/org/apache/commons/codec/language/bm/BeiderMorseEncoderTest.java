@@ -47,7 +47,6 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
         String[] names = { "ácz", "átz", "Ignácz", "Ignátz", "Ignác" };
         for (String name : names) {
             Assert.assertFalse(bmpm.encode(name).equals(""));
-
         }
     }
 
