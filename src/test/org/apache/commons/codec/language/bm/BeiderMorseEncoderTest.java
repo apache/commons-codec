@@ -25,6 +25,7 @@ import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.StringEncoderAbstractTest;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -34,9 +35,42 @@ import org.junit.Test;
  * @since 2.0
  */
 public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
+    private void assertNotEmpty(BeiderMorseEncoder bmpm, final String value) throws EncoderException {
+        Assert.assertFalse(value, bmpm.encode(value).equals(""));
+    }
+
     @Override
     protected StringEncoder createStringEncoder() {
         return new BeiderMorseEncoder();
+    }
+
+    @Ignore
+    @Test
+    public void testAsciiEncodeNotEmpty1Letter() throws EncoderException {
+        BeiderMorseEncoder bmpm = new BeiderMorseEncoder();
+        bmpm.setNameType(NameType.GENERIC);
+        bmpm.setRuleType(RuleType.APPROX);
+        for (char c = 'a'; c <= 'z'; c++) {
+            final String value = "" + c;
+            final String valueU = value.toUpperCase();
+            assertNotEmpty(bmpm, value);
+            assertNotEmpty(bmpm, valueU);
+        }
+    }
+
+    @Test
+    public void testAsciiEncodeNotEmpty2Letters() throws EncoderException {
+        BeiderMorseEncoder bmpm = new BeiderMorseEncoder();
+        bmpm.setNameType(NameType.GENERIC);
+        bmpm.setRuleType(RuleType.APPROX);
+        for (char c1 = 'a'; c1 <= 'z'; c1++) {
+            for (char c2 = 'a'; c2 <= 'z'; c2++) {
+                final String value = new String(new char[] { c1, c2 });
+                final String valueU = value.toUpperCase();
+                assertNotEmpty(bmpm, value);
+                assertNotEmpty(bmpm, valueU);
+            }
+        }
     }
 
     @Test
@@ -46,7 +80,7 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
         bmpm.setRuleType(RuleType.APPROX);
         String[] names = { "ácz", "átz", "Ignácz", "Ignátz", "Ignác" };
         for (String name : names) {
-            Assert.assertFalse(bmpm.encode(name).equals(""));
+            assertNotEmpty(bmpm, name);
         }
     }
 
