@@ -40,11 +40,11 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
     }
 
     @Test
-    public void testEncodeAtz() throws EncoderException {
+    public void testEncodeAtzNotEmpty() throws EncoderException {
         BeiderMorseEncoder bmpm = new BeiderMorseEncoder();
         bmpm.setNameType(NameType.GENERIC);
         bmpm.setRuleType(RuleType.APPROX);
-        String[] names = { "ácz", "átz" };
+        String[] names = { "ácz", "átz", "Ignácz", "Ignátz", "Ignác" };
         for (String name : names) {
             Assert.assertFalse(bmpm.encode(name).equals(""));
 
