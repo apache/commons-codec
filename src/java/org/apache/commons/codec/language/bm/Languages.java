@@ -54,6 +54,84 @@ import java.util.Set;
  */
 public class Languages {
 
+    /**
+     * A set of languages.
+     */
+    public static abstract class LanguageSet {
+        public static LanguageSet from(Set<String> langs) {
+            if (langs.isEmpty()) {
+                return NO_LANGUAGES;
+            } else {
+                return new SomeLanguages(langs);
+            }
+        }
+
+        public abstract boolean contains(String language);
+
+        public abstract String getAny();
+
+        public abstract boolean isEmpty();
+
+        public abstract boolean isSingleton();
+
+        public abstract LanguageSet restrictTo(LanguageSet other);
+    }
+
+    /**
+     * Some languages, explicitly enumerated.
+     */
+    public static class SomeLanguages extends LanguageSet {
+        private final Set<String> languages;
+
+        private SomeLanguages(Set<String> languages) {
+            this.languages = Collections.unmodifiableSet(languages);
+        }
+
+        @Override
+        public boolean contains(String language) {
+            return this.languages.contains(language);
+        }
+
+        @Override
+        public String getAny() {
+            return this.languages.iterator().next();
+        }
+
+        public Set<String> getLanguages() {
+            return this.languages;
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return this.languages.isEmpty();
+        }
+
+        @Override
+        public boolean isSingleton() {
+            return this.languages.size() == 1;
+        }
+
+        @Override
+        public LanguageSet restrictTo(LanguageSet other) {
+            if (other == NO_LANGUAGES) {
+                return other;
+            } else if (other == ANY_LANGUAGE) {
+                return this;
+            } else {
+                SomeLanguages sl = (SomeLanguages) other;
+                Set<String> ls = new HashSet<String>(this.languages);
+                ls.retainAll(sl.languages);
+                return from(ls);
+            }
+        }
+
+        @Override
+        public String toString() {
+            return "Languages(" + languages.toString() + ")";
+        }
+
+    }
+
     public static final String ANY = "any";
 
     private static final Map<NameType, Languages> LANGUAGES = new EnumMap<NameType, Languages>(NameType.class);
@@ -107,53 +185,12 @@ public class Languages {
 
     private final Set<String> languages;
 
-    private Languages(Set<String> languages) {
-        this.languages = languages;
-    }
-
-    public Set<String> getLanguages() {
-        return this.languages;
-    }
-
-    /**
-     * A set of languages.
-     */
-    public static abstract class LanguageSet {
-        public abstract LanguageSet restrictTo(LanguageSet other);
-
-        public static LanguageSet from(Set<String> langs) {
-            if (langs.isEmpty()) {
-                return NO_LANGUAGES;
-            } else {
-                return new SomeLanguages(langs);
-            }
-        }
-
-        public abstract boolean contains(String language);
-
-        public abstract boolean isSingleton();
-
-        public abstract String getAny();
-
-        public abstract boolean isEmpty();
-    }
-
     /**
      * No languages at all.
      */
     public static final LanguageSet NO_LANGUAGES = new LanguageSet() {
         @Override
-        public LanguageSet restrictTo(LanguageSet other) {
-            return this;
-        }
-
-        @Override
         public boolean contains(String language) {
-            return false;
-        }
-
-        @Override
-        public boolean isSingleton() {
             return false;
         }
 
@@ -166,6 +203,21 @@ public class Languages {
         public boolean isEmpty() {
             return true;
         }
+
+        @Override
+        public boolean isSingleton() {
+            return false;
+        }
+
+        @Override
+        public LanguageSet restrictTo(LanguageSet other) {
+            return this;
+        }
+
+        @Override
+        public String toString() {
+            return "NO_LANGUAGES";
+        }
     };
 
     /**
@@ -173,18 +225,8 @@ public class Languages {
      */
     public static final LanguageSet ANY_LANGUAGE = new LanguageSet() {
         @Override
-        public LanguageSet restrictTo(LanguageSet other) {
-            return other;
-        }
-
-        @Override
         public boolean contains(String language) {
             return true;
-        }
-
-        @Override
-        public boolean isSingleton() {
-            return false;
         }
 
         @Override
@@ -196,54 +238,28 @@ public class Languages {
         public boolean isEmpty() {
             return false;
         }
-    };
 
-    /**
-     * Some languages, explicitly enumerated.
-     */
-    public static class SomeLanguages extends LanguageSet {
-        private final Set<String> languages;
-
-        private SomeLanguages(Set<String> languages) {
-            this.languages = Collections.unmodifiableSet(languages);
-        }
-
-        public Set<String> getLanguages() {
-            return this.languages;
+        @Override
+        public boolean isSingleton() {
+            return false;
         }
 
         @Override
         public LanguageSet restrictTo(LanguageSet other) {
-            if (other == NO_LANGUAGES) {
-                return other;
-            } else if (other == ANY_LANGUAGE) {
-                return this;
-            } else {
-                SomeLanguages sl = (SomeLanguages) other;
-                Set<String> ls = new HashSet<String>(this.languages);
-                ls.retainAll(sl.languages);
-                return from(ls);
-            }
+            return other;
         }
 
         @Override
-        public boolean contains(String language) {
-            return this.languages.contains(language);
+        public String toString() {
+            return "ANY_LANGUAGE";
         }
+    };
 
-        @Override
-        public boolean isSingleton() {
-            return this.languages.size() == 1;
-        }
+    private Languages(Set<String> languages) {
+        this.languages = languages;
+    }
 
-        @Override
-        public String getAny() {
-            return this.languages.iterator().next();
-        }
-
-        @Override
-        public boolean isEmpty() {
-            return this.languages.isEmpty();
-        }
+    public Set<String> getLanguages() {
+        return this.languages;
     }
 }

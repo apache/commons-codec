@@ -234,6 +234,11 @@ public class Lang {
             }
         }
 
-        return Languages.LanguageSet.from(langs);
+        Languages.LanguageSet ls = Languages.LanguageSet.from(langs);
+        if (ls.equals(Languages.NO_LANGUAGES)) {
+            return Languages.ANY_LANGUAGE;
+        } else {
+            return ls;
+        }
     }
 }

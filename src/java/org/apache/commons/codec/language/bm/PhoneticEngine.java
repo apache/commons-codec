@@ -49,6 +49,124 @@ import java.util.Set;
  * @since 2.0
  */
 public class PhoneticEngine {
+    static class PhonemeBuilder {
+
+        public static PhonemeBuilder empty(Languages.LanguageSet languages) {
+            return new PhonemeBuilder(Collections.singleton(new Rule.Phoneme("", languages)));
+        }
+
+        private final Set<Rule.Phoneme> phonemes;
+
+        private PhonemeBuilder(Set<Rule.Phoneme> phonemes) {
+            this.phonemes = phonemes;
+        }
+
+        public PhonemeBuilder append(String str) {
+            Set<Rule.Phoneme> newPhonemes = new HashSet<Rule.Phoneme>();
+
+            for (Rule.Phoneme ph : this.phonemes) {
+                newPhonemes.add(ph.append(str));
+            }
+
+            return new PhonemeBuilder(newPhonemes);
+        }
+
+        public PhonemeBuilder apply(Rule.PhonemeExpr phonemeExpr) {
+            Set<Rule.Phoneme> newPhonemes = new HashSet<Rule.Phoneme>();
+
+            for (Rule.Phoneme left : this.phonemes) {
+                for (Rule.Phoneme right : phonemeExpr.getPhonemes()) {
+                    Rule.Phoneme join = left.join(right);
+                    if (!join.getLanguages().isEmpty()) {
+                        newPhonemes.add(join);
+                    }
+                }
+            }
+
+            return new PhonemeBuilder(newPhonemes);
+        }
+
+        public Set<Rule.Phoneme> getPhonemes() {
+            return this.phonemes;
+        }
+
+        public String makeString() {
+            List<String> sorted = new ArrayList<String>();
+
+            for (Rule.Phoneme ph : this.phonemes) {
+                sorted.add(ph.getPhonemeText());
+            }
+
+            Collections.sort(sorted);
+            StringBuilder sb = new StringBuilder();
+
+            for (String ph : sorted) {
+                if (sb.length() > 0)
+                    sb.append("|");
+                sb.append(ph);
+            }
+
+            return sb.toString();
+        }
+    }
+
+    private static class RulesApplication {
+        private final List<Rule> finalRules;
+        private final String input;
+
+        private PhonemeBuilder phonemeBuilder;
+        private int i;
+        private boolean found;
+
+        public RulesApplication(List<Rule> finalRules, String input, PhonemeBuilder phonemeBuilder, int i) {
+            if (finalRules == null) {
+                throw new NullPointerException("The finalRules argument must not be null");
+            }
+            this.finalRules = finalRules;
+            this.phonemeBuilder = phonemeBuilder;
+            this.input = input;
+            this.i = i;
+        }
+
+        public int getI() {
+            return this.i;
+        }
+
+        public PhonemeBuilder getPhonemeBuilder() {
+            return this.phonemeBuilder;
+        }
+
+        public RulesApplication invoke() {
+            this.found = false;
+            int patternLength = 0;
+            RULES: for (Rule rule : this.finalRules) {
+                String pattern = rule.getPattern();
+                patternLength = pattern.length();
+                // log("trying pattern: " + pattern);
+
+                if (!rule.patternAndContextMatches(this.input, this.i)) {
+                    // log("no match");
+                    continue RULES;
+                }
+
+                this.phonemeBuilder = this.phonemeBuilder.apply(rule.getPhoneme());
+                this.found = true;
+                break RULES;
+            }
+
+            if (!this.found) {
+                patternLength = 1;
+            }
+
+            this.i += patternLength;
+            return this;
+        }
+
+        public boolean isFound() {
+            return this.found;
+        }
+    }
+
     private static final Map<NameType, Set<String>> NAME_PREFIXES = new EnumMap<NameType, Set<String>>(NameType.class);
 
     static {
@@ -58,6 +176,19 @@ public class PhoneticEngine {
                 "del", "dela", "de la", "della", "des", "di", "do", "dos", "du", "van", "von"))));
         NAME_PREFIXES.put(NameType.GENERIC, Collections.unmodifiableSet(new HashSet<String>(Arrays.asList("da", "dal", "de", "del", "dela",
                 "de la", "della", "des", "di", "do", "dos", "du", "van", "von"))));
+    }
+
+    private static String join(Iterable<String> strings, String sep) {
+        StringBuilder sb = new StringBuilder();
+        Iterator<String> si = strings.iterator();
+        if (si.hasNext()) {
+            sb.append(si.next());
+        }
+        while (si.hasNext()) {
+            sb.append(sep).append(si.next());
+        }
+
+        return sb.toString();
     }
 
     private final Lang lang;
@@ -86,6 +217,57 @@ public class PhoneticEngine {
         this.ruleType = ruleType;
         this.concat = concat;
         this.lang = Lang.instance(nameType);
+    }
+
+    private PhonemeBuilder applyFinalRules(PhonemeBuilder phonemeBuilder, List<Rule> finalRules, Languages.LanguageSet languageSet,
+            boolean strip) {
+        if (finalRules == null) {
+            throw new NullPointerException("finalRules can not be null");
+        }
+        if (finalRules.isEmpty()) {
+            return phonemeBuilder;
+        }
+
+        Set<Rule.Phoneme> phonemes = new HashSet<Rule.Phoneme>();
+
+        for (Rule.Phoneme phoneme : phonemeBuilder.getPhonemes()) {
+            PhonemeBuilder subBuilder = PhonemeBuilder.empty(phoneme.getLanguages());
+            String phonemeText = phoneme.getPhonemeText();
+            // System.err.println("Expanding: " + phonemeText);
+
+            for (int i = 0; i < phonemeText.length();) {
+                RulesApplication rulesApplication = new RulesApplication(finalRules, phonemeText, subBuilder, i).invoke();
+                boolean found = rulesApplication.isFound();
+                subBuilder = rulesApplication.getPhonemeBuilder();
+
+                if (!found) {
+                    // System.err.println("Not found. Appending as-is");
+                    subBuilder = subBuilder.append(phonemeText.substring(i, i + 1));
+                }
+
+                i = rulesApplication.getI();
+
+                // System.err.println(phonemeText + " " + i + ": " + subBuilder.makeString());
+            }
+
+            // System.err.println("Expanded to: " + subBuilder.makeString());
+
+            phonemes.addAll(subBuilder.getPhonemes());
+        }
+
+        return new PhonemeBuilder(phonemes);
+    }
+
+    /**
+     * Encodes a string to its phonetic representation.
+     * 
+     * @param input
+     *            the String to encode
+     * @return the encoding of the input
+     */
+    public String encode(String input) {
+        Languages.LanguageSet languageSet = this.lang.guessLanguages(input);
+        return phoneticUtf8(input, languageSet);
     }
 
     /**
@@ -122,18 +304,6 @@ public class PhoneticEngine {
      */
     public boolean isConcat() {
         return this.concat;
-    }
-
-    /**
-     * Encodes a string to its phonetic representation.
-     * 
-     * @param input
-     *            the String to encode
-     * @return the encoding of the input
-     */
-    public String encode(String input) {
-        Languages.LanguageSet languageSet = this.lang.guessLanguages(input);
-        return phoneticUtf8(input, languageSet);
     }
 
     /**
@@ -232,175 +402,5 @@ public class PhoneticEngine {
         // System.err.println("Done");
 
         return phonemeBuilder.makeString();
-    }
-
-    private PhonemeBuilder applyFinalRules(PhonemeBuilder phonemeBuilder, List<Rule> finalRules, Languages.LanguageSet languageSet,
-            boolean strip) {
-        if (finalRules == null) {
-            throw new NullPointerException("finalRules can not be null");
-        }
-        if (finalRules.isEmpty()) {
-            return phonemeBuilder;
-        }
-
-        Set<Rule.Phoneme> phonemes = new HashSet<Rule.Phoneme>();
-
-        for (Rule.Phoneme phoneme : phonemeBuilder.getPhonemes()) {
-            PhonemeBuilder subBuilder = PhonemeBuilder.empty(phoneme.getLanguages());
-            String phonemeText = phoneme.getPhonemeText();
-            // System.err.println("Expanding: " + phonemeText);
-
-            for (int i = 0; i < phonemeText.length();) {
-                RulesApplication rulesApplication = new RulesApplication(finalRules, phonemeText, subBuilder, i).invoke();
-                boolean found = rulesApplication.isFound();
-                subBuilder = rulesApplication.getPhonemeBuilder();
-
-                if (!found) {
-                    // System.err.println("Not found. Appending as-is");
-                    subBuilder = subBuilder.append(phonemeText.substring(i, i + 1));
-                }
-
-                i = rulesApplication.getI();
-
-                // System.err.println(phonemeText + " " + i + ": " + subBuilder.makeString());
-            }
-
-            // System.err.println("Expanded to: " + subBuilder.makeString());
-
-            phonemes.addAll(subBuilder.getPhonemes());
-        }
-
-        return new PhonemeBuilder(phonemes);
-    }
-
-    private static String join(Iterable<String> strings, String sep) {
-        StringBuilder sb = new StringBuilder();
-        Iterator<String> si = strings.iterator();
-        if (si.hasNext()) {
-            sb.append(si.next());
-        }
-        while (si.hasNext()) {
-            sb.append(sep).append(si.next());
-        }
-
-        return sb.toString();
-    }
-
-    private static class RulesApplication {
-        private final List<Rule> finalRules;
-        private final String input;
-
-        private PhonemeBuilder phonemeBuilder;
-        private int i;
-        private boolean found;
-
-        public RulesApplication(List<Rule> finalRules, String input, PhonemeBuilder phonemeBuilder, int i) {
-            if (finalRules == null) {
-                throw new NullPointerException("The finalRules argument must not be null");
-            }
-            this.finalRules = finalRules;
-            this.phonemeBuilder = phonemeBuilder;
-            this.input = input;
-            this.i = i;
-        }
-
-        public PhonemeBuilder getPhonemeBuilder() {
-            return this.phonemeBuilder;
-        }
-
-        public int getI() {
-            return this.i;
-        }
-
-        public boolean isFound() {
-            return this.found;
-        }
-
-        public RulesApplication invoke() {
-            this.found = false;
-            int patternLength = 0;
-            RULES: for (Rule rule : this.finalRules) {
-                String pattern = rule.getPattern();
-                patternLength = pattern.length();
-                // log("trying pattern: " + pattern);
-
-                if (!rule.patternAndContextMatches(this.input, this.i)) {
-                    // log("no match");
-                    continue RULES;
-                }
-
-                this.phonemeBuilder = this.phonemeBuilder.apply(rule.getPhoneme());
-                this.found = true;
-                break RULES;
-            }
-
-            if (!this.found) {
-                patternLength = 1;
-            }
-
-            this.i += patternLength;
-            return this;
-        }
-    }
-
-    static class PhonemeBuilder {
-
-        public static PhonemeBuilder empty(Languages.LanguageSet languages) {
-            return new PhonemeBuilder(Collections.singleton(new Rule.Phoneme("", languages)));
-        }
-
-        private final Set<Rule.Phoneme> phonemes;
-
-        private PhonemeBuilder(Set<Rule.Phoneme> phonemes) {
-            this.phonemes = phonemes;
-        }
-
-        public Set<Rule.Phoneme> getPhonemes() {
-            return this.phonemes;
-        }
-
-        public PhonemeBuilder apply(Rule.PhonemeExpr phonemeExpr) {
-            Set<Rule.Phoneme> newPhonemes = new HashSet<Rule.Phoneme>();
-
-            for (Rule.Phoneme left : this.phonemes) {
-                for (Rule.Phoneme right : phonemeExpr.getPhonemes()) {
-                    Rule.Phoneme join = left.join(right);
-                    if (!join.getLanguages().isEmpty()) {
-                        newPhonemes.add(join);
-                    }
-                }
-            }
-
-            return new PhonemeBuilder(newPhonemes);
-        }
-
-        public String makeString() {
-            List<String> sorted = new ArrayList<String>();
-
-            for (Rule.Phoneme ph : this.phonemes) {
-                sorted.add(ph.getPhonemeText());
-            }
-
-            Collections.sort(sorted);
-            StringBuilder sb = new StringBuilder();
-
-            for (String ph : sorted) {
-                if (sb.length() > 0)
-                    sb.append("|");
-                sb.append(ph);
-            }
-
-            return sb.toString();
-        }
-
-        public PhonemeBuilder append(String str) {
-            Set<Rule.Phoneme> newPhonemes = new HashSet<Rule.Phoneme>();
-
-            for (Rule.Phoneme ph : this.phonemes) {
-                newPhonemes.add(ph.append(str));
-            }
-
-            return new PhonemeBuilder(newPhonemes);
-        }
     }
 }

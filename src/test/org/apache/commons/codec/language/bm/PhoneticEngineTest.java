@@ -37,18 +37,14 @@ public class PhoneticEngineTest {
 
     @Parameterized.Parameters
     public static List<Object[]> data() {
-        return Arrays
-                .asList(new Object[] { "Renault", "rinD|rinDlt|rina|rinalt|rino|rinolt|rinu|rinult", NameType.GENERIC, RuleType.APPROX,
-                        true },
-                        new Object[] { "Renault", "rYnDlt|rYnalt|rYnult|rinDlt|rinalt|rinult", NameType.ASHKENAZI, RuleType.APPROX, true },
-                        new Object[] { "Renault", "rinDlt", NameType.SEPHARDIC, RuleType.APPROX, true },
-                        new Object[] { "SntJohn-Smith", "sntjonsmit", NameType.GENERIC, RuleType.EXACT, true },
-                        new Object[] { "d'ortley", "ortlaj|ortlaj|ortlej|ortlej-dortlaj|dortlaj|dortlej|dortlej", NameType.GENERIC,
-                                RuleType.EXACT, true },
-                        new Object[] {
-                                "van helsing",
-                                "elSink|elsink|helSink|helsink|helzink|xelsink-banhelsink|fanhelsink|fanhelzink|vanhelsink|vanhelzink|vanjelsink",
-                                NameType.GENERIC, RuleType.EXACT, false });
+        return Arrays.asList(new Object[] { "Renault", "rinD|rinDlt|rina|rinalt|rino|rinolt|rinu|rinult", NameType.GENERIC,
+                RuleType.APPROX, true }, new Object[] { "Renault", "rYnDlt|rYnalt|rYnult|rinDlt|rinalt|rinult", NameType.ASHKENAZI,
+                RuleType.APPROX, true }, new Object[] { "Renault", "rinDlt", NameType.SEPHARDIC, RuleType.APPROX, true }, new Object[] {
+                "SntJohn-Smith", "sntjonsmit", NameType.GENERIC, RuleType.EXACT, true }, new Object[] { "d'ortley",
+                "ortlaj|ortlaj|ortlej|ortlej-dortlaj|dortlaj|dortlej|dortlej", NameType.GENERIC, RuleType.EXACT, true }, new Object[] {
+                "van helsing",
+                "elSink|elsink|helSink|helsink|helzink|xelsink-banhelsink|fanhelsink|fanhelzink|vanhelsink|vanhelzink|vanjelsink",
+                NameType.GENERIC, RuleType.EXACT, false });
     }
 
     private final boolean concat;
@@ -72,7 +68,7 @@ public class PhoneticEngineTest {
         String phoneticActual = engine.encode(this.name);
 
         System.err.println("expecting: " + this.phoneticExpected);
-        System.err.println("actual: " + phoneticActual);
+        System.err.println("actual:    " + phoneticActual);
         assertEquals("phoneme incorrect", this.phoneticExpected, phoneticActual);
     }
 }

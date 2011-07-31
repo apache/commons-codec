@@ -25,7 +25,6 @@ import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.StringEncoderAbstractTest;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -40,14 +39,16 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
         return new BeiderMorseEncoder();
     }
 
-    @Ignore
     @Test
     public void testEncodeAtz() throws EncoderException {
         BeiderMorseEncoder bmpm = new BeiderMorseEncoder();
         bmpm.setNameType(NameType.GENERIC);
         bmpm.setRuleType(RuleType.APPROX);
-        Assert.assertFalse(bmpm.encode("ácz").equals(""));
-        Assert.assertFalse(bmpm.encode("átz").equals(""));
+        String[] names = { "ácz", "átz" };
+        for (String name : names) {
+            Assert.assertFalse(bmpm.encode(name).equals(""));
+
+        }
     }
 
     /**
@@ -79,6 +80,7 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
         Languages.instance("thereIsNoSuchLanguage");
     }
 
+    // @Ignore
     @Test(timeout = 10000L)
     public void testLongestEnglishSurname() throws EncoderException {
         BeiderMorseEncoder bmpm = new BeiderMorseEncoder();
@@ -120,7 +122,7 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
         bmpm.setRuleType(RuleType.RULES);
     }
 
-    @Test(timeout = 10000L)
+    @Test(timeout = 20000L)
     public void testSpeedCheck() throws EncoderException {
         char[] chars = new char[] { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'o', 'u' };
         BeiderMorseEncoder bmpm = new BeiderMorseEncoder();

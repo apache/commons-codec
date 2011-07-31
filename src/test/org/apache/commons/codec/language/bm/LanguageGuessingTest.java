@@ -48,7 +48,7 @@ public class LanguageGuessingTest {
                 { "Sjneijder", "dutch", EXACT }, { "Klausewitz", "german", EXACT }, { "Küçük", "turkish", EXACT },
                 { "Giacometti", "italian", EXACT }, { "Nagy", "hungarian", EXACT }, { "Ceauşescu", "romanian", EXACT },
                 { "Angelopoulos", "greeklatin", EXACT }, { "Αγγελόπουλος", "greek", EXACT }, { "Пушкин", "cyrillic", EXACT },
-                { "כהן", "hebrew", EXACT } });
+                { "כהן", "hebrew", EXACT }, { "ácz", "any", EXACT }, { "átz", "any", EXACT } });
     }
 
     private final String exactness;
