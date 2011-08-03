@@ -41,8 +41,12 @@ public class Base32InputStreamTest {
     @Test
     public void testCodec105() throws IOException {
         Base32InputStream in = new Base32InputStream(new Codec105ErrorInputStream(), true, 0, null);
-        for (int i = 0; i < 5; i++) {
-            in.read();
+        try {
+            for (int i = 0; i < 5; i++) {
+                in.read();
+            }
+        } finally {
+            in.close();
         }
     }
 

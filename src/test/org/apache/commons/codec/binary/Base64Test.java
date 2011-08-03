@@ -469,7 +469,7 @@ public class Base64Test {
         Base64 b64 = new Base64();
 
         try {
-            b64.decode(new Integer(5));
+            b64.decode(Integer.valueOf(5));
             fail("decode(Object) didn't throw an exception when passed an Integer object");
         } catch (DecoderException e) {
             // ignored

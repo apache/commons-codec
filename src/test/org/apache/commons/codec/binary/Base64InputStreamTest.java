@@ -51,8 +51,12 @@ public class Base64InputStreamTest {
     @Test
     public void testCodec105() throws IOException {
         Base64InputStream in = new Base64InputStream(new Codec105ErrorInputStream(), true, 0, null);
-        for (int i = 0; i < 5; i++) {
-            in.read();
+        try {
+            for (int i = 0; i < 5; i++) {
+                in.read();
+            }
+        } finally {
+            in.close();
         }
     }
 
