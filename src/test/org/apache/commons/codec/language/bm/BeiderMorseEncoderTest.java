@@ -25,7 +25,6 @@ import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.StringEncoderAbstractTest;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -44,7 +43,7 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
         return new BeiderMorseEncoder();
     }
 
-    @Ignore
+    // @Ignore
     @Test
     public void testAsciiEncodeNotEmpty1Letter() throws EncoderException {
         BeiderMorseEncoder bmpm = new BeiderMorseEncoder();
@@ -113,7 +112,6 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
         Languages.instance("thereIsNoSuchLanguage");
     }
 
-    // @Ignore
     @Test(timeout = 10000L)
     public void testLongestEnglishSurname() throws EncoderException {
         BeiderMorseEncoder bmpm = new BeiderMorseEncoder();
@@ -165,7 +163,7 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
         Random rand = new Random();
         stringBuffer.append(chars[rand.nextInt(chars.length)]);
         long start;
-        for (int i = 0; i < 40; i++) {
+        for (int i = 0; i < 30; i++) {
             start = System.currentTimeMillis();
             // System.out.println(i + " String to encode:" + stringBuffer.toString());
             bmpm.encode(stringBuffer.toString());

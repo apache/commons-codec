@@ -123,8 +123,8 @@
 "gh" "" "[ei]" "(g[romanian+italian+greeklatin]|gh)" 
           
 "ouh" "" "[aioe]" "(v[french]|uh)"
-"uh" "" "[aioe]" "(v|uh)" 
-"h" "" "$" "" 
+"uh" "" "[aioe]" "(v|uh)"
+"h" "." "$" "" // match h at the end of words, but not as a single letter
 "h" "[aeiouyäöü]" "" ""  // german
 "h" "^" "" "(h|x[romanian+greeklatin]|H[english+romanian+polish+french+portuguese+italian+spanish])" 
          

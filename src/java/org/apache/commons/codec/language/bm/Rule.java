@@ -143,13 +143,13 @@ public class Rule {
                 Languages ls = Languages.instance(s);
                 for (String l : ls.getLanguages()) {
                     try {
-                        rs.put(l, parseRules(createScanner(s, rt, l)));
+                        rs.put(l, parseRules(createScanner(s, rt, l), createResourceName(s, rt, l)));
                     } catch (IllegalStateException e) {
                         throw new IllegalStateException("Problem processing " + createResourceName(s, rt, l), e);
                     }
                 }
                 if (!rt.equals(RuleType.RULES)) {
-                    rs.put("common", parseRules(createScanner(s, rt, "common")));
+                    rs.put("common", parseRules(createScanner(s, rt, "common"), createResourceName(s, rt, "common")));
                 }
 
                 rts.put(rt, Collections.unmodifiableMap(rs));
@@ -262,7 +262,7 @@ public class Rule {
         }
     }
 
-    private static List<Rule> parseRules(Scanner scanner) {
+    private static List<Rule> parseRules(final Scanner scanner, final String location) {
         List<Rule> lines = new ArrayList<Rule>();
         int currentLine = 0;
 
@@ -300,7 +300,7 @@ public class Rule {
                         if (incl.contains(" ")) {
                             System.err.println("Warining: malformed import statement: " + rawLine);
                         } else {
-                            lines.addAll(parseRules(createScanner(incl)));
+                            lines.addAll(parseRules(createScanner(incl), location + "->" + incl));
                         }
                     } else {
                         // rule
@@ -313,7 +313,21 @@ public class Rule {
                                 String lCon = stripQuotes(parts[1]);
                                 String rCon = stripQuotes(parts[2]);
                                 PhonemeExpr ph = parsePhonemeExpr(stripQuotes(parts[3]));
-                                Rule r = new Rule(pat, lCon, rCon, ph);
+                                final int cLine = currentLine;
+                                Rule r = new Rule(pat, lCon, rCon, ph) {
+                                    private final int line = cLine;
+                                    private final String loc = location;
+
+                                    @Override
+                                    public String toString() {
+                                        final StringBuilder sb = new StringBuilder();
+                                        sb.append("Rule");
+                                        sb.append("{line=").append(line);
+                                        sb.append(", loc='").append(loc).append('\'');
+                                        sb.append('}');
+                                        return sb.toString();
+                                    }
+                                };
                                 lines.add(r);
                             } catch (IllegalArgumentException e) {
                                 throw new IllegalStateException("Problem parsing line " + currentLine, e);
