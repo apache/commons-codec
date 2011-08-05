@@ -219,8 +219,7 @@ public class PhoneticEngine {
         this.lang = Lang.instance(nameType);
     }
 
-    private PhonemeBuilder applyFinalRules(PhonemeBuilder phonemeBuilder, List<Rule> finalRules, Languages.LanguageSet languageSet,
-            boolean strip) {
+    private PhonemeBuilder applyFinalRules(PhonemeBuilder phonemeBuilder, List<Rule> finalRules) {
         if (finalRules == null) {
             throw new NullPointerException("finalRules can not be null");
         }
@@ -394,10 +393,10 @@ public class PhoneticEngine {
         }
 
         // System.err.println("Applying general rules");
-        phonemeBuilder = applyFinalRules(phonemeBuilder, finalRules1, languageSet, false);
+        phonemeBuilder = applyFinalRules(phonemeBuilder, finalRules1);
         // System.err.println("Now got: " + phonemeBuilder.makeString());
         // System.err.println("Applying language-specific rules");
-        phonemeBuilder = applyFinalRules(phonemeBuilder, finalRules2, languageSet, true);
+        phonemeBuilder = applyFinalRules(phonemeBuilder, finalRules2);
         // System.err.println("Now got: " + phonemeBuilder.makeString());
         // System.err.println("Done");
 
