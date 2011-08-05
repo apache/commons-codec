@@ -43,7 +43,6 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
         return new BeiderMorseEncoder();
     }
 
-    // @Ignore
     @Test
     public void testAsciiEncodeNotEmpty1Letter() throws EncoderException {
         BeiderMorseEncoder bmpm = new BeiderMorseEncoder();
