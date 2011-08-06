@@ -79,7 +79,9 @@ import java.util.regex.Pattern;
  * @since 2.0
  */
 public class Rule {
+
     public static class Phoneme implements PhonemeExpr, Comparable<Phoneme> {
+
         private final CharSequence phonemeText;
         private final Languages.LanguageSet languages;
 
@@ -110,15 +112,18 @@ public class Rule {
 
         public int compareTo(Phoneme o) {
             for (int i = 0; i < phonemeText.length(); i++) {
-                if (i >= o.phonemeText.length())
+                if (i >= o.phonemeText.length()) {
                     return +1;
+                }
                 int c = phonemeText.charAt(i) - o.phonemeText.charAt(i);
-                if (c != 0)
+                if (c != 0) {
                     return c;
+                }
             }
 
-            if (phonemeText.length() < o.phonemeText.length())
+            if (phonemeText.length() < o.phonemeText.length()) {
                 return -1;
+            }
 
             return 0;
         }
@@ -307,9 +312,10 @@ public class Rule {
                     // trim leading-trailing whitespace
                     line = line.trim();
 
-                    if (line.length() == 0)
+                    if (line.length() == 0) {
                         continue; // empty lines can be safely skipped
-
+                    }
+                    
                     if (line.startsWith(HASH_INCLUDE)) {
                         // include statement
                         String incl = line.substring(HASH_INCLUDE.length()).trim();
