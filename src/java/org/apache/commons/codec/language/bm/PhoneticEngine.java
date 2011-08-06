@@ -50,6 +50,7 @@ import java.util.TreeSet;
  * @since 2.0
  */
 public class PhoneticEngine {
+
     static class PhonemeBuilder {
 
         public static PhonemeBuilder empty(Languages.LanguageSet languages) {
@@ -97,8 +98,9 @@ public class PhoneticEngine {
             // System.err.println(this.phonemes.getClass());
 
             for (Rule.Phoneme ph : this.phonemes) {
-                if (sb.length() > 0)
+                if (sb.length() > 0) {
                     sb.append("|");
+                }
                 sb.append(ph.getPhonemeText());
             }
 
@@ -330,8 +332,7 @@ public class PhoneticEngine {
                     return "(" + encode(remainder) + ")-(" + encode(combined) + ")";
                 }
                 // fixme: this case is invariant on l
-                else if (input.length() >= 2 && input.substring(0, 2).equals("d'")) // check for d'
-                {
+                else if (input.length() >= 2 && input.substring(0, 2).equals("d'")) { // check for d'
                     String remainder = input.substring(2);
                     String combined = "d" + remainder;
                     return "(" + encode(remainder) + ")-(" + encode(combined) + ")";

@@ -24,10 +24,13 @@ package org.apache.commons.codec.language.bm;
  * @since 2.0
  */
 public enum NameType {
+    
     /** Ashkenazi family names */
     ASHKENAZI("ash"),
+    
     /** Generic names and words */
     GENERIC("gen"),
+    
     /** Sephardic family names */
     SEPHARDIC("sep");
 
