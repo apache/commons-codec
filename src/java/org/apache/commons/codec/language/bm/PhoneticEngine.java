@@ -287,18 +287,17 @@ public class PhoneticEngine {
         input = input.toLowerCase(Locale.ENGLISH).replace('-', ' ').trim();
 
         if (this.nameType == NameType.GENERIC) {
+            if (input.length() >= 2 && input.substring(0, 2).equals("d'")) { // check for d'
+                String remainder = input.substring(2);
+                String combined = "d" + remainder;
+                return "(" + encode(remainder) + ")-(" + encode(combined) + ")";
+            }
             for (String l : NAME_PREFIXES.get(this.nameType)) {
                 // handle generic prefixes
                 if (input.startsWith(l + " ")) {
                     // check for any prefix in the words list
                     String remainder = input.substring(l.length() + 1); // input without the prefix
                     String combined = l + remainder; // input with prefix without space
-                    return "(" + encode(remainder) + ")-(" + encode(combined) + ")";
-                }
-                // fixme: this case is invariant on l
-                else if (input.length() >= 2 && input.substring(0, 2).equals("d'")) { // check for d'
-                    String remainder = input.substring(2);
-                    String combined = "d" + remainder;
                     return "(" + encode(remainder) + ")-(" + encode(combined) + ")";
                 }
             }
