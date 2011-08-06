@@ -218,11 +218,7 @@ public class Rule {
      * @return a list of Rules that apply
      */
     public static List<Rule> instance(NameType nameType, RuleType rt, Languages.LanguageSet langs) {
-        if (langs.isSingleton()) {
-            return instance(nameType, rt, langs.getAny());
-        } else {
-            return instance(nameType, rt, Languages.ANY);
-        }
+        return langs.isSingleton() ? instance(nameType, rt, langs.getAny()) : instance(nameType, rt, Languages.ANY);
     }
 
     /**
@@ -315,7 +311,7 @@ public class Rule {
                     if (line.length() == 0) {
                         continue; // empty lines can be safely skipped
                     }
-                    
+
                     if (line.startsWith(HASH_INCLUDE)) {
                         // include statement
                         String incl = line.substring(HASH_INCLUDE.length()).trim();
@@ -621,8 +617,9 @@ public class Rule {
     }
 
     private static boolean startsWith(CharSequence input, CharSequence prefix) {
-        if (prefix.length() > input.length())
+        if (prefix.length() > input.length()) {
             return false;
+        }
         for (int i = 0; i < prefix.length(); i++) {
             if (input.charAt(i) != prefix.charAt(i)) {
                 return false;
@@ -632,8 +629,9 @@ public class Rule {
     }
 
     private static boolean endsWith(CharSequence input, CharSequence suffix) {
-        if (suffix.length() > input.length())
+        if (suffix.length() > input.length()) {
             return false;
+        }
         for (int i = input.length() - 1, j = suffix.length() - 1; j >= 0; i--, j--) {
             if (input.charAt(i) != suffix.charAt(j)) {
                 return false;
@@ -652,6 +650,7 @@ public class Rule {
     }
 
     private static class AppendableCharSeqeuence implements CharSequence {
+        
         private final CharSequence left;
         private final CharSequence right;
         private final int length;
