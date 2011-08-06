@@ -80,6 +80,67 @@ import java.util.regex.Pattern;
  */
 public class Rule {
 
+    private static class AppendableCharSeqeuence implements CharSequence {
+        
+        private final CharSequence left;
+        private final CharSequence right;
+        private final int length;
+        private String contentCache = null;
+
+        private AppendableCharSeqeuence(CharSequence left, CharSequence right) {
+            this.left = left;
+            this.right = right;
+            this.length = left.length() + right.length();
+        }
+
+        public void buildString(StringBuilder sb) {
+            if (left instanceof AppendableCharSeqeuence) {
+                ((AppendableCharSeqeuence) left).buildString(sb);
+            } else {
+                sb.append(left);
+            }
+            if (right instanceof AppendableCharSeqeuence) {
+                ((AppendableCharSeqeuence) right).buildString(sb);
+            } else {
+                sb.append(right);
+            }
+        }
+
+        public char charAt(int index) {
+            // int lLength = left.length();
+            // if(index < lLength) return left.charAt(index);
+            // else return right.charAt(index - lLength);
+            return toString().charAt(index);
+        }
+
+        public int length() {
+            return length;
+        }
+
+        public CharSequence subSequence(int start, int end) {
+            // int lLength = left.length();
+            // if(start > lLength) return right.subSequence(start - lLength, end - lLength);
+            // else if(end <= lLength) return left.subSequence(start, end);
+            // else {
+            // CharSequence newLeft = left.subSequence(start, lLength);
+            // CharSequence newRight = right.subSequence(0, end - lLength);
+            // return new AppendableCharSeqeuence(newLeft, newRight);
+            // }
+            return toString().subSequence(start, end);
+        }
+
+        @Override
+        public String toString() {
+            if (contentCache == null) {
+                StringBuilder sb = new StringBuilder();
+                buildString(sb);
+                contentCache = sb.toString();
+                // System.err.println("Materialized string: " + contentCache);
+            }
+            return contentCache;
+        }
+    }
+
     public static class Phoneme implements PhonemeExpr, Comparable<Phoneme> {
 
         private final CharSequence phonemeText;
@@ -92,22 +153,6 @@ public class Rule {
 
         public Phoneme append(CharSequence str) {
             return new Phoneme(new AppendableCharSeqeuence(this.phonemeText, str), this.languages);
-        }
-
-        public Languages.LanguageSet getLanguages() {
-            return this.languages;
-        }
-
-        public Iterable<Phoneme> getPhonemes() {
-            return Collections.singleton(this);
-        }
-
-        public CharSequence getPhonemeText() {
-            return this.phonemeText;
-        }
-
-        public Phoneme join(Phoneme right) {
-            return new Phoneme(new AppendableCharSeqeuence(this.phonemeText, right.phonemeText), this.languages.restrictTo(right.languages));
         }
 
         public int compareTo(Phoneme o) {
@@ -127,6 +172,22 @@ public class Rule {
 
             return 0;
         }
+
+        public Languages.LanguageSet getLanguages() {
+            return this.languages;
+        }
+
+        public Iterable<Phoneme> getPhonemes() {
+            return Collections.singleton(this);
+        }
+
+        public CharSequence getPhonemeText() {
+            return this.phonemeText;
+        }
+
+        public Phoneme join(Phoneme right) {
+            return new Phoneme(new AppendableCharSeqeuence(this.phonemeText, right.phonemeText), this.languages.restrictTo(right.languages));
+        }
     }
 
     public interface PhonemeExpr {
@@ -143,6 +204,20 @@ public class Rule {
         public List<Phoneme> getPhonemes() {
             return this.phonemes;
         }
+    }
+
+    /**
+     * A minimal wrapper around the functionality of Matcher that we use, to allow for alternate implementations.
+     */
+    public static interface RMatcher {
+        public boolean find();
+    }
+
+    /**
+     * A minimal wrapper around the functionality of Pattern that we use, to allow for alternate implementations.
+     */
+    public static interface RPattern {
+        public RMatcher matcher(CharSequence input);
     }
 
     public static final String ALL = "ALL";
@@ -180,6 +255,15 @@ public class Rule {
         }
     }
 
+    private static boolean contains(CharSequence chars, char input) {
+        for (int i = 0; i < chars.length(); i++) {
+            if (chars.charAt(i) == input) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private static String createResourceName(NameType nameType, RuleType rt, String lang) {
         return String.format("org/apache/commons/codec/language/bm/%s_%s_%s.txt", nameType.getName(), rt.getName(), lang);
     }
@@ -204,6 +288,18 @@ public class Rule {
         }
 
         return new Scanner(rulesIS, ResourceConstants.ENCODING);
+    }
+
+    private static boolean endsWith(CharSequence input, CharSequence suffix) {
+        if (suffix.length() > input.length()) {
+            return false;
+        }
+        for (int i = input.length() - 1, j = suffix.length() - 1; j >= 0; i--, j--) {
+            if (input.charAt(i) != suffix.charAt(j)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -359,123 +455,6 @@ public class Rule {
         return lines;
     }
 
-    private static String stripQuotes(String str) {
-        if (str.startsWith(DOUBLE_QUOTE)) {
-            str = str.substring(1);
-        }
-
-        if (str.endsWith(DOUBLE_QUOTE)) {
-            str = str.substring(0, str.length() - 1);
-        }
-
-        return str;
-    }
-
-    private final RPattern lContext;
-
-    private final String pattern;
-
-    private final PhonemeExpr phoneme;
-
-    private final RPattern rContext;
-
-    /**
-     * Creates a new rule.
-     * 
-     * @param pattern
-     *            the pattern
-     * @param lContext
-     *            the left context
-     * @param rContext
-     *            the right context
-     * @param phoneme
-     *            the resulting phoneme
-     */
-    public Rule(String pattern, String lContext, String rContext, PhonemeExpr phoneme) {
-        this.pattern = pattern;
-        this.lContext = pattern(lContext + "$");
-        this.rContext = pattern("^" + rContext);
-        this.phoneme = phoneme;
-    }
-
-    /**
-     * Gets the left context. This is a regular expression that must match to the left of the pattern.
-     * 
-     * @return the left context Pattern
-     */
-    public RPattern getLContext() {
-        return this.lContext;
-    }
-
-    /**
-     * Gets the pattern. This is a string-literal that must exactly match.
-     * 
-     * @return the pattern
-     */
-    public String getPattern() {
-        return this.pattern;
-    }
-
-    /**
-     * Gets the phoneme. If the rule matches, this is the phoneme associated with the pattern match.
-     * 
-     * @return the phoneme
-     */
-    public PhonemeExpr getPhoneme() {
-        return this.phoneme;
-    }
-
-    /**
-     * Gets the right context. This is a regular expression that must match to the right of the pattern.
-     * 
-     * @return the right context Pattern
-     */
-    public RPattern getRContext() {
-        return this.rContext;
-    }
-
-    /**
-     * Decides if the pattern and context match the input starting at a position.
-     * 
-     * @param input
-     *            the input String
-     * @param i
-     *            the int position within the input
-     * @return true if the pattern and left/right context match, false otherwise
-     */
-    public boolean patternAndContextMatches(CharSequence input, int i) {
-        if (i < 0)
-            throw new IndexOutOfBoundsException("Can not match pattern at negative indexes");
-
-        int patternLength = this.pattern.length();
-        int ipl = i + patternLength;
-
-        if (ipl > input.length()) {
-            // not enough room for the pattern to match
-            return false;
-        }
-
-        boolean patternMatches = input.subSequence(i, ipl).equals(this.pattern);
-        boolean rContextMatches = this.rContext.matcher(input.subSequence(ipl, input.length())).find();
-        boolean lContextMatches = this.lContext.matcher(input.subSequence(0, i)).find();
-
-        return patternMatches && rContextMatches && lContextMatches;
-    }
-
-    /**
-     * A minimal wrapper around the functionality of Pattern that we use, to allow for alternate implementations.
-     */
-    public static interface RPattern {
-        public RMatcher matcher(CharSequence input);
-    }
-
-    /**
-     * A minimal wrapper around the functionality of Matcher that we use, to allow for alternate implementations.
-     */
-    public static interface RMatcher {
-        public boolean find();
-    }
-
     /**
      * Attempt to compile the regex into direct string ops, falling back to Pattern and Matcher in the worst case.
      * 
@@ -628,85 +607,106 @@ public class Rule {
         return true;
     }
 
-    private static boolean endsWith(CharSequence input, CharSequence suffix) {
-        if (suffix.length() > input.length()) {
+    private static String stripQuotes(String str) {
+        if (str.startsWith(DOUBLE_QUOTE)) {
+            str = str.substring(1);
+        }
+
+        if (str.endsWith(DOUBLE_QUOTE)) {
+            str = str.substring(0, str.length() - 1);
+        }
+
+        return str;
+    }
+
+    private final RPattern lContext;
+
+    private final String pattern;
+
+    private final PhonemeExpr phoneme;
+
+    private final RPattern rContext;
+
+    /**
+     * Creates a new rule.
+     * 
+     * @param pattern
+     *            the pattern
+     * @param lContext
+     *            the left context
+     * @param rContext
+     *            the right context
+     * @param phoneme
+     *            the resulting phoneme
+     */
+    public Rule(String pattern, String lContext, String rContext, PhonemeExpr phoneme) {
+        this.pattern = pattern;
+        this.lContext = pattern(lContext + "$");
+        this.rContext = pattern("^" + rContext);
+        this.phoneme = phoneme;
+    }
+
+    /**
+     * Gets the left context. This is a regular expression that must match to the left of the pattern.
+     * 
+     * @return the left context Pattern
+     */
+    public RPattern getLContext() {
+        return this.lContext;
+    }
+
+    /**
+     * Gets the pattern. This is a string-literal that must exactly match.
+     * 
+     * @return the pattern
+     */
+    public String getPattern() {
+        return this.pattern;
+    }
+
+    /**
+     * Gets the phoneme. If the rule matches, this is the phoneme associated with the pattern match.
+     * 
+     * @return the phoneme
+     */
+    public PhonemeExpr getPhoneme() {
+        return this.phoneme;
+    }
+
+    /**
+     * Gets the right context. This is a regular expression that must match to the right of the pattern.
+     * 
+     * @return the right context Pattern
+     */
+    public RPattern getRContext() {
+        return this.rContext;
+    }
+
+    /**
+     * Decides if the pattern and context match the input starting at a position.
+     * 
+     * @param input
+     *            the input String
+     * @param i
+     *            the int position within the input
+     * @return true if the pattern and left/right context match, false otherwise
+     */
+    public boolean patternAndContextMatches(CharSequence input, int i) {
+        if (i < 0)
+            throw new IndexOutOfBoundsException("Can not match pattern at negative indexes");
+
+        int patternLength = this.pattern.length();
+        int ipl = i + patternLength;
+
+        if (ipl > input.length()) {
+            // not enough room for the pattern to match
             return false;
         }
-        for (int i = input.length() - 1, j = suffix.length() - 1; j >= 0; i--, j--) {
-            if (input.charAt(i) != suffix.charAt(j)) {
-                return false;
-            }
-        }
-        return true;
-    }
 
-    private static boolean contains(CharSequence chars, char input) {
-        for (int i = 0; i < chars.length(); i++) {
-            if (chars.charAt(i) == input) {
-                return true;
-            }
-        }
-        return false;
-    }
+        boolean patternMatches = input.subSequence(i, ipl).equals(this.pattern);
+        boolean rContextMatches = this.rContext.matcher(input.subSequence(ipl, input.length())).find();
+        boolean lContextMatches = this.lContext.matcher(input.subSequence(0, i)).find();
 
-    private static class AppendableCharSeqeuence implements CharSequence {
-        
-        private final CharSequence left;
-        private final CharSequence right;
-        private final int length;
-        private String contentCache = null;
-
-        private AppendableCharSeqeuence(CharSequence left, CharSequence right) {
-            this.left = left;
-            this.right = right;
-            this.length = left.length() + right.length();
-        }
-
-        public int length() {
-            return length;
-        }
-
-        public char charAt(int index) {
-            // int lLength = left.length();
-            // if(index < lLength) return left.charAt(index);
-            // else return right.charAt(index - lLength);
-            return toString().charAt(index);
-        }
-
-        public CharSequence subSequence(int start, int end) {
-            // int lLength = left.length();
-            // if(start > lLength) return right.subSequence(start - lLength, end - lLength);
-            // else if(end <= lLength) return left.subSequence(start, end);
-            // else {
-            // CharSequence newLeft = left.subSequence(start, lLength);
-            // CharSequence newRight = right.subSequence(0, end - lLength);
-            // return new AppendableCharSeqeuence(newLeft, newRight);
-            // }
-            return toString().subSequence(start, end);
-        }
-
-        @Override
-        public String toString() {
-            if (contentCache == null) {
-                StringBuilder sb = new StringBuilder();
-                buildString(sb);
-                contentCache = sb.toString();
-                // System.err.println("Materialized string: " + contentCache);
-            }
-            return contentCache;
-        }
-
-        public void buildString(StringBuilder sb) {
-            if (left instanceof AppendableCharSeqeuence) {
-                ((AppendableCharSeqeuence) left).buildString(sb);
-            } else {
-                sb.append(left);
-            }
-            if (right instanceof AppendableCharSeqeuence) {
-                ((AppendableCharSeqeuence) right).buildString(sb);
-            } else {
-                sb.append(right);
-            }
-        }
+        return patternMatches && rContextMatches && lContextMatches;
     }
 }

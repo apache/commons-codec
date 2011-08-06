@@ -268,42 +268,6 @@ public class PhoneticEngine {
     }
 
     /**
-     * Gets the Lang language guessing rules being used.
-     * 
-     * @return the Lang in use
-     */
-    public Lang getLang() {
-        return this.lang;
-    }
-
-    /**
-     * Gets the NameType being used.
-     * 
-     * @return the NameType in use
-     */
-    public NameType getNameType() {
-        return this.nameType;
-    }
-
-    /**
-     * Gets the RuleType being used.
-     * 
-     * @return the RuleType in use
-     */
-    public RuleType getRuleType() {
-        return this.ruleType;
-    }
-
-    /**
-     * Gets if multiple phonetic encodings are concatenated or if just the first one is kept.
-     * 
-     * @return true if multiple phonetic encodings are returned, false if just the first is.
-     */
-    public boolean isConcat() {
-        return this.concat;
-    }
-
-    /**
      * Encodes an input string into an output phonetic representation, given a set of possible origin languages.
      * 
      * @param input
@@ -398,5 +362,41 @@ public class PhoneticEngine {
         // System.err.println("Done");
 
         return phonemeBuilder.makeString();
+    }
+
+    /**
+     * Gets the Lang language guessing rules being used.
+     * 
+     * @return the Lang in use
+     */
+    public Lang getLang() {
+        return this.lang;
+    }
+
+    /**
+     * Gets the NameType being used.
+     * 
+     * @return the NameType in use
+     */
+    public NameType getNameType() {
+        return this.nameType;
+    }
+
+    /**
+     * Gets the RuleType being used.
+     * 
+     * @return the RuleType in use
+     */
+    public RuleType getRuleType() {
+        return this.ruleType;
+    }
+
+    /**
+     * Gets if multiple phonetic encodings are concatenated or if just the first one is kept.
+     * 
+     * @return true if multiple phonetic encodings are returned, false if just the first is.
+     */
+    public boolean isConcat() {
+        return this.concat;
     }
 }
