@@ -31,6 +31,16 @@ import org.junit.Test;
  * @since 2.0
  */
 public class RuleTest {
+    private static class NegativeIntegerBaseMatcher extends BaseMatcher<Integer> {
+        public void describeTo(Description description) {
+            description.appendText("value should be negative");
+        }
+
+        public boolean matches(Object item) {
+            return ((Integer) item) < 0;
+        }
+    }
+
     private Rule.Phoneme[][] makePhonemes() {
         String[][] words = {
                 { "rinD", "rinDlt", "rina", "rinalt", "rino", "rinolt", "rinu", "rinult" },
@@ -49,15 +59,6 @@ public class RuleTest {
     }
 
     @Test
-    public void phonemeComparedToSelfIsZero() {
-        for (Rule.Phoneme[] phs : makePhonemes()) {
-            for (Rule.Phoneme ph : phs) {
-                assertEquals("Phoneme compared to itself should be zero: " + ph.getPhonemeText(), 0, ph.compareTo(ph));
-            }
-        }
-    }
-
-    @Test
     public void phonemeComparedToLaterIsNegative() {
         for (Rule.Phoneme[] phs : makePhonemes()) {
             for (int i = 0; i < phs.length; i++) {
@@ -71,13 +72,12 @@ public class RuleTest {
         }
     }
 
-    private static class NegativeIntegerBaseMatcher extends BaseMatcher<Integer> {
-        public boolean matches(Object item) {
-            return ((Integer) item) < 0;
-        }
-
-        public void describeTo(Description description) {
-            description.appendText("value should be negative");
+    @Test
+    public void phonemeComparedToSelfIsZero() {
+        for (Rule.Phoneme[] phs : makePhonemes()) {
+            for (Rule.Phoneme ph : phs) {
+                assertEquals("Phoneme compared to itself should be zero: " + ph.getPhonemeText(), 0, ph.compareTo(ph));
+            }
         }
     }
 }
