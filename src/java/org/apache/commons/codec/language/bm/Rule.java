@@ -686,10 +686,6 @@ public class Rule {
             return toString().subSequence(start, end);
         }
 
-        public CharSequence append(CharSequence right) {
-            return new AppendableCharSeqeuence(this, right);
-        }
-
         @Override
         public String toString() {
             if (contentCache == null) {
