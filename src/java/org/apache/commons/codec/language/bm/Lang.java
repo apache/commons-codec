@@ -93,7 +93,7 @@ public class Lang {
 
     static {
         for (NameType s : NameType.values()) {
-            Langs.put(s, loadFromResource(LANGUAGE_RULES_RN, Languages.instance(s)));
+            Langs.put(s, loadFromResource(LANGUAGE_RULES_RN, Languages.getInstance(s)));
         }
     }
 

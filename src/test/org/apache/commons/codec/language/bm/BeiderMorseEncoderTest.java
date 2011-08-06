@@ -110,17 +110,17 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testInvalidLangIllegalArgumentException() {
-        Rule.instance(NameType.GENERIC, RuleType.APPROX, "noSuchLanguage");
+        Rule.getInstance(NameType.GENERIC, RuleType.APPROX, "noSuchLanguage");
     }
 
     @Test(expected = IllegalStateException.class)
     public void testInvalidLangIllegalStateException() {
-        Lang.loadFromResource("thisIsAMadeUpResourceName", Languages.instance(NameType.GENERIC));
+        Lang.loadFromResource("thisIsAMadeUpResourceName", Languages.getInstance(NameType.GENERIC));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testInvalidLanguageIllegalArgumentException() {
-        Languages.instance("thereIsNoSuchLanguage");
+        Languages.getInstance("thereIsNoSuchLanguage");
     }
 
     @Test(timeout = 10000L)

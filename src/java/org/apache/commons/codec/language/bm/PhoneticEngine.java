@@ -264,7 +264,7 @@ public class PhoneticEngine {
      */
     public String encode(String input) {
         Languages.LanguageSet languageSet = this.lang.guessLanguages(input);
-        return phoneticUtf8(input, languageSet);
+        return encode(input, languageSet);
     }
 
     /**
@@ -311,10 +311,10 @@ public class PhoneticEngine {
      * @param languageSet
      * @return a phonetic representation of the input; a String containing '-'-separated phonetic representations of the input
      */
-    public String phoneticUtf8(String input, final Languages.LanguageSet languageSet) {
-        final List<Rule> rules = Rule.instance(this.nameType, RuleType.RULES, languageSet);
-        final List<Rule> finalRules1 = Rule.instance(this.nameType, this.ruleType, "common");
-        final List<Rule> finalRules2 = Rule.instance(this.nameType, this.ruleType, languageSet);
+    public String encode(String input, final Languages.LanguageSet languageSet) {
+        final List<Rule> rules = Rule.getInstance(this.nameType, RuleType.RULES, languageSet);
+        final List<Rule> finalRules1 = Rule.getInstance(this.nameType, this.ruleType, "common");
+        final List<Rule> finalRules2 = Rule.getInstance(this.nameType, this.ruleType, languageSet);
         // System.err.println("Languages: " + languageSet);
         // System.err.println("Rules: " + rules);
 

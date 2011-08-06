@@ -161,7 +161,7 @@ public class Rule {
             for (RuleType rt : RuleType.values()) {
                 Map<String, List<Rule>> rs = new HashMap<String, List<Rule>>();
 
-                Languages ls = Languages.instance(s);
+                Languages ls = Languages.getInstance(s);
                 for (String l : ls.getLanguages()) {
                     try {
                         rs.put(l, parseRules(createScanner(s, rt, l), createResourceName(s, rt, l)));
@@ -217,8 +217,8 @@ public class Rule {
      *            the set of languages to consider
      * @return a list of Rules that apply
      */
-    public static List<Rule> instance(NameType nameType, RuleType rt, Languages.LanguageSet langs) {
-        return langs.isSingleton() ? instance(nameType, rt, langs.getAny()) : instance(nameType, rt, Languages.ANY);
+    public static List<Rule> getInstance(NameType nameType, RuleType rt, Languages.LanguageSet langs) {
+        return langs.isSingleton() ? getInstance(nameType, rt, langs.getAny()) : getInstance(nameType, rt, Languages.ANY);
     }
 
     /**
@@ -232,7 +232,7 @@ public class Rule {
      *            the language to consider
      * @return a list rules for a combination of name type, rule type and a single language.
      */
-    public static List<Rule> instance(NameType nameType, RuleType rt, String lang) {
+    public static List<Rule> getInstance(NameType nameType, RuleType rt, String lang) {
         List<Rule> rules = RULES.get(nameType).get(rt).get(lang);
 
         if (rules == null) {
