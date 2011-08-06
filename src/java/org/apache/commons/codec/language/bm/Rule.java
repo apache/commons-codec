@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -78,17 +79,17 @@ import java.util.regex.Pattern;
  * @since 2.0
  */
 public class Rule {
-    public static class Phoneme implements PhonemeExpr {
-        private final String phonemeText;
+    public static class Phoneme implements PhonemeExpr, Comparable<Phoneme> {
+        private final CharSequence phonemeText;
         private final Languages.LanguageSet languages;
 
-        public Phoneme(String phonemeText, Languages.LanguageSet languages) {
+        public Phoneme(CharSequence phonemeText, Languages.LanguageSet languages) {
             this.phonemeText = phonemeText;
             this.languages = languages;
         }
 
-        public Phoneme append(String str) {
-            return new Phoneme(this.phonemeText + str, this.languages);
+        public Phoneme append(CharSequence str) {
+            return new Phoneme(new AppendableCharSeqeuence(this.phonemeText, str), this.languages);
         }
 
         public Languages.LanguageSet getLanguages() {
@@ -99,12 +100,27 @@ public class Rule {
             return Collections.singleton(this);
         }
 
-        public String getPhonemeText() {
+        public CharSequence getPhonemeText() {
             return this.phonemeText;
         }
 
         public Phoneme join(Phoneme right) {
-            return new Phoneme(this.phonemeText + right.phonemeText, this.languages.restrictTo(right.languages));
+            return new Phoneme(new AppendableCharSeqeuence(this.phonemeText, right.phonemeText), this.languages.restrictTo(right.languages));
+        }
+
+        public int compareTo(Phoneme o) {
+            for (int i = 0; i < phonemeText.length(); i++) {
+                if (i >= o.phonemeText.length())
+                    return +1;
+                int c = phonemeText.charAt(i) - o.phonemeText.charAt(i);
+                if (c != 0)
+                    return c;
+            }
+
+            if (phonemeText.length() < o.phonemeText.length())
+                return -1;
+
+            return 0;
         }
     }
 
@@ -353,13 +369,13 @@ public class Rule {
         return str;
     }
 
-    private final Pattern lContext;
+    private final RPattern lContext;
 
     private final String pattern;
 
     private final PhonemeExpr phoneme;
 
-    private final Pattern rContext;
+    private final RPattern rContext;
 
     /**
      * Creates a new rule.
@@ -375,8 +391,8 @@ public class Rule {
      */
     public Rule(String pattern, String lContext, String rContext, PhonemeExpr phoneme) {
         this.pattern = pattern;
-        this.lContext = Pattern.compile(lContext + "$");
-        this.rContext = Pattern.compile("^" + rContext + ".*");
+        this.lContext = pattern(lContext + "$");
+        this.rContext = pattern("^" + rContext);
         this.phoneme = phoneme;
     }
 
@@ -385,30 +401,9 @@ public class Rule {
      * 
      * @return the left context Pattern
      */
-    public Pattern getLContext() {
+    public RPattern getLContext() {
         return this.lContext;
     }
-
-    // /**
-    // * Decides if the language restriction for this rule applies.
-    // *
-    // * @param languageArg
-    // * a Set of Strings giving the names of the languages in scope
-    // * @return true if these satistfy the language and logical restrictions on this rule, false otherwise
-    // */
-    // public boolean languageMatches(Set<String> languageArg) {
-    // if (!languageArg.contains(Languages.ANY) && !this.languages.isEmpty()) {
-    // if (ALL.equals(this.logical) && !languageArg.containsAll(this.languages)) {
-    // return false;
-    // } else {
-    // Set<String> isect = new HashSet<String>(languageArg);
-    // isect.retainAll(this.languages);
-    // return !isect.isEmpty();
-    // }
-    // } else {
-    // return true;
-    // }
-    // }
 
     /**
      * Gets the pattern. This is a string-literal that must exactly match.
@@ -433,7 +428,7 @@ public class Rule {
      * 
      * @return the right context Pattern
      */
-    public Pattern getRContext() {
+    public RPattern getRContext() {
         return this.rContext;
     }
 
@@ -446,7 +441,7 @@ public class Rule {
      *            the int position within the input
      * @return true if the pattern and left/right context match, false otherwise
      */
-    public boolean patternAndContextMatches(String input, int i) {
+    public boolean patternAndContextMatches(CharSequence input, int i) {
         if (i < 0)
             throw new IndexOutOfBoundsException("Can not match pattern at negative indexes");
 
@@ -458,10 +453,259 @@ public class Rule {
             return false;
         }
 
-        boolean patternMatches = input.substring(i, ipl).equals(this.pattern);
-        boolean rContextMatches = this.rContext.matcher(input.substring(ipl)).find();
-        boolean lContextMatches = this.lContext.matcher(input.substring(0, i)).find();
+        boolean patternMatches = input.subSequence(i, ipl).equals(this.pattern);
+        boolean rContextMatches = this.rContext.matcher(input.subSequence(ipl, input.length())).find();
+        boolean lContextMatches = this.lContext.matcher(input.subSequence(0, i)).find();
 
         return patternMatches && rContextMatches && lContextMatches;
+    }
+
+    /**
+     * A minimal wrapper around the functionality of Pattern that we use, to allow for alternate implementations.
+     */
+    public static interface RPattern {
+        public RMatcher matcher(CharSequence input);
+    }
+
+    /**
+     * A minimal wrapper around the functionality of Matcher that we use, to allow for alternate implementations.
+     */
+    public static interface RMatcher {
+        public boolean find();
+    }
+
+    /**
+     * Attempt to compile the regex into direct string ops, falling back to Pattern and Matcher in the worst case.
+     * 
+     * @param regex
+     *            the regular expression to compile
+     * @return an RPattern that will match this regex
+     */
+    private static RPattern pattern(final String regex) {
+        boolean startsWith = regex.startsWith("^");
+        boolean endsWith = regex.endsWith("$");
+        final String content = regex.substring(startsWith ? 1 : 0, endsWith ? regex.length() - 1 : regex.length());
+        boolean boxes = content.contains("[");
+
+        if (!boxes) {
+            if (startsWith && endsWith) {
+                // exact match
+                if (content.length() == 0) {
+                    // empty
+                    return new RPattern() {
+                        public RMatcher matcher(final CharSequence input) {
+                            return new RMatcher() {
+                                public boolean find() {
+                                    return input.length() == 0;
+                                }
+                            };
+                        }
+                    };
+                } else {
+                    return new RPattern() {
+                        public RMatcher matcher(final CharSequence input) {
+                            return new RMatcher() {
+                                public boolean find() {
+                                    return input.equals(content);
+                                }
+                            };
+                        }
+                    };
+                }
+            } else if ((startsWith || endsWith) && content.length() == 0) {
+                // matches every string
+                return new RPattern() {
+                    public RMatcher matcher(CharSequence input) {
+                        return new RMatcher() {
+                            public boolean find() {
+                                return true;
+                            }
+                        };
+                    }
+                };
+            } else if (startsWith) {
+                // matches from start
+                return new RPattern() {
+                    public RMatcher matcher(final CharSequence input) {
+                        return new RMatcher() {
+                            public boolean find() {
+                                return startsWith(input, content);
+                            }
+                        };
+                    }
+                };
+            } else if (endsWith) {
+                // matches from start
+                return new RPattern() {
+                    public RMatcher matcher(final CharSequence input) {
+                        return new RMatcher() {
+                            public boolean find() {
+                                return endsWith(input, content);
+                            }
+                        };
+                    }
+                };
+            }
+        } else {
+            boolean startsWithBox = content.startsWith("[");
+            boolean endsWithBox = content.endsWith("]");
+
+            if (startsWithBox && endsWithBox) {
+                String boxContent = content.substring(1, content.length() - 1);
+                if (!boxContent.contains("[")) {
+                    // box containing alternatives
+                    boolean negate = boxContent.startsWith("^");
+                    if (negate) {
+                        boxContent = boxContent.substring(1);
+                    }
+                    final String bContent = boxContent;
+                    final boolean shouldMatch = !negate;
+
+                    if (startsWith && endsWith) {
+                        // exact match
+                        return new RPattern() {
+                            public RMatcher matcher(final CharSequence input) {
+                                return new RMatcher() {
+                                    public boolean find() {
+                                        return input.length() == 1 && (contains(bContent, input.charAt(0)) == shouldMatch);
+                                    }
+                                };
+                            }
+                        };
+                    } else if (startsWith) {
+                        // first char
+                        return new RPattern() {
+                            public RMatcher matcher(final CharSequence input) {
+                                return new RMatcher() {
+                                    public boolean find() {
+                                        return input.length() > 0 && (contains(bContent, input.charAt(0)) == shouldMatch);
+                                    }
+                                };
+                            }
+                        };
+                    } else if (endsWith) {
+                        // last char
+                        return new RPattern() {
+                            public RMatcher matcher(final CharSequence input) {
+                                return new RMatcher() {
+                                    public boolean find() {
+                                        return input.length() > 0 && (contains(bContent, input.charAt(input.length() - 1)) == shouldMatch);
+                                    }
+                                };
+                            }
+                        };
+                    }
+                }
+            }
+        }
+
+        // System.out.println("Couldn't optimize regex: " + regex);
+        return new RPattern() {
+            Pattern pattern = Pattern.compile(regex);
+
+            public RMatcher matcher(CharSequence input) {
+                final Matcher matcher = pattern.matcher(input);
+                return new RMatcher() {
+                    public boolean find() {
+                        return matcher.find();
+                    }
+                };
+            }
+        };
+    }
+
+    private static boolean startsWith(CharSequence input, CharSequence prefix) {
+        if (prefix.length() > input.length())
+            return false;
+        for (int i = 0; i < prefix.length(); i++) {
+            if (input.charAt(i) != prefix.charAt(i)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static boolean endsWith(CharSequence input, CharSequence suffix) {
+        if (suffix.length() > input.length())
+            return false;
+        for (int i = input.length() - 1, j = suffix.length() - 1; j >= 0; i--, j--) {
+            if (input.charAt(i) != suffix.charAt(j)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static boolean contains(CharSequence chars, char input) {
+        for (int i = 0; i < chars.length(); i++) {
+            if (chars.charAt(i) == input) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static class AppendableCharSeqeuence implements CharSequence {
+        private final CharSequence left;
+        private final CharSequence right;
+        private final int length;
+        private String contentCache = null;
+
+        private AppendableCharSeqeuence(CharSequence left, CharSequence right) {
+            this.left = left;
+            this.right = right;
+            this.length = left.length() + right.length();
+        }
+
+        public int length() {
+            return length;
+        }
+
+        public char charAt(int index) {
+            // int lLength = left.length();
+            // if(index < lLength) return left.charAt(index);
+            // else return right.charAt(index - lLength);
+            return toString().charAt(index);
+        }
+
+        public CharSequence subSequence(int start, int end) {
+            // int lLength = left.length();
+            // if(start > lLength) return right.subSequence(start - lLength, end - lLength);
+            // else if(end <= lLength) return left.subSequence(start, end);
+            // else {
+            // CharSequence newLeft = left.subSequence(start, lLength);
+            // CharSequence newRight = right.subSequence(0, end - lLength);
+            // return new AppendableCharSeqeuence(newLeft, newRight);
+            // }
+            return toString().subSequence(start, end);
+        }
+
+        public CharSequence append(CharSequence right) {
+            return new AppendableCharSeqeuence(this, right);
+        }
+
+        @Override
+        public String toString() {
+            if (contentCache == null) {
+                StringBuilder sb = new StringBuilder();
+                buildString(sb);
+                contentCache = sb.toString();
+                // System.err.println("Materialized string: " + contentCache);
+            }
+            return contentCache;
+        }
+
+        public void buildString(StringBuilder sb) {
+            if (left instanceof AppendableCharSeqeuence) {
+                ((AppendableCharSeqeuence) left).buildString(sb);
+            } else {
+                sb.append(left);
+            }
+            if (right instanceof AppendableCharSeqeuence) {
+                ((AppendableCharSeqeuence) right).buildString(sb);
+            } else {
+                sb.append(right);
+            }
+        }
     }
 }

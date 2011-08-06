@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * <p>
@@ -61,7 +62,7 @@ public class PhoneticEngine {
             this.phonemes = phonemes;
         }
 
-        public PhonemeBuilder append(String str) {
+        public PhonemeBuilder append(CharSequence str) {
             Set<Rule.Phoneme> newPhonemes = new HashSet<Rule.Phoneme>();
 
             for (Rule.Phoneme ph : this.phonemes) {
@@ -91,19 +92,14 @@ public class PhoneticEngine {
         }
 
         public String makeString() {
-            List<String> sorted = new ArrayList<String>();
+
+            StringBuilder sb = new StringBuilder();
+            // System.err.println(this.phonemes.getClass());
 
             for (Rule.Phoneme ph : this.phonemes) {
-                sorted.add(ph.getPhonemeText());
-            }
-
-            Collections.sort(sorted);
-            StringBuilder sb = new StringBuilder();
-
-            for (String ph : sorted) {
                 if (sb.length() > 0)
                     sb.append("|");
-                sb.append(ph);
+                sb.append(ph.getPhonemeText());
             }
 
             return sb.toString();
@@ -112,13 +108,13 @@ public class PhoneticEngine {
 
     private static class RulesApplication {
         private final List<Rule> finalRules;
-        private final String input;
+        private final CharSequence input;
 
         private PhonemeBuilder phonemeBuilder;
         private int i;
         private boolean found;
 
-        public RulesApplication(List<Rule> finalRules, String input, PhonemeBuilder phonemeBuilder, int i) {
+        public RulesApplication(List<Rule> finalRules, CharSequence input, PhonemeBuilder phonemeBuilder, int i) {
             if (finalRules == null) {
                 throw new NullPointerException("The finalRules argument must not be null");
             }
@@ -227,11 +223,11 @@ public class PhoneticEngine {
             return phonemeBuilder;
         }
 
-        Set<Rule.Phoneme> phonemes = new HashSet<Rule.Phoneme>();
+        Set<Rule.Phoneme> phonemes = new TreeSet<Rule.Phoneme>();
 
         for (Rule.Phoneme phoneme : phonemeBuilder.getPhonemes()) {
             PhonemeBuilder subBuilder = PhonemeBuilder.empty(phoneme.getLanguages());
-            String phonemeText = phoneme.getPhonemeText();
+            CharSequence phonemeText = phoneme.getPhonemeText();
             // System.err.println("Expanding: " + phonemeText);
 
             for (int i = 0; i < phonemeText.length();) {
@@ -241,7 +237,7 @@ public class PhoneticEngine {
 
                 if (!found) {
                     // System.err.println("Not found. Appending as-is");
-                    subBuilder = subBuilder.append(phonemeText.substring(i, i + 1));
+                    subBuilder = subBuilder.append(phonemeText.subSequence(i, i + 1));
                 }
 
                 i = rulesApplication.getI();
@@ -331,14 +327,14 @@ public class PhoneticEngine {
                     // check for any prefix in the words list
                     String remainder = input.substring(l.length() + 1); // input without the prefix
                     String combined = l + remainder; // input with prefix without space
-                    return encode(remainder) + "-" + encode(combined);
+                    return "(" + encode(remainder) + ")-(" + encode(combined) + ")";
                 }
                 // fixme: this case is invariant on l
                 else if (input.length() >= 2 && input.substring(0, 2).equals("d'")) // check for d'
                 {
                     String remainder = input.substring(2);
                     String combined = "d" + remainder;
-                    return encode(remainder) + "-" + encode(combined);
+                    return "(" + encode(remainder) + ")-(" + encode(combined) + ")";
                 }
             }
         }

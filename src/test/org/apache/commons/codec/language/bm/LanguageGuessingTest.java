@@ -44,11 +44,21 @@ public class LanguageGuessingTest {
                 { "Renault", "french", EXACT },
                 { "Mickiewicz", "polish", EXACT },
                 { "Thompson", "english", ONE_OF }, // this also hits german and greeklatin
-                { "Nuñez", "spanish", EXACT }, { "Carvalho", "portuguese", EXACT }, { "Čapek", "czech", EXACT },
-                { "Sjneijder", "dutch", EXACT }, { "Klausewitz", "german", EXACT }, { "Küçük", "turkish", EXACT },
-                { "Giacometti", "italian", EXACT }, { "Nagy", "hungarian", EXACT }, { "Ceauşescu", "romanian", EXACT },
-                { "Angelopoulos", "greeklatin", EXACT }, { "Αγγελόπουλος", "greek", EXACT }, { "Пушкин", "cyrillic", EXACT },
-                { "כהן", "hebrew", EXACT }, { "ácz", "any", EXACT }, { "átz", "any", EXACT } });
+                { "Nuñez", "spanish", EXACT },
+                { "Carvalho", "portuguese", EXACT },
+                { "Čapek", "czech", EXACT },
+                { "Sjneijder", "dutch", EXACT },
+                { "Klausewitz", "german", EXACT },
+                { "Küçük", "turkish", EXACT },
+                { "Giacometti", "italian", EXACT },
+                { "Nagy", "hungarian", EXACT },
+                { "Ceauşescu", "romanian", EXACT },
+                { "Angelopoulos", "greeklatin", EXACT },
+                { "Αγγελόπουλος", "greek", EXACT },
+                { "Пушкин", "cyrillic", EXACT },
+                { "כהן", "hebrew", EXACT },
+                { "ácz", "any", EXACT },
+                { "átz", "any", EXACT } });
     }
 
     private final String exactness;

@@ -17,12 +17,12 @@
 
 package org.apache.commons.codec.language.bm;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
-import org.junit.runners.Parameterized;
+import org.hamcrest.BaseMatcher;
+import org.hamcrest.Description;
+import org.junit.Test;
 
 /**
  * Tests Rule.
@@ -30,37 +30,54 @@ import org.junit.runners.Parameterized;
  * @author Apache Software Foundation
  * @since 2.0
  */
-// @RunWith(Parameterized.class)
 public class RuleTest {
+    private Rule.Phoneme[][] makePhonemes() {
+        String[][] words = {
+                { "rinD", "rinDlt", "rina", "rinalt", "rino", "rinolt", "rinu", "rinult" },
+                { "dortlaj", "dortlej", "ortlaj", "ortlej", "ortlej-dortlaj" } };
+        Rule.Phoneme[][] phonemes = new Rule.Phoneme[words.length][];
 
-    @Parameterized.Parameters
-    public static List<Object[]> data() {
-        return Arrays.asList(
-                new Object[] {
-                        "matching language sets with ALL",
-                        new Rule("e", "", "", new Rule.Phoneme("o", Languages.LanguageSet.from(new HashSet<String>(Arrays.asList("english",
-                                "french"))))), new HashSet<String>(Arrays.asList("english", "french")), true },
-                new Object[] {
-                        "non-matching language sets with ALL",
-                        new Rule("e", "", "", new Rule.Phoneme("o", Languages.LanguageSet.from(new HashSet<String>(Arrays.asList("english",
-                                "french"))))), new HashSet<String>(Arrays.asList("english")), false });
+        for (int i = 0; i < words.length; i++) {
+            String[] words_i = words[i];
+            Rule.Phoneme[] phonemes_i = phonemes[i] = new Rule.Phoneme[words_i.length];
+            for (int j = 0; j < words_i.length; j++) {
+                phonemes_i[j] = new Rule.Phoneme(words_i[j], Languages.NO_LANGUAGES);
+            }
+        }
+
+        return phonemes;
     }
 
-    private final String caseName;
-    private final boolean expected;
-    private final Set<String> langs;
-    private final Rule rule;
-
-    public RuleTest(String caseName, Rule rule, Set<String> langs, boolean expected) {
-        this.caseName = caseName;
-        this.rule = rule;
-        this.langs = langs;
-        this.expected = expected;
+    @Test
+    public void phonemeComparedToSelfIsZero() {
+        for (Rule.Phoneme[] phs : makePhonemes()) {
+            for (Rule.Phoneme ph : phs) {
+                assertEquals("Phoneme compared to itself should be zero: " + ph.getPhonemeText(), 0, ph.compareTo(ph));
+            }
+        }
     }
 
-    // @Test
-    // public void testRuleLanguageMatches() {
-    // assertEquals(this.caseName, this.expected, this.rule.languageMatches(this.langs));
-    // }
+    @Test
+    public void phonemeComparedToLaterIsNegative() {
+        for (Rule.Phoneme[] phs : makePhonemes()) {
+            for (int i = 0; i < phs.length; i++) {
+                for (int j = i + 1; j < phs.length; j++) {
+                    int c = phs[i].compareTo(phs[j]);
 
+                    assertThat("Comparing " + phs[i].getPhonemeText() + " to " + phs[j].getPhonemeText() + " should be negative", c,
+                            new NegativeIntegerBaseMatcher());
+                }
+            }
+        }
+    }
+
+    private static class NegativeIntegerBaseMatcher extends BaseMatcher<Integer> {
+        public boolean matches(Object item) {
+            return ((Integer) item) < 0;
+        }
+
+        public void describeTo(Description description) {
+            description.appendText("value should be negative");
+        }
+    }
 }
