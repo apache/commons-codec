@@ -213,10 +213,16 @@ public class Rule {
         boolean find();
     }
 
+    /**
+     * Always returns true.
+     */
     private static class TrueRMatcher implements RMatcher {
 
         private static TrueRMatcher INSTANCE = new TrueRMatcher();
 
+        /**
+         * Always returns true.
+         */
         public boolean find() {
             return true;
         }
