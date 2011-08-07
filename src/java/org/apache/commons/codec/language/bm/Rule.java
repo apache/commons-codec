@@ -215,7 +215,7 @@ public class Rule {
 
     private static class TrueRMatcher implements RMatcher {
 
-        static TrueRMatcher INSTANCE = new TrueRMatcher();
+        private static TrueRMatcher INSTANCE = new TrueRMatcher();
 
         public boolean find() {
             return true;
