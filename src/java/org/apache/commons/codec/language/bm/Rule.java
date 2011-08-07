@@ -456,7 +456,7 @@ public class Rule {
     }
 
     /**
-     * Attempt to compile the regex into direct string ops, falling back to Pattern and Matcher in the worst case.
+     * Attempts to compile the regex into direct string ops, falling back to Pattern and Matcher in the worst case.
      * 
      * @param regex
      *            the regular expression to compile
