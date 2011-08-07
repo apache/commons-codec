@@ -210,14 +210,14 @@ public class Rule {
      * A minimal wrapper around the functionality of Matcher that we use, to allow for alternate implementations.
      */
     public static interface RMatcher {
-        public boolean find();
+        boolean find();
     }
 
     /**
      * A minimal wrapper around the functionality of Pattern that we use, to allow for alternate implementations.
      */
     public static interface RPattern {
-        public RMatcher matcher(CharSequence input);
+        RMatcher matcher(CharSequence input);
     }
 
     public static final String ALL = "ALL";
