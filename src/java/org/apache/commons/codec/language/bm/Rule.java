@@ -692,9 +692,10 @@ public class Rule {
      * @return true if the pattern and left/right context match, false otherwise
      */
     public boolean patternAndContextMatches(CharSequence input, int i) {
-        if (i < 0)
+        if (i < 0) {
             throw new IndexOutOfBoundsException("Can not match pattern at negative indexes");
-
+        }
+        
         int patternLength = this.pattern.length();
         int ipl = i + patternLength;
 
