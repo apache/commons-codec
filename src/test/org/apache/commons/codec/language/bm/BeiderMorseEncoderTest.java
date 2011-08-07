@@ -162,6 +162,11 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
         bmpm.setRuleType(RuleType.RULES);
     }
 
+    /**
+     * Runs between 1.1 and 13 seconds at length 40 for me (Gary Gregory, 2011/08/06)
+     *  
+     * @throws EncoderException
+     */
     @Test(/* timeout = 20000L */)
     public void testSpeedCheck() throws EncoderException {
         char[] chars = new char[] { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'o', 'u' };
@@ -170,7 +175,7 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
         Random rand = new Random();
         stringBuffer.append(chars[rand.nextInt(chars.length)]);
         long start;
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < 40; i++) {
             start = System.currentTimeMillis();
             // System.out.println(i + " String to encode:" + stringBuffer.toString());
             bmpm.encode(stringBuffer.toString());
