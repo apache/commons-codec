@@ -81,7 +81,7 @@ import java.util.regex.Pattern;
 public class Rule {
 
     private static class AppendableCharSeqeuence implements CharSequence {
-        
+
         private final CharSequence left;
         private final CharSequence right;
         private final int length;
@@ -211,6 +211,16 @@ public class Rule {
      */
     public static interface RMatcher {
         boolean find();
+    }
+
+    private static class TrueRMatcher implements RMatcher {
+
+        static TrueRMatcher INSTANCE = new TrueRMatcher();
+
+        public boolean find() {
+            return true;
+        }
+
     }
 
     /**
@@ -497,11 +507,7 @@ public class Rule {
                 // matches every string
                 return new RPattern() {
                     public RMatcher matcher(CharSequence input) {
-                        return new RMatcher() {
-                            public boolean find() {
-                                return true;
-                            }
-                        };
+                        return TrueRMatcher.INSTANCE;
                     }
                 };
             } else if (startsWith) {
@@ -695,7 +701,7 @@ public class Rule {
         if (i < 0) {
             throw new IndexOutOfBoundsException("Can not match pattern at negative indexes");
         }
-        
+
         int patternLength = this.pattern.length();
         int ipl = i + patternLength;
 
