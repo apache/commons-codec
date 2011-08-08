@@ -80,4 +80,68 @@ public class RuleTest {
             }
         }
     }
+
+    @Test
+    public void subSequenceWorks() {
+        // AppendableCharSequence is private to Rule. We can only make it through a Phoneme.
+
+        Rule.Phoneme a = new Rule.Phoneme("a", null);
+        Rule.Phoneme b = new Rule.Phoneme("b", null);
+        Rule.Phoneme cd = new Rule.Phoneme("cd", null);
+        Rule.Phoneme ef = new Rule.Phoneme("ef", null);
+        Rule.Phoneme ghi = new Rule.Phoneme("ghi", null);
+        Rule.Phoneme jkl = new Rule.Phoneme("jkl", null);
+
+        assertEquals('a', a.getPhonemeText().charAt(0));
+        assertEquals('b', b.getPhonemeText().charAt(0));
+        assertEquals('c', cd.getPhonemeText().charAt(0));
+        assertEquals('d', cd.getPhonemeText().charAt(1));
+        assertEquals('e', ef.getPhonemeText().charAt(0));
+        assertEquals('f', ef.getPhonemeText().charAt(1));
+        assertEquals('g', ghi.getPhonemeText().charAt(0));
+        assertEquals('h', ghi.getPhonemeText().charAt(1));
+        assertEquals('i', ghi.getPhonemeText().charAt(2));
+        assertEquals('j', jkl.getPhonemeText().charAt(0));
+        assertEquals('k', jkl.getPhonemeText().charAt(1));
+        assertEquals('l', jkl.getPhonemeText().charAt(2));
+
+        Rule.Phoneme a_b = a.append(b.getPhonemeText());
+        assertEquals('a', a_b.getPhonemeText().charAt(0));
+        assertEquals('b', a_b.getPhonemeText().charAt(1));
+        assertEquals("ab", a_b.getPhonemeText().subSequence(0, 2).toString());
+        assertEquals("a", a_b.getPhonemeText().subSequence(0, 1).toString());
+        assertEquals("b", a_b.getPhonemeText().subSequence(1, 2).toString());
+
+        Rule.Phoneme cd_ef = cd.append(ef.getPhonemeText());
+        assertEquals('c', cd_ef.getPhonemeText().charAt(0));
+        assertEquals('d', cd_ef.getPhonemeText().charAt(1));
+        assertEquals('e', cd_ef.getPhonemeText().charAt(2));
+        assertEquals('f', cd_ef.getPhonemeText().charAt(3));
+        assertEquals("c", cd_ef.getPhonemeText().subSequence(0, 1).toString());
+        assertEquals("d", cd_ef.getPhonemeText().subSequence(1, 2).toString());
+        assertEquals("e", cd_ef.getPhonemeText().subSequence(2, 3).toString());
+        assertEquals("f", cd_ef.getPhonemeText().subSequence(3, 4).toString());
+        assertEquals("cd", cd_ef.getPhonemeText().subSequence(0, 2).toString());
+        assertEquals("de", cd_ef.getPhonemeText().subSequence(1, 3).toString());
+        assertEquals("ef", cd_ef.getPhonemeText().subSequence(2, 4).toString());
+        assertEquals("cde", cd_ef.getPhonemeText().subSequence(0, 3).toString());
+        assertEquals("def", cd_ef.getPhonemeText().subSequence(1, 4).toString());
+        assertEquals("cdef", cd_ef.getPhonemeText().subSequence(0, 4).toString());
+
+        Rule.Phoneme a_b_cd = a.append(b.getPhonemeText()).append(cd.getPhonemeText());
+        assertEquals('a', a_b_cd.getPhonemeText().charAt(0));
+        assertEquals('b', a_b_cd.getPhonemeText().charAt(1));
+        assertEquals('c', a_b_cd.getPhonemeText().charAt(2));
+        assertEquals('d', a_b_cd.getPhonemeText().charAt(3));
+        assertEquals("a", a_b_cd.getPhonemeText().subSequence(0, 1).toString());
+        assertEquals("b", a_b_cd.getPhonemeText().subSequence(1, 2).toString());
+        assertEquals("c", a_b_cd.getPhonemeText().subSequence(2, 3).toString());
+        assertEquals("d", a_b_cd.getPhonemeText().subSequence(3, 4).toString());
+        assertEquals("ab", a_b_cd.getPhonemeText().subSequence(0, 2).toString());
+        assertEquals("bc", a_b_cd.getPhonemeText().subSequence(1, 3).toString());
+        assertEquals("cd", a_b_cd.getPhonemeText().subSequence(2, 4).toString());
+        assertEquals("abc", a_b_cd.getPhonemeText().subSequence(0, 3).toString());
+        assertEquals("bcd", a_b_cd.getPhonemeText().subSequence(1, 4).toString());
+        assertEquals("abcd", a_b_cd.getPhonemeText().subSequence(0, 4).toString());
+    }
 }

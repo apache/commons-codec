@@ -24,6 +24,7 @@ import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
@@ -71,7 +72,7 @@ import java.util.regex.Pattern;
  */
 public class Lang {
 
-    private static class LangRule {
+    private static final class LangRule {
         private final boolean acceptOnMatch;
         private final Set<String> languages;
         private final Pattern pattern;
@@ -199,7 +200,7 @@ public class Lang {
      */
     public String guessLanguage(String text) {
         Languages.LanguageSet ls = guessLanguages(text);
-        return ls.isSingleton() ? ls.getAny() : Languages.ANY; 
+        return ls.isSingleton() ? ls.getAny() : Languages.ANY;
     }
 
     /**
@@ -210,7 +211,7 @@ public class Lang {
      * @return a Set of Strings of language names that are potential matches for the input word
      */
     public Languages.LanguageSet guessLanguages(String input) {
-        String text = input.toLowerCase(); // todo: locale?
+        String text = input.toLowerCase(Locale.ENGLISH);
         // System.out.println("Testing text: '" + text + "'");
 
         Set<String> langs = new HashSet<String>(this.languages.getLanguages());

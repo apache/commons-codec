@@ -51,7 +51,7 @@ import java.util.TreeSet;
  */
 public class PhoneticEngine {
 
-    static class PhonemeBuilder {
+    static final class PhonemeBuilder {
 
         public static PhonemeBuilder empty(Languages.LanguageSet languages) {
             return new PhonemeBuilder(Collections.singleton(new Rule.Phoneme("", languages)));
@@ -108,7 +108,7 @@ public class PhoneticEngine {
         }
     }
 
-    private static class RulesApplication {
+    private static final class RulesApplication {
         private final List<Rule> finalRules;
         private final CharSequence input;
 
@@ -176,6 +176,32 @@ public class PhoneticEngine {
                 "de la", "della", "des", "di", "do", "dos", "du", "van", "von"))));
     }
 
+    private static CharSequence cacheSubSequence(final CharSequence cached) {
+        // return cached;
+        final CharSequence[][] cache = new CharSequence[cached.length()][cached.length()];
+        return new CharSequence() {
+            public char charAt(int index) {
+                return cached.charAt(index);
+            }
+
+            public int length() {
+                return cached.length();
+            }
+
+            public CharSequence subSequence(int start, int end) {
+                if (start == end)
+                    return "";
+
+                CharSequence res = cache[start][end - 1];
+                if (res == null) {
+                    res = cached.subSequence(start, end);
+                    cache[start][end - 1] = res;
+                }
+                return res;
+            }
+        };
+    }
+
     private static String join(Iterable<String> strings, String sep) {
         StringBuilder sb = new StringBuilder();
         Iterator<String> si = strings.iterator();
@@ -229,7 +255,7 @@ public class PhoneticEngine {
 
         for (Rule.Phoneme phoneme : phonemeBuilder.getPhonemes()) {
             PhonemeBuilder subBuilder = PhonemeBuilder.empty(phoneme.getLanguages());
-            CharSequence phonemeText = phoneme.getPhonemeText();
+            CharSequence phonemeText = cacheSubSequence(phoneme.getPhonemeText());
             // System.err.println("Expanding: " + phonemeText);
 
             for (int i = 0; i < phonemeText.length();) {
@@ -248,7 +274,7 @@ public class PhoneticEngine {
             }
 
             // System.err.println("Expanded to: " + subBuilder.makeString());
-
+            // System.err.println("phenomes in collection of type: " + subBuilder.getPhonemes().getClass());
             phonemes.addAll(subBuilder.getPhonemes());
         }
 
@@ -345,8 +371,9 @@ public class PhoneticEngine {
         PhonemeBuilder phonemeBuilder = PhonemeBuilder.empty(languageSet);
 
         // loop over each char in the input - we will handle the increment manually
-        for (int i = 0; i < input.length();) {
-            RulesApplication rulesApplication = new RulesApplication(rules, input, phonemeBuilder, i).invoke();
+        CharSequence inputCache = cacheSubSequence(input);
+        for (int i = 0; i < inputCache.length();) {
+            RulesApplication rulesApplication = new RulesApplication(rules, inputCache, phonemeBuilder, i).invoke();
             i = rulesApplication.getI();
             phonemeBuilder = rulesApplication.getPhonemeBuilder();
             // System.err.println(input + " " + i + ": " + phonemeBuilder.makeString());

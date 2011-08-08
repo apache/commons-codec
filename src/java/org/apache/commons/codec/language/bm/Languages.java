@@ -58,9 +58,9 @@ public class Languages {
      * A set of languages.
      */
     public static abstract class LanguageSet {
-        
+
         public static LanguageSet from(Set<String> langs) {
-            return langs.isEmpty() ? NO_LANGUAGES : new SomeLanguages(langs);  
+            return langs.isEmpty() ? NO_LANGUAGES : new SomeLanguages(langs);
         }
 
         public abstract boolean contains(String language);
@@ -77,7 +77,7 @@ public class Languages {
     /**
      * Some languages, explicitly enumerated.
      */
-    public static class SomeLanguages extends LanguageSet {
+    public static final class SomeLanguages extends LanguageSet {
         private final Set<String> languages;
 
         private SomeLanguages(Set<String> languages) {
@@ -116,9 +116,13 @@ public class Languages {
                 return this;
             } else {
                 SomeLanguages sl = (SomeLanguages) other;
-                Set<String> ls = new HashSet<String>(this.languages);
-                ls.retainAll(sl.languages);
-                return from(ls);
+                if (sl.languages.containsAll(languages)) {
+                    return this;
+                } else {
+                    Set<String> ls = new HashSet<String>(this.languages);
+                    ls.retainAll(sl.languages);
+                    return from(ls);
+                }
             }
         }
 

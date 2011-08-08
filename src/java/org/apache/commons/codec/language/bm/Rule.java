@@ -80,68 +80,7 @@ import java.util.regex.Pattern;
  */
 public class Rule {
 
-    private static class AppendableCharSeqeuence implements CharSequence {
-
-        private final CharSequence left;
-        private final CharSequence right;
-        private final int length;
-        private String contentCache = null;
-
-        private AppendableCharSeqeuence(CharSequence left, CharSequence right) {
-            this.left = left;
-            this.right = right;
-            this.length = left.length() + right.length();
-        }
-
-        public void buildString(StringBuilder sb) {
-            if (left instanceof AppendableCharSeqeuence) {
-                ((AppendableCharSeqeuence) left).buildString(sb);
-            } else {
-                sb.append(left);
-            }
-            if (right instanceof AppendableCharSeqeuence) {
-                ((AppendableCharSeqeuence) right).buildString(sb);
-            } else {
-                sb.append(right);
-            }
-        }
-
-        public char charAt(int index) {
-            // int lLength = left.length();
-            // if(index < lLength) return left.charAt(index);
-            // else return right.charAt(index - lLength);
-            return toString().charAt(index);
-        }
-
-        public int length() {
-            return length;
-        }
-
-        public CharSequence subSequence(int start, int end) {
-            // int lLength = left.length();
-            // if(start > lLength) return right.subSequence(start - lLength, end - lLength);
-            // else if(end <= lLength) return left.subSequence(start, end);
-            // else {
-            // CharSequence newLeft = left.subSequence(start, lLength);
-            // CharSequence newRight = right.subSequence(0, end - lLength);
-            // return new AppendableCharSeqeuence(newLeft, newRight);
-            // }
-            return toString().subSequence(start, end);
-        }
-
-        @Override
-        public String toString() {
-            if (contentCache == null) {
-                StringBuilder sb = new StringBuilder();
-                buildString(sb);
-                contentCache = sb.toString();
-                // System.err.println("Materialized string: " + contentCache);
-            }
-            return contentCache;
-        }
-    }
-
-    public static class Phoneme implements PhonemeExpr, Comparable<Phoneme> {
+    public static final class Phoneme implements PhonemeExpr, Comparable<Phoneme> {
 
         private final CharSequence phonemeText;
         private final Languages.LanguageSet languages;
@@ -152,7 +91,7 @@ public class Rule {
         }
 
         public Phoneme append(CharSequence str) {
-            return new Phoneme(new AppendableCharSeqeuence(this.phonemeText, str), this.languages);
+            return new Phoneme(this.phonemeText.toString() + str.toString(), this.languages);
         }
 
         public int compareTo(Phoneme o) {
@@ -186,7 +125,7 @@ public class Rule {
         }
 
         public Phoneme join(Phoneme right) {
-            return new Phoneme(new AppendableCharSeqeuence(this.phonemeText, right.phonemeText), this.languages.restrictTo(right.languages));
+            return new Phoneme(this.phonemeText.toString() + right.phonemeText.toString(), this.languages.restrictTo(right.languages));
         }
     }
 
@@ -194,7 +133,7 @@ public class Rule {
         Iterable<Phoneme> getPhonemes();
     }
 
-    public static class PhonemeList implements PhonemeExpr {
+    public static final class PhonemeList implements PhonemeExpr {
         private final List<Phoneme> phonemes;
 
         public PhonemeList(List<Phoneme> phonemes) {
@@ -207,44 +146,17 @@ public class Rule {
     }
 
     /**
-     * A minimal wrapper around the functionality of Matcher that we use, to allow for alternate implementations.
-     */
-    public static interface RMatcher {
-        boolean find();
-    }
-
-    /**
-     * Always returns true.
-     */
-    private static class TrueRMatcher implements RMatcher {
-
-        private static TrueRMatcher INSTANCE = new TrueRMatcher();
-
-        /**
-         * Always returns true.
-         */
-        public boolean find() {
-            return true;
-        }
-
-    }
-
-    private static class AllStringsRMatcher implements RPattern {
-
-        private static AllStringsRMatcher INSTANCE = new AllStringsRMatcher();
-
-        public RMatcher matcher(CharSequence input) {
-            return TrueRMatcher.INSTANCE;
-        }
-
-    }
-
-    /**
      * A minimal wrapper around the functionality of Pattern that we use, to allow for alternate implementations.
      */
     public static interface RPattern {
-        RMatcher matcher(CharSequence input);
+        boolean isMatch(CharSequence input);
     }
+
+    public static final RPattern ALL_STRINGS_RMATCHER = new RPattern() {
+        public boolean isMatch(CharSequence input) {
+            return true;
+        }
+    };
 
     public static final String ALL = "ALL";
 
@@ -500,48 +412,32 @@ public class Rule {
                 if (content.length() == 0) {
                     // empty
                     return new RPattern() {
-                        public RMatcher matcher(final CharSequence input) {
-                            return new RMatcher() {
-                                public boolean find() {
-                                    return input.length() == 0;
-                                }
-                            };
+                        public boolean isMatch(CharSequence input) {
+                            return input.length() == 0;
                         }
                     };
                 } else {
                     return new RPattern() {
-                        public RMatcher matcher(final CharSequence input) {
-                            return new RMatcher() {
-                                public boolean find() {
-                                    return input.equals(content);
-                                }
-                            };
+                        public boolean isMatch(CharSequence input) {
+                            return input.equals(content);
                         }
                     };
                 }
             } else if ((startsWith || endsWith) && content.length() == 0) {
                 // matches every string
-                return AllStringsRMatcher.INSTANCE;
+                return ALL_STRINGS_RMATCHER;
             } else if (startsWith) {
                 // matches from start
                 return new RPattern() {
-                    public RMatcher matcher(final CharSequence input) {
-                        return new RMatcher() {
-                            public boolean find() {
-                                return startsWith(input, content);
-                            }
-                        };
+                    public boolean isMatch(CharSequence input) {
+                        return startsWith(input, content);
                     }
                 };
             } else if (endsWith) {
                 // matches from start
                 return new RPattern() {
-                    public RMatcher matcher(final CharSequence input) {
-                        return new RMatcher() {
-                            public boolean find() {
-                                return endsWith(input, content);
-                            }
-                        };
+                    public boolean isMatch(CharSequence input) {
+                        return endsWith(input, content);
                     }
                 };
             }
@@ -563,34 +459,22 @@ public class Rule {
                     if (startsWith && endsWith) {
                         // exact match
                         return new RPattern() {
-                            public RMatcher matcher(final CharSequence input) {
-                                return new RMatcher() {
-                                    public boolean find() {
-                                        return input.length() == 1 && (contains(bContent, input.charAt(0)) == shouldMatch);
-                                    }
-                                };
+                            public boolean isMatch(CharSequence input) {
+                                return input.length() == 1 && (contains(bContent, input.charAt(0)) == shouldMatch);
                             }
                         };
                     } else if (startsWith) {
                         // first char
                         return new RPattern() {
-                            public RMatcher matcher(final CharSequence input) {
-                                return new RMatcher() {
-                                    public boolean find() {
-                                        return input.length() > 0 && (contains(bContent, input.charAt(0)) == shouldMatch);
-                                    }
-                                };
+                            public boolean isMatch(CharSequence input) {
+                                return input.length() > 0 && (contains(bContent, input.charAt(0)) == shouldMatch);
                             }
                         };
                     } else if (endsWith) {
                         // last char
                         return new RPattern() {
-                            public RMatcher matcher(final CharSequence input) {
-                                return new RMatcher() {
-                                    public boolean find() {
-                                        return input.length() > 0 && (contains(bContent, input.charAt(input.length() - 1)) == shouldMatch);
-                                    }
-                                };
+                            public boolean isMatch(CharSequence input) {
+                                return input.length() > 0 && (contains(bContent, input.charAt(input.length() - 1)) == shouldMatch);
                             }
                         };
                     }
@@ -602,13 +486,9 @@ public class Rule {
         return new RPattern() {
             Pattern pattern = Pattern.compile(regex);
 
-            public RMatcher matcher(CharSequence input) {
-                final Matcher matcher = pattern.matcher(input);
-                return new RMatcher() {
-                    public boolean find() {
-                        return matcher.find();
-                    }
-                };
+            public boolean isMatch(CharSequence input) {
+                Matcher matcher = pattern.matcher(input);
+                return matcher.find();
             }
         };
     }
@@ -723,8 +603,8 @@ public class Rule {
         }
 
         boolean patternMatches = input.subSequence(i, ipl).equals(this.pattern);
-        boolean rContextMatches = this.rContext.matcher(input.subSequence(ipl, input.length())).find();
-        boolean lContextMatches = this.lContext.matcher(input.subSequence(0, i)).find();
+        boolean rContextMatches = this.rContext.isMatch(input.subSequence(ipl, input.length()));
+        boolean lContextMatches = this.lContext.isMatch(input.subSequence(0, i));
 
         return patternMatches && rContextMatches && lContextMatches;
     }

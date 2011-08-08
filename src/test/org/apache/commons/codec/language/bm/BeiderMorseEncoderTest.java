@@ -19,8 +19,6 @@ package org.apache.commons.codec.language.bm;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Random;
-
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.StringEncoderAbstractTest;
@@ -165,7 +163,7 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
     }
 
     /**
-     * (Un)luckily, the worse performing test because of the data in {@link TEST_CHARS}
+     * (Un)luckily, the worse performing test because of the data in {@link #TEST_CHARS}
      * 
      * @throws EncoderException
      */
@@ -183,34 +181,23 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
         }
     }
 
-    /**
-     * Another odd performance edge case.
-     * 
-     * @throws EncoderException
-     */
-    @Test(/* timeout = 20000L */)
-    public void testSpeedCheckAZ() throws EncoderException {
+    @Test
+    public void testSpeedCheck2() throws EncoderException {
         BeiderMorseEncoder bmpm = this.createGenericApproxEncoder();
-        String phrase = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz";
+        String phrase = "ItstheendoftheworldasweknowitandIfeelfine";
+
         for (int i = 1; i <= phrase.length(); i++) {
             bmpm.encode(phrase.subSequence(0, i));
         }
     }
 
-    /**
-     * Runs between 1.6 and 13 seconds at length 40 for me (Gary Gregory, 2011/08/06)
-     * 
-     * @throws EncoderException
-     */
-    @Test(/* timeout = 20000L */)
-    public void testSpeedCheckRandom() throws EncoderException {
+    @Test
+    public void testSpeedCheck3() throws EncoderException {
         BeiderMorseEncoder bmpm = this.createGenericApproxEncoder();
-        StringBuffer stringBuffer = new StringBuffer();
-        Random rand = new Random();
-        stringBuffer.append(TEST_CHARS[rand.nextInt(TEST_CHARS.length)]);
-        for (int i = 0; i < 40; i++) {
-            bmpm.encode(stringBuffer.toString());
-            stringBuffer.append(TEST_CHARS[rand.nextInt(TEST_CHARS.length)]);
+        String phrase = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz";
+
+        for (int i = 1; i <= phrase.length(); i++) {
+            bmpm.encode(phrase.subSequence(0, i));
         }
     }
 }
