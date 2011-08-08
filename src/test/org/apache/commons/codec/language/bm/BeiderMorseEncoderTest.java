@@ -165,7 +165,40 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
     }
 
     /**
-     * Runs between 1.1 and 13 seconds at length 40 for me (Gary Gregory, 2011/08/06)
+     * (Un)luckily, the worse performing test because of the data in {@link TEST_CHARS}
+     * 
+     * @throws EncoderException
+     */
+    @Test(/* timeout = 20000L */)
+    public void testSpeedCheck() throws EncoderException {
+        BeiderMorseEncoder bmpm = this.createGenericApproxEncoder();
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append(TEST_CHARS[0]);
+        for (int i = 0, j = 1; i < 40; i++, j++) {
+            if (j == TEST_CHARS.length) {
+                j = 0;
+            }
+            bmpm.encode(stringBuffer.toString());
+            stringBuffer.append(TEST_CHARS[j]);
+        }
+    }
+
+    /**
+     * Another odd performance edge case.
+     * 
+     * @throws EncoderException
+     */
+    @Test(/* timeout = 20000L */)
+    public void testSpeedCheckAZ() throws EncoderException {
+        BeiderMorseEncoder bmpm = this.createGenericApproxEncoder();
+        String phrase = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz";
+        for (int i = 1; i <= phrase.length(); i++) {
+            bmpm.encode(phrase.subSequence(0, i));
+        }
+    }
+
+    /**
+     * Runs between 1.6 and 13 seconds at length 40 for me (Gary Gregory, 2011/08/06)
      * 
      * @throws EncoderException
      */
@@ -178,20 +211,6 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
         for (int i = 0; i < 40; i++) {
             bmpm.encode(stringBuffer.toString());
             stringBuffer.append(TEST_CHARS[rand.nextInt(TEST_CHARS.length)]);
-        }
-    }
-
-    @Test(/* timeout = 20000L */)
-    public void testSpeedCheck() throws EncoderException {
-        BeiderMorseEncoder bmpm = this.createGenericApproxEncoder();
-        StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append(TEST_CHARS[0]);
-        for (int i = 0, j = 1; i < 40; i++, j++) {
-            if (j == TEST_CHARS.length) {
-                j = 0;
-            }
-            bmpm.encode(stringBuffer.toString());
-            stringBuffer.append(TEST_CHARS[j]);
         }
     }
 }
