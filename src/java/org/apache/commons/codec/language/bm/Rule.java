@@ -229,6 +229,16 @@ public class Rule {
 
     }
 
+    private static class AllStringsRMatcher implements RPattern {
+
+        private static AllStringsRMatcher INSTANCE = new AllStringsRMatcher();
+
+        public RMatcher matcher(CharSequence input) {
+            return TrueRMatcher.INSTANCE;
+        }
+
+    }
+
     /**
      * A minimal wrapper around the functionality of Pattern that we use, to allow for alternate implementations.
      */
@@ -511,11 +521,7 @@ public class Rule {
                 }
             } else if ((startsWith || endsWith) && content.length() == 0) {
                 // matches every string
-                return new RPattern() {
-                    public RMatcher matcher(CharSequence input) {
-                        return TrueRMatcher.INSTANCE;
-                    }
-                };
+                return AllStringsRMatcher.INSTANCE;
             } else if (startsWith) {
                 // matches from start
                 return new RPattern() {
