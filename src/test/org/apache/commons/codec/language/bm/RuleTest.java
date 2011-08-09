@@ -63,7 +63,7 @@ public class RuleTest {
         for (Rule.Phoneme[] phs : makePhonemes()) {
             for (int i = 0; i < phs.length; i++) {
                 for (int j = i + 1; j < phs.length; j++) {
-                    int c = phs[i].compareTo(phs[j]);
+                    int c = Rule.Phoneme.COMPARATOR.compare(phs[i], phs[j]);
 
                     assertThat("Comparing " + phs[i].getPhonemeText() + " to " + phs[j].getPhonemeText() + " should be negative", c,
                             new NegativeIntegerBaseMatcher());
@@ -76,7 +76,8 @@ public class RuleTest {
     public void phonemeComparedToSelfIsZero() {
         for (Rule.Phoneme[] phs : makePhonemes()) {
             for (Rule.Phoneme ph : phs) {
-                assertEquals("Phoneme compared to itself should be zero: " + ph.getPhonemeText(), 0, ph.compareTo(ph));
+                assertEquals("Phoneme compared to itself should be zero: " + ph.getPhonemeText(), 0,
+                        Rule.Phoneme.COMPARATOR.compare(ph, ph));
             }
         }
     }

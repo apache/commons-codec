@@ -21,6 +21,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -80,7 +81,26 @@ import java.util.regex.Pattern;
  */
 public class Rule {
 
-    public static final class Phoneme implements PhonemeExpr, Comparable<Phoneme> {
+    public static final class Phoneme implements PhonemeExpr {
+        public static final Comparator<Phoneme> COMPARATOR = new Comparator<Phoneme>() {
+            public int compare(Phoneme o1, Phoneme o2) {
+                for (int i = 0; i < o1.phonemeText.length(); i++) {
+                    if (i >= o2.phonemeText.length()) {
+                        return +1;
+                    }
+                    int c = o1.phonemeText.charAt(i) - o2.phonemeText.charAt(i);
+                    if (c != 0) {
+                        return c;
+                    }
+                }
+
+                if (o1.phonemeText.length() < o2.phonemeText.length()) {
+                    return -1;
+                }
+
+                return 0;
+            }
+        };
 
         private final CharSequence phonemeText;
         private final Languages.LanguageSet languages;
@@ -92,24 +112,6 @@ public class Rule {
 
         public Phoneme append(CharSequence str) {
             return new Phoneme(this.phonemeText.toString() + str.toString(), this.languages);
-        }
-
-        public int compareTo(Phoneme o) {
-            for (int i = 0; i < phonemeText.length(); i++) {
-                if (i >= o.phonemeText.length()) {
-                    return +1;
-                }
-                int c = phonemeText.charAt(i) - o.phonemeText.charAt(i);
-                if (c != 0) {
-                    return c;
-                }
-            }
-
-            if (phonemeText.length() < o.phonemeText.length()) {
-                return -1;
-            }
-
-            return 0;
         }
 
         public Languages.LanguageSet getLanguages() {

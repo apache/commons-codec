@@ -251,7 +251,7 @@ public class PhoneticEngine {
             return phonemeBuilder;
         }
 
-        Set<Rule.Phoneme> phonemes = new TreeSet<Rule.Phoneme>();
+        Set<Rule.Phoneme> phonemes = new TreeSet<Rule.Phoneme>(Rule.Phoneme.COMPARATOR);
 
         for (Rule.Phoneme phoneme : phonemeBuilder.getPhonemes()) {
             PhonemeBuilder subBuilder = PhonemeBuilder.empty(phoneme.getLanguages());
