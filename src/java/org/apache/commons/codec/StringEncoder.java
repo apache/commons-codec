@@ -23,7 +23,7 @@ package org.apache.commons.codec;
  * @author Apache Software Foundation
  * @version $Id$
  */
-public interface StringEncoder extends Encoder {
+public interface StringEncoder extends SymmetricEncoder<String> {
     
     /**
      * Encodes a String and returns a String.

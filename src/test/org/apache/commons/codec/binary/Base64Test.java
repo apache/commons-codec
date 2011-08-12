@@ -29,7 +29,6 @@ import java.util.Arrays;
 import java.util.Random;
 
 import org.apache.commons.codec.DecoderException;
-import org.apache.commons.codec.EncoderException;
 import org.junit.Test;
 
 /**
@@ -465,23 +464,10 @@ public class Base64Test {
     }
 
     @Test
-    public void testObjectDecodeWithInvalidParameter() throws Exception {
-        Base64 b64 = new Base64();
-
-        try {
-            b64.decode(Integer.valueOf(5));
-            fail("decode(Object) didn't throw an exception when passed an Integer object");
-        } catch (DecoderException e) {
-            // ignored
-        }
-
-    }
-
-    @Test
     public void testObjectDecodeWithValidParameter() throws Exception {
 
         String original = "Hello World!";
-        Object o = Base64.encodeBase64(original.getBytes("UTF-8"));
+        byte[] o = Base64.encodeBase64(original.getBytes("UTF-8"));
 
         Base64 b64 = new Base64();
         Object oDecoded = b64.decode(o);
@@ -492,21 +478,10 @@ public class Base64Test {
     }
 
     @Test
-    public void testObjectEncodeWithInvalidParameter() throws Exception {
-        Base64 b64 = new Base64();
-        try {
-            b64.encode("Yadayadayada");
-            fail("encode(Object) didn't throw an exception when passed a String object");
-        } catch (EncoderException e) {
-            // Expected
-        }
-    }
-
-    @Test
     public void testObjectEncodeWithValidParameter() throws Exception {
 
         String original = "Hello World!";
-        Object origObj = original.getBytes("UTF-8");
+        byte[] origObj = original.getBytes("UTF-8");
 
         Base64 b64 = new Base64();
         Object oEncoded = b64.encode(origObj);
@@ -1196,7 +1171,7 @@ public class Base64Test {
         byte[] b4 = Hex.decodeHex("2bf7cc2701fe4397b49ebeed5acc7090".toCharArray());  // for url-safe tests
 
         assertEquals("StringToByte Hello World", "Hello World", StringUtils.newStringUtf8(base64.decode(s1)));
-        assertEquals("StringToByte Hello World", "Hello World", StringUtils.newStringUtf8((byte[])base64.decode((Object)s1)));
+        assertEquals("StringToByte Hello World", "Hello World", StringUtils.newStringUtf8(base64.decode(s1)));
         assertEquals("StringToByte static Hello World", "Hello World", StringUtils.newStringUtf8(Base64.decodeBase64(s1)));
         assertEquals("StringToByte \"\"", "", StringUtils.newStringUtf8(base64.decode(s2)));
         assertEquals("StringToByte static \"\"", "", StringUtils.newStringUtf8(Base64.decodeBase64(s2)));

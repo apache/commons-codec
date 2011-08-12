@@ -18,17 +18,10 @@
 package org.apache.commons.codec.net;
 
 import java.io.ByteArrayOutputStream;
-import java.io.UnsupportedEncodingException;
 import java.util.BitSet;
 
-import org.apache.commons.codec.BinaryDecoder;
-import org.apache.commons.codec.BinaryEncoder;
 import org.apache.commons.codec.CharEncoding;
 import org.apache.commons.codec.DecoderException;
-import org.apache.commons.codec.EncoderException;
-import org.apache.commons.codec.StringDecoder;
-import org.apache.commons.codec.StringEncoder;
-import org.apache.commons.codec.binary.StringUtils;
 
 /**
  * <p>Implements the 'www-form-urlencoded' encoding scheme, 
@@ -50,7 +43,7 @@ import org.apache.commons.codec.binary.StringUtils;
  * @since 1.2
  * @version $Id$
  */
-public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, StringDecoder {
+public abstract class URLCodec {
     
     /**
      * Radix used in encoding and decoding.
@@ -206,135 +199,6 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      */
     public byte[] decode(byte[] bytes) throws DecoderException {
         return decodeUrl(bytes);
-    }
-
-    /**
-     * Encodes a string into its URL safe form using the specified string charset. Unsafe characters are escaped.
-     * 
-     * @param pString
-     *            string to convert to a URL safe form
-     * @param charset
-     *            the charset for pString
-     * @return URL safe string
-     * @throws UnsupportedEncodingException
-     *             Thrown if charset is not supported
-     */
-    public String encode(String pString, String charset) throws UnsupportedEncodingException {
-        if (pString == null) {
-            return null;
-        }
-        return StringUtils.newStringUsAscii(encode(pString.getBytes(charset)));
-    }
-
-    /**
-     * Encodes a string into its URL safe form using the default string 
-     * charset. Unsafe characters are escaped.
-     *
-     * @param pString string to convert to a URL safe form
-     * @return URL safe string
-     * @throws EncoderException Thrown if URL encoding is unsuccessful
-     * 
-     * @see #getDefaultCharset()
-     */
-    public String encode(String pString) throws EncoderException {
-        if (pString == null) {
-            return null;
-        }
-        try {
-            return encode(pString, getDefaultCharset());
-        } catch (UnsupportedEncodingException e) {
-            throw new EncoderException(e.getMessage(), e);
-        }
-    }
-
-
-    /**
-     * Decodes a URL safe string into its original form using the 
-     * specified encoding. Escaped characters are converted back 
-     * to their original representation.
-     *
-     * @param pString URL safe string to convert into its original form
-     * @param charset the original string charset
-     * @return original string 
-     * @throws DecoderException Thrown if URL decoding is unsuccessful
-     * @throws UnsupportedEncodingException Thrown if charset is not
-     *                                      supported 
-     */
-    public String decode(String pString, String charset) throws DecoderException, UnsupportedEncodingException {
-        if (pString == null) {
-            return null;
-        }
-        return new String(decode(StringUtils.getBytesUsAscii(pString)), charset);
-    }
-
-    /**
-     * Decodes a URL safe string into its original form using the default
-     * string charset. Escaped characters are converted back to their 
-     * original representation.
-     *
-     * @param pString URL safe string to convert into its original form
-     * @return original string 
-     * @throws DecoderException Thrown if URL decoding is unsuccessful
-     * 
-     * @see #getDefaultCharset()
-     */
-    public String decode(String pString) throws DecoderException {
-        if (pString == null) {
-            return null;
-        }
-        try {
-            return decode(pString, getDefaultCharset());
-        } catch (UnsupportedEncodingException e) {
-            throw new DecoderException(e.getMessage(), e);
-        }
-    }
-
-    /**
-     * Encodes an object into its URL safe form. Unsafe characters are 
-     * escaped.
-     *
-     * @param pObject string to convert to a URL safe form
-     * @return URL safe object
-     * @throws EncoderException Thrown if URL encoding is not 
-     *                          applicable to objects of this type or
-     *                          if encoding is unsuccessful
-     */
-    public Object encode(Object pObject) throws EncoderException {
-        if (pObject == null) {
-            return null;
-        } else if (pObject instanceof byte[]) {
-            return encode((byte[])pObject);
-        } else if (pObject instanceof String) {
-            return encode((String)pObject);
-        } else {
-            throw new EncoderException("Objects of type " +
-                pObject.getClass().getName() + " cannot be URL encoded"); 
-              
-        }
-    }
-
-    /**
-     * Decodes a URL safe object into its original form. Escaped characters are converted back to their original
-     * representation.
-     * 
-     * @param pObject
-     *                  URL safe object to convert into its original form
-     * @return original object
-     * @throws DecoderException
-     *                  Thrown if the argument is not a <code>String</code> or <code>byte[]</code>. Thrown if a failure condition is
-     *                  encountered during the decode process.
-     */
-    public Object decode(Object pObject) throws DecoderException {
-        if (pObject == null) {
-            return null;
-        } else if (pObject instanceof byte[]) {
-            return decode((byte[]) pObject);
-        } else if (pObject instanceof String) {
-            return decode((String) pObject);
-        } else {
-            throw new DecoderException("Objects of type " + pObject.getClass().getName() + " cannot be URL decoded");
-
-        }
     }
 
     /**

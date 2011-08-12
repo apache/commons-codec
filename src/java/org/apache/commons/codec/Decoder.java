@@ -30,7 +30,7 @@ package org.apache.commons.codec;
  * @author Apache Software Foundation
  * @version $Id$
  */
-public interface Decoder {
+public interface Decoder<I, O> {
 
     /**
      * Decodes an "encoded" Object and returns a "decoded"
@@ -50,6 +50,6 @@ public interface Decoder {
      * method is null, a param cannot be cast to the
      * appropriate type for a specific encoder.
      */
-    Object decode(Object source) throws DecoderException;
+    O decode(I source) throws DecoderException;
 }  
 

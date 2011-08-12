@@ -63,14 +63,4 @@ public class StringEncoderComparatorTest {
             assertEquals("Result Array not Equal to Control Array at index: " + i, controlArray[i], resultArray[i]);
         }
     }
-
-    @Test
-    public void testComparatorWithDoubleMetaphoneAndInvalidInput() throws Exception {
-        StringEncoderComparator sCompare =
-            new StringEncoderComparator( new DoubleMetaphone() );
-           
-        int compare = sCompare.compare(new Double(3.0), Long.valueOf(3));
-        assertEquals( "Trying to compare objects that make no sense to the underlying encoder should return a zero compare code",
-                                0, compare);        
-    }
 }

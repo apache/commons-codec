@@ -23,7 +23,7 @@ package org.apache.commons.codec;
  * @author Apache Software Foundation
  * @version $Id$
  */
-public interface StringDecoder extends Decoder {
+public interface StringDecoder extends SymmetricDecoder<String> {
     
     /**
      * Decodes a String and returns a String.

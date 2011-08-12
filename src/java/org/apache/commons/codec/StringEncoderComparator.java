@@ -27,7 +27,7 @@ import java.util.Comparator;
  * @author Apache Software Foundation
  * @version $Id$
  */
-public class StringEncoderComparator implements Comparator {
+public class StringEncoderComparator implements Comparator<String> {
 
     /**
      * Internal encoder instance.
@@ -45,25 +45,25 @@ public class StringEncoderComparator implements Comparator {
     }
 
     /**
-     * Compares two strings based not on the strings themselves, but on an encoding of the two strings using the
-     * StringEncoder this Comparator was created with.
+     * Compares two strings based not on the strings themselves, but on an encoding of the two strings using the StringEncoder this
+     * Comparator was created with.
      * 
      * If an {@link EncoderException} is encountered, return <code>0</code>.
      * 
      * @param o1
-     *            the object to compare
+     *            the String to compare
      * @param o2
-     *            the object to compare to
+     *            the String to compare to
      * @return the Comparable.compareTo() return code or 0 if an encoding error was caught.
      * @see Comparable
      */
-    public int compare(Object o1, Object o2) {
+    public int compare(String o1, String o2) {
 
         int compareCode = 0;
 
         try {
-            Comparable s1 = (Comparable) this.stringEncoder.encode(o1);
-            Comparable s2 = (Comparable) this.stringEncoder.encode(o2);
+            String s1 = this.stringEncoder.encode(o1);
+            String s2 = this.stringEncoder.encode(o2);
             compareCode = s1.compareTo(s2);
         } catch (EncoderException ee) {
             compareCode = 0;

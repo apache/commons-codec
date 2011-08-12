@@ -134,20 +134,12 @@ public class QCodecTest {
     public void testEncodeObjects() throws Exception {
         QCodec qcodec = new QCodec();
         String plain = "1+1 = 2";
-        String encoded = (String) qcodec.encode((Object) plain);
+        String encoded = qcodec.encode(plain);
         assertEquals("Basic Q encoding test", 
             "=?UTF-8?Q?1+1 =3D 2?=", encoded);
 
-        Object result = qcodec.encode((Object) null);
+        String result = qcodec.encode((String) null);
         assertEquals( "Encoding a null Object should return null", null, result);
-        
-        try {
-            Object dObj = new Double(3.0);
-            qcodec.encode( dObj );
-            fail( "Trying to url encode a Double object should cause an exception.");
-        } catch (EncoderException ee) {
-            // Exception expected, test segment passes.
-        }
     }
     
 
@@ -169,23 +161,15 @@ public class QCodecTest {
     }
 
     @Test
-    public void testDecodeObjects() throws Exception {
+    public void testDecodeStrings() throws Exception {
         QCodec qcodec = new QCodec();
         String decoded = "=?UTF-8?Q?1+1 =3D 2?=";
-        String plain = (String) qcodec.decode((Object) decoded);
+        String plain = (String) qcodec.decode(decoded);
         assertEquals("Basic Q decoding test", 
             "1+1 = 2", plain);
 
-        Object result = qcodec.decode((Object) null);
-        assertEquals( "Decoding a null Object should return null", null, result);
-        
-        try {
-            Object dObj = new Double(3.0);
-            qcodec.decode( dObj );
-            fail( "Trying to url encode a Double object should cause an exception.");
-        } catch (DecoderException ee) {
-            // Exception expected, test segment passes.
-        }
+        Object result = qcodec.decode(null);
+        assertEquals( "Decoding a null Object should return null", null, result);        
     }
 
 

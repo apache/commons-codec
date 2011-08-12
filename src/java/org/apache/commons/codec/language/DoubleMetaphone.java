@@ -17,7 +17,6 @@
 
 package org.apache.commons.codec.language;
 
-import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
 
 /**
@@ -190,21 +189,6 @@ public class DoubleMetaphone implements StringEncoder {
         return alternate ? result.getAlternate() : result.getPrimary();
     }
     
-    /**
-     * Encode the value using DoubleMetaphone.  It will only work if 
-     * <code>obj</code> is a <code>String</code> (like <code>Metaphone</code>).
-     *
-     * @param obj Object to encode (should be of type String)
-     * @return An encoded Object (will be of type String)
-     * @throws EncoderException encode parameter is not of type String
-     */
-    public Object encode(Object obj) throws EncoderException {
-        if (!(obj instanceof String)) {
-            throw new EncoderException("DoubleMetaphone encode parameter is not of type String"); 
-        } 
-        return doubleMetaphone((String) obj);
-    }
-
     /**
      * Encode the value using DoubleMetaphone.
      *

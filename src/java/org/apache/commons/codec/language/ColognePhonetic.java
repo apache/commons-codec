@@ -19,7 +19,6 @@ package org.apache.commons.codec.language;
 
 import java.util.Locale;
 
-import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
 
 /**
@@ -375,17 +374,6 @@ public class ColognePhonetic implements StringEncoder {
             lastCode = code;
         }
         return output.toString();
-    }
-
-    public Object encode(Object object) throws EncoderException {
-        if (!(object instanceof String)) {
-            throw new EncoderException("This methodâ€™s parameter was expected to be of the type " +
-                String.class.getName() +
-                ". But actually it was of the type " +
-                object.getClass().getName() +
-                ".");
-        }
-        return encode((String) object);
     }
 
     public String encode(String text) {

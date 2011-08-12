@@ -23,7 +23,7 @@ package org.apache.commons.codec;
  * @author Apache Software Foundation
  * @version $Id$
  */
-public interface BinaryDecoder extends Decoder {
+public interface BinaryDecoder extends SymmetricDecoder<byte[]> {
 
     /**
      * Decodes a byte array and returns the results as a byte array. 

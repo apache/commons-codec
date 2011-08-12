@@ -19,8 +19,6 @@ package org.apache.commons.codec.binary;
 
 import org.apache.commons.codec.BinaryDecoder;
 import org.apache.commons.codec.BinaryEncoder;
-import org.apache.commons.codec.DecoderException;
-import org.apache.commons.codec.EncoderException;
 
 /**
  * Abstract superclass for Base-N encoders and decoders.
@@ -248,23 +246,6 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
-     * Encodes an Object using the Base-N algorithm. This method is provided in order to satisfy the requirements of the
-     * Encoder interface, and will throw an EncoderException if the supplied object is not of type byte[].
-     *
-     * @param pObject
-     *            Object to encode
-     * @return An object (of type byte[]) containing the Base-N encoded data which corresponds to the byte[] supplied.
-     * @throws EncoderException
-     *             if the parameter supplied is not of type byte[]
-     */
-    public Object encode(Object pObject) throws EncoderException {
-        if (!(pObject instanceof byte[])) {
-            throw new EncoderException("Parameter supplied to Base-N encode is not a byte[]");
-        }
-        return encode((byte[]) pObject);
-    }
-
-    /**
      * Encodes a byte[] containing binary data, into a String containing characters in the Base-N alphabet.
      *
      * @param pArray
@@ -273,26 +254,6 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      */
     public String encodeToString(byte[] pArray) {
         return StringUtils.newStringUtf8(encode(pArray));
-    }
-
-    /**
-     * Decodes an Object using the Base-N algorithm. This method is provided in order to satisfy the requirements of the
-     * Decoder interface, and will throw a DecoderException if the supplied object is not of type byte[] or String.
-     *
-     * @param pObject
-     *            Object to decode
-     * @return An object (of type byte[]) containing the binary data which corresponds to the byte[] or String supplied.
-     * @throws DecoderException
-     *             if the parameter supplied is not of type byte[]
-     */
-    public Object decode(Object pObject) throws DecoderException {        
-        if (pObject instanceof byte[]) {
-            return decode((byte[]) pObject);
-        } else if (pObject instanceof String) {
-            return decode((String) pObject);
-        } else {
-            throw new DecoderException("Parameter supplied to Base-N decode is not a byte[] or a String");
-        }
     }
 
     /**

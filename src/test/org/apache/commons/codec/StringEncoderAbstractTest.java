@@ -72,18 +72,6 @@ public abstract class StringEncoderAbstractTest {
     }
 
     @Test
-    public void testEncodeWithInvalidObject() throws Exception {
-        boolean exceptionThrown = false;
-        try {
-            StringEncoder encoder = this.getStringEncoder();
-            encoder.encode(new Float(3.4));
-        } catch (Exception e) {
-            exceptionThrown = true;
-        }
-        Assert.assertTrue("An exception was not thrown when we tried to encode " + "a Float object", exceptionThrown);
-    }
-
-    @Test
     public void testLocaleIndependence() throws Exception {
         StringEncoder encoder = this.getStringEncoder();
 

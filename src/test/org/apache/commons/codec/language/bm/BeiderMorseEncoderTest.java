@@ -187,7 +187,7 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
         String phrase = "ItstheendoftheworldasweknowitandIfeelfine";
 
         for (int i = 1; i <= phrase.length(); i++) {
-            bmpm.encode(phrase.subSequence(0, i));
+            bmpm.encode(phrase.subSequence(0, i).toString());
         }
     }
 
@@ -197,7 +197,7 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
         String phrase = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz";
 
         for (int i = 1; i <= phrase.length(); i++) {
-            bmpm.encode(phrase.subSequence(0, i));
+            bmpm.encode(phrase.subSequence(0, i).toString());
         }
     }
 }

@@ -154,53 +154,6 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     }
 
     /**
-     * Encodes an object into its Base64 form using the default charset. Unsafe characters are escaped.
-     * 
-     * @param value
-     *                  object to convert to Base64 form
-     * @return Base64 object
-     * 
-     * @throws EncoderException
-     *                  thrown if a failure condition is encountered during the encoding process.
-     */
-    public Object encode(Object value) throws EncoderException {
-        if (value == null) {
-            return null;
-        } else if (value instanceof String) {
-            return encode((String) value);
-        } else {
-            throw new EncoderException("Objects of type " +
-                  value.getClass().getName() +
-                  " cannot be encoded using BCodec");
-        }
-    }
-
-    /**
-     * Decodes a Base64 object into its original form. Escaped characters are converted back to their original
-     * representation.
-     * 
-     * @param value
-     *                  Base64 object to convert into its original form
-     * 
-     * @return original object
-     * 
-     * @throws DecoderException
-     *                  Thrown if the argument is not a <code>String</code>. Thrown if a failure condition is
-     *                  encountered during the decode process.
-     */
-    public Object decode(Object value) throws DecoderException {
-        if (value == null) {
-            return null;
-        } else if (value instanceof String) {
-            return decode((String) value);
-        } else {
-            throw new DecoderException("Objects of type " +
-                  value.getClass().getName() +
-                  " cannot be decoded using BCodec");
-        }
-    }
-
-    /**
      * The default charset used for string decoding and encoding.
      * 
      * @return the default string charset.

@@ -23,7 +23,7 @@ package org.apache.commons.codec;
  * @author Apache Software Foundation
  * @version $Id$
  */
-public interface BinaryEncoder extends Encoder {
+public interface BinaryEncoder extends SymmetricEncoder<byte[]> {
     
     /**
      * Encodes a byte array and return the encoded data

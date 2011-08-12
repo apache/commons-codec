@@ -22,7 +22,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.StringEncoderAbstractTest;
 import org.junit.Test;
@@ -1011,11 +1010,7 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest {
      */
     private void assertDoubleMetaphone(String expected, String source) {
         assertEquals(expected, this.getDoubleMetaphone().encode(source));
-        try {
-            assertEquals(expected, this.getDoubleMetaphone().encode((Object) source));
-        } catch (EncoderException e) {
-            fail("Unexpected expection: " + e);
-        }
+        assertEquals(expected, this.getDoubleMetaphone().encode(source));
         assertEquals(expected, this.getDoubleMetaphone().doubleMetaphone(source));
         assertEquals(expected, this.getDoubleMetaphone().doubleMetaphone(source, false));
     }

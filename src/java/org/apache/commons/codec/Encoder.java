@@ -26,21 +26,19 @@ package org.apache.commons.codec;
  * @author Apache Software Foundation
  * @version $Id$
  */
-public interface Encoder {
+public interface Encoder<I,O> {
     
     /**
-     * Encodes an "Object" and returns the encoded content 
-     * as an Object.  The Objects here may just be <code>byte[]</code>
-     * or <code>String</code>s depending on the implementation used.
-     *   
-     * @param source An object ot encode
+     * Encodes an "Object" and returns the encoded content as an Object. The Objects here may just be <code>byte[]</code> or
+     * <code>String</code>s depending on the implementation used.
+     * 
+     * @param source
+     *            An object ot encode
      * 
      * @return An "encoded" Object
      * 
-     * @throws EncoderException an encoder exception is
-     *  thrown if the encoder experiences a failure
-     *  condition during the encoding process.
+     * @throws EncoderException
+     *             an encoder exception is thrown if the encoder experiences a failure condition during the encoding process.
      */
-    Object encode(Object source) throws EncoderException;
-}  
-
+    O encode(I source) throws EncoderException;
+}

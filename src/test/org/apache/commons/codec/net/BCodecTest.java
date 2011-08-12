@@ -108,20 +108,12 @@ public class BCodecTest {
     public void testEncodeObjects() throws Exception {
         BCodec bcodec = new BCodec();
         String plain = "what not";
-        String encoded = (String) bcodec.encode((Object) plain);
+        String encoded = bcodec.encode(plain);
 
         assertEquals("Basic B encoding test", "=?UTF-8?B?d2hhdCBub3Q=?=", encoded);
 
-        Object result = bcodec.encode((Object) null);
+        String result = bcodec.encode((String) null);
         assertEquals("Encoding a null Object should return null", null, result);
-
-        try {
-            Object dObj = new Double(3.0);
-            bcodec.encode(dObj);
-            fail("Trying to url encode a Double object should cause an exception.");
-        } catch (EncoderException ee) {
-            // Exception expected, test segment passes.
-        }
     }
 
     @Test
@@ -142,21 +134,13 @@ public class BCodecTest {
     }
 
     @Test
-    public void testDecodeObjects() throws Exception {
+    public void testDecodeStrings() throws Exception {
         BCodec bcodec = new BCodec();
         String decoded = "=?UTF-8?B?d2hhdCBub3Q=?=";
-        String plain = (String) bcodec.decode((Object) decoded);
+        String plain = (String) bcodec.decode(decoded);
         assertEquals("Basic B decoding test", "what not", plain);
 
-        Object result = bcodec.decode((Object) null);
+        Object result = bcodec.decode(null);
         assertEquals("Decoding a null Object should return null", null, result);
-
-        try {
-            Object dObj = new Double(3.0);
-            bcodec.decode(dObj);
-            fail("Trying to url encode a Double object should cause an exception.");
-        } catch (DecoderException ee) {
-            // Exception expected, test segment passes.
-        }
     }
 }

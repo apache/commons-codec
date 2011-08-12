@@ -18,9 +18,6 @@
 package org.apache.commons.codec.binary;
 
 import org.apache.commons.codec.BinaryDecoder;
-import org.apache.commons.codec.BinaryEncoder;
-import org.apache.commons.codec.DecoderException;
-import org.apache.commons.codec.EncoderException;
 
 /**
  * Converts between byte arrays and strings of "0"s and "1"s.
@@ -32,7 +29,7 @@ import org.apache.commons.codec.EncoderException;
  * @since 1.3
  * @version $Id$
  */
-public class BinaryCodec implements BinaryDecoder, BinaryEncoder {
+public abstract class BinaryCodec implements BinaryDecoder {
     /*
      * tried to avoid using ArrayUtils to minimize dependencies while using these empty arrays - dep is just not worth
      * it.
@@ -70,61 +67,6 @@ public class BinaryCodec implements BinaryDecoder, BinaryEncoder {
     private static final int[] BITS = {BIT_0, BIT_1, BIT_2, BIT_3, BIT_4, BIT_5, BIT_6, BIT_7};
 
     /**
-     * Converts an array of raw binary data into an array of ASCII 0 and 1 characters.
-     * 
-     * @param raw
-     *                  the raw binary data to convert
-     * @return 0 and 1 ASCII character bytes one for each bit of the argument
-     * @see org.apache.commons.codec.BinaryEncoder#encode(byte[])
-     */
-    public byte[] encode(byte[] raw) {
-        return toAsciiBytes(raw);
-    }
-
-    /**
-     * Converts an array of raw binary data into an array of ASCII 0 and 1 chars.
-     * 
-     * @param raw
-     *                  the raw binary data to convert
-     * @return 0 and 1 ASCII character chars one for each bit of the argument
-     * @throws EncoderException
-     *                  if the argument is not a byte[]
-     * @see org.apache.commons.codec.Encoder#encode(Object)
-     */
-    public Object encode(Object raw) throws EncoderException {
-        if (!(raw instanceof byte[])) {
-            throw new EncoderException("argument not a byte array");
-        }
-        return toAsciiChars((byte[]) raw);
-    }
-
-    /**
-     * Decodes a byte array where each byte represents an ASCII '0' or '1'.
-     * 
-     * @param ascii
-     *                  each byte represents an ASCII '0' or '1'
-     * @return the raw encoded binary where each bit corresponds to a byte in the byte array argument
-     * @throws DecoderException
-     *                  if argument is not a byte[], char[] or String
-     * @see org.apache.commons.codec.Decoder#decode(Object)
-     */
-    public Object decode(Object ascii) throws DecoderException {
-        if (ascii == null) {
-            return EMPTY_BYTE_ARRAY;
-        }
-        if (ascii instanceof byte[]) {
-            return fromAscii((byte[]) ascii);
-        }
-        if (ascii instanceof char[]) {
-            return fromAscii((char[]) ascii);
-        }
-        if (ascii instanceof String) {
-            return fromAscii(((String) ascii).toCharArray());
-        }
-        throw new DecoderException("argument not a byte array");
-    }
-
-    /**
      * Decodes a byte array where each byte represents an ASCII '0' or '1'.
      * 
      * @param ascii
@@ -134,6 +76,33 @@ public class BinaryCodec implements BinaryDecoder, BinaryEncoder {
      */
     public byte[] decode(byte[] ascii) {
         return fromAscii(ascii);
+    }
+
+    /**
+     * Decodes a byte array where each byte represents an ASCII '0' or '1'.
+     * 
+     * @param ascii
+     *                  each byte represents an ASCII '0' or '1'
+     * @return the raw encoded binary where each bit corresponds to a byte in the byte array argument
+     * @see org.apache.commons.codec.Decoder#decode(Object)
+     */
+    public byte[] decode(char[] ascii) {
+        return fromAscii(ascii);
+    }
+
+    /**
+     * Decodes a byte array where each byte represents an ASCII '0' or '1'.
+     * 
+     * @param ascii
+     *                  each byte represents an ASCII '0' or '1'
+     * @return the raw encoded binary where each bit corresponds to a byte in the byte array argument
+     * @see org.apache.commons.codec.Decoder#decode(Object)
+     */
+    public byte[] decode(String ascii) {
+        if (ascii == null) {
+            return EMPTY_BYTE_ARRAY;
+        }
+        return fromAscii(ascii.toCharArray());
     }
 
     /**
