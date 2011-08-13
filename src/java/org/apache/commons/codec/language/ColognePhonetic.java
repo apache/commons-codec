@@ -289,7 +289,7 @@ public class ColognePhonetic implements StringEncoder {
      * </p>
      * 
      * @param text
-     * @return the corresponding encoding according to the <i>KÃ¶lner Phonetik</i> algorithm
+     * @return the corresponding encoding according to the <i>K&ouml;lner Phonetik</i> algorithm
      */
     public String colognePhonetic(String text) {
         if (text == null) {
