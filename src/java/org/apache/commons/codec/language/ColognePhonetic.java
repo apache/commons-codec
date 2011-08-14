@@ -262,6 +262,15 @@ public class ColognePhonetic implements StringEncoder {
         }
     }
 
+    /**
+     * Maps some Germanic characters to plain for internal processing. The following characters are mapped:
+     * <ul>
+     * <li>capital a, umlaut mark</li>
+     * <li>capital u, umlaut mark</li>
+     * <li>capital o, umlaut mark</li>
+     * <li>small sharp s, German</li>
+     * </ul>
+     */
     private static final char[][] PREPROCESS_MAP = new char[][]{
         {'\u00C4', 'A'}, // capital a, umlaut mark
         {'\u00DC', 'U'}, // capital u, umlaut mark
@@ -397,8 +406,8 @@ public class ColognePhonetic implements StringEncoder {
         return colognePhonetic(text1).equals(colognePhonetic(text2));
     }
 
-    /*
-     * Converts the string to upper case and replaces germanic umlauts, and the â€œÃŸâ€�.
+    /**
+     * Converts the string to upper case and replaces germanic characters as defined in {@link #PREPROCESS_MAP}.
      */
     private String preprocess(String text) {
         text = text.toUpperCase(Locale.GERMAN);
