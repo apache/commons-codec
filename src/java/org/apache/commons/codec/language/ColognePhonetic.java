@@ -262,10 +262,11 @@ public class ColognePhonetic implements StringEncoder {
         }
     }
 
-    private static final char[][] PREPROCESS_MAP = new char[][]{{'\u00C4', 'A'}, // Ã„
-        {'\u00DC', 'U'}, // Ãœ
-        {'\u00D6', 'O'}, // Ã–
-        {'\u00DF', 'S'} // ÃŸ
+    private static final char[][] PREPROCESS_MAP = new char[][]{
+        {'\u00C4', 'A'}, // capital a, umlaut mark
+        {'\u00DC', 'U'}, // capital u, umlaut mark
+        {'\u00D6', 'O'}, // capital o, umlaut mark
+        {'\u00DF', 'S'} // small sharp s, German
     };
 
     /*
