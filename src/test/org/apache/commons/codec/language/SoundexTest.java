@@ -364,15 +364,16 @@ public class SoundexTest extends StringEncoderAbstractTest {
     @Test
     public void testUsMappingEWithAcute() {
         Assert.assertEquals("E000", this.getSoundexEncoder().encode("e"));
-        if (Character.isLetter('�')) {
+        if (Character.isLetter('\u00e9')) { // e-acute
             try {
-                Assert.assertEquals("�000", this.getSoundexEncoder().encode("�"));
+                //         uppercase E-acute
+                Assert.assertEquals("\u00c9000", this.getSoundexEncoder().encode("\u00e9"));
                 Assert.fail("Expected IllegalArgumentException not thrown");
             } catch (IllegalArgumentException e) {
                 // expected
             }
         } else {
-            Assert.assertEquals("", this.getSoundexEncoder().encode("�"));
+            Assert.assertEquals("", this.getSoundexEncoder().encode("\u00e9"));
         }
     }
 
@@ -384,15 +385,16 @@ public class SoundexTest extends StringEncoderAbstractTest {
     @Test
     public void testUsMappingOWithDiaeresis() {
         Assert.assertEquals("O000", this.getSoundexEncoder().encode("o"));
-        if (Character.isLetter('�')) {
+        if (Character.isLetter('\u00f6')) { // o-umlaut
             try {
-                Assert.assertEquals("�000", this.getSoundexEncoder().encode("�"));
+                //         uppercase O-umlaut
+                Assert.assertEquals("\u00d6000", this.getSoundexEncoder().encode("\u00f6"));
                 Assert.fail("Expected IllegalArgumentException not thrown");
             } catch (IllegalArgumentException e) {
                 // expected
             }
         } else {
-            Assert.assertEquals("", this.getSoundexEncoder().encode("�"));
+            Assert.assertEquals("", this.getSoundexEncoder().encode("\u00f6"));
         }
     }
 }
