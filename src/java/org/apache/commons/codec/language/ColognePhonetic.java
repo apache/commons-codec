@@ -389,7 +389,7 @@ public class ColognePhonetic implements StringEncoder {
 
     public Object encode(Object object) throws EncoderException {
         if (!(object instanceof String)) {
-            throw new EncoderException("This methodâ€™s parameter was expected to be of the type " +
+            throw new EncoderException("This method's parameter was expected to be of the type " +
                 String.class.getName() +
                 ". But actually it was of the type " +
                 object.getClass().getName() +
