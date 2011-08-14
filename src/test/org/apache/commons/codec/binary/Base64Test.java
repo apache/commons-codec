@@ -92,8 +92,8 @@ public class Base64Test {
         encodedContent = StringUtils.newStringUtf8(encodedBytes);
         assertTrue("encoding hello world", encodedContent.equals("SGVsbG8gV29ybGQ="));
 
-        // bogus characters to decode (to skip actually)
-        byte[] decode = b64.decode("SGVsbG{������}8gV29ybGQ=");
+        // bogus characters to decode (to skip actually) {e-acute*6}
+        byte[] decode = b64.decode("SGVsbG{\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9}8gV29ybGQ=");
         String decodeString = StringUtils.newStringUtf8(decode);
         assertTrue("decode hello world", decodeString.equals("Hello World"));        
     }
