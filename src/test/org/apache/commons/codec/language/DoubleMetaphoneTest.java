@@ -1224,12 +1224,12 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest {
 
     @Test
     public void testCCedilla() {
-        this.getDoubleMetaphone().isDoubleMetaphoneEqual("�", "S");
+        this.getDoubleMetaphone().isDoubleMetaphoneEqual("\u00e7", "S"); // c-cedilla
     }
     
     @Test
     public void testNTilde() {
-        this.getDoubleMetaphone().isDoubleMetaphoneEqual("�", "N");
+        this.getDoubleMetaphone().isDoubleMetaphoneEqual("\u00f1", "N"); // n-tilde
     }
     
     public void validateFixture(String[][] pairs) {
