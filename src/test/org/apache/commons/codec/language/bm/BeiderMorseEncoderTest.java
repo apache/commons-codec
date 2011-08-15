@@ -18,6 +18,7 @@
 package org.apache.commons.codec.language.bm;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
@@ -90,7 +91,8 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
     @Test
     public void testEncodeAtzNotEmpty() throws EncoderException {
         BeiderMorseEncoder bmpm = createGenericApproxEncoder();
-        String[] names = { "ácz", "átz", "Ignácz", "Ignátz", "Ignác" };
+        //String[] names = { "ácz", "átz", "Ignácz", "Ignátz", "Ignác" };
+        String[] names = { "\u00e1cz", "\u00e1tz", "Ign\u00e1cz", "Ign\u00e1tz", "Ign\u00e1c" };
         for (String name : names) {
             assertNotEmpty(bmpm, name);
         }
@@ -139,7 +141,7 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
     public void testSetConcat() {
         BeiderMorseEncoder bmpm = new BeiderMorseEncoder();
         bmpm.setConcat(false);
-        assertEquals("Should be able to set concat to false", false, bmpm.isConcat());
+        assertFalse("Should be able to set concat to false", bmpm.isConcat());
     }
 
     @Test
