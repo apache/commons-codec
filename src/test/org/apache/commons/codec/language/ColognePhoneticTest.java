@@ -64,9 +64,9 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
             {"i", "0"},
             {"o", "0"},
             {"u", "0"},
-            {"\u00E4", "0"},
-            {"\u00F6", "0"},
-            {"\u00FC", "0"},
+            {"\u00E4", "0"}, // a-umlaut
+            {"\u00F6", "0"}, // o-umlaut
+            {"\u00FC", "0"}, // u-umlaut
             {"aa", "0"},
             {"ha", "0"},
             {"h", ""},
@@ -94,7 +94,7 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
     @Test
     public void testExamples() throws EncoderException {
         String[][] data = {
-            {"m\u00DCller", "657"},
+            {"m\u00DCller", "657"}, // mÜller - why upper case U-umlaut?
             {"schmidt", "862"},
             {"schneider", "8627"},
             {"fischer", "387"},
@@ -102,12 +102,12 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
             {"wagner", "3467"},
             {"becker", "147"},
             {"hoffmann", "0366"},
-            {"sch\u00C4fer", "837"},
+            {"sch\u00C4fer", "837"}, // schÄfer - why upper case A-umlaut ?
             {"Breschnew", "17863"},
             {"Wikipedia", "3412"},
             {"peter", "127"},
             {"pharma", "376"},
-            {"mönchengladbach", "664645214"},
+            {"m\u00f6nchengladbach", "664645214"}, // mönchengladbach 
             {"deutsch", "28"},
             {"deutz", "28"},
             {"hamburg", "06174"},
@@ -127,20 +127,21 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
 
     @Test
     public void testHyphen() throws EncoderException {
-        String[][] data = {{"bergisch-gladbach", "174845214"}, {"Müller-Lüdenscheidt", "65752682"}};
+        String[][] data = {{"bergisch-gladbach", "174845214"}, 
+                {"M\u00fcller-L\u00fcdenscheidt", "65752682"}}; // Müller-Lüdenscheidt
         this.checkEncodings(data);
     }
 
     @Test
     public void testIsEncodeEquals() {
         String[][] data = {
-            {"Meyer", "Müller"},
+            {"Meyer", "M\u00fcller"}, // Müller
             {"Meyer", "Mayr"},
             {"house", "house"},
             {"House", "house"},
             {"Haus", "house"},
             {"ganz", "Gans"},
-            {"ganz", "Gänse"},
+            {"ganz", "G\u00e4nse"}, // Gänse
             {"Miyagi", "Miyako"}};
         for (String[] element : data) {
             ((ColognePhonetic) this.getStringEncoder()).isEncodeEqual(element[1], element[0]);
