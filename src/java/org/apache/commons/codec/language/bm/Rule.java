@@ -369,14 +369,14 @@ public class Rule {
                                 PhonemeExpr ph = parsePhonemeExpr(stripQuotes(parts[3]));
                                 final int cLine = currentLine;
                                 Rule r = new Rule(pat, lCon, rCon, ph) {
-                                    private final int line = cLine;
+                                    private final int myLine = cLine;
                                     private final String loc = location;
 
                                     @Override
                                     public String toString() {
                                         final StringBuilder sb = new StringBuilder();
                                         sb.append("Rule");
-                                        sb.append("{line=").append(line);
+                                        sb.append("{line=").append(myLine);
                                         sb.append(", loc='").append(loc).append('\'');
                                         sb.append('}');
                                         return sb.toString();
