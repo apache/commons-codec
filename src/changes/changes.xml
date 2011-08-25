@@ -17,297 +17,298 @@
 -->
 <!-- $Id$ -->
 <document>
-    <properties>
-        <title>Changes</title>
-        <author>Gary D. Gregory</author>
-    </properties>
-    <body>
-        <release version="2.0" date="TBA" description="Feature and fix release.">
-            <action dev="ggregory, sebb" type="fix" issue="CODEC-127">
-             Fix various character encoding issues in comments and test cases.
-            </action>
-            <action dev="ggregory" type="fix" issue="CODEC-126">
-             Make org.apache.commons.codec.net.URLCodec charset field final.
-            </action>
-            <action dev="ggregory, matthewpocock" type="update" issue="CODEC-125">
-             Implement a Beider-Morse phonetic matching codec.
-            </action>
-            <action dev="ggregory" type="update" issue="CODEC-119">
-             Migrate to Java 5.
-            </action>
-            <action dev="ggregory" type="update" issue="CODEC-120">
-             Migrate to JUnit 4.
-            </action>
-            <action dev="ggregory" type="fix" issue="CODEC-123">
-             ColognePhonetic Javadoc should use HTML entities for special characters.
-            </action>
-		</release>
-        <release version="1.5" date="29 March 2011" description="Feature and fix release.">
-            <action dev="sebb" type="fix" issue="CODEC-89">
-             new Base64().encode() appends a CRLF, and chunks results into 76 character lines.
-            </action>
-            <action dev="sebb" type="fix" issue="CODEC-92">
-             Many test cases use getBytes() which uses the default platform encoding so tests may fail on some platforms.
-            </action>
-            <action dev="sebb, julius, ggregory" type="add" issue="CODEC-93" due-to="sebb">
-             Add test(s) to check that encodeBase64() does not chunk output.
-             </action>
-            <action dev="sebb" type="fix" issue="CODEC-97" due-to="mjryall">
-             Base64 default constructor behaviour changed to enable chunking in 1.4.
-            </action>
-            <action dev="ggregory" type="fix" issue="CODEC-99" due-to="julius">
-             Base64.encodeBase64String() shouldn't chunk.
-            </action>
-            <action dev="julius" type="fix" issue="CODEC-101" due-to="balusc">
-             Base64InputStream#read(byte[]) incorrectly returns 0 at end of any stream which is multiple of 3 bytes long.
-            </action>
-            <action dev="bayard" type="fix" issue="CODEC-103" due-to="gnuf">
-             Typo in DecoderException message thrown from Hex.decodeHex.
-            </action>
-            <action dev="julius, ggregory" type="add" issue="CODEC-105" due-to="zak">
-             ArrayIndexOutOfBoundsException when doing multiple reads() on encoding Base64InputStream.
-            </action>
-            <action dev="bayard" type="add" issue="CODEC-106" due-to="it2mmeyerfa">
-             Add the "Kölner Phonetik" encoder (Cologne Phonetic) to codec.lang.
-            </action>
-            <action dev="ggregory" type="add" issue="CODEC-111" due-to="ggregory">
-             org.apache.commons.codec.net.URLCodec.ESCAPE_CHAR isn't final but should be.
-            </action>
-            <action dev="sebb" type="add" issue="CODEC-112" due-to="sebb">
-             Base64.encodeBase64(byte[] binaryData, boolean isChunked, boolean urlSafe, int maxResultSize) throws IAE for valid maxResultSize if isChunked is false.
-            </action>
-            <action dev="ggregory" type="add" issue="CODEC-113" due-to="ggregory">
-             org.apache.commons.codec.language.RefinedSoundex.US_ENGLISH_MAPPING should be package protected MALICIOUS_CODE.
-            </action>
-            <action dev="ggregory" type="add" issue="CODEC-114" due-to="ggregory">
-             org.apache.commons.codec.language.Soundex.US_ENGLISH_MAPPING should be package protected MALICIOUS_CODE.
-            </action>
-            <action dev="ggregory" type="add" issue="CODEC-115" due-to="sebb">
-             DoubleMetaphone.maxCodeLen should probably be private.
-            </action>
-            <action dev="ggregory" type="remove" issue="CODEC-116" due-to="ggregory">
-             Remove deprecated package private method Base64.discardWhitespace(byte[])
-            </action>
-            <action dev="ggregory" type="fix" issue="CODEC-117" due-to="ggregory">
-             Caverphone encodes names starting and ending with "mb" incorrectly.
-            </action>
-            <action dev="ggregory" type="add" issue="CODEC-118" due-to="ggregory">
-             Split Caverphone class into two classes for Caverphone 1.0 and 2.0.
-            </action>
-        </release>
-        <release version="1.4" date="9 August 2009" description="Feature and fix release.">
-            <action dev="ggregory" type="fix" issue="CODEC-80" due-to="Julius Davies">
-             Regression: Base64.encode(chunk=true) has bug when input length is multiple of 76.
-             </action>
-            <action dev="ggregory" type="fix" issue="CODEC-77" due-to="Julius Davies">
-             Base64 bug with empty input (new byte[0]).
-             </action>
-            <action dev="ggregory" type="fix" issue="CODEC-75" due-to="Julius Davies">
-             Make Base64 URL-safe.
-             </action>
-            <action dev="ggregory" type="add" issue="CODEC-74">
-             Allow for uppercase letters output in Hex.encodeHex().
-             </action>
-            <action dev="bayard" type="fix" issue="CODEC-72" due-to="Sebb">
-             Soundex and RefinedSoundex issues with character arrays.
-            </action>
-            <action dev="bayard" type="fix" issue="CODEC-71" due-to="Sebb">
-             Base64.isArrayByteBase64() method is inefficient for large byte arrays.
-            </action>
-            <action dev="bayard" type="fix" issue="CODEC-70" due-to="Sebb">
-             Thread safety and malicious code safety improvements.
-            </action>
-            <action dev="bayard" type="fix" issue="CODEC-68" due-to="Robert Rodewald">
-             isBase64 throws ArrayIndexOutOfBoundsException on some non-BASE64 bytes.
-            </action>
-            <action dev="bayard" type="fix" issue="CODEC-65" due-to="Benjamin Bentmann">
-             Fix case-insensitive string handling.
-            </action>
-            <action dev="ggregory" type="fix" issue="CODEC-61" due-to="Igor Slepchin">
-             Base64.encodeBase64() throws NegativeArraySizeException on large files.
-            </action>
-            <action dev="bayard" type="add" issue="CODEC-60">
-             Implement Caverphone.
-            </action>
-            <action dev="ggregory" type="fix" issue="CODEC-58" due-to="Julius Davies">
-             Character set used by Base64 not documented.
-            </action>
-            <action dev="bayard" type="fix" issue="CODEC-56" due-to="Sebb">
-             RefinedSoundex creates instance before al fields have been initialized.
-            </action>
-            <action dev="bayard" type="add" issue="CODEC-52" due-to="Niklas Gustavsson">
-             Digest on InputStreams.
-            </action>
-            <action dev="bayard" type="fix" issue="CODEC-51">
-             2 Test failures in SoundexTest.
-            </action>
-            <action dev="bayard" type="add" issue="CODEC-40" due-to="Chris Black">
-             Patch to add crypto-compatible BigInteger encoding support to Base64.
-            </action>
-            <action dev="ggregory" type="add" issue="CODEC-39" due-to="Jamie Flournoy" due-to-email="jamie@white-mountain.org">
-             DigestUtils: Add methods for SHA-256, SHA-384, and SHA-512.
-            </action>
-            <action dev="tobrien" type="fix" issue="CODEC-10" due-to="Reggie Riser" due-to-email="rriser@informs.com">
-             Using US_ENGLISH in Soundex caused an NullPointerException.
-            </action>
-            <action dev="tobrien" type="fix" issue="CODEC-6" due-to="David Tonhofer">
-             Source tarball spews files all over the place.
-            </action>
-            <action dev="ggregory" type="fix" issue="CODEC-22" due-to="Piero Ottuzzi">
-             Base64.isArrayByteBase64() throws an ArrayIndexOutOfBoundsException for negative octets
-            </action>
-            <action dev="jochen" type="add" issue="CODEC-69" due-to="Julius Davies">
-             Streaming Base64 (Base64InputStream and Base64OutputStream added).
-            </action>
-            <action dev="ggregory" type="fix" issue="CODEC-78" due-to="Julius Davies">
-             Base64: Improve Code Coverage.
-            </action>
-            <action dev="ggregory" type="add" issue="CODEC-59" due-to="Julius Davies">
-             Add methods to Base64 which work with String instead of byte[].
-            </action>
-            <action dev="ggregory" type="fix" issue="CODEC-81" due-to="Julius Davies">
-             Base64's new constructor parameters ignored.
-            </action>
-            <action dev="niallp" type="fix" issue="CODEC-83">
-             Improve Double Metaphone test coverage.
-            </action>
-            <action dev="niallp" type="fix" issue="CODEC-84">
-             Double Metaphone bugs in alternative encoding.
-            </action>
-            <action dev="ggregory" type="fix" issue="CODEC-73" due-to="Benjamin Bentmann">
-             Make string2byte conversions indepedent of platform default encoding.
-            </action>
-        </release>
-        <release version="1.3" date="10 July 2004" description="Feature and fix release.">
-            <action dev="ggregory, tobrien" type="add" issue="CODEC-21" due-to="Alex Karasulu">
-             BinaryCodec: Encodes and decodes binary to and from Strings of 0s and 1s.
-            </action>
-            <action dev="ggregory" type="add" issue="CODEC-41" due-to="Oleg Kalnichevski" due-to-email="olegk@apache.org">
-             QuotedPrintableCodec: Codec for RFC 1521 MIME (Multipurpose Internet
-             Mail Extensions) Part One. Rules #3, #4, and #5 of the quoted-printable spec
-             are not implemented yet. See also issue CODEC-46.
-            </action>
-            <action dev="ggregory" type="add" issue="CODEC-41" due-to="Oleg Kalnichevski" due-to-email="olegk@apache.org">
-             BCodec: Identical to the Base64 encoding defined by RFC 1521 and allows a
-             character set to be specified.
-            </action>
-            <action dev="ggregory" type="add" issue="CODEC-41" due-to="Oleg Kalnichevski" due-to-email="olegk@apache.org">
-             QCodec: Similar to the Quoted-Printable content-transfer-encoding defined
-             in RFC 1521 and designed to allow text containing mostly ASCII characters to
-             be decipherable on an ASCII terminal without decoding.
-            </action>
-            <action dev="ggregory" type="add" issue="CODEC-45" due-to="Matthew Inger" due-to-email="mattinger@yahoo.com">
-             Soundex: Implemented the DIFFERENCE algorithm.
-              </action>
-            <action dev="ggregory" type="add" issue="CODEC-45" due-to="Matthew Inger" due-to-email="mattinger@yahoo.com">
-             RefinedSoundex: Implemented the DIFFERENCE algorithm.
-            </action>
-            <action dev="ggregory" type="update">
-             This version is relesed under the
-             &lt;a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0&lt;/a>
-             , please see LICENSE.txt. Previous versions were released under the
-             &lt;a href="http://www.apache.org/licenses/LICENSE-1.1">Apache License 1.1&lt;/a>
-             </action>
-            <action dev="ggregory" type="update">
-             The Board recommendation to remove Javadoc author tags has been
-             implemented. All author tags are now "Apache Software Foundation".
-            </action>
-            <action dev="ggregory" type="fix" issue="CODEC-25" due-to="Oleg Kalnichevski" due-to-email="olegk@apache.org">
-             The default URL encoding logic was broken.
-            </action>
-            <action dev="ggregory" type="fix" issue="CODEC-31" due-to="Gary D. Gregory">
-             Base64 chunked encoding not compliant with RFC 2045 section 2.1 CRLF.
-            </action>
-            <action dev="ggregory" type="fix" issue="CODEC-5">
-             Hex converts illegal characters to 255.
-            </action>
-            <action dev="tobrien" type="fix" issue="CODEC-17">
-             Metaphone now correctly handles a silent B in a word that ends in MB.
-             "COMB" is encoded as "KM", before this fix "COMB" was encoded as "KMB".
-            </action>
-            <action dev="ggregory" type="fix">
-             Added missing tags in Javadoc comments.
-            </action>
-            <action dev="ggregory" type="fix">
-             General Javadoc improvements.
-            </action>
-        </release>
-        <release version="1.2" date="24 Nov 2003" description="Feature and fix release.">
-            <action dev="tobrien" type="add" due-to="Oleg Kalnichevski" due-to-email="olegk@apache.org">
-             URLCodec: Implements the www-form-urlencoded encoding scheme.
-            </action>
-            <action dev="tobrien" type="add" due-to="Dave Dribin, David Graham">
-             DigestUtils: Calculates MD5 and SHA digests.
-            </action>
-            <action dev="tobrien" type="fix" issue="CODEC-26" due-to="Brian Ewins">
-             Modified Base64 to remedy non-compliance with RFC
-             2045.  Non-Base64 characters were not being discarded during the
-             decode.  RFC 2045 explicitly states that all characters outside of the
-             base64 alphabet are to be ignored.
-            </action>
-            <action dev="ggregory" type="fix" issue="CODEC-4">
-             Hex.decode(Object) throws a ClassCastException when a String argument is passed in.
-            </action>
-            <action dev="ggregory" type="fix" issue="CODEC-3">
-             Soundex: The HW rule is not applied; hyphens and apostrophes are not ignored.
-            </action>
-            <action dev="ggregory" type="fix" issue="CODEC-29">
-             Soundex.setMaxLength causes bugs and is not needed.
-             Calling Soundex.setMaxLength() with a value of 2 or less causes the wrong
-             answer to be returned.  Since the encoding returned by Soundex is always
-             of length 4 by definition (we do not use the '-' in as a letter-nnn
-             separator) the need for a maxLength attribute is not needed.  Deprecate
-             the field and accessor methods.
-            </action>
-            <action dev="Members" type="fix">
-             Fix in Metaphone relating to the handling of the maximum code length.
-            </action>
-        </release>
-        <release version="1.1" date="29 April 2003" description="The first official release. Numerous projects had been depending on version 1.0-dev while in the Sandbox.">
-            <action dev="Members" type="add">
-             A newer version of the Base64 class reflecting improvements from
-             both the commons-httpclient and xml-rpc versions of code forked
-             from catalina.
-            </action>
-            <action dev="Members" type="add">
-             Base64 class from commons-httpclient in org.apache.commons.codec.base64
-             has been retained for backwards compatibility but has been deprecated.
-            </action>
-            <action dev="Members" type="add">
-             Soundex class from commons-util in org.apache.commons.codec.
-            </action>
-            <action dev="Members" type="add">
-             Metaphone class from commons-util in org.apache.commons.codec.
-            </action>
-            <action dev="tobrien" type="add">
-             RefinedSoundex class in org.apache.commons.codec.
-            </action>
-            <action dev="Members" type="add">
-             Encoder/Decoder interfaces in org.apache.commons.
-            </action>
-            <action dev="Members" type="add">
-             String and Binary specific Encoder/Decoder interfaces in org.apache.commons.
-            </action>
-            <action dev="Members" type="add">
-             StringEncoderComparator replaces the SoundexComparator from the language package.
-            </action>
-            <action dev="Members" type="fix">
-             Base64 now discards whitespace characters when decoding encoded content.
-            </action>
-        </release>
-        <release version="1.0-dev" date="25 April 2003" description="Last release from the Sandbox.">
-            <action dev="tobrien" type="add">
-             Base64 class from commons-httpclient in org.apache.commons.codec.base64.
-            </action>
-            <action dev="tobrien" type="add">
-             Soundex class from commons-util in org.apache.commons.codec.
-            </action>
-            <action dev="tobrien" type="add">
-             Metaphone class from commons-util in org.apache.commons.codec.
-            </action>
-            <action dev="Members" type="add">
-             SoundexComparator class from commons-util in org.apache.commons.codec.
-            </action>
-        </release>
-    </body>
+  <properties>
+    <title>Changes</title>
+    <author>Gary D. Gregory</author>
+  </properties>
+  <body>
+    <!-- <release version="2.0" date="TBA" description="Feature and fix release."> <action dev="ggregory" type="fix" issue="CODEC-126"> Make 
+      org.apache.commons.codec.net.URLCodec charset field final. </action> -->
+  </release>
+    <release version="1.6" date="TBA" description="Feature and fix release.">
+      <action dev="ggregory, sebb" type="fix" issue="CODEC-127">
+        Fix various character encoding issues in comments and test cases.
+      </action>
+      <action dev="ggregory, matthewpocock" type="update" issue="CODEC-125">
+        Implement a Beider-Morse phonetic matching codec.
+      </action>
+      <action dev="ggregory" type="update" issue="CODEC-119">
+        Migrate to Java 5.
+      </action>
+      <action dev="ggregory" type="update" issue="CODEC-120">
+        Migrate to JUnit 4.
+      </action>
+      <action dev="ggregory" type="fix" issue="CODEC-123">
+        ColognePhonetic Javadoc should use HTML entities for special characters.
+      </action>
+    </release>
+    <release version="1.5" date="29 March 2011" description="Feature and fix release.">
+      <action dev="sebb" type="fix" issue="CODEC-89">
+        new Base64().encode() appends a CRLF, and chunks results into 76 character lines.
+      </action>
+      <action dev="sebb" type="fix" issue="CODEC-92">
+        Many test cases use getBytes() which uses the default platform encoding so tests may fail on some platforms.
+      </action>
+      <action dev="sebb, julius, ggregory" type="add" issue="CODEC-93" due-to="sebb">
+        Add test(s) to check that encodeBase64() does not chunk output.
+      </action>
+      <action dev="sebb" type="fix" issue="CODEC-97" due-to="mjryall">
+        Base64 default constructor behaviour changed to enable chunking in 1.4.
+      </action>
+      <action dev="ggregory" type="fix" issue="CODEC-99" due-to="julius">
+        Base64.encodeBase64String() shouldn't chunk.
+      </action>
+      <action dev="julius" type="fix" issue="CODEC-101" due-to="balusc">
+        Base64InputStream#read(byte[]) incorrectly returns 0 at end of any stream which is multiple of 3 bytes long.
+      </action>
+      <action dev="bayard" type="fix" issue="CODEC-103" due-to="gnuf">
+        Typo in DecoderException message thrown from Hex.decodeHex.
+      </action>
+      <action dev="julius, ggregory" type="add" issue="CODEC-105" due-to="zak">
+        ArrayIndexOutOfBoundsException when doing multiple reads() on encoding Base64InputStream.
+      </action>
+      <action dev="bayard" type="add" issue="CODEC-106" due-to="it2mmeyerfa">
+        Add the "Kölner Phonetik" encoder (Cologne Phonetic) to codec.lang.
+      </action>
+      <action dev="ggregory" type="add" issue="CODEC-111" due-to="ggregory">
+        org.apache.commons.codec.net.URLCodec.ESCAPE_CHAR isn't final but should be.
+      </action>
+      <action dev="sebb" type="add" issue="CODEC-112" due-to="sebb">
+        Base64.encodeBase64(byte[] binaryData, boolean isChunked, boolean urlSafe, int maxResultSize) throws IAE for valid maxResultSize if isChunked is false.
+      </action>
+      <action dev="ggregory" type="add" issue="CODEC-113" due-to="ggregory">
+        org.apache.commons.codec.language.RefinedSoundex.US_ENGLISH_MAPPING should be package protected MALICIOUS_CODE.
+      </action>
+      <action dev="ggregory" type="add" issue="CODEC-114" due-to="ggregory">
+        org.apache.commons.codec.language.Soundex.US_ENGLISH_MAPPING should be package protected MALICIOUS_CODE.
+      </action>
+      <action dev="ggregory" type="add" issue="CODEC-115" due-to="sebb">
+        DoubleMetaphone.maxCodeLen should probably be private.
+      </action>
+      <action dev="ggregory" type="remove" issue="CODEC-116" due-to="ggregory">
+        Remove deprecated package private method Base64.discardWhitespace(byte[])
+      </action>
+      <action dev="ggregory" type="fix" issue="CODEC-117" due-to="ggregory">
+        Caverphone encodes names starting and ending with "mb" incorrectly.
+      </action>
+      <action dev="ggregory" type="add" issue="CODEC-118" due-to="ggregory">
+        Split Caverphone class into two classes for Caverphone 1.0 and 2.0.
+      </action>
+    </release>
+    <release version="1.4" date="9 August 2009" description="Feature and fix release.">
+      <action dev="ggregory" type="fix" issue="CODEC-80" due-to="Julius Davies">
+        Regression: Base64.encode(chunk=true) has bug when input length is multiple of 76.
+      </action>
+      <action dev="ggregory" type="fix" issue="CODEC-77" due-to="Julius Davies">
+        Base64 bug with empty input (new byte[0]).
+      </action>
+      <action dev="ggregory" type="fix" issue="CODEC-75" due-to="Julius Davies">
+        Make Base64 URL-safe.
+      </action>
+      <action dev="ggregory" type="add" issue="CODEC-74">
+        Allow for uppercase letters output in Hex.encodeHex().
+      </action>
+      <action dev="bayard" type="fix" issue="CODEC-72" due-to="Sebb">
+        Soundex and RefinedSoundex issues with character arrays.
+      </action>
+      <action dev="bayard" type="fix" issue="CODEC-71" due-to="Sebb">
+        Base64.isArrayByteBase64() method is inefficient for large byte arrays.
+      </action>
+      <action dev="bayard" type="fix" issue="CODEC-70" due-to="Sebb">
+        Thread safety and malicious code safety improvements.
+      </action>
+      <action dev="bayard" type="fix" issue="CODEC-68" due-to="Robert Rodewald">
+        isBase64 throws ArrayIndexOutOfBoundsException on some non-BASE64 bytes.
+      </action>
+      <action dev="bayard" type="fix" issue="CODEC-65" due-to="Benjamin Bentmann">
+        Fix case-insensitive string handling.
+      </action>
+      <action dev="ggregory" type="fix" issue="CODEC-61" due-to="Igor Slepchin">
+        Base64.encodeBase64() throws NegativeArraySizeException on large files.
+      </action>
+      <action dev="bayard" type="add" issue="CODEC-60">
+        Implement Caverphone.
+      </action>
+      <action dev="ggregory" type="fix" issue="CODEC-58" due-to="Julius Davies">
+        Character set used by Base64 not documented.
+      </action>
+      <action dev="bayard" type="fix" issue="CODEC-56" due-to="Sebb">
+        RefinedSoundex creates instance before al fields have been initialized.
+      </action>
+      <action dev="bayard" type="add" issue="CODEC-52" due-to="Niklas Gustavsson">
+        Digest on InputStreams.
+      </action>
+      <action dev="bayard" type="fix" issue="CODEC-51">
+        2 Test failures in SoundexTest.
+      </action>
+      <action dev="bayard" type="add" issue="CODEC-40" due-to="Chris Black">
+        Patch to add crypto-compatible BigInteger encoding support to Base64.
+      </action>
+      <action dev="ggregory" type="add" issue="CODEC-39" due-to="Jamie Flournoy" due-to-email="jamie@white-mountain.org">
+        DigestUtils: Add methods for SHA-256, SHA-384, and SHA-512.
+      </action>
+      <action dev="tobrien" type="fix" issue="CODEC-10" due-to="Reggie Riser" due-to-email="rriser@informs.com">
+        Using US_ENGLISH in Soundex caused an NullPointerException.
+      </action>
+      <action dev="tobrien" type="fix" issue="CODEC-6" due-to="David Tonhofer">
+        Source tarball spews files all over the place.
+      </action>
+      <action dev="ggregory" type="fix" issue="CODEC-22" due-to="Piero Ottuzzi">
+        Base64.isArrayByteBase64() throws an ArrayIndexOutOfBoundsException for negative octets
+      </action>
+      <action dev="jochen" type="add" issue="CODEC-69" due-to="Julius Davies">
+        Streaming Base64 (Base64InputStream and Base64OutputStream added).
+      </action>
+      <action dev="ggregory" type="fix" issue="CODEC-78" due-to="Julius Davies">
+        Base64: Improve Code Coverage.
+      </action>
+      <action dev="ggregory" type="add" issue="CODEC-59" due-to="Julius Davies">
+        Add methods to Base64 which work with String instead of byte[].
+      </action>
+      <action dev="ggregory" type="fix" issue="CODEC-81" due-to="Julius Davies">
+        Base64's new constructor parameters ignored.
+      </action>
+      <action dev="niallp" type="fix" issue="CODEC-83">
+        Improve Double Metaphone test coverage.
+      </action>
+      <action dev="niallp" type="fix" issue="CODEC-84">
+        Double Metaphone bugs in alternative encoding.
+      </action>
+      <action dev="ggregory" type="fix" issue="CODEC-73" due-to="Benjamin Bentmann">
+        Make string2byte conversions indepedent of platform default encoding.
+      </action>
+    </release>
+    <release version="1.3" date="10 July 2004" description="Feature and fix release.">
+      <action dev="ggregory, tobrien" type="add" issue="CODEC-21" due-to="Alex Karasulu">
+        BinaryCodec: Encodes and decodes binary to and from Strings of 0s and 1s.
+      </action>
+      <action dev="ggregory" type="add" issue="CODEC-41" due-to="Oleg Kalnichevski" due-to-email="olegk@apache.org">
+        QuotedPrintableCodec: Codec for RFC 1521 MIME (Multipurpose Internet
+        Mail Extensions) Part One. Rules #3, #4, and #5 of the quoted-printable spec
+        are not implemented yet. See also issue CODEC-46.
+      </action>
+      <action dev="ggregory" type="add" issue="CODEC-41" due-to="Oleg Kalnichevski" due-to-email="olegk@apache.org">
+        BCodec: Identical to the Base64 encoding defined by RFC 1521 and allows a
+        character set to be specified.
+      </action>
+      <action dev="ggregory" type="add" issue="CODEC-41" due-to="Oleg Kalnichevski" due-to-email="olegk@apache.org">
+        QCodec: Similar to the Quoted-Printable content-transfer-encoding defined
+        in RFC 1521 and designed to allow text containing mostly ASCII characters to
+        be decipherable on an ASCII terminal without decoding.
+      </action>
+      <action dev="ggregory" type="add" issue="CODEC-45" due-to="Matthew Inger" due-to-email="mattinger@yahoo.com">
+        Soundex: Implemented the DIFFERENCE algorithm.
+      </action>
+      <action dev="ggregory" type="add" issue="CODEC-45" due-to="Matthew Inger" due-to-email="mattinger@yahoo.com">
+        RefinedSoundex: Implemented the DIFFERENCE algorithm.
+      </action>
+      <action dev="ggregory" type="update">
+        This version is relesed under the
+        &lt;a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0&lt;/a>
+        , please see LICENSE.txt. Previous versions were released under the
+        &lt;a href="http://www.apache.org/licenses/LICENSE-1.1">Apache License 1.1&lt;/a>
+      </action>
+      <action dev="ggregory" type="update">
+        The Board recommendation to remove Javadoc author tags has been
+        implemented. All author tags are now "Apache Software Foundation".
+      </action>
+      <action dev="ggregory" type="fix" issue="CODEC-25" due-to="Oleg Kalnichevski" due-to-email="olegk@apache.org">
+        The default URL encoding logic was broken.
+      </action>
+      <action dev="ggregory" type="fix" issue="CODEC-31" due-to="Gary D. Gregory">
+        Base64 chunked encoding not compliant with RFC 2045 section 2.1 CRLF.
+      </action>
+      <action dev="ggregory" type="fix" issue="CODEC-5">
+        Hex converts illegal characters to 255.
+      </action>
+      <action dev="tobrien" type="fix" issue="CODEC-17">
+        Metaphone now correctly handles a silent B in a word that ends in MB.
+        "COMB" is encoded as "KM", before this fix "COMB" was encoded as "KMB".
+      </action>
+      <action dev="ggregory" type="fix">
+        Added missing tags in Javadoc comments.
+      </action>
+      <action dev="ggregory" type="fix">
+        General Javadoc improvements.
+      </action>
+    </release>
+    <release version="1.2" date="24 Nov 2003" description="Feature and fix release.">
+      <action dev="tobrien" type="add" due-to="Oleg Kalnichevski" due-to-email="olegk@apache.org">
+        URLCodec: Implements the www-form-urlencoded encoding scheme.
+      </action>
+      <action dev="tobrien" type="add" due-to="Dave Dribin, David Graham">
+        DigestUtils: Calculates MD5 and SHA digests.
+      </action>
+      <action dev="tobrien" type="fix" issue="CODEC-26" due-to="Brian Ewins">
+        Modified Base64 to remedy non-compliance with RFC
+        2045. Non-Base64 characters were not being discarded during the
+        decode. RFC 2045 explicitly states that all characters outside of the
+        base64 alphabet are to be ignored.
+      </action>
+      <action dev="ggregory" type="fix" issue="CODEC-4">
+        Hex.decode(Object) throws a ClassCastException when a String argument is passed in.
+      </action>
+      <action dev="ggregory" type="fix" issue="CODEC-3">
+        Soundex: The HW rule is not applied; hyphens and apostrophes are not ignored.
+      </action>
+      <action dev="ggregory" type="fix" issue="CODEC-29">
+        Soundex.setMaxLength causes bugs and is not needed.
+        Calling Soundex.setMaxLength() with a value of 2 or less causes the wrong
+        answer to be returned. Since the encoding returned by Soundex is always
+        of length 4 by definition (we do not use the '-' in as a letter-nnn
+        separator) the need for a maxLength attribute is not needed. Deprecate
+        the field and accessor methods.
+      </action>
+      <action dev="Members" type="fix">
+        Fix in Metaphone relating to the handling of the maximum code length.
+      </action>
+    </release>
+    <release version="1.1" date="29 April 2003"
+      description="The first official release. Numerous projects had been depending on version 1.0-dev while in the Sandbox.">
+      <action dev="Members" type="add">
+        A newer version of the Base64 class reflecting improvements from
+        both the commons-httpclient and xml-rpc versions of code forked
+        from catalina.
+      </action>
+      <action dev="Members" type="add">
+        Base64 class from commons-httpclient in org.apache.commons.codec.base64
+        has been retained for backwards compatibility but has been deprecated.
+      </action>
+      <action dev="Members" type="add">
+        Soundex class from commons-util in org.apache.commons.codec.
+      </action>
+      <action dev="Members" type="add">
+        Metaphone class from commons-util in org.apache.commons.codec.
+      </action>
+      <action dev="tobrien" type="add">
+        RefinedSoundex class in org.apache.commons.codec.
+      </action>
+      <action dev="Members" type="add">
+        Encoder/Decoder interfaces in org.apache.commons.
+      </action>
+      <action dev="Members" type="add">
+        String and Binary specific Encoder/Decoder interfaces in org.apache.commons.
+      </action>
+      <action dev="Members" type="add">
+        StringEncoderComparator replaces the SoundexComparator from the language package.
+      </action>
+      <action dev="Members" type="fix">
+        Base64 now discards whitespace characters when decoding encoded content.
+      </action>
+    </release>
+    <release version="1.0-dev" date="25 April 2003" description="Last release from the Sandbox.">
+      <action dev="tobrien" type="add">
+        Base64 class from commons-httpclient in org.apache.commons.codec.base64.
+      </action>
+      <action dev="tobrien" type="add">
+        Soundex class from commons-util in org.apache.commons.codec.
+      </action>
+      <action dev="tobrien" type="add">
+        Metaphone class from commons-util in org.apache.commons.codec.
+      </action>
+      <action dev="Members" type="add">
+        SoundexComparator class from commons-util in org.apache.commons.codec.
+      </action>
+    </release>
+  </body>
 </document>
