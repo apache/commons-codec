@@ -137,7 +137,7 @@ public class BCodecTest {
     public void testDecodeStrings() throws Exception {
         BCodec bcodec = new BCodec();
         String decoded = "=?UTF-8?B?d2hhdCBub3Q=?=";
-        String plain = (String) bcodec.decode(decoded);
+        String plain = bcodec.decode(decoded);
         assertEquals("Basic B decoding test", "what not", plain);
 
         Object result = bcodec.decode(null);

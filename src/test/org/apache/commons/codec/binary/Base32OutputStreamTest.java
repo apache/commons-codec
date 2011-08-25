@@ -66,7 +66,7 @@ public class Base32OutputStreamTest {
      */
     @Test
     public void testBase32EmptyOutputStreamMimeChunkSize() throws Exception {
-        testBase32EmptyOutputStream(Base32.MIME_CHUNK_SIZE);
+        testBase32EmptyOutputStream(BaseNCodec.MIME_CHUNK_SIZE);
     }
 
     /**
@@ -77,7 +77,7 @@ public class Base32OutputStreamTest {
      */
     @Test
     public void testBase32EmptyOutputStreamPemChunkSize() throws Exception {
-        testBase32EmptyOutputStream(Base32.PEM_CHUNK_SIZE);
+        testBase32EmptyOutputStream(BaseNCodec.PEM_CHUNK_SIZE);
     }
 
     private void testBase32EmptyOutputStream(int chunkSize) throws Exception {
@@ -98,7 +98,7 @@ public class Base32OutputStreamTest {
         // Hello World test.
         byte[] encoded = StringUtils.getBytesUtf8(Base32TestData.BASE32_FIXTURE);
         byte[] decoded = StringUtils.getBytesUtf8(Base32TestData.STRING_FIXTURE);
-        testByChunk(encoded, decoded, Base32.MIME_CHUNK_SIZE, CRLF);
+        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CRLF);
 
 //        // Single Byte test.
 //        encoded = StringUtils.getBytesUtf8("AA==\r\n");

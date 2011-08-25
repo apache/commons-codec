@@ -164,7 +164,7 @@ public class QCodecTest {
     public void testDecodeStrings() throws Exception {
         QCodec qcodec = new QCodec();
         String decoded = "=?UTF-8?Q?1+1 =3D 2?=";
-        String plain = (String) qcodec.decode(decoded);
+        String plain = qcodec.decode(decoded);
         assertEquals("Basic Q decoding test", 
             "1+1 = 2", plain);
 

@@ -99,7 +99,7 @@ public class HexCharTest {
      */
     private void checkDecodeHexOddCharacters(char[] data) {
         try {
-            HexCharCodec.decodeHex(data);
+            Hex.decodeHex(data);
             fail("An exception wasn't thrown when trying to decode an odd number of characters");
         } catch (DecoderException e) {
             // Expected exception
@@ -149,7 +149,7 @@ public class HexCharTest {
         // encode source to hex string to bytes with charset
         char[] actualEncodedChars = customCodec.encode(sourceString);
         // encode source to hex string...
-        String expectedHexString = HexCharCodec.encodeHexString(sourceBytes);
+        String expectedHexString = Hex.encodeHexString(sourceBytes);
         // ... and get the bytes in the expected charset
         char[] expectedHexStringChars = expectedHexString.toCharArray();
         assertArrayEquals(expectedHexStringChars, actualEncodedChars);
@@ -198,7 +198,7 @@ public class HexCharTest {
 
     @Test
     public void testCustomCharsetToString() {
-        assertTrue(new HexCharCodec().toString().indexOf(HexCharCodec.DEFAULT_CHARSET_NAME) >= 0);
+        assertTrue(new HexCharCodec().toString().indexOf(Hex.DEFAULT_CHARSET_NAME) >= 0);
     }
 
     @Test
@@ -258,9 +258,9 @@ public class HexCharTest {
 
     @Test
     public void testDencodeEmpty() throws DecoderException {
-        assertTrue(Arrays.equals(new byte[0], HexCharCodec.decodeHex(new char[0])));
+        assertTrue(Arrays.equals(new byte[0], Hex.decodeHex(new char[0])));
         assertTrue(Arrays.equals(new byte[0], new HexCharCodec().decode(new byte[0])));
-        assertTrue(Arrays.equals(new byte[0], (byte[]) new HexCharCodec().decode("")));
+        assertTrue(Arrays.equals(new byte[0], new HexCharCodec().decode("")));
     }
 
     @Test
@@ -273,8 +273,8 @@ public class HexCharTest {
             random.nextBytes(data);
 
             // static API
-            char[] encodedChars = HexCharCodec.encodeHex(data);
-            byte[] decodedBytes = HexCharCodec.decodeHex(encodedChars);
+            char[] encodedChars = Hex.encodeHex(data);
+            byte[] decodedBytes = Hex.decodeHex(encodedChars);
             assertTrue(Arrays.equals(data, decodedBytes));
 
             // instance API with array parameter
@@ -284,28 +284,28 @@ public class HexCharTest {
 
             // instance API with char[] (Object) parameter
             String dataString = new String(encodedChars);
-            char[] encodedStringChars = (char[]) hex.encode(dataString);
-            decodedBytes = (byte[]) hex.decode(encodedStringChars);
+            char[] encodedStringChars = hex.encode(dataString);
+            decodedBytes = hex.decode(encodedStringChars);
             assertTrue(Arrays.equals(StringUtils.getBytesUtf8(dataString), decodedBytes));
 
             // instance API with String (Object) parameter
             dataString = new String(encodedChars);
-            encodedStringChars = (char[]) hex.encode(dataString);
-            decodedBytes = (byte[]) hex.decode(new String(encodedStringChars));
+            encodedStringChars = hex.encode(dataString);
+            decodedBytes = hex.decode(new String(encodedStringChars));
             assertTrue(Arrays.equals(StringUtils.getBytesUtf8(dataString), decodedBytes));
         }
     }
 
     @Test
     public void testEncodeEmpty() throws EncoderException {
-        assertTrue(Arrays.equals(new char[0], HexCharCodec.encodeHex(new byte[0])));
+        assertTrue(Arrays.equals(new char[0], Hex.encodeHex(new byte[0])));
         assertTrue(Arrays.equals(new char[0], new HexCharCodec().encode(new byte[0])));
-        assertTrue(Arrays.equals(new char[0], (char[]) new HexCharCodec().encode("")));
+        assertTrue(Arrays.equals(new char[0], new HexCharCodec().encode("")));
     }
 
     @Test
     public void testEncodeZeroes() {
-        char[] c = HexCharCodec.encodeHex(new byte[36]);
+        char[] c = Hex.encodeHex(new byte[36]);
         assertEquals("000000000000000000000000000000000000000000000000000000000000000000000000", new String(c));
     }
 
@@ -314,11 +314,11 @@ public class HexCharTest {
         byte[] b = StringUtils.getBytesUtf8("Hello World");
         final String expected = "48656c6c6f20576f726c64";
         char[] actual;
-        actual = HexCharCodec.encodeHex(b);
+        actual = Hex.encodeHex(b);
         assertTrue(expected.equals(new String(actual)));
-        actual = HexCharCodec.encodeHex(b, true);
+        actual = Hex.encodeHex(b, true);
         assertTrue(expected.equals(new String(actual)));
-        actual = HexCharCodec.encodeHex(b, false);
+        actual = Hex.encodeHex(b, false);
         assertFalse(expected.equals(new String(actual)));
     }
 
@@ -327,11 +327,11 @@ public class HexCharTest {
         byte[] b = StringUtils.getBytesUtf8("Hello World");
         final String expected = "48656C6C6F20576F726C64";
         char[] actual;
-        actual = HexCharCodec.encodeHex(b);
+        actual = Hex.encodeHex(b);
         assertFalse(expected.equals(new String(actual)));
-        actual = HexCharCodec.encodeHex(b, true);
+        actual = Hex.encodeHex(b, true);
         assertFalse(expected.equals(new String(actual)));
-        actual = HexCharCodec.encodeHex(b, false);
+        actual = Hex.encodeHex(b, false);
         assertTrue(expected.equals(new String(actual)));
     }
 

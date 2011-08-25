@@ -90,7 +90,7 @@ public class URLCodecBinaryTest {
     @Test
     public void testDecodeWithNullArray() throws Exception {
         byte[] plain = null;
-        byte[] result = URLBinaryCodec.decodeUrl( plain );
+        byte[] result = URLCodec.decodeUrl( plain );
         assertEquals("Result should be null", null, result);
     }
 
@@ -117,7 +117,7 @@ public class URLCodecBinaryTest {
         String plain = "Hello+there%21";
 
         byte[] plainBA = plain.getBytes("UTF-8");
-        byte[] decodedBA = (byte[]) urlCodec.decode(plainBA);
+        byte[] decodedBA = urlCodec.decode(plainBA);
         String decoded = new String(decodedBA);
         assertEquals("Basic URL decoding test", 
             "Hello there!", decoded);

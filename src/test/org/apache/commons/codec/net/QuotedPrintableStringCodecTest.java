@@ -152,7 +152,7 @@ public class QuotedPrintableStringCodecTest {
     public void testEncodeUrlWithNullBitSet() throws Exception {
         QuotedPrintableStringCodec qpcodec = new QuotedPrintableStringCodec();
         String plain = "1+1 = 2";
-        String encoded = new String(QuotedPrintableStringCodec.
+        String encoded = new String(QuotedPrintableCodec.
             encodeQuotedPrintable(null, plain.getBytes("UTF-8")));
         assertEquals("Basic quoted-printable encoding test", 
             "1+1 =3D 2", encoded);
@@ -164,7 +164,7 @@ public class QuotedPrintableStringCodecTest {
     @Test
     public void testDecodeWithNullArray() throws Exception {
         byte[] plain = null;
-        byte[] result = QuotedPrintableStringCodec.decodeQuotedPrintable( plain );
+        byte[] result = QuotedPrintableCodec.decodeQuotedPrintable( plain );
         assertEquals("Result should be null", null, result);
     }
 

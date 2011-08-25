@@ -68,7 +68,7 @@ public class QuotedPrintableBinaryCodecTest {
     @Test
     public void testDecodeWithNullArray() throws Exception {
         byte[] plain = null;
-        byte[] result = QuotedPrintableBinaryCodec.decodeQuotedPrintable( plain );
+        byte[] result = QuotedPrintableCodec.decodeQuotedPrintable( plain );
         assertEquals("Result should be null", null, result);
     }
 

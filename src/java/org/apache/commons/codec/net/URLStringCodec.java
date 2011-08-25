@@ -52,6 +52,7 @@ public class URLStringCodec extends URLCodec implements StringEncoder, StringDec
      * 
      * @return the default string charset.
      */
+    @Override
     public String getDefaultCharset() {
         return this.charset;
     }
