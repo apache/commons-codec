@@ -189,8 +189,9 @@ public class PhoneticEngine {
             }
 
             public CharSequence subSequence(int start, int end) {
-                if (start == end)
+                if (start == end) {
                     return "";
+                }
 
                 CharSequence res = cache[start][end - 1];
                 if (res == null) {

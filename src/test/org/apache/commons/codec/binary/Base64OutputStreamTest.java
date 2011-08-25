@@ -72,7 +72,7 @@ public class Base64OutputStreamTest {
      */
     @Test
     public void testBase64EmptyOutputStreamMimeChunkSize() throws Exception {
-        testBase64EmptyOutputStream(Base64.MIME_CHUNK_SIZE);
+        testBase64EmptyOutputStream(BaseNCodec.MIME_CHUNK_SIZE);
     }
 
     /**
@@ -83,7 +83,7 @@ public class Base64OutputStreamTest {
      */
     @Test
     public void testBase64EmptyOutputStreamPemChunkSize() throws Exception {
-        testBase64EmptyOutputStream(Base64.PEM_CHUNK_SIZE);
+        testBase64EmptyOutputStream(BaseNCodec.PEM_CHUNK_SIZE);
     }
 
     private void testBase64EmptyOutputStream(int chunkSize) throws Exception {
@@ -104,17 +104,17 @@ public class Base64OutputStreamTest {
         // Hello World test.
         byte[] encoded = StringUtils.getBytesUtf8("SGVsbG8gV29ybGQ=\r\n");
         byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
-        testByChunk(encoded, decoded, Base64.MIME_CHUNK_SIZE, CRLF);
+        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CRLF);
 
         // Single Byte test.
         encoded = StringUtils.getBytesUtf8("AA==\r\n");
         decoded = new byte[]{(byte) 0};
-        testByChunk(encoded, decoded, Base64.MIME_CHUNK_SIZE, CRLF);
+        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CRLF);
 
         // OpenSSL interop test.
         encoded = StringUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE);
         decoded = Base64TestData.DECODED;
-        testByChunk(encoded, decoded, Base64.PEM_CHUNK_SIZE, LF);
+        testByChunk(encoded, decoded, BaseNCodec.PEM_CHUNK_SIZE, LF);
 
         // Single Line test.
         String singleLine = Base64TestData.ENCODED_64_CHARS_PER_LINE.replaceAll("\n", "");

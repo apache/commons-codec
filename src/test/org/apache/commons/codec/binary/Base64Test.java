@@ -83,7 +83,7 @@ public class Base64Test {
         encodedContent = StringUtils.newStringUtf8(encodedBytes);
         assertTrue("encoding hello world", encodedContent.equals("SGVsbG8gV29ybGQ="));
 
-        Base64 b64 = new Base64(Base64.MIME_CHUNK_SIZE, null);  // null lineSeparator same as saying no-chunking
+        Base64 b64 = new Base64(BaseNCodec.MIME_CHUNK_SIZE, null);  // null lineSeparator same as saying no-chunking
         encodedBytes = b64.encode(StringUtils.getBytesUtf8(content));
         encodedContent = StringUtils.newStringUtf8(encodedBytes);
         assertTrue("encoding hello world", encodedContent.equals("SGVsbG8gV29ybGQ="));
@@ -544,7 +544,7 @@ public class Base64Test {
      */
     @Test
     public void testRfc2045Section6Dot8ChunkSizeDefinition() {
-        assertEquals(76, Base64.MIME_CHUNK_SIZE);
+        assertEquals(76, BaseNCodec.MIME_CHUNK_SIZE);
     }
 
     /**
@@ -552,7 +552,7 @@ public class Base64Test {
      */
     @Test
     public void testRfc1421Section6Dot8ChunkSizeDefinition() {
-        assertEquals(64, Base64.PEM_CHUNK_SIZE);
+        assertEquals(64, BaseNCodec.PEM_CHUNK_SIZE);
     }
 
     /**

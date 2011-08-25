@@ -158,8 +158,9 @@ public class Lang {
                     // trim leading-trailing whitespace
                     line = line.trim();
 
-                    if (line.length() == 0)
+                    if (line.length() == 0) {
                         continue; // empty lines can be safely skipped
+                    }
 
                     // split it up
                     String[] parts = line.split("\\s+");

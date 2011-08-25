@@ -128,7 +128,7 @@ public class Base32InputStreamTest {
      */
     @Test
     public void testBase32EmptyInputStreamMimeChuckSize() throws Exception {
-        testBase32EmptyInputStream(Base32.MIME_CHUNK_SIZE);
+        testBase32EmptyInputStream(BaseNCodec.MIME_CHUNK_SIZE);
     }
 
     /**
@@ -139,7 +139,7 @@ public class Base32InputStreamTest {
      */
     @Test
     public void testBase32EmptyInputStreamPemChuckSize() throws Exception {
-        testBase32EmptyInputStream(Base32.PEM_CHUNK_SIZE);
+        testBase32EmptyInputStream(BaseNCodec.PEM_CHUNK_SIZE);
     }
 
     private void testBase32EmptyInputStream(int chuckSize) throws Exception {
@@ -160,12 +160,12 @@ public class Base32InputStreamTest {
         // Hello World test.
         byte[] encoded = StringUtils.getBytesUtf8(Base32TestData.BASE32_FIXTURE);
         byte[] decoded = StringUtils.getBytesUtf8(Base32TestData.STRING_FIXTURE);
-        testByChunk(encoded, decoded, Base32.MIME_CHUNK_SIZE, CRLF);
+        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CRLF);
 
         // Single Byte test.
         encoded = StringUtils.getBytesUtf8("AA======\r\n");
         decoded = new byte[]{(byte) 0};
-        testByChunk(encoded, decoded, Base32.MIME_CHUNK_SIZE, CRLF);
+        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CRLF);
 
 //        // OpenSSL interop test.
 //        encoded = StringUtils.getBytesUtf8(Base32TestData.ENCODED_32_CHARS_PER_LINE);
@@ -199,12 +199,12 @@ public class Base32InputStreamTest {
         // Hello World test.
         byte[] encoded = StringUtils.getBytesUtf8(Base32TestData.BASE32_FIXTURE);
         byte[] decoded = StringUtils.getBytesUtf8(Base32TestData.STRING_FIXTURE);
-        testByteByByte(encoded, decoded, Base32.MIME_CHUNK_SIZE, CRLF);
+        testByteByByte(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CRLF);
 
         // Single Byte test.
         encoded = StringUtils.getBytesUtf8("AA======\r\n");
         decoded = new byte[]{(byte) 0};
-        testByteByByte(encoded, decoded, Base32.MIME_CHUNK_SIZE, CRLF);
+        testByteByByte(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CRLF);
 
 //        // Single Line test.
 //        String singleLine = Base32TestData.ENCODED_32_CHARS_PER_LINE.replaceAll("\n", "");
