@@ -26,6 +26,9 @@
       org.apache.commons.codec.net.URLCodec charset field final. </action> -->
   </release>
     <release version="1.6" date="TBA" description="Feature and fix release.">
+      <action dev="ggregory" type="fix" issue="CODEC-128" due-to="ville.skytta@iki.fi ">
+        Documentation spelling fixes.
+      </action>
       <action dev="ggregory, sebb" type="fix" issue="CODEC-127">
         Fix various character encoding issues in comments and test cases.
       </action>
