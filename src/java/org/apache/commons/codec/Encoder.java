@@ -33,7 +33,7 @@ public interface Encoder {
      * as an Object.  The Objects here may just be <code>byte[]</code>
      * or <code>String</code>s depending on the implementation used.
      *   
-     * @param source An object ot encode
+     * @param source An object to encode
      * 
      * @return An "encoded" Object
      * 

@@ -65,14 +65,14 @@ abstract class RFC1522Codec {
      * Applies an RFC 1522 compliant encoding scheme to the given string of text with the 
      * given charset. This method constructs the "encoded-word" header common to all the 
      * RFC 1522 codecs and then invokes {@link #doEncoding(byte [])} method of a concrete 
-     * class to perform the specific enconding.
+     * class to perform the specific encoding.
      * 
      * @param text a string to encode
      * @param charset a charset to be used
      * 
      * @return RFC 1522 compliant "encoded-word"
      * 
-     * @throws EncoderException thrown if there is an error conidition during the Encoding 
+     * @throws EncoderException thrown if there is an error condition during the Encoding 
      *  process.
      * @throws UnsupportedEncodingException thrown if charset is not supported 
      * 
@@ -99,12 +99,12 @@ abstract class RFC1522Codec {
     /**
      * Applies an RFC 1522 compliant decoding scheme to the given string of text. This method 
      * processes the "encoded-word" header common to all the RFC 1522 codecs and then invokes 
-     * {@link #doEncoding(byte [])} method of a concrete class to perform the specific deconding.
+     * {@link #doEncoding(byte [])} method of a concrete class to perform the specific decoding.
      * 
      * @param text a string to decode
      * @return A new decoded String or <code>null</code> if the input is <code>null</code>.
      * 
-     * @throws DecoderException thrown if there is an error conidition during the Decoding 
+     * @throws DecoderException thrown if there is an error condition during the decoding 
      *  process.
      * @throws UnsupportedEncodingException thrown if charset specified in the "encoded-word" 
      *  header is not supported 

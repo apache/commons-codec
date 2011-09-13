@@ -33,7 +33,7 @@ public interface StringEncoder extends Encoder {
      * @return the encoded String
      * 
      * @throws EncoderException thrown if there is
-     *  an error conidition during the Encoding process.
+     *  an error condition during the encoding process.
      */
     String encode(String source) throws EncoderException;
 }  

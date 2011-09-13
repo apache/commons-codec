@@ -42,9 +42,9 @@ import org.apache.commons.codec.StringEncoder;
  * 
  * <li>
  * <h3>Step 1:</h3>
- * After preprocessing (convertion to upper case, transcription of <a
+ * After preprocessing (conversion to upper case, transcription of <a
  * href="http://en.wikipedia.org/wiki/Germanic_umlaut">germanic umlauts</a>, removal of non alphabetical characters) the
- * letters of the supplied text are replaced by their phonetic code according to the folowing table.
+ * letters of the supplied text are replaced by their phonetic code according to the following table.
  * <table border="1">
  * <tbody>
  * <tr>

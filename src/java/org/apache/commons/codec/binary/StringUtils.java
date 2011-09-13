@@ -175,7 +175,7 @@ public class StringUtils {
      * @param charsetName
      *            The name of a required {@link java.nio.charset.Charset}
      * @return A new <code>String</code> decoded from the specified array of bytes using the given charset,
-     *         or <code>null</code> if the input byte arrray was <code>null</code>.
+     *         or <code>null</code> if the input byte array was <code>null</code>.
      * @throws IllegalStateException
      *             Thrown when a {@link UnsupportedEncodingException} is caught, which should never happen for a
      *             required charset name.

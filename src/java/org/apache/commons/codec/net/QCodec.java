@@ -294,7 +294,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     }
 
     /**
-     * Tests if optional tranformation of SPACE characters is to be used
+     * Tests if optional transformation of SPACE characters is to be used
      * 
      * @return <code>true</code> if SPACE characters are to be transformed, <code>false</code> otherwise
      */
@@ -303,7 +303,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     }
 
     /**
-     * Defines whether optional tranformation of SPACE characters is to be used
+     * Defines whether optional transformation of SPACE characters is to be used
      * 
      * @param b
      *                  <code>true</code> if SPACE characters are to be transformed, <code>false</code> otherwise

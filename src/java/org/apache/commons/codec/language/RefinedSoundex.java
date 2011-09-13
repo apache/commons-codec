@@ -163,7 +163,7 @@ public class RefinedSoundex implements StringEncoder {
     }
 
     /**
-     * Retreives the Refined Soundex code for a given String object.
+     * Retrieves the Refined Soundex code for a given String object.
      * 
      * @param str
      *                  String to encode using the Refined Soundex algorithm
