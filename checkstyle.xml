@@ -30,10 +30,11 @@ limitations under the License.
   </module>
 
   <module name="TreeWalker">
-
+    <property name="cacheFile" value="target/cachefile"/>
     <module name="OperatorWrap">
       <property name="option" value="eol"/>
     </module>
   </module>
+
 </module>
 
