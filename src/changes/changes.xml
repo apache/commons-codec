@@ -23,8 +23,8 @@
   </properties>
   <body>
     <!-- <release version="2.0" date="TBA" description="Feature and fix release."> <action dev="ggregory" type="fix" issue="CODEC-126"> Make 
-      org.apache.commons.codec.net.URLCodec charset field final. </action> -->
-  </release>
+      org.apache.commons.codec.net.URLCodec charset field final. </action>   </release>
+    -->
     <release version="1.6" date="TBA" description="Feature and fix release.">
       <action dev="ggregory" type="fix" issue="CODEC-128" due-to="ville.skytta@iki.fi ">
         Documentation spelling fixes.
