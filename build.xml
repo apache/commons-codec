@@ -31,6 +31,7 @@ limitations under the License.
     <!-- ========== Construct unit test classpath ============================= -->
     <path id="test.classpath">
         <pathelement location="${build.home}/classes"/>
+        <pathelement location="${resources.home}"/>
         <pathelement location="${build.home}/tests"/>
         <pathelement location="${junit.jar}"/>
     </path>
@@ -117,6 +118,7 @@ limitations under the License.
                 <attribute name="X-Compile-Source-JDK" value="${compile.source}"/>
                 <attribute name="X-Compile-Target-JDK" value="${compile.target}"/>
             </manifest>
+            <fileset dir="${resources.home}"/>
         </jar>
     </target>
     <target name="install-jar" depends="jar" description="--> Installs jar file in ${lib.repo}">
