@@ -30,7 +30,7 @@ import org.junit.Test;
  * Tests BeiderMorseEncoder.
  * 
  * @author Apache Software Foundation
- * @since 2.0
+ * @since 1.6
  */
 public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
     private static final char[] TEST_CHARS = new char[] { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'o', 'u' };

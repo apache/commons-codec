@@ -50,7 +50,7 @@ import java.util.Set;
  * </p>
  * 
  * @author Apache Software Foundation
- * @since 2.0
+ * @since 1.6
  */
 public class Languages {
 

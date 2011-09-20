@@ -28,7 +28,7 @@ import org.junit.Test;
  * Tests Rule.
  * 
  * @author Apache Software Foundation
- * @since 2.0
+ * @since 1.6
  */
 public class RuleTest {
     private static class NegativeIntegerBaseMatcher extends BaseMatcher<Integer> {

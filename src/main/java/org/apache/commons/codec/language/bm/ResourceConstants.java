@@ -21,7 +21,7 @@ package org.apache.commons.codec.language.bm;
  * Constants used to process resource files.
  * 
  * @author Apache Software Foundation
- * @since 2.0
+ * @since 1.6
  */
 class ResourceConstants {
 

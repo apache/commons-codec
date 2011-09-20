@@ -77,7 +77,7 @@ import java.util.regex.Pattern;
  * </p>
  * 
  * @author Apache Software Foundation
- * @since 2.0
+ * @since 1.6
  */
 public class Rule {
 

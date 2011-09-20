@@ -21,7 +21,7 @@ package org.apache.commons.codec.language.bm;
  * Supported types of names. Unless you are matching particular family names, use {@link #GENERIC}.
  * 
  * @author Apache Software Foundation
- * @since 2.0
+ * @since 1.6
  */
 public enum NameType {
 

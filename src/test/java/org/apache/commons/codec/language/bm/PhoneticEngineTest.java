@@ -30,7 +30,7 @@ import org.junit.runners.Parameterized;
  * Tests PhoneticEngine.
  * 
  * @author Apache Software Foundation
- * @since 2.0
+ * @since 1.6
  */
 @RunWith(Parameterized.class)
 public class PhoneticEngineTest {

@@ -30,7 +30,7 @@ import org.junit.runners.Parameterized;
  * Tests guessLanguages API.
  * 
  * @author Apache Software Foundation
- * @since 2.0
+ * @since 1.6
  */
 @RunWith(Parameterized.class)
 public class LanguageGuessingTest {

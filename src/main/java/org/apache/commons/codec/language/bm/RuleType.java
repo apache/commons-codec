@@ -21,7 +21,7 @@ package org.apache.commons.codec.language.bm;
  * Types of rule.
  * 
  * @author Apache Software Foundation
- * @since 2.0
+ * @since 1.6
  */
 public enum RuleType {
 
