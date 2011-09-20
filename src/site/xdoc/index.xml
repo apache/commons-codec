@@ -83,7 +83,7 @@ The <a href="source-repository.html">subversion repository</a> can be
 <!-- ================================================== -->
 <section name="Releases">
 <ul>
-<li>Codec 2.0 requires Java 1.5</li>
+<li>Codec 1.6 requires Java 1.5</li>
 <li>Codec 1.5 requires Java 1.4</li>
 <li>Codec 1.4 requires Java 1.4</li>
 </ul>
