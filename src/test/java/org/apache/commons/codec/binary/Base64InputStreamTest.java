@@ -17,6 +17,7 @@
 
 package org.apache.commons.codec.binary;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -39,9 +40,14 @@ import org.junit.Test;
  */
 public class Base64InputStreamTest {
 
-    private final static byte[] CRLF = {(byte) '\r', (byte) '\n'};
+    /**
+     * Decodes to {0, 0, 0, 255, 255, 255}
+     */
+    private static final String ENCODED_B64 = "AAAA////";
 
-    private final static byte[] LF = {(byte) '\n'};
+    private final static byte[] CRLF = { (byte) '\r', (byte) '\n' };
+
+    private final static byte[] LF = { (byte) '\n' };
 
     private static final String STRING_FIXTURE = "Hello World";
 
@@ -61,10 +67,10 @@ public class Base64InputStreamTest {
     }
 
     /**
-     * Test for the CODEC-101 bug:  InputStream.read(byte[]) should never return 0
-     * because Java's builtin InputStreamReader hates that.
-     *
-     * @throws Exception for some failure scenarios.
+     * Test for the CODEC-101 bug: InputStream.read(byte[]) should never return 0 because Java's builtin InputStreamReader hates that.
+     * 
+     * @throws Exception
+     *             for some failure scenarios.
      */
     @Test
     public void testCodec101() throws Exception {
@@ -80,23 +86,19 @@ public class Base64InputStreamTest {
     }
 
     /**
-     * Another test for the CODEC-101 bug:
-     * In commons-codec-1.4 this test shows InputStreamReader explicitly hating an
+     * Another test for the CODEC-101 bug: In commons-codec-1.4 this test shows InputStreamReader explicitly hating an
      * InputStream.read(byte[]) return of 0:
-     *
-     * java.io.IOException: Underlying input stream returned zero bytes
-     * at sun.nio.cs.StreamDecoder.readBytes(StreamDecoder.java:268)
-     * at sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:306)
-     * at sun.nio.cs.StreamDecoder.read(StreamDecoder.java:158)
-     * at java.io.InputStreamReader.read(InputStreamReader.java:167)
-     * at java.io.BufferedReader.fill(BufferedReader.java:136)
-     * at java.io.BufferedReader.readLine(BufferedReader.java:299)
-     * at java.io.BufferedReader.readLine(BufferedReader.java:362)
-     * at org.apache.commons.codec.binary.Base64InputStreamTest.testInputStreamReader(Base64InputStreamTest.java:75)
-     *
-     * But in commons-codec-1.5 it's fixed.  :-)
-     *
-     * @throws Exception for some failure scenarios.
+     * 
+     * java.io.IOException: Underlying input stream returned zero bytes at sun.nio.cs.StreamDecoder.readBytes(StreamDecoder.java:268) at
+     * sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:306) at sun.nio.cs.StreamDecoder.read(StreamDecoder.java:158) at
+     * java.io.InputStreamReader.read(InputStreamReader.java:167) at java.io.BufferedReader.fill(BufferedReader.java:136) at
+     * java.io.BufferedReader.readLine(BufferedReader.java:299) at java.io.BufferedReader.readLine(BufferedReader.java:362) at
+     * org.apache.commons.codec.binary.Base64InputStreamTest.testInputStreamReader(Base64InputStreamTest.java:75)
+     * 
+     * But in commons-codec-1.5 it's fixed. :-)
+     * 
+     * @throws Exception
+     *             for some failure scenarios.
      */
     @Test
     public void testInputStreamReader() throws Exception {
@@ -110,10 +112,10 @@ public class Base64InputStreamTest {
     }
 
     /**
-     * Test the Base64InputStream implementation against the special NPE inducing input
-     * identified in the CODEC-98 bug.
-     *
-     * @throws Exception for some failure scenarios.
+     * Test the Base64InputStream implementation against the special NPE inducing input identified in the CODEC-98 bug.
+     * 
+     * @throws Exception
+     *             for some failure scenarios.
      */
     @Test
     public void testCodec98NPE() throws Exception {
@@ -125,9 +127,7 @@ public class Base64InputStreamTest {
         byte[] decodedBytes = Base64TestData.streamToBytes(stream, new byte[1024]);
 
         String decoded = StringUtils.newStringUtf8(decodedBytes);
-        assertEquals(
-            "codec-98 NPE Base64InputStream", Base64TestData.CODEC_98_NPE_DECODED, decoded
-        );
+        assertEquals("codec-98 NPE Base64InputStream", Base64TestData.CODEC_98_NPE_DECODED, decoded);
     }
 
     /**
@@ -174,7 +174,7 @@ public class Base64InputStreamTest {
 
         // Single Byte test.
         encoded = StringUtils.getBytesUtf8("AA==\r\n");
-        decoded = new byte[]{(byte) 0};
+        decoded = new byte[] { (byte) 0 };
         testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CRLF);
 
         // OpenSSL interop test.
@@ -212,7 +212,7 @@ public class Base64InputStreamTest {
 
         // Single Byte test.
         encoded = StringUtils.getBytesUtf8("AA==\r\n");
-        decoded = new byte[]{(byte) 0};
+        decoded = new byte[] { (byte) 0 };
         testByteByByte(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CRLF);
 
         // OpenSSL interop test.
@@ -236,11 +236,11 @@ public class Base64InputStreamTest {
     }
 
     /**
-     * Tests method does three tests on the supplied data: 1. encoded ---[DECODE]--> decoded 2. decoded ---[ENCODE]-->
-     * encoded 3. decoded ---[WRAP-WRAP-WRAP-etc...] --> decoded
+     * Tests method does three tests on the supplied data: 1. encoded ---[DECODE]--> decoded 2. decoded ---[ENCODE]--> encoded 3. decoded
+     * ---[WRAP-WRAP-WRAP-etc...] --> decoded
      * <p/>
-     * By "[WRAP-WRAP-WRAP-etc...]" we mean situation where the Base64InputStream wraps itself in encode and decode mode
-     * over and over again.
+     * By "[WRAP-WRAP-WRAP-etc...]" we mean situation where the Base64InputStream wraps itself in encode and decode mode over and over
+     * again.
      * 
      * @param encoded
      *            base64 encoded data
@@ -287,11 +287,11 @@ public class Base64InputStreamTest {
     }
 
     /**
-     * Tests method does three tests on the supplied data: 1. encoded ---[DECODE]--> decoded 2. decoded ---[ENCODE]-->
-     * encoded 3. decoded ---[WRAP-WRAP-WRAP-etc...] --> decoded
+     * Tests method does three tests on the supplied data: 1. encoded ---[DECODE]--> decoded 2. decoded ---[ENCODE]--> encoded 3. decoded
+     * ---[WRAP-WRAP-WRAP-etc...] --> decoded
      * <p/>
-     * By "[WRAP-WRAP-WRAP-etc...]" we mean situation where the Base64InputStream wraps itself in encode and decode mode
-     * over and over again.
+     * By "[WRAP-WRAP-WRAP-etc...]" we mean situation where the Base64InputStream wraps itself in encode and decode mode over and over
+     * again.
      * 
      * @param encoded
      *            base64 encoded data
@@ -355,7 +355,7 @@ public class Base64InputStreamTest {
     public void testMarkSupported() throws Exception {
         byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
         ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
-        Base64InputStream in = new Base64InputStream(bin, true, 4, new byte[]{0, 0, 0});
+        Base64InputStream in = new Base64InputStream(bin, true, 4, new byte[] { 0, 0, 0 });
         // Always returns false for now.
         assertFalse("Base64InputStream.markSupported() is false", in.markSupported());
     }
@@ -371,7 +371,7 @@ public class Base64InputStreamTest {
         byte[] buf = new byte[1024];
         int bytesRead = 0;
         ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
-        Base64InputStream in = new Base64InputStream(bin, true, 4, new byte[]{0, 0, 0});
+        Base64InputStream in = new Base64InputStream(bin, true, 4, new byte[] { 0, 0, 0 });
         bytesRead = in.read(buf, 0, 0);
         assertEquals("Base64InputStream.read(buf, 0, 0) returns 0", 0, bytesRead);
     }
@@ -386,7 +386,7 @@ public class Base64InputStreamTest {
     public void testReadNull() throws Exception {
         byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
         ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
-        Base64InputStream in = new Base64InputStream(bin, true, 4, new byte[]{0, 0, 0});
+        Base64InputStream in = new Base64InputStream(bin, true, 4, new byte[] { 0, 0, 0 });
         try {
             in.read(null, 0, 0);
             fail("Base64InputStream.read(null, 0, 0) to throw a NullPointerException");
@@ -405,7 +405,7 @@ public class Base64InputStreamTest {
         byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
         byte[] buf = new byte[1024];
         ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
-        Base64InputStream in = new Base64InputStream(bin, true, 4, new byte[]{0, 0, 0});
+        Base64InputStream in = new Base64InputStream(bin, true, 4, new byte[] { 0, 0, 0 });
 
         try {
             in.read(buf, -1, 0);
@@ -434,5 +434,52 @@ public class Base64InputStreamTest {
         } catch (IndexOutOfBoundsException e) {
             // Expected
         }
+    }
+
+    /**
+     * Tests skipping as a noop
+     * 
+     * @throws Throwable
+     */
+    @Test
+    public void testSkipNone() throws Throwable {
+        InputStream ins = new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));
+        Base64InputStream b64stream = new Base64InputStream(ins);
+        byte[] actualBytes = new byte[6];
+        assertEquals(0, b64stream.skip(0));
+        b64stream.read(actualBytes, 0, actualBytes.length);
+        assertArrayEquals(actualBytes, new byte[] { 0, 0, 0, (byte) 255, (byte) 255, (byte) 255 });
+        // End of stream reached
+        assertEquals(-1, b64stream.read());
+    }
+
+    /**
+     * Tests skipping past the end of a stream.
+     * 
+     * @throws Throwable
+     */
+    @Test
+    public void testSkipPastEnd() throws Throwable {
+        InputStream ins = new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));
+        Base64InputStream b64stream = new Base64InputStream(ins);
+        assertEquals(8, b64stream.skip(10));
+        // End of stream reached
+        assertEquals(-1, b64stream.read());
+        assertEquals(-1, b64stream.read());
+    }
+
+    /**
+     * Tests skipping to the end of a stream.
+     * 
+     * @throws Throwable
+     */
+    @Test
+    public void testSkipToEnd() throws Throwable {
+        InputStream ins = new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));
+        Base64InputStream b64stream = new Base64InputStream(ins);
+        assertEquals(8, b64stream.skip(8));
+        // End of stream reached
+        assertEquals(-1, b64stream.read());
+        assertEquals(-1, b64stream.read());
     }
 }
