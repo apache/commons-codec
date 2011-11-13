@@ -79,7 +79,7 @@ public class PhoneticEngine {
         }
 
         /**
-         * Create a new phoneme builder containing all phonemes in this one extended by <code>str</code>.
+         * Creates a new phoneme builder containing all phonemes in this one extended by <code>str</code>.
          *
          * @param str   the characters to append to the phonemes
          * @return  a new phoneme builder lenghened by <code>str</code>
@@ -95,7 +95,7 @@ public class PhoneticEngine {
         }
 
         /**
-         * Create a new phoneme builder containing the application of the expression to all phonemes in this builder.
+         * Creates a new phoneme builder containing the application of the expression to all phonemes in this builder.
          *
          * This will lengthen phonemes that have compatible language sets to the expression, and drop those that are
          * incompatible.
@@ -120,7 +120,7 @@ public class PhoneticEngine {
         }
 
         /**
-         * The underlying phoneme set. Please don't mutate.
+         * Gets underlying phoneme set. Please don't mutate.
          *
          * @return  the phoneme set
          */
@@ -129,7 +129,7 @@ public class PhoneticEngine {
         }
 
         /**
-         * Stringify the phoneme set. This produces a single string of the strings of each phoneme, joined with a pipe.
+         * Stringifies the phoneme set. This produces a single string of the strings of each phoneme, joined with a pipe.
          * This is explicitly provied in place of toString as it is a potentially expensive operation, which should be
          * avoided when debugging.
          *
@@ -189,8 +189,8 @@ public class PhoneticEngine {
         }
 
         /**
-         * This invokes the rules. It loops over the rules list, stopping at the first one that has a matching context
-         * and pattern. It then applies this rule to the phoneme builder to produce updated phonemes. If there was no
+         * Invokes the rules. Loops over the rules list, stopping at the first one that has a matching context
+         * and pattern. Then applies this rule to the phoneme builder to produce updated phonemes. If there was no
          * match, <code>i</code> is advanced one and the character is silently dropped from the phonetic spelling.
          *
          * @return <code>this</code>
@@ -271,7 +271,7 @@ public class PhoneticEngine {
     }
 
     /**
-     * Join some strings with an internal separater.
+     * Joins some strings with an internal separator.
      * @param strings   Strings to join
      * @param sep       String to separate them with
      * @return          a single String consisting of each element of <code>strings</code> interlieved by <code>sep</code>
@@ -318,7 +318,7 @@ public class PhoneticEngine {
     }
 
     /**
-     * Apply the final rules to convert from a language-specific phonetic representation to a language-independent
+     * Applies the final rules to convert from a language-specific phonetic representation to a language-independent
      * representation.
      *
      * @param phonemeBuilder

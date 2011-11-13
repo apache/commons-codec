@@ -78,7 +78,7 @@ import org.apache.commons.codec.StringEncoder;
  * @since 1.6
  */
 public class BeiderMorseEncoder implements StringEncoder {
-    // implementation note: This class is a spring-friendly facade to PhoneticEngine. It allows read/write configuration
+    // Implementation note: This class is a spring-friendly facade to PhoneticEngine. It allows read/write configuration
     // of an immutable PhoneticEngine instance that will be delegated to for the actual encoding.
 
     // a cached object
