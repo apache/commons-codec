@@ -76,8 +76,8 @@ public class PhoneticEngineTest {
 
         String phoneticActual = engine.encode(this.name);
 
-        System.err.println("expecting: " + this.phoneticExpected);
-        System.err.println("actual:    " + phoneticActual);
+        //System.err.println("expecting: " + this.phoneticExpected);
+        //System.err.println("actual:    " + phoneticActual);
         assertEquals("phoneme incorrect", this.phoneticExpected, phoneticActual);
     }
 }
