@@ -71,6 +71,13 @@ import java.util.regex.Pattern;
  * @since 1.6
  */
 public class Lang {
+    // implementation note: This class is divided into two sections. The first part is a static factory interface that
+    // exposes the LANGUAGE_RULES_RN resource as a Lang instance. The second part is the Lang instance methods that
+    // encapsulate a particular language-guessing rule table and the language guessing itself.
+    //
+    // It may make sense in the future to expose the private constructor to allow power users to build custom language-
+    // guessing rules, perhaps by marking it protected and allowing sub-classing. However, the vast majority of users
+    // should be strongly encouraged to use the static factory <code>instance</code> method to get their Lang instances.
 
     private static final class LangRule {
         private final boolean acceptOnMatch;

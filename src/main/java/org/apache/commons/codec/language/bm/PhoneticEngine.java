@@ -51,8 +51,23 @@ import java.util.TreeSet;
  */
 public class PhoneticEngine {
 
+    /**
+     * Utility for manipulating a set of phonemes as they are being built up. Not intended for use outside this package,
+     * and probably not outside the {@link PhoneticEngine} class.
+     *
+     * @author Apache Software Foundation
+     * @since 1.6
+     */
     static final class PhonemeBuilder {
 
+        /**
+         * An empty builder where all phonemes must come from some set of languages. This will contain a single
+         * phoneme of zero characters. This can then be appended to. This should be the only way to create a new
+         * phoneme from scratch.
+         *
+         * @param languages the set of languages
+         * @return  a new, empty phoneme builder
+         */
         public static PhonemeBuilder empty(Languages.LanguageSet languages) {
             return new PhonemeBuilder(Collections.singleton(new Rule.Phoneme("", languages)));
         }
@@ -63,6 +78,12 @@ public class PhoneticEngine {
             this.phonemes = phonemes;
         }
 
+        /**
+         * Create a new phoneme builder containing all phonemes in this one extended by <code>str</code>.
+         *
+         * @param str   the characters to append to the phonemes
+         * @return  a new phoneme builder lenghened by <code>str</code>
+         */
         public PhonemeBuilder append(CharSequence str) {
             Set<Rule.Phoneme> newPhonemes = new HashSet<Rule.Phoneme>();
 
@@ -73,6 +94,16 @@ public class PhoneticEngine {
             return new PhonemeBuilder(newPhonemes);
         }
 
+        /**
+         * Create a new phoneme builder containing the application of the expression to all phonemes in this builder.
+         *
+         * This will lengthen phonemes that have compatible language sets to the expression, and drop those that are
+         * incompatible.
+         *
+         * @param phonemeExpr   the expression to apply
+         * @return  a new phoneme builder containing the results of <code>phonemeExpr</code> applied to each phoneme
+         *      in turn
+         */
         public PhonemeBuilder apply(Rule.PhonemeExpr phonemeExpr) {
             Set<Rule.Phoneme> newPhonemes = new HashSet<Rule.Phoneme>();
 
@@ -88,10 +119,22 @@ public class PhoneticEngine {
             return new PhonemeBuilder(newPhonemes);
         }
 
+        /**
+         * The underlying phoneme set. Please don't mutate.
+         *
+         * @return  the phoneme set
+         */
         public Set<Rule.Phoneme> getPhonemes() {
             return this.phonemes;
         }
 
+        /**
+         * Stringify the phoneme set. This produces a single string of the strings of each phoneme, joined with a pipe.
+         * This is explicitly provied in place of toString as it is a potentially expensive operation, which should be
+         * avoided when debugging.
+         *
+         * @return  the stringified phoneme set
+         */
         public String makeString() {
 
             StringBuilder sb = new StringBuilder();
@@ -108,6 +151,17 @@ public class PhoneticEngine {
         }
     }
 
+    /**
+     * A function closure capturing the application of a list of rules to an input sequence at a particular offset.
+     * After invocation, the values <code>i</code> and <code>found</code> are updated. <code>i</code> points to the
+     * index of the next char in <code>input</code> that must be processed next (the input up to that index having been
+     * processed already), and <code>found</code> indicates if a matching rule was found or not. In the case where a
+     * matching rule was found, <code>phonemeBuilder</code> is replaced with a new buidler containing the phonemes
+     * updated by the matching rule.
+     *
+     * @author Apache Software Foundation
+     * @since 1.6
+     */
     private static final class RulesApplication {
         private final List<Rule> finalRules;
         private final CharSequence input;
@@ -134,6 +188,13 @@ public class PhoneticEngine {
             return this.phonemeBuilder;
         }
 
+        /**
+         * This invokes the rules. It loops over the rules list, stopping at the first one that has a matching context
+         * and pattern. It then applies this rule to the phoneme builder to produce updated phonemes. If there was no
+         * match, <code>i</code> is advanced one and the character is silently dropped from the phonetic spelling.
+         *
+         * @return <code>this</code>
+         */
         public RulesApplication invoke() {
             this.found = false;
             int patternLength = 0;
@@ -176,6 +237,12 @@ public class PhoneticEngine {
                 "de la", "della", "des", "di", "do", "dos", "du", "van", "von"))));
     }
 
+    /**
+     * This is a performance hack to avoid overhead associated with very frequent CharSequence.subSequence calls.
+     *
+     * @param cached the character sequence to cache
+     * @return a <code>CharSequence</code> that internally memoises subSequence values
+     */
     private static CharSequence cacheSubSequence(final CharSequence cached) {
         // return cached;
         final CharSequence[][] cache = new CharSequence[cached.length()][cached.length()];
@@ -203,6 +270,12 @@ public class PhoneticEngine {
         };
     }
 
+    /**
+     * Join some strings with an internal separater.
+     * @param strings   Strings to join
+     * @param sep       String to separate them with
+     * @return          a single String consisting of each element of <code>strings</code> interlieved by <code>sep</code>
+     */
     private static String join(Iterable<String> strings, String sep) {
         StringBuilder sb = new StringBuilder();
         Iterator<String> si = strings.iterator();
@@ -244,6 +317,14 @@ public class PhoneticEngine {
         this.lang = Lang.instance(nameType);
     }
 
+    /**
+     * Apply the final rules to convert from a language-specific phonetic representation to a language-independent
+     * representation.
+     *
+     * @param phonemeBuilder
+     * @param finalRules
+     * @return
+     */
     private PhonemeBuilder applyFinalRules(PhonemeBuilder phonemeBuilder, List<Rule> finalRules) {
         if (finalRules == null) {
             throw new NullPointerException("finalRules can not be null");
@@ -304,8 +385,11 @@ public class PhoneticEngine {
      */
     public String encode(String input, final Languages.LanguageSet languageSet) {
         final List<Rule> rules = Rule.getInstance(this.nameType, RuleType.RULES, languageSet);
+        // rules common across many (all) languages
         final List<Rule> finalRules1 = Rule.getInstance(this.nameType, this.ruleType, "common");
+        // rules that apply to a specific language that may be ambiguous or wrong if applied to other languages
         final List<Rule> finalRules2 = Rule.getInstance(this.nameType, this.ruleType, languageSet);
+
         // System.err.println("Languages: " + languageSet);
         // System.err.println("Rules: " + rules);
 
@@ -333,6 +417,7 @@ public class PhoneticEngine {
         final List<String> words = Arrays.asList(input.split("\\s+"));
         final List<String> words2 = new ArrayList<String>();
 
+        // special-case handling of word prefixes based upon the name type
         switch (this.nameType) {
         case SEPHARDIC:
             for (String aWord : words) {
@@ -380,13 +465,10 @@ public class PhoneticEngine {
             // System.err.println(input + " " + i + ": " + phonemeBuilder.makeString());
         }
 
-        // System.err.println("Applying general rules");
+        // Apply the general rules
         phonemeBuilder = applyFinalRules(phonemeBuilder, finalRules1);
-        // System.err.println("Now got: " + phonemeBuilder.makeString());
-        // System.err.println("Applying language-specific rules");
+        // Apply the language-specific rules
         phonemeBuilder = applyFinalRules(phonemeBuilder, finalRules2);
-        // System.err.println("Now got: " + phonemeBuilder.makeString());
-        // System.err.println("Done");
 
         return phonemeBuilder.makeString();
     }

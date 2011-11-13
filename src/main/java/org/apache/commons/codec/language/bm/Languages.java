@@ -53,6 +53,9 @@ import java.util.Set;
  * @since 1.6
  */
 public class Languages {
+    // implementation note: This class is divided into two sections. The first part is a static factory interface that
+    // exposes org/apache/commons/codec/language/bm/%s_languages.txt for %s in NameType.* as a list of supported
+    // languages, and a second part that provides instance methods for accessing this set fo supported languages.
 
     /**
      * A set of languages.
