@@ -210,6 +210,23 @@ limitations under the License.
     <commons.encoding>UTF-8</commons.encoding>
   </properties>
   <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>3.0</version>
+          <dependencies>
+            <dependency>
+              <!-- add support for ssh/scp -->
+              <groupId>org.apache.maven.wagon</groupId>
+              <artifactId>wagon-ssh</artifactId>
+              <version>1.0</version>
+            </dependency>
+          </dependencies>
+        </plugin>
+      </plugins>
+    </pluginManagement>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -258,7 +275,6 @@ limitations under the License.
         <artifactId>maven-changes-plugin</artifactId>
         <version>2.6</version>
         <configuration>
-<!--           <xmlPath>${basedir}/src/changes/changes.xml</xmlPath> -->
           <issueLinkTemplate>%URL%/%ISSUE%</issueLinkTemplate>
           <!-- TODO: <onlyCurrentVersion>true</onlyCurrentVersion> -->
         </configuration>
