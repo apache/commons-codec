@@ -25,7 +25,12 @@ package org.apache.commons.codec.language.bm;
  */
 public enum RuleType {
 
-    APPROX("approx"), EXACT("exact"), RULES("rules");
+    /** Approximate rules, which will lead to the largest number of phonetic interpretations. */
+    APPROX("approx"),
+    /** Exact rules, which will lead to a minimum number of phonetic interpretations. */
+    EXACT("exact"),
+    /** For internal use only. Please use {@link #APPROX} or {@link #EXACT}. */
+    RULES("rules");
 
     private final String name;
 

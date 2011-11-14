@@ -18,7 +18,9 @@
 package org.apache.commons.codec.language.bm;
 
 /**
- * Supported types of names. Unless you are matching particular family names, use {@link #GENERIC}.
+ * Supported types of names. Unless you are matching particular family names, use {@link #GENERIC}. The
+ * <code>GENERIC</code> NameType should work reasonably well for non-name words. The other encodings are specifically
+ * tuned to family names, and may not work well at all for general text.
  * 
  * @author Apache Software Foundation
  * @since 1.6

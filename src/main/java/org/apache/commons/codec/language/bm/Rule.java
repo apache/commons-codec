@@ -583,7 +583,9 @@ public class Rule {
     }
 
     /**
-     * Decides if the pattern and context match the input starting at a position.
+     * Decides if the pattern and context match the input starting at a position. It is a match if the
+     * <code>lContext</code> matches <code>input</code> up to <code>i</code>, <code>pattern</code> matches at i and
+     * <code>rContext</code> matches from the end of the match of <code>pattern</code> to the end of <code>input</code>.
      * 
      * @param input
      *            the input String
@@ -604,6 +606,9 @@ public class Rule {
             return false;
         }
 
+        // fixme: this is a readability/speed trade-off - these 3 expressions should be inlined for speed to avoid
+        // evaluating latter ones if earlier ones have already failed, but that would make the code a lot harder to
+        // read
         boolean patternMatches = input.subSequence(i, ipl).equals(this.pattern);
         boolean rContextMatches = this.rContext.isMatch(input.subSequence(ipl, input.length()));
         boolean lContextMatches = this.lContext.isMatch(input.subSequence(0, i));

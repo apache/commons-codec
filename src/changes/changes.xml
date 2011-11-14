@@ -25,7 +25,7 @@
     <!-- <release version="2.0" date="TBA" description="Feature and fix release."> <action dev="ggregory" type="fix" issue="CODEC-126"> Make 
       org.apache.commons.codec.net.URLCodec charset field final. </action>   </release>
     -->
-    <release version="1.6" date="TBA" description="Feature and fix release.">
+    <release version="1.6" date="20 November 2011" description="Feature and fix release.">
       <action dev="ggregory" type="fix" issue="CODEC-129" due-to="ggregory">
         Use standard Maven directory layout.
       </action>
@@ -35,7 +35,7 @@
       <action dev="ggregory, sebb" type="fix" issue="CODEC-127">
         Fix various character encoding issues in comments and test cases.
       </action>
-      <action dev="ggregory, matthewpocock" type="update" issue="CODEC-125">
+      <action dev="ggregory, matthewpocock" type="update" issue="CODEC-125" due-to="Matthew Pocock">
         Implement a Beider-Morse phonetic matching codec.
       </action>
       <action dev="ggregory" type="update" issue="CODEC-119">

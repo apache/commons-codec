@@ -56,29 +56,12 @@ public class Soundex implements StringEncoder {
      */
     public static final Soundex US_ENGLISH = new Soundex();
 
-
     /**
-     * Encodes the Strings and returns the number of characters in the two encoded Strings that are the same. This
-     * return value ranges from 0 through 4: 0 indicates little or no similarity, and 4 indicates strong similarity or
-     * identical values.
+     * The maximum length of a Soundex code - Soundex codes are only four characters by definition.
      * 
-     * @param s1
-     *                  A String that will be encoded and compared.
-     * @param s2
-     *                  A String that will be encoded and compared.
-     * @return The number of characters in the two encoded Strings that are the same from 0 to 4.
-     * 
-     * @see SoundexUtils#difference(StringEncoder,String,String)
-     * @see <a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_de-dz_8co5.asp"> MS
-     *          T-SQL DIFFERENCE </a>
-     * 
-     * @throws EncoderException
-     *                  if an error occurs encoding one of the strings
-     * @since 1.3
+     * @deprecated This feature is not needed since the encoding size must be constant. Will be removed in 2.0.
      */
-    public int difference(String s1, String s2) throws EncoderException {
-        return SoundexUtils.difference(this, s1, s2);
-    }
+    private int maxLength = 4;
 
     /**
      * Every letter of the alphabet is "mapped" to a numerical value. This char array holds the values to which each
@@ -121,6 +104,29 @@ public class Soundex implements StringEncoder {
      */
     public Soundex(String mapping) {
         this.soundexMapping = mapping.toCharArray();
+    }
+
+    /**
+     * Encodes the Strings and returns the number of characters in the two encoded Strings that are the same. This
+     * return value ranges from 0 through 4: 0 indicates little or no similarity, and 4 indicates strong similarity or
+     * identical values.
+     * 
+     * @param s1
+     *                  A String that will be encoded and compared.
+     * @param s2
+     *                  A String that will be encoded and compared.
+     * @return The number of characters in the two encoded Strings that are the same from 0 to 4.
+     * 
+     * @see SoundexUtils#difference(StringEncoder,String,String)
+     * @see <a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_de-dz_8co5.asp"> MS
+     *          T-SQL DIFFERENCE </a>
+     * 
+     * @throws EncoderException
+     *                  if an error occurs encoding one of the strings
+     * @since 1.3
+     */
+    public int difference(String s1, String s2) throws EncoderException {
+        return SoundexUtils.difference(this, s1, s2);
     }
 
     /**
@@ -187,6 +193,16 @@ public class Soundex implements StringEncoder {
     }
 
     /**
+     * Returns the maxLength. Standard Soundex
+     * 
+     * @deprecated This feature is not needed since the encoding size must be constant. Will be removed in 2.0.
+     * @return int
+     */
+    public int getMaxLength() {
+        return this.maxLength;
+    }
+
+    /**
      * Returns the soundex mapping.
      * 
      * @return soundexMapping.
@@ -212,6 +228,17 @@ public class Soundex implements StringEncoder {
         return this.getSoundexMapping()[index];
     }
 
+    /**
+     * Sets the maxLength.
+     * 
+     * @deprecated This feature is not needed since the encoding size must be constant. Will be removed in 2.0.
+     * @param maxLength
+     *                  The maxLength to set
+     */
+    public void setMaxLength(int maxLength) {
+        this.maxLength = maxLength;
+    }
+    
     /**
      * Retrieves the Soundex code for a given String object.
      * 
