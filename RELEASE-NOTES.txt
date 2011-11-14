@@ -1,6 +1,6 @@
 $Id$
 
-The Commons Codec team is pleased to announce the commons-codec-1.5 release!
+The Commons Codec team is pleased to announce the commons-codec-1.6 release!
 
 The codec package contains simple encoder and decoders for
 various formats such as Base64 and Hexadecimal. In addition to these
@@ -8,6 +8,25 @@ widely used encoders and decoders, the codec package also maintains a
 collection of phonetic encoding utilities.
 
 Changes in this version include:
+
+Fixed Bugs:
+o Use standard Maven directory layout.  Issue: CODEC-129. Thanks to ggregory. 
+o Documentation spelling fixes.  Issue: CODEC-128. Thanks to ville.skytta@iki.fi. 
+o Fix various character encoding issues in comments and test cases.  Issue: CODEC-127. 
+o ColognePhonetic Javadoc should use HTML entities for special characters.  Issue: CODEC-123. 
+
+Changes:
+o Implement a Beider-Morse phonetic matching codec.  Issue: CODEC-125. Thanks to Matthew Pocock. 
+o Migrate to Java 5.  Issue: CODEC-119. 
+o Migrate to JUnit 4.  Issue: CODEC-120. 
+
+Have fun!
+-Commons Codec team
+
+
+===============================================================================
+
+Commons Codec Package Version 1.5 Release Notes
 
 New features:
 o Add test(s) to check that encodeBase64() does not chunk output.  Issue: CODEC-93. Thanks to sebb. 
