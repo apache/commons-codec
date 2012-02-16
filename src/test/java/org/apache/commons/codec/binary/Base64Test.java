@@ -30,6 +30,7 @@ import java.util.Random;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -1216,6 +1217,23 @@ public class Base64Test {
             }
         }
         return buf.toString();
+    }
+    
+    /**
+     * Tests a lineSeparator much bigger than DEFAULT_BUFFER_SIZE.
+     * 
+     * @see <a href="http://mail-archives.apache.org/mod_mbox/commons-dev/201202.mbox/%3C4F3C85D7.5060706@snafu.de%3E">dev@commons.apache.org</a>
+     */
+    @Test
+    @Ignore
+    public void testHugeLineSeparator() {
+        final int BaseNCodec_DEFAULT_BUFFER_SIZE = 8192;
+        final int Base64_BYTES_PER_ENCODED_BLOCK = 4;
+        byte[] baLineSeparator = new byte[BaseNCodec_DEFAULT_BUFFER_SIZE * 4 - 3];
+        Base64 b64 = new Base64(Base64_BYTES_PER_ENCODED_BLOCK, baLineSeparator);
+        String strOriginal = "Hello World";
+        String strDecoded = new String(b64.decode(b64.encode(StringUtils.getBytesUtf8(strOriginal))));
+        assertTrue("testDEFAULT_BUFFER_SIZE", strOriginal.equals(strDecoded));
     }
 
 }
