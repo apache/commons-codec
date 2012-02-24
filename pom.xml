@@ -20,7 +20,7 @@ limitations under the License.
   <parent>
     <groupId>org.apache.commons</groupId>
     <artifactId>commons-parent</artifactId>
-    <version>22</version>
+    <version>23</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>commons-codec</groupId>
@@ -201,7 +201,7 @@ limitations under the License.
     <commons.componentid>codec</commons.componentid>
     <commons.release.version>1.6.1</commons.release.version>
     <!-- The RC version used in the staging repository URL. -->
-    <commons.rc.version>RC2</commons.rc.version>
+    <commons.rc.version>RC1</commons.rc.version>
     <commons.jira.id>CODEC</commons.jira.id>
     <commons.jira.pid>12310464</commons.jira.pid>
     <!-- Ensure copies work OK (can be removed later when this is in parent POM) -->
@@ -245,7 +245,7 @@ limitations under the License.
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
-        <version>2.3.2</version>
+        <version>2.4</version>
         <executions>
           <execution>
             <goals>
@@ -257,7 +257,7 @@ limitations under the License.
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
-        <version>2.2.2</version>
+        <version>2.3</version>
         <configuration>
           <descriptors>
             <descriptor>src/main/assembly/bin.xml</descriptor>
@@ -305,7 +305,7 @@ limitations under the License.
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-pmd-plugin</artifactId>
-        <version>2.6</version>
+        <version>2.7</version>
         <configuration>
           <targetJdk>1.5</targetJdk>
         </configuration>
@@ -313,7 +313,7 @@ limitations under the License.
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>findbugs-maven-plugin</artifactId>
-        <version>2.3.3</version>
+        <version>2.4.0</version>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
