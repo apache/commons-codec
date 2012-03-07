@@ -42,20 +42,10 @@ import org.apache.commons.codec.binary.StringUtils;
  * to ensure the integrity of the data should the message pass through a character- translating, and/or line-wrapping
  * gateway.
  * </p>
- * 
- * <p>
- * Note:
- * </p>
- * <p>
- * Rules #3, #4, and #5 of the quoted-printable spec are not implemented yet because the complete quoted-printable spec
- * does not lend itself well into the byte[] oriented codec framework. Complete the codec once the streamable codec
- * framework is ready. The motivation behind providing the codec in a partial form is that it can already come in handy
- * for those applications that do not require quoted-printable line formatting (rules #3, #4, #5), for instance Q codec.
- * </p>
- * 
+ *
  * @see <a href="http://www.ietf.org/rfc/rfc1521.txt"> RFC 1521 MIME (Multipurpose Internet Mail Extensions) Part One:
  *          Mechanisms for Specifying and Describing the Format of Internet Message Bodies </a>
- * 
+ *
  * @author Apache Software Foundation
  * @since 1.3
  * @version $Id$
@@ -76,6 +66,14 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
     private static final byte TAB = 9;
 
     private static final byte SPACE = 32;
+
+    private static final byte CR = 13;
+
+    private static final byte LF = 10;
+
+    /** Safe line length for quoted printable encoded text. */
+    private static final int SAFE_LENGTH = 73;
+
     // Static initializer for printable chars collection
     static {
         // alpha characters
@@ -111,26 +109,78 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * Encodes byte into its quoted-printable representation.
      * 
      * @param b
-     *                  byte to encode
+     *            byte to encode
      * @param buffer
-     *                  the buffer to write to
+     *            the buffer to write to
+     * @return The number of bytes written to the <code>buffer</code>
      */
-    private static final void encodeQuotedPrintable(int b, ByteArrayOutputStream buffer) {
+    private static final int encodeQuotedPrintable(int b, ByteArrayOutputStream buffer) {
         buffer.write(ESCAPE_CHAR);
         char hex1 = Character.toUpperCase(Character.forDigit((b >> 4) & 0xF, 16));
         char hex2 = Character.toUpperCase(Character.forDigit(b & 0xF, 16));
         buffer.write(hex1);
         buffer.write(hex2);
+        return 3;
+    }
+
+    /**
+     * Return the byte at position <code>index</code> of the byte array and
+     * make sure it is unsigned.
+     *
+     * @param index
+     *                  position in the array
+     * @param bytes
+     *                  the byte array
+     * @return the unsigned octet at position <code>index</code> from the array
+     */
+    private static int getUnsignedOctet(final int index, final byte[] bytes) {
+        int b = bytes[index];
+        if (b < 0) {
+            b = 256 + b;
+        }
+        return b;
+    }
+
+    /**
+     * Write a byte to the buffer.
+     *
+     * @param b
+     *                  byte to write
+     * @param encode
+     *                  indicates whether the octet shall be encoded
+     * @param buffer
+     *                  the buffer to write to
+     * @return the number of bytes that have been written to the buffer
+     */
+    private static int encodeByte(final int b, final boolean encode,
+                                  final ByteArrayOutputStream buffer) {
+        if (encode) {
+            return encodeQuotedPrintable(b, buffer);
+        } else {
+            buffer.write(b);
+            return 1;
+        }
+    }
+
+    /**
+     * Checks whether the given byte is whitespace.
+     *
+     * @param b
+     *                  byte to be checked
+     * @return <code>true</code> if the byte is either a space or tab character
+     */
+    private static boolean isWhitespace(final int b) {
+        return b == SPACE || b == TAB;
     }
 
     /**
      * Encodes an array of bytes into an array of quoted-printable 7-bit characters. Unsafe characters are escaped.
-     * 
+     *
      * <p>
-     * This function implements a subset of quoted-printable encoding specification (rule #1 and rule #2) as defined in
-     * RFC 1521 and is suitable for encoding binary data and unformatted text.
+     * This function fully implements the quoted-printable encoding specification (rule #1 through rule #5)
+     * as defined in RFC 1521 and is suitable for encoding binary data and unformatted text.
      * </p>
-     * 
+     *
      * @param printable
      *                  bitset of characters deemed quoted-printable
      * @param bytes
@@ -145,29 +195,59 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
             printable = PRINTABLE_CHARS;
         }
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        for (byte c : bytes) {
-            int b = c;
-            if (b < 0) {
-                b = 256 + b;
-            }
-            if (printable.get(b)) {
-                buffer.write(b);
+        int pos = 1;
+        // encode up to buffer.length - 3, the last three octets will be treated
+        // separately for simplification of note #3
+        for (int i = 0; i < bytes.length - 3; i++) {
+            int b = getUnsignedOctet(i, bytes);
+            if (pos < SAFE_LENGTH) {
+                // up to this length it is safe to add any byte, encoded or not
+                pos += encodeByte(b, !printable.get(b), buffer);
             } else {
-                encodeQuotedPrintable(b, buffer);
+                // rule #3: whitespace at the end of a line *must* be encoded
+                encodeByte(b, !printable.get(b) || isWhitespace(b), buffer);
+
+                // rule #5: soft line break
+                buffer.write(ESCAPE_CHAR);
+                buffer.write(CR);
+                buffer.write(LF);
+                pos = 1;
             }
         }
+
+        // rule #3: whitespace at the end of a line *must* be encoded
+        // if we would do a soft break line after this octet, encode whitespace
+        int b = getUnsignedOctet(bytes.length - 3, bytes);
+        boolean encode = !printable.get(b) || (isWhitespace(b) && pos > SAFE_LENGTH - 5);
+        pos += encodeByte(b, encode, buffer);
+
+        // note #3: '=' *must not* be the ultimate or penultimate character
+        // simplification: if < 6 bytes left, do a soft line break as we may need
+        //                 exactly 6 bytes space for the last 2 bytes
+        if (pos > SAFE_LENGTH - 2) {
+            buffer.write(ESCAPE_CHAR);
+            buffer.write(CR);
+            buffer.write(LF);
+        }
+        for (int i = bytes.length - 2; i < bytes.length; i++) {
+            b = getUnsignedOctet(i, bytes);
+            // rule #3: trailing whitespace shall be encoded
+            encode = !printable.get(b) || (i > bytes.length - 2 && isWhitespace(b));
+            encodeByte(b, encode, buffer);
+        }
+
         return buffer.toByteArray();
     }
 
     /**
-     * Decodes an array quoted-printable characters into an array of original bytes. Escaped characters are converted
-     * back to their original representation.
-     * 
+     * Decodes an array quoted-printable characters into an array of original bytes. Escaped characters are
+     * converted back to their original representation.
+     *
      * <p>
-     * This function implements a subset of quoted-printable encoding specification (rule #1 and rule #2) as defined in
-     * RFC 1521.
+     * This function fully implements the quoted-printable encoding specification (rule #1 through rule #5) as
+     * defined in RFC 1521.
      * </p>
-     * 
+     *
      * @param bytes
      *                  array of quoted-printable characters
      * @return array of original bytes
@@ -180,16 +260,21 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
         }
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         for (int i = 0; i < bytes.length; i++) {
-            int b = bytes[i];
+            final int b = bytes[i];
             if (b == ESCAPE_CHAR) {
                 try {
-                    int u = Utils.digit16(bytes[++i]);
+                    // if the next octet is a CR we have found a soft line break
+                    if (bytes[++i] == CR) {
+                        continue;
+                    }
+                    int u = Utils.digit16(bytes[i]);
                     int l = Utils.digit16(bytes[++i]);
                     buffer.write((char) ((u << 4) + l));
                 } catch (ArrayIndexOutOfBoundsException e) {
                     throw new DecoderException("Invalid quoted-printable encoding", e);
                 }
-            } else {
+            } else if (b != CR && b != LF) {
+                // every other octet is appended except for CR & LF
                 buffer.write(b);
             }
         }
@@ -200,8 +285,8 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * Encodes an array of bytes into an array of quoted-printable 7-bit characters. Unsafe characters are escaped.
      * 
      * <p>
-     * This function implements a subset of quoted-printable encoding specification (rule #1 and rule #2) as defined in
-     * RFC 1521 and is suitable for encoding binary data and unformatted text.
+     * This function fully implements the quoted-printable encoding specification (rule #1 through rule #5)
+     * as defined in RFC 1521 and is suitable for encoding binary data and unformatted text.
      * </p>
      * 
      * @param bytes
@@ -217,8 +302,8 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * back to their original representation.
      * 
      * <p>
-     * This function implements a subset of quoted-printable encoding specification (rule #1 and rule #2) as defined in
-     * RFC 1521.
+     * This function fully implements the quoted-printable encoding specification (rule #1 through rule #2)
+     * as defined in RFC 1521.
      * </p>
      * 
      * @param bytes
@@ -235,8 +320,8 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * Encodes a string into its quoted-printable form using the default string charset. Unsafe characters are escaped.
      * 
      * <p>
-     * This function implements a subset of quoted-printable encoding specification (rule #1 and rule #2) as defined in
-     * RFC 1521 and is suitable for encoding binary data.
+     * This function fully implements the quoted-printable encoding specification (rule #1 through rule #2)
+     * as defined in RFC 1521 and is suitable for encoding binary data.
      * </p>
      * 
      * @param pString
@@ -365,8 +450,8 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * Encodes a string into its quoted-printable form using the specified charset. Unsafe characters are escaped.
      * 
      * <p>
-     * This function implements a subset of quoted-printable encoding specification (rule #1 and rule #2) as defined in
-     * RFC 1521 and is suitable for encoding binary data and unformatted text.
+     * This function fully implements the quoted-printable encoding specification (rule #1 through rule #2)
+     * as defined in RFC 1521 and is suitable for encoding binary data and unformatted text.
      * </p>
      * 
      * @param pString
