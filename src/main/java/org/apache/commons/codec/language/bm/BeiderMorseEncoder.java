@@ -100,7 +100,7 @@ public class BeiderMorseEncoder implements StringEncoder {
 
     /**
      * Gets the name type currently in operation.
-     * 
+     *
      * @return the NameType currently being used
      */
     public NameType getNameType() {
@@ -109,7 +109,7 @@ public class BeiderMorseEncoder implements StringEncoder {
 
     /**
      * Gets the rule type currently in operation.
-     * 
+     *
      * @return the RuleType currently being used
      */
     public RuleType getRuleType() {
@@ -118,7 +118,7 @@ public class BeiderMorseEncoder implements StringEncoder {
 
     /**
      * Discovers if multiple possible encodings are concatenated.
-     * 
+     *
      * @return true if multiple encodings are concatenated, false if just the first one is returned
      */
     public boolean isConcat() {
@@ -127,33 +127,55 @@ public class BeiderMorseEncoder implements StringEncoder {
 
     /**
      * Sets how multiple possible phonetic encodings are combined.
-     * 
+     *
      * @param concat
      *            true if multiple encodings are to be combined with a '|', false if just the first one is to be considered
      */
     public void setConcat(boolean concat) {
-        this.engine = new PhoneticEngine(this.engine.getNameType(), this.engine.getRuleType(), concat);
+        this.engine = new PhoneticEngine(this.engine.getNameType(),
+                                         this.engine.getRuleType(),
+                                         concat,
+                                         this.engine.getMaxPhonemes());
     }
 
     /**
      * Sets the type of name. Use {@link NameType#GENERIC} unless you specifically want phoentic encodings optimized for Ashkenazi or
      * Sephardic Jewish family names.
-     * 
+     *
      * @param nameType
      *            the NameType in use
      */
     public void setNameType(NameType nameType) {
-        this.engine = new PhoneticEngine(nameType, this.engine.getRuleType(), this.engine.isConcat());
+        this.engine = new PhoneticEngine(nameType,
+                                         this.engine.getRuleType(),
+                                         this.engine.isConcat(),
+                                         this.engine.getMaxPhonemes());
     }
 
     /**
      * Sets the rule type to apply. This will widen or narrow the range of phonetic encodings considered.
-     * 
+     *
      * @param ruleType
      *            {@link RuleType#APPROX} or {@link RuleType#EXACT} for approximate or exact phonetic matches
      */
     public void setRuleType(RuleType ruleType) {
-        this.engine = new PhoneticEngine(this.engine.getNameType(), ruleType, this.engine.isConcat());
+        this.engine = new PhoneticEngine(this.engine.getNameType(),
+                                         ruleType,
+                                         this.engine.isConcat(),
+                                         this.engine.getMaxPhonemes());
+    }
+
+    /**
+     * Sets the number of maximum of phonemes that shall be considered by the engine.
+     *
+     * @param maxPhonemes
+     *            the maximum number of phonemes returned by the engine
+     */
+    public void setMaxPhonemes(int maxPhonemes) {
+        this.engine = new PhoneticEngine(this.engine.getNameType(),
+                                         this.engine.getRuleType(),
+                                         this.engine.isConcat(),
+                                         maxPhonemes);
     }
 
 }

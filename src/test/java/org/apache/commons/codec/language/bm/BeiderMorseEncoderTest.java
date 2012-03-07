@@ -19,6 +19,7 @@ package org.apache.commons.codec.language.bm;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
@@ -60,7 +61,7 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
     public void testAllChars() throws EncoderException {
         BeiderMorseEncoder bmpm = createGenericApproxEncoder();
         for (char c = Character.MIN_VALUE; c < Character.MAX_VALUE; c++) {
-            bmpm.encode("" + c);
+            bmpm.encode(Character.toString(c));
         }
     }
 
@@ -68,7 +69,7 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
     public void testAsciiEncodeNotEmpty1Letter() throws EncoderException {
         BeiderMorseEncoder bmpm = createGenericApproxEncoder();
         for (char c = 'a'; c <= 'z'; c++) {
-            final String value = "" + c;
+            final String value = Character.toString(c);
             final String valueU = value.toUpperCase();
             assertNotEmpty(bmpm, value);
             assertNotEmpty(bmpm, valueU);
@@ -135,6 +136,24 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
     public void testNegativeIndexForRuleMatchIndexOutOfBoundsException() {
         Rule r = new Rule("a", "", "", new Rule.Phoneme("", Languages.ANY_LANGUAGE));
         r.patternAndContextMatches("bob", -1);
+    }
+
+    @Test
+    public void testOOM() throws EncoderException {
+        String phrase = "200697900'-->&#1913348150;</  bceaeef >aadaabcf\"aedfbff<!--\'-->?>cae"
+                + "cfaaa><?&#<!--</script>&lang&fc;aadeaf?>>&bdquo<    cc =\"abff\"    /></   afe  >"
+                + "<script><!-- f(';<    cf aefbeef = \"bfabadcf\" ebbfeedd = fccabeb >";
+
+        BeiderMorseEncoder encoder = new BeiderMorseEncoder();
+        encoder.setNameType(NameType.GENERIC);
+        encoder.setRuleType(RuleType.EXACT);
+        encoder.setMaxPhonemes(10);
+
+        String phonemes = encoder.encode(phrase);
+        assertTrue(phonemes.length() > 0);
+
+        String[] phonemeArr = phonemes.split("\\|");
+        assertTrue(phonemeArr.length <= 10);
     }
 
     @Test

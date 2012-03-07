@@ -26,6 +26,9 @@
       org.apache.commons.codec.net.URLCodec charset field final. </action>   </release>
     -->
     <release version="1.6.1" date="TBD" description="Feature and fix release.">
+      <action dev="ggregory" type="fix" issue="CODEC-132" due-to="rcmuir">
+        BeiderMorseEncoder OOM issues
+      </action>
       <action dev="ggregory" type="fix" issue="CODEC-121" due-to="javajohn">
         QuotedPrintableCodec does not support soft line break per the 'quoted-printable' example on Wikipedia
       </action>

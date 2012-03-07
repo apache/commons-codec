@@ -18,6 +18,7 @@
 package org.apache.commons.codec.language.bm;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.List;
@@ -38,22 +39,18 @@ public class PhoneticEngineTest {
     @Parameterized.Parameters
     public static List<Object[]> data() {
         return Arrays
-                .asList(new Object[] {
-                        "Renault",
-                        "rinD|rinDlt|rina|rinalt|rino|rinolt|rinu|rinult",
-                        NameType.GENERIC,
-                        RuleType.APPROX,
-                        true },
-                        new Object[] { "Renault", "rYnDlt|rYnalt|rYnult|rinDlt|rinalt|rinult", NameType.ASHKENAZI, RuleType.APPROX, true },
-                        new Object[] { "Renault", "rinDlt", NameType.SEPHARDIC, RuleType.APPROX, true },
-                        new Object[] { "SntJohn-Smith", "sntjonsmit", NameType.GENERIC, RuleType.EXACT, true },
-                        new Object[] { "d'ortley", "(ortlaj|ortlej)-(dortlaj|dortlej)", NameType.GENERIC, RuleType.EXACT, true },
+                .asList(new Object[] { "Renault", "rinD|rinDlt|rina|rinalt|rino|rinolt|rinu|rinult", NameType.GENERIC, RuleType.APPROX, true, 10 },
+                        new Object[] { "Renault", "rYnDlt|rYnalt|rYnult|rinDlt|rinalt|rinult", NameType.ASHKENAZI, RuleType.APPROX, true, 10 },
+                        new Object[] { "Renault", "rYnDlt", NameType.ASHKENAZI, RuleType.APPROX, true, 1 },
+                        new Object[] { "Renault", "rinDlt", NameType.SEPHARDIC, RuleType.APPROX, true, 10 },
+                        new Object[] { "SntJohn-Smith", "sntjonsmit", NameType.GENERIC, RuleType.EXACT, true, 10 },
+                        new Object[] { "d'ortley", "(ortlaj|ortlej)-(dortlaj|dortlej)", NameType.GENERIC, RuleType.EXACT, true, 10 },
                         new Object[] {
                                 "van helsing",
                                 "(elSink|elsink|helSink|helsink|helzink|xelsink)-(banhelsink|fanhelsink|fanhelzink|vanhelsink|vanhelzink|vanjelsink)",
                                 NameType.GENERIC,
                                 RuleType.EXACT,
-                                false });
+                                false, 10 });
     }
 
     private final boolean concat;
@@ -61,23 +58,37 @@ public class PhoneticEngineTest {
     private final NameType nameType;
     private final String phoneticExpected;
     private final RuleType ruleType;
+    private final int maxPhonemes;
 
-    public PhoneticEngineTest(String name, String phoneticExpected, NameType nameType, RuleType ruleType, boolean concat) {
+    public PhoneticEngineTest(String name, String phoneticExpected, NameType nameType,
+                              RuleType ruleType, boolean concat, int maxPhonemes) {
         this.name = name;
         this.phoneticExpected = phoneticExpected;
         this.nameType = nameType;
         this.ruleType = ruleType;
         this.concat = concat;
+        this.maxPhonemes = maxPhonemes;
     }
 
     @Test(timeout = 10000L)
     public void testEncode() {
-        PhoneticEngine engine = new PhoneticEngine(this.nameType, this.ruleType, this.concat);
+        PhoneticEngine engine = new PhoneticEngine(this.nameType, this.ruleType, this.concat, this.maxPhonemes);
 
         String phoneticActual = engine.encode(this.name);
 
         //System.err.println("expecting: " + this.phoneticExpected);
         //System.err.println("actual:    " + phoneticActual);
         assertEquals("phoneme incorrect", this.phoneticExpected, phoneticActual);
+
+        if (this.concat) {
+            String[] split = phoneticActual.split("\\|");
+            assertTrue(split.length <= this.maxPhonemes);
+        } else {
+            String[] words = phoneticActual.split("-");
+            for (String word : words) {
+                String[] split = word.split("\\|");
+                assertTrue(split.length <= this.maxPhonemes);
+            }
+        }
     }
 }
