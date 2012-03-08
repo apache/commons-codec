@@ -35,7 +35,7 @@ import org.apache.commons.codec.StringEncoder;
  * @see <a href="http://en.wikipedia.org/wiki/NYSIIS">http://en.wikipedia.org/wiki/NYSIIS</a>
  * @see <a href="http://www.dropby.com/NYSIIS.html">http://www.dropby.com/NYSIIS.html</a>
  * @see Soundex
- * @version $Id: Nysiis.java 669755 2008-06-20 01:21:52Z sebb $
+ * @version $Id$
  */
 public class Nysiis implements StringEncoder {
 
