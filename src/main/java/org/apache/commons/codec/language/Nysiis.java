@@ -17,6 +17,8 @@
 
 package org.apache.commons.codec.language;
 
+import java.util.regex.Pattern;
+
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
 
@@ -46,6 +48,15 @@ public class Nysiis implements StringEncoder {
     private static final char[] CHARS_NN = new char[] { 'N', 'N' };
     private static final char[] CHARS_S = new char[] { 'S' };
     private static final char[] CHARS_SSS = new char[] { 'S', 'S', 'S' };
+    
+    private static final Pattern PAT_MAC = Pattern.compile("^MAC");
+    private static final Pattern PAT_KN = Pattern.compile("^KN");
+    private static final Pattern PAT_K = Pattern.compile("^K");
+    private static final Pattern PAT_PH_PF = Pattern.compile("^(PH|PF)");
+    private static final Pattern PAT_SCH = Pattern.compile("^SCH");
+    private static final Pattern PAT_EE_IE = Pattern.compile("(EE|IE)$");
+    private static final Pattern PAT_DT_ETC = Pattern.compile("(DT|RT|RD|NT|ND)$");
+    
     private static final char SPACE = ' ';
     private static final int TRUE_LENGTH = 6;
 
@@ -194,16 +205,16 @@ public class Nysiis implements StringEncoder {
 
         // Translate first characters of name:
         // MAC -> MCC, KN -> NN, K -> C, PH | PF -> FF, SCH -> SSS
-        str = str.replaceFirst("^MAC", "MCC");
-        str = str.replaceFirst("^KN", "NN");
-        str = str.replaceFirst("^K", "C");
-        str = str.replaceFirst("^(PH|PF)", "FF");
-        str = str.replaceFirst("^SCH", "SSS");
-
+        str = PAT_MAC.matcher(str).replaceFirst("MCC");
+        str = PAT_KN.matcher(str).replaceFirst("NN");
+        str = PAT_K.matcher(str).replaceFirst("C");
+        str = PAT_PH_PF.matcher(str).replaceFirst("FF");
+        str = PAT_SCH.matcher(str).replaceFirst("SSS");
+        
         // Translate last characters of name:
         // EE -> Y, IE -> Y, DT | RT | RD | NT | ND -> D
-        str = str.replaceFirst("(EE|IE)$", "Y");
-        str = str.replaceFirst("(DT|RT|RD|NT|ND)$", "D");
+        str = PAT_EE_IE.matcher(str).replaceFirst("Y");
+        str = PAT_DT_ETC.matcher(str).replaceFirst("D");
 
         // First character of key = first character of name.
         StringBuffer key = new StringBuffer(str.length());
