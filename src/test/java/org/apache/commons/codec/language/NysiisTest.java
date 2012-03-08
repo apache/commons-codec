@@ -156,63 +156,58 @@ public class NysiisTest extends StringEncoderAbstractTest {
         // 8.  Collapse all strings of repeated characters
         // 9.  Add original first character of name as first character of key
 
-        List<String[]> testValues =
-                Arrays.asList(
-                        // http://www.dropby.com/indexLF.html?content=/NYSIIS.html
-                        // 1. Transcode first characters of name
-                        new String[] { "MACINTOSH", "MCANT" },
-                        // violates 4j: the second N should not be added, as the first
-                        //              key char is already a N
-                        new String[] { "KNUTH", "NAT" }, // Original: NNAT; modified: NATH
-                        // O and E are transcoded to A because of rule 4a
-                        // H also to A because of rule 4h
-                        // the N gets mysteriously lost, maybe because of a wrongly implemented rule 4h
-                        // that skips the next char in such a case?
-                        // the remaining A is removed because of rule 7
-                        new String[] { "KOEHN", "CAN" }, // Original: C
-                        // violates 4j: see also KNUTH
-                        new String[] { "PHILLIPSON", "FALAPSAN" }, // Original: FFALAP[SAN]
-                        // violates 4j: see also KNUTH
-                        new String[] { "PFEISTER", "FASTAR" }, // Original: FFASTA[R]
-                        // violates 4j: see also KNUTH
-                        new String[] { "SCHOENHOEFT", "SANAFT" }, // Original: SSANAF[T]
-                        // http://www.dropby.com/indexLF.html?content=/NYSIIS.html
-                        // 2.Transcode last characters of name: 
-                        new String[] { "MCKEE", "MCY" },
-                        new String[] { "MACKIE", "MCY" },
-                        new String[] { "HEITSCHMIDT", "HATSNAD" },
-                        new String[] { "BART", "BAD" },
-                        new String[] { "HURD", "HAD" },
-                        new String[] { "HUNT", "HAD" },
-                        new String[] { "WESTERLUND", "WASTARLAD" },
-                        // http://www.dropby.com/indexLF.html?content=/NYSIIS.html
-                        // 4. Transcode remaining characters by following these rules, incrementing by one character each time: 
-                        new String[] { "CASSTEVENS", "CASTAFAN" },
-                        new String[] { "VASQUEZ", "VASG" },
-                        new String[] { "FRAZIER", "FRASAR" },
-                        new String[] { "BOWMAN", "BANAN" },
-                        new String[] { "MCKNIGHT", "MCNAGT" },
-                        new String[] { "RICKERT", "RACAD" },
-                        // violates 5: the last S is not removed
-                        // when comparing to DEUTS, which is phonetically similar
-                        // the result it also DAT, which is correct for DEUTSCH too imo
-                        new String[] { "DEUTSCH", "DAT" }, // Original: DATS
-                        new String[] { "WESTPHAL", "WASTFAL" },
-                        // violates 4h: the H should be transcoded to S and thus ignored as
-                        // the first key character is also S
-                        new String[] { "SHRIVER", "SRAVAR" }, // Original: SHRAVA[R]
-                        // same as KOEHN, the L gets mysteriously lost
-                        new String[] { "KUHL", "CAL" }, // Original: C
-                        new String[] { "RAWSON", "RASAN" },
-                        // If last character is S, remove it
-                        new String[] { "JILES", "JAL" },
-                        // violates 6: if the last two characters are AY, remove A
-                        new String[] { "CARRAWAY", "CARY" }, // Original: CARAY
-                        new String[] { "YAMADA", "YANAD" });
-
-        for (String[] arr : testValues) {
-            Assert.assertEquals("Problem with " + arr[0], arr[1], this.fullNysiis.encode(arr[0]));
-        }
+        this.assertEncodings(
+                // http://www.dropby.com/indexLF.html?content=/NYSIIS.html
+                // 1. Transcode first characters of name
+                new String[] { "MACINTOSH", "MCANT" },
+                // violates 4j: the second N should not be added, as the first
+                //              key char is already a N
+                new String[] { "KNUTH", "NAT" }, // Original: NNAT; modified: NATH
+                // O and E are transcoded to A because of rule 4a
+                // H also to A because of rule 4h
+                // the N gets mysteriously lost, maybe because of a wrongly implemented rule 4h
+                // that skips the next char in such a case?
+                // the remaining A is removed because of rule 7
+                new String[] { "KOEHN", "CAN" }, // Original: C
+                // violates 4j: see also KNUTH
+                new String[] { "PHILLIPSON", "FALAPSAN" }, // Original: FFALAP[SAN]
+                // violates 4j: see also KNUTH
+                new String[] { "PFEISTER", "FASTAR" }, // Original: FFASTA[R]
+                // violates 4j: see also KNUTH
+                new String[] { "SCHOENHOEFT", "SANAFT" }, // Original: SSANAF[T]
+                // http://www.dropby.com/indexLF.html?content=/NYSIIS.html
+                // 2.Transcode last characters of name: 
+                new String[] { "MCKEE", "MCY" },
+                new String[] { "MACKIE", "MCY" },
+                new String[] { "HEITSCHMIDT", "HATSNAD" },
+                new String[] { "BART", "BAD" },
+                new String[] { "HURD", "HAD" },
+                new String[] { "HUNT", "HAD" },
+                new String[] { "WESTERLUND", "WASTARLAD" },
+                // http://www.dropby.com/indexLF.html?content=/NYSIIS.html
+                // 4. Transcode remaining characters by following these rules, incrementing by one character each time: 
+                new String[] { "CASSTEVENS", "CASTAFAN" },
+                new String[] { "VASQUEZ", "VASG" },
+                new String[] { "FRAZIER", "FRASAR" },
+                new String[] { "BOWMAN", "BANAN" },
+                new String[] { "MCKNIGHT", "MCNAGT" },
+                new String[] { "RICKERT", "RACAD" },
+                // violates 5: the last S is not removed
+                // when comparing to DEUTS, which is phonetically similar
+                // the result it also DAT, which is correct for DEUTSCH too imo
+                new String[] { "DEUTSCH", "DAT" }, // Original: DATS
+                new String[] { "WESTPHAL", "WASTFAL" },
+                // violates 4h: the H should be transcoded to S and thus ignored as
+                // the first key character is also S
+                new String[] { "SHRIVER", "SRAVAR" }, // Original: SHRAVA[R]
+                // same as KOEHN, the L gets mysteriously lost
+                new String[] { "KUHL", "CAL" }, // Original: C
+                new String[] { "RAWSON", "RASAN" },
+                // If last character is S, remove it
+                new String[] { "JILES", "JAL" },
+                // violates 6: if the last two characters are AY, remove A
+                new String[] { "CARRAWAY", "CARY" }, // Original: CARAY
+                new String[] { "YAMADA", "YANAD" });
     }
 
     @Test
