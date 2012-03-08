@@ -170,7 +170,7 @@ public class Nysiis implements StringEncoder {
     }
 
     public boolean isTrueLength() {
-        return trueLength;
+        return this.trueLength;
     }
 
     /**
