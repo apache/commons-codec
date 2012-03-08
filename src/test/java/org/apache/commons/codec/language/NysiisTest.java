@@ -29,7 +29,7 @@ import org.junit.Test;
 /**
  * Tests {@link Nysiis}
  * 
- * @version $Id: NysiisTest.java 658834 2008-05-21 19:57:51Z niallp $
+ * @version $Id$
  */
 public class NysiisTest extends StringEncoderAbstractTest {
 
