@@ -49,6 +49,28 @@ public class NysiisTest extends StringEncoderAbstractTest {
     }
 
     @Test
+    public void testBran() throws EncoderException {
+        encodeAll(new String[] { "Brian", "Brown", "Brun" }, "BRAN");
+    }
+
+    @Test
+    public void testCap() throws EncoderException {
+        this.encodeAll(new String[] { "Capp", "Cope", "Copp", "Kipp" }, "CAP");
+    }
+
+    @Test
+    public void testDad() throws EncoderException {
+        // Data Quality and Record Linkage Techniques P.121 claims this is DAN,
+        // but it should be DAD, verified also with dropby.com
+        this.encodeAll(new String[] { "Dent" }, "DAD");
+    }
+
+    @Test
+    public void testDan() throws EncoderException {
+        this.encodeAll(new String[] { "Dane", "Dean", "Dionne" }, "DAN");
+    }
+
+    @Test
     public void testDropBy() throws EncoderException {
         List<String[]> testValues =
                 Arrays.asList(
@@ -89,7 +111,7 @@ public class NysiisTest extends StringEncoderAbstractTest {
      * @throws EncoderException
      */
     @Test
-    public void testOthers() throws EncoderException {
+    public void testDropBy2() throws EncoderException {
         List<String[]> testValues =
                 Arrays.asList(
                         // http://www.dropby.com/indexLF.html?content=/NYSIIS.html
@@ -125,8 +147,27 @@ public class NysiisTest extends StringEncoderAbstractTest {
                         // If last character is S, remove it
                         new String[] { "JILES", "JAL" },
                         //new String[] { "CARRAWAY", "CARAY" },
-                        new String[] { "YAMADA", "YANAD" },
-                        // Others
+                        new String[] { "YAMADA", "YANAD" });
+
+        for (String[] arr : testValues) {
+            Assert.assertEquals("Problem with " + arr[0], arr[1], createStringEncoder(false).encode(arr[0]));
+        }
+    }
+
+    @Test
+    public void testFal() throws EncoderException {
+        this.encodeAll(new String[] { "Phil" }, "FAL");
+    }
+
+    /**
+     * Tests data gathered from around the internets.
+     * 
+     * @throws EncoderException
+     */
+    @Test
+    public void testOthers() throws EncoderException {
+        List<String[]> testValues =
+                Arrays.asList(
                         new String[] { "O'Daniel", "ODANAL" },
                         new String[] { "O'Donnel", "ODANAL" },
                         new String[] { "Cory", "CARY" },
@@ -141,33 +182,6 @@ public class NysiisTest extends StringEncoderAbstractTest {
     }
 
     @Test
-    public void testBran() throws EncoderException {
-        encodeAll(new String[] { "Brian", "Brown", "Brun" }, "BRAN");
-    }
-
-    @Test
-    public void testCap() throws EncoderException {
-        this.encodeAll(new String[] { "Capp", "Cope", "Copp", "Kipp" }, "CAP");
-    }
-
-    @Test
-    public void testDan() throws EncoderException {
-        this.encodeAll(new String[] { "Dane", "Dean", "Dionne" }, "DAN");
-    }
-
-    @Test
-    public void testDad() throws EncoderException {
-        // Data Quality and Record Linkage Techniques P.121 claims this is DAN,
-        // but it should be DAD, verified also with dropby.com
-        this.encodeAll(new String[] { "Dent" }, "DAD");
-    }
-
-    @Test
-    public void testSnat() throws EncoderException {
-        this.encodeAll(new String[] { "Smith", "Schmit" }, "SNAT");
-    }
-
-    @Test
     public void testSnad() throws EncoderException {
         // Data Quality and Record Linkage Techniques P.121 claims this is SNAT,
         // but it should be SNAD
@@ -175,8 +189,8 @@ public class NysiisTest extends StringEncoderAbstractTest {
     }
 
     @Test
-    public void testFal() throws EncoderException {
-        this.encodeAll(new String[] { "Phil" }, "FAL");
+    public void testSnat() throws EncoderException {
+        this.encodeAll(new String[] { "Smith", "Schmit" }, "SNAT");
     }
 
     @Test
