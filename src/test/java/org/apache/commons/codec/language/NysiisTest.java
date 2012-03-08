@@ -294,6 +294,23 @@ public class NysiisTest extends StringEncoderAbstractTest {
     }
 
     /**
+     * Tests rule 4.2: Q → G, Z → S, M → N
+     * 
+     * @throws EncoderException
+     */
+    @Test
+    public void testRule4Dot2() throws EncoderException {
+        List<String[]> testValues =
+                Arrays.asList(
+                        new String[] { "XQ", "XG" },
+                        new String[] { "XZ", "X" },
+                        new String[] { "XM", "XN" });
+        for (String[] arr : testValues) {
+            Assert.assertEquals("Problem with " + arr[0], arr[1], this.fullNysiis.encode(arr[0]));
+        }
+    }
+
+    /**
      * Tests rule 5: If last character is S, remove it.
      * 
      * @throws EncoderException
