@@ -35,6 +35,21 @@ public class NysiisTest extends StringEncoderAbstractTest {
 
     private final Nysiis fullNysiis = new Nysiis(false);
     
+    /**
+     * Takes an array of String pairs where each pair's first element is the input and the second element the expected
+     * encoding.
+     * 
+     * @param testValues
+     *            an array of String pairs where each pair's first element is the input and the second element the
+     *            expected encoding.
+     * @throws EncoderException
+     */
+    private void assertEncodings(String[]... testValues) throws EncoderException {
+        for (String[] arr : testValues) {
+            Assert.assertEquals("Problem with " + arr[0], arr[1], this.fullNysiis.encode(arr[0]));
+        }
+    }
+
     @Override
     protected StringEncoder createStringEncoder() {
         return new Nysiis();
@@ -217,19 +232,14 @@ public class NysiisTest extends StringEncoderAbstractTest {
      */
     @Test
     public void testOthers() throws EncoderException {
-        List<String[]> testValues =
-                Arrays.asList(
-                        new String[] { "O'Daniel", "ODANAL" },
-                        new String[] { "O'Donnel", "ODANAL" },
-                        new String[] { "Cory", "CARY" },
-                        new String[] { "Corey", "CARY" },
-                        new String[] { "Kory", "CARY" },
-                        //
-                        new String[] { "FUZZY", "FASY" });
-
-        for (String[] arr : testValues) {
-            Assert.assertEquals("Problem with " + arr[0], arr[1], this.fullNysiis.encode(arr[0]));
-        }
+        this.assertEncodings(
+                new String[] { "O'Daniel", "ODANAL" },
+                new String[] { "O'Donnel", "ODANAL" },
+                new String[] { "Cory", "CARY" },
+                new String[] { "Corey", "CARY" },
+                new String[] { "Kory", "CARY" },
+                //
+                new String[] { "FUZZY", "FASY" });
     }
 
     /**
@@ -239,17 +249,13 @@ public class NysiisTest extends StringEncoderAbstractTest {
      */
     @Test
     public void testRule1() throws EncoderException {
-        List<String[]> testValues =
-                Arrays.asList(
-                        new String[] { "MACX", "MCX" },
-                        new String[] { "KNX", "NX" },
-                        new String[] { "KX", "CX" },
-                        new String[] { "PHX", "FX" },
-                        new String[] { "PFX", "FX" },
-                        new String[] { "SCHX", "SX" });
-        for (String[] arr : testValues) {
-            Assert.assertEquals("Problem with " + arr[0], arr[1], this.fullNysiis.encode(arr[0]));
-        }
+        this.assertEncodings(
+                new String[] { "MACX", "MCX" },
+                new String[] { "KNX", "NX" },
+                new String[] { "KX", "CX" },
+                new String[] { "PHX", "FX" },
+                new String[] { "PFX", "FX" },
+                new String[] { "SCHX", "SX" });
     }
 
     /**
@@ -259,18 +265,14 @@ public class NysiisTest extends StringEncoderAbstractTest {
      */
     @Test
     public void testRule2() throws EncoderException {
-        List<String[]> testValues =
-                Arrays.asList(
-                        new String[] { "XEE", "XY" },
-                        new String[] { "XIE", "XY" },
-                        new String[] { "XDT", "XD" },
-                        new String[] { "XRT", "XD" },
-                        new String[] { "XRD", "XD" },
-                        new String[] { "XNT", "XD" },
-                        new String[] { "XND", "XD" });
-        for (String[] arr : testValues) {
-            Assert.assertEquals("Problem with " + arr[0], arr[1], this.fullNysiis.encode(arr[0]));
-        }
+        this.assertEncodings(
+                new String[] { "XEE", "XY" },
+                new String[] { "XIE", "XY" },
+                new String[] { "XDT", "XD" },
+                new String[] { "XRT", "XD" },
+                new String[] { "XRD", "XD" },
+                new String[] { "XNT", "XD" },
+                new String[] { "XND", "XD" });
     }
 
     /**
@@ -280,17 +282,13 @@ public class NysiisTest extends StringEncoderAbstractTest {
      */
     @Test
     public void testRule4Dot1() throws EncoderException {
-        List<String[]> testValues =
-                Arrays.asList(
-                        new String[] { "XEV", "XAF" },
-                        new String[] { "XAX", "XAX" },
-                        new String[] { "XEX", "XAX" },
-                        new String[] { "XIX", "XAX" },
-                        new String[] { "XOX", "XAX" },
-                        new String[] { "XUX", "XAX" });
-        for (String[] arr : testValues) {
-            Assert.assertEquals("Problem with " + arr[0], arr[1], this.fullNysiis.encode(arr[0]));
-        }
+        this.assertEncodings(
+                new String[] { "XEV", "XAF" },
+                new String[] { "XAX", "XAX" },
+                new String[] { "XEX", "XAX" },
+                new String[] { "XIX", "XAX" },
+                new String[] { "XOX", "XAX" },
+                new String[] { "XUX", "XAX" });
     }
 
     /**
@@ -300,14 +298,10 @@ public class NysiisTest extends StringEncoderAbstractTest {
      */
     @Test
     public void testRule4Dot2() throws EncoderException {
-        List<String[]> testValues =
-                Arrays.asList(
-                        new String[] { "XQ", "XG" },
-                        new String[] { "XZ", "X" },
-                        new String[] { "XM", "XN" });
-        for (String[] arr : testValues) {
-            Assert.assertEquals("Problem with " + arr[0], arr[1], this.fullNysiis.encode(arr[0]));
-        }
+        this.assertEncodings(
+                new String[] { "XQ", "XG" },
+                new String[] { "XZ", "X" },
+                new String[] { "XM", "XN" });
     }
 
     /**
@@ -317,13 +311,9 @@ public class NysiisTest extends StringEncoderAbstractTest {
      */
     @Test
     public void testRule5() throws EncoderException {
-        List<String[]> testValues =
-                Arrays.asList(
-                        new String[] { "XS", "X" },
-                        new String[] { "XSS", "X" });
-        for (String[] arr : testValues) {
-            Assert.assertEquals("Problem with " + arr[0], arr[1], this.fullNysiis.encode(arr[0]));
-        }
+        this.assertEncodings(
+                new String[] { "XS", "X" },
+                new String[] { "XSS", "X" });
     }
 
     /**
@@ -333,13 +323,9 @@ public class NysiisTest extends StringEncoderAbstractTest {
      */
     @Test
     public void testRule6() throws EncoderException {
-        List<String[]> testValues =
-                Arrays.asList(
-                        new String[] { "XAY", "XY" },
-                        new String[] { "XAYS", "XY" }); // Rules 5, 6
-        for (String[] arr : testValues) {
-            Assert.assertEquals("Problem with " + arr[0], arr[1], this.fullNysiis.encode(arr[0]));
-        }
+        this.assertEncodings(
+                new String[] { "XAY", "XY" },
+                new String[] { "XAYS", "XY" }); // Rules 5, 6
     }
 
     /**
@@ -349,13 +335,9 @@ public class NysiisTest extends StringEncoderAbstractTest {
      */
     @Test
     public void testRule7() throws EncoderException {
-        List<String[]> testValues =
-                Arrays.asList(
-                        new String[] { "XA", "X" },
-                        new String[] { "XAS", "X" }); // Rules 5, 7
-        for (String[] arr : testValues) {
-            Assert.assertEquals("Problem with " + arr[0], arr[1], this.fullNysiis.encode(arr[0]));
-        }
+        this.assertEncodings(
+                new String[] { "XA", "X" },
+                new String[] { "XAS", "X" }); // Rules 5, 7
     }
     @Test
     public void testSnad() throws EncoderException {
