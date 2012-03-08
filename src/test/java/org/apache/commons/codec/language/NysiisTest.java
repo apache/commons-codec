@@ -137,29 +137,29 @@ public class NysiisTest extends StringEncoderAbstractTest {
         // Algorithm (taken from www.dropby.com/NYSIIS.html):
         //
         // 1.  Transcode first characters of name:
-        //    MAC »   MCC
-        //    KN  »   NN
-        //    K   »   C
-        //    PH  »   FF
-        //    PF  »   FF
-        //    SCH »   SSS
+        //    MAC >   MCC
+        //    KN  >   NN
+        //    K   >   C
+        //    PH  >   FF
+        //    PF  >   FF
+        //    SCH >   SSS
         //
         // 2.  Transcode last characters of name:
-        //    EE, IE  »   Y
-        //    DT,RT,RD,NT,ND  »   D
+        //    EE, IE  >   Y
+        //    DT,RT,RD,NT,ND  >   D
         //
         // 3.  First character of key = first character of name.
         //
         // 4.  Transcode remaining characters by following these rules, incrementing by one character each time:
-        //   4a.   EV  »   AF  else A,E,I,O,U » A
-        //   4b.   Q   »   G
-        //   4c.   Z   »   S
-        //   4d.   M   »   N
-        //   4e.   KN  »   N   else K » C
-        //   4f.   SCH     »   SSS
-        //   4g.   PH  »   FF
-        //   4h.   H   »   If previous or next is nonvowel, previous
-        //   4i.   W   »   If previous is vowel, previous
+        //   4a.   EV  >   AF  else A,E,I,O,U > A
+        //   4b.   Q   >   G
+        //   4c.   Z   >   S
+        //   4d.   M   >   N
+        //   4e.   KN  >   N   else K > C
+        //   4f.   SCH >   SSS
+        //   4g.   PH  >   FF
+        //   4h.   H   >   If previous or next is nonvowel, previous
+        //   4i.   W   >   If previous is vowel, previous
         //   4j.   Add current to key if current != last key character
         //
         // 5.  If last character is S, remove it
@@ -186,7 +186,7 @@ public class NysiisTest extends StringEncoderAbstractTest {
                         new String[] { "PHILLIPSON", "FALAPSAN" }, // Original: FFALAP[SAN]
                         // violates 4j: see also KNUTH
                         new String[] { "PFEISTER", "FASTAR" }, // Original: FFASTA[R]
-                        // violoates 4j: see also KNUTH
+                        // violates 4j: see also KNUTH
                         new String[] { "SCHOENHOEFT", "SANAFT" }, // Original: SSANAF[T]
                         // http://www.dropby.com/indexLF.html?content=/NYSIIS.html
                         // 2.Transcode last characters of name: 
@@ -213,7 +213,7 @@ public class NysiisTest extends StringEncoderAbstractTest {
                         // violates 4h: the H should be transcoded to S and thus ignored as
                         // the first key character is also S
                         new String[] { "SHRIVER", "SRAVAR" }, // Original: SHRAVA[R]
-                        // same as KOEHN, the L gets mysteriously lost, the correct one
+                        // same as KOEHN, the L gets mysteriously lost
                         new String[] { "KUHL", "CAL" }, // Original: C
                         new String[] { "RAWSON", "RASAN" },
                         // If last character is S, remove it
