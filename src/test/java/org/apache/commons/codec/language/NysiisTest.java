@@ -85,37 +85,32 @@ public class NysiisTest extends StringEncoderAbstractTest {
 
     @Test
     public void testDropBy() throws EncoderException {
-        List<String[]> testValues =
-                Arrays.asList(
-                        new String[] { "MACINTOSH", "MCANT" },
-                        new String[] { "KNUTH", "NAT"   },
-                        new String[] { "KOEHN", "CAN" },
-                        new String[] { "PHILLIPSON", "FALAPSAN" },
-                        new String[] { "PFEISTER", "FASTAR" },
-                        new String[] { "MCKEE", "MCY" },
-                        new String[] { "MACKIE", "MCY" },
-                        new String[] { "HEITSCHMIDT", "HATSNAD" },
-                        new String[] { "BART", "BAD" },
-                        new String[] { "HURD", "HAD" },
-                        new String[] { "HUNT", "HAD" },
-                        new String[] { "WESTERLUND", "WASTARLAD" },
-                        new String[] { "CASSTEVENS", "CASTAFAN" },
-                        new String[] { "VASQUEZ", "VASG" },
-                        new String[] { "FRAZIER", "FRASAR" },
-                        new String[] { "BOWMAN", "BANAN" },
-                        new String[] { "RICKERT", "RACAD" },
-                        new String[] { "DEUTSCH", "DAT" },
-                        new String[] { "WESTPHAL", "WASTFAL" },
-                        new String[] { "SHRIVER", "SRAVAR" },
-                        new String[] { "KUHL", "CAL" },
-                        new String[] { "RAWSON", "RASAN" },
-                        new String[] { "JILES", "JAL" },
-                        new String[] { "CARRAWAY", "CARY" },
-                        new String[] { "YAMADA", "YANAD" });
-
-        for (String[] arr : testValues) {
-            Assert.assertEquals("Problem with " + arr[0], arr[1], this.fullNysiis.encode(arr[0]));
-        }
+        this.assertEncodings(
+                new String[] { "MACINTOSH", "MCANT" },
+                new String[] { "KNUTH", "NAT"   },
+                new String[] { "KOEHN", "CAN" },
+                new String[] { "PHILLIPSON", "FALAPSAN" },
+                new String[] { "PFEISTER", "FASTAR" },
+                new String[] { "MCKEE", "MCY" },
+                new String[] { "MACKIE", "MCY" },
+                new String[] { "HEITSCHMIDT", "HATSNAD" },
+                new String[] { "BART", "BAD" },
+                new String[] { "HURD", "HAD" },
+                new String[] { "HUNT", "HAD" },
+                new String[] { "WESTERLUND", "WASTARLAD" },
+                new String[] { "CASSTEVENS", "CASTAFAN" },
+                new String[] { "VASQUEZ", "VASG" },
+                new String[] { "FRAZIER", "FRASAR" },
+                new String[] { "BOWMAN", "BANAN" },
+                new String[] { "RICKERT", "RACAD" },
+                new String[] { "DEUTSCH", "DAT" },
+                new String[] { "WESTPHAL", "WASTFAL" },
+                new String[] { "SHRIVER", "SRAVAR" },
+                new String[] { "KUHL", "CAL" },
+                new String[] { "RAWSON", "RASAN" },
+                new String[] { "JILES", "JAL" },
+                new String[] { "CARRAWAY", "CARY" },
+                new String[] { "YAMADA", "YANAD" });
     }
 
     /**
