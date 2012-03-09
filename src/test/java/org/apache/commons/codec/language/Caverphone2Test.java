@@ -27,7 +27,6 @@ import org.junit.Test;
 /**
  * Tests Caverphone2.
  * 
- * @author Apache Software Foundation
  * @version $Id$
  * @since 1.5
  */

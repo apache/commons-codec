@@ -27,7 +27,6 @@ import org.junit.Test;
  * 
  * <p>Keep this file in UTF-8 encoding for proper Javadoc processing.</p>
  * 
- * @author ggregory
  */
 public class ColognePhoneticTest extends StringEncoderAbstractTest {
 

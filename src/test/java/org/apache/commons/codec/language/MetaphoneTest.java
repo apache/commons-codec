@@ -26,7 +26,6 @@ import org.apache.commons.codec.StringEncoderAbstractTest;
 import org.junit.Test;
 
 /**
- * @author Apache Software Foundation
  * @version $Id$
  */
 public class MetaphoneTest extends StringEncoderAbstractTest {

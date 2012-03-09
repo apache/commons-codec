@@ -27,7 +27,6 @@ import org.junit.Test;
 /**
  * Tests {@link StringUtils}
  * 
- * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
  * @version $Id$
  */
 public class StringUtilsTest {

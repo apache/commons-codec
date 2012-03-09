@@ -20,7 +20,6 @@ package org.apache.commons.codec;
 import org.junit.Test;
 
 /**
- * @author Apache Software Foundation
  * @version $Id$
  */
 public abstract class BinaryEncoderAbstractTest {

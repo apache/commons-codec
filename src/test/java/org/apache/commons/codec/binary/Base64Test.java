@@ -37,7 +37,6 @@ import org.junit.Test;
  * Test cases for Base64 class.
  * 
  * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>
- * @author Apache Software Foundation
  * @version $Id$
  */
 public class Base64Test {

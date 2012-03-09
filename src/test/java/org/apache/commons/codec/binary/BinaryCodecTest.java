@@ -31,7 +31,6 @@ import org.junit.Test;
 /**
  * TestCase for BinaryCodec class.
  * 
- * @author Apache Software Foundation
  * @version $Id$
  */
 public class BinaryCodecTest {

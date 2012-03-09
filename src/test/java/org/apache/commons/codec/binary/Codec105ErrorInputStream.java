@@ -25,7 +25,6 @@ import java.io.InputStream;
  * 
  * Recreates the bug described in CODEC-105.
  * 
- * @author Apache Software Foundation
  * @version $Id $
  * @since 1.5
  */

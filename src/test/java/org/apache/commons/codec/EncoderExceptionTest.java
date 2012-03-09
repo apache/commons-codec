@@ -25,7 +25,6 @@ import org.junit.Test;
 /**
  * Tests {@link EncoderException}.
  * 
- * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
  * @version $Id$
  */
 public class EncoderExceptionTest {

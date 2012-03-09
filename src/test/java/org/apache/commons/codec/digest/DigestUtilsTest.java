@@ -30,7 +30,6 @@ import org.junit.Test;
 /**
  * Tests DigestUtils methods.
  * 
- * @author Apache Software Foundation
  * @version $Id$
  */
 public class DigestUtilsTest {

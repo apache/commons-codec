@@ -24,7 +24,6 @@ import org.junit.Test;
 /**
  * Sanity checks for {@link CharEncoding}.
  * 
- * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
  * @version $Id$
  */
 public class CharEncodingTest {

@@ -29,7 +29,6 @@ import org.junit.Test;
 /**
  * Quoted-printable codec test cases
  * 
- * @author <a href="mailto:oleg@ural.ru">Oleg Kalnichevski</a>
  * @version $Id$
  */
 public class BCodecTest {

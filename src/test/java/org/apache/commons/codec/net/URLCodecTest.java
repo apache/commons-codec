@@ -31,7 +31,6 @@ import org.junit.Test;
 /**
  * URL codec test cases
  * 
- * @author Apache Software Foundation
  * @version $Id$
  */
 public class URLCodecTest {

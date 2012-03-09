@@ -34,7 +34,6 @@ import org.junit.Test;
  * Tests to make sure future versions of commons-codec.jar have identical Base64
  * behavior as commons-codec-1.3.jar.
  *
- * @author Julius Davies
  * @since Mar 25, 2010
  */
 public class Base64Codec13Test {

@@ -34,7 +34,6 @@ import java.util.Arrays;
 import org.junit.Test;
 
 /**
- * @author Apache Software Foundation
  * @version $Id $
  * @since 1.4
  */

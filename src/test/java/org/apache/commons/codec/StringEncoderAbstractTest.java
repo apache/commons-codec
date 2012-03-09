@@ -24,7 +24,6 @@ import junit.framework.Assert;
 import org.junit.Test;
 
 /**
- * @author Apache Software Foundation
  * @version $Id$
  */
 public abstract class StringEncoderAbstractTest {

@@ -27,7 +27,6 @@ import org.junit.Test;
 /**
  * RFC 1522 compliant codec test cases
  * 
- * @author <a href="mailto:oleg@ural.ru">Oleg Kalnichevski</a>
  * @version $Id$
  */
 public class RFC1522CodecTest {

@@ -30,7 +30,6 @@ import org.junit.Test;
 /**
  * Tests BeiderMorseEncoder.
  * 
- * @author Apache Software Foundation
  * @since 1.6
  */
 public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {

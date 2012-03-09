@@ -27,7 +27,6 @@ import org.junit.Test;
 /**
  * Tests RefinedSoundex.
  * 
- * @author Apache Software Foundation
  * @version $Id$
  */
 public class RefinedSoundexTest extends StringEncoderAbstractTest {

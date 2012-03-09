@@ -36,7 +36,6 @@ import org.junit.Test;
 /**
  * Tests {@link org.apache.commons.codec.binary.Hex}.
  * 
- * @author Apache Software Foundation
  * @version $Id$
  */
 public class HexTest {

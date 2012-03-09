@@ -27,7 +27,6 @@ import org.junit.Test;
 /**
  * Tests Rule.
  * 
- * @author Apache Software Foundation
  * @since 1.6
  */
 public class RuleTest {
