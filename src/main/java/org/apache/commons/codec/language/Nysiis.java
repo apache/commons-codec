@@ -166,28 +166,44 @@ public class Nysiis implements StringEncoder {
         return new char[] { curr };
     }
 
-    private final boolean trueLength;
+    /** Indicates the strict mode. */
+    private final boolean strict;
 
+    /**
+     * Creates an instance of the {@link Nysiis} encoder with strict mode (original form),
+     * i.e. encoded strings have a maximum length of 6.
+     */
     public Nysiis() {
         this(true);
     }
 
-    public Nysiis(boolean trueLength) {
-        this.trueLength = trueLength;
+    /**
+     * Create an instance of the {@link Nysiis} encoder with the specified strict mode:
+     *
+     * <ul>
+     *  <li><code>true</code>: encoded strings have a maximum length of 6</li>
+     *  <li><code>false</code>: encoded strings may have arbitrary length</li>
+     * </ul>
+     *
+     * @param strict
+     *            the strict mode
+     */
+    public Nysiis(final boolean strict) {
+        this.strict = strict;
     }
 
     /**
      * Encodes an Object using the NYSIIS algorithm. This method is provided in order to satisfy the requirements of the
      * Encoder interface, and will throw an {@link EncoderException} if the supplied object is not of type
      * {@link String}.
-     * 
+     *
      * @param pObject
      *            Object to encode
      * @return An object (or a {@link String}) containing the NYSIIS code which corresponds to the given String.
      * @throws EncoderException
-     *             if the parameter supplied is not of a {@link String}
+     *            if the parameter supplied is not of a {@link String}
      * @throws IllegalArgumentException
-     *             if a character is not mapped
+     *            if a character is not mapped
      */
     public Object encode(Object pObject) throws EncoderException {
         if (!(pObject instanceof String)) {
@@ -198,24 +214,29 @@ public class Nysiis implements StringEncoder {
 
     /**
      * Encodes a String using the NYSIIS algorithm.
-     * 
+     *
      * @param pString
      *            A String object to encode
      * @return A Nysiis code corresponding to the String supplied
      * @throws IllegalArgumentException
-     *             if a character is not mapped
+     *            if a character is not mapped
      */
     public String encode(String pString) {
         return this.nysiis(pString);
     }
 
-    public boolean isTrueLength() {
-        return this.trueLength;
+    /**
+     * Indicates the strict mode for this {@link Nysiis} encoder.
+     *
+     * @return <code>true</code> if the encoder is configured for strict mode, <code>false</code> otherwise
+     */
+    public boolean isStrict() {
+        return this.strict;
     }
 
     /**
      * Retrieves the NYSIIS code for a given String object.
-     * 
+     *
      * @param str
      *            String to encode using the NYSIIS algorithm
      * @return A NYSIIS code for the String supplied
@@ -239,7 +260,7 @@ public class Nysiis implements StringEncoder {
         str = PAT_K.matcher(str).replaceFirst("C");
         str = PAT_PH_PF.matcher(str).replaceFirst("FF");
         str = PAT_SCH.matcher(str).replaceFirst("SSS");
-        
+
         // Translate last characters of name:
         // EE -> Y, IE -> Y, DT | RT | RD | NT | ND -> D
         str = PAT_EE_IE.matcher(str).replaceFirst("Y");
@@ -289,7 +310,7 @@ public class Nysiis implements StringEncoder {
         }
 
         final String string = key.toString();
-        return this.isTrueLength() ? string.substring(0, Math.min(TRUE_LENGTH, string.length())) : string;
+        return this.isStrict() ? string.substring(0, Math.min(TRUE_LENGTH, string.length())) : string;
     }
 
 }
