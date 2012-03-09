@@ -61,8 +61,8 @@ import org.apache.commons.codec.StringEncoder;
  * 9. Add original first character of name as first character of key
  * </pre></p>
  *
- * @see <a href="http://en.wikipedia.org/wiki/NYSIIS">http://en.wikipedia.org/wiki/NYSIIS</a>
- * @see <a href="http://www.dropby.com/NYSIIS.html">http://www.dropby.com/NYSIIS.html</a>
+ * @see <a href="http://en.wikipedia.org/wiki/NYSIIS">NYSIIS on Wikipedia</a>
+ * @see <a href="http://www.dropby.com/NYSIIS.html">NYSIIS on dropby.com</a>
  * @see Soundex
  * @version $Id$
  */
