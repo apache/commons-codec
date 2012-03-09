@@ -23,8 +23,6 @@ import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
 
 /**
- * THIS CLASS LIVES IN THE TEST DIRECTORY UNTIL IT IS FULLY BAKED. 
- * 
  * Encodes a string into a NYSIIS value. NYSIIS is an encoding used to relate similar names, but can also be used as a
  * general purpose scheme to find word with similar phonemes.
  *
