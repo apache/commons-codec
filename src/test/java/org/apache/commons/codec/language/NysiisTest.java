@@ -26,6 +26,7 @@ import org.junit.Test;
 /**
  * Tests {@link Nysiis}
  * 
+ * @since 1.7
  * @version $Id$
  */
 public class NysiisTest extends StringEncoderAbstractTest {
