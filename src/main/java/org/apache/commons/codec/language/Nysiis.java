@@ -27,11 +27,42 @@ import org.apache.commons.codec.StringEncoder;
  * 
  * Encodes a string into a NYSIIS value. NYSIIS is an encoding used to relate similar names, but can also be used as a
  * general purpose scheme to find word with similar phonemes.
- * 
+ *
  * <p>
  * NYSIIS features an accuracy increase of 2.7% over the traditional Soundex algorithm.
  * </p>
- * 
+ *
+ * <p>Algorithm description:
+ * <pre>
+ * 1. Transcode first characters of name
+ *   1a. MAC ->   MCC
+ *   1b. KN  ->   NN
+ *   1c. K   ->   C
+ *   1d. PH  ->   FF
+ *   1e. PF  ->   FF
+ *   1f. SCH ->   SSS
+ * 2. Transcode last characters of name
+ *   2a. EE, IE          ->   Y
+ *   2b. DT,RT,RD,NT,ND  ->   D
+ * 3. First character of key = first character of name
+ * 4. Transcode remaining characters by following these rules, incrementing by one character each time
+ *   4a. EV  ->   AF  else A,E,I,O,U -> A
+ *   4b. Q   ->   G
+ *   4c. Z   ->   S
+ *   4d. M   ->   N
+ *   4e. KN  ->   N   else K -> C
+ *   4f. SCH ->   SSS
+ *   4g. PH  ->   FF
+ *   4h. H   ->   If previous or next is nonvowel, previous
+ *   4i. W   ->   If previous is vowel, previous
+ *   4j. Add current to key if current != last key character
+ * 5. If last character is S, remove it
+ * 6. If last characters are AY, replace with Y
+ * 7. If last character is A, remove it
+ * 8. Collapse all strings of repeated characters
+ * 9. Add original first character of name as first character of key
+ * </pre></p>
+ *
  * @see <a href="http://en.wikipedia.org/wiki/NYSIIS">http://en.wikipedia.org/wiki/NYSIIS</a>
  * @see <a href="http://www.dropby.com/NYSIIS.html">http://www.dropby.com/NYSIIS.html</a>
  * @see Soundex
@@ -39,24 +70,24 @@ import org.apache.commons.codec.StringEncoder;
  */
 public class Nysiis implements StringEncoder {
 
-    private static final char[] CHARS_A = new char[] { 'A' };
-    private static final char[] CHARS_AF = new char[] { 'A', 'F' };
-    private static final char[] CHARS_C = new char[] { 'C' };
-    private static final char[] CHARS_FF = new char[] { 'F', 'F' };
-    private static final char[] CHARS_G = new char[] { 'G' };
-    private static final char[] CHARS_N = new char[] { 'N' };
-    private static final char[] CHARS_NN = new char[] { 'N', 'N' };
-    private static final char[] CHARS_S = new char[] { 'S' };
+    private static final char[] CHARS_A   = new char[] { 'A' };
+    private static final char[] CHARS_AF  = new char[] { 'A', 'F' };
+    private static final char[] CHARS_C   = new char[] { 'C' };
+    private static final char[] CHARS_FF  = new char[] { 'F', 'F' };
+    private static final char[] CHARS_G   = new char[] { 'G' };
+    private static final char[] CHARS_N   = new char[] { 'N' };
+    private static final char[] CHARS_NN  = new char[] { 'N', 'N' };
+    private static final char[] CHARS_S   = new char[] { 'S' };
     private static final char[] CHARS_SSS = new char[] { 'S', 'S', 'S' };
-    
-    private static final Pattern PAT_MAC = Pattern.compile("^MAC");
-    private static final Pattern PAT_KN = Pattern.compile("^KN");
-    private static final Pattern PAT_K = Pattern.compile("^K");
-    private static final Pattern PAT_PH_PF = Pattern.compile("^(PH|PF)");
-    private static final Pattern PAT_SCH = Pattern.compile("^SCH");
-    private static final Pattern PAT_EE_IE = Pattern.compile("(EE|IE)$");
+
+    private static final Pattern PAT_MAC    = Pattern.compile("^MAC");
+    private static final Pattern PAT_KN     = Pattern.compile("^KN");
+    private static final Pattern PAT_K      = Pattern.compile("^K");
+    private static final Pattern PAT_PH_PF  = Pattern.compile("^(PH|PF)");
+    private static final Pattern PAT_SCH    = Pattern.compile("^SCH");
+    private static final Pattern PAT_EE_IE  = Pattern.compile("(EE|IE)$");
     private static final Pattern PAT_DT_ETC = Pattern.compile("(DT|RT|RD|NT|ND)$");
-    
+
     private static final char SPACE = ' ';
     private static final int TRUE_LENGTH = 6;
 
