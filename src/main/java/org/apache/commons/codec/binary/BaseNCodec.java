@@ -32,6 +32,11 @@ import org.apache.commons.codec.EncoderException;
  */
 public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
 
+    /**
+     * EOF
+     * 
+     * @since 1.7
+     */
     static final int EOF = -1;
 
     /**
