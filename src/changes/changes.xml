@@ -35,7 +35,7 @@
       <action dev="ggregory" type="fix" issue="CODEC-121" due-to="javajohn">
         QuotedPrintableCodec does not support soft line break per the 'quoted-printable' example on Wikipedia
       </action>
-      <action dev="ggregory" type="fix" issue="CODEC-63" due-to="javajohn">
+      <action dev="ggregory" type="add" issue="CODEC-63" due-to="javajohn">
         Implement NYSIIS
       </action>
     </release>
