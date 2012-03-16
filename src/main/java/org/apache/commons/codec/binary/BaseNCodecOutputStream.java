@@ -17,6 +17,8 @@
 
 package org.apache.commons.codec.binary;
 
+import static org.apache.commons.codec.binary.BaseNCodec.EOF;
+
 import java.io.FilterOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -134,9 +136,9 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
     public void close() throws IOException {
         // Notify encoder of EOF (-1).
         if (doEncode) {
-            baseNCodec.encode(singleByte, 0, -1);
+            baseNCodec.encode(singleByte, 0, EOF);
         } else {
-            baseNCodec.decode(singleByte, 0, -1);
+            baseNCodec.decode(singleByte, 0, EOF);
         }
         flush();
         out.close();

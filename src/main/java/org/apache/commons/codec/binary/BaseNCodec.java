@@ -32,6 +32,8 @@ import org.apache.commons.codec.EncoderException;
  */
 public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
 
+    static final int EOF = -1;
+
     /**
      *  MIME chunk size per RFC 2045 section 6.8.
      *
@@ -213,7 +215,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
             }
             return len;
         }
-        return eof ? -1 : 0;
+        return eof ? EOF : 0;
     }
 
     /**
@@ -319,7 +321,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
             return pArray;
         }
         decode(pArray, 0, pArray.length);
-        decode(pArray, 0, -1); // Notify decoder of EOF.
+        decode(pArray, 0, EOF); // Notify decoder of EOF.
         byte[] result = new byte[pos];
         readResults(result, 0, result.length);
         return result;
@@ -338,7 +340,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
             return pArray;
         }
         encode(pArray, 0, pArray.length);
-        encode(pArray, 0, -1); // Notify encoder of EOF.
+        encode(pArray, 0, EOF); // Notify encoder of EOF.
         byte[] buf = new byte[pos - readPos];
         readResults(buf, 0, buf.length);
         return buf;
