@@ -32,7 +32,7 @@
       <action dev="tn" type="fix" issue="CODEC-131" due-to="smolav">
         DoubleMetaphone javadoc contains dead links
       </action>
-      <action dev="ggregory" type="fix" issue="CODEC-121" due-to="javajohn">
+      <action dev="ggregory" type="fix" issue="CODEC-121" due-to="tn">
         QuotedPrintableCodec does not support soft line break per the 'quoted-printable' example on Wikipedia
       </action>
       <action dev="ggregory" type="add" issue="CODEC-63" due-to="javajohn">
