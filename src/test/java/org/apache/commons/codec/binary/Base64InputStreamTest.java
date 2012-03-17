@@ -24,13 +24,16 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -49,6 +52,34 @@ public class Base64InputStreamTest {
     private final static byte[] LF = { (byte) '\n' };
 
     private static final String STRING_FIXTURE = "Hello World";
+
+    /**
+     * Tests the problem reported in CODEC-130. Missing / wrong implementation of skip.
+     */
+    @Test
+    @Ignore
+    public void testCodec130() throws IOException {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        Base64OutputStream base64os = new Base64OutputStream(bos);
+
+        base64os.write("Hello World!".getBytes());
+
+        ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
+        Base64InputStream ins = new Base64InputStream(bis);
+
+        // we skip the first character read from the reader
+        ins.skip(1);
+        StringBuffer sb = new StringBuffer();
+        int len = 0;
+        byte[] bytes = new byte[10];
+        while ((len = ins.read(bytes)) != -1) {
+            String s = new String(bytes, 0, len, "iso-8859-1");
+            sb.append(s);
+        }
+        String str = sb.toString();
+
+        assertEquals("ello World!", str);
+    }
 
     /**
      * Tests the bug reported in CODEC-105. Bad interactions with InputStream when reading one byte at a time.
