@@ -62,7 +62,7 @@ public class Base64InputStreamTest {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         Base64OutputStream base64os = new Base64OutputStream(bos);
 
-        base64os.write("Hello World!".getBytes());
+        base64os.write(STRING_FIXTURE.getBytes());
 
         ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
         Base64InputStream ins = new Base64InputStream(bis);
@@ -78,7 +78,7 @@ public class Base64InputStreamTest {
         }
         String str = sb.toString();
 
-        assertEquals("ello World!", str);
+        assertEquals(STRING_FIXTURE.substring(1), str);
     }
 
     /**
