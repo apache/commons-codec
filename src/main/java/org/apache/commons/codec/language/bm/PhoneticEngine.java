@@ -23,6 +23,7 @@ import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -82,10 +83,10 @@ public class PhoneticEngine {
          * Creates a new phoneme builder containing all phonemes in this one extended by <code>str</code>.
          *
          * @param str   the characters to append to the phonemes
-         * @return  a new phoneme builder lenghened by <code>str</code>
+         * @return  a new phoneme builder lenghtened by <code>str</code>
          */
         public PhonemeBuilder append(CharSequence str) {
-            Set<Rule.Phoneme> newPhonemes = new HashSet<Rule.Phoneme>();
+            Set<Rule.Phoneme> newPhonemes = new LinkedHashSet<Rule.Phoneme>();
 
             for (Rule.Phoneme ph : this.phonemes) {
                 newPhonemes.add(ph.append(str));
@@ -106,7 +107,7 @@ public class PhoneticEngine {
          *      in turn
          */
         public PhonemeBuilder apply(Rule.PhonemeExpr phonemeExpr, int maxPhonemes) {
-            Set<Rule.Phoneme> newPhonemes = new HashSet<Rule.Phoneme>();
+            Set<Rule.Phoneme> newPhonemes = new LinkedHashSet<Rule.Phoneme>();
 
             EXPR: for (Rule.Phoneme left : this.phonemes) {
                 for (Rule.Phoneme right : phonemeExpr.getPhonemes()) {
