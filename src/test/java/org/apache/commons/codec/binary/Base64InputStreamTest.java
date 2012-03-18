@@ -61,21 +61,16 @@ public class Base64InputStreamTest {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         Base64OutputStream base64os = new Base64OutputStream(bos);
 
-        base64os.write(STRING_FIXTURE.getBytes());
+        base64os.write(StringUtils.getBytesUtf8(STRING_FIXTURE));
+        base64os.close();
 
         ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
         Base64InputStream ins = new Base64InputStream(bis);
 
         // we skip the first character read from the reader
         ins.skip(1);
-        StringBuffer sb = new StringBuffer();
-        int len = 0;
-        byte[] bytes = new byte[10];
-        while ((len = ins.read(bytes)) != -1) {
-            String s = new String(bytes, 0, len, "iso-8859-1");
-            sb.append(s);
-        }
-        String str = sb.toString();
+        byte[] decodedBytes = Base64TestData.streamToBytes(ins, new byte[64]);
+        String str = StringUtils.newStringUtf8(decodedBytes);
 
         assertEquals(STRING_FIXTURE.substring(1), str);
     }

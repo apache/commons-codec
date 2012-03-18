@@ -24,10 +24,12 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class Base32InputStreamTest {
@@ -37,6 +39,31 @@ public class Base32InputStreamTest {
     private final static byte[] CRLF = { (byte) '\r', (byte) '\n' };
 
     private final static byte[] LF = { (byte) '\n' };
+
+    private static final String STRING_FIXTURE = "Hello World";
+
+    /**
+     * Tests the problem reported in CODEC-130. Missing / wrong implementation of skip.
+     */
+    @Test
+    @Ignore
+    public void testCodec130() throws IOException {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        Base32OutputStream base32os = new Base32OutputStream(bos);
+
+        base32os.write(StringUtils.getBytesUtf8(STRING_FIXTURE));
+        base32os.close();
+
+        ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
+        Base32InputStream ins = new Base32InputStream(bis);
+
+        // we skip the first character read from the reader
+        ins.skip(1);
+        byte[] decodedBytes = Base32TestData.streamToBytes(ins, new byte[64]);
+        String str = StringUtils.newStringUtf8(decodedBytes);
+
+        assertEquals(STRING_FIXTURE.substring(1), str);
+    }
 
     /**
      * Tests the bug reported in CODEC-105. Bad interactions with InputStream when reading one byte at a time.
