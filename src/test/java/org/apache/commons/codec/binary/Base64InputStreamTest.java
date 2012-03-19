@@ -485,7 +485,7 @@ public class Base64InputStreamTest {
     public void testSkipBig() throws Throwable {
         InputStream ins = new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));
         Base64InputStream b64stream = new Base64InputStream(ins);
-        assertEquals(6, b64stream.skip(1024));
+        assertEquals(6, b64stream.skip(Integer.MAX_VALUE));
         // End of stream reached
         assertEquals(-1, b64stream.read());
         assertEquals(-1, b64stream.read());
