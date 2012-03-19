@@ -29,7 +29,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class Base32InputStreamTest {
@@ -46,7 +45,6 @@ public class Base32InputStreamTest {
      * Tests the problem reported in CODEC-130. Missing / wrong implementation of skip.
      */
     @Test
-    @Ignore
     public void testCodec130() throws IOException {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         Base32OutputStream base32os = new Base32OutputStream(bos);
@@ -145,6 +143,24 @@ public class Base32InputStreamTest {
     // "codec-98 NPE Base32InputStream", Base32TestData.CODEC_98_NPE_DECODED, decoded
     // );
     // }
+
+    /**
+     * Tests skipping past the end of a stream.
+     * 
+     * @throws Throwable
+     */
+    @Test
+    public void testAvailable() throws Throwable {
+        InputStream ins = new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_FOO));
+        Base32InputStream b32stream = new Base32InputStream(ins);
+        assertEquals(1, b32stream.available());
+        assertEquals(3, b32stream.skip(10));
+        // End of stream reached
+        assertEquals(0, b32stream.available());
+        assertEquals(-1, b32stream.read());
+        assertEquals(-1, b32stream.read());
+        assertEquals(0, b32stream.available());
+    }
 
     /**
      * Tests the Base32InputStream implementation against empty input.
@@ -467,6 +483,21 @@ public class Base32InputStreamTest {
     }
 
     /**
+     * Tests skipping number of characters larger than the internal buffer.
+     * 
+     * @throws Throwable
+     */
+    @Test
+    public void testSkipBig() throws Throwable {
+        InputStream ins = new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_FOO));
+        Base32InputStream b32stream = new Base32InputStream(ins);
+        assertEquals(3, b32stream.skip(1024));
+        // End of stream reached
+        assertEquals(-1, b32stream.read());
+        assertEquals(-1, b32stream.read());
+    }
+
+    /**
      * Tests skipping past the end of a stream.
      * 
      * @throws Throwable
@@ -475,7 +506,8 @@ public class Base32InputStreamTest {
     public void testSkipPastEnd() throws Throwable {
         InputStream ins = new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_FOO));
         Base32InputStream b32stream = new Base32InputStream(ins);
-        assertEquals(8, b32stream.skip(10));
+        // due to CODEC-130, skip now skips correctly decoded characters rather than encoded
+        assertEquals(3, b32stream.skip(10));
         // End of stream reached
         assertEquals(-1, b32stream.read());
         assertEquals(-1, b32stream.read());
@@ -490,9 +522,22 @@ public class Base32InputStreamTest {
     public void testSkipToEnd() throws Throwable {
         InputStream ins = new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_FOO));
         Base32InputStream b32stream = new Base32InputStream(ins);
-        assertEquals(8, b32stream.skip(8));
+        // due to CODEC-130, skip now skips correctly decoded characters rather than encoded
+        assertEquals(3, b32stream.skip(3));
         // End of stream reached
         assertEquals(-1, b32stream.read());
         assertEquals(-1, b32stream.read());
+    }
+
+    /**
+     * Tests if negative arguments to skip are handled correctly.
+     *
+     * @throws Throwable
+     */
+    @Test(expected=IllegalArgumentException.class)
+    public void testSkipWrongArgument() throws Throwable {
+        InputStream ins = new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_FOO));
+        Base32InputStream b32stream = new Base32InputStream(ins);
+        b32stream.skip(-10);
     }
 }
