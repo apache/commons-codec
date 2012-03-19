@@ -22,8 +22,13 @@
     <author>Gary Gregory</author>
   </properties>
   <body>
-    <!-- <release version="2.0" date="TBA" description="Feature and fix release."> <action dev="ggregory" type="fix" issue="CODEC-126"> Make 
-      org.apache.commons.codec.net.URLCodec charset field final. </action>   </release>
+    <!-- 
+    <release version="2.0" date="TBA" description="Feature and fix release."> 
+    <action dev="ggregory" type="fix" issue="CODEC-126"> Make org.apache.commons.codec.net.URLCodec charset field final. </action>   
+      <action dev="ggregory" type="fix" issue="CODEC-121" due-to="tn">
+        QuotedPrintableCodec does not support soft line break per the 'quoted-printable' example on Wikipedia
+      </action>      
+    </release>
     -->
     <release version="1.7" date="TBD" description="Feature and fix release.">
       <action dev="ggregory" type="fix" issue="CODEC-132" due-to="rcmuir">
@@ -32,8 +37,8 @@
       <action dev="tn" type="fix" issue="CODEC-131" due-to="smolav">
         DoubleMetaphone javadoc contains dead links
       </action>
-      <action dev="ggregory" type="fix" issue="CODEC-121" due-to="tn">
-        QuotedPrintableCodec does not support soft line break per the 'quoted-printable' example on Wikipedia
+      <action dev="ggregory" type="add" issue="CODEC-130" due-to="tn">
+        Base64InputStream.skip skips underlying stream, not output
       </action>
       <action dev="ggregory" type="add" issue="CODEC-63" due-to="bayard">
         Implement NYSIIS
