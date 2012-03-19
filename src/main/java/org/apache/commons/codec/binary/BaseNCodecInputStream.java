@@ -163,21 +163,17 @@ public class BaseNCodecInputStream extends FilterInputStream {
 
         // skip in chunks of 512 bytes
         final byte[] b = new byte[512];
-        final int max = (int) Math.min(n, Integer.MAX_VALUE);
-        int total = 0;
+        long todo = n;
 
-        while (total < max) {
-            int len = max - total;
-            if (len > b.length) {
-                len = b.length;
-            }
-            len = read(b, 0, len);
+        while (todo > 0) {
+            int len = (int) Math.min(b.length, todo);
+            len = this.read(b, 0, len);
             if (len == EOF) {
                 break;
             }
-            total += len;
+            todo -= len;
         }
 
-        return total;
+        return n - todo;
     }
 }
