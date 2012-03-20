@@ -48,6 +48,7 @@ public class BaseNCodecInputStream extends FilterInputStream {
      * @return <code>0</code> if the {@link InputStream} has reached <code>EOF</code>,
      * <code>1</code> otherwise
      */
+    @Override
     public int available() throws IOException {
         // Note: the logic is similar to the InflaterInputStream:
         //       as long as we have not reached EOF, indicate that there is more
