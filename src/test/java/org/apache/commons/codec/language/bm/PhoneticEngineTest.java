@@ -35,21 +35,23 @@ import org.junit.runners.Parameterized;
 @RunWith(Parameterized.class)
 public class PhoneticEngineTest {
 
+    private static final Integer TEN = Integer.valueOf(10);
+
     @Parameterized.Parameters
     public static List<Object[]> data() {
         return Arrays
-                .asList(new Object[] { "Renault", "rinD|rinDlt|rina|rinalt|rino|rinolt|rinu|rinult", NameType.GENERIC, RuleType.APPROX, true, 10 },
-                        new Object[] { "Renault", "rYnDlt|rYnalt|rYnult|rinDlt|rinalt|rinult", NameType.ASHKENAZI, RuleType.APPROX, true, 10 },
-                        new Object[] { "Renault", "rYnDlt", NameType.ASHKENAZI, RuleType.APPROX, true, 1 },
-                        new Object[] { "Renault", "rinDlt", NameType.SEPHARDIC, RuleType.APPROX, true, 10 },
-                        new Object[] { "SntJohn-Smith", "sntjonsmit", NameType.GENERIC, RuleType.EXACT, true, 10 },
-                        new Object[] { "d'ortley", "(ortlaj|ortlej)-(dortlaj|dortlej)", NameType.GENERIC, RuleType.EXACT, true, 10 },
+                .asList(new Object[] { "Renault", "rinD|rinDlt|rina|rinalt|rino|rinolt|rinu|rinult", NameType.GENERIC, RuleType.APPROX, Boolean.TRUE, TEN },
+                        new Object[] { "Renault", "rYnDlt|rYnalt|rYnult|rinDlt|rinalt|rinult", NameType.ASHKENAZI, RuleType.APPROX, Boolean.TRUE, TEN },
+                        new Object[] { "Renault", "rYnDlt", NameType.ASHKENAZI, RuleType.APPROX, Boolean.TRUE, Integer.valueOf(1) },
+                        new Object[] { "Renault", "rinDlt", NameType.SEPHARDIC, RuleType.APPROX, Boolean.TRUE, TEN },
+                        new Object[] { "SntJohn-Smith", "sntjonsmit", NameType.GENERIC, RuleType.EXACT, Boolean.TRUE, TEN },
+                        new Object[] { "d'ortley", "(ortlaj|ortlej)-(dortlaj|dortlej)", NameType.GENERIC, RuleType.EXACT, Boolean.TRUE, TEN },
                         new Object[] {
                                 "van helsing",
                                 "(elSink|elsink|helSink|helsink|helzink|xelsink)-(banhelsink|fanhelsink|fanhelzink|vanhelsink|vanhelzink|vanjelsink)",
                                 NameType.GENERIC,
                                 RuleType.EXACT,
-                                false, 10 });
+                                Boolean.FALSE, TEN });
     }
 
     private final boolean concat;
