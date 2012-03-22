@@ -81,22 +81,22 @@ public class Base64Test {
         String encodedContent;
         byte[] encodedBytes = Base64.encodeBase64(StringUtils.getBytesUtf8(content));
         encodedContent = StringUtils.newStringUtf8(encodedBytes);
-        assertTrue("encoding hello world", encodedContent.equals("SGVsbG8gV29ybGQ="));
+        assertEquals("encoding hello world", "SGVsbG8gV29ybGQ=", encodedContent);
 
         Base64 b64 = new Base64(BaseNCodec.MIME_CHUNK_SIZE, null);  // null lineSeparator same as saying no-chunking
         encodedBytes = b64.encode(StringUtils.getBytesUtf8(content));
         encodedContent = StringUtils.newStringUtf8(encodedBytes);
-        assertTrue("encoding hello world", encodedContent.equals("SGVsbG8gV29ybGQ="));
+        assertEquals("encoding hello world", "SGVsbG8gV29ybGQ=", encodedContent);
 
         b64 = new Base64(0, null);  // null lineSeparator same as saying no-chunking
         encodedBytes = b64.encode(StringUtils.getBytesUtf8(content));
         encodedContent = StringUtils.newStringUtf8(encodedBytes);
-        assertTrue("encoding hello world", encodedContent.equals("SGVsbG8gV29ybGQ="));
+        assertEquals("encoding hello world", "SGVsbG8gV29ybGQ=", encodedContent);
 
         // bogus characters to decode (to skip actually) {e-acute*6}
         byte[] decode = b64.decode("SGVsbG{\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9}8gV29ybGQ=");
         String decodeString = StringUtils.newStringUtf8(decode);
-        assertTrue("decode hello world", decodeString.equals("Hello World"));        
+        assertEquals("decode hello world", "Hello World", decodeString);        
     }
 
     /**
@@ -263,24 +263,24 @@ public class Base64Test {
 
     @Test
     public void testDecodePadOnly() throws UnsupportedEncodingException {
-        assertTrue(Base64.decodeBase64("====".getBytes("UTF-8")).length == 0);
+        assertEquals(0, Base64.decodeBase64("====".getBytes("UTF-8")).length);
         assertEquals("", new String(Base64.decodeBase64("====".getBytes("UTF-8"))));
         // Test truncated padding
-        assertTrue(Base64.decodeBase64("===".getBytes("UTF-8")).length == 0);
-        assertTrue(Base64.decodeBase64("==".getBytes("UTF-8")).length == 0);
-        assertTrue(Base64.decodeBase64("=".getBytes("UTF-8")).length == 0);
-        assertTrue(Base64.decodeBase64("".getBytes("UTF-8")).length == 0);
+        assertEquals(0, Base64.decodeBase64("===".getBytes("UTF-8")).length);
+        assertEquals(0, Base64.decodeBase64("==".getBytes("UTF-8")).length);
+        assertEquals(0, Base64.decodeBase64("=".getBytes("UTF-8")).length);
+        assertEquals(0, Base64.decodeBase64("".getBytes("UTF-8")).length);
     }
 
     @Test
     public void testDecodePadOnlyChunked() throws UnsupportedEncodingException {
-        assertTrue(Base64.decodeBase64("====\n".getBytes("UTF-8")).length == 0);
+        assertEquals(0, Base64.decodeBase64("====\n".getBytes("UTF-8")).length);
         assertEquals("", new String(Base64.decodeBase64("====\n".getBytes("UTF-8"))));
         // Test truncated padding
-        assertTrue(Base64.decodeBase64("===\n".getBytes("UTF-8")).length == 0);
-        assertTrue(Base64.decodeBase64("==\n".getBytes("UTF-8")).length == 0);
-        assertTrue(Base64.decodeBase64("=\n".getBytes("UTF-8")).length == 0);
-        assertTrue(Base64.decodeBase64("\n".getBytes("UTF-8")).length == 0);
+        assertEquals(0, Base64.decodeBase64("===\n".getBytes("UTF-8")).length);
+        assertEquals(0, Base64.decodeBase64("==\n".getBytes("UTF-8")).length);
+        assertEquals(0, Base64.decodeBase64("=\n".getBytes("UTF-8")).length);
+        assertEquals(0, Base64.decodeBase64("\n".getBytes("UTF-8")).length);
     }
 
     @Test
@@ -301,7 +301,7 @@ public class Base64Test {
 
         String dest = new String(decodedWithWS);
 
-        assertTrue("Dest string doesn't equal the original", dest.equals(orig));
+        assertEquals("Dest string doesn't equal the original", orig, dest);
     }
 
     /**
@@ -454,8 +454,8 @@ public class Base64Test {
             Base64 b64 = new Base64();
             byte[] result = b64.decode(bArray);
 
-            assertTrue("The result should be empty as the test encoded content did " + "not contain any valid base 64 characters",
-                    result.length == 0);
+            assertEquals("The result should be empty as the test encoded content did " + "not contain any valid base 64 characters",
+                    0, result.length);
         } catch (Exception e) {
             fail("Exception was thrown when trying to decode "
                 + "invalid base64 encoded data - RFC 2045 requires that all "
@@ -488,7 +488,7 @@ public class Base64Test {
         byte[] baDecoded = (byte[]) oDecoded;
         String dest = new String(baDecoded);
 
-        assertTrue("dest string does not equal original", dest.equals(original));
+        assertEquals("dest string does not equal original", original, dest);
     }
 
     @Test
@@ -513,7 +513,7 @@ public class Base64Test {
         byte[] bArray = Base64.decodeBase64((byte[]) oEncoded);
         String dest = new String(bArray);
 
-        assertTrue("dest string does not equal original", dest.equals(original));
+        assertEquals("dest string does not equal original", original, dest);
     }
 
     @Test
@@ -1232,7 +1232,7 @@ public class Base64Test {
         Base64 b64 = new Base64(Base64_BYTES_PER_ENCODED_BLOCK, baLineSeparator);
         String strOriginal = "Hello World";
         String strDecoded = new String(b64.decode(b64.encode(StringUtils.getBytesUtf8(strOriginal))));
-        assertTrue("testDEFAULT_BUFFER_SIZE", strOriginal.equals(strDecoded));
+        assertEquals("testDEFAULT_BUFFER_SIZE", strOriginal, strDecoded);
     }
 
 }

@@ -337,11 +337,11 @@ public class HexTest {
         final String expected = "48656c6c6f20576f726c64";
         char[] actual;
         actual = Hex.encodeHex(b);
-        assertTrue(expected.equals(new String(actual)));
+        assertEquals(expected, new String(actual));
         actual = Hex.encodeHex(b, true);
-        assertTrue(expected.equals(new String(actual)));
+        assertEquals(expected, new String(actual));
         actual = Hex.encodeHex(b, false);
-        assertFalse(expected.equals(new String(actual)));
+        assertEquals(expected, new String(actual));
     }
 
     @Test
