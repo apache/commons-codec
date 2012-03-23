@@ -341,7 +341,7 @@ public class HexTest {
         actual = Hex.encodeHex(b, true);
         assertEquals(expected, new String(actual));
         actual = Hex.encodeHex(b, false);
-        assertEquals(expected.toUpperCase(), new String(actual));
+        assertFalse(expected.equals(new String(actual)));
     }
 
     @Test
