@@ -17,6 +17,8 @@
 
 package org.apache.commons.codec.language.bm;
 
+import org.apache.commons.codec.CharEncoding;
+
 /**
  * Constants used to process resource files.
  * 
@@ -26,7 +28,7 @@ package org.apache.commons.codec.language.bm;
 class ResourceConstants {
 
     static final String CMT = "//";
-    static final String ENCODING = "UTF-8";
+    static final String ENCODING = CharEncoding.UTF_8;
     static final String EXT_CMT_END = "*/";
     static final String EXT_CMT_START = "/*";
 
