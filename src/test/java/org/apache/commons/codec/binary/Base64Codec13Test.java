@@ -512,8 +512,8 @@ public class Base64Codec13Test {
         
         try {
             return s != null ? s.getBytes("UTF-8") : null;
-        } catch (UnsupportedEncodingException uee) {
-            throw new IllegalStateException(uee.toString());
+        } catch (UnsupportedEncodingException e) {
+            throw new IllegalStateException(e.toString());
         }
     }
 }
