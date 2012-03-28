@@ -36,7 +36,7 @@ public class RuleTest {
         }
 
         public boolean matches(Object item) {
-            return ((Integer) item) < 0;
+            return (Integer) item < 0;
         }
     }
 

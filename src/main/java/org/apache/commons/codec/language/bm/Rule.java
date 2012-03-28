@@ -462,21 +462,21 @@ public class Rule {
                         // exact match
                         return new RPattern() {
                             public boolean isMatch(CharSequence input) {
-                                return input.length() == 1 && (contains(bContent, input.charAt(0)) == shouldMatch);
+                                return input.length() == 1 && contains(bContent, input.charAt(0)) == shouldMatch;
                             }
                         };
                     } else if (startsWith) {
                         // first char
                         return new RPattern() {
                             public boolean isMatch(CharSequence input) {
-                                return input.length() > 0 && (contains(bContent, input.charAt(0)) == shouldMatch);
+                                return input.length() > 0 && contains(bContent, input.charAt(0)) == shouldMatch;
                             }
                         };
                     } else if (endsWith) {
                         // last char
                         return new RPattern() {
                             public boolean isMatch(CharSequence input) {
-                                return input.length() > 0 && (contains(bContent, input.charAt(input.length() - 1)) == shouldMatch);
+                                return input.length() > 0 && contains(bContent, input.charAt(input.length() - 1)) == shouldMatch;
                             }
                         };
                     }

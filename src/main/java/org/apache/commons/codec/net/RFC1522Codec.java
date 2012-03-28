@@ -140,7 +140,7 @@ abstract class RFC1522Codec {
         if (text == null) {
             return null;
         }
-        if ((!text.startsWith(PREFIX)) || (!text.endsWith(POSTFIX))) {
+        if (!text.startsWith(PREFIX) || !text.endsWith(POSTFIX)) {
             throw new DecoderException("RFC 1522 violation: malformed encoded content");
         }
         int terminator = text.length() - 2;

@@ -265,10 +265,10 @@ public class Soundex implements StringEncoder {
         out[0] = str.charAt(0);
         // getMappingCode() throws IllegalArgumentException
         last = getMappingCode(str, 0);
-        while ((incount < str.length()) && (count < out.length)) {
+        while (incount < str.length() && count < out.length) {
             mapped = getMappingCode(str, incount++);
             if (mapped != 0) {
-                if ((mapped != '0') && (mapped != last)) {
+                if (mapped != '0' && mapped != last) {
                     out[count++] = mapped;
                 }
                 last = mapped;

@@ -58,7 +58,7 @@ public class Base64Test {
         String nullString = null;
         String emptyString = "";
         String validString = "abc===defg\n\r123456\r789\r\rABC\n\nDEF==GHI\r\nJKL==============";
-        String invalidString = validString + ((char)0); // append null character
+        String invalidString = validString + (char)0; // append null character
         
         try {
             Base64.isBase64(nullString);
@@ -340,7 +340,7 @@ public class Base64Test {
             byte[] data = new byte[i];
             this.getRandom().nextBytes(data);
             byte[] enc = Base64.encodeBase64(data);
-            assertTrue("\"" + (new String(enc)) + "\" is Base64 data.", Base64.isBase64(enc));
+            assertTrue("\"" + new String(enc) + "\" is Base64 data.", Base64.isBase64(enc));
             byte[] data2 = Base64.decodeBase64(enc);
             assertTrue(toString(data) + " equals " + toString(data2), Arrays.equals(data, data2));
         }

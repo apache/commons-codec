@@ -49,7 +49,7 @@ public class SoundexTest extends StringEncoderAbstractTest {
 
     @Test
     public void testB650() throws EncoderException {
-        this.checkEncodingVariations("B650", (new String[]{
+        this.checkEncodingVariations("B650", new String[]{
             "BARHAM",
             "BARONE",
             "BARRON",
@@ -89,7 +89,7 @@ public class SoundexTest extends StringEncoderAbstractTest {
             "BYRAM",
             "BYRNE",
             "BYRON",
-            "BYRUM"}));
+            "BYRUM"});
     }
 
     @Test
@@ -189,7 +189,7 @@ public class SoundexTest extends StringEncoderAbstractTest {
 
     @Test
     public void testEncodeIgnoreApostrophes() throws EncoderException {
-        this.checkEncodingVariations("O165", (new String[]{
+        this.checkEncodingVariations("O165", new String[]{
             "OBrien",
             "'OBrien",
             "O'Brien",
@@ -197,7 +197,7 @@ public class SoundexTest extends StringEncoderAbstractTest {
             "OBr'ien",
             "OBri'en",
             "OBrie'n",
-            "OBrien'"}));
+            "OBrien'"});
     }
 
     /**
@@ -207,7 +207,7 @@ public class SoundexTest extends StringEncoderAbstractTest {
      */
     @Test
     public void testEncodeIgnoreHyphens() throws EncoderException {
-        this.checkEncodingVariations("K525", (new String[]{
+        this.checkEncodingVariations("K525", new String[]{
             "KINGSMITH",
             "-KINGSMITH",
             "K-INGSMITH",
@@ -218,7 +218,7 @@ public class SoundexTest extends StringEncoderAbstractTest {
             "KINGSM-ITH",
             "KINGSMI-TH",
             "KINGSMIT-H",
-            "KINGSMITH-"}));
+            "KINGSMITH-"});
     }
 
     @Test
@@ -259,7 +259,7 @@ public class SoundexTest extends StringEncoderAbstractTest {
         Assert.assertEquals("S460", this.getSoundexEncoder().encode("Sgler"));
         Assert.assertEquals("S460", this.getSoundexEncoder().encode("Swhgler"));
         // Also S460:
-        this.checkEncodingVariations("S460", (new String[]{
+        this.checkEncodingVariations("S460", new String[]{
             "SAILOR",
             "SALYER",
             "SAYLOR",
@@ -275,7 +275,7 @@ public class SoundexTest extends StringEncoderAbstractTest {
             "SHULER",
             "SILAR",
             "SILER",
-            "SILLER"}));
+            "SILLER"});
     }
 
     /**
@@ -297,7 +297,7 @@ public class SoundexTest extends StringEncoderAbstractTest {
      */
     @Test
     public void testMsSqlServer2() throws EncoderException {
-        this.checkEncodingVariations("E625", (new String[]{"Erickson", "Erickson", "Erikson", "Ericson", "Ericksen", "Ericsen"}));
+        this.checkEncodingVariations("E625", new String[]{"Erickson", "Erickson", "Erikson", "Ericson", "Ericksen", "Ericsen"});
     }
 
     /**

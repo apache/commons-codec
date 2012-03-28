@@ -81,7 +81,7 @@ public class Metaphone implements StringEncoder {
      */
     public String metaphone(String txt) {
         boolean hard = false ;
-        if ((txt == null) || (txt.length() == 0)) {
+        if (txt == null || txt.length() == 0) {
             return "" ;
         }
         // single character is itself
@@ -134,11 +134,11 @@ public class Metaphone implements StringEncoder {
         int wdsz = local.length();
         int n = 0 ;
 
-        while ((code.length() < this.getMaxCodeLen()) && 
-               (n < wdsz) ) { // max code size of 4 works well
+        while (code.length() < this.getMaxCodeLen() && 
+               n < wdsz ) { // max code size of 4 works well
             char symb = local.charAt(n) ;
             // remove duplicate letters except C
-            if ((symb != 'C') && (isPreviousChar( local, n, symb )) ) {
+            if (symb != 'C' && isPreviousChar( local, n, symb ) ) {
                 n++ ;
             } else { // not dup
                 switch(symb) {
@@ -158,7 +158,7 @@ public class Metaphone implements StringEncoder {
                     /* discard if SCI, SCE or SCY */
                     if ( isPreviousChar(local, n, 'S') && 
                          !isLastChar(wdsz, n) && 
-                         (FRONTV.indexOf(local.charAt(n + 1)) >= 0) ) { 
+                         FRONTV.indexOf(local.charAt(n + 1)) >= 0 ) { 
                         break;
                     }
                     if (regionMatch(local, n, "CIA")) { // "CIA" -> X
@@ -166,7 +166,7 @@ public class Metaphone implements StringEncoder {
                         break;
                     }
                     if (!isLastChar(wdsz, n) && 
-                        (FRONTV.indexOf(local.charAt(n + 1)) >= 0)) {
+                        FRONTV.indexOf(local.charAt(n + 1)) >= 0) {
                         code.append('S');
                         break; // CI,CE,CY -> S
                     }
@@ -176,8 +176,8 @@ public class Metaphone implements StringEncoder {
                         break ;
                     }
                     if (isNextChar(local, n, 'H')) { // detect CH
-                        if ((n == 0) && 
-                            (wdsz >= 3) && 
+                        if (n == 0 && 
+                            wdsz >= 3 && 
                             isVowel(local,2) ) { // CH consonant -> K consonant
                             code.append('K');
                         } else { 
@@ -190,7 +190,7 @@ public class Metaphone implements StringEncoder {
                 case 'D' :
                     if (!isLastChar(wdsz, n + 1) && 
                         isNextChar(local, n, 'G') && 
-                        (FRONTV.indexOf(local.charAt(n + 2)) >= 0)) { // DGE DGI DGY -> J 
+                        FRONTV.indexOf(local.charAt(n + 2)) >= 0) { // DGE DGI DGY -> J 
                         code.append('J'); n += 2 ;
                     } else { 
                         code.append('T');
@@ -206,7 +206,7 @@ public class Metaphone implements StringEncoder {
                         !isVowel(local,n+2)) {
                         break;
                     }
-                    if ((n > 0) && 
+                    if (n > 0 && 
                         ( regionMatch(local, n, "GN") ||
                           regionMatch(local, n, "GNED") ) ) {
                         break; // silent G
@@ -218,8 +218,8 @@ public class Metaphone implements StringEncoder {
                         hard = false ;
                     }
                     if (!isLastChar(wdsz, n) && 
-                        (FRONTV.indexOf(local.charAt(n + 1)) >= 0) && 
-                        (!hard)) {
+                        FRONTV.indexOf(local.charAt(n + 1)) >= 0 && 
+                        !hard) {
                         code.append('J');
                     } else {
                         code.append('K');
@@ -229,8 +229,8 @@ public class Metaphone implements StringEncoder {
                     if (isLastChar(wdsz, n)) {
                         break ; // terminal H
                     }
-                    if ((n > 0) && 
-                        (VARSON.indexOf(local.charAt(n - 1)) >= 0)) {
+                    if (n > 0 && 
+                        VARSON.indexOf(local.charAt(n - 1)) >= 0) {
                         break;
                     }
                     if (isVowel(local,n+1)) {
@@ -339,7 +339,7 @@ public class Metaphone implements StringEncoder {
     private boolean regionMatch(StringBuffer string, int index, String test) {
         boolean matches = false;
         if( index >= 0 &&
-            (index + test.length() - 1) < string.length() ) {
+            index + test.length() - 1 < string.length() ) {
             String substring = string.substring( index, index + test.length());
             matches = substring.equals( test );
         }
