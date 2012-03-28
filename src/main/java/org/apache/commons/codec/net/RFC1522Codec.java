@@ -75,7 +75,7 @@ abstract class RFC1522Codec {
      * 
      * @throws EncoderException thrown if there is an error condition during the Encoding 
      *  process.
-     * @see <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
+     * @see <a href="http://download.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      */
     protected String encodeText(final String text, final Charset charset)
      throws EncoderException  
@@ -110,7 +110,7 @@ abstract class RFC1522Codec {
      *  process.
      * @throws UnsupportedEncodingException if charset is not available 
      * 
-     * @see <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
+     * @see <a href="http://download.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      */
     protected String encodeText(final String text, final String charsetName)
      throws EncoderException, UnsupportedEncodingException  

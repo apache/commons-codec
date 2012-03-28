@@ -66,7 +66,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * @param charset
      *                  the default string charset to use.
      * 
-     * @see <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
+     * @see <a href="http://download.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      */
     public BCodec(final Charset charset) {
         this.charset = charset;
@@ -80,7 +80,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * @throws UnsupportedCharsetException
      *             If the named charset is unavailable
      * @since 1.7 throws UnsupportedCharsetException if the named charset is unavailable
-     * @see <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
+     * @see <a href="http://download.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      */
     public BCodec(final String charsetName) {
         this(Charset.forName(charsetName));

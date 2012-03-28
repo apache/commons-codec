@@ -20,7 +20,7 @@ package org.apache.commons.codec;
 /**
  * Character encoding names required of every implementation of the Java platform.
  * 
- * From the Java documentation <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/charset/Charset.html">Standard
+ * From the Java documentation <a href="http://download.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard
  * charsets</a>:
  * <p>
  * <cite>Every implementation of the Java platform is required to support the following character encodings. Consult the
@@ -47,7 +47,7 @@ package org.apache.commons.codec;
  * This perhaps would best belong in the [lang] project. Even if a similar interface is defined in [lang], it is not
  * foreseen that [codec] would be made to depend on [lang].
  * 
- * @see <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
+ * @see <a href="http://download.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
  * @author Apache Software Foundation
  * @since 1.4
  * @version $Id$
@@ -59,7 +59,7 @@ public class CharEncoding {
      * Every implementation of the Java platform is required to support this character encoding.
      * </p>
      * 
-     * @see <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
+     * @see <a href="http://download.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      */
     public static final String ISO_8859_1 = "ISO-8859-1";
 
@@ -71,7 +71,7 @@ public class CharEncoding {
      * Every implementation of the Java platform is required to support this character encoding.
      * </p>
      * 
-     * @see <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
+     * @see <a href="http://download.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      */
     public static final String US_ASCII = "US-ASCII";
 
@@ -84,7 +84,7 @@ public class CharEncoding {
      * Every implementation of the Java platform is required to support this character encoding.
      * </p>
      * 
-     * @see <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
+     * @see <a href="http://download.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      */
     public static final String UTF_16 = "UTF-16";
 
@@ -96,7 +96,7 @@ public class CharEncoding {
      * Every implementation of the Java platform is required to support this character encoding.
      * </p>
      * 
-     * @see <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
+     * @see <a href="http://download.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      */
     public static final String UTF_16BE = "UTF-16BE";
 
@@ -108,7 +108,7 @@ public class CharEncoding {
      * Every implementation of the Java platform is required to support this character encoding.
      * </p>
      * 
-     * @see <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
+     * @see <a href="http://download.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      */
     public static final String UTF_16LE = "UTF-16LE";
 
@@ -120,7 +120,7 @@ public class CharEncoding {
      * Every implementation of the Java platform is required to support this character encoding.
      * </p>
      * 
-     * @see <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
+     * @see <a href="http://download.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      */
     public static final String UTF_8 = "UTF-8";
 }
