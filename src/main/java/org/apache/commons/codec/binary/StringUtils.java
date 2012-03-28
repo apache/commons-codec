@@ -18,8 +18,10 @@
 package org.apache.commons.codec.binary;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 
 import org.apache.commons.codec.CharEncoding;
+import org.apache.commons.codec.Charsets;
 
 /**
  * Converts String to and from bytes using the encodings required by the Java specification. These encodings are specified in <a
@@ -34,100 +36,39 @@ import org.apache.commons.codec.CharEncoding;
 public class StringUtils {
 
     /**
+     * Calls {@link String#getBytes(Charset)} 
+     * 
+     * @param string
+     *            The string to encode (if null, return null).
+     * @param charset
+     *            The {@link Charset} to encode the {@code String}
+     * @return the encoded bytes
+     */
+    private static byte[] getBytes(String string, Charset charset) {
+        if (string == null) {
+            return null;
+        }
+        return string.getBytes(charset);
+    }
+
+    /**
      * Encodes the given string into a sequence of bytes using the ISO-8859-1 charset, storing the result into a new
      * byte array.
      * 
      * @param string
      *            the String to encode, may be <code>null</code>
      * @return encoded bytes, or <code>null</code> if the input string was <code>null</code>
-     * @throws IllegalStateException
-     *             Thrown when the charset is missing, which should be never according the the Java specification.
+     * @throws NullPointerException
+     *             Thrown if {@link Charsets#ISO_8859_1} is not initialized, which should never happen since it is
+     *             required by the Java platform specification.
+     * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
      * @see <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      * @see #getBytesUnchecked(String, String)
      */
     public static byte[] getBytesIso8859_1(String string) {
-        return StringUtils.getBytesUnchecked(string, CharEncoding.ISO_8859_1);
+        return getBytes(string, Charsets.ISO_8859_1);
     }
 
-    /**
-     * Encodes the given string into a sequence of bytes using the US-ASCII charset, storing the result into a new byte
-     * array.
-     * 
-     * @param string
-     *            the String to encode, may be <code>null</code>
-     * @return encoded bytes, or <code>null</code> if the input string was <code>null</code>
-     * @throws IllegalStateException
-     *             Thrown when the charset is missing, which should be never according the the Java specification.
-     * @see <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
-     * @see #getBytesUnchecked(String, String)
-     */
-    public static byte[] getBytesUsAscii(String string) {
-        return StringUtils.getBytesUnchecked(string, CharEncoding.US_ASCII);
-    }
-
-    /**
-     * Encodes the given string into a sequence of bytes using the UTF-16 charset, storing the result into a new byte
-     * array.
-     * 
-     * @param string
-     *            the String to encode, may be <code>null</code>
-     * @return encoded bytes, or <code>null</code> if the input string was <code>null</code>
-     * @throws IllegalStateException
-     *             Thrown when the charset is missing, which should be never according the the Java specification.
-     * @see <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
-     * @see #getBytesUnchecked(String, String)
-     */
-    public static byte[] getBytesUtf16(String string) {
-        return StringUtils.getBytesUnchecked(string, CharEncoding.UTF_16);
-    }
-
-    /**
-     * Encodes the given string into a sequence of bytes using the UTF-16BE charset, storing the result into a new byte
-     * array.
-     * 
-     * @param string
-     *            the String to encode, may be <code>null</code>
-     * @return encoded bytes, or <code>null</code> if the input string was <code>null</code>
-     * @throws IllegalStateException
-     *             Thrown when the charset is missing, which should be never according the the Java specification.
-     * @see <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
-     * @see #getBytesUnchecked(String, String)
-     */
-    public static byte[] getBytesUtf16Be(String string) {
-        return StringUtils.getBytesUnchecked(string, CharEncoding.UTF_16BE);
-    }
-
-    /**
-     * Encodes the given string into a sequence of bytes using the UTF-16LE charset, storing the result into a new byte
-     * array.
-     * 
-     * @param string
-     *            the String to encode, may be <code>null</code>
-     * @return encoded bytes, or <code>null</code> if the input string was <code>null</code>
-     * @throws IllegalStateException
-     *             Thrown when the charset is missing, which should be never according the the Java specification.
-     * @see <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
-     * @see #getBytesUnchecked(String, String)
-     */
-    public static byte[] getBytesUtf16Le(String string) {
-        return StringUtils.getBytesUnchecked(string, CharEncoding.UTF_16LE);
-    }
-
-    /**
-     * Encodes the given string into a sequence of bytes using the UTF-8 charset, storing the result into a new byte
-     * array.
-     * 
-     * @param string
-     *            the String to encode, may be <code>null</code>
-     * @return encoded bytes, or <code>null</code> if the input string was <code>null</code>
-     * @throws IllegalStateException
-     *             Thrown when the charset is missing, which should be never according the the Java specification.
-     * @see <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
-     * @see #getBytesUnchecked(String, String)
-     */
-    public static byte[] getBytesUtf8(String string) {
-        return StringUtils.getBytesUnchecked(string, CharEncoding.UTF_8);
-    }
 
     /**
      * Encodes the given string into a sequence of bytes using the named charset, storing the result into a new byte
@@ -159,8 +100,115 @@ public class StringUtils {
         }
     }
 
+    /**
+     * Encodes the given string into a sequence of bytes using the US-ASCII charset, storing the result into a new byte
+     * array.
+     * 
+     * @param string
+     *            the String to encode, may be <code>null</code>
+     * @return encoded bytes, or <code>null</code> if the input string was <code>null</code>
+     * @throws NullPointerException
+     *             Thrown if {@link Charsets#US_ASCII} is not initialized, which should never happen since it is
+     *             required by the Java platform specification.
+     * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
+     * @see <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
+     * @see #getBytesUnchecked(String, String)
+     */
+    public static byte[] getBytesUsAscii(String string) {
+        return getBytes(string, Charsets.US_ASCII);
+    }
+
+    /**
+     * Encodes the given string into a sequence of bytes using the UTF-16 charset, storing the result into a new byte
+     * array.
+     * 
+     * @param string
+     *            the String to encode, may be <code>null</code>
+     * @return encoded bytes, or <code>null</code> if the input string was <code>null</code>
+     * @throws NullPointerException
+     *             Thrown if {@link Charsets#UTF_16} is not initialized, which should never happen since it is
+     *             required by the Java platform specification.
+     * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
+     * @see <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
+     * @see #getBytesUnchecked(String, String)
+     */
+    public static byte[] getBytesUtf16(String string) {
+        return getBytes(string, Charsets.UTF_16);
+    }
+
+    /**
+     * Encodes the given string into a sequence of bytes using the UTF-16BE charset, storing the result into a new byte
+     * array.
+     * 
+     * @param string
+     *            the String to encode, may be <code>null</code>
+     * @return encoded bytes, or <code>null</code> if the input string was <code>null</code>
+     * @throws NullPointerException
+     *             Thrown if {@link Charsets#UTF_16BE} is not initialized, which should never happen since it is
+     *             required by the Java platform specification.
+     * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
+     * @see <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
+     * @see #getBytesUnchecked(String, String)
+     */
+    public static byte[] getBytesUtf16Be(String string) {
+        return getBytes(string, Charsets.UTF_16BE);
+    }
+
+    /**
+     * Encodes the given string into a sequence of bytes using the UTF-16LE charset, storing the result into a new byte
+     * array.
+     * 
+     * @param string
+     *            the String to encode, may be <code>null</code>
+     * @return encoded bytes, or <code>null</code> if the input string was <code>null</code>
+     * @throws NullPointerException
+     *             Thrown if {@link Charsets#UTF_16LE} is not initialized, which should never happen since it is
+     *             required by the Java platform specification.
+     * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
+     * @see <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
+     * @see #getBytesUnchecked(String, String)
+     */
+    public static byte[] getBytesUtf16Le(String string) {
+        return getBytes(string, Charsets.UTF_16LE);
+    }
+
+    /**
+     * Encodes the given string into a sequence of bytes using the UTF-8 charset, storing the result into a new byte
+     * array.
+     * 
+     * @param string
+     *            the String to encode, may be <code>null</code>
+     * @return encoded bytes, or <code>null</code> if the input string was <code>null</code>
+     * @throws NullPointerException
+     *             Thrown if {@link Charsets#UTF_8} is not initialized, which should never happen since it is
+     *             required by the Java platform specification.
+     * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
+     * @see <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
+     * @see #getBytesUnchecked(String, String)
+     */
+    public static byte[] getBytesUtf8(String string) {
+        return getBytes(string, Charsets.UTF_8);
+    }
+
     private static IllegalStateException newIllegalStateException(String charsetName, UnsupportedEncodingException e) {
         return new IllegalStateException(charsetName + ": " + e);
+    }
+
+    /**
+     * Constructs a new <code>String</code> by decoding the specified array of bytes using the given charset.
+     * 
+     * @param bytes
+     *            The bytes to be decoded into characters
+     * @param charset
+     *            The {@link Charset} to encode the {@code String}
+     * @return A new <code>String</code> decoded from the specified array of bytes using the given charset,
+     *         or <code>null</code> if the input byte array was <code>null</code>.
+     * @throws NullPointerException
+     *             Thrown if {@link Charsets#UTF_8} is not initialized, which should never happen since it is
+     *             required by the Java platform specification.
+     */
+    private static String newString(byte[] bytes, Charset charset) {
+        return bytes == null ? null : new String(bytes, charset);
     }
 
     /**
@@ -198,14 +246,15 @@ public class StringUtils {
      * 
      * @param bytes
      *            The bytes to be decoded into characters, may be <code>null</code>
-     * @return A new <code>String</code> decoded from the specified array of bytes using the ISO-8859-1 charset,
-     *         or <code>null</code> if the input byte array was <code>null</code>.
-     * @throws IllegalStateException
-     *             Thrown when a {@link UnsupportedEncodingException} is caught, which should never happen since the
-     *             charset is required.
+     * @return A new <code>String</code> decoded from the specified array of bytes using the ISO-8859-1 charset, or
+     *         <code>null</code> if the input byte array was <code>null</code>.
+     * @throws NullPointerException
+     *             Thrown if {@link Charsets#ISO_8859_1} is not initialized, which should never happen since it is
+     *             required by the Java platform specification.
+     * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
      */
     public static String newStringIso8859_1(byte[] bytes) {
-        return StringUtils.newString(bytes, CharEncoding.ISO_8859_1);
+        return new String(bytes, Charsets.ISO_8859_1);
     }
 
     /**
@@ -215,12 +264,13 @@ public class StringUtils {
      *            The bytes to be decoded into characters
      * @return A new <code>String</code> decoded from the specified array of bytes using the US-ASCII charset,
      *         or <code>null</code> if the input byte array was <code>null</code>.
-     * @throws IllegalStateException
-     *             Thrown when a {@link UnsupportedEncodingException} is caught, which should never happen since the
-     *             charset is required.
+     * @throws NullPointerException
+     *             Thrown if {@link Charsets#US_ASCII} is not initialized, which should never happen since it is
+     *             required by the Java platform specification.
+     * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
      */
     public static String newStringUsAscii(byte[] bytes) {
-        return StringUtils.newString(bytes, CharEncoding.US_ASCII);
+        return new String(bytes, Charsets.US_ASCII);
     }
 
     /**
@@ -230,12 +280,13 @@ public class StringUtils {
      *            The bytes to be decoded into characters
      * @return A new <code>String</code> decoded from the specified array of bytes using the UTF-16 charset
      *         or <code>null</code> if the input byte array was <code>null</code>.
-     * @throws IllegalStateException
-     *             Thrown when a {@link UnsupportedEncodingException} is caught, which should never happen since the
-     *             charset is required.
+     * @throws NullPointerException
+     *             Thrown if {@link Charsets#UTF_16} is not initialized, which should never happen since it is
+     *             required by the Java platform specification.
+     * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
      */
     public static String newStringUtf16(byte[] bytes) {
-        return StringUtils.newString(bytes, CharEncoding.UTF_16);
+        return new String(bytes, Charsets.UTF_16);
     }
 
     /**
@@ -245,12 +296,13 @@ public class StringUtils {
      *            The bytes to be decoded into characters
      * @return A new <code>String</code> decoded from the specified array of bytes using the UTF-16BE charset,
      *         or <code>null</code> if the input byte array was <code>null</code>.
-     * @throws IllegalStateException
-     *             Thrown when a {@link UnsupportedEncodingException} is caught, which should never happen since the
-     *             charset is required.
+     * @throws NullPointerException
+     *             Thrown if {@link Charsets#UTF_16BE} is not initialized, which should never happen since it is
+     *             required by the Java platform specification.
+     * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
      */
     public static String newStringUtf16Be(byte[] bytes) {
-        return StringUtils.newString(bytes, CharEncoding.UTF_16BE);
+        return new String(bytes, Charsets.UTF_16BE);
     }
 
     /**
@@ -260,12 +312,13 @@ public class StringUtils {
      *            The bytes to be decoded into characters
      * @return A new <code>String</code> decoded from the specified array of bytes using the UTF-16LE charset,
      *         or <code>null</code> if the input byte array was <code>null</code>.
-     * @throws IllegalStateException
-     *             Thrown when a {@link UnsupportedEncodingException} is caught, which should never happen since the
-     *             charset is required.
+     * @throws NullPointerException
+     *             Thrown if {@link Charsets#UTF_16LE} is not initialized, which should never happen since it is
+     *             required by the Java platform specification.
+     * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
      */
     public static String newStringUtf16Le(byte[] bytes) {
-        return StringUtils.newString(bytes, CharEncoding.UTF_16LE);
+        return new String(bytes, Charsets.UTF_16LE);
     }
 
     /**
@@ -275,12 +328,13 @@ public class StringUtils {
      *            The bytes to be decoded into characters
      * @return A new <code>String</code> decoded from the specified array of bytes using the UTF-8 charset,
      *         or <code>null</code> if the input byte array was <code>null</code>.
-     * @throws IllegalStateException
-     *             Thrown when a {@link UnsupportedEncodingException} is caught, which should never happen since the
-     *             charset is required.
+     * @throws NullPointerException
+     *             Thrown if {@link Charsets#UTF_8} is not initialized, which should never happen since it is
+     *             required by the Java platform specification.
+     * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
      */
     public static String newStringUtf8(byte[] bytes) {
-        return StringUtils.newString(bytes, CharEncoding.UTF_8);
+        return newString(bytes, Charsets.UTF_8);
     }
 
 }
