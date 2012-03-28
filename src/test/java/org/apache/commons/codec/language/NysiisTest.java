@@ -54,8 +54,8 @@ public class NysiisTest extends StringEncoderAbstractTest {
     }
 
     private void encodeAll(String[] strings, String expectedEncoding) throws EncoderException {
-        for (int i = 0; i < strings.length; i++) {
-            Assert.assertEquals("Problem with " + strings[i], expectedEncoding, getStringEncoder().encode(strings[i]));
+        for (String string : strings) {
+            Assert.assertEquals("Problem with " + string, expectedEncoding, getStringEncoder().encode(string));
         }
     }
 
