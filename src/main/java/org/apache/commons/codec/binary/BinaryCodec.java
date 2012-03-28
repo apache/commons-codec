@@ -211,11 +211,11 @@ public class BinaryCodec implements BinaryDecoder, BinaryEncoder {
     }
 
     /**
-     * Returns <code>true</code> if the given array is {@code null} or empty (size 0.)
+     * Returns {@code true} if the given array is {@code null} or empty (size 0.)
      * 
      * @param array
      *            the source array
-     * @return <code>true</code> if the given array is {@code null} or empty (size 0.)
+     * @return {@code true} if the given array is {@code null} or empty (size 0.)
      */
     private static boolean isEmpty(byte[] array) {
         return array == null || array.length == 0;

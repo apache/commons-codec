@@ -187,7 +187,7 @@ public class Base64 extends BaseNCodec {
      * </p>
      * 
      * @param urlSafe
-     *            if <code>true</code>, URL-safe encoding is used. In most cases this should be set to
+     *            if {@code true}, URL-safe encoding is used. In most cases this should be set to
      *            <code>false</code>.
      * @since 1.4
      */
@@ -473,7 +473,7 @@ public class Base64 extends BaseNCodec {
      * 
      * @param arrayOctet
      *            byte array to test
-     * @return <code>true</code> if all bytes are valid characters in the Base64 alphabet or if the byte array is empty;
+     * @return {@code true} if all bytes are valid characters in the Base64 alphabet or if the byte array is empty;
      *         <code>false</code>, otherwise
      * @deprecated 1.5 Use {@link #isBase64(byte[])}, will be removed in 2.0.
      */
@@ -486,7 +486,7 @@ public class Base64 extends BaseNCodec {
      * 
      * @param octet
      *            The value to test
-     * @return <code>true</code> if the value is defined in the the base 64 alphabet, <code>false</code> otherwise.
+     * @return {@code true} if the value is defined in the the base 64 alphabet, <code>false</code> otherwise.
      * @since 1.4
      */
     public static boolean isBase64(byte octet) {
@@ -499,7 +499,7 @@ public class Base64 extends BaseNCodec {
      * 
      * @param base64
      *            String to test
-     * @return <code>true</code> if all characters in the String are valid characters in the Base64 alphabet or if
+     * @return {@code true} if all characters in the String are valid characters in the Base64 alphabet or if
      *         the String is empty; <code>false</code>, otherwise
      *  @since 1.5
      */
@@ -513,7 +513,7 @@ public class Base64 extends BaseNCodec {
      * 
      * @param arrayOctet
      *            byte array to test
-     * @return <code>true</code> if all bytes are valid characters in the Base64 alphabet or if the byte array is empty;
+     * @return {@code true} if all bytes are valid characters in the Base64 alphabet or if the byte array is empty;
      *         <code>false</code>, otherwise
      * @since 1.5
      */    
@@ -595,7 +595,7 @@ public class Base64 extends BaseNCodec {
      * @param binaryData
      *            Array containing binary data to encode.
      * @param isChunked
-     *            if <code>true</code> this encoder will chunk the base64 output into 76 character blocks
+     *            if {@code true} this encoder will chunk the base64 output into 76 character blocks
      * @return Base64-encoded data.
      * @throws IllegalArgumentException
      *             Thrown when the input array needs an output array bigger than {@link Integer#MAX_VALUE}
@@ -610,9 +610,9 @@ public class Base64 extends BaseNCodec {
      * @param binaryData
      *            Array containing binary data to encode.
      * @param isChunked
-     *            if <code>true</code> this encoder will chunk the base64 output into 76 character blocks
+     *            if {@code true} this encoder will chunk the base64 output into 76 character blocks
      * @param urlSafe
-     *            if <code>true</code> this encoder will emit - and _ instead of the usual + and / characters.
+     *            if {@code true} this encoder will emit - and _ instead of the usual + and / characters.
      * @return Base64-encoded data.
      * @throws IllegalArgumentException
      *             Thrown when the input array needs an output array bigger than {@link Integer#MAX_VALUE}
@@ -628,9 +628,9 @@ public class Base64 extends BaseNCodec {
      * @param binaryData
      *            Array containing binary data to encode.
      * @param isChunked
-     *            if <code>true</code> this encoder will chunk the base64 output into 76 character blocks
+     *            if {@code true} this encoder will chunk the base64 output into 76 character blocks
      * @param urlSafe
-     *            if <code>true</code> this encoder will emit - and _ instead of the usual + and / characters.
+     *            if {@code true} this encoder will emit - and _ instead of the usual + and / characters.
      * @param maxResultSize
      *            The maximum result size to accept.
      * @return Base64-encoded data.
@@ -748,7 +748,7 @@ public class Base64 extends BaseNCodec {
      * 
      * @param octet
      *            The value to test
-     * @return <code>true</code> if the value is defined in the the Base32 alphabet <code>false</code> otherwise.
+     * @return {@code true} if the value is defined in the the Base32 alphabet <code>false</code> otherwise.
      */
     @Override
     protected boolean isInAlphabet(byte octet) {

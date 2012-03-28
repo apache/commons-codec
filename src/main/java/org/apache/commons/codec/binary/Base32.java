@@ -167,7 +167,7 @@ public class Base32 extends BaseNCodec {
      * <p>
      * When encoding the line length is 0 (no chunking).
      * </p>
-     * @param useHex if <code>true</code> then use Base32 Hex alphabet
+     * @param useHex if {@code true} then use Base32 Hex alphabet
      */
     public Base32(boolean useHex) {
         this(0, null, useHex);
@@ -222,7 +222,7 @@ public class Base32 extends BaseNCodec {
      *            If lineLength <= 0, then the output will not be divided into lines (chunks). Ignored when decoding.
      * @param lineSeparator
      *            Each line of encoded data will end with this sequence of bytes.
-     * @param useHex if <code>true</code>, then use Base32 Hex alphabet, otherwise use Base32 alphabet
+     * @param useHex if {@code true}, then use Base32 Hex alphabet, otherwise use Base32 alphabet
      * @throws IllegalArgumentException
      *             The provided lineSeparator included some Base32 characters. That's not going to work!
      *             Or the lineLength > 0 and lineSeparator is null.
@@ -464,7 +464,7 @@ public class Base32 extends BaseNCodec {
      * 
      * @param octet
      *            The value to test
-     * @return <code>true</code> if the value is defined in the the Base32 alphabet <code>false</code> otherwise.
+     * @return {@code true} if the value is defined in the the Base32 alphabet <code>false</code> otherwise.
      */
     @Override
     public boolean isInAlphabet(byte octet) {

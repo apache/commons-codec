@@ -385,7 +385,7 @@ public class Metaphone implements StringEncoder {
      *
      * @param str1 First of two strings to compare
      * @param str2 Second of two strings to compare
-     * @return <code>true</code> if the metaphones of these strings are identical, 
+     * @return {@code true} if the metaphones of these strings are identical, 
      *        <code>false</code> otherwise.
      */
     public boolean isMetaphoneEqual(String str1, String str2) {
