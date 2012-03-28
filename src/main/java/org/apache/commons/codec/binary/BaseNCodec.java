@@ -372,7 +372,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      *
      * @param value The value to test
      *
-     * @return {@code true} if the value is defined in the current alphabet, <code>false</code> otherwise.
+     * @return {@code true} if the value is defined in the current alphabet, {@code false} otherwise.
      */
     protected abstract boolean isInAlphabet(byte value);
     
@@ -384,7 +384,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * @param allowWSPad if {@code true}, then whitespace and PAD are also allowed
      *
      * @return {@code true} if all bytes are valid characters in the alphabet or if the byte array is empty;
-     *         <code>false</code>, otherwise
+     *         {@code false}, otherwise
      */    
     public boolean isInAlphabet(byte[] arrayOctet, boolean allowWSPad) {
         for (int i = 0; i < arrayOctet.length; i++) {
@@ -402,7 +402,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      *
      * @param basen String to test
      * @return {@code true} if all characters in the String are valid characters in the alphabet or if
-     *         the String is empty; <code>false</code>, otherwise
+     *         the String is empty; {@code false}, otherwise
      * @see #isInAlphabet(byte[], boolean)
      */
     public boolean isInAlphabet(String basen) {
@@ -416,7 +416,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      *
      * @param arrayOctet
      *            byte array to test
-     * @return {@code true} if any byte is a valid character in the alphabet or PAD; <code>false</code> otherwise
+     * @return {@code true} if any byte is a valid character in the alphabet or PAD; {@code false} otherwise
      */
     protected boolean containsAlphabetOrPad(byte[] arrayOctet) {
         if (arrayOctet == null) {

@@ -188,7 +188,7 @@ public class Base64 extends BaseNCodec {
      * 
      * @param urlSafe
      *            if {@code true}, URL-safe encoding is used. In most cases this should be set to
-     *            <code>false</code>.
+     *            {@code false}.
      * @since 1.4
      */
     public Base64(boolean urlSafe) {
@@ -474,7 +474,7 @@ public class Base64 extends BaseNCodec {
      * @param arrayOctet
      *            byte array to test
      * @return {@code true} if all bytes are valid characters in the Base64 alphabet or if the byte array is empty;
-     *         <code>false</code>, otherwise
+     *         {@code false}, otherwise
      * @deprecated 1.5 Use {@link #isBase64(byte[])}, will be removed in 2.0.
      */
     public static boolean isArrayByteBase64(byte[] arrayOctet) {
@@ -486,7 +486,7 @@ public class Base64 extends BaseNCodec {
      * 
      * @param octet
      *            The value to test
-     * @return {@code true} if the value is defined in the the base 64 alphabet, <code>false</code> otherwise.
+     * @return {@code true} if the value is defined in the the base 64 alphabet, {@code false} otherwise.
      * @since 1.4
      */
     public static boolean isBase64(byte octet) {
@@ -500,7 +500,7 @@ public class Base64 extends BaseNCodec {
      * @param base64
      *            String to test
      * @return {@code true} if all characters in the String are valid characters in the Base64 alphabet or if
-     *         the String is empty; <code>false</code>, otherwise
+     *         the String is empty; {@code false}, otherwise
      *  @since 1.5
      */
     public static boolean isBase64(String base64) {
@@ -514,7 +514,7 @@ public class Base64 extends BaseNCodec {
      * @param arrayOctet
      *            byte array to test
      * @return {@code true} if all bytes are valid characters in the Base64 alphabet or if the byte array is empty;
-     *         <code>false</code>, otherwise
+     *         {@code false}, otherwise
      * @since 1.5
      */    
     public static boolean isBase64(byte[] arrayOctet) {
@@ -748,7 +748,7 @@ public class Base64 extends BaseNCodec {
      * 
      * @param octet
      *            The value to test
-     * @return {@code true} if the value is defined in the the Base32 alphabet <code>false</code> otherwise.
+     * @return {@code true} if the value is defined in the the Base32 alphabet {@code false} otherwise.
      */
     @Override
     protected boolean isInAlphabet(byte octet) {

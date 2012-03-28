@@ -464,7 +464,7 @@ public class Base32 extends BaseNCodec {
      * 
      * @param octet
      *            The value to test
-     * @return {@code true} if the value is defined in the the Base32 alphabet <code>false</code> otherwise.
+     * @return {@code true} if the value is defined in the the Base32 alphabet {@code false} otherwise.
      */
     @Override
     public boolean isInAlphabet(byte octet) {

@@ -218,7 +218,7 @@ public class DoubleMetaphone implements StringEncoder {
      * @param value1 The left-hand side of the encoded {@link String#equals(Object)}.
      * @param value2 The right-hand side of the encoded {@link String#equals(Object)}.
      * @return {@code true} if the encoded <code>String</code>s are equal;
-     *          <code>false</code> otherwise.
+     *          {@code false} otherwise.
      * @see #isDoubleMetaphoneEqual(String,String,boolean)
      */
     public boolean isDoubleMetaphoneEqual(String value1, String value2) {
@@ -233,7 +233,7 @@ public class DoubleMetaphone implements StringEncoder {
      * @param value2 The right-hand side of the encoded {@link String#equals(Object)}.
      * @param alternate use the alternate value if {@code true}.
      * @return {@code true} if the encoded <code>String</code>s are equal;
-     *          <code>false</code> otherwise.
+     *          {@code false} otherwise.
      */
     public boolean isDoubleMetaphoneEqual(String value1, 
                                           String value2, 
