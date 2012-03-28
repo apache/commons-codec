@@ -21,6 +21,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
+import java.nio.charset.UnsupportedCharsetException;
+
 import org.apache.commons.codec.CharEncoding;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
@@ -209,22 +211,9 @@ public class QuotedPrintableCodecTest {
         }
     }
     
-    @Test
+    @Test(expected=UnsupportedCharsetException.class)
     public void testInvalidEncoding() {
-        QuotedPrintableCodec qpcodec = new QuotedPrintableCodec("NONSENSE");
-           String plain = "Hello there!";
-            try {
-               qpcodec.encode(plain);
-                fail( "We set the encoding to a bogus NONSENSE vlaue, this shouldn't have worked.");
-            } catch (EncoderException ee) {
-                // Exception expected, test segment passes.
-            }
-            try {
-               qpcodec.decode(plain);
-                fail( "We set the encoding to a bogus NONSENSE vlaue, this shouldn't have worked.");
-            } catch (DecoderException ee) {
-                // Exception expected, test segment passes.
-            }
+        new QuotedPrintableCodec("NONSENSE");
     }
 
     @Test
