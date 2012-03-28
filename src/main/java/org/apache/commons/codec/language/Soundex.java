@@ -133,7 +133,7 @@ public class Soundex implements StringEncoder {
      * Encodes an Object using the soundex algorithm. This method is provided in order to satisfy the requirements of
      * the Encoder interface, and will throw an EncoderException if the supplied object is not of type java.lang.String.
      * 
-     * @param pObject
+     * @param obj
      *                  Object to encode
      * @return An object (or type java.lang.String) containing the soundex code which corresponds to the String
      *             supplied.
@@ -142,24 +142,24 @@ public class Soundex implements StringEncoder {
      * @throws IllegalArgumentException
      *                  if a character is not mapped
      */
-    public Object encode(Object pObject) throws EncoderException {
-        if (!(pObject instanceof String)) {
+    public Object encode(Object obj) throws EncoderException {
+        if (!(obj instanceof String)) {
             throw new EncoderException("Parameter supplied to Soundex encode is not of type java.lang.String");
         }
-        return soundex((String) pObject);
+        return soundex((String) obj);
     }
 
     /**
      * Encodes a String using the soundex algorithm.
      * 
-     * @param pString
+     * @param str
      *                  A String object to encode
      * @return A Soundex code corresponding to the String supplied
      * @throws IllegalArgumentException
      *                  if a character is not mapped
      */
-    public String encode(String pString) {
-        return soundex(pString);
+    public String encode(String str) {
+        return soundex(str);
     }
 
     /**

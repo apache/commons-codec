@@ -193,40 +193,40 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     /**
      * Encodes a string into its quoted-printable form using the specified charset. Unsafe characters are escaped.
      * 
-     * @param pString
+     * @param str
      *                  string to convert to quoted-printable form
      * @param charset
-     *                  the charset for pString
+     *                  the charset for str
      * @return quoted-printable string
      * 
      * @throws EncoderException
      *                  thrown if a failure condition is encountered during the encoding process.
      */
-    public String encode(final String pString, final Charset charset) throws EncoderException {
-        if (pString == null) {
+    public String encode(final String str, final Charset charset) throws EncoderException {
+        if (str == null) {
             return null;
         }
-        return encodeText(pString, charset);
+        return encodeText(str, charset);
     }
 
     /**
      * Encodes a string into its quoted-printable form using the specified charset. Unsafe characters are escaped.
      * 
-     * @param pString
+     * @param str
      *                  string to convert to quoted-printable form
      * @param charset
-     *                  the charset for pString
+     *                  the charset for str
      * @return quoted-printable string
      * 
      * @throws EncoderException
      *                  thrown if a failure condition is encountered during the encoding process.
      */
-    public String encode(final String pString, final String charset) throws EncoderException {
-        if (pString == null) {
+    public String encode(final String str, final String charset) throws EncoderException {
+        if (str == null) {
             return null;
         }
         try {
-            return encodeText(pString, charset);
+            return encodeText(str, charset);
         } catch (UnsupportedEncodingException e) {
             throw new EncoderException(e.getMessage(), e);
         }
@@ -235,25 +235,25 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     /**
      * Encodes a string into its quoted-printable form using the default charset. Unsafe characters are escaped.
      * 
-     * @param pString
+     * @param str
      *                  string to convert to quoted-printable form
      * @return quoted-printable string
      * 
      * @throws EncoderException
      *                  thrown if a failure condition is encountered during the encoding process.
      */
-    public String encode(String pString) throws EncoderException {
-        if (pString == null) {
+    public String encode(String str) throws EncoderException {
+        if (str == null) {
             return null;
         }
-        return encode(pString, getCharset());
+        return encode(str, getCharset());
     }
 
     /**
      * Decodes a quoted-printable string into its original form. Escaped characters are converted back to their original
      * representation.
      * 
-     * @param pString
+     * @param str
      *                  quoted-printable string to convert into its original form
      * 
      * @return original string
@@ -261,12 +261,12 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * @throws DecoderException
      *                  A decoder exception is thrown if a failure condition is encountered during the decode process.
      */
-    public String decode(String pString) throws DecoderException {
-        if (pString == null) {
+    public String decode(String str) throws DecoderException {
+        if (str == null) {
             return null;
         }
         try {
-            return decodeText(pString);
+            return decodeText(str);
         } catch (UnsupportedEncodingException e) {
             throw new DecoderException(e.getMessage(), e);
         }
@@ -275,21 +275,21 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     /**
      * Encodes an object into its quoted-printable form using the default charset. Unsafe characters are escaped.
      * 
-     * @param pObject
+     * @param obj
      *                  object to convert to quoted-printable form
      * @return quoted-printable object
      * 
      * @throws EncoderException
      *                  thrown if a failure condition is encountered during the encoding process.
      */
-    public Object encode(Object pObject) throws EncoderException {
-        if (pObject == null) {
+    public Object encode(Object obj) throws EncoderException {
+        if (obj == null) {
             return null;
-        } else if (pObject instanceof String) {
-            return encode((String) pObject);
+        } else if (obj instanceof String) {
+            return encode((String) obj);
         } else {
             throw new EncoderException("Objects of type " + 
-                  pObject.getClass().getName() + 
+                  obj.getClass().getName() + 
                   " cannot be encoded using Q codec");
         }
     }
@@ -298,7 +298,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * Decodes a quoted-printable object into its original form. Escaped characters are converted back to their original
      * representation.
      * 
-     * @param pObject
+     * @param obj
      *                  quoted-printable object to convert into its original form
      * 
      * @return original object
@@ -307,14 +307,14 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      *                  Thrown if the argument is not a <code>String</code>. Thrown if a failure condition is
      *                  encountered during the decode process.
      */
-    public Object decode(Object pObject) throws DecoderException {
-        if (pObject == null) {
+    public Object decode(Object obj) throws DecoderException {
+        if (obj == null) {
             return null;
-        } else if (pObject instanceof String) {
-            return decode((String) pObject);
+        } else if (obj instanceof String) {
+            return decode((String) obj);
         } else {
             throw new DecoderException("Objects of type " + 
-                  pObject.getClass().getName() + 
+                  obj.getClass().getName() + 
                   " cannot be decoded using Q codec");
         }
     }

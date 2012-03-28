@@ -121,29 +121,29 @@ public class RefinedSoundex implements StringEncoder {
      * and will throw an EncoderException if the supplied object is not of type
      * java.lang.String.
      * 
-     * @param pObject
+     * @param obj
      *                  Object to encode
      * @return An object (or type java.lang.String) containing the refined
      *             soundex code which corresponds to the String supplied.
      * @throws EncoderException
      *                  if the parameter supplied is not of type java.lang.String
      */
-    public Object encode(Object pObject) throws EncoderException {
-        if (!(pObject instanceof String)) {
+    public Object encode(Object obj) throws EncoderException {
+        if (!(obj instanceof String)) {
             throw new EncoderException("Parameter supplied to RefinedSoundex encode is not of type java.lang.String");
         }
-        return soundex((String) pObject);
+        return soundex((String) obj);
     }
 
     /**
      * Encodes a String using the refined soundex algorithm.
      * 
-     * @param pString
+     * @param str
      *                  A String object to encode
      * @return A Soundex code corresponding to the String supplied
      */
-    public String encode(String pString) {
-        return soundex(pString);
+    public String encode(String str) {
+        return soundex(str);
     }
 
     /**

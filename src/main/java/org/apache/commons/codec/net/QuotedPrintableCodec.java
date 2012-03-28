@@ -256,7 +256,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * RFC 1521 and is suitable for encoding binary data.
      * </p>
      * 
-     * @param pString
+     * @param str
      *                  string to convert to quoted-printable form
      * @return quoted-printable string
      * 
@@ -265,15 +265,15 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * 
      * @see #getCharset()
      */
-    public String encode(String pString) throws EncoderException {
-        return this.encode(pString, getCharset());
+    public String encode(String str) throws EncoderException {
+        return this.encode(str, getCharset());
     }
 
     /**
      * Decodes a quoted-printable string into its original form using the specified string charset. Escaped characters
      * are converted back to their original representation.
      * 
-     * @param pString
+     * @param str
      *                  quoted-printable string to convert into its original form
      * @param charset
      *                  the original string charset
@@ -281,18 +281,18 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * @throws DecoderException
      *                  Thrown if quoted-printable decoding is unsuccessful
      */
-    public String decode(String pString, Charset charset) throws DecoderException {
-        if (pString == null) {
+    public String decode(String str, Charset charset) throws DecoderException {
+        if (str == null) {
             return null;
         }
-        return new String(this.decode(StringUtils.getBytesUsAscii(pString)), charset);
+        return new String(this.decode(StringUtils.getBytesUsAscii(str)), charset);
     }
 
     /**
      * Decodes a quoted-printable string into its original form using the specified string charset. Escaped characters
      * are converted back to their original representation.
      * 
-     * @param pString
+     * @param str
      *                  quoted-printable string to convert into its original form
      * @param charset
      *                  the original string charset
@@ -302,18 +302,18 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * @throws UnsupportedEncodingException
      *                  Thrown if charset is not supported
      */
-    public String decode(String pString, String charset) throws DecoderException, UnsupportedEncodingException {
-        if (pString == null) {
+    public String decode(String str, String charset) throws DecoderException, UnsupportedEncodingException {
+        if (str == null) {
             return null;
         }
-        return new String(decode(StringUtils.getBytesUsAscii(pString)), charset);
+        return new String(decode(StringUtils.getBytesUsAscii(str)), charset);
     }
 
     /**
      * Decodes a quoted-printable string into its original form using the default string charset. Escaped characters are
      * converted back to their original representation.
      * 
-     * @param pString
+     * @param str
      *                  quoted-printable string to convert into its original form
      * @return original string
      * @throws DecoderException
@@ -321,30 +321,30 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      *                  Thrown if charset is not supported.
      * @see #getCharset()
      */
-    public String decode(String pString) throws DecoderException {
-        return this.decode(pString, this.getCharset());
+    public String decode(String str) throws DecoderException {
+        return this.decode(str, this.getCharset());
     }
 
     /**
      * Encodes an object into its quoted-printable safe form. Unsafe characters are escaped.
      * 
-     * @param pObject
+     * @param obj
      *                  string to convert to a quoted-printable form
      * @return quoted-printable object
      * @throws EncoderException
      *                  Thrown if quoted-printable encoding is not applicable to objects of this type or if encoding is
      *                  unsuccessful
      */
-    public Object encode(Object pObject) throws EncoderException {
-        if (pObject == null) {
+    public Object encode(Object obj) throws EncoderException {
+        if (obj == null) {
             return null;
-        } else if (pObject instanceof byte[]) {
-            return encode((byte[]) pObject);
-        } else if (pObject instanceof String) {
-            return encode((String) pObject);
+        } else if (obj instanceof byte[]) {
+            return encode((byte[]) obj);
+        } else if (obj instanceof String) {
+            return encode((String) obj);
         } else {
             throw new EncoderException("Objects of type " + 
-                  pObject.getClass().getName() + 
+                  obj.getClass().getName() + 
                   " cannot be quoted-printable encoded");
         }
     }
@@ -353,23 +353,23 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * Decodes a quoted-printable object into its original form. Escaped characters are converted back to their original
      * representation.
      * 
-     * @param pObject
+     * @param obj
      *                  quoted-printable object to convert into its original form
      * @return original object
      * @throws DecoderException
      *                  Thrown if the argument is not a <code>String</code> or <code>byte[]</code>. Thrown if a failure condition is
      *                  encountered during the decode process.
      */
-    public Object decode(Object pObject) throws DecoderException {
-        if (pObject == null) {
+    public Object decode(Object obj) throws DecoderException {
+        if (obj == null) {
             return null;
-        } else if (pObject instanceof byte[]) {
-            return decode((byte[]) pObject);
-        } else if (pObject instanceof String) {
-            return decode((String) pObject);
+        } else if (obj instanceof byte[]) {
+            return decode((byte[]) obj);
+        } else if (obj instanceof String) {
+            return decode((String) obj);
         } else {
             throw new DecoderException("Objects of type " + 
-                  pObject.getClass().getName() + 
+                  obj.getClass().getName() + 
                   " cannot be quoted-printable decoded");
         }
     }
@@ -401,17 +401,17 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * RFC 1521 and is suitable for encoding binary data and unformatted text.
      * </p>
      * 
-     * @param pString
+     * @param str
      *                  string to convert to quoted-printable form
      * @param charset
-     *                  the charset for pString
+     *                  the charset for str
      * @return quoted-printable string
      */
-    public String encode(String pString, Charset charset) {
-        if (pString == null) {
+    public String encode(String str, Charset charset) {
+        if (str == null) {
             return null;
         }
-        return StringUtils.newStringUsAscii(this.encode(pString.getBytes(charset)));
+        return StringUtils.newStringUsAscii(this.encode(str.getBytes(charset)));
     }
 
     /**
@@ -422,19 +422,19 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * RFC 1521 and is suitable for encoding binary data and unformatted text.
      * </p>
      * 
-     * @param pString
+     * @param str
      *                  string to convert to quoted-printable form
      * @param charset
-     *                  the charset for pString
+     *                  the charset for str
      * @return quoted-printable string
      * 
      * @throws UnsupportedEncodingException
      *                  Thrown if the charset is not supported
      */
-    public String encode(String pString, String charset) throws UnsupportedEncodingException {
-        if (pString == null) {
+    public String encode(String str, String charset) throws UnsupportedEncodingException {
+        if (str == null) {
             return null;
         }
-        return StringUtils.newStringUsAscii(encode(pString.getBytes(charset)));
+        return StringUtils.newStringUsAscii(encode(str.getBytes(charset)));
     }
 }

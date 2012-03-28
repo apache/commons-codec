@@ -214,37 +214,37 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
     /**
      * Encodes a string into its URL safe form using the specified string charset. Unsafe characters are escaped.
      * 
-     * @param pString
+     * @param str
      *            string to convert to a URL safe form
      * @param charset
-     *            the charset for pString
+     *            the charset for str
      * @return URL safe string
      * @throws UnsupportedEncodingException
      *             Thrown if charset is not supported
      */
-    public String encode(String pString, String charset) throws UnsupportedEncodingException {
-        if (pString == null) {
+    public String encode(String str, String charset) throws UnsupportedEncodingException {
+        if (str == null) {
             return null;
         }
-        return StringUtils.newStringUsAscii(encode(pString.getBytes(charset)));
+        return StringUtils.newStringUsAscii(encode(str.getBytes(charset)));
     }
 
     /**
      * Encodes a string into its URL safe form using the default string 
      * charset. Unsafe characters are escaped.
      *
-     * @param pString string to convert to a URL safe form
+     * @param str string to convert to a URL safe form
      * @return URL safe string
      * @throws EncoderException Thrown if URL encoding is unsuccessful
      * 
      * @see #getDefaultCharset()
      */
-    public String encode(String pString) throws EncoderException {
-        if (pString == null) {
+    public String encode(String str) throws EncoderException {
+        if (str == null) {
             return null;
         }
         try {
-            return encode(pString, getDefaultCharset());
+            return encode(str, getDefaultCharset());
         } catch (UnsupportedEncodingException e) {
             throw new EncoderException(e.getMessage(), e);
         }
@@ -256,18 +256,18 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      * specified encoding. Escaped characters are converted back 
      * to their original representation.
      *
-     * @param pString URL safe string to convert into its original form
+     * @param str URL safe string to convert into its original form
      * @param charset the original string charset
      * @return original string 
      * @throws DecoderException Thrown if URL decoding is unsuccessful
      * @throws UnsupportedEncodingException Thrown if charset is not
      *                                      supported 
      */
-    public String decode(String pString, String charset) throws DecoderException, UnsupportedEncodingException {
-        if (pString == null) {
+    public String decode(String str, String charset) throws DecoderException, UnsupportedEncodingException {
+        if (str == null) {
             return null;
         }
-        return new String(decode(StringUtils.getBytesUsAscii(pString)), charset);
+        return new String(decode(StringUtils.getBytesUsAscii(str)), charset);
     }
 
     /**
@@ -275,18 +275,18 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      * string charset. Escaped characters are converted back to their 
      * original representation.
      *
-     * @param pString URL safe string to convert into its original form
+     * @param str URL safe string to convert into its original form
      * @return original string 
      * @throws DecoderException Thrown if URL decoding is unsuccessful
      * 
      * @see #getDefaultCharset()
      */
-    public String decode(String pString) throws DecoderException {
-        if (pString == null) {
+    public String decode(String str) throws DecoderException {
+        if (str == null) {
             return null;
         }
         try {
-            return decode(pString, getDefaultCharset());
+            return decode(str, getDefaultCharset());
         } catch (UnsupportedEncodingException e) {
             throw new DecoderException(e.getMessage(), e);
         }
@@ -296,22 +296,22 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      * Encodes an object into its URL safe form. Unsafe characters are 
      * escaped.
      *
-     * @param pObject string to convert to a URL safe form
+     * @param obj string to convert to a URL safe form
      * @return URL safe object
      * @throws EncoderException Thrown if URL encoding is not 
      *                          applicable to objects of this type or
      *                          if encoding is unsuccessful
      */
-    public Object encode(Object pObject) throws EncoderException {
-        if (pObject == null) {
+    public Object encode(Object obj) throws EncoderException {
+        if (obj == null) {
             return null;
-        } else if (pObject instanceof byte[]) {
-            return encode((byte[])pObject);
-        } else if (pObject instanceof String) {
-            return encode((String)pObject);
+        } else if (obj instanceof byte[]) {
+            return encode((byte[])obj);
+        } else if (obj instanceof String) {
+            return encode((String)obj);
         } else {
             throw new EncoderException("Objects of type " +
-                pObject.getClass().getName() + " cannot be URL encoded"); 
+                obj.getClass().getName() + " cannot be URL encoded"); 
               
         }
     }
@@ -320,22 +320,22 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      * Decodes a URL safe object into its original form. Escaped characters are converted back to their original
      * representation.
      * 
-     * @param pObject
+     * @param obj
      *                  URL safe object to convert into its original form
      * @return original object
      * @throws DecoderException
      *                  Thrown if the argument is not a <code>String</code> or <code>byte[]</code>. Thrown if a failure condition is
      *                  encountered during the decode process.
      */
-    public Object decode(Object pObject) throws DecoderException {
-        if (pObject == null) {
+    public Object decode(Object obj) throws DecoderException {
+        if (obj == null) {
             return null;
-        } else if (pObject instanceof byte[]) {
-            return decode((byte[]) pObject);
-        } else if (pObject instanceof String) {
-            return decode((String) pObject);
+        } else if (obj instanceof byte[]) {
+            return decode((byte[]) obj);
+        } else if (obj instanceof String) {
+            return decode((String) obj);
         } else {
-            throw new DecoderException("Objects of type " + pObject.getClass().getName() + " cannot be URL decoded");
+            throw new DecoderException("Objects of type " + obj.getClass().getName() + " cannot be URL decoded");
 
         }
     }
