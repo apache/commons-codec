@@ -24,6 +24,8 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.nio.charset.UnsupportedCharsetException;
+
 import org.apache.commons.codec.CharEncoding;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
@@ -150,21 +152,9 @@ public class QCodecTest {
     }
     
 
-    @Test
+    @Test(expected=UnsupportedCharsetException.class)
     public void testInvalidEncoding() {
-        QCodec qcodec = new QCodec("NONSENSE");
-            try {
-               qcodec.encode("Hello there!");
-                fail( "We set the encoding to a bogus NONSENSE vlaue, this shouldn't have worked.");
-            } catch (EncoderException ee) {
-                // Exception expected, test segment passes.
-            }
-            try {
-               qcodec.decode("=?NONSENSE?Q?Hello there!?=");
-                fail( "We set the encoding to a bogus NONSENSE vlaue, this shouldn't have worked.");
-            } catch (DecoderException ee) {
-                // Exception expected, test segment passes.
-            }
+        new QCodec("NONSENSE");
     }
 
     @Test

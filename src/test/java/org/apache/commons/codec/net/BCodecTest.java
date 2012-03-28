@@ -21,6 +21,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
+import java.nio.charset.UnsupportedCharsetException;
+
 import org.apache.commons.codec.CharEncoding;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
@@ -123,21 +125,9 @@ public class BCodecTest {
         }
     }
 
-    @Test
+    @Test(expected=UnsupportedCharsetException.class)
     public void testInvalidEncoding() {
-        BCodec bcodec = new BCodec("NONSENSE");
-        try {
-            bcodec.encode("Hello there!");
-            fail("We set the encoding to a bogus NONSENSE value, this shouldn't have worked.");
-        } catch (EncoderException ee) {
-            // Exception expected, test segment passes.
-        }
-        try {
-            bcodec.decode("=?NONSENSE?B?Hello there!?=");
-            fail("We set the encoding to a bogus NONSENSE value, this shouldn't have worked.");
-        } catch (DecoderException ee) {
-            // Exception expected, test segment passes.
-        }
+        new BCodec("NONSENSE");
     }
 
     @Test
