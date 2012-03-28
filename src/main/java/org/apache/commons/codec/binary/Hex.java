@@ -17,11 +17,13 @@
 
 package org.apache.commons.codec.binary;
 
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+import java.nio.charset.UnsupportedCharsetException;
 
 import org.apache.commons.codec.BinaryDecoder;
 import org.apache.commons.codec.BinaryEncoder;
 import org.apache.commons.codec.CharEncoding;
+import org.apache.commons.codec.Charsets;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 
@@ -34,6 +36,13 @@ import org.apache.commons.codec.EncoderException;
  * @version $Id$
  */
 public class Hex implements BinaryEncoder, BinaryDecoder {
+
+    /**
+     * Default charset name is {@link Charsets#UTF_8}
+     * 
+     * @since 1.7
+     */
+    public static final Charset DEFAULT_CHARSET = Charsets.UTF_8;
 
     /**
      * Default charset name is {@link CharEncoding#UTF_8}
@@ -169,25 +178,39 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
         return digit;
     }
 
-    private final String charsetName;
+    private final Charset charset;
 
     /**
-     * Creates a new codec with the default charset name {@link #DEFAULT_CHARSET_NAME}
+     * Creates a new codec with the default charset name {@link #DEFAULT_CHARSET}
      */
     public Hex() {
         // use default encoding
-        this.charsetName = DEFAULT_CHARSET_NAME;
+        this.charset = DEFAULT_CHARSET;
+    }
+
+    /**
+     * Creates a new codec with the given Charset.
+     * 
+     * @param charset
+     *            the charset.
+     * @since 1.7
+     */
+    public Hex(Charset charset) {
+        this.charset = charset;
     }
 
     /**
      * Creates a new codec with the given charset name.
      * 
-     * @param csName
+     * @param charsetName
      *            the charset name.
+     * @throws UnsupportedCharsetException
+     *             If the named charset is unavailable
      * @since 1.4
+     * @since 1.7 throws UnsupportedCharsetException if the named charset is unavailable
      */
-    public Hex(String csName) {
-        this.charsetName = csName;
+    public Hex(String charsetName) {
+        this(Charset.forName(charsetName));
     }
 
     /**
@@ -203,11 +226,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * @see #decodeHex(char[])
      */
     public byte[] decode(byte[] array) throws DecoderException {
-        try {
-            return decodeHex(new String(array, getCharsetName()).toCharArray());
-        } catch (UnsupportedEncodingException e) {
-            throw new DecoderException(e.getMessage(), e);
-        }
+        return decodeHex(new String(array, getCharset()).toCharArray());
     }
 
     /**
@@ -238,19 +257,17 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * represent any given byte.
      * <p>
      * The conversion from hexadecimal characters to the returned bytes is performed with the charset named by
-     * {@link #getCharsetName()}.
+     * {@link #getCharset()}.
      * </p>
      * 
      * @param array
      *            a byte[] to convert to Hex characters
      * @return A byte[] containing the bytes of the hexadecimal characters
-     * @throws IllegalStateException
-     *             if the charsetName is invalid. This API throws {@link IllegalStateException} instead of
-     *             {@link UnsupportedEncodingException} for backward compatibility.
+     * @since 1.7 No longer throws IllegalStateException if the charsetName is invalid.
      * @see #encodeHex(byte[])
      */
     public byte[] encode(byte[] array) {
-        return StringUtils.getBytesUnchecked(encodeHexString(array), getCharsetName());
+        return encodeHexString(array).getBytes(this.getCharset());
     }
 
     /**
@@ -259,7 +276,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * characters to represent any given byte.
      * <p>
      * The conversion from hexadecimal characters to bytes to be encoded to performed with the charset named by
-     * {@link #getCharsetName()}.
+     * {@link #getCharset()}.
      * </p>
      * 
      * @param object
@@ -271,13 +288,21 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      */
     public Object encode(Object object) throws EncoderException {
         try {
-            byte[] byteArray = object instanceof String ? ((String) object).getBytes(getCharsetName()) : (byte[]) object;
+            byte[] byteArray = object instanceof String ? ((String) object).getBytes(this.getCharset()) : (byte[]) object;
             return encodeHex(byteArray);
         } catch (ClassCastException e) {
             throw new EncoderException(e.getMessage(), e);
-        } catch (UnsupportedEncodingException e) {
-            throw new EncoderException(e.getMessage(), e);
         }
+    }
+
+    /**
+     * Gets the charset.
+     * 
+     * @return the charset.
+     * @since 1.7
+     */
+    public Charset getCharset() {
+        return this.charset;
     }
 
     /**
@@ -287,7 +312,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * @since 1.4
      */
     public String getCharsetName() {
-        return this.charsetName;
+        return this.charset.name();
     }
 
     /**
@@ -297,6 +322,6 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      */
     @Override
     public String toString() {
-        return super.toString() + "[charsetName=" + this.charsetName + "]";
+        return super.toString() + "[charsetName=" + this.charset + "]";
     }
 }

@@ -24,6 +24,7 @@ import static org.junit.Assert.fail;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+import java.nio.charset.UnsupportedCharsetException;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -159,7 +160,7 @@ public class HexTest {
         Hex utf8Codec = new Hex();
         expectedHexString = "48656c6c6f20576f726c64";
         byte[] decodedUtf8Bytes = (byte[]) utf8Codec.decode(expectedHexString);
-        actualStringFromBytes = new String(decodedUtf8Bytes, utf8Codec.getCharsetName());
+        actualStringFromBytes = new String(decodedUtf8Bytes, utf8Codec.getCharset());
         // sanity check:
         assertEquals(name, sourceString, actualStringFromBytes);
         // actual check:
@@ -168,34 +169,9 @@ public class HexTest {
         assertEquals(name, sourceString, actualStringFromBytes);
     }
 
-    @Test
-    public void testCustomCharsetBadNameEncodeByteArray() throws UnsupportedEncodingException {
-        try {
-            new Hex(BAD_ENCODING_NAME).encode("Hello World".getBytes("UTF-8"));
-            fail("Expected " + IllegalStateException.class.getName());
-        } catch (IllegalStateException e) {
-            // Expected
-        }
-    }
-
-    @Test
-    public void testCustomCharsetBadNameEncodeObject() {
-        try {
-            new Hex(BAD_ENCODING_NAME).encode("Hello World");
-            fail("Expected " + EncoderException.class.getName());
-        } catch (EncoderException e) {
-            // Expected
-        }
-    }
-
-    @Test
-    public void testCustomCharsetBadNameDecodeObject() throws UnsupportedEncodingException {
-        try {
-            new Hex(BAD_ENCODING_NAME).decode("Hello World".getBytes("UTF-8"));
-            fail("Expected " + DecoderException.class.getName());
-        } catch (DecoderException e) {
-            // Expected
-        }
+    @Test(expected=UnsupportedCharsetException.class)
+    public void testCustomCharsetBadName() throws UnsupportedEncodingException {
+        new Hex(BAD_ENCODING_NAME);
     }
 
     @Test
