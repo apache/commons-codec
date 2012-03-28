@@ -40,6 +40,7 @@ public class StringEncoderComparator implements Comparator {
      * @deprecated Creating an instance without a {@link StringEncoder} leads to a {@link NullPointerException}. Will be
      *             removed in 2.0.
      */
+    @Deprecated
     public StringEncoderComparator() {
         this.stringEncoder = null; // Trying to use this will cause things to break
     }

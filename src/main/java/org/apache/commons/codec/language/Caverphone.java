@@ -33,6 +33,7 @@ import org.apache.commons.codec.StringEncoder;
  * @since 1.4
  * @deprecated 1.5 Replaced by {@link Caverphone2}, will be removed in 2.0.
  */
+@Deprecated
 public class Caverphone implements StringEncoder {
 
     /**
