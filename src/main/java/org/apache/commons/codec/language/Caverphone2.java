@@ -40,6 +40,7 @@ public class Caverphone2 extends AbstractCaverphone {
      *            String the source string
      * @return A caverphone code for the given String
      */
+    @Override
     public String encode(String source) {
         String txt = source;
         if (txt == null || txt.length() == 0) {

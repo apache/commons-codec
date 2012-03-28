@@ -193,6 +193,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      * @param bytes array of bytes to convert to URL safe characters
      * @return array of bytes containing URL safe characters
      */
+    @Override
     public byte[] encode(byte[] bytes) {
         return encodeUrl(WWW_FORM_URL, bytes);
     }
@@ -207,6 +208,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      * @return array of original bytes 
      * @throws DecoderException Thrown if URL decoding is unsuccessful
      */
+    @Override
     public byte[] decode(byte[] bytes) throws DecoderException {
         return decodeUrl(bytes);
     }
@@ -239,6 +241,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      * 
      * @see #getDefaultCharset()
      */
+    @Override
     public String encode(String str) throws EncoderException {
         if (str == null) {
             return null;
@@ -281,6 +284,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      * 
      * @see #getDefaultCharset()
      */
+    @Override
     public String decode(String str) throws DecoderException {
         if (str == null) {
             return null;
@@ -302,6 +306,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      *                          applicable to objects of this type or
      *                          if encoding is unsuccessful
      */
+    @Override
     public Object encode(Object obj) throws EncoderException {
         if (obj == null) {
             return null;
@@ -327,6 +332,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      *                  Thrown if the argument is not a <code>String</code> or <code>byte[]</code>. Thrown if a failure condition is
      *                  encountered during the decode process.
      */
+    @Override
     public Object decode(Object obj) throws DecoderException {
         if (obj == null) {
             return null;

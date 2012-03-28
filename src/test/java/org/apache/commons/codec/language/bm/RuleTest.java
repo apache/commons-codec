@@ -31,10 +31,12 @@ import org.junit.Test;
  */
 public class RuleTest {
     private static class NegativeIntegerBaseMatcher extends BaseMatcher<Integer> {
+        @Override
         public void describeTo(Description description) {
             description.appendText("value should be negative");
         }
 
+        @Override
         public boolean matches(Object item) {
             return (Integer) item < 0;
         }

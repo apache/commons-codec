@@ -225,6 +225,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      *             Thrown if an odd number of characters is supplied to this function
      * @see #decodeHex(char[])
      */
+    @Override
     public byte[] decode(byte[] array) throws DecoderException {
         return decodeHex(new String(array, getCharset()).toCharArray());
     }
@@ -242,6 +243,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      *             char[]
      * @see #decodeHex(char[])
      */
+    @Override
     public Object decode(Object object) throws DecoderException {
         try {
             char[] charArray = object instanceof String ? ((String) object).toCharArray() : (char[]) object;
@@ -266,6 +268,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * @since 1.7 No longer throws IllegalStateException if the charsetName is invalid.
      * @see #encodeHex(byte[])
      */
+    @Override
     public byte[] encode(byte[] array) {
         return encodeHexString(array).getBytes(this.getCharset());
     }
@@ -286,6 +289,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      *             Thrown if the given object is not a String or byte[]
      * @see #encodeHex(byte[])
      */
+    @Override
     public Object encode(Object object) throws EncoderException {
         try {
             byte[] byteArray = object instanceof String ? ((String) object).getBytes(this.getCharset()) : (byte[]) object;

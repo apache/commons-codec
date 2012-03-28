@@ -256,14 +256,17 @@ public class PhoneticEngine {
         // return cached;
         final CharSequence[][] cache = new CharSequence[cached.length()][cached.length()];
         return new CharSequence() {
+            @Override
             public char charAt(int index) {
                 return cached.charAt(index);
             }
 
+            @Override
             public int length() {
                 return cached.length();
             }
 
+            @Override
             public CharSequence subSequence(int start, int end) {
                 if (start == end) {
                     return "";

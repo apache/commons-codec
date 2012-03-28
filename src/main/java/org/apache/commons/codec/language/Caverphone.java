@@ -70,6 +70,7 @@ public class Caverphone implements StringEncoder {
      * @throws EncoderException
      *             if the parameter supplied is not of type java.lang.String
      */
+    @Override
     public Object encode(Object obj) throws EncoderException {
         if (!(obj instanceof String)) {
             throw new EncoderException("Parameter supplied to Caverphone encode is not of type java.lang.String");
@@ -84,6 +85,7 @@ public class Caverphone implements StringEncoder {
      *            String object to encode
      * @return The caverphone code corresponding to the String supplied
      */
+    @Override
     public String encode(String str) {
         return this.caverphone(str);
     }

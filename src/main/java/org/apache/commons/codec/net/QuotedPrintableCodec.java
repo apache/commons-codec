@@ -225,6 +225,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      *                  array of bytes to be encoded
      * @return array of bytes containing quoted-printable data
      */
+    @Override
     public byte[] encode(byte[] bytes) {
         return encodeQuotedPrintable(PRINTABLE_CHARS, bytes);
     }
@@ -244,6 +245,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * @throws DecoderException
      *                  Thrown if quoted-printable decoding is unsuccessful
      */
+    @Override
     public byte[] decode(byte[] bytes) throws DecoderException {
         return decodeQuotedPrintable(bytes);
     }
@@ -265,6 +267,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * 
      * @see #getCharset()
      */
+    @Override
     public String encode(String str) throws EncoderException {
         return this.encode(str, getCharset());
     }
@@ -321,6 +324,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      *                  Thrown if charset is not supported.
      * @see #getCharset()
      */
+    @Override
     public String decode(String str) throws DecoderException {
         return this.decode(str, this.getCharset());
     }
@@ -335,6 +339,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      *                  Thrown if quoted-printable encoding is not applicable to objects of this type or if encoding is
      *                  unsuccessful
      */
+    @Override
     public Object encode(Object obj) throws EncoderException {
         if (obj == null) {
             return null;
@@ -360,6 +365,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      *                  Thrown if the argument is not a <code>String</code> or <code>byte[]</code>. Thrown if a failure condition is
      *                  encountered during the decode process.
      */
+    @Override
     public Object decode(Object obj) throws DecoderException {
         if (obj == null) {
             return null;

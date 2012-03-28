@@ -128,6 +128,7 @@ public class RefinedSoundex implements StringEncoder {
      * @throws EncoderException
      *                  if the parameter supplied is not of type java.lang.String
      */
+    @Override
     public Object encode(Object obj) throws EncoderException {
         if (!(obj instanceof String)) {
             throw new EncoderException("Parameter supplied to RefinedSoundex encode is not of type java.lang.String");
@@ -142,6 +143,7 @@ public class RefinedSoundex implements StringEncoder {
      *                  A String object to encode
      * @return A Soundex code corresponding to the String supplied
      */
+    @Override
     public String encode(String str) {
         return soundex(str);
     }

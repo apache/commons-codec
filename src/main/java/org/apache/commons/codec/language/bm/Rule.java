@@ -83,6 +83,7 @@ public class Rule {
 
     public static final class Phoneme implements PhonemeExpr {
         public static final Comparator<Phoneme> COMPARATOR = new Comparator<Phoneme>() {
+            @Override
             public int compare(Phoneme o1, Phoneme o2) {
                 for (int i = 0; i < o1.phonemeText.length(); i++) {
                     if (i >= o2.phonemeText.length()) {
@@ -118,6 +119,7 @@ public class Rule {
             return this.languages;
         }
 
+        @Override
         public Iterable<Phoneme> getPhonemes() {
             return Collections.singleton(this);
         }
@@ -142,6 +144,7 @@ public class Rule {
             this.phonemes = phonemes;
         }
 
+        @Override
         public List<Phoneme> getPhonemes() {
             return this.phonemes;
         }
@@ -155,6 +158,7 @@ public class Rule {
     }
 
     public static final RPattern ALL_STRINGS_RMATCHER = new RPattern() {
+        @Override
         public boolean isMatch(CharSequence input) {
             return true;
         }
@@ -414,12 +418,14 @@ public class Rule {
                 if (content.length() == 0) {
                     // empty
                     return new RPattern() {
+                        @Override
                         public boolean isMatch(CharSequence input) {
                             return input.length() == 0;
                         }
                     };
                 } else {
                     return new RPattern() {
+                        @Override
                         public boolean isMatch(CharSequence input) {
                             return input.equals(content);
                         }
@@ -431,6 +437,7 @@ public class Rule {
             } else if (startsWith) {
                 // matches from start
                 return new RPattern() {
+                    @Override
                     public boolean isMatch(CharSequence input) {
                         return startsWith(input, content);
                     }
@@ -438,6 +445,7 @@ public class Rule {
             } else if (endsWith) {
                 // matches from start
                 return new RPattern() {
+                    @Override
                     public boolean isMatch(CharSequence input) {
                         return endsWith(input, content);
                     }
@@ -461,6 +469,7 @@ public class Rule {
                     if (startsWith && endsWith) {
                         // exact match
                         return new RPattern() {
+                            @Override
                             public boolean isMatch(CharSequence input) {
                                 return input.length() == 1 && contains(bContent, input.charAt(0)) == shouldMatch;
                             }
@@ -468,6 +477,7 @@ public class Rule {
                     } else if (startsWith) {
                         // first char
                         return new RPattern() {
+                            @Override
                             public boolean isMatch(CharSequence input) {
                                 return input.length() > 0 && contains(bContent, input.charAt(0)) == shouldMatch;
                             }
@@ -475,6 +485,7 @@ public class Rule {
                     } else if (endsWith) {
                         // last char
                         return new RPattern() {
+                            @Override
                             public boolean isMatch(CharSequence input) {
                                 return input.length() > 0 && contains(bContent, input.charAt(input.length() - 1)) == shouldMatch;
                             }
@@ -488,6 +499,7 @@ public class Rule {
         return new RPattern() {
             Pattern pattern = Pattern.compile(regex);
 
+            @Override
             public boolean isMatch(CharSequence input) {
                 Matcher matcher = pattern.matcher(input);
                 return matcher.find();

@@ -143,6 +143,7 @@ public class Soundex implements StringEncoder {
      * @throws IllegalArgumentException
      *                  if a character is not mapped
      */
+    @Override
     public Object encode(Object obj) throws EncoderException {
         if (!(obj instanceof String)) {
             throw new EncoderException("Parameter supplied to Soundex encode is not of type java.lang.String");
@@ -159,6 +160,7 @@ public class Soundex implements StringEncoder {
      * @throws IllegalArgumentException
      *                  if a character is not mapped
      */
+    @Override
     public String encode(String str) {
         return soundex(str);
     }

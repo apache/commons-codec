@@ -84,6 +84,7 @@ public class BeiderMorseEncoder implements StringEncoder {
     // a cached object
     private PhoneticEngine engine = new PhoneticEngine(NameType.GENERIC, RuleType.APPROX, true);
 
+    @Override
     public Object encode(Object source) throws EncoderException {
         if (!(source instanceof String)) {
             throw new EncoderException("BeiderMorseEncoder encode parameter is not of type String");
@@ -91,6 +92,7 @@ public class BeiderMorseEncoder implements StringEncoder {
         return encode((String) source);
     }
 
+    @Override
     public String encode(String source) throws EncoderException {
         if (source == null) {
             return null;
