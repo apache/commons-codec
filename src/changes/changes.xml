@@ -31,6 +31,9 @@
     </release>
     -->
     <release version="1.7" date="TBD" description="Feature and fix release.">
+      <action dev="ggregory" type="fix" issue="CODEC-136">
+        Use Charset objects when possible, create Charsets for required character encodings
+      </action>
       <action dev="ggregory" type="fix" issue="CODEC-132" due-to="rcmuir">
         BeiderMorseEncoder OOM issues
       </action>
