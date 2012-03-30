@@ -17,6 +17,7 @@
 package org.apache.commons.codec;
 
 import java.nio.charset.Charset;
+import java.nio.charset.UnsupportedCharsetException;
 
 /**
  * Charsets required of every implementation of the Java platform.
@@ -54,10 +55,36 @@ import java.nio.charset.Charset;
  * @version $Id: CharEncoding.java 1173287 2011-09-20 18:16:19Z ggregory $
  */
 public class Charsets {
+    
     //
     // This class should only contain Charset instances for required encodings. This guarantees that it will load correctly and
     // without delay on all Java platforms.
     //
+    
+    /**
+     * Returns the given Charset or the default Charset if the given Charset is null. 
+     * 
+     * @param charset
+     *            A charset or null.
+     * @return the given Charset or the default Charset if the given Charset is null
+     */
+    public static Charset toCharset(Charset charset) {
+        return charset == null ? Charset.defaultCharset() : charset;
+    }
+
+    /**
+     * Returns a Charset for the named charset. If the name is null, return the default Charset.
+     * 
+     * @param charset
+     *            The name of the requested charset, may be null.
+     * @return a Charset for the named charset
+     * @throws UnsupportedCharsetException
+     *             If the named charset is unavailable
+     */
+    public static Charset toCharset(String charset) {
+        return charset == null ? Charset.defaultCharset() : Charset.forName(charset);
+    }
+
     /**
      * CharEncodingISO Latin Alphabet No. 1, a.k.a. ISO-LATIN-1. </p>
      * <p>

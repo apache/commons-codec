@@ -17,6 +17,8 @@
 
 package org.apache.commons.codec;
 
+import java.nio.charset.Charset;
+
 import junit.framework.Assert;
 
 import org.junit.Test;
@@ -27,6 +29,14 @@ import org.junit.Test;
  * @version $Id: CharEncodingTest.java 1298985 2012-03-09 19:12:49Z ggregory $
  */
 public class CharsetsTest {
+
+    @Test
+    public void testToCharset() {
+        Assert.assertEquals(Charset.defaultCharset(), Charsets.toCharset((String) null));
+        Assert.assertEquals(Charset.defaultCharset(), Charsets.toCharset((Charset) null));
+        Assert.assertEquals(Charset.defaultCharset(), Charsets.toCharset(Charset.defaultCharset()));
+        Assert.assertEquals(Charset.forName("UTF-8"), Charsets.toCharset(Charset.forName("UTF-8")));
+    }
 
     @Test
     public void testIso8859_1() {
