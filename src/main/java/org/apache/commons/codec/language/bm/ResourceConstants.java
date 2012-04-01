@@ -22,7 +22,6 @@ import org.apache.commons.codec.CharEncoding;
 /**
  * Constants used to process resource files.
  * 
- * @author Apache Software Foundation
  * @since 1.6
  */
 class ResourceConstants {

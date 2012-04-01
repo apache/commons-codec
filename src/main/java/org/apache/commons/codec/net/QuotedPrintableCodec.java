@@ -58,7 +58,6 @@ import org.apache.commons.codec.binary.StringUtils;
  * @see <a href="http://www.ietf.org/rfc/rfc1521.txt"> RFC 1521 MIME (Multipurpose Internet Mail Extensions) Part One:
  *          Mechanisms for Specifying and Describing the Format of Internet Message Bodies </a>
  * 
- * @author Apache Software Foundation
  * @since 1.3
  * @version $Id$
  */

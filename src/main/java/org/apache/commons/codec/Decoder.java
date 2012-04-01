@@ -27,7 +27,6 @@ package org.apache.commons.codec;
  * 
  * <p>One of the two interfaces at the center of the codec package.</p>
  * 
- * @author Apache Software Foundation
  * @version $Id$
  */
 public interface Decoder {

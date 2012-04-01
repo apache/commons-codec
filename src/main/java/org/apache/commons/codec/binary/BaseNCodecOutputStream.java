@@ -23,6 +23,8 @@ import java.io.FilterOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import org.apache.commons.codec.binary.BaseNCodec.Context;
+
 /**
  * Abstract superclass for Base-N output streams.
  * 
@@ -36,6 +38,9 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
 
     private final byte[] singleByte = new byte[1];
 
+    private Context context = new Context();
+
+    // TODO should this be protected?
     public BaseNCodecOutputStream(OutputStream out, BaseNCodec basedCodec, boolean doEncode) {
         super(out);
         this.baseNCodec = basedCodec;
@@ -84,9 +89,9 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
             throw new IndexOutOfBoundsException();
         } else if (len > 0) {
             if (doEncode) {
-                baseNCodec.encode(b, offset, len);
+                baseNCodec.encode(b, offset, len, context);
             } else {
-                baseNCodec.decode(b, offset, len);
+                baseNCodec.decode(b, offset, len, context);
             }
             flush(false);
         }
@@ -102,10 +107,10 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
      *             if an I/O error occurs.
      */
     private void flush(boolean propogate) throws IOException {
-        int avail = baseNCodec.available();
+        int avail = baseNCodec.available(context);
         if (avail > 0) {
             byte[] buf = new byte[avail];
-            int c = baseNCodec.readResults(buf, 0, avail);
+            int c = baseNCodec.readResults(buf, 0, avail, context);
             if (c > 0) {
                 out.write(buf, 0, c);
             }
@@ -136,9 +141,9 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
     public void close() throws IOException {
         // Notify encoder of EOF (-1).
         if (doEncode) {
-            baseNCodec.encode(singleByte, 0, EOF);
+            baseNCodec.encode(singleByte, 0, EOF, context);
         } else {
-            baseNCodec.decode(singleByte, 0, EOF);
+            baseNCodec.decode(singleByte, 0, EOF, context);
         }
         flush();
         out.close();

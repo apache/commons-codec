@@ -33,7 +33,7 @@ package org.apache.commons.codec.binary;
  * This class operates directly on byte streams, and not character streams.
  * </p>
  * <p>
- * This class is not thread-safe. Each thread should use its own instance.
+ * This class is thread-safe.
  * </p>
  * 
  * @see <a href="http://www.ietf.org/rfc/rfc4648.txt">RFC 4648</a>
@@ -122,8 +122,6 @@ public class Base32 extends BaseNCodec {
      * Place holder for the bytes we're dealing with for our based logic. 
      * Bitwise operations store and extract the encoding or decoding from this variable.
      */
-    private long bitWorkArea;
-
     /**
      * Convenience variable to help us determine when our buffer is going to run out of room and needs resizing.
      * <code>decodeSize = {@link #BYTES_PER_ENCODED_BLOCK} - 1 + lineSeparator.length;</code>
@@ -275,36 +273,37 @@ public class Base32 extends BaseNCodec {
      *            Position to start reading data from.
      * @param inAvail
      *            Amount of bytes available from input for encoding.
+     * @param context the context to be used
      *
      * Output is written to {@link #buffer} as 8-bit octets, using {@link #pos} as the buffer position
      */
     @Override
-    void decode(byte[] in, int inPos, int inAvail) { // package protected for access from I/O streams
-        if (eof) {
+    void decode(byte[] in, int inPos, int inAvail, Context context) { // package protected for access from I/O streams
+        if (context.eof) {
             return;
         }
         if (inAvail < 0) {
-            eof = true;
+            context.eof = true;
         }
         for (int i = 0; i < inAvail; i++) {
             byte b = in[inPos++];
             if (b == PAD) {
                 // We're done.
-                eof = true;
+                context.eof = true;
                 break;
             } else {
-                ensureBufferSize(decodeSize);
+                ensureBufferSize(decodeSize, context);
                 if (b >= 0 && b < this.decodeTable.length) {
                     int result = this.decodeTable[b];
                     if (result >= 0) {
-                        modulus = (modulus+1) % BYTES_PER_ENCODED_BLOCK;
-                        bitWorkArea = (bitWorkArea << BITS_PER_ENCODED_BYTE) + result; // collect decoded bytes
-                        if (modulus == 0) { // we can output the 5 bytes
-                            buffer[pos++] = (byte) ((bitWorkArea >> 32) & MASK_8BITS);
-                            buffer[pos++] = (byte) ((bitWorkArea >> 24) & MASK_8BITS);
-                            buffer[pos++] = (byte) ((bitWorkArea >> 16) & MASK_8BITS);
-                            buffer[pos++] = (byte) ((bitWorkArea >> 8) & MASK_8BITS);
-                            buffer[pos++] = (byte) (bitWorkArea & MASK_8BITS);
+                        context.modulus = (context.modulus+1) % BYTES_PER_ENCODED_BLOCK;
+                        context.lbitWorkArea = (context.lbitWorkArea << BITS_PER_ENCODED_BYTE) + result; // collect decoded bytes
+                        if (context.modulus == 0) { // we can output the 5 bytes
+                            context.buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 32) & MASK_8BITS);
+                            context.buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 24) & MASK_8BITS);
+                            context.buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 16) & MASK_8BITS);
+                            context.buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 8) & MASK_8BITS);
+                            context.buffer[context.pos++] = (byte) (context.lbitWorkArea & MASK_8BITS);
                         }
                     }
                 }
@@ -314,40 +313,40 @@ public class Base32 extends BaseNCodec {
         // Two forms of EOF as far as Base32 decoder is concerned: actual
         // EOF (-1) and first time '=' character is encountered in stream.
         // This approach makes the '=' padding characters completely optional.
-        if (eof && modulus >= 2) { // if modulus < 2, nothing to do
-            ensureBufferSize(decodeSize);
+        if (context.eof && context.modulus >= 2) { // if modulus < 2, nothing to do
+            ensureBufferSize(decodeSize, context);
     
             //  we ignore partial bytes, i.e. only multiples of 8 count
-            switch (modulus) {
+            switch (context.modulus) {
                 case 2 : // 10 bits, drop 2 and output one byte
-                    buffer[pos++] = (byte) ((bitWorkArea >> 2) & MASK_8BITS);
+                    context.buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 2) & MASK_8BITS);
                     break;
                 case 3 : // 15 bits, drop 7 and output 1 byte
-                    buffer[pos++] = (byte) ((bitWorkArea >> 7) & MASK_8BITS);
+                    context.buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 7) & MASK_8BITS);
                     break;
                 case 4 : // 20 bits = 2*8 + 4
-                    bitWorkArea = bitWorkArea >> 4; // drop 4 bits
-                    buffer[pos++] = (byte) ((bitWorkArea >> 8) & MASK_8BITS);
-                    buffer[pos++] = (byte) ((bitWorkArea) & MASK_8BITS);
+                    context.lbitWorkArea = context.lbitWorkArea >> 4; // drop 4 bits
+                    context.buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 8) & MASK_8BITS);
+                    context.buffer[context.pos++] = (byte) ((context.lbitWorkArea) & MASK_8BITS);
                     break;
                 case 5 : // 25bits = 3*8 + 1
-                    bitWorkArea = bitWorkArea >> 1;
-                    buffer[pos++] = (byte) ((bitWorkArea >> 16) & MASK_8BITS);
-                    buffer[pos++] = (byte) ((bitWorkArea >> 8) & MASK_8BITS);
-                    buffer[pos++] = (byte) ((bitWorkArea) & MASK_8BITS);
+                    context.lbitWorkArea = context.lbitWorkArea >> 1;
+                    context.buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 16) & MASK_8BITS);
+                    context.buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 8) & MASK_8BITS);
+                    context.buffer[context.pos++] = (byte) ((context.lbitWorkArea) & MASK_8BITS);
                     break;
                 case 6 : // 30bits = 3*8 + 6
-                    bitWorkArea = bitWorkArea >> 6;
-                    buffer[pos++] = (byte) ((bitWorkArea >> 16) & MASK_8BITS);
-                    buffer[pos++] = (byte) ((bitWorkArea >> 8) & MASK_8BITS);
-                    buffer[pos++] = (byte) ((bitWorkArea) & MASK_8BITS);
+                    context.lbitWorkArea = context.lbitWorkArea >> 6;
+                    context.buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 16) & MASK_8BITS);
+                    context.buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 8) & MASK_8BITS);
+                    context.buffer[context.pos++] = (byte) ((context.lbitWorkArea) & MASK_8BITS);
                     break;
                 case 7 : // 35 = 4*8 +3
-                    bitWorkArea = bitWorkArea >> 3;
-                    buffer[pos++] = (byte) ((bitWorkArea >> 24) & MASK_8BITS);
-                    buffer[pos++] = (byte) ((bitWorkArea >> 16) & MASK_8BITS);
-                    buffer[pos++] = (byte) ((bitWorkArea >> 8) & MASK_8BITS);
-                    buffer[pos++] = (byte) ((bitWorkArea) & MASK_8BITS);
+                    context.lbitWorkArea = context.lbitWorkArea >> 3;
+                    context.buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 24) & MASK_8BITS);
+                    context.buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 16) & MASK_8BITS);
+                    context.buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 8) & MASK_8BITS);
+                    context.buffer[context.pos++] = (byte) ((context.lbitWorkArea) & MASK_8BITS);
                     break;
             }
         }
@@ -366,93 +365,94 @@ public class Base32 extends BaseNCodec {
      *            Position to start reading data from.
      * @param inAvail
      *            Amount of bytes available from input for encoding.
+     * @param context the context to be used
      */
     @Override
-    void encode(byte[] in, int inPos, int inAvail) { // package protected for access from I/O streams
-        if (eof) {
+    void encode(byte[] in, int inPos, int inAvail, Context context) { // package protected for access from I/O streams
+        if (context.eof) {
             return;
         }
         // inAvail < 0 is how we're informed of EOF in the underlying data we're
         // encoding.
         if (inAvail < 0) {
-            eof = true;
-            if (0 == modulus && lineLength == 0) {
+            context.eof = true;
+            if (0 == context.modulus && lineLength == 0) {
                 return; // no leftovers to process and not using chunking
             }
-            ensureBufferSize(encodeSize);
-            int savedPos = pos;
-            switch (modulus) { // % 5
+            ensureBufferSize(encodeSize, context);
+            int savedPos = context.pos;
+            switch (context.modulus) { // % 5
                 case 1 : // Only 1 octet; take top 5 bits then remainder
-                    buffer[pos++] = encodeTable[(int)(bitWorkArea >> 3) & MASK_5BITS]; // 8-1*5 = 3
-                    buffer[pos++] = encodeTable[(int)(bitWorkArea << 2) & MASK_5BITS]; // 5-3=2
-                    buffer[pos++] = PAD;
-                    buffer[pos++] = PAD;
-                    buffer[pos++] = PAD;
-                    buffer[pos++] = PAD;
-                    buffer[pos++] = PAD;
-                    buffer[pos++] = PAD;
+                    context.buffer[context.pos++] = encodeTable[(int)(context.lbitWorkArea >> 3) & MASK_5BITS]; // 8-1*5 = 3
+                    context.buffer[context.pos++] = encodeTable[(int)(context.lbitWorkArea << 2) & MASK_5BITS]; // 5-3=2
+                    context.buffer[context.pos++] = PAD;
+                    context.buffer[context.pos++] = PAD;
+                    context.buffer[context.pos++] = PAD;
+                    context.buffer[context.pos++] = PAD;
+                    context.buffer[context.pos++] = PAD;
+                    context.buffer[context.pos++] = PAD;
                     break;
     
                 case 2 : // 2 octets = 16 bits to use
-                    buffer[pos++] = encodeTable[(int)(bitWorkArea >> 11) & MASK_5BITS]; // 16-1*5 = 11
-                    buffer[pos++] = encodeTable[(int)(bitWorkArea >>  6) & MASK_5BITS]; // 16-2*5 = 6
-                    buffer[pos++] = encodeTable[(int)(bitWorkArea >>  1) & MASK_5BITS]; // 16-3*5 = 1
-                    buffer[pos++] = encodeTable[(int)(bitWorkArea <<  4) & MASK_5BITS]; // 5-1 = 4
-                    buffer[pos++] = PAD;
-                    buffer[pos++] = PAD;
-                    buffer[pos++] = PAD;
-                    buffer[pos++] = PAD;
+                    context.buffer[context.pos++] = encodeTable[(int)(context.lbitWorkArea >> 11) & MASK_5BITS]; // 16-1*5 = 11
+                    context.buffer[context.pos++] = encodeTable[(int)(context.lbitWorkArea >>  6) & MASK_5BITS]; // 16-2*5 = 6
+                    context.buffer[context.pos++] = encodeTable[(int)(context.lbitWorkArea >>  1) & MASK_5BITS]; // 16-3*5 = 1
+                    context.buffer[context.pos++] = encodeTable[(int)(context.lbitWorkArea <<  4) & MASK_5BITS]; // 5-1 = 4
+                    context.buffer[context.pos++] = PAD;
+                    context.buffer[context.pos++] = PAD;
+                    context.buffer[context.pos++] = PAD;
+                    context.buffer[context.pos++] = PAD;
                     break;
                 case 3 : // 3 octets = 24 bits to use
-                    buffer[pos++] = encodeTable[(int)(bitWorkArea >> 19) & MASK_5BITS]; // 24-1*5 = 19
-                    buffer[pos++] = encodeTable[(int)(bitWorkArea >> 14) & MASK_5BITS]; // 24-2*5 = 14
-                    buffer[pos++] = encodeTable[(int)(bitWorkArea >>  9) & MASK_5BITS]; // 24-3*5 = 9
-                    buffer[pos++] = encodeTable[(int)(bitWorkArea >>  4) & MASK_5BITS]; // 24-4*5 = 4
-                    buffer[pos++] = encodeTable[(int)(bitWorkArea <<  1) & MASK_5BITS]; // 5-4 = 1
-                    buffer[pos++] = PAD;
-                    buffer[pos++] = PAD;
-                    buffer[pos++] = PAD;
+                    context.buffer[context.pos++] = encodeTable[(int)(context.lbitWorkArea >> 19) & MASK_5BITS]; // 24-1*5 = 19
+                    context.buffer[context.pos++] = encodeTable[(int)(context.lbitWorkArea >> 14) & MASK_5BITS]; // 24-2*5 = 14
+                    context.buffer[context.pos++] = encodeTable[(int)(context.lbitWorkArea >>  9) & MASK_5BITS]; // 24-3*5 = 9
+                    context.buffer[context.pos++] = encodeTable[(int)(context.lbitWorkArea >>  4) & MASK_5BITS]; // 24-4*5 = 4
+                    context.buffer[context.pos++] = encodeTable[(int)(context.lbitWorkArea <<  1) & MASK_5BITS]; // 5-4 = 1
+                    context.buffer[context.pos++] = PAD;
+                    context.buffer[context.pos++] = PAD;
+                    context.buffer[context.pos++] = PAD;
                     break;
                 case 4 : // 4 octets = 32 bits to use
-                    buffer[pos++] = encodeTable[(int)(bitWorkArea >> 27) & MASK_5BITS]; // 32-1*5 = 27
-                    buffer[pos++] = encodeTable[(int)(bitWorkArea >> 22) & MASK_5BITS]; // 32-2*5 = 22
-                    buffer[pos++] = encodeTable[(int)(bitWorkArea >> 17) & MASK_5BITS]; // 32-3*5 = 17
-                    buffer[pos++] = encodeTable[(int)(bitWorkArea >> 12) & MASK_5BITS]; // 32-4*5 = 12
-                    buffer[pos++] = encodeTable[(int)(bitWorkArea >>  7) & MASK_5BITS]; // 32-5*5 =  7
-                    buffer[pos++] = encodeTable[(int)(bitWorkArea >>  2) & MASK_5BITS]; // 32-6*5 =  2
-                    buffer[pos++] = encodeTable[(int)(bitWorkArea <<  3) & MASK_5BITS]; // 5-2 = 3
-                    buffer[pos++] = PAD;
+                    context.buffer[context.pos++] = encodeTable[(int)(context.lbitWorkArea >> 27) & MASK_5BITS]; // 32-1*5 = 27
+                    context.buffer[context.pos++] = encodeTable[(int)(context.lbitWorkArea >> 22) & MASK_5BITS]; // 32-2*5 = 22
+                    context.buffer[context.pos++] = encodeTable[(int)(context.lbitWorkArea >> 17) & MASK_5BITS]; // 32-3*5 = 17
+                    context.buffer[context.pos++] = encodeTable[(int)(context.lbitWorkArea >> 12) & MASK_5BITS]; // 32-4*5 = 12
+                    context.buffer[context.pos++] = encodeTable[(int)(context.lbitWorkArea >>  7) & MASK_5BITS]; // 32-5*5 =  7
+                    context.buffer[context.pos++] = encodeTable[(int)(context.lbitWorkArea >>  2) & MASK_5BITS]; // 32-6*5 =  2
+                    context.buffer[context.pos++] = encodeTable[(int)(context.lbitWorkArea <<  3) & MASK_5BITS]; // 5-2 = 3
+                    context.buffer[context.pos++] = PAD;
                     break;
             }
-            currentLinePos += pos - savedPos; // keep track of current line position
+            context.currentLinePos += context.pos - savedPos; // keep track of current line position
             // if currentPos == 0 we are at the start of a line, so don't add CRLF
-            if (lineLength > 0 && currentLinePos > 0){ // add chunk separator if required
-                System.arraycopy(lineSeparator, 0, buffer, pos, lineSeparator.length);
-                pos += lineSeparator.length;
+            if (lineLength > 0 && context.currentLinePos > 0){ // add chunk separator if required
+                System.arraycopy(lineSeparator, 0, context.buffer, context.pos, lineSeparator.length);
+                context.pos += lineSeparator.length;
             }            
         } else {
             for (int i = 0; i < inAvail; i++) {
-                ensureBufferSize(encodeSize);
-                modulus = (modulus+1) % BYTES_PER_UNENCODED_BLOCK;
+                ensureBufferSize(encodeSize, context);
+                context.modulus = (context.modulus+1) % BYTES_PER_UNENCODED_BLOCK;
                 int b = in[inPos++];
                 if (b < 0) {
                     b += 256;
                 }
-                bitWorkArea = (bitWorkArea << 8) + b; // BITS_PER_BYTE
-                if (0 == modulus) { // we have enough bytes to create our output 
-                    buffer[pos++] = encodeTable[(int)(bitWorkArea >> 35) & MASK_5BITS];
-                    buffer[pos++] = encodeTable[(int)(bitWorkArea >> 30) & MASK_5BITS];
-                    buffer[pos++] = encodeTable[(int)(bitWorkArea >> 25) & MASK_5BITS];
-                    buffer[pos++] = encodeTable[(int)(bitWorkArea >> 20) & MASK_5BITS];
-                    buffer[pos++] = encodeTable[(int)(bitWorkArea >> 15) & MASK_5BITS];
-                    buffer[pos++] = encodeTable[(int)(bitWorkArea >> 10) & MASK_5BITS];
-                    buffer[pos++] = encodeTable[(int)(bitWorkArea >> 5) & MASK_5BITS];
-                    buffer[pos++] = encodeTable[(int)bitWorkArea & MASK_5BITS];
-                    currentLinePos += BYTES_PER_ENCODED_BLOCK;
-                    if (lineLength > 0 && lineLength <= currentLinePos) {
-                        System.arraycopy(lineSeparator, 0, buffer, pos, lineSeparator.length);
-                        pos += lineSeparator.length;
-                        currentLinePos = 0;
+                context.lbitWorkArea = (context.lbitWorkArea << 8) + b; // BITS_PER_BYTE
+                if (0 == context.modulus) { // we have enough bytes to create our output 
+                    context.buffer[context.pos++] = encodeTable[(int)(context.lbitWorkArea >> 35) & MASK_5BITS];
+                    context.buffer[context.pos++] = encodeTable[(int)(context.lbitWorkArea >> 30) & MASK_5BITS];
+                    context.buffer[context.pos++] = encodeTable[(int)(context.lbitWorkArea >> 25) & MASK_5BITS];
+                    context.buffer[context.pos++] = encodeTable[(int)(context.lbitWorkArea >> 20) & MASK_5BITS];
+                    context.buffer[context.pos++] = encodeTable[(int)(context.lbitWorkArea >> 15) & MASK_5BITS];
+                    context.buffer[context.pos++] = encodeTable[(int)(context.lbitWorkArea >> 10) & MASK_5BITS];
+                    context.buffer[context.pos++] = encodeTable[(int)(context.lbitWorkArea >> 5) & MASK_5BITS];
+                    context.buffer[context.pos++] = encodeTable[(int)context.lbitWorkArea & MASK_5BITS];
+                    context.currentLinePos += BYTES_PER_ENCODED_BLOCK;
+                    if (lineLength > 0 && lineLength <= context.currentLinePos) {
+                        System.arraycopy(lineSeparator, 0, context.buffer, context.pos, lineSeparator.length);
+                        context.pos += lineSeparator.length;
+                        context.currentLinePos = 0;
                     }
                 }
             }
