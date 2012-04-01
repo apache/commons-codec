@@ -19,11 +19,11 @@ package org.apache.commons.codec.binary;
 
 import static org.junit.Assert.assertTrue;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 
 import org.apache.commons.codec.BinaryDecoder;
 import org.apache.commons.codec.BinaryEncoder;
+import org.apache.commons.codec.Charsets;
 import org.apache.commons.codec.Decoder;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.Encoder;
@@ -510,10 +510,6 @@ public class Base64Codec13Test {
         // need this class to be able to run against commons-codec-1.3.jar, hence the
         // duplication here.
         
-        try {
-            return s != null ? s.getBytes("UTF-8") : null;
-        } catch (UnsupportedEncodingException e) {
-            throw new IllegalStateException(e.toString());
-        }
+        return s != null ? s.getBytes(Charsets.UTF_8) : null;
     }
 }

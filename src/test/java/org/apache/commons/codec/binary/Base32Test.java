@@ -23,6 +23,7 @@ import static org.junit.Assert.fail;
 
 import java.util.Arrays;
 
+import org.apache.commons.codec.Charsets;
 import org.junit.Test;
 
 public class Base32Test {
@@ -62,7 +63,7 @@ public class Base32Test {
     public void testBase32Samples() throws Exception {
         Base32 codec = new Base32();
         for (String[] element : BASE32_TEST_CASES) {
-                assertEquals(element[1], codec.encodeAsString(element[0].getBytes("UTF-8")));
+                assertEquals(element[1], codec.encodeAsString(element[0].getBytes(Charsets.UTF_8)));
         }
     }
 
@@ -70,7 +71,7 @@ public class Base32Test {
     public void testBase32HexSamples() throws Exception {
         Base32 codec = new Base32(true);
         for (String[] element : BASE32HEX_TEST_CASES) {
-                assertEquals(element[1], codec.encodeAsString(element[0].getBytes("UTF-8")));
+                assertEquals(element[1], codec.encodeAsString(element[0].getBytes(Charsets.UTF_8)));
         }
     }
 
@@ -78,7 +79,7 @@ public class Base32Test {
     public void testBase32Chunked () throws Exception {
         Base32 codec = new Base32(20);
         for (String[] element : BASE32_TEST_CASES_CHUNKED) {
-                assertEquals(element[1], codec.encodeAsString(element[0].getBytes("UTF-8")));
+                assertEquals(element[1], codec.encodeAsString(element[0].getBytes(Charsets.UTF_8)));
         }        
     }
 
