@@ -49,6 +49,7 @@ import java.util.Set;
  * Ported from language.php
  * </p>
  * 
+ * @author Apache Software Foundation
  * @since 1.6
  */
 public class Languages {

@@ -26,68 +26,11 @@ import org.apache.commons.codec.EncoderException;
  * Abstract superclass for Base-N encoders and decoders.
  *
  * <p>
- * This class is thread-safe.
+ * This class is not thread-safe.
+ * Each thread should use its own instance.
  * </p>
  */
 public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
-
-    /**
-     * Holds thread context so classes can be thread-safe.
-     * 
-     * This class is not itself thread-safe; each thread must allocate its own copy.
-     * 
-     * @since 1.7
-     */
-    static class Context {
-
-        /**
-         * Place holder for the bytes we're dealing with for our based logic. 
-         * Bitwise operations store and extract the encoding or decoding from this variable.
-         */
-        int ibitWorkArea;
-
-        /**
-         * Place holder for the bytes we're dealing with for our based logic. 
-         * Bitwise operations store and extract the encoding or decoding from this variable.
-         */
-        long lbitWorkArea;
-
-        /**
-         * Buffer for streaming.
-         */
-        byte[] buffer;
-
-        /**
-         * Position where next character should be written in the buffer.
-         */
-        int pos;
-
-        /**
-         * Position where next character should be read from the buffer.
-         */
-        int readPos;
-
-        /**
-         * Boolean flag to indicate the EOF has been reached. Once EOF has been reached, this object becomes useless,
-         * and must be thrown away.
-         */
-        boolean eof;
-
-        /**
-         * Variable tracks how many characters have been written to the current line. Only used when encoding. We use it to
-         * make sure each encoded line never goes beyond lineLength (if lineLength > 0).
-         */
-        int currentLinePos;
-
-        /**
-         * Writes to the buffer only occur after every 3/5 reads when encoding, and every 4/8 reads when decoding.
-         * This variable helps track that.
-         */
-        int modulus;
-
-        Context() {
-        }
-    }
 
     /**
      * EOF
@@ -157,6 +100,39 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     private final int chunkSeparatorLength;
 
     /**
+     * Buffer for streaming.
+     */
+    protected byte[] buffer;
+
+    /**
+     * Position where next character should be written in the buffer.
+     */
+    protected int pos;
+
+    /**
+     * Position where next character should be read from the buffer.
+     */
+    private int readPos;
+
+    /**
+     * Boolean flag to indicate the EOF has been reached. Once EOF has been reached, this object becomes useless,
+     * and must be thrown away.
+     */
+    protected boolean eof;
+
+    /**
+     * Variable tracks how many characters have been written to the current line. Only used when encoding. We use it to
+     * make sure each encoded line never goes beyond lineLength (if lineLength > 0).
+     */
+    protected int currentLinePos;
+
+    /**
+     * Writes to the buffer only occur after every 3/5 reads when encoding, and every 4/8 reads when decoding.
+     * This variable helps track that.
+     */
+    protected int modulus;
+
+    /**
      * Note <code>lineLength</code> is rounded down to the nearest multiple of {@link #encodedBlockSize}
      * If <code>chunkSeparatorLength</code> is zero, then chunking is disabled.
      * @param unencodedBlockSize the size of an unencoded block (e.g. Base64 = 3)
@@ -174,21 +150,19 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     /**
      * Returns true if this object has buffered data for reading.
      *
-     * @param context the context to be used
      * @return true if there is data still available for reading.
      */
-    boolean hasData(Context context) {  // package protected for access from I/O streams
-        return context.buffer != null;
+    boolean hasData() {  // package protected for access from I/O streams
+        return this.buffer != null;
     }
 
     /**
      * Returns the amount of buffered data available for reading.
      *
-     * @param context the context to be used
      * @return The amount of buffered data available for reading.
      */
-    int available(Context context) {  // package protected for access from I/O streams
-        return context.buffer != null ? context.pos - context.readPos : 0;
+    int available() {  // package protected for access from I/O streams
+        return buffer != null ? pos - readPos : 0;
     }
 
     /**
@@ -200,19 +174,16 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         return DEFAULT_BUFFER_SIZE;
     }
 
-    /** 
-     * Increases our buffer by the {@link #DEFAULT_BUFFER_RESIZE_FACTOR}.
-     * @param context the context to be used
-     */
-    private void resizeBuffer(Context context) {
-        if (context.buffer == null) {
-            context.buffer = new byte[getDefaultBufferSize()];
-            context.pos = 0;
-            context.readPos = 0;
+    /** Increases our buffer by the {@link #DEFAULT_BUFFER_RESIZE_FACTOR}. */
+    private void resizeBuffer() {
+        if (buffer == null) {
+            buffer = new byte[getDefaultBufferSize()];
+            pos = 0;
+            readPos = 0;
         } else {
-            byte[] b = new byte[context.buffer.length * DEFAULT_BUFFER_RESIZE_FACTOR];
-            System.arraycopy(context.buffer, 0, b, 0, context.buffer.length);
-            context.buffer = b;
+            byte[] b = new byte[buffer.length * DEFAULT_BUFFER_RESIZE_FACTOR];
+            System.arraycopy(buffer, 0, b, 0, buffer.length);
+            buffer = b;
         }
     }
 
@@ -220,11 +191,10 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * Ensure that the buffer has room for <code>size</code> bytes
      *
      * @param size minimum spare space required
-     * @param context the context to be used
      */
-    protected void ensureBufferSize(int size, Context context){
-        if ((context.buffer == null) || (context.buffer.length < context.pos + size)){
-            resizeBuffer(context);
+    protected void ensureBufferSize(int size){
+        if ((buffer == null) || (buffer.length < pos + size)){
+            resizeBuffer();
         }
     }
 
@@ -238,20 +208,19 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      *            position in byte[] array to start extraction at.
      * @param bAvail
      *            amount of bytes we're allowed to extract. We may extract fewer (if fewer are available).
-     * @param context the context to be used
      * @return The number of bytes successfully extracted into the provided byte[] array.
      */
-    int readResults(byte[] b, int bPos, int bAvail, Context context) {  // package protected for access from I/O streams
-        if (context.buffer != null) {
-            int len = Math.min(available(context), bAvail);
-            System.arraycopy(context.buffer, context.readPos, b, bPos, len);
-            context.readPos += len;
-            if (context.readPos >= context.pos) {
-                context.buffer = null; // so hasData() will return false, and this method can return -1
+    int readResults(byte[] b, int bPos, int bAvail) {  // package protected for access from I/O streams
+        if (buffer != null) {
+            int len = Math.min(available(), bAvail);
+            System.arraycopy(buffer, readPos, b, bPos, len);
+            readPos += len;
+            if (readPos >= pos) {
+                buffer = null; // so hasData() will return false, and this method can return -1
             }
             return len;
         }
-        return context.eof ? EOF : 0;
+        return eof ? EOF : 0;
     }
 
     /**
@@ -271,6 +240,18 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
             default :
                 return false;
         }
+    }
+
+    /**
+     * Resets this object to its initial newly constructed state.
+     */
+    private void reset() {
+        buffer = null;
+        pos = 0;
+        readPos = 0;
+        currentLinePos = 0;
+        modulus = 0;
+        eof = false;
     }
 
     /**
@@ -340,14 +321,14 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * @return a byte array containing binary data
      */
     public byte[] decode(byte[] pArray) {
-        Context context = new Context();
+        reset();
         if (pArray == null || pArray.length == 0) {
             return pArray;
         }
-        decode(pArray, 0, pArray.length, context);
-        decode(pArray, 0, EOF, context); // Notify decoder of EOF.
-        byte[] result = new byte[context.pos];
-        readResults(result, 0, result.length, context);
+        decode(pArray, 0, pArray.length);
+        decode(pArray, 0, EOF); // Notify decoder of EOF.
+        byte[] result = new byte[pos];
+        readResults(result, 0, result.length);
         return result;
     }
 
@@ -359,14 +340,14 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * @return A byte array containing only the basen alphabetic character data
      */
     public byte[] encode(byte[] pArray) {
-        Context context = new Context();
+        reset();        
         if (pArray == null || pArray.length == 0) {
             return pArray;
         }
-        encode(pArray, 0, pArray.length, context);
-        encode(pArray, 0, EOF, context); // Notify encoder of EOF.
-        byte[] buf = new byte[context.pos - context.readPos];
-        readResults(buf, 0, buf.length, context);
+        encode(pArray, 0, pArray.length);
+        encode(pArray, 0, EOF); // Notify encoder of EOF.
+        byte[] buf = new byte[pos - readPos];
+        readResults(buf, 0, buf.length);
         return buf;
     }
     
@@ -381,9 +362,9 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         return StringUtils.newStringUtf8(encode(pArray));
     }
 
-    abstract void encode(byte[] pArray, int i, int length, Context context);  // package protected for access from I/O streams
+    abstract void encode(byte[] pArray, int i, int length);  // package protected for access from I/O streams
 
-    abstract void decode(byte[] pArray, int i, int length, Context context); // package protected for access from I/O streams
+    abstract void decode(byte[] pArray, int i, int length); // package protected for access from I/O streams
     
     /**
      * Returns whether or not the <code>octet</code> is in the current alphabet.

@@ -87,16 +87,15 @@ public class Base32Test {
     public void testSingleCharEncoding() {
         for (int i = 0; i < 20; i++) {
             Base32 codec = new Base32();
-            BaseNCodec.Context context = new BaseNCodec.Context();
             byte unencoded[] = new byte[i];
             byte allInOne[] = codec.encode(unencoded);
             codec = new Base32();
             for (int j=0; j< unencoded.length; j++) {
-                codec.encode(unencoded, j, 1, context);
+                codec.encode(unencoded, j, 1);
             }
-            codec.encode(unencoded, 0, -1, context);
+            codec.encode(unencoded, 0, -1);
             byte singly[] = new byte[allInOne.length];
-            codec.readResults(singly, 0, 100, context);
+            codec.readResults(singly, 0, 100);
             if (!Arrays.equals(allInOne, singly)){
                 fail();
             }

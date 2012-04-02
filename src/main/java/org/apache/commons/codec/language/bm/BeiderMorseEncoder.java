@@ -74,6 +74,7 @@ import org.apache.commons.codec.StringEncoder;
  * splitting on pipe (<code>|</code>) and indexing under each of these alternatives.
  * </p>
  * 
+ * @author Apache Software Foundation
  * @since 1.6
  */
 public class BeiderMorseEncoder implements StringEncoder {

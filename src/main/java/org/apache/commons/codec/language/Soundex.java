@@ -24,6 +24,7 @@ import org.apache.commons.codec.StringEncoder;
  * Encodes a string into a Soundex value. Soundex is an encoding used to relate similar names, but can also be used as a
  * general purpose scheme to find word with similar phonemes.
  * 
+ * @author Apache Software Foundation
  * @version $Id$
  */
 public class Soundex implements StringEncoder {

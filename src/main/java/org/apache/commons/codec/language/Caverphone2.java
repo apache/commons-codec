@@ -23,6 +23,7 @@ package org.apache.commons.codec.language;
  * This is an algorithm created by the Caversham Project at the University of Otago. It implements the Caverphone 2.0
  * algorithm:
  * 
+ * @author Apache Software Foundation
  * @version $Id: Caverphone.java 1075947 2011-03-01 17:56:14Z ggregory $
  * @see <a href="http://en.wikipedia.org/wiki/Caverphone">Wikipedia - Caverphone</a>
  * @see <a href="http://caversham.otago.ac.nz/files/working/ctp150804.pdf">Caverphone 2.0 specification</a>

@@ -20,6 +20,7 @@ package org.apache.commons.codec;
 /**
  * Defines common decoding methods for String decoders.
  *
+ * @author Apache Software Foundation
  * @version $Id$
  */
 public interface StringDecoder extends Decoder {

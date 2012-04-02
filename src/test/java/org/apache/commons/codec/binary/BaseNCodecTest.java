@@ -38,11 +38,11 @@ public class BaseNCodecTest {
             }
             
             @Override
-            void encode(byte[] pArray, int i, int length, Context context) {
+            void encode(byte[] pArray, int i, int length) {
             }
             
             @Override
-            void decode(byte[] pArray, int i, int length, Context context) {
+            void decode(byte[] pArray, int i, int length) {
             }
         };        
     }

@@ -41,6 +41,7 @@ import org.apache.commons.codec.binary.StringUtils;
  * Message Header Extensions for Non-ASCII Text</a>
  * </p>
  * 
+ * @author Apache Software Foundation
  * @since 1.3
  * @version $Id$
  */
