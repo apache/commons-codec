@@ -22,7 +22,6 @@ package org.apache.commons.codec.language.bm;
  * <code>GENERIC</code> NameType should work reasonably well for non-name words. The other encodings are specifically
  * tuned to family names, and may not work well at all for general text.
  * 
- * @author Apache Software Foundation
  * @since 1.6
  */
 public enum NameType {

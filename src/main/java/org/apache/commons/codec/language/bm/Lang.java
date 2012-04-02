@@ -67,7 +67,6 @@ import java.util.regex.Pattern;
  * <p/>
  * Port of lang.php
  * 
- * @author Apache Software Foundation
  * @since 1.6
  */
 public class Lang {

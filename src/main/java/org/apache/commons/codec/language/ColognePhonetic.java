@@ -177,7 +177,6 @@ import org.apache.commons.codec.StringEncoder;
  * </ul>
  * 
  * @see <a href="http://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik">Wikipedia (de): K&ouml;lner Phonetik (in German)</a>
- * @author Apache Software Foundation
  * @since 1.5
  */
 public class ColognePhonetic implements StringEncoder {

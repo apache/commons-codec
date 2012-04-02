@@ -44,7 +44,6 @@ import org.apache.commons.codec.StringEncoder;
  * @see <a href="http://www.ietf.org/rfc/rfc1522.txt">MIME (Multipurpose Internet Mail Extensions) Part Two: Message
  *          Header Extensions for Non-ASCII Text</a>
  * 
- * @author Apache Software Foundation
  * @since 1.3
  * @version $Id$
  */

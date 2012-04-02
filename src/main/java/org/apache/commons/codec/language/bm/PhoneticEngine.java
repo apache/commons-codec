@@ -47,7 +47,6 @@ import java.util.TreeSet;
  * Ported from phoneticengine.php
  * </p>
  * 
- * @author Apache Software Foundation
  * @since 1.6
  */
 public class PhoneticEngine {
@@ -56,7 +55,6 @@ public class PhoneticEngine {
      * Utility for manipulating a set of phonemes as they are being built up. Not intended for use outside this package,
      * and probably not outside the {@link PhoneticEngine} class.
      *
-     * @author Apache Software Foundation
      * @since 1.6
      */
     static final class PhonemeBuilder {
@@ -165,7 +163,6 @@ public class PhoneticEngine {
      * matching rule was found, <code>phonemeBuilder</code> is replaced with a new buidler containing the phonemes
      * updated by the matching rule.
      *
-     * @author Apache Software Foundation
      * @since 1.6
      */
     private static final class RulesApplication {
