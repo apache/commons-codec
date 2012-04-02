@@ -1,17 +1,25 @@
-$Id$
-
-The Commons Codec team is pleased to announce the commons-codec-X.Y release!
+              Apache Commons Codec 1.7 RELEASE NOTES
 
 The codec package contains simple encoder and decoders for
-various formats such as Base64 and Hexadecimal. In addition to these
+various formats such as Base64 and Hexadecimal.  In addition to these
 widely used encoders and decoders, the codec package also maintains a
 collection of phonetic encoding utilities.
 
+Feature and fix release.
+
 Changes in this version include:
 
-Fixed Bugs:
+New features:
+o CODEC-130:  Base64InputStream.skip skips underlying stream, not output Thanks to tn. 
+o CODEC-63:  Implement NYSIIS Thanks to bayard. 
 
-Changes:
+Fixed Bugs:
+o CODEC-138:  Complete FilterInputStream interface for BaseNCodecInputStream 
+o CODEC-136:  Use Charset objects when possible, create Charsets for required character encodings 
+o CODEC-132:  BeiderMorseEncoder OOM issues Thanks to rcmuir. 
+o CODEC-131:  DoubleMetaphone javadoc contains dead links Thanks to smolav. 
+
+
 
 Known issue only on IBM Java 5:
 
@@ -24,17 +32,14 @@ testInputStreamReader(org.apache.commons.codec.binary.Base64InputStreamTest)
 Time elapsed: 0.004 sec  <<< ERROR!
 sun.io.MalformedInputException
        at sun.io.ByteToCharUTF8.convert(ByteToCharUTF8.java:310)
-       at
-sun.nio.cs.StreamDecoder$ConverterSD.convertInto(StreamDecoder.java:316)
-       at
-sun.nio.cs.StreamDecoder$ConverterSD.implRead(StreamDecoder.java:366)
+       at sun.nio.cs.StreamDecoder$ConverterSD.convertInto(StreamDecoder.java:316)
+       at sun.nio.cs.StreamDecoder ConverterSD.implRead(StreamDecoder.java:366)
        at sun.nio.cs.StreamDecoder.read(StreamDecoder.java:252)
        at java.io.InputStreamReader.read(InputStreamReader.java:212)
        at java.io.BufferedReader.fill(BufferedReader.java:157)
        at java.io.BufferedReader.readLine(BufferedReader.java:320)
        at java.io.BufferedReader.readLine(BufferedReader.java:383)
-       at
-org.apache.commons.codec.binary.Base64InputStreamTest.testInputStreamReader(Base64InputStreamTest.java:110)
+       at org.apache.commons.codec.binary.Base64InputStreamTest.testInputStreamReader(Base64InputStreamTest.java:110)
 -------------------------------------------------------------------------------
 $ java -version
 java version "1.5.0"
@@ -47,230 +52,11 @@ JIT  - 20100623_16197ifx10_r8
 GC   - FP22011_06)
 JCL  - 20110627
 -------------------------------------------------------------------------------
+]]>
 
-Have fun!
--Commons Codec team
+For complete information on Commons Codec, including instructions on how to submit bug reports,
+patches, or suggestions for improvement, see the Apache Commons Codec website:
 
-
-===============================================================================
-
-The Commons Codec team is pleased to announce the commons-codec-1.6 release!
-
-The codec package contains simple encoder and decoders for
-various formats such as Base64 and Hexadecimal. In addition to these
-widely used encoders and decoders, the codec package also maintains a
-collection of phonetic encoding utilities.
-
-Changes in this version include:
-
-Fixed Bugs:
-o Use standard Maven directory layout.  Issue: CODEC-129. Thanks to ggregory. 
-o Documentation spelling fixes.  Issue: CODEC-128. Thanks to ville.skytta@iki.fi. 
-o Fix various character encoding issues in comments and test cases.  Issue: CODEC-127. 
-o ColognePhonetic Javadoc should use HTML entities for special characters.  Issue: CODEC-123. 
-
-Changes:
-o Implement a Beider-Morse phonetic matching codec.  Issue: CODEC-125. Thanks to Matthew Pocock. 
-o Migrate to Java 5.  Issue: CODEC-119. 
-o Migrate to JUnit 4.  Issue: CODEC-120. 
-
-Have fun!
--Commons Codec team
+http://commons.apache.org/codec/
 
 
-===============================================================================
-
-Commons Codec Package Version 1.5 Release Notes
-
-New features:
-o Add test(s) to check that encodeBase64() does not chunk output.  Issue: CODEC-93. Thanks to sebb. 
-o ArrayIndexOutOfBoundsException when doing multiple reads() on encoding Base64InputStream.  Issue: CODEC-105. Thanks to zak. 
-o Add the Cologne Phonetic to codec.lang.  Issue: CODEC-106. Thanks to it2mmeyerfa. 
-o org.apache.commons.codec.net.URLCodec.ESCAPE_CHAR isn't final but should be.  Issue: CODEC-111. Thanks to ggregory. 
-o Base64.encodeBase64(byte[] binaryData, boolean isChunked, boolean urlSafe, int maxResultSize) throws IAE for valid maxResultSize if isChunked is false.  Issue: CODEC-112. Thanks to sebb. 
-o org.apache.commons.codec.language.RefinedSoundex.US_ENGLISH_MAPPING should be package protected MALICIOUS_CODE.  Issue: CODEC-113. Thanks to ggregory. 
-o org.apache.commons.codec.language.Soundex.US_ENGLISH_MAPPING should be package protected MALICIOUS_CODE.  Issue: CODEC-114. Thanks to ggregory. 
-o DoubleMetaphone.maxCodeLen should probably be private.  Issue: CODEC-115. Thanks to sebb. 
-o Split Caverphone class into two classes for Caverphone 1.0 and 2.0.  Issue: CODEC-118. Thanks to ggregory. 
-
-Fixed Bugs:
-o new Base64().encode() appends a CRLF, and chunks results into 76 character lines.  Issue: CODEC-89. 
-o Many test cases use getBytes() which uses the default platform encoding so tests may fail on some platforms.  Issue: CODEC-92. 
-o Base64 default constructor behaviour changed to enable chunking in 1.4.  Issue: CODEC-97. Thanks to mjryall. 
-o Base64.encodeBase64String() shouldn't chunk.  Issue: CODEC-99. Thanks to julius. 
-o Base64InputStream#read(byte[]) incorrectly returns 0 at end of any stream which is multiple of 3 bytes long.  Issue: CODEC-101. Thanks to balusc. 
-o Typo in DecoderException message thrown from Hex.decodeHex.  Issue: CODEC-103. Thanks to gnuf. 
-o Caverphone encodes names starting and ending with "mb" incorrectly.  Issue: CODEC-117. Thanks to ggregory. 
-
-Removed:
-o Remove deprecated package private method Base64.discardWhitespace(byte[])  Issue: CODEC-116. Thanks to ggregory. 
-
-Have fun!
--Commons Codec team
-
-===============================================================================
-
-Commons Codec Package Version 1.4 Release Notes
-
-Compatibility
-o Codec 1.4 is binary compatible with Codec 1.3
-o Codec 1.4 has a minimum requirement of JDK 1.4
-
-Changes in this version include:
-
-  New Features:
-
-o [CODEC-60] Implement Caverphone.
-o [CODEC-52] Digest on InputStreams.
-o [CODEC-39] DigestUtils: Add methods for SHA-256, SHA-384, and SHA-512.
-o [CODEC-69] Streaming Base64 (Base64InputStream and Base64OutputStream added).
-o [CODEC-59] Add methods to Base64 which work with String instead of byte[]
-
-  Fixed bugs:
-
-o [CODEC-77] Base64 bug with empty input (new byte[0]).
-o [CODEC-72] Soundex and RefinedSoundex issues with character arrays.
-o [CODEC-71] Base64.isArrayByteBase64() method is inefficient for large byte arrays.
-o [CODEC-70] Thread safety and malicious code safety improvements.
-o [CODEC-68] isBase64 throws ArrayIndexOutOfBoundsException on some non-BASE64 bytes.
-o [CODEC-65] Fix case-insensitive string handling.
-o [CODEC-61] Base64.encodeBase64() throws NegativeArraySizeException on large files.
-o [CODEC-58] Character set used by Base64 not documented.
-o [CODEC-56] RefinedSoundex creates instance before al fields have been initialized.
-o [CODEC-51] Test failures in SoundexTest
-o [CODEC-10] Using US_ENGLISH in Soundex caused an NullPointerException.
-o [CODEC-6]  Source tarball spews files all over the place.
-o [CODEC-22] Base64.isArrayByteBase64() throws an ArrayIndexOutOfBoundsException for negative octets
-o [CODEC-78] Base64: Improve Code Coverage
-o [CODEC-81] Base64's new constructor parameters ignored
-o [CODEC-83] Improve Double Metaphone test coverage
-o [CODEC-84] Double Metaphone bugs in alternative encoding
-o [CODEC-73] Make string2byte conversions indepedent of platform default encoding
-
-  Changes:
-
-o [CODEC-75] Make Base64 URL-safe
-o [CODEC-74] Allow for uppercase letters output in Hex.encodeHex().
-o [CODEC-40] Add crypto-compatible BigInteger encoding support to Base64.
-
-===============================================================================
-
-Commons Codec Package Version 1.3 Release Notes
-
-  New Features:
-
-o BinaryCodec: Encodes and decodes binary to and from Strings of 0s and 1s. 
-  Issue: 27813. Thanks to Alex Karasulu. 
-o QuotedPrintableCodec: Codec for RFC 1521 MIME (Multipurpose Internet Mail 
-  Extensions) Part One. Rules #3, #4, and #5 of the quoted-printable spec are 
-  not implemented yet. See also issue 27789. Issue: 26617. Thanks to Oleg 
-  Kalnichevski. 
-o BCodec: Identical to the Base64 encoding defined by RFC 1521 and allows a 
-  character set to be specified. Issue: 26617. Thanks to Oleg Kalnichevski. 
-o QCodec: Similar to the Quoted-Printable content-transfer-encoding defined 
-  in RFC 1521 and designed to allow text containing mostly ASCII characters 
-  to be decipherable on an ASCII terminal without decoding. Issue: 26617. 
-  Thanks to Oleg Kalnichevski. 
-o Soundex: Implemented the DIFFERENCE algorithm. Issue: 25243. Thanks to 
-  Matthew Inger. 
-o RefinedSoundex: Implemented the DIFFERENCE algorithm. Issue: 25243. Thanks 
-  to Matthew Inger. 
-
-  Fixed bugs:
-
-o The default URL encoding logic was broken. Issue: 25995. Thanks to Oleg 
-  Kalnichevski. 
-o Base64 chunked encoding not compliant with RFC 2045 section 2.1 CRLF. 
-  Issue: 27781. Thanks to Gary D. Gregory. 
-o Hex converts illegal characters to 255. Issue: 28455. 
-o Metaphone now correctly handles a silent B in a word that ends in MB. 
-  "COMB" is encoded as "KM", before this fix "COMB" was encoded as "KMB". 
-  Issue: 28457. 
-o Added missing tags in Javadoc comments. 
-o General Javadoc improvements. 
-
-  Changes:
-
-o This version is relesed under the Apache License 2.0 , please see 
-  LICENSE.txt. Previous versions were released under the Apache License 1.1. 
-o The Board recommendation to remove Javadoc author tags has been 
-  implemented. All author tags are now "Apache Software Foundation".  
-
-===============================================================================
-
-Commons Codec Package Version 1.2 Release Notes
-
-NEW FEATURES:
-
-* URLCodec - Implements the 'www-form-urlencoded' encoding scheme
-
-* DigestUtils - Simple utility class that provides static convenience
-  methods for calculating md5 and hex digests.
-
-
-BUG FIXES:
-
-* Fix for Bug 19860: Modified Base64 to remedy non-compliance with RFC
-  2045.  Non-Base64 characters were not being discarded during the
-  decode.  RFC 2045 explicitly states that all characters outside of the
-  base64 alphabet are to be ignored.  
-
-* Fix for Bug 24360: Hex.decode(Object) throws a ClassCastException 
-  when a String argument is passed in.
-  
-* Fix for Bug 24471: Soundex: The HW rule is not applied; hyphens and 
-  apostrophes are not ignored.
-  
-* Fix for Bug 24484: Soundex.setMaxLength causes bugs and is not needed.
-  Calling Soundex.setMaxLength() with a value of 2 or less causes the wrong
-  answer to be returned.  Since the encoding returned by Soundex is always
-  of length 4 by definition (we do not use the '-' in as a letter-nnn 
-  separator) the need for a maxLength attribute is not needed.  Deprecate 
-  the field and accessor methods.
-
-* Fix in Metaphone relating to the handling of the maximum code length.
-
-===============================================================================
-
-Commons Codec Package Version 1.1 Release Notes
-
-INTRODUCTION:
-
-This document contains the release notes for this version of the Commons
-Codec package, and highlights changes since the previous version.  Version
-1.1 is the first official release of Codec.  Numerous projects had been 
-depending on Version 1.0-dev while Codec was in the Sandbox, and backwards
-compatibility has been preserved to ease the transition to this official
-release. 
-
-NEW FEATURES:
-
-* A newer version of the Base64 class reflecting improvements from
-  both the commons-httpclient and xml-rpc versions of code forked
-  from catalina.
-* Base64 class from commons-httpclient in org.apache.commons.codec.base64
-  has been retained for backwards compatibility but has been deprecated
-* Soundex class from commons-util in org.apache.commons.codec
-* Metaphone class from commons-util in org.apache.commons.codec
-* RefinedSoundex class in org.apache.commons.codec
-* Encoder/Decoder interfaces in org.apache.commons
-* String and Binary specific Encoder/Decoder interfaces in 
-  org.apache.commons
-* StringEncoderComparator replaces the SoundexComparator from the
-  language package.
-
-BUG FIXES:
-
-* Base64 now discards whitespace characters when decoding encoded
-  content.
-
-===============================================================================
-
-Commons Codec Package Version 1.0-dev Release Notes
-
-NEW FEATURES:
-
-* Base64 class from commons-httpclient in org.apache.commons.codec.base64
-* Soundex class from commons-util in org.apache.commons.codec
-* Metaphone class from commons-util in org.apache.commons.codec
-* SoundexComparator class from commons-util in org.apache.commons.codec
