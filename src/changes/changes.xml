@@ -51,6 +51,9 @@ The <action> type attribute can be add,update,fix,remove.
     </release>
     -->
     <release version="1.7" date="TBD" description="Feature and fix release.">
+      <action dev="ggregory" type="fix" issue="CODEC-96" due-to="sebb">
+        Base64 encode() method is no longer thread-safe, breaking clients using it as a shared BinaryEncoder
+      </action>
       <action dev="sebb" type="fix" issue="CODEC-138">
         Complete FilterInputStream interface for BaseNCodecInputStream
       </action>
