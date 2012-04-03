@@ -170,7 +170,7 @@ public class HexTest {
     }
 
     @Test(expected=UnsupportedCharsetException.class)
-    public void testCustomCharsetBadName() throws UnsupportedEncodingException {
+    public void testCustomCharsetBadName() {
         new Hex(BAD_ENCODING_NAME);
     }
 

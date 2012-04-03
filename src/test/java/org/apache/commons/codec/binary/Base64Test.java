@@ -23,7 +23,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Random;
@@ -123,7 +122,7 @@ public class Base64Test {
     }
 
     @Test
-    public void testCodeInteger1() throws UnsupportedEncodingException {
+    public void testCodeInteger1() {
         String encodedInt1 = "li7dzDacuo67Jg7mtqEm2TRuOMU=";
         BigInteger bigInt1 = new BigInteger("85739377120809420210425962799" + "0318636601332086981");
 
@@ -132,7 +131,7 @@ public class Base64Test {
     }
 
     @Test
-    public void testCodeInteger2() throws UnsupportedEncodingException {
+    public void testCodeInteger2() {
         String encodedInt2 = "9B5ypLY9pMOmtxCeTDHgwdNFeGs=";
         BigInteger bigInt2 = new BigInteger("13936727572861167254666467268" + "91466679477132949611");
 
@@ -141,7 +140,7 @@ public class Base64Test {
     }
 
     @Test
-    public void testCodeInteger3() throws UnsupportedEncodingException {
+    public void testCodeInteger3() {
         String encodedInt3 = "FKIhdgaG5LGKiEtF1vHy4f3y700zaD6QwDS3IrNVGzNp2" + "rY+1LFWTK6D44AyiC1n8uWz1itkYMZF0/aKDK0Yjg==";
         BigInteger bigInt3 = new BigInteger("10806548154093873461951748545"
             + "1196989136416448805819079363524309897749044958112417136240557"
@@ -152,7 +151,7 @@ public class Base64Test {
     }
 
     @Test
-    public void testCodeInteger4() throws UnsupportedEncodingException {
+    public void testCodeInteger4() {
         String encodedInt4 = "ctA8YGxrtngg/zKVvqEOefnwmViFztcnPBYPlJsvh6yKI"
             + "4iDm68fnp4Mi3RrJ6bZAygFrUIQLxLjV+OJtgJAEto0xAs+Mehuq1DkSFEpP3o"
             + "DzCTOsrOiS1DwQe4oIb7zVk/9l7aPtJMHW0LVlMdwZNFNNJoqMcT2ZfCPrfvYv"
@@ -249,7 +248,7 @@ public class Base64Test {
      * Tests conditional true branch for "marker0" test.
      */
     @Test
-    public void testDecodePadMarkerIndex2() throws UnsupportedEncodingException {
+    public void testDecodePadMarkerIndex2() {
         assertEquals("A", new String(Base64.decodeBase64("QQ==".getBytes(Charsets.UTF_8))));
     }
 
@@ -257,13 +256,13 @@ public class Base64Test {
      * Tests conditional branches for "marker1" test.
      */
     @Test
-    public void testDecodePadMarkerIndex3() throws UnsupportedEncodingException {
+    public void testDecodePadMarkerIndex3() {
         assertEquals("AA", new String(Base64.decodeBase64("QUE=".getBytes(Charsets.UTF_8))));
         assertEquals("AAA", new String(Base64.decodeBase64("QUFB".getBytes(Charsets.UTF_8))));
     }
 
     @Test
-    public void testDecodePadOnly() throws UnsupportedEncodingException {
+    public void testDecodePadOnly() {
         assertEquals(0, Base64.decodeBase64("====".getBytes(Charsets.UTF_8)).length);
         assertEquals("", new String(Base64.decodeBase64("====".getBytes(Charsets.UTF_8))));
         // Test truncated padding
@@ -274,7 +273,7 @@ public class Base64Test {
     }
 
     @Test
-    public void testDecodePadOnlyChunked() throws UnsupportedEncodingException {
+    public void testDecodePadOnlyChunked() {
         assertEquals(0, Base64.decodeBase64("====\n".getBytes(Charsets.UTF_8)).length);
         assertEquals("", new String(Base64.decodeBase64("====\n".getBytes(Charsets.UTF_8))));
         // Test truncated padding
@@ -408,7 +407,7 @@ public class Base64Test {
     }
 
     @Test
-    public void testKnownDecodings() throws UnsupportedEncodingException {
+    public void testKnownDecodings() {
         assertEquals("The quick brown fox jumped over the lazy dogs.", new String(Base64
                 .decodeBase64("VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2dzLg==".getBytes(Charsets.UTF_8))));
         assertEquals("It was the best of times, it was the worst of times.", new String(Base64
@@ -423,7 +422,7 @@ public class Base64Test {
     }
 
     @Test
-    public void testKnownEncodings() throws UnsupportedEncodingException {
+    public void testKnownEncodings() {
         assertEquals("VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2dzLg==", new String(Base64
                 .encodeBase64("The quick brown fox jumped over the lazy dogs.".getBytes(Charsets.UTF_8))));
         assertEquals(

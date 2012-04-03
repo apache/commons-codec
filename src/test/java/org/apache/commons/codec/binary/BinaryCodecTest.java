@@ -20,8 +20,6 @@ package org.apache.commons.codec.binary;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-import java.io.UnsupportedEncodingException;
-
 import org.apache.commons.codec.Charsets;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
@@ -176,7 +174,7 @@ public class BinaryCodecTest {
      * @param encodeMe
      *            data to encode and compare
      */
-    void assertDecodeObject(byte[] bits, String encodeMe) throws DecoderException, UnsupportedEncodingException {
+    void assertDecodeObject(byte[] bits, String encodeMe) throws DecoderException {
         byte[] decoded;
         decoded = (byte[]) instance.decode(encodeMe);
         assertEquals(new String(bits), new String(decoded));
@@ -198,7 +196,7 @@ public class BinaryCodecTest {
      * Tests for byte[] decode(byte[])
      */
     @Test
-    public void testDecodeByteArray() throws UnsupportedEncodingException {
+    public void testDecodeByteArray() {
         // With a single raw binary
         byte[] bits = new byte[1];
         byte[] decoded = instance.decode("00000000".getBytes(Charsets.UTF_8));
@@ -481,7 +479,7 @@ public class BinaryCodecTest {
      * Tests for byte[] fromAscii(byte[])
      */
     @Test
-    public void testFromAsciiByteArray() throws UnsupportedEncodingException {
+    public void testFromAsciiByteArray() {
         assertEquals(0, BinaryCodec.fromAscii((byte[]) null).length);
         assertEquals(0, BinaryCodec.fromAscii(new byte[0]).length);
         // With a single raw binary
