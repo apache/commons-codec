@@ -335,6 +335,7 @@ public class PhoneticEngine {
      *            if it will concatenate multiple encodings
      * @param maxPhonemes
      *            the maximum number of phonemes that will be handled
+     * @since 1.7
      */
     public PhoneticEngine(NameType nameType, RuleType ruleType, boolean concat, int maxPhonemes) {
         if (ruleType == RuleType.RULES) {
@@ -545,6 +546,7 @@ public class PhoneticEngine {
      * Gets the maximum number of phonemes the engine will calculate for a given input.
      *
      * @return the maximum number of phonemes
+     * @since 1.7
      */
     public int getMaxPhonemes() {
         return this.maxPhonemes;

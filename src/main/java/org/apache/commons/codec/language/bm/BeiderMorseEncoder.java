@@ -171,6 +171,7 @@ public class BeiderMorseEncoder implements StringEncoder {
      *
      * @param maxPhonemes
      *            the maximum number of phonemes returned by the engine
+     * @since 1.7
      */
     public void setMaxPhonemes(int maxPhonemes) {
         this.engine = new PhoneticEngine(this.engine.getNameType(),

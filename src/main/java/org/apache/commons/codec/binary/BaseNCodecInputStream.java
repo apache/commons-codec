@@ -51,6 +51,7 @@ public class BaseNCodecInputStream extends FilterInputStream {
      *
      * @return <code>0</code> if the {@link InputStream} has reached <code>EOF</code>,
      * <code>1</code> otherwise
+     * @since 1.7
      */
     @Override
     public int available() throws IOException {
@@ -182,6 +183,7 @@ public class BaseNCodecInputStream extends FilterInputStream {
      * {@inheritDoc}
      *
      * @throws IllegalArgumentException if the provided skip length is negative
+     * @since 1.7
      */
     @Override
     public long skip(long n) throws IOException {
