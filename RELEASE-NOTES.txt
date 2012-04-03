@@ -14,6 +14,9 @@ o CODEC-130:  Base64InputStream.skip skips underlying stream, not output Thanks 
 o CODEC-63:  Implement NYSIIS Thanks to bayard. 
 
 Fixed Bugs:
+o CODEC-96:  Base64 encode() method is no longer thread-safe, breaking clients using it as a shared BinaryEncoder.
+              Note: the fix breaks binary compatibility, however the changes are to a class (BaseNCodec) which is
+              intended for internal use. Thanks to sebb. 
 o CODEC-138:  Complete FilterInputStream interface for BaseNCodecInputStream 
 o CODEC-136:  Use Charset objects when possible, create Charsets for required character encodings 
 o CODEC-132:  BeiderMorseEncoder OOM issues Thanks to rcmuir. 
@@ -33,7 +36,7 @@ Time elapsed: 0.004 sec  <<< ERROR!
 sun.io.MalformedInputException
        at sun.io.ByteToCharUTF8.convert(ByteToCharUTF8.java:310)
        at sun.nio.cs.StreamDecoder$ConverterSD.convertInto(StreamDecoder.java:316)
-       at sun.nio.cs.StreamDecoder ConverterSD.implRead(StreamDecoder.java:366)
+       at sun.nio.cs.StreamDecoder$ConverterSD.implRead(StreamDecoder.java:366)
        at sun.nio.cs.StreamDecoder.read(StreamDecoder.java:252)
        at java.io.InputStreamReader.read(InputStreamReader.java:212)
        at java.io.BufferedReader.fill(BufferedReader.java:157)

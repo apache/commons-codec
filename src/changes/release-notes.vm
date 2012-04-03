@@ -27,7 +27,7 @@ $release.description.replaceAll("  ", "
 
 ## Fix up indentation for multi-line action descriptions
 #macro ( indent )
-#set($action=$action.replaceAll("(?m)^  +","                 "))
+#set($action=$action.replaceAll("(?m)^  +","              "))
 #end
 #if ($release.getActions().size() == 0)
 No changes defined in this version.
