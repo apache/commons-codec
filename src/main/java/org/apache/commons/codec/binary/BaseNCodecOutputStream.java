@@ -38,7 +38,7 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
 
     private final byte[] singleByte = new byte[1];
 
-    private Context context = new Context();
+    private final Context context = new Context();
 
     // TODO should this be protected?
     public BaseNCodecOutputStream(OutputStream out, BaseNCodec basedCodec, boolean doEncode) {

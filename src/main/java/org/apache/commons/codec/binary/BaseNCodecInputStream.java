@@ -38,7 +38,7 @@ public class BaseNCodecInputStream extends FilterInputStream {
 
     private final byte[] singleByte = new byte[1];
 
-    private Context context = new Context();
+    private final Context context = new Context();
 
     protected BaseNCodecInputStream(InputStream in, BaseNCodec baseNCodec, boolean doEncode) {
         super(in);
