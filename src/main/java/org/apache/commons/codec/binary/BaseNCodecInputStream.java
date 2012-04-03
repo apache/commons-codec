@@ -67,7 +67,7 @@ public class BaseNCodecInputStream extends FilterInputStream {
      * <p>The {@link #mark} method of {@link BaseNCodecInputStream} does nothing.</p>
      *
      * @param readLimit the maximum limit of bytes that can be read before the mark position becomes invalid.
-     *  @since 1.7
+     * @since 1.7
      */
     @Override
     public synchronized void mark(int readLimit) {
