@@ -51,6 +51,9 @@ The <action> type attribute can be add,update,fix,remove.
     </release>
     -->
     <release version="1.7" date="TBD" description="Feature and fix release.">
+      <action dev="ggregory" type="fix" issue="CODEC-133" due-to="lathspell">
+        Add classes for MD5/SHA1/SHA-512-based Unix crypt(3) hash variants.
+      </action>
       <action dev="ggregory" type="fix" issue="CODEC-96" due-to="sebb">
         Base64 encode() method is no longer thread-safe, breaking clients using it as a shared BinaryEncoder.
         Note: the fix breaks binary compatibility, however the changes are to a class (BaseNCodec) which is

@@ -1,0 +1,75 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.apache.commons.codec.digest;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import org.junit.Test;
+
+public class UnixCryptTest {
+
+    @Test
+    public void testUnixCryptStrings() throws Exception {
+        // trivial test
+        assertEquals("xxWAum7tHdIUw", Crypt.crypt("secret", "xx"));
+        // empty data
+        assertEquals("12UFlHxel6uMM", Crypt.crypt("", "12"));
+        // salt gets cut at maximum length
+        assertEquals("12FJgqDtVOg7Q", Crypt.crypt("secret", "12"));
+        assertEquals("12FJgqDtVOg7Q", Crypt.crypt("secret", "12345678"));
+    }
+
+    @Test
+    public void testUnixCryptBytes() throws Exception {
+        // An empty Bytearray equals an empty String
+        assertEquals("12UFlHxel6uMM", Crypt.crypt(new byte[0], "12"));
+        // UTF-8 stores \u00e4 "a with diaeresis" as two bytes 0xc3 0xa4.
+        assertEquals("./287bds2PjVw", Crypt.crypt("t\u00e4st", "./"));
+        // ISO-8859-1 stores "a with diaeresis" as single byte 0xe4.
+        assertEquals("./bLIFNqo9XKQ", Crypt.crypt("t\u00e4st".getBytes("ISO-8859-1"), "./"));
+        assertEquals("./bLIFNqo9XKQ", Crypt.crypt(new byte[]{(byte) 0x74, (byte) 0xe4, (byte) 0x73, (byte) 0x74}, "./"));
+    }
+
+    /**
+     * Some salts are invalid for crypt(3) but not for unixCrypt().
+     */
+    @Test
+    public void testUnixCryptExplicitCall() {
+        // A call to crypt() with an empty salt would result in a "$6$" hash.
+        // Using unixCrypt() explicitly results in a random salt.
+        assertTrue(UnixCrypt.crypt("secret".getBytes()).matches("^[a-zA-Z0-9./]{13}$"));
+        assertTrue(UnixCrypt.crypt("secret".getBytes(), null).matches("^[a-zA-Z0-9./]{13}$"));
+    }
+
+    /**
+     * Unimplemented "$foo$" salt prefixes would be threated as UnixCrypt salt.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void testUnicCryptInvalidSalt() throws Exception {
+        UnixCrypt.crypt("secret", "$a");
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testUnixCryptNullData() {
+        UnixCrypt.crypt((byte[]) null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testUnixCryptWithEmptySalt() throws Exception {
+        UnixCrypt.crypt("secret", "");
+    }
+}
