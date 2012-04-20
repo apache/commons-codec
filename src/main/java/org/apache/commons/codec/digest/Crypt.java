@@ -23,7 +23,7 @@ import org.apache.commons.codec.Charsets;
  * 
  * See {@link #crypt(String, String)} for further details.
  * 
- * @version $Id $
+ * @version $Id$
  * @since 1.7
  */
 public class Crypt {
