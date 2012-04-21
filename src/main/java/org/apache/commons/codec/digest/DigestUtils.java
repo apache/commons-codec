@@ -81,7 +81,7 @@ public class DigestUtils {
      * @throws RuntimeException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
-    static MessageDigest getDigest(String algorithm) {
+    public static MessageDigest getDigest(String algorithm) {
         try {
             return MessageDigest.getInstance(algorithm);
         } catch (NoSuchAlgorithmException e) {
@@ -96,7 +96,7 @@ public class DigestUtils {
      * @throws RuntimeException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
-    private static MessageDigest getMd5Digest() {
+    public static MessageDigest getMd5Digest() {
         return getDigest("MD5");
     }
 
@@ -110,7 +110,7 @@ public class DigestUtils {
      * @throws RuntimeException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
-    private static MessageDigest getSha256Digest() {
+    public static MessageDigest getSha256Digest() {
         return getDigest("SHA-256");
     }
 
@@ -124,7 +124,7 @@ public class DigestUtils {
      * @throws RuntimeException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
-    private static MessageDigest getSha384Digest() {
+    public static MessageDigest getSha384Digest() {
         return getDigest("SHA-384");
     }
 
@@ -138,7 +138,7 @@ public class DigestUtils {
      * @throws RuntimeException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
-    private static MessageDigest getSha512Digest() {
+    public static MessageDigest getSha512Digest() {
         return getDigest("SHA-512");
     }
 
@@ -149,7 +149,7 @@ public class DigestUtils {
      * @throws RuntimeException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
-    private static MessageDigest getShaDigest() {
+    public static MessageDigest getShaDigest() {
         return getDigest("SHA");
     }
 
@@ -577,5 +577,35 @@ public class DigestUtils {
      */
     public static String shaHex(String data) {
         return Hex.encodeHexString(sha(data));
+    }
+
+    /**
+     * Updates the given {@link MessageDigest}.
+     * 
+     * @param messageDigest
+     *            the {@link MessageDigest} to update
+     * @param valueToDigest
+     *            the value to update the {@link MessageDigest} with
+     * @return the updated {@link MessageDigest}
+     * @since 1.7
+     */
+    public static MessageDigest updateDigest(final MessageDigest messageDigest, final String valueToDigest) {
+        messageDigest.update(getBytesUtf8(valueToDigest));
+        return messageDigest;
+    }
+
+    /**
+     * Updates the given {@link MessageDigest}.
+     * 
+     * @param messageDigest
+     *            the {@link MessageDigest} to update
+     * @param valueToDigest
+     *            the value to update the {@link MessageDigest} with
+     * @return the updated {@link MessageDigest}
+     * @since 1.7
+     */
+    public static MessageDigest updateDigest(final MessageDigest messageDigest, byte[] valueToDigest) {
+        messageDigest.update(valueToDigest);
+        return messageDigest;
     }
 }

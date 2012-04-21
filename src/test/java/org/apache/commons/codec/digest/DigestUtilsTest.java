@@ -22,8 +22,10 @@ import static org.junit.Assert.fail;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.security.MessageDigest;
 import java.util.Random;
 
+import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.binary.StringUtils;
 import org.junit.Test;
 
@@ -177,4 +179,41 @@ public class DigestUtilsTest {
                 DigestUtils.shaHex(new ByteArrayInputStream(testData)));
 
     }
+    
+    @Test
+    public void testUpdateWithByteArray(){
+        final String d1 = "C'est un homme qui rentre dans un café, et plouf";
+        final String d2 = "C'est un homme, c'est qu'une tête, on lui offre un cadeau: 'oh... encore un chapeau!'";
+
+        MessageDigest messageDigest = DigestUtils.getShaDigest();
+        messageDigest.update(d1.getBytes());
+        messageDigest.update(d2.getBytes());
+        final String expectedResult = Hex.encodeHexString(messageDigest.digest());
+
+        messageDigest = DigestUtils.getShaDigest();
+        DigestUtils.updateDigest(messageDigest, d1.getBytes());
+        DigestUtils.updateDigest(messageDigest, d2.getBytes());
+        final String actualResult = Hex.encodeHexString(messageDigest.digest());
+
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    public void testUpdateWithString(){
+        final String d1 = "C'est un homme qui rentre dans un café, et plouf";
+        final String d2 = "C'est un homme, c'est qu'une tête, on lui offre un cadeau: 'oh... encore un chapeau!'";
+        
+        MessageDigest messageDigest = DigestUtils.getShaDigest();
+        messageDigest.update(StringUtils.getBytesUtf8(d1));
+        messageDigest.update(StringUtils.getBytesUtf8(d2));
+        final String expectedResult = Hex.encodeHexString(messageDigest.digest());
+
+        messageDigest = DigestUtils.getShaDigest();
+        DigestUtils.updateDigest(messageDigest, d1);
+        DigestUtils.updateDigest(messageDigest, d2);
+        final String actualResult = Hex.encodeHexString(messageDigest.digest());
+
+        assertEquals(expectedResult, actualResult);
+    }
+
 }
