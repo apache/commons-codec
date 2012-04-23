@@ -36,7 +36,7 @@ import org.apache.commons.codec.Charsets;
  * Conversion to Kotlin and from there to Java in 2012.
  * </p>
  * <p>
- * The C style comments are from the original C code, the ones with "//" from me.
+ * The C style comments are from the original C code, the ones with "//" from the port.
  * </p>
  * 
  * @version $Id$
