@@ -163,6 +163,8 @@ public class PhoneticEngine {
      * matching rule was found, <code>phonemeBuilder</code> is replaced with a new buidler containing the phonemes
      * updated by the matching rule.
      *
+     * Although this class is not thread-safe (it has mutable unprotected fields), it is not shared between threads
+     * as it is constructed as needed by the calling methods.
      * @since 1.6
      */
     private static final class RulesApplication {

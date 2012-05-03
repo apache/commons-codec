@@ -39,6 +39,8 @@ import org.apache.commons.codec.Charsets;
  * The C style comments are from the original C code, the ones with "//" from the port.
  * </p>
  * 
+ * This class is immutable and thread-safe.
+ * 
  * @version $Id$
  * @since 1.7
  */

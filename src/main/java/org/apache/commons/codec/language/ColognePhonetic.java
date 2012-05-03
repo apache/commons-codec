@@ -176,11 +176,18 @@ import org.apache.commons.codec.StringEncoder;
  * 
  * </ul>
  * 
+ * This class is thread-safe.
+ * 
  * @see <a href="http://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik">Wikipedia (de): K&ouml;lner Phonetik (in German)</a>
  * @since 1.5
  */
 public class ColognePhonetic implements StringEncoder {
 
+    /**
+     * This class is not thread-safe; the field {@link #length} is mutable.
+     * However, it is not shared between threads, as it is constructed on demand
+     * by the method {@link ColognePhonetic#colognePhonetic(String)}
+     */
     private abstract class CologneBuffer {
 
         protected final char[] data;

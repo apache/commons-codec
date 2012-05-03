@@ -50,6 +50,8 @@ import java.util.Set;
  * </p>
  * 
  * @since 1.6
+ * 
+ * This class is immutable and thread-safe.
  */
 public class Languages {
     // Iimplementation note: This class is divided into two sections. The first part is a static factory interface that

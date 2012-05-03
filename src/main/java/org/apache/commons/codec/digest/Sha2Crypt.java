@@ -34,6 +34,8 @@ import java.util.regex.Pattern;
  * into the Public Domain.
  * </p>
  * 
+ * This class is immutable and thread-safe.
+ * 
  * @version $Id$
  * @since 1.7
  */

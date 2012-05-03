@@ -31,6 +31,8 @@ import org.apache.commons.codec.EncoderException;
  * Converts hexadecimal Strings. The charset used for certain operation can be set, the default is set in
  * {@link #DEFAULT_CHARSET_NAME}
  * 
+ * This class is thread-safe.
+ * 
  * @since 1.1
  * @version $Id$
  */

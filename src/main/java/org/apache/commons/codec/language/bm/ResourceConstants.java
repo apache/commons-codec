@@ -22,6 +22,8 @@ import org.apache.commons.codec.CharEncoding;
 /**
  * Constants used to process resource files.
  * 
+ * This class is immutable and thread-safe.
+ * 
  * @since 1.6
  */
 class ResourceConstants {

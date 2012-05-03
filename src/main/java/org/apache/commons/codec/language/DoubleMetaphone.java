@@ -27,6 +27,13 @@ import org.apache.commons.codec.StringEncoder;
  * @see <a href="http://drdobbs.com/184401251?pgno=2">Original Article</a>
  * @see <a href="http://en.wikipedia.org/wiki/Metaphone">http://en.wikipedia.org/wiki/Metaphone</a>
  *
+ * This class is conditionally thread-safe.
+ * The instance field {@link #maxCodeLen} is mutable {@link #setMaxCodeLen(int)}
+ * but is not volatile, and accesses are not synchronised.
+ * If an instance of the class is shared between threads, the caller needs to ensure that suitable synchronisation
+ * is used to ensure safe publication of the value between threads, and must not invoke {@link #setMaxCodeLen(int)}
+ * after initial setup. 
+ * 
  * @version $Id$
  */
 public class DoubleMetaphone implements StringEncoder {

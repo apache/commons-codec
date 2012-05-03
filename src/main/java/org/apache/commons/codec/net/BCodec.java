@@ -40,6 +40,8 @@ import org.apache.commons.codec.binary.Base64;
  * handling software.
  * </p>
  * 
+ * This class is immutable and thread-safe.
+ * 
  * @see <a href="http://www.ietf.org/rfc/rfc1522.txt">MIME (Multipurpose Internet Mail Extensions) Part Two: Message
  *          Header Extensions for Non-ASCII Text</a>
  * 

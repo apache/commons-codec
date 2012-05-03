@@ -46,6 +46,8 @@ import org.apache.commons.codec.binary.StringUtils;
  * 1.4 rely on the platform's default charset encoding.
  * </p>
  * 
+ * This class is immutable and thread-safe.
+ * 
  * @since 1.2
  * @version $Id$
  */

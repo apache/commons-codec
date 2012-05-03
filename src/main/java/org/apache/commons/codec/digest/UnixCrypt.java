@@ -33,6 +33,8 @@ import org.apache.commons.codec.Charsets;
  * This class is slightly incompatible if the given salt contains characters
  * that are not part of the allowed range [a-zA-Z0-9./].
  *
+ * This class is immutable and thread-safe.
+ *
  * @version $Id$
  * @since 1.7
  */
@@ -372,7 +374,9 @@ public class UnixCrypt {
             throw new IllegalArgumentException("Invalid salt value: " + salt);
         }
 
-        for (; salt.length() < 2; salt = salt + "A");
+        for (; salt.length() < 2; salt = salt + "A") {
+            // NOOP
+        }
         StringBuilder buffer = new StringBuilder("             ");
         char charZero = salt.charAt(0);
         char charOne = salt.charAt(1);
