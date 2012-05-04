@@ -10,11 +10,13 @@ Feature and fix release.
 Changes in this version include:
 
 New features:
+o CODEC-139:  DigestUtils: add updateDigest methods and make methods public. Thanks to dsebastien. 
+o CODEC-133:  Add classes for MD5/SHA1/SHA-512-based Unix crypt(3) hash variants. Thanks to lathspell. 
 o CODEC-130:  Base64InputStream.skip skips underlying stream, not output Thanks to tn. 
-o CODEC-63:  Implement NYSIIS Thanks to bayard. 
+o CODEC-63:   Implement NYSIIS Thanks to bayard. 
 
 Fixed Bugs:
-o CODEC-96:  Base64 encode() method is no longer thread-safe, breaking clients using it as a shared BinaryEncoder.
+o CODEC-96:   Base64 encode() method is no longer thread-safe, breaking clients using it as a shared BinaryEncoder.
               Note: the fix breaks binary compatibility, however the changes are to a class (BaseNCodec) which is
               intended for internal use. Thanks to sebb. 
 o CODEC-138:  Complete FilterInputStream interface for BaseNCodecInputStream 
@@ -22,6 +24,8 @@ o CODEC-136:  Use Charset objects when possible, create Charsets for required ch
 o CODEC-132:  BeiderMorseEncoder OOM issues Thanks to rcmuir. 
 o CODEC-131:  DoubleMetaphone javadoc contains dead links Thanks to smolav. 
 
+Changes:
+o CODEC-143:  StringBuffer could be replaced by StringBuilder for local variables. 
 
 
 Known issue only on IBM Java 5:
