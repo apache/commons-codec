@@ -1190,12 +1190,12 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest {
                 matches.append("{\"" + name0 + "\", \"" + name1 + "\"}," + cr);
             }
         }
-        String msg = failures.toString();
         matches.append("};");
         // Turn on to print a new MATCH array
         //System.out.println(matches.toString());
-        if (msg.length() > 0) {
+        if (failCount > 0) {
             // Turn on to see which pairs do NOT match.
+            // String msg = failures.toString();
             //fail(failCount + " failures out of " + FIXTURE.length + ". The
             // following could be made to match: " + cr + msg);
         }
