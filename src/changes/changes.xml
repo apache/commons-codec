@@ -51,6 +51,9 @@ The <action> type attribute can be add,update,fix,remove.
     </release>
     -->
     <release version="1.7" date="TBD" description="Feature and fix release.">
+      <action issue="CODEC-143" dev="sebb" type="update">
+        StringBuffer could be replaced by StringBuilder for local variables.
+      </action>
       <action dev="ggregory" type="add" issue="CODEC-139" due-to="dsebastien">
         DigestUtils: add updateDigest methods and make methods public.
       </action>

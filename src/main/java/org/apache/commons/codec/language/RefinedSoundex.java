@@ -181,7 +181,7 @@ public class RefinedSoundex implements StringEncoder {
             return str;
         }
 
-        StringBuffer sBuf = new StringBuffer();
+        StringBuilder sBuf = new StringBuilder();
         sBuf.append(str.charAt(0));
 
         char last, current;

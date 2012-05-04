@@ -84,7 +84,7 @@ abstract class RFC1522Codec {
         if (text == null) {
             return null;
         }
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         buffer.append(PREFIX); 
         buffer.append(charset);
         buffer.append(SEP);
