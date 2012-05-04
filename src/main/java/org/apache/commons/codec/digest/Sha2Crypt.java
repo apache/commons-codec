@@ -139,7 +139,7 @@ public class Sha2Crypt {
             throw new IllegalArgumentException("Invalid salt value: " + salt);
         }
         if (m.group(3) != null) {
-            rounds = Integer.valueOf(m.group(3));
+            rounds = Integer.parseInt(m.group(3));
             rounds = Math.max(ROUNDS_MIN, Math.min(ROUNDS_MAX, rounds));
             roundsCustom = true;
         }
