@@ -190,7 +190,7 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
     @Test(/* timeout = 20000L */)
     public void testSpeedCheck() throws EncoderException {
         BeiderMorseEncoder bmpm = this.createGenericApproxEncoder();
-        StringBuffer stringBuffer = new StringBuffer();
+        StringBuilder stringBuffer = new StringBuilder();
         stringBuffer.append(TEST_CHARS[0]);
         for (int i = 0, j = 1; i < 40; i++, j++) {
             if (j == TEST_CHARS.length) {

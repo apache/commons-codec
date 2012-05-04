@@ -289,7 +289,7 @@ public class Base64Test {
         String orig = "I am a late night coder.";
 
         byte[] encodedArray = Base64.encodeBase64(orig.getBytes(Charsets.UTF_8));
-        StringBuffer intermediate = new StringBuffer(new String(encodedArray));
+        StringBuilder intermediate = new StringBuilder(new String(encodedArray));
 
         intermediate.insert(2, ' ');
         intermediate.insert(5, '\t');
@@ -1208,7 +1208,7 @@ public class Base64Test {
     }
 
     private String toString(byte[] data) {
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         for (int i = 0; i < data.length; i++) {
             buf.append(data[i]);
             if (i != data.length - 1) {

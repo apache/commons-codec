@@ -1172,8 +1172,8 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest {
     @Test
     public void testIsDoubleMetaphoneEqualExtended3() {
         this.validateFixture(FIXTURE);
-        StringBuffer failures = new StringBuffer();
-        StringBuffer matches = new StringBuffer();
+        StringBuilder failures = new StringBuilder();
+        StringBuilder matches = new StringBuilder();
         String cr = System.getProperty("line.separator");
         matches.append("private static final String[][] MATCHES = {" + cr);
         int failCount = 0;

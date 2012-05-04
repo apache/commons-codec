@@ -50,7 +50,7 @@ public class URLCodecTest {
     }
     
     private String constructString(int [] unicodeChars) {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         if (unicodeChars != null) {
             for (int unicodeChar : unicodeChars) {
                 buffer.append((char)unicodeChar); 

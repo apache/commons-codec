@@ -42,7 +42,7 @@ public class BCodecTest {
         { 0x412, 0x441, 0x435, 0x43C, 0x5F, 0x43F, 0x440, 0x438, 0x432, 0x435, 0x442 };
 
     private String constructString(int[] unicodeChars) {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         if (unicodeChars != null) {
             for (int unicodeChar : unicodeChars) {
                 buffer.append((char) unicodeChar);
