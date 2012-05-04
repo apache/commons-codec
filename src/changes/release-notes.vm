@@ -46,11 +46,11 @@ $release.description.replaceAll("  ", "
 #set($issue=$indent1)
 #end
 #if ($actionItem.getDueTo())
-#set($dueto="Thanks to $actionItem.getDueTo(). ")
+#set($dueto=" Thanks to $actionItem.getDueTo().")
 #else
 #set($dueto="")
 #end
-o $issue  ${action} $dueto
+o $issue  ${action}$dueto
 #set($action="")
 #set($issue="")
 #set($dueto="")
