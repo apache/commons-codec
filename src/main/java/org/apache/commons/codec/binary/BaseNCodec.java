@@ -293,12 +293,24 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
 
     /**
      * Encodes a byte[] containing binary data, into a String containing characters in the Base-N alphabet.
+     * Uses UTF8 encoding.
      *
      * @param pArray
      *            a byte array containing binary data
      * @return A String containing only Base-N character data
      */
     public String encodeToString(byte[] pArray) {
+        return StringUtils.newStringUtf8(encode(pArray));
+    }
+
+    /**
+     * Encodes a byte[] containing binary data, into a String containing characters in the appropriate alphabet.
+     * Uses UTF8 encoding.
+     *
+     * @param pArray a byte array containing binary data
+     * @return String containing only character data in the appropriate alphabet.
+    */
+    public String encodeAsString(byte[] pArray){
         return StringUtils.newStringUtf8(encode(pArray));
     }
 
@@ -374,17 +386,6 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         return buf;
     }
     
-    /**
-     * Encodes a byte[] containing binary data, into a String containing characters in the appropriate alphabet.
-     * Uses UTF8 encoding.
-     *
-     * @param pArray a byte array containing binary data
-     * @return String containing only character data in the appropriate alphabet.
-    */
-    public String encodeAsString(byte[] pArray){
-        return StringUtils.newStringUtf8(encode(pArray));
-    }
-
     abstract void encode(byte[] pArray, int i, int length, Context context);  // package protected for access from I/O streams
 
     abstract void decode(byte[] pArray, int i, int length, Context context); // package protected for access from I/O streams
