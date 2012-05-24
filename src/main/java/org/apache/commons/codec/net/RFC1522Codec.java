@@ -41,7 +41,7 @@ import org.apache.commons.codec.binary.StringUtils;
  * Message Header Extensions for Non-ASCII Text</a>
  * </p>
  * 
- * This class is immutable and thread-safe.
+ * <p>This class is immutable and thread-safe.</p>
  * 
  * @since 1.3
  * @version $Id$

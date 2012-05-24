@@ -49,7 +49,7 @@ import java.nio.charset.UnsupportedCharsetException;
  * This perhaps would best belong in the Commons Lang project. Even if a similar class is defined in Commons Lang, it is
  * not foreseen that Commons Codec would be made to depend on Commons Lang.
  * 
- * This class is immutable and thread-safe.
+ * <p>This class is immutable and thread-safe.</p>
  * 
  * @see <a href="http://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
  * @since 1.7

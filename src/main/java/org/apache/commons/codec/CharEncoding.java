@@ -47,7 +47,7 @@ package org.apache.commons.codec;
  * This perhaps would best belong in the [lang] project. Even if a similar interface is defined in [lang], it is not
  * foreseen that [codec] would be made to depend on [lang].
  * 
- * This class is immutable and thread-safe.
+ * <p>This class is immutable and thread-safe.</p>
  * 
  * @see <a href="http://download.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
  * @since 1.4

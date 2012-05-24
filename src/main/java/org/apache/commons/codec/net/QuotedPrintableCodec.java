@@ -55,7 +55,7 @@ import org.apache.commons.codec.binary.StringUtils;
  * for those applications that do not require quoted-printable line formatting (rules #3, #4, #5), for instance Q codec.
  * </p>
  * 
- * This class is immutable and thread-safe.
+ * <p>This class is immutable and thread-safe.</p>
  * 
  * @see <a href="http://www.ietf.org/rfc/rfc1521.txt"> RFC 1521 MIME (Multipurpose Internet Mail Extensions) Part One:
  *          Mechanisms for Specifying and Describing the Format of Internet Message Bodies </a>

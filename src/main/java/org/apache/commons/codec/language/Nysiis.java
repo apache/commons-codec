@@ -61,7 +61,7 @@ import org.apache.commons.codec.StringEncoder;
  * 9. Add original first character of name as first character of key
  * </pre></p>
  *
- * This class is immutable and thread-safe.
+ * <p>This class is immutable and thread-safe.</p>
  * 
  * @see <a href="http://en.wikipedia.org/wiki/NYSIIS">NYSIIS on Wikipedia</a>
  * @see <a href="http://www.dropby.com/NYSIIS.html">NYSIIS on dropby.com</a>

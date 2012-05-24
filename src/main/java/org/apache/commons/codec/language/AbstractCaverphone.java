@@ -26,7 +26,7 @@ import org.apache.commons.codec.StringEncoder;
  * This is an algorithm created by the Caversham Project at the University of Otago. It implements the Caverphone 2.0
  * algorithm:
  * 
- * This class is immutable and thread-safe.
+ * <p>This class is immutable and thread-safe.</p>
  * 
  * @version $Id: Caverphone.java 1075947 2011-03-01 17:56:14Z ggregory $
  * @see <a href="http://en.wikipedia.org/wiki/Caverphone">Wikipedia - Caverphone</a>

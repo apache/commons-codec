@@ -28,7 +28,7 @@ package org.apache.commons.codec.language;
  * @see <a href="http://caversham.otago.ac.nz/files/working/ctp150804.pdf">Caverphone 2.0 specification</a>
  * @since 1.5
  * 
- * This class is immutable and thread-safe.
+ * <p>This class is immutable and thread-safe.</p>
  */
 public class Caverphone2 extends AbstractCaverphone {
 

@@ -22,7 +22,7 @@ import org.apache.commons.codec.CharEncoding;
 /**
  * Constants used to process resource files.
  * 
- * This class is immutable and thread-safe.
+ * <p>This class is immutable and thread-safe.</p>
  * 
  * @since 1.6
  */

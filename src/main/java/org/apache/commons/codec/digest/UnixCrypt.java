@@ -33,7 +33,7 @@ import org.apache.commons.codec.Charsets;
  * This class is slightly incompatible if the given salt contains characters
  * that are not part of the allowed range [a-zA-Z0-9./].
  *
- * This class is immutable and thread-safe.
+ * <p>This class is immutable and thread-safe.</p>
  *
  * @version $Id$
  * @since 1.7

@@ -27,7 +27,7 @@ import org.apache.commons.codec.Charsets;
  * Converts String to and from bytes using the encodings required by the Java specification. These encodings are specified in <a
  * href="http://download.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
  * 
- * This class is immutable and thread-safe.
+ * <p>This class is immutable and thread-safe.</p>
  *
  * @see CharEncoding
  * @see <a href="http://download.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>

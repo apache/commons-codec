@@ -23,7 +23,7 @@ import org.apache.commons.codec.Charsets;
  * 
  * See {@link #crypt(String, String)} for further details.
  * 
- * This class is immutable and thread-safe.
+ * <p>This class is immutable and thread-safe.</p>
  * 
  * @version $Id$
  * @since 1.7

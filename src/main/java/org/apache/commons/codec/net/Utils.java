@@ -22,7 +22,7 @@ import org.apache.commons.codec.DecoderException;
 /**
  * Utility methods for this package.
  * 
- * This class is immutable and thread-safe.
+ * <p>This class is immutable and thread-safe.</p>
  * 
  * @version $Id$
  * @since 1.4

@@ -25,7 +25,7 @@ import org.apache.commons.codec.StringEncoder;
  * optimized for spell checking words. Soundex method originally developed by
  * <CITE>Margaret Odell</CITE> and <CITE>Robert Russell</CITE>.
  * 
- * This class is immutable and thread-safe.
+ * <p>This class is immutable and thread-safe.</p>
  * 
  * @version $Id$
  */
