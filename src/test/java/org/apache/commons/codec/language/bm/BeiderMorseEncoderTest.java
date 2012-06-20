@@ -29,7 +29,7 @@ import org.junit.Test;
 
 /**
  * Tests BeiderMorseEncoder.
- * 
+ *
  * @since 1.6
  */
 public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
@@ -53,7 +53,7 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
 
     /**
      * Tests we do not blow up.
-     * 
+     *
      * @throws EncoderException
      */
     @Test
@@ -101,7 +101,7 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
     /**
      * Tests https://issues.apache.org/jira/browse/CODEC-125?focusedCommentId=13071566&page=com.atlassian.jira.plugin.system.issuetabpanels:
      * comment-tabpanel#comment-13071566
-     * 
+     *
      * @throws EncoderException
      */
     @Test
@@ -184,7 +184,7 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
 
     /**
      * (Un)luckily, the worse performing test because of the data in {@link #TEST_CHARS}
-     * 
+     *
      * @throws EncoderException
      */
     @Test(/* timeout = 20000L */)

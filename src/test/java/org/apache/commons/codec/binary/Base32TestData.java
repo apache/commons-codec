@@ -24,7 +24,7 @@ import java.util.Random;
 /**
  * This random data was encoded by OpenSSL. Java had nothing to do with it. This data helps us test interop between
  * Commons-Codec and OpenSSL. Notice that OpenSSL creates 64 character lines instead of the 76 of Commons-Codec.
- * 
+ *
  * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>
  * @version $Id $
  * @since 1.4
@@ -94,10 +94,10 @@ public class Base32TestData {
 
     /**
      * Returns an encoded and decoded copy of the same random data.
-     * 
+     *
      * @param codec the codec to use
      * @param size amount of random data to generate and encode
-     * @return two byte[] arrays:  [0] = decoded, [1] = encoded 
+     * @return two byte[] arrays:  [0] = decoded, [1] = encoded
      */
     static byte[][] randomData(BaseNCodec codec, int size) {
         Random r = new Random();

@@ -7,7 +7,7 @@
  * the License.  You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,11 +20,11 @@ import java.util.Random;
 
 /**
  * Base64 like method to convert binary bytes into ASCII chars.
- * 
+ *
  * TODO: Can Base64 be reused?
- * 
+ *
  * <p>This class is immutable and thread-safe.</p>
- * 
+ *
  * @version $Id$
  * @since 1.7
  */
@@ -37,7 +37,7 @@ class B64 {
 
     /**
      * Base64 like conversion of bytes to ASCII chars.
-     * 
+     *
      * @param b2
      *            A byte from the result.
      * @param b1
@@ -62,7 +62,7 @@ class B64 {
 
     /**
      * Generates a string of random chars from the B64T set.
-     * 
+     *
      * @param num
      *            Number of chars to generate.
      */

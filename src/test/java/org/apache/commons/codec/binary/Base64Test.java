@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -35,7 +35,7 @@ import org.junit.Test;
 
 /**
  * Test cases for Base64 class.
- * 
+ *
  * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>
  * @version $Id$
  */
@@ -59,19 +59,19 @@ public class Base64Test {
         String emptyString = "";
         String validString = "abc===defg\n\r123456\r789\r\rABC\n\nDEF==GHI\r\nJKL==============";
         String invalidString = validString + (char)0; // append null character
-        
+
         try {
             Base64.isBase64(nullString);
             fail("Base64.isStringBase64() should not be null-safe.");
         } catch (NullPointerException npe) {
             assertNotNull("Base64.isStringBase64() should not be null-safe.", npe);
         }
-        
+
         assertTrue("Base64.isStringBase64(empty-string) is true", Base64.isBase64(emptyString));
-        assertTrue("Base64.isStringBase64(valid-string) is true", Base64.isBase64(validString));        
-        assertFalse("Base64.isStringBase64(invalid-string) is false", Base64.isBase64(invalidString));        
+        assertTrue("Base64.isStringBase64(valid-string) is true", Base64.isBase64(validString));
+        assertFalse("Base64.isStringBase64(invalid-string) is false", Base64.isBase64(invalidString));
     }
-    
+
     /**
      * Test the Base64 implementation
      */
@@ -96,7 +96,7 @@ public class Base64Test {
         // bogus characters to decode (to skip actually) {e-acute*6}
         byte[] decode = b64.decode("SGVsbG{\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9}8gV29ybGQ=");
         String decodeString = StringUtils.newStringUtf8(decode);
-        assertEquals("decode hello world", "Hello World", decodeString);        
+        assertEquals("decode hello world", "Hello World", decodeString);
     }
 
     /**
@@ -353,7 +353,7 @@ public class Base64Test {
         testEncodeOverMaxSize(1);
         testEncodeOverMaxSize(2);
     }
-    
+
     @Test
     public void testCodec112() { // size calculation assumes always chunked
         byte[] in = new byte[] {0};
@@ -566,7 +566,7 @@ public class Base64Test {
      * <li>BASE64("fooba") = "Zm9vYmE="</li>
      * <li>BASE64("foobar") = "Zm9vYmFy"</li>
      * </ul>
-     * 
+     *
      * @see <a href="http://tools.ietf.org/html/rfc4648">http://tools.ietf.org/html/rfc4648</a>
      */
     @Test
@@ -579,7 +579,7 @@ public class Base64Test {
         assertEquals("fooba", StringUtils.newStringUsAscii(Base64.decodeBase64("Zm9vYmE=")));
         assertEquals("foobar", StringUtils.newStringUsAscii(Base64.decodeBase64("Zm9vYmFy")));
     }
-    
+
     /**
      * Tests RFC 4648 section 10 test vectors.
      * <ul>
@@ -591,7 +591,7 @@ public class Base64Test {
      * <li>BASE64("fooba") = "Zm9vYmE="</li>
      * <li>BASE64("foobar") = "Zm9vYmFy"</li>
      * </ul>
-     * 
+     *
      * @see <a href="http://tools.ietf.org/html/rfc4648">http://tools.ietf.org/html/rfc4648</a>
      */
     @Test
@@ -605,7 +605,7 @@ public class Base64Test {
         assertEquals("fooba", StringUtils.newStringUsAscii(Base64.decodeBase64("Zm9vYmE=" + CRLF)));
         assertEquals("foobar", StringUtils.newStringUsAscii(Base64.decodeBase64("Zm9vYmFy" + CRLF)));
     }
-    
+
     /**
      * Tests RFC 4648 section 10 test vectors.
      * <ul>
@@ -617,7 +617,7 @@ public class Base64Test {
      * <li>BASE64("fooba") = "Zm9vYmE="</li>
      * <li>BASE64("foobar") = "Zm9vYmFy"</li>
      * </ul>
-     * 
+     *
      * @see <a href="http://tools.ietf.org/html/rfc4648">http://tools.ietf.org/html/rfc4648</a>
      */
     @Test
@@ -630,7 +630,7 @@ public class Base64Test {
         assertEquals("Zm9vYmE=", Base64.encodeBase64String(StringUtils.getBytesUtf8("fooba")));
         assertEquals("Zm9vYmFy", Base64.encodeBase64String(StringUtils.getBytesUtf8("foobar")));
     }
-    
+
     /**
      * Tests RFC 4648 section 10 test vectors.
      * <ul>
@@ -642,7 +642,7 @@ public class Base64Test {
      * <li>BASE64("fooba") = "Zm9vYmE="</li>
      * <li>BASE64("foobar") = "Zm9vYmFy"</li>
      * </ul>
-     * 
+     *
      * @see <a href="http://tools.ietf.org/html/rfc4648">http://tools.ietf.org/html/rfc4648</a>
      */
     @Test
@@ -655,7 +655,7 @@ public class Base64Test {
         //testDecodeEncode("Zm9vYmE=");
         //testDecodeEncode("Zm9vYmFy");
     }
-    
+
     private void testDecodeEncode(String encodedText) {
         String decodedText = StringUtils.newStringUsAscii(Base64.decodeBase64(encodedText));
         String encodedText2 = Base64.encodeBase64String(StringUtils.getBytesUtf8(decodedText));
@@ -673,7 +673,7 @@ public class Base64Test {
      * <li>BASE64("fooba") = "Zm9vYmE="</li>
      * <li>BASE64("foobar") = "Zm9vYmFy"</li>
      * </ul>
-     * 
+     *
      * @see <a href="http://tools.ietf.org/html/rfc4648">http://tools.ietf.org/html/rfc4648</a>
      */
     @Test
@@ -686,13 +686,13 @@ public class Base64Test {
         testEncodeDecode("fooba");
         testEncodeDecode("foobar");
     }
-    
+
     private void testEncodeDecode(String plainText) {
         String encodedText = Base64.encodeBase64String(StringUtils.getBytesUtf8(plainText));
         String decodedText = StringUtils.newStringUsAscii(Base64.decodeBase64(encodedText));
         assertEquals(plainText, decodedText);
     }
-    
+
     @Test
     public void testSingletons() {
         assertEquals("AA==", new String(Base64.encodeBase64(new byte[]{(byte) 0})));
@@ -1073,7 +1073,7 @@ public class Base64Test {
     /**
      * Base64 encoding of UUID's is a common use-case, especially in URL-SAFE mode. This test case ends up being the
      * "URL-SAFE" JUnit's.
-     * 
+     *
      * @throws DecoderException
      *             if Hex.decode() fails - a serious problem since Hex comes from our own commons-codec!
      */
@@ -1217,10 +1217,10 @@ public class Base64Test {
         }
         return buf.toString();
     }
-    
+
     /**
      * Tests a lineSeparator much bigger than DEFAULT_BUFFER_SIZE.
-     * 
+     *
      * @see <a href="http://mail-archives.apache.org/mod_mbox/commons-dev/201202.mbox/%3C4F3C85D7.5060706@snafu.de%3E">dev@commons.apache.org</a>
      */
     @Test

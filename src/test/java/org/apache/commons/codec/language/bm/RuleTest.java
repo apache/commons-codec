@@ -26,7 +26,7 @@ import org.junit.Test;
 
 /**
  * Tests Rule.
- * 
+ *
  * @since 1.6
  */
 public class RuleTest {

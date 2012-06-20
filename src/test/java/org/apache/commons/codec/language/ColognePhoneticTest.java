@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,9 +24,9 @@ import org.junit.Test;
 
 /**
  * Tests the {@code ColognePhonetic} class.
- * 
+ *
  * <p>Keep this file in UTF-8 encoding for proper Javadoc processing.</p>
- * 
+ *
  */
 public class ColognePhoneticTest extends StringEncoderAbstractTest {
 
@@ -44,10 +44,10 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
     public void testAaclan() throws EncoderException {
         this.checkEncoding("0856", "Aaclan");
     }
-    
+
     /**
      * Tests [CODEC-122]
-     * 
+     *
      * @throws EncoderException
      */
     @Test
@@ -106,7 +106,7 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
             {"Wikipedia", "3412"},
             {"peter", "127"},
             {"pharma", "376"},
-            {"m\u00f6nchengladbach", "664645214"}, // mönchengladbach 
+            {"m\u00f6nchengladbach", "664645214"}, // mönchengladbach
             {"deutsch", "28"},
             {"deutz", "28"},
             {"hamburg", "06174"},
@@ -126,7 +126,7 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest {
 
     @Test
     public void testHyphen() throws EncoderException {
-        String[][] data = {{"bergisch-gladbach", "174845214"}, 
+        String[][] data = {{"bergisch-gladbach", "174845214"},
                 {"M\u00fcller-L\u00fcdenscheidt", "65752682"}}; // Müller-Lüdenscheidt
         this.checkEncodings(data);
     }

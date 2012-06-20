@@ -23,19 +23,19 @@ import java.util.regex.Pattern;
 
 /**
  * SHA2-based Unix crypt implementation.
- * 
+ *
  * <p>
  * Based on the C implementation released into the Public Domain by Ulrich Drepper &lt;drepper@redhat.com&gt;
  * http://www.akkadia.org/drepper/SHA-crypt.txt
  * </p>
- * 
+ *
  * <p>
  * Conversion to Kotlin and from there to Java in 2012 by Christian Hammers &lt;ch@lathspell.de&gt; and likewise put
  * into the Public Domain.
  * </p>
- * 
+ *
  * <p>This class is immutable and thread-safe.</p>
- * 
+ *
  * @version $Id$
  * @since 1.7
  */
@@ -45,46 +45,46 @@ public class Sha2Crypt {
      * Default number of rounds if not explicitly specified.
      */
     private static final int ROUNDS_DEFAULT = 5000;
-    
+
     /**
      * Maximum number of rounds.
      */
     private static final int ROUNDS_MAX = 999999999;
-    
+
     /**
      * Minimum number of rounds.
      */
     private static final int ROUNDS_MIN = 1000;
-    
+
     /**
      * Prefix for optional rounds specification.
      */
     private static final String ROUNDS_PREFIX = "rounds=";
-    
+
     /**
      * The MessageDigest algorithm.
      */
     private static final String SHA256_ALGORITHM = "SHA-256";
-    
+
     /**
      * The number of bytes the final hash value will have.
      */
     private static final int SHA256_BLOCKSIZE = 32;
-    
+
     /**
      * The prefixes that can be used to identify this crypt() variant.
      */
     static final String SHA256_PREFIX = "$5$";
-    
+
     private static final String SHA512_ALGORITHM = "SHA-512";
-    
+
     private static final int SHA512_BLOCKSIZE = 64;
-    
+
     static final String SHA512_PREFIX = "$6$";
 
     /**
      * Generates a libc crypt() compatible "$5$" hash value with random salt.
-     * 
+     *
      * See {@link Crypt#crypt(String, String)} for details.
      */
     public static String sha256Crypt(byte[] keyBytes) throws Exception {
@@ -93,7 +93,7 @@ public class Sha2Crypt {
 
     /**
      * Generates a libc6 crypt() compatible "$5$" hash value.
-     * 
+     *
      * See {@link Crypt#crypt(String, String)} for details.
      */
     public static String sha256Crypt(byte[] keyBytes, String salt) throws Exception {
@@ -105,12 +105,12 @@ public class Sha2Crypt {
 
     /**
      * Generates a libc6 crypt() compatible "$5$" or "$6$" SHA2 based hash value.
-     * 
+     *
      * This is a nearly line by line conversion of the original C function. The numbered comments are from the algorithm
      * description, the short C-style ones from the original C code and the ones with "Remark" from me.
-     * 
+     *
      * See {@link Crypt#crypt(String, String)} for details.
-     * 
+     *
      * @param keyBytes
      *            The plaintext that should be hashed.
      * @param salt_string
@@ -494,7 +494,7 @@ public class Sha2Crypt {
 
     /**
      * Generates a libc crypt() compatible "$6$" hash value with random salt.
-     * 
+     *
      * See {@link Crypt#crypt(String, String)} for details.
      */
     public static String sha512Crypt(byte[] keyBytes) throws Exception {
@@ -503,7 +503,7 @@ public class Sha2Crypt {
 
     /**
      * Generates a libc6 crypt() compatible "$6$" hash value.
-     * 
+     *
      * See {@link Crypt#crypt(String, String)} for details.
      */
     public static String sha512Crypt(byte[] keyBytes, String salt) throws Exception {

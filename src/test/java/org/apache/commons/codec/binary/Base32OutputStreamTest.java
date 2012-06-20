@@ -32,7 +32,7 @@ public class Base32OutputStreamTest {
 
     private final static byte[] LF = {(byte) '\n'};
 
-    
+
 
 //    /**
 //     * Test the Base32OutputStream implementation against the special NPE inducing input
@@ -56,11 +56,11 @@ public class Base32OutputStreamTest {
 //            "codec-98 NPE Base32OutputStream", Base32TestData.CODEC_98_NPE_DECODED, decoded
 //        );
 //    }
-    
+
 
     /**
      * Test the Base32OutputStream implementation against empty input.
-     * 
+     *
      * @throws Exception
      *             for some failure scenarios.
      */
@@ -71,7 +71,7 @@ public class Base32OutputStreamTest {
 
     /**
      * Test the Base32OutputStream implementation against empty input.
-     * 
+     *
      * @throws Exception
      *             for some failure scenarios.
      */
@@ -89,7 +89,7 @@ public class Base32OutputStreamTest {
 
     /**
      * Test the Base32OutputStream implementation
-     * 
+     *
      * @throws Exception
      *             for some failure scenarios.
      */
@@ -124,7 +124,7 @@ public class Base32OutputStreamTest {
 
     /**
      * Test the Base32OutputStream implementation
-     * 
+     *
      * @throws Exception
      *             for some failure scenarios.
      */
@@ -163,7 +163,7 @@ public class Base32OutputStreamTest {
      * <p/>
      * By "[WRAP-WRAP-WRAP-etc...]" we mean situation where the Base32OutputStream wraps itself in encode and decode
      * mode over and over again.
-     * 
+     *
      * @param encoded
      *            Base32 encoded data
      * @param decoded
@@ -213,7 +213,7 @@ public class Base32OutputStreamTest {
      * <p/>
      * By "[WRAP-WRAP-WRAP-etc...]" we mean situation where the Base32OutputStream wraps itself in encode and decode
      * mode over and over again.
-     * 
+     *
      * @param encoded
      *            Base32 encoded data
      * @param decoded
@@ -276,7 +276,7 @@ public class Base32OutputStreamTest {
 
     /**
      * Tests Base32OutputStream.write for expected IndexOutOfBoundsException conditions.
-     * 
+     *
      * @throws Exception
      *             for some failure scenarios.
      */
@@ -317,7 +317,7 @@ public class Base32OutputStreamTest {
 
     /**
      * Tests Base32OutputStream.write(null).
-     * 
+     *
      * @throws Exception
      *             for some failure scenarios.
      */

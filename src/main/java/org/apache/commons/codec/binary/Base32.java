@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,7 +19,7 @@ package org.apache.commons.codec.binary;
 
 /**
  * Provides Base32 encoding and decoding as defined by <a href="http://www.ietf.org/rfc/rfc4648.txt">RFC 4648</a>.
- * 
+ *
  * <p>
  * The class can be parameterized in the following manner with various constructors:
  * <ul>
@@ -35,17 +35,17 @@ package org.apache.commons.codec.binary;
  * <p>
  * This class is thread-safe.
  * </p>
- * 
+ *
  * @see <a href="http://www.ietf.org/rfc/rfc4648.txt">RFC 4648</a>
- * 
+ *
  * @since 1.5
  * @version $Revision$
  */
 public class Base32 extends BaseNCodec {
 
     /**
-     * BASE32 characters are 5 bits in length. 
-     * They are formed by taking a block of five octets to form a 40-bit string, 
+     * BASE32 characters are 5 bits in length.
+     * They are formed by taking a block of five octets to form a 40-bit string,
      * which is converted into eight BASE32 characters.
      */
     private static final int BITS_PER_ENCODED_BYTE = 5;
@@ -63,7 +63,7 @@ public class Base32 extends BaseNCodec {
      * This array is a lookup table that translates Unicode characters drawn from the "Base32 Alphabet" (as specified in
      * Table 3 of RFC 2045) into their 5-bit positive integer equivalents. Characters that are not in the Base32
      * alphabet but fall within the bounds of the array are translated to -1.
-     * 
+     *
      */
     private static final byte[] DECODE_TABLE = {
          //  0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
@@ -89,7 +89,7 @@ public class Base32 extends BaseNCodec {
      * This array is a lookup table that translates Unicode characters drawn from the "Base32 |Hex Alphabet" (as specified in
      * Table 3 of RFC 2045) into their 5-bit positive integer equivalents. Characters that are not in the Base32 Hex
      * alphabet but fall within the bounds of the array are translated to -1.
-     * 
+     *
      */
     private static final byte[] HEX_DECODE_TABLE = {
          //  0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
@@ -106,7 +106,7 @@ public class Base32 extends BaseNCodec {
      * equivalents as specified in Table 3 of RFC 2045.
      */
     private static final byte[] HEX_ENCODE_TABLE = {
-            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 
+            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
             'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
     };
@@ -119,7 +119,7 @@ public class Base32 extends BaseNCodec {
     // some state be preserved between calls of encode() and decode().
 
     /**
-     * Place holder for the bytes we're dealing with for our based logic. 
+     * Place holder for the bytes we're dealing with for our based logic.
      * Bitwise operations store and extract the encoding or decoding from this variable.
      */
     /**
@@ -154,7 +154,7 @@ public class Base32 extends BaseNCodec {
      * <p>
      * When encoding the line length is 0 (no chunking).
      * </p>
-     * 
+     *
      */
     public Base32() {
         this(false);
@@ -176,7 +176,7 @@ public class Base32 extends BaseNCodec {
      * <p>
      * When encoding the line length is given in the constructor, the line separator is CRLF.
      * </p>
-     * 
+     *
      * @param lineLength
      *            Each line of encoded data will be at most of the given length (rounded down to nearest multiple of 8).
      *            If lineLength <= 0, then the output will not be divided into lines (chunks). Ignored when decoding.
@@ -193,7 +193,7 @@ public class Base32 extends BaseNCodec {
      * <p>
      * Line lengths that aren't multiples of 8 will still essentially end up being multiples of 8 in the encoded data.
      * </p>
-     * 
+     *
      * @param lineLength
      *            Each line of encoded data will be at most of the given length (rounded down to nearest multiple of 8).
      *            If lineLength <= 0, then the output will not be divided into lines (chunks). Ignored when decoding.
@@ -205,7 +205,7 @@ public class Base32 extends BaseNCodec {
     public Base32(int lineLength, byte[] lineSeparator) {
         this(lineLength, lineSeparator, false);
     }
-    
+
     /**
      * Creates a Base32 / Base32 Hex codec used for decoding and encoding.
      * <p>
@@ -214,7 +214,7 @@ public class Base32 extends BaseNCodec {
      * <p>
      * Line lengths that aren't multiples of 8 will still essentially end up being multiples of 8 in the encoded data.
      * </p>
-     * 
+     *
      * @param lineLength
      *            Each line of encoded data will be at most of the given length (rounded down to nearest multiple of 8).
      *            If lineLength <= 0, then the output will not be divided into lines (chunks). Ignored when decoding.
@@ -226,15 +226,15 @@ public class Base32 extends BaseNCodec {
      *             Or the lineLength > 0 and lineSeparator is null.
      */
     public Base32(int lineLength, byte[] lineSeparator, boolean useHex) {
-        super(BYTES_PER_UNENCODED_BLOCK, BYTES_PER_ENCODED_BLOCK, 
-                lineLength, 
+        super(BYTES_PER_UNENCODED_BLOCK, BYTES_PER_ENCODED_BLOCK,
+                lineLength,
                 lineSeparator == null ? 0 : lineSeparator.length);
         if (useHex){
             this.encodeTable = HEX_ENCODE_TABLE;
-            this.decodeTable = HEX_DECODE_TABLE;            
+            this.decodeTable = HEX_DECODE_TABLE;
         } else {
             this.encodeTable = ENCODE_TABLE;
-            this.decodeTable = DECODE_TABLE;            
+            this.decodeTable = DECODE_TABLE;
         }
         if (lineLength > 0) {
             if (lineSeparator == null) {
@@ -266,7 +266,7 @@ public class Base32 extends BaseNCodec {
      * silently ignored, but has implications for other bytes, too. This method subscribes to the garbage-in,
      * garbage-out philosophy: it will not check the provided data for validity.
      * </p>
-     * 
+     *
      * @param in
      *            byte[] array of ascii data to Base32 decode.
      * @param inPos
@@ -309,13 +309,13 @@ public class Base32 extends BaseNCodec {
                 }
             }
         }
-    
+
         // Two forms of EOF as far as Base32 decoder is concerned: actual
         // EOF (-1) and first time '=' character is encountered in stream.
         // This approach makes the '=' padding characters completely optional.
         if (context.eof && context.modulus >= 2) { // if modulus < 2, nothing to do
             ensureBufferSize(decodeSize, context);
-    
+
             //  we ignore partial bytes, i.e. only multiples of 8 count
             switch (context.modulus) {
                 case 2 : // 10 bits, drop 2 and output one byte
@@ -358,7 +358,7 @@ public class Base32 extends BaseNCodec {
      * the data to encode, and once with inAvail set to "-1" to alert encoder that EOF has been reached, so flush last
      * remaining bytes (if not multiple of 5).
      * </p>
-     * 
+     *
      * @param in
      *            byte[] array of binary data to Base32 encode.
      * @param inPos
@@ -392,7 +392,7 @@ public class Base32 extends BaseNCodec {
                     context.buffer[context.pos++] = PAD;
                     context.buffer[context.pos++] = PAD;
                     break;
-    
+
                 case 2 : // 2 octets = 16 bits to use
                     context.buffer[context.pos++] = encodeTable[(int)(context.lbitWorkArea >> 11) & MASK_5BITS]; // 16-1*5 = 11
                     context.buffer[context.pos++] = encodeTable[(int)(context.lbitWorkArea >>  6) & MASK_5BITS]; // 16-2*5 = 6
@@ -429,7 +429,7 @@ public class Base32 extends BaseNCodec {
             if (lineLength > 0 && context.currentLinePos > 0){ // add chunk separator if required
                 System.arraycopy(lineSeparator, 0, context.buffer, context.pos, lineSeparator.length);
                 context.pos += lineSeparator.length;
-            }            
+            }
         } else {
             for (int i = 0; i < inAvail; i++) {
                 ensureBufferSize(encodeSize, context);
@@ -439,7 +439,7 @@ public class Base32 extends BaseNCodec {
                     b += 256;
                 }
                 context.lbitWorkArea = (context.lbitWorkArea << 8) + b; // BITS_PER_BYTE
-                if (0 == context.modulus) { // we have enough bytes to create our output 
+                if (0 == context.modulus) { // we have enough bytes to create our output
                     context.buffer[context.pos++] = encodeTable[(int)(context.lbitWorkArea >> 35) & MASK_5BITS];
                     context.buffer[context.pos++] = encodeTable[(int)(context.lbitWorkArea >> 30) & MASK_5BITS];
                     context.buffer[context.pos++] = encodeTable[(int)(context.lbitWorkArea >> 25) & MASK_5BITS];
@@ -461,7 +461,7 @@ public class Base32 extends BaseNCodec {
 
     /**
      * Returns whether or not the <code>octet</code> is in the Base32 alphabet.
-     * 
+     *
      * @param octet
      *            The value to test
      * @return {@code true} if the value is defined in the the Base32 alphabet {@code false} otherwise.

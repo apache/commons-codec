@@ -13,7 +13,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package org.apache.commons.codec.binary;
@@ -27,7 +27,7 @@ import org.apache.commons.codec.Charsets;
 import org.junit.Test;
 
 public class Base32Test {
-    
+
     private static final String [][] BASE32_TEST_CASES = { // RFC 4648
         {""       ,""},
         {"f"      ,"MY======"},
@@ -80,7 +80,7 @@ public class Base32Test {
         Base32 codec = new Base32(20);
         for (String[] element : BASE32_TEST_CASES_CHUNKED) {
                 assertEquals(element[1], codec.encodeAsString(element[0].getBytes(Charsets.UTF_8)));
-        }        
+        }
     }
 
     @Test
@@ -122,7 +122,7 @@ public class Base32Test {
             //assertEquals(b[0],codec.decode(b[1]));
         }
     }
-    
+
     @Test
     public void testRandomBytesHex() {
         for (int i = 0; i < 20; i++) {

@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -29,9 +29,9 @@ import org.junit.Test;
 
 /**
  * Tests {@link DoubleMetaphone}.
- * 
+ *
  * <p>Keep this file in UTF-8 encoding for proper Javadoc processing.</p>
- * 
+ *
  * @see "http://www.cuj.com/documents/s=8038/cuj0006philips/"
  * @version $Id$
  */
@@ -39,11 +39,11 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest {
 
     /**
      * Test data from http://aspell.sourceforge.net/test/batch0.tab.
-     * 
+     *
      * "Copyright (C) 2002 Kevin Atkinson (kevina@gnu.org). Verbatim copying
      * and distribution of this entire article is permitted in any medium,
      * provided this notice is preserved."
-     * 
+     *
      * Massaged the test data in the array below.
      */
     private static final String[][] FIXTURE = { { "Accosinly", "Occasionally" }, {
@@ -1115,7 +1115,7 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest {
     @Test
     public void testSetMaxCodeLength() {
         String value = "jumped";
-        
+
         DoubleMetaphone doubleMetaphone = new DoubleMetaphone();
 
         // Sanity check of default settings
@@ -1225,12 +1225,12 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest {
     public void testCCedilla() {
         assertTrue(this.getDoubleMetaphone().isDoubleMetaphoneEqual("\u00e7", "S")); // c-cedilla
     }
-    
+
     @Test
     public void testNTilde() {
         assertTrue(this.getDoubleMetaphone().isDoubleMetaphoneEqual("\u00f1", "N")); // n-tilde
     }
-    
+
     public void validateFixture(String[][] pairs) {
         if (pairs.length == 0) {
             fail("Test fixture is empty");

@@ -25,18 +25,18 @@ import org.junit.Test;
 
 /**
  * Tests {@link Nysiis}
- * 
+ *
  * @since 1.7
  * @version $Id$
  */
 public class NysiisTest extends StringEncoderAbstractTest {
 
     private final Nysiis fullNysiis = new Nysiis(false);
-    
+
     /**
      * Takes an array of String pairs where each pair's first element is the input and the second element the expected
      * encoding.
-     * 
+     *
      * @param testValues
      *            an array of String pairs where each pair's first element is the input and the second element the
      *            expected encoding.
@@ -83,7 +83,7 @@ public class NysiisTest extends StringEncoderAbstractTest {
 
     /**
      * Tests data gathered from around the internet.
-     * 
+     *
      * @see <a href="http://www.dropby.com/NYSIISTextStrings.html">http://www.dropby.com/NYSIISTextStrings.html</a>
      * @throws EncoderException
      */
@@ -152,7 +152,7 @@ public class NysiisTest extends StringEncoderAbstractTest {
 
     /**
      * Tests data gathered from around the internets.
-     * 
+     *
      * @throws EncoderException
      */
     @Test
@@ -169,7 +169,7 @@ public class NysiisTest extends StringEncoderAbstractTest {
 
     /**
      * Tests rule 1: Translate first characters of name: MAC → MCC, KN → N, K → C, PH, PF → FF, SCH → SSS
-     * 
+     *
      * @throws EncoderException
      */
     @Test
@@ -185,7 +185,7 @@ public class NysiisTest extends StringEncoderAbstractTest {
 
     /**
      * Tests rule 2: Translate last characters of name: EE → Y, IE → Y, DT, RT, RD, NT, ND → D
-     * 
+     *
      * @throws EncoderException
      */
     @Test
@@ -202,7 +202,7 @@ public class NysiisTest extends StringEncoderAbstractTest {
 
     /**
      * Tests rule 4.1: EV → AF else A, E, I, O, U → A
-     * 
+     *
      * @throws EncoderException
      */
     @Test
@@ -218,7 +218,7 @@ public class NysiisTest extends StringEncoderAbstractTest {
 
     /**
      * Tests rule 4.2: Q → G, Z → S, M → N
-     * 
+     *
      * @throws EncoderException
      */
     @Test
@@ -231,7 +231,7 @@ public class NysiisTest extends StringEncoderAbstractTest {
 
     /**
      * Tests rule 5: If last character is S, remove it.
-     * 
+     *
      * @throws EncoderException
      */
     @Test
@@ -243,7 +243,7 @@ public class NysiisTest extends StringEncoderAbstractTest {
 
     /**
      * Tests rule 6: If last characters are AY, replace with Y.
-     * 
+     *
      * @throws EncoderException
      */
     @Test
@@ -255,7 +255,7 @@ public class NysiisTest extends StringEncoderAbstractTest {
 
     /**
      * Tests rule 7: If last character is A, remove it.
-     * 
+     *
      * @throws EncoderException
      */
     @Test

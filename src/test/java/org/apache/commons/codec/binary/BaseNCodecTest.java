@@ -13,7 +13,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package org.apache.commons.codec.binary;
@@ -28,7 +28,7 @@ import org.junit.Test;
 public class BaseNCodecTest {
 
     BaseNCodec codec;
-    
+
     @Before
     public void setUp() {
         codec = new BaseNCodec(0, 0, 0, 0) {
@@ -36,15 +36,15 @@ public class BaseNCodecTest {
             protected boolean isInAlphabet(byte b) {
                 return b=='O' || b == 'K'; // allow OK
             }
-            
+
             @Override
             void encode(byte[] pArray, int i, int length, Context context) {
             }
-            
+
             @Override
             void decode(byte[] pArray, int i, int length, Context context) {
             }
-        };        
+        };
     }
 
     @Test

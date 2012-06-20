@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -35,7 +35,7 @@ import java.io.InputStream;
  * Since this class operates directly on byte streams, and not character streams, it is hard-coded to only encode/decode
  * character encodings which are compatible with the lower 127 ASCII chart (ISO-8859-1, Windows-1252, UTF-8, etc).
  * </p>
- * 
+ *
  * @version $Id$
  * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>
  * @since 1.4
@@ -44,7 +44,7 @@ public class Base64InputStream extends BaseNCodecInputStream {
 
     /**
      * Creates a Base64InputStream such that all data read is Base64-decoded from the original provided InputStream.
-     * 
+     *
      * @param in
      *            InputStream to wrap.
      */
@@ -55,7 +55,7 @@ public class Base64InputStream extends BaseNCodecInputStream {
     /**
      * Creates a Base64InputStream such that all data read is either Base64-encoded or Base64-decoded from the original
      * provided InputStream.
-     * 
+     *
      * @param in
      *            InputStream to wrap.
      * @param doEncode
@@ -68,7 +68,7 @@ public class Base64InputStream extends BaseNCodecInputStream {
     /**
      * Creates a Base64InputStream such that all data read is either Base64-encoded or Base64-decoded from the original
      * provided InputStream.
-     * 
+     *
      * @param in
      *            InputStream to wrap.
      * @param doEncode

@@ -61,11 +61,11 @@ public class Base64OutputStreamTest {
             "codec-98 NPE Base64OutputStream", Base64TestData.CODEC_98_NPE_DECODED, decoded
         );
     }
-    
+
 
     /**
      * Test the Base64OutputStream implementation against empty input.
-     * 
+     *
      * @throws Exception
      *             for some failure scenarios.
      */
@@ -76,7 +76,7 @@ public class Base64OutputStreamTest {
 
     /**
      * Test the Base64OutputStream implementation against empty input.
-     * 
+     *
      * @throws Exception
      *             for some failure scenarios.
      */
@@ -94,7 +94,7 @@ public class Base64OutputStreamTest {
 
     /**
      * Test the Base64OutputStream implementation
-     * 
+     *
      * @throws Exception
      *             for some failure scenarios.
      */
@@ -132,7 +132,7 @@ public class Base64OutputStreamTest {
 
     /**
      * Test the Base64OutputStream implementation
-     * 
+     *
      * @throws Exception
      *             for some failure scenarios.
      */
@@ -174,7 +174,7 @@ public class Base64OutputStreamTest {
      * <p/>
      * By "[WRAP-WRAP-WRAP-etc...]" we mean situation where the Base64OutputStream wraps itself in encode and decode
      * mode over and over again.
-     * 
+     *
      * @param encoded
      *            base64 encoded data
      * @param decoded
@@ -224,7 +224,7 @@ public class Base64OutputStreamTest {
      * <p/>
      * By "[WRAP-WRAP-WRAP-etc...]" we mean situation where the Base64OutputStream wraps itself in encode and decode
      * mode over and over again.
-     * 
+     *
      * @param encoded
      *            base64 encoded data
      * @param decoded
@@ -287,7 +287,7 @@ public class Base64OutputStreamTest {
 
     /**
      * Tests Base64OutputStream.write for expected IndexOutOfBoundsException conditions.
-     * 
+     *
      * @throws Exception
      *             for some failure scenarios.
      */
@@ -328,7 +328,7 @@ public class Base64OutputStreamTest {
 
     /**
      * Tests Base64OutputStream.write(null).
-     * 
+     *
      * @throws Exception
      *             for some failure scenarios.
      */

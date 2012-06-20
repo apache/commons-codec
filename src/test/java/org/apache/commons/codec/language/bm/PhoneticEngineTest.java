@@ -29,7 +29,7 @@ import org.junit.runners.Parameterized;
 
 /**
  * Tests PhoneticEngine.
- * 
+ *
  * @since 1.6
  */
 @RunWith(Parameterized.class)

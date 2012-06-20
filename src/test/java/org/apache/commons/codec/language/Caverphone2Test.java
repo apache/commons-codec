@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -26,7 +26,7 @@ import org.junit.Test;
 
 /**
  * Tests Caverphone2.
- * 
+ *
  * @version $Id$
  * @since 1.5
  */
@@ -39,9 +39,9 @@ public class Caverphone2Test extends StringEncoderAbstractTest {
 
     /**
      * See http://caversham.otago.ac.nz/files/working/ctp150804.pdf
-     * 
+     *
      * AT11111111 words: add, aid, at, art, eat, earth, head, hit, hot, hold, hard, heart, it, out, old
-     * 
+     *
      * @throws EncoderException
      */
     @Test
@@ -66,7 +66,7 @@ public class Caverphone2Test extends StringEncoderAbstractTest {
 
     /**
      * See http://caversham.otago.ac.nz/files/working/ctp150804.pdf
-     * 
+     *
      * @throws EncoderException
      */
     @Test
@@ -77,7 +77,7 @@ public class Caverphone2Test extends StringEncoderAbstractTest {
 
     /**
      * See http://caversham.otago.ac.nz/files/working/ctp150804.pdf
-     * 
+     *
      * @throws EncoderException
      */
     @Test
@@ -169,7 +169,7 @@ public class Caverphone2Test extends StringEncoderAbstractTest {
 
     /**
      * See http://caversham.otago.ac.nz/files/working/ctp150804.pdf
-     * 
+     *
      * @throws EncoderException
      */
     @Test
@@ -248,7 +248,7 @@ public class Caverphone2Test extends StringEncoderAbstractTest {
 
     /**
      * See http://caversham.otago.ac.nz/files/working/ctp150804.pdf
-     * 
+     *
      * @throws EncoderException
      */
     @Test
@@ -326,7 +326,7 @@ public class Caverphone2Test extends StringEncoderAbstractTest {
 
     /**
      * See http://caversham.otago.ac.nz/files/working/ctp150804.pdf
-     * 
+     *
      * @throws EncoderException
      */
     @Test

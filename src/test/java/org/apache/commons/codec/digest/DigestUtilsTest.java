@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -31,13 +31,13 @@ import org.junit.Test;
 
 /**
  * Tests DigestUtils methods.
- * 
+ *
  * @version $Id$
  */
 public class DigestUtilsTest {
 
     private final byte[] testData = new byte[1024*1024];
-    
+
     private byte[] getBytesUtf8(String hashMe) {
         return StringUtils.getBytesUtf8(hashMe);
     }
@@ -53,7 +53,7 @@ public class DigestUtilsTest {
     public void testConstructable() {
         new DigestUtils();
     }
-    
+
     @Test
     public void testInternalNoSuchAlgorithmException() {
         try {
@@ -126,18 +126,18 @@ public class DigestUtilsTest {
              DigestUtils.sha256Hex(getBytesUtf8("abc")));
     assertEquals("248d6a61d20638b8e5c026930c3e6039a33ce45964ff2167f6ecedd419db06c1",
              DigestUtils.sha256Hex("abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq"));
-    
+
     assertEquals(DigestUtils.sha256Hex(testData),
             DigestUtils.sha256Hex(new ByteArrayInputStream(testData)));
-    }    
+    }
 
     @Test
     public void testSha384() throws IOException {
     // Examples from FIPS 180-2
-    assertEquals("cb00753f45a35e8bb5a03d699ac65007272c32ab0eded1631a8b605a43ff5bed" + 
+    assertEquals("cb00753f45a35e8bb5a03d699ac65007272c32ab0eded1631a8b605a43ff5bed" +
              "8086072ba1e7cc2358baeca134c825a7",
              DigestUtils.sha384Hex("abc"));
-    assertEquals("cb00753f45a35e8bb5a03d699ac65007272c32ab0eded1631a8b605a43ff5bed" + 
+    assertEquals("cb00753f45a35e8bb5a03d699ac65007272c32ab0eded1631a8b605a43ff5bed" +
              "8086072ba1e7cc2358baeca134c825a7",
              DigestUtils.sha384Hex(getBytesUtf8("abc")));
     assertEquals("09330c33f71147e83d192fc782cd1b4753111b173b3b05d22fa08086e3b0f712" +
@@ -157,13 +157,13 @@ public class DigestUtilsTest {
     assertEquals("ddaf35a193617abacc417349ae20413112e6fa4e89a97ea20a9eeee64b55d39a" +
              "2192992a274fc1a836ba3c23a3feebbd454d4423643ce80e2a9ac94fa54ca49f",
              DigestUtils.sha512Hex(getBytesUtf8("abc")));
-    assertEquals("8e959b75dae313da8cf4f72814fc143f8f7779c6eb9f7fa17299aeadb6889018" + 
+    assertEquals("8e959b75dae313da8cf4f72814fc143f8f7779c6eb9f7fa17299aeadb6889018" +
              "501d289e4900f7e4331b99dec4b5433ac7d329eeb6dd26545e96e55b874be909",
-             DigestUtils.sha512Hex("abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmn" + 
+             DigestUtils.sha512Hex("abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmn" +
                        "hijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu"));
     assertEquals(DigestUtils.sha512Hex(testData),
             DigestUtils.sha512Hex(new ByteArrayInputStream(testData)));
-}    
+}
 
     @Test
     public void testShaHex() throws IOException {
@@ -179,7 +179,7 @@ public class DigestUtilsTest {
                 DigestUtils.shaHex(new ByteArrayInputStream(testData)));
 
     }
-    
+
     @Test
     public void testUpdateWithByteArray(){
         final String d1 = "C'est un homme qui rentre dans un café, et plouf";
@@ -202,7 +202,7 @@ public class DigestUtilsTest {
     public void testUpdateWithString(){
         final String d1 = "C'est un homme qui rentre dans un café, et plouf";
         final String d2 = "C'est un homme, c'est qu'une tête, on lui offre un cadeau: 'oh... encore un chapeau!'";
-        
+
         MessageDigest messageDigest = DigestUtils.getShaDigest();
         messageDigest.update(StringUtils.getBytesUtf8(d1));
         messageDigest.update(StringUtils.getBytesUtf8(d2));

@@ -90,7 +90,7 @@ public class Base64InputStreamTest {
 
     /**
      * Test for the CODEC-101 bug: InputStream.read(byte[]) should never return 0 because Java's builtin InputStreamReader hates that.
-     * 
+     *
      * @throws Exception
      *             for some failure scenarios.
      */
@@ -110,15 +110,15 @@ public class Base64InputStreamTest {
     /**
      * Another test for the CODEC-101 bug: In commons-codec-1.4 this test shows InputStreamReader explicitly hating an
      * InputStream.read(byte[]) return of 0:
-     * 
+     *
      * java.io.IOException: Underlying input stream returned zero bytes at sun.nio.cs.StreamDecoder.readBytes(StreamDecoder.java:268) at
      * sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:306) at sun.nio.cs.StreamDecoder.read(StreamDecoder.java:158) at
      * java.io.InputStreamReader.read(InputStreamReader.java:167) at java.io.BufferedReader.fill(BufferedReader.java:136) at
      * java.io.BufferedReader.readLine(BufferedReader.java:299) at java.io.BufferedReader.readLine(BufferedReader.java:362) at
      * org.apache.commons.codec.binary.Base64InputStreamTest.testInputStreamReader(Base64InputStreamTest.java:75)
-     * 
+     *
      * But in commons-codec-1.5 it's fixed. :-)
-     * 
+     *
      * @throws Exception
      *             for some failure scenarios.
      */
@@ -135,7 +135,7 @@ public class Base64InputStreamTest {
 
     /**
      * Test the Base64InputStream implementation against the special NPE inducing input identified in the CODEC-98 bug.
-     * 
+     *
      * @throws Exception
      *             for some failure scenarios.
      */
@@ -172,7 +172,7 @@ public class Base64InputStreamTest {
 
     /**
      * Tests the Base64InputStream implementation against empty input.
-     * 
+     *
      * @throws Exception
      *             for some failure scenarios.
      */
@@ -183,7 +183,7 @@ public class Base64InputStreamTest {
 
     /**
      * Tests the Base64InputStream implementation against empty input.
-     * 
+     *
      * @throws Exception
      *             for some failure scenarios.
      */
@@ -201,7 +201,7 @@ public class Base64InputStreamTest {
 
     /**
      * Tests the Base64InputStream implementation.
-     * 
+     *
      * @throws Exception
      *             for some failure scenarios.
      */
@@ -239,7 +239,7 @@ public class Base64InputStreamTest {
 
     /**
      * Tests the Base64InputStream implementation.
-     * 
+     *
      * @throws Exception
      *             for some failure scenarios.
      */
@@ -281,7 +281,7 @@ public class Base64InputStreamTest {
      * <p/>
      * By "[WRAP-WRAP-WRAP-etc...]" we mean situation where the Base64InputStream wraps itself in encode and decode mode over and over
      * again.
-     * 
+     *
      * @param encoded
      *            base64 encoded data
      * @param decoded
@@ -332,7 +332,7 @@ public class Base64InputStreamTest {
      * <p/>
      * By "[WRAP-WRAP-WRAP-etc...]" we mean situation where the Base64InputStream wraps itself in encode and decode mode over and over
      * again.
-     * 
+     *
      * @param encoded
      *            base64 encoded data
      * @param decoded
@@ -388,7 +388,7 @@ public class Base64InputStreamTest {
 
     /**
      * Tests markSupported.
-     * 
+     *
      * @throws Exception
      */
     @Test
@@ -402,7 +402,7 @@ public class Base64InputStreamTest {
 
     /**
      * Tests read returning 0
-     * 
+     *
      * @throws Exception
      */
     @Test
@@ -418,7 +418,7 @@ public class Base64InputStreamTest {
 
     /**
      * Tests read with null.
-     * 
+     *
      * @throws Exception
      *             for some failure scenarios.
      */
@@ -437,7 +437,7 @@ public class Base64InputStreamTest {
 
     /**
      * Tests read throwing IndexOutOfBoundsException
-     * 
+     *
      * @throws Exception
      */
     @Test
@@ -493,7 +493,7 @@ public class Base64InputStreamTest {
 
     /**
      * Tests skipping as a noop
-     * 
+     *
      * @throws Throwable
      */
     @Test
@@ -510,7 +510,7 @@ public class Base64InputStreamTest {
 
     /**
      * Tests skipping past the end of a stream.
-     * 
+     *
      * @throws Throwable
      */
     @Test
@@ -526,7 +526,7 @@ public class Base64InputStreamTest {
 
     /**
      * Tests skipping to the end of a stream.
-     * 
+     *
      * @throws Throwable
      */
     @Test

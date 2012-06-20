@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -66,7 +66,7 @@ import java.util.regex.Pattern;
  * </ul>
  * <p/>
  * Port of lang.php
- * 
+ *
  * @since 1.6
  */
 public class Lang {
@@ -106,7 +106,7 @@ public class Lang {
 
     /**
      * Gets a Lang instance for one of the supported NameTypes.
-     * 
+     *
      * @param nameType
      *            the NameType to look up
      * @return a Lang encapsulating the language guessing rules for that name type
@@ -123,7 +123,7 @@ public class Lang {
      * In normal use, you will obtain instances of Lang through the {@link #instance(NameType)} method. You will only need to call this
      * yourself if you are developing custom language mapping rules.
      * </p>
-     * 
+     *
      * @param languageRulesResourceName
      *            the fully-qualified resource name to load
      * @param languages
@@ -200,7 +200,7 @@ public class Lang {
 
     /**
      * Guesses the language of a word.
-     * 
+     *
      * @param text
      *            the word
      * @return the language that the word originates from or {@link Languages#ANY} if there was no unique match
@@ -212,7 +212,7 @@ public class Lang {
 
     /**
      * Guesses the languages of a word.
-     * 
+     *
      * @param input
      *            the word
      * @return a Set of Strings of language names that are potential matches for the input word

@@ -150,7 +150,7 @@ public class Base64Codec13Test {
         s[180] = "hN4+x/sK9FRZn5llaw7/XDGwht3BcIxAFP4JoGqVQCw8c5IOlSqKEOViYss1mnvko6kVrc2iMEA8h8RssJ4dJBpFDZ/bkehCyhQmWpspZtAvRN59mj6nx0SBglYGccPyrn3e0uvvGJ5nYmjTA7gqB0Y+FFGAYwgAO345ipxTrMFsnJ8a913GzpobJdcHiw5hfqYK2iqo8STzVljaGMc5WSzP69vFDTHSS39YSfbE890TPBgm";
     }
 
-    /* These are chunked versions of the strings above (chunked by commons-codec-1.3.jar) */    
+    /* These are chunked versions of the strings above (chunked by commons-codec-1.3.jar) */
     private static void initCHUNKED_STRINGS() {
         String[] c = CHUNKED_STRINGS;
         c[0] = "";
@@ -358,7 +358,7 @@ public class Base64Codec13Test {
     /**
      * Tests to make sure Base64's implementation of the org.apache.commons.codec.Encoder
      * interface is behaving identical to commons-codec-1.3.jar.
-     * 
+     *
      * @throws EncoderException problem
      */
     @Test
@@ -379,7 +379,7 @@ public class Base64Codec13Test {
      * interface is behaving identical to commons-codec-1.3.jar.
      *
      * @throws DecoderException problem
-     */    
+     */
     @Test
     public void testDecoder() throws DecoderException {
         Decoder dec = new Base64();
@@ -398,7 +398,7 @@ public class Base64Codec13Test {
      * interface is behaving identical to commons-codec-1.3.jar.
      *
      * @throws EncoderException problem
-     */        
+     */
     @Test
     public void testBinaryEncoder() throws EncoderException {
         BinaryEncoder enc = new Base64();
@@ -417,7 +417,7 @@ public class Base64Codec13Test {
      * interface is behaving identical to commons-codec-1.3.jar.
      *
      * @throws DecoderException problem
-     */    
+     */
     @Test
     public void testBinaryDecoder() throws DecoderException {
         BinaryDecoder dec = new Base64();
@@ -436,7 +436,7 @@ public class Base64Codec13Test {
      * static method is behaving identical to commons-codec-1.3.jar.
      *
      * @throws EncoderException problem
-     */        
+     */
     @Test
     public void testStaticEncode() throws EncoderException {
         for (int i = 0; i < STRINGS.length; i++) {
@@ -454,7 +454,7 @@ public class Base64Codec13Test {
      * static method is behaving identical to commons-codec-1.3.jar.
      *
      * @throws DecoderException problem
-     */            
+     */
     @Test
     public void testStaticDecode() throws DecoderException {
         for (int i = 0; i < STRINGS.length; i++) {
@@ -472,7 +472,7 @@ public class Base64Codec13Test {
      * static method is behaving identical to commons-codec-1.3.jar.
      *
      * @throws EncoderException problem
-     */                
+     */
     @Test
     public void testStaticEncodeChunked() throws EncoderException {
         for (int i = 0; i < STRINGS.length; i++) {
@@ -491,7 +491,7 @@ public class Base64Codec13Test {
      * supplied with chunked input.
      *
      * @throws DecoderException problem
-     */                
+     */
     @Test
     public void testStaticDecodeChunked() throws DecoderException {
         for (int i = 0; i < STRINGS.length; i++) {
@@ -509,7 +509,7 @@ public class Base64Codec13Test {
         // We would use commons-codec-1.4.jar own utility method for this, but we
         // need this class to be able to run against commons-codec-1.3.jar, hence the
         // duplication here.
-        
+
         return s != null ? s.getBytes(Charsets.UTF_8) : null;
     }
 }

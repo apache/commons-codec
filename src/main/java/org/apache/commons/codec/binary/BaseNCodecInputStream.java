@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -27,7 +27,7 @@ import org.apache.commons.codec.binary.BaseNCodec.Context;
 
 /**
  * Abstract superclass for Base-N input streams.
- * 
+ *
  * @since 1.5
  */
 public class BaseNCodecInputStream extends FilterInputStream {
@@ -86,7 +86,7 @@ public class BaseNCodecInputStream extends FilterInputStream {
 
     /**
      * Reads one <code>byte</code> from this input stream.
-     * 
+     *
      * @return the byte as an integer in the range 0 to 255. Returns -1 if EOF has been reached.
      * @throws IOException
      *             if an I/O error occurs.
@@ -107,14 +107,14 @@ public class BaseNCodecInputStream extends FilterInputStream {
     /**
      * Attempts to read <code>len</code> bytes into the specified <code>b</code> array starting at <code>offset</code>
      * from this InputStream.
-     * 
+     *
      * @param b
      *            destination byte array
      * @param offset
      *            where to start writing the bytes
      * @param len
      *            maximum number of bytes to read
-     * 
+     *
      * @return number of bytes read
      * @throws IOException
      *             if an I/O error occurs.

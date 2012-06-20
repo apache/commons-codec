@@ -28,9 +28,9 @@ import org.junit.Test;
 
 /**
  * Tests {@link Soundex}.
- * 
+ *
  * <p>Keep this file in UTF-8 encoding for proper Javadoc processing.</p>
- * 
+ *
  * @version $Id$
  */
 public class SoundexTest extends StringEncoderAbstractTest {
@@ -202,7 +202,7 @@ public class SoundexTest extends StringEncoderAbstractTest {
 
     /**
      * Test data from http://www.myatt.demon.co.uk/sxalg.htm
-     * 
+     *
      * @throws EncoderException
      */
     @Test
@@ -240,7 +240,7 @@ public class SoundexTest extends StringEncoderAbstractTest {
 
     /**
      * Consonants from the same code group separated by W or H are treated as one.
-     * 
+     *
      * Test data from http://www.myatt.demon.co.uk/sxalg.htm
      */
     @Test
@@ -251,7 +251,7 @@ public class SoundexTest extends StringEncoderAbstractTest {
 
     /**
      * Consonants from the same code group separated by W or H are treated as one.
-     * 
+     *
      * @throws EncoderException
      */
     @Test
@@ -292,7 +292,7 @@ public class SoundexTest extends StringEncoderAbstractTest {
      * Examples for MS SQLServer from
      * http://support.microsoft.com/default.aspx?scid=http://support.microsoft.com:80/support
      * /kb/articles/Q100/3/65.asp&NoWebContent=1
-     * 
+     *
      * @throws EncoderException
      */
     @Test
@@ -357,7 +357,7 @@ public class SoundexTest extends StringEncoderAbstractTest {
 
     /**
      * Fancy characters are not mapped by the default US mapping.
-     * 
+     *
      * http://issues.apache.org/bugzilla/show_bug.cgi?id=29080
      */
     @Test
@@ -378,7 +378,7 @@ public class SoundexTest extends StringEncoderAbstractTest {
 
     /**
      * Fancy characters are not mapped by the default US mapping.
-     * 
+     *
      * http://issues.apache.org/bugzilla/show_bug.cgi?id=29080
      */
     @Test

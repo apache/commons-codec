@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -62,7 +62,7 @@ import org.apache.commons.codec.StringEncoder;
  * </pre></p>
  *
  * <p>This class is immutable and thread-safe.</p>
- * 
+ *
  * @see <a href="http://en.wikipedia.org/wiki/NYSIIS">NYSIIS on Wikipedia</a>
  * @see <a href="http://www.dropby.com/NYSIIS.html">NYSIIS on dropby.com</a>
  * @see Soundex
@@ -94,7 +94,7 @@ public class Nysiis implements StringEncoder {
 
     /**
      * Tests if the given character is a vowel.
-     * 
+     *
      * @param c
      *            the character to test
      * @return {@code true} if the character is a vowel, {@code false} otherwise
@@ -106,7 +106,7 @@ public class Nysiis implements StringEncoder {
     /**
      * Transcodes the remaining parts of the String. The method operates on a sliding window, looking at 4 characters at
      * a time: [i-1, i, i+1, i+2].
-     * 
+     *
      * @param prev
      *            the previous character
      * @param curr

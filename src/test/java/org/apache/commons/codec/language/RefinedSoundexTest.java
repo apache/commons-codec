@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -26,7 +26,7 @@ import org.junit.Test;
 
 /**
  * Tests RefinedSoundex.
- * 
+ *
  * @version $Id$
  */
 public class RefinedSoundexTest extends StringEncoderAbstractTest {
@@ -88,17 +88,17 @@ public class RefinedSoundexTest extends StringEncoderAbstractTest {
         char code = this.getRefinedSoundex().getMappingCode('#');
         assertEquals("Code does not equals zero", 0, code);
     }
-    
+
     @Test
     public void testNewInstance() {
         assertEquals("D6043", new RefinedSoundex().soundex("dogs"));
     }
-    
+
     @Test
     public void testNewInstance2() {
         assertEquals("D6043", new RefinedSoundex(RefinedSoundex.US_ENGLISH_MAPPING_STRING.toCharArray()).soundex("dogs"));
     }
-    
+
     @Test
     public void testNewInstance3() {
         assertEquals("D6043", new RefinedSoundex(RefinedSoundex.US_ENGLISH_MAPPING_STRING).soundex("dogs"));

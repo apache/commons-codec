@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -54,7 +54,7 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
             assertTrue(failMsg, this.getMetaphone().isMetaphoneEqual(name1, name0));
         }
     }
-    
+
     /**
      * @return Returns the metaphone.
      */
@@ -87,7 +87,7 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
 
     /**
      * Initial AE case.
-     * 
+     *
      * Match data computed from http://www.lanw.com/java/phonetic/default.htm
      */
     @Test
@@ -97,7 +97,7 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
 
     /**
      * Initial WH case.
-     * 
+     *
      * Match data computed from http://www.lanw.com/java/phonetic/default.htm
      */
     @Test
@@ -109,7 +109,7 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
 
     /**
      * Initial A, not followed by an E case.
-     * 
+     *
      * Match data computed from http://www.lanw.com/java/phonetic/default.htm
      */
     @Test
@@ -242,7 +242,7 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
 
     /**
      * Initial KN case.
-     * 
+     *
      * Match data computed from http://www.lanw.com/java/phonetic/default.htm
      */
     @Test
@@ -348,7 +348,7 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
 
     /**
      * Initial WR case.
-     * 
+     *
      * Match data computed from http://www.lanw.com/java/phonetic/default.htm
      */
     @Test
@@ -380,7 +380,7 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
         assertEquals("LS", this.getMetaphone().metaphone("lazy"));
         assertEquals("TKS", this.getMetaphone().metaphone("dogs"));
     }
-    
+
     @Test
     public void testWordEndingInMB() {
         assertEquals( "KM", this.getMetaphone().metaphone("COMB") );
@@ -400,7 +400,7 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
      */
     @Test
     public void testWhy() {
-        // PHP returns "H". The original metaphone returns an empty string. 
+        // PHP returns "H". The original metaphone returns an empty string.
         assertEquals("", this.getMetaphone().metaphone("WHY"));
     }
 

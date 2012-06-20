@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -46,7 +46,7 @@ import java.util.TreeSet;
  * <p>
  * Ported from phoneticengine.php
  * </p>
- * 
+ *
  * @since 1.6
  */
 public class PhoneticEngine {
@@ -399,7 +399,7 @@ public class PhoneticEngine {
 
     /**
      * Encodes a string to its phonetic representation.
-     * 
+     *
      * @param input
      *            the String to encode
      * @return the encoding of the input
@@ -411,7 +411,7 @@ public class PhoneticEngine {
 
     /**
      * Encodes an input string into an output phonetic representation, given a set of possible origin languages.
-     * 
+     *
      * @param input
      *            String to phoneticise; a String with dashes or spaces separating each word
      * @param languageSet
@@ -510,7 +510,7 @@ public class PhoneticEngine {
 
     /**
      * Gets the Lang language guessing rules being used.
-     * 
+     *
      * @return the Lang in use
      */
     public Lang getLang() {
@@ -519,7 +519,7 @@ public class PhoneticEngine {
 
     /**
      * Gets the NameType being used.
-     * 
+     *
      * @return the NameType in use
      */
     public NameType getNameType() {
@@ -528,7 +528,7 @@ public class PhoneticEngine {
 
     /**
      * Gets the RuleType being used.
-     * 
+     *
      * @return the RuleType in use
      */
     public RuleType getRuleType() {
@@ -537,7 +537,7 @@ public class PhoneticEngine {
 
     /**
      * Gets if multiple phonetic encodings are concatenated or if just the first one is kept.
-     * 
+     *
      * @return true if multiple phonetic encodings are returned, false if just the first is.
      */
     public boolean isConcat() {

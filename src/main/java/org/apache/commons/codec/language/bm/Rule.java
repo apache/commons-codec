@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -75,7 +75,7 @@ import java.util.regex.Pattern;
  * <li><b>Blank lines:</b> All blank lines will be skipped.</li>
  * </ul>
  * </p>
- * 
+ *
  * @since 1.6
  */
 public class Rule {
@@ -247,7 +247,7 @@ public class Rule {
 
     /**
      * Gets rules for a combination of name type, rule type and languages.
-     * 
+     *
      * @param nameType
      *            the NameType to consider
      * @param rt
@@ -262,7 +262,7 @@ public class Rule {
 
     /**
      * Gets rules for a combination of name type, rule type and a single language.
-     * 
+     *
      * @param nameType
      *            the NameType to consider
      * @param rt
@@ -400,7 +400,7 @@ public class Rule {
 
     /**
      * Attempts to compile the regex into direct string ops, falling back to Pattern and Matcher in the worst case.
-     * 
+     *
      * @param regex
      *            the regular expression to compile
      * @return an RPattern that will match this regex
@@ -540,7 +540,7 @@ public class Rule {
 
     /**
      * Creates a new rule.
-     * 
+     *
      * @param pattern
      *            the pattern
      * @param lContext
@@ -559,7 +559,7 @@ public class Rule {
 
     /**
      * Gets the left context. This is a regular expression that must match to the left of the pattern.
-     * 
+     *
      * @return the left context Pattern
      */
     public RPattern getLContext() {
@@ -568,7 +568,7 @@ public class Rule {
 
     /**
      * Gets the pattern. This is a string-literal that must exactly match.
-     * 
+     *
      * @return the pattern
      */
     public String getPattern() {
@@ -577,7 +577,7 @@ public class Rule {
 
     /**
      * Gets the phoneme. If the rule matches, this is the phoneme associated with the pattern match.
-     * 
+     *
      * @return the phoneme
      */
     public PhonemeExpr getPhoneme() {
@@ -586,7 +586,7 @@ public class Rule {
 
     /**
      * Gets the right context. This is a regular expression that must match to the right of the pattern.
-     * 
+     *
      * @return the right context Pattern
      */
     public RPattern getRContext() {
@@ -597,7 +597,7 @@ public class Rule {
      * Decides if the pattern and context match the input starting at a position. It is a match if the
      * <code>lContext</code> matches <code>input</code> up to <code>i</code>, <code>pattern</code> matches at i and
      * <code>rContext</code> matches from the end of the match of <code>pattern</code> to the end of <code>input</code>.
-     * 
+     *
      * @param input
      *            the input String
      * @param i

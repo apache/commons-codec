@@ -55,7 +55,7 @@ public class UnixCrypt {
         51, 52, 53, 54, 55, 56, 57, 58, 59, 60,
         61, 62, 63, 0, 0, 0, 0, 0
     };
-    
+
     private static final int COV2CHAR[] = {
         46, 47, 48, 49, 50, 51, 52, 53, 54, 55,
         56, 57, 65, 66, 67, 68, 69, 70, 71, 72,
@@ -65,14 +65,14 @@ public class UnixCrypt {
         109, 110, 111, 112, 113, 114, 115, 116, 117, 118,
         119, 120, 121, 122
     };
-    
+
     private static final char SALT_CHARS[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789./".toCharArray();
-    
+
     private static final boolean SHIFT2[] = {
         false, false, true, true, true, true, true, true, false, true,
         true, true, true, true, true, false
     };
-    
+
     private static final int SKB[][] = {
         {
             0, 16, 0x20000000, 0x20000010, 0x10000, 0x10010, 0x20010000, 0x20010010, 2048, 2064,
@@ -140,7 +140,7 @@ public class UnixCrypt {
             10274, 0x4002822, 0x42822, 0x4042822
         }
     };
-    
+
     private static final int SPTRANS[][] = {
         {
             0x820200, 0x20000, 0x80800000, 0x80820200, 0x800000, 0x80020200, 0x80020000, 0x80800000, 0x80020200, 0x820200,

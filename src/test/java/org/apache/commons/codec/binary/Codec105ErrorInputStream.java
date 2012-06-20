@@ -22,9 +22,9 @@ import java.io.InputStream;
 
 /**
  * Emits three line-feeds '\n' in a row, one at a time, and then EOF.
- * 
+ *
  * Recreates the bug described in CODEC-105.
- * 
+ *
  * @version $Id $
  * @since 1.5
  */

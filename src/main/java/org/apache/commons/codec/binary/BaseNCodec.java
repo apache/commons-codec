@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -33,21 +33,21 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
 
     /**
      * Holds thread context so classes can be thread-safe.
-     * 
+     *
      * This class is not itself thread-safe; each thread must allocate its own copy.
-     * 
+     *
      * @since 1.7
      */
     static class Context {
 
         /**
-         * Place holder for the bytes we're dealing with for our based logic. 
+         * Place holder for the bytes we're dealing with for our based logic.
          * Bitwise operations store and extract the encoding or decoding from this variable.
          */
         int ibitWorkArea;
 
         /**
-         * Place holder for the bytes we're dealing with for our based logic. 
+         * Place holder for the bytes we're dealing with for our based logic.
          * Bitwise operations store and extract the encoding or decoding from this variable.
          */
         long lbitWorkArea;
@@ -91,7 +91,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
 
     /**
      * EOF
-     * 
+     *
      * @since 1.7
      */
     static final int EOF = -1;
@@ -135,7 +135,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * Byte used to pad output.
      */
     protected static final byte PAD_DEFAULT = '='; // Allow static access to default
-    
+
     protected final byte PAD = PAD_DEFAULT; // instance variable just in case it needs to vary later
 
     /** Number of bytes in each full block of unencoded data, e.g. 4 for Base64 and 5 for Base32 */
@@ -145,14 +145,14 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     private final int encodedBlockSize;
 
     /**
-     * Chunksize for encoding. Not used when decoding. 
+     * Chunksize for encoding. Not used when decoding.
      * A value of zero or less implies no chunking of the encoded data.
      * Rounded down to nearest multiple of encodedBlockSize.
      */
     protected final int lineLength;
-    
+
     /**
-     * Size of chunk separator. Not used unless {@link #lineLength} > 0. 
+     * Size of chunk separator. Not used unless {@link #lineLength} > 0.
      */
     private final int chunkSeparatorLength;
 
@@ -200,7 +200,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         return DEFAULT_BUFFER_SIZE;
     }
 
-    /** 
+    /**
      * Increases our buffer by the {@link #DEFAULT_BUFFER_RESIZE_FACTOR}.
      * @param context the context to be used
      */
@@ -229,7 +229,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
-     * Extracts buffered data into the provided byte[] array, starting at position bPos, 
+     * Extracts buffered data into the provided byte[] array, starting at position bPos,
      * up to a maximum of bAvail bytes. Returns how many bytes were actually extracted.
      *
      * @param b
@@ -325,7 +325,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      *             if the parameter supplied is not of type byte[]
      */
     @Override
-    public Object decode(Object obj) throws DecoderException {        
+    public Object decode(Object obj) throws DecoderException {
         if (obj instanceof byte[]) {
             return decode((byte[]) obj);
         } else if (obj instanceof String) {
@@ -348,7 +348,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
 
     /**
      * Decodes a byte[] containing characters in the Base-N alphabet.
-     * 
+     *
      * @param pArray
      *            A byte array containing Base-N character data
      * @return a byte array containing binary data
@@ -385,11 +385,11 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         readResults(buf, 0, buf.length, context);
         return buf;
     }
-    
+
     abstract void encode(byte[] pArray, int i, int length, Context context);  // package protected for access from I/O streams
 
     abstract void decode(byte[] pArray, int i, int length, Context context); // package protected for access from I/O streams
-    
+
     /**
      * Returns whether or not the <code>octet</code> is in the current alphabet.
      * Does not allow whitespace or pad.
@@ -399,7 +399,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * @return {@code true} if the value is defined in the current alphabet, {@code false} otherwise.
      */
     protected abstract boolean isInAlphabet(byte value);
-    
+
     /**
      * Tests a given byte array to see if it contains only valid characters within the alphabet.
      * The method optionally treats whitespace and pad as valid.
@@ -409,7 +409,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      *
      * @return {@code true} if all bytes are valid characters in the alphabet or if the byte array is empty;
      *         {@code false}, otherwise
-     */    
+     */
     public boolean isInAlphabet(byte[] arrayOctet, boolean allowWSPad) {
         for (int i = 0; i < arrayOctet.length; i++) {
             if (!isInAlphabet(arrayOctet[i]) &&
@@ -421,7 +421,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
-     * Tests a given String to see if it contains only valid characters within the alphabet. 
+     * Tests a given String to see if it contains only valid characters within the alphabet.
      * The method treats whitespace and PAD as valid.
      *
      * @param basen String to test
@@ -459,7 +459,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      *
      * @param pArray byte[] array which will later be encoded
      *
-     * @return amount of space needed to encoded the supplied array.  
+     * @return amount of space needed to encoded the supplied array.
      * Returns a long since a max-len array will require > Integer.MAX_VALUE
      */
     public long getEncodedLength(byte[] pArray) {

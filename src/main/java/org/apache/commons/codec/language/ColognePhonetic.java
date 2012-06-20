@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -30,16 +30,16 @@ import org.apache.commons.codec.StringEncoder;
  * Implements the <a href="http://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik">K&ouml;lner Phonetik</a> (Cologne Phonetic)
  * algorithm issued by Hans Joachim Postel in 1969.
  * </p>
- * 
+ *
  * <p>
  * The <i>K&ouml;lner Phonetik</i> is a phonetic algorithm which is optimized for the German language. It is related to the
  * well-known soundex algorithm.
  * </p>
- * 
+ *
  * <h2>Algorithm</h2>
- * 
+ *
  * <ul>
- * 
+ *
  * <li>
  * <h3>Step 1:</h3>
  * After preprocessing (conversion to upper case, transcription of <a
@@ -58,7 +58,7 @@ import org.apache.commons.codec.StringEncoder;
  * <td align="center">0</td>
  * </tr>
  * <tr>
- * 
+ *
  * <td>H</td>
  * <td></td>
  * <td align="center">-</td>
@@ -71,7 +71,7 @@ import org.apache.commons.codec.StringEncoder;
  * <tr>
  * <td>P</td>
  * <td>not before H</td>
- * 
+ *
  * </tr>
  * <tr>
  * <td>D, T</td>
@@ -84,7 +84,7 @@ import org.apache.commons.codec.StringEncoder;
  * <td rowspan="2" align="center">3</td>
  * </tr>
  * <tr>
- * 
+ *
  * <td>P</td>
  * <td>before H</td>
  * </tr>
@@ -96,7 +96,7 @@ import org.apache.commons.codec.StringEncoder;
  * <tr>
  * <td rowspan="2">C</td>
  * <td>at onset before A, H, K, L, O, Q, R, U, X</td>
- * 
+ *
  * </tr>
  * <tr>
  * <td>before A, H, K, O, Q, U, X except after S, Z</td>
@@ -109,7 +109,7 @@ import org.apache.commons.codec.StringEncoder;
  * <tr>
  * <td>L</td>
  * <td></td>
- * 
+ *
  * <td align="center">5</td>
  * </tr>
  * <tr>
@@ -122,7 +122,7 @@ import org.apache.commons.codec.StringEncoder;
  * <td></td>
  * <td align="center">7</td>
  * </tr>
- * 
+ *
  * <tr>
  * <td>S, Z</td>
  * <td></td>
@@ -135,7 +135,7 @@ import org.apache.commons.codec.StringEncoder;
  * <tr>
  * <td>at onset except before A, H, K, L, O, Q, R, U, X</td>
  * </tr>
- * 
+ *
  * <tr>
  * <td>not before A, H, K, O, Q, U, X</td>
  * </tr>
@@ -153,31 +153,31 @@ import org.apache.commons.codec.StringEncoder;
  * <small><i>(Source: <a href= "http://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik#Buchstabencodes" >Wikipedia (de):
  * K&ouml;lner Phonetik -- Buchstabencodes</a>)</i></small>
  * </p>
- * 
+ *
  * <h4>Example:</h4>
- * 
+ *
  * {@code "M}&uuml;{@code ller-L}&uuml;{@code denscheidt" => "MULLERLUDENSCHEIDT" => "6005507500206880022"}
- * 
+ *
  * </li>
- * 
+ *
  * <li>
  * <h3>Step 2:</h3>
  * Collapse of all multiple consecutive code digits.
  * <h4>Example:</h4>
  * {@code "6005507500206880022" => "6050750206802"}</li>
- * 
+ *
  * <li>
  * <h3>Step 3:</h3>
  * Removal of all codes "0" except at the beginning. This means that two or more identical consecutive digits can occur
  * if they occur after removing the "0" digits.
- * 
+ *
  * <h4>Example:</h4>
  * {@code "6050750206802" => "65752682"}</li>
- * 
+ *
  * </ul>
- * 
+ *
  * This class is thread-safe.
- * 
+ *
  * @see <a href="http://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik">Wikipedia (de): K&ouml;lner Phonetik (in German)</a>
  * @since 1.5
  */
@@ -303,7 +303,7 @@ public class ColognePhonetic implements StringEncoder {
      * <p>
      * In contrast to the initial description of the algorithm, this implementation does the encoding in one pass.
      * </p>
-     * 
+     *
      * @param text
      * @return the corresponding encoding according to the <i>K&ouml;lner Phonetik</i> algorithm
      */

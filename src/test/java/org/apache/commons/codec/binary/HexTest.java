@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -36,13 +36,13 @@ import org.junit.Test;
 
 /**
  * Tests {@link org.apache.commons.codec.binary.Hex}.
- * 
+ *
  * @version $Id$
  */
 public class HexTest {
 
     private static final String BAD_ENCODING_NAME = "UNKNOWN";
-    
+
     private final static boolean LOG = false;
 
     private boolean charsetSanityCheck(String name) {
@@ -71,7 +71,7 @@ public class HexTest {
                 // x-JIS0208
                 // x-MacDingbat
                 // x-MacSymbol
-                // 
+                //
                 log("FAILED charsetSanityCheck=Interesting Java charset oddity: Roundtrip failed for " + name);
             }
             return equals;
@@ -124,7 +124,7 @@ public class HexTest {
     @Test
     public void testCustomCharset() throws UnsupportedEncodingException, DecoderException {
         for (String name : Charset.availableCharsets().keySet()) {
-            testCustomCharset(name, "testCustomCharset");            
+            testCustomCharset(name, "testCustomCharset");
         }
     }
 

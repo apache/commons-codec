@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -27,7 +27,7 @@ import org.apache.commons.codec.binary.BaseNCodec.Context;
 
 /**
  * Abstract superclass for Base-N output streams.
- * 
+ *
  * @since 1.5
  */
 public class BaseNCodecOutputStream extends FilterOutputStream {
@@ -49,7 +49,7 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
 
     /**
      * Writes the specified <code>byte</code> to this output stream.
-     * 
+     *
      * @param i
      *            source byte
      * @throws IOException
@@ -64,14 +64,14 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
     /**
      * Writes <code>len</code> bytes from the specified <code>b</code> array starting at <code>offset</code> to this
      * output stream.
-     * 
+     *
      * @param b
      *            source byte array
      * @param offset
      *            where to start reading the bytes
      * @param len
      *            maximum number of bytes to write
-     * 
+     *
      * @throws IOException
      *             if an I/O error occurs.
      * @throws NullPointerException
@@ -100,7 +100,7 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
     /**
      * Flushes this output stream and forces any buffered output bytes to be written out to the stream. If propogate is
      * true, the wrapped stream will also be flushed.
-     * 
+     *
      * @param propogate
      *            boolean flag to indicate whether the wrapped OutputStream should also be flushed.
      * @throws IOException
@@ -122,7 +122,7 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
 
     /**
      * Flushes this output stream and forces any buffered output bytes to be written out to the stream.
-     * 
+     *
      * @throws IOException
      *             if an I/O error occurs.
      */
@@ -133,7 +133,7 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
 
     /**
      * Closes this output stream and releases any system resources associated with the stream.
-     * 
+     *
      * @throws IOException
      *             if an I/O error occurs.
      */
