@@ -412,8 +412,8 @@ public class Sha2Crypt {
         /*
          * Now we can construct the result string. It consists of three parts.
          */
-        StringBuilder buffer = new StringBuilder(saltPrefix + (roundsCustom ? ROUNDS_PREFIX + rounds + "$" : "")
-                + saltString + "$");
+        StringBuilder buffer = new StringBuilder(saltPrefix +
+                (roundsCustom ? ROUNDS_PREFIX + rounds + "$" : "") + saltString + "$");
 
         // e) the base-64 encoded final C digest. The encoding used is as
         // follows:
