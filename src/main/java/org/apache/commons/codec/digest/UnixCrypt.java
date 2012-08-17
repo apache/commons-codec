@@ -22,18 +22,18 @@ import org.apache.commons.codec.Charsets;
 
 /**
  * Unix crypt(3) algorithm implementation.
- *
- * <p>This class only implements the traditional 56 bit DES based algorithm. Please
+ * <p>
+ * This class only implements the traditional 56 bit DES based algorithm. Please
  * use DigestUtils.crypt() for a method that distinguishes between all the
- * algorithms supported in the current glibc's crypt().</p>
- *
- * <p>The Java implementation was taken from the JetSpeed Portal project (see
- * org.apache.jetspeed.services.security.ldap.UnixCrypt).</p>
- *
- * <p>This class is slightly incompatible if the given salt contains characters
- * that are not part of the allowed range [a-zA-Z0-9./].</p>
- *
- * <p>This class is immutable and thread-safe.</p>
+ * algorithms supported in the current glibc's crypt().
+ * <p>
+ * The Java implementation was taken from the JetSpeed Portal project (see
+ * org.apache.jetspeed.services.security.ldap.UnixCrypt).
+ * <p>
+ * This class is slightly incompatible if the given salt contains characters
+ * that are not part of the allowed range [a-zA-Z0-9./].
+ * <p>
+ * This class is immutable and thread-safe.
  *
  * @version $Id$
  * @since 1.7
@@ -209,6 +209,117 @@ public class UnixCrypt {
         }
     };
 
+    /**
+     * Generates a crypt(3) compatible hash using the DES algorithm.
+     * <p>
+     * As no salt is given, a random one will be used.
+     *
+     * @param original
+     *             plaintext password
+     * @return a 13 character string starting with the salt string
+     */
+    public static String crypt(byte[] original) {
+        return crypt(original, null);
+    }
+
+    /**
+     * Generates a crypt(3) compatible hash using the DES algorithm.
+     * <p>
+     * Using unspecified characters as salt results incompatible hash values.
+     *
+     * @param original
+     *             plaintext password
+     * @param salt
+     *             a two character string drawn from [a-zA-Z0-9./] or null for a random one
+     * @return a 13 character string starting with the salt string
+     * @throws IllegalArgumentException if the salt does not match the allowed pattern
+     */
+    public static String crypt(byte[] original, String salt) {
+        if (salt == null) {
+            Random randomGenerator = new Random();
+            int numSaltChars = SALT_CHARS.length;
+            salt = "" + SALT_CHARS[Math.abs(randomGenerator.nextInt()) % numSaltChars] +
+                   SALT_CHARS[Math.abs(randomGenerator.nextInt()) % numSaltChars];
+        } else if (!salt.matches("^[" + B64.B64T + "]{2,}$")) {
+            throw new IllegalArgumentException("Invalid salt value: " + salt);
+        }
+
+        for (; salt.length() < 2; salt = salt + "A") {
+            // NOOP
+        }
+
+        StringBuilder buffer = new StringBuilder("             ");
+        char charZero = salt.charAt(0);
+        char charOne = salt.charAt(1);
+        buffer.setCharAt(0, charZero);
+        buffer.setCharAt(1, charOne);
+        int eSwap0 = CON_SALT[charZero];
+        int eSwap1 = CON_SALT[charOne] << 4;
+        byte key[] = new byte[8];
+        for (int i = 0; i < key.length; i++) {
+            key[i] = 0;
+        }
+
+        for (int i = 0; i < key.length && i < original.length; i++) {
+            int iChar = original[i];
+            key[i] = (byte) (iChar << 1);
+        }
+
+        int schedule[] = desSetKey(key);
+        int out[] = body(schedule, eSwap0, eSwap1);
+        byte b[] = new byte[9];
+        intToFourBytes(out[0], b, 0);
+        intToFourBytes(out[1], b, 4);
+        b[8] = 0;
+        int i = 2;
+        int y = 0;
+        int u = 128;
+        for (; i < 13; i++) {
+            int j = 0;
+            int c = 0;
+            for (; j < 6; j++) {
+                c <<= 1;
+                if ((b[y] & u) != 0) {
+                    c |= 0x1;
+                }
+                u >>>= 1;
+                if (u == 0) {
+                    y++;
+                    u = 128;
+                }
+                buffer.setCharAt(i, (char) COV2CHAR[c]);
+            }
+        }
+        return buffer.toString();
+    }
+
+    /**
+     * Generates a crypt(3) compatible hash using the DES algorithm.
+     * <p>
+     * As no salt is given, a random one is used.
+     *
+     * @param original
+     *             plaintext password
+     * @return a 13 character string starting with the salt string
+     */
+    public static String crypt(String original) {
+        return crypt(original.getBytes(Charsets.UTF_8));
+    }
+
+    /**
+     * Generates a crypt(3) compatible hash using the DES algorithm.
+     *
+     * @param original
+     *             plaintext password
+     * @param salt
+     *             a two character string drawn from [a-zA-Z0-9./] or null for a random one
+     * @return a 13 character string starting with the salt string
+     * @throws IllegalArgumentException if the salt does not match the allowed pattern
+     */
+    public static String crypt(String original, String salt) {
+        return crypt(original.getBytes(Charsets.UTF_8), salt);
+    }
+
     private static int[] body(int schedule[], int eSwap0, int eSwap1) {
         int left = 0;
         int right = 0;
@@ -338,113 +449,6 @@ public class UnixCrypt {
         b ^= t;
         results[0] = a;
         results[1] = b;
-    }
-
-    /**
-     * Generates a crypt(3) compatible hash using the DES algorithm.
-     * <p>
-     * As no salt is given, a random one will be used.
-     *
-     * @param original
-     *             plaintext password
-     * @return a 13 character string starting with the salt string
-     */
-    public static String crypt(byte[] original) {
-        return crypt(original, null);
-    }
-
-    /**
-     * Generates a crypt(3) compatible hash using the DES algorithm.
-     * <p>
-     * Using unspecified characters as salt results incompatible hash values.
-     *
-     * @param original
-     *             plaintext password
-     * @param salt
-     *             a two character string drawn from [a-zA-Z0-9./] or null for a random one
-     * @return a 13 character string starting with the salt string
-     */
-    public static String crypt(byte[] original, String salt) {
-        if (salt == null) {
-            Random randomGenerator = new Random();
-            int numSaltChars = SALT_CHARS.length;
-            salt = "" + SALT_CHARS[Math.abs(randomGenerator.nextInt()) % numSaltChars] + SALT_CHARS[Math.abs(randomGenerator.nextInt()) % numSaltChars];
-        } else if (!salt.matches("^[" + B64.B64T + "]{2,}$")) {
-            throw new IllegalArgumentException("Invalid salt value: " + salt);
-        }
-
-        for (; salt.length() < 2; salt = salt + "A") {
-            // NOOP
-        }
-        StringBuilder buffer = new StringBuilder("             ");
-        char charZero = salt.charAt(0);
-        char charOne = salt.charAt(1);
-        buffer.setCharAt(0, charZero);
-        buffer.setCharAt(1, charOne);
-        int eSwap0 = CON_SALT[charZero];
-        int eSwap1 = CON_SALT[charOne] << 4;
-        byte key[] = new byte[8];
-        for (int i = 0; i < key.length; i++) {
-            key[i] = 0;
-        }
-
-        for (int i = 0; i < key.length && i < original.length; i++) {
-            int iChar = original[i];
-            key[i] = (byte) (iChar << 1);
-        }
-
-        int schedule[] = desSetKey(key);
-        int out[] = body(schedule, eSwap0, eSwap1);
-        byte b[] = new byte[9];
-        intToFourBytes(out[0], b, 0);
-        intToFourBytes(out[1], b, 4);
-        b[8] = 0;
-        int i = 2;
-        int y = 0;
-        int u = 128;
-        for (; i < 13; i++) {
-            int j = 0;
-            int c = 0;
-            for (; j < 6; j++) {
-                c <<= 1;
-                if ((b[y] & u) != 0) {
-                    c |= 0x1;
-                }
-                u >>>= 1;
-                if (u == 0) {
-                    y++;
-                    u = 128;
-                }
-                buffer.setCharAt(i, (char) COV2CHAR[c]);
-            }
-        }
-        return buffer.toString();
-    }
-
-    /**
-     * Generates a crypt(3) compatible hash using the DES algorithm.
-     * <p>
-     * As no salt is given, a random one is used.
-     *
-     * @param original
-     *             plaintext password
-     * @return a 13 character string starting with the salt string
-     */
-    public static String crypt(String original) throws Exception {
-        return crypt(original.getBytes(Charsets.UTF_8));
-    }
-
-    /**
-     * Generates a crypt(3) compatible hash using the DES algorithm.
-     *
-     * @param original
-     *             plaintext password
-     * @param salt
-     *             a two character string drawn from [a-zA-Z0-9./] or null for a random one
-     * @return a 13 character string starting with the salt string
-     */
-    public static String crypt(String original, String salt) throws Exception {
-        return crypt(original.getBytes(Charsets.UTF_8), salt);
     }
 
 }

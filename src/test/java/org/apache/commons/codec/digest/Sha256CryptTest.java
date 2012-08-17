@@ -18,12 +18,16 @@ package org.apache.commons.codec.digest;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+
+import java.security.NoSuchAlgorithmException;
+
+import org.apache.commons.codec.Charsets;
 import org.junit.Test;
 
 public class Sha256CryptTest {
 
     @Test
-    public void testSha256CryptStrings() throws Exception {
+    public void testSha256CryptStrings() throws NoSuchAlgorithmException {
         // empty data
         assertEquals("$5$foo$Fq9CX624QIfnCAmlGiPKLlAasdacKCRxZztPoeo7o0B", Crypt.crypt("", "$5$foo"));
         // salt gets cut at dollar sign
@@ -36,28 +40,28 @@ public class Sha256CryptTest {
     }
 
     @Test
-    public void testSha256CryptBytes() throws Exception {
+    public void testSha256CryptBytes() throws NoSuchAlgorithmException {
         // An empty Bytearray equals an empty String
         assertEquals("$5$foo$Fq9CX624QIfnCAmlGiPKLlAasdacKCRxZztPoeo7o0B", Crypt.crypt(new byte[0], "$5$foo"));
         // UTF-8 stores \u00e4 "a with diaeresis" as two bytes 0xc3 0xa4.
         assertEquals("$5$./$iH66LwY5sTDTdHeOxq5nvNDVAxuoCcyH/y6Ptte82P8", Crypt.crypt("t\u00e4st", "$5$./$"));
         // ISO-8859-1 stores "a with diaeresis" as single byte 0xe4.
-        assertEquals("$5$./$qx5gFfCzjuWUOvsDDy.5Nor3UULPIqLVBZhgGNS0c14", Crypt.crypt("t\u00e4st".getBytes("ISO-8859-1"), "$5$./$"));
+        assertEquals("$5$./$qx5gFfCzjuWUOvsDDy.5Nor3UULPIqLVBZhgGNS0c14", Crypt.crypt("t\u00e4st".getBytes(Charsets.ISO_8859_1), "$5$./$"));
     }
 
     @Test
-    public void testSha256CryptExplicitCall() throws Exception {
+    public void testSha256CryptExplicitCall() throws NoSuchAlgorithmException {
         assertTrue(Sha2Crypt.sha256Crypt("secret".getBytes()).matches("^\\$5\\$[a-zA-Z0-9./]{0,16}\\$.{1,}$"));
         assertTrue(Sha2Crypt.sha256Crypt("secret".getBytes(), null).matches("^\\$5\\$[a-zA-Z0-9./]{0,16}\\$.{1,}$"));
     }
 
     @Test(expected = NullPointerException.class)
-    public void testSha256CryptNullData() throws Exception {
+    public void testSha256CryptNullData() throws NoSuchAlgorithmException {
         Sha2Crypt.sha256Crypt((byte[]) null);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testSha256CryptWithEmptySalt() throws Exception {
+    public void testSha256CryptWithEmptySalt() throws NoSuchAlgorithmException {
         Sha2Crypt.sha256Crypt("secret".getBytes(), "");
     }
 }

@@ -17,77 +17,71 @@
 package org.apache.commons.codec.digest;
 
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.codec.Charsets;
+
 /**
  * SHA2-based Unix crypt implementation.
- *
  * <p>
  * Based on the C implementation released into the Public Domain by Ulrich Drepper &lt;drepper@redhat.com&gt;
  * http://www.akkadia.org/drepper/SHA-crypt.txt
- * </p>
- *
  * <p>
- * Conversion to Kotlin and from there to Java in 2012 by Christian Hammers &lt;ch@lathspell.de&gt; and likewise put
- * into the Public Domain.
- * </p>
- *
- * <p>This class is immutable and thread-safe.</p>
+ * Conversion to Kotlin and from there to Java in 2012 by Christian Hammers &lt;ch@lathspell.de&gt;
+ * and likewise put into the Public Domain.
+ * <p>
+ * This class is immutable and thread-safe.
  *
  * @version $Id$
  * @since 1.7
  */
 public class Sha2Crypt {
 
-    /**
-     * Default number of rounds if not explicitly specified.
-     */
+    /** Default number of rounds if not explicitly specified. */
     private static final int ROUNDS_DEFAULT = 5000;
 
-    /**
-     * Maximum number of rounds.
-     */
+    /** Maximum number of rounds. */
     private static final int ROUNDS_MAX = 999999999;
 
-    /**
-     * Minimum number of rounds.
-     */
+    /** Minimum number of rounds. */
     private static final int ROUNDS_MIN = 1000;
 
-    /**
-     * Prefix for optional rounds specification.
-     */
+    /** Prefix for optional rounds specification. */
     private static final String ROUNDS_PREFIX = "rounds=";
 
-    /**
-     * The MessageDigest algorithm.
-     */
+    /** The SHA-256 MessageDigest algorithm. */
     private static final String SHA256_ALGORITHM = "SHA-256";
 
-    /**
-     * The number of bytes the final hash value will have.
-     */
+    /** The number of bytes the final hash value will have (SHA-256 variant). */
     private static final int SHA256_BLOCKSIZE = 32;
 
-    /**
-     * The prefixes that can be used to identify this crypt() variant.
-     */
+    /** The prefixes that can be used to identify this crypt() variant (SHA-256). */
     static final String SHA256_PREFIX = "$5$";
 
+    /** The SHA-512 MessageDigest algorithm. */
     private static final String SHA512_ALGORITHM = "SHA-512";
 
+    /** The number of bytes the final hash value will have (SHA-512 variant). */
     private static final int SHA512_BLOCKSIZE = 64;
 
+    /** The prefixes that can be used to identify this crypt() variant (SHA-512). */
     static final String SHA512_PREFIX = "$6$";
+
+    /** The pattern to match valid salt values. */
+    private static final Pattern SALT_PATTERN =
+            Pattern.compile("^\\$([56])\\$(rounds=(\\d+)\\$)?([\\.\\/a-zA-Z0-9]{1,16}).*");
 
     /**
      * Generates a libc crypt() compatible "$5$" hash value with random salt.
      * <p>
      * See {@link Crypt#crypt(String, String)} for details.
+     *
+     * @throws NoSuchAlgorithmException if no "SHA-256" algorithm implementation is available
      */
-    public static String sha256Crypt(byte[] keyBytes) throws Exception {
+    public static String sha256Crypt(byte[] keyBytes) throws NoSuchAlgorithmException {
         return sha256Crypt(keyBytes, null);
     }
 
@@ -95,8 +89,11 @@ public class Sha2Crypt {
      * Generates a libc6 crypt() compatible "$5$" hash value.
      * <p>
      * See {@link Crypt#crypt(String, String)} for details.
+     *
+     * @throws IllegalArgumentException if the salt does not match the allowed pattern
+     * @throws NoSuchAlgorithmException if no "SHA-256" algorithm implementation is available
      */
-    public static String sha256Crypt(byte[] keyBytes, String salt) throws Exception {
+    public static String sha256Crypt(byte[] keyBytes, String salt) throws NoSuchAlgorithmException {
         if (salt == null) {
             salt = SHA256_PREFIX + B64.getRandomSalt(8);
         }
@@ -114,7 +111,7 @@ public class Sha2Crypt {
      *
      * @param keyBytes
      *            plaintext that should be hashed
-     * @param salt_string
+     * @param salt
      *            real salt value without prefix or "rounds="
      * @param saltPrefix
      *            either $5$ or $6$
@@ -123,19 +120,22 @@ public class Sha2Crypt {
      * @param algorithm
      *            {@link MessageDigest} algorithm identifier string
      * @return complete hash value including prefix and salt
+     * @throws IllegalArgumentException if the given salt is {@code null} or does not match the allowed pattern
+     * @throws NoSuchAlgorithmException if no implementation for the given algorithm is available
      */
     private static String sha2Crypt(byte[] keyBytes, String salt, String saltPrefix, int blocksize, String algorithm)
-            throws Exception {
+            throws NoSuchAlgorithmException {
+
         int keyLen = keyBytes.length;
 
         // Extracts effective salt and the number of rounds from the given salt.
         int rounds = ROUNDS_DEFAULT;
         boolean roundsCustom = false;
         if (salt == null) {
-            throw new IllegalArgumentException("Invalid salt value: null");
+            throw new IllegalArgumentException("Salt must not be null");
         }
-        Pattern p = Pattern.compile("^\\$([56])\\$(rounds=(\\d+)\\$)?([\\.\\/a-zA-Z0-9]{1,16}).*");
-        Matcher m = p.matcher(salt);
+
+        Matcher m = SALT_PATTERN.matcher(salt);
         if (m == null || !m.find()) {
             throw new IllegalArgumentException("Invalid salt value: " + salt);
         }
@@ -145,7 +145,7 @@ public class Sha2Crypt {
             roundsCustom = true;
         }
         String saltString = m.group(4);
-        byte[] saltBytes = saltString.getBytes("UTF-8");
+        byte[] saltBytes = saltString.getBytes(Charsets.UTF_8);
         int saltLen = saltBytes.length;
 
         // 1. start digest A
@@ -342,7 +342,7 @@ public class Sha2Crypt {
         // The loop uses a digest as input. In the first round it is the
         // digest produced in step 12. In the latter steps it is the digest
         // produced in step 21.h. The following text uses the notation
-        // "digest A/C" to desribe this behavior.
+        // "digest A/C" to describe this behavior.
         /*
          * Repeatedly run the collected hash value through sha512 to burn CPU cycles.
          */
@@ -413,8 +413,14 @@ public class Sha2Crypt {
         /*
          * Now we can construct the result string. It consists of three parts.
          */
-        StringBuilder buffer = new StringBuilder(saltPrefix +
-                (roundsCustom ? ROUNDS_PREFIX + rounds + "$" : "") + saltString + "$");
+        StringBuilder buffer = new StringBuilder(saltPrefix);
+        if (roundsCustom) {
+            buffer.append(ROUNDS_PREFIX);
+            buffer.append(rounds);
+            buffer.append("$");
+        }
+        buffer.append(saltString);
+        buffer.append("$");
 
         // e) the base-64 encoded final C digest. The encoding used is as
         // follows:
@@ -497,8 +503,10 @@ public class Sha2Crypt {
      * Generates a libc crypt() compatible "$6$" hash value with random salt.
      * <p>
      * See {@link Crypt#crypt(String, String)} for details.
+     *
+     * @throws NoSuchAlgorithmException if no "SHA-512" algorithm implementation is available
      */
-    public static String sha512Crypt(byte[] keyBytes) throws Exception {
+    public static String sha512Crypt(byte[] keyBytes) throws NoSuchAlgorithmException {
         return sha512Crypt(keyBytes, null);
     }
 
@@ -506,8 +514,11 @@ public class Sha2Crypt {
      * Generates a libc6 crypt() compatible "$6$" hash value.
      * <p>
      * See {@link Crypt#crypt(String, String)} for details.
+     *
+     * @throws IllegalArgumentException if the salt does not match the allowed pattern
+     * @throws NoSuchAlgorithmException if no "SHA-512" algorithm implementation is available
      */
-    public static String sha512Crypt(byte[] keyBytes, String salt) throws Exception {
+    public static String sha512Crypt(byte[] keyBytes, String salt) throws NoSuchAlgorithmException {
         if (salt == null) {
             salt = SHA512_PREFIX + B64.getRandomSalt(8);
         }

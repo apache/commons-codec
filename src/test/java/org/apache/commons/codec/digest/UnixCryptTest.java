@@ -18,12 +18,16 @@ package org.apache.commons.codec.digest;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+
+import java.security.NoSuchAlgorithmException;
+
+import org.apache.commons.codec.Charsets;
 import org.junit.Test;
 
 public class UnixCryptTest {
 
     @Test
-    public void testUnixCryptStrings() throws Exception {
+    public void testUnixCryptStrings() throws NoSuchAlgorithmException {
         // trivial test
         assertEquals("xxWAum7tHdIUw", Crypt.crypt("secret", "xx"));
         // empty data
@@ -34,13 +38,13 @@ public class UnixCryptTest {
     }
 
     @Test
-    public void testUnixCryptBytes() throws Exception {
+    public void testUnixCryptBytes() throws NoSuchAlgorithmException {
         // An empty Bytearray equals an empty String
         assertEquals("12UFlHxel6uMM", Crypt.crypt(new byte[0], "12"));
         // UTF-8 stores \u00e4 "a with diaeresis" as two bytes 0xc3 0xa4.
         assertEquals("./287bds2PjVw", Crypt.crypt("t\u00e4st", "./"));
         // ISO-8859-1 stores "a with diaeresis" as single byte 0xe4.
-        assertEquals("./bLIFNqo9XKQ", Crypt.crypt("t\u00e4st".getBytes("ISO-8859-1"), "./"));
+        assertEquals("./bLIFNqo9XKQ", Crypt.crypt("t\u00e4st".getBytes(Charsets.ISO_8859_1), "./"));
         assertEquals("./bLIFNqo9XKQ", Crypt.crypt(new byte[]{(byte) 0x74, (byte) 0xe4, (byte) 0x73, (byte) 0x74}, "./"));
     }
 
@@ -59,7 +63,7 @@ public class UnixCryptTest {
      * Unimplemented "$foo$" salt prefixes would be threated as UnixCrypt salt.
      */
     @Test(expected = IllegalArgumentException.class)
-    public void testUnicCryptInvalidSalt() throws Exception {
+    public void testUnicCryptInvalidSalt() {
         UnixCrypt.crypt("secret", "$a");
     }
 
@@ -69,7 +73,7 @@ public class UnixCryptTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testUnixCryptWithEmptySalt() throws Exception {
+    public void testUnixCryptWithEmptySalt() {
         UnixCrypt.crypt("secret", "");
     }
 }

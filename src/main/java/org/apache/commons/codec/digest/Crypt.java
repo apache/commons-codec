@@ -16,14 +16,16 @@
  */
 package org.apache.commons.codec.digest;
 
+import java.security.NoSuchAlgorithmException;
+
 import org.apache.commons.codec.Charsets;
 
 /**
  * GNU libc crypt(3) compatible hash method.
  * <p>
  * See {@link #crypt(String, String)} for further details.
- *
- * <p>This class is immutable and thread-safe.</p>
+ * <p>
+ * This class is immutable and thread-safe.
  *
  * @version $Id$
  * @since 1.7
@@ -39,24 +41,27 @@ public class Crypt {
      * @param keyBytes
      *            plaintext password
      * @return hash value
+     * @throws NoSuchAlgorithmException if no algorithm implementation is available
      */
-    public static String crypt(byte[] keyBytes) throws Exception {
+    public static String crypt(byte[] keyBytes) throws NoSuchAlgorithmException {
         return crypt(keyBytes, null);
     }
 
     /**
      * Encrypts a password in a crypt(3) compatible way.
      * <p>
-     * A random salt and the default algorithm (currently SHA-512) are used. See
-     * {@link #crypt(String, String)} for details.
+     * If no salt is provided, a random salt and the default algorithm (currently SHA-512) will be used.
+     * See {@link #crypt(String, String)} for details.
      *
      * @param keyBytes
      *            plaintext password
      * @param salt
      *            salt value
      * @return hash value
+     * @throws IllegalArgumentException if the salt does not match the allowed pattern
+     * @throws NoSuchAlgorithmException if no algorithm implementation is available
      */
-    public static String crypt(byte[] keyBytes, String salt) throws Exception {
+    public static String crypt(byte[] keyBytes, String salt) throws NoSuchAlgorithmException {
         if (salt == null) {
             return Sha2Crypt.sha512Crypt(keyBytes);
         } else if (salt.startsWith(Sha2Crypt.SHA512_PREFIX)) {
@@ -79,14 +84,14 @@ public class Crypt {
      * @param key
      *            plaintext password
      * @return hash value
+     * @throws NoSuchAlgorithmException if no algorithm implementation is available
      */
-    public static String crypt(String key) throws Exception {
+    public static String crypt(String key) throws NoSuchAlgorithmException {
         return crypt(key, null);
     }
 
     /**
      * Encrypts a password in a crypt(3) compatible way.
-     *
      * <p>
      * The exact algorithm depends on the format of the salt string:
      * <ul>
@@ -98,16 +103,13 @@ public class Crypt {
      * </ul>
      * The magic strings "$apr1$" and "$2a$" are not recognised by this method as its
      * output should be identical with that of the libc implementation.
-     *
      * <p>
      * The rest of the salt string is drawn from the set [a-zA-Z0-9./] and is cut at the
      * maximum length of if a "$" sign is encountered. It is therefore valid to enter a
      * complete hash value as salt to e.g. verify a password with:
-     *
      * <pre>
      *      storedPwd.equals(crypt(enteredPwd, storedPwd))
      * </pre>
-     *
      * <p>
      * The resulting string starts with the marker string ($6$), continues with the salt
      * value and ends with a "$" sign followed by the actual hash value. For DES the string
@@ -118,15 +120,12 @@ public class Crypt {
      * <li>MD5: 34 chars
      * <li>DES: 13 chars
      * </ul>
-     *
      * <p>
      * Example:
-     *
      * <pre>
      *      crypt("secret", "$1$xxxx") => "$1$xxxx$aMkevjfEIpa35Bh3G4bAc."
      *      crypt("secret", "xx") => "xxWAum7tHdIUw"
      * </pre>
-     *
      * <p>
      * This method comes in a variation that accepts a byte[] array to support input strings that
      * are not encoded in UTF-8 but e.g. in ISO-8859-1 where equal characters result in different byte values.
@@ -137,8 +136,10 @@ public class Crypt {
      * @param salt
      *            salt value
      * @return hash value, i.e. encrypted password including the salt string
+     * @throws IllegalArgumentException if the salt does not match the allowed pattern
+     * @throws NoSuchAlgorithmException if no algorithm implementation is available
      */
-    public static String crypt(String key, String salt) throws Exception {
+    public static String crypt(String key, String salt) throws NoSuchAlgorithmException {
         return crypt(key.getBytes(Charsets.UTF_8), salt);
     }
 }

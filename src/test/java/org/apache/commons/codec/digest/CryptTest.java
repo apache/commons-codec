@@ -17,12 +17,15 @@
 package org.apache.commons.codec.digest;
 
 import static org.junit.Assert.assertTrue;
+
+import java.security.NoSuchAlgorithmException;
+
 import org.junit.Test;
 
 public class CryptTest {
 
     @Test
-    public void testDefaultCryptVariant() throws Exception {
+    public void testDefaultCryptVariant() throws NoSuchAlgorithmException {
         // If salt is null or completely omitted, a random "$6$" is used.
         assertTrue(Crypt.crypt("secret").startsWith("$6$"));
         assertTrue(Crypt.crypt("secret", null).startsWith("$6$"));
@@ -36,7 +39,7 @@ public class CryptTest {
      * hash would not be verifyable with other implementations of crypt().
      */
     @Test(expected = IllegalArgumentException.class)
-    public void testCryptWithEmptySalt() throws Exception {
+    public void testCryptWithEmptySalt() throws NoSuchAlgorithmException {
         Crypt.crypt("secret", "");
     }
 
