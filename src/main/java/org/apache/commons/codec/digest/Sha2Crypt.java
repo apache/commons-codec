@@ -84,7 +84,7 @@ public class Sha2Crypt {
 
     /**
      * Generates a libc crypt() compatible "$5$" hash value with random salt.
-     *
+     * <p>
      * See {@link Crypt#crypt(String, String)} for details.
      */
     public static String sha256Crypt(byte[] keyBytes) throws Exception {
@@ -93,7 +93,7 @@ public class Sha2Crypt {
 
     /**
      * Generates a libc6 crypt() compatible "$5$" hash value.
-     *
+     * <p>
      * See {@link Crypt#crypt(String, String)} for details.
      */
     public static String sha256Crypt(byte[] keyBytes, String salt) throws Exception {
@@ -105,23 +105,24 @@ public class Sha2Crypt {
 
     /**
      * Generates a libc6 crypt() compatible "$5$" or "$6$" SHA2 based hash value.
-     *
-     * This is a nearly line by line conversion of the original C function. The numbered comments are from the algorithm
-     * description, the short C-style ones from the original C code and the ones with "Remark" from me.
-     *
+     * <p>
+     * This is a nearly line by line conversion of the original C function. The numbered comments
+     * are from the algorithm description, the short C-style ones from the original C code and the
+     * ones with "Remark" from me.
+     * <p>
      * See {@link Crypt#crypt(String, String)} for details.
      *
      * @param keyBytes
-     *            The plaintext that should be hashed.
+     *            plaintext that should be hashed
      * @param salt_string
-     *            The real salt value without prefix or "rounds=".
+     *            real salt value without prefix or "rounds="
      * @param saltPrefix
-     *            Either $5$ or $6$.
+     *            either $5$ or $6$
      * @param blocksize
-     *            A value that differs between $5$ and $6$.
+     *            a value that differs between $5$ and $6$
      * @param algorithm
-     *            The MessageDigest algorithm identifier string.
-     * @return The complete hash value including prefix and salt.
+     *            {@link MessageDigest} algorithm identifier string
+     * @return complete hash value including prefix and salt
      */
     private static String sha2Crypt(byte[] keyBytes, String salt, String saltPrefix, int blocksize, String algorithm)
             throws Exception {
@@ -494,7 +495,7 @@ public class Sha2Crypt {
 
     /**
      * Generates a libc crypt() compatible "$6$" hash value with random salt.
-     *
+     * <p>
      * See {@link Crypt#crypt(String, String)} for details.
      */
     public static String sha512Crypt(byte[] keyBytes) throws Exception {
@@ -503,7 +504,7 @@ public class Sha2Crypt {
 
     /**
      * Generates a libc6 crypt() compatible "$6$" hash value.
-     *
+     * <p>
      * See {@link Crypt#crypt(String, String)} for details.
      */
     public static String sha512Crypt(byte[] keyBytes, String salt) throws Exception {

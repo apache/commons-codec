@@ -23,15 +23,15 @@ import org.apache.commons.codec.Charsets;
 /**
  * Unix crypt(3) algorithm implementation.
  *
- * This class only implements the traditional 56 bit DES based algorithm. Please
+ * <p>This class only implements the traditional 56 bit DES based algorithm. Please
  * use DigestUtils.crypt() for a method that distinguishes between all the
- * algorithms supported in the current glibc's crypt().
+ * algorithms supported in the current glibc's crypt().</p>
  *
- * The Java implementation was taken from the JetSpeed Portal project (see
- * org.apache.jetspeed.services.security.ldap.UnixCrypt).
+ * <p>The Java implementation was taken from the JetSpeed Portal project (see
+ * org.apache.jetspeed.services.security.ldap.UnixCrypt).</p>
  *
- * This class is slightly incompatible if the given salt contains characters
- * that are not part of the allowed range [a-zA-Z0-9./].
+ * <p>This class is slightly incompatible if the given salt contains characters
+ * that are not part of the allowed range [a-zA-Z0-9./].</p>
  *
  * <p>This class is immutable and thread-safe.</p>
  *
@@ -342,12 +342,12 @@ public class UnixCrypt {
 
     /**
      * Generates a crypt(3) compatible hash using the DES algorithm.
-     *
+     * <p>
      * As no salt is given, a random one will be used.
      *
-     * @param original Plaintext password
-     *
-     * @return A 13 character string starting with the salt string.
+     * @param original
+     *             plaintext password
+     * @return a 13 character string starting with the salt string
      */
     public static String crypt(byte[] original) {
         return crypt(original, null);
@@ -355,15 +355,14 @@ public class UnixCrypt {
 
     /**
      * Generates a crypt(3) compatible hash using the DES algorithm.
-     *
+     * <p>
      * Using unspecified characters as salt results incompatible hash values.
      *
-     * @param original Plaintext password
-     *
-     * @param salt A two character string drawn from [a-zA-Z0-9./] or null for a
-     * random one.
-     *
-     * @return A 13 character string starting with the salt string.
+     * @param original
+     *             plaintext password
+     * @param salt
+     *             a two character string drawn from [a-zA-Z0-9./] or null for a random one
+     * @return a 13 character string starting with the salt string
      */
     public static String crypt(byte[] original, String salt) {
         if (salt == null) {
@@ -424,12 +423,12 @@ public class UnixCrypt {
 
     /**
      * Generates a crypt(3) compatible hash using the DES algorithm.
-     *
+     * <p>
      * As no salt is given, a random one is used.
      *
-     * @param original Plaintext password
-     *
-     * @return A 13 character string starting with the salt string.
+     * @param original
+     *             plaintext password
+     * @return a 13 character string starting with the salt string
      */
     public static String crypt(String original) throws Exception {
         return crypt(original.getBytes(Charsets.UTF_8));
@@ -438,10 +437,11 @@ public class UnixCrypt {
     /**
      * Generates a crypt(3) compatible hash using the DES algorithm.
      *
-     * @param original Plaintext password
-     * @param salt A two character string drawn from [a-zA-Z0-9./] or null for a
-     * random one.
-     * @return A 13 character string starting with the salt string.
+     * @param original
+     *             plaintext password
+     * @param salt
+     *             a two character string drawn from [a-zA-Z0-9./] or null for a random one
+     * @return a 13 character string starting with the salt string
      */
     public static String crypt(String original, String salt) throws Exception {
         return crypt(original.getBytes(Charsets.UTF_8), salt);

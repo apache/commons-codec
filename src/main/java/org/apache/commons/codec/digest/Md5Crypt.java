@@ -29,15 +29,12 @@ import org.apache.commons.codec.Charsets;
  * Based on the public domain ("beer-ware") C implementation from Poul-Henning Kamp which was found at:
  * </p>
  * <p>
- * http://www.freebsd.org/cgi/cvsweb.cgi/src/lib/libcrypt/crypt-md5.c?rev=1.1;content-type=text%2Fplain</br>
+ * http://www.freebsd.org/cgi/cvsweb.cgi/src/lib/libcrypt/crypt-md5.c?rev=1.1;content-type=text%2Fplain<br/>
  * Source: $FreeBSD: src/lib/libcrypt/crypt-md5.c,v 1.1 1999/01/21 13:50:09 brandon Exp $
  * </p>
- * <p>
- * Conversion to Kotlin and from there to Java in 2012.
- * </p>
- * <p>
- * The C style comments are from the original C code, the ones with "//" from the port.
- * </p>
+ * <p>Conversion to Kotlin and from there to Java in 2012.</p>
+ *
+ * <p>The C style comments are from the original C code, the ones with "//" from the port.</p>
  *
  * <p>This class is immutable and thread-safe.</p>
  *
@@ -91,16 +88,17 @@ public class Md5Crypt {
     }
 
     /**
-     * Generates an Apache htpasswd compatible "$apr1$" MD5 based hash value. *
-     *
-     * The algorithm is identical to the crypt(3) "$1$" one but produces different outputs due to the different salt
-     * prefix.
+     * Generates an Apache htpasswd compatible "$apr1$" MD5 based hash value.
+     * <p>
+     * The algorithm is identical to the crypt(3) "$1$" one but produces different
+     * outputs due to the different salt prefix.
      *
      * @param keyBytes
-     *            The plaintext string that should be hashed.
+     *            plaintext string that should be hashed.
      * @param salt
-     *            Salt string including the prefix and optionally garbage at the end. Will be generated randomly if
-     *            null.
+     *            salt string including the prefix and optionally garbage at the end.
+     *            Will be generated randomly if null.
+     * @return computed hash value
      */
     public static String apr1Crypt(String keyBytes, String salt) throws Exception {
         return apr1Crypt(keyBytes.getBytes(Charsets.UTF_8), salt);
@@ -108,7 +106,7 @@ public class Md5Crypt {
 
     /**
      * Generates a libc6 crypt() compatible "$1$" hash value.
-     *
+     * <p>
      * See {@link Crypt#crypt(String, String)} for details.
      */
     public static String md5Crypt(final byte[] keyBytes) throws Exception {
@@ -117,14 +115,15 @@ public class Md5Crypt {
 
     /**
      * Generates a libc crypt() compatible "$1$" MD5 based hash value.
-     *
+     * <p>
      * See {@link Crypt#crypt(String, String)} for details.
      *
      * @param keyBytes
-     *            The plaintext string that should be hashed.
+     *            plaintext string that should be hashed.
      * @param salt
-     *            Salt string including the prefix and optionally garbage at the end. Will be generated randomly if
-     *            null.
+     *            salt string including the prefix and optionally garbage at the end.
+     *            Will be generated randomly if null.
+     * @return computed hash value
      */
     public static String md5Crypt(byte[] keyBytes, String salt) throws Exception {
         return md5Crypt(keyBytes, salt, MD5_PREFIX);
@@ -132,7 +131,7 @@ public class Md5Crypt {
 
     /**
      * Generates a libc6 crypt() "$1$" or Apache htpasswd "$apr1$" hash value.
-     *
+     * <p>
      * See {@link Crypt#crypt(String, String)} or {@link #apr1Crypt(String, String)} for details.
      */
     public static String md5Crypt(final byte[] keyBytes, final String salt, final String prefix) throws Exception {
