@@ -51,6 +51,10 @@ The <action> type attribute can be add,update,fix,remove.
     </release>
     -->
     <release version="1.7" date="TBD" description="Feature and fix release.">
+      <action issue="CODEC-147" dev="tn" type="update">
+        BeiderMorseEncoder/PhoneticEngine: make results deterministic by using a LinkedHashSet
+        instead of a HashSet.
+      </action>
       <action issue="CODEC-143" dev="sebb" type="update">
         StringBuffer could be replaced by StringBuilder for local variables.
       </action>
