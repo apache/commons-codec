@@ -31,40 +31,38 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 /**
- * <p>
  * Language guessing utility.
- * </p>
  * <p>
- * This class encapsulates rules used to guess the possible languages that a word originates from. This is done by reference to a whole
- * series of rules distributed in resource files.
- * </p>
+ * This class encapsulates rules used to guess the possible languages that a word originates from. This is
+ * done by reference to a whole series of rules distributed in resource files.
  * <p>
- * Instances of this class are typically managed through the static factory method instance(). Unless you are developing your own language
- * guessing rules, you will not need to interact with this class directly.
- * </p>
+ * Instances of this class are typically managed through the static factory method instance().
+ * Unless you are developing your own language guessing rules, you will not need to interact with this class directly.
  * <p>
  * This class is intended to be immutable and thread-safe.
- * </p>
- * <h2>Lang resources</h2
  * <p>
- * Language guessing rules are typically loaded from resource files. These are UTF-8 encoded text files. They are systematically named
- * following the pattern: <blockquote>org/apache/commons/codec/language/bm/lang.txt</blockquote> The format of these resources is the
- * following:
- * </p>
+ * <b>Lang resources</b>
+ * <p>
+ * Language guessing rules are typically loaded from resource files. These are UTF-8 encoded text files.
+ * They are systematically named following the pattern:
+ * <blockquote>org/apache/commons/codec/language/bm/lang.txt</blockquote>
+ * The format of these resources is the following:
  * <ul>
- * <li><b>Rules:</b> whitespace separated strings. There should be 3 columns to each row, and these will be interpreted as:
+ * <li><b>Rules:</b> whitespace separated strings.
+ * There should be 3 columns to each row, and these will be interpreted as:
  * <ol>
  * <li>pattern: a regular expression.</li>
  * <li>languages: a '+'-separated list of languages.</li>
  * <li>acceptOnMatch: 'true' or 'false' indicating if a match rules in or rules out the language.</li>
  * </ol>
  * </li>
- * <li><b>End-of-line comments:</b> Any occurance of '//' will cause all text following on that line to be discarded as a comment.</li>
- * <li><b>Multi-line comments:</b> Any line starting with '/*' will start multi-line commenting mode. This will skip all content until a
- * line ending in '*' and '/' is found.</li>
+ * <li><b>End-of-line comments:</b> Any occurrence of '//' will cause all text following on that line to be
+ * discarded as a comment.</li>
+ * <li><b>Multi-line comments:</b> Any line starting with '/*' will start multi-line commenting mode.
+ * This will skip all content until a line ending in '*' and '/' is found.</li>
  * <li><b>Blank lines:</b> All blank lines will be skipped.</li>
  * </ul>
- * <p/>
+ * <p>
  * Port of lang.php
  *
  * @since 1.6
@@ -116,13 +114,10 @@ public class Lang {
     }
 
     /**
-     * <p>
      * Loads language rules from a resource.
-     * </p>
      * <p>
-     * In normal use, you will obtain instances of Lang through the {@link #instance(NameType)} method. You will only need to call this
-     * yourself if you are developing custom language mapping rules.
-     * </p>
+     * In normal use, you will obtain instances of Lang through the {@link #instance(NameType)} method.
+     * You will only need to call this yourself if you are developing custom language mapping rules.
      *
      * @param languageRulesResourceName
      *            the fully-qualified resource name to load
@@ -157,7 +152,6 @@ public class Lang {
                     // discard comments
                     int cmtI = line.indexOf(ResourceConstants.CMT);
                     if (cmtI >= 0) {
-                        // System.err.println("index of comment: " + cmtI);
                         line = line.substring(0, cmtI);
                     }
 
@@ -170,11 +164,10 @@ public class Lang {
 
                     // split it up
                     String[] parts = line.split("\\s+");
-                    // System.err.println("part count: " + parts.length);
 
                     if (parts.length != 3) {
-                        // fixme: we really need to log this somewhere
-                        System.err.println("Warning: malformed line '" + rawLine + "'");
+                        // FIXME: consider throwing an IllegalStateException like in Rule
+                        // System.err.println("Warning: malformed line '" + rawLine + "'");
                         continue;
                     }
 
@@ -219,22 +212,15 @@ public class Lang {
      */
     public Languages.LanguageSet guessLanguages(String input) {
         String text = input.toLowerCase(Locale.ENGLISH);
-        // System.out.println("Testing text: '" + text + "'");
 
         Set<String> langs = new HashSet<String>(this.languages.getLanguages());
         for (LangRule rule : this.rules) {
             if (rule.matches(text)) {
-                // System.out.println("Rule " + rule.pattern + " matches " + text);
                 if (rule.acceptOnMatch) {
-                    // System.out.println("Retaining " + rule.languages);
                     langs.retainAll(rule.languages);
                 } else {
-                    // System.out.println("Removing " + rule.languages);
                     langs.removeAll(rule.languages);
                 }
-                // System.out.println("Current languages: " + langs);
-            } else {
-                // System.out.println("Rule " + rule.pattern + " does not match " + text);
             }
         }
 

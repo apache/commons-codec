@@ -31,29 +31,25 @@ import java.util.Set;
 import java.util.TreeSet;
 
 /**
- * <p>
  * Converts words into potential phonetic representations.
- * </p>
  * <p>
- * This is a two-stage process. Firstly, the word is converted into a phonetic representation that takes into account the likely source
- * language. Next, this phonetic representation is converted into a pan-european 'average' representation, allowing comparison between
- * different versions of essentially the same word from different languages.
- * </p>
+ * This is a two-stage process. Firstly, the word is converted into a phonetic representation that takes
+ * into account the likely source language. Next, this phonetic representation is converted into a
+ * pan-european 'average' representation, allowing comparison between different versions of essentially
+ * the same word from different languages.
  * <p>
- * This class is intentionally immutable. If you wish to alter the settings for a PhoneticEngine, you must make a new one with the updated
- * settings. This makes the class thread-safe.
- * </p>
+ * This class is intentionally immutable. If you wish to alter the settings for a PhoneticEngine, you
+ * must make a new one with the updated settings. This makes the class thread-safe.
  * <p>
  * Ported from phoneticengine.php
- * </p>
  *
  * @since 1.6
  */
 public class PhoneticEngine {
 
     /**
-     * Utility for manipulating a set of phonemes as they are being built up. Not intended for use outside this package,
-     * and probably not outside the {@link PhoneticEngine} class.
+     * Utility for manipulating a set of phonemes as they are being built up. Not intended for use outside
+     * this package, and probably not outside the {@link PhoneticEngine} class.
      *
      * @since 1.6
      */
@@ -95,7 +91,7 @@ public class PhoneticEngine {
 
         /**
          * Creates a new phoneme builder containing the application of the expression to all phonemes in this builder.
-         *
+         * <p>
          * This will lengthen phonemes that have compatible language sets to the expression, and drop those that are
          * incompatible.
          *
@@ -133,9 +129,9 @@ public class PhoneticEngine {
         }
 
         /**
-         * Stringifies the phoneme set. This produces a single string of the strings of each phoneme, joined with a pipe.
-         * This is explicitly provied in place of toString as it is a potentially expensive operation, which should be
-         * avoided when debugging.
+         * Stringifies the phoneme set. This produces a single string of the strings of each phoneme,
+         * joined with a pipe. This is explicitly provided in place of toString as it is a potentially
+         * expensive operation, which should be avoided when debugging.
          *
          * @return  the stringified phoneme set
          */
@@ -160,7 +156,7 @@ public class PhoneticEngine {
      * After invocation, the values <code>i</code> and <code>found</code> are updated. <code>i</code> points to the
      * index of the next char in <code>input</code> that must be processed next (the input up to that index having been
      * processed already), and <code>found</code> indicates if a matching rule was found or not. In the case where a
-     * matching rule was found, <code>phonemeBuilder</code> is replaced with a new buidler containing the phonemes
+     * matching rule was found, <code>phonemeBuilder</code> is replaced with a new builder containing the phonemes
      * updated by the matching rule.
      *
      * Although this class is not thread-safe (it has mutable unprotected fields), it is not shared between threads
@@ -206,19 +202,17 @@ public class PhoneticEngine {
         public RulesApplication invoke() {
             this.found = false;
             int patternLength = 0;
-            RULES: for (Rule rule : this.finalRules) {
+            for (Rule rule : this.finalRules) {
                 String pattern = rule.getPattern();
                 patternLength = pattern.length();
-                // log("trying pattern: " + pattern);
 
                 if (!rule.patternAndContextMatches(this.input, this.i)) {
-                    // log("no match");
-                    continue RULES;
+                    continue;
                 }
 
                 this.phonemeBuilder = this.phonemeBuilder.apply(rule.getPhoneme(), maxPhonemes);
                 this.found = true;
-                break RULES;
+                break;
             }
 
             if (!this.found) {
@@ -249,7 +243,7 @@ public class PhoneticEngine {
      * This is a performance hack to avoid overhead associated with very frequent CharSequence.subSequence calls.
      *
      * @param cached the character sequence to cache
-     * @return a <code>CharSequence</code> that internally memoises subSequence values
+     * @return a <code>CharSequence</code> that internally caches subSequence values
      */
     private static CharSequence cacheSubSequence(final CharSequence cached) {
         // return cached;
@@ -285,7 +279,7 @@ public class PhoneticEngine {
      * Joins some strings with an internal separator.
      * @param strings   Strings to join
      * @param sep       String to separate them with
-     * @return          a single String consisting of each element of <code>strings</code> interlieved by <code>sep</code>
+     * @return          a single String consisting of each element of <code>strings</code> interleaved by <code>sep</code>
      */
     private static String join(Iterable<String> strings, String sep) {
         StringBuilder sb = new StringBuilder();
@@ -351,8 +345,8 @@ public class PhoneticEngine {
     }
 
     /**
-     * Applies the final rules to convert from a language-specific phonetic representation to a language-independent
-     * representation.
+     * Applies the final rules to convert from a language-specific phonetic representation to a
+     * language-independent representation.
      *
      * @param phonemeBuilder
      * @param finalRules
@@ -371,7 +365,6 @@ public class PhoneticEngine {
         for (Rule.Phoneme phoneme : phonemeBuilder.getPhonemes()) {
             PhonemeBuilder subBuilder = PhonemeBuilder.empty(phoneme.getLanguages());
             CharSequence phonemeText = cacheSubSequence(phoneme.getPhonemeText());
-            // System.err.println("Expanding: " + phonemeText);
 
             for (int i = 0; i < phonemeText.length();) {
                 RulesApplication rulesApplication =
@@ -380,17 +373,13 @@ public class PhoneticEngine {
                 subBuilder = rulesApplication.getPhonemeBuilder();
 
                 if (!found) {
-                    // System.err.println("Not found. Appending as-is");
+                    // not found, appending as-is
                     subBuilder = subBuilder.append(phonemeText.subSequence(i, i + 1));
                 }
 
                 i = rulesApplication.getI();
-
-                // System.err.println(phonemeText + " " + i + ": " + subBuilder.makeString());
             }
 
-            // System.err.println("Expanded to: " + subBuilder.makeString());
-            // System.err.println("phenomes in collection of type: " + subBuilder.getPhonemes().getClass());
             phonemes.addAll(subBuilder.getPhonemes());
         }
 
@@ -423,9 +412,6 @@ public class PhoneticEngine {
         final List<Rule> finalRules1 = Rule.getInstance(this.nameType, this.ruleType, "common");
         // rules that apply to a specific language that may be ambiguous or wrong if applied to other languages
         final List<Rule> finalRules2 = Rule.getInstance(this.nameType, this.ruleType, languageSet);
-
-        // System.err.println("Languages: " + languageSet);
-        // System.err.println("Rules: " + rules);
 
         // tidy the input
         // lower case is a locale-dependent operation
@@ -497,7 +483,6 @@ public class PhoneticEngine {
                     new RulesApplication(rules, inputCache, phonemeBuilder, i, maxPhonemes).invoke();
             i = rulesApplication.getI();
             phonemeBuilder = rulesApplication.getPhonemeBuilder();
-            // System.err.println(input + " " + i + ": " + phonemeBuilder.makeString());
         }
 
         // Apply the general rules
@@ -538,7 +523,7 @@ public class PhoneticEngine {
     /**
      * Gets if multiple phonetic encodings are concatenated or if just the first one is kept.
      *
-     * @return true if multiple phonetic encodings are returned, false if just the first is.
+     * @return true if multiple phonetic encodings are returned, false if just the first is
      */
     public boolean isConcat() {
         return this.concat;

@@ -27,17 +27,13 @@ import java.util.Scanner;
 import java.util.Set;
 
 /**
- * <p>
  * Language codes.
- * </p>
  * <p>
- * Language codes are typically loaded from resource files. These are UTF-8 encoded text files. They are systematically named following the
- * pattern:
- * </p>
+ * Language codes are typically loaded from resource files. These are UTF-8 encoded text files. They are
+ * systematically named following the pattern:
  * <blockquote>org/apache/commons/codec/language/bm/${{@link NameType#getName()} languages.txt</blockquote>
  * <p>
  * The format of these resources is the following:
- * </p>
  * <ul>
  * <li><b>Language:</b> a single string containing no whitespace</li>
  * <li><b>End-of-line comments:</b> Any occurance of '//' will cause all text following on that line to be discarded as a comment.</li>
@@ -47,7 +43,6 @@ import java.util.Set;
  * </ul>
  * <p>
  * Ported from language.php
- * </p>
  *
  * @since 1.6
  *
