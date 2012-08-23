@@ -137,9 +137,7 @@ public class PhoneticEngine {
          * @return  the stringified phoneme set
          */
         public String makeString() {
-
-            StringBuilder sb = new StringBuilder();
-            // System.err.println(this.phonemes.getClass());
+            final StringBuilder sb = new StringBuilder();
 
             for (Rule.Phoneme ph : this.phonemes) {
                 if (sb.length() > 0) {
@@ -349,9 +347,9 @@ public class PhoneticEngine {
      * Applies the final rules to convert from a language-specific phonetic representation to a
      * language-independent representation.
      *
-     * @param phonemeBuilder
-     * @param finalRules
-     * @return
+     * @param phonemeBuilder the current phonemes
+     * @param finalRules the final rules to apply
+     * @return the resulting phonemes
      */
     private PhonemeBuilder applyFinalRules(PhonemeBuilder phonemeBuilder, List<Rule> finalRules) {
         if (finalRules == null) {
