@@ -319,4 +319,3 @@ public class Nysiis implements StringEncoder {
     }
 
 }
-
