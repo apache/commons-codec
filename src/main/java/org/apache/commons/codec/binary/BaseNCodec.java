@@ -28,6 +28,8 @@ import org.apache.commons.codec.EncoderException;
  * <p>
  * This class is thread-safe.
  * </p>
+ *
+ * @version $Id$
  */
 public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
 

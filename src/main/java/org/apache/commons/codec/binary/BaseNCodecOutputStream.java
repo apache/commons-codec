@@ -29,6 +29,7 @@ import org.apache.commons.codec.binary.BaseNCodec.Context;
  * Abstract superclass for Base-N output streams.
  *
  * @since 1.5
+ * @version $Id$
  */
 public class BaseNCodecOutputStream extends FilterOutputStream {
 
