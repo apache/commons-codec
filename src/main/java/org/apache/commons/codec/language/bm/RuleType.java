@@ -21,6 +21,7 @@ package org.apache.commons.codec.language.bm;
  * Types of rule.
  *
  * @since 1.6
+ * @version $Id$
  */
 public enum RuleType {
 

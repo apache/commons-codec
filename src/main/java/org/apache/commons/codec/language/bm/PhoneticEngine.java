@@ -44,6 +44,7 @@ import java.util.TreeSet;
  * Ported from phoneticengine.php
  *
  * @since 1.6
+ * @version $Id$
  */
 public class PhoneticEngine {
 
