@@ -617,13 +617,13 @@ public class Rule {
             return false;
         }
 
-        // fixme: this is a readability/speed trade-off - these 3 expressions should be inlined for speed to avoid
-        // evaluating latter ones if earlier ones have already failed, but that would make the code a lot harder to
-        // read
-        boolean patternMatches = input.subSequence(i, ipl).equals(this.pattern);
-        boolean rContextMatches = this.rContext.isMatch(input.subSequence(ipl, input.length()));
-        boolean lContextMatches = this.lContext.isMatch(input.subSequence(0, i));
-
-        return patternMatches && rContextMatches && lContextMatches;
+        // evaluate the pattern, left context and right context
+        // fail early if any of the evaluations is not successful
+        if (!input.subSequence(i, ipl).equals(this.pattern)) {
+            return false;
+        } else if (!this.rContext.isMatch(input.subSequence(ipl, input.length()))) {
+            return false;
+        }
+        return this.lContext.isMatch(input.subSequence(0, i));
     }
 }
