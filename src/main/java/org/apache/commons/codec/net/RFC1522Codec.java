@@ -25,23 +25,16 @@ import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.binary.StringUtils;
 
 /**
- * <p>
  * Implements methods common to all codecs defined in RFC 1522.
- * </p>
- *
  * <p>
- * <a href="http://www.ietf.org/rfc/rfc1522.txt">RFC 1522</a>
- * describes techniques to allow the encoding of non-ASCII text in
- * various portions of a RFC 822 [2] message header, in a manner which
+ * <a href="http://www.ietf.org/rfc/rfc1522.txt">RFC 1522</a> describes techniques to allow the
+ * encoding of non-ASCII text in various portions of a RFC 822 [2] message header, in a manner which
  * is unlikely to confuse existing message handling software.
- * </p>
-
- * @see <a href="http://www.ietf.org/rfc/rfc1522.txt">
- * MIME (Multipurpose Internet Mail Extensions) Part Two:
- * Message Header Extensions for Non-ASCII Text</a>
- * </p>
+ * <p>
+ * This class is immutable and thread-safe.
  *
- * <p>This class is immutable and thread-safe.</p>
+ * @see <a href="http://www.ietf.org/rfc/rfc1522.txt">MIME (Multipurpose Internet Mail Extensions) Part Two:
+ *          Message Header Extensions for Non-ASCII Text</a>
  *
  * @since 1.3
  * @version $Id$

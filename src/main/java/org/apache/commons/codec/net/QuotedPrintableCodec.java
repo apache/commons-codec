@@ -33,9 +33,7 @@ import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.binary.StringUtils;
 
 /**
- * <p>
  * Codec for the Quoted-Printable section of <a href="http://www.ietf.org/rfc/rfc1521.txt">RFC 1521</a>.
- * </p>
  * <p>
  * The Quoted-Printable encoding is intended to represent data that largely consists of octets that correspond to
  * printable characters in the ASCII character set. It encodes the data in such a way that the resulting octets are
@@ -43,19 +41,15 @@ import org.apache.commons.codec.binary.StringUtils;
  * data remains largely recognizable by humans. A body which is entirely ASCII may also be encoded in Quoted-Printable
  * to ensure the integrity of the data should the message pass through a character- translating, and/or line-wrapping
  * gateway.
- * </p>
- *
  * <p>
  * Note:
- * </p>
  * <p>
  * Rules #3, #4, and #5 of the quoted-printable spec are not implemented yet because the complete quoted-printable spec
  * does not lend itself well into the byte[] oriented codec framework. Complete the codec once the streamable codec
  * framework is ready. The motivation behind providing the codec in a partial form is that it can already come in handy
  * for those applications that do not require quoted-printable line formatting (rules #3, #4, #5), for instance Q codec.
- * </p>
- *
- * <p>This class is immutable and thread-safe.</p>
+ * <p>
+ * This class is immutable and thread-safe.
  *
  * @see <a href="http://www.ietf.org/rfc/rfc1521.txt"> RFC 1521 MIME (Multipurpose Internet Mail Extensions) Part One:
  *          Mechanisms for Specifying and Describing the Format of Internet Message Bodies </a>

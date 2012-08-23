@@ -31,22 +31,16 @@ import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.binary.StringUtils;
 
 /**
- * <p>Implements the 'www-form-urlencoded' encoding scheme,
- * also misleadingly known as URL encoding.</p>
- *
- * <p>For more detailed information please refer to
- * <a href="http://www.w3.org/TR/html4/interact/forms.html#h-17.13.4.1">
- * Chapter 17.13.4 'Form content types'</a> of the
- * <a href="http://www.w3.org/TR/html4/">HTML 4.01 Specification<a></p>
- *
+ * Implements the 'www-form-urlencoded' encoding scheme, also misleadingly known as URL encoding.
  * <p>
- * This codec is meant to be a replacement for standard Java classes
- * {@link java.net.URLEncoder} and {@link java.net.URLDecoder}
- * on older Java platforms, as these classes in Java versions below
+ * This codec is meant to be a replacement for standard Java classes {@link java.net.URLEncoder} and
+ * {@link java.net.URLDecoder} on older Java platforms, as these classes in Java versions below
  * 1.4 rely on the platform's default charset encoding.
- * </p>
+ * <p>
+ * This class is immutable and thread-safe.
  *
- * <p>This class is immutable and thread-safe.</p>
+ * @see <a href="http://www.w3.org/TR/html4/interact/forms.html#h-17.13.4.1">Chapter 17.13.4 'Form content types'</a>
+ *           of the <a href="http://www.w3.org/TR/html4/">HTML 4.01 Specification<a>
  *
  * @since 1.2
  * @version $Id$

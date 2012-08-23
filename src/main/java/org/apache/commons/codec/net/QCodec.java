@@ -29,18 +29,14 @@ import org.apache.commons.codec.StringDecoder;
 import org.apache.commons.codec.StringEncoder;
 
 /**
- * <p>
- * Similar to the Quoted-Printable content-transfer-encoding defined in <a
- * href="http://www.ietf.org/rfc/rfc1521.txt">RFC 1521</a> and designed to allow text containing mostly ASCII
+ * Similar to the Quoted-Printable content-transfer-encoding defined in
+ * <a href="http://www.ietf.org/rfc/rfc1521.txt">RFC 1521</a> and designed to allow text containing mostly ASCII
  * characters to be decipherable on an ASCII terminal without decoding.
- * </p>
- *
  * <p>
  * <a href="http://www.ietf.org/rfc/rfc1522.txt">RFC 1522</a> describes techniques to allow the encoding of non-ASCII
  * text in various portions of a RFC 822 [2] message header, in a manner which is unlikely to confuse existing message
  * handling software.
- * </p>
- *
+ * <p>
  * This class is conditionally thread-safe.
  * The instance field {@link #encodeBlanks} is mutable {@link #setEncodeBlanks(boolean)}
  * but is not volatile, and accesses are not synchronised.
