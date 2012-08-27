@@ -60,6 +60,9 @@ limitations under the License.
     <module name="OperatorWrap">
       <property name="option" value="eol" />
     </module>
+    <module name="LineLength">
+      <property name="max" value="120"/>
+    </module>
   </module>
 
 </module>

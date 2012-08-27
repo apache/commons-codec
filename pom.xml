@@ -208,6 +208,7 @@ limitations under the License.
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <commons.encoding>UTF-8</commons.encoding>
+    <checkstyle.header.file>${basedir}/LICENSE-header.txt</checkstyle.header.file>
   </properties>
   <build>
     <pluginManagement>
