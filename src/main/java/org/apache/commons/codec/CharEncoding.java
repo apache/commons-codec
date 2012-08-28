@@ -20,12 +20,12 @@ package org.apache.commons.codec;
 /**
  * Character encoding names required of every implementation of the Java platform.
  *
- * From the Java documentation <a href="http://download.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard
- * charsets</a>:
+ * From the Java documentation <a
+ * href="http://download.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>:
  * <p>
  * <cite>Every implementation of the Java platform is required to support the following character encodings. Consult the
  * release documentation for your implementation to see if any other encodings are supported. Consult the release
- * documentation for your implementation to see if any other encodings are supported. </cite>
+ * documentation for your implementation to see if any other encodings are supported.</cite>
  * </p>
  *
  * <ul>
@@ -47,7 +47,9 @@ package org.apache.commons.codec;
  * This perhaps would best belong in the [lang] project. Even if a similar interface is defined in [lang], it is not
  * foreseen that [codec] would be made to depend on [lang].
  *
- * <p>This class is immutable and thread-safe.</p>
+ * <p>
+ * This class is immutable and thread-safe.
+ * </p>
  *
  * @see <a href="http://download.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
  * @since 1.4
