@@ -21,18 +21,16 @@ import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
 
 /**
- * Encodes a string into a double metaphone value.
- * This Implementation is based on the algorithm by <CITE>Lawrence Philips</CITE>.
+ * Encodes a string into a double metaphone value. This Implementation is based on the algorithm by <CITE>Lawrence
+ * Philips</CITE>.
+ * <p>
+ * This class is conditionally thread-safe. The instance field {@link #maxCodeLen} is mutable
+ * {@link #setMaxCodeLen(int)} but is not volatile, and accesses are not synchronized. If an instance of the class is
+ * shared between threads, the caller needs to ensure that suitable synchronization is used to ensure safe publication
+ * of the value between threads, and must not invoke {@link #setMaxCodeLen(int)} after initial setup.
  *
  * @see <a href="http://drdobbs.com/184401251?pgno=2">Original Article</a>
  * @see <a href="http://en.wikipedia.org/wiki/Metaphone">http://en.wikipedia.org/wiki/Metaphone</a>
- *
- * This class is conditionally thread-safe.
- * The instance field {@link #maxCodeLen} is mutable {@link #setMaxCodeLen(int)}
- * but is not volatile, and accesses are not synchronized.
- * If an instance of the class is shared between threads, the caller needs to ensure that suitable synchronization
- * is used to ensure safe publication of the value between threads, and must not invoke {@link #setMaxCodeLen(int)}
- * after initial setup.
  *
  * @version $Id$
  */

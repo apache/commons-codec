@@ -60,10 +60,9 @@ public class Base32 extends BaseNCodec {
     private static final byte[] CHUNK_SEPARATOR = {'\r', '\n'};
 
     /**
-     * This array is a lookup table that translates Unicode characters drawn from the "Base32 Alphabet" (as specified in
-     * Table 3 of RFC 2045) into their 5-bit positive integer equivalents. Characters that are not in the Base32
+     * This array is a lookup table that translates Unicode characters drawn from the "Base32 Alphabet" (as specified
+     * in Table 3 of RFC 2045) into their 5-bit positive integer equivalents. Characters that are not in the Base32
      * alphabet but fall within the bounds of the array are translated to -1.
-     *
      */
     private static final byte[] DECODE_TABLE = {
          //  0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
@@ -86,10 +85,9 @@ public class Base32 extends BaseNCodec {
     };
 
     /**
-     * This array is a lookup table that translates Unicode characters drawn from the "Base32 |Hex Alphabet" (as specified in
-     * Table 3 of RFC 2045) into their 5-bit positive integer equivalents. Characters that are not in the Base32 Hex
-     * alphabet but fall within the bounds of the array are translated to -1.
-     *
+     * This array is a lookup table that translates Unicode characters drawn from the "Base32 |Hex Alphabet" (as
+     * specified in Table 3 of RFC 2045) into their 5-bit positive integer equivalents. Characters that are not in the
+     * Base32 Hex alphabet but fall within the bounds of the array are translated to -1.
      */
     private static final byte[] HEX_DECODE_TABLE = {
          //  0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
@@ -102,8 +100,8 @@ public class Base32 extends BaseNCodec {
     };
 
     /**
-     * This array is a lookup table that translates 5-bit positive integer index values into their "Base32 Hex Alphabet"
-     * equivalents as specified in Table 3 of RFC 2045.
+     * This array is a lookup table that translates 5-bit positive integer index values into their
+     * "Base32 Hex Alphabet" equivalents as specified in Table 3 of RFC 2045.
      */
     private static final byte[] HEX_ENCODE_TABLE = {
             '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
@@ -122,6 +120,7 @@ public class Base32 extends BaseNCodec {
      * Place holder for the bytes we're dealing with for our based logic.
      * Bitwise operations store and extract the encoding or decoding from this variable.
      */
+
     /**
      * Convenience variable to help us determine when our buffer is going to run out of room and needs resizing.
      * <code>decodeSize = {@link #BYTES_PER_ENCODED_BLOCK} - 1 + lineSeparator.length;</code>
@@ -178,8 +177,9 @@ public class Base32 extends BaseNCodec {
      * </p>
      *
      * @param lineLength
-     *            Each line of encoded data will be at most of the given length (rounded down to nearest multiple of 8).
-     *            If lineLength <= 0, then the output will not be divided into lines (chunks). Ignored when decoding.
+     *            Each line of encoded data will be at most of the given length (rounded down to nearest multiple of
+     *            8). If lineLength <= 0, then the output will not be divided into lines (chunks). Ignored when
+     *            decoding.
      */
     public Base32(int lineLength) {
         this(lineLength, CHUNK_SEPARATOR);
@@ -195,8 +195,9 @@ public class Base32 extends BaseNCodec {
      * </p>
      *
      * @param lineLength
-     *            Each line of encoded data will be at most of the given length (rounded down to nearest multiple of 8).
-     *            If lineLength <= 0, then the output will not be divided into lines (chunks). Ignored when decoding.
+     *            Each line of encoded data will be at most of the given length (rounded down to nearest multiple of
+     *            8). If lineLength <= 0, then the output will not be divided into lines (chunks). Ignored when
+     *            decoding.
      * @param lineSeparator
      *            Each line of encoded data will end with this sequence of bytes.
      * @throws IllegalArgumentException
@@ -216,14 +217,16 @@ public class Base32 extends BaseNCodec {
      * </p>
      *
      * @param lineLength
-     *            Each line of encoded data will be at most of the given length (rounded down to nearest multiple of 8).
-     *            If lineLength <= 0, then the output will not be divided into lines (chunks). Ignored when decoding.
+     *            Each line of encoded data will be at most of the given length (rounded down to nearest multiple of
+     *            8). If lineLength <= 0, then the output will not be divided into lines (chunks). Ignored when
+     *            decoding.
      * @param lineSeparator
      *            Each line of encoded data will end with this sequence of bytes.
-     * @param useHex if {@code true}, then use Base32 Hex alphabet, otherwise use Base32 alphabet
+     * @param useHex
+     *            if {@code true}, then use Base32 Hex alphabet, otherwise use Base32 alphabet
      * @throws IllegalArgumentException
-     *             The provided lineSeparator included some Base32 characters. That's not going to work!
-     *             Or the lineLength > 0 and lineSeparator is null.
+     *             The provided lineSeparator included some Base32 characters. That's not going to work! Or the
+     *             lineLength > 0 and lineSeparator is null.
      */
     public Base32(int lineLength, byte[] lineSeparator, boolean useHex) {
         super(BYTES_PER_UNENCODED_BLOCK, BYTES_PER_ENCODED_BLOCK,
@@ -297,7 +300,8 @@ public class Base32 extends BaseNCodec {
                     int result = this.decodeTable[b];
                     if (result >= 0) {
                         context.modulus = (context.modulus+1) % BYTES_PER_ENCODED_BLOCK;
-                        context.lbitWorkArea = (context.lbitWorkArea << BITS_PER_ENCODED_BYTE) + result; // collect decoded bytes
+                        // collect decoded bytes
+                        context.lbitWorkArea = (context.lbitWorkArea << BITS_PER_ENCODED_BYTE) + result;
                         if (context.modulus == 0) { // we can output the 5 bytes
                             context.buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 32) & MASK_8BITS);
                             context.buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 24) & MASK_8BITS);
