@@ -170,7 +170,8 @@ public class BaseNCodecInputStream extends FilterInputStream {
 
     /**
      * Repositions this stream to the position at the time the mark method was last called on this input stream.
-     * <p>The {@link #reset} method of {@link BaseNCodecInputStream} does nothing except throw an {@link IOException}.</p>
+     * <p>
+     * The {@link #reset} method of {@link BaseNCodecInputStream} does nothing except throw an {@link IOException}.
      *
      * @throws IOException if this method is invoked
      * @since 1.7
