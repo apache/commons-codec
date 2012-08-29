@@ -231,11 +231,16 @@ public class PhoneticEngine {
 
     static {
         NAME_PREFIXES.put(NameType.ASHKENAZI,
-                Collections.unmodifiableSet(new HashSet<String>(Arrays.asList("bar", "ben", "da", "de", "van", "von"))));
-        NAME_PREFIXES.put(NameType.SEPHARDIC, Collections.unmodifiableSet(new HashSet<String>(Arrays.asList("al", "el", "da", "dal", "de",
-                "del", "dela", "de la", "della", "des", "di", "do", "dos", "du", "van", "von"))));
-        NAME_PREFIXES.put(NameType.GENERIC, Collections.unmodifiableSet(new HashSet<String>(Arrays.asList("da", "dal", "de", "del", "dela",
-                "de la", "della", "des", "di", "do", "dos", "du", "van", "von"))));
+                Collections.unmodifiableSet(
+                        new HashSet<String>(Arrays.asList("bar", "ben", "da", "de", "van", "von"))));
+        NAME_PREFIXES.put(NameType.SEPHARDIC,
+                Collections.unmodifiableSet(
+                        new HashSet<String>(Arrays.asList("al", "el", "da", "dal", "de", "del", "dela", "de la",
+                                                          "della", "des", "di", "do", "dos", "du", "van", "von"))));
+        NAME_PREFIXES.put(NameType.GENERIC,
+                Collections.unmodifiableSet(
+                        new HashSet<String>(Arrays.asList("da", "dal", "de", "del", "dela", "de la", "della",
+                                                          "des", "di", "do", "dos", "du", "van", "von"))));
     }
 
     /**
@@ -278,7 +283,7 @@ public class PhoneticEngine {
      * Joins some strings with an internal separator.
      * @param strings   Strings to join
      * @param sep       String to separate them with
-     * @return          a single String consisting of each element of <code>strings</code> interleaved by <code>sep</code>
+     * @return a single String consisting of each element of <code>strings</code> interleaved by <code>sep</code>
      */
     private static String join(Iterable<String> strings, String sep) {
         StringBuilder sb = new StringBuilder();
@@ -403,7 +408,8 @@ public class PhoneticEngine {
      * @param input
      *            String to phoneticise; a String with dashes or spaces separating each word
      * @param languageSet
-     * @return a phonetic representation of the input; a String containing '-'-separated phonetic representations of the input
+     * @return a phonetic representation of the input; a String containing '-'-separated phonetic representations
+     *   of the input
      */
     public String encode(String input, final Languages.LanguageSet languageSet) {
         final List<Rule> rules = Rule.getInstance(this.nameType, RuleType.RULES, languageSet);

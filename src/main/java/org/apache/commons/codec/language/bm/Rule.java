@@ -127,7 +127,8 @@ public class Rule {
         }
 
         public Phoneme join(Phoneme right) {
-            return new Phoneme(this.phonemeText.toString() + right.phonemeText.toString(), this.languages.restrictTo(right.languages));
+            return new Phoneme(this.phonemeText.toString() + right.phonemeText.toString(),
+                               this.languages.restrictTo(right.languages));
         }
     }
 
@@ -168,8 +169,8 @@ public class Rule {
 
     private static final String HASH_INCLUDE = "#include";
 
-    private static final Map<NameType, Map<RuleType, Map<String, List<Rule>>>> RULES = new EnumMap<NameType, Map<RuleType, Map<String, List<Rule>>>>(
-            NameType.class);
+    private static final Map<NameType, Map<RuleType, Map<String, List<Rule>>>> RULES =
+            new EnumMap<NameType, Map<RuleType, Map<String, List<Rule>>>>(NameType.class);
 
     static {
         for (NameType s : NameType.values()) {
@@ -207,7 +208,8 @@ public class Rule {
     }
 
     private static String createResourceName(NameType nameType, RuleType rt, String lang) {
-        return String.format("org/apache/commons/codec/language/bm/%s_%s_%s.txt", nameType.getName(), rt.getName(), lang);
+        return String.format("org/apache/commons/codec/language/bm/%s_%s_%s.txt",
+                             nameType.getName(), rt.getName(), lang);
     }
 
     private static Scanner createScanner(NameType nameType, RuleType rt, String lang) {
@@ -256,7 +258,8 @@ public class Rule {
      * @return a list of Rules that apply
      */
     public static List<Rule> getInstance(NameType nameType, RuleType rt, Languages.LanguageSet langs) {
-        return langs.isSingleton() ? getInstance(nameType, rt, langs.getAny()) : getInstance(nameType, rt, Languages.ANY);
+        return langs.isSingleton() ? getInstance(nameType, rt, langs.getAny()) :
+                                     getInstance(nameType, rt, Languages.ANY);
     }
 
     /**
@@ -274,7 +277,8 @@ public class Rule {
         List<Rule> rules = RULES.get(nameType).get(rt).get(lang);
 
         if (rules == null) {
-            throw new IllegalArgumentException(String.format("No rules found for %s, %s, %s.", nameType.getName(), rt.getName(), lang));
+            throw new IllegalArgumentException(String.format("No rules found for %s, %s, %s.",
+                                               nameType.getName(), rt.getName(), lang));
         }
 
         return rules;
@@ -364,7 +368,8 @@ public class Rule {
                         String[] parts = line.split("\\s+");
                         if (parts.length != 4) {
                             // FIXME: consider throwing an IllegalStateException like in parsePhonemeExpr
-                            // System.err.println("Warning: malformed rule statement split into " + parts.length + " parts: " + rawLine);
+//                            System.err.println("Warning: malformed rule statement split into " + parts.length +
+//                                               " parts: " + rawLine);
                         } else {
                             try {
                                 String pat = stripQuotes(parts[0]);
@@ -487,7 +492,8 @@ public class Rule {
                         return new RPattern() {
                             @Override
                             public boolean isMatch(CharSequence input) {
-                                return input.length() > 0 && contains(bContent, input.charAt(input.length() - 1)) == shouldMatch;
+                                return input.length() > 0 &&
+                                       contains(bContent, input.charAt(input.length() - 1)) == shouldMatch;
                             }
                         };
                     }

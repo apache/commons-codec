@@ -23,7 +23,8 @@ import org.apache.commons.codec.StringEncoder;
 /**
  * Encodes strings into their Beider-Morse phonetic encoding.
  * <p>
- * Beider-Morse phonetic encodings are optimised for family names. However, they may be useful for a wide range of words.
+ * Beider-Morse phonetic encodings are optimised for family names. However, they may be useful for a wide range
+ * of words.
  * <p>
  * This encoder is intentionally mutable to allow dynamic configuration through bean properties. As such, it
  * is mutable, and may not be thread-safe. If you require a guaranteed thread-safe encoding then use
@@ -55,7 +56,7 @@ import org.apache.commons.codec.StringEncoder;
  * If multiple hyphenated words where found, or if the word may contain a name prefix, each encoded word is placed
  * in elipses and these blocks are then joined with hyphens. For example, "<code>d'ortley</code>" has a possible
  * prefix. The form without prefix encodes to "<code>ortlaj|ortlej</code>", while the form with prefix encodes to
- * "<code>dortlaj|dortlej</code>". Thus, the full, combined encoding is "<code>(ortlaj|ortlej)-(dortlaj|dortlej)</code>".
+ * "<code>dortlaj|dortlej</code>". Thus, the full, combined encoding is "{@code (ortlaj|ortlej)-(dortlaj|dortlej)}".
  * <p>
  * The encoded forms are often quite a bit longer than the input strings. This is because a single input may have many
  * potential phonetic interpretations. For example, "<code>Renault</code>" encodes to
@@ -121,7 +122,8 @@ public class BeiderMorseEncoder implements StringEncoder {
      * Sets how multiple possible phonetic encodings are combined.
      *
      * @param concat
-     *            true if multiple encodings are to be combined with a '|', false if just the first one is to be considered
+     *            true if multiple encodings are to be combined with a '|', false if just the first one is
+     *            to be considered
      */
     public void setConcat(boolean concat) {
         this.engine = new PhoneticEngine(this.engine.getNameType(),
