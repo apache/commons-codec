@@ -25,18 +25,15 @@ import org.apache.commons.codec.StringEncoder;
  * <p>
  * Initial Java implementation by <CITE>William B. Brogden. December, 1997</CITE>.
  * Permission given by <CITE>wbrogden</CITE> for code to be used anywhere.
- * </p>
  * <p>
- * <CITE>Hanging on the Metaphone</CITE> by <CITE>Lawrence Philips</CITE> in <CITE>Computer Language of Dec. 1990, p
- * 39.</CITE>
- * </p>
+ * <CITE>Hanging on the Metaphone</CITE> by <CITE>Lawrence Philips</CITE> in <CITE>Computer Language of Dec. 1990,
+ * p 39.</CITE>
  * <p>
- * Note, that this does not match the algorithm that ships with PHP, or the algorithm
- * found in the Perl <a href="http://search.cpan.org/~mschwern/Text-Metaphone-1.96/Metaphone.pm">Text:Metaphone-1.96</a>.
+ * Note, that this does not match the algorithm that ships with PHP, or the algorithm found in the Perl
+ * <a href="http://search.cpan.org/~mschwern/Text-Metaphone-1.96/Metaphone.pm">Text:Metaphone-1.96</a>.
  * They have had undocumented changes from the originally published algorithm.
  * For more information, see <a href="https://issues.apache.org/jira/browse/CODEC-57">CODEC-57</a>.
- * </p>
- *
+ * <p>
  * This class is conditionally thread-safe.
  * The instance field {@link #maxCodeLen} is mutable {@link #setMaxCodeLen(int)}
  * but is not volatile, and accesses are not synchronised.

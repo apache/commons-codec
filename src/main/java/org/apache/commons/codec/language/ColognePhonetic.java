@@ -25,14 +25,12 @@ import org.apache.commons.codec.StringEncoder;
 /**
  * Encodes a string into a Cologne Phonetic value.
  * <p>
- * Implements the <a href="http://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik">K&ouml;lner Phonetik</a> (Cologne Phonetic)
- * algorithm issued by Hans Joachim Postel in 1969.
- * </p>
- *
+ * Implements the <a href="http://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik">K&ouml;lner Phonetik</a>
+ * (Cologne Phonetic) algorithm issued by Hans Joachim Postel in 1969.
  * <p>
- * The <i>K&ouml;lner Phonetik</i> is a phonetic algorithm which is optimized for the German language. It is related to the
- * well-known soundex algorithm.
- * </p>
+ * The <i>K&ouml;lner Phonetik</i> is a phonetic algorithm which is optimized for the German language.
+ * It is related to the well-known soundex algorithm.
+ * <p>
  *
  * <h2>Algorithm</h2>
  *
