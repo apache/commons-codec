@@ -62,7 +62,8 @@ public class Caverphone2 extends AbstractCaverphone {
         txt = txt.replaceAll("^rough", "rou2f");
         txt = txt.replaceAll("^tough", "tou2f");
         txt = txt.replaceAll("^enough", "enou2f"); // 2.0 only
-        txt = txt.replaceAll("^trough", "trou2f"); // 2.0 only - note the spec says ^enough here again, c+p error I assume
+        txt = txt.replaceAll("^trough", "trou2f"); // 2.0 only
+                                                   // note the spec says ^enough here again, c+p error I assume
         txt = txt.replaceAll("^gn", "2n");
 
         // End
