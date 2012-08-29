@@ -137,11 +137,9 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
 
     /**
      * Encodes an array of bytes into an array of quoted-printable 7-bit characters. Unsafe characters are escaped.
-     *
      * <p>
      * This function implements a subset of quoted-printable encoding specification (rule #1 and rule #2) as defined in
      * RFC 1521 and is suitable for encoding binary data and unformatted text.
-     * </p>
      *
      * @param printable
      *                  bitset of characters deemed quoted-printable
@@ -174,11 +172,9 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
     /**
      * Decodes an array quoted-printable characters into an array of original bytes. Escaped characters are converted
      * back to their original representation.
-     *
      * <p>
      * This function implements a subset of quoted-printable encoding specification (rule #1 and rule #2) as defined in
      * RFC 1521.
-     * </p>
      *
      * @param bytes
      *                  array of quoted-printable characters
@@ -210,11 +206,9 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
 
     /**
      * Encodes an array of bytes into an array of quoted-printable 7-bit characters. Unsafe characters are escaped.
-     *
      * <p>
      * This function implements a subset of quoted-printable encoding specification (rule #1 and rule #2) as defined in
      * RFC 1521 and is suitable for encoding binary data and unformatted text.
-     * </p>
      *
      * @param bytes
      *                  array of bytes to be encoded
@@ -228,11 +222,9 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
     /**
      * Decodes an array of quoted-printable characters into an array of original bytes. Escaped characters are converted
      * back to their original representation.
-     *
      * <p>
      * This function implements a subset of quoted-printable encoding specification (rule #1 and rule #2) as defined in
      * RFC 1521.
-     * </p>
      *
      * @param bytes
      *                  array of quoted-printable characters
@@ -247,11 +239,9 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
 
     /**
      * Encodes a string into its quoted-printable form using the default string charset. Unsafe characters are escaped.
-     *
      * <p>
      * This function implements a subset of quoted-printable encoding specification (rule #1 and rule #2) as defined in
      * RFC 1521 and is suitable for encoding binary data.
-     * </p>
      *
      * @param str
      *                  string to convert to quoted-printable form
@@ -332,8 +322,8 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      *                  string to convert to a quoted-printable form
      * @return quoted-printable object
      * @throws EncoderException
-     *                  Thrown if quoted-printable encoding is not applicable to objects of this type or if encoding is
-     *                  unsuccessful
+     *                  Thrown if quoted-printable encoding is not applicable to objects of this type or if
+     *                  encoding is unsuccessful
      */
     @Override
     public Object encode(Object obj) throws EncoderException {
@@ -351,15 +341,15 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
     }
 
     /**
-     * Decodes a quoted-printable object into its original form. Escaped characters are converted back to their original
-     * representation.
+     * Decodes a quoted-printable object into its original form. Escaped characters are converted back to their
+     * original representation.
      *
      * @param obj
      *                  quoted-printable object to convert into its original form
      * @return original object
      * @throws DecoderException
-     *                  Thrown if the argument is not a <code>String</code> or <code>byte[]</code>. Thrown if a failure condition is
-     *                  encountered during the decode process.
+     *                  Thrown if the argument is not a <code>String</code> or <code>byte[]</code>.
+     *                  Thrown if a failure condition is encountered during the decode process.
      */
     @Override
     public Object decode(Object obj) throws DecoderException {
@@ -397,11 +387,9 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
 
     /**
      * Encodes a string into its quoted-printable form using the specified charset. Unsafe characters are escaped.
-     *
      * <p>
      * This function implements a subset of quoted-printable encoding specification (rule #1 and rule #2) as defined in
      * RFC 1521 and is suitable for encoding binary data and unformatted text.
-     * </p>
      *
      * @param str
      *                  string to convert to quoted-printable form
@@ -419,11 +407,9 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
 
     /**
      * Encodes a string into its quoted-printable form using the specified charset. Unsafe characters are escaped.
-     *
      * <p>
      * This function implements a subset of quoted-printable encoding specification (rule #1 and rule #2) as defined in
      * RFC 1521 and is suitable for encoding binary data and unformatted text.
-     * </p>
      *
      * @param str
      *                  string to convert to quoted-printable form
