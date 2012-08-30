@@ -160,6 +160,7 @@ public class Base32InputStreamTest {
         assertEquals(-1, b32stream.read());
         assertEquals(-1, b32stream.read());
         assertEquals(0, b32stream.available());
+        b32stream.close();
     }
 
     /**
@@ -285,8 +286,9 @@ public class Base32InputStreamTest {
     private void testByChunk(byte[] encoded, byte[] decoded, int chunkSize, byte[] seperator) throws Exception {
 
         // Start with encode.
-        InputStream in = new ByteArrayInputStream(decoded);
-        in = new Base32InputStream(in, true, chunkSize, seperator);
+        InputStream in;
+        
+        in = new Base32InputStream(new ByteArrayInputStream(decoded), true, chunkSize, seperator);
         byte[] output = Base32TestData.streamToBytes(in);
 
         assertEquals("EOF", -1, in.read());
@@ -294,8 +296,7 @@ public class Base32InputStreamTest {
         assertTrue("Streaming base32 encode", Arrays.equals(output, encoded));
 
         // Now let's try decode.
-        in = new ByteArrayInputStream(encoded);
-        in = new Base32InputStream(in);
+        in = new Base32InputStream(new ByteArrayInputStream(encoded));
         output = Base32TestData.streamToBytes(in);
 
         assertEquals("EOF", -1, in.read());
@@ -313,6 +314,7 @@ public class Base32InputStreamTest {
         assertEquals("EOF", -1, in.read());
         assertEquals("Still EOF", -1, in.read());
         assertTrue("Streaming base32 wrap-wrap-wrap!", Arrays.equals(output, decoded));
+        in.close();
     }
 
     /**
@@ -336,8 +338,8 @@ public class Base32InputStreamTest {
     private void testByteByByte(byte[] encoded, byte[] decoded, int chunkSize, byte[] seperator) throws Exception {
 
         // Start with encode.
-        InputStream in = new ByteArrayInputStream(decoded);
-        in = new Base32InputStream(in, true, chunkSize, seperator);
+        InputStream in;
+        in = new Base32InputStream(new ByteArrayInputStream(decoded), true, chunkSize, seperator);
         byte[] output = new byte[encoded.length];
         for (int i = 0; i < output.length; i++) {
             output[i] = (byte) in.read();
@@ -347,9 +349,10 @@ public class Base32InputStreamTest {
         assertEquals("Still EOF", -1, in.read());
         assertTrue("Streaming base32 encode", Arrays.equals(output, encoded));
 
+        in.close();
+
         // Now let's try decode.
-        in = new ByteArrayInputStream(encoded);
-        in = new Base32InputStream(in);
+        in = new Base32InputStream(new ByteArrayInputStream(encoded));
         output = new byte[decoded.length];
         for (int i = 0; i < output.length; i++) {
             output[i] = (byte) in.read();
@@ -359,6 +362,8 @@ public class Base32InputStreamTest {
         assertEquals("Still EOF", -1, in.read());
         assertTrue("Streaming base32 decode", Arrays.equals(output, decoded));
 
+        in.close();
+ 
         // I always wanted to do this! (wrap encoder with decoder etc etc).
         in = new ByteArrayInputStream(decoded);
         for (int i = 0; i < 10; i++) {
@@ -387,6 +392,7 @@ public class Base32InputStreamTest {
         Base32InputStream in = new Base32InputStream(bin, true, 4, new byte[] { 0, 0, 0 });
         // Always returns false for now.
         assertFalse("Base32InputStream.markSupported() is false", in.markSupported());
+        in.close();
     }
 
     /**
@@ -403,6 +409,7 @@ public class Base32InputStreamTest {
         Base32InputStream in = new Base32InputStream(bin, true, 4, new byte[] { 0, 0, 0 });
         bytesRead = in.read(buf, 0, 0);
         assertEquals("Base32InputStream.read(buf, 0, 0) returns 0", 0, bytesRead);
+        in.close();
     }
 
     /**
@@ -422,6 +429,7 @@ public class Base32InputStreamTest {
         } catch (NullPointerException e) {
             // Expected
         }
+        in.close();
     }
 
     /**
@@ -463,6 +471,7 @@ public class Base32InputStreamTest {
         } catch (IndexOutOfBoundsException e) {
             // Expected
         }
+        in.close();
     }
 
     /**
@@ -480,6 +489,7 @@ public class Base32InputStreamTest {
         assertArrayEquals(actualBytes, new byte[] { 102, 111, 111, 0, 0, 0 });
         // End of stream reached
         assertEquals(-1, b32stream.read());
+        b32stream.close();
     }
 
     /**
@@ -495,6 +505,7 @@ public class Base32InputStreamTest {
         // End of stream reached
         assertEquals(-1, b32stream.read());
         assertEquals(-1, b32stream.read());
+        b32stream.close();
     }
 
     /**
@@ -511,7 +522,8 @@ public class Base32InputStreamTest {
         // End of stream reached
         assertEquals(-1, b32stream.read());
         assertEquals(-1, b32stream.read());
-    }
+        b32stream.close();
+}
 
     /**
      * Tests skipping to the end of a stream.
@@ -527,6 +539,7 @@ public class Base32InputStreamTest {
         // End of stream reached
         assertEquals(-1, b32stream.read());
         assertEquals(-1, b32stream.read());
+        b32stream.close();
     }
 
     /**
@@ -539,5 +552,6 @@ public class Base32InputStreamTest {
         InputStream ins = new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_FOO));
         Base32InputStream b32stream = new Base32InputStream(ins);
         b32stream.skip(-10);
+        b32stream.close();
     }
 }
