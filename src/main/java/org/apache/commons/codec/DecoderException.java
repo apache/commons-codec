@@ -54,7 +54,7 @@ public class DecoderException extends Exception {
     }
 
     /**
-     * Constructsa new exception with the specified detail message and cause.
+     * Constructs a new exception with the specified detail message and cause.
      *
      * <p>
      * Note that the detail message associated with <code>cause</code> is not automatically incorporated into this
