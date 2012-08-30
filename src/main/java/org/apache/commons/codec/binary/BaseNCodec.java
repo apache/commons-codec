@@ -95,6 +95,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
          *
          * @return a String useful for debugging.
          */
+        @SuppressWarnings("boxing") // OK to ignore boxing here
         @Override
         public String toString() {
             return String
