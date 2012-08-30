@@ -334,7 +334,7 @@ public class Base64 extends BaseNCodec {
             if (0 == context.modulus && lineLength == 0) {
                 return; // no leftovers to process and not using chunking
             }
-            ensureBufferSize(encodeSize, context);
+            final byte[] buffer = ensureBufferSize(encodeSize, context);
             int savedPos = context.pos;
             switch (context.modulus) { // 0-2
                 case 1 : // 8 bits = 6 + 2
@@ -367,7 +367,7 @@ public class Base64 extends BaseNCodec {
             }
         } else {
             for (int i = 0; i < inAvail; i++) {
-                ensureBufferSize(encodeSize, context);
+                final byte[] buffer = ensureBufferSize(encodeSize, context);
                 context.modulus = (context.modulus+1) % BYTES_PER_UNENCODED_BLOCK;
                 int b = in[inPos++];
                 if (b < 0) {
@@ -424,7 +424,7 @@ public class Base64 extends BaseNCodec {
             context.eof = true;
         }
         for (int i = 0; i < inAvail; i++) {
-            ensureBufferSize(decodeSize, context);
+            final byte[] buffer = ensureBufferSize(decodeSize, context);
             byte b = in[inPos++];
             if (b == PAD) {
                 // We're done.
@@ -437,9 +437,9 @@ public class Base64 extends BaseNCodec {
                         context.modulus = (context.modulus+1) % BYTES_PER_ENCODED_BLOCK;
                         context.ibitWorkArea = (context.ibitWorkArea << BITS_PER_ENCODED_BYTE) + result;
                         if (context.modulus == 0) {
-                            context.buffer[context.pos++] = (byte) ((context.ibitWorkArea >> 16) & MASK_8BITS);
-                            context.buffer[context.pos++] = (byte) ((context.ibitWorkArea >> 8) & MASK_8BITS);
-                            context.buffer[context.pos++] = (byte) (context.ibitWorkArea & MASK_8BITS);
+                            buffer[context.pos++] = (byte) ((context.ibitWorkArea >> 16) & MASK_8BITS);
+                            buffer[context.pos++] = (byte) ((context.ibitWorkArea >> 8) & MASK_8BITS);
+                            buffer[context.pos++] = (byte) (context.ibitWorkArea & MASK_8BITS);
                         }
                     }
                 }
@@ -450,7 +450,7 @@ public class Base64 extends BaseNCodec {
         // EOF (-1) and first time '=' character is encountered in stream.
         // This approach makes the '=' padding characters completely optional.
         if (context.eof && context.modulus != 0) {
-            ensureBufferSize(decodeSize, context);
+            final byte[] buffer = ensureBufferSize(decodeSize, context);
 
             // We have some spare bits remaining
             // Output all whole multiples of 8 bits and ignore the rest
@@ -459,12 +459,12 @@ public class Base64 extends BaseNCodec {
            //       break;
                 case 2 : // 12 bits = 8 + 4
                     context.ibitWorkArea = context.ibitWorkArea >> 4; // dump the extra 4 bits
-                    context.buffer[context.pos++] = (byte) ((context.ibitWorkArea) & MASK_8BITS);
+                    buffer[context.pos++] = (byte) ((context.ibitWorkArea) & MASK_8BITS);
                     break;
                 case 3 : // 18 bits = 8 + 8 + 2
                     context.ibitWorkArea = context.ibitWorkArea >> 2; // dump 2 bits
-                    context.buffer[context.pos++] = (byte) ((context.ibitWorkArea >> 8) & MASK_8BITS);
-                    context.buffer[context.pos++] = (byte) ((context.ibitWorkArea) & MASK_8BITS);
+                    buffer[context.pos++] = (byte) ((context.ibitWorkArea >> 8) & MASK_8BITS);
+                    buffer[context.pos++] = (byte) ((context.ibitWorkArea) & MASK_8BITS);
                     break;
             }
         }
