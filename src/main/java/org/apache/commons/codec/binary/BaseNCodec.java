@@ -207,7 +207,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * Increases our buffer by the {@link #DEFAULT_BUFFER_RESIZE_FACTOR}.
      * @param context the context to be used
      */
-    private void resizeBuffer(Context context) {
+    private byte[] resizeBuffer(Context context) {
         if (context.buffer == null) {
             context.buffer = new byte[getDefaultBufferSize()];
             context.pos = 0;
@@ -217,6 +217,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
             System.arraycopy(context.buffer, 0, b, 0, context.buffer.length);
             context.buffer = b;
         }
+        return context.buffer;
     }
 
     /**
@@ -225,10 +226,11 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * @param size minimum spare space required
      * @param context the context to be used
      */
-    protected void ensureBufferSize(int size, Context context){
+    protected byte[] ensureBufferSize(int size, Context context){
         if ((context.buffer == null) || (context.buffer.length < context.pos + size)){
-            resizeBuffer(context);
+            return resizeBuffer(context);
         }
+        return context.buffer;
     }
 
     /**
