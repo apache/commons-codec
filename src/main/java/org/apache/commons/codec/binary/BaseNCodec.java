@@ -76,14 +76,14 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         boolean eof;
 
         /**
-         * Variable tracks how many characters have been written to the current line. Only used when encoding. We use it to
-         * make sure each encoded line never goes beyond lineLength (if lineLength > 0).
+         * Variable tracks how many characters have been written to the current line. Only used when encoding. We use
+         * it to make sure each encoded line never goes beyond lineLength (if lineLength > 0).
          */
         int currentLinePos;
 
         /**
-         * Writes to the buffer only occur after every 3/5 reads when encoding, and every 4/8 reads when decoding.
-         * This variable helps track that.
+         * Writes to the buffer only occur after every 3/5 reads when encoding, and every 4/8 reads when decoding. This
+         * variable helps track that.
          */
         int modulus;
 
@@ -166,10 +166,11 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * @param lineLength if &gt; 0, use chunking with a length <code>lineLength</code>
      * @param chunkSeparatorLength the chunk separator length, if relevant
      */
-    protected BaseNCodec(int unencodedBlockSize, int encodedBlockSize, int lineLength, int chunkSeparatorLength){
+    protected BaseNCodec(int unencodedBlockSize, int encodedBlockSize, int lineLength, int chunkSeparatorLength) {
         this.unencodedBlockSize = unencodedBlockSize;
         this.encodedBlockSize = encodedBlockSize;
-        this.lineLength = (lineLength > 0  && chunkSeparatorLength > 0) ? (lineLength / encodedBlockSize) * encodedBlockSize : 0;
+        final boolean useChunking = lineLength > 0 && chunkSeparatorLength > 0;
+        this.lineLength = useChunking ? (lineLength / encodedBlockSize) * encodedBlockSize : 0;
         this.chunkSeparatorLength = chunkSeparatorLength;
     }
 
@@ -231,8 +232,10 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
-     * Extracts buffered data into the provided byte[] array, starting at position bPos,
-     * up to a maximum of bAvail bytes. Returns how many bytes were actually extracted.
+     * Extracts buffered data into the provided byte[] array, starting at position bPos, up to a maximum of bAvail
+     * bytes. Returns how many bytes were actually extracted.
+     * <p>
+     * Package protected for access from I/O streams.
      *
      * @param b
      *            byte[] array to extract the buffered data into.
@@ -240,10 +243,11 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      *            position in byte[] array to start extraction at.
      * @param bAvail
      *            amount of bytes we're allowed to extract. We may extract fewer (if fewer are available).
-     * @param context the context to be used
+     * @param context
+     *            the context to be used
      * @return The number of bytes successfully extracted into the provided byte[] array.
      */
-    int readResults(byte[] b, int bPos, int bAvail, Context context) {  // package protected for access from I/O streams
+    int readResults(byte[] b, int bPos, int bAvail, Context context) {
         if (context.buffer != null) {
             int len = Math.min(available(context), bAvail);
             System.arraycopy(context.buffer, context.readPos, b, bPos, len);
@@ -276,8 +280,8 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
-     * Encodes an Object using the Base-N algorithm. This method is provided in order to satisfy the requirements of the
-     * Encoder interface, and will throw an EncoderException if the supplied object is not of type byte[].
+     * Encodes an Object using the Base-N algorithm. This method is provided in order to satisfy the requirements of
+     * the Encoder interface, and will throw an EncoderException if the supplied object is not of type byte[].
      *
      * @param obj
      *            Object to encode
@@ -317,12 +321,13 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
-     * Decodes an Object using the Base-N algorithm. This method is provided in order to satisfy the requirements of the
-     * Decoder interface, and will throw a DecoderException if the supplied object is not of type byte[] or String.
+     * Decodes an Object using the Base-N algorithm. This method is provided in order to satisfy the requirements of
+     * the Decoder interface, and will throw a DecoderException if the supplied object is not of type byte[] or String.
      *
      * @param obj
      *            Object to decode
-     * @return An object (of type byte[]) containing the binary data which corresponds to the byte[] or String supplied.
+     * @return An object (of type byte[]) containing the binary data which corresponds to the byte[] or String
+     *         supplied.
      * @throws DecoderException
      *             if the parameter supplied is not of type byte[]
      */
@@ -388,9 +393,11 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         return buf;
     }
 
-    abstract void encode(byte[] pArray, int i, int length, Context context);  // package protected for access from I/O streams
+    // package protected for access from I/O streams
+    abstract void encode(byte[] pArray, int i, int length, Context context);
 
-    abstract void decode(byte[] pArray, int i, int length, Context context); // package protected for access from I/O streams
+    // package protected for access from I/O streams
+    abstract void decode(byte[] pArray, int i, int length, Context context);
 
     /**
      * Returns whether or not the <code>octet</code> is in the current alphabet.

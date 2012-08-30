@@ -36,8 +36,9 @@ import java.math.BigInteger;
  * </ul>
  * </p>
  * <p>
- * Since this class operates directly on byte streams, and not character streams, it is hard-coded to only encode/decode
- * character encodings which are compatible with the lower 127 ASCII chart (ISO-8859-1, Windows-1252, UTF-8, etc).
+ * Since this class operates directly on byte streams, and not character streams, it is hard-coded to only
+ * encode/decode character encodings which are compatible with the lower 127 ASCII chart (ISO-8859-1, Windows-1252,
+ * UTF-8, etc).
  * </p>
  * <p>
  * This class is thread-safe.
@@ -98,8 +99,8 @@ public class Base64 extends BaseNCodec {
     };
 
     /**
-     * This array is a lookup table that translates Unicode characters drawn from the "Base64 Alphabet" (as specified in
-     * Table 1 of RFC 2045) into their 6-bit positive integer equivalents. Characters that are not in the Base64
+     * This array is a lookup table that translates Unicode characters drawn from the "Base64 Alphabet" (as specified
+     * in Table 1 of RFC 2045) into their 6-bit positive integer equivalents. Characters that are not in the Base64
      * alphabet but fall within the bounds of the array are translated to -1.
      *
      * Note: '+' and '-' both decode to 62. '/' and '_' both decode to 63. This means decoder seamlessly handles both
@@ -172,7 +173,8 @@ public class Base64 extends BaseNCodec {
     /**
      * Creates a Base64 codec used for decoding (all modes) and encoding in the given URL-safe mode.
      * <p>
-     * When encoding the line length is 76, the line separator is CRLF, and the encoding table is STANDARD_ENCODE_TABLE.
+     * When encoding the line length is 76, the line separator is CRLF, and the encoding table is
+     * STANDARD_ENCODE_TABLE.
      * </p>
      *
      * <p>
@@ -180,8 +182,7 @@ public class Base64 extends BaseNCodec {
      * </p>
      *
      * @param urlSafe
-     *            if {@code true}, URL-safe encoding is used. In most cases this should be set to
-     *            {@code false}.
+     *            if {@code true}, URL-safe encoding is used. In most cases this should be set to {@code false}.
      * @since 1.4
      */
     public Base64(boolean urlSafe) {
@@ -202,8 +203,9 @@ public class Base64 extends BaseNCodec {
      * </p>
      *
      * @param lineLength
-     *            Each line of encoded data will be at most of the given length (rounded down to nearest multiple of 4).
-     *            If lineLength <= 0, then the output will not be divided into lines (chunks). Ignored when decoding.
+     *            Each line of encoded data will be at most of the given length (rounded down to nearest multiple of
+     *            4). If lineLength <= 0, then the output will not be divided into lines (chunks). Ignored when
+     *            decoding.
      * @since 1.4
      */
     public Base64(int lineLength) {
@@ -224,8 +226,9 @@ public class Base64 extends BaseNCodec {
      * </p>
      *
      * @param lineLength
-     *            Each line of encoded data will be at most of the given length (rounded down to nearest multiple of 4).
-     *            If lineLength <= 0, then the output will not be divided into lines (chunks). Ignored when decoding.
+     *            Each line of encoded data will be at most of the given length (rounded down to nearest multiple of
+     *            4). If lineLength <= 0, then the output will not be divided into lines (chunks). Ignored when
+     *            decoding.
      * @param lineSeparator
      *            Each line of encoded data will end with this sequence of bytes.
      * @throws IllegalArgumentException
@@ -250,8 +253,9 @@ public class Base64 extends BaseNCodec {
      * </p>
      *
      * @param lineLength
-     *            Each line of encoded data will be at most of the given length (rounded down to nearest multiple of 4).
-     *            If lineLength <= 0, then the output will not be divided into lines (chunks). Ignored when decoding.
+     *            Each line of encoded data will be at most of the given length (rounded down to nearest multiple of
+     *            4). If lineLength <= 0, then the output will not be divided into lines (chunks). Ignored when
+     *            decoding.
      * @param lineSeparator
      *            Each line of encoded data will end with this sequence of bytes.
      * @param urlSafe
@@ -315,7 +319,8 @@ public class Base64 extends BaseNCodec {
      *            Position to start reading data from.
      * @param inAvail
      *            Amount of bytes available from input for encoding.
-     * @param context the context to be used
+     * @param context
+     *            the context to be used
      */
     @Override
     void encode(byte[] in, int inPos, int inAvail, Context context) {
@@ -333,8 +338,10 @@ public class Base64 extends BaseNCodec {
             int savedPos = context.pos;
             switch (context.modulus) { // 0-2
                 case 1 : // 8 bits = 6 + 2
-                    context.buffer[context.pos++] = encodeTable[(context.ibitWorkArea >> 2) & MASK_6BITS]; // top 6 bits
-                    context.buffer[context.pos++] = encodeTable[(context.ibitWorkArea << 4) & MASK_6BITS]; // remaining 2
+                    // top 6 bits:
+                    context.buffer[context.pos++] = encodeTable[(context.ibitWorkArea >> 2) & MASK_6BITS];
+                    // remaining 2:
+                    context.buffer[context.pos++] = encodeTable[(context.ibitWorkArea << 4) & MASK_6BITS];
                     // URL-SAFE skips the padding to further reduce size.
                     if (encodeTable == STANDARD_ENCODE_TABLE) {
                         context.buffer[context.pos++] = PAD;
@@ -405,7 +412,8 @@ public class Base64 extends BaseNCodec {
      *            Position to start reading data from.
      * @param inAvail
      *            Amount of bytes available from input for encoding.
-     * @param context the context to be used
+     * @param context
+     *            the context to be used
      */
     @Override
     void decode(byte[] in, int inPos, int inAvail, Context context) {
