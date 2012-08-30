@@ -92,9 +92,10 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
 
         /**
          * Returns a String useful for debugging (especially within a debugger.)
-         * 
+         *
          * @return a String useful for debugging.
          */
+        @Override
         public String toString() {
             return String
                     .format("%s[buffer=%s, currentLinePos=%s, eof=%s, ibitWorkArea=%s, lbitWorkArea=%s, modulus=%s, pos=%s, readPos=%s]",
