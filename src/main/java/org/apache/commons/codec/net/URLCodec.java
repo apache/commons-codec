@@ -320,8 +320,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
         } else if (obj instanceof String) {
             return encode((String)obj);
         } else {
-            throw new EncoderException("Objects of type " +
-                obj.getClass().getName() + " cannot be URL encoded");
+            throw new EncoderException("Objects of type " + obj.getClass().getName() + " cannot be URL encoded");
 
         }
     }
