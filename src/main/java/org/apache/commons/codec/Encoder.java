@@ -33,11 +33,11 @@ public interface Encoder {
      * <code>byte[]</code> or <code>String</code>s depending on the implementation used.
      *
      * @param source
-     *                  An object to encode
+     *            An object to encode
      * @return An "encoded" Object
      * @throws EncoderException
-     *                  An encoder exception is thrown if the encoder experiences a failure condition during
-     *                  the encoding process.
+     *             An encoder exception is thrown if the encoder experiences a failure condition during the encoding
+     *             process.
      */
     Object encode(Object source) throws EncoderException;
 }
