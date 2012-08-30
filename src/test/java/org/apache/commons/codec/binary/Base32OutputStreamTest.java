@@ -313,6 +313,7 @@ public class Base32OutputStreamTest {
         } catch (IndexOutOfBoundsException ioobe) {
             // Expected
         }
+        out.close();
     }
 
     /**
@@ -331,6 +332,7 @@ public class Base32OutputStreamTest {
         } catch (NullPointerException e) {
             // Expected
         }
+        out.close();
     }
 
 }

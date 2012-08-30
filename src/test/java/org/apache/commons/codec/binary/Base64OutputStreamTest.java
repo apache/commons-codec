@@ -324,6 +324,7 @@ public class Base64OutputStreamTest {
         } catch (IndexOutOfBoundsException ioobe) {
             // Expected
         }
+        out.close();
     }
 
     /**
@@ -341,6 +342,8 @@ public class Base64OutputStreamTest {
             fail("Expcted Base64OutputStream.write(null) to throw a NullPointerException");
         } catch (NullPointerException e) {
             // Expected
+        } finally {
+            out.close();
         }
     }
 
