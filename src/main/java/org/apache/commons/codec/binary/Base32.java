@@ -396,7 +396,6 @@ public class Base32 extends BaseNCodec {
                     buffer[context.pos++] = PAD;
                     buffer[context.pos++] = PAD;
                     break;
-
                 case 2 : // 2 octets = 16 bits to use
                     buffer[context.pos++] = encodeTable[(int)(context.lbitWorkArea >> 11) & MASK_5BITS]; // 16-1*5 = 11
                     buffer[context.pos++] = encodeTable[(int)(context.lbitWorkArea >>  6) & MASK_5BITS]; // 16-2*5 = 6
