@@ -289,7 +289,7 @@ public class Base32 extends BaseNCodec {
             context.eof = true;
         }
         for (int i = 0; i < inAvail; i++) {
-            byte b = in[inPos++];
+            final byte b = in[inPos++];
             if (b == PAD) {
                 // We're done.
                 context.eof = true;
@@ -297,7 +297,7 @@ public class Base32 extends BaseNCodec {
             } else {
                 final byte[] buffer = ensureBufferSize(decodeSize, context);
                 if (b >= 0 && b < this.decodeTable.length) {
-                    int result = this.decodeTable[b];
+                    final int result = this.decodeTable[b];
                     if (result >= 0) {
                         context.modulus = (context.modulus+1) % BYTES_PER_ENCODED_BLOCK;
                         // collect decoded bytes
@@ -384,7 +384,7 @@ public class Base32 extends BaseNCodec {
                 return; // no leftovers to process and not using chunking
             }
             final byte[] buffer = ensureBufferSize(encodeSize, context);
-            int savedPos = context.pos;
+            final int savedPos = context.pos;
             switch (context.modulus) { // % 5
                 case 1 : // Only 1 octet; take top 5 bits then remainder
                     buffer[context.pos++] = encodeTable[(int)(context.lbitWorkArea >> 3) & MASK_5BITS]; // 8-1*5 = 3

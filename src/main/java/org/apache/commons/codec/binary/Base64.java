@@ -335,7 +335,7 @@ public class Base64 extends BaseNCodec {
                 return; // no leftovers to process and not using chunking
             }
             final byte[] buffer = ensureBufferSize(encodeSize, context);
-            int savedPos = context.pos;
+            final int savedPos = context.pos;
             switch (context.modulus) { // 0-2
                 case 1 : // 8 bits = 6 + 2
                     // top 6 bits:
