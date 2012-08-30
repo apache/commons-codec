@@ -339,30 +339,30 @@ public class Base64 extends BaseNCodec {
             switch (context.modulus) { // 0-2
                 case 1 : // 8 bits = 6 + 2
                     // top 6 bits:
-                    context.buffer[context.pos++] = encodeTable[(context.ibitWorkArea >> 2) & MASK_6BITS];
+                    buffer[context.pos++] = encodeTable[(context.ibitWorkArea >> 2) & MASK_6BITS];
                     // remaining 2:
-                    context.buffer[context.pos++] = encodeTable[(context.ibitWorkArea << 4) & MASK_6BITS];
+                    buffer[context.pos++] = encodeTable[(context.ibitWorkArea << 4) & MASK_6BITS];
                     // URL-SAFE skips the padding to further reduce size.
                     if (encodeTable == STANDARD_ENCODE_TABLE) {
-                        context.buffer[context.pos++] = PAD;
-                        context.buffer[context.pos++] = PAD;
+                        buffer[context.pos++] = PAD;
+                        buffer[context.pos++] = PAD;
                     }
                     break;
 
                 case 2 : // 16 bits = 6 + 6 + 4
-                    context.buffer[context.pos++] = encodeTable[(context.ibitWorkArea >> 10) & MASK_6BITS];
-                    context.buffer[context.pos++] = encodeTable[(context.ibitWorkArea >> 4) & MASK_6BITS];
-                    context.buffer[context.pos++] = encodeTable[(context.ibitWorkArea << 2) & MASK_6BITS];
+                    buffer[context.pos++] = encodeTable[(context.ibitWorkArea >> 10) & MASK_6BITS];
+                    buffer[context.pos++] = encodeTable[(context.ibitWorkArea >> 4) & MASK_6BITS];
+                    buffer[context.pos++] = encodeTable[(context.ibitWorkArea << 2) & MASK_6BITS];
                     // URL-SAFE skips the padding to further reduce size.
                     if (encodeTable == STANDARD_ENCODE_TABLE) {
-                        context.buffer[context.pos++] = PAD;
+                        buffer[context.pos++] = PAD;
                     }
                     break;
             }
             context.currentLinePos += context.pos - savedPos; // keep track of current line position
             // if currentPos == 0 we are at the start of a line, so don't add CRLF
             if (lineLength > 0 && context.currentLinePos > 0) {
-                System.arraycopy(lineSeparator, 0, context.buffer, context.pos, lineSeparator.length);
+                System.arraycopy(lineSeparator, 0, buffer, context.pos, lineSeparator.length);
                 context.pos += lineSeparator.length;
             }
         } else {
@@ -375,13 +375,13 @@ public class Base64 extends BaseNCodec {
                 }
                 context.ibitWorkArea = (context.ibitWorkArea << 8) + b; //  BITS_PER_BYTE
                 if (0 == context.modulus) { // 3 bytes = 24 bits = 4 * 6 bits to extract
-                    context.buffer[context.pos++] = encodeTable[(context.ibitWorkArea >> 18) & MASK_6BITS];
-                    context.buffer[context.pos++] = encodeTable[(context.ibitWorkArea >> 12) & MASK_6BITS];
-                    context.buffer[context.pos++] = encodeTable[(context.ibitWorkArea >> 6) & MASK_6BITS];
-                    context.buffer[context.pos++] = encodeTable[context.ibitWorkArea & MASK_6BITS];
+                    buffer[context.pos++] = encodeTable[(context.ibitWorkArea >> 18) & MASK_6BITS];
+                    buffer[context.pos++] = encodeTable[(context.ibitWorkArea >> 12) & MASK_6BITS];
+                    buffer[context.pos++] = encodeTable[(context.ibitWorkArea >> 6) & MASK_6BITS];
+                    buffer[context.pos++] = encodeTable[context.ibitWorkArea & MASK_6BITS];
                     context.currentLinePos += BYTES_PER_ENCODED_BLOCK;
                     if (lineLength > 0 && lineLength <= context.currentLinePos) {
-                        System.arraycopy(lineSeparator, 0, context.buffer, context.pos, lineSeparator.length);
+                        System.arraycopy(lineSeparator, 0, buffer, context.pos, lineSeparator.length);
                         context.pos += lineSeparator.length;
                         context.currentLinePos = 0;
                     }
@@ -425,14 +425,14 @@ public class Base64 extends BaseNCodec {
         }
         for (int i = 0; i < inAvail; i++) {
             final byte[] buffer = ensureBufferSize(decodeSize, context);
-            byte b = in[inPos++];
+            final byte b = in[inPos++];
             if (b == PAD) {
                 // We're done.
                 context.eof = true;
                 break;
             } else {
                 if (b >= 0 && b < DECODE_TABLE.length) {
-                    int result = DECODE_TABLE[b];
+                    final int result = DECODE_TABLE[b];
                     if (result >= 0) {
                         context.modulus = (context.modulus+1) % BYTES_PER_ENCODED_BLOCK;
                         context.ibitWorkArea = (context.ibitWorkArea << BITS_PER_ENCODED_BYTE) + result;
