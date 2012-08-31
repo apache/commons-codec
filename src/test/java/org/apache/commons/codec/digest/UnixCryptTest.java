@@ -16,12 +16,11 @@
  */
 package org.apache.commons.codec.digest;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import java.security.NoSuchAlgorithmException;
 
 import org.apache.commons.codec.Charsets;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 public class UnixCryptTest {
@@ -57,6 +56,16 @@ public class UnixCryptTest {
         // Using unixCrypt() explicitly results in a random salt.
         assertTrue(UnixCrypt.crypt("secret".getBytes()).matches("^[a-zA-Z0-9./]{13}$"));
         assertTrue(UnixCrypt.crypt("secret".getBytes(), null).matches("^[a-zA-Z0-9./]{13}$"));
+    }
+
+    /**
+     * Single character salts are illegal!
+     * E.g. with glibc 2.13, crypt("secret", "x") = "xxZREZpkHZpkI" but
+     * crypt("secret", "xx") = "xxWAum7tHdIUw" which makes it unverifyable.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void testUnixCryptWithHalfSalt() {
+        UnixCrypt.crypt("secret", "x");
     }
 
     /**
