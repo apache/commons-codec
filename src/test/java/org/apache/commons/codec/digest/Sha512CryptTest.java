@@ -22,6 +22,7 @@ import static org.junit.Assert.assertTrue;
 import java.security.NoSuchAlgorithmException;
 
 import org.apache.commons.codec.Charsets;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class Sha512CryptTest {
@@ -58,6 +59,25 @@ public class Sha512CryptTest {
     @Test(expected = NullPointerException.class)
     public void testSha512CryptNullData() throws NoSuchAlgorithmException {
         Sha2Crypt.sha512Crypt((byte[]) null);
+    }
+
+    @Ignore
+    public void testSha512CryptNullSalt() throws NoSuchAlgorithmException {
+        // cannot be tested as sha512Crypt() with all params is private and
+        // all public methods check for salt==null.
+    }
+
+    @Test
+    public void testSha2CryptRounds() throws NoSuchAlgorithmException {
+        // minimum rounds?
+        assertEquals("$5$rounds=1000$abcd$b8MCU4GEeZIekOy5ahQ8EWfT330hvYGVeDYkBxXBva.", Sha2Crypt.sha256Crypt("secret".getBytes(Charsets.UTF_8), "$5$rounds=50$abcd$"));
+        assertEquals("$5$rounds=1001$abcd$SQsJZs7KXKdd2DtklI3TY3tkD7UYA99RD0FBLm4Sk48", Sha2Crypt.sha256Crypt("secret".getBytes(Charsets.UTF_8), "$5$rounds=1001$abcd$"));
+        assertEquals("$5$rounds=9999$abcd$Rh/8ngVh9oyuS6lL3.fsq.9xbvXJsfyKWxSjO2mPIa7", Sha2Crypt.sha256Crypt("secret".getBytes(Charsets.UTF_8), "$5$rounds=9999$abcd"));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testSha2CryptWrongSalt() throws NoSuchAlgorithmException {
+        Sha2Crypt.sha512Crypt("secret".getBytes(Charsets.UTF_8), "xx");
     }
 
     @Test(expected = IllegalArgumentException.class)
