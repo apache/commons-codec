@@ -22,6 +22,11 @@ import org.junit.Test;
 public class B64Test {
 
     @Test
+    public void testB64T() {
+        assertEquals(64, B64.B64T.length());
+    }
+
+    @Test
     public void testB64from24bit() {
         StringBuilder buffer = new StringBuilder("");
         B64.b64from24bit((byte) 8, (byte) 16, (byte) 64, 2, buffer);
