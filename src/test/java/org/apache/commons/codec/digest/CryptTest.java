@@ -16,10 +16,10 @@
  */
 package org.apache.commons.codec.digest;
 
-import static org.junit.Assert.assertTrue;
-
 import java.security.NoSuchAlgorithmException;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 public class CryptTest {
@@ -29,6 +29,13 @@ public class CryptTest {
         // If salt is null or completely omitted, a random "$6$" is used.
         assertTrue(Crypt.crypt("secret").startsWith("$6$"));
         assertTrue(Crypt.crypt("secret", null).startsWith("$6$"));
+    }
+
+    @Test
+    public void testCryptWithBytes() throws NoSuchAlgorithmException {
+        byte[] keyBytes = new byte[] { 'b', 'y', 't', 'e' };
+        String hash = Crypt.crypt(keyBytes);
+        assertEquals(hash, Crypt.crypt("byte", hash));
     }
 
     /**
