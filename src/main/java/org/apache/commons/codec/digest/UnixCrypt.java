@@ -238,8 +238,9 @@ public class UnixCrypt {
         if (salt == null) {
             Random randomGenerator = new Random();
             int numSaltChars = SALT_CHARS.length;
-            salt = "" + SALT_CHARS[Math.abs(randomGenerator.nextInt()) % numSaltChars] +
-                   SALT_CHARS[Math.abs(randomGenerator.nextInt()) % numSaltChars];
+            // Types casts fix two FindBugs report of RV_ABSOLUTE_VALUE_OF_RANDOM_INT.
+            salt = "" + SALT_CHARS[(int)Math.abs((long)randomGenerator.nextInt()) % numSaltChars] +
+                   SALT_CHARS[(int)Math.abs((long)randomGenerator.nextInt()) % numSaltChars];
         } else if (!salt.matches("^[" + B64.B64T + "]{2,}$")) {
             throw new IllegalArgumentException("Invalid salt value: " + salt);
         }
