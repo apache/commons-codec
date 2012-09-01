@@ -51,6 +51,9 @@ The <action> type attribute can be add,update,fix,remove.
     </release>
     -->
     <release version="1.7" date="TBD" description="Feature and fix release.">
+      <action issue="CODEC-148" dev="ggregory" type="add" due-to="lathspell">
+        More tests and minor things.
+      </action>
       <action issue="CODEC-146" dev="tn" type="add" due-to="Julius Davies">
         Added regression tests for PhoneticEngine based on Solr-3.6.0.
       </action>
