@@ -338,8 +338,6 @@ public class UnixCrypt {
         t = right;
         right = left >>> 1 | left << 31;
         left = t >>> 1 | t << 31;
-        left &= 0xffffffff;
-        right &= 0xffffffff;
         int results[] = new int[2];
         permOp(right, left, 1, 0x55555555, results);
         right = results[0];
@@ -414,10 +412,10 @@ public class UnixCrypt {
             d &= 0xfffffff;
             int s = SKB[0][c & 0x3f] | SKB[1][c >>> 6 & 0x3 | c >>> 7 & 0x3c] | SKB[2][c >>> 13 & 0xf | c >>> 14 & 0x30] | SKB[3][c >>> 20 & 0x1 | c >>> 21 & 0x6 | c >>> 22 & 0x38];
             int t = SKB[4][d & 0x3f] | SKB[5][d >>> 7 & 0x3 | d >>> 8 & 0x3c] | SKB[6][d >>> 15 & 0x3f] | SKB[7][d >>> 21 & 0xf | d >>> 22 & 0x30];
-            schedule[j++] = (t << 16 | s & 0xffff) & 0xffffffff;
+            schedule[j++] = (t << 16 | s & 0xffff);
             s = s >>> 16 | t & 0xffff0000;
             s = s << 4 | s >>> 28;
-            schedule[j++] = s & 0xffffffff;
+            schedule[j++] = s;
         }
 
         return schedule;
