@@ -82,11 +82,9 @@ public class Apr1CryptTest {
     public void testApr1CryptWithoutSalt() {
         // Without salt, a random is generated
         String hash = Md5Crypt.apr1Crypt("secret");
+        assertTrue(hash.matches("^\\$apr1\\$[a-zA-Z0-9\\./]{8}\\$[a-zA-Z0-9\\./]{22}$"));
         String hash2 = Md5Crypt.apr1Crypt("secret");
         assertNotSame(hash, hash2);
-        System.out.println(hash.length() + "; " + hash)
-                ;
-        assertTrue(hash.matches("^\\$apr1\\$[a-zA-Z0-9\\./]{8}\\$[a-zA-Z0-9\\./]{22}$"));
     }
 
     @Test(expected = IllegalArgumentException.class)
