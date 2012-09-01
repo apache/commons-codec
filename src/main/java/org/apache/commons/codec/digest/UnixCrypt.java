@@ -35,7 +35,7 @@ import org.apache.commons.codec.Charsets;
  * <p>
  * This class is immutable and thread-safe.
  *
- * @version $Id$
+ * @version $Id: UnixCrypt.java 1375781 2012-08-21 20:49:40Z tn $
  * @since 1.7
  */
 public class UnixCrypt {
@@ -217,6 +217,8 @@ public class UnixCrypt {
      * @param original
      *             plaintext password
      * @return a 13 character string starting with the salt string
+     * @throws RuntimeException
+     *              when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
     public static String crypt(byte[] original) {
         return crypt(original, null);
@@ -232,7 +234,10 @@ public class UnixCrypt {
      * @param salt
      *             a two character string drawn from [a-zA-Z0-9./] or null for a random one
      * @return a 13 character string starting with the salt string
-     * @throws IllegalArgumentException if the salt does not match the allowed pattern
+     * @throws IllegalArgumentException
+     *              if the salt does not match the allowed pattern
+     * @throws RuntimeException
+     *              when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
     public static String crypt(byte[] original, String salt) {
         if (salt == null) {
@@ -302,6 +307,8 @@ public class UnixCrypt {
      * @param original
      *             plaintext password
      * @return a 13 character string starting with the salt string
+     * @throws RuntimeException
+     *              when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
     public static String crypt(String original) {
         return crypt(original.getBytes(Charsets.UTF_8));
@@ -315,7 +322,10 @@ public class UnixCrypt {
      * @param salt
      *             a two character string drawn from [a-zA-Z0-9./] or null for a random one
      * @return a 13 character string starting with the salt string
-     * @throws IllegalArgumentException if the salt does not match the allowed pattern
+     * @throws IllegalArgumentException
+     *              if the salt does not match the allowed pattern
+     * @throws RuntimeException
+     *              when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
     public static String crypt(String original, String salt) {
         return crypt(original.getBytes(Charsets.UTF_8), salt);
@@ -338,8 +348,8 @@ public class UnixCrypt {
         t = right;
         right = left >>> 1 | left << 31;
         left = t >>> 1 | t << 31;
-        left &= 0xffffffff;
-        right &= 0xffffffff;
+        // left &= 0xffffffff;
+        // right &= 0xffffffff;
         int results[] = new int[2];
         permOp(right, left, 1, 0x55555555, results);
         right = results[0];
@@ -400,7 +410,7 @@ public class UnixCrypt {
         d = results[0];
         c = results[1];
         d = (d & 0xff) << 16 | d & 0xff00 | (d & 0xff0000) >>> 16 | (c & 0xf0000000) >>> 4;
-        c &= 0xfffffff;
+        // c &= 0xfffffff;
         int j = 0;
         for (int i = 0; i < 16; i++) {
             if (SHIFT2[i]) {
@@ -410,14 +420,14 @@ public class UnixCrypt {
                 c = c >>> 1 | c << 27;
                 d = d >>> 1 | d << 27;
             }
-            c &= 0xfffffff;
-            d &= 0xfffffff;
+            // c &= 0xfffffff;
+            // d &= 0xfffffff;
             int s = SKB[0][c & 0x3f] | SKB[1][c >>> 6 & 0x3 | c >>> 7 & 0x3c] | SKB[2][c >>> 13 & 0xf | c >>> 14 & 0x30] | SKB[3][c >>> 20 & 0x1 | c >>> 21 & 0x6 | c >>> 22 & 0x38];
             int t = SKB[4][d & 0x3f] | SKB[5][d >>> 7 & 0x3 | d >>> 8 & 0x3c] | SKB[6][d >>> 15 & 0x3f] | SKB[7][d >>> 21 & 0xf | d >>> 22 & 0x30];
-            schedule[j++] = (t << 16 | s & 0xffff) & 0xffffffff;
+            schedule[j++] = (t << 16 | s & 0xffff) /* & 0xffffffff */;
             s = s >>> 16 | t & 0xffff0000;
             s = s << 4 | s >>> 28;
-            schedule[j++] = s & 0xffffffff;
+            schedule[j++] = s /* & 0xffffffff */;
         }
 
         return schedule;

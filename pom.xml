@@ -273,7 +273,6 @@ limitations under the License.
         <configuration>
           <configLocation>${basedir}/checkstyle.xml</configLocation>
           <enableRulesSummary>false</enableRulesSummary>
-          <headerFile>${basedir}/LICENSE-header.txt</headerFile>
         </configuration>
       </plugin>
       <plugin>
