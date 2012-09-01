@@ -17,7 +17,6 @@
 package org.apache.commons.codec.digest;
 
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -51,9 +50,6 @@ public class Md5Crypt {
     /** The number of bytes of the final hash. */
     private static final int BLOCKSIZE = 16;
 
-    /** The MessageDigest MD5_ALGORITHM. */
-    private static final String MD5_ALGORITHM = "MD5";
-
     /** The Identifier of this crypt() variant. */
     static final String MD5_PREFIX = "$1$";
 
@@ -63,9 +59,10 @@ public class Md5Crypt {
     /**
      * See {@link #apr1Crypt(String, String)} for details.
      *
-     * @throws NoSuchAlgorithmException if no "MD5" algorithm implementation is available
+     * @throws RuntimeException
+     *              when a {@link java.security.NoSuchAlgorithmException} is caught.     *
      */
-    public static String apr1Crypt(byte[] keyBytes) throws NoSuchAlgorithmException {
+    public static String apr1Crypt(byte[] keyBytes) {
         return apr1Crypt(keyBytes, APR1_PREFIX + B64.getRandomSalt(8));
     }
 
@@ -73,9 +70,10 @@ public class Md5Crypt {
      * See {@link #apr1Crypt(String, String)} for details.
      *
      * @throws IllegalArgumentException if the salt does not match the allowed pattern
-     * @throws NoSuchAlgorithmException if no "MD5" algorithm implementation is available
+     * @throws RuntimeException
+     *              when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
-    public static String apr1Crypt(byte[] keyBytes, String salt) throws NoSuchAlgorithmException {
+    public static String apr1Crypt(byte[] keyBytes, String salt) {
         // to make the md5Crypt regex happy
         if (salt != null && !salt.startsWith(APR1_PREFIX)) {
             salt = APR1_PREFIX + salt;
@@ -86,9 +84,10 @@ public class Md5Crypt {
     /**
      * See {@link #apr1Crypt(String, String)} for details.
      *
-     * @throws NoSuchAlgorithmException if no "MD5" algorithm implementation is available
+     * @throws RuntimeException
+     *              when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
-    public static String apr1Crypt(String keyBytes) throws NoSuchAlgorithmException {
+    public static String apr1Crypt(String keyBytes) {
         return apr1Crypt(keyBytes.getBytes(Charsets.UTF_8));
     }
 
@@ -104,10 +103,12 @@ public class Md5Crypt {
      *            salt string including the prefix and optionally garbage at the end.
      *            Will be generated randomly if null.
      * @return computed hash value
-     * @throws IllegalArgumentException if the salt does not match the allowed pattern
-     * @throws NoSuchAlgorithmException if no "MD5" algorithm implementation is available
+     * @throws IllegalArgumentException
+     *              if the salt does not match the allowed pattern
+     * @throws RuntimeException
+     *              when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
-    public static String apr1Crypt(String keyBytes, String salt) throws NoSuchAlgorithmException {
+    public static String apr1Crypt(String keyBytes, String salt) {
         return apr1Crypt(keyBytes.getBytes(Charsets.UTF_8), salt);
     }
 
@@ -116,9 +117,10 @@ public class Md5Crypt {
      * <p>
      * See {@link Crypt#crypt(String, String)} for details.
      *
-     * @throws NoSuchAlgorithmException if no "MD5" algorithm implementation is available
+     * @throws RuntimeException
+     *              when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
-    public static String md5Crypt(final byte[] keyBytes) throws NoSuchAlgorithmException {
+    public static String md5Crypt(final byte[] keyBytes) {
         return md5Crypt(keyBytes, MD5_PREFIX + B64.getRandomSalt(8));
     }
 
@@ -133,10 +135,12 @@ public class Md5Crypt {
      *            salt string including the prefix and optionally garbage at the end.
      *            Will be generated randomly if null.
      * @return computed hash value
-     * @throws IllegalArgumentException if the salt does not match the allowed pattern
-     * @throws NoSuchAlgorithmException if no "MD5" algorithm implementation is available
+     * @throws IllegalArgumentException
+     *              if the salt does not match the allowed pattern
+     * @throws RuntimeException
+     *              when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
-    public static String md5Crypt(byte[] keyBytes, String salt) throws NoSuchAlgorithmException {
+    public static String md5Crypt(byte[] keyBytes, String salt) {
         return md5Crypt(keyBytes, salt, MD5_PREFIX);
     }
 
@@ -145,11 +149,13 @@ public class Md5Crypt {
      * <p>
      * See {@link Crypt#crypt(String, String)} or {@link #apr1Crypt(String, String)} for details.
      *
-     * @throws IllegalArgumentException if the salt does not match the allowed pattern
-     * @throws NoSuchAlgorithmException if no "MD5" algorithm implementation is available
+     * @throws IllegalArgumentException
+     *              if the salt does not match the allowed pattern
+     * @throws RuntimeException
+     *              when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
     public static String md5Crypt(final byte[] keyBytes, final String salt, final String prefix)
-            throws NoSuchAlgorithmException {
+            {
         int keyLen = keyBytes.length;
 
         // Extract the real salt from the given string which can be a complete hash string.
@@ -166,7 +172,7 @@ public class Md5Crypt {
         }
         byte[] saltBytes = saltString.getBytes(Charsets.UTF_8);
 
-        MessageDigest ctx = MessageDigest.getInstance(MD5_ALGORITHM);
+        MessageDigest ctx = DigestUtils.getMd5Digest();
 
         /*
          * The password first, since that is what is most unknown
@@ -186,7 +192,7 @@ public class Md5Crypt {
         /*
          * Then just as many characters of the MD5(pw,salt,pw)
          */
-        MessageDigest ctx1 = MessageDigest.getInstance(MD5_ALGORITHM);
+        MessageDigest ctx1 = DigestUtils.getMd5Digest();
         ctx1.update(keyBytes);
         ctx1.update(saltBytes);
         ctx1.update(keyBytes);
@@ -227,7 +233,7 @@ public class Md5Crypt {
          * need 30 seconds to build a 1000 entry dictionary...
          */
         for (int i = 0; i < ROUNDS; i++) {
-            ctx1 = MessageDigest.getInstance(MD5_ALGORITHM);
+            ctx1 = DigestUtils.getMd5Digest();
             if ((i & 1) != 0) {
                 ctx1.update(keyBytes);
             } else {

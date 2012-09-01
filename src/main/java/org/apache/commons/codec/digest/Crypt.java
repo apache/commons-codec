@@ -16,8 +16,6 @@
  */
 package org.apache.commons.codec.digest;
 
-import java.security.NoSuchAlgorithmException;
-
 import org.apache.commons.codec.Charsets;
 
 /**
@@ -41,9 +39,10 @@ public class Crypt {
      * @param keyBytes
      *            plaintext password
      * @return hash value
-     * @throws NoSuchAlgorithmException if no algorithm implementation is available
+     * @throws RuntimeException
+     *            when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
-    public static String crypt(byte[] keyBytes) throws NoSuchAlgorithmException {
+    public static String crypt(byte[] keyBytes) {
         return crypt(keyBytes, null);
     }
 
@@ -58,10 +57,12 @@ public class Crypt {
      * @param salt
      *            salt value
      * @return hash value
-     * @throws IllegalArgumentException if the salt does not match the allowed pattern
-     * @throws NoSuchAlgorithmException if no algorithm implementation is available
+     * @throws IllegalArgumentException
+     *              if the salt does not match the allowed pattern
+     * @throws RuntimeException
+     *              when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
-    public static String crypt(byte[] keyBytes, String salt) throws NoSuchAlgorithmException {
+    public static String crypt(byte[] keyBytes, String salt) {
         if (salt == null) {
             return Sha2Crypt.sha512Crypt(keyBytes);
         } else if (salt.startsWith(Sha2Crypt.SHA512_PREFIX)) {
@@ -84,9 +85,10 @@ public class Crypt {
      * @param key
      *            plaintext password
      * @return hash value
-     * @throws NoSuchAlgorithmException if no algorithm implementation is available
+     * @throws RuntimeException
+     *              when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
-    public static String crypt(String key) throws NoSuchAlgorithmException {
+    public static String crypt(String key) {
         return crypt(key, null);
     }
 
@@ -136,10 +138,12 @@ public class Crypt {
      * @param salt
      *            salt value
      * @return hash value, i.e. encrypted password including the salt string
-     * @throws IllegalArgumentException if the salt does not match the allowed pattern
-     * @throws NoSuchAlgorithmException if no algorithm implementation is available
+     * @throws IllegalArgumentException
+     *              if the salt does not match the allowed pattern
+     * @throws RuntimeException
+     *              when a {@link java.security.NoSuchAlgorithmException} is caught.     *
      */
-    public static String crypt(String key, String salt) throws NoSuchAlgorithmException {
+    public static String crypt(String key, String salt) {
         return crypt(key.getBytes(Charsets.UTF_8), salt);
     }
 }

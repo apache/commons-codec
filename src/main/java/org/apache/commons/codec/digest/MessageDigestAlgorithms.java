@@ -20,15 +20,19 @@ package org.apache.commons.codec.digest;
 import java.security.MessageDigest;
 
 /**
- * Standard {@link MessageDigest} algorithm names from the <cite>Java Cryptography Architecture Standard Algorithm 
- * Name Documentation</cite>.
- * 
+ * Standard {@link MessageDigest} algorithm names from the <cite>Java Cryptography Architecture Standard Algorithm Name
+ * Documentation</cite>.
+ *
  * @see <a href="http://docs.oracle.com/javase/6/docs/technotes/guides/security/StandardNames.html">Java Cryptography
  *      Architecture Standard Algorithm Name Documentation</a>
  * @since 1.7
  * @version $Id$
  */
 public class MessageDigestAlgorithms {
+
+    private MessageDigestAlgorithms() {
+        // cannot be instantiated.
+    }
 
     /**
      * The MD2 message digest algorithm defined in RFC 1319.

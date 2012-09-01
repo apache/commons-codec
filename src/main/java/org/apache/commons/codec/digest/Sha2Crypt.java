@@ -17,7 +17,6 @@
 package org.apache.commons.codec.digest;
 
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -52,17 +51,11 @@ public class Sha2Crypt {
     /** Prefix for optional rounds specification. */
     private static final String ROUNDS_PREFIX = "rounds=";
 
-    /** The SHA-256 MessageDigest algorithm. */
-    private static final String SHA256_ALGORITHM = "SHA-256";
-
     /** The number of bytes the final hash value will have (SHA-256 variant). */
     private static final int SHA256_BLOCKSIZE = 32;
 
     /** The prefixes that can be used to identify this crypt() variant (SHA-256). */
     static final String SHA256_PREFIX = "$5$";
-
-    /** The SHA-512 MessageDigest algorithm. */
-    private static final String SHA512_ALGORITHM = "SHA-512";
 
     /** The number of bytes the final hash value will have (SHA-512 variant). */
     private static final int SHA512_BLOCKSIZE = 64;
@@ -79,9 +72,10 @@ public class Sha2Crypt {
      * <p>
      * See {@link Crypt#crypt(String, String)} for details.
      *
-     * @throws NoSuchAlgorithmException if no "SHA-256" algorithm implementation is available
+     * @throws RuntimeException
+     *              when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
-    public static String sha256Crypt(byte[] keyBytes) throws NoSuchAlgorithmException {
+    public static String sha256Crypt(byte[] keyBytes) {
         return sha256Crypt(keyBytes, null);
     }
 
@@ -91,13 +85,14 @@ public class Sha2Crypt {
      * See {@link Crypt#crypt(String, String)} for details.
      *
      * @throws IllegalArgumentException if the salt does not match the allowed pattern
-     * @throws NoSuchAlgorithmException if no "SHA-256" algorithm implementation is available
+     * @throws RuntimeException
+     *              when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
-    public static String sha256Crypt(byte[] keyBytes, String salt) throws NoSuchAlgorithmException {
+    public static String sha256Crypt(byte[] keyBytes, String salt) {
         if (salt == null) {
             salt = SHA256_PREFIX + B64.getRandomSalt(8);
         }
-        return sha2Crypt(keyBytes, salt, SHA256_PREFIX, SHA256_BLOCKSIZE, SHA256_ALGORITHM);
+        return sha2Crypt(keyBytes, salt, SHA256_PREFIX, SHA256_BLOCKSIZE, MessageDigestAlgorithms.SHA_256);
     }
 
     /**
@@ -121,10 +116,11 @@ public class Sha2Crypt {
      *            {@link MessageDigest} algorithm identifier string
      * @return complete hash value including prefix and salt
      * @throws IllegalArgumentException if the given salt is {@code null} or does not match the allowed pattern
-     * @throws NoSuchAlgorithmException if no implementation for the given algorithm is available
+     * @throws RuntimeException
+     *              when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
     private static String sha2Crypt(byte[] keyBytes, String salt, String saltPrefix, int blocksize, String algorithm)
-            throws NoSuchAlgorithmException {
+            {
 
         int keyLen = keyBytes.length;
 
@@ -150,7 +146,7 @@ public class Sha2Crypt {
 
         // 1. start digest A
         // Prepare for the real work.
-        MessageDigest ctx = MessageDigest.getInstance(algorithm);
+        MessageDigest ctx = DigestUtils.getDigest(algorithm);
 
         // 2. the password string is added to digest A
         /*
@@ -178,7 +174,7 @@ public class Sha2Crypt {
          * Compute alternate sha512 sum with input KEY, SALT, and KEY. The final result will be added to the first
          * context.
          */
-        MessageDigest altCtx = MessageDigest.getInstance(algorithm);
+        MessageDigest altCtx = DigestUtils.getDigest(algorithm);
 
         // 5. add the password to digest B
         /*
@@ -256,7 +252,7 @@ public class Sha2Crypt {
         /*
          * Start computation of P byte sequence.
          */
-        altCtx = MessageDigest.getInstance(algorithm);
+        altCtx = DigestUtils.getDigest(algorithm);
 
         // 14. for every byte in the password (excluding the terminating NUL byte
         // in the C representation of the string)
@@ -297,7 +293,7 @@ public class Sha2Crypt {
         /*
          * Start computation of S byte sequence.
          */
-        altCtx = MessageDigest.getInstance(algorithm);
+        altCtx = DigestUtils.getDigest(algorithm);
 
         // 18. repeast the following 16+A[0] times, where A[0] represents the first
         // byte in digest A interpreted as an 8-bit unsigned value
@@ -351,7 +347,7 @@ public class Sha2Crypt {
             /*
              * New context.
              */
-            ctx = MessageDigest.getInstance(algorithm);
+            ctx = DigestUtils.getDigest(algorithm);
 
             // b) for odd round numbers add the byte sequense P to digest C
             // c) for even round numbers add digest A/C
@@ -504,9 +500,10 @@ public class Sha2Crypt {
      * <p>
      * See {@link Crypt#crypt(String, String)} for details.
      *
-     * @throws NoSuchAlgorithmException if no "SHA-512" algorithm implementation is available
+     * @throws RuntimeException
+     *              when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
-    public static String sha512Crypt(byte[] keyBytes) throws NoSuchAlgorithmException {
+    public static String sha512Crypt(byte[] keyBytes) {
         return sha512Crypt(keyBytes, null);
     }
 
@@ -516,12 +513,13 @@ public class Sha2Crypt {
      * See {@link Crypt#crypt(String, String)} for details.
      *
      * @throws IllegalArgumentException if the salt does not match the allowed pattern
-     * @throws NoSuchAlgorithmException if no "SHA-512" algorithm implementation is available
+     * @throws RuntimeException
+     *              when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
-    public static String sha512Crypt(byte[] keyBytes, String salt) throws NoSuchAlgorithmException {
+    public static String sha512Crypt(byte[] keyBytes, String salt) {
         if (salt == null) {
             salt = SHA512_PREFIX + B64.getRandomSalt(8);
         }
-        return sha2Crypt(keyBytes, salt, SHA512_PREFIX, SHA512_BLOCKSIZE, SHA512_ALGORITHM);
+        return sha2Crypt(keyBytes, salt, SHA512_PREFIX, SHA512_BLOCKSIZE, MessageDigestAlgorithms.SHA_512);
     }
 }

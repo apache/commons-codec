@@ -16,18 +16,22 @@
  */
 package org.apache.commons.codec.digest;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.security.NoSuchAlgorithmException;
-
 import org.apache.commons.codec.Charsets;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 public class UnixCryptTest {
 
     @Test
-    public void testUnixCryptStrings() throws NoSuchAlgorithmException {
+    public void testCtor() {
+        assertNotNull(new UnixCrypt());
+    }
+
+    @Test
+    public void testUnixCryptStrings() {
         // trivial test
         assertEquals("xxWAum7tHdIUw", Crypt.crypt("secret", "xx"));
         // empty data
@@ -38,7 +42,7 @@ public class UnixCryptTest {
     }
 
     @Test
-    public void testUnixCryptBytes() throws NoSuchAlgorithmException {
+    public void testUnixCryptBytes() {
         // An empty Bytearray equals an empty String
         assertEquals("12UFlHxel6uMM", Crypt.crypt(new byte[0], "12"));
         // UTF-8 stores \u00e4 "a with diaeresis" as two bytes 0xc3 0xa4.
@@ -60,6 +64,16 @@ public class UnixCryptTest {
     }
 
     /**
+     * Single character salts are illegal!
+     * E.g. with glibc 2.13, crypt("secret", "x") = "xxZREZpkHZpkI" but
+     * crypt("secret", "xx") = "xxWAum7tHdIUw" which makes it unverifyable.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void testUnixCryptWithHalfSalt() {
+        UnixCrypt.crypt("secret", "x");
+    }
+
+    /**
      * Unimplemented "$foo$" salt prefixes would be threated as UnixCrypt salt.
      */
     @Test(expected = IllegalArgumentException.class)
@@ -75,5 +89,13 @@ public class UnixCryptTest {
     @Test(expected = IllegalArgumentException.class)
     public void testUnixCryptWithEmptySalt() {
         UnixCrypt.crypt("secret", "");
+    }
+
+    @Test
+    public void testUnixCryptWithoutSalt() {
+        String hash = UnixCrypt.crypt("foo");
+        assertTrue(hash.matches("^[a-zA-Z0-9./]{13}$"));
+        String hash2 = UnixCrypt.crypt("foo");
+        assertNotSame(hash, hash2);
     }
 }

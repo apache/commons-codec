@@ -16,18 +16,16 @@
  */
 package org.apache.commons.codec.digest;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.security.NoSuchAlgorithmException;
-
 import org.apache.commons.codec.Charsets;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 public class Apr1CryptTest {
 
     @Test
-    public void testApr1CryptStrings() throws NoSuchAlgorithmException {
+    public void testApr1CryptStrings() {
         // A random example using htpasswd
         assertEquals("$apr1$TqI9WECO$LHZB2DqRlk9nObiB6vJG9.", Md5Crypt.apr1Crypt("secret", "$apr1$TqI9WECO"));
         // empty data
@@ -42,7 +40,12 @@ public class Apr1CryptTest {
     }
 
     @Test
-    public void testApr1CryptBytes() throws NoSuchAlgorithmException {
+    public void testApr1CryptBytes() {
+        // random salt
+        byte[] keyBytes = new byte[] { '!', 'b', 'c', '.' };
+        String hash = Md5Crypt.apr1Crypt(keyBytes);
+        assertEquals(hash, Md5Crypt.apr1Crypt("!bc.", hash));
+
         // An empty Bytearray equals an empty String
         assertEquals("$apr1$foo$P27KyD1htb4EllIPEYhqi0", Md5Crypt.apr1Crypt(new byte[0], "$apr1$foo"));
         // UTF-8 stores \u00e4 "a with diaeresis" as two bytes 0xc3 0xa4.
@@ -52,7 +55,7 @@ public class Apr1CryptTest {
     }
 
     @Test
-    public void testApr1CryptExplicitCall() throws NoSuchAlgorithmException {
+    public void testApr1CryptExplicitCall() {
         // When explicitly called the prefix is optional
         assertEquals("$apr1$1234$mAlH7FRST6FiRZ.kcYL.j1", Md5Crypt.apr1Crypt("secret", "1234"));
         // When explicitly called without salt, a random one will be used.
@@ -60,13 +63,32 @@ public class Apr1CryptTest {
         assertTrue(Md5Crypt.apr1Crypt("secret".getBytes(), null).matches("^\\$apr1\\$[a-zA-Z0-9./]{0,8}\\$.{1,}$"));
     }
 
+    @Test
+    public void testApr1LongSalt() {
+        assertEquals("$apr1$12345678$0lqb/6VUFP8JY/s/jTrIk0", Md5Crypt.apr1Crypt("secret", "12345678901234567890"));
+    }
+
     @Test(expected = NullPointerException.class)
-    public void testApr1CryptNullData() throws NoSuchAlgorithmException {
+    public void testApr1CryptNullData() {
         Md5Crypt.apr1Crypt((byte[]) null);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testApr1CryptWithEmptySalt() throws NoSuchAlgorithmException {
+    public void testApr1CryptWithEmptySalt() {
         Md5Crypt.apr1Crypt("secret".getBytes(), "");
+    }
+
+    @Test
+    public void testApr1CryptWithoutSalt() {
+        // Without salt, a random is generated
+        String hash = Md5Crypt.apr1Crypt("secret");
+        assertTrue(hash.matches("^\\$apr1\\$[a-zA-Z0-9\\./]{8}\\$[a-zA-Z0-9\\./]{22}$"));
+        String hash2 = Md5Crypt.apr1Crypt("secret");
+        assertNotSame(hash, hash2);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testApr1CryptWithInvalidSalt() {
+        Md5Crypt.apr1Crypt(new byte[0], "!");
     }
 }
