@@ -33,14 +33,14 @@ public class Crypt {
     /**
      * Encrypts a password in a crypt(3) compatible way.
      * <p>
-     * A random salt and the default algorithm (currently SHA-512) are used. See
-     * {@link #crypt(String, String)} for details.
+     * A random salt and the default algorithm (currently SHA-512) are used. See {@link #crypt(String, String)} for
+     * details.
      *
      * @param keyBytes
      *            plaintext password
      * @return hash value
      * @throws RuntimeException
-     *            when a {@link java.security.NoSuchAlgorithmException} is caught.
+     *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
     public static String crypt(byte[] keyBytes) {
         return crypt(keyBytes, null);
@@ -49,8 +49,8 @@ public class Crypt {
     /**
      * Encrypts a password in a crypt(3) compatible way.
      * <p>
-     * If no salt is provided, a random salt and the default algorithm (currently SHA-512) will be used.
-     * See {@link #crypt(String, String)} for details.
+     * If no salt is provided, a random salt and the default algorithm (currently SHA-512) will be used. See
+     * {@link #crypt(String, String)} for details.
      *
      * @param keyBytes
      *            plaintext password
@@ -58,9 +58,9 @@ public class Crypt {
      *            salt value
      * @return hash value
      * @throws IllegalArgumentException
-     *              if the salt does not match the allowed pattern
+     *             if the salt does not match the allowed pattern
      * @throws RuntimeException
-     *              when a {@link java.security.NoSuchAlgorithmException} is caught.
+     *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
     public static String crypt(byte[] keyBytes, String salt) {
         if (salt == null) {
@@ -86,7 +86,7 @@ public class Crypt {
      *            plaintext password
      * @return hash value
      * @throws RuntimeException
-     *              when a {@link java.security.NoSuchAlgorithmException} is caught.
+     *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
     public static String crypt(String key) {
         return crypt(key, null);
@@ -103,19 +103,20 @@ public class Crypt {
      * <li>DES, the traditional UnixCrypt algorithm is used else with only 2 chars
      * <li>Only the first 8 chars of the passwords are used in the DES algorithm!
      * </ul>
-     * The magic strings "$apr1$" and "$2a$" are not recognised by this method as its
-     * output should be identical with that of the libc implementation.
+     * The magic strings "$apr1$" and "$2a$" are not recognised by this method as its output should be identical with
+     * that of the libc implementation.
      * <p>
-     * The rest of the salt string is drawn from the set [a-zA-Z0-9./] and is cut at the
-     * maximum length of if a "$" sign is encountered. It is therefore valid to enter a
-     * complete hash value as salt to e.g. verify a password with:
+     * The rest of the salt string is drawn from the set [a-zA-Z0-9./] and is cut at the maximum length of if a "$"
+     * sign is encountered. It is therefore valid to enter a complete hash value as salt to e.g. verify a password
+     * with:
+     *
      * <pre>
-     *      storedPwd.equals(crypt(enteredPwd, storedPwd))
+     * storedPwd.equals(crypt(enteredPwd, storedPwd))
      * </pre>
      * <p>
-     * The resulting string starts with the marker string ($6$), continues with the salt
-     * value and ends with a "$" sign followed by the actual hash value. For DES the string
-     * only contains the salt and actual hash. It's total length is dependent on the algorithm used:
+     * The resulting string starts with the marker string ($6$), continues with the salt value and ends with a "$" sign
+     * followed by the actual hash value. For DES the string only contains the salt and actual hash. It's total length
+     * is dependent on the algorithm used:
      * <ul>
      * <li>SHA-512: 106 chars
      * <li>SHA-256: 63 chars
@@ -124,13 +125,14 @@ public class Crypt {
      * </ul>
      * <p>
      * Example:
+     *
      * <pre>
      *      crypt("secret", "$1$xxxx") => "$1$xxxx$aMkevjfEIpa35Bh3G4bAc."
      *      crypt("secret", "xx") => "xxWAum7tHdIUw"
      * </pre>
      * <p>
-     * This method comes in a variation that accepts a byte[] array to support input strings that
-     * are not encoded in UTF-8 but e.g. in ISO-8859-1 where equal characters result in different byte values.
+     * This method comes in a variation that accepts a byte[] array to support input strings that are not encoded in
+     * UTF-8 but e.g. in ISO-8859-1 where equal characters result in different byte values.
      *
      * @see "The man page of the libc crypt (3) function."
      * @param key
@@ -139,9 +141,9 @@ public class Crypt {
      *            salt value
      * @return hash value, i.e. encrypted password including the salt string
      * @throws IllegalArgumentException
-     *              if the salt does not match the allowed pattern
+     *             if the salt does not match the allowed pattern
      * @throws RuntimeException
-     *              when a {@link java.security.NoSuchAlgorithmException} is caught.     *
+     *             when a {@link java.security.NoSuchAlgorithmException} is caught. *
      */
     public static String crypt(String key, String salt) {
         return crypt(key.getBytes(Charsets.UTF_8), salt);
