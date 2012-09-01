@@ -17,6 +17,10 @@
 
 package org.apache.commons.codec.digest;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.security.MessageDigest;
@@ -24,9 +28,6 @@ import java.util.Random;
 
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.binary.StringUtils;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
 import org.junit.Test;
 
 /**

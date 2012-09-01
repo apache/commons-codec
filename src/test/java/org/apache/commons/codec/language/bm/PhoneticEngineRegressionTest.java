@@ -17,14 +17,14 @@
 
 package org.apache.commons.codec.language.bm;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.TreeMap;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
 /**
  * Tests PhoneticEngine and Languages.LanguageSet in ways very similar to code found in solr-3.6.0.

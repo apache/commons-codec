@@ -16,10 +16,11 @@
  */
 package org.apache.commons.codec.digest;
 
-import org.apache.commons.codec.Charsets;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+
+import org.apache.commons.codec.Charsets;
 import org.junit.Test;
 
 public class Md5CryptTest {

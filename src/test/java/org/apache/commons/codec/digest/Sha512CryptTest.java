@@ -16,11 +16,12 @@
  */
 package org.apache.commons.codec.digest;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.util.Arrays;
 
 import org.apache.commons.codec.Charsets;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import org.junit.Ignore;
 import org.junit.Test;
 
