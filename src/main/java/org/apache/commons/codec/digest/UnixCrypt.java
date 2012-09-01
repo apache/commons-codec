@@ -394,14 +394,14 @@ public class UnixCrypt {
         u = u ^ u << 16 ^ r ^ sArr[s];
         int t = v ^ v << 16 ^ r ^ sArr[s + 1];
         t = t >>> 4 | t << 28;
-        el ^= SPTRANS[1][t & 0x3f]
-                | SPTRANS[3][t >>> 8 & 0x3f]
-                | SPTRANS[5][t >>> 16 & 0x3f]
-                | SPTRANS[7][t >>> 24 & 0x3f]
-                | SPTRANS[0][u & 0x3f]
-                | SPTRANS[2][u >>> 8 & 0x3f]
-                | SPTRANS[4][u >>> 16 & 0x3f]
-                | SPTRANS[6][u >>> 24 & 0x3f];
+        el ^= SPTRANS[1][t & 0x3f] |
+                SPTRANS[3][t >>> 8 & 0x3f] |
+                SPTRANS[5][t >>> 16 & 0x3f] |
+                SPTRANS[7][t >>> 24 & 0x3f] |
+                SPTRANS[0][u & 0x3f] |
+                SPTRANS[2][u >>> 8 & 0x3f] |
+                SPTRANS[4][u >>> 16 & 0x3f] |
+                SPTRANS[6][u >>> 24 & 0x3f];
         return el;
     }
 
@@ -437,14 +437,14 @@ public class UnixCrypt {
             }
             // c &= 0xfffffff;
             // d &= 0xfffffff;
-            int s = SKB[0][c & 0x3f]
-                    | SKB[1][c >>> 6 & 0x3 | c >>> 7 & 0x3c]
-                    | SKB[2][c >>> 13 & 0xf | c >>> 14 & 0x30]
-                    | SKB[3][c >>> 20 & 0x1 | c >>> 21 & 0x6 | c >>> 22 & 0x38];
-            int t = SKB[4][d & 0x3f]
-                    | SKB[5][d >>> 7 & 0x3 | d >>> 8 & 0x3c]
-                    | SKB[6][d >>> 15 & 0x3f]
-                    | SKB[7][d >>> 21 & 0xf | d >>> 22 & 0x30];
+            int s = SKB[0][c & 0x3f] |
+                    SKB[1][c >>> 6 & 0x3 | c >>> 7 & 0x3c] |
+                    SKB[2][c >>> 13 & 0xf | c >>> 14 & 0x30] |
+                    SKB[3][c >>> 20 & 0x1 | c >>> 21 & 0x6 | c >>> 22 & 0x38];
+            int t = SKB[4][d & 0x3f] |
+                    SKB[5][d >>> 7 & 0x3 | d >>> 8 & 0x3c] |
+                    SKB[6][d >>> 15 & 0x3f] |
+                    SKB[7][d >>> 21 & 0xf | d >>> 22 & 0x30];
             schedule[j++] = (t << 16 | s & 0xffff) /* & 0xffffffff */;
             s = s >>> 16 | t & 0xffff0000;
             s = s << 4 | s >>> 28;
