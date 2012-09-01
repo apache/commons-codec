@@ -26,12 +26,15 @@ import org.apache.commons.codec.Charsets;
 /**
  * The libc crypt() "$1$" and Apache "$apr1$" MD5-based hash algorithm.
  * <p>
- * Based on the public domain ("beer-ware") C implementation from Poul-Henning Kamp which was found at:
- * <a href="http://www.freebsd.org/cgi/cvsweb.cgi/src/lib/libcrypt/crypt-md5.c?rev=1.1;content-type=text%2Fplain">
+ * Based on the public domain ("beer-ware") C implementation from Poul-Henning Kamp which was found at: <a
+ * href="http://www.freebsd.org/cgi/cvsweb.cgi/src/lib/libcrypt/crypt-md5.c?rev=1.1;content-type=text%2Fplain">
  * crypt-md5.c @ freebsd.org</a><br/>
  * <p>
  * Source:
- * <pre>$FreeBSD: src/lib/libcrypt/crypt-md5.c,v 1.1 1999/01/21 13:50:09 brandon Exp $</pre>
+ *
+ * <pre>
+ * $FreeBSD: src/lib/libcrypt/crypt-md5.c,v 1.1 1999/01/21 13:50:09 brandon Exp $
+ * </pre>
  * <p>
  * Conversion to Kotlin and from there to Java in 2012.
  * <p>
@@ -60,7 +63,7 @@ public class Md5Crypt {
      * See {@link #apr1Crypt(String, String)} for details.
      *
      * @throws RuntimeException
-     *              when a {@link java.security.NoSuchAlgorithmException} is caught.     *
+     *             when a {@link java.security.NoSuchAlgorithmException} is caught. *
      */
     public static String apr1Crypt(byte[] keyBytes) {
         return apr1Crypt(keyBytes, APR1_PREFIX + B64.getRandomSalt(8));
@@ -69,9 +72,10 @@ public class Md5Crypt {
     /**
      * See {@link #apr1Crypt(String, String)} for details.
      *
-     * @throws IllegalArgumentException if the salt does not match the allowed pattern
+     * @throws IllegalArgumentException
+     *             if the salt does not match the allowed pattern
      * @throws RuntimeException
-     *              when a {@link java.security.NoSuchAlgorithmException} is caught.
+     *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
     public static String apr1Crypt(byte[] keyBytes, String salt) {
         // to make the md5Crypt regex happy
@@ -85,7 +89,7 @@ public class Md5Crypt {
      * See {@link #apr1Crypt(String, String)} for details.
      *
      * @throws RuntimeException
-     *              when a {@link java.security.NoSuchAlgorithmException} is caught.
+     *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
     public static String apr1Crypt(String keyBytes) {
         return apr1Crypt(keyBytes.getBytes(Charsets.UTF_8));
@@ -94,19 +98,19 @@ public class Md5Crypt {
     /**
      * Generates an Apache htpasswd compatible "$apr1$" MD5 based hash value.
      * <p>
-     * The algorithm is identical to the crypt(3) "$1$" one but produces different
-     * outputs due to the different salt prefix.
+     * The algorithm is identical to the crypt(3) "$1$" one but produces different outputs due to the different salt
+     * prefix.
      *
      * @param keyBytes
      *            plaintext string that should be hashed.
      * @param salt
-     *            salt string including the prefix and optionally garbage at the end.
-     *            Will be generated randomly if null.
+     *            salt string including the prefix and optionally garbage at the end. Will be generated randomly if
+     *            null.
      * @return computed hash value
      * @throws IllegalArgumentException
-     *              if the salt does not match the allowed pattern
+     *             if the salt does not match the allowed pattern
      * @throws RuntimeException
-     *              when a {@link java.security.NoSuchAlgorithmException} is caught.
+     *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
     public static String apr1Crypt(String keyBytes, String salt) {
         return apr1Crypt(keyBytes.getBytes(Charsets.UTF_8), salt);
@@ -118,7 +122,7 @@ public class Md5Crypt {
      * See {@link Crypt#crypt(String, String)} for details.
      *
      * @throws RuntimeException
-     *              when a {@link java.security.NoSuchAlgorithmException} is caught.
+     *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
     public static String md5Crypt(final byte[] keyBytes) {
         return md5Crypt(keyBytes, MD5_PREFIX + B64.getRandomSalt(8));
@@ -132,13 +136,13 @@ public class Md5Crypt {
      * @param keyBytes
      *            plaintext string that should be hashed.
      * @param salt
-     *            salt string including the prefix and optionally garbage at the end.
-     *            Will be generated randomly if null.
+     *            salt string including the prefix and optionally garbage at the end. Will be generated randomly if
+     *            null.
      * @return computed hash value
      * @throws IllegalArgumentException
-     *              if the salt does not match the allowed pattern
+     *             if the salt does not match the allowed pattern
      * @throws RuntimeException
-     *              when a {@link java.security.NoSuchAlgorithmException} is caught.
+     *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
     public static String md5Crypt(byte[] keyBytes, String salt) {
         return md5Crypt(keyBytes, salt, MD5_PREFIX);
@@ -150,12 +154,11 @@ public class Md5Crypt {
      * See {@link Crypt#crypt(String, String)} or {@link #apr1Crypt(String, String)} for details.
      *
      * @throws IllegalArgumentException
-     *              if the salt does not match the allowed pattern
+     *             if the salt does not match the allowed pattern
      * @throws RuntimeException
-     *              when a {@link java.security.NoSuchAlgorithmException} is caught.
+     *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
-    public static String md5Crypt(final byte[] keyBytes, final String salt, final String prefix)
-            {
+    public static String md5Crypt(final byte[] keyBytes, final String salt, final String prefix) {
         int keyLen = keyBytes.length;
 
         // Extract the real salt from the given string which can be a complete hash string.
