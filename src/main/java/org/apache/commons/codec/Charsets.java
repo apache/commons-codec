@@ -17,7 +17,6 @@
 package org.apache.commons.codec;
 
 import java.nio.charset.Charset;
-import java.nio.charset.UnsupportedCharsetException;
 
 /**
  * Charsets required of every implementation of the Java platform.
