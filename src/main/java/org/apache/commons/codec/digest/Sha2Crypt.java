@@ -29,8 +29,8 @@ import org.apache.commons.codec.Charsets;
  * Based on the C implementation released into the Public Domain by Ulrich Drepper &lt;drepper@redhat.com&gt;
  * http://www.akkadia.org/drepper/SHA-crypt.txt
  * <p>
- * Conversion to Kotlin and from there to Java in 2012 by Christian Hammers &lt;ch@lathspell.de&gt;
- * and likewise put into the Public Domain.
+ * Conversion to Kotlin and from there to Java in 2012 by Christian Hammers &lt;ch@lathspell.de&gt; and likewise put
+ * into the Public Domain.
  * <p>
  * This class is immutable and thread-safe.
  *
@@ -64,8 +64,8 @@ public class Sha2Crypt {
     static final String SHA512_PREFIX = "$6$";
 
     /** The pattern to match valid salt values. */
-    private static final Pattern SALT_PATTERN =
-            Pattern.compile("^\\$([56])\\$(rounds=(\\d+)\\$)?([\\.\\/a-zA-Z0-9]{1,16}).*");
+    private static final Pattern SALT_PATTERN = Pattern
+            .compile("^\\$([56])\\$(rounds=(\\d+)\\$)?([\\.\\/a-zA-Z0-9]{1,16}).*");
 
     /**
      * Generates a libc crypt() compatible "$5$" hash value with random salt.
@@ -73,7 +73,7 @@ public class Sha2Crypt {
      * See {@link Crypt#crypt(String, String)} for details.
      *
      * @throws RuntimeException
-     *              when a {@link java.security.NoSuchAlgorithmException} is caught.
+     *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
     public static String sha256Crypt(byte[] keyBytes) {
         return sha256Crypt(keyBytes, null);
@@ -84,9 +84,10 @@ public class Sha2Crypt {
      * <p>
      * See {@link Crypt#crypt(String, String)} for details.
      *
-     * @throws IllegalArgumentException if the salt does not match the allowed pattern
+     * @throws IllegalArgumentException
+     *             if the salt does not match the allowed pattern
      * @throws RuntimeException
-     *              when a {@link java.security.NoSuchAlgorithmException} is caught.
+     *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
     public static String sha256Crypt(byte[] keyBytes, String salt) {
         if (salt == null) {
@@ -98,9 +99,8 @@ public class Sha2Crypt {
     /**
      * Generates a libc6 crypt() compatible "$5$" or "$6$" SHA2 based hash value.
      * <p>
-     * This is a nearly line by line conversion of the original C function. The numbered comments
-     * are from the algorithm description, the short C-style ones from the original C code and the
-     * ones with "Remark" from me.
+     * This is a nearly line by line conversion of the original C function. The numbered comments are from the
+     * algorithm description, the short C-style ones from the original C code and the ones with "Remark" from me.
      * <p>
      * See {@link Crypt#crypt(String, String)} for details.
      *
@@ -115,12 +115,12 @@ public class Sha2Crypt {
      * @param algorithm
      *            {@link MessageDigest} algorithm identifier string
      * @return complete hash value including prefix and salt
-     * @throws IllegalArgumentException if the given salt is {@code null} or does not match the allowed pattern
+     * @throws IllegalArgumentException
+     *             if the given salt is {@code null} or does not match the allowed pattern
      * @throws RuntimeException
-     *              when a {@link java.security.NoSuchAlgorithmException} is caught.
+     *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
-    private static String sha2Crypt(byte[] keyBytes, String salt, String saltPrefix, int blocksize, String algorithm)
-            {
+    private static String sha2Crypt(byte[] keyBytes, String salt, String saltPrefix, int blocksize, String algorithm) {
 
         int keyLen = keyBytes.length;
 
@@ -501,7 +501,7 @@ public class Sha2Crypt {
      * See {@link Crypt#crypt(String, String)} for details.
      *
      * @throws RuntimeException
-     *              when a {@link java.security.NoSuchAlgorithmException} is caught.
+     *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
     public static String sha512Crypt(byte[] keyBytes) {
         return sha512Crypt(keyBytes, null);
@@ -512,9 +512,10 @@ public class Sha2Crypt {
      * <p>
      * See {@link Crypt#crypt(String, String)} for details.
      *
-     * @throws IllegalArgumentException if the salt does not match the allowed pattern
+     * @throws IllegalArgumentException
+     *             if the salt does not match the allowed pattern
      * @throws RuntimeException
-     *              when a {@link java.security.NoSuchAlgorithmException} is caught.
+     *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
     public static String sha512Crypt(byte[] keyBytes, String salt) {
         if (salt == null) {
