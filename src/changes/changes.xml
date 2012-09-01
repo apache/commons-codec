@@ -51,6 +51,9 @@ The <action> type attribute can be add,update,fix,remove.
     </release>
     -->
     <release version="1.7" date="TBD" description="Feature and fix release.">
+      <action issue="CODEC-151" dev="ggregory" type="add" due-to="lathspell">
+        Remove unnecessary attempt to fill up the salt variable in UnixCrypt.
+      </action>
       <action issue="CODEC-153" dev="ggregory" type="add" due-to="ggregory">
         Create a class MessageDigestAlgorithms to define standard algorithm names.
       </action>

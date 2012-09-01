@@ -245,10 +245,6 @@ public class UnixCrypt {
             throw new IllegalArgumentException("Invalid salt value: " + salt);
         }
 
-        for (; salt.length() < 2; salt = salt + "A") {
-            // NOOP
-        }
-
         StringBuilder buffer = new StringBuilder("             ");
         char charZero = salt.charAt(0);
         char charOne = salt.charAt(1);
