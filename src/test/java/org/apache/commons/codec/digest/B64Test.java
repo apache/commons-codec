@@ -17,12 +17,14 @@
 package org.apache.commons.codec.digest;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
 
 public class B64Test {
 
     @Test
     public void testB64T() {
+        assertNotNull(new B64()); // for the 100% code coverage :)
         assertEquals(64, B64.B64T.length());
     }
 

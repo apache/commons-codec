@@ -16,8 +16,6 @@
  */
 package org.apache.commons.codec.digest;
 
-import java.security.NoSuchAlgorithmException;
-
 import org.apache.commons.codec.Charsets;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -26,7 +24,7 @@ import org.junit.Test;
 public class UnixCryptTest {
 
     @Test
-    public void testUnixCryptStrings() throws NoSuchAlgorithmException {
+    public void testUnixCryptStrings() {
         // trivial test
         assertEquals("xxWAum7tHdIUw", Crypt.crypt("secret", "xx"));
         // empty data
@@ -37,7 +35,7 @@ public class UnixCryptTest {
     }
 
     @Test
-    public void testUnixCryptBytes() throws NoSuchAlgorithmException {
+    public void testUnixCryptBytes() {
         // An empty Bytearray equals an empty String
         assertEquals("12UFlHxel6uMM", Crypt.crypt(new byte[0], "12"));
         // UTF-8 stores \u00e4 "a with diaeresis" as two bytes 0xc3 0xa4.

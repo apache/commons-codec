@@ -217,6 +217,8 @@ public class UnixCrypt {
      * @param original
      *             plaintext password
      * @return a 13 character string starting with the salt string
+     * @throws RuntimeException
+     *              when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
     public static String crypt(byte[] original) {
         return crypt(original, null);
@@ -232,7 +234,10 @@ public class UnixCrypt {
      * @param salt
      *             a two character string drawn from [a-zA-Z0-9./] or null for a random one
      * @return a 13 character string starting with the salt string
-     * @throws IllegalArgumentException if the salt does not match the allowed pattern
+     * @throws IllegalArgumentException
+     *              if the salt does not match the allowed pattern
+     * @throws RuntimeException
+     *              when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
     public static String crypt(byte[] original, String salt) {
         if (salt == null) {
@@ -301,6 +306,8 @@ public class UnixCrypt {
      * @param original
      *             plaintext password
      * @return a 13 character string starting with the salt string
+     * @throws RuntimeException
+     *              when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
     public static String crypt(String original) {
         return crypt(original.getBytes(Charsets.UTF_8));
@@ -314,7 +321,10 @@ public class UnixCrypt {
      * @param salt
      *             a two character string drawn from [a-zA-Z0-9./] or null for a random one
      * @return a 13 character string starting with the salt string
-     * @throws IllegalArgumentException if the salt does not match the allowed pattern
+     * @throws IllegalArgumentException
+     *              if the salt does not match the allowed pattern
+     * @throws RuntimeException
+     *              when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
     public static String crypt(String original, String salt) {
         return crypt(original.getBytes(Charsets.UTF_8), salt);

@@ -16,18 +16,15 @@
  */
 package org.apache.commons.codec.digest;
 
+import org.apache.commons.codec.Charsets;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-
-import java.security.NoSuchAlgorithmException;
-
-import org.apache.commons.codec.Charsets;
 import org.junit.Test;
 
 public class Sha256CryptTest {
 
     @Test
-    public void testSha256CryptStrings() throws NoSuchAlgorithmException {
+    public void testSha256CryptStrings() {
         // empty data
         assertEquals("$5$foo$Fq9CX624QIfnCAmlGiPKLlAasdacKCRxZztPoeo7o0B", Crypt.crypt("", "$5$foo"));
         // salt gets cut at dollar sign
@@ -40,7 +37,7 @@ public class Sha256CryptTest {
     }
 
     @Test
-    public void testSha256CryptBytes() throws NoSuchAlgorithmException {
+    public void testSha256CryptBytes() {
         // An empty Bytearray equals an empty String
         assertEquals("$5$foo$Fq9CX624QIfnCAmlGiPKLlAasdacKCRxZztPoeo7o0B", Crypt.crypt(new byte[0], "$5$foo"));
         // UTF-8 stores \u00e4 "a with diaeresis" as two bytes 0xc3 0xa4.
@@ -50,18 +47,18 @@ public class Sha256CryptTest {
     }
 
     @Test
-    public void testSha256CryptExplicitCall() throws NoSuchAlgorithmException {
+    public void testSha256CryptExplicitCall() {
         assertTrue(Sha2Crypt.sha256Crypt("secret".getBytes()).matches("^\\$5\\$[a-zA-Z0-9./]{0,16}\\$.{1,}$"));
         assertTrue(Sha2Crypt.sha256Crypt("secret".getBytes(), null).matches("^\\$5\\$[a-zA-Z0-9./]{0,16}\\$.{1,}$"));
     }
 
     @Test(expected = NullPointerException.class)
-    public void testSha256CryptNullData() throws NoSuchAlgorithmException {
+    public void testSha256CryptNullData() {
         Sha2Crypt.sha256Crypt((byte[]) null);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testSha256CryptWithEmptySalt() throws NoSuchAlgorithmException {
+    public void testSha256CryptWithEmptySalt() {
         Sha2Crypt.sha256Crypt("secret".getBytes(), "");
     }
 }
