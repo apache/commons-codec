@@ -23,7 +23,9 @@ import java.util.Random;
  *
  * TODO: Can Base64 be reused?
  *
- * <p>This class is immutable and thread-safe.</p>
+ * <p>
+ * This class is immutable and thread-safe.
+ * </p>
  *
  * @version $Id$
  * @since 1.7
