@@ -16,6 +16,8 @@
  */
 package org.apache.commons.codec.digest;
 
+import java.util.Arrays;
+
 import org.apache.commons.codec.Charsets;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -47,6 +49,14 @@ public class Sha256CryptTest {
     }
 
     @Test
+    public void testSha2CryptRounds() {
+        // minimum rounds?
+        assertEquals("$5$rounds=1000$abcd$b8MCU4GEeZIekOy5ahQ8EWfT330hvYGVeDYkBxXBva.", Sha2Crypt.sha256Crypt("secret".getBytes(Charsets.UTF_8), "$5$rounds=50$abcd$"));
+        assertEquals("$5$rounds=1001$abcd$SQsJZs7KXKdd2DtklI3TY3tkD7UYA99RD0FBLm4Sk48", Sha2Crypt.sha256Crypt("secret".getBytes(Charsets.UTF_8), "$5$rounds=1001$abcd$"));
+        assertEquals("$5$rounds=9999$abcd$Rh/8ngVh9oyuS6lL3.fsq.9xbvXJsfyKWxSjO2mPIa7", Sha2Crypt.sha256Crypt("secret".getBytes(Charsets.UTF_8), "$5$rounds=9999$abcd"));
+    }
+
+    @Test
     public void testSha256CryptExplicitCall() {
         assertTrue(Sha2Crypt.sha256Crypt("secret".getBytes()).matches("^\\$5\\$[a-zA-Z0-9./]{0,16}\\$.{1,}$"));
         assertTrue(Sha2Crypt.sha256Crypt("secret".getBytes(), null).matches("^\\$5\\$[a-zA-Z0-9./]{0,16}\\$.{1,}$"));
@@ -60,5 +70,12 @@ public class Sha256CryptTest {
     @Test(expected = IllegalArgumentException.class)
     public void testSha256CryptWithEmptySalt() {
         Sha2Crypt.sha256Crypt("secret".getBytes(), "");
+    }
+
+    @Test
+    public void testSha256LargetThanBlocksize() {
+        byte[] buffer = new byte[200];
+        Arrays.fill(buffer, 0, 200, (byte)'A');
+        assertEquals("$5$abc$HbF3RRc15OwNKB/RZZ5F.1I6zsLcKXHQoSdB9Owx/Q8", Sha2Crypt.sha256Crypt(buffer, "$5$abc"));
     }
 }

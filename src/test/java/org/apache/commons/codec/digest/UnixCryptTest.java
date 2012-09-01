@@ -18,10 +18,17 @@ package org.apache.commons.codec.digest;
 
 import org.apache.commons.codec.Charsets;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 public class UnixCryptTest {
+
+    @Test
+    public void testCtor() {
+        assertNotNull(new UnixCrypt());
+    }
 
     @Test
     public void testUnixCryptStrings() {
@@ -82,5 +89,13 @@ public class UnixCryptTest {
     @Test(expected = IllegalArgumentException.class)
     public void testUnixCryptWithEmptySalt() {
         UnixCrypt.crypt("secret", "");
+    }
+
+    @Test
+    public void testUnixCryptWithoutSalt() {
+        String hash = UnixCrypt.crypt("foo");
+        assertTrue(hash.matches("^[a-zA-Z0-9./]{13}$"));
+        String hash2 = UnixCrypt.crypt("foo");
+        assertNotSame(hash, hash2);
     }
 }

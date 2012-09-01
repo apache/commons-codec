@@ -18,6 +18,7 @@ package org.apache.commons.codec.digest;
 
 import org.apache.commons.codec.Charsets;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
@@ -75,6 +76,17 @@ public class Apr1CryptTest {
     @Test(expected = IllegalArgumentException.class)
     public void testApr1CryptWithEmptySalt() {
         Md5Crypt.apr1Crypt("secret".getBytes(), "");
+    }
+
+    @Test
+    public void testApr1CryptWithoutSalt() {
+        // Without salt, a random is generated
+        String hash = Md5Crypt.apr1Crypt("secret");
+        String hash2 = Md5Crypt.apr1Crypt("secret");
+        assertNotSame(hash, hash2);
+        System.out.println(hash.length() + "; " + hash)
+                ;
+        assertTrue(hash.matches("^\\$apr1\\$[a-zA-Z0-9\\./]{8}\\$[a-zA-Z0-9\\./]{22}$"));
     }
 
     @Test(expected = IllegalArgumentException.class)

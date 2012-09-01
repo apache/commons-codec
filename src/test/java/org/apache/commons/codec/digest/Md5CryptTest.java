@@ -18,10 +18,16 @@ package org.apache.commons.codec.digest;
 
 import org.apache.commons.codec.Charsets;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 public class Md5CryptTest {
+
+    @Test
+    public void testCtor() {
+        assertNotNull(new Md5Crypt()); // for code-coverage
+    }
 
     @Test
     public void testMd5CryptStrings() {
@@ -50,6 +56,11 @@ public class Md5CryptTest {
     public void testMd5CryptExplicitCall() {
         assertTrue(Md5Crypt.md5Crypt("secret".getBytes()).matches("^\\$1\\$[a-zA-Z0-9./]{0,8}\\$.{1,}$"));
         assertTrue(Md5Crypt.md5Crypt("secret".getBytes(), null).matches("^\\$1\\$[a-zA-Z0-9./]{0,8}\\$.{1,}$"));
+    }
+
+    @Test
+    public void testMd5CryptLongInput() {
+        assertEquals("$1$1234$MoxekaNNUgfPRVqoeYjCD/", Crypt.crypt("12345678901234567890", "$1$1234"));
     }
 
     @Test(expected = NullPointerException.class)
