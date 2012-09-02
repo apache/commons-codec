@@ -133,7 +133,7 @@ public class DigestUtilsTest {
      * An MD5 hash converted to hex should always be 32 characters.
      */
     @Test
-    public void testMD5HexLength() {
+    public void testMd5HexLength() {
         String hashMe = "this is some string that is longer than 32 characters";
         String hash = DigestUtils.md5Hex(getBytesUtf8(hashMe));
         assertEquals(32, hash.length());
@@ -161,7 +161,7 @@ public class DigestUtilsTest {
      * An MD5 hash should always be a 16 element byte[].
      */
     @Test
-    public void testMD5Length() {
+    public void testMd5Length() {
         String hashMe = "this is some string that is longer than 16 characters";
         byte[] hash = DigestUtils.md5(getBytesUtf8(hashMe));
         assertEquals(16, hash.length);
