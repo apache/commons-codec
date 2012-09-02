@@ -17,6 +17,7 @@
 package org.apache.commons.codec.digest;
 
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -117,8 +118,9 @@ public class Sha2Crypt {
      * @return complete hash value including prefix and salt
      * @throws IllegalArgumentException
      *             if the given salt is {@code null} or does not match the allowed pattern
-     * @throws RuntimeException
-     *             when a {@link java.security.NoSuchAlgorithmException} is caught.
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught
+     * @see MessageDigestAlgorithms
      */
     private static String sha2Crypt(byte[] keyBytes, String salt, String saltPrefix, int blocksize, String algorithm) {
 
