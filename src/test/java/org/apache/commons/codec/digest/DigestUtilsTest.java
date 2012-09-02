@@ -182,7 +182,25 @@ public class DigestUtilsTest {
     }
 
     @Test
-    public void testUpdateWithByteArray(){
+    public void testSha1UpdateWithByteArray(){
+        final String d1 = "C'est un homme qui rentre dans un café, et plouf";
+        final String d2 = "C'est un homme, c'est qu'une tête, on lui offre un cadeau: 'oh... encore un chapeau!'";
+
+        MessageDigest messageDigest = DigestUtils.getSha1Digest();
+        messageDigest.update(d1.getBytes());
+        messageDigest.update(d2.getBytes());
+        final String expectedResult = Hex.encodeHexString(messageDigest.digest());
+
+        messageDigest = DigestUtils.getSha1Digest();
+        DigestUtils.updateDigest(messageDigest, d1.getBytes());
+        DigestUtils.updateDigest(messageDigest, d2.getBytes());
+        final String actualResult = Hex.encodeHexString(messageDigest.digest());
+
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    public void testShaUpdateWithByteArray(){
         final String d1 = "C'est un homme qui rentre dans un café, et plouf";
         final String d2 = "C'est un homme, c'est qu'une tête, on lui offre un cadeau: 'oh... encore un chapeau!'";
 
@@ -200,7 +218,25 @@ public class DigestUtilsTest {
     }
 
     @Test
-    public void testUpdateWithString(){
+    public void testSha1UpdateWithString(){
+        final String d1 = "C'est un homme qui rentre dans un café, et plouf";
+        final String d2 = "C'est un homme, c'est qu'une tête, on lui offre un cadeau: 'oh... encore un chapeau!'";
+
+        MessageDigest messageDigest = DigestUtils.getSha1Digest();
+        messageDigest.update(StringUtils.getBytesUtf8(d1));
+        messageDigest.update(StringUtils.getBytesUtf8(d2));
+        final String expectedResult = Hex.encodeHexString(messageDigest.digest());
+
+        messageDigest = DigestUtils.getSha1Digest();
+        DigestUtils.updateDigest(messageDigest, d1);
+        DigestUtils.updateDigest(messageDigest, d2);
+        final String actualResult = Hex.encodeHexString(messageDigest.digest());
+
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    public void testShaUpdateWithString(){
         final String d1 = "C'est un homme qui rentre dans un café, et plouf";
         final String d2 = "C'est un homme, c'est qu'une tête, on lui offre un cadeau: 'oh... encore un chapeau!'";
 

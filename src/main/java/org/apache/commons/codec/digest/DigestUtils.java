@@ -103,6 +103,20 @@ public class DigestUtils {
     }
 
     /**
+     * Returns an SHA-1 digest.
+     *
+     * @return An SHA-1 digest instance.
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught, which should never happen because SHA-1 is a
+     *             built-in algorithm
+     * @see MessageDigestAlgorithms#SHA_1
+     * @since 1.7
+     */
+    public static MessageDigest getSha1Digest() {
+        return getDigest(MessageDigestAlgorithms.SHA_1);
+    }
+
+    /**
      * Returns an SHA-256 digest.
      * <p>
      * Throws a <code>RuntimeException</code> on JRE versions prior to 1.4.0.
@@ -250,12 +264,38 @@ public class DigestUtils {
      * @param data
      *            Data to digest
      * @return SHA-1 digest
+     * @since 1.7
+     */
+    public static byte[] sha1(byte[] data) {
+        return getSha1Digest().digest(data);
+    }
+
+    /**
+     * Calculates the SHA-1 digest and returns the value as a <code>byte[]</code>.
+     *
+     * @param data
+     *            Data to digest
+     * @return SHA-1 digest
      * @throws IOException
      *             On error reading from the stream
      * @since 1.4
      */
     public static byte[] sha(InputStream data) throws IOException {
         return digest(getShaDigest(), data);
+    }
+
+    /**
+     * Calculates the SHA-1 digest and returns the value as a <code>byte[]</code>.
+     *
+     * @param data
+     *            Data to digest
+     * @return SHA-1 digest
+     * @throws IOException
+     *             On error reading from the stream
+     * @since 1.7
+     */
+    public static byte[] sha1(InputStream data) throws IOException {
+        return digest(getSha1Digest(), data);
     }
 
     /**
@@ -597,8 +637,8 @@ public class DigestUtils {
      * @return the updated {@link MessageDigest}
      * @since 1.7
      */
-    public static MessageDigest updateDigest(final MessageDigest messageDigest, final String valueToDigest) {
-        messageDigest.update(getBytesUtf8(valueToDigest));
+    public static MessageDigest updateDigest(final MessageDigest messageDigest, byte[] valueToDigest) {
+        messageDigest.update(valueToDigest);
         return messageDigest;
     }
 
@@ -612,8 +652,8 @@ public class DigestUtils {
      * @return the updated {@link MessageDigest}
      * @since 1.7
      */
-    public static MessageDigest updateDigest(final MessageDigest messageDigest, byte[] valueToDigest) {
-        messageDigest.update(valueToDigest);
+    public static MessageDigest updateDigest(final MessageDigest messageDigest, final String valueToDigest) {
+        messageDigest.update(getBytesUtf8(valueToDigest));
         return messageDigest;
     }
 }
