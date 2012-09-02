@@ -66,6 +66,31 @@ public class DigestUtilsTest {
     }
 
     @Test
+    public void testMd2Hex() throws IOException {
+        // Examples from RFC 1319
+        assertEquals("8350e5a3e24c153df2275c9f80692773", DigestUtils.md2Hex(""));
+
+        assertEquals("32ec01ec4a6dac72c0ab96fb34c0b5d1", DigestUtils.md2Hex("a"));
+
+        assertEquals("da853b0d3f88d99b30283a69e6ded6bb", DigestUtils.md2Hex("abc"));
+
+        assertEquals("ab4f496bfb2a530b219ff33031fe06b0", DigestUtils.md2Hex("message digest"));
+
+        assertEquals("4e8ddff3650292ab5a4108c3aa47940b", DigestUtils.md2Hex("abcdefghijklmnopqrstuvwxyz"));
+
+        assertEquals(
+            "da33def2a42df13975352846c30338cd",
+            DigestUtils.md2Hex("ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "abcdefghijklmnopqrstuvwxyz" + "0123456789"));
+
+        assertEquals(
+            "d5976f79d83d3a0dc9806c3c66f3efd8",
+            DigestUtils.md2Hex("1234567890123456789012345678901234567890" + "1234567890123456789012345678901234567890"));
+
+        assertEquals(DigestUtils.md2Hex(testData),
+                DigestUtils.md2Hex(new ByteArrayInputStream(testData)));
+    }
+
+    @Test
     public void testMd5Hex() throws IOException {
         // Examples from RFC 1321
         assertEquals("d41d8cd98f00b204e9800998ecf8427e", DigestUtils.md5Hex(""));
@@ -91,6 +116,20 @@ public class DigestUtilsTest {
     }
 
     /**
+     * An MD2 hash converted to hex should always be 32 characters.
+     */
+    @Test
+    public void testMd2HexLength() {
+        String hashMe = "this is some string that is longer than 32 characters";
+        String hash = DigestUtils.md2Hex(getBytesUtf8(hashMe));
+        assertEquals(32, hash.length());
+
+        hashMe = "length < 32";
+        hash = DigestUtils.md2Hex(getBytesUtf8(hashMe));
+        assertEquals(32, hash.length());
+    }
+
+    /**
      * An MD5 hash converted to hex should always be 32 characters.
      */
     @Test
@@ -102,6 +141,20 @@ public class DigestUtilsTest {
         hashMe = "length < 32";
         hash = DigestUtils.md5Hex(getBytesUtf8(hashMe));
         assertEquals(32, hash.length());
+    }
+
+    /**
+     * An MD2 hash should always be a 16 element byte[].
+     */
+    @Test
+    public void testMd2Length() {
+        String hashMe = "this is some string that is longer than 16 characters";
+        byte[] hash = DigestUtils.md2(getBytesUtf8(hashMe));
+        assertEquals(16, hash.length);
+
+        hashMe = "length < 16";
+        hash = DigestUtils.md2(getBytesUtf8(hashMe));
+        assertEquals(16, hash.length);
     }
 
     /**
