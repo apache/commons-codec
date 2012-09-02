@@ -231,7 +231,6 @@ public class DigestUtilsTest {
             DigestUtils.shaHex("abcdbcdecdefdefgefghfghighij" + "hijkijkljklmklmnlmnomnopnopq"));
         assertEquals(DigestUtils.shaHex(testData),
                 DigestUtils.shaHex(new ByteArrayInputStream(testData)));
-
     }
 
     @Test
