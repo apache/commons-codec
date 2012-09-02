@@ -234,6 +234,20 @@ public class DigestUtilsTest {
     }
 
     @Test
+    public void testSha1Hex() throws IOException {
+        // Examples from FIPS 180-1
+        assertEquals("a9993e364706816aba3e25717850c26c9cd0d89d", DigestUtils.sha1Hex("abc"));
+
+        assertEquals("a9993e364706816aba3e25717850c26c9cd0d89d", DigestUtils.sha1Hex(getBytesUtf8("abc")));
+
+        assertEquals(
+            "84983e441c3bd26ebaae4aa1f95129e5e54670f1",
+            DigestUtils.shaHex("abcdbcdecdefdefgefghfghighij" + "hijkijkljklmklmnlmnomnopnopq"));
+        assertEquals(DigestUtils.shaHex(testData),
+                DigestUtils.shaHex(new ByteArrayInputStream(testData)));
+    }
+
+    @Test
     public void testSha1UpdateWithByteArray(){
         final String d1 = "C'est un homme qui rentre dans un café, et plouf";
         final String d2 = "C'est un homme, c'est qu'une tête, on lui offre un cadeau: 'oh... encore un chapeau!'";

@@ -399,6 +399,55 @@ public class DigestUtils {
     }
 
     /**
+     * Calculates the SHA-1 digest and returns the value as a <code>byte[]</code>.
+     *
+     * @param data
+     *            Data to digest
+     * @return SHA-1 digest
+     */
+    public static byte[] sha1(String data) {
+        return sha1(getBytesUtf8(data));
+    }
+
+    /**
+     * Calculates the SHA-1 digest and returns the value as a hex string.
+     *
+     * @param data
+     *            Data to digest
+     * @return SHA-1 digest as a hex string
+     * @since 1.7
+     */
+    public static String sha1Hex(byte[] data) {
+        return Hex.encodeHexString(sha1(data));
+    }
+
+    /**
+     * Calculates the SHA-1 digest and returns the value as a hex string.
+     *
+     * @param data
+     *            Data to digest
+     * @return SHA-1 digest as a hex string
+     * @throws IOException
+     *             On error reading from the stream
+     * @since 1.7
+     */
+    public static String sha1Hex(InputStream data) throws IOException {
+        return Hex.encodeHexString(sha1(data));
+    }
+
+    /**
+     * Calculates the SHA-1 digest and returns the value as a hex string.
+     *
+     * @param data
+     *            Data to digest
+     * @return SHA-1 digest as a hex string
+     * @since 1.7
+     */
+    public static String sha1Hex(String data) {
+        return Hex.encodeHexString(sha1(data));
+    }
+
+    /**
      * Calculates the SHA-256 digest and returns the value as a <code>byte[]</code>.
      * <p>
      * Throws a <code>RuntimeException</code> on JRE versions prior to 1.4.0.
