@@ -55,14 +55,9 @@ public class DigestUtilsTest {
         assertNotNull(new DigestUtils());
     }
 
-    @Test
+    @Test(expected=IllegalArgumentException.class)
     public void testInternalNoSuchAlgorithmException() {
-        try {
-            DigestUtils.getDigest("Bogus Bogus");
-            fail("A RuntimeException should have been thrown.");
-        } catch (RuntimeException e) {
-            // Expected exception.
-        }
+        DigestUtils.getDigest("Bogus Bogus");
     }
 
     @Test
