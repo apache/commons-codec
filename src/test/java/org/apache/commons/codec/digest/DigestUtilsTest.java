@@ -84,6 +84,34 @@ public class DigestUtilsTest {
                 DigestUtils.md2Hex(new ByteArrayInputStream(testData)));
     }
 
+    /**
+     * An MD2 hash converted to hex should always be 32 characters.
+     */
+    @Test
+    public void testMd2HexLength() {
+        String hashMe = "this is some string that is longer than 32 characters";
+        String hash = DigestUtils.md2Hex(getBytesUtf8(hashMe));
+        assertEquals(32, hash.length());
+
+        hashMe = "length < 32";
+        hash = DigestUtils.md2Hex(getBytesUtf8(hashMe));
+        assertEquals(32, hash.length());
+    }
+
+    /**
+     * An MD2 hash should always be a 16 element byte[].
+     */
+    @Test
+    public void testMd2Length() {
+        String hashMe = "this is some string that is longer than 16 characters";
+        byte[] hash = DigestUtils.md2(getBytesUtf8(hashMe));
+        assertEquals(16, hash.length);
+
+        hashMe = "length < 16";
+        hash = DigestUtils.md2(getBytesUtf8(hashMe));
+        assertEquals(16, hash.length);
+    }
+
     @Test
     public void testMd5Hex() throws IOException {
         // Examples from RFC 1321
@@ -110,20 +138,6 @@ public class DigestUtilsTest {
     }
 
     /**
-     * An MD2 hash converted to hex should always be 32 characters.
-     */
-    @Test
-    public void testMd2HexLength() {
-        String hashMe = "this is some string that is longer than 32 characters";
-        String hash = DigestUtils.md2Hex(getBytesUtf8(hashMe));
-        assertEquals(32, hash.length());
-
-        hashMe = "length < 32";
-        hash = DigestUtils.md2Hex(getBytesUtf8(hashMe));
-        assertEquals(32, hash.length());
-    }
-
-    /**
      * An MD5 hash converted to hex should always be 32 characters.
      */
     @Test
@@ -138,20 +152,6 @@ public class DigestUtilsTest {
     }
 
     /**
-     * An MD2 hash should always be a 16 element byte[].
-     */
-    @Test
-    public void testMd2Length() {
-        String hashMe = "this is some string that is longer than 16 characters";
-        byte[] hash = DigestUtils.md2(getBytesUtf8(hashMe));
-        assertEquals(16, hash.length);
-
-        hashMe = "length < 16";
-        hash = DigestUtils.md2(getBytesUtf8(hashMe));
-        assertEquals(16, hash.length);
-    }
-
-    /**
      * An MD5 hash should always be a 16 element byte[].
      */
     @Test
@@ -163,6 +163,56 @@ public class DigestUtilsTest {
         hashMe = "length < 16";
         hash = DigestUtils.md5(getBytesUtf8(hashMe));
         assertEquals(16, hash.length);
+    }
+
+    @Test
+    public void testSha1Hex() throws IOException {
+        // Examples from FIPS 180-1
+        assertEquals("a9993e364706816aba3e25717850c26c9cd0d89d", DigestUtils.sha1Hex("abc"));
+
+        assertEquals("a9993e364706816aba3e25717850c26c9cd0d89d", DigestUtils.sha1Hex(getBytesUtf8("abc")));
+
+        assertEquals(
+            "84983e441c3bd26ebaae4aa1f95129e5e54670f1",
+            DigestUtils.shaHex("abcdbcdecdefdefgefghfghighij" + "hijkijkljklmklmnlmnomnopnopq"));
+        assertEquals(DigestUtils.shaHex(testData),
+                DigestUtils.sha1Hex(new ByteArrayInputStream(testData)));
+    }
+
+    @Test
+    public void testSha1UpdateWithByteArray(){
+        final String d1 = "C'est un homme qui rentre dans un café, et plouf";
+        final String d2 = "C'est un homme, c'est qu'une tête, on lui offre un cadeau: 'oh... encore un chapeau!'";
+
+        MessageDigest messageDigest = DigestUtils.getSha1Digest();
+        messageDigest.update(d1.getBytes());
+        messageDigest.update(d2.getBytes());
+        final String expectedResult = Hex.encodeHexString(messageDigest.digest());
+
+        messageDigest = DigestUtils.getSha1Digest();
+        DigestUtils.updateDigest(messageDigest, d1.getBytes());
+        DigestUtils.updateDigest(messageDigest, d2.getBytes());
+        final String actualResult = Hex.encodeHexString(messageDigest.digest());
+
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    public void testSha1UpdateWithString(){
+        final String d1 = "C'est un homme qui rentre dans un café, et plouf";
+        final String d2 = "C'est un homme, c'est qu'une tête, on lui offre un cadeau: 'oh... encore un chapeau!'";
+
+        MessageDigest messageDigest = DigestUtils.getSha1Digest();
+        messageDigest.update(StringUtils.getBytesUtf8(d1));
+        messageDigest.update(StringUtils.getBytesUtf8(d2));
+        final String expectedResult = Hex.encodeHexString(messageDigest.digest());
+
+        messageDigest = DigestUtils.getSha1Digest();
+        DigestUtils.updateDigest(messageDigest, d1);
+        DigestUtils.updateDigest(messageDigest, d2);
+        final String actualResult = Hex.encodeHexString(messageDigest.digest());
+
+        assertEquals(expectedResult, actualResult);
     }
 
     @Test
@@ -228,38 +278,6 @@ public class DigestUtilsTest {
     }
 
     @Test
-    public void testSha1Hex() throws IOException {
-        // Examples from FIPS 180-1
-        assertEquals("a9993e364706816aba3e25717850c26c9cd0d89d", DigestUtils.sha1Hex("abc"));
-
-        assertEquals("a9993e364706816aba3e25717850c26c9cd0d89d", DigestUtils.sha1Hex(getBytesUtf8("abc")));
-
-        assertEquals(
-            "84983e441c3bd26ebaae4aa1f95129e5e54670f1",
-            DigestUtils.shaHex("abcdbcdecdefdefgefghfghighij" + "hijkijkljklmklmnlmnomnopnopq"));
-        assertEquals(DigestUtils.shaHex(testData),
-                DigestUtils.sha1Hex(new ByteArrayInputStream(testData)));
-    }
-
-    @Test
-    public void testSha1UpdateWithByteArray(){
-        final String d1 = "C'est un homme qui rentre dans un café, et plouf";
-        final String d2 = "C'est un homme, c'est qu'une tête, on lui offre un cadeau: 'oh... encore un chapeau!'";
-
-        MessageDigest messageDigest = DigestUtils.getSha1Digest();
-        messageDigest.update(d1.getBytes());
-        messageDigest.update(d2.getBytes());
-        final String expectedResult = Hex.encodeHexString(messageDigest.digest());
-
-        messageDigest = DigestUtils.getSha1Digest();
-        DigestUtils.updateDigest(messageDigest, d1.getBytes());
-        DigestUtils.updateDigest(messageDigest, d2.getBytes());
-        final String actualResult = Hex.encodeHexString(messageDigest.digest());
-
-        assertEquals(expectedResult, actualResult);
-    }
-
-    @Test
     public void testShaUpdateWithByteArray(){
         final String d1 = "C'est un homme qui rentre dans un café, et plouf";
         final String d2 = "C'est un homme, c'est qu'une tête, on lui offre un cadeau: 'oh... encore un chapeau!'";
@@ -272,24 +290,6 @@ public class DigestUtilsTest {
         messageDigest = DigestUtils.getShaDigest();
         DigestUtils.updateDigest(messageDigest, d1.getBytes());
         DigestUtils.updateDigest(messageDigest, d2.getBytes());
-        final String actualResult = Hex.encodeHexString(messageDigest.digest());
-
-        assertEquals(expectedResult, actualResult);
-    }
-
-    @Test
-    public void testSha1UpdateWithString(){
-        final String d1 = "C'est un homme qui rentre dans un café, et plouf";
-        final String d2 = "C'est un homme, c'est qu'une tête, on lui offre un cadeau: 'oh... encore un chapeau!'";
-
-        MessageDigest messageDigest = DigestUtils.getSha1Digest();
-        messageDigest.update(StringUtils.getBytesUtf8(d1));
-        messageDigest.update(StringUtils.getBytesUtf8(d2));
-        final String expectedResult = Hex.encodeHexString(messageDigest.digest());
-
-        messageDigest = DigestUtils.getSha1Digest();
-        DigestUtils.updateDigest(messageDigest, d1);
-        DigestUtils.updateDigest(messageDigest, d2);
         final String actualResult = Hex.encodeHexString(messageDigest.digest());
 
         assertEquals(expectedResult, actualResult);
