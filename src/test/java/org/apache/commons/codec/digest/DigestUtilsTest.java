@@ -238,7 +238,7 @@ public class DigestUtilsTest {
             "84983e441c3bd26ebaae4aa1f95129e5e54670f1",
             DigestUtils.shaHex("abcdbcdecdefdefgefghfghighij" + "hijkijkljklmklmnlmnomnopnopq"));
         assertEquals(DigestUtils.shaHex(testData),
-                DigestUtils.shaHex(new ByteArrayInputStream(testData)));
+                DigestUtils.sha1Hex(new ByteArrayInputStream(testData)));
     }
 
     @Test
