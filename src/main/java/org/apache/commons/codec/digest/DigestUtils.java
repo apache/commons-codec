@@ -342,7 +342,9 @@ public class DigestUtils {
      * @param data
      *            Data to digest
      * @return SHA-1 digest
+     * @deprecated Use {@link #sha1(byte[])}
      */
+    @Deprecated
     public static byte[] sha(byte[] data) {
         return getShaDigest().digest(data);
     }
@@ -356,7 +358,9 @@ public class DigestUtils {
      * @throws IOException
      *             On error reading from the stream
      * @since 1.4
+     * @deprecated Use {@link #sha1(InputStream)}
      */
+    @Deprecated
     public static byte[] sha(InputStream data) throws IOException {
         return digest(getShaDigest(), data);
     }
@@ -367,7 +371,9 @@ public class DigestUtils {
      * @param data
      *            Data to digest
      * @return SHA-1 digest
+     * @deprecated Use {@link #sha1(String)}
      */
+    @Deprecated
     public static byte[] sha(String data) {
         return sha(getBytesUtf8(data));
     }
@@ -735,7 +741,9 @@ public class DigestUtils {
      * @param data
      *            Data to digest
      * @return SHA-1 digest as a hex string
+     * @deprecated Use {@link #sha1Hex(byte[])}
      */
+    @Deprecated
     public static String shaHex(byte[] data) {
         return Hex.encodeHexString(sha(data));
     }
@@ -749,7 +757,9 @@ public class DigestUtils {
      * @throws IOException
      *             On error reading from the stream
      * @since 1.4
+     * @deprecated Use {@link #sha1Hex(InputStream)}
      */
+    @Deprecated
     public static String shaHex(InputStream data) throws IOException {
         return Hex.encodeHexString(sha(data));
     }
@@ -760,7 +770,9 @@ public class DigestUtils {
      * @param data
      *            Data to digest
      * @return SHA-1 digest as a hex string
+     * @deprecated Use {@link #sha1Hex(String)}
      */
+    @Deprecated
     public static String shaHex(String data) {
         return Hex.encodeHexString(sha(data));
     }
