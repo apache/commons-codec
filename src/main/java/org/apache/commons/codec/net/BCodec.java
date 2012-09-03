@@ -19,7 +19,6 @@ package org.apache.commons.codec.net;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
-import java.nio.charset.UnsupportedCharsetException;
 
 import org.apache.commons.codec.Charsets;
 import org.apache.commons.codec.DecoderException;
@@ -75,7 +74,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      *
      * @param charsetName
      *            the default charset to use.
-     * @throws UnsupportedCharsetException
+     * @throws java.nio.charset.UnsupportedCharsetException
      *             If the named charset is unavailable
      * @since 1.7 throws UnsupportedCharsetException if the named charset is unavailable
      * @see <a href="http://download.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>

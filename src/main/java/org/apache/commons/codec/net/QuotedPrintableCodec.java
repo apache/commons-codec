@@ -20,7 +20,6 @@ package org.apache.commons.codec.net;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
-import java.nio.charset.UnsupportedCharsetException;
 import java.util.BitSet;
 
 import org.apache.commons.codec.BinaryDecoder;
@@ -111,7 +110,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      *
      * @param charsetName
      *            the default string charset to use.
-     * @throws UnsupportedCharsetException
+     * @throws java.nio.charset.UnsupportedCharsetException
      *             If the named charset is unavailable
      * @since 1.7 throws UnsupportedCharsetException if the named charset is unavailable
      */

@@ -17,7 +17,6 @@
 package org.apache.commons.codec;
 
 import java.nio.charset.Charset;
-import java.nio.charset.UnsupportedCharsetException;
 
 /**
  * Charsets required of every implementation of the Java platform.
@@ -81,7 +80,7 @@ public class Charsets {
      * @param charset
      *            The name of the requested charset, may be null.
      * @return a Charset for the named charset
-     * @throws UnsupportedCharsetException
+     * @throws java.nio.charset.UnsupportedCharsetException
      *             If the named charset is unavailable
      */
     public static Charset toCharset(String charset) {
