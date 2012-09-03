@@ -25,12 +25,10 @@ import org.apache.commons.codec.StringEncoder;
 /**
  * Encodes a string into a NYSIIS value. NYSIIS is an encoding used to relate similar names, but can also be used as a
  * general purpose scheme to find word with similar phonemes.
- *
  * <p>
  * NYSIIS features an accuracy increase of 2.7% over the traditional Soundex algorithm.
- * </p>
- *
- * <p>Algorithm description:
+ * <p>
+ * Algorithm description:
  * <pre>
  * 1. Transcode first characters of name
  *   1a. MAC ->   MCC
@@ -59,9 +57,9 @@ import org.apache.commons.codec.StringEncoder;
  * 7. If last character is A, remove it
  * 8. Collapse all strings of repeated characters
  * 9. Add original first character of name as first character of key
- * </pre></p>
- *
- * <p>This class is immutable and thread-safe.</p>
+ * </pre>
+ * <p>
+ * This class is immutable and thread-safe.
  *
  * @see <a href="http://en.wikipedia.org/wiki/NYSIIS">NYSIIS on Wikipedia</a>
  * @see <a href="http://www.dropby.com/NYSIIS.html">NYSIIS on dropby.com</a>
