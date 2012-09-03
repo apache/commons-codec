@@ -164,16 +164,12 @@ public class Languages {
             if (inExtendedComment) {
                 if (line.endsWith(ResourceConstants.EXT_CMT_END)) {
                     inExtendedComment = false;
-                } else {
-                    // skip
                 }
             } else {
                 if (line.startsWith(ResourceConstants.EXT_CMT_START)) {
                     inExtendedComment = true;
                 } else if (line.length() > 0) {
                     ls.add(line);
-                } else {
-                    // skip blank lines
                 }
             }
         }

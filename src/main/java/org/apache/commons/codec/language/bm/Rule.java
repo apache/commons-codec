@@ -334,8 +334,6 @@ public class Rule {
             if (inMultilineComment) {
                 if (line.endsWith(ResourceConstants.EXT_CMT_END)) {
                     inMultilineComment = false;
-                } else {
-                    // skip
                 }
             } else {
                 if (line.startsWith(ResourceConstants.EXT_CMT_START)) {

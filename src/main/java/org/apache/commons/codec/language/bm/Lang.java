@@ -141,10 +141,9 @@ public class Lang {
             String line = rawLine;
 
             if (inExtendedComment) {
+                // check for closing comment marker, otherwise discard doc comment line
                 if (line.endsWith(ResourceConstants.EXT_CMT_END)) {
                     inExtendedComment = false;
-                } else {
-                    // discard doc comment line
                 }
             } else {
                 if (line.startsWith(ResourceConstants.EXT_CMT_START)) {
