@@ -48,22 +48,22 @@ public class Metaphone implements StringEncoder {
     /**
      * Five values in the English language
      */
-    private static final String VOWELS = "AEIOU" ;
+    private static final String VOWELS = "AEIOU";
 
     /**
      * Variable used in Metaphone algorithm
      */
-    private static final String FRONTV = "EIY"   ;
+    private static final String FRONTV = "EIY";
 
     /**
      * Variable used in Metaphone algorithm
      */
-    private static final String VARSON = "CSPTG" ;
+    private static final String VARSON = "CSPTG";
 
     /**
      * The max code length for metaphone is 4
      */
-    private int maxCodeLen = 4 ;
+    private int maxCodeLen = 4;
 
     /**
      * Creates an instance of the Metaphone encoder
@@ -83,24 +83,24 @@ public class Metaphone implements StringEncoder {
      * @return A metaphone code corresponding to the String supplied
      */
     public String metaphone(String txt) {
-        boolean hard = false ;
+        boolean hard = false;
         if (txt == null || txt.length() == 0) {
-            return "" ;
+            return "";
         }
         // single character is itself
         if (txt.length() == 1) {
-            return txt.toUpperCase(java.util.Locale.ENGLISH) ;
+            return txt.toUpperCase(java.util.Locale.ENGLISH);
         }
 
-        char[] inwd = txt.toUpperCase(java.util.Locale.ENGLISH).toCharArray() ;
+        char[] inwd = txt.toUpperCase(java.util.Locale.ENGLISH).toCharArray();
 
         StringBuilder local = new StringBuilder(40); // manipulate
-        StringBuilder code = new StringBuilder(10) ; //   output
+        StringBuilder code = new StringBuilder(10); //   output
         // handle initial 2 characters exceptions
         switch(inwd[0]) {
-        case 'K' :
-        case 'G' :
-        case 'P' : /* looking for KN, etc*/
+        case 'K':
+        case 'G':
+        case 'P': /* looking for KN, etc*/
             if (inwd[1] == 'N') {
                 local.append(inwd, 1, inwd.length - 1);
             } else {
@@ -114,10 +114,10 @@ public class Metaphone implements StringEncoder {
                 local.append(inwd);
             }
             break;
-        case 'W' : /* looking for WR or WH */
+        case 'W': /* looking for WR or WH */
             if (inwd[1] == 'R') {   // WR -> R
                 local.append(inwd, 1, inwd.length - 1);
-                break ;
+                break;
             }
             if (inwd[1] == 'H') {
                 local.append(inwd, 1, inwd.length - 1);
@@ -126,38 +126,42 @@ public class Metaphone implements StringEncoder {
                 local.append(inwd);
             }
             break;
-        case 'X' : /* initial X becomes S */
+        case 'X': /* initial X becomes S */
             inwd[0] = 'S';
             local.append(inwd);
-            break ;
-        default :
+            break;
+        default:
             local.append(inwd);
         } // now local has working string with initials fixed
 
         int wdsz = local.length();
-        int n = 0 ;
+        int n = 0;
 
         while (code.length() < this.getMaxCodeLen() &&
                n < wdsz ) { // max code size of 4 works well
-            char symb = local.charAt(n) ;
+            char symb = local.charAt(n);
             // remove duplicate letters except C
             if (symb != 'C' && isPreviousChar( local, n, symb ) ) {
-                n++ ;
+                n++;
             } else { // not dup
                 switch(symb) {
-                case 'A' : case 'E' : case 'I' : case 'O' : case 'U' :
+                case 'A':
+                case 'E':
+                case 'I':
+                case 'O':
+                case 'U':
                     if (n == 0) {
                         code.append(symb);
                     }
-                    break ; // only use vowel if leading char
-                case 'B' :
+                    break; // only use vowel if leading char
+                case 'B':
                     if ( isPreviousChar(local, n, 'M') &&
                          isLastChar(wdsz, n) ) { // B is silent if word ends in MB
                         break;
                     }
                     code.append(symb);
                     break;
-                case 'C' : // lots of C special cases
+                case 'C': // lots of C special cases
                     /* discard if SCI, SCE or SCY */
                     if ( isPreviousChar(local, n, 'S') &&
                          !isLastChar(wdsz, n) &&
@@ -175,8 +179,8 @@ public class Metaphone implements StringEncoder {
                     }
                     if (isPreviousChar(local, n, 'S') &&
                         isNextChar(local, n, 'H') ) { // SCH->sk
-                        code.append('K') ;
-                        break ;
+                        code.append('K');
+                        break;
                     }
                     if (isNextChar(local, n, 'H')) { // detect CH
                         if (n == 0 &&
@@ -189,17 +193,17 @@ public class Metaphone implements StringEncoder {
                     } else {
                         code.append('K');
                     }
-                    break ;
-                case 'D' :
+                    break;
+                case 'D':
                     if (!isLastChar(wdsz, n + 1) &&
                         isNextChar(local, n, 'G') &&
                         FRONTV.indexOf(local.charAt(n + 2)) >= 0) { // DGE DGI DGY -> J
-                        code.append('J'); n += 2 ;
+                        code.append('J'); n += 2;
                     } else {
                         code.append('T');
                     }
-                    break ;
-                case 'G' : // GH silent at end or before consonant
+                    break;
+                case 'G': // GH silent at end or before consonant
                     if (isLastChar(wdsz, n + 1) &&
                         isNextChar(local, n, 'H')) {
                         break;
@@ -216,9 +220,9 @@ public class Metaphone implements StringEncoder {
                     }
                     if (isPreviousChar(local, n, 'G')) {
                         // NOTE: Given that duplicated chars are removed, I don't see how this can ever be true
-                        hard = true ;
+                        hard = true;
                     } else {
-                        hard = false ;
+                        hard = false;
                     }
                     if (!isLastChar(wdsz, n) &&
                         FRONTV.indexOf(local.charAt(n + 1)) >= 0 &&
@@ -227,10 +231,10 @@ public class Metaphone implements StringEncoder {
                     } else {
                         code.append('K');
                     }
-                    break ;
+                    break;
                 case 'H':
                     if (isLastChar(wdsz, n)) {
-                        break ; // terminal H
+                        break; // terminal H
                     }
                     if (n > 0 &&
                         VARSON.indexOf(local.charAt(n - 1)) >= 0) {
@@ -241,14 +245,14 @@ public class Metaphone implements StringEncoder {
                     }
                     break;
                 case 'F':
-                case 'J' :
-                case 'L' :
+                case 'J':
+                case 'L':
                 case 'M':
-                case 'N' :
-                case 'R' :
+                case 'N':
+                case 'R':
                     code.append(symb);
                     break;
-                case 'K' :
+                case 'K':
                     if (n > 0) { // not initial
                         if (!isPreviousChar(local, n, 'C')) {
                             code.append(symb);
@@ -256,19 +260,19 @@ public class Metaphone implements StringEncoder {
                     } else {
                         code.append(symb); // initial K
                     }
-                    break ;
-                case 'P' :
+                    break;
+                case 'P':
                     if (isNextChar(local,n,'H')) {
                         // PH -> F
                         code.append('F');
                     } else {
                         code.append(symb);
                     }
-                    break ;
-                case 'Q' :
+                    break;
+                case 'Q':
                     code.append('K');
                     break;
-                case 'S' :
+                case 'S':
                     if (regionMatch(local,n,"SH") ||
                         regionMatch(local,n,"SIO") ||
                         regionMatch(local,n,"SIA")) {
@@ -277,7 +281,7 @@ public class Metaphone implements StringEncoder {
                         code.append('S');
                     }
                     break;
-                case 'T' :
+                case 'T':
                     if (regionMatch(local,n,"TIA") ||
                         regionMatch(local,n,"TIO")) {
                         code.append('X');
@@ -293,22 +297,28 @@ public class Metaphone implements StringEncoder {
                     } else {
                         code.append('T');
                     }
-                    break ;
-                case 'V' :
-                    code.append('F'); break ;
-                case 'W' : case 'Y' : // silent if not followed by vowel
+                    break;
+                case 'V':
+                    code.append('F'); break;
+                case 'W':
+                case 'Y': // silent if not followed by vowel
                     if (!isLastChar(wdsz,n) &&
                         isVowel(local,n+1)) {
                         code.append(symb);
                     }
-                    break ;
-                case 'X' :
-                    code.append('K'); code.append('S');
-                    break ;
-                case 'Z' :
-                    code.append('S'); break ;
+                    break;
+                case 'X':
+                    code.append('K');
+                    code.append('S');
+                    break;
+                case 'Z':
+                    code.append('S');
+                    break;
+                default:
+                    // do nothing
+                    break;
                 } // end switch
-                n++ ;
+                n++;
             } // end else from symb != 'C'
             if (code.length() > this.getMaxCodeLen()) {
                 code.setLength(this.getMaxCodeLen());
