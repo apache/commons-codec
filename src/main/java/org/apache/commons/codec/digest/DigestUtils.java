@@ -184,7 +184,9 @@ public class DigestUtils {
      * @return An SHA-1 digest instance.
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught
+     * @deprecated Use {@link #getSha1Digest()}
      */
+    @Deprecated
     public static MessageDigest getShaDigest() {
         return getDigest("SHA");
     }
