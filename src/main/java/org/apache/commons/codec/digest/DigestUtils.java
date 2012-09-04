@@ -188,7 +188,7 @@ public class DigestUtils {
      */
     @Deprecated
     public static MessageDigest getShaDigest() {
-        return getDigest("SHA");
+        return getSha1Digest();
     }
 
     /**
@@ -349,7 +349,7 @@ public class DigestUtils {
      */
     @Deprecated
     public static byte[] sha(byte[] data) {
-        return getShaDigest().digest(data);
+        return sha1(data);
     }
 
     /**
@@ -365,7 +365,7 @@ public class DigestUtils {
      */
     @Deprecated
     public static byte[] sha(InputStream data) throws IOException {
-        return digest(getShaDigest(), data);
+        return sha1(data);
     }
 
     /**
@@ -378,7 +378,7 @@ public class DigestUtils {
      */
     @Deprecated
     public static byte[] sha(String data) {
-        return sha(getBytesUtf8(data));
+        return sha1(data);
     }
 
     /**
@@ -748,7 +748,7 @@ public class DigestUtils {
      */
     @Deprecated
     public static String shaHex(byte[] data) {
-        return Hex.encodeHexString(sha(data));
+        return sha1Hex(data);
     }
 
     /**
@@ -764,7 +764,7 @@ public class DigestUtils {
      */
     @Deprecated
     public static String shaHex(InputStream data) throws IOException {
-        return Hex.encodeHexString(sha(data));
+        return sha1Hex(data);
     }
 
     /**
@@ -777,7 +777,7 @@ public class DigestUtils {
      */
     @Deprecated
     public static String shaHex(String data) {
-        return Hex.encodeHexString(sha(data));
+        return sha1Hex(data);
     }
 
     /**
