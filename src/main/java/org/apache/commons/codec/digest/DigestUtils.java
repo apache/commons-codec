@@ -97,6 +97,7 @@ public class DigestUtils {
      *             when a {@link NoSuchAlgorithmException} is caught, which should never happen because MD2 is a
      *             built-in algorithm
      * @see MessageDigestAlgorithms#MD2
+     * @since 1.7
      */
     public static MessageDigest getMd2Digest() {
         return getDigest(MessageDigestAlgorithms.MD2);
