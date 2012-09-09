@@ -389,7 +389,7 @@ public class Base32 extends BaseNCodec {
             final byte[] buffer = ensureBufferSize(encodeSize, context);
             final int savedPos = context.pos;
             switch (context.modulus) { // % 5
-                case 0 : // TODO - correct?
+                case 0 :
                     break;
                 case 1 : // Only 1 octet; take top 5 bits then remainder
                     buffer[context.pos++] = encodeTable[(int)(context.lbitWorkArea >> 3) & MASK_5BITS]; // 8-1*5 = 3
