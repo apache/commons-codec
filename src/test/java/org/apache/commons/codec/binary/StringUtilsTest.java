@@ -136,6 +136,11 @@ public class StringUtilsTest {
     }
 
     @Test
+    public void testNewStringNullInput() {
+        Assert.assertNull(StringUtils.newString(null, "UNKNOWN"));
+    }
+
+    @Test
     public void testNewStringIso8859_1() throws UnsupportedEncodingException {
         String charsetName = "ISO-8859-1";
         testNewString(charsetName);
