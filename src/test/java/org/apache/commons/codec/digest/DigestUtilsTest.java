@@ -263,6 +263,7 @@ public class DigestUtilsTest {
             DigestUtils.sha512Hex(new ByteArrayInputStream(testData)));
 }
 
+    @SuppressWarnings("deprecation") // deliberate tests of deprecated code
     @Test
     public void testShaHex() throws IOException {
         // Examples from FIPS 180-1
@@ -277,6 +278,7 @@ public class DigestUtilsTest {
                 DigestUtils.shaHex(new ByteArrayInputStream(testData)));
     }
 
+    @SuppressWarnings("deprecation") // deliberate tests of deprecated code
     @Test
     public void testShaUpdateWithByteArray(){
         final String d1 = "C'est un homme qui rentre dans un café, et plouf";
@@ -295,6 +297,7 @@ public class DigestUtilsTest {
         assertEquals(expectedResult, actualResult);
     }
 
+    @SuppressWarnings("deprecation") // deliberate tests of deprecated code
     @Test
     public void testShaUpdateWithString(){
         final String d1 = "C'est un homme qui rentre dans un café, et plouf";
