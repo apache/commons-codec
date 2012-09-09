@@ -337,6 +337,8 @@ public class Base64 extends BaseNCodec {
             final byte[] buffer = ensureBufferSize(encodeSize, context);
             final int savedPos = context.pos;
             switch (context.modulus) { // 0-2
+                case 0 : // nothing to do here
+                    break;
                 case 1 : // 8 bits = 6 + 2
                     // top 6 bits:
                     buffer[context.pos++] = encodeTable[(context.ibitWorkArea >> 2) & MASK_6BITS];
@@ -358,6 +360,8 @@ public class Base64 extends BaseNCodec {
                         buffer[context.pos++] = PAD;
                     }
                     break;
+                default:
+                    throw new IllegalStateException("Impossible modulus "+context.modulus);
             }
             context.currentLinePos += context.pos - savedPos; // keep track of current line position
             // if currentPos == 0 we are at the start of a line, so don't add CRLF
@@ -455,8 +459,10 @@ public class Base64 extends BaseNCodec {
             // We have some spare bits remaining
             // Output all whole multiples of 8 bits and ignore the rest
             switch (context.modulus) {
-           //   case 1: // 6 bits - ignore entirely
-           //       break;
+//              case 0 : // impossible, as excluded above
+                case 1 : // 6 bits - ignore entirely
+                    // TODO not currently tested; perhaps it is impossible?
+                    break;
                 case 2 : // 12 bits = 8 + 4
                     context.ibitWorkArea = context.ibitWorkArea >> 4; // dump the extra 4 bits
                     buffer[context.pos++] = (byte) ((context.ibitWorkArea) & MASK_8BITS);
@@ -466,6 +472,8 @@ public class Base64 extends BaseNCodec {
                     buffer[context.pos++] = (byte) ((context.ibitWorkArea >> 8) & MASK_8BITS);
                     buffer[context.pos++] = (byte) ((context.ibitWorkArea) & MASK_8BITS);
                     break;
+                default:
+                    throw new IllegalStateException("Impossible modulus "+context.modulus);
             }
         }
     }
