@@ -278,7 +278,7 @@ public class Base32 extends BaseNCodec {
      *            Amount of bytes available from input for encoding.
      * @param context the context to be used
      *
-     * Output is written to {@link #buffer} as 8-bit octets, using {@link #pos} as the buffer position
+     * Output is written to {@link Context#buffer} as 8-bit octets, using {@link Context#pos} as the buffer position
      */
     @Override
     void decode(byte[] in, int inPos, int inAvail, Context context) { // package protected for access from I/O streams
