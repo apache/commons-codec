@@ -38,7 +38,7 @@ public class RuleTest {
 
         @Override
         public boolean matches(Object item) {
-            return (Integer) item < 0;
+            return ((Integer) item).intValue() < 0;
         }
     }
 
@@ -66,7 +66,7 @@ public class RuleTest {
                 for (int j = i + 1; j < phs.length; j++) {
                     int c = Rule.Phoneme.COMPARATOR.compare(phs[i], phs[j]);
 
-                    assertThat("Comparing " + phs[i].getPhonemeText() + " to " + phs[j].getPhonemeText() + " should be negative", c,
+                    assertThat("Comparing " + phs[i].getPhonemeText() + " to " + phs[j].getPhonemeText() + " should be negative", Integer.valueOf(c),
                             new NegativeIntegerBaseMatcher());
                 }
             }
