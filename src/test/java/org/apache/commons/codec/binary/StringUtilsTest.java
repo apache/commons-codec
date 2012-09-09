@@ -114,6 +114,11 @@ public class StringUtilsTest {
         }
     }
 
+    @Test
+    public void testGetBytesUncheckedNullInput() {
+        Assert.assertNull(StringUtils.getBytesUnchecked(null, "UNKNOWN"));
+    }
+
     private void testNewString(String charsetName) throws UnsupportedEncodingException {
         String expected = new String(BYTES_FIXTURE, charsetName);
         String actual = StringUtils.newString(BYTES_FIXTURE, charsetName);
