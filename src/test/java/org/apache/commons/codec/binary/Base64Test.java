@@ -648,12 +648,12 @@ public class Base64Test {
     @Test
     public void testRfc4648Section10DecodeEncode() {
         testDecodeEncode("");
-        //testDecodeEncode("Zg==");
-        //testDecodeEncode("Zm8=");
-        //testDecodeEncode("Zm9v");
-        //testDecodeEncode("Zm9vYg==");
-        //testDecodeEncode("Zm9vYmE=");
-        //testDecodeEncode("Zm9vYmFy");
+        testDecodeEncode("Zg==");
+        testDecodeEncode("Zm8=");
+        testDecodeEncode("Zm9v");
+        testDecodeEncode("Zm9vYg==");
+        testDecodeEncode("Zm9vYmE=");
+        testDecodeEncode("Zm9vYmFy");
     }
 
     private void testDecodeEncode(String encodedText) {
