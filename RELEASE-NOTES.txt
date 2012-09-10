@@ -7,6 +7,8 @@ collection of phonetic encoding utilities.
 
 Feature and fix release.
 
+Commons Codec 1.7 requires a minimum of Java 1.6
+
 Changes in this version include:
 
 New features:
