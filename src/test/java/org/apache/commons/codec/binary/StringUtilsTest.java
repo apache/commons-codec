@@ -33,6 +33,12 @@ public class StringUtilsTest {
 
     private static final byte[] BYTES_FIXTURE = {'a','b','c'};
 
+    // This is valid input for UTF-16BE
+    private static final byte[] BYTES_FIXTURE_16BE = {0, 'a', 0, 'b', 0, 'c'};
+
+    // This is valid for UTF-16LE
+    private static final byte[] BYTES_FIXTURE_16LE = {'a', 0, 'b', 0, 'c', 0};
+
     private static final String STRING_FIXTURE = "ABC";
 
     /**
@@ -171,8 +177,8 @@ public class StringUtilsTest {
     public void testNewStringUtf16Be() throws UnsupportedEncodingException {
         String charsetName = "UTF-16BE";
         testNewString(charsetName);
-        String expected = new String(BYTES_FIXTURE, charsetName);
-        String actual = StringUtils.newStringUtf16Be(BYTES_FIXTURE);
+        String expected = new String(BYTES_FIXTURE_16BE, charsetName);
+        String actual = StringUtils.newStringUtf16Be(BYTES_FIXTURE_16BE);
         Assert.assertEquals(expected, actual);
     }
 
@@ -180,8 +186,8 @@ public class StringUtilsTest {
     public void testNewStringUtf16Le() throws UnsupportedEncodingException {
         String charsetName = "UTF-16LE";
         testNewString(charsetName);
-        String expected = new String(BYTES_FIXTURE, charsetName);
-        String actual = StringUtils.newStringUtf16Le(BYTES_FIXTURE);
+        String expected = new String(BYTES_FIXTURE_16LE, charsetName);
+        String actual = StringUtils.newStringUtf16Le(BYTES_FIXTURE_16LE);
         Assert.assertEquals(expected, actual);
     }
 
