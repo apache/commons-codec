@@ -54,7 +54,7 @@ limitations under the License.
       <p>
         We recommend you use a mirror to download our release
         builds, but you <strong>must</strong> verify the integrity of
-        the downloaded files using signatures downloaded from our main 
+        the downloaded files using signatures downloaded from our main
         distribution directories. Recent releases (48 hours) may not yet
         be available from the mirrors.
       </p>
@@ -71,7 +71,7 @@ limitations under the License.
 
       <form action="[location]" method="get" id="SelectMirror">
         <p>
-          Other mirrors: 
+          Other mirrors:
           <select name="Preferred">
           [if-any http]
             [for http]<option value="[http]">[http]</option>[end]
@@ -90,37 +90,37 @@ limitations under the License.
       <p>
         The <a href="http://www.apache.org/dist/commons/KEYS">KEYS</a>
         link links to the code signing keys used to sign the product.
-        The <code>PGP</code> link downloads the OpenPGP compatible signature from our main site. 
+        The <code>PGP</code> link downloads the OpenPGP compatible signature from our main site.
         The <code>MD5</code> link downloads the checksum from the main site.
       </p>
     </subsection>
     </section>
-    <section name="Commons Codec 1.6 ">
+    <section name="Commons Codec 1.7 ">
       <subsection name="Binaries">
         <table>
           <tr>
-              <td><a href="[preferred]/commons/codec/binaries/commons-codec-1.6-bin.tar.gz">commons-codec-1.6-bin.tar.gz</a></td>
-              <td><a href="http://www.apache.org/dist/commons/codec/binaries/commons-codec-1.6-bin.tar.gz.md5">md5</a></td>
-              <td><a href="http://www.apache.org/dist/commons/codec/binaries/commons-codec-1.6-bin.tar.gz.asc">pgp</a></td>
+              <td><a href="[preferred]/commons/codec/binaries/commons-codec-1.7-bin.tar.gz">commons-codec-1.7-bin.tar.gz</a></td>
+              <td><a href="http://www.apache.org/dist/commons/codec/binaries/commons-codec-1.7-bin.tar.gz.md5">md5</a></td>
+              <td><a href="http://www.apache.org/dist/commons/codec/binaries/commons-codec-1.7-bin.tar.gz.asc">pgp</a></td>
           </tr>
           <tr>
-              <td><a href="[preferred]/commons/codec/binaries/commons-codec-1.6-bin.zip">commons-codec-1.6-bin.zip</a></td>
-              <td><a href="http://www.apache.org/dist/commons/codec/binaries/commons-codec-1.6-bin.zip.md5">md5</a></td>
-              <td><a href="http://www.apache.org/dist/commons/codec/binaries/commons-codec-1.6-bin.zip.asc">pgp</a></td>
+              <td><a href="[preferred]/commons/codec/binaries/commons-codec-1.7-bin.zip">commons-codec-1.7-bin.zip</a></td>
+              <td><a href="http://www.apache.org/dist/commons/codec/binaries/commons-codec-1.7-bin.zip.md5">md5</a></td>
+              <td><a href="http://www.apache.org/dist/commons/codec/binaries/commons-codec-1.7-bin.zip.asc">pgp</a></td>
           </tr>
         </table>
       </subsection>
       <subsection name="Source">
         <table>
           <tr>
-              <td><a href="[preferred]/commons/codec/source/commons-codec-1.6-src.tar.gz">commons-codec-1.6-src.tar.gz</a></td>
-              <td><a href="http://www.apache.org/dist/commons/codec/source/commons-codec-1.6-src.tar.gz.md5">md5</a></td>
-              <td><a href="http://www.apache.org/dist/commons/codec/source/commons-codec-1.6-src.tar.gz.asc">pgp</a></td>
+              <td><a href="[preferred]/commons/codec/source/commons-codec-1.7-src.tar.gz">commons-codec-1.7-src.tar.gz</a></td>
+              <td><a href="http://www.apache.org/dist/commons/codec/source/commons-codec-1.7-src.tar.gz.md5">md5</a></td>
+              <td><a href="http://www.apache.org/dist/commons/codec/source/commons-codec-1.7-src.tar.gz.asc">pgp</a></td>
           </tr>
           <tr>
-              <td><a href="[preferred]/commons/codec/source/commons-codec-1.6-src.zip">commons-codec-1.6-src.zip</a></td>
-              <td><a href="http://www.apache.org/dist/commons/codec/source/commons-codec-1.6-src.zip.md5">md5</a></td>
-              <td><a href="http://www.apache.org/dist/commons/codec/source/commons-codec-1.6-src.zip.asc">pgp</a></td>
+              <td><a href="[preferred]/commons/codec/source/commons-codec-1.7-src.zip">commons-codec-1.7-src.zip</a></td>
+              <td><a href="http://www.apache.org/dist/commons/codec/source/commons-codec-1.7-src.zip.md5">md5</a></td>
+              <td><a href="http://www.apache.org/dist/commons/codec/source/commons-codec-1.7-src.zip.asc">pgp</a></td>
           </tr>
         </table>
       </subsection>
