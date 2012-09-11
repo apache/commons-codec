@@ -41,42 +41,7 @@ o CODEC-147:  BeiderMorseEncoder/PhoneticEngine: make results deterministic by u
 o CODEC-143:  StringBuffer could be replaced by StringBuilder for local variables.
 
 
-Known issue only on IBM Java 5:
-
--------------------------------------------------------------------------------
-Test set: org.apache.commons.codec.binary.Base64InputStreamTest
--------------------------------------------------------------------------------
-Tests run: 15, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.287 sec
-<<< FAILURE!
-testInputStreamReader(org.apache.commons.codec.binary.Base64InputStreamTest)
-Time elapsed: 0.004 sec  <<< ERROR!
-sun.io.MalformedInputException
-       at sun.io.ByteToCharUTF8.convert(ByteToCharUTF8.java:310)
-       at sun.nio.cs.StreamDecoder$ConverterSD.convertInto(StreamDecoder.java:316)
-       at sun.nio.cs.StreamDecoder$ConverterSD.implRead(StreamDecoder.java:366)
-       at sun.nio.cs.StreamDecoder.read(StreamDecoder.java:252)
-       at java.io.InputStreamReader.read(InputStreamReader.java:212)
-       at java.io.BufferedReader.fill(BufferedReader.java:157)
-       at java.io.BufferedReader.readLine(BufferedReader.java:320)
-       at java.io.BufferedReader.readLine(BufferedReader.java:383)
-       at org.apache.commons.codec.binary.Base64InputStreamTest.testInputStreamReader(Base64InputStreamTest.java:110)
--------------------------------------------------------------------------------
-$ java -version
-java version "1.5.0"
-Java(TM) 2 Runtime Environment, Standard Edition (build pxa64devifx-20110627
-(SR12 FP5 ))
-IBM J9 VM (build 2.3, J2RE 1.5.0 IBM J9 2.3 Linux amd64-64
-j9vmxa6423ifx-20110624 (JIT enabled)
-J9VM - 20110623_85457_LHdSMr
-JIT  - 20100623_16197ifx10_r8
-GC   - FP22011_06)
-JCL  - 20110627
--------------------------------------------------------------------------------
-]]>
-
 For complete information on Commons Codec, including instructions on how to submit bug reports,
 patches, or suggestions for improvement, see the Apache Commons Codec website:
 
 http://commons.apache.org/codec/
-
-
