@@ -25,7 +25,7 @@ limitations under the License.
   <modelVersion>4.0.0</modelVersion>
   <groupId>commons-codec</groupId>
   <artifactId>commons-codec</artifactId>
-  <version>1.7-SNAPSHOT</version>
+  <version>1.8-SNAPSHOT</version>
   <name>Commons Codec</name>
   <inceptionYear>2002</inceptionYear>
   <description>
@@ -199,7 +199,7 @@ limitations under the License.
     <maven.compile.source>1.6</maven.compile.source>
     <maven.compile.target>1.6</maven.compile.target>
     <commons.componentid>codec</commons.componentid>
-    <commons.release.version>1.7</commons.release.version>
+    <commons.release.version>1.8</commons.release.version>
     <!-- The RC version used in the staging repository URL. -->
     <commons.rc.version>RC1</commons.rc.version>
     <commons.jira.id>CODEC</commons.jira.id>
