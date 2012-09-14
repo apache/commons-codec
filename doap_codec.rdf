@@ -54,6 +54,16 @@ limitations under the License.
         <created>2011-03-29</created>
         <revision>1.5</revision>
       </Version>
+      <Version>
+        <name>commons-codec</name>
+        <created>2011-11-20</created>
+        <revision>1.6</revision>
+      </Version>
+      <Version>
+        <name>commons-codec</name>
+        <created>2012-09-11</created>
+        <revision>1.7</revision>
+      </Version>
     </release>
     <mailing-list rdf:resource="http://commons.apache.org/mail-lists.html"/>
   </Project>
