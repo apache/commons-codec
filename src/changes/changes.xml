@@ -113,7 +113,7 @@ Feature and fix release.
       <action issue="CODEC-130" dev="ggregory" type="add" due-to="tn">
         Base64InputStream.skip skips underlying stream, not output.
       </action>
-      <action issue="CODEC-63" dev="ggregory" type="add" due-to="bayard">
+      <action issue="CODEC-63" dev="ggregory" type="add" due-to="tn">
         Implement NYSIIS phonetic encoder.
       </action>
     </release>
