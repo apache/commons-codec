@@ -20,6 +20,8 @@ package org.apache.commons.codec.net;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+import java.nio.charset.IllegalCharsetNameException;
+import java.nio.charset.UnsupportedCharsetException;
 import java.util.BitSet;
 
 import org.apache.commons.codec.BinaryDecoder;
@@ -86,7 +88,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
     }
 
     /**
-     * Default constructor.
+     * Default constructor, assumes default charset of {@link Charsets#UTF_8}
      */
     public QuotedPrintableCodec() {
         this(Charsets.UTF_8);
@@ -97,8 +99,6 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      *
      * @param charset
      *            the default string charset to use.
-     * @throws UnsupportedCharsetException
-     *             If the named charset is unavailable
      * @since 1.7
      */
     public QuotedPrintableCodec(Charset charset) {
@@ -110,11 +110,18 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      *
      * @param charsetName
      *            the default string charset to use.
-     * @throws java.nio.charset.UnsupportedCharsetException
-     *             If the named charset is unavailable
+     * @throws UnsupportedCharsetException
+     *             If no support for the named charset is available 
+     *             in this instance of the Java virtual machine
+     * @throws IllegalArgumentException
+     *             If the given charsetName is null
+     * @throws IllegalCharsetNameException
+     *             If the given charset name is illegal
+     *
      * @since 1.7 throws UnsupportedCharsetException if the named charset is unavailable
      */
-    public QuotedPrintableCodec(String charsetName) {
+    public QuotedPrintableCodec(String charsetName) 
+            throws IllegalCharsetNameException, IllegalArgumentException, UnsupportedCharsetException {
         this(Charset.forName(charsetName));
     }
 
