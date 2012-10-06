@@ -27,6 +27,7 @@ import java.util.Random;
 
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.binary.StringUtils;
+import static org.apache.commons.codec.binary.StringUtils.getBytesUtf8;
 import org.junit.Test;
 
 /**
@@ -37,10 +38,6 @@ import org.junit.Test;
 public class DigestUtilsTest {
 
     private final byte[] testData = new byte[1024*1024];
-
-    private byte[] getBytesUtf8(String hashMe) {
-        return StringUtils.getBytesUtf8(hashMe);
-    }
 
     /* (non-Javadoc)
      * @see junit.framework.TestCase#setUp()
