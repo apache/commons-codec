@@ -756,11 +756,11 @@ public class Base64 extends BaseNCodec {
     }
 
     /**
-     * Returns whether or not the <code>octet</code> is in the Base32 alphabet.
+     * Returns whether or not the <code>octet</code> is in the Base64 alphabet.
      *
      * @param octet
      *            The value to test
-     * @return {@code true} if the value is defined in the the Base32 alphabet {@code false} otherwise.
+     * @return {@code true} if the value is defined in the the Base64 alphabet {@code false} otherwise.
      */
     @Override
     protected boolean isInAlphabet(byte octet) {
