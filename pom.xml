@@ -102,6 +102,11 @@ limitations under the License.
       <organizationUrl>http://juliusdavies.ca/</organizationUrl>
       <timezone>-8</timezone>
     </developer>
+    <developer>
+      <name>Thomas Neidhart</name>
+      <id>tn</id>
+      <email>tn@apache.org</email>
+    </developer>
   </developers>
   <contributors>
     <contributor>
@@ -182,7 +187,7 @@ limitations under the License.
       <name>Matthew Pocock</name>
       <email>turingatemyhamster@gmail.com</email>
       <roles>
-        <role>Beinder-Morse phonetic matching</role>
+        <role>Beider-Morse phonetic matching</role>
       </roles>
     </contributor>
   </contributors>
