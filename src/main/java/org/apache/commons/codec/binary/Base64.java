@@ -261,6 +261,7 @@ public class Base64 extends BaseNCodec {
      * @param urlSafe
      *            Instead of emitting '+' and '/' we emit '-' and '_' respectively. urlSafe is only applied to encode
      *            operations. Decoding seamlessly handles both modes.
+     *            <b>Note: no padding is added when using the URL-safe alphabet.</b>
      * @throws IllegalArgumentException
      *             The provided lineSeparator included some base64 characters. That's not going to work!
      * @since 1.4
@@ -305,9 +306,10 @@ public class Base64 extends BaseNCodec {
     /**
      * <p>
      * Encodes all of the provided data, starting at inPos, for inAvail bytes. Must be called at least twice: once with
-     * the data to encode, and once with inAvail set to "-1" to alert encoder that EOF has been reached, so flush last
+     * the data to encode, and once with inAvail set to "-1" to alert encoder that EOF has been reached, to flush last
      * remaining bytes (if not multiple of 3).
      * </p>
+     * <p><b>Note: no padding is added when encoding using the URL-safe alphabet.</b></p>
      * <p>
      * Thanks to "commons" project in ws.apache.org for the bitwise operations, and general approach.
      * http://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/
@@ -567,7 +569,7 @@ public class Base64 extends BaseNCodec {
     /**
      * Encodes binary data using a URL-safe variation of the base64 algorithm but does not chunk the output. The
      * url-safe variation emits - and _ instead of + and / characters.
-     *
+     * <b>Note: no padding is added.</b>
      * @param binaryData
      *            binary data to encode
      * @return byte[] containing Base64 characters in their UTF-8 representation.
@@ -580,7 +582,7 @@ public class Base64 extends BaseNCodec {
     /**
      * Encodes binary data using a URL-safe variation of the base64 algorithm but does not chunk the output. The
      * url-safe variation emits - and _ instead of + and / characters.
-     *
+     * <b>Note: no padding is added.</b>
      * @param binaryData
      *            binary data to encode
      * @return String containing Base64 characters
@@ -625,6 +627,7 @@ public class Base64 extends BaseNCodec {
      *            if {@code true} this encoder will chunk the base64 output into 76 character blocks
      * @param urlSafe
      *            if {@code true} this encoder will emit - and _ instead of the usual + and / characters.
+     *            <b>Note: no padding is added when encoding using the URL-safe alphabet.</b>
      * @return Base64-encoded data.
      * @throws IllegalArgumentException
      *             Thrown when the input array needs an output array bigger than {@link Integer#MAX_VALUE}
@@ -643,6 +646,7 @@ public class Base64 extends BaseNCodec {
      *            if {@code true} this encoder will chunk the base64 output into 76 character blocks
      * @param urlSafe
      *            if {@code true} this encoder will emit - and _ instead of the usual + and / characters.
+     *            <b>Note: no padding is added when encoding using the URL-safe alphabet.</b>
      * @param maxResultSize
      *            The maximum result size to accept.
      * @return Base64-encoded data.
