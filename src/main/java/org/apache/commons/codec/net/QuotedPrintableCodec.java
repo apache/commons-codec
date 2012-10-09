@@ -111,7 +111,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * @param charsetName
      *            the default string charset to use.
      * @throws UnsupportedCharsetException
-     *             If no support for the named charset is available 
+     *             If no support for the named charset is available
      *             in this instance of the Java virtual machine
      * @throws IllegalArgumentException
      *             If the given charsetName is null
@@ -120,7 +120,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      *
      * @since 1.7 throws UnsupportedCharsetException if the named charset is unavailable
      */
-    public QuotedPrintableCodec(String charsetName) 
+    public QuotedPrintableCodec(String charsetName)
             throws IllegalCharsetNameException, IllegalArgumentException, UnsupportedCharsetException {
         this(Charset.forName(charsetName));
     }
