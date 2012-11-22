@@ -179,6 +179,17 @@ import org.apache.commons.codec.StringEncoder;
  */
 public class ColognePhonetic implements StringEncoder {
 
+    // Predefined char arrays for better performance and less GC load
+    private static final char[] AEIJOUY = new char[] { 'A', 'E', 'I', 'J', 'O', 'U', 'Y' };
+    private static final char[] SCZ = new char[] { 'S', 'C', 'Z' };
+    private static final char[] WFPV = new char[] { 'W', 'F', 'P', 'V' };
+    private static final char[] GKQ = new char[] { 'G', 'K', 'Q' };
+    private static final char[] CKQ = new char[] { 'C', 'K', 'Q' };
+    private static final char[] AHKLOQRUX = new char[] { 'A', 'H', 'K', 'L', 'O', 'Q', 'R', 'U', 'X' };
+    private static final char[] SZ = new char[] { 'S', 'Z' };
+    private static final char[] AHOUKQX = new char[] { 'A', 'H', 'O', 'U', 'K', 'Q', 'X' };
+    private static final char[] TDX = new char[] { 'T', 'D', 'X' };
+
     /**
      * This class is not thread-safe; the field {@link #length} is mutable.
      * However, it is not shared between threads, as it is constructed on demand
@@ -331,7 +342,7 @@ public class ColognePhonetic implements StringEncoder {
                 nextChar = '-';
             }
 
-            if (arrayContains(new char[]{'A', 'E', 'I', 'J', 'O', 'U', 'Y'}, chr)) {
+            if (arrayContains(AEIJOUY, chr)) {
                 code = '0';
             } else if (chr == 'H' || chr < 'A' || chr > 'Z') {
                 if (lastCode == '/') {
@@ -340,13 +351,13 @@ public class ColognePhonetic implements StringEncoder {
                 code = '-';
             } else if (chr == 'B' || (chr == 'P' && nextChar != 'H')) {
                 code = '1';
-            } else if ((chr == 'D' || chr == 'T') && !arrayContains(new char[]{'S', 'C', 'Z'}, nextChar)) {
+            } else if ((chr == 'D' || chr == 'T') && !arrayContains(SCZ, nextChar)) {
                 code = '2';
-            } else if (arrayContains(new char[]{'W', 'F', 'P', 'V'}, chr)) {
+            } else if (arrayContains(WFPV, chr)) {
                 code = '3';
-            } else if (arrayContains(new char[]{'G', 'K', 'Q'}, chr)) {
+            } else if (arrayContains(GKQ, chr)) {
                 code = '4';
-            } else if (chr == 'X' && !arrayContains(new char[]{'C', 'K', 'Q'}, lastChar)) {
+            } else if (chr == 'X' && !arrayContains(CKQ, lastChar)) {
                 code = '4';
                 input.addLeft('S');
                 rightLength++;
@@ -354,20 +365,19 @@ public class ColognePhonetic implements StringEncoder {
                 code = '8';
             } else if (chr == 'C') {
                 if (lastCode == '/') {
-                    if (arrayContains(new char[]{'A', 'H', 'K', 'L', 'O', 'Q', 'R', 'U', 'X'}, nextChar)) {
+                    if (arrayContains(AHKLOQRUX, nextChar)) {
                         code = '4';
                     } else {
                         code = '8';
                     }
                 } else {
-                    if (arrayContains(new char[]{'S', 'Z'}, lastChar) ||
-                        !arrayContains(new char[]{'A', 'H', 'O', 'U', 'K', 'Q', 'X'}, nextChar)) {
+                    if (arrayContains(SZ, lastChar) || !arrayContains(AHOUKQX, nextChar)) {
                         code = '8';
                     } else {
                         code = '4';
                     }
                 }
-            } else if (arrayContains(new char[]{'T', 'D', 'X'}, chr)) {
+            } else if (arrayContains(TDX, chr)) {
                 code = '8';
             } else if (chr == 'R') {
                 code = '7';
