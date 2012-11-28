@@ -48,6 +48,7 @@ The <action> type attribute can be add,update,fix,remove.
     </release>
     -->
     <release version="1.8" date="TBA" description="Feature and fix release."> 
+      <action dev="ggregory" type="add" issue="CODEC-161" due-to="crice">Add Match Rating Approach (MRA) phonetic algorithm encoder.</action>   
       <action dev="ggregory" type="fix" issue="CODEC-163" due-to="leo141">ColognePhonetic encoder unneccessarily creates many char arrays on every loop run.</action>   
       <action dev="sebb" type="fix" issue="CODEC-160">Base64.encodeBase64URLSafeString doesn't add padding characters at the end.</action>   
     </release>
