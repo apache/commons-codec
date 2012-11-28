@@ -18,7 +18,6 @@
 package org.apache.commons.codec.language;
 
 import org.apache.commons.codec.EncoderException;
-import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.StringEncoderAbstractTest;
 import org.junit.Test;
 
@@ -28,10 +27,10 @@ import org.junit.Test;
  * <p>Keep this file in UTF-8 encoding for proper Javadoc processing.</p>
  *
  */
-public class ColognePhoneticTest extends StringEncoderAbstractTest {
+public class ColognePhoneticTest extends StringEncoderAbstractTest<ColognePhonetic> {
 
     @Override
-    protected StringEncoder createStringEncoder() {
+    protected ColognePhonetic createStringEncoder() {
         return new ColognePhonetic();
     }
 

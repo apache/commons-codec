@@ -20,7 +20,6 @@ package org.apache.commons.codec.language;
 import junit.framework.Assert;
 
 import org.apache.commons.codec.EncoderException;
-import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.StringEncoderAbstractTest;
 import org.junit.Test;
 
@@ -30,10 +29,10 @@ import org.junit.Test;
  * @version $Id: CaverphoneTest.java 1075947 2011-03-01 17:56:14Z ggregory $
  * @since 1.5
  */
-public class Caverphone1Test extends StringEncoderAbstractTest {
+public class Caverphone1Test extends StringEncoderAbstractTest<Caverphone1> {
 
     @Override
-    protected StringEncoder createStringEncoder() {
+    protected Caverphone1 createStringEncoder() {
         return new Caverphone1();
     }
 

@@ -21,25 +21,24 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.StringEncoderAbstractTest;
 import org.junit.Test;
 
 /**
  * @version $Id$
  */
-public class MetaphoneTest extends StringEncoderAbstractTest {
+public class MetaphoneTest extends StringEncoderAbstractTest<Metaphone> {
 
     public void assertIsMetaphoneEqual(String source, String[] matches) {
         // match source to all matches
         for (String matche : matches) {
             assertTrue("Source: " + source + ", should have same Metaphone as: " + matche,
-                       this.getMetaphone().isMetaphoneEqual(source, matche));
+                       this.getStringEncoder().isMetaphoneEqual(source, matche));
         }
         // match to each other
         for (String matche : matches) {
             for (String matche2 : matches) {
-                assertTrue(this.getMetaphone().isMetaphoneEqual(matche, matche2));
+                assertTrue(this.getStringEncoder().isMetaphoneEqual(matche, matche2));
             }
         }
     }
@@ -50,20 +49,13 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
             String name0 = pair[0];
             String name1 = pair[1];
             String failMsg = "Expected match between " + name0 + " and " + name1;
-            assertTrue(failMsg, this.getMetaphone().isMetaphoneEqual(name0, name1));
-            assertTrue(failMsg, this.getMetaphone().isMetaphoneEqual(name1, name0));
+            assertTrue(failMsg, this.getStringEncoder().isMetaphoneEqual(name0, name1));
+            assertTrue(failMsg, this.getStringEncoder().isMetaphoneEqual(name1, name0));
         }
     }
 
-    /**
-     * @return Returns the metaphone.
-     */
-    private Metaphone getMetaphone() {
-        return (Metaphone) this.getStringEncoder();
-    }
-
     @Override
-    protected StringEncoder createStringEncoder() {
+    protected Metaphone createStringEncoder() {
         return new Metaphone();
     }
 
@@ -368,31 +360,31 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
 
     @Test
     public void testMetaphone() {
-        assertEquals("HL", this.getMetaphone().metaphone("howl"));
-        assertEquals("TSTN", this.getMetaphone().metaphone("testing"));
-        assertEquals("0", this.getMetaphone().metaphone("The"));
-        assertEquals("KK", this.getMetaphone().metaphone("quick"));
-        assertEquals("BRN", this.getMetaphone().metaphone("brown"));
-        assertEquals("FKS", this.getMetaphone().metaphone("fox"));
-        assertEquals("JMPT", this.getMetaphone().metaphone("jumped"));
-        assertEquals("OFR", this.getMetaphone().metaphone("over"));
-        assertEquals("0", this.getMetaphone().metaphone("the"));
-        assertEquals("LS", this.getMetaphone().metaphone("lazy"));
-        assertEquals("TKS", this.getMetaphone().metaphone("dogs"));
+        assertEquals("HL", this.getStringEncoder().metaphone("howl"));
+        assertEquals("TSTN", this.getStringEncoder().metaphone("testing"));
+        assertEquals("0", this.getStringEncoder().metaphone("The"));
+        assertEquals("KK", this.getStringEncoder().metaphone("quick"));
+        assertEquals("BRN", this.getStringEncoder().metaphone("brown"));
+        assertEquals("FKS", this.getStringEncoder().metaphone("fox"));
+        assertEquals("JMPT", this.getStringEncoder().metaphone("jumped"));
+        assertEquals("OFR", this.getStringEncoder().metaphone("over"));
+        assertEquals("0", this.getStringEncoder().metaphone("the"));
+        assertEquals("LS", this.getStringEncoder().metaphone("lazy"));
+        assertEquals("TKS", this.getStringEncoder().metaphone("dogs"));
     }
 
     @Test
     public void testWordEndingInMB() {
-        assertEquals( "KM", this.getMetaphone().metaphone("COMB") );
-        assertEquals( "TM", this.getMetaphone().metaphone("TOMB") );
-        assertEquals( "WM", this.getMetaphone().metaphone("WOMB") );
+        assertEquals( "KM", this.getStringEncoder().metaphone("COMB") );
+        assertEquals( "TM", this.getStringEncoder().metaphone("TOMB") );
+        assertEquals( "WM", this.getStringEncoder().metaphone("WOMB") );
     }
 
     @Test
     public void testDiscardOfSCEOrSCIOrSCY() {
-        assertEquals( "SNS", this.getMetaphone().metaphone("SCIENCE") );
-        assertEquals( "SN", this.getMetaphone().metaphone("SCENE") );
-        assertEquals( "S", this.getMetaphone().metaphone("SCY") );
+        assertEquals( "SNS", this.getStringEncoder().metaphone("SCIENCE") );
+        assertEquals( "SN", this.getStringEncoder().metaphone("SCENE") );
+        assertEquals( "S", this.getStringEncoder().metaphone("SCY") );
     }
 
     /**
@@ -401,80 +393,80 @@ public class MetaphoneTest extends StringEncoderAbstractTest {
     @Test
     public void testWhy() {
         // PHP returns "H". The original metaphone returns an empty string.
-        assertEquals("", this.getMetaphone().metaphone("WHY"));
+        assertEquals("", this.getStringEncoder().metaphone("WHY"));
     }
 
     @Test
     public void testWordsWithCIA() {
-        assertEquals( "XP", this.getMetaphone().metaphone("CIAPO") );
+        assertEquals( "XP", this.getStringEncoder().metaphone("CIAPO") );
     }
 
     @Test
     public void testTranslateOfSCHAndCH() {
-        assertEquals( "SKTL", this.getMetaphone().metaphone("SCHEDULE") );
-        assertEquals( "SKMT", this.getMetaphone().metaphone("SCHEMATIC") );
+        assertEquals( "SKTL", this.getStringEncoder().metaphone("SCHEDULE") );
+        assertEquals( "SKMT", this.getStringEncoder().metaphone("SCHEMATIC") );
 
-        assertEquals( "KRKT", this.getMetaphone().metaphone("CHARACTER") );
-        assertEquals( "TX", this.getMetaphone().metaphone("TEACH") );
+        assertEquals( "KRKT", this.getStringEncoder().metaphone("CHARACTER") );
+        assertEquals( "TX", this.getStringEncoder().metaphone("TEACH") );
     }
 
     @Test
     public void testTranslateToJOfDGEOrDGIOrDGY() {
-        assertEquals( "TJ", this.getMetaphone().metaphone("DODGY") );
-        assertEquals( "TJ", this.getMetaphone().metaphone("DODGE") );
-        assertEquals( "AJMT", this.getMetaphone().metaphone("ADGIEMTI") );
+        assertEquals( "TJ", this.getStringEncoder().metaphone("DODGY") );
+        assertEquals( "TJ", this.getStringEncoder().metaphone("DODGE") );
+        assertEquals( "AJMT", this.getStringEncoder().metaphone("ADGIEMTI") );
     }
 
     @Test
     public void testDiscardOfSilentHAfterG() {
-        assertEquals( "KNT", this.getMetaphone().metaphone("GHENT") );
-        assertEquals( "B", this.getMetaphone().metaphone("BAUGH") );
+        assertEquals( "KNT", this.getStringEncoder().metaphone("GHENT") );
+        assertEquals( "B", this.getStringEncoder().metaphone("BAUGH") );
     }
 
     @Test
     public void testDiscardOfSilentGN() {
         // NOTE: This does not test for silent GN, but for starting with GN
-        assertEquals( "N", this.getMetaphone().metaphone("GNU") );
+        assertEquals( "N", this.getStringEncoder().metaphone("GNU") );
 
         // NOTE: Trying to test for GNED, but expected code does not appear to execute
-        assertEquals( "SNT", this.getMetaphone().metaphone("SIGNED") );
+        assertEquals( "SNT", this.getStringEncoder().metaphone("SIGNED") );
     }
 
     @Test
     public void testPHTOF() {
-        assertEquals( "FX", this.getMetaphone().metaphone("PHISH") );
+        assertEquals( "FX", this.getStringEncoder().metaphone("PHISH") );
     }
 
     @Test
     public void testSHAndSIOAndSIAToX() {
-        assertEquals( "XT", this.getMetaphone().metaphone("SHOT") );
-        assertEquals( "OTXN", this.getMetaphone().metaphone("ODSIAN") );
-        assertEquals( "PLXN", this.getMetaphone().metaphone("PULSION") );
+        assertEquals( "XT", this.getStringEncoder().metaphone("SHOT") );
+        assertEquals( "OTXN", this.getStringEncoder().metaphone("ODSIAN") );
+        assertEquals( "PLXN", this.getStringEncoder().metaphone("PULSION") );
     }
 
     @Test
     public void testTIOAndTIAToX() {
-        assertEquals( "OX", this.getMetaphone().metaphone("OTIA") );
-        assertEquals( "PRXN", this.getMetaphone().metaphone("PORTION") );
+        assertEquals( "OX", this.getStringEncoder().metaphone("OTIA") );
+        assertEquals( "PRXN", this.getStringEncoder().metaphone("PORTION") );
     }
 
     @Test
     public void testTCH() {
-        assertEquals( "RX", this.getMetaphone().metaphone("RETCH") );
-        assertEquals( "WX", this.getMetaphone().metaphone("WATCH") );
+        assertEquals( "RX", this.getStringEncoder().metaphone("RETCH") );
+        assertEquals( "WX", this.getStringEncoder().metaphone("WATCH") );
     }
 
     @Test
     public void testExceedLength() {
         // should be AKSKS, but istruncated by Max Code Length
-        assertEquals( "AKSK", this.getMetaphone().metaphone("AXEAXE") );
+        assertEquals( "AKSK", this.getStringEncoder().metaphone("AXEAXE") );
     }
 
     @Test
     public void testSetMaxLengthWithTruncation() {
         // should be AKSKS, but istruncated by Max Code Length
-        this.getMetaphone().setMaxCodeLen( 6 );
-        assertEquals( "AKSKSK", this.getMetaphone().metaphone("AXEAXEAXE") );
+        this.getStringEncoder().setMaxCodeLen( 6 );
+        assertEquals( "AKSKSK", this.getStringEncoder().metaphone("AXEAXEAXE") );
     }
 
     public void validateFixture(String[][] pairs) {

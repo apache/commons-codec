@@ -19,7 +19,6 @@ package org.apache.commons.codec.language;
 
 import static org.junit.Assert.assertEquals;
 
-import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.StringEncoderAbstractTest;
 import org.junit.Test;
 
@@ -32,7 +31,7 @@ import org.junit.Test;
  * @see <a href="http://swoodbridge.com/DoubleMetaPhone/surnames.txt">PHP test program</a>
  * @version $Id$
  */
-public class DoubleMetaphone2Test extends StringEncoderAbstractTest {
+public class DoubleMetaphone2Test extends StringEncoderAbstractTest<DoubleMetaphone> {
 
     private static final int ALTERNATE_INDEX = 2;
 
@@ -1265,20 +1264,13 @@ public class DoubleMetaphone2Test extends StringEncoderAbstractTest {
     private void checkDoubleMetaphone(int typeIndex, boolean alternate) {
         for (int i = 0; i < TEST_DATA.length; i++) {
             String value = TEST_DATA[i][0];
-            assertEquals("Test [" + i + "]=" + value, TEST_DATA[i][typeIndex], this.getDoubleMetaphone().doubleMetaphone(value, alternate));
+            assertEquals("Test [" + i + "]=" + value, TEST_DATA[i][typeIndex], this.getStringEncoder().doubleMetaphone(value, alternate));
         }
     }
 
     @Override
-    protected StringEncoder createStringEncoder() {
+    protected DoubleMetaphone createStringEncoder() {
         return new DoubleMetaphone();
-    }
-
-    /**
-     * @return Returns the metaphone.
-     */
-    private DoubleMetaphone getDoubleMetaphone() {
-        return (DoubleMetaphone) this.getStringEncoder();
     }
 
     /**

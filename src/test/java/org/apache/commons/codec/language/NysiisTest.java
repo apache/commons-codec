@@ -18,7 +18,6 @@
 package org.apache.commons.codec.language;
 
 import org.apache.commons.codec.EncoderException;
-import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.StringEncoderAbstractTest;
 import org.junit.Assert;
 import org.junit.Test;
@@ -29,7 +28,7 @@ import org.junit.Test;
  * @since 1.7
  * @version $Id$
  */
-public class NysiisTest extends StringEncoderAbstractTest {
+public class NysiisTest extends StringEncoderAbstractTest<Nysiis> {
 
     private final Nysiis fullNysiis = new Nysiis(false);
 
@@ -49,7 +48,7 @@ public class NysiisTest extends StringEncoderAbstractTest {
     }
 
     @Override
-    protected StringEncoder createStringEncoder() {
+    protected Nysiis createStringEncoder() {
         return new Nysiis();
     }
 

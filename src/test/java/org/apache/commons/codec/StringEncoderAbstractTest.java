@@ -26,9 +26,9 @@ import org.junit.Test;
 /**
  * @version $Id$
  */
-public abstract class StringEncoderAbstractTest {
+public abstract class StringEncoderAbstractTest<T extends StringEncoder> {
 
-    protected StringEncoder stringEncoder = this.createStringEncoder();
+    protected T stringEncoder = this.createStringEncoder();
 
     public void checkEncoding(String expected, String source) throws EncoderException {
         Assert.assertEquals("Source: " + source, expected, this.getStringEncoder().encode(source));
@@ -46,9 +46,9 @@ public abstract class StringEncoderAbstractTest {
         }
     }
 
-    protected abstract StringEncoder createStringEncoder();
+    protected abstract T createStringEncoder();
 
-    public StringEncoder getStringEncoder() {
+    public T getStringEncoder() {
         return this.stringEncoder;
     }
 
