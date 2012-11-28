@@ -903,68 +903,11 @@ public class DoubleMetaphone implements StringEncoder {
     }
 
     /**
-     * Shortcut method with 1 criteria.
-     */
-    private static boolean contains(String value, int start, int length, String criteria) {
-        return contains(value, start, length, new String[] { criteria });
-    }
-
-    /**
-     * Shortcut method with 2 criteria.
-     */
-    private static boolean contains(String value, int start, int length,
-                                    String criteria1, String criteria2) {
-        return contains(value, start, length, new String[] { criteria1, criteria2 });
-    }
-
-    /**
-     * Shortcut method with 3 criteria.
-     */
-    private static boolean contains(String value, int start, int length,
-                                    String criteria1, String criteria2, String criteria3) {
-        return contains(value, start, length, new String[] { criteria1, criteria2, criteria3 });
-    }
-
-    /**
-     * Shortcut method with 4 criteria.
-     */
-    private static boolean contains(String value, int start, int length,
-                                    String criteria1, String criteria2,
-                                    String criteria3, String criteria4) {
-        return contains(value, start, length,
-                        new String[] { criteria1, criteria2, criteria3, criteria4 });
-    }
-
-    /**
-     * Shortcut method with 5 criteria.
-     */
-    private static boolean contains(String value, int start, int length,
-                                    String criteria1, String criteria2,
-                                    String criteria3, String criteria4,
-                                    String criteria5) {
-        return contains(value, start, length,
-                        new String[] { criteria1, criteria2, criteria3,
-                                       criteria4, criteria5 });
-    }
-
-    /**
-     * Shortcut method with 6 criteria.
-     */
-    private static boolean contains(String value, int start, int length,
-                                    String criteria1, String criteria2,
-                                    String criteria3, String criteria4,
-                                    String criteria5, String criteria6) {
-        return contains(value, start, length,
-                        new String[] { criteria1, criteria2, criteria3,
-                                       criteria4, criteria5, criteria6 });
-    }
-
-    /**
      * Determines whether <code>value</code> contains any of the criteria starting at index <code>start</code> and
      * matching up to length <code>length</code>.
      */
     protected static boolean contains(String value, int start, int length,
-                                      String[] criteria) {
+                                      String... criteria) {
         boolean result = false;
         if (start >= 0 && start + length <= value.length()) {
             String target = value.substring(start, start + length);
