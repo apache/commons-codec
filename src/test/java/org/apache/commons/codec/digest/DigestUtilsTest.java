@@ -17,6 +17,7 @@
 
 package org.apache.commons.codec.digest;
 
+import static org.apache.commons.codec.binary.StringUtils.getBytesUtf8;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -27,7 +28,6 @@ import java.util.Random;
 
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.binary.StringUtils;
-import static org.apache.commons.codec.binary.StringUtils.getBytesUtf8;
 import org.junit.Test;
 
 /**
