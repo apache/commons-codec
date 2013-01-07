@@ -27,7 +27,7 @@ import org.junit.Test;
 /**
  * Series of tests for the Match Rating Approach algorithm.
  *
- * General naming nomeneclature for the test is of the form:
+ * General naming nomenclature for the test is of the form:
  * GeneralMetadataOnTheTestArea_ActualTestValues_ExpectedResult
  *
  * An unusual value is indicated by the term "corner case"
