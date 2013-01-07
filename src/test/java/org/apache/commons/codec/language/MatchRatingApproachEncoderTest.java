@@ -34,8 +34,6 @@ import org.junit.Test;
  */
 public class MatchRatingApproachEncoderTest extends StringEncoderAbstractTest<MatchRatingApproachEncoder> {
 
-
-
     // ********** BEGIN REGION - TEST SUPPORT METHODS
 
     @Test
@@ -77,6 +75,11 @@ public class MatchRatingApproachEncoderTest extends StringEncoderAbstractTest<Ma
     @Test
     public final void testAccentRemoval_NINO_NoChange() {
         assertEquals("", this.getStringEncoder().removeAccents(""));
+    }
+	
+	@Test
+    public final void testAccentRemoval_NullValue_ReturnNullSuccessfully() {
+    	assertEquals(null, this.getStringEncoder().removeAccents(null));
     }
 
     @Test
@@ -196,6 +199,16 @@ public class MatchRatingApproachEncoderTest extends StringEncoderAbstractTest<Ma
     @Test
     public final void testGetEncoding_One_Letter_to_Nothing() {
         assertEquals("", this.getStringEncoder().encode("E"));
+    }
+	
+	@Test
+    public final void testCompareNameNullSpace_ReturnsFalseSuccessfully() {
+    	assertEquals(false, getStringEncoder().isEncodeEquals(null, " "));
+    }
+    
+    @Test
+    public final void testCompareNameSameNames_ReturnsFalseSuccessfully() {
+    	assertEquals(true, getStringEncoder().isEncodeEquals("John", "John"));
     }
 
     // ***** END REGION - TEST GET MRA ENCODING
