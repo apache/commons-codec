@@ -50,7 +50,7 @@ public class EncoderException extends Exception {
      * @param message
      *            a useful message relating to the encoder specific error.
      */
-    public EncoderException(String message) {
+    public EncoderException(final String message) {
         super(message);
     }
 
@@ -69,7 +69,7 @@ public class EncoderException extends Exception {
      *            value is permitted, and indicates that the cause is nonexistent or unknown.
      * @since 1.4
      */
-    public EncoderException(String message, Throwable cause) {
+    public EncoderException(final String message, final Throwable cause) {
         super(message, cause);
     }
 
@@ -83,7 +83,7 @@ public class EncoderException extends Exception {
      *            value is permitted, and indicates that the cause is nonexistent or unknown.
      * @since 1.4
      */
-    public EncoderException(Throwable cause) {
+    public EncoderException(final Throwable cause) {
         super(cause);
     }
 }
