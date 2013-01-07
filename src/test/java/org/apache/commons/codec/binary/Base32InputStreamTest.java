@@ -287,7 +287,7 @@ public class Base32InputStreamTest {
 
         // Start with encode.
         InputStream in;
-        
+
         in = new Base32InputStream(new ByteArrayInputStream(decoded), true, chunkSize, seperator);
         byte[] output = Base32TestData.streamToBytes(in);
 
@@ -363,7 +363,7 @@ public class Base32InputStreamTest {
         assertTrue("Streaming base32 decode", Arrays.equals(output, decoded));
 
         in.close();
- 
+
         // I always wanted to do this! (wrap encoder with decoder etc etc).
         in = new ByteArrayInputStream(decoded);
         for (int i = 0; i < 10; i++) {

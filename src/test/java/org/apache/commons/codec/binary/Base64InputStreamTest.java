@@ -308,7 +308,7 @@ public class Base64InputStreamTest {
         assertTrue("Streaming base64 encode", Arrays.equals(output, encoded));
 
         in.close();
-        
+
         // Now let's try decode.
         in = new Base64InputStream(new ByteArrayInputStream(encoded));
         output = Base64TestData.streamToBytes(in);
@@ -376,7 +376,7 @@ public class Base64InputStreamTest {
         assertTrue("Streaming base64 decode", Arrays.equals(output, decoded));
 
         in.close();
-        
+
         // I always wanted to do this! (wrap encoder with decoder etc etc).
         in = new ByteArrayInputStream(decoded);
         for (int i = 0; i < 10; i++) {

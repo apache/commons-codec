@@ -26,15 +26,15 @@ import org.junit.Test;
 
 /**
  * Series of tests for the Match Rating Approach algorithm.
- * 
+ *
  * General naming nomeneclature for the test is of the form:
  * GeneralMetadataOnTheTestArea_ActualTestValues_ExpectedResult
- * 
+ *
  * An unusual value is indicated by the term "corner case"
  */
 public class MatchRatingApproachEncoderTest extends StringEncoderAbstractTest<MatchRatingApproachEncoder> {
 
-    
+
 
     // ********** BEGIN REGION - TEST SUPPORT METHODS
 
