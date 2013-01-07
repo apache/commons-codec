@@ -142,7 +142,7 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest<ColognePhonet
             {"ganz", "G\u00e4nse"}, // Gänse
             {"Miyagi", "Miyako"}};
         for (String[] element : data) {
-            ((ColognePhonetic) this.getStringEncoder()).isEncodeEqual(element[1], element[0]);
+            this.getStringEncoder().isEncodeEqual(element[1], element[0]);
         }
     }
 
