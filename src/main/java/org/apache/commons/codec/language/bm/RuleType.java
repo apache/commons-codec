@@ -34,7 +34,7 @@ public enum RuleType {
 
     private final String name;
 
-    RuleType(String name) {
+    RuleType(final String name) {
         this.name = name;
     }
 

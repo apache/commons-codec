@@ -43,8 +43,8 @@ public class Apr1CryptTest {
     @Test
     public void testApr1CryptBytes() {
         // random salt
-        byte[] keyBytes = new byte[] { '!', 'b', 'c', '.' };
-        String hash = Md5Crypt.apr1Crypt(keyBytes);
+        final byte[] keyBytes = new byte[] { '!', 'b', 'c', '.' };
+        final String hash = Md5Crypt.apr1Crypt(keyBytes);
         assertEquals(hash, Md5Crypt.apr1Crypt("!bc.", hash));
 
         // An empty Bytearray equals an empty String
@@ -82,9 +82,9 @@ public class Apr1CryptTest {
     @Test
     public void testApr1CryptWithoutSalt() {
         // Without salt, a random is generated
-        String hash = Md5Crypt.apr1Crypt("secret");
+        final String hash = Md5Crypt.apr1Crypt("secret");
         assertTrue(hash.matches("^\\$apr1\\$[a-zA-Z0-9\\./]{8}\\$[a-zA-Z0-9\\./]{22}$"));
-        String hash2 = Md5Crypt.apr1Crypt("secret");
+        final String hash2 = Md5Crypt.apr1Crypt("secret");
         assertNotSame(hash, hash2);
     }
 

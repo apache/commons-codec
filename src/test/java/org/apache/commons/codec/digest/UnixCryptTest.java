@@ -94,9 +94,9 @@ public class UnixCryptTest {
 
     @Test
     public void testUnixCryptWithoutSalt() {
-        String hash = UnixCrypt.crypt("foo");
+        final String hash = UnixCrypt.crypt("foo");
         assertTrue(hash.matches("^[a-zA-Z0-9./]{13}$"));
-        String hash2 = UnixCrypt.crypt("foo");
+        final String hash2 = UnixCrypt.crypt("foo");
         assertNotSame(hash, hash2);
     }
 }

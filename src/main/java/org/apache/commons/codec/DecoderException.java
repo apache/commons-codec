@@ -49,7 +49,7 @@ public class DecoderException extends Exception {
      * @param message
      *            The detail message which is saved for later retrieval by the {@link #getMessage()} method.
      */
-    public DecoderException(String message) {
+    public DecoderException(final String message) {
         super(message);
     }
 
@@ -66,7 +66,7 @@ public class DecoderException extends Exception {
      *            value is permitted, and indicates that the cause is nonexistent or unknown.
      * @since 1.4
      */
-    public DecoderException(String message, Throwable cause) {
+    public DecoderException(final String message, final Throwable cause) {
         super(message, cause);
     }
 
@@ -80,7 +80,7 @@ public class DecoderException extends Exception {
      *            value is permitted, and indicates that the cause is nonexistent or unknown.
      * @since 1.4
      */
-    public DecoderException(Throwable cause) {
+    public DecoderException(final Throwable cause) {
         super(cause);
     }
 }

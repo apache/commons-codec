@@ -156,7 +156,7 @@ public class Base64TestData {
                 lastRead = status[LAST_READ_KEY];
             }
             if (buf.length != size) {
-                byte[] smallerBuf = new byte[size];
+                final byte[] smallerBuf = new byte[size];
                 System.arraycopy(buf, 0, smallerBuf, 0, size);
                 buf = smallerBuf;
             }
@@ -184,7 +184,7 @@ public class Base64TestData {
     }
 
     private static byte[] resizeArray(final byte[] bytes) {
-        byte[] biggerBytes = new byte[bytes.length * 2];
+        final byte[] biggerBytes = new byte[bytes.length * 2];
         System.arraycopy(bytes, 0, biggerBytes, 0, bytes.length);
         return biggerBytes;
     }
@@ -197,11 +197,11 @@ public class Base64TestData {
      * @param urlSafe true if encoding be urlSafe
      * @return two byte[] arrays:  [0] = decoded, [1] = encoded
      */
-    static byte[][] randomData(int size, boolean urlSafe) {
-        Random r = new Random();
-        byte[] decoded = new byte[size];
+    static byte[][] randomData(final int size, final boolean urlSafe) {
+        final Random r = new Random();
+        final byte[] decoded = new byte[size];
         r.nextBytes(decoded);
-        byte[] encoded = urlSafe ? Base64.encodeBase64URLSafe(decoded) : Base64.encodeBase64(decoded);
+        final byte[] encoded = urlSafe ? Base64.encodeBase64URLSafe(decoded) : Base64.encodeBase64(decoded);
         return new byte[][] {decoded, encoded};
     }
 
@@ -212,8 +212,8 @@ public class Base64TestData {
      * @param c byte to look for
      * @return true if bytes contains c, false otherwise
      */
-    static boolean bytesContain(byte[] bytes, byte c) {
-        for (byte b : bytes) {
+    static boolean bytesContain(final byte[] bytes, final byte c) {
+        for (final byte b : bytes) {
             if (b == c) { return true; }
         }
         return false;

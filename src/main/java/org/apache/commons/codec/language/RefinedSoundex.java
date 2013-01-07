@@ -73,7 +73,7 @@ public class RefinedSoundex implements StringEncoder {
      *                  Mapping array to use when finding the corresponding code for
      *                  a given character
      */
-    public RefinedSoundex(char[] mapping) {
+    public RefinedSoundex(final char[] mapping) {
         this.soundexMapping = new char[mapping.length];
         System.arraycopy(mapping, 0, this.soundexMapping, 0, mapping.length);
     }
@@ -86,7 +86,7 @@ public class RefinedSoundex implements StringEncoder {
      *            Mapping string to use when finding the corresponding code for a given character
      * @since 1.4
      */
-    public RefinedSoundex(String mapping) {
+    public RefinedSoundex(final String mapping) {
         this.soundexMapping = mapping.toCharArray();
     }
 
@@ -112,7 +112,7 @@ public class RefinedSoundex implements StringEncoder {
      *                  if an error occurs encoding one of the strings
      * @since 1.3
      */
-    public int difference(String s1, String s2) throws EncoderException {
+    public int difference(final String s1, final String s2) throws EncoderException {
         return SoundexUtils.difference(this, s1, s2);
     }
 
@@ -130,7 +130,7 @@ public class RefinedSoundex implements StringEncoder {
      *                  if the parameter supplied is not of type java.lang.String
      */
     @Override
-    public Object encode(Object obj) throws EncoderException {
+    public Object encode(final Object obj) throws EncoderException {
         if (!(obj instanceof String)) {
             throw new EncoderException("Parameter supplied to RefinedSoundex encode is not of type java.lang.String");
         }
@@ -145,7 +145,7 @@ public class RefinedSoundex implements StringEncoder {
      * @return A Soundex code corresponding to the String supplied
      */
     @Override
-    public String encode(String str) {
+    public String encode(final String str) {
         return soundex(str);
     }
 
@@ -158,7 +158,7 @@ public class RefinedSoundex implements StringEncoder {
      *                  char to get mapping for
      * @return A character (really a numeral) to return for the given char
      */
-    char getMappingCode(char c) {
+    char getMappingCode(final char c) {
         if (!Character.isLetter(c)) {
             return 0;
         }
@@ -181,7 +181,7 @@ public class RefinedSoundex implements StringEncoder {
             return str;
         }
 
-        StringBuilder sBuf = new StringBuilder();
+        final StringBuilder sBuf = new StringBuilder();
         sBuf.append(str.charAt(0));
 
         char last, current;

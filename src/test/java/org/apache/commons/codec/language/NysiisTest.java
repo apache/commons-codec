@@ -41,8 +41,8 @@ public class NysiisTest extends StringEncoderAbstractTest<Nysiis> {
      *            expected encoding.
      * @throws EncoderException
      */
-    private void assertEncodings(String[]... testValues) throws EncoderException {
-        for (String[] arr : testValues) {
+    private void assertEncodings(final String[]... testValues) throws EncoderException {
+        for (final String[] arr : testValues) {
             Assert.assertEquals("Problem with " + arr[0], arr[1], this.fullNysiis.encode(arr[0]));
         }
     }
@@ -52,8 +52,8 @@ public class NysiisTest extends StringEncoderAbstractTest<Nysiis> {
         return new Nysiis();
     }
 
-    private void encodeAll(String[] strings, String expectedEncoding) throws EncoderException {
-        for (String string : strings) {
+    private void encodeAll(final String[] strings, final String expectedEncoding) throws EncoderException {
+        for (final String string : strings) {
             Assert.assertEquals("Problem with " + string, expectedEncoding, getStringEncoder().encode(string));
         }
     }
@@ -293,9 +293,9 @@ public class NysiisTest extends StringEncoderAbstractTest<Nysiis> {
 
     @Test
     public void testTrueVariant() {
-        Nysiis encoder = new Nysiis(true);
+        final Nysiis encoder = new Nysiis(true);
 
-        String encoded = encoder.encode("WESTERLUND");
+        final String encoded = encoder.encode("WESTERLUND");
         Assert.assertTrue(encoded.length() <= 6);
         Assert.assertEquals("WASTAR", encoded);
     }

@@ -207,7 +207,7 @@ public class Nysiis implements StringEncoder {
      *            if a character is not mapped
      */
     @Override
-    public Object encode(Object obj) throws EncoderException {
+    public Object encode(final Object obj) throws EncoderException {
         if (!(obj instanceof String)) {
             throw new EncoderException("Parameter supplied to Nysiis encode is not of type java.lang.String");
         }
@@ -224,7 +224,7 @@ public class Nysiis implements StringEncoder {
      *            if a character is not mapped
      */
     @Override
-    public String encode(String str) {
+    public String encode(final String str) {
         return this.nysiis(str);
     }
 
@@ -270,7 +270,7 @@ public class Nysiis implements StringEncoder {
         str = PAT_DT_ETC.matcher(str).replaceFirst("D");
 
         // First character of key = first character of name.
-        StringBuilder key = new StringBuilder(str.length());
+        final StringBuilder key = new StringBuilder(str.length());
         key.append(str.charAt(0));
 
         // Transcode remaining characters, incrementing by one character each time

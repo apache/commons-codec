@@ -28,16 +28,16 @@ public abstract class BinaryEncoderAbstractTest {
 
     @Test
     public void testEncodeEmpty() throws Exception {
-        BinaryEncoder encoder = makeEncoder();
+        final BinaryEncoder encoder = makeEncoder();
         encoder.encode(new byte[0]);
     }
 
     @Test
     public void testEncodeNull() throws Exception {
-        BinaryEncoder encoder = makeEncoder();
+        final BinaryEncoder encoder = makeEncoder();
         try {
             encoder.encode(null);
-        } catch (EncoderException ee) {
+        } catch (final EncoderException ee) {
             // An exception should be thrown
         }
     }

@@ -82,7 +82,7 @@ public class BinaryCodecTest {
     public void testDecodeObjectException() {
         try {
             this.instance.decode(new Object());
-        } catch (DecoderException e) {
+        } catch (final DecoderException e) {
             // all is well.
             return;
         }
@@ -174,7 +174,7 @@ public class BinaryCodecTest {
      * @param encodeMe
      *            data to encode and compare
      */
-    void assertDecodeObject(byte[] bits, String encodeMe) throws DecoderException {
+    void assertDecodeObject(final byte[] bits, final String encodeMe) throws DecoderException {
         byte[] decoded;
         decoded = (byte[]) instance.decode(encodeMe);
         assertEquals(new String(bits), new String(decoded));
@@ -1073,7 +1073,7 @@ public class BinaryCodecTest {
      */
     @Test
     public void testEncodeObjectNull() throws Exception {
-        Object obj = new byte[0];
+        final Object obj = new byte[0];
         assertEquals(0, ((char[]) instance.encode(obj)).length);
     }
 
@@ -1084,7 +1084,7 @@ public class BinaryCodecTest {
     public void testEncodeObjectException() {
         try {
             instance.encode("");
-        } catch (EncoderException e) {
+        } catch (final EncoderException e) {
             // all is well.
             return;
         }

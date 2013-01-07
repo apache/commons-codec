@@ -35,28 +35,28 @@ public class EncoderExceptionTest {
 
     @Test
     public void testConstructor0() {
-        EncoderException e = new EncoderException();
+        final EncoderException e = new EncoderException();
         assertNull(e.getMessage());
         assertNull(e.getCause());
     }
 
     @Test
     public void testConstructorString() {
-        EncoderException e = new EncoderException(MSG);
+        final EncoderException e = new EncoderException(MSG);
         assertEquals(MSG, e.getMessage());
         assertNull(e.getCause());
     }
 
     @Test
     public void testConstructorStringThrowable() {
-        EncoderException e = new EncoderException(MSG, t);
+        final EncoderException e = new EncoderException(MSG, t);
         assertEquals(MSG, e.getMessage());
         assertEquals(t, e.getCause());
     }
 
     @Test
     public void testConstructorThrowable() {
-        EncoderException e = new EncoderException(t);
+        final EncoderException e = new EncoderException(t);
         assertEquals(t.getClass().getName(), e.getMessage());
         assertEquals(t, e.getCause());
     }

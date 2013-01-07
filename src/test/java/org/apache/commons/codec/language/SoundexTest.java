@@ -360,7 +360,7 @@ public class SoundexTest extends StringEncoderAbstractTest<Soundex> {
                 //         uppercase E-acute
                 Assert.assertEquals("\u00c9000", this.getStringEncoder().encode("\u00e9"));
                 Assert.fail("Expected IllegalArgumentException not thrown");
-            } catch (IllegalArgumentException e) {
+            } catch (final IllegalArgumentException e) {
                 // expected
             }
         } else {
@@ -381,7 +381,7 @@ public class SoundexTest extends StringEncoderAbstractTest<Soundex> {
                 //         uppercase O-umlaut
                 Assert.assertEquals("\u00d6000", this.getStringEncoder().encode("\u00f6"));
                 Assert.fail("Expected IllegalArgumentException not thrown");
-            } catch (IllegalArgumentException e) {
+            } catch (final IllegalArgumentException e) {
                 // expected
             }
         } else {

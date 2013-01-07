@@ -39,8 +39,8 @@ class Utils {
      * @throws DecoderException
      *             Thrown when the byte is not valid per {@link Character#digit(char,int)}
      */
-    static int digit16(byte b) throws DecoderException {
-        int i = Character.digit((char) b, 16);
+    static int digit16(final byte b) throws DecoderException {
+        final int i = Character.digit((char) b, 16);
         if (i == -1) {
             throw new DecoderException("Invalid URL encoding: not a valid digit (radix " + URLCodec.RADIX + "): " + b);
         }

@@ -48,7 +48,7 @@ public class Base64OutputStream extends BaseNCodecOutputStream {
      * @param out
      *            OutputStream to wrap.
      */
-    public Base64OutputStream(OutputStream out) {
+    public Base64OutputStream(final OutputStream out) {
         this(out, true);
     }
 
@@ -61,7 +61,7 @@ public class Base64OutputStream extends BaseNCodecOutputStream {
      * @param doEncode
      *            true if we should encode all data written to us, false if we should decode.
      */
-    public Base64OutputStream(OutputStream out, boolean doEncode) {
+    public Base64OutputStream(final OutputStream out, final boolean doEncode) {
         super(out,new Base64(false), doEncode);
     }
 
@@ -81,7 +81,7 @@ public class Base64OutputStream extends BaseNCodecOutputStream {
      *            If doEncode is true, each line of encoded data will be terminated with this byte sequence (e.g. \r\n).
      *            If lineLength <= 0, the lineSeparator is not used. If doEncode is false lineSeparator is ignored.
      */
-    public Base64OutputStream(OutputStream out, boolean doEncode, int lineLength, byte[] lineSeparator) {
+    public Base64OutputStream(final OutputStream out, final boolean doEncode, final int lineLength, final byte[] lineSeparator) {
         super(out, new Base64(lineLength, lineSeparator), doEncode);
     }
 }

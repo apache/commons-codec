@@ -65,7 +65,7 @@ public class Md5Crypt {
      * @throws RuntimeException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught. *
      */
-    public static String apr1Crypt(byte[] keyBytes) {
+    public static String apr1Crypt(final byte[] keyBytes) {
         return apr1Crypt(keyBytes, APR1_PREFIX + B64.getRandomSalt(8));
     }
 
@@ -77,7 +77,7 @@ public class Md5Crypt {
      * @throws RuntimeException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
-    public static String apr1Crypt(byte[] keyBytes, String salt) {
+    public static String apr1Crypt(final byte[] keyBytes, String salt) {
         // to make the md5Crypt regex happy
         if (salt != null && !salt.startsWith(APR1_PREFIX)) {
             salt = APR1_PREFIX + salt;
@@ -91,7 +91,7 @@ public class Md5Crypt {
      * @throws RuntimeException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
-    public static String apr1Crypt(String keyBytes) {
+    public static String apr1Crypt(final String keyBytes) {
         return apr1Crypt(keyBytes.getBytes(Charsets.UTF_8));
     }
 
@@ -112,7 +112,7 @@ public class Md5Crypt {
      * @throws RuntimeException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
-    public static String apr1Crypt(String keyBytes, String salt) {
+    public static String apr1Crypt(final String keyBytes, final String salt) {
         return apr1Crypt(keyBytes.getBytes(Charsets.UTF_8), salt);
     }
 
@@ -144,7 +144,7 @@ public class Md5Crypt {
      * @throws RuntimeException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
-    public static String md5Crypt(byte[] keyBytes, String salt) {
+    public static String md5Crypt(final byte[] keyBytes, final String salt) {
         return md5Crypt(keyBytes, salt, MD5_PREFIX);
     }
 
@@ -159,7 +159,7 @@ public class Md5Crypt {
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
     public static String md5Crypt(final byte[] keyBytes, final String salt, final String prefix) {
-        int keyLen = keyBytes.length;
+        final int keyLen = keyBytes.length;
 
         // Extract the real salt from the given string which can be a complete hash string.
         String saltString;
@@ -173,9 +173,9 @@ public class Md5Crypt {
             }
             saltString = m.group(1);
         }
-        byte[] saltBytes = saltString.getBytes(Charsets.UTF_8);
+        final byte[] saltBytes = saltString.getBytes(Charsets.UTF_8);
 
-        MessageDigest ctx = DigestUtils.getMd5Digest();
+        final MessageDigest ctx = DigestUtils.getMd5Digest();
 
         /*
          * The password first, since that is what is most unknown
@@ -215,7 +215,7 @@ public class Md5Crypt {
          * Then something really weird...
          */
         ii = keyLen;
-        int j = 0;
+        final int j = 0;
         while (ii > 0) {
             if ((ii & 1) == 1) {
                 ctx.update(finalb[j]);
@@ -228,7 +228,7 @@ public class Md5Crypt {
         /*
          * Now make the output string
          */
-        StringBuilder passwd = new StringBuilder(prefix + saltString + "$");
+        final StringBuilder passwd = new StringBuilder(prefix + saltString + "$");
         finalb = ctx.digest();
 
         /*

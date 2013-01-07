@@ -75,8 +75,8 @@ public class MatchRatingApproachEncoder implements StringEncoder {
     String cleanName(final String name) {
         String upperName = name.toUpperCase(Locale.ENGLISH);
 
-        String[] charsToTrim = { "\\-", "[&]", "\\'", "\\.", "[\\,]" };
-        for (String str : charsToTrim) {
+        final String[] charsToTrim = { "\\-", "[&]", "\\'", "\\.", "[\\,]" };
+        for (final String str : charsToTrim) {
             upperName = upperName.replaceAll(str, EMPTY);
         }
 
@@ -148,11 +148,11 @@ public class MatchRatingApproachEncoder implements StringEncoder {
      * @return Annexed first & last 3 letters of input word.
      */
     String getFirst3Last3(final String name) {
-        int nameLength = name.length();
+        final int nameLength = name.length();
 
         if (nameLength > SIX) {
-            String firstThree = name.substring(0, THREE);
-            String lastThree = name.substring(nameLength - THREE, nameLength);
+            final String firstThree = name.substring(0, THREE);
+            final String lastThree = name.substring(nameLength - THREE, nameLength);
             return firstThree + lastThree;
         } else {
             return name;
@@ -238,13 +238,13 @@ public class MatchRatingApproachEncoder implements StringEncoder {
 
         // 5. Obtain the minimum rating value by calculating the length sum of the
         // encoded Strings and sending it down.
-        int sumLength = Math.abs(name1.length() + name2.length());
+        final int sumLength = Math.abs(name1.length() + name2.length());
         int minRating = 0;
         minRating = getMinRating(sumLength);
 
         // 6. Process the encoded Strings from left to right and remove any
         // identical characters found from both Strings respectively.
-        int count = leftToRightThenRightToLeftProcessing(name1, name2);
+        final int count = leftToRightThenRightToLeftProcessing(name1, name2);
 
         // 7. Each PNI item that has a similarity rating equal to or greater than
         // the min is considered to be a good candidate match
@@ -264,7 +264,7 @@ public class MatchRatingApproachEncoder implements StringEncoder {
      *            The letter under investiagtion
      * @return True if a vowel, else false
      */
-    boolean isVowel(String letter) {
+    boolean isVowel(final String letter) {
         return letter.equalsIgnoreCase("E") || letter.equalsIgnoreCase("A") || letter.equalsIgnoreCase("O") || letter.equalsIgnoreCase("I") ||
                 letter.equalsIgnoreCase("U");
     }
@@ -282,12 +282,12 @@ public class MatchRatingApproachEncoder implements StringEncoder {
      *            name2
      * @return
      */
-    int leftToRightThenRightToLeftProcessing(String name1, String name2) {
-        char[] name1Char = name1.toCharArray();
-        char[] name2Char = name2.toCharArray();
+    int leftToRightThenRightToLeftProcessing(final String name1, final String name2) {
+        final char[] name1Char = name1.toCharArray();
+        final char[] name2Char = name2.toCharArray();
 
-        int name1Size = name1.length() - 1;
-        int name2Size = name2.length() - 1;
+        final int name1Size = name1.length() - 1;
+        final int name2Size = name2.length() - 1;
 
         String name1LtRStart = EMPTY;
         String name1LtREnd = EMPTY;
@@ -320,8 +320,8 @@ public class MatchRatingApproachEncoder implements StringEncoder {
         }
 
         // Char arrays -> string & remove extraneous space
-        String strA = new String(name1Char).replaceAll("\\s+", EMPTY);
-        String strB = new String(name2Char).replaceAll("\\s+", EMPTY);
+        final String strA = new String(name1Char).replaceAll("\\s+", EMPTY);
+        final String strB = new String(name2Char).replaceAll("\\s+", EMPTY);
 
         // Final bit - subtract longest string from 6 and return this int value
         if (strA.length() > strB.length()) {
@@ -344,12 +344,12 @@ public class MatchRatingApproachEncoder implements StringEncoder {
             return null;
         }
 
-        StringBuilder sb = new StringBuilder();
-        int n = accentedWord.length();
+        final StringBuilder sb = new StringBuilder();
+        final int n = accentedWord.length();
 
         for (int i = 0; i < n; i++) {
-            char c = accentedWord.charAt(i);
-            int pos = UNICODE.indexOf(c);
+            final char c = accentedWord.charAt(i);
+            final int pos = UNICODE.indexOf(c);
             if (pos > -1) {
                 sb.append(PLAIN_ASCII.charAt(pos));
             } else {
@@ -372,14 +372,14 @@ public class MatchRatingApproachEncoder implements StringEncoder {
      *            String to have double consonants removed
      * @return Single consonant word
      */
-    String removeDoubleConsonants(String name) {
-        String[] dblCnstArray = new String[] { "BB", "CC", "DD", "FF", "GG", "HH", "JJ", "KK", "LL", "MM", "NN", "PP", "QQ", "RR", "SS", "TT", "VV",
+    String removeDoubleConsonants(final String name) {
+        final String[] dblCnstArray = new String[] { "BB", "CC", "DD", "FF", "GG", "HH", "JJ", "KK", "LL", "MM", "NN", "PP", "QQ", "RR", "SS", "TT", "VV",
                 "WW", "XX", "YY", "ZZ" };
 
         String replacedName = name.toUpperCase();
-        for (String dc : dblCnstArray) {
+        for (final String dc : dblCnstArray) {
             if (replacedName.contains(dc)) {
-                String singleLetter = dc.substring(0, 1);
+                final String singleLetter = dc.substring(0, 1);
                 replacedName = replacedName.replace(dc, singleLetter);
             }
         }
@@ -401,7 +401,7 @@ public class MatchRatingApproachEncoder implements StringEncoder {
      */
     String removeVowels(String name) {
         // Extract first letter
-        String firstLetter = name.substring(0, 1);
+        final String firstLetter = name.substring(0, 1);
 
         name = name.replaceAll("A", EMPTY);
         name = name.replaceAll("E", EMPTY);

@@ -166,7 +166,7 @@ public class Base32 extends BaseNCodec {
      * </p>
      * @param useHex if {@code true} then use Base32 Hex alphabet
      */
-    public Base32(boolean useHex) {
+    public Base32(final boolean useHex) {
         this(0, null, useHex);
     }
 
@@ -181,7 +181,7 @@ public class Base32 extends BaseNCodec {
      *            8). If lineLength <= 0, then the output will not be divided into lines (chunks). Ignored when
      *            decoding.
      */
-    public Base32(int lineLength) {
+    public Base32(final int lineLength) {
         this(lineLength, CHUNK_SEPARATOR);
     }
 
@@ -203,7 +203,7 @@ public class Base32 extends BaseNCodec {
      * @throws IllegalArgumentException
      *             The provided lineSeparator included some Base32 characters. That's not going to work!
      */
-    public Base32(int lineLength, byte[] lineSeparator) {
+    public Base32(final int lineLength, final byte[] lineSeparator) {
         this(lineLength, lineSeparator, false);
     }
 
@@ -228,7 +228,7 @@ public class Base32 extends BaseNCodec {
      *             The provided lineSeparator included some Base32 characters. That's not going to work! Or the
      *             lineLength > 0 and lineSeparator is null.
      */
-    public Base32(int lineLength, byte[] lineSeparator, boolean useHex) {
+    public Base32(final int lineLength, final byte[] lineSeparator, final boolean useHex) {
         super(BYTES_PER_UNENCODED_BLOCK, BYTES_PER_ENCODED_BLOCK,
                 lineLength,
                 lineSeparator == null ? 0 : lineSeparator.length);
@@ -245,7 +245,7 @@ public class Base32 extends BaseNCodec {
             }
             // Must be done after initializing the tables
             if (containsAlphabetOrPad(lineSeparator)) {
-                String sep = StringUtils.newStringUtf8(lineSeparator);
+                final String sep = StringUtils.newStringUtf8(lineSeparator);
                 throw new IllegalArgumentException("lineSeparator must not contain Base32 characters: [" + sep + "]");
             }
             this.encodeSize = BYTES_PER_ENCODED_BLOCK + lineSeparator.length;
@@ -281,7 +281,7 @@ public class Base32 extends BaseNCodec {
      * Output is written to {@link Context#buffer} as 8-bit octets, using {@link Context#pos} as the buffer position
      */
     @Override
-    void decode(byte[] in, int inPos, int inAvail, Context context) { // package protected for access from I/O streams
+    void decode(final byte[] in, int inPos, final int inAvail, final Context context) { // package protected for access from I/O streams
         if (context.eof) {
             return;
         }
@@ -375,7 +375,7 @@ public class Base32 extends BaseNCodec {
      * @param context the context to be used
      */
     @Override
-    void encode(byte[] in, int inPos, int inAvail, Context context) { // package protected for access from I/O streams
+    void encode(final byte[] in, int inPos, final int inAvail, final Context context) { // package protected for access from I/O streams
         if (context.eof) {
             return;
         }
@@ -477,7 +477,7 @@ public class Base32 extends BaseNCodec {
      * @return {@code true} if the value is defined in the the Base32 alphabet {@code false} otherwise.
      */
     @Override
-    public boolean isInAlphabet(byte octet) {
+    public boolean isInAlphabet(final byte octet) {
         return octet >= 0 && octet < decodeTable.length && decodeTable[octet] != -1;
     }
 }

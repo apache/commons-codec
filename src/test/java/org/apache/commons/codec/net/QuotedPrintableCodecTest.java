@@ -46,10 +46,10 @@ public class QuotedPrintableCodecTest {
         0x432, 0x435, 0x442
     };
 
-    private String constructString(int [] unicodeChars) {
-        StringBuilder buffer = new StringBuilder();
+    private String constructString(final int [] unicodeChars) {
+        final StringBuilder buffer = new StringBuilder();
         if (unicodeChars != null) {
-            for (int unicodeChar : unicodeChars) {
+            for (final int unicodeChar : unicodeChars) {
                 buffer.append((char)unicodeChar);
             }
         }
@@ -59,10 +59,10 @@ public class QuotedPrintableCodecTest {
     @Test
     public void testUTF8RoundTrip() throws Exception {
 
-        String ru_msg = constructString(RUSSIAN_STUFF_UNICODE);
-        String ch_msg = constructString(SWISS_GERMAN_STUFF_UNICODE);
+        final String ru_msg = constructString(RUSSIAN_STUFF_UNICODE);
+        final String ch_msg = constructString(SWISS_GERMAN_STUFF_UNICODE);
 
-        QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
+        final QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
 
         assertEquals(
             "=D0=92=D1=81=D0=B5=D0=BC_=D0=BF=D1=80=D0=B8=D0=B2=D0=B5=D1=82",
@@ -76,9 +76,9 @@ public class QuotedPrintableCodecTest {
 
     @Test
     public void testBasicEncodeDecode() throws Exception {
-        QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
-        String plain = "= Hello there =\r\n";
-        String encoded = qpcodec.encode(plain);
+        final QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
+        final String plain = "= Hello there =\r\n";
+        final String encoded = qpcodec.encode(plain);
         assertEquals("Basic quoted-printable encoding test",
             "=3D Hello there =3D=0D=0A", encoded);
         assertEquals("Basic quoted-printable decoding test",
@@ -87,9 +87,9 @@ public class QuotedPrintableCodecTest {
 
     @Test
     public void testSafeCharEncodeDecode() throws Exception {
-        QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
-        String plain = "abc123_-.*~!@#$%^&()+{}\"\\;:`,/[]";
-        String encoded = qpcodec.encode(plain);
+        final QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
+        final String plain = "abc123_-.*~!@#$%^&()+{}\"\\;:`,/[]";
+        final String encoded = qpcodec.encode(plain);
         assertEquals("Safe chars quoted-printable encoding test",
             plain, encoded);
         assertEquals("Safe chars quoted-printable decoding test",
@@ -99,9 +99,9 @@ public class QuotedPrintableCodecTest {
 
     @Test
     public void testUnsafeEncodeDecode() throws Exception {
-        QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
-        String plain = "=\r\n";
-        String encoded = qpcodec.encode(plain);
+        final QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
+        final String plain = "=\r\n";
+        final String encoded = qpcodec.encode(plain);
         assertEquals("Unsafe chars quoted-printable encoding test",
             "=3D=0D=0A", encoded);
         assertEquals("Unsafe chars quoted-printable decoding test",
@@ -110,7 +110,7 @@ public class QuotedPrintableCodecTest {
 
     @Test
     public void testEncodeDecodeNull() throws Exception {
-        QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
+        final QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
         assertNull("Null string quoted-printable encoding test",
             qpcodec.encode((String)null));
         assertNull("Null string quoted-printable decoding test",
@@ -120,41 +120,41 @@ public class QuotedPrintableCodecTest {
 
     @Test
     public void testDecodeInvalid() throws Exception {
-        QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
+        final QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
         try {
             qpcodec.decode("=");
             fail("DecoderException should have been thrown");
-        } catch (DecoderException e) {
+        } catch (final DecoderException e) {
             // Expected. Move on
         }
         try {
             qpcodec.decode("=A");
             fail("DecoderException should have been thrown");
-        } catch (DecoderException e) {
+        } catch (final DecoderException e) {
             // Expected. Move on
         }
         try {
             qpcodec.decode("=WW");
             fail("DecoderException should have been thrown");
-        } catch (DecoderException e) {
+        } catch (final DecoderException e) {
             // Expected. Move on
         }
     }
 
     @Test
     public void testEncodeNull() throws Exception {
-        QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
-        byte[] plain = null;
-        byte[] encoded = qpcodec.encode(plain);
+        final QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
+        final byte[] plain = null;
+        final byte[] encoded = qpcodec.encode(plain);
         assertEquals("Encoding a null string should return null",
             null, encoded);
     }
 
     @Test
     public void testEncodeUrlWithNullBitSet() throws Exception {
-        QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
-        String plain = "1+1 = 2";
-        String encoded = new String(QuotedPrintableCodec.
+        final QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
+        final String plain = "1+1 = 2";
+        final String encoded = new String(QuotedPrintableCodec.
             encodeQuotedPrintable(null, plain.getBytes(Charsets.UTF_8)));
         assertEquals("Basic quoted-printable encoding test",
             "1+1 =3D 2", encoded);
@@ -165,49 +165,49 @@ public class QuotedPrintableCodecTest {
 
     @Test
     public void testDecodeWithNullArray() throws Exception {
-        byte[] plain = null;
-        byte[] result = QuotedPrintableCodec.decodeQuotedPrintable( plain );
+        final byte[] plain = null;
+        final byte[] result = QuotedPrintableCodec.decodeQuotedPrintable( plain );
         assertEquals("Result should be null", null, result);
     }
 
     @Test
     public void testEncodeStringWithNull() throws Exception {
-        QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
-        String test = null;
-        String result = qpcodec.encode( test, "charset" );
+        final QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
+        final String test = null;
+        final String result = qpcodec.encode( test, "charset" );
         assertEquals("Result should be null", null, result);
     }
 
     @Test
     public void testDecodeStringWithNull() throws Exception {
-        QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
-        String test = null;
-        String result = qpcodec.decode( test, "charset" );
+        final QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
+        final String test = null;
+        final String result = qpcodec.decode( test, "charset" );
         assertEquals("Result should be null", null, result);
     }
 
     @Test
     public void testEncodeObjects() throws Exception {
-        QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
-        String plain = "1+1 = 2";
+        final QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
+        final String plain = "1+1 = 2";
         String encoded = (String) qpcodec.encode((Object) plain);
         assertEquals("Basic quoted-printable encoding test",
             "1+1 =3D 2", encoded);
 
-        byte[] plainBA = plain.getBytes(Charsets.UTF_8);
-        byte[] encodedBA = (byte[]) qpcodec.encode((Object) plainBA);
+        final byte[] plainBA = plain.getBytes(Charsets.UTF_8);
+        final byte[] encodedBA = (byte[]) qpcodec.encode((Object) plainBA);
         encoded = new String(encodedBA);
         assertEquals("Basic quoted-printable encoding test",
             "1+1 =3D 2", encoded);
 
-        Object result = qpcodec.encode((Object) null);
+        final Object result = qpcodec.encode((Object) null);
         assertEquals( "Encoding a null Object should return null", null, result);
 
         try {
-            Object dObj = new Double(3.0);
+            final Object dObj = new Double(3.0);
             qpcodec.encode( dObj );
             fail( "Trying to url encode a Double object should cause an exception.");
-        } catch (EncoderException ee) {
+        } catch (final EncoderException ee) {
             // Exception expected, test segment passes.
         }
     }
@@ -219,37 +219,37 @@ public class QuotedPrintableCodecTest {
 
     @Test
     public void testDecodeObjects() throws Exception {
-        QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
-        String plain = "1+1 =3D 2";
+        final QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
+        final String plain = "1+1 =3D 2";
         String decoded = (String) qpcodec.decode((Object) plain);
         assertEquals("Basic quoted-printable decoding test",
             "1+1 = 2", decoded);
 
-        byte[] plainBA = plain.getBytes(Charsets.UTF_8);
-        byte[] decodedBA = (byte[]) qpcodec.decode((Object) plainBA);
+        final byte[] plainBA = plain.getBytes(Charsets.UTF_8);
+        final byte[] decodedBA = (byte[]) qpcodec.decode((Object) plainBA);
         decoded = new String(decodedBA);
         assertEquals("Basic quoted-printable decoding test",
             "1+1 = 2", decoded);
 
-        Object result = qpcodec.decode((Object) null);
+        final Object result = qpcodec.decode((Object) null);
         assertEquals( "Decoding a null Object should return null", null, result);
 
         try {
-            Object dObj = new Double(3.0);
+            final Object dObj = new Double(3.0);
             qpcodec.decode( dObj );
             fail( "Trying to url encode a Double object should cause an exception.");
-        } catch (DecoderException ee) {
+        } catch (final DecoderException ee) {
             // Exception expected, test segment passes.
         }
     }
 
     @Test
     public void testDefaultEncoding() throws Exception {
-        String plain = "Hello there!";
-        QuotedPrintableCodec qpcodec = new QuotedPrintableCodec("UnicodeBig");
+        final String plain = "Hello there!";
+        final QuotedPrintableCodec qpcodec = new QuotedPrintableCodec("UnicodeBig");
         qpcodec.encode(plain); // To work around a weird quirk in Java 1.2.2
-        String encoded1 = qpcodec.encode(plain, "UnicodeBig");
-        String encoded2 = qpcodec.encode(plain);
+        final String encoded1 = qpcodec.encode(plain, "UnicodeBig");
+        final String encoded2 = qpcodec.encode(plain);
         assertEquals(encoded1, encoded2);
     }
 
@@ -262,8 +262,8 @@ public class QuotedPrintableCodecTest {
      * @see <a href="https://issues.apache.org/jira/browse/CODEC-121">CODEC-121</a>
      */
     public void testSoftLineBreakDecode() throws Exception {
-        String qpdata = "If you believe that truth=3Dbeauty, then surely=20=\r\nmathematics is the most beautiful branch of philosophy.";
-        String expected = "If you believe that truth=beauty, then surely mathematics is the most beautiful branch of philosophy.";
+        final String qpdata = "If you believe that truth=3Dbeauty, then surely=20=\r\nmathematics is the most beautiful branch of philosophy.";
+        final String expected = "If you believe that truth=beauty, then surely mathematics is the most beautiful branch of philosophy.";
         assertEquals(expected, new QuotedPrintableCodec().decode(qpdata));
     }
 
@@ -276,8 +276,8 @@ public class QuotedPrintableCodecTest {
      * @see <a href="https://issues.apache.org/jira/browse/CODEC-121">CODEC-121</a>
      */
     public void testSoftLineBreakEncode() throws Exception {
-        String qpdata = "If you believe that truth=3Dbeauty, then surely=20=\r\nmathematics is the most beautiful branch of philosophy.";
-        String expected = "If you believe that truth=beauty, then surely mathematics is the most beautiful branch of philosophy.";
+        final String qpdata = "If you believe that truth=3Dbeauty, then surely=20=\r\nmathematics is the most beautiful branch of philosophy.";
+        final String expected = "If you believe that truth=beauty, then surely mathematics is the most beautiful branch of philosophy.";
         assertEquals(qpdata, new QuotedPrintableCodec().encode(expected));
     }
 }

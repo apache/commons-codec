@@ -76,7 +76,7 @@ public class Sha2Crypt {
      * @throws RuntimeException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
-    public static String sha256Crypt(byte[] keyBytes) {
+    public static String sha256Crypt(final byte[] keyBytes) {
         return sha256Crypt(keyBytes, null);
     }
 
@@ -90,7 +90,7 @@ public class Sha2Crypt {
      * @throws RuntimeException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
-    public static String sha256Crypt(byte[] keyBytes, String salt) {
+    public static String sha256Crypt(final byte[] keyBytes, String salt) {
         if (salt == null) {
             salt = SHA256_PREFIX + B64.getRandomSalt(8);
         }
@@ -122,9 +122,9 @@ public class Sha2Crypt {
      *             when a {@link NoSuchAlgorithmException} is caught
      * @see MessageDigestAlgorithms
      */
-    private static String sha2Crypt(byte[] keyBytes, String salt, String saltPrefix, int blocksize, String algorithm) {
+    private static String sha2Crypt(final byte[] keyBytes, final String salt, final String saltPrefix, final int blocksize, final String algorithm) {
 
-        int keyLen = keyBytes.length;
+        final int keyLen = keyBytes.length;
 
         // Extracts effective salt and the number of rounds from the given salt.
         int rounds = ROUNDS_DEFAULT;
@@ -133,7 +133,7 @@ public class Sha2Crypt {
             throw new IllegalArgumentException("Salt must not be null");
         }
 
-        Matcher m = SALT_PATTERN.matcher(salt);
+        final Matcher m = SALT_PATTERN.matcher(salt);
         if (m == null || !m.find()) {
             throw new IllegalArgumentException("Invalid salt value: " + salt);
         }
@@ -142,9 +142,9 @@ public class Sha2Crypt {
             rounds = Math.max(ROUNDS_MIN, Math.min(ROUNDS_MAX, rounds));
             roundsCustom = true;
         }
-        String saltString = m.group(4);
-        byte[] saltBytes = saltString.getBytes(Charsets.UTF_8);
-        int saltLen = saltBytes.length;
+        final String saltString = m.group(4);
+        final byte[] saltBytes = saltString.getBytes(Charsets.UTF_8);
+        final int saltLen = saltBytes.length;
 
         // 1. start digest A
         // Prepare for the real work.
@@ -283,7 +283,7 @@ public class Sha2Crypt {
         /*
          * Create byte sequence P.
          */
-        byte[] pBytes = new byte[keyLen];
+        final byte[] pBytes = new byte[keyLen];
         int cp = 0;
         while (cp < keyLen - blocksize) {
             System.arraycopy(tempResult, 0, pBytes, cp, blocksize);
@@ -325,7 +325,7 @@ public class Sha2Crypt {
          * Create byte sequence S.
          */
         // Remark: The salt is limited to 16 chars, how does this make sense?
-        byte[] sBytes = new byte[saltLen];
+        final byte[] sBytes = new byte[saltLen];
         cp = 0;
         while (cp < saltLen - blocksize) {
             System.arraycopy(tempResult, 0, sBytes, cp, blocksize);
@@ -411,7 +411,7 @@ public class Sha2Crypt {
         /*
          * Now we can construct the result string. It consists of three parts.
          */
-        StringBuilder buffer = new StringBuilder(saltPrefix);
+        final StringBuilder buffer = new StringBuilder(saltPrefix);
         if (roundsCustom) {
             buffer.append(ROUNDS_PREFIX);
             buffer.append(rounds);
@@ -505,7 +505,7 @@ public class Sha2Crypt {
      * @throws RuntimeException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
-    public static String sha512Crypt(byte[] keyBytes) {
+    public static String sha512Crypt(final byte[] keyBytes) {
         return sha512Crypt(keyBytes, null);
     }
 
@@ -519,7 +519,7 @@ public class Sha2Crypt {
      * @throws RuntimeException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
-    public static String sha512Crypt(byte[] keyBytes, String salt) {
+    public static String sha512Crypt(final byte[] keyBytes, String salt) {
         if (salt == null) {
             salt = SHA512_PREFIX + B64.getRandomSalt(8);
         }

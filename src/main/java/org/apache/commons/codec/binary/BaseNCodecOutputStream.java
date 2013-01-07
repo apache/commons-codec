@@ -42,7 +42,7 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
     private final Context context = new Context();
 
     // TODO should this be protected?
-    public BaseNCodecOutputStream(OutputStream out, BaseNCodec basedCodec, boolean doEncode) {
+    public BaseNCodecOutputStream(final OutputStream out, final BaseNCodec basedCodec, final boolean doEncode) {
         super(out);
         this.baseNCodec = basedCodec;
         this.doEncode = doEncode;
@@ -57,7 +57,7 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
      *             if an I/O error occurs.
      */
     @Override
-    public void write(int i) throws IOException {
+    public void write(final int i) throws IOException {
         singleByte[0] = (byte) i;
         write(singleByte, 0, 1);
     }
@@ -81,7 +81,7 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
      *             if offset, len or buffer size are invalid
      */
     @Override
-    public void write(byte b[], int offset, int len) throws IOException {
+    public void write(final byte b[], final int offset, final int len) throws IOException {
         if (b == null) {
             throw new NullPointerException();
         } else if (offset < 0 || len < 0) {
@@ -107,11 +107,11 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
      * @throws IOException
      *             if an I/O error occurs.
      */
-    private void flush(boolean propogate) throws IOException {
-        int avail = baseNCodec.available(context);
+    private void flush(final boolean propogate) throws IOException {
+        final int avail = baseNCodec.available(context);
         if (avail > 0) {
-            byte[] buf = new byte[avail];
-            int c = baseNCodec.readResults(buf, 0, avail, context);
+            final byte[] buf = new byte[avail];
+            final int c = baseNCodec.readResults(buf, 0, avail, context);
             if (c > 0) {
                 out.write(buf, 0, c);
             }

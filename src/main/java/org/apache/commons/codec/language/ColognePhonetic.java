@@ -201,12 +201,12 @@ public class ColognePhonetic implements StringEncoder {
 
         protected int length = 0;
 
-        public CologneBuffer(char[] data) {
+        public CologneBuffer(final char[] data) {
             this.data = data;
             this.length = data.length;
         }
 
-        public CologneBuffer(int buffSize) {
+        public CologneBuffer(final int buffSize) {
             this.data = new char[buffSize];
             this.length = 0;
         }
@@ -225,18 +225,18 @@ public class ColognePhonetic implements StringEncoder {
 
     private class CologneOutputBuffer extends CologneBuffer {
 
-        public CologneOutputBuffer(int buffSize) {
+        public CologneOutputBuffer(final int buffSize) {
             super(buffSize);
         }
 
-        public void addRight(char chr) {
+        public void addRight(final char chr) {
             data[length] = chr;
             length++;
         }
 
         @Override
-        protected char[] copyData(int start, final int length) {
-            char[] newData = new char[length];
+        protected char[] copyData(final int start, final int length) {
+            final char[] newData = new char[length];
             System.arraycopy(data, start, newData, 0, length);
             return newData;
         }
@@ -244,18 +244,18 @@ public class ColognePhonetic implements StringEncoder {
 
     private class CologneInputBuffer extends CologneBuffer {
 
-        public CologneInputBuffer(char[] data) {
+        public CologneInputBuffer(final char[] data) {
             super(data);
         }
 
-        public void addLeft(char ch) {
+        public void addLeft(final char ch) {
             length++;
             data[getNextPos()] = ch;
         }
 
         @Override
-        protected char[] copyData(int start, final int length) {
-            char[] newData = new char[length];
+        protected char[] copyData(final int start, final int length) {
+            final char[] newData = new char[length];
             System.arraycopy(data, data.length - this.length + start, newData, 0, length);
             return newData;
         }
@@ -269,7 +269,7 @@ public class ColognePhonetic implements StringEncoder {
         }
 
         public char removeNext() {
-            char ch = getNextChar();
+            final char ch = getNextChar();
             length--;
             return ch;
         }
@@ -294,8 +294,8 @@ public class ColognePhonetic implements StringEncoder {
     /*
      * Returns whether the array contains the key, or not.
      */
-    private static boolean arrayContains(char[] arr, char key) {
-        for (char element : arr) {
+    private static boolean arrayContains(final char[] arr, final char key) {
+        for (final char element : arr) {
             if (element == key) {
                 return true;
             }
@@ -321,8 +321,8 @@ public class ColognePhonetic implements StringEncoder {
 
         text = preprocess(text);
 
-        CologneOutputBuffer output = new CologneOutputBuffer(text.length() * 2);
-        CologneInputBuffer input = new CologneInputBuffer(text.toCharArray());
+        final CologneOutputBuffer output = new CologneOutputBuffer(text.length() * 2);
+        final CologneInputBuffer input = new CologneInputBuffer(text.toCharArray());
 
         char nextChar;
 
@@ -400,7 +400,7 @@ public class ColognePhonetic implements StringEncoder {
     }
 
     @Override
-    public Object encode(Object object) throws EncoderException {
+    public Object encode(final Object object) throws EncoderException {
         if (!(object instanceof String)) {
             throw new EncoderException("This method's parameter was expected to be of the type " +
                 String.class.getName() +
@@ -412,11 +412,11 @@ public class ColognePhonetic implements StringEncoder {
     }
 
     @Override
-    public String encode(String text) {
+    public String encode(final String text) {
         return colognePhonetic(text);
     }
 
-    public boolean isEncodeEqual(String text1, String text2) {
+    public boolean isEncodeEqual(final String text1, final String text2) {
         return colognePhonetic(text1).equals(colognePhonetic(text2));
     }
 
@@ -426,11 +426,11 @@ public class ColognePhonetic implements StringEncoder {
     private String preprocess(String text) {
         text = text.toUpperCase(Locale.GERMAN);
 
-        char[] chrs = text.toCharArray();
+        final char[] chrs = text.toCharArray();
 
         for (int index = 0; index < chrs.length; index++) {
             if (chrs[index] > 'Z') {
-                for (char[] element : PREPROCESS_MAP) {
+                for (final char[] element : PREPROCESS_MAP) {
                     if (chrs[index] == element[0]) {
                         chrs[index] = element[1];
                         break;

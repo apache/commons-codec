@@ -179,7 +179,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * @param lineLength if &gt; 0, use chunking with a length <code>lineLength</code>
      * @param chunkSeparatorLength the chunk separator length, if relevant
      */
-    protected BaseNCodec(int unencodedBlockSize, int encodedBlockSize, int lineLength, int chunkSeparatorLength) {
+    protected BaseNCodec(final int unencodedBlockSize, final int encodedBlockSize, final int lineLength, final int chunkSeparatorLength) {
         this.unencodedBlockSize = unencodedBlockSize;
         this.encodedBlockSize = encodedBlockSize;
         final boolean useChunking = lineLength > 0 && chunkSeparatorLength > 0;
@@ -193,7 +193,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * @param context the context to be used
      * @return true if there is data still available for reading.
      */
-    boolean hasData(Context context) {  // package protected for access from I/O streams
+    boolean hasData(final Context context) {  // package protected for access from I/O streams
         return context.buffer != null;
     }
 
@@ -203,7 +203,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * @param context the context to be used
      * @return The amount of buffered data available for reading.
      */
-    int available(Context context) {  // package protected for access from I/O streams
+    int available(final Context context) {  // package protected for access from I/O streams
         return context.buffer != null ? context.pos - context.readPos : 0;
     }
 
@@ -220,13 +220,13 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * Increases our buffer by the {@link #DEFAULT_BUFFER_RESIZE_FACTOR}.
      * @param context the context to be used
      */
-    private byte[] resizeBuffer(Context context) {
+    private byte[] resizeBuffer(final Context context) {
         if (context.buffer == null) {
             context.buffer = new byte[getDefaultBufferSize()];
             context.pos = 0;
             context.readPos = 0;
         } else {
-            byte[] b = new byte[context.buffer.length * DEFAULT_BUFFER_RESIZE_FACTOR];
+            final byte[] b = new byte[context.buffer.length * DEFAULT_BUFFER_RESIZE_FACTOR];
             System.arraycopy(context.buffer, 0, b, 0, context.buffer.length);
             context.buffer = b;
         }
@@ -239,7 +239,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * @param size minimum spare space required
      * @param context the context to be used
      */
-    protected byte[] ensureBufferSize(int size, Context context){
+    protected byte[] ensureBufferSize(final int size, final Context context){
         if ((context.buffer == null) || (context.buffer.length < context.pos + size)){
             return resizeBuffer(context);
         }
@@ -262,9 +262,9 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      *            the context to be used
      * @return The number of bytes successfully extracted into the provided byte[] array.
      */
-    int readResults(byte[] b, int bPos, int bAvail, Context context) {
+    int readResults(final byte[] b, final int bPos, final int bAvail, final Context context) {
         if (context.buffer != null) {
-            int len = Math.min(available(context), bAvail);
+            final int len = Math.min(available(context), bAvail);
             System.arraycopy(context.buffer, context.readPos, b, bPos, len);
             context.readPos += len;
             if (context.readPos >= context.pos) {
@@ -282,7 +282,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      *            the byte to check
      * @return true if byte is whitespace, false otherwise
      */
-    protected static boolean isWhiteSpace(byte byteToCheck) {
+    protected static boolean isWhiteSpace(final byte byteToCheck) {
         switch (byteToCheck) {
             case ' ' :
             case '\n' :
@@ -305,7 +305,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      *             if the parameter supplied is not of type byte[]
      */
     @Override
-    public Object encode(Object obj) throws EncoderException {
+    public Object encode(final Object obj) throws EncoderException {
         if (!(obj instanceof byte[])) {
             throw new EncoderException("Parameter supplied to Base-N encode is not a byte[]");
         }
@@ -320,7 +320,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      *            a byte array containing binary data
      * @return A String containing only Base-N character data
      */
-    public String encodeToString(byte[] pArray) {
+    public String encodeToString(final byte[] pArray) {
         return StringUtils.newStringUtf8(encode(pArray));
     }
 
@@ -331,7 +331,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * @param pArray a byte array containing binary data
      * @return String containing only character data in the appropriate alphabet.
     */
-    public String encodeAsString(byte[] pArray){
+    public String encodeAsString(final byte[] pArray){
         return StringUtils.newStringUtf8(encode(pArray));
     }
 
@@ -347,7 +347,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      *             if the parameter supplied is not of type byte[]
      */
     @Override
-    public Object decode(Object obj) throws DecoderException {
+    public Object decode(final Object obj) throws DecoderException {
         if (obj instanceof byte[]) {
             return decode((byte[]) obj);
         } else if (obj instanceof String) {
@@ -364,7 +364,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      *            A String containing Base-N character data
      * @return a byte array containing binary data
      */
-    public byte[] decode(String pArray) {
+    public byte[] decode(final String pArray) {
         return decode(StringUtils.getBytesUtf8(pArray));
     }
 
@@ -376,14 +376,14 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * @return a byte array containing binary data
      */
     @Override
-    public byte[] decode(byte[] pArray) {
+    public byte[] decode(final byte[] pArray) {
         if (pArray == null || pArray.length == 0) {
             return pArray;
         }
-        Context context = new Context();
+        final Context context = new Context();
         decode(pArray, 0, pArray.length, context);
         decode(pArray, 0, EOF, context); // Notify decoder of EOF.
-        byte[] result = new byte[context.pos];
+        final byte[] result = new byte[context.pos];
         readResults(result, 0, result.length, context);
         return result;
     }
@@ -396,14 +396,14 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * @return A byte array containing only the basen alphabetic character data
      */
     @Override
-    public byte[] encode(byte[] pArray) {
+    public byte[] encode(final byte[] pArray) {
         if (pArray == null || pArray.length == 0) {
             return pArray;
         }
-        Context context = new Context();
+        final Context context = new Context();
         encode(pArray, 0, pArray.length, context);
         encode(pArray, 0, EOF, context); // Notify encoder of EOF.
-        byte[] buf = new byte[context.pos - context.readPos];
+        final byte[] buf = new byte[context.pos - context.readPos];
         readResults(buf, 0, buf.length, context);
         return buf;
     }
@@ -434,7 +434,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * @return {@code true} if all bytes are valid characters in the alphabet or if the byte array is empty;
      *         {@code false}, otherwise
      */
-    public boolean isInAlphabet(byte[] arrayOctet, boolean allowWSPad) {
+    public boolean isInAlphabet(final byte[] arrayOctet, final boolean allowWSPad) {
         for (int i = 0; i < arrayOctet.length; i++) {
             if (!isInAlphabet(arrayOctet[i]) &&
                     (!allowWSPad || (arrayOctet[i] != PAD) && !isWhiteSpace(arrayOctet[i]))) {
@@ -453,7 +453,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      *         the String is empty; {@code false}, otherwise
      * @see #isInAlphabet(byte[], boolean)
      */
-    public boolean isInAlphabet(String basen) {
+    public boolean isInAlphabet(final String basen) {
         return isInAlphabet(StringUtils.getBytesUtf8(basen), true);
     }
 
@@ -466,11 +466,11 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      *            byte array to test
      * @return {@code true} if any byte is a valid character in the alphabet or PAD; {@code false} otherwise
      */
-    protected boolean containsAlphabetOrPad(byte[] arrayOctet) {
+    protected boolean containsAlphabetOrPad(final byte[] arrayOctet) {
         if (arrayOctet == null) {
             return false;
         }
-        for (byte element : arrayOctet) {
+        for (final byte element : arrayOctet) {
             if (PAD == element || isInAlphabet(element)) {
                 return true;
             }
@@ -486,7 +486,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * @return amount of space needed to encoded the supplied array.
      * Returns a long since a max-len array will require > Integer.MAX_VALUE
      */
-    public long getEncodedLength(byte[] pArray) {
+    public long getEncodedLength(final byte[] pArray) {
         // Calculate non-chunked size - rounded up to allow for padding
         // cast to long is needed to avoid possibility of overflow
         long len = ((pArray.length + unencodedBlockSize-1)  / unencodedBlockSize) * (long) encodedBlockSize;

@@ -101,7 +101,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      *            the default string charset to use.
      * @since 1.7
      */
-    public QuotedPrintableCodec(Charset charset) {
+    public QuotedPrintableCodec(final Charset charset) {
         this.charset = charset;
     }
 
@@ -120,7 +120,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      *
      * @since 1.7 throws UnsupportedCharsetException if the named charset is unavailable
      */
-    public QuotedPrintableCodec(String charsetName)
+    public QuotedPrintableCodec(final String charsetName)
             throws IllegalCharsetNameException, IllegalArgumentException, UnsupportedCharsetException {
         this(Charset.forName(charsetName));
     }
@@ -133,10 +133,10 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * @param buffer
      *            the buffer to write to
      */
-    private static final void encodeQuotedPrintable(int b, ByteArrayOutputStream buffer) {
+    private static final void encodeQuotedPrintable(final int b, final ByteArrayOutputStream buffer) {
         buffer.write(ESCAPE_CHAR);
-        char hex1 = Character.toUpperCase(Character.forDigit((b >> 4) & 0xF, 16));
-        char hex2 = Character.toUpperCase(Character.forDigit(b & 0xF, 16));
+        final char hex1 = Character.toUpperCase(Character.forDigit((b >> 4) & 0xF, 16));
+        final char hex2 = Character.toUpperCase(Character.forDigit(b & 0xF, 16));
         buffer.write(hex1);
         buffer.write(hex2);
     }
@@ -153,15 +153,15 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      *            array of bytes to be encoded
      * @return array of bytes containing quoted-printable data
      */
-    public static final byte[] encodeQuotedPrintable(BitSet printable, byte[] bytes) {
+    public static final byte[] encodeQuotedPrintable(BitSet printable, final byte[] bytes) {
         if (bytes == null) {
             return null;
         }
         if (printable == null) {
             printable = PRINTABLE_CHARS;
         }
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        for (byte c : bytes) {
+        final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        for (final byte c : bytes) {
             int b = c;
             if (b < 0) {
                 b = 256 + b;
@@ -188,19 +188,19 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * @throws DecoderException
      *             Thrown if quoted-printable decoding is unsuccessful
      */
-    public static final byte[] decodeQuotedPrintable(byte[] bytes) throws DecoderException {
+    public static final byte[] decodeQuotedPrintable(final byte[] bytes) throws DecoderException {
         if (bytes == null) {
             return null;
         }
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         for (int i = 0; i < bytes.length; i++) {
-            int b = bytes[i];
+            final int b = bytes[i];
             if (b == ESCAPE_CHAR) {
                 try {
-                    int u = Utils.digit16(bytes[++i]);
-                    int l = Utils.digit16(bytes[++i]);
+                    final int u = Utils.digit16(bytes[++i]);
+                    final int l = Utils.digit16(bytes[++i]);
                     buffer.write((char) ((u << 4) + l));
-                } catch (ArrayIndexOutOfBoundsException e) {
+                } catch (final ArrayIndexOutOfBoundsException e) {
                     throw new DecoderException("Invalid quoted-printable encoding", e);
                 }
             } else {
@@ -221,7 +221,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * @return array of bytes containing quoted-printable data
      */
     @Override
-    public byte[] encode(byte[] bytes) {
+    public byte[] encode(final byte[] bytes) {
         return encodeQuotedPrintable(PRINTABLE_CHARS, bytes);
     }
 
@@ -239,7 +239,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      *             Thrown if quoted-printable decoding is unsuccessful
      */
     @Override
-    public byte[] decode(byte[] bytes) throws DecoderException {
+    public byte[] decode(final byte[] bytes) throws DecoderException {
         return decodeQuotedPrintable(bytes);
     }
 
@@ -258,7 +258,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * @see #getCharset()
      */
     @Override
-    public String encode(String str) throws EncoderException {
+    public String encode(final String str) throws EncoderException {
         return this.encode(str, getCharset());
     }
 
@@ -275,7 +275,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      *             Thrown if quoted-printable decoding is unsuccessful
      * @since 1.7
      */
-    public String decode(String str, Charset charset) throws DecoderException {
+    public String decode(final String str, final Charset charset) throws DecoderException {
         if (str == null) {
             return null;
         }
@@ -296,7 +296,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * @throws UnsupportedEncodingException
      *             Thrown if charset is not supported
      */
-    public String decode(String str, String charset) throws DecoderException, UnsupportedEncodingException {
+    public String decode(final String str, final String charset) throws DecoderException, UnsupportedEncodingException {
         if (str == null) {
             return null;
         }
@@ -315,7 +315,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * @see #getCharset()
      */
     @Override
-    public String decode(String str) throws DecoderException {
+    public String decode(final String str) throws DecoderException {
         return this.decode(str, this.getCharset());
     }
 
@@ -330,7 +330,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      *             unsuccessful
      */
     @Override
-    public Object encode(Object obj) throws EncoderException {
+    public Object encode(final Object obj) throws EncoderException {
         if (obj == null) {
             return null;
         } else if (obj instanceof byte[]) {
@@ -356,7 +356,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      *             condition is encountered during the decode process.
      */
     @Override
-    public Object decode(Object obj) throws DecoderException {
+    public Object decode(final Object obj) throws DecoderException {
         if (obj == null) {
             return null;
         } else if (obj instanceof byte[]) {
@@ -402,7 +402,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * @return quoted-printable string
      * @since 1.7
      */
-    public String encode(String str, Charset charset) {
+    public String encode(final String str, final Charset charset) {
         if (str == null) {
             return null;
         }
@@ -423,7 +423,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * @throws UnsupportedEncodingException
      *             Thrown if the charset is not supported
      */
-    public String encode(String str, String charset) throws UnsupportedEncodingException {
+    public String encode(final String str, final String charset) throws UnsupportedEncodingException {
         if (str == null) {
             return null;
         }

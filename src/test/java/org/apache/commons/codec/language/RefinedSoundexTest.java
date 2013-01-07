@@ -77,7 +77,7 @@ public class RefinedSoundexTest extends StringEncoderAbstractTest<RefinedSoundex
 
     @Test
     public void testGetMappingCodeNonLetter() {
-        char code = this.getStringEncoder().getMappingCode('#');
+        final char code = this.getStringEncoder().getMappingCode('#');
         assertEquals("Code does not equals zero", 0, code);
     }
 

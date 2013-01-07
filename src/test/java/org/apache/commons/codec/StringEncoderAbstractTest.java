@@ -30,18 +30,18 @@ public abstract class StringEncoderAbstractTest<T extends StringEncoder> {
 
     protected T stringEncoder = this.createStringEncoder();
 
-    public void checkEncoding(String expected, String source) throws EncoderException {
+    public void checkEncoding(final String expected, final String source) throws EncoderException {
         Assert.assertEquals("Source: " + source, expected, this.getStringEncoder().encode(source));
     }
 
-    protected void checkEncodings(String[][] data) throws EncoderException {
-        for (String[] element : data) {
+    protected void checkEncodings(final String[][] data) throws EncoderException {
+        for (final String[] element : data) {
             this.checkEncoding(element[1], element[0]);
         }
     }
 
-    protected void checkEncodingVariations(String expected, String data[]) throws EncoderException {
-        for (String element : data) {
+    protected void checkEncodingVariations(final String expected, final String data[]) throws EncoderException {
+        for (final String element : data) {
             this.checkEncoding(expected, element);
         }
     }
@@ -54,7 +54,7 @@ public abstract class StringEncoderAbstractTest<T extends StringEncoder> {
 
     @Test
     public void testEncodeEmpty() throws Exception {
-        Encoder encoder = this.getStringEncoder();
+        final Encoder encoder = this.getStringEncoder();
         encoder.encode("");
         encoder.encode(" ");
         encoder.encode("\t");
@@ -62,10 +62,10 @@ public abstract class StringEncoderAbstractTest<T extends StringEncoder> {
 
     @Test
     public void testEncodeNull() throws Exception {
-        StringEncoder encoder = this.getStringEncoder();
+        final StringEncoder encoder = this.getStringEncoder();
         try {
             encoder.encode(null);
-        } catch (EncoderException ee) {
+        } catch (final EncoderException ee) {
             // An exception should be thrown
         }
     }
@@ -74,9 +74,9 @@ public abstract class StringEncoderAbstractTest<T extends StringEncoder> {
     public void testEncodeWithInvalidObject() throws Exception {
         boolean exceptionThrown = false;
         try {
-            StringEncoder encoder = this.getStringEncoder();
+            final StringEncoder encoder = this.getStringEncoder();
             encoder.encode(new Float(3.4));
-        } catch (Exception e) {
+        } catch (final Exception e) {
             exceptionThrown = true;
         }
         Assert.assertTrue("An exception was not thrown when we tried to encode " + "a Float object", exceptionThrown);
@@ -84,15 +84,15 @@ public abstract class StringEncoderAbstractTest<T extends StringEncoder> {
 
     @Test
     public void testLocaleIndependence() throws Exception {
-        StringEncoder encoder = this.getStringEncoder();
+        final StringEncoder encoder = this.getStringEncoder();
 
-        String[] data = {"I", "i",};
+        final String[] data = {"I", "i",};
 
-        Locale orig = Locale.getDefault();
-        Locale[] locales = {Locale.ENGLISH, new Locale("tr"), Locale.getDefault()};
+        final Locale orig = Locale.getDefault();
+        final Locale[] locales = {Locale.ENGLISH, new Locale("tr"), Locale.getDefault()};
 
         try {
-            for (String element : data) {
+            for (final String element : data) {
                 String ref = null;
                 for (int j = 0; j < locales.length; j++) {
                     Locale.setDefault(locales[j]);
@@ -102,7 +102,7 @@ public abstract class StringEncoderAbstractTest<T extends StringEncoder> {
                         String cur = null;
                         try {
                             cur = encoder.encode(element);
-                        } catch (Exception e) {
+                        } catch (final Exception e) {
                             Assert.fail(Locale.getDefault().toString() + ": " + e.getMessage());
                         }
                         Assert.assertEquals(Locale.getDefault().toString() + ": ", ref, cur);

@@ -74,15 +74,15 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * @throws DecoderException
      *             Thrown if an odd number or illegal of characters is supplied
      */
-    public static byte[] decodeHex(char[] data) throws DecoderException {
+    public static byte[] decodeHex(final char[] data) throws DecoderException {
 
-        int len = data.length;
+        final int len = data.length;
 
         if ((len & 0x01) != 0) {
             throw new DecoderException("Odd number of characters.");
         }
 
-        byte[] out = new byte[len >> 1];
+        final byte[] out = new byte[len >> 1];
 
         // two characters form the hex value.
         for (int i = 0, j = 0; j < len; i++) {
@@ -105,7 +105,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      *            a byte[] to convert to Hex characters
      * @return A char[] containing hexadecimal characters
      */
-    public static char[] encodeHex(byte[] data) {
+    public static char[] encodeHex(final byte[] data) {
         return encodeHex(data, true);
     }
 
@@ -121,7 +121,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * @return A char[] containing hexadecimal characters
      * @since 1.4
      */
-    public static char[] encodeHex(byte[] data, boolean toLowerCase) {
+    public static char[] encodeHex(final byte[] data, final boolean toLowerCase) {
         return encodeHex(data, toLowerCase ? DIGITS_LOWER : DIGITS_UPPER);
     }
 
@@ -137,9 +137,9 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * @return A char[] containing hexadecimal characters
      * @since 1.4
      */
-    protected static char[] encodeHex(byte[] data, char[] toDigits) {
-        int l = data.length;
-        char[] out = new char[l << 1];
+    protected static char[] encodeHex(final byte[] data, final char[] toDigits) {
+        final int l = data.length;
+        final char[] out = new char[l << 1];
         // two characters form the hex value.
         for (int i = 0, j = 0; i < l; i++) {
             out[j++] = toDigits[(0xF0 & data[i]) >>> 4];
@@ -157,7 +157,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * @return A String containing hexadecimal characters
      * @since 1.4
      */
-    public static String encodeHexString(byte[] data) {
+    public static String encodeHexString(final byte[] data) {
         return new String(encodeHex(data));
     }
 
@@ -172,8 +172,8 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * @throws DecoderException
      *             Thrown if ch is an illegal hex character
      */
-    protected static int toDigit(char ch, int index) throws DecoderException {
-        int digit = Character.digit(ch, 16);
+    protected static int toDigit(final char ch, final int index) throws DecoderException {
+        final int digit = Character.digit(ch, 16);
         if (digit == -1) {
             throw new DecoderException("Illegal hexadecimal character " + ch + " at index " + index);
         }
@@ -197,7 +197,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      *            the charset.
      * @since 1.7
      */
-    public Hex(Charset charset) {
+    public Hex(final Charset charset) {
         this.charset = charset;
     }
 
@@ -211,7 +211,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * @since 1.4
      * @since 1.7 throws UnsupportedCharsetException if the named charset is unavailable
      */
-    public Hex(String charsetName) {
+    public Hex(final String charsetName) {
         this(Charset.forName(charsetName));
     }
 
@@ -228,7 +228,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * @see #decodeHex(char[])
      */
     @Override
-    public byte[] decode(byte[] array) throws DecoderException {
+    public byte[] decode(final byte[] array) throws DecoderException {
         return decodeHex(new String(array, getCharset()).toCharArray());
     }
 
@@ -246,11 +246,11 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * @see #decodeHex(char[])
      */
     @Override
-    public Object decode(Object object) throws DecoderException {
+    public Object decode(final Object object) throws DecoderException {
         try {
-            char[] charArray = object instanceof String ? ((String) object).toCharArray() : (char[]) object;
+            final char[] charArray = object instanceof String ? ((String) object).toCharArray() : (char[]) object;
             return decodeHex(charArray);
-        } catch (ClassCastException e) {
+        } catch (final ClassCastException e) {
             throw new DecoderException(e.getMessage(), e);
         }
     }
@@ -271,7 +271,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * @see #encodeHex(byte[])
      */
     @Override
-    public byte[] encode(byte[] array) {
+    public byte[] encode(final byte[] array) {
         return encodeHexString(array).getBytes(this.getCharset());
     }
 
@@ -292,12 +292,12 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * @see #encodeHex(byte[])
      */
     @Override
-    public Object encode(Object object) throws EncoderException {
+    public Object encode(final Object object) throws EncoderException {
         try {
-            byte[] byteArray = object instanceof String ?
+            final byte[] byteArray = object instanceof String ?
                                    ((String) object).getBytes(this.getCharset()) : (byte[]) object;
             return encodeHex(byteArray);
-        } catch (ClassCastException e) {
+        } catch (final ClassCastException e) {
             throw new EncoderException(e.getMessage(), e);
         }
     }

@@ -42,7 +42,7 @@ public class Crypt {
      * @throws RuntimeException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
-    public static String crypt(byte[] keyBytes) {
+    public static String crypt(final byte[] keyBytes) {
         return crypt(keyBytes, null);
     }
 
@@ -62,7 +62,7 @@ public class Crypt {
      * @throws RuntimeException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
-    public static String crypt(byte[] keyBytes, String salt) {
+    public static String crypt(final byte[] keyBytes, final String salt) {
         if (salt == null) {
             return Sha2Crypt.sha512Crypt(keyBytes);
         } else if (salt.startsWith(Sha2Crypt.SHA512_PREFIX)) {
@@ -88,7 +88,7 @@ public class Crypt {
      * @throws RuntimeException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
-    public static String crypt(String key) {
+    public static String crypt(final String key) {
         return crypt(key, null);
     }
 
@@ -145,7 +145,7 @@ public class Crypt {
      * @throws RuntimeException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught. *
      */
-    public static String crypt(String key, String salt) {
+    public static String crypt(final String key, final String salt) {
         return crypt(key.getBytes(Charsets.UTF_8), salt);
     }
 }

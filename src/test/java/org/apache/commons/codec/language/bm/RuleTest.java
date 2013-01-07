@@ -32,25 +32,25 @@ import org.junit.Test;
 public class RuleTest {
     private static class NegativeIntegerBaseMatcher extends BaseMatcher<Integer> {
         @Override
-        public void describeTo(Description description) {
+        public void describeTo(final Description description) {
             description.appendText("value should be negative");
         }
 
         @Override
-        public boolean matches(Object item) {
+        public boolean matches(final Object item) {
             return ((Integer) item).intValue() < 0;
         }
     }
 
     private Rule.Phoneme[][] makePhonemes() {
-        String[][] words = {
+        final String[][] words = {
                 { "rinD", "rinDlt", "rina", "rinalt", "rino", "rinolt", "rinu", "rinult" },
                 { "dortlaj", "dortlej", "ortlaj", "ortlej", "ortlej-dortlaj" } };
-        Rule.Phoneme[][] phonemes = new Rule.Phoneme[words.length][];
+        final Rule.Phoneme[][] phonemes = new Rule.Phoneme[words.length][];
 
         for (int i = 0; i < words.length; i++) {
-            String[] words_i = words[i];
-            Rule.Phoneme[] phonemes_i = phonemes[i] = new Rule.Phoneme[words_i.length];
+            final String[] words_i = words[i];
+            final Rule.Phoneme[] phonemes_i = phonemes[i] = new Rule.Phoneme[words_i.length];
             for (int j = 0; j < words_i.length; j++) {
                 phonemes_i[j] = new Rule.Phoneme(words_i[j], Languages.NO_LANGUAGES);
             }
@@ -61,10 +61,10 @@ public class RuleTest {
 
     @Test
     public void testPhonemeComparedToLaterIsNegative() {
-        for (Rule.Phoneme[] phs : makePhonemes()) {
+        for (final Rule.Phoneme[] phs : makePhonemes()) {
             for (int i = 0; i < phs.length; i++) {
                 for (int j = i + 1; j < phs.length; j++) {
-                    int c = Rule.Phoneme.COMPARATOR.compare(phs[i], phs[j]);
+                    final int c = Rule.Phoneme.COMPARATOR.compare(phs[i], phs[j]);
 
                     assertThat("Comparing " + phs[i].getPhonemeText() + " to " + phs[j].getPhonemeText() + " should be negative", Integer.valueOf(c),
                             new NegativeIntegerBaseMatcher());
@@ -75,8 +75,8 @@ public class RuleTest {
 
     @Test
     public void testPhonemeComparedToSelfIsZero() {
-        for (Rule.Phoneme[] phs : makePhonemes()) {
-            for (Rule.Phoneme ph : phs) {
+        for (final Rule.Phoneme[] phs : makePhonemes()) {
+            for (final Rule.Phoneme ph : phs) {
                 assertEquals("Phoneme compared to itself should be zero: " + ph.getPhonemeText(), 0,
                         Rule.Phoneme.COMPARATOR.compare(ph, ph));
             }
@@ -87,12 +87,12 @@ public class RuleTest {
     public void testSubSequenceWorks() {
         // AppendableCharSequence is private to Rule. We can only make it through a Phoneme.
 
-        Rule.Phoneme a = new Rule.Phoneme("a", null);
-        Rule.Phoneme b = new Rule.Phoneme("b", null);
-        Rule.Phoneme cd = new Rule.Phoneme("cd", null);
-        Rule.Phoneme ef = new Rule.Phoneme("ef", null);
-        Rule.Phoneme ghi = new Rule.Phoneme("ghi", null);
-        Rule.Phoneme jkl = new Rule.Phoneme("jkl", null);
+        final Rule.Phoneme a = new Rule.Phoneme("a", null);
+        final Rule.Phoneme b = new Rule.Phoneme("b", null);
+        final Rule.Phoneme cd = new Rule.Phoneme("cd", null);
+        final Rule.Phoneme ef = new Rule.Phoneme("ef", null);
+        final Rule.Phoneme ghi = new Rule.Phoneme("ghi", null);
+        final Rule.Phoneme jkl = new Rule.Phoneme("jkl", null);
 
         assertEquals('a', a.getPhonemeText().charAt(0));
         assertEquals('b', b.getPhonemeText().charAt(0));
@@ -107,14 +107,14 @@ public class RuleTest {
         assertEquals('k', jkl.getPhonemeText().charAt(1));
         assertEquals('l', jkl.getPhonemeText().charAt(2));
 
-        Rule.Phoneme a_b = a.append(b.getPhonemeText());
+        final Rule.Phoneme a_b = a.append(b.getPhonemeText());
         assertEquals('a', a_b.getPhonemeText().charAt(0));
         assertEquals('b', a_b.getPhonemeText().charAt(1));
         assertEquals("ab", a_b.getPhonemeText().subSequence(0, 2).toString());
         assertEquals("a", a_b.getPhonemeText().subSequence(0, 1).toString());
         assertEquals("b", a_b.getPhonemeText().subSequence(1, 2).toString());
 
-        Rule.Phoneme cd_ef = cd.append(ef.getPhonemeText());
+        final Rule.Phoneme cd_ef = cd.append(ef.getPhonemeText());
         assertEquals('c', cd_ef.getPhonemeText().charAt(0));
         assertEquals('d', cd_ef.getPhonemeText().charAt(1));
         assertEquals('e', cd_ef.getPhonemeText().charAt(2));
@@ -130,7 +130,7 @@ public class RuleTest {
         assertEquals("def", cd_ef.getPhonemeText().subSequence(1, 4).toString());
         assertEquals("cdef", cd_ef.getPhonemeText().subSequence(0, 4).toString());
 
-        Rule.Phoneme a_b_cd = a.append(b.getPhonemeText()).append(cd.getPhonemeText());
+        final Rule.Phoneme a_b_cd = a.append(b.getPhonemeText()).append(cd.getPhonemeText());
         assertEquals('a', a_b_cd.getPhonemeText().charAt(0));
         assertEquals('b', a_b_cd.getPhonemeText().charAt(1));
         assertEquals('c', a_b_cd.getPhonemeText().charAt(2));

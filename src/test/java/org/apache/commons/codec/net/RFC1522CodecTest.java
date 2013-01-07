@@ -34,12 +34,12 @@ public class RFC1522CodecTest {
     static class RFC1522TestCodec extends RFC1522Codec {
 
         @Override
-        protected byte[] doDecoding(byte[] bytes) {
+        protected byte[] doDecoding(final byte[] bytes) {
             return bytes;
         }
 
         @Override
-        protected byte[] doEncoding(byte[] bytes) {
+        protected byte[] doEncoding(final byte[] bytes) {
             return bytes;
         }
 
@@ -52,17 +52,17 @@ public class RFC1522CodecTest {
 
     @Test
     public void testNullInput() throws Exception {
-        RFC1522TestCodec testcodec = new RFC1522TestCodec();
+        final RFC1522TestCodec testcodec = new RFC1522TestCodec();
         assertNull(testcodec.decodeText(null));
         assertNull(testcodec.encodeText(null, CharEncoding.UTF_8));
     }
 
-    private void assertExpectedDecoderException(String s) throws Exception {
-        RFC1522TestCodec testcodec = new RFC1522TestCodec();
+    private void assertExpectedDecoderException(final String s) throws Exception {
+        final RFC1522TestCodec testcodec = new RFC1522TestCodec();
         try {
             testcodec.decodeText(s);
             fail("DecoderException should have been thrown");
-        } catch (DecoderException e) {
+        } catch (final DecoderException e) {
             // Expected.
         }
     }

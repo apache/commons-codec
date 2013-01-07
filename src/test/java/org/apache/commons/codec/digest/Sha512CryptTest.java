@@ -87,7 +87,7 @@ public class Sha512CryptTest {
 
     @Test
     public void testSha256LargetThanBlocksize() {
-        byte[] buffer = new byte[200];
+        final byte[] buffer = new byte[200];
         Arrays.fill(buffer, 0, 200, (byte)'A');
         assertEquals("$6$abc$oP/h8PRhCKIA66KSTjGwNsQMSLLZnuFOTjOhrqNrDkKgjTlpePSqibB0qtmDapMbP/zN1cUEYSeHFrpgqZ.GG1", Sha2Crypt.sha512Crypt(buffer, "$6$abc"));
     }

@@ -61,8 +61,8 @@ public class PhoneticEngineTest {
     private final RuleType ruleType;
     private final int maxPhonemes;
 
-    public PhoneticEngineTest(String name, String phoneticExpected, NameType nameType,
-                              RuleType ruleType, boolean concat, int maxPhonemes) {
+    public PhoneticEngineTest(final String name, final String phoneticExpected, final NameType nameType,
+                              final RuleType ruleType, final boolean concat, final int maxPhonemes) {
         this.name = name;
         this.phoneticExpected = phoneticExpected;
         this.nameType = nameType;
@@ -73,21 +73,21 @@ public class PhoneticEngineTest {
 
     @Test(timeout = 10000L)
     public void testEncode() {
-        PhoneticEngine engine = new PhoneticEngine(this.nameType, this.ruleType, this.concat, this.maxPhonemes);
+        final PhoneticEngine engine = new PhoneticEngine(this.nameType, this.ruleType, this.concat, this.maxPhonemes);
 
-        String phoneticActual = engine.encode(this.name);
+        final String phoneticActual = engine.encode(this.name);
 
         //System.err.println("expecting: " + this.phoneticExpected);
         //System.err.println("actual:    " + phoneticActual);
         assertEquals("phoneme incorrect", this.phoneticExpected, phoneticActual);
 
         if (this.concat) {
-            String[] split = phoneticActual.split("\\|");
+            final String[] split = phoneticActual.split("\\|");
             assertTrue(split.length <= this.maxPhonemes);
         } else {
-            String[] words = phoneticActual.split("-");
-            for (String word : words) {
-                String[] split = word.split("\\|");
+            final String[] words = phoneticActual.split("-");
+            for (final String word : words) {
+                final String[] split = word.split("\\|");
                 assertTrue(split.length <= this.maxPhonemes);
             }
         }

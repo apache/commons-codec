@@ -104,7 +104,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      *
      * @param charset the default string charset to use.
      */
-    public URLCodec(String charset) {
+    public URLCodec(final String charset) {
         super();
         this.charset = charset;
     }
@@ -118,7 +118,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      *            array of bytes to convert to URL safe characters
      * @return array of bytes containing URL safe characters
      */
-    public static final byte[] encodeUrl(BitSet urlsafe, byte[] bytes) {
+    public static final byte[] encodeUrl(BitSet urlsafe, final byte[] bytes) {
         if (bytes == null) {
             return null;
         }
@@ -126,8 +126,8 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
             urlsafe = WWW_FORM_URL;
         }
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        for (byte c : bytes) {
+        final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        for (final byte c : bytes) {
             int b = c;
             if (b < 0) {
                 b = 256 + b;
@@ -139,8 +139,8 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
                 buffer.write(b);
             } else {
                 buffer.write(ESCAPE_CHAR);
-                char hex1 = Character.toUpperCase(Character.forDigit((b >> 4) & 0xF, RADIX));
-                char hex2 = Character.toUpperCase(Character.forDigit(b & 0xF, RADIX));
+                final char hex1 = Character.toUpperCase(Character.forDigit((b >> 4) & 0xF, RADIX));
+                final char hex2 = Character.toUpperCase(Character.forDigit(b & 0xF, RADIX));
                 buffer.write(hex1);
                 buffer.write(hex2);
             }
@@ -158,21 +158,21 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      * @throws DecoderException
      *             Thrown if URL decoding is unsuccessful
      */
-    public static final byte[] decodeUrl(byte[] bytes) throws DecoderException {
+    public static final byte[] decodeUrl(final byte[] bytes) throws DecoderException {
         if (bytes == null) {
             return null;
         }
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         for (int i = 0; i < bytes.length; i++) {
-            int b = bytes[i];
+            final int b = bytes[i];
             if (b == '+') {
                 buffer.write(' ');
             } else if (b == ESCAPE_CHAR) {
                 try {
-                    int u = Utils.digit16(bytes[++i]);
-                    int l = Utils.digit16(bytes[++i]);
+                    final int u = Utils.digit16(bytes[++i]);
+                    final int l = Utils.digit16(bytes[++i]);
                     buffer.write((char) ((u << 4) + l));
-                } catch (ArrayIndexOutOfBoundsException e) {
+                } catch (final ArrayIndexOutOfBoundsException e) {
                     throw new DecoderException("Invalid URL encoding: ", e);
                 }
             } else {
@@ -190,7 +190,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      * @return array of bytes containing URL safe characters
      */
     @Override
-    public byte[] encode(byte[] bytes) {
+    public byte[] encode(final byte[] bytes) {
         return encodeUrl(WWW_FORM_URL, bytes);
     }
 
@@ -206,7 +206,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      *             Thrown if URL decoding is unsuccessful
      */
     @Override
-    public byte[] decode(byte[] bytes) throws DecoderException {
+    public byte[] decode(final byte[] bytes) throws DecoderException {
         return decodeUrl(bytes);
     }
 
@@ -221,7 +221,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      * @throws UnsupportedEncodingException
      *             Thrown if charset is not supported
      */
-    public String encode(String str, String charset) throws UnsupportedEncodingException {
+    public String encode(final String str, final String charset) throws UnsupportedEncodingException {
         if (str == null) {
             return null;
         }
@@ -240,13 +240,13 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      * @see #getDefaultCharset()
      */
     @Override
-    public String encode(String str) throws EncoderException {
+    public String encode(final String str) throws EncoderException {
         if (str == null) {
             return null;
         }
         try {
             return encode(str, getDefaultCharset());
-        } catch (UnsupportedEncodingException e) {
+        } catch (final UnsupportedEncodingException e) {
             throw new EncoderException(e.getMessage(), e);
         }
     }
@@ -266,7 +266,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      * @throws UnsupportedEncodingException
      *             Thrown if charset is not supported
      */
-    public String decode(String str, String charset) throws DecoderException, UnsupportedEncodingException {
+    public String decode(final String str, final String charset) throws DecoderException, UnsupportedEncodingException {
         if (str == null) {
             return null;
         }
@@ -285,13 +285,13 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      * @see #getDefaultCharset()
      */
     @Override
-    public String decode(String str) throws DecoderException {
+    public String decode(final String str) throws DecoderException {
         if (str == null) {
             return null;
         }
         try {
             return decode(str, getDefaultCharset());
-        } catch (UnsupportedEncodingException e) {
+        } catch (final UnsupportedEncodingException e) {
             throw new DecoderException(e.getMessage(), e);
         }
     }
@@ -306,7 +306,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      *             Thrown if URL encoding is not applicable to objects of this type or if encoding is unsuccessful
      */
     @Override
-    public Object encode(Object obj) throws EncoderException {
+    public Object encode(final Object obj) throws EncoderException {
         if (obj == null) {
             return null;
         } else if (obj instanceof byte[]) {
@@ -331,7 +331,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      *             condition is encountered during the decode process.
      */
     @Override
-    public Object decode(Object obj) throws DecoderException {
+    public Object decode(final Object obj) throws DecoderException {
         if (obj == null) {
             return null;
         } else if (obj instanceof byte[]) {

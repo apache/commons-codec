@@ -29,26 +29,26 @@ import org.junit.Test;
  */
 public class MetaphoneTest extends StringEncoderAbstractTest<Metaphone> {
 
-    public void assertIsMetaphoneEqual(String source, String[] matches) {
+    public void assertIsMetaphoneEqual(final String source, final String[] matches) {
         // match source to all matches
-        for (String matche : matches) {
+        for (final String matche : matches) {
             assertTrue("Source: " + source + ", should have same Metaphone as: " + matche,
                        this.getStringEncoder().isMetaphoneEqual(source, matche));
         }
         // match to each other
-        for (String matche : matches) {
-            for (String matche2 : matches) {
+        for (final String matche : matches) {
+            for (final String matche2 : matches) {
                 assertTrue(this.getStringEncoder().isMetaphoneEqual(matche, matche2));
             }
         }
     }
 
-    public void assertMetaphoneEqual(String[][] pairs) {
+    public void assertMetaphoneEqual(final String[][] pairs) {
         this.validateFixture(pairs);
-        for (String[] pair : pairs) {
-            String name0 = pair[0];
-            String name1 = pair[1];
-            String failMsg = "Expected match between " + name0 + " and " + name1;
+        for (final String[] pair : pairs) {
+            final String name0 = pair[0];
+            final String name1 = pair[1];
+            final String failMsg = "Expected match between " + name0 + " and " + name1;
             assertTrue(failMsg, this.getStringEncoder().isMetaphoneEqual(name0, name1));
             assertTrue(failMsg, this.getStringEncoder().isMetaphoneEqual(name1, name0));
         }
@@ -469,7 +469,7 @@ public class MetaphoneTest extends StringEncoderAbstractTest<Metaphone> {
         assertEquals( "AKSKSK", this.getStringEncoder().metaphone("AXEAXEAXE") );
     }
 
-    public void validateFixture(String[][] pairs) {
+    public void validateFixture(final String[][] pairs) {
         if (pairs.length == 0) {
             fail("Test fixture is empty");
         }

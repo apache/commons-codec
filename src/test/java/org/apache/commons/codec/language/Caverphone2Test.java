@@ -70,7 +70,7 @@ public class Caverphone2Test extends StringEncoderAbstractTest<Caverphone2> {
      */
     @Test
     public void testCaverphoneRevisitedExamples() throws EncoderException {
-        String[][] data = {{"Stevenson", "STFNSN1111"}, {"Peter", "PTA1111111"}};
+        final String[][] data = {{"Stevenson", "STFNSN1111"}, {"Peter", "PTA1111111"}};
         this.checkEncodings(data);
     }
 
@@ -337,21 +337,21 @@ public class Caverphone2Test extends StringEncoderAbstractTest<Caverphone2> {
 
     @Test
     public void testEndMb() throws EncoderException {
-        String[][] data = {{"mb", "M111111111"}, {"mbmb", "MPM1111111"}};
+        final String[][] data = {{"mb", "M111111111"}, {"mbmb", "MPM1111111"}};
         this.checkEncodings(data);
     }
 
     // Caverphone Revisited
     @Test
     public void testIsCaverphoneEquals() throws EncoderException {
-        Caverphone2 caverphone = new Caverphone2();
+        final Caverphone2 caverphone = new Caverphone2();
         Assert.assertFalse("Caverphone encodings should not be equal", caverphone.isEncodeEqual("Peter", "Stevenson"));
         Assert.assertTrue("Caverphone encodings should be equal", caverphone.isEncodeEqual("Peter", "Peady"));
     }
 
     @Test
     public void testSpecificationExamples() throws EncoderException {
-        String[][] data = {
+        final String[][] data = {
             {"Peter", "PTA1111111"},
             {"ready", "RTA1111111"},
             {"social", "SSA1111111"},

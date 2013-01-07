@@ -69,13 +69,13 @@ abstract class RFC1522Codec {
         if (text == null) {
             return null;
         }
-        StringBuilder buffer = new StringBuilder();
+        final StringBuilder buffer = new StringBuilder();
         buffer.append(PREFIX);
         buffer.append(charset);
         buffer.append(SEP);
         buffer.append(this.getEncoding());
         buffer.append(SEP);
-        byte [] rawData = this.doEncoding(text.getBytes(charset));
+        final byte [] rawData = this.doEncoding(text.getBytes(charset));
         buffer.append(StringUtils.newStringUsAscii(rawData));
         buffer.append(POSTFIX);
         return buffer.toString();
@@ -129,13 +129,13 @@ abstract class RFC1522Codec {
         if (!text.startsWith(PREFIX) || !text.endsWith(POSTFIX)) {
             throw new DecoderException("RFC 1522 violation: malformed encoded content");
         }
-        int terminator = text.length() - 2;
+        final int terminator = text.length() - 2;
         int from = 2;
         int to = text.indexOf(SEP, from);
         if (to == terminator) {
             throw new DecoderException("RFC 1522 violation: charset token not found");
         }
-        String charset = text.substring(from, to);
+        final String charset = text.substring(from, to);
         if (charset.equals("")) {
             throw new DecoderException("RFC 1522 violation: charset not specified");
         }
@@ -144,7 +144,7 @@ abstract class RFC1522Codec {
         if (to == terminator) {
             throw new DecoderException("RFC 1522 violation: encoding token not found");
         }
-        String encoding = text.substring(from, to);
+        final String encoding = text.substring(from, to);
         if (!getEncoding().equalsIgnoreCase(encoding)) {
             throw new DecoderException("This codec cannot decode " + encoding + " encoded content");
         }

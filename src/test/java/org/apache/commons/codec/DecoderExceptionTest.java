@@ -35,28 +35,28 @@ public class DecoderExceptionTest {
 
     @Test
     public void testConstructor0() {
-        DecoderException e = new DecoderException();
+        final DecoderException e = new DecoderException();
         assertNull(e.getMessage());
         assertNull(e.getCause());
     }
 
     @Test
     public void testConstructorString() {
-        DecoderException e = new DecoderException(MSG);
+        final DecoderException e = new DecoderException(MSG);
         assertEquals(MSG, e.getMessage());
         assertNull(e.getCause());
     }
 
     @Test
     public void testConstructorStringThrowable() {
-        DecoderException e = new DecoderException(MSG, t);
+        final DecoderException e = new DecoderException(MSG, t);
         assertEquals(MSG, e.getMessage());
         assertEquals(t, e.getCause());
     }
 
     @Test
     public void testConstructorThrowable() {
-        DecoderException e = new DecoderException(t);
+        final DecoderException e = new DecoderException(t);
         assertEquals(t.getClass().getName(), e.getMessage());
         assertEquals(t, e.getCause());
     }

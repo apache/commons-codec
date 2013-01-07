@@ -52,61 +52,61 @@ public class StringUtilsTest {
 
     @Test
     public void testGetBytesIso8859_1() throws UnsupportedEncodingException {
-        String charsetName = "ISO-8859-1";
+        final String charsetName = "ISO-8859-1";
         testGetBytesUnchecked(charsetName);
-        byte[] expected = STRING_FIXTURE.getBytes(charsetName);
-        byte[] actual = StringUtils.getBytesIso8859_1(STRING_FIXTURE);
+        final byte[] expected = STRING_FIXTURE.getBytes(charsetName);
+        final byte[] actual = StringUtils.getBytesIso8859_1(STRING_FIXTURE);
         Assert.assertTrue(Arrays.equals(expected, actual));
     }
 
-    private void testGetBytesUnchecked(String charsetName) throws UnsupportedEncodingException {
-        byte[] expected = STRING_FIXTURE.getBytes(charsetName);
-        byte[] actual = StringUtils.getBytesUnchecked(STRING_FIXTURE, charsetName);
+    private void testGetBytesUnchecked(final String charsetName) throws UnsupportedEncodingException {
+        final byte[] expected = STRING_FIXTURE.getBytes(charsetName);
+        final byte[] actual = StringUtils.getBytesUnchecked(STRING_FIXTURE, charsetName);
         Assert.assertTrue(Arrays.equals(expected, actual));
     }
 
     @Test
     public void testGetBytesUsAscii() throws UnsupportedEncodingException {
-        String charsetName = "US-ASCII";
+        final String charsetName = "US-ASCII";
         testGetBytesUnchecked(charsetName);
-        byte[] expected = STRING_FIXTURE.getBytes(charsetName);
-        byte[] actual = StringUtils.getBytesUsAscii(STRING_FIXTURE);
+        final byte[] expected = STRING_FIXTURE.getBytes(charsetName);
+        final byte[] actual = StringUtils.getBytesUsAscii(STRING_FIXTURE);
         Assert.assertTrue(Arrays.equals(expected, actual));
     }
 
     @Test
     public void testGetBytesUtf16() throws UnsupportedEncodingException {
-        String charsetName = "UTF-16";
+        final String charsetName = "UTF-16";
         testGetBytesUnchecked(charsetName);
-        byte[] expected = STRING_FIXTURE.getBytes(charsetName);
-        byte[] actual = StringUtils.getBytesUtf16(STRING_FIXTURE);
+        final byte[] expected = STRING_FIXTURE.getBytes(charsetName);
+        final byte[] actual = StringUtils.getBytesUtf16(STRING_FIXTURE);
         Assert.assertTrue(Arrays.equals(expected, actual));
     }
 
     @Test
     public void testGetBytesUtf16Be() throws UnsupportedEncodingException {
-        String charsetName = "UTF-16BE";
+        final String charsetName = "UTF-16BE";
         testGetBytesUnchecked(charsetName);
-        byte[] expected = STRING_FIXTURE.getBytes(charsetName);
-        byte[] actual = StringUtils.getBytesUtf16Be(STRING_FIXTURE);
+        final byte[] expected = STRING_FIXTURE.getBytes(charsetName);
+        final byte[] actual = StringUtils.getBytesUtf16Be(STRING_FIXTURE);
         Assert.assertTrue(Arrays.equals(expected, actual));
     }
 
     @Test
     public void testGetBytesUtf16Le() throws UnsupportedEncodingException {
-        String charsetName = "UTF-16LE";
+        final String charsetName = "UTF-16LE";
         testGetBytesUnchecked(charsetName);
-        byte[] expected = STRING_FIXTURE.getBytes(charsetName);
-        byte[] actual = StringUtils.getBytesUtf16Le(STRING_FIXTURE);
+        final byte[] expected = STRING_FIXTURE.getBytes(charsetName);
+        final byte[] actual = StringUtils.getBytesUtf16Le(STRING_FIXTURE);
         Assert.assertTrue(Arrays.equals(expected, actual));
     }
 
     @Test
     public void testGetBytesUtf8() throws UnsupportedEncodingException {
-        String charsetName = "UTF-8";
+        final String charsetName = "UTF-8";
         testGetBytesUnchecked(charsetName);
-        byte[] expected = STRING_FIXTURE.getBytes(charsetName);
-        byte[] actual = StringUtils.getBytesUtf8(STRING_FIXTURE);
+        final byte[] expected = STRING_FIXTURE.getBytes(charsetName);
+        final byte[] actual = StringUtils.getBytesUtf8(STRING_FIXTURE);
         Assert.assertTrue(Arrays.equals(expected, actual));
     }
 
@@ -115,7 +115,7 @@ public class StringUtilsTest {
         try {
             StringUtils.getBytesUnchecked(STRING_FIXTURE, "UNKNOWN");
             Assert.fail("Expected " + IllegalStateException.class.getName());
-        } catch (IllegalStateException e) {
+        } catch (final IllegalStateException e) {
             // Expected
         }
     }
@@ -125,9 +125,9 @@ public class StringUtilsTest {
         Assert.assertNull(StringUtils.getBytesUnchecked(null, "UNKNOWN"));
     }
 
-    private void testNewString(String charsetName) throws UnsupportedEncodingException {
-        String expected = new String(BYTES_FIXTURE, charsetName);
-        String actual = StringUtils.newString(BYTES_FIXTURE, charsetName);
+    private void testNewString(final String charsetName) throws UnsupportedEncodingException {
+        final String expected = new String(BYTES_FIXTURE, charsetName);
+        final String actual = StringUtils.newString(BYTES_FIXTURE, charsetName);
         Assert.assertEquals(expected, actual);
     }
 
@@ -136,7 +136,7 @@ public class StringUtilsTest {
         try {
             StringUtils.newString(BYTES_FIXTURE, "UNKNOWN");
             Assert.fail("Expected " + IllegalStateException.class.getName());
-        } catch (IllegalStateException e) {
+        } catch (final IllegalStateException e) {
             // Expected
         }
     }
@@ -148,55 +148,55 @@ public class StringUtilsTest {
 
     @Test
     public void testNewStringIso8859_1() throws UnsupportedEncodingException {
-        String charsetName = "ISO-8859-1";
+        final String charsetName = "ISO-8859-1";
         testNewString(charsetName);
-        String expected = new String(BYTES_FIXTURE, charsetName);
-        String actual = StringUtils.newStringIso8859_1(BYTES_FIXTURE);
+        final String expected = new String(BYTES_FIXTURE, charsetName);
+        final String actual = StringUtils.newStringIso8859_1(BYTES_FIXTURE);
         Assert.assertEquals(expected, actual);
     }
 
     @Test
     public void testNewStringUsAscii() throws UnsupportedEncodingException {
-        String charsetName = "US-ASCII";
+        final String charsetName = "US-ASCII";
         testNewString(charsetName);
-        String expected = new String(BYTES_FIXTURE, charsetName);
-        String actual = StringUtils.newStringUsAscii(BYTES_FIXTURE);
+        final String expected = new String(BYTES_FIXTURE, charsetName);
+        final String actual = StringUtils.newStringUsAscii(BYTES_FIXTURE);
         Assert.assertEquals(expected, actual);
     }
 
     @Test
     public void testNewStringUtf16() throws UnsupportedEncodingException {
-        String charsetName = "UTF-16";
+        final String charsetName = "UTF-16";
         testNewString(charsetName);
-        String expected = new String(BYTES_FIXTURE, charsetName);
-        String actual = StringUtils.newStringUtf16(BYTES_FIXTURE);
+        final String expected = new String(BYTES_FIXTURE, charsetName);
+        final String actual = StringUtils.newStringUtf16(BYTES_FIXTURE);
         Assert.assertEquals(expected, actual);
     }
 
     @Test
     public void testNewStringUtf16Be() throws UnsupportedEncodingException {
-        String charsetName = "UTF-16BE";
+        final String charsetName = "UTF-16BE";
         testNewString(charsetName);
-        String expected = new String(BYTES_FIXTURE_16BE, charsetName);
-        String actual = StringUtils.newStringUtf16Be(BYTES_FIXTURE_16BE);
+        final String expected = new String(BYTES_FIXTURE_16BE, charsetName);
+        final String actual = StringUtils.newStringUtf16Be(BYTES_FIXTURE_16BE);
         Assert.assertEquals(expected, actual);
     }
 
     @Test
     public void testNewStringUtf16Le() throws UnsupportedEncodingException {
-        String charsetName = "UTF-16LE";
+        final String charsetName = "UTF-16LE";
         testNewString(charsetName);
-        String expected = new String(BYTES_FIXTURE_16LE, charsetName);
-        String actual = StringUtils.newStringUtf16Le(BYTES_FIXTURE_16LE);
+        final String expected = new String(BYTES_FIXTURE_16LE, charsetName);
+        final String actual = StringUtils.newStringUtf16Le(BYTES_FIXTURE_16LE);
         Assert.assertEquals(expected, actual);
     }
 
     @Test
     public void testNewStringUtf8() throws UnsupportedEncodingException {
-        String charsetName = "UTF-8";
+        final String charsetName = "UTF-8";
         testNewString(charsetName);
-        String expected = new String(BYTES_FIXTURE, charsetName);
-        String actual = StringUtils.newStringUtf8(BYTES_FIXTURE);
+        final String expected = new String(BYTES_FIXTURE, charsetName);
+        final String actual = StringUtils.newStringUtf8(BYTES_FIXTURE);
         Assert.assertEquals(expected, actual);
     }
 }

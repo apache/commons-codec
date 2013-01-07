@@ -92,7 +92,7 @@ public class Soundex implements StringEncoder {
      * @param mapping
      *                  Mapping array to use when finding the corresponding code for a given character
      */
-    public Soundex(char[] mapping) {
+    public Soundex(final char[] mapping) {
         this.soundexMapping = new char[mapping.length];
         System.arraycopy(mapping, 0, this.soundexMapping, 0, mapping.length);
     }
@@ -105,7 +105,7 @@ public class Soundex implements StringEncoder {
      *            Mapping string to use when finding the corresponding code for a given character
      * @since 1.4
      */
-    public Soundex(String mapping) {
+    public Soundex(final String mapping) {
         this.soundexMapping = mapping.toCharArray();
     }
 
@@ -128,7 +128,7 @@ public class Soundex implements StringEncoder {
      *                  if an error occurs encoding one of the strings
      * @since 1.3
      */
-    public int difference(String s1, String s2) throws EncoderException {
+    public int difference(final String s1, final String s2) throws EncoderException {
         return SoundexUtils.difference(this, s1, s2);
     }
 
@@ -146,7 +146,7 @@ public class Soundex implements StringEncoder {
      *                  if a character is not mapped
      */
     @Override
-    public Object encode(Object obj) throws EncoderException {
+    public Object encode(final Object obj) throws EncoderException {
         if (!(obj instanceof String)) {
             throw new EncoderException("Parameter supplied to Soundex encode is not of type java.lang.String");
         }
@@ -163,7 +163,7 @@ public class Soundex implements StringEncoder {
      *                  if a character is not mapped
      */
     @Override
-    public String encode(String str) {
+    public String encode(final String str) {
         return soundex(str);
     }
 
@@ -180,15 +180,15 @@ public class Soundex implements StringEncoder {
      * @throws IllegalArgumentException
      *                  if the character is not mapped
      */
-    private char getMappingCode(String str, int index) {
+    private char getMappingCode(final String str, final int index) {
         // map() throws IllegalArgumentException
-        char mappedChar = this.map(str.charAt(index));
+        final char mappedChar = this.map(str.charAt(index));
         // HW rule check
         if (index > 1 && mappedChar != '0') {
-            char hwChar = str.charAt(index - 1);
+            final char hwChar = str.charAt(index - 1);
             if ('H' == hwChar || 'W' == hwChar) {
-                char preHWChar = str.charAt(index - 2);
-                char firstCode = this.map(preHWChar);
+                final char preHWChar = str.charAt(index - 2);
+                final char firstCode = this.map(preHWChar);
                 if (firstCode == mappedChar || 'H' == preHWChar || 'W' == preHWChar) {
                     return 0;
                 }
@@ -226,8 +226,8 @@ public class Soundex implements StringEncoder {
      * @throws IllegalArgumentException
      *                  Thrown if <code>ch</code> is not mapped.
      */
-    private char map(char ch) {
-        int index = ch - 'A';
+    private char map(final char ch) {
+        final int index = ch - 'A';
         if (index < 0 || index >= this.getSoundexMapping().length) {
             throw new IllegalArgumentException("The character is not mapped: " + ch);
         }
@@ -242,7 +242,7 @@ public class Soundex implements StringEncoder {
      *                  The maxLength to set
      */
     @Deprecated
-    public void setMaxLength(int maxLength) {
+    public void setMaxLength(final int maxLength) {
         this.maxLength = maxLength;
     }
 
@@ -263,7 +263,7 @@ public class Soundex implements StringEncoder {
         if (str.length() == 0) {
             return str;
         }
-        char out[] = {'0', '0', '0', '0'};
+        final char out[] = {'0', '0', '0', '0'};
         char last, mapped;
         int incount = 1, count = 1;
         out[0] = str.charAt(0);

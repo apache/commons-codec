@@ -53,7 +53,7 @@ public abstract class AbstractCaverphone implements StringEncoder {
      *             if the parameter supplied is not of type java.lang.String
      */
     @Override
-    public Object encode(Object source) throws EncoderException {
+    public Object encode(final Object source) throws EncoderException {
         if (!(source instanceof String)) {
             throw new EncoderException("Parameter supplied to Caverphone encode is not of type java.lang.String");
         }
@@ -72,7 +72,7 @@ public abstract class AbstractCaverphone implements StringEncoder {
      * @return {@code true} if the encodings of these strings are identical, {@code false} otherwise.
      * @throws EncoderException
      */
-    public boolean isEncodeEqual(String str1, String str2) throws EncoderException {
+    public boolean isEncodeEqual(final String str1, final String str2) throws EncoderException {
         return this.encode(str1).equals(this.encode(str2));
     }
 

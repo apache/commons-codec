@@ -47,10 +47,10 @@ public class QCodecTest {
         0x432, 0x435, 0x442
     };
 
-    private String constructString(int [] unicodeChars) {
-        StringBuilder buffer = new StringBuilder();
+    private String constructString(final int [] unicodeChars) {
+        final StringBuilder buffer = new StringBuilder();
         if (unicodeChars != null) {
-            for (int unicodeChar : unicodeChars) {
+            for (final int unicodeChar : unicodeChars) {
                 buffer.append((char)unicodeChar);
             }
         }
@@ -59,7 +59,7 @@ public class QCodecTest {
 
     @Test
     public void testNullInput() throws Exception {
-        QCodec qcodec = new QCodec();
+        final QCodec qcodec = new QCodec();
         assertNull(qcodec.doDecoding(null));
         assertNull(qcodec.doEncoding(null));
     }
@@ -67,10 +67,10 @@ public class QCodecTest {
     @Test
     public void testUTF8RoundTrip() throws Exception {
 
-        String ru_msg = constructString(RUSSIAN_STUFF_UNICODE);
-        String ch_msg = constructString(SWISS_GERMAN_STUFF_UNICODE);
+        final String ru_msg = constructString(RUSSIAN_STUFF_UNICODE);
+        final String ch_msg = constructString(SWISS_GERMAN_STUFF_UNICODE);
 
-        QCodec qcodec = new QCodec(CharEncoding.UTF_8);
+        final QCodec qcodec = new QCodec(CharEncoding.UTF_8);
 
         assertEquals(
             "=?UTF-8?Q?=D0=92=D1=81=D0=B5=D0=BC=5F=D0=BF=D1=80=D0=B8=D0=B2=D0=B5=D1=82?=",
@@ -85,9 +85,9 @@ public class QCodecTest {
 
     @Test
     public void testBasicEncodeDecode() throws Exception {
-        QCodec qcodec = new QCodec();
-        String plain = "= Hello there =\r\n";
-        String encoded = qcodec.encode(plain);
+        final QCodec qcodec = new QCodec();
+        final String plain = "= Hello there =\r\n";
+        final String encoded = qcodec.encode(plain);
         assertEquals("Basic Q encoding test",
             "=?UTF-8?Q?=3D Hello there =3D=0D=0A?=", encoded);
         assertEquals("Basic Q decoding test",
@@ -96,9 +96,9 @@ public class QCodecTest {
 
     @Test
     public void testUnsafeEncodeDecode() throws Exception {
-        QCodec qcodec = new QCodec();
-        String plain = "?_=\r\n";
-        String encoded = qcodec.encode(plain);
+        final QCodec qcodec = new QCodec();
+        final String plain = "?_=\r\n";
+        final String encoded = qcodec.encode(plain);
         assertEquals("Unsafe chars Q encoding test",
             "=?UTF-8?Q?=3F=5F=3D=0D=0A?=", encoded);
         assertEquals("Unsafe chars Q decoding test",
@@ -107,7 +107,7 @@ public class QCodecTest {
 
     @Test
     public void testEncodeDecodeNull() throws Exception {
-        QCodec qcodec = new QCodec();
+        final QCodec qcodec = new QCodec();
         assertNull("Null string Q encoding test",
             qcodec.encode((String)null));
         assertNull("Null string Q decoding test",
@@ -116,37 +116,37 @@ public class QCodecTest {
 
     @Test
     public void testEncodeStringWithNull() throws Exception {
-        QCodec qcodec = new QCodec();
-        String test = null;
-        String result = qcodec.encode( test, "charset" );
+        final QCodec qcodec = new QCodec();
+        final String test = null;
+        final String result = qcodec.encode( test, "charset" );
         assertEquals("Result should be null", null, result);
     }
 
     @Test
     public void testDecodeStringWithNull() throws Exception {
-        QCodec qcodec = new QCodec();
-        String test = null;
-        String result = qcodec.decode( test );
+        final QCodec qcodec = new QCodec();
+        final String test = null;
+        final String result = qcodec.decode( test );
         assertEquals("Result should be null", null, result);
     }
 
 
     @Test
     public void testEncodeObjects() throws Exception {
-        QCodec qcodec = new QCodec();
-        String plain = "1+1 = 2";
-        String encoded = (String) qcodec.encode((Object) plain);
+        final QCodec qcodec = new QCodec();
+        final String plain = "1+1 = 2";
+        final String encoded = (String) qcodec.encode((Object) plain);
         assertEquals("Basic Q encoding test",
             "=?UTF-8?Q?1+1 =3D 2?=", encoded);
 
-        Object result = qcodec.encode((Object) null);
+        final Object result = qcodec.encode((Object) null);
         assertEquals( "Encoding a null Object should return null", null, result);
 
         try {
-            Object dObj = new Double(3.0);
+            final Object dObj = new Double(3.0);
             qcodec.encode( dObj );
             fail( "Trying to url encode a Double object should cause an exception.");
-        } catch (EncoderException ee) {
+        } catch (final EncoderException ee) {
             // Exception expected, test segment passes.
         }
     }
@@ -159,20 +159,20 @@ public class QCodecTest {
 
     @Test
     public void testDecodeObjects() throws Exception {
-        QCodec qcodec = new QCodec();
-        String decoded = "=?UTF-8?Q?1+1 =3D 2?=";
-        String plain = (String) qcodec.decode((Object) decoded);
+        final QCodec qcodec = new QCodec();
+        final String decoded = "=?UTF-8?Q?1+1 =3D 2?=";
+        final String plain = (String) qcodec.decode((Object) decoded);
         assertEquals("Basic Q decoding test",
             "1+1 = 2", plain);
 
-        Object result = qcodec.decode((Object) null);
+        final Object result = qcodec.decode((Object) null);
         assertEquals( "Decoding a null Object should return null", null, result);
 
         try {
-            Object dObj = new Double(3.0);
+            final Object dObj = new Double(3.0);
             qcodec.decode( dObj );
             fail( "Trying to url encode a Double object should cause an exception.");
-        } catch (DecoderException ee) {
+        } catch (final DecoderException ee) {
             // Exception expected, test segment passes.
         }
     }
@@ -180,10 +180,10 @@ public class QCodecTest {
 
     @Test
     public void testEncodeDecodeBlanks() throws Exception {
-        String plain = "Mind those pesky blanks";
-        String encoded1 = "=?UTF-8?Q?Mind those pesky blanks?=";
-        String encoded2 = "=?UTF-8?Q?Mind_those_pesky_blanks?=";
-        QCodec qcodec = new QCodec();
+        final String plain = "Mind those pesky blanks";
+        final String encoded1 = "=?UTF-8?Q?Mind those pesky blanks?=";
+        final String encoded2 = "=?UTF-8?Q?Mind_those_pesky_blanks?=";
+        final QCodec qcodec = new QCodec();
         qcodec.setEncodeBlanks(false);
         String s = qcodec.encode(plain);
         assertEquals("Blanks encoding with the Q codec test", encoded1, s);
@@ -199,7 +199,7 @@ public class QCodecTest {
 
     @Test
     public void testLetUsMakeCloverHappy() throws Exception {
-        QCodec qcodec = new QCodec();
+        final QCodec qcodec = new QCodec();
         qcodec.setEncodeBlanks(true);
         assertTrue(qcodec.isEncodeBlanks());
         qcodec.setEncodeBlanks(false);

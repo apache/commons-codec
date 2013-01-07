@@ -185,7 +185,7 @@ public class Base64 extends BaseNCodec {
      *            if {@code true}, URL-safe encoding is used. In most cases this should be set to {@code false}.
      * @since 1.4
      */
-    public Base64(boolean urlSafe) {
+    public Base64(final boolean urlSafe) {
         this(MIME_CHUNK_SIZE, CHUNK_SEPARATOR, urlSafe);
     }
 
@@ -208,7 +208,7 @@ public class Base64 extends BaseNCodec {
      *            decoding.
      * @since 1.4
      */
-    public Base64(int lineLength) {
+    public Base64(final int lineLength) {
         this(lineLength, CHUNK_SEPARATOR);
     }
 
@@ -235,7 +235,7 @@ public class Base64 extends BaseNCodec {
      *             Thrown when the provided lineSeparator included some base64 characters.
      * @since 1.4
      */
-    public Base64(int lineLength, byte[] lineSeparator) {
+    public Base64(final int lineLength, final byte[] lineSeparator) {
         this(lineLength, lineSeparator, false);
     }
 
@@ -266,7 +266,7 @@ public class Base64 extends BaseNCodec {
      *             The provided lineSeparator included some base64 characters. That's not going to work!
      * @since 1.4
      */
-    public Base64(int lineLength, byte[] lineSeparator, boolean urlSafe) {
+    public Base64(final int lineLength, final byte[] lineSeparator, final boolean urlSafe) {
         super(BYTES_PER_UNENCODED_BLOCK, BYTES_PER_ENCODED_BLOCK,
                 lineLength,
                 lineSeparator == null ? 0 : lineSeparator.length);
@@ -274,7 +274,7 @@ public class Base64 extends BaseNCodec {
         // @see test case Base64Test.testConstructors()
         if (lineSeparator != null) {
             if (containsAlphabetOrPad(lineSeparator)) {
-                String sep = StringUtils.newStringUtf8(lineSeparator);
+                final String sep = StringUtils.newStringUtf8(lineSeparator);
                 throw new IllegalArgumentException("lineSeparator must not contain base64 characters: [" + sep + "]");
             }
             if (lineLength > 0){ // null line-sep forces no chunking rather than throwing IAE
@@ -325,7 +325,7 @@ public class Base64 extends BaseNCodec {
      *            the context to be used
      */
     @Override
-    void encode(byte[] in, int inPos, int inAvail, Context context) {
+    void encode(final byte[] in, int inPos, final int inAvail, final Context context) {
         if (context.eof) {
             return;
         }
@@ -422,7 +422,7 @@ public class Base64 extends BaseNCodec {
      *            the context to be used
      */
     @Override
-    void decode(byte[] in, int inPos, int inAvail, Context context) {
+    void decode(final byte[] in, int inPos, final int inAvail, final Context context) {
         if (context.eof) {
             return;
         }
@@ -491,7 +491,7 @@ public class Base64 extends BaseNCodec {
      * @deprecated 1.5 Use {@link #isBase64(byte[])}, will be removed in 2.0.
      */
     @Deprecated
-    public static boolean isArrayByteBase64(byte[] arrayOctet) {
+    public static boolean isArrayByteBase64(final byte[] arrayOctet) {
         return isBase64(arrayOctet);
     }
 
@@ -503,7 +503,7 @@ public class Base64 extends BaseNCodec {
      * @return {@code true} if the value is defined in the the base 64 alphabet, {@code false} otherwise.
      * @since 1.4
      */
-    public static boolean isBase64(byte octet) {
+    public static boolean isBase64(final byte octet) {
         return octet == PAD_DEFAULT || (octet >= 0 && octet < DECODE_TABLE.length && DECODE_TABLE[octet] != -1);
     }
 
@@ -517,7 +517,7 @@ public class Base64 extends BaseNCodec {
      *         the String is empty; {@code false}, otherwise
      *  @since 1.5
      */
-    public static boolean isBase64(String base64) {
+    public static boolean isBase64(final String base64) {
         return isBase64(StringUtils.getBytesUtf8(base64));
     }
 
@@ -531,7 +531,7 @@ public class Base64 extends BaseNCodec {
      *         {@code false}, otherwise
      * @since 1.5
      */
-    public static boolean isBase64(byte[] arrayOctet) {
+    public static boolean isBase64(final byte[] arrayOctet) {
         for (int i = 0; i < arrayOctet.length; i++) {
             if (!isBase64(arrayOctet[i]) && !isWhiteSpace(arrayOctet[i])) {
                 return false;
@@ -547,7 +547,7 @@ public class Base64 extends BaseNCodec {
      *            binary data to encode
      * @return byte[] containing Base64 characters in their UTF-8 representation.
      */
-    public static byte[] encodeBase64(byte[] binaryData) {
+    public static byte[] encodeBase64(final byte[] binaryData) {
         return encodeBase64(binaryData, false);
     }
 
@@ -562,7 +562,7 @@ public class Base64 extends BaseNCodec {
      * @return String containing Base64 characters.
      * @since 1.4 (NOTE:  1.4 chunked the output, whereas 1.5 does not).
      */
-    public static String encodeBase64String(byte[] binaryData) {
+    public static String encodeBase64String(final byte[] binaryData) {
         return StringUtils.newStringUtf8(encodeBase64(binaryData, false));
     }
 
@@ -575,7 +575,7 @@ public class Base64 extends BaseNCodec {
      * @return byte[] containing Base64 characters in their UTF-8 representation.
      * @since 1.4
      */
-    public static byte[] encodeBase64URLSafe(byte[] binaryData) {
+    public static byte[] encodeBase64URLSafe(final byte[] binaryData) {
         return encodeBase64(binaryData, false, true);
     }
 
@@ -588,7 +588,7 @@ public class Base64 extends BaseNCodec {
      * @return String containing Base64 characters
      * @since 1.4
      */
-    public static String encodeBase64URLSafeString(byte[] binaryData) {
+    public static String encodeBase64URLSafeString(final byte[] binaryData) {
         return StringUtils.newStringUtf8(encodeBase64(binaryData, false, true));
     }
 
@@ -599,7 +599,7 @@ public class Base64 extends BaseNCodec {
      *            binary data to encode
      * @return Base64 characters chunked in 76 character blocks
      */
-    public static byte[] encodeBase64Chunked(byte[] binaryData) {
+    public static byte[] encodeBase64Chunked(final byte[] binaryData) {
         return encodeBase64(binaryData, true);
     }
 
@@ -614,7 +614,7 @@ public class Base64 extends BaseNCodec {
      * @throws IllegalArgumentException
      *             Thrown when the input array needs an output array bigger than {@link Integer#MAX_VALUE}
      */
-    public static byte[] encodeBase64(byte[] binaryData, boolean isChunked) {
+    public static byte[] encodeBase64(final byte[] binaryData, final boolean isChunked) {
         return encodeBase64(binaryData, isChunked, false);
     }
 
@@ -633,7 +633,7 @@ public class Base64 extends BaseNCodec {
      *             Thrown when the input array needs an output array bigger than {@link Integer#MAX_VALUE}
      * @since 1.4
      */
-    public static byte[] encodeBase64(byte[] binaryData, boolean isChunked, boolean urlSafe) {
+    public static byte[] encodeBase64(final byte[] binaryData, final boolean isChunked, final boolean urlSafe) {
         return encodeBase64(binaryData, isChunked, urlSafe, Integer.MAX_VALUE);
     }
 
@@ -654,15 +654,15 @@ public class Base64 extends BaseNCodec {
      *             Thrown when the input array needs an output array bigger than maxResultSize
      * @since 1.4
      */
-    public static byte[] encodeBase64(byte[] binaryData, boolean isChunked, boolean urlSafe, int maxResultSize) {
+    public static byte[] encodeBase64(final byte[] binaryData, final boolean isChunked, final boolean urlSafe, final int maxResultSize) {
         if (binaryData == null || binaryData.length == 0) {
             return binaryData;
         }
 
         // Create this so can use the super-class method
         // Also ensures that the same roundings are performed by the ctor and the code
-        Base64 b64 = isChunked ? new Base64(urlSafe) : new Base64(0, CHUNK_SEPARATOR, urlSafe);
-        long len = b64.getEncodedLength(binaryData);
+        final Base64 b64 = isChunked ? new Base64(urlSafe) : new Base64(0, CHUNK_SEPARATOR, urlSafe);
+        final long len = b64.getEncodedLength(binaryData);
         if (len > maxResultSize) {
             throw new IllegalArgumentException("Input array too big, the output array would be bigger (" +
                 len +
@@ -681,7 +681,7 @@ public class Base64 extends BaseNCodec {
      * @return Array containing decoded data.
      * @since 1.4
      */
-    public static byte[] decodeBase64(String base64String) {
+    public static byte[] decodeBase64(final String base64String) {
         return new Base64().decode(base64String);
     }
 
@@ -692,7 +692,7 @@ public class Base64 extends BaseNCodec {
      *            Byte array containing Base64 data
      * @return Array containing decoded data.
      */
-    public static byte[] decodeBase64(byte[] base64Data) {
+    public static byte[] decodeBase64(final byte[] base64Data) {
         return new Base64().decode(base64Data);
     }
 
@@ -707,7 +707,7 @@ public class Base64 extends BaseNCodec {
      * @return A BigInteger
      * @since 1.4
      */
-    public static BigInteger decodeInteger(byte[] pArray) {
+    public static BigInteger decodeInteger(final byte[] pArray) {
         return new BigInteger(1, decodeBase64(pArray));
     }
 
@@ -721,7 +721,7 @@ public class Base64 extends BaseNCodec {
      *             if null is passed in
      * @since 1.4
      */
-    public static byte[] encodeInteger(BigInteger bigInt) {
+    public static byte[] encodeInteger(final BigInteger bigInt) {
         if (bigInt == null) {
             throw new NullPointerException("encodeInteger called with null parameter");
         }
@@ -735,11 +735,11 @@ public class Base64 extends BaseNCodec {
      *            <code>BigInteger</code> to be converted
      * @return a byte array representation of the BigInteger parameter
      */
-    static byte[] toIntegerBytes(BigInteger bigInt) {
+    static byte[] toIntegerBytes(final BigInteger bigInt) {
         int bitlen = bigInt.bitLength();
         // round bitlen
         bitlen = ((bitlen + 7) >> 3) << 3;
-        byte[] bigBytes = bigInt.toByteArray();
+        final byte[] bigBytes = bigInt.toByteArray();
 
         if (((bigInt.bitLength() % 8) != 0) && (((bigInt.bitLength() / 8) + 1) == (bitlen / 8))) {
             return bigBytes;
@@ -753,8 +753,8 @@ public class Base64 extends BaseNCodec {
             startSrc = 1;
             len--;
         }
-        int startDst = bitlen / 8 - len; // to pad w/ nulls as per spec
-        byte[] resizedBytes = new byte[bitlen / 8];
+        final int startDst = bitlen / 8 - len; // to pad w/ nulls as per spec
+        final byte[] resizedBytes = new byte[bitlen / 8];
         System.arraycopy(bigBytes, startSrc, resizedBytes, startDst, len);
         return resizedBytes;
     }
@@ -767,7 +767,7 @@ public class Base64 extends BaseNCodec {
      * @return {@code true} if the value is defined in the the Base64 alphabet {@code false} otherwise.
      */
     @Override
-    protected boolean isInAlphabet(byte octet) {
+    protected boolean isInAlphabet(final byte octet) {
         return octet >= 0 && octet < decodeTable.length && decodeTable[octet] != -1;
     }
 

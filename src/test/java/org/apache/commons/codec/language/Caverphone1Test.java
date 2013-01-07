@@ -65,7 +65,7 @@ public class Caverphone1Test extends StringEncoderAbstractTest<Caverphone1> {
 
     @Test
     public void testEndMb() throws EncoderException {
-        String[][] data = {{"mb", "M11111"}, {"mbmb", "MPM111"}};
+        final String[][] data = {{"mb", "M11111"}, {"mbmb", "MPM111"}};
         this.checkEncodings(data);
     }
 
@@ -76,7 +76,7 @@ public class Caverphone1Test extends StringEncoderAbstractTest<Caverphone1> {
      */
     @Test
     public void testIsCaverphoneEquals() throws EncoderException {
-        Caverphone1 caverphone = new Caverphone1();
+        final Caverphone1 caverphone = new Caverphone1();
         Assert.assertFalse("Caverphone encodings should not be equal", caverphone.isEncodeEqual("Peter", "Stevenson"));
         Assert.assertTrue("Caverphone encodings should be equal", caverphone.isEncodeEqual("Peter", "Peady"));
     }
@@ -88,7 +88,7 @@ public class Caverphone1Test extends StringEncoderAbstractTest<Caverphone1> {
      */
     @Test
     public void testSpecificationV1Examples() throws EncoderException {
-        String[][] data = {{"David", "TFT111"}, {"Whittle", "WTL111"}};
+        final String[][] data = {{"David", "TFT111"}, {"Whittle", "WTL111"}};
         this.checkEncodings(data);
     }
 
@@ -99,7 +99,7 @@ public class Caverphone1Test extends StringEncoderAbstractTest<Caverphone1> {
      */
     @Test
     public void testWikipediaExamples() throws EncoderException {
-        String[][] data = {{"Lee", "L11111"}, {"Thompson", "TMPSN1"}};
+        final String[][] data = {{"Lee", "L11111"}, {"Thompson", "TMPSN1"}};
         this.checkEncodings(data);
     }
 

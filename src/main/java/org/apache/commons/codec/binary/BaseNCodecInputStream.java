@@ -41,7 +41,7 @@ public class BaseNCodecInputStream extends FilterInputStream {
 
     private final Context context = new Context();
 
-    protected BaseNCodecInputStream(InputStream in, BaseNCodec baseNCodec, boolean doEncode) {
+    protected BaseNCodecInputStream(final InputStream in, final BaseNCodec baseNCodec, final boolean doEncode) {
         super(in);
         this.doEncode = doEncode;
         this.baseNCodec = baseNCodec;
@@ -72,7 +72,7 @@ public class BaseNCodecInputStream extends FilterInputStream {
      * @since 1.7
      */
     @Override
-    public synchronized void mark(int readLimit) {
+    public synchronized void mark(final int readLimit) {
     }
 
     /**
@@ -125,7 +125,7 @@ public class BaseNCodecInputStream extends FilterInputStream {
      *             if offset, len or buffer size are invalid
      */
     @Override
-    public int read(byte b[], int offset, int len) throws IOException {
+    public int read(final byte b[], final int offset, final int len) throws IOException {
         if (b == null) {
             throw new NullPointerException();
         } else if (offset < 0 || len < 0) {
@@ -154,8 +154,8 @@ public class BaseNCodecInputStream extends FilterInputStream {
             */
             while (readLen == 0) {
                 if (!baseNCodec.hasData(context)) {
-                    byte[] buf = new byte[doEncode ? 4096 : 8192];
-                    int c = in.read(buf);
+                    final byte[] buf = new byte[doEncode ? 4096 : 8192];
+                    final int c = in.read(buf);
                     if (doEncode) {
                         baseNCodec.encode(buf, 0, c, context);
                     } else {
@@ -188,7 +188,7 @@ public class BaseNCodecInputStream extends FilterInputStream {
      * @since 1.7
      */
     @Override
-    public long skip(long n) throws IOException {
+    public long skip(final long n) throws IOException {
         if (n < 0) {
             throw new IllegalArgumentException("Negative skip length: " + n);
         }

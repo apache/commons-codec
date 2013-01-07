@@ -178,7 +178,7 @@ public class UnixCrypt {
      *            plaintext password
      * @return a 13 character string starting with the salt string
      */
-    public static String crypt(byte[] original) {
+    public static String crypt(final byte[] original) {
         return crypt(original, null);
     }
 
@@ -195,36 +195,36 @@ public class UnixCrypt {
      * @throws IllegalArgumentException
      *             if the salt does not match the allowed pattern
      */
-    public static String crypt(byte[] original, String salt) {
+    public static String crypt(final byte[] original, String salt) {
         if (salt == null) {
-            Random randomGenerator = new Random();
-            int numSaltChars = SALT_CHARS.length;
+            final Random randomGenerator = new Random();
+            final int numSaltChars = SALT_CHARS.length;
             salt = "" + SALT_CHARS[randomGenerator.nextInt(numSaltChars)] +
                     SALT_CHARS[randomGenerator.nextInt(numSaltChars)];
         } else if (!salt.matches("^[" + B64.B64T + "]{2,}$")) {
             throw new IllegalArgumentException("Invalid salt value: " + salt);
         }
 
-        StringBuilder buffer = new StringBuilder("             ");
-        char charZero = salt.charAt(0);
-        char charOne = salt.charAt(1);
+        final StringBuilder buffer = new StringBuilder("             ");
+        final char charZero = salt.charAt(0);
+        final char charOne = salt.charAt(1);
         buffer.setCharAt(0, charZero);
         buffer.setCharAt(1, charOne);
-        int eSwap0 = CON_SALT[charZero];
-        int eSwap1 = CON_SALT[charOne] << 4;
-        byte key[] = new byte[8];
+        final int eSwap0 = CON_SALT[charZero];
+        final int eSwap1 = CON_SALT[charOne] << 4;
+        final byte key[] = new byte[8];
         for (int i = 0; i < key.length; i++) {
             key[i] = 0;
         }
 
         for (int i = 0; i < key.length && i < original.length; i++) {
-            int iChar = original[i];
+            final int iChar = original[i];
             key[i] = (byte) (iChar << 1);
         }
 
-        int schedule[] = desSetKey(key);
-        int out[] = body(schedule, eSwap0, eSwap1);
-        byte b[] = new byte[9];
+        final int schedule[] = desSetKey(key);
+        final int out[] = body(schedule, eSwap0, eSwap1);
+        final byte b[] = new byte[9];
         intToFourBytes(out[0], b, 0);
         intToFourBytes(out[1], b, 4);
         b[8] = 0;
@@ -259,7 +259,7 @@ public class UnixCrypt {
      *            plaintext password
      * @return a 13 character string starting with the salt string
      */
-    public static String crypt(String original) {
+    public static String crypt(final String original) {
         return crypt(original.getBytes(Charsets.UTF_8));
     }
 
@@ -274,11 +274,11 @@ public class UnixCrypt {
      * @throws IllegalArgumentException
      *             if the salt does not match the allowed pattern
      */
-    public static String crypt(String original, String salt) {
+    public static String crypt(final String original, final String salt) {
         return crypt(original.getBytes(Charsets.UTF_8), salt);
     }
 
-    private static int[] body(int schedule[], int eSwap0, int eSwap1) {
+    private static int[] body(final int schedule[], final int eSwap0, final int eSwap1) {
         int left = 0;
         int right = 0;
         int t = 0;
@@ -295,7 +295,7 @@ public class UnixCrypt {
         t = right;
         right = left >>> 1 | left << 31;
         left = t >>> 1 | t << 31;
-        int results[] = new int[2];
+        final int results[] = new int[2];
         permOp(right, left, 1, 0x55555555, results);
         right = results[0];
         left = results[1];
@@ -311,18 +311,18 @@ public class UnixCrypt {
         permOp(right, left, 4, 0xf0f0f0f, results);
         right = results[0];
         left = results[1];
-        int out[] = new int[2];
+        final int out[] = new int[2];
         out[0] = left;
         out[1] = right;
         return out;
     }
 
-    private static int byteToUnsigned(byte b) {
-        int value = b;
+    private static int byteToUnsigned(final byte b) {
+        final int value = b;
         return value < 0 ? value + 256 : value;
     }
 
-    private static int dEncrypt(int el, int r, int s, int e0, int e1, int sArr[]) {
+    private static int dEncrypt(int el, final int r, final int s, final int e0, final int e1, final int sArr[]) {
         int v = r ^ r >>> 16;
         int u = v & e0;
         v &= e1;
@@ -335,11 +335,11 @@ public class UnixCrypt {
         return el;
     }
 
-    private static int[] desSetKey(byte key[]) {
-        int schedule[] = new int[32];
+    private static int[] desSetKey(final byte key[]) {
+        final int schedule[] = new int[32];
         int c = fourBytesToInt(key, 0);
         int d = fourBytesToInt(key, 4);
-        int results[] = new int[2];
+        final int results[] = new int[2];
         permOp(d, c, 4, 0xf0f0f0f, results);
         d = results[0];
         c = results[1];
@@ -370,7 +370,7 @@ public class UnixCrypt {
             int s = SKB[0][c & 0x3f] | SKB[1][c >>> 6 & 0x3 | c >>> 7 & 0x3c] |
                     SKB[2][c >>> 13 & 0xf | c >>> 14 & 0x30] |
                     SKB[3][c >>> 20 & 0x1 | c >>> 21 & 0x6 | c >>> 22 & 0x38];
-            int t = SKB[4][d & 0x3f] | SKB[5][d >>> 7 & 0x3 | d >>> 8 & 0x3c] | SKB[6][d >>> 15 & 0x3f] |
+            final int t = SKB[4][d & 0x3f] | SKB[5][d >>> 7 & 0x3 | d >>> 8 & 0x3c] | SKB[6][d >>> 15 & 0x3f] |
                     SKB[7][d >>> 21 & 0xf | d >>> 22 & 0x30];
             schedule[j++] = (t << 16 | s & 0xffff);
             s = s >>> 16 | t & 0xffff0000;
@@ -381,7 +381,7 @@ public class UnixCrypt {
         return schedule;
     }
 
-    private static int fourBytesToInt(byte b[], int offset) {
+    private static int fourBytesToInt(final byte b[], int offset) {
         int value = byteToUnsigned(b[offset++]);
         value |= byteToUnsigned(b[offset++]) << 8;
         value |= byteToUnsigned(b[offset++]) << 16;
@@ -389,21 +389,21 @@ public class UnixCrypt {
         return value;
     }
 
-    private static int hPermOp(int a, int n, int m) {
-        int t = (a << 16 - n ^ a) & m;
+    private static int hPermOp(int a, final int n, final int m) {
+        final int t = (a << 16 - n ^ a) & m;
         a = a ^ t ^ t >>> 16 - n;
         return a;
     }
 
-    private static void intToFourBytes(int iValue, byte b[], int offset) {
+    private static void intToFourBytes(final int iValue, final byte b[], int offset) {
         b[offset++] = (byte) (iValue & 0xff);
         b[offset++] = (byte) (iValue >>> 8 & 0xff);
         b[offset++] = (byte) (iValue >>> 16 & 0xff);
         b[offset++] = (byte) (iValue >>> 24 & 0xff);
     }
 
-    private static void permOp(int a, int b, int n, int m, int results[]) {
-        int t = (a >>> n ^ b) & m;
+    private static void permOp(int a, int b, final int n, final int m, final int results[]) {
+        final int t = (a >>> n ^ b) & m;
         a ^= t << n;
         b ^= t;
         results[0] = a;

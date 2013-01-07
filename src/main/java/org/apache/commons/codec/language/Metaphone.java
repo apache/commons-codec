@@ -82,7 +82,7 @@ public class Metaphone implements StringEncoder {
      * @param txt String to find the metaphone code for
      * @return A metaphone code corresponding to the String supplied
      */
-    public String metaphone(String txt) {
+    public String metaphone(final String txt) {
         boolean hard = false;
         if (txt == null || txt.length() == 0) {
             return "";
@@ -92,10 +92,10 @@ public class Metaphone implements StringEncoder {
             return txt.toUpperCase(java.util.Locale.ENGLISH);
         }
 
-        char[] inwd = txt.toUpperCase(java.util.Locale.ENGLISH).toCharArray();
+        final char[] inwd = txt.toUpperCase(java.util.Locale.ENGLISH).toCharArray();
 
-        StringBuilder local = new StringBuilder(40); // manipulate
-        StringBuilder code = new StringBuilder(10); //   output
+        final StringBuilder local = new StringBuilder(40); // manipulate
+        final StringBuilder code = new StringBuilder(10); //   output
         // handle initial 2 characters exceptions
         switch(inwd[0]) {
         case 'K':
@@ -134,12 +134,12 @@ public class Metaphone implements StringEncoder {
             local.append(inwd);
         } // now local has working string with initials fixed
 
-        int wdsz = local.length();
+        final int wdsz = local.length();
         int n = 0;
 
         while (code.length() < this.getMaxCodeLen() &&
                n < wdsz ) { // max code size of 4 works well
-            char symb = local.charAt(n);
+            final char symb = local.charAt(n);
             // remove duplicate letters except C
             if (symb != 'C' && isPreviousChar( local, n, symb ) ) {
                 n++;
@@ -327,11 +327,11 @@ public class Metaphone implements StringEncoder {
         return code.toString();
     }
 
-    private boolean isVowel(StringBuilder string, int index) {
+    private boolean isVowel(final StringBuilder string, final int index) {
         return VOWELS.indexOf(string.charAt(index)) >= 0;
     }
 
-    private boolean isPreviousChar(StringBuilder string, int index, char c) {
+    private boolean isPreviousChar(final StringBuilder string, final int index, final char c) {
         boolean matches = false;
         if( index > 0 &&
             index < string.length() ) {
@@ -340,7 +340,7 @@ public class Metaphone implements StringEncoder {
         return matches;
     }
 
-    private boolean isNextChar(StringBuilder string, int index, char c) {
+    private boolean isNextChar(final StringBuilder string, final int index, final char c) {
         boolean matches = false;
         if( index >= 0 &&
             index < string.length() - 1 ) {
@@ -349,17 +349,17 @@ public class Metaphone implements StringEncoder {
         return matches;
     }
 
-    private boolean regionMatch(StringBuilder string, int index, String test) {
+    private boolean regionMatch(final StringBuilder string, final int index, final String test) {
         boolean matches = false;
         if( index >= 0 &&
             index + test.length() - 1 < string.length() ) {
-            String substring = string.substring( index, index + test.length());
+            final String substring = string.substring( index, index + test.length());
             matches = substring.equals( test );
         }
         return matches;
     }
 
-    private boolean isLastChar(int wdsz, int n) {
+    private boolean isLastChar(final int wdsz, final int n) {
         return n + 1 == wdsz;
     }
 
@@ -377,7 +377,7 @@ public class Metaphone implements StringEncoder {
      *                          of type java.lang.String
      */
     @Override
-    public Object encode(Object obj) throws EncoderException {
+    public Object encode(final Object obj) throws EncoderException {
         if (!(obj instanceof String)) {
             throw new EncoderException("Parameter supplied to Metaphone encode is not of type java.lang.String");
         }
@@ -391,7 +391,7 @@ public class Metaphone implements StringEncoder {
      * @return The metaphone code corresponding to the String supplied
      */
     @Override
-    public String encode(String str) {
+    public String encode(final String str) {
         return metaphone(str);
     }
 
@@ -403,7 +403,7 @@ public class Metaphone implements StringEncoder {
      * @return {@code true} if the metaphones of these strings are identical,
      *        {@code false} otherwise.
      */
-    public boolean isMetaphoneEqual(String str1, String str2) {
+    public boolean isMetaphoneEqual(final String str1, final String str2) {
         return metaphone(str1).equals(metaphone(str2));
     }
 
@@ -417,6 +417,6 @@ public class Metaphone implements StringEncoder {
      * Sets the maxCodeLen.
      * @param maxCodeLen The maxCodeLen to set
      */
-    public void setMaxCodeLen(int maxCodeLen) { this.maxCodeLen = maxCodeLen; }
+    public void setMaxCodeLen(final int maxCodeLen) { this.maxCodeLen = maxCodeLen; }
 
 }

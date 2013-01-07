@@ -60,7 +60,7 @@ public class Languages {
      */
     public static abstract class LanguageSet {
 
-        public static LanguageSet from(Set<String> langs) {
+        public static LanguageSet from(final Set<String> langs) {
             return langs.isEmpty() ? NO_LANGUAGES : new SomeLanguages(langs);
         }
 
@@ -81,12 +81,12 @@ public class Languages {
     public static final class SomeLanguages extends LanguageSet {
         private final Set<String> languages;
 
-        private SomeLanguages(Set<String> languages) {
+        private SomeLanguages(final Set<String> languages) {
             this.languages = Collections.unmodifiableSet(languages);
         }
 
         @Override
-        public boolean contains(String language) {
+        public boolean contains(final String language) {
             return this.languages.contains(language);
         }
 
@@ -110,17 +110,17 @@ public class Languages {
         }
 
         @Override
-        public LanguageSet restrictTo(LanguageSet other) {
+        public LanguageSet restrictTo(final LanguageSet other) {
             if (other == NO_LANGUAGES) {
                 return other;
             } else if (other == ANY_LANGUAGE) {
                 return this;
             } else {
-                SomeLanguages sl = (SomeLanguages) other;
+                final SomeLanguages sl = (SomeLanguages) other;
                 if (sl.languages.containsAll(languages)) {
                     return this;
                 } else {
-                    Set<String> ls = new HashSet<String>(this.languages);
+                    final Set<String> ls = new HashSet<String>(this.languages);
                     ls.retainAll(sl.languages);
                     return from(ls);
                 }
@@ -139,28 +139,28 @@ public class Languages {
     private static final Map<NameType, Languages> LANGUAGES = new EnumMap<NameType, Languages>(NameType.class);
 
     static {
-        for (NameType s : NameType.values()) {
+        for (final NameType s : NameType.values()) {
             LANGUAGES.put(s, getInstance(langResourceName(s)));
         }
     }
 
-    public static Languages getInstance(NameType nameType) {
+    public static Languages getInstance(final NameType nameType) {
         return LANGUAGES.get(nameType);
     }
 
-    public static Languages getInstance(String languagesResourceName) {
+    public static Languages getInstance(final String languagesResourceName) {
         // read languages list
-        Set<String> ls = new HashSet<String>();
-        InputStream langIS = Languages.class.getClassLoader().getResourceAsStream(languagesResourceName);
+        final Set<String> ls = new HashSet<String>();
+        final InputStream langIS = Languages.class.getClassLoader().getResourceAsStream(languagesResourceName);
 
         if (langIS == null) {
             throw new IllegalArgumentException("Unable to resolve required resource: " + languagesResourceName);
         }
 
-        Scanner lsScanner = new Scanner(langIS, ResourceConstants.ENCODING);
+        final Scanner lsScanner = new Scanner(langIS, ResourceConstants.ENCODING);
         boolean inExtendedComment = false;
         while (lsScanner.hasNextLine()) {
-            String line = lsScanner.nextLine().trim();
+            final String line = lsScanner.nextLine().trim();
             if (inExtendedComment) {
                 if (line.endsWith(ResourceConstants.EXT_CMT_END)) {
                     inExtendedComment = false;
@@ -177,7 +177,7 @@ public class Languages {
         return new Languages(Collections.unmodifiableSet(ls));
     }
 
-    private static String langResourceName(NameType nameType) {
+    private static String langResourceName(final NameType nameType) {
         return String.format("org/apache/commons/codec/language/bm/%s_languages.txt", nameType.getName());
     }
 
@@ -188,7 +188,7 @@ public class Languages {
      */
     public static final LanguageSet NO_LANGUAGES = new LanguageSet() {
         @Override
-        public boolean contains(String language) {
+        public boolean contains(final String language) {
             return false;
         }
 
@@ -208,7 +208,7 @@ public class Languages {
         }
 
         @Override
-        public LanguageSet restrictTo(LanguageSet other) {
+        public LanguageSet restrictTo(final LanguageSet other) {
             return this;
         }
 
@@ -223,7 +223,7 @@ public class Languages {
      */
     public static final LanguageSet ANY_LANGUAGE = new LanguageSet() {
         @Override
-        public boolean contains(String language) {
+        public boolean contains(final String language) {
             return true;
         }
 
@@ -243,7 +243,7 @@ public class Languages {
         }
 
         @Override
-        public LanguageSet restrictTo(LanguageSet other) {
+        public LanguageSet restrictTo(final LanguageSet other) {
             return other;
         }
 
@@ -253,7 +253,7 @@ public class Languages {
         }
     };
 
-    private Languages(Set<String> languages) {
+    private Languages(final Set<String> languages) {
         this.languages = languages;
     }
 

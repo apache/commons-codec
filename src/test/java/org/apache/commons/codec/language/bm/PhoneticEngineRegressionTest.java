@@ -184,22 +184,22 @@ public class PhoneticEngineRegressionTest {
      * Making a JUnit test out of it to protect Solr from possible future
      * regressions in Commons-Codec.
      */
-    private static String encode(Map<String, String> args, boolean concat, String input) {
+    private static String encode(final Map<String, String> args, final boolean concat, final String input) {
         Languages.LanguageSet languageSet;
         PhoneticEngine engine;
 
         // PhoneticEngine = NameType + RuleType + concat
         // we use common-codec's defaults: GENERIC + APPROX + true
-        String nameTypeArg = args.get("nameType");
-        NameType nameType = (nameTypeArg == null) ? NameType.GENERIC : NameType.valueOf(nameTypeArg);
+        final String nameTypeArg = args.get("nameType");
+        final NameType nameType = (nameTypeArg == null) ? NameType.GENERIC : NameType.valueOf(nameTypeArg);
 
-        String ruleTypeArg = args.get("ruleType");
-        RuleType ruleType = (ruleTypeArg == null) ? RuleType.APPROX : RuleType.valueOf(ruleTypeArg);
+        final String ruleTypeArg = args.get("ruleType");
+        final RuleType ruleType = (ruleTypeArg == null) ? RuleType.APPROX : RuleType.valueOf(ruleTypeArg);
 
         engine = new PhoneticEngine(nameType, ruleType, concat);
 
         // LanguageSet: defaults to automagic, otherwise a comma-separated list.
-        String languageSetArg = args.get("languageSet");
+        final String languageSetArg = args.get("languageSet");
         if (languageSetArg == null || languageSetArg.equals("auto")) {
             languageSet = null;
         } else {

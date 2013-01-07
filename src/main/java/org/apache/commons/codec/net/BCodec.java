@@ -89,7 +89,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     }
 
     @Override
-    protected byte[] doEncoding(byte[] bytes) {
+    protected byte[] doEncoding(final byte[] bytes) {
         if (bytes == null) {
             return null;
         }
@@ -97,7 +97,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     }
 
     @Override
-    protected byte[] doDecoding(byte[] bytes) {
+    protected byte[] doDecoding(final byte[] bytes) {
         if (bytes == null) {
             return null;
         }
@@ -140,7 +140,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
         }
         try {
             return this.encodeText(value, charset);
-        } catch (UnsupportedEncodingException e) {
+        } catch (final UnsupportedEncodingException e) {
             throw new EncoderException(e.getMessage(), e);
         }
     }
@@ -155,7 +155,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      *             thrown if a failure condition is encountered during the encoding process.
      */
     @Override
-    public String encode(String value) throws EncoderException {
+    public String encode(final String value) throws EncoderException {
         if (value == null) {
             return null;
         }
@@ -173,13 +173,13 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      *             A decoder exception is thrown if a failure condition is encountered during the decode process.
      */
     @Override
-    public String decode(String value) throws DecoderException {
+    public String decode(final String value) throws DecoderException {
         if (value == null) {
             return null;
         }
         try {
             return this.decodeText(value);
-        } catch (UnsupportedEncodingException e) {
+        } catch (final UnsupportedEncodingException e) {
             throw new DecoderException(e.getMessage(), e);
         }
     }
@@ -194,7 +194,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      *             thrown if a failure condition is encountered during the encoding process.
      */
     @Override
-    public Object encode(Object value) throws EncoderException {
+    public Object encode(final Object value) throws EncoderException {
         if (value == null) {
             return null;
         } else if (value instanceof String) {
@@ -218,7 +218,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      *             during the decode process.
      */
     @Override
-    public Object decode(Object value) throws DecoderException {
+    public Object decode(final Object value) throws DecoderException {
         if (value == null) {
             return null;
         } else if (value instanceof String) {

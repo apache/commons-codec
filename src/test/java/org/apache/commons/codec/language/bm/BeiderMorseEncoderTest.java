@@ -35,12 +35,12 @@ import org.junit.Test;
 public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
     private static final char[] TEST_CHARS = new char[] { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'o', 'u' };
 
-    private void assertNotEmpty(BeiderMorseEncoder bmpm, final String value) throws EncoderException {
+    private void assertNotEmpty(final BeiderMorseEncoder bmpm, final String value) throws EncoderException {
         Assert.assertFalse(value, bmpm.encode(value).equals(""));
     }
 
     private BeiderMorseEncoder createGenericApproxEncoder() {
-        BeiderMorseEncoder encoder = new BeiderMorseEncoder();
+        final BeiderMorseEncoder encoder = new BeiderMorseEncoder();
         encoder.setNameType(NameType.GENERIC);
         encoder.setRuleType(RuleType.APPROX);
         return encoder;
@@ -58,7 +58,7 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
      */
     @Test
     public void testAllChars() throws EncoderException {
-        BeiderMorseEncoder bmpm = createGenericApproxEncoder();
+        final BeiderMorseEncoder bmpm = createGenericApproxEncoder();
         for (char c = Character.MIN_VALUE; c < Character.MAX_VALUE; c++) {
             bmpm.encode(Character.toString(c));
         }
@@ -66,7 +66,7 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
 
     @Test
     public void testAsciiEncodeNotEmpty1Letter() throws EncoderException {
-        BeiderMorseEncoder bmpm = createGenericApproxEncoder();
+        final BeiderMorseEncoder bmpm = createGenericApproxEncoder();
         for (char c = 'a'; c <= 'z'; c++) {
             final String value = Character.toString(c);
             final String valueU = value.toUpperCase();
@@ -77,7 +77,7 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
 
     @Test
     public void testAsciiEncodeNotEmpty2Letters() throws EncoderException {
-        BeiderMorseEncoder bmpm = createGenericApproxEncoder();
+        final BeiderMorseEncoder bmpm = createGenericApproxEncoder();
         for (char c1 = 'a'; c1 <= 'z'; c1++) {
             for (char c2 = 'a'; c2 <= 'z'; c2++) {
                 final String value = new String(new char[] { c1, c2 });
@@ -90,10 +90,10 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
 
     @Test
     public void testEncodeAtzNotEmpty() throws EncoderException {
-        BeiderMorseEncoder bmpm = createGenericApproxEncoder();
+        final BeiderMorseEncoder bmpm = createGenericApproxEncoder();
         //String[] names = { "ácz", "átz", "Ignácz", "Ignátz", "Ignác" };
-        String[] names = { "\u00e1cz", "\u00e1tz", "Ign\u00e1cz", "Ign\u00e1tz", "Ign\u00e1c" };
-        for (String name : names) {
+        final String[] names = { "\u00e1cz", "\u00e1tz", "Ign\u00e1cz", "Ign\u00e1tz", "Ign\u00e1c" };
+        for (final String name : names) {
             assertNotEmpty(bmpm, name);
         }
     }
@@ -106,7 +106,7 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
      */
     @Test
     public void testEncodeGna() throws EncoderException {
-        BeiderMorseEncoder bmpm = createGenericApproxEncoder();
+        final BeiderMorseEncoder bmpm = createGenericApproxEncoder();
         bmpm.encode("gna");
     }
 
@@ -127,58 +127,58 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
 
     @Test(timeout = 10000L)
     public void testLongestEnglishSurname() throws EncoderException {
-        BeiderMorseEncoder bmpm = createGenericApproxEncoder();
+        final BeiderMorseEncoder bmpm = createGenericApproxEncoder();
         bmpm.encode("MacGhilleseatheanaich");
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void testNegativeIndexForRuleMatchIndexOutOfBoundsException() {
-        Rule r = new Rule("a", "", "", new Rule.Phoneme("", Languages.ANY_LANGUAGE));
+        final Rule r = new Rule("a", "", "", new Rule.Phoneme("", Languages.ANY_LANGUAGE));
         r.patternAndContextMatches("bob", -1);
     }
 
     @Test
     public void testOOM() throws EncoderException {
-        String phrase = "200697900'-->&#1913348150;</  bceaeef >aadaabcf\"aedfbff<!--\'-->?>cae"
+        final String phrase = "200697900'-->&#1913348150;</  bceaeef >aadaabcf\"aedfbff<!--\'-->?>cae"
                 + "cfaaa><?&#<!--</script>&lang&fc;aadeaf?>>&bdquo<    cc =\"abff\"    /></   afe  >"
                 + "<script><!-- f(';<    cf aefbeef = \"bfabadcf\" ebbfeedd = fccabeb >";
 
-        BeiderMorseEncoder encoder = new BeiderMorseEncoder();
+        final BeiderMorseEncoder encoder = new BeiderMorseEncoder();
         encoder.setNameType(NameType.GENERIC);
         encoder.setRuleType(RuleType.EXACT);
         encoder.setMaxPhonemes(10);
 
-        String phonemes = encoder.encode(phrase);
+        final String phonemes = encoder.encode(phrase);
         assertTrue(phonemes.length() > 0);
 
-        String[] phonemeArr = phonemes.split("\\|");
+        final String[] phonemeArr = phonemes.split("\\|");
         assertTrue(phonemeArr.length <= 10);
     }
 
     @Test
     public void testSetConcat() {
-        BeiderMorseEncoder bmpm = new BeiderMorseEncoder();
+        final BeiderMorseEncoder bmpm = new BeiderMorseEncoder();
         bmpm.setConcat(false);
         assertFalse("Should be able to set concat to false", bmpm.isConcat());
     }
 
     @Test
     public void testSetNameTypeAsh() {
-        BeiderMorseEncoder bmpm = new BeiderMorseEncoder();
+        final BeiderMorseEncoder bmpm = new BeiderMorseEncoder();
         bmpm.setNameType(NameType.ASHKENAZI);
         assertEquals("Name type should have been set to ash", NameType.ASHKENAZI, bmpm.getNameType());
     }
 
     @Test
     public void testSetRuleTypeExact() {
-        BeiderMorseEncoder bmpm = new BeiderMorseEncoder();
+        final BeiderMorseEncoder bmpm = new BeiderMorseEncoder();
         bmpm.setRuleType(RuleType.EXACT);
         assertEquals("Rule type should have been set to exact", RuleType.EXACT, bmpm.getRuleType());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testSetRuleTypeToRulesIllegalArgumentException() {
-        BeiderMorseEncoder bmpm = new BeiderMorseEncoder();
+        final BeiderMorseEncoder bmpm = new BeiderMorseEncoder();
         bmpm.setRuleType(RuleType.RULES);
     }
 
@@ -189,8 +189,8 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
      */
     @Test(/* timeout = 20000L */)
     public void testSpeedCheck() throws EncoderException {
-        BeiderMorseEncoder bmpm = this.createGenericApproxEncoder();
-        StringBuilder stringBuffer = new StringBuilder();
+        final BeiderMorseEncoder bmpm = this.createGenericApproxEncoder();
+        final StringBuilder stringBuffer = new StringBuilder();
         stringBuffer.append(TEST_CHARS[0]);
         for (int i = 0, j = 1; i < 40; i++, j++) {
             if (j == TEST_CHARS.length) {
@@ -203,8 +203,8 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
 
     @Test
     public void testSpeedCheck2() throws EncoderException {
-        BeiderMorseEncoder bmpm = this.createGenericApproxEncoder();
-        String phrase = "ItstheendoftheworldasweknowitandIfeelfine";
+        final BeiderMorseEncoder bmpm = this.createGenericApproxEncoder();
+        final String phrase = "ItstheendoftheworldasweknowitandIfeelfine";
 
         for (int i = 1; i <= phrase.length(); i++) {
             bmpm.encode(phrase.subSequence(0, i));
@@ -213,8 +213,8 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
 
     @Test
     public void testSpeedCheck3() throws EncoderException {
-        BeiderMorseEncoder bmpm = this.createGenericApproxEncoder();
-        String phrase = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz";
+        final BeiderMorseEncoder bmpm = this.createGenericApproxEncoder();
+        final String phrase = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz";
 
         for (int i = 1; i <= phrase.length(); i++) {
             bmpm.encode(phrase.subSequence(0, i));

@@ -1261,9 +1261,9 @@ public class DoubleMetaphone2Test extends StringEncoderAbstractTest<DoubleMetaph
         {"weikersheim", "AKRS", "FKRS"},
         {"zhao", "J", "J"}};
 
-    private void checkDoubleMetaphone(int typeIndex, boolean alternate) {
+    private void checkDoubleMetaphone(final int typeIndex, final boolean alternate) {
         for (int i = 0; i < TEST_DATA.length; i++) {
-            String value = TEST_DATA[i][0];
+            final String value = TEST_DATA[i][0];
             assertEquals("Test [" + i + "]=" + value, TEST_DATA[i][typeIndex], this.getStringEncoder().doubleMetaphone(value, alternate));
         }
     }

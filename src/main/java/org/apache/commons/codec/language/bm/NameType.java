@@ -38,7 +38,7 @@ public enum NameType {
 
     private final String name;
 
-    NameType(String name) {
+    NameType(final String name) {
         this.name = name;
     }
 

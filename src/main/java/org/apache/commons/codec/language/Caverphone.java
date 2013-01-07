@@ -54,7 +54,7 @@ public class Caverphone implements StringEncoder {
      *            String the source string
      * @return A caverphone code for the given String
      */
-    public String caverphone(String source) {
+    public String caverphone(final String source) {
         return this.encoder.encode(source);
     }
 
@@ -70,7 +70,7 @@ public class Caverphone implements StringEncoder {
      *             if the parameter supplied is not of type java.lang.String
      */
     @Override
-    public Object encode(Object obj) throws EncoderException {
+    public Object encode(final Object obj) throws EncoderException {
         if (!(obj instanceof String)) {
             throw new EncoderException("Parameter supplied to Caverphone encode is not of type java.lang.String");
         }
@@ -85,7 +85,7 @@ public class Caverphone implements StringEncoder {
      * @return The caverphone code corresponding to the String supplied
      */
     @Override
-    public String encode(String str) {
+    public String encode(final String str) {
         return this.caverphone(str);
     }
 
@@ -98,7 +98,7 @@ public class Caverphone implements StringEncoder {
      *            Second of two strings to compare
      * @return {@code true} if the caverphones of these strings are identical, {@code false} otherwise.
      */
-    public boolean isCaverphoneEqual(String str1, String str2) {
+    public boolean isCaverphoneEqual(final String str1, final String str2) {
         return this.caverphone(str1).equals(this.caverphone(str2));
     }
 

@@ -66,7 +66,7 @@ public class LanguageGuessingTest {
     private final String language;
     private final String name;
 
-    public LanguageGuessingTest(String name, String language, String exactness) {
+    public LanguageGuessingTest(final String name, final String language, final String exactness) {
         this.name = name;
         this.language = language;
         this.exactness = exactness;
@@ -74,7 +74,7 @@ public class LanguageGuessingTest {
 
     @Test
     public void testLanguageGuessing() {
-        Languages.LanguageSet guesses = this.lang.guessLanguages(this.name);
+        final Languages.LanguageSet guesses = this.lang.guessLanguages(this.name);
 
         assertTrue("language predicted for name '" + this.name + "' is wrong: " + guesses + " should contain '" + this.language + "'",
                 guesses.contains(this.language));

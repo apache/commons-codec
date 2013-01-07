@@ -82,13 +82,13 @@ public class Lang {
         private final Set<String> languages;
         private final Pattern pattern;
 
-        private LangRule(Pattern pattern, Set<String> languages, boolean acceptOnMatch) {
+        private LangRule(final Pattern pattern, final Set<String> languages, final boolean acceptOnMatch) {
             this.pattern = pattern;
             this.languages = languages;
             this.acceptOnMatch = acceptOnMatch;
         }
 
-        public boolean matches(String txt) {
+        public boolean matches(final String txt) {
             return this.pattern.matcher(txt).find();
         }
     }
@@ -98,7 +98,7 @@ public class Lang {
     private static final String LANGUAGE_RULES_RN = "org/apache/commons/codec/language/bm/lang.txt";
 
     static {
-        for (NameType s : NameType.values()) {
+        for (final NameType s : NameType.values()) {
             Langs.put(s, loadFromResource(LANGUAGE_RULES_RN, Languages.getInstance(s)));
         }
     }
@@ -110,7 +110,7 @@ public class Lang {
      *            the NameType to look up
      * @return a Lang encapsulating the language guessing rules for that name type
      */
-    public static Lang instance(NameType nameType) {
+    public static Lang instance(final NameType nameType) {
         return Langs.get(nameType);
     }
 
@@ -126,18 +126,18 @@ public class Lang {
      *            the languages that these rules will support
      * @return a Lang encapsulating the loaded language-guessing rules.
      */
-    public static Lang loadFromResource(String languageRulesResourceName, Languages languages) {
-        List<LangRule> rules = new ArrayList<LangRule>();
-        InputStream lRulesIS = Lang.class.getClassLoader().getResourceAsStream(languageRulesResourceName);
+    public static Lang loadFromResource(final String languageRulesResourceName, final Languages languages) {
+        final List<LangRule> rules = new ArrayList<LangRule>();
+        final InputStream lRulesIS = Lang.class.getClassLoader().getResourceAsStream(languageRulesResourceName);
 
         if (lRulesIS == null) {
             throw new IllegalStateException("Unable to resolve required resource:" + LANGUAGE_RULES_RN);
         }
 
-        Scanner scanner = new Scanner(lRulesIS, ResourceConstants.ENCODING);
+        final Scanner scanner = new Scanner(lRulesIS, ResourceConstants.ENCODING);
         boolean inExtendedComment = false;
         while (scanner.hasNextLine()) {
-            String rawLine = scanner.nextLine();
+            final String rawLine = scanner.nextLine();
             String line = rawLine;
 
             if (inExtendedComment) {
@@ -150,7 +150,7 @@ public class Lang {
                     inExtendedComment = true;
                 } else {
                     // discard comments
-                    int cmtI = line.indexOf(ResourceConstants.CMT);
+                    final int cmtI = line.indexOf(ResourceConstants.CMT);
                     if (cmtI >= 0) {
                         line = line.substring(0, cmtI);
                     }
@@ -163,16 +163,16 @@ public class Lang {
                     }
 
                     // split it up
-                    String[] parts = line.split("\\s+");
+                    final String[] parts = line.split("\\s+");
 
                     if (parts.length != 3) {
                         throw new IllegalArgumentException("Malformed line '" + rawLine + "' in language resource '" +
                                                            languageRulesResourceName + "'");
                     }
 
-                    Pattern pattern = Pattern.compile(parts[0]);
-                    String[] langs = parts[1].split("\\+");
-                    boolean accept = parts[2].equals("true");
+                    final Pattern pattern = Pattern.compile(parts[0]);
+                    final String[] langs = parts[1].split("\\+");
+                    final boolean accept = parts[2].equals("true");
 
                     rules.add(new LangRule(pattern, new HashSet<String>(Arrays.asList(langs)), accept));
                 }
@@ -185,7 +185,7 @@ public class Lang {
     private final Languages languages;
     private final List<LangRule> rules;
 
-    private Lang(List<LangRule> rules, Languages languages) {
+    private Lang(final List<LangRule> rules, final Languages languages) {
         this.rules = Collections.unmodifiableList(rules);
         this.languages = languages;
     }
@@ -197,8 +197,8 @@ public class Lang {
      *            the word
      * @return the language that the word originates from or {@link Languages#ANY} if there was no unique match
      */
-    public String guessLanguage(String text) {
-        Languages.LanguageSet ls = guessLanguages(text);
+    public String guessLanguage(final String text) {
+        final Languages.LanguageSet ls = guessLanguages(text);
         return ls.isSingleton() ? ls.getAny() : Languages.ANY;
     }
 
@@ -209,11 +209,11 @@ public class Lang {
      *            the word
      * @return a Set of Strings of language names that are potential matches for the input word
      */
-    public Languages.LanguageSet guessLanguages(String input) {
-        String text = input.toLowerCase(Locale.ENGLISH);
+    public Languages.LanguageSet guessLanguages(final String input) {
+        final String text = input.toLowerCase(Locale.ENGLISH);
 
-        Set<String> langs = new HashSet<String>(this.languages.getLanguages());
-        for (LangRule rule : this.rules) {
+        final Set<String> langs = new HashSet<String>(this.languages.getLanguages());
+        for (final LangRule rule : this.rules) {
             if (rule.matches(text)) {
                 if (rule.acceptOnMatch) {
                     langs.retainAll(rule.languages);
@@ -223,7 +223,7 @@ public class Lang {
             }
         }
 
-        Languages.LanguageSet ls = Languages.LanguageSet.from(langs);
+        final Languages.LanguageSet ls = Languages.LanguageSet.from(langs);
         return ls.equals(Languages.NO_LANGUAGES) ? Languages.ANY_LANGUAGE : ls;
     }
 }
