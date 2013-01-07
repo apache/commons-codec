@@ -59,6 +59,9 @@ public class MatchRatingApproachEncoder implements StringEncoder {
             + "\u00C4\u00E4\u00CB\u00EB\u00CF\u00EF\u00D6\u00F6\u00DC\u00FC\u0178\u00FF" + "\u00C5\u00E5" + "\u00C7\u00E7"
             + "\u0150\u0151\u0170\u0171";
 
+    private static final String[] DOUBLE_CONSONANT = new String[] { "BB", "CC", "DD", "FF", "GG", "HH", "JJ", "KK", "LL", "MM", "NN", "PP", "QQ", "RR", "SS", "TT", "VV",
+            "WW", "XX", "YY", "ZZ" };
+
     /**
      * Cleans up a name: 1. Upper-cases everything 2. Removes some common punctuation 3. Removes accents 4. Removes any
      * spaces.
@@ -373,17 +376,13 @@ public class MatchRatingApproachEncoder implements StringEncoder {
      * @return Single consonant word
      */
     String removeDoubleConsonants(final String name) {
-        final String[] dblCnstArray = new String[] { "BB", "CC", "DD", "FF", "GG", "HH", "JJ", "KK", "LL", "MM", "NN", "PP", "QQ", "RR", "SS", "TT", "VV",
-                "WW", "XX", "YY", "ZZ" };
-
         String replacedName = name.toUpperCase();
-        for (final String dc : dblCnstArray) {
+        for (final String dc : DOUBLE_CONSONANT) {
             if (replacedName.contains(dc)) {
                 final String singleLetter = dc.substring(0, 1);
                 replacedName = replacedName.replace(dc, singleLetter);
             }
         }
-
         return replacedName;
     }
 
