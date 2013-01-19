@@ -28,7 +28,6 @@ import java.util.Comparator;
  *
  * @version $Id$
  */
-@SuppressWarnings("rawtypes")
 public class StringEncoderComparator implements Comparator {
 
     /**
@@ -70,7 +69,6 @@ public class StringEncoderComparator implements Comparator {
      * @return the Comparable.compareTo() return code or 0 if an encoding error was caught.
      * @see Comparable
      */
-    @SuppressWarnings("unchecked")
     @Override
     public int compare(final Object o1, final Object o2) {
 
