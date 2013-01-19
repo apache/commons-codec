@@ -337,7 +337,8 @@ public class PhoneticEngine {
      *            the maximum number of phonemes that will be handled
      * @since 1.7
      */
-    public PhoneticEngine(final NameType nameType, final RuleType ruleType, final boolean concat, final int maxPhonemes) {
+    public PhoneticEngine(final NameType nameType, final RuleType ruleType, final boolean concat,
+                          final int maxPhonemes) {
         if (ruleType == RuleType.RULES) {
             throw new IllegalArgumentException("ruleType must not be " + RuleType.RULES);
         }

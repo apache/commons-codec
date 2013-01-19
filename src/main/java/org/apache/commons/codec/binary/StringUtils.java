@@ -192,7 +192,8 @@ public class StringUtils {
         return getBytes(string, Charsets.UTF_8);
     }
 
-    private static IllegalStateException newIllegalStateException(final String charsetName, final UnsupportedEncodingException e) {
+    private static IllegalStateException newIllegalStateException(final String charsetName,
+                                                                  final UnsupportedEncodingException e) {
         return new IllegalStateException(charsetName + ": " + e);
     }
 

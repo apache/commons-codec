@@ -81,7 +81,8 @@ public class Base64OutputStream extends BaseNCodecOutputStream {
      *            If doEncode is true, each line of encoded data will be terminated with this byte sequence (e.g. \r\n).
      *            If lineLength <= 0, the lineSeparator is not used. If doEncode is false lineSeparator is ignored.
      */
-    public Base64OutputStream(final OutputStream out, final boolean doEncode, final int lineLength, final byte[] lineSeparator) {
+    public Base64OutputStream(final OutputStream out, final boolean doEncode,
+                              final int lineLength, final byte[] lineSeparator) {
         super(out, new Base64(lineLength, lineSeparator), doEncode);
     }
 }

@@ -654,7 +654,8 @@ public class Base64 extends BaseNCodec {
      *             Thrown when the input array needs an output array bigger than maxResultSize
      * @since 1.4
      */
-    public static byte[] encodeBase64(final byte[] binaryData, final boolean isChunked, final boolean urlSafe, final int maxResultSize) {
+    public static byte[] encodeBase64(final byte[] binaryData, final boolean isChunked,
+                                      final boolean urlSafe, final int maxResultSize) {
         if (binaryData == null || binaryData.length == 0) {
             return binaryData;
         }

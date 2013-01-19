@@ -77,7 +77,8 @@ public class Base32InputStream extends BaseNCodecInputStream {
      *            If doEncode is true, each line of encoded data will be terminated with this byte sequence (e.g. \r\n).
      *            If lineLength <= 0, the lineSeparator is not used. If doEncode is false lineSeparator is ignored.
      */
-    public Base32InputStream(final InputStream in, final boolean doEncode, final int lineLength, final byte[] lineSeparator) {
+    public Base32InputStream(final InputStream in, final boolean doEncode,
+                             final int lineLength, final byte[] lineSeparator) {
         super(in, new Base32(lineLength, lineSeparator), doEncode);
     }
 

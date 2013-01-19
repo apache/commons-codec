@@ -174,7 +174,8 @@ public class Rule {
 
     static {
         for (final NameType s : NameType.values()) {
-            final Map<RuleType, Map<String, List<Rule>>> rts = new EnumMap<RuleType, Map<String, List<Rule>>>(RuleType.class);
+            final Map<RuleType, Map<String, List<Rule>>> rts =
+                    new EnumMap<RuleType, Map<String, List<Rule>>>(RuleType.class);
 
             for (final RuleType rt : RuleType.values()) {
                 final Map<String, List<Rule>> rs = new HashMap<String, List<Rule>>();
@@ -257,7 +258,8 @@ public class Rule {
      *            the set of languages to consider
      * @return a list of Rules that apply
      */
-    public static List<Rule> getInstance(final NameType nameType, final RuleType rt, final Languages.LanguageSet langs) {
+    public static List<Rule> getInstance(final NameType nameType, final RuleType rt,
+                                         final Languages.LanguageSet langs) {
         return langs.isSingleton() ? getInstance(nameType, rt, langs.getAny()) :
                                      getInstance(nameType, rt, Languages.ANY);
     }
