@@ -184,9 +184,9 @@ public class MatchRatingApproachEncoder implements StringEncoder {
 
         if (sumLength <= FOUR) {
             minRating = FIVE;
-        } else if ((sumLength >= FIVE) && (sumLength <= SEVEN)) {
+        } else if (sumLength >= FIVE && sumLength <= SEVEN) {
             minRating = FOUR;
-        } else if ((sumLength >= EIGHT) && (sumLength <= ELEVEN)) {
+        } else if (sumLength >= EIGHT && sumLength <= ELEVEN) {
             minRating = THREE;
         } else if (sumLength == TWELVE) {
             minRating = TWO;
@@ -308,10 +308,10 @@ public class MatchRatingApproachEncoder implements StringEncoder {
             }
 
             name1LtRStart = name1.substring(i, i + 1);
-            name1LtREnd = name1.substring(name1Size - i, (name1Size - i) + 1);
+            name1LtREnd = name1.substring(name1Size - i, name1Size - i + 1);
 
             name2RtLStart = name2.substring(i, i + 1);
-            name2RtLEnd = name2.substring(name2Size - i, (name2Size - i) + 1);
+            name2RtLEnd = name2.substring(name2Size - i, name2Size - i + 1);
 
             // Left to right...
             if (name1LtRStart.equals(name2RtLStart)) {
@@ -416,7 +416,7 @@ public class MatchRatingApproachEncoder implements StringEncoder {
 
         // return isVowel(firstLetter) ? (firstLetter + name) : name;
         if (isVowel(firstLetter)) {
-            return (firstLetter + name);
+            return firstLetter + name;
         } else {
             return name;
         }
