@@ -247,8 +247,6 @@ public class MatchRatingApproachEncoderTest extends StringEncoderAbstractTest<Ma
     	assertFalse(this.getStringEncoder().isEncodeEquals("test", "t"));
     }
     
-    
-
     // ***** END REGION - TEST SUPPORT METHODS
 
     // ***** BEGIN REGION - TEST GET MRA ENCODING
