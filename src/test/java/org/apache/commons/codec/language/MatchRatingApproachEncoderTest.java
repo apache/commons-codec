@@ -146,21 +146,108 @@ public class MatchRatingApproachEncoderTest extends StringEncoderAbstractTest<Ma
     public final void testGetMinRating_7_Return4_Successfully() {
         assertEquals(4, this.getStringEncoder().getMinRating(7));
     }
+    
+    @Test
+    public final void testGetMinRating_1_Returns5_Successfully() {
+        assertEquals(5, this.getStringEncoder().getMinRating(1));
+    }
 
     @Test
     public final void testGetMinRating_2_Returns5_Successfully() {
         assertEquals(5, this.getStringEncoder().getMinRating(2));
     }
-
+    
     @Test
-    public final void testGetMinRating_2_Return1_Successfully() {
-        assertEquals(1, this.getStringEncoder().getMinRating(13));
+    public final void testgetMinRating_5_Returns4_Successfully(){
+    	assertEquals(4, this.getStringEncoder().getMinRating(5)); 
+    }
+    
+    @Test
+    public final void testgetMinRating_5_Returns4_Successfully2(){
+    	assertEquals(4, this.getStringEncoder().getMinRating(5)); 
+    }
+    
+    @Test
+    public final void testgetMinRating_6_Returns4_Successfully(){
+    	assertEquals(4, this.getStringEncoder().getMinRating(6)); 
+    }
+    
+    @Test
+    public final void testgetMinRating_7_Returns4_Successfully(){
+    	assertEquals(4, this.getStringEncoder().getMinRating(7)); 
+    }
+    
+    @Test
+    public final void testgetMinRating_8_Returns3_Successfully(){
+    	assertEquals(3, this.getStringEncoder().getMinRating(8));
+    }
+    
+    @Test
+    public final void testgetMinRating_10_Returns3_Successfully(){
+    	assertEquals(3, this.getStringEncoder().getMinRating(10)); 
+    }
+    
+    @Test
+    public final void testgetMinRating_11_Returns_3_Successfully(){
+    	assertEquals(3, this.getStringEncoder().getMinRating(11)); 
     }
 
+    @Test
+    public final void testGetMinRating_13_Returns_1_Successfully() {
+        assertEquals(1, this.getStringEncoder().getMinRating(13));
+    }
+    
     @Test
     public final void testcleanName_SuccessfullyClean() {
         assertEquals("THISISATEST", this.getStringEncoder().cleanName("This-ís   a t.,es &t"));
     }
+    
+    @Test
+    public final void testisVowel_SingleVowel_ReturnsTrue() {
+    	assertTrue(this.getStringEncoder().isVowel(("I")));
+    }
+    
+    @Test
+    public final void testisEncodeEquals_CornerCase_SecondNameNothing_ReturnsFalse() {
+    	assertFalse(this.getStringEncoder().isEncodeEquals("test", ""));
+    }
+
+    @Test
+    public final void testisEncodeEquals_CornerCase_FirstNameNothing_ReturnsFalse() {
+    	assertFalse(this.getStringEncoder().isEncodeEquals("", "test"));
+    }
+    
+    @Test
+    public final void testisEncodeEquals_CornerCase_SecondNameJustSpace_ReturnsFalse() {
+    	assertFalse(this.getStringEncoder().isEncodeEquals("test", " "));
+    }
+
+    @Test
+    public final void testisEncodeEquals_CornerCase_FirstNameJustSpace_ReturnsFalse() {
+    	assertFalse(this.getStringEncoder().isEncodeEquals(" ", "test"));
+    }
+    
+    @Test
+    public final void testisEncodeEquals_CornerCase_SecondNameNull_ReturnsFalse() {
+    	assertFalse(this.getStringEncoder().isEncodeEquals("test", null));
+    }
+
+    @Test
+    public final void testisEncodeEquals_CornerCase_FirstNameNull_ReturnsFalse() {
+    	assertFalse(this.getStringEncoder().isEncodeEquals(null, "test"));
+    }
+    
+    @Test
+    public final void testisEncodeEquals_CornerCase_FirstNameJust1Letter_ReturnsFalse() {
+    	assertFalse(this.getStringEncoder().isEncodeEquals("t", "test"));
+    }
+
+    @Test
+    public final void testisEncodeEqualsSecondNameJust1Letter_ReturnsFalse() {
+    	assertFalse(this.getStringEncoder().isEncodeEquals("test", "t"));
+    }
+    
+    
 
     // ***** END REGION - TEST SUPPORT METHODS
 
