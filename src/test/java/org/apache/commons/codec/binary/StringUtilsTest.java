@@ -20,7 +20,7 @@ package org.apache.commons.codec.binary;
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.junit.Test;
 

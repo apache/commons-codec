@@ -19,7 +19,7 @@
 
 package org.apache.commons.codec.language;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoderAbstractTest;
