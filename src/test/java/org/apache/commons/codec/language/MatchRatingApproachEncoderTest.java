@@ -99,7 +99,7 @@ public class MatchRatingApproachEncoderTest extends StringEncoderAbstractTest<Ma
 
     @Test
     public final void testIsVowel_CapitalA_ReturnsTrue() {
-        assertEquals(true, this.getStringEncoder().isVowel("A"));
+        assertTrue(this.getStringEncoder().isVowel("A"));
     }
 
     @Test
@@ -288,12 +288,12 @@ public class MatchRatingApproachEncoderTest extends StringEncoderAbstractTest<Ma
 	
 	@Test
     public final void testCompareNameNullSpace_ReturnsFalseSuccessfully() {
-    	assertEquals(false, getStringEncoder().isEncodeEquals(null, " "));
+    	assertFalse(getStringEncoder().isEncodeEquals(null, " "));
     }
     
     @Test
     public final void testCompareNameSameNames_ReturnsFalseSuccessfully() {
-    	assertEquals(true, getStringEncoder().isEncodeEquals("John", "John"));
+    	assertTrue(getStringEncoder().isEncodeEquals("John", "John"));
     }
 
     // ***** END REGION - TEST GET MRA ENCODING
