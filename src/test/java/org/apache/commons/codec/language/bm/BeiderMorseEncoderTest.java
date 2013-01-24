@@ -32,7 +32,7 @@ import org.junit.Test;
  *
  * @since 1.6
  */
-public class BeiderMorseEncoderTest extends StringEncoderAbstractTest {
+public class BeiderMorseEncoderTest extends StringEncoderAbstractTest<StringEncoder> {
     private static final char[] TEST_CHARS = new char[] { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'o', 'u' };
 
     private void assertNotEmpty(final BeiderMorseEncoder bmpm, final String value) throws EncoderException {
