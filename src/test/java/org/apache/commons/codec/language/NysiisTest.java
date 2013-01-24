@@ -52,31 +52,31 @@ public class NysiisTest extends StringEncoderAbstractTest<Nysiis> {
         return new Nysiis();
     }
 
-    private void encodeAll(final String[] strings, final String expectedEncoding) throws EncoderException {
+    private void encodeAll(final String[] strings, final String expectedEncoding) {
         for (final String string : strings) {
             Assert.assertEquals("Problem with " + string, expectedEncoding, getStringEncoder().encode(string));
         }
     }
 
     @Test
-    public void testBran() throws EncoderException {
+    public void testBran() {
         encodeAll(new String[] { "Brian", "Brown", "Brun" }, "BRAN");
     }
 
     @Test
-    public void testCap() throws EncoderException {
+    public void testCap() {
         this.encodeAll(new String[] { "Capp", "Cope", "Copp", "Kipp" }, "CAP");
     }
 
     @Test
-    public void testDad() throws EncoderException {
+    public void testDad() {
         // Data Quality and Record Linkage Techniques P.121 claims this is DAN,
         // but it should be DAD, verified also with dropby.com
         this.encodeAll(new String[] { "Dent" }, "DAD");
     }
 
     @Test
-    public void testDan() throws EncoderException {
+    public void testDan() {
         this.encodeAll(new String[] { "Dane", "Dean", "Dionne" }, "DAN");
     }
 
@@ -145,7 +145,7 @@ public class NysiisTest extends StringEncoderAbstractTest<Nysiis> {
     }
 
     @Test
-    public void testFal() throws EncoderException {
+    public void testFal() {
         this.encodeAll(new String[] { "Phil" }, "FAL");
     }
 
@@ -264,19 +264,19 @@ public class NysiisTest extends StringEncoderAbstractTest<Nysiis> {
                 new String[] { "XAS", "X" }); // Rules 5, 7
     }
     @Test
-    public void testSnad() throws EncoderException {
+    public void testSnad() {
         // Data Quality and Record Linkage Techniques P.121 claims this is SNAT,
         // but it should be SNAD
         this.encodeAll(new String[] { "Schmidt" }, "SNAD");
     }
 
     @Test
-    public void testSnat() throws EncoderException {
+    public void testSnat() {
         this.encodeAll(new String[] { "Smith", "Schmit" }, "SNAT");
     }
 
     @Test
-    public void testSpecialBranches() throws EncoderException {
+    public void testSpecialBranches() {
         this.encodeAll(new String[] { "Kobwick" }, "CABWAC");
         this.encodeAll(new String[] { "Kocher" }, "CACAR");
         this.encodeAll(new String[] { "Fesca" }, "FASC");
@@ -287,7 +287,7 @@ public class NysiisTest extends StringEncoderAbstractTest<Nysiis> {
     }
 
     @Test
-    public void testTranan() throws EncoderException {
+    public void testTranan() {
         this.encodeAll(new String[] { "Trueman", "Truman" }, "TRANAN");
     }
 
