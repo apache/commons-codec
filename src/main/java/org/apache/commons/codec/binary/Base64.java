@@ -480,6 +480,25 @@ public class Base64 extends BaseNCodec {
         }
     }
 
+    @Override
+    public byte[] decode(final byte[] pArray) {
+        if (pArray == null || pArray.length == 0) {
+            return pArray;
+        }
+        return ApacheModifiedMiGBase64.decode(pArray);
+    }
+
+    @Override
+    public byte[] encode(final byte[] pArray) {
+        if (pArray == null || pArray.length == 0) {
+            return pArray;
+        }
+        return ApacheModifiedMiGBase64.encodeToByte(
+                pArray, lineSeparator != null, isUrlSafe(), Integer.MAX_VALUE, lineSeparator, lineLength
+        );
+    }
+
+
     /**
      * Tests a given byte array to see if it contains only valid characters within the Base64 alphabet. Currently the
      * method treats whitespace as valid.
@@ -563,7 +582,9 @@ public class Base64 extends BaseNCodec {
      * @since 1.4 (NOTE:  1.4 chunked the output, whereas 1.5 does not).
      */
     public static String encodeBase64String(final byte[] binaryData) {
-        return StringUtils.newStringUtf8(encodeBase64(binaryData, false));
+        return ApacheModifiedMiGBase64.encodeToString(
+                binaryData, false, false, Integer.MAX_VALUE
+        );
     }
 
     /**
@@ -589,7 +610,9 @@ public class Base64 extends BaseNCodec {
      * @since 1.4
      */
     public static String encodeBase64URLSafeString(final byte[] binaryData) {
-        return StringUtils.newStringUtf8(encodeBase64(binaryData, false, true));
+        return ApacheModifiedMiGBase64.encodeToString(
+                binaryData, false, true, Integer.MAX_VALUE
+        );
     }
 
     /**
@@ -656,23 +679,11 @@ public class Base64 extends BaseNCodec {
      */
     public static byte[] encodeBase64(final byte[] binaryData, final boolean isChunked,
                                       final boolean urlSafe, final int maxResultSize) {
-        if (binaryData == null || binaryData.length == 0) {
-            return binaryData;
-        }
-
-        // Create this so can use the super-class method
-        // Also ensures that the same roundings are performed by the ctor and the code
-        final Base64 b64 = isChunked ? new Base64(urlSafe) : new Base64(0, CHUNK_SEPARATOR, urlSafe);
-        final long len = b64.getEncodedLength(binaryData);
-        if (len > maxResultSize) {
-            throw new IllegalArgumentException("Input array too big, the output array would be bigger (" +
-                len +
-                ") than the specified maximum size of " +
-                maxResultSize);
-        }
-
-        return b64.encode(binaryData);
+        return ApacheModifiedMiGBase64.encodeToByte(
+                binaryData, isChunked, urlSafe, maxResultSize
+        );
     }
+
 
     /**
      * Decodes a Base64 String into octets
@@ -683,7 +694,10 @@ public class Base64 extends BaseNCodec {
      * @since 1.4
      */
     public static byte[] decodeBase64(final String base64String) {
-        return new Base64().decode(base64String);
+        if (base64String == null) { return null; }
+        if ("".equals(base64String)) { return new byte[0]; }
+
+        return ApacheModifiedMiGBase64.decode(base64String.toCharArray());
     }
 
     /**
@@ -694,7 +708,9 @@ public class Base64 extends BaseNCodec {
      * @return Array containing decoded data.
      */
     public static byte[] decodeBase64(final byte[] base64Data) {
-        return new Base64().decode(base64Data);
+        if (base64Data == null || base64Data.length == 0) { return base64Data; }
+
+        return ApacheModifiedMiGBase64.decode(base64Data);
     }
 
     // Implementation of the Encoder Interface

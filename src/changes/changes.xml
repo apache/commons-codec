@@ -48,6 +48,7 @@ The <action> type attribute can be add,update,fix,remove.
     </release>
     -->
     <release version="1.8" date="TBA" description="Feature and fix release.">
+      <action dev="julius" type="fix" issue="CODEC-166">Base64 could be faster.</action>
       <action dev="julius" type="update" issue="CODEC-167">Adds JUnit to test our decode with pad character in the middle.</action> 
       <action dev="ggregory" type="add" issue="CODEC-161" due-to="crice">Add Match Rating Approach (MRA) phonetic algorithm encoder.</action>   
       <action dev="ggregory" type="fix" issue="CODEC-163" due-to="leo141">ColognePhonetic encoder unneccessarily creates many char arrays on every loop run.</action>   
