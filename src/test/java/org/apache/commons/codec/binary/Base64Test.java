@@ -100,6 +100,26 @@ public class Base64Test {
     }
 
     /**
+     * Test our decode with pad character in the middle.
+     * (Our current implementation:  halt decode and return what we've got so far).
+     *
+     * The point of this test is not to say "this is the correct way to decode base64."
+     * The point is simply to keep us aware of the current logic since 1.4 so we
+     * don't accidentally break it without realizing.
+     *
+     * Note for historians.  The 1.3 logic would decode to:
+     * "Hello World\u0000Hello World" -- null in the middle ---
+     * and 1.4 unwittingly changed it to current logic.
+     */
+    @Test
+    public void testDecodeWithInnerPad() {
+        final String content = "SGVsbG8gV29ybGQ=SGVsbG8gV29ybGQ=";
+        byte[] result = Base64.decodeBase64(content);
+        byte[] shouldBe = StringUtils.getBytesUtf8("Hello World");
+        assertTrue("decode should halt at pad (=)", Arrays.equals(result, shouldBe));
+    }
+
+    /**
      * Tests Base64.encodeBase64().
      */
     @Test
