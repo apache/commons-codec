@@ -296,7 +296,7 @@ limitations under the License.
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-pmd-plugin</artifactId>
-        <version>2.7.1</version>
+        <version>3.0.1</version>
         <configuration>
           <targetJdk>${maven.compile.target}</targetJdk>
         </configuration>
