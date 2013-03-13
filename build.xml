@@ -41,6 +41,17 @@ limitations under the License.
         <filter token="name" value="${component.name}"/>
         <filter token="package" value="${component.package}"/>
         <filter token="version" value="${component.version}"/>
+		<delete dir="compat" />
+		<copy todir="compat">
+			<fileset dir="src/" />
+		</copy>
+		<replace dir="compat/" token="org.apache.commons.codec" value="org.apache.commons.codec.android" />
+		<move todir="compat/main/java/org/apache/commons/codec/android/">
+			<fileset dir="compat/main/java/org/apache/commons/codec/"/>
+		</move>
+		<move todir="compat/main/resources/org/apache/commons/codec/android/">
+			<fileset dir="compat/main/resources/org/apache/commons/codec/"/>
+		</move>
     </target>
     <target name="prepare" depends="init" description="Prepare build directory">
         <mkdir dir="${build.home}"/>
