@@ -299,6 +299,10 @@ limitations under the License.
         <version>3.0.1</version>
         <configuration>
           <targetJdk>${maven.compile.target}</targetJdk>
+          <linkXref>true</linkXref>
+          <rulesets>
+            <ruleset>${basedir}/pmd.xml</ruleset>
+          </rulesets>
         </configuration>
       </plugin>
       <plugin>
