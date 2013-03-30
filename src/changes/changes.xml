@@ -48,6 +48,7 @@ The <action> type attribute can be add,update,fix,remove.
     </release>
     -->
     <release version="1.8" date="TBA" description="Feature and fix release.">
+      <action dev="ggregory" type="add" issue="CODEC-168" due-to="Daniel Cassidy">Add DigestUtils.updateDigest(MessageDigest, InputStream).</action>   
       <action dev="julius" type="add" issue="CODEC-167">Add JUnit to test our decode with pad character in the middle.</action> 
       <action dev="ggregory" type="add" issue="CODEC-161" due-to="crice">Add Match Rating Approach (MRA) phonetic algorithm encoder.</action>   
       <action dev="ggregory" type="fix" issue="CODEC-163" due-to="leo141">ColognePhonetic encoder unnecessarily creates many char arrays on every loop run.</action>   

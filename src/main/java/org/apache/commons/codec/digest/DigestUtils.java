@@ -46,15 +46,7 @@ public class DigestUtils {
      *             On error reading from the stream
      */
     private static byte[] digest(final MessageDigest digest, final InputStream data) throws IOException {
-        final byte[] buffer = new byte[STREAM_BUFFER_LENGTH];
-        int read = data.read(buffer, 0, STREAM_BUFFER_LENGTH);
-
-        while (read > -1) {
-            digest.update(buffer, 0, read);
-            read = data.read(buffer, 0, STREAM_BUFFER_LENGTH);
-        }
-
-        return digest.digest();
+        return updateDigest(digest, data).digest();
     }
 
     /**
@@ -782,6 +774,30 @@ public class DigestUtils {
     public static MessageDigest updateDigest(final MessageDigest messageDigest, final byte[] valueToDigest) {
         messageDigest.update(valueToDigest);
         return messageDigest;
+    }
+
+    /**
+     * Reads through an InputStream and updates the digest for the data
+     *
+     * @param digest
+     *            The MessageDigest to use (e.g. MD5)
+     * @param data
+     *            Data to digest
+     * @return MD5 digest
+     * @throws IOException
+     *             On error reading from the stream
+     * @since 1.8             
+     */
+    public static MessageDigest updateDigest(final MessageDigest digest, final InputStream data) throws IOException {
+        final byte[] buffer = new byte[STREAM_BUFFER_LENGTH];
+        int read = data.read(buffer, 0, STREAM_BUFFER_LENGTH);
+
+        while (read > -1) {
+            digest.update(buffer, 0, read);
+            read = data.read(buffer, 0, STREAM_BUFFER_LENGTH);
+        }
+
+        return digest;
     }
 
     /**
