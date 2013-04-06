@@ -34,6 +34,7 @@ limitations under the License.
         <pathelement location="${resources.home}"/>
         <pathelement location="${build.home}/tests"/>
         <pathelement location="${junit.jar}"/>
+        <pathelement location="${hamcrest.jar}"/>
     </path>
     <!-- ========== Executable Targets ======================================== -->
     <target name="init" description="Initialize and evaluate conditionals">
