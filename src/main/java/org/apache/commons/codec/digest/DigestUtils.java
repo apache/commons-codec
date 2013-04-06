@@ -786,7 +786,7 @@ public class DigestUtils {
      * @return MD5 digest
      * @throws IOException
      *             On error reading from the stream
-     * @since 1.8             
+     * @since 1.8
      */
     public static MessageDigest updateDigest(final MessageDigest digest, final InputStream data) throws IOException {
         final byte[] buffer = new byte[STREAM_BUFFER_LENGTH];
