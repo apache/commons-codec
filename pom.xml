@@ -281,12 +281,23 @@ limitations under the License.
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
+        <!-- Use 2.9.1 instead of 2.10; 2.10 seems to scan the 'target' 
+        dir and wants license headers in .properties to be the header for 
+        Java files. -->
         <version>2.9.1</version>
         <configuration>
           <configLocation>${basedir}/checkstyle.xml</configLocation>
           <enableRulesSummary>false</enableRulesSummary>
           <headerFile>${basedir}/LICENSE-header.txt</headerFile>
         </configuration>
+        <!-- We need to specify reportSets because 2.9.1 creates two reports -->
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>checkstyle</report>
+            </reports>
+          </reportSet>
+        </reportSets>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
