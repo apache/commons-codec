@@ -28,6 +28,7 @@ import java.util.Comparator;
  *
  * @version $Id$
  */
+@SuppressWarnings("rawtypes") // TODO ought to implement Comparator<String> but that's not possible whilst maintaining binary compatibility 
 public class StringEncoderComparator implements Comparator {
 
     /**
@@ -75,8 +76,10 @@ public class StringEncoderComparator implements Comparator {
         int compareCode = 0;
 
         try {
-            final Comparable s1 = (Comparable) this.stringEncoder.encode(o1);
-            final Comparable s2 = (Comparable) this.stringEncoder.encode(o2);
+            @SuppressWarnings("unchecked") // May fail with CCE if encode returns something that is not Comparable
+            // However this was always the case.
+            final Comparable<Comparable<?>> s1 = (Comparable<Comparable<?>>) this.stringEncoder.encode(o1);
+            final Comparable<?> s2 = (Comparable<?>) this.stringEncoder.encode(o2);
             compareCode = s1.compareTo(s2);
         } catch (final EncoderException ee) {
             compareCode = 0;
