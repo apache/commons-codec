@@ -26,7 +26,8 @@ import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.binary.StringUtils;
 
 /**
- * Operations to simplify common {@link java.security.MessageDigest} tasks. This class is thread safe.
+ * Operations to simplify common {@link java.security.MessageDigest} tasks.
+ * This class is immutable and thread-safe.
  *
  * @version $Id$
  */

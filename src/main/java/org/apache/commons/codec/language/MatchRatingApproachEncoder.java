@@ -24,6 +24,8 @@ import org.apache.commons.codec.StringEncoder;
 /**
  * Match Rating Approach Phonetic Algorithm Developed by <CITE>Western Airlines</CITE> in 1977.
  *
+ * This class is immutable and thread-safe.
+ *
  * @see <a href="http://en.wikipedia.org/wiki/Match_rating_approach">Wikipedia - Match Rating Approach</a>
  * @since 1.8
  */
