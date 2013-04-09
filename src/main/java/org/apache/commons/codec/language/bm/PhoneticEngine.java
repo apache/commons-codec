@@ -38,8 +38,9 @@ import java.util.TreeSet;
  * pan-european 'average' representation, allowing comparison between different versions of essentially
  * the same word from different languages.
  * <p>
- * This class is intentionally immutable. If you wish to alter the settings for a PhoneticEngine, you
- * must make a new one with the updated settings. This makes the class thread-safe.
+ * This class is intentionally immutable and thread-safe.
+ * If you wish to alter the settings for a PhoneticEngine, you
+ * must make a new one with the updated settings.
  * <p>
  * Ported from phoneticengine.php
  *
