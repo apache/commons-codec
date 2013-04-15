@@ -28,7 +28,8 @@ import java.util.Comparator;
  *
  * @version $Id$
  */
-@SuppressWarnings("rawtypes") // TODO ought to implement Comparator<String> but that's not possible whilst maintaining binary compatibility 
+@SuppressWarnings("rawtypes")
+// TODO ought to implement Comparator<String> but that's not possible whilst maintaining binary compatibility.
 public class StringEncoderComparator implements Comparator {
 
     /**
