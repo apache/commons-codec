@@ -29,6 +29,7 @@ limitations under the License.
   <modelVersion>4.0.0</modelVersion>
   <groupId>commons-codec</groupId>
   <artifactId>commons-codec</artifactId>
+  <!-- Remember to update the version in default.properties as well -->
   <version>1.8-SNAPSHOT</version>
   <name>Commons Codec</name>
   <inceptionYear>2002</inceptionYear>
