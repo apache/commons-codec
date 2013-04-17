@@ -6,7 +6,7 @@ The Apache Software Foundation (http://www.apache.org/).
 
 --------------------------------------------------------------------------------
 src/test/org/apache/commons/codec/language/DoubleMetaphoneTest.java contains 
-test data from http://aspell.sourceforge.net/test/batch0.tab.
+test data from http://aspell.net/test/orig/batch0.tab.
 
 Copyright (C) 2002 Kevin Atkinson (kevina@gnu.org). Verbatim copying
 and distribution of this entire article is permitted in any medium,

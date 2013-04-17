@@ -37,7 +37,7 @@ import org.junit.Test;
 public class DoubleMetaphoneTest extends StringEncoderAbstractTest<DoubleMetaphone> {
 
     /**
-     * Test data from http://aspell.sourceforge.net/test/batch0.tab.
+     * Test data from http://aspell.net/test/orig/batch0.tab.
      *
      * "Copyright (C) 2002 Kevin Atkinson (kevina@gnu.org). Verbatim copying
      * and distribution of this entire article is permitted in any medium,
