@@ -31,10 +31,10 @@ limitations under the License.
   <artifactId>commons-codec</artifactId>
   <!-- Remember to update the version in default.properties as well -->
   <version>1.9-SNAPSHOT</version>
-  <name>Commons Codec</name>
+  <name>Apache Commons Codec</name>
   <inceptionYear>2002</inceptionYear>
   <description>
-     The codec package contains simple encoder and decoders for
+     The Apache Commons Codec package contains simple encoder and decoders for
      various formats such as Base64 and Hexadecimal.  In addition to these
      widely used encoders and decoders, the codec package also maintains a
      collection of phonetic encoding utilities.
@@ -53,7 +53,7 @@ limitations under the License.
     <site>
       <id>stagingSite</id>
       <name>Apache Staging Website</name>
-      <url>scp://people.apache.org/www/commons.apache.org/codec/</url>
+      <url>${commons.deployment.protocol}://people.apache.org/www/commons.apache.org/${commons.componentid}/</url>
     </site>
   </distributionManagement>
   <developers>
