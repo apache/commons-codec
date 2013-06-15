@@ -42,7 +42,7 @@ public class DigestUtils {
      *            The MessageDigest to use (e.g. MD5)
      * @param data
      *            Data to digest
-     * @return MD5 digest
+     * @return the digest
      * @throws IOException
      *             On error reading from the stream
      */
