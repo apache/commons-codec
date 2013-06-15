@@ -58,7 +58,7 @@ public class DigestUtils {
      *            href="http://java.sun.com/j2se/1.3/docs/guide/security/CryptoSpec.html#AppA">Appendix A in the Java
      *            Cryptography Architecture API Specification & Reference</a> for information about standard algorithm
      *            names.
-     * @return An MD5 digest instance.
+     * @return A digest instance.
      * @see MessageDigest#getInstance(String)
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught.
@@ -784,7 +784,7 @@ public class DigestUtils {
      *            The MessageDigest to use (e.g. MD5)
      * @param data
      *            Data to digest
-     * @return MD5 digest
+     * @return the digest
      * @throws IOException
      *             On error reading from the stream
      * @since 1.8
