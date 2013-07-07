@@ -213,8 +213,8 @@ limitations under the License.
     </dependency>
   </dependencies>
   <properties>
-    <maven.compile.source>1.6</maven.compile.source>
-    <maven.compile.target>1.6</maven.compile.target>
+    <maven.compiler.source>1.6</maven.compiler.source>
+    <maven.compiler.target>1.6</maven.compiler.target>
     <commons.componentid>codec</commons.componentid>
     <commons.release.version>1.9</commons.release.version>
     <!-- The RC version used in the staging repository URL. -->
