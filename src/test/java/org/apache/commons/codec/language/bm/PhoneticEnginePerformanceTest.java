@@ -76,6 +76,22 @@ import org.junit.Test;
  * <p>
  * Patch not applied.
  * </p>
+ * <p>
+ * On this file's revision 1539787, with patch <a
+ * href="https://issues.apache.org/jira/secure/attachment/12612178/CODEC-174-reuse-set-in-PhonemeBuilder.patch"
+ * >CODEC-174-reuse-set-in-PhonemeBuilder.patch</a>:
+ * </p>
+ * <ol>
+ * <li>Time for encoding 80,000 times the input 'Angelo': 13,724 millis.</li>
+ * <li>Time for encoding 80,000 times the input 'Angelo': 13,451 millis.</li>
+ * <li>Time for encoding 80,000 times the input 'Angelo': 13,742 millis.</li>
+ * <li>Time for encoding 80,000 times the input 'Angelo': 13,186 millis.</li>
+ * <li>Time for encoding 80,000 times the input 'Angelo': 13,600 millis.</li>
+ * <li>Time for encoding 80,000 times the input 'Angelo': 16,405 millis.</li>
+ * </ol>
+ * <p>
+ * 
+ * </p>
  */
 public class PhoneticEnginePerformanceTest {
 

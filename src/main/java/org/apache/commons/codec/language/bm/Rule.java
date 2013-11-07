@@ -101,16 +101,22 @@ public class Rule {
             }
         };
 
-        private final CharSequence phonemeText;
+        private final StringBuilder phonemeText;
         private final Languages.LanguageSet languages;
 
         public Phoneme(final CharSequence phonemeText, final Languages.LanguageSet languages) {
-            this.phonemeText = phonemeText;
+            this.phonemeText = new StringBuilder(phonemeText);
             this.languages = languages;
         }
+        
+        public Phoneme(final Phoneme phonemeLeft, final Phoneme phonemeRight) {
+        	this.phonemeText = new StringBuilder(phonemeLeft.phonemeText);
+        	this.phonemeText.append(phonemeRight.phonemeText);
+        	this.languages = phonemeLeft.languages;
+        }
 
-        public Phoneme append(final CharSequence str) {
-            return new Phoneme(this.phonemeText.toString() + str.toString(), this.languages);
+        public void append(final CharSequence str) {
+        	this.phonemeText.append(str);
         }
 
         public Languages.LanguageSet getLanguages() {
