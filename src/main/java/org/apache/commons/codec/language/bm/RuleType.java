@@ -38,6 +38,11 @@ public enum RuleType {
         this.name = name;
     }
 
+    /**
+     * Gets the rule name.
+     * 
+     * @return the rule name.
+     */
     public String getName() {
         return this.name;
     }
