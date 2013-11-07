@@ -139,7 +139,6 @@ public class Lang {
         while (scanner.hasNextLine()) {
             final String rawLine = scanner.nextLine();
             String line = rawLine;
-
             if (inExtendedComment) {
                 // check for closing comment marker, otherwise discard doc comment line
                 if (line.endsWith(ResourceConstants.EXT_CMT_END)) {
@@ -178,7 +177,6 @@ public class Lang {
                 }
             }
         }
-
         return new Lang(rules, languages);
     }
 
