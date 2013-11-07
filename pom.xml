@@ -248,6 +248,7 @@ limitations under the License.
         <configuration>
           <excludes>
             <exclude>**/*AbstractTest.java</exclude>
+            <exclude>**/*PerformanceTest.java</exclude>
           </excludes>
         </configuration>
       </plugin>
