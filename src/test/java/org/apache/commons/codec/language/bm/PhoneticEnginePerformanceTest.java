@@ -90,7 +90,7 @@ import org.junit.Test;
  * <li>Time for encoding 80,000 times the input 'Angelo': 16,405 millis.</li>
  * </ol>
  * <p>
- * 
+ * Patch applied, committed revision 1539788.
  * </p>
  */
 public class PhoneticEnginePerformanceTest {
