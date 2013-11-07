@@ -85,7 +85,7 @@ import org.junit.Test;
  * <li>Time for encoding 80,000 times the input 'Angelo': 13,724 millis.</li>
  * <li>Time for encoding 80,000 times the input 'Angelo': 13,451 millis.</li>
  * <li>Time for encoding 80,000 times the input 'Angelo': 13,742 millis.</li>
- * <li>Time for encoding 80,000 times the input 'Angelo': 13,186 millis.</li>
+ * <li>Time for encoding 80,000 times the input 'Angelo': <b>13,186 millis.</b></li>
  * <li>Time for encoding 80,000 times the input 'Angelo': 13,600 millis.</li>
  * <li>Time for encoding 80,000 times the input 'Angelo': 16,405 millis.</li>
  * </ol>
