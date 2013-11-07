@@ -99,7 +99,7 @@ public class PhoneticEnginePerformanceTest {
 
     @Test
     public void test() {
-        PhoneticEngine engine = new PhoneticEngine(NameType.GENERIC, RuleType.APPROX, true);
+        final PhoneticEngine engine = new PhoneticEngine(NameType.GENERIC, RuleType.APPROX, true);
         final String input = "Angelo";
         final long startMillis = System.currentTimeMillis();
         for (int i = 0; i < LOOP; i++) {

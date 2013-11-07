@@ -71,12 +71,12 @@ public class PhoneticEngine {
 
         private final Set<Rule.Phoneme> phonemes;
 
-        private PhonemeBuilder(Rule.Phoneme phoneme) {
+        private PhonemeBuilder(final Rule.Phoneme phoneme) {
             this.phonemes = new LinkedHashSet<Rule.Phoneme>();
             this.phonemes.add(phoneme);
         }
         
-        private PhonemeBuilder(Set<Rule.Phoneme> phonemes) {
+        private PhonemeBuilder(final Set<Rule.Phoneme> phonemes) {
             this.phonemes = phonemes;
         }
 
@@ -202,9 +202,9 @@ public class PhoneticEngine {
         public RulesApplication invoke() {
             this.found = false;
             int patternLength = 1;
-            List<Rule> rules = this.finalRules.get(input.subSequence(i, i+patternLength));
+            final List<Rule> rules = this.finalRules.get(input.subSequence(i, i+patternLength));
             if (rules != null) {
-            	for (Rule rule : rules) {
+            	for (final Rule rule : rules) {
 	            	final String pattern = rule.getPattern();
 	                patternLength = pattern.length();
 	            	if (rule.patternAndContextMatches(this.input, this.i)) {

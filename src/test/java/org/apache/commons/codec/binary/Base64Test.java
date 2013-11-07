@@ -114,8 +114,8 @@ public class Base64Test {
     @Test
     public void testDecodeWithInnerPad() {
         final String content = "SGVsbG8gV29ybGQ=SGVsbG8gV29ybGQ=";
-        byte[] result = Base64.decodeBase64(content);
-        byte[] shouldBe = StringUtils.getBytesUtf8("Hello World");
+        final byte[] result = Base64.decodeBase64(content);
+        final byte[] shouldBe = StringUtils.getBytesUtf8("Hello World");
         assertTrue("decode should halt at pad (=)", Arrays.equals(result, shouldBe));
     }
 
