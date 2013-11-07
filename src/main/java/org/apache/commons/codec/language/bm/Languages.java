@@ -158,20 +158,24 @@ public class Languages {
         }
 
         final Scanner lsScanner = new Scanner(langIS, ResourceConstants.ENCODING);
-        boolean inExtendedComment = false;
-        while (lsScanner.hasNextLine()) {
-            final String line = lsScanner.nextLine().trim();
-            if (inExtendedComment) {
-                if (line.endsWith(ResourceConstants.EXT_CMT_END)) {
-                    inExtendedComment = false;
-                }
-            } else {
-                if (line.startsWith(ResourceConstants.EXT_CMT_START)) {
-                    inExtendedComment = true;
-                } else if (line.length() > 0) {
-                    ls.add(line);
+        try {
+            boolean inExtendedComment = false;
+            while (lsScanner.hasNextLine()) {
+                final String line = lsScanner.nextLine().trim();
+                if (inExtendedComment) {
+                    if (line.endsWith(ResourceConstants.EXT_CMT_END)) {
+                        inExtendedComment = false;
+                    }
+                } else {
+                    if (line.startsWith(ResourceConstants.EXT_CMT_START)) {
+                        inExtendedComment = true;
+                    } else if (line.length() > 0) {
+                        ls.add(line);
+                    }
                 }
             }
+        } finally {
+            lsScanner.close();
         }
 
         return new Languages(Collections.unmodifiableSet(ls));
