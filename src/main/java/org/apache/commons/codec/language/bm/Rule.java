@@ -169,16 +169,16 @@ public class Rule {
 
     private static final String HASH_INCLUDE = "#include";
 
-    private static final Map<NameType, Map<RuleType, Map<String, List<Rule>>>> RULES =
-            new EnumMap<NameType, Map<RuleType, Map<String, List<Rule>>>>(NameType.class);
+    private static final Map<NameType, Map<RuleType, Map<String, Map<String, List<Rule>>>>> RULES =
+            new EnumMap<NameType, Map<RuleType, Map<String, Map<String, List<Rule>>>>>(NameType.class);
 
     static {
         for (final NameType s : NameType.values()) {
-            final Map<RuleType, Map<String, List<Rule>>> rts =
-                    new EnumMap<RuleType, Map<String, List<Rule>>>(RuleType.class);
+            final Map<RuleType, Map<String, Map<String, List<Rule>>>> rts =
+                    new EnumMap<RuleType, Map<String, Map<String, List<Rule>>>>(RuleType.class);
 
             for (final RuleType rt : RuleType.values()) {
-                final Map<String, List<Rule>> rs = new HashMap<String, List<Rule>>();
+                final Map<String, Map<String, List<Rule>>> rs = new HashMap<String, Map<String, List<Rule>>>();
 
                 final Languages ls = Languages.getInstance(s);
                 for (final String l : ls.getLanguages()) {
@@ -258,7 +258,7 @@ public class Rule {
      *            the set of languages to consider
      * @return a list of Rules that apply
      */
-    public static List<Rule> getInstance(final NameType nameType, final RuleType rt,
+    public static Map<String, List<Rule>> getInstance(final NameType nameType, final RuleType rt,
                                          final Languages.LanguageSet langs) {
         return langs.isSingleton() ? getInstance(nameType, rt, langs.getAny()) :
                                      getInstance(nameType, rt, Languages.ANY);
@@ -275,8 +275,8 @@ public class Rule {
      *            the language to consider
      * @return a list rules for a combination of name type, rule type and a single language.
      */
-    public static List<Rule> getInstance(final NameType nameType, final RuleType rt, final String lang) {
-        final List<Rule> rules = RULES.get(nameType).get(rt).get(lang);
+    public static Map<String, List<Rule>> getInstance(final NameType nameType, final RuleType rt, final String lang) {
+        final Map<String, List<Rule>> rules = RULES.get(nameType).get(rt).get(lang);
 
         if (rules == null) {
             throw new IllegalArgumentException(String.format("No rules found for %s, %s, %s.",
@@ -323,8 +323,8 @@ public class Rule {
         }
     }
 
-    private static List<Rule> parseRules(final Scanner scanner, final String location) {
-        final List<Rule> lines = new ArrayList<Rule>();
+    private static Map<String, List<Rule>> parseRules(final Scanner scanner, final String location) {
+        final Map<String, List<Rule>> lines = new HashMap<String, List<Rule>>();
         int currentLine = 0;
 
         boolean inMultilineComment = false;
@@ -361,7 +361,7 @@ public class Rule {
                             throw new IllegalArgumentException("Malformed import statement '" + rawLine + "' in " +
                                                                location);
                         } else {
-                            lines.addAll(parseRules(createScanner(incl), location + "->" + incl));
+                            lines.putAll(parseRules(createScanner(incl), location + "->" + incl));
                         }
                     } else {
                         // rule
@@ -390,7 +390,13 @@ public class Rule {
                                         return sb.toString();
                                     }
                                 };
-                                lines.add(r);
+                                String patternKey = r.pattern.substring(0,1);
+                                List<Rule> rules = lines.get(patternKey);
+                                if (rules == null) {
+                                	rules = new ArrayList<Rule>();
+                                	lines.put(patternKey, rules);
+                                }
+                                rules.add(r);
                             } catch (final IllegalArgumentException e) {
                                 throw new IllegalStateException("Problem parsing line '" + currentLine + "' in " +
                                                                 location, e);

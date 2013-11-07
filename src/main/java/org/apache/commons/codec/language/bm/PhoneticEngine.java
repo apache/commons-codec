@@ -164,7 +164,7 @@ public class PhoneticEngine {
      * @since 1.6
      */
     private static final class RulesApplication {
-        private final List<Rule> finalRules;
+        private final Map<String, List<Rule>> finalRules;
         private final CharSequence input;
 
         private PhonemeBuilder phonemeBuilder;
@@ -172,7 +172,7 @@ public class PhoneticEngine {
         private final int maxPhonemes;
         private boolean found;
 
-        public RulesApplication(final List<Rule> finalRules, final CharSequence input,
+        public RulesApplication(final Map<String, List<Rule>> finalRules, final CharSequence input,
                                 final PhonemeBuilder phonemeBuilder, final int i, final int maxPhonemes) {
             if (finalRules == null) {
                 throw new NullPointerException("The finalRules argument must not be null");
@@ -201,18 +201,18 @@ public class PhoneticEngine {
          */
         public RulesApplication invoke() {
             this.found = false;
-            int patternLength = 0;
-            for (final Rule rule : this.finalRules) {
-                final String pattern = rule.getPattern();
-                patternLength = pattern.length();
-
-                if (!rule.patternAndContextMatches(this.input, this.i)) {
-                    continue;
-                }
-
-                this.phonemeBuilder = this.phonemeBuilder.apply(rule.getPhoneme(), maxPhonemes);
-                this.found = true;
-                break;
+            int patternLength = 1;
+            List<Rule> rules = this.finalRules.get(input.subSequence(i, i+patternLength));
+            if (rules != null) {
+            	for (Rule rule : rules) {
+	            	final String pattern = rule.getPattern();
+	                patternLength = pattern.length();
+	            	if (rule.patternAndContextMatches(this.input, this.i)) {
+		                this.phonemeBuilder = this.phonemeBuilder.apply(rule.getPhoneme(), maxPhonemes);
+		                this.found = true;
+		                break;
+	            	}
+            	}
             }
 
             if (!this.found) {
@@ -358,7 +358,7 @@ public class PhoneticEngine {
      * @param finalRules the final rules to apply
      * @return the resulting phonemes
      */
-    private PhonemeBuilder applyFinalRules(final PhonemeBuilder phonemeBuilder, final List<Rule> finalRules) {
+    private PhonemeBuilder applyFinalRules(final PhonemeBuilder phonemeBuilder, final Map<String, List<Rule>> finalRules) {
         if (finalRules == null) {
             throw new NullPointerException("finalRules can not be null");
         }
@@ -414,11 +414,11 @@ public class PhoneticEngine {
      *   of the input
      */
     public String encode(String input, final Languages.LanguageSet languageSet) {
-        final List<Rule> rules = Rule.getInstance(this.nameType, RuleType.RULES, languageSet);
+        final Map<String, List<Rule>> rules = Rule.getInstance(this.nameType, RuleType.RULES, languageSet);
         // rules common across many (all) languages
-        final List<Rule> finalRules1 = Rule.getInstance(this.nameType, this.ruleType, "common");
+        final Map<String, List<Rule>> finalRules1 = Rule.getInstance(this.nameType, this.ruleType, "common");
         // rules that apply to a specific language that may be ambiguous or wrong if applied to other languages
-        final List<Rule> finalRules2 = Rule.getInstance(this.nameType, this.ruleType, languageSet);
+        final Map<String, List<Rule>> finalRules2 = Rule.getInstance(this.nameType, this.ruleType, languageSet);
 
         // tidy the input
         // lower case is a locale-dependent operation
