@@ -27,6 +27,15 @@ import org.junit.Test;
  * <p>
  * Results for November 7, 2013, project SVN revision 1539678.
  * </p>
+ * <p>
+ * Environment:
+ * </p>
+ * <ul>
+ * <li>java version "1.7.0_45"</li>
+ * <li>Java(TM) SE Runtime Environment (build 1.7.0_45-b18)</li>
+ * <li>Java HotSpot(TM) 64-Bit Server VM (build 24.45-b08, mixed mode)</li>
+ * <li>OS name: "windows 7", version: "6.1", arch: "amd64", family: "windows")</li>
+ * </ul>
  * <ol>
  * <li>Time for encoding 80,000 times the input 'Angelo': 33,039 millis.</li>
  * <li>Time for encoding 80,000 times the input 'Angelo': 32,297 millis.</li>
@@ -48,6 +57,25 @@ import org.junit.Test;
  * <li>Time for encoding 80,000 times the input 'Angelo': 13,861 millis.</li>
  * <li>Time for encoding 80,000 times the input 'Angelo': 13,696 millis.</li>
  * </ol>
+ * <p>
+ * Patch applied, committed revision 1539783.
+ * </p>
+ * <p>
+ * On this file's revision 1539783, with patch <a
+ * href="https://issues.apache.org/jira/secure/attachment/12611962/CODEC-174-delete-subsequence-cache.patch"
+ * >CODEC-174-delete-subsequence-cache.patch</a>:
+ * </p>
+ * <ol>
+ * <li>Time for encoding 80,000 times the input 'Angelo': 13,547 millis.</li>
+ * <li>Time for encoding 80,000 times the input 'Angelo': <b>13,501 millis.</b></li>
+ * <li>Time for encoding 80,000 times the input 'Angelo': 13,528 millis.</li>
+ * <li>Time for encoding 80,000 times the input 'Angelo': 17,110 millis.</li>
+ * <li>Time for encoding 80,000 times the input 'Angelo': 13,910 millis.</li>
+ * <li>Time for encoding 80,000 times the input 'Angelo': 16,969 millis.</li>
+ * </ol>
+ * <p>
+ * Patch not applied.
+ * </p>
  */
 public class PhoneticEnginePerformanceTest {
 
