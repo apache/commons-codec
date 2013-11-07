@@ -84,7 +84,6 @@ public class PhoneticEngine {
          * Creates a new phoneme builder containing all phonemes in this one extended by <code>str</code>.
          *
          * @param str   the characters to append to the phonemes
-         * @return  a new phoneme builder lenghtened by <code>str</code>
          */
         public void append(final CharSequence str) {
             for (final Rule.Phoneme ph : this.phonemes) {
