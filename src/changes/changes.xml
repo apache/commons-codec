@@ -45,6 +45,7 @@ The <action> type attribute can be add,update,fix,remove.
     <release version="1.9" date="TBA" description="Feature and fix release."> 
       <action dev="sebb" type="fix" issue="CODEC-170" due-to="Matt Bishop">Base32 decode table has spurious value</action>   
       <action dev="ggregory" type="fix" issue="CODEC-170" due-to="Ron Wheeler, Henri Yandell">Link broken in Metaphone Javadoc</action>   
+      <action dev="ggregory" type="updated" issue="CODEC-174" due-to=" Thomas Champagne">Improve performance of Beider Morse encoder</action>   
     </release>
     <release version="1.8" date="19 April 2013" description="Feature and fix release. Requires a minimum of Java 1.6">
       <action dev="ggregory" type="add" issue="CODEC-168" due-to="Daniel Cassidy">Add DigestUtils.updateDigest(MessageDigest, InputStream).</action>   
