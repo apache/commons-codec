@@ -87,7 +87,7 @@ public class PhoneticEngine {
          */
         public void append(final CharSequence str) {
             for (final Rule.Phoneme ph : this.phonemes) {
-            	ph.append(str);
+                ph.append(str);
             }
         }
 
@@ -204,15 +204,15 @@ public class PhoneticEngine {
             int patternLength = 1;
             final List<Rule> rules = this.finalRules.get(input.subSequence(i, i+patternLength));
             if (rules != null) {
-            	for (final Rule rule : rules) {
-	            	final String pattern = rule.getPattern();
-	                patternLength = pattern.length();
-	            	if (rule.patternAndContextMatches(this.input, this.i)) {
-		                this.phonemeBuilder = this.phonemeBuilder.apply(rule.getPhoneme(), maxPhonemes);
-		                this.found = true;
-		                break;
-	            	}
-            	}
+                for (final Rule rule : rules) {
+                    final String pattern = rule.getPattern();
+                    patternLength = pattern.length();
+                    if (rule.patternAndContextMatches(this.input, this.i)) {
+                        this.phonemeBuilder = this.phonemeBuilder.apply(rule.getPhoneme(), maxPhonemes);
+                        this.found = true;
+                        break;
+                    }
+                }
             }
 
             if (!this.found) {
