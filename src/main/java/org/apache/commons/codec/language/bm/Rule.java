@@ -110,13 +110,13 @@ public class Rule {
         }
         
         public Phoneme(final Phoneme phonemeLeft, final Phoneme phonemeRight) {
-        	this.phonemeText = new StringBuilder(phonemeLeft.phonemeText);
-        	this.phonemeText.append(phonemeRight.phonemeText);
-        	this.languages = phonemeLeft.languages;
+            this.phonemeText = new StringBuilder(phonemeLeft.phonemeText);
+            this.phonemeText.append(phonemeRight.phonemeText);
+            this.languages = phonemeLeft.languages;
         }
 
         public void append(final CharSequence str) {
-        	this.phonemeText.append(str);
+            this.phonemeText.append(str);
         }
 
         public Languages.LanguageSet getLanguages() {
@@ -399,8 +399,8 @@ public class Rule {
                                 final String patternKey = r.pattern.substring(0,1);
                                 List<Rule> rules = lines.get(patternKey);
                                 if (rules == null) {
-                                	rules = new ArrayList<Rule>();
-                                	lines.put(patternKey, rules);
+                                    rules = new ArrayList<Rule>();
+                                    lines.put(patternKey, rules);
                                 }
                                 rules.add(r);
                             } catch (final IllegalArgumentException e) {
