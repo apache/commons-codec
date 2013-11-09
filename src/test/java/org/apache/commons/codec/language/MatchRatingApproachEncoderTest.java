@@ -76,10 +76,10 @@ public class MatchRatingApproachEncoderTest extends StringEncoderAbstractTest<Ma
     public final void testAccentRemoval_NINO_NoChange() {
         assertEquals("", this.getStringEncoder().removeAccents(""));
     }
-	
-	@Test
+    
+    @Test
     public final void testAccentRemoval_NullValue_ReturnNullSuccessfully() {
-    	assertEquals(null, this.getStringEncoder().removeAccents(null));
+        assertEquals(null, this.getStringEncoder().removeAccents(null));
     }
 
     @Test
@@ -159,37 +159,37 @@ public class MatchRatingApproachEncoderTest extends StringEncoderAbstractTest<Ma
     
     @Test
     public final void testgetMinRating_5_Returns4_Successfully(){
-    	assertEquals(4, this.getStringEncoder().getMinRating(5)); 
+        assertEquals(4, this.getStringEncoder().getMinRating(5)); 
     }
     
     @Test
     public final void testgetMinRating_5_Returns4_Successfully2(){
-    	assertEquals(4, this.getStringEncoder().getMinRating(5)); 
+        assertEquals(4, this.getStringEncoder().getMinRating(5)); 
     }
     
     @Test
     public final void testgetMinRating_6_Returns4_Successfully(){
-    	assertEquals(4, this.getStringEncoder().getMinRating(6)); 
+        assertEquals(4, this.getStringEncoder().getMinRating(6)); 
     }
     
     @Test
     public final void testgetMinRating_7_Returns4_Successfully(){
-    	assertEquals(4, this.getStringEncoder().getMinRating(7)); 
+        assertEquals(4, this.getStringEncoder().getMinRating(7)); 
     }
     
     @Test
     public final void testgetMinRating_8_Returns3_Successfully(){
-    	assertEquals(3, this.getStringEncoder().getMinRating(8));
+        assertEquals(3, this.getStringEncoder().getMinRating(8));
     }
     
     @Test
     public final void testgetMinRating_10_Returns3_Successfully(){
-    	assertEquals(3, this.getStringEncoder().getMinRating(10)); 
+        assertEquals(3, this.getStringEncoder().getMinRating(10)); 
     }
     
     @Test
     public final void testgetMinRating_11_Returns_3_Successfully(){
-    	assertEquals(3, this.getStringEncoder().getMinRating(11)); 
+        assertEquals(3, this.getStringEncoder().getMinRating(11)); 
     }
 
     @Test
@@ -204,47 +204,47 @@ public class MatchRatingApproachEncoderTest extends StringEncoderAbstractTest<Ma
     
     @Test
     public final void testisVowel_SingleVowel_ReturnsTrue() {
-    	assertTrue(this.getStringEncoder().isVowel(("I")));
+        assertTrue(this.getStringEncoder().isVowel(("I")));
     }
     
     @Test
     public final void testisEncodeEquals_CornerCase_SecondNameNothing_ReturnsFalse() {
-    	assertFalse(this.getStringEncoder().isEncodeEquals("test", ""));
+        assertFalse(this.getStringEncoder().isEncodeEquals("test", ""));
     }
 
     @Test
     public final void testisEncodeEquals_CornerCase_FirstNameNothing_ReturnsFalse() {
-    	assertFalse(this.getStringEncoder().isEncodeEquals("", "test"));
+        assertFalse(this.getStringEncoder().isEncodeEquals("", "test"));
     }
     
     @Test
     public final void testisEncodeEquals_CornerCase_SecondNameJustSpace_ReturnsFalse() {
-    	assertFalse(this.getStringEncoder().isEncodeEquals("test", " "));
+        assertFalse(this.getStringEncoder().isEncodeEquals("test", " "));
     }
 
     @Test
     public final void testisEncodeEquals_CornerCase_FirstNameJustSpace_ReturnsFalse() {
-    	assertFalse(this.getStringEncoder().isEncodeEquals(" ", "test"));
+        assertFalse(this.getStringEncoder().isEncodeEquals(" ", "test"));
     }
     
     @Test
     public final void testisEncodeEquals_CornerCase_SecondNameNull_ReturnsFalse() {
-    	assertFalse(this.getStringEncoder().isEncodeEquals("test", null));
+        assertFalse(this.getStringEncoder().isEncodeEquals("test", null));
     }
 
     @Test
     public final void testisEncodeEquals_CornerCase_FirstNameNull_ReturnsFalse() {
-    	assertFalse(this.getStringEncoder().isEncodeEquals(null, "test"));
+        assertFalse(this.getStringEncoder().isEncodeEquals(null, "test"));
     }
     
     @Test
     public final void testisEncodeEquals_CornerCase_FirstNameJust1Letter_ReturnsFalse() {
-    	assertFalse(this.getStringEncoder().isEncodeEquals("t", "test"));
+        assertFalse(this.getStringEncoder().isEncodeEquals("t", "test"));
     }
 
     @Test
     public final void testisEncodeEqualsSecondNameJust1Letter_ReturnsFalse() {
-    	assertFalse(this.getStringEncoder().isEncodeEquals("test", "t"));
+        assertFalse(this.getStringEncoder().isEncodeEquals("test", "t"));
     }
     
     // ***** END REGION - TEST SUPPORT METHODS
@@ -285,15 +285,15 @@ public class MatchRatingApproachEncoderTest extends StringEncoderAbstractTest<Ma
     public final void testGetEncoding_One_Letter_to_Nothing() {
         assertEquals("", this.getStringEncoder().encode("E"));
     }
-	
-	@Test
+    
+    @Test
     public final void testCompareNameNullSpace_ReturnsFalseSuccessfully() {
-    	assertFalse(getStringEncoder().isEncodeEquals(null, " "));
+        assertFalse(getStringEncoder().isEncodeEquals(null, " "));
     }
     
     @Test
     public final void testCompareNameSameNames_ReturnsFalseSuccessfully() {
-    	assertTrue(getStringEncoder().isEncodeEquals("John", "John"));
+        assertTrue(getStringEncoder().isEncodeEquals("John", "John"));
     }
 
     // ***** END REGION - TEST GET MRA ENCODING
