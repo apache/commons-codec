@@ -115,8 +115,9 @@ public class Rule {
             this.languages = phonemeLeft.languages;
         }
 
-        public void append(final CharSequence str) {
+        public Phoneme  append(final CharSequence str) {
             this.phonemeText.append(str);
+            return this;
         }
 
         public Languages.LanguageSet getLanguages() {
