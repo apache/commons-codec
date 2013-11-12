@@ -30,6 +30,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.apache.commons.codec.language.bm.Languages.LanguageSet;
+import org.apache.commons.codec.language.bm.Rule.Phoneme;
+
 /**
  * Converts words into potential phonetic representations.
  * <p>
@@ -107,8 +110,9 @@ public class PhoneticEngine {
 
             EXPR: for (final Rule.Phoneme left : this.phonemes) {
                 for (final Rule.Phoneme right : phonemeExpr.getPhonemes()) {
-                    final Rule.Phoneme join = left.join(right);
-                    if (!join.getLanguages().isEmpty()) {
+                	LanguageSet languages = left.getLanguages().restrictTo(right.getLanguages());
+                	if (!languages.isEmpty()) {
+                		final Rule.Phoneme join = new Phoneme(left, right, languages);
                         if (newPhonemes.size() < maxPhonemes) {
                             newPhonemes.add(join);
                         } else {
