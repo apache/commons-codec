@@ -117,13 +117,13 @@ public class Languages {
                 return this;
             } else {
                 final SomeLanguages sl = (SomeLanguages) other;
-                if (sl.languages.containsAll(languages)) {
-                    return this;
-                } else {
-                    final Set<String> ls = new HashSet<String>(this.languages);
-                    ls.retainAll(sl.languages);
-                    return from(ls);
+                final Set<String> ls = new HashSet<String>(Math.min(languages.size(), sl.languages.size()));
+                for (String lang : languages) {
+                    if (sl.languages.contains(lang)) {
+                        ls.add(lang);
+                    }
                 }
+                return from(ls);
             }
         }
 

@@ -92,6 +92,31 @@ import org.junit.Test;
  * <p>
  * Patch applied, committed revision 1539788.
  * </p>
+ * <p>
+ * Before patch https://issues.apache.org/jira/secure/attachment/12613371/CODEC-174-refactor-restrictTo-method-in-SomeLanguages.patch
+ * </p>
+ * <ol>
+ * <li>Time for encoding 80,000 times the input 'Angelo': 13,133 millis.</li>
+ * <li>Time for encoding 80,000 times the input 'Angelo': 13,064 millis.</li>
+ * <li>Time for encoding 80,000 times the input 'Angelo': <b>12,838 millis.</b></li>
+ * <li>Time for encoding 80,000 times the input 'Angelo': 12,970 millis.</li>
+ * <li>Time for encoding 80,000 times the input 'Angelo': 13,122 millis.</li>
+ * <li>Time for encoding 80,000 times the input 'Angelo': 13,293 millis.</li>
+ * </ol>
+ * <p>
+ * After patch https://issues.apache.org/jira/secure/attachment/12613371/CODEC-174-refactor-restrictTo-method-in-SomeLanguages.patch
+ * </p>
+ * <ol>
+ * <li>Time for encoding 80,000 times the input 'Angelo': 11,576 millis.</li>
+ * <li>Time for encoding 80,000 times the input 'Angelo': 11,506 millis.</li>
+ * <li>Time for encoding 80,000 times the input 'Angelo': 11,361 millis.</li>
+ * <li>Time for encoding 80,000 times the input 'Angelo': <b>11,142 millis.</b></li>
+ * <li>Time for encoding 80,000 times the input 'Angelo': 11,430 millis.</li>
+ * <li>Time for encoding 80,000 times the input 'Angelo': 11,297 millis.</li>
+ * </ol>
+ * <p>
+ * Patch applied, committed revision 1541234.
+ * </p>
  */
 public class PhoneticEnginePerformanceTest {
 
