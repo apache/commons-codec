@@ -245,42 +245,6 @@ public class PhoneticEngine {
     }
 
     /**
-     * This is a performance hack to avoid overhead associated with very frequent CharSequence.subSequence calls.
-     *
-     * @param cached the character sequence to cache
-     * @return a <code>CharSequence</code> that internally caches subSequence values
-     */
-    private static CharSequence cacheSubSequence(final CharSequence cached) {
-        // return cached;
-        final CharSequence[][] cache = new CharSequence[cached.length()][cached.length()];
-        return new CharSequence() {
-            @Override
-            public char charAt(final int index) {
-                return cached.charAt(index);
-            }
-
-            @Override
-            public int length() {
-                return cached.length();
-            }
-
-            @Override
-            public CharSequence subSequence(final int start, final int end) {
-                if (start == end) {
-                    return "";
-                }
-
-                CharSequence res = cache[start][end - 1];
-                if (res == null) {
-                    res = cached.subSequence(start, end);
-                    cache[start][end - 1] = res;
-                }
-                return res;
-            }
-        };
-    }
-
-    /**
      * Joins some strings with an internal separator.
      * @param strings   Strings to join
      * @param sep       String to separate them with
@@ -370,7 +334,7 @@ public class PhoneticEngine {
 
         for (final Rule.Phoneme phoneme : phonemeBuilder.getPhonemes()) {
             PhonemeBuilder subBuilder = PhonemeBuilder.empty(phoneme.getLanguages());
-            final CharSequence phonemeText = cacheSubSequence(phoneme.getPhonemeText());
+            final String phonemeText = phoneme.getPhonemeText().toString();
 
             for (int i = 0; i < phonemeText.length();) {
                 final RulesApplication rulesApplication =
@@ -484,10 +448,9 @@ public class PhoneticEngine {
         PhonemeBuilder phonemeBuilder = PhonemeBuilder.empty(languageSet);
 
         // loop over each char in the input - we will handle the increment manually
-        final CharSequence inputCache = cacheSubSequence(input);
-        for (int i = 0; i < inputCache.length();) {
+        for (int i = 0; i < input.length();) {
             final RulesApplication rulesApplication =
-                    new RulesApplication(rules, inputCache, phonemeBuilder, i, maxPhonemes).invoke();
+                    new RulesApplication(rules, input, phonemeBuilder, i, maxPhonemes).invoke();
             i = rulesApplication.getI();
             phonemeBuilder = rulesApplication.getPhonemeBuilder();
         }
