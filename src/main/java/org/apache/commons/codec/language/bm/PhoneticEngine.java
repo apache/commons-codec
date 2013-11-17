@@ -383,11 +383,11 @@ public class PhoneticEngine {
      *   of the input
      */
     public String encode(String input, final Languages.LanguageSet languageSet) {
-        final Map<String, List<Rule>> rules = Rule.getInstance(this.nameType, RuleType.RULES, languageSet);
+        final Map<String, List<Rule>> rules = Rule.getInstanceMap(this.nameType, RuleType.RULES, languageSet);
         // rules common across many (all) languages
-        final Map<String, List<Rule>> finalRules1 = Rule.getInstance(this.nameType, this.ruleType, "common");
+        final Map<String, List<Rule>> finalRules1 = Rule.getInstanceMap(this.nameType, this.ruleType, "common");
         // rules that apply to a specific language that may be ambiguous or wrong if applied to other languages
-        final Map<String, List<Rule>> finalRules2 = Rule.getInstance(this.nameType, this.ruleType, languageSet);
+        final Map<String, List<Rule>> finalRules2 = Rule.getInstanceMap(this.nameType, this.ruleType, languageSet);
 
         // tidy the input
         // lower case is a locale-dependent operation
