@@ -310,6 +310,7 @@ public class Rule {
      * @param langs
      *            the set of languages to consider
      * @return a map containing all Rules that apply, grouped by the first character of the rule pattern
+     * @since 1.9
      */
     public static Map<String, List<Rule>> getInstanceMap(final NameType nameType, final RuleType rt,
                                                          final Languages.LanguageSet langs) {
@@ -327,6 +328,7 @@ public class Rule {
      * @param lang
      *            the language to consider
      * @return a map containing all Rules that apply, grouped by the first character of the rule pattern
+     * @since 1.9
      */
     public static Map<String, List<Rule>> getInstanceMap(final NameType nameType, final RuleType rt,
                                                          final String lang) {
