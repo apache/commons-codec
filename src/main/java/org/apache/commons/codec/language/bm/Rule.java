@@ -119,7 +119,7 @@ public class Rule {
             this.phonemeText.append(phonemeRight.phonemeText);
         }
 
-        public Phoneme  append(final CharSequence str) {
+        public Phoneme append(final CharSequence str) {
             this.phonemeText.append(str);
             return this;
         }
@@ -135,6 +135,15 @@ public class Rule {
 
         public CharSequence getPhonemeText() {
             return this.phonemeText;
+        }
+
+        /**
+         * @deprecated since 1.9
+         */
+        @Deprecated
+        public Phoneme join(final Phoneme right) {
+            return new Phoneme(this.phonemeText.toString() + right.phonemeText.toString(),
+                               this.languages.restrictTo(right.languages));
         }
     }
 
