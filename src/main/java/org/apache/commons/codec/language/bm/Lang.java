@@ -166,8 +166,8 @@ public class Lang {
                         final String[] parts = line.split("\\s+");
 
                         if (parts.length != 3) {
-                            throw new IllegalArgumentException("Malformed line '" + rawLine
-                                    + "' in language resource '" + languageRulesResourceName + "'");
+                            throw new IllegalArgumentException("Malformed line '" + rawLine +
+                                    "' in language resource '" + languageRulesResourceName + "'");
                         }
 
                         final Pattern pattern = Pattern.compile(parts[0]);

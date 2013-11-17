@@ -78,7 +78,7 @@ public class PhoneticEngine {
             this.phonemes = new LinkedHashSet<Rule.Phoneme>();
             this.phonemes.add(phoneme);
         }
-        
+
         private PhonemeBuilder(final Set<Rule.Phoneme> phonemes) {
             this.phonemes = phonemes;
         }
@@ -110,9 +110,9 @@ public class PhoneticEngine {
 
             EXPR: for (final Rule.Phoneme left : this.phonemes) {
                 for (final Rule.Phoneme right : phonemeExpr.getPhonemes()) {
-                	LanguageSet languages = left.getLanguages().restrictTo(right.getLanguages());
-                	if (!languages.isEmpty()) {
-                		final Rule.Phoneme join = new Phoneme(left, right, languages);
+                    LanguageSet languages = left.getLanguages().restrictTo(right.getLanguages());
+                    if (!languages.isEmpty()) {
+                        final Rule.Phoneme join = new Phoneme(left, right, languages);
                         if (newPhonemes.size() < maxPhonemes) {
                             newPhonemes.add(join);
                         } else {
@@ -326,7 +326,8 @@ public class PhoneticEngine {
      * @param finalRules the final rules to apply
      * @return the resulting phonemes
      */
-    private PhonemeBuilder applyFinalRules(final PhonemeBuilder phonemeBuilder, final Map<String, List<Rule>> finalRules) {
+    private PhonemeBuilder applyFinalRules(final PhonemeBuilder phonemeBuilder,
+                                           final Map<String, List<Rule>> finalRules) {
         if (finalRules == null) {
             throw new NullPointerException("finalRules can not be null");
         }

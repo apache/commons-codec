@@ -40,7 +40,7 @@ public enum RuleType {
 
     /**
      * Gets the rule name.
-     * 
+     *
      * @return the rule name.
      */
     public String getName() {

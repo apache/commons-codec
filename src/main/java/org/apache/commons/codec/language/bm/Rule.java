@@ -108,7 +108,7 @@ public class Rule {
             this.phonemeText = new StringBuilder(phonemeText);
             this.languages = languages;
         }
-        
+
         public Phoneme(final Phoneme phonemeLeft, final Phoneme phonemeRight) {
             this(phonemeLeft.phonemeText, phonemeLeft.languages);
             this.phonemeText.append(phonemeRight.phonemeText);

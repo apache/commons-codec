@@ -807,7 +807,8 @@ public class DigestUtils {
      * @param messageDigest
      *            the {@link MessageDigest} to update
      * @param valueToDigest
-     *            the value to update the {@link MessageDigest} with; converted to bytes using {@link StringUtils#getBytesUtf8(String)}
+     *            the value to update the {@link MessageDigest} with;
+     *            converted to bytes using {@link StringUtils#getBytesUtf8(String)}
      * @return the updated {@link MessageDigest}
      * @since 1.7
      */
