@@ -50,8 +50,8 @@
 
 "y" "[aáuiíoóeéê]" "" "j"
 "y" "" "[aeiíou]" "j"
-"m" "" "[bcdfglnprstv]" "(m|n)" // maybe to add a rule for m/n before a consonant that disappears [preceeding vowel becomes nasalized]
-"m" "" "$" "(m|n)" // maybe to add a rule for final m/n that disappears [preceeding vowel becomes nasalized]
+"m" "" "[bcdfglnprstv]" "(m|n)" // maybe to add a rule for m/n before a consonant that disappears [preceding vowel becomes nasalized]
+"m" "" "$" "(m|n)" // maybe to add a rule for final m/n that disappears [preceding vowel becomes nasalized]
 
 "ão" "" "" "(au|an|on)"
 "ãe" "" "" "(aj|an)"
