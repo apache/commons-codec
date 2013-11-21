@@ -170,16 +170,16 @@ public class Base32OutputStreamTest {
      *            the data from above, but decoded
      * @param chunkSize
      *            chunk size (line-length) of the Base32 encoded data.
-     * @param seperator
+     * @param separator
      *            Line separator in the Base32 encoded data.
      * @throws Exception
      *             Usually signifies a bug in the Base32 commons-codec implementation.
      */
-    private void testByChunk(final byte[] encoded, final byte[] decoded, final int chunkSize, final byte[] seperator) throws Exception {
+    private void testByChunk(final byte[] encoded, final byte[] decoded, final int chunkSize, final byte[] separator) throws Exception {
 
         // Start with encode.
         ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
-        OutputStream out = new Base32OutputStream(byteOut, true, chunkSize, seperator);
+        OutputStream out = new Base32OutputStream(byteOut, true, chunkSize, separator);
         out.write(decoded);
         out.close();
         byte[] output = byteOut.toByteArray();
@@ -198,7 +198,7 @@ public class Base32OutputStreamTest {
         out = byteOut;
         for (int i = 0; i < 10; i++) {
             out = new Base32OutputStream(out, false);
-            out = new Base32OutputStream(out, true, chunkSize, seperator);
+            out = new Base32OutputStream(out, true, chunkSize, separator);
         }
         out.write(decoded);
         out.close();
@@ -220,16 +220,16 @@ public class Base32OutputStreamTest {
      *            the data from above, but decoded
      * @param chunkSize
      *            chunk size (line-length) of the Base32 encoded data.
-     * @param seperator
+     * @param separator
      *            Line separator in the Base32 encoded data.
      * @throws Exception
      *             Usually signifies a bug in the Base32 commons-codec implementation.
      */
-    private void testByteByByte(final byte[] encoded, final byte[] decoded, final int chunkSize, final byte[] seperator) throws Exception {
+    private void testByteByByte(final byte[] encoded, final byte[] decoded, final int chunkSize, final byte[] separator) throws Exception {
 
         // Start with encode.
         ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
-        OutputStream out = new Base32OutputStream(byteOut, true, chunkSize, seperator);
+        OutputStream out = new Base32OutputStream(byteOut, true, chunkSize, separator);
         for (final byte element : decoded) {
             out.write(element);
         }
@@ -263,7 +263,7 @@ public class Base32OutputStreamTest {
         out = byteOut;
         for (int i = 0; i < 10; i++) {
             out = new Base32OutputStream(out, false);
-            out = new Base32OutputStream(out, true, chunkSize, seperator);
+            out = new Base32OutputStream(out, true, chunkSize, separator);
         }
         for (final byte element : decoded) {
             out.write(element);

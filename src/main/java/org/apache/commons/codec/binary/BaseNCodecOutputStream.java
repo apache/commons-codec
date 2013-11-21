@@ -99,15 +99,15 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
     }
 
     /**
-     * Flushes this output stream and forces any buffered output bytes to be written out to the stream. If propogate is
+     * Flushes this output stream and forces any buffered output bytes to be written out to the stream. If propagate is
      * true, the wrapped stream will also be flushed.
      *
-     * @param propogate
+     * @param propagate
      *            boolean flag to indicate whether the wrapped OutputStream should also be flushed.
      * @throws IOException
      *             if an I/O error occurs.
      */
-    private void flush(final boolean propogate) throws IOException {
+    private void flush(final boolean propagate) throws IOException {
         final int avail = baseNCodec.available(context);
         if (avail > 0) {
             final byte[] buf = new byte[avail];
@@ -116,7 +116,7 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
                 out.write(buf, 0, c);
             }
         }
-        if (propogate) {
+        if (propagate) {
             out.flush();
         }
     }

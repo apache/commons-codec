@@ -291,16 +291,16 @@ public class Base64InputStreamTest {
      *            the data from above, but decoded
      * @param chunkSize
      *            chunk size (line-length) of the base64 encoded data.
-     * @param seperator
+     * @param separator
      *            Line separator in the base64 encoded data.
      * @throws Exception
      *             Usually signifies a bug in the Base64 commons-codec implementation.
      */
-    private void testByChunk(final byte[] encoded, final byte[] decoded, final int chunkSize, final byte[] seperator) throws Exception {
+    private void testByChunk(final byte[] encoded, final byte[] decoded, final int chunkSize, final byte[] separator) throws Exception {
 
         // Start with encode.
         InputStream in;
-        in = new Base64InputStream(new ByteArrayInputStream(decoded), true, chunkSize, seperator);
+        in = new Base64InputStream(new ByteArrayInputStream(decoded), true, chunkSize, separator);
         byte[] output = Base64TestData.streamToBytes(in);
 
         assertEquals("EOF", -1, in.read());
@@ -320,7 +320,7 @@ public class Base64InputStreamTest {
         // I always wanted to do this! (wrap encoder with decoder etc etc).
         in = new ByteArrayInputStream(decoded);
         for (int i = 0; i < 10; i++) {
-            in = new Base64InputStream(in, true, chunkSize, seperator);
+            in = new Base64InputStream(in, true, chunkSize, separator);
             in = new Base64InputStream(in, false);
         }
         output = Base64TestData.streamToBytes(in);
@@ -344,16 +344,16 @@ public class Base64InputStreamTest {
      *            the data from above, but decoded
      * @param chunkSize
      *            chunk size (line-length) of the base64 encoded data.
-     * @param seperator
+     * @param separator
      *            Line separator in the base64 encoded data.
      * @throws Exception
      *             Usually signifies a bug in the Base64 commons-codec implementation.
      */
-    private void testByteByByte(final byte[] encoded, final byte[] decoded, final int chunkSize, final byte[] seperator) throws Exception {
+    private void testByteByByte(final byte[] encoded, final byte[] decoded, final int chunkSize, final byte[] separator) throws Exception {
 
         // Start with encode.
         InputStream in;
-        in = new Base64InputStream(new ByteArrayInputStream(decoded), true, chunkSize, seperator);
+        in = new Base64InputStream(new ByteArrayInputStream(decoded), true, chunkSize, separator);
         byte[] output = new byte[encoded.length];
         for (int i = 0; i < output.length; i++) {
             output[i] = (byte) in.read();
@@ -380,7 +380,7 @@ public class Base64InputStreamTest {
         // I always wanted to do this! (wrap encoder with decoder etc etc).
         in = new ByteArrayInputStream(decoded);
         for (int i = 0; i < 10; i++) {
-            in = new Base64InputStream(in, true, chunkSize, seperator);
+            in = new Base64InputStream(in, true, chunkSize, separator);
             in = new Base64InputStream(in, false);
         }
         output = new byte[decoded.length];
