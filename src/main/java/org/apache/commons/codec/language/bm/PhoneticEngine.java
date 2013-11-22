@@ -104,7 +104,7 @@ public class PhoneticEngine {
          * @param maxPhonemes   the maximum number of phonemes to build up
          */
         public void apply(final Rule.PhonemeExpr phonemeExpr, final int maxPhonemes) {
-            final List<Rule.Phoneme> newPhonemes = new ArrayList<Rule.Phoneme>(maxPhonemes);
+            final Set<Rule.Phoneme> newPhonemes = new LinkedHashSet<Rule.Phoneme>(maxPhonemes);
 
             EXPR: for (final Rule.Phoneme left : this.phonemes) {
                 for (final Rule.Phoneme right : phonemeExpr.getPhonemes()) {
