@@ -169,7 +169,7 @@ public class Rule {
     /**
      * A minimal wrapper around the functionality of Pattern that we use, to allow for alternate implementations.
      */
-    public static interface RPattern {
+    public interface RPattern {
         boolean isMatch(CharSequence input);
     }
 
