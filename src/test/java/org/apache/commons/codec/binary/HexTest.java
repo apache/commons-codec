@@ -131,7 +131,6 @@ public class HexTest {
     /**
      * @param name
      * @param parent
-     *            TODO
      * @throws UnsupportedEncodingException
      * @throws DecoderException
      */
