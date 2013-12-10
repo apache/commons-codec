@@ -38,7 +38,7 @@ import org.apache.commons.codec.language.bm.Rule.Phoneme;
  * <p>
  * This is a two-stage process. Firstly, the word is converted into a phonetic representation that takes
  * into account the likely source language. Next, this phonetic representation is converted into a
- * pan-european 'average' representation, allowing comparison between different versions of essentially
+ * pan-European 'average' representation, allowing comparison between different versions of essentially
  * the same word from different languages.
  * <p>
  * This class is intentionally immutable and thread-safe.
