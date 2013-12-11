@@ -235,7 +235,7 @@ limitations under the License.
           <artifactId>maven-scm-publish-plugin</artifactId>
           <configuration>
             <ignorePathsToDelete>
-              <ignorePathToDelete>javadocs**</ignorePathToDelete>
+              <ignorePathToDelete>archive**</ignorePathToDelete>
             </ignorePathsToDelete>
           </configuration>
         </plugin>
