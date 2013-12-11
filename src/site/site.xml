@@ -17,7 +17,7 @@
 -->
 <project name="Codec">
     <bannerRight>
-        <name>Commons Codec</name>
+        <name>Apache Commons Codec</name>
         <src>/images/logo.png</src>
         <href>/index.html</href>
     </bannerRight>
