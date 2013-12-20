@@ -34,7 +34,7 @@ import org.apache.commons.codec.Charsets;
  * into the Public Domain.
  * <p>
  * This class is immutable and thread-safe.
- *
+ * 
  * @version $Id$
  * @since 1.7
  */
@@ -72,7 +72,10 @@ public class Sha2Crypt {
      * Generates a libc crypt() compatible "$5$" hash value with random salt.
      * <p>
      * See {@link Crypt#crypt(String, String)} for details.
-     *
+     * 
+     * @param keyBytes
+     *            plaintext to hash
+     * @return complete hash value
      * @throws RuntimeException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
@@ -84,7 +87,12 @@ public class Sha2Crypt {
      * Generates a libc6 crypt() compatible "$5$" hash value.
      * <p>
      * See {@link Crypt#crypt(String, String)} for details.
-     *
+     * 
+     * @param keyBytes
+     *            plaintext to hash
+     * @param salt
+     *            real salt value without prefix or "rounds="
+     * @return complete hash value including salt
      * @throws IllegalArgumentException
      *             if the salt does not match the allowed pattern
      * @throws RuntimeException
@@ -100,13 +108,13 @@ public class Sha2Crypt {
     /**
      * Generates a libc6 crypt() compatible "$5$" or "$6$" SHA2 based hash value.
      * <p>
-     * This is a nearly line by line conversion of the original C function. The numbered comments are from the
-     * algorithm description, the short C-style ones from the original C code and the ones with "Remark" from me.
+     * This is a nearly line by line conversion of the original C function. The numbered comments are from the algorithm
+     * description, the short C-style ones from the original C code and the ones with "Remark" from me.
      * <p>
      * See {@link Crypt#crypt(String, String)} for details.
-     *
+     * 
      * @param keyBytes
-     *            plaintext that should be hashed
+     *            plaintext to hash
      * @param salt
      *            real salt value without prefix or "rounds="
      * @param saltPrefix
@@ -123,7 +131,7 @@ public class Sha2Crypt {
      * @see MessageDigestAlgorithms
      */
     private static String sha2Crypt(final byte[] keyBytes, final String salt, final String saltPrefix,
-                                    final int blocksize, final String algorithm) {
+            final int blocksize, final String algorithm) {
 
         final int keyLen = keyBytes.length;
 
@@ -502,7 +510,10 @@ public class Sha2Crypt {
      * Generates a libc crypt() compatible "$6$" hash value with random salt.
      * <p>
      * See {@link Crypt#crypt(String, String)} for details.
-     *
+     * 
+     * @param keyBytes
+     *            plaintext to hash
+     * @return complete hash value
      * @throws RuntimeException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
@@ -514,7 +525,12 @@ public class Sha2Crypt {
      * Generates a libc6 crypt() compatible "$6$" hash value.
      * <p>
      * See {@link Crypt#crypt(String, String)} for details.
-     *
+     * 
+     * @param keyBytes
+     *            plaintext to hash
+     * @param salt
+     *            real salt value without prefix or "rounds="
+     * @return complete hash value including salt
      * @throws IllegalArgumentException
      *             if the salt does not match the allowed pattern
      * @throws RuntimeException
