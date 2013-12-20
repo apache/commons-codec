@@ -64,6 +64,7 @@ public class Md5Crypt {
      *
      * @param keyBytes
      *            plaintext string to hash.
+     * @return the hash value
      * @throws RuntimeException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught. *
      */
@@ -76,6 +77,7 @@ public class Md5Crypt {
      *
      * @param keyBytes
      *            plaintext string to hash.
+     * @return the hash value
      * @throws IllegalArgumentException
      *             if the salt does not match the allowed pattern
      * @throws RuntimeException
@@ -94,6 +96,7 @@ public class Md5Crypt {
      *
      * @param keyBytes
      *            plaintext string to hash.
+     * @return the hash value
      * @throws RuntimeException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
@@ -112,7 +115,7 @@ public class Md5Crypt {
      * @param salt
      *            salt string including the prefix and optionally garbage at the end. Will be generated randomly if
      *            null.
-     * @return computed hash value
+     * @return the hash value
      * @throws IllegalArgumentException
      *             if the salt does not match the allowed pattern
      * @throws RuntimeException
@@ -129,6 +132,7 @@ public class Md5Crypt {
      *
      * @param keyBytes
      *            plaintext string to hash.
+     * @return the hash value
      * @throws RuntimeException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
@@ -146,7 +150,7 @@ public class Md5Crypt {
      * @param salt
      *            salt string including the prefix and optionally garbage at the end. Will be generated randomly if
      *            null.
-     * @return computed hash value
+     * @return the hash value
      * @throws IllegalArgumentException
      *             if the salt does not match the allowed pattern
      * @throws RuntimeException
@@ -160,9 +164,10 @@ public class Md5Crypt {
      * Generates a libc6 crypt() "$1$" or Apache htpasswd "$apr1$" hash value.
      * <p>
      * See {@link Crypt#crypt(String, String)} or {@link #apr1Crypt(String, String)} for details.
-     *
+     * 
      * @param keyBytes
      *            plaintext string to hash.
+     * @return the hash value
      * @throws IllegalArgumentException
      *             if the salt does not match the allowed pattern
      * @throws RuntimeException
