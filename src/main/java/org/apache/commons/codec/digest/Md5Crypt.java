@@ -62,6 +62,8 @@ public class Md5Crypt {
     /**
      * See {@link #apr1Crypt(String, String)} for details.
      *
+     * @param keyBytes
+     *            plaintext string to hash.
      * @throws RuntimeException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught. *
      */
@@ -72,6 +74,8 @@ public class Md5Crypt {
     /**
      * See {@link #apr1Crypt(String, String)} for details.
      *
+     * @param keyBytes
+     *            plaintext string to hash.
      * @throws IllegalArgumentException
      *             if the salt does not match the allowed pattern
      * @throws RuntimeException
@@ -88,6 +92,8 @@ public class Md5Crypt {
     /**
      * See {@link #apr1Crypt(String, String)} for details.
      *
+     * @param keyBytes
+     *            plaintext string to hash.
      * @throws RuntimeException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
@@ -102,7 +108,7 @@ public class Md5Crypt {
      * prefix.
      *
      * @param keyBytes
-     *            plaintext string that should be hashed.
+     *            plaintext string to hash.
      * @param salt
      *            salt string including the prefix and optionally garbage at the end. Will be generated randomly if
      *            null.
@@ -121,6 +127,8 @@ public class Md5Crypt {
      * <p>
      * See {@link Crypt#crypt(String, String)} for details.
      *
+     * @param keyBytes
+     *            plaintext string to hash.
      * @throws RuntimeException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
@@ -134,7 +142,7 @@ public class Md5Crypt {
      * See {@link Crypt#crypt(String, String)} for details.
      *
      * @param keyBytes
-     *            plaintext string that should be hashed.
+     *            plaintext string to hash.
      * @param salt
      *            salt string including the prefix and optionally garbage at the end. Will be generated randomly if
      *            null.
@@ -153,6 +161,8 @@ public class Md5Crypt {
      * <p>
      * See {@link Crypt#crypt(String, String)} or {@link #apr1Crypt(String, String)} for details.
      *
+     * @param keyBytes
+     *            plaintext string to hash.
      * @throws IllegalArgumentException
      *             if the salt does not match the allowed pattern
      * @throws RuntimeException
