@@ -42,11 +42,11 @@ The <action> type attribute can be add,update,fix,remove.
     <author>Gary Gregory</author>
   </properties>
   <body>
-    <release version="1.9" date="TBA" description="Feature and fix release."> 
-      <action dev="sebb" type="fix" issue="CODEC-170" due-to="Matt Bishop">Base32 decode table has spurious value</action>   
-      <action dev="ggregory" type="fix" issue="CODEC-170" due-to="Ron Wheeler, Henri Yandell">Link broken in Metaphone Javadoc</action>   
+    <release version="1.9" date="20 December 2013" description="Feature and fix release."> 
       <action dev="ggregory" type="updated" issue="CODEC-174" due-to="Thomas Champagne">Improve performance of Beider Morse encoder</action>   
       <action dev="ggregory" type="fix" issue="CODEC-175">Beider Morse does not close Scanners used to read config files</action>   
+      <action dev="sebb" type="fix" issue="CODEC-172" due-to="Matt Bishop">Base32 decode table has spurious value</action>   
+      <action dev="ggregory" type="fix" issue="CODEC-170" due-to="Ron Wheeler, Henri Yandell">Link broken in Metaphone Javadoc</action>   
       <action dev="ggregory" type="fix" issue="CODEC-176" due-to="Ville Skyttä">Spelling fixes in Javadoc and comments</action>   
     </release>
     <release version="1.8" date="19 April 2013" description="Feature and fix release. Requires a minimum of Java 1.6">
