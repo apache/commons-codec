@@ -43,20 +43,20 @@ The <action> type attribute can be add,update,fix,remove.
   </properties>
   <body>
     <release version="1.9" date="20 December 2013" description="Feature and fix release."> 
-      <action dev="ggregory" type="updated" issue="CODEC-174" due-to="Thomas Champagne">Improve performance of Beider Morse encoder</action>   
+      <action dev="ggregory" type="update" issue="CODEC-174" due-to="Thomas Champagne">Improve performance of Beider Morse encoder</action>   
       <action dev="ggregory" type="fix" issue="CODEC-175">Beider Morse does not close Scanners used to read config files</action>   
       <action dev="sebb" type="fix" issue="CODEC-172" due-to="Matt Bishop">Base32 decode table has spurious value</action>   
       <action dev="ggregory" type="fix" issue="CODEC-170" due-to="Ron Wheeler, Henri Yandell">Link broken in Metaphone Javadoc</action>   
       <action dev="ggregory" type="fix" issue="CODEC-176" due-to="Ville Skyttä">Spelling fixes in Javadoc and comments</action>   
     </release>
-    <release version="1.8" date="19 April 2013" description="Feature and fix release. Requires a minimum of Java 1.6">
+    <release version="1.8" date="19 April 2013" description="Feature and fix release. Requires a minimum of Java 1.6.">
       <action dev="ggregory" type="add" issue="CODEC-168" due-to="Daniel Cassidy">Add DigestUtils.updateDigest(MessageDigest, InputStream).</action>   
       <action dev="julius" type="add" issue="CODEC-167">Add JUnit to test our decode with pad character in the middle.</action> 
       <action dev="ggregory" type="add" issue="CODEC-161" due-to="crice">Add Match Rating Approach (MRA) phonetic algorithm encoder.</action>   
       <action dev="ggregory" type="fix" issue="CODEC-163" due-to="leo141">ColognePhonetic encoder unnecessarily creates many char arrays on every loop run.</action>   
       <action dev="sebb" type="fix" issue="CODEC-160">Base64.encodeBase64URLSafeString doesn't add padding characters at the end.</action>   
     </release>
-    <release version="1.7" date="11 September 2012" description="Feature and fix release. Requires a minimum of Java 1.6">
+    <release version="1.7" date="11 September 2012" description="Feature and fix release. Requires a minimum of Java 1.6.">
       <action issue="CODEC-157" dev="ggregory" type="add" due-to="ggregory">
         DigestUtils: Add MD2 APIs.
       </action>
@@ -121,7 +121,7 @@ The <action> type attribute can be add,update,fix,remove.
         Implement NYSIIS phonetic encoder.
       </action>
     </release>
-    <release version="1.6" date="20 November 2011" description="Feature and fix release. Requires a minimum of Java 1.5">
+    <release version="1.6" date="20 November 2011" description="Feature and fix release. Requires a minimum of Java 1.5.">
       <action dev="ggregory" type="fix" issue="CODEC-129" due-to="ggregory">
         Use standard Maven directory layout.
       </action>
@@ -144,7 +144,7 @@ The <action> type attribute can be add,update,fix,remove.
         ColognePhonetic Javadoc should use HTML entities for special characters.
       </action>
     </release>
-    <release version="1.5" date="29 March 2011" description="Feature and fix release. Requires a minimum of Java 1.4">
+    <release version="1.5" date="29 March 2011" description="Feature and fix release. Requires a minimum of Java 1.4.">
       <action dev="sebb" type="add" issue="CODEC-88">
         Added new Base32 encoder.
       </action>
@@ -200,7 +200,7 @@ The <action> type attribute can be add,update,fix,remove.
         Split Caverphone class into two classes for Caverphone 1.0 and 2.0.
       </action>
     </release>
-    <release version="1.4" date="9 August 2009" description="Feature and fix release. Requires a minimum of Java 1.4">
+    <release version="1.4" date="9 August 2009" description="Feature and fix release. Requires a minimum of Java 1.4.">
       <action dev="ggregory" type="fix" issue="CODEC-80" due-to="Julius Davies">
         Regression: Base64.encode(chunk=true) has bug when input length is multiple of 76.
       </action>
