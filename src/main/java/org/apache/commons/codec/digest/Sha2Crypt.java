@@ -34,7 +34,7 @@ import org.apache.commons.codec.Charsets;
  * into the Public Domain.
  * <p>
  * This class is immutable and thread-safe.
- * 
+ *
  * @version $Id$
  * @since 1.7
  */
@@ -72,7 +72,7 @@ public class Sha2Crypt {
      * Generates a libc crypt() compatible "$5$" hash value with random salt.
      * <p>
      * See {@link Crypt#crypt(String, String)} for details.
-     * 
+     *
      * @param keyBytes
      *            plaintext to hash
      * @return complete hash value
@@ -87,7 +87,7 @@ public class Sha2Crypt {
      * Generates a libc6 crypt() compatible "$5$" hash value.
      * <p>
      * See {@link Crypt#crypt(String, String)} for details.
-     * 
+     *
      * @param keyBytes
      *            plaintext to hash
      * @param salt
@@ -112,7 +112,7 @@ public class Sha2Crypt {
      * description, the short C-style ones from the original C code and the ones with "Remark" from me.
      * <p>
      * See {@link Crypt#crypt(String, String)} for details.
-     * 
+     *
      * @param keyBytes
      *            plaintext to hash
      * @param salt
@@ -510,7 +510,7 @@ public class Sha2Crypt {
      * Generates a libc crypt() compatible "$6$" hash value with random salt.
      * <p>
      * See {@link Crypt#crypt(String, String)} for details.
-     * 
+     *
      * @param keyBytes
      *            plaintext to hash
      * @return complete hash value
@@ -525,7 +525,7 @@ public class Sha2Crypt {
      * Generates a libc6 crypt() compatible "$6$" hash value.
      * <p>
      * See {@link Crypt#crypt(String, String)} for details.
-     * 
+     *
      * @param keyBytes
      *            plaintext to hash
      * @param salt

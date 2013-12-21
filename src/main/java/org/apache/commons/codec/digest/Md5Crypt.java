@@ -165,7 +165,7 @@ public class Md5Crypt {
      * Generates a libc6 crypt() "$1$" or Apache htpasswd "$apr1$" hash value.
      * <p>
      * See {@link Crypt#crypt(String, String)} or {@link #apr1Crypt(String, String)} for details.
-     * 
+     *
      * @param keyBytes
      *            plaintext string to hash.
      * @param salt May be null.
