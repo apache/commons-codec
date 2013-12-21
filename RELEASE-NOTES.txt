@@ -1,23 +1,22 @@
-              Apache Commons Codec 1.8 RELEASE NOTES
+              Apache Commons Codec 1.9 RELEASE NOTES
 
 The codec package contains simple encoder and decoders for
 various formats such as Base64 and Hexadecimal.  In addition to these
 widely used encoders and decoders, the codec package also maintains a
 collection of phonetic encoding utilities.
 
-Feature and fix release. Requires a minimum of Java 1.6
+Performance and fix release. Requires a minimum of Java 1.6.
 
 Changes in this version include:
 
-New features:
-o CODEC-168:  Add DigestUtils.updateDigest(MessageDigest, InputStream). Thanks to Daniel Cassidy.
-o CODEC-167:  Add JUnit to test our decode with pad character in the middle.
-o CODEC-161:  Add Match Rating Approach (MRA) phonetic algorithm encoder. Thanks to crice.
+Performance:
+CODEC-174: Improve performance of Beider Morse encoder. Thanks to Thomas Champagne.
 
 Fixed Bugs:
-o CODEC-163:  ColognePhonetic encoder unnecessarily creates many char arrays on every loop run. Thanks to leo141.
-o CODEC-160:  Base64.encodeBase64URLSafeString doesn't add padding characters at the end.
-
+o CODEC-175: Beider Morse does not close Scanners used to read config files. 
+o CODEC-172: Base32 decode table has spurious value. Thanks to Matt Bishop. 
+o CODEC-170: Link broken in Metaphone Javadoc. Thanks to Ron Wheeler, Henri Yandell. 
+o CODEC-176: Spelling fixes in Javadoc and comments. Thanks to Ville Skyttä. 
 
 
 For complete information on Commons Codec, including instructions on how to submit bug reports,
