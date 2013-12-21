@@ -45,11 +45,11 @@ limitations under the License.
 -->
 <document>
   <properties>
-    <title>Download Commons Codec</title>
+    <title>Download Apache Commons Codec</title>
     <author email="dev@commons.apache.org">Commons Documentation Team</author>
   </properties>
   <body>
-    <section name="Download Commons Codec">
+    <section name="Download Apache Commons Codec">
     <subsection name="Using a Mirror">
       <p>
         We recommend you use a mirror to download our release
@@ -95,32 +95,32 @@ limitations under the License.
       </p>
     </subsection>
     </section>
-    <section name="Commons Codec 1.8 ">
+    <section name="Apache Commons Codec 1.9 ">
       <subsection name="Binaries">
         <table>
           <tr>
-              <td><a href="[preferred]/commons/codec/binaries/commons-codec-1.8-bin.tar.gz">commons-codec-1.8-bin.tar.gz</a></td>
-              <td><a href="http://www.apache.org/dist/commons/codec/binaries/commons-codec-1.8-bin.tar.gz.md5">md5</a></td>
-              <td><a href="http://www.apache.org/dist/commons/codec/binaries/commons-codec-1.8-bin.tar.gz.asc">pgp</a></td>
+              <td><a href="[preferred]/commons/codec/binaries/commons-codec-1.9-bin.tar.gz">commons-codec-1.9-bin.tar.gz</a></td>
+              <td><a href="http://www.apache.org/dist/commons/codec/binaries/commons-codec-1.9-bin.tar.gz.md5">md5</a></td>
+              <td><a href="http://www.apache.org/dist/commons/codec/binaries/commons-codec-1.9-bin.tar.gz.asc">pgp</a></td>
           </tr>
           <tr>
-              <td><a href="[preferred]/commons/codec/binaries/commons-codec-1.8-bin.zip">commons-codec-1.8-bin.zip</a></td>
-              <td><a href="http://www.apache.org/dist/commons/codec/binaries/commons-codec-1.8-bin.zip.md5">md5</a></td>
-              <td><a href="http://www.apache.org/dist/commons/codec/binaries/commons-codec-1.8-bin.zip.asc">pgp</a></td>
+              <td><a href="[preferred]/commons/codec/binaries/commons-codec-1.9-bin.zip">commons-codec-1.9-bin.zip</a></td>
+              <td><a href="http://www.apache.org/dist/commons/codec/binaries/commons-codec-1.9-bin.zip.md5">md5</a></td>
+              <td><a href="http://www.apache.org/dist/commons/codec/binaries/commons-codec-1.9-bin.zip.asc">pgp</a></td>
           </tr>
         </table>
       </subsection>
       <subsection name="Source">
         <table>
           <tr>
-              <td><a href="[preferred]/commons/codec/source/commons-codec-1.8-src.tar.gz">commons-codec-1.8-src.tar.gz</a></td>
-              <td><a href="http://www.apache.org/dist/commons/codec/source/commons-codec-1.8-src.tar.gz.md5">md5</a></td>
-              <td><a href="http://www.apache.org/dist/commons/codec/source/commons-codec-1.8-src.tar.gz.asc">pgp</a></td>
+              <td><a href="[preferred]/commons/codec/source/commons-codec-1.9-src.tar.gz">commons-codec-1.9-src.tar.gz</a></td>
+              <td><a href="http://www.apache.org/dist/commons/codec/source/commons-codec-1.9-src.tar.gz.md5">md5</a></td>
+              <td><a href="http://www.apache.org/dist/commons/codec/source/commons-codec-1.9-src.tar.gz.asc">pgp</a></td>
           </tr>
           <tr>
-              <td><a href="[preferred]/commons/codec/source/commons-codec-1.8-src.zip">commons-codec-1.8-src.zip</a></td>
-              <td><a href="http://www.apache.org/dist/commons/codec/source/commons-codec-1.8-src.zip.md5">md5</a></td>
-              <td><a href="http://www.apache.org/dist/commons/codec/source/commons-codec-1.8-src.zip.asc">pgp</a></td>
+              <td><a href="[preferred]/commons/codec/source/commons-codec-1.9-src.zip">commons-codec-1.9-src.zip</a></td>
+              <td><a href="http://www.apache.org/dist/commons/codec/source/commons-codec-1.9-src.zip.md5">md5</a></td>
+              <td><a href="http://www.apache.org/dist/commons/codec/source/commons-codec-1.9-src.zip.asc">pgp</a></td>
           </tr>
         </table>
       </subsection>
