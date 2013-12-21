@@ -77,6 +77,7 @@ public class Md5Crypt {
      *
      * @param keyBytes
      *            plaintext string to hash.
+     * @param salt An APR1 salt.
      * @return the hash value
      * @throws IllegalArgumentException
      *             if the salt does not match the allowed pattern
@@ -167,6 +168,8 @@ public class Md5Crypt {
      * 
      * @param keyBytes
      *            plaintext string to hash.
+     * @param salt May be null.
+     * @param prefix salt prefix
      * @return the hash value
      * @throws IllegalArgumentException
      *             if the salt does not match the allowed pattern
