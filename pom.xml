@@ -309,7 +309,7 @@ limitations under the License.
         <artifactId>maven-pmd-plugin</artifactId>
         <version>3.0.1</version>
         <configuration>
-          <targetJdk>${maven.compile.target}</targetJdk>
+          <targetJdk>${maven.compiler.target}</targetJdk>
           <linkXref>true</linkXref>
           <rulesets>
             <ruleset>${basedir}/pmd.xml</ruleset>
