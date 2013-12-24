@@ -38,7 +38,7 @@ limitations under the License.
      various formats such as Base64 and Hexadecimal.  In addition to these
      widely used encoders and decoders, the codec package also maintains a
      collection of phonetic encoding utilities.
-    </description>
+  </description>
   <url>http://commons.apache.org/proper/commons-codec/</url>
   <issueManagement>
     <system>jira</system>
