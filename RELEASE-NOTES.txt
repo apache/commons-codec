@@ -19,7 +19,7 @@ o CODEC-170: Link broken in Metaphone Javadoc. Thanks to Ron Wheeler, Henri Yand
 o CODEC-176: Spelling fixes in Javadoc and comments. Thanks to Ville Skyttä. 
 
 
-For complete information on Commons Codec, including instructions on how to submit bug reports,
+For complete information on Apache Commons Codec, including instructions on how to submit bug reports,
 patches, or suggestions for improvement, see the Apache Commons Codec website:
 
 http://commons.apache.org/proper/commons-codec/
