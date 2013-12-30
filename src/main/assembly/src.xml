@@ -31,8 +31,8 @@
                 <include>LICENSE.txt</include>
                 <include>LICENSE-header.txt</include>
                 <include>NOTICE.txt</include>
-                <include>pom.xml</include>
                 <include>pmd.xml</include>
+                <include>pom.xml</include>
                 <include>RELEASE-NOTES*.txt</include>
                 <include>TODO</include>
             </includes>
