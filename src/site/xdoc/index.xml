@@ -84,12 +84,12 @@ The <a href="source-repository.html">subversion repository</a> can be
 <!-- ================================================== -->
 <section name="Releases">
 <ul>
-<li><a href="archives/1.9/index.html">Codec 1.9</a> requires Java 1.6</li>
-<li><a href="archives/1.8/index.html">Codec 1.8</a> requires Java 1.6</li>
-<li><a href="archives/1.7/index.html">Codec 1.7</a> requires Java 1.6</li>
-<li>Codec 1.6 requires Java 1.5</li>
-<li>Codec 1.5 requires Java 1.4</li>
-<li>Codec 1.4 requires Java 1.4</li>
+  <li><a href="http://commons.apache.org/codec/download_codec.cgi">Codec 1.9 (mirrors)</a> requires Java 1.6</li>
+  <li><a href="http://archive.apache.org/dist/commons/codec/">Codec 1.8 (archives)</a> requires Java 1.6</li>
+  <li><a href="http://archive.apache.org/dist/commons/codec/">Codec 1.7 (archives)</a> requires Java 1.6</li>
+  <li><a href="http://archive.apache.org/dist/commons/codec/">Codec 1.6 (archives)</a> requires Java 1.5</li>
+  <li><a href="http://archive.apache.org/dist/commons/codec/">Codec 1.5 (archives)</a> requires Java 1.4</li>
+  <li><a href="http://archive.apache.org/dist/commons/codec/">Codec 1.4 (archives)</a> requires Java 1.4</li>
 </ul>
 <p>
 See the
