@@ -43,6 +43,7 @@ The <action> type attribute can be add,update,fix,remove.
   </properties>
   <body>
     <release version="1.10" date="DD Mmmm 2014" description="Feature and fix release."> 
+      <action dev="ggregory" type="update" issue="CODEC-178">Deprecate Charsets Charset constants in favor of Java 7's java.nio.charset.StandardCharsets</action>   
     </release>
     <release version="1.9" date="20 December 2013" description="Feature and fix release."> 
       <action dev="ggregory" type="update" issue="CODEC-174" due-to="Thomas Champagne">Improve performance of Beider Morse encoder</action>   
