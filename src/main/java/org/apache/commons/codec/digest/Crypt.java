@@ -127,8 +127,8 @@ public class Crypt {
      * Example:
      *
      * <pre>
-     *      crypt("secret", "$1$xxxx") => "$1$xxxx$aMkevjfEIpa35Bh3G4bAc."
-     *      crypt("secret", "xx") => "xxWAum7tHdIUw"
+     *      crypt("secret", "$1$xxxx") =&gt; "$1$xxxx$aMkevjfEIpa35Bh3G4bAc."
+     *      crypt("secret", "xx") =&gt; "xxWAum7tHdIUw"
      * </pre>
      * <p>
      * This method comes in a variation that accepts a byte[] array to support input strings that are not encoded in

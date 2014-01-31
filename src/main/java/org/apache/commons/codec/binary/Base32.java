@@ -22,13 +22,13 @@ package org.apache.commons.codec.binary;
  *
  * <p>
  * The class can be parameterized in the following manner with various constructors:
+ * </p>
  * <ul>
  * <li>Whether to use the "base32hex" variant instead of the default "base32"</li>
  * <li>Line length: Default 76. Line length that aren't multiples of 8 will still essentially end up being multiples of
  * 8 in the encoded data.
  * <li>Line separator: Default is CRLF ("\r\n")</li>
  * </ul>
- * </p>
  * <p>
  * This class operates directly on byte streams, and not character streams.
  * </p>
@@ -144,7 +144,7 @@ public class Base32 extends BaseNCodec {
     private final byte[] encodeTable;
 
     /**
-     * Line separator for encoding. Not used when decoding. Only used if lineLength > 0.
+     * Line separator for encoding. Not used when decoding. Only used if lineLength &gt; 0.
      */
     private final byte[] lineSeparator;
 
@@ -178,7 +178,7 @@ public class Base32 extends BaseNCodec {
      *
      * @param lineLength
      *            Each line of encoded data will be at most of the given length (rounded down to nearest multiple of
-     *            8). If lineLength <= 0, then the output will not be divided into lines (chunks). Ignored when
+     *            8). If lineLength &lt;= 0, then the output will not be divided into lines (chunks). Ignored when
      *            decoding.
      */
     public Base32(final int lineLength) {
@@ -196,7 +196,7 @@ public class Base32 extends BaseNCodec {
      *
      * @param lineLength
      *            Each line of encoded data will be at most of the given length (rounded down to nearest multiple of
-     *            8). If lineLength <= 0, then the output will not be divided into lines (chunks). Ignored when
+     *            8). If lineLength &lt;= 0, then the output will not be divided into lines (chunks). Ignored when
      *            decoding.
      * @param lineSeparator
      *            Each line of encoded data will end with this sequence of bytes.
@@ -218,7 +218,7 @@ public class Base32 extends BaseNCodec {
      *
      * @param lineLength
      *            Each line of encoded data will be at most of the given length (rounded down to nearest multiple of
-     *            8). If lineLength <= 0, then the output will not be divided into lines (chunks). Ignored when
+     *            8). If lineLength &lt;= 0, then the output will not be divided into lines (chunks). Ignored when
      *            decoding.
      * @param lineSeparator
      *            Each line of encoded data will end with this sequence of bytes.
@@ -226,7 +226,7 @@ public class Base32 extends BaseNCodec {
      *            if {@code true}, then use Base32 Hex alphabet, otherwise use Base32 alphabet
      * @throws IllegalArgumentException
      *             The provided lineSeparator included some Base32 characters. That's not going to work! Or the
-     *             lineLength > 0 and lineSeparator is null.
+     *             lineLength &gt; 0 and lineSeparator is null.
      */
     public Base32(final int lineLength, final byte[] lineSeparator, final boolean useHex) {
         super(BYTES_PER_UNENCODED_BLOCK, BYTES_PER_ENCODED_BLOCK,

@@ -79,7 +79,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
 
         /**
          * Variable tracks how many characters have been written to the current line. Only used when encoding. We use
-         * it to make sure each encoded line never goes beyond lineLength (if lineLength > 0).
+         * it to make sure each encoded line never goes beyond lineLength (if lineLength &gt; 0).
          */
         int currentLinePos;
 
@@ -169,7 +169,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     protected final int lineLength;
 
     /**
-     * Size of chunk separator. Not used unless {@link #lineLength} > 0.
+     * Size of chunk separator. Not used unless {@link #lineLength} &gt; 0.
      */
     private final int chunkSeparatorLength;
 
@@ -487,7 +487,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * @param pArray byte[] array which will later be encoded
      *
      * @return amount of space needed to encoded the supplied array.
-     * Returns a long since a max-len array will require > Integer.MAX_VALUE
+     * Returns a long since a max-len array will require &gt; Integer.MAX_VALUE
      */
     public long getEncodedLength(final byte[] pArray) {
         // Calculate non-chunked size - rounded up to allow for padding

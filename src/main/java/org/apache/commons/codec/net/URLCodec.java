@@ -40,7 +40,7 @@ import org.apache.commons.codec.binary.StringUtils;
  * This class is immutable and thread-safe.
  *
  * @see <a href="http://www.w3.org/TR/html4/interact/forms.html#h-17.13.4.1">Chapter 17.13.4 Form content types</a>
- *           of the <a href="http://www.w3.org/TR/html4/">HTML 4.01 Specification<a>
+ *           of the <a href="http://www.w3.org/TR/html4/">HTML 4.01 Specification</a>
  *
  * @since 1.2
  * @version $Id$

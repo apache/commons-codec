@@ -145,7 +145,7 @@ public class MatchRatingApproachEncoder implements StringEncoder {
     }
 
     /**
-     * Gets the first & last 3 letters of a name (if > 6 characters) Else just returns the name.
+     * Gets the first and last 3 letters of a name (if &gt; 6 characters) Else just returns the name.
      *
      * <h2>API Usage</h2>
      * <p>
@@ -154,7 +154,7 @@ public class MatchRatingApproachEncoder implements StringEncoder {
      *
      * @param name
      *            The string to get the substrings from
-     * @return Annexed first & last 3 letters of input word.
+     * @return Annexed first and last 3 letters of input word.
      */
     String getFirst3Last3(final String name) {
         final int nameLength = name.length();

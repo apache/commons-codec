@@ -42,6 +42,8 @@ import org.apache.commons.codec.StringEncoder;
  * href="http://en.wikipedia.org/wiki/Germanic_umlaut">germanic umlauts</a>, removal of non alphabetical characters) the
  * letters of the supplied text are replaced by their phonetic code according to the following table.
  * <table border="1">
+ * <caption style="caption-side: bottom"><small><i>(Source: <a href="http://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik#Buchstabencodes">Wikipedia (de):
+ * K&ouml;lner Phonetik -- Buchstabencodes</a>)</i></small></caption>
  * <tbody>
  * <tr>
  * <th>Letter</th>
@@ -145,10 +147,6 @@ import org.apache.commons.codec.StringEncoder;
  * </tr>
  * </tbody>
  * </table>
- * <p>
- * <small><i>(Source: <a href= "http://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik#Buchstabencodes" >Wikipedia (de):
- * K&ouml;lner Phonetik -- Buchstabencodes</a>)</i></small>
- * </p>
  *
  * <h4>Example:</h4>
  *

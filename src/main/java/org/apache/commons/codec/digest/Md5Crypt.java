@@ -28,7 +28,7 @@ import org.apache.commons.codec.Charsets;
  * <p>
  * Based on the public domain ("beer-ware") C implementation from Poul-Henning Kamp which was found at: <a
  * href="http://www.freebsd.org/cgi/cvsweb.cgi/src/lib/libcrypt/crypt-md5.c?rev=1.1;content-type=text%2Fplain">
- * crypt-md5.c @ freebsd.org</a><br/>
+ * crypt-md5.c @ freebsd.org</a><br>
  * <p>
  * Source:
  *
