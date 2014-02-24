@@ -348,8 +348,8 @@ public class Base64 extends BaseNCodec {
                     buffer[context.pos++] = encodeTable[(context.ibitWorkArea << 4) & MASK_6BITS];
                     // URL-SAFE skips the padding to further reduce size.
                     if (encodeTable == STANDARD_ENCODE_TABLE) {
-                        buffer[context.pos++] = PAD;
-                        buffer[context.pos++] = PAD;
+                        buffer[context.pos++] = pad;
+                        buffer[context.pos++] = pad;
                     }
                     break;
 
@@ -359,7 +359,7 @@ public class Base64 extends BaseNCodec {
                     buffer[context.pos++] = encodeTable[(context.ibitWorkArea << 2) & MASK_6BITS];
                     // URL-SAFE skips the padding to further reduce size.
                     if (encodeTable == STANDARD_ENCODE_TABLE) {
-                        buffer[context.pos++] = PAD;
+                        buffer[context.pos++] = pad;
                     }
                     break;
                 default:
@@ -432,7 +432,7 @@ public class Base64 extends BaseNCodec {
         for (int i = 0; i < inAvail; i++) {
             final byte[] buffer = ensureBufferSize(decodeSize, context);
             final byte b = in[inPos++];
-            if (b == PAD) {
+            if (b == pad) {
                 // We're done.
                 context.eof = true;
                 break;

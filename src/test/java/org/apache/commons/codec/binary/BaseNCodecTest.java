@@ -21,6 +21,7 @@ package org.apache.commons.codec.binary;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -158,11 +159,36 @@ public class BaseNCodecTest {
         assertTrue(codec.containsAlphabetOrPad("OK".getBytes()));
         assertTrue(codec.containsAlphabetOrPad("OK ".getBytes()));
         assertFalse(codec.containsAlphabetOrPad("ok ".getBytes()));
-        assertTrue(codec.containsAlphabetOrPad(new byte[]{codec.PAD}));
+        assertTrue(codec.containsAlphabetOrPad(new byte[]{codec.pad}));
     }
 
 //    @Test
 //    public void testGetEncodedLength() {
 //        fail("Not yet implemented");
 //    }
+    
+    @Test
+    public void testProvidePaddingByte() {
+        // Given
+    	codec = new BaseNCodec(0, 0, 0, 0, (byte)0x25) {
+            @Override
+            protected boolean isInAlphabet(final byte b) {
+                return b=='O' || b == 'K'; // allow OK
+            }
+
+            @Override
+            void encode(final byte[] pArray, final int i, final int length, final Context context) {
+            }
+
+            @Override
+            void decode(final byte[] pArray, final int i, final int length, final Context context) {
+            }
+        };
+        
+        // When
+        byte actualPaddingByte = codec.pad;
+        
+        // Then
+        assertEquals(0x25, actualPaddingByte);
+    }
 }
