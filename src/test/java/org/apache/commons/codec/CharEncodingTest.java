@@ -18,7 +18,6 @@
 package org.apache.commons.codec;
 
 import org.junit.Assert;
-
 import org.junit.Test;
 
 /**

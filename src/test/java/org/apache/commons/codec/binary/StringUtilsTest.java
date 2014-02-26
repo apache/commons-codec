@@ -21,7 +21,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 
 import org.junit.Assert;
-
 import org.junit.Test;
 
 /**

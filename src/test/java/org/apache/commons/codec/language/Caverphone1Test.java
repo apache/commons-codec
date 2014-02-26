@@ -17,10 +17,9 @@
 
 package org.apache.commons.codec.language;
 
-import org.junit.Assert;
-
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoderAbstractTest;
+import org.junit.Assert;
 import org.junit.Test;
 
 /**

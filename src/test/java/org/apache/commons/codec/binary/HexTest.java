@@ -28,10 +28,9 @@ import java.nio.charset.UnsupportedCharsetException;
 import java.util.Arrays;
 import java.util.Random;
 
-import org.junit.Assert;
-
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
