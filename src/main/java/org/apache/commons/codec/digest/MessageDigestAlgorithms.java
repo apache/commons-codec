@@ -24,6 +24,7 @@ import java.security.MessageDigest;
  * Documentation</cite>.
  * <p>
  * This class is immutable and thread-safe.
+ * </p>
  *
  * @see <a href="http://docs.oracle.com/javase/6/docs/technotes/guides/security/StandardNames.html">Java Cryptography
  *      Architecture Standard Algorithm Name Documentation</a>
