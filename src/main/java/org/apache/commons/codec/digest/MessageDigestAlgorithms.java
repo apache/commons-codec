@@ -25,6 +25,7 @@ import java.security.MessageDigest;
  * <p>
  * This class is immutable and thread-safe.
  * </p>
+ * TODO This should be an enum.
  *
  * @see <a href="http://docs.oracle.com/javase/6/docs/technotes/guides/security/StandardNames.html">Java Cryptography
  *      Architecture Standard Algorithm Name Documentation</a>
