@@ -91,11 +91,12 @@ public class Metaphone implements StringEncoder {
      */
     public String metaphone(final String txt) {
         boolean hard = false;
-        if (txt == null || txt.length() == 0) {
+        final int txtLength = txt.length();
+        if (txt == null || txtLength == 0) {
             return "";
         }
         // single character is itself
-        if (txt.length() == 1) {
+        if (txtLength == 1) {
             return txt.toUpperCase(java.util.Locale.ENGLISH);
         }
 
