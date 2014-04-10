@@ -43,6 +43,7 @@ The <action> type attribute can be add,update,fix,remove.
   </properties>
   <body>
     <release version="1.10" date="DD Mmmm 2014" description="Feature and fix release."> 
+      <action dev="ggregory" type="add" issue="CODEC-184" due-to="Cyrille Artho">NullPointerException in DoubleMetaPhone.isDoubleMetaphoneEqual when using empty strings</action>   
       <action dev="ggregory" type="add" issue="CODEC-181" due-to="Ivan Martinez-Ortiz">Make possible to provide padding byte to BaseNCodec in constructor</action>   
       <action dev="ggregory" type="fix" issue="CODEC-180" due-to="Ville Skyttä">Fix Javadoc 1.8.0 errors</action>   
       <action dev="ggregory" type="update" issue="CODEC-178">Deprecate Charsets Charset constants in favor of Java 7's java.nio.charset.StandardCharsets</action>   

@@ -1061,6 +1061,16 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest<DoubleMetapho
     }
 
     @Test
+    public void testCodec184() throws Throwable {
+        assertTrue(new DoubleMetaphone().isDoubleMetaphoneEqual("", "", false));
+        assertTrue(new DoubleMetaphone().isDoubleMetaphoneEqual("", "", true));
+        assertFalse(new DoubleMetaphone().isDoubleMetaphoneEqual("aa", "", false));
+        assertFalse(new DoubleMetaphone().isDoubleMetaphoneEqual("aa", "", true));
+        assertFalse(new DoubleMetaphone().isDoubleMetaphoneEqual("", "aa", false));
+        assertFalse(new DoubleMetaphone().isDoubleMetaphoneEqual("", "aa", true));
+      }
+
+    @Test
     public void testDoubleMetaphone() {
         assertDoubleMetaphone("TSTN", "testing");
         assertDoubleMetaphone("0", "The");
@@ -1111,7 +1121,9 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest<DoubleMetapho
 
     @Test
     public void testIsDoubleMetaphoneEqualBasic() {
-        final String[][] testFixture = new String[][] { { "Case", "case" }, {
+        final String[][] testFixture = new String[][] { { 
+                "", "" }, {
+                "Case", "case" }, {
                 "CASE", "Case" }, {
                 "caSe", "cAsE" }, {
                 "cookie", "quick" }, {
