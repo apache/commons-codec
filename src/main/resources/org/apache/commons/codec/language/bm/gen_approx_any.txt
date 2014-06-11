@@ -41,7 +41,7 @@
 "s" "" "$" "(s|[french])"
 "t" "[aeiouAEIOU]" "[^aeiouAEIOU]" "(t|[french])" // Petitjean
 "s" "[aeiouAEIOU]" "[^aeiouAEIOU]" "(s|[french])" // Groslot, Grosleau
-    //array("p" "[aeiouAEIOU]" "[^aeiouAEIOU]" "(p|[$french])" 
+    //array("p" "[aeiouAEIOU]" "[^aeiouAEIOU]" "(p|[french])" 
     
 "I" "[aeiouAEIBFOUQY]" "" "i"
 "I" "" "[^aeiouAEBFIOU]e" "(Q[german]|i|D[english])"  // "line"
@@ -86,7 +86,7 @@
 "E" "" "$" "i"
 "E" "[DaoiuAOIUQY]" "" "i"
 "E" "" "[aoAOQY]" "i"
-"E" "" "" "(i|Y[$german])"
+"E" "" "" "(i|Y[german])"
         
 "P" "" "" "(o|u)" 
     
@@ -94,14 +94,14 @@
 "O" "" "ts$" "o"
 "O" "" "$" "o"
 "O" "[oeiuQY]" "" "o"
-"O" "" "" "(o|Y[$german])"
+"O" "" "" "(o|Y[german])"
 "O" "" "" "o"
     
 "A" "" "[fklmnprst]$" "(a|o)"
 "A" "" "ts$" "(a|o)"
 "A" "" "$" "(a|o)"
 "A" "[oeiuQY]" "" "(a|o)"
-"A" "" "" "(a|o|Y[$german])"
+"A" "" "" "(a|o|Y[german])"
 "A" "" "" "(a|o)"
 
 "U" "" "$" "u"

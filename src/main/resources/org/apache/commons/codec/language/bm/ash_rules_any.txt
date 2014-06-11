@@ -84,7 +84,7 @@
 "cz" "" "" "tS" // Polish
     
 "cia" "" "[bcdgkpstwzż]" "(tSB[polish]|tsB)"
-"cia" "" "" "(tSa[$polish]|tsa)" 
+"cia" "" "" "(tSa[polish]|tsa)" 
 "cią" "" "[bp]" "(tSom[polish]|tsom)"
 "cią" "" "" "(tSon[polish]|tson)"
 "cię" "" "[bp]" "(tSem[polish]|tsem)"

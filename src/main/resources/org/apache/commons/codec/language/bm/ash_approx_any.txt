@@ -99,7 +99,7 @@
 "i"	""	"[aeou]"	"j"
 "y"	"[aáuiíoóeéê]"	""	"j"
 "y"	""	"[aeiíou]"	"j"
-"e"	""	"$"	"(e|E[$french])"
+"e"	""	"$"	"(e|E[french])"
 
 "ão"	""	""	"(au|an)" // Port
 "ãe"	""	""	"(aj|an)" // Port
