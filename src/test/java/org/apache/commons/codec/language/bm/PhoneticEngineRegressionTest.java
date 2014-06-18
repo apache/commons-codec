@@ -186,6 +186,10 @@ public class PhoneticEngineRegressionTest {
         args.put("nameType", "GENERIC");
         args.put("ruleType", "APPROX");
         assertEquals(encode(args, true, "abram"), "Ybram|Ybrom|abram|abran|abrom|abron|avram|avrom|obram|obran|obrom|obron|ovram|ovrom");
+
+        args.put("nameType", "ASHKENAZI");
+        args.put("ruleType", "APPROX");
+        assertEquals(encode(args, true, "abram"), "Ybram|Ybrom|abram|abrom|avram|avrom|imbram|imbrom|obram|obrom|ombram|ombrom|ovram|ovrom");
     }
 
     /**
