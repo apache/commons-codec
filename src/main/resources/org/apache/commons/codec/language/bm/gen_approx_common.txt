@@ -37,19 +37,19 @@
 "sEn" "[rmnl]" "$" "(zn|zon)"
 "sEn" "" "$" "(sn|son)"
             
-"e" "[bdfgklmnprsStvzZ]" "[ln]$" ""
-"i" "[bdfgklmnprsStvzZ]" "[ln]$" ""
-"E" "[bdfgklmnprsStvzZ]" "[ln]$" ""
-"I" "[bdfgklmnprsStvzZ]" "[ln]$" ""
-"Q" "[bdfgklmnprsStvzZ]" "[ln]$" ""
-"Y" "[bdfgklmnprsStvzZ]" "[ln]$" ""
+"e" "[BbdfgklmnprsStvzZ]" "[ln]$" ""
+"i" "[BbdfgklmnprsStvzZ]" "[ln]$" ""
+"E" "[BbdfgklmnprsStvzZ]" "[ln]$" ""
+"I" "[BbdfgklmnprsStvzZ]" "[ln]$" ""
+"Q" "[BbdfgklmnprsStvzZ]" "[ln]$" ""
+"Y" "[BbdfgklmnprsStvzZ]" "[ln]$" ""
 
-"e" "[bdfgklmnprsStvzZ]" "[ln][bdfgklmnprsStvzZ]" ""
-"i" "[bdfgklmnprsStvzZ]" "[ln][bdfgklmnprsStvzZ]" ""
-"E" "[bdfgklmnprsStvzZ]" "[ln][bdfgklmnprsStvzZ]" ""
-"I" "[bdfgklmnprsStvzZ]" "[ln][bdfgklmnprsStvzZ]" ""
-"Q" "[bdfgklmnprsStvzZ]" "[ln][bdfgklmnprsStvzZ]" ""
-"Y" "[bdfgklmnprsStvzZ]" "[ln][bdfgklmnprsStvzZ]" ""
+"e" "[BbdfgklmnprsStvzZ]" "[ln][BbdfgklmnprsStvzZ]" ""
+"i" "[BbdfgklmnprsStvzZ]" "[ln][BbdfgklmnprsStvzZ]" ""
+"E" "[BbdfgklmnprsStvzZ]" "[ln][BbdfgklmnprsStvzZ]" ""
+"I" "[BbdfgklmnprsStvzZ]" "[ln][BbdfgklmnprsStvzZ]" ""
+"Q" "[BbdfgklmnprsStvzZ]" "[ln][BbdfgklmnprsStvzZ]" ""
+"Y" "[BbdfgklmnprsStvzZ]" "[ln][BbdfgklmnprsStvzZ]" ""
 
 "lEs" "" "" "(lEs|lz)"  // Applebaum < Appelbaum (English + blend English-something forms as Finklestein)
 "lE" "[bdfgkmnprStvzZ]" "" "(lE|l)"  // Applebaum < Appelbaum (English + blend English-something forms as Finklestein)

@@ -95,11 +95,11 @@ public class Lang {
 
     private static final Map<NameType, Lang> Langs = new EnumMap<NameType, Lang>(NameType.class);
 
-    private static final String LANGUAGE_RULES_RN = "org/apache/commons/codec/language/bm/lang.txt";
+    private static final String LANGUAGE_RULES_RN = "org/apache/commons/codec/language/bm/%s_lang.txt";
 
     static {
         for (final NameType s : NameType.values()) {
-            Langs.put(s, loadFromResource(LANGUAGE_RULES_RN, Languages.getInstance(s)));
+            Langs.put(s, loadFromResource(String.format(LANGUAGE_RULES_RN, s.getName()), Languages.getInstance(s)));
         }
     }
 

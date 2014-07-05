@@ -17,7 +17,7 @@
 
 package org.apache.commons.codec.language.bm;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -185,11 +185,16 @@ public class PhoneticEngineRegressionTest {
         Map<String, String> args = new TreeMap<String, String>();
         args.put("nameType", "GENERIC");
         args.put("ruleType", "APPROX");
+
         assertEquals(encode(args, true, "abram"), "Ybram|Ybrom|abram|abran|abrom|abron|avram|avrom|obram|obran|obrom|obron|ovram|ovrom");
+        assertEquals(encode(args, true, "Bendzin"), "bndzn|bntsn|bnzn|vndzn|vntsn");
 
         args.put("nameType", "ASHKENAZI");
         args.put("ruleType", "APPROX");
+
         assertEquals(encode(args, true, "abram"), "Ybram|Ybrom|abram|abrom|avram|avrom|imbram|imbrom|obram|obrom|ombram|ombrom|ovram|ovrom");
+        assertEquals(encode(args, true, "Halpern"), "YlpYrn|Ylpirn|alpYrn|alpirn|olpYrn|olpirn|xalpirn|xolpirn");
+
     }
 
     /**

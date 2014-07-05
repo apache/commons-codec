@@ -55,11 +55,11 @@
 "sh" "" "[äöü]" "sh" // german
 "sh" "" "[aeiou]" "(S[russian+english]|sh)"
 "sh" "" "" "S" // russian+english
-    
+
 "kh" "" "" "(x[russian+english]|kh)"
-    
+
 "chs" "" "" "(ks[german]|xs|tSs[russian+english])"
-    
+
     // French "ch" is currently disabled
     //array("ch" "" "[ei]" "(x|tS|k[romanian]|S[french])"
     //array("ch" "" "" "(x|tS[russian+english]|S[french])"
@@ -212,8 +212,8 @@
 "v" "^" "" "(v|f[german])"
         
 "h" "[aeiouyäöü]" "" "" //german
-"h" "" "" "(h|x[".(romanian+polish)."])"
-"h" "^" "" "(h|H[".(english+german)."])" // H can be exact "h" or approximate "kh"
+"h" "" "" "(h|x[romanian+polish])"
+"h" "^" "" "(h|H[english+german])" // H can be exact "h" or approximate "kh"
     
  // VOWELS  
 "yi" "^" "" "i"
@@ -275,7 +275,7 @@
     
 "ą" "" "[bp]" "om"  // polish
 "ą" "" "" "on"  // polish
-"ä" "" "" "Y"  // german
+"ä" "" "" "(Y|e)" // german
 "á" "" "" "a" // hungarian
 "ă" "" "" "(e[romanian]|a)" //romanian
 "à" "" "" "a"  // french

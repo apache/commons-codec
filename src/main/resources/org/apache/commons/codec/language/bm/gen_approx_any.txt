@@ -29,6 +29,12 @@
 "mp" "" "" "(mp|b[greeklatin])"
 "ng" "" "" "(ng|g[greeklatin])"
 
+"B" "" "[fktSs]" "(p|f[spanish])" 
+"B" "" "p" "" 
+"B" "" "$" "(p|f[spanish])" 
+"V" "" "[pktSs]" "(f|p[spanish])" 
+"V" "" "f" "" 
+"V" "" "$" "(f|p[spanish])" 
 "B" "" "" "(b|v[spanish])"
 "V" "" "" "(v|b[spanish])"
     
@@ -58,6 +64,7 @@
 "lE" "[bdfgkmnprsStvzZ]" "" "(li|il[english]|lY[german])"  // Applebaum < Appelbaum
 "rE" "[bdfgkmnprsStvzZ]" "" "(ri|ir[english]|rY[german])"
     
+"EE" "" "" "(i|)" 
 "ea" "" "" "(D|a|i)"
     
 "au" "" "" "(D|a|u)"

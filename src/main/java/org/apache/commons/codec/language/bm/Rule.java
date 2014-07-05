@@ -147,6 +147,22 @@ public class Rule {
             return new Phoneme(this.phonemeText.toString() + right.phonemeText.toString(),
                                this.languages.restrictTo(right.languages));
         }
+
+        /**
+         * Returns a new Phoneme with the same text but a union of its
+         * current language set and the given one.
+         *
+         * @param lang the language set to merge
+         * @return a new Phoneme
+         */
+        public Phoneme mergeWithLanguage(final LanguageSet lang) {
+          return new Phoneme(this.phonemeText.toString(), this.languages.merge(lang));
+        }
+
+        @Override
+        public String toString() {
+          return phonemeText.toString() + "[" + languages + "]";
+        }
     }
 
     public interface PhonemeExpr {
@@ -442,6 +458,9 @@ public class Rule {
                                         sb.append("Rule");
                                         sb.append("{line=").append(myLine);
                                         sb.append(", loc='").append(loc).append('\'');
+                                        sb.append(", pat='").append(pat).append('\'');
+                                        sb.append(", lcon='").append(lCon).append('\'');
+                                        sb.append(", rcon='").append(rCon).append('\'');
                                         sb.append('}');
                                         return sb.toString();
                                     }

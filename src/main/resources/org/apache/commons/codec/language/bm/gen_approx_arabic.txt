@@ -15,6 +15,9 @@
  * limitations under the License.
  */
 
+"1a" "" "" "(D|a)" 
+"1i" "" "" "(D|i|e)" 
+"1u" "" "" "(D|u|o)" 
 "j1" "" "" "(ja|je|jo|ju|j)"
 "1" "" "" "(a|e|i|o|u|)"
 "u" "" "" "(o|u)"

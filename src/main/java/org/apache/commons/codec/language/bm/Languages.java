@@ -73,6 +73,8 @@ public class Languages {
         public abstract boolean isSingleton();
 
         public abstract LanguageSet restrictTo(LanguageSet other);
+
+        public abstract LanguageSet merge(LanguageSet other);
     }
 
     /**
@@ -122,6 +124,22 @@ public class Languages {
                     if (sl.languages.contains(lang)) {
                         ls.add(lang);
                     }
+                }
+                return from(ls);
+            }
+        }
+
+        @Override
+        public LanguageSet merge(final LanguageSet other) {
+            if (other == NO_LANGUAGES) {
+                return this;
+            } else if (other == ANY_LANGUAGE) {
+                return other;
+            } else {
+                final SomeLanguages sl = (SomeLanguages) other;
+                final Set<String> ls = new HashSet<String>(languages);
+                for (String lang : sl.languages) {
+                  ls.add(lang);
                 }
                 return from(ls);
             }
@@ -217,6 +235,11 @@ public class Languages {
         }
 
         @Override
+        public LanguageSet merge(final LanguageSet other) {
+            return other;
+        }
+
+        @Override
         public String toString() {
             return "NO_LANGUAGES";
         }
@@ -248,6 +271,11 @@ public class Languages {
 
         @Override
         public LanguageSet restrictTo(final LanguageSet other) {
+            return other;
+        }
+
+        @Override
+        public LanguageSet merge(final LanguageSet other) {
             return other;
         }
 

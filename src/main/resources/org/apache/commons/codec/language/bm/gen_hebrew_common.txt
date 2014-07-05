@@ -23,7 +23,10 @@
 "p" "" "" "f"   
 "b" "^" "" "b"    
 "b" "" "" "(b|v)"    
-        
+"B" "" "" "(b|v)" // Spanish "b"
+"V" "" "" "v" // Spanish "v"
+"EE" "" "" "(1|)" // final "e" (english & french)
+
 "ja" "" "" "i"
 "jA" "" "" "i"  
 "je" "" "" "i"
@@ -64,17 +67,20 @@
 "ou" "^" "" "(u|v|1)"
 "o" "^" "" "(u|v|1)"
 "O" "^" "" "(u|v|1)"
+"P" "^" "" "(u|v|1)" 
 "U" "^" "" "(u|v|1)"
 "u" "^" "" "(u|v|1)"
     
 "o" "" "$" "(u|1)"
 "O" "" "$" "(u|1)"
+"P" "" "$" "(u|1)" 
 "u" "" "$" "(u|1)"
 "U" "" "$" "(u|1)"
     
 "ou" "" "" "u"
 "o" "" "" "u"
 "O" "" "" "u"
+"P" "" "" "u" 
 "U" "" "" "u"
         
 "VV" "" "" "u" // alef/ayin + vov from ruleshebrew
@@ -91,8 +97,8 @@
     //"z" "" "" "(z|Z)"
     //"d" "" "" "(d|dZ)"
    
-"TB" "" "$" "(t|s)" // tav from ruleshebrew; only Ashkenazic
-"TB" "" "" "t" // tav from ruleshebrew; only Ashkenazic    
+"TB" "^" "" "t" // tav from ruleshebrew
+"TB" "" "" "(t|s)" // tav from ruleshebrew; s is only Ashkenazic
 "T" "" "" "t"   // tet from  ruleshebrew
     
    //"k" "" "" "(k|x)"

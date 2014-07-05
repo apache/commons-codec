@@ -81,7 +81,7 @@
 "ck" "" "" "(k|tsk[polish+czech])"
 "cz" "" "" "(tS|tsz[czech])" // Polish
    
-    //Proceccing of "h" in various combinations         
+    //Processing of "h" in various combinations         
 "rh" "^" "" "r"
 "dh" "^" "" "d"
 "bh" "^" "" "b"
@@ -124,7 +124,7 @@
           
 "ouh" "" "[aioe]" "(v[french]|uh)"
 "uh" "" "[aioe]" "(v|uh)"
-"h" "." "$" "" // match h at the end of words, but not as a single letter
+"h" "." "$" "" // match h at the end of words, but not as a single letter: difference to the original version
 "h" "[aeiouyäöü]" "" ""  // german
 "h" "^" "" "(h|x[romanian+greeklatin]|H[english+romanian+polish+french+portuguese+italian+spanish])" 
          
@@ -288,7 +288,7 @@
 // LANGUAGE SPECIFIC CHARACTERS 
 "ą" "" "[bp]" "om" // polish
 "ą" "" "" "on"  // polish
-"ä" "" "" "Y" 
+"ä" "" "" "(Y|e)" 
 "á" "" "" "a" // Port & Sp
 "à" "" "" "a" 
 "â" "" "" "a" 

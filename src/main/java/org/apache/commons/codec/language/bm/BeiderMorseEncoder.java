@@ -64,9 +64,12 @@ import org.apache.commons.codec.StringEncoder;
  * encodings as they consider a wider range of possible, approximate phonetic interpretations of the original word.
  * Down-stream applications may wish to further process the encoding for indexing or lookup purposes, for example, by
  * splitting on pipe (<code>|</code>) and indexing under each of these alternatives.
+ * <p>
+ * <b>Note</b>: this version of the Beider-Morse encoding is equivalent with v3.3 of the reference implementation.
  *
  * @see <a href="http://stevemorse.org/phonetics/bmpm.htm">Beider-Morse Phonetic Matching</a>
  * @see <a href="http://stevemorse.org/phoneticinfo.htm">Reference implementation</a>
+ *
  * @since 1.6
  * @version $Id$
  */

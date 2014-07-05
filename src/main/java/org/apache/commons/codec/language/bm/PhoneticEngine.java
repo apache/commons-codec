@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
+import java.util.TreeMap;
 
 import org.apache.commons.codec.language.bm.Languages.LanguageSet;
 import org.apache.commons.codec.language.bm.Rule.Phoneme;
@@ -335,7 +335,8 @@ public class PhoneticEngine {
             return phonemeBuilder;
         }
 
-        final Set<Rule.Phoneme> phonemes = new TreeSet<Rule.Phoneme>(Rule.Phoneme.COMPARATOR);
+        final Map<Rule.Phoneme, Rule.Phoneme> phonemes =
+            new TreeMap<Rule.Phoneme, Rule.Phoneme>(Rule.Phoneme.COMPARATOR);
 
         for (final Rule.Phoneme phoneme : phonemeBuilder.getPhonemes()) {
             PhonemeBuilder subBuilder = PhonemeBuilder.empty(phoneme.getLanguages());
@@ -355,10 +356,21 @@ public class PhoneticEngine {
                 i = rulesApplication.getI();
             }
 
-            phonemes.addAll(subBuilder.getPhonemes());
+            // the phonemes map orders the phonemes only based on their text, but ignores the language set
+            // when adding new phonemes, check for equal phonemes and merge their language set, otherwise
+            // phonemes with the same text but different language set get lost
+            for (final Rule.Phoneme newPhoneme : subBuilder.getPhonemes()) {
+                if (phonemes.containsKey(newPhoneme)) {
+                    final Rule.Phoneme oldPhoneme = phonemes.remove(newPhoneme);
+                    final Rule.Phoneme mergedPhoneme = oldPhoneme.mergeWithLanguage(newPhoneme.getLanguages());
+                    phonemes.put(mergedPhoneme, mergedPhoneme);
+                } else {
+                    phonemes.put(newPhoneme, newPhoneme);
+                }
+            }
         }
 
-        return new PhonemeBuilder(phonemes);
+        return new PhonemeBuilder(phonemes.keySet());
     }
 
     /**
