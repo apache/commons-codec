@@ -31,848 +31,843 @@ import org.apache.commons.codec.binary.StringUtils;
 /**
  * Operations to simplify common {@link javax.crypto.Mac} tasks. This class is
  * immutable and thread-safe.
- * 
+ *
  * <p>
  * <strong> Note: Not all JCE implementations supports all in this enum listed
  * algorithms. In this a IllegalArgumentException is thrown. JRE's prior to 1.4
  * may need the JCE Standard Extension.</strong>
  * </p>
- * 
+ *
  * @version $Id$
  */
 public final class HmacUtils {
 
-	private static final int STREAM_BUFFER_LENGTH = 1024;
+    private static final int STREAM_BUFFER_LENGTH = 1024;
 
-	/**
-	 * Returns a initialized <code>Mac</code> for the given
-	 * <code>algorithm</code>.
-	 * 
-	 * @param algorithm
-	 *            the name of the algorithm requested. See <a href=
-	 *            "http://docs.oracle.com/javase/6/docs/technotes/guides/security/crypto/CryptoSpec.html#AppA"
-	 *            >Appendix A in the Java Cryptography Architecture Reference
-	 *            Guide</a> for information about standard algorithm names.
-	 * @param key
-	 *            They key for the keyed digest (must not be null)
-	 * @return A Mac instance initialized with the given key.
-	 * @see Mac#getInstance(String)
-	 * @see Mac#init(SecretKeySpec)
-	 * @throws IllegalArgumentException
-	 *             when a {@link NoSuchAlgorithmException} is caught or key is
-	 *             null or key is invalid.
-	 */
-	public static Mac getInitializedMac(HmacAlgorithms algorithm,
-			final byte[] key) {
-		return getInitializedMac(algorithm.toString(), key);
-	}
+    /**
+     * Returns a initialized <code>Mac</code> for the given
+     * <code>algorithm</code>.
+     *
+     * @param algorithm
+     *            the name of the algorithm requested. See <a href=
+     *            "http://docs.oracle.com/javase/6/docs/technotes/guides/security/crypto/CryptoSpec.html#AppA"
+     *            >Appendix A in the Java Cryptography Architecture Reference
+     *            Guide</a> for information about standard algorithm names.
+     * @param key
+     *            They key for the keyed digest (must not be null or empty)
+     * @return A Mac instance initialized with the given key.
+     * @see Mac#getInstance(String)
+     * @see Mac#init(SecretKeySpec)
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is
+     *             null or empty or key is invalid.
+     */
+    public static Mac getInitializedMac(HmacAlgorithms algorithm,
+            final byte[] key) {
+        return getInitializedMac(algorithm.toString(), key);
+    }
 
-	/**
-	 * Returns a initialized <code>Mac</code> for the given
-	 * <code>algorithm</code>.
-	 * 
-	 * @param algorithm
-	 *            the name of the algorithm requested. See <a href=
-	 *            "http://docs.oracle.com/javase/6/docs/technotes/guides/security/crypto/CryptoSpec.html#AppA"
-	 *            >Appendix A in the Java Cryptography Architecture Reference
-	 *            Guide</a> for information about standard algorithm names.
-	 * @param key
-	 *            They key for the keyed digest (must not be null)
-	 * @return A Mac instance initialized with the given key.
-	 * @see Mac#getInstance(String)
-	 * @see Mac#init(SecretKeySpec)
-	 * @throws IllegalArgumentException
-	 *             when a {@link NoSuchAlgorithmException} is caught or key is
-	 *             null or key is invalid.
-	 */
-	public static Mac getInitializedMac(String algorithm, final byte[] key) {
+    /**
+     * Returns a initialized <code>Mac</code> for the given
+     * <code>algorithm</code>.
+     *
+     * @param algorithm
+     *            the name of the algorithm requested. See <a href=
+     *            "http://docs.oracle.com/javase/6/docs/technotes/guides/security/crypto/CryptoSpec.html#AppA"
+     *            >Appendix A in the Java Cryptography Architecture Reference
+     *            Guide</a> for information about standard algorithm names.
+     * @param key
+     *            They key for the keyed digest (must not be null or empty)
+     * @return A Mac instance initialized with the given key.
+     * @see Mac#getInstance(String)
+     * @see Mac#init(SecretKeySpec)
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is
+     *             null or empty or key is invalid.
+     */
+    public static Mac getInitializedMac(String algorithm, final byte[] key) {
 
-		if (key == null) {
-			throw new IllegalArgumentException("Null Key");
-		}
+        if (key == null) {
+            throw new IllegalArgumentException("Null Key");
+        }
 
-		try {
-			SecretKeySpec keySpec = null;
+        if (key.length == 0) {
+            throw new IllegalArgumentException("Empty Key");
+        }
 
-			if (key.length == 0) {
-				// https://bugs.openjdk.java.net/browse/JDK-8020509
-				byte[] dummyKey = "dummy".getBytes();
-				keySpec = new SecretKeySpec(dummyKey, dummyKey.length, 0,
-						algorithm);
-			} else {
-				keySpec = new SecretKeySpec(key, algorithm);
-			}
+        try {
+            SecretKeySpec keySpec = new SecretKeySpec(key, algorithm);
+            Mac mac = Mac.getInstance(algorithm);
+            mac.init(keySpec);
+            return mac;
+        } catch (NoSuchAlgorithmException e) {
+            throw new IllegalArgumentException(e);
+        } catch (InvalidKeyException e) {
+            //cannot happen
+            throw new IllegalArgumentException(e);
+        }
+    }
 
-			Mac mac = Mac.getInstance(algorithm);
-			mac.init(keySpec);
-			return mac;
-		} catch (NoSuchAlgorithmException e) {
-			throw new IllegalArgumentException(e);
-		} catch (InvalidKeyException e) {
-			throw new IllegalArgumentException(e);
-		}
-	}
+    /**
+     * Returns a initialized <code>Mac</code> for the HmacMD5 algorithm.
+     *
+     * @param key
+     *            They key for the keyed digest (must not be null or empty)
+     * @return A Mac instance initialized with the given key.
+     * @see Mac#getInstance(String)
+     * @see Mac#init(SecretKeySpec)
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is
+     *             null or empty or key is invalid.
+     */
+    public static Mac getHmacMd5(final byte[] key) {
+        return getInitializedMac(HmacAlgorithms.HMAC_MD5, key);
+    }
 
-	/**
-	 * Returns a initialized <code>Mac</code> for the HmacMD5 algorithm.
-	 * 
-	 * @param key
-	 *            They key for the keyed digest (must not be null)
-	 * @return A Mac instance initialized with the given key.
-	 * @see Mac#getInstance(String)
-	 * @see Mac#init(SecretKeySpec)
-	 * @throws IllegalArgumentException
-	 *             when a {@link NoSuchAlgorithmException} is caught or key is
-	 *             null or key is invalid.
-	 */
-	public static Mac getHmacMd5(final byte[] key) {
-		return getInitializedMac(HmacAlgorithms.HMAC_MD5, key);
-	}
+    /**
+     * Returns a initialized <code>Mac</code> for the HmacSHA1 algorithm.
+     *
+     * @param key
+     *            They key for the keyed digest (must not be null or empty)
+     * @return A Mac instance initialized with the given key.
+     * @see Mac#getInstance(String)
+     * @see Mac#init(SecretKeySpec)
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is
+     *             null or empty or key is invalid.
+     */
+    public static Mac getHmacSha1(final byte[] key) {
+        return getInitializedMac(HmacAlgorithms.HMAC_SHA_1, key);
+    }
 
-	/**
-	 * Returns a initialized <code>Mac</code> for the HmacSHA1 algorithm.
-	 * 
-	 * @param key
-	 *            They key for the keyed digest (must not be null)
-	 * @return A Mac instance initialized with the given key.
-	 * @see Mac#getInstance(String)
-	 * @see Mac#init(SecretKeySpec)
-	 * @throws IllegalArgumentException
-	 *             when a {@link NoSuchAlgorithmException} is caught or key is
-	 *             null or key is invalid.
-	 */
-	public static Mac getHmacSha1(final byte[] key) {
-		return getInitializedMac(HmacAlgorithms.HMAC_SHA_1, key);
-	}
+    /**
+     * Returns a initialized <code>Mac</code> for the HmacSHA256 algorithm.
+     *
+     * @param key
+     *            They key for the keyed digest (must not be null or empty)
+     * @return A Mac instance initialized with the given key.
+     * @see Mac#getInstance(String)
+     * @see Mac#init(SecretKeySpec)
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is
+     *             null or empty or key is invalid.
+     */
+    public static Mac getHmacSha256(final byte[] key) {
+        return getInitializedMac(HmacAlgorithms.HMAC_SHA_256, key);
+    }
 
-	/**
-	 * Returns a initialized <code>Mac</code> for the HmacSHA256 algorithm.
-	 * 
-	 * @param key
-	 *            They key for the keyed digest (must not be null)
-	 * @return A Mac instance initialized with the given key.
-	 * @see Mac#getInstance(String)
-	 * @see Mac#init(SecretKeySpec)
-	 * @throws IllegalArgumentException
-	 *             when a {@link NoSuchAlgorithmException} is caught or key is
-	 *             null or key is invalid.
-	 */
-	public static Mac getHmacSha256(final byte[] key) {
-		return getInitializedMac(HmacAlgorithms.HMAC_SHA_256, key);
-	}
+    /**
+     * Returns a initialized <code>Mac</code> for the HmacSHA384 algorithm.
+     *
+     * @param key
+     *            They key for the keyed digest (must not be null or empty)
+     * @return A Mac instance initialized with the given key.
+     * @see Mac#getInstance(String)
+     * @see Mac#init(SecretKeySpec)
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is
+     *             null or empty or key is invalid.
+     */
+    public static Mac getHmacSha384(final byte[] key) {
+        return getInitializedMac(HmacAlgorithms.HMAC_SHA_384, key);
+    }
 
-	/**
-	 * Returns a initialized <code>Mac</code> for the HmacSHA384 algorithm.
-	 * 
-	 * @param key
-	 *            They key for the keyed digest (must not be null)
-	 * @return A Mac instance initialized with the given key.
-	 * @see Mac#getInstance(String)
-	 * @see Mac#init(SecretKeySpec)
-	 * @throws IllegalArgumentException
-	 *             when a {@link NoSuchAlgorithmException} is caught or key is
-	 *             null or key is invalid.
-	 */
-	public static Mac getHmacSha384(final byte[] key) {
-		return getInitializedMac(HmacAlgorithms.HMAC_SHA_384, key);
-	}
+    /**
+     * Returns a initialized <code>Mac</code> for the HmacSHA512 algorithm.
+     *
+     * @param key
+     *            They key for the keyed digest (must not be null or empty)
+     * @return A Mac instance initialized with the given key.
+     * @see Mac#getInstance(String)
+     * @see Mac#init(SecretKeySpec)
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is
+     *             null or empty or key is invalid.
+     */
+    public static Mac getHmacSha512(final byte[] key) {
+        return getInitializedMac(HmacAlgorithms.HMAC_SHA_512, key);
+    }
 
-	/**
-	 * Returns a initialized <code>Mac</code> for the HmacSHA512 algorithm.
-	 * 
-	 * @param key
-	 *            They key for the keyed digest (must not be null)
-	 * @return A Mac instance initialized with the given key.
-	 * @see Mac#getInstance(String)
-	 * @see Mac#init(SecretKeySpec)
-	 * @throws IllegalArgumentException
-	 *             when a {@link NoSuchAlgorithmException} is caught or key is
-	 *             null or key is invalid.
-	 */
-	public static Mac getHmacSha512(final byte[] key) {
-		return getInitializedMac(HmacAlgorithms.HMAC_SHA_512, key);
-	}
+    // hmacMd5
 
-	// hmacMd5
+    /**
+     * Returns a HmacMD5 Message Authentication Code (MAC) for the given key and
+     * value.
+     *
+     * @param key
+     *            They key for the keyed digest (must not be null or empty)
+     * @param valueToDigest
+     *            The value (data) which should to digest (maybe empty or null)
+     * @return HmacMD5 MAC for the given key and value
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is
+     *             null or empty or key is invalid.
+     */
+    public static byte[] hmacMd5(final String key, final String valueToDigest) {
+        return hmacMd5(StringUtils.getBytesUtf8(key),
+                StringUtils.getBytesUtf8(valueToDigest));
+    }
 
-	/**
-	 * Returns a HmacMD5 Message Authentication Code (MAC) for the given key and
-	 * value.
-	 * 
-	 * @param key
-	 *            They key for the keyed digest (must not be null)
-	 * @param valueToDigest
-	 *            The value (data) which should to digest (maybe empty or null)
-	 * @return HmacMD5 MAC for the given key and value
-	 * @throws IllegalArgumentException
-	 *             when a {@link NoSuchAlgorithmException} is caught or key is
-	 *             null or key is invalid.
-	 */
-	public static byte[] hmacMd5(final String key, final String valueToDigest) {
-		return hmacMd5(StringUtils.getBytesUtf8(key),
-				StringUtils.getBytesUtf8(valueToDigest));
-	}
+    /**
+     * Returns a HmacMD5 Message Authentication Code (MAC) for the given key and
+     * value.
+     *
+     * @param key
+     *            They key for the keyed digest (must not be null or empty)
+     * @param valueToDigest
+     *            The value (data) which should to digest (maybe empty or null)
+     * @return HmacMD5 MAC for the given key and value
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is
+     *             null or empty or key is invalid.
+     */
+    public static byte[] hmacMd5(final byte[] key, final byte[] valueToDigest) {
+        try {
+            return getHmacMd5(key).doFinal(valueToDigest);
+        } catch (IllegalStateException e) {
+            // cannot happen
+            throw new IllegalArgumentException(e);
+        }
+    }
 
-	/**
-	 * Returns a HmacMD5 Message Authentication Code (MAC) for the given key and
-	 * value.
-	 * 
-	 * @param key
-	 *            They key for the keyed digest (must not be null)
-	 * @param valueToDigest
-	 *            The value (data) which should to digest (maybe empty or null)
-	 * @return HmacMD5 MAC for the given key and value
-	 * @throws IllegalArgumentException
-	 *             when a {@link NoSuchAlgorithmException} is caught or key is
-	 *             null or key is invalid.
-	 */
-	public static byte[] hmacMd5(final byte[] key, final byte[] valueToDigest) {
-		try {
-			return getHmacMd5(key).doFinal(valueToDigest);
-		} catch (IllegalStateException e) {
-			// cannot happen
-			throw new IllegalArgumentException(e);
-		}
-	}
+    /**
+     * Returns a HmacMD5 Message Authentication Code (MAC) for the given key and
+     * value.
+     *
+     * @param key
+     *            They key for the keyed digest (must not be null or empty)
+     * @param valueToDigest
+     *            The value (data) which should to digest
+     *            <p>
+     *            The Inputstream must not be null and will not be closed
+     *            </p>
+     * @return HmacMD5 MAC for the given key and value
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is
+     *             null or empty or key is invalid.
+     */
+    public static byte[] hmacMd5(final byte[] key,
+            final InputStream valueToDigest) throws IOException {
+        return updateHmac(getHmacMd5(key), valueToDigest).doFinal();
+    }
 
-	/**
-	 * Returns a HmacMD5 Message Authentication Code (MAC) for the given key and
-	 * value.
-	 * 
-	 * @param key
-	 *            They key for the keyed digest (must not be null)
-	 * @param valueToDigest
-	 *            The value (data) which should to digest
-	 *            <p>
-	 *            The Inputstream must not be null and will not be closed
-	 *            </p>
-	 * @return HmacMD5 MAC for the given key and value
-	 * @throws IllegalArgumentException
-	 *             when a {@link NoSuchAlgorithmException} is caught or key is
-	 *             null or key is invalid.
-	 */
-	public static byte[] hmacMd5(final byte[] key,
-			final InputStream valueToDigest) throws IOException {
-		return updateHmac(getHmacMd5(key), valueToDigest).doFinal();
-	}
+    /**
+     * Returns a HmacMD5 Message Authentication Code (MAC) as a hex string
+     * (lowercase) for the given key and value.
+     *
+     * @param key
+     *            They key for the keyed digest (must not be null or empty)
+     * @param valueToDigest
+     *            The value (data) which should to digest (maybe empty or null)
+     * @return HmacMD5 MAC for the given key and value as a hex string
+     *         (lowercase)
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is
+     *             null or empty or key is invalid.
+     */
+    public static String hmacMd5Hex(final byte[] key, final byte[] valueToDigest) {
+        return Hex.encodeHexString(hmacMd5(key, valueToDigest));
+    }
 
-	/**
-	 * Returns a HmacMD5 Message Authentication Code (MAC) as a hex string
-	 * (lowercase) for the given key and value.
-	 * 
-	 * @param key
-	 *            They key for the keyed digest (must not be null)
-	 * @param valueToDigest
-	 *            The value (data) which should to digest (maybe empty or null)
-	 * @return HmacMD5 MAC for the given key and value as a hex string
-	 *         (lowercase)
-	 * @throws IllegalArgumentException
-	 *             when a {@link NoSuchAlgorithmException} is caught or key is
-	 *             null or key is invalid.
-	 */
-	public static String hmacMd5Hex(final byte[] key, final byte[] valueToDigest) {
-		return Hex.encodeHexString(hmacMd5(key, valueToDigest));
-	}
+    /**
+     * Returns a HmacMD5 Message Authentication Code (MAC) as a hex string
+     * (lowercase) for the given key and value.
+     *
+     * @param key
+     *            They key for the keyed digest (must not be null or empty)
+     * @param valueToDigest
+     *            The value (data) which should to digest (maybe empty or null)
+     * @return HmacMD5 MAC for the given key and value as a hex string
+     *         (lowercase)
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is
+     *             null or empty or key is invalid.
+     */
+    public static String hmacMd5Hex(final String key, final String valueToDigest) {
+        return Hex.encodeHexString(hmacMd5(key, valueToDigest));
+    }
 
-	/**
-	 * Returns a HmacMD5 Message Authentication Code (MAC) as a hex string
-	 * (lowercase) for the given key and value.
-	 * 
-	 * @param key
-	 *            They key for the keyed digest (must not be null)
-	 * @param valueToDigest
-	 *            The value (data) which should to digest (maybe empty or null)
-	 * @return HmacMD5 MAC for the given key and value as a hex string
-	 *         (lowercase)
-	 * @throws IllegalArgumentException
-	 *             when a {@link NoSuchAlgorithmException} is caught or key is
-	 *             null or key is invalid.
-	 */
-	public static String hmacMd5Hex(final String key, final String valueToDigest) {
-		return Hex.encodeHexString(hmacMd5(key, valueToDigest));
-	}
+    /**
+     * Returns a HmacMD5 Message Authentication Code (MAC) as a hex string
+     * (lowercase) for the given key and value.
+     *
+     * @param key
+     *            They key for the keyed digest (must not be null or empty)
+     * @param valueToDigest
+     *            The value (data) which should to digest
+     *            <p>
+     *            The Inputstream must not be null and will not be closed
+     *            </p>
+     * @return HmacMD5 MAC for the given key and value as a hex string
+     *         (lowercase)
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is
+     *             null or empty or key is invalid.
+     */
+    public static String hmacMd5Hex(final byte[] key,
+            final InputStream valueToDigest) throws IOException {
+        return Hex.encodeHexString(hmacMd5(key, valueToDigest));
+    }
 
-	/**
-	 * Returns a HmacMD5 Message Authentication Code (MAC) as a hex string
-	 * (lowercase) for the given key and value.
-	 * 
-	 * @param key
-	 *            They key for the keyed digest (must not be null)
-	 * @param valueToDigest
-	 *            The value (data) which should to digest
-	 *            <p>
-	 *            The Inputstream must not be null and will not be closed
-	 *            </p>
-	 * @return HmacMD5 MAC for the given key and value as a hex string
-	 *         (lowercase)
-	 * @throws IllegalArgumentException
-	 *             when a {@link NoSuchAlgorithmException} is caught or key is
-	 *             null or key is invalid.
-	 */
-	public static String hmacMd5Hex(final byte[] key,
-			final InputStream valueToDigest) throws IOException {
-		return Hex.encodeHexString(hmacMd5(key, valueToDigest));
-	}
+    // hmacSha1
 
-	// hmacSha1
+    /**
+     * Returns a HmacSHA1 Message Authentication Code (MAC) for the given key
+     * and value.
+     *
+     * @param key
+     *            They key for the keyed digest (must not be null or empty)
+     * @param valueToDigest
+     *            The value (data) which should to digest (maybe empty or null)
+     * @return HmacSHA1 MAC for the given key and value
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is
+     *             null or empty or key is invalid.
+     */
+    public static byte[] hmacSha1(final byte[] key, final byte[] valueToDigest) {
+        try {
+            return getHmacSha1(key).doFinal(valueToDigest);
+        } catch (IllegalStateException e) {
+            // cannot happen
+            throw new IllegalArgumentException(e);
+        }
+    }
 
-	/**
-	 * Returns a HmacSHA1 Message Authentication Code (MAC) for the given key
-	 * and value.
-	 * 
-	 * @param key
-	 *            They key for the keyed digest (must not be null)
-	 * @param valueToDigest
-	 *            The value (data) which should to digest (maybe empty or null)
-	 * @return HmacSHA1 MAC for the given key and value
-	 * @throws IllegalArgumentException
-	 *             when a {@link NoSuchAlgorithmException} is caught or key is
-	 *             null or key is invalid.
-	 */
-	public static byte[] hmacSha1(final byte[] key, final byte[] valueToDigest) {
-		try {
-			return getHmacSha1(key).doFinal(valueToDigest);
-		} catch (IllegalStateException e) {
-			// cannot happen
-			throw new IllegalArgumentException(e);
-		}
-	}
+    /**
+     * Returns a HmacSHA1 Message Authentication Code (MAC) for the given key
+     * and value.
+     *
+     * @param key
+     *            They key for the keyed digest (must not be null or empty)
+     * @param valueToDigest
+     *            The value (data) which should to digest (maybe empty or null)
+     * @return HmacSHA1 MAC for the given key and value
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is
+     *             null or empty or key is invalid.
+     */
+    public static byte[] hmacSha1(final String key, final String valueToDigest) {
+        return hmacSha1(StringUtils.getBytesUtf8(key),
+                StringUtils.getBytesUtf8(valueToDigest));
+    }
 
-	/**
-	 * Returns a HmacSHA1 Message Authentication Code (MAC) for the given key
-	 * and value.
-	 * 
-	 * @param key
-	 *            They key for the keyed digest (must not be null)
-	 * @param valueToDigest
-	 *            The value (data) which should to digest (maybe empty or null)
-	 * @return HmacSHA1 MAC for the given key and value
-	 * @throws IllegalArgumentException
-	 *             when a {@link NoSuchAlgorithmException} is caught or key is
-	 *             null or key is invalid.
-	 */
-	public static byte[] hmacSha1(final String key, final String valueToDigest) {
-		return hmacSha1(StringUtils.getBytesUtf8(key),
-				StringUtils.getBytesUtf8(valueToDigest));
-	}
+    /**
+     * Returns a HmacSHA1 Message Authentication Code (MAC) for the given key
+     * and value.
+     *
+     * @param key
+     *            They key for the keyed digest (must not be null or empty)
+     * @param valueToDigest
+     *            The value (data) which should to digest
+     *            <p>
+     *            The Inputstream must not be null and will not be closed
+     *            </p>
+     * @return HmacSHA1 MAC for the given key and value
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is
+     *             null or empty or key is invalid.
+     */
+    public static byte[] hmacSha1(final byte[] key,
+            final InputStream valueToDigest) throws IOException {
+        return updateHmac(getHmacSha1(key), valueToDigest).doFinal();
+    }
 
-	/**
-	 * Returns a HmacSHA1 Message Authentication Code (MAC) for the given key
-	 * and value.
-	 * 
-	 * @param key
-	 *            They key for the keyed digest (must not be null)
-	 * @param valueToDigest
-	 *            The value (data) which should to digest
-	 *            <p>
-	 *            The Inputstream must not be null and will not be closed
-	 *            </p>
-	 * @return HmacSHA1 MAC for the given key and value
-	 * @throws IllegalArgumentException
-	 *             when a {@link NoSuchAlgorithmException} is caught or key is
-	 *             null or key is invalid.
-	 */
-	public static byte[] hmacSha1(final byte[] key,
-			final InputStream valueToDigest) throws IOException {
-		return updateHmac(getHmacSha1(key), valueToDigest).doFinal();
-	}
+    /**
+     * Returns a HmacSHA1 Message Authentication Code (MAC) as hex string
+     * (lowercase) for the given key and value.
+     *
+     * @param key
+     *            They key for the keyed digest (must not be null or empty)
+     * @param valueToDigest
+     *            The value (data) which should to digest (maybe empty or null)
+     * @return HmacSHA1 MAC for the given key and value as hex string
+     *         (lowercase)
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is
+     *             null or empty or key is invalid.
+     */
+    public static String hmacSha1Hex(final byte[] key,
+            final byte[] valueToDigest) {
+        return Hex.encodeHexString(hmacSha1(key, valueToDigest));
+    }
 
-	/**
-	 * Returns a HmacSHA1 Message Authentication Code (MAC) as hex string
-	 * (lowercase) for the given key and value.
-	 * 
-	 * @param key
-	 *            They key for the keyed digest (must not be null)
-	 * @param valueToDigest
-	 *            The value (data) which should to digest (maybe empty or null)
-	 * @return HmacSHA1 MAC for the given key and value as hex string
-	 *         (lowercase)
-	 * @throws IllegalArgumentException
-	 *             when a {@link NoSuchAlgorithmException} is caught or key is
-	 *             null or key is invalid.
-	 */
-	public static String hmacSha1Hex(final byte[] key,
-			final byte[] valueToDigest) {
-		return Hex.encodeHexString(hmacSha1(key, valueToDigest));
-	}
+    /**
+     * Returns a HmacSHA1 Message Authentication Code (MAC) as hex string
+     * (lowercase) for the given key and value.
+     *
+     * @param key
+     *            They key for the keyed digest (must not be null or empty)
+     * @param valueToDigest
+     *            The value (data) which should to digest (maybe empty or null)
+     * @return HmacSHA1 MAC for the given key and value as hex string
+     *         (lowercase)
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is
+     *             null or empty or key is invalid.
+     */
+    public static String hmacSha1Hex(final String key,
+            final String valueToDigest) {
+        return Hex.encodeHexString(hmacSha1(key, valueToDigest));
+    }
 
-	/**
-	 * Returns a HmacSHA1 Message Authentication Code (MAC) as hex string
-	 * (lowercase) for the given key and value.
-	 * 
-	 * @param key
-	 *            They key for the keyed digest (must not be null)
-	 * @param valueToDigest
-	 *            The value (data) which should to digest (maybe empty or null)
-	 * @return HmacSHA1 MAC for the given key and value as hex string
-	 *         (lowercase)
-	 * @throws IllegalArgumentException
-	 *             when a {@link NoSuchAlgorithmException} is caught or key is
-	 *             null or key is invalid.
-	 */
-	public static String hmacSha1Hex(final String key,
-			final String valueToDigest) {
-		return Hex.encodeHexString(hmacSha1(key, valueToDigest));
-	}
+    /**
+     * Returns a HmacSHA1 Message Authentication Code (MAC) as hex string
+     * (lowercase) for the given key and value.
+     *
+     * @param key
+     *            They key for the keyed digest (must not be null or empty)
+     * @param valueToDigest
+     *            The value (data) which should to digest
+     *            <p>
+     *            The Inputstream must not be null and will not be closed
+     *            </p>
+     * @return HmacSHA1 MAC for the given key and value as hex string
+     *         (lowercase)
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is
+     *             null or empty or key is invalid.
+     */
+    public static String hmacSha1Hex(final byte[] key,
+            final InputStream valueToDigest) throws IOException {
+        return Hex.encodeHexString(hmacSha1(key, valueToDigest));
+    }
 
-	/**
-	 * Returns a HmacSHA1 Message Authentication Code (MAC) as hex string
-	 * (lowercase) for the given key and value.
-	 * 
-	 * @param key
-	 *            They key for the keyed digest (must not be null)
-	 * @param valueToDigest
-	 *            The value (data) which should to digest
-	 *            <p>
-	 *            The Inputstream must not be null and will not be closed
-	 *            </p>
-	 * @return HmacSHA1 MAC for the given key and value as hex string
-	 *         (lowercase)
-	 * @throws IllegalArgumentException
-	 *             when a {@link NoSuchAlgorithmException} is caught or key is
-	 *             null or key is invalid.
-	 */
-	public static String hmacSha1Hex(final byte[] key,
-			final InputStream valueToDigest) throws IOException {
-		return Hex.encodeHexString(hmacSha1(key, valueToDigest));
-	}
+    // hmacSha256
 
-	// hmacSha256
+    /**
+     * Returns a HmacSHA256 Message Authentication Code (MAC) for the given key
+     * and value.
+     *
+     * @param key
+     *            They key for the keyed digest (must not be null or empty)
+     * @param valueToDigest
+     *            The value (data) which should to digest (maybe empty or null)
+     * @return HmacSHA256 MAC for the given key and value
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is
+     *             null or empty or key is invalid.
+     */
+    public static byte[] hmacSha256(final byte[] key, final byte[] valueToDigest) {
+        try {
+            return getHmacSha256(key).doFinal(valueToDigest);
+        } catch (IllegalStateException e) {
+            // cannot happen
+            throw new IllegalArgumentException(e);
+        }
+    }
 
-	/**
-	 * Returns a HmacSHA256 Message Authentication Code (MAC) for the given key
-	 * and value.
-	 * 
-	 * @param key
-	 *            They key for the keyed digest (must not be null)
-	 * @param valueToDigest
-	 *            The value (data) which should to digest (maybe empty or null)
-	 * @return HmacSHA256 MAC for the given key and value
-	 * @throws IllegalArgumentException
-	 *             when a {@link NoSuchAlgorithmException} is caught or key is
-	 *             null or key is invalid.
-	 */
-	public static byte[] hmacSha256(final byte[] key, final byte[] valueToDigest) {
-		try {
-			return getHmacSha256(key).doFinal(valueToDigest);
-		} catch (IllegalStateException e) {
-			// cannot happen
-			throw new IllegalArgumentException(e);
-		}
-	}
+    /**
+     * Returns a HmacSHA256 Message Authentication Code (MAC) for the given key
+     * and value.
+     *
+     * @param key
+     *            They key for the keyed digest (must not be null or empty)
+     * @param valueToDigest
+     *            The value (data) which should to digest (maybe empty or null)
+     * @return HmacSHA256 MAC for the given key and value
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is
+     *             null or empty or key is invalid.
+     */
+    public static byte[] hmacSha256(final String key, final String valueToDigest) {
+        return hmacSha256(StringUtils.getBytesUtf8(key),
+                StringUtils.getBytesUtf8(valueToDigest));
+    }
 
-	/**
-	 * Returns a HmacSHA256 Message Authentication Code (MAC) for the given key
-	 * and value.
-	 * 
-	 * @param key
-	 *            They key for the keyed digest (must not be null)
-	 * @param valueToDigest
-	 *            The value (data) which should to digest (maybe empty or null)
-	 * @return HmacSHA256 MAC for the given key and value
-	 * @throws IllegalArgumentException
-	 *             when a {@link NoSuchAlgorithmException} is caught or key is
-	 *             null or key is invalid.
-	 */
-	public static byte[] hmacSha256(final String key, final String valueToDigest) {
-		return hmacSha256(StringUtils.getBytesUtf8(key),
-				StringUtils.getBytesUtf8(valueToDigest));
-	}
+    /**
+     * Returns a HmacSHA256 Message Authentication Code (MAC) for the given key
+     * and value.
+     *
+     * @param key
+     *            They key for the keyed digest (must not be null or empty)
+     * @param valueToDigest
+     *            The value (data) which should to digest
+     *            <p>
+     *            The Inputstream must not be null and will not be closed
+     *            </p>
+     * @return HmacSHA256 MAC for the given key and value
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is
+     *             null or empty or key is invalid.
+     */
+    public static byte[] hmacSha256(final byte[] key,
+            final InputStream valueToDigest) throws IOException {
+        return updateHmac(getHmacSha256(key), valueToDigest).doFinal();
+    }
 
-	/**
-	 * Returns a HmacSHA256 Message Authentication Code (MAC) for the given key
-	 * and value.
-	 * 
-	 * @param key
-	 *            They key for the keyed digest (must not be null)
-	 * @param valueToDigest
-	 *            The value (data) which should to digest
-	 *            <p>
-	 *            The Inputstream must not be null and will not be closed
-	 *            </p>
-	 * @return HmacSHA256 MAC for the given key and value
-	 * @throws IllegalArgumentException
-	 *             when a {@link NoSuchAlgorithmException} is caught or key is
-	 *             null or key is invalid.
-	 */
-	public static byte[] hmacSha256(final byte[] key,
-			final InputStream valueToDigest) throws IOException {
-		return updateHmac(getHmacSha256(key), valueToDigest).doFinal();
-	}
+    /**
+     * Returns a HmacSHA256 Message Authentication Code (MAC) as hex string
+     * (lowercase) for the given key and value.
+     *
+     * @param key
+     *            They key for the keyed digest (must not be null or empty)
+     * @param valueToDigest
+     *            The value (data) which should to digest (maybe empty or null)
+     * @return HmacSHA256 MAC for the given key and value as hex string
+     *         (lowercase)
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is
+     *             null or empty or key is invalid.
+     */
+    public static String hmacSha256Hex(final byte[] key,
+            final byte[] valueToDigest) {
+        return Hex.encodeHexString(hmacSha256(key, valueToDigest));
+    }
 
-	/**
-	 * Returns a HmacSHA256 Message Authentication Code (MAC) as hex string
-	 * (lowercase) for the given key and value.
-	 * 
-	 * @param key
-	 *            They key for the keyed digest (must not be null)
-	 * @param valueToDigest
-	 *            The value (data) which should to digest (maybe empty or null)
-	 * @return HmacSHA256 MAC for the given key and value as hex string
-	 *         (lowercase)
-	 * @throws IllegalArgumentException
-	 *             when a {@link NoSuchAlgorithmException} is caught or key is
-	 *             null or key is invalid.
-	 */
-	public static String hmacSha256Hex(final byte[] key,
-			final byte[] valueToDigest) {
-		return Hex.encodeHexString(hmacSha256(key, valueToDigest));
-	}
+    /**
+     * Returns a HmacSHA256 Message Authentication Code (MAC) as hex string
+     * (lowercase) for the given key and value.
+     *
+     * @param key
+     *            They key for the keyed digest (must not be null or empty)
+     * @param valueToDigest
+     *            The value (data) which should to digest (maybe empty or null)
+     * @return HmacSHA256 MAC for the given key and value as hex string
+     *         (lowercase)
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is
+     *             null or empty or key is invalid.
+     */
+    public static String hmacSha256Hex(final String key,
+            final String valueToDigest) {
+        return Hex.encodeHexString(hmacSha256(key, valueToDigest));
+    }
 
-	/**
-	 * Returns a HmacSHA256 Message Authentication Code (MAC) as hex string
-	 * (lowercase) for the given key and value.
-	 * 
-	 * @param key
-	 *            They key for the keyed digest (must not be null)
-	 * @param valueToDigest
-	 *            The value (data) which should to digest (maybe empty or null)
-	 * @return HmacSHA256 MAC for the given key and value as hex string
-	 *         (lowercase)
-	 * @throws IllegalArgumentException
-	 *             when a {@link NoSuchAlgorithmException} is caught or key is
-	 *             null or key is invalid.
-	 */
-	public static String hmacSha256Hex(final String key,
-			final String valueToDigest) {
-		return Hex.encodeHexString(hmacSha256(key, valueToDigest));
-	}
+    /**
+     * Returns a HmacSHA256 Message Authentication Code (MAC) as hex string
+     * (lowercase) for the given key and value.
+     *
+     * @param key
+     *            They key for the keyed digest (must not be null or empty)
+     * @param valueToDigest
+     *            The value (data) which should to digest
+     *            <p>
+     *            The Inputstream must not be null and will not be closed
+     *            </p>
+     * @return HmacSHA256 MAC for the given key and value as hex string
+     *         (lowercase)
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is
+     *             null or empty or key is invalid.
+     */
+    public static String hmacSha256Hex(final byte[] key,
+            final InputStream valueToDigest) throws IOException {
+        return Hex.encodeHexString(hmacSha256(key, valueToDigest));
+    }
 
-	/**
-	 * Returns a HmacSHA256 Message Authentication Code (MAC) as hex string
-	 * (lowercase) for the given key and value.
-	 * 
-	 * @param key
-	 *            They key for the keyed digest (must not be null)
-	 * @param valueToDigest
-	 *            The value (data) which should to digest
-	 *            <p>
-	 *            The Inputstream must not be null and will not be closed
-	 *            </p>
-	 * @return HmacSHA256 MAC for the given key and value as hex string
-	 *         (lowercase)
-	 * @throws IllegalArgumentException
-	 *             when a {@link NoSuchAlgorithmException} is caught or key is
-	 *             null or key is invalid.
-	 */
-	public static String hmacSha256Hex(final byte[] key,
-			final InputStream valueToDigest) throws IOException {
-		return Hex.encodeHexString(hmacSha256(key, valueToDigest));
-	}
+    // hmacSha384
 
-	// hmacSha384
+    /**
+     * Returns a HmacSHA384 Message Authentication Code (MAC) for the given key
+     * and value.
+     *
+     * @param key
+     *            They key for the keyed digest (must not be null or empty)
+     * @param valueToDigest
+     *            The value (data) which should to digest (maybe empty or null)
+     * @return HmacSHA384 MAC for the given key and value
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is
+     *             null or empty or key is invalid.
+     */
+    public static byte[] hmacSha384(final byte[] key, final byte[] valueToDigest) {
+        try {
+            return getHmacSha384(key).doFinal(valueToDigest);
+        } catch (IllegalStateException e) {
+            // cannot happen
+            throw new IllegalArgumentException(e);
+        }
+    }
 
-	/**
-	 * Returns a HmacSHA384 Message Authentication Code (MAC) for the given key
-	 * and value.
-	 * 
-	 * @param key
-	 *            They key for the keyed digest (must not be null)
-	 * @param valueToDigest
-	 *            The value (data) which should to digest (maybe empty or null)
-	 * @return HmacSHA384 MAC for the given key and value
-	 * @throws IllegalArgumentException
-	 *             when a {@link NoSuchAlgorithmException} is caught or key is
-	 *             null or key is invalid.
-	 */
-	public static byte[] hmacSha384(final byte[] key, final byte[] valueToDigest) {
-		try {
-			return getHmacSha384(key).doFinal(valueToDigest);
-		} catch (IllegalStateException e) {
-			// cannot happen
-			throw new IllegalArgumentException(e);
-		}
-	}
+    /**
+     * Returns a HmacSHA384 Message Authentication Code (MAC) for the given key
+     * and value.
+     *
+     * @param key
+     *            They key for the keyed digest (must not be null or empty)
+     * @param valueToDigest
+     *            The value (data) which should to digest (maybe empty or null)
+     * @return HmacSHA384 MAC for the given key and value
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is
+     *             null or empty or key is invalid.
+     */
+    public static byte[] hmacSha384(final String key, final String valueToDigest) {
+        return hmacSha384(StringUtils.getBytesUtf8(key),
+                StringUtils.getBytesUtf8(valueToDigest));
+    }
 
-	/**
-	 * Returns a HmacSHA384 Message Authentication Code (MAC) for the given key
-	 * and value.
-	 * 
-	 * @param key
-	 *            They key for the keyed digest (must not be null)
-	 * @param valueToDigest
-	 *            The value (data) which should to digest (maybe empty or null)
-	 * @return HmacSHA384 MAC for the given key and value
-	 * @throws IllegalArgumentException
-	 *             when a {@link NoSuchAlgorithmException} is caught or key is
-	 *             null or key is invalid.
-	 */
-	public static byte[] hmacSha384(final String key, final String valueToDigest) {
-		return hmacSha384(StringUtils.getBytesUtf8(key),
-				StringUtils.getBytesUtf8(valueToDigest));
-	}
+    /**
+     * Returns a HmacSHA384 Message Authentication Code (MAC) for the given key
+     * and value.
+     *
+     * @param key
+     *            They key for the keyed digest (must not be null or empty)
+     * @param valueToDigest
+     *            The value (data) which should to digest
+     *            <p>
+     *            The Inputstream must not be null and will not be closed
+     *            </p>
+     * @return HmacSHA384 MAC for the given key and value
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is
+     *             null or empty or key is invalid.
+     */
+    public static byte[] hmacSha384(final byte[] key,
+            final InputStream valueToDigest) throws IOException {
+        return updateHmac(getHmacSha384(key), valueToDigest).doFinal();
+    }
 
-	/**
-	 * Returns a HmacSHA384 Message Authentication Code (MAC) for the given key
-	 * and value.
-	 * 
-	 * @param key
-	 *            They key for the keyed digest (must not be null)
-	 * @param valueToDigest
-	 *            The value (data) which should to digest
-	 *            <p>
-	 *            The Inputstream must not be null and will not be closed
-	 *            </p>
-	 * @return HmacSHA384 MAC for the given key and value
-	 * @throws IllegalArgumentException
-	 *             when a {@link NoSuchAlgorithmException} is caught or key is
-	 *             null or key is invalid.
-	 */
-	public static byte[] hmacSha384(final byte[] key,
-			final InputStream valueToDigest) throws IOException {
-		return updateHmac(getHmacSha384(key), valueToDigest).doFinal();
-	}
+    /**
+     * Returns a HmacSHA384 Message Authentication Code (MAC) as hex string
+     * (lowercase) for the given key and value.
+     *
+     * @param key
+     *            They key for the keyed digest (must not be null or empty)
+     * @param valueToDigest
+     *            The value (data) which should to digest (maybe empty or null)
+     * @return HmacSHA384 MAC for the given key and value as hex string
+     *         (lowercase)
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is
+     *             null or empty or key is invalid.
+     */
+    public static String hmacSha384Hex(final byte[] key,
+            final byte[] valueToDigest) {
+        return Hex.encodeHexString(hmacSha384(key, valueToDigest));
+    }
 
-	/**
-	 * Returns a HmacSHA384 Message Authentication Code (MAC) as hex string
-	 * (lowercase) for the given key and value.
-	 * 
-	 * @param key
-	 *            They key for the keyed digest (must not be null)
-	 * @param valueToDigest
-	 *            The value (data) which should to digest (maybe empty or null)
-	 * @return HmacSHA384 MAC for the given key and value as hex string
-	 *         (lowercase)
-	 * @throws IllegalArgumentException
-	 *             when a {@link NoSuchAlgorithmException} is caught or key is
-	 *             null or key is invalid.
-	 */
-	public static String hmacSha384Hex(final byte[] key,
-			final byte[] valueToDigest) {
-		return Hex.encodeHexString(hmacSha384(key, valueToDigest));
-	}
+    /**
+     * Returns a HmacSHA384 Message Authentication Code (MAC) as hex string
+     * (lowercase) for the given key and value.
+     *
+     * @param key
+     *            They key for the keyed digest (must not be null or empty)
+     * @param valueToDigest
+     *            The value (data) which should to digest (maybe empty or null)
+     * @return HmacSHA384 MAC for the given key and value as hex string
+     *         (lowercase)
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is
+     *             null or empty or key is invalid.
+     */
+    public static String hmacSha384Hex(final String key,
+            final String valueToDigest) {
+        return Hex.encodeHexString(hmacSha384(key, valueToDigest));
+    }
 
-	/**
-	 * Returns a HmacSHA384 Message Authentication Code (MAC) as hex string
-	 * (lowercase) for the given key and value.
-	 * 
-	 * @param key
-	 *            They key for the keyed digest (must not be null)
-	 * @param valueToDigest
-	 *            The value (data) which should to digest (maybe empty or null)
-	 * @return HmacSHA384 MAC for the given key and value as hex string
-	 *         (lowercase)
-	 * @throws IllegalArgumentException
-	 *             when a {@link NoSuchAlgorithmException} is caught or key is
-	 *             null or key is invalid.
-	 */
-	public static String hmacSha384Hex(final String key,
-			final String valueToDigest) {
-		return Hex.encodeHexString(hmacSha384(key, valueToDigest));
-	}
+    /**
+     * Returns a HmacSHA384 Message Authentication Code (MAC) as hex string
+     * (lowercase) for the given key and value.
+     *
+     * @param key
+     *            They key for the keyed digest (must not be null or empty)
+     * @param valueToDigest
+     *            The value (data) which should to digest
+     *            <p>
+     *            The Inputstream must not be null and will not be closed
+     *            </p>
+     * @return HmacSHA384 MAC for the given key and value as hex string
+     *         (lowercase)
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is
+     *             null or empty or key is invalid.
+     */
+    public static String hmacSha384Hex(final byte[] key,
+            final InputStream valueToDigest) throws IOException {
+        return Hex.encodeHexString(hmacSha384(key, valueToDigest));
+    }
 
-	/**
-	 * Returns a HmacSHA384 Message Authentication Code (MAC) as hex string
-	 * (lowercase) for the given key and value.
-	 * 
-	 * @param key
-	 *            They key for the keyed digest (must not be null)
-	 * @param valueToDigest
-	 *            The value (data) which should to digest
-	 *            <p>
-	 *            The Inputstream must not be null and will not be closed
-	 *            </p>
-	 * @return HmacSHA384 MAC for the given key and value as hex string
-	 *         (lowercase)
-	 * @throws IllegalArgumentException
-	 *             when a {@link NoSuchAlgorithmException} is caught or key is
-	 *             null or key is invalid.
-	 */
-	public static String hmacSha384Hex(final byte[] key,
-			final InputStream valueToDigest) throws IOException {
-		return Hex.encodeHexString(hmacSha384(key, valueToDigest));
-	}
+    // hmacSha512
 
-	// hmacSha512
+    /**
+     * Returns a HmacSHA512 Message Authentication Code (MAC) for the given key
+     * and value.
+     *
+     * @param key
+     *            They key for the keyed digest (must not be null or empty)
+     * @param valueToDigest
+     *            The value (data) which should to digest (maybe empty or null)
+     * @return HmacSHA512 MAC for the given key and value
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is
+     *             null or empty or key is invalid.
+     */
+    public static byte[] hmacSha512(final byte[] key, final byte[] valueToDigest) {
+        try {
+            return getHmacSha512(key).doFinal(valueToDigest);
+        } catch (IllegalStateException e) {
+            // cannot happen
+            throw new IllegalArgumentException(e);
+        }
+    }
 
-	/**
-	 * Returns a HmacSHA512 Message Authentication Code (MAC) for the given key
-	 * and value.
-	 * 
-	 * @param key
-	 *            They key for the keyed digest (must not be null)
-	 * @param valueToDigest
-	 *            The value (data) which should to digest (maybe empty or null)
-	 * @return HmacSHA512 MAC for the given key and value
-	 * @throws IllegalArgumentException
-	 *             when a {@link NoSuchAlgorithmException} is caught or key is
-	 *             null or key is invalid.
-	 */
-	public static byte[] hmacSha512(final byte[] key, final byte[] valueToDigest) {
-		try {
-			return getHmacSha512(key).doFinal(valueToDigest);
-		} catch (IllegalStateException e) {
-			// cannot happen
-			throw new IllegalArgumentException(e);
-		}
-	}
+    /**
+     * Returns a HmacSHA512 Message Authentication Code (MAC) for the given key
+     * and value.
+     *
+     * @param key
+     *            They key for the keyed digest (must not be null or empty)
+     * @param valueToDigest
+     *            The value (data) which should to digest (maybe empty or null)
+     * @return HmacSHA512 MAC for the given key and value
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is
+     *             null or empty or key is invalid.
+     */
+    public static byte[] hmacSha512(final String key, final String valueToDigest) {
+        return hmacSha512(StringUtils.getBytesUtf8(key),
+                StringUtils.getBytesUtf8(valueToDigest));
+    }
 
-	/**
-	 * Returns a HmacSHA512 Message Authentication Code (MAC) for the given key
-	 * and value.
-	 * 
-	 * @param key
-	 *            They key for the keyed digest (must not be null)
-	 * @param valueToDigest
-	 *            The value (data) which should to digest (maybe empty or null)
-	 * @return HmacSHA512 MAC for the given key and value
-	 * @throws IllegalArgumentException
-	 *             when a {@link NoSuchAlgorithmException} is caught or key is
-	 *             null or key is invalid.
-	 */
-	public static byte[] hmacSha512(final String key, final String valueToDigest) {
-		return hmacSha512(StringUtils.getBytesUtf8(key),
-				StringUtils.getBytesUtf8(valueToDigest));
-	}
+    /**
+     * Returns a HmacSHA512 Message Authentication Code (MAC) for the given key
+     * and value.
+     *
+     * @param key
+     *            They key for the keyed digest (must not be null or empty)
+     * @param valueToDigest
+     *            The value (data) which should to digest
+     *            <p>
+     *            The Inputstream must not be null and will not be closed
+     *            </p>
+     * @return HmacSHA512 MAC for the given key and value
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is
+     *             null or empty or key is invalid.
+     */
+    public static byte[] hmacSha512(final byte[] key,
+            final InputStream valueToDigest) throws IOException {
+        return updateHmac(getHmacSha512(key), valueToDigest).doFinal();
+    }
 
-	/**
-	 * Returns a HmacSHA512 Message Authentication Code (MAC) for the given key
-	 * and value.
-	 * 
-	 * @param key
-	 *            They key for the keyed digest (must not be null)
-	 * @param valueToDigest
-	 *            The value (data) which should to digest
-	 *            <p>
-	 *            The Inputstream must not be null and will not be closed
-	 *            </p>
-	 * @return HmacSHA512 MAC for the given key and value
-	 * @throws IllegalArgumentException
-	 *             when a {@link NoSuchAlgorithmException} is caught or key is
-	 *             null or key is invalid.
-	 */
-	public static byte[] hmacSha512(final byte[] key,
-			final InputStream valueToDigest) throws IOException {
-		return updateHmac(getHmacSha512(key), valueToDigest).doFinal();
-	}
+    /**
+     * Returns a HmacSHA512 Message Authentication Code (MAC) as hex string
+     * (lowercase) for the given key and value.
+     *
+     * @param key
+     *            They key for the keyed digest (must not be null or empty)
+     * @param valueToDigest
+     *            The value (data) which should to digest (maybe empty or null)
+     * @return HmacSHA512 MAC for the given key and value as hex string
+     *         (lowercase)
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is
+     *             null or empty or key is invalid.
+     */
+    public static String hmacSha512Hex(final byte[] key,
+            final byte[] valueToDigest) {
+        return Hex.encodeHexString(hmacSha512(key, valueToDigest));
+    }
 
-	/**
-	 * Returns a HmacSHA512 Message Authentication Code (MAC) as hex string
-	 * (lowercase) for the given key and value.
-	 * 
-	 * @param key
-	 *            They key for the keyed digest (must not be null)
-	 * @param valueToDigest
-	 *            The value (data) which should to digest (maybe empty or null)
-	 * @return HmacSHA512 MAC for the given key and value as hex string
-	 *         (lowercase)
-	 * @throws IllegalArgumentException
-	 *             when a {@link NoSuchAlgorithmException} is caught or key is
-	 *             null or key is invalid.
-	 */
-	public static String hmacSha512Hex(final byte[] key,
-			final byte[] valueToDigest) {
-		return Hex.encodeHexString(hmacSha512(key, valueToDigest));
-	}
+    /**
+     * Returns a HmacSHA512 Message Authentication Code (MAC) as hex string
+     * (lowercase) for the given key and value.
+     *
+     * @param key
+     *            They key for the keyed digest (must not be null or empty)
+     * @param valueToDigest
+     *            The value (data) which should to digest (maybe empty or null)
+     * @return HmacSHA512 MAC for the given key and value as hex string
+     *         (lowercase)
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is
+     *             null or empty or key is invalid.
+     */
+    public static String hmacSha512Hex(final String key,
+            final String valueToDigest) {
+        return Hex.encodeHexString(hmacSha512(key, valueToDigest));
+    }
 
-	/**
-	 * Returns a HmacSHA512 Message Authentication Code (MAC) as hex string
-	 * (lowercase) for the given key and value.
-	 * 
-	 * @param key
-	 *            They key for the keyed digest (must not be null)
-	 * @param valueToDigest
-	 *            The value (data) which should to digest (maybe empty or null)
-	 * @return HmacSHA512 MAC for the given key and value as hex string
-	 *         (lowercase)
-	 * @throws IllegalArgumentException
-	 *             when a {@link NoSuchAlgorithmException} is caught or key is
-	 *             null or key is invalid.
-	 */
-	public static String hmacSha512Hex(final String key,
-			final String valueToDigest) {
-		return Hex.encodeHexString(hmacSha512(key, valueToDigest));
-	}
+    /**
+     * Returns a HmacSHA512 Message Authentication Code (MAC) as hex string
+     * (lowercase) for the given key and value.
+     *
+     * @param key
+     *            They key for the keyed digest (must not be null or empty)
+     * @param valueToDigest
+     *            The value (data) which should to digest
+     *            <p>
+     *            The Inputstream must not be null and will not be closed
+     *            </p>
+     * @return HmacSHA512 MAC for the given key and value as hex string
+     *         (lowercase)
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is
+     *             null or empty or key is invalid.
+     */
+    public static String hmacSha512Hex(final byte[] key,
+            final InputStream valueToDigest) throws IOException {
+        return Hex.encodeHexString(hmacSha512(key, valueToDigest));
+    }
 
-	/**
-	 * Returns a HmacSHA512 Message Authentication Code (MAC) as hex string
-	 * (lowercase) for the given key and value.
-	 * 
-	 * @param key
-	 *            They key for the keyed digest (must not be null)
-	 * @param valueToDigest
-	 *            The value (data) which should to digest
-	 *            <p>
-	 *            The Inputstream must not be null and will not be closed
-	 *            </p>
-	 * @return HmacSHA512 MAC for the given key and value as hex string
-	 *         (lowercase)
-	 * @throws IllegalArgumentException
-	 *             when a {@link NoSuchAlgorithmException} is caught or key is
-	 *             null or key is invalid.
-	 */
-	public static String hmacSha512Hex(final byte[] key,
-			final InputStream valueToDigest) throws IOException {
-		return Hex.encodeHexString(hmacSha512(key, valueToDigest));
-	}
+    // update
 
-	// update
+    /**
+     * Updates the given {@link Mac}. This generates a digest for valueToDigest
+     * and the key the Mac was initialized
+     *
+     * @param mac
+     *            the initialized {@link Mac} to update
+     * @param valueToDigest
+     *            the value to update the {@link Mac} with (maybe null or empty)
+     * @return the updated {@link Mac}
+     * @throws IllegalStateException
+     *             if the Mac was not initialized
+     * @since 1.x
+     */
+    public static Mac updateHmac(final Mac mac, final byte[] valueToDigest) {
+        mac.reset();
+        mac.update(valueToDigest);
+        return mac;
+    }
 
-	/**
-	 * Updates the given {@link Mac}. This generates a digest for valueToDigest
-	 * and the key the Mac was initialized
-	 * 
-	 * @param mac
-	 *            the initialized {@link Mac} to update
-	 * @param valueToDigest
-	 *            the value to update the {@link Mac} with (maybe null or empty)
-	 * @return the updated {@link Mac}
-	 * @throws IllegalStateException
-	 *             if the Mac was not initialized
-	 * @since 1.x
-	 */
-	public static Mac updateHmac(final Mac mac, final byte[] valueToDigest) {
-		mac.reset();
-		mac.update(valueToDigest);
-		return mac;
-	}
+    /**
+     * Updates the given {@link Mac}. This generates a digest for valueToDigest
+     * and the key the Mac was initialized
+     *
+     * @param mac
+     *            the initialized {@link Mac} to update
+     * @param valueToDigest
+     *            the value to update the {@link Mac} with (maybe null or empty)
+     * @return the updated {@link Mac}
+     * @throws IllegalStateException
+     *             if the Mac was not initialized
+     * @since 1.x
+     */
+    public static Mac updateHmac(final Mac mac, final String valueToDigest) {
+        mac.reset();
+        mac.update(StringUtils.getBytesUtf8(valueToDigest));
+        return mac;
+    }
 
-	/**
-	 * Updates the given {@link Mac}. This generates a digest for valueToDigest
-	 * and the key the Mac was initialized
-	 * 
-	 * @param mac
-	 *            the initialized {@link Mac} to update
-	 * @param valueToDigest
-	 *            the value to update the {@link Mac} with (maybe null or empty)
-	 * @return the updated {@link Mac}
-	 * @throws IllegalStateException
-	 *             if the Mac was not initialized
-	 * @since 1.x
-	 */
-	public static Mac updateHmac(final Mac mac, final String valueToDigest) {
-		mac.reset();
-		mac.update(StringUtils.getBytesUtf8(valueToDigest));
-		return mac;
-	}
+    /**
+     * Updates the given {@link Mac}. This generates a digest for valueToDigest
+     * and the key the Mac was initialized
+     *
+     * @param mac
+     *            the initialized {@link Mac} to update
+     * @param valueToDigest
+     *            the value to update the {@link Mac} with
+     *            <p>
+     *            The Inputstream must not be null and will not be closed
+     *            </p>
+     * @return the updated {@link Mac}
+     * @throws IllegalStateException
+     *             if the Mac was not initialized
+     * @since 1.x
+     */
+    public static Mac updateHmac(final Mac mac, final InputStream valueToDigest)
+            throws IOException {
+        mac.reset();
+        final byte[] buffer = new byte[STREAM_BUFFER_LENGTH];
+        int read = valueToDigest.read(buffer, 0, STREAM_BUFFER_LENGTH);
 
-	/**
-	 * Updates the given {@link Mac}. This generates a digest for valueToDigest
-	 * and the key the Mac was initialized
-	 * 
-	 * @param mac
-	 *            the initialized {@link Mac} to update
-	 * @param valueToDigest
-	 *            the value to update the {@link Mac} with
-	 *            <p>
-	 *            The Inputstream must not be null and will not be closed
-	 *            </p>
-	 * @return the updated {@link Mac}
-	 * @throws IllegalStateException
-	 *             if the Mac was not initialized
-	 * @since 1.x
-	 */
-	public static Mac updateHmac(final Mac mac, final InputStream valueToDigest)
-			throws IOException {
-		mac.reset();
-		final byte[] buffer = new byte[STREAM_BUFFER_LENGTH];
-		int read = valueToDigest.read(buffer, 0, STREAM_BUFFER_LENGTH);
+        while (read > -1) {
+            mac.update(buffer, 0, read);
+            read = valueToDigest.read(buffer, 0, STREAM_BUFFER_LENGTH);
+        }
 
-		while (read > -1) {
-			mac.update(buffer, 0, read);
-			read = valueToDigest.read(buffer, 0, STREAM_BUFFER_LENGTH);
-		}
-
-		return mac;
-	}
+        return mac;
+    }
 }
