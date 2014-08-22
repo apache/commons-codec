@@ -95,7 +95,7 @@ public class Nysiis implements StringEncoder {
      *
      * @param c
      *            the character to test
-     * @return {@code true} if the character is a vowel, {@code false} otherwise
+     * @return <code>true</code> if the character is a vowel, <code>false</code> otherwise
      */
     private static boolean isVowel(final char c) {
         return c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U';
@@ -182,8 +182,8 @@ public class Nysiis implements StringEncoder {
      * Create an instance of the {@link Nysiis} encoder with the specified strict mode:
      *
      * <ul>
-     *  <li>{@code true}: encoded strings have a maximum length of 6</li>
-     *  <li>{@code false}: encoded strings may have arbitrary length</li>
+     *  <li><code>true</code>: encoded strings have a maximum length of 6</li>
+     *  <li><code>false</code>: encoded strings may have arbitrary length</li>
      * </ul>
      *
      * @param strict
@@ -231,7 +231,7 @@ public class Nysiis implements StringEncoder {
     /**
      * Indicates the strict mode for this {@link Nysiis} encoder.
      *
-     * @return {@code true} if the encoder is configured for strict mode, {@code false} otherwise
+     * @return <code>true</code> if the encoder is configured for strict mode, <code>false</code> otherwise
      */
     public boolean isStrict() {
         return this.strict;

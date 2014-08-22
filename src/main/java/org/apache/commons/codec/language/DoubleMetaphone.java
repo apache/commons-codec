@@ -223,8 +223,8 @@ public class DoubleMetaphone implements StringEncoder {
      *
      * @param value1 The left-hand side of the encoded {@link String#equals(Object)}.
      * @param value2 The right-hand side of the encoded {@link String#equals(Object)}.
-     * @return {@code true} if the encoded <code>String</code>s are equal;
-     *          {@code false} otherwise.
+     * @return <code>true</code> if the encoded <code>String</code>s are equal;
+     *          <code>false</code> otherwise.
      * @see #isDoubleMetaphoneEqual(String,String,boolean)
      */
     public boolean isDoubleMetaphoneEqual(final String value1, final String value2) {
@@ -237,9 +237,9 @@ public class DoubleMetaphone implements StringEncoder {
      *
      * @param value1 The left-hand side of the encoded {@link String#equals(Object)}.
      * @param value2 The right-hand side of the encoded {@link String#equals(Object)}.
-     * @param alternate use the alternate value if {@code true}.
-     * @return {@code true} if the encoded <code>String</code>s are equal;
-     *          {@code false} otherwise.
+     * @param alternate use the alternate value if <code>true</code>.
+     * @return <code>true</code> if the encoded <code>String</code>s are equal;
+     *          <code>false</code> otherwise.
      */
     public boolean isDoubleMetaphoneEqual(final String value1, final String value2, final boolean alternate) {
         return StringUtils.equals(doubleMetaphone(value1, alternate), doubleMetaphone(value2, alternate));
@@ -868,7 +868,7 @@ public class DoubleMetaphone implements StringEncoder {
 
     /**
      * Determines whether or not the value starts with a silent letter.  It will
-     * return {@code true} if the value starts with any of 'GN', 'KN',
+     * return <code>true</code> if the value starts with any of 'GN', 'KN',
      * 'PN', 'WR' or 'PS'.
      */
     private boolean isSilentStart(final String value) {

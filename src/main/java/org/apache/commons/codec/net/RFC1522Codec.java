@@ -115,7 +115,7 @@ abstract class RFC1522Codec {
      *
      * @param text
      *            a string to decode
-     * @return A new decoded String or {@code null} if the input is {@code null}.
+     * @return A new decoded String or <code>null</code> if the input is <code>null</code>.
      * @throws DecoderException
      *             thrown if there is an error condition during the decoding process.
      * @throws UnsupportedEncodingException

@@ -96,7 +96,7 @@ public class Caverphone implements StringEncoder {
      *            First of two strings to compare
      * @param str2
      *            Second of two strings to compare
-     * @return {@code true} if the caverphones of these strings are identical, {@code false} otherwise.
+     * @return <code>true</code> if the caverphones of these strings are identical, <code>false</code> otherwise.
      */
     public boolean isCaverphoneEqual(final String str1, final String str2) {
         return this.caverphone(str1).equals(this.caverphone(str2));

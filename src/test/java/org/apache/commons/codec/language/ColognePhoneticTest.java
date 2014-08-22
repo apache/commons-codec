@@ -22,7 +22,7 @@ import org.apache.commons.codec.StringEncoderAbstractTest;
 import org.junit.Test;
 
 /**
- * Tests the {@code ColognePhonetic} class.
+ * Tests the <code>ColognePhonetic</code> class.
  *
  * <p>Keep this file in UTF-8 encoding for proper Javadoc processing.</p>
  *
