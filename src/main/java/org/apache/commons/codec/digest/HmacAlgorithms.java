@@ -18,7 +18,7 @@
 package org.apache.commons.codec.digest;
 
 /**
- * Standard {@link HmacSHA512} algorithm names from the <cite>Java Cryptography Architecture Standard Algorithm Name
+ * Standard {@link HmacUtils} algorithm names from the <cite>Java Cryptography Architecture Standard Algorithm Name
  * Documentation</cite>.
  *
  * <p>
