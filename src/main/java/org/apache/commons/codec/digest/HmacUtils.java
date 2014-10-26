@@ -73,7 +73,7 @@ public final class HmacUtils {
      *            They key for the keyed digest (must not be null)
      * @return A Mac instance initialized with the given key.
      * @see Mac#getInstance(String)
-     * @see Mac#init(SecretKeySpec)
+     * @see Mac#init(Key)
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      */
@@ -91,7 +91,7 @@ public final class HmacUtils {
      *            They key for the keyed digest (must not be null)
      * @return A Mac instance initialized with the given key.
      * @see Mac#getInstance(String)
-     * @see Mac#init(SecretKeySpec)
+     * @see Mac#init(Key)
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      */
@@ -109,7 +109,7 @@ public final class HmacUtils {
      *            They key for the keyed digest (must not be null)
      * @return A Mac instance initialized with the given key.
      * @see Mac#getInstance(String)
-     * @see Mac#init(SecretKeySpec)
+     * @see Mac#init(Key)
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      */
@@ -127,7 +127,7 @@ public final class HmacUtils {
      *            They key for the keyed digest (must not be null)
      * @return A Mac instance initialized with the given key.
      * @see Mac#getInstance(String)
-     * @see Mac#init(SecretKeySpec)
+     * @see Mac#init(Key)
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      */
@@ -147,7 +147,7 @@ public final class HmacUtils {
      *            They key for the keyed digest (must not be null)
      * @return A Mac instance initialized with the given key.
      * @see Mac#getInstance(String)
-     * @see Mac#init(SecretKeySpec)
+     * @see Mac#init(Key)
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      */
@@ -167,7 +167,7 @@ public final class HmacUtils {
      *            They key for the keyed digest (must not be null)
      * @return A Mac instance initialized with the given key.
      * @see Mac#getInstance(String)
-     * @see Mac#init(SecretKeySpec)
+     * @see Mac#init(Key)
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      */
