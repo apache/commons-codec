@@ -20,6 +20,7 @@ package org.apache.commons.codec.digest;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.InvalidKeyException;
+import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 
 import javax.crypto.Mac;
@@ -54,7 +55,7 @@ public final class HmacUtils {
      *            They key for the keyed digest (must not be null)
      * @return A Mac instance initialized with the given key.
      * @see Mac#getInstance(String)
-     * @see Mac#init(SecretKeySpec)
+     * @see Mac#init(Key)
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      */
