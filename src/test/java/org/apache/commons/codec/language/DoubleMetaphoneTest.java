@@ -1121,7 +1121,7 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest<DoubleMetapho
 
     @Test
     public void testIsDoubleMetaphoneEqualBasic() {
-        final String[][] testFixture = new String[][] { { 
+        final String[][] testFixture = new String[][] { {
                 "", "" }, {
                 "Case", "case" }, {
                 "CASE", "Case" }, {

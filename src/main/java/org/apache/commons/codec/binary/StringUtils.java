@@ -41,12 +41,12 @@ public class StringUtils {
      * <p>
      * Compares two CharSequences, returning <code>true</code> if they represent equal sequences of characters.
      * </p>
-     * 
+     *
      * <p>
      * <code>null</code>s are handled without exceptions. Two <code>null</code> references are considered to be equal.
      * The comparison is case sensitive.
      * </p>
-     * 
+     *
      * <pre>
      * StringUtils.equals(null, null)   = true
      * StringUtils.equals(null, "abc")  = false
@@ -54,11 +54,11 @@ public class StringUtils {
      * StringUtils.equals("abc", "abc") = true
      * StringUtils.equals("abc", "ABC") = false
      * </pre>
-     * 
+     *
      * <p>
      * Copied from Apache Commons Lang r1583482 on April 10, 2014 (day of 3.3.2 release).
      * </p>
-     * 
+     *
      * @see Object#equals(Object)
      * @param cs1
      *            the first CharSequence, may be <code>null</code>

@@ -166,7 +166,7 @@ public class BaseNCodecTest {
 //    public void testGetEncodedLength() {
 //        fail("Not yet implemented");
 //    }
-    
+
     @Test
     public void testProvidePaddingByte() {
         // Given
@@ -184,10 +184,10 @@ public class BaseNCodecTest {
             void decode(final byte[] pArray, final int i, final int length, final Context context) {
             }
         };
-        
+
         // When
         byte actualPaddingByte = codec.pad;
-        
+
         // Then
         assertEquals(0x25, actualPaddingByte);
     }

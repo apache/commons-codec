@@ -68,7 +68,7 @@ public class Base32Test {
         {"fooba"  ,"MZXW6YTB"},
         {"foobar" ,"MZXW6YTBOI%%%%%%"},
     };
-    
+
     @Test
     public void testBase32Samples() throws Exception {
         final Base32 codec = new Base32();
@@ -142,11 +142,11 @@ public class Base32Test {
             //assertEquals(b[0],codec.decode(b[1]));
         }
     }
-    
+
     @Test
     public void testBase32SamplesNonDefaultPadding() throws Exception {
         final Base32 codec = new Base32((byte)0x25); // '%' <=> 0x25
-        
+
         for (final String[] element : BASE32_PAD_TEST_CASES) {
                 assertEquals(element[1], codec.encodeAsString(element[0].getBytes(Charsets.UTF_8)));
         }
