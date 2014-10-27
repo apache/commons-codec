@@ -71,6 +71,7 @@ public abstract class AbstractCaverphone implements StringEncoder {
      *            Second of two strings to compare
      * @return <code>true</code> if the encodings of these strings are identical, <code>false</code> otherwise.
      * @throws EncoderException
+     *             thrown if there is an error condition during the encoding process.
      */
     public boolean isEncodeEqual(final String str1, final String str2) throws EncoderException {
         return this.encode(str1).equals(this.encode(str2));
