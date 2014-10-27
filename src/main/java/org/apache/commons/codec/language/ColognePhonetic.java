@@ -25,12 +25,12 @@ import org.apache.commons.codec.StringEncoder;
 /**
  * Encodes a string into a Cologne Phonetic value.
  * <p>
- * Implements the <a href="http://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik">K&ouml;lner Phonetik</a>
- * (Cologne Phonetic) algorithm issued by Hans Joachim Postel in 1969.
+ * Implements the <a href="http://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik">K&ouml;lner Phonetik</a> (Cologne
+ * Phonetic) algorithm issued by Hans Joachim Postel in 1969.
  * </p>
  * <p>
- * The <i>K&ouml;lner Phonetik</i> is a phonetic algorithm which is optimized for the German language.
- * It is related to the well-known soundex algorithm.
+ * The <i>K&ouml;lner Phonetik</i> is a phonetic algorithm which is optimized for the German language. It is related to
+ * the well-known soundex algorithm.
  * </p>
  *
  * <h2>Algorithm</h2>
@@ -43,9 +43,9 @@ import org.apache.commons.codec.StringEncoder;
  * href="http://en.wikipedia.org/wiki/Germanic_umlaut">germanic umlauts</a>, removal of non alphabetical characters) the
  * letters of the supplied text are replaced by their phonetic code according to the following table.
  * <table border="1">
- * <caption style="caption-side: bottom"><small><i>(Source: <a href="http://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik#Buchstabencodes">Wikipedia (de):
- * K&ouml;lner Phonetik -- Buchstabencodes</a>)</i></small></caption>
- * <tbody>
+ * <caption style="caption-side: bottom"><small><i>(Source: <a
+ * href="http://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik#Buchstabencodes">Wikipedia (de): K&ouml;lner Phonetik --
+ * Buchstabencodes</a>)</i></small></caption> <tbody>
  * <tr>
  * <th>Letter</th>
  * <th>Context</th>
@@ -151,7 +151,8 @@ import org.apache.commons.codec.StringEncoder;
  *
  * <h4>Example:</h4>
  *
- * <code>"M</code>&uuml;<code>ller-L</code>&uuml;<code>denscheidt" =&gt; "MULLERLUDENSCHEIDT" =&gt; "6005507500206880022"</code>
+ * <code>"M</code>&uuml;<code>ller-L</code>&uuml;
+ * <code>denscheidt" =&gt; "MULLERLUDENSCHEIDT" =&gt; "6005507500206880022"</code>
  *
  * </li>
  *
