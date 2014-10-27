@@ -173,8 +173,7 @@ public class Base64 extends BaseNCodec {
     /**
      * Creates a Base64 codec used for decoding (all modes) and encoding in the given URL-safe mode.
      * <p>
-     * When encoding the line length is 76, the line separator is CRLF, and the encoding table is
-     * STANDARD_ENCODE_TABLE.
+     * When encoding the line length is 76, the line separator is CRLF, and the encoding table is STANDARD_ENCODE_TABLE.
      * </p>
      *
      * <p>
@@ -182,7 +181,8 @@ public class Base64 extends BaseNCodec {
      * </p>
      *
      * @param urlSafe
-     *            if <code>true</code>, URL-safe encoding is used. In most cases this should be set to <code>false</code>.
+     *            if <code>true</code>, URL-safe encoding is used. In most cases this should be set to
+     *            <code>false</code>.
      * @since 1.4
      */
     public Base64(final boolean urlSafe) {
