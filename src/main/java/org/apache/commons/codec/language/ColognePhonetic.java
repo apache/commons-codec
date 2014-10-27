@@ -27,10 +27,11 @@ import org.apache.commons.codec.StringEncoder;
  * <p>
  * Implements the <a href="http://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik">K&ouml;lner Phonetik</a>
  * (Cologne Phonetic) algorithm issued by Hans Joachim Postel in 1969.
+ * </p>
  * <p>
  * The <i>K&ouml;lner Phonetik</i> is a phonetic algorithm which is optimized for the German language.
  * It is related to the well-known soundex algorithm.
- * <p>
+ * </p>
  *
  * <h2>Algorithm</h2>
  *
@@ -170,7 +171,9 @@ import org.apache.commons.codec.StringEncoder;
  *
  * </ul>
  *
+ * <p>
  * This class is thread-safe.
+ * </p>
  *
  * @see <a href="http://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik">Wikipedia (de): K&ouml;lner Phonetik (in German)</a>
  * @since 1.5
