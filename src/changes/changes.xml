@@ -49,6 +49,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action dev="ggregory" type="add" issue="CODEC-181" due-to="Ivan Martinez-Ortiz">Make possible to provide padding byte to BaseNCodec in constructor</action>   
       <action dev="ggregory" type="fix" issue="CODEC-180" due-to="Ville Skyttä">Fix Javadoc 1.8.0 errors</action>   
       <action dev="ggregory" type="update" issue="CODEC-178">Deprecate Charsets Charset constants in favor of Java 7's java.nio.charset.StandardCharsets</action>   
+      <action dev="ggregory" type="update" issue="CODEC-189">Fix Java 8 build Javadoc errors</action>   
     </release>
     <release version="1.9" date="20 December 2013" description="Feature and fix release."> 
       <action dev="ggregory" type="update" issue="CODEC-174" due-to="Thomas Champagne">Improve performance of Beider Morse encoder</action>   
