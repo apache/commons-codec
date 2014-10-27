@@ -222,6 +222,8 @@ public final class HmacUtils {
      *            The InputStream must not be null and will not be closed
      *            </p>
      * @return HmacMD5 MAC for the given key and value
+     * @throws IOException
+     *             If an I/O error occurs.
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      */
@@ -270,6 +272,8 @@ public final class HmacUtils {
      *            The InputStream must not be null and will not be closed
      *            </p>
      * @return HmacMD5 MAC for the given key and value as a hex string (lowercase)
+     * @throws IOException
+     *             If an I/O error occurs.
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      */
@@ -325,6 +329,8 @@ public final class HmacUtils {
      *            The InputStream must not be null and will not be closed
      *            </p>
      * @return HmacSHA1 MAC for the given key and value
+     * @throws IOException
+     *             If an I/O error occurs.
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      */
@@ -373,6 +379,8 @@ public final class HmacUtils {
      *            The InputStream must not be null and will not be closed
      *            </p>
      * @return HmacSHA1 MAC for the given key and value as hex string (lowercase)
+     * @throws IOException
+     *             If an I/O error occurs.
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      */
@@ -428,7 +436,9 @@ public final class HmacUtils {
      *            The InputStream must not be null and will not be closed
      *            </p>
      * @return HmacSHA256 MAC for the given key and value
-     * @throws IllegalArgumentException
+     * @throws IOException
+     *             If an I/O error occurs.
+s     * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      */
     public static byte[] hmacSha256(final byte[] key, final InputStream valueToDigest) throws IOException {
@@ -476,6 +486,8 @@ public final class HmacUtils {
      *            The InputStream must not be null and will not be closed
      *            </p>
      * @return HmacSHA256 MAC for the given key and value as hex string (lowercase)
+     * @throws IOException
+     *             If an I/O error occurs.
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      */
@@ -531,6 +543,8 @@ public final class HmacUtils {
      *            The InputStream must not be null and will not be closed
      *            </p>
      * @return HmacSHA384 MAC for the given key and value
+     * @throws IOException
+     *             If an I/O error occurs.
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      */
@@ -579,6 +593,8 @@ public final class HmacUtils {
      *            The InputStream must not be null and will not be closed
      *            </p>
      * @return HmacSHA384 MAC for the given key and value as hex string (lowercase)
+     * @throws IOException
+     *             If an I/O error occurs.
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      */
@@ -634,6 +650,8 @@ public final class HmacUtils {
      *            The InputStream must not be null and will not be closed
      *            </p>
      * @return HmacSHA512 MAC for the given key and value
+     * @throws IOException
+     *             If an I/O error occurs.
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      */
@@ -682,6 +700,8 @@ public final class HmacUtils {
      *            The InputStream must not be null and will not be closed
      *            </p>
      * @return HmacSHA512 MAC for the given key and value as hex string (lowercase)
+     * @throws IOException
+     *             If an I/O error occurs.
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      */
@@ -735,8 +755,10 @@ public final class HmacUtils {
      *            The InputStream must not be null and will not be closed
      *            </p>
      * @return the updated {@link Mac}
+     * @throws IOException
+     *             If an I/O error occurs.
      * @throws IllegalStateException
-     *             if the Mac was not initialized
+     *             If the Mac was not initialized
      * @since 1.x
      */
     public static Mac updateHmac(final Mac mac, final InputStream valueToDigest) throws IOException {
