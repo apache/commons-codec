@@ -140,6 +140,10 @@ public class Rule {
         }
 
         /**
+         * Deprecated since 1.9.
+         * 
+         * @param right the Phoneme to join 
+         * @return a new Phoneme 
          * @deprecated since 1.9
          */
         @Deprecated
