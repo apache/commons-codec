@@ -43,8 +43,8 @@ public class StringUtils {
      * </p>
      * 
      * <p>
-     * <code>null</code>s are handled without exceptions. Two <code>null</code> references are considered to be equal. The
-     * comparison is case sensitive.
+     * <code>null</code>s are handled without exceptions. Two <code>null</code> references are considered to be equal.
+     * The comparison is case sensitive.
      * </p>
      * 
      * <pre>
