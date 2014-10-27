@@ -896,7 +896,7 @@ public class DoubleMetaphone implements StringEncoder {
         return input.toUpperCase(java.util.Locale.ENGLISH);
     }
 
-    /**
+    /*
      * Gets the character at index <code>index</code> if available, otherwise
      * it returns <code>Character.MIN_VALUE</code> so that there is some sort
      * of a default.
@@ -908,7 +908,7 @@ public class DoubleMetaphone implements StringEncoder {
         return value.charAt(index);
     }
 
-    /**
+    /*
      * Determines whether <code>value</code> contains any of the criteria starting at index <code>start</code> and
      * matching up to length <code>length</code>.
      */
