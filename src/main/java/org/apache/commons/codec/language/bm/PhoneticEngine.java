@@ -391,8 +391,9 @@ public class PhoneticEngine {
      * @param input
      *            String to phoneticise; a String with dashes or spaces separating each word
      * @param languageSet
-     * @return a phonetic representation of the input; a String containing '-'-separated phonetic representations
-     *   of the input
+     *            set of possible origin languages
+     * @return a phonetic representation of the input; a String containing '-'-separated phonetic representations of the
+     *         input
      */
     public String encode(String input, final Languages.LanguageSet languageSet) {
         final Map<String, List<Rule>> rules = Rule.getInstanceMap(this.nameType, RuleType.RULES, languageSet);
