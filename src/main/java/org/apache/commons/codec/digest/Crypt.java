@@ -97,26 +97,26 @@ public class Crypt {
      * <p>
      * The exact algorithm depends on the format of the salt string:
      * <ul>
-     * <li>SHA-512 salts start with $6$ and are up to 16 chars long.
-     * <li>SHA-256 salts start with $5$ and are up to 16 chars long
-     * <li>MD5 salts start with "$1$" and are up to 8 chars long
+     * <li>SHA-512 salts start with {@code $6$} and are up to 16 chars long.
+     * <li>SHA-256 salts start with {@code $5$} and are up to 16 chars long
+     * <li>MD5 salts start with {@code $1$} and are up to 8 chars long
      * <li>DES, the traditional UnixCrypt algorithm is used else with only 2 chars
      * <li>Only the first 8 chars of the passwords are used in the DES algorithm!
      * </ul>
-     * The magic strings "$apr1$" and "$2a$" are not recognised by this method as its output should be identical with
-     * that of the libc implementation.
+     * The magic strings {@code "$apr1$"} and {@code "$2a$"} are not recognized by this method as its output should be
+     * identical with that of the libc implementation.
      * <p>
-     * The rest of the salt string is drawn from the set [a-zA-Z0-9./] and is cut at the maximum length of if a "$"
-     * sign is encountered. It is therefore valid to enter a complete hash value as salt to e.g. verify a password
-     * with:
+     * The rest of the salt string is drawn from the set {@code [a-zA-Z0-9./]} and is cut at the maximum length of if a
+     * {@code "$"} sign is encountered. It is therefore valid to enter a complete hash value as salt to e.g. verify a
+     * password with:
      *
      * <pre>
      * storedPwd.equals(crypt(enteredPwd, storedPwd))
      * </pre>
      * <p>
-     * The resulting string starts with the marker string ($6$), continues with the salt value and ends with a "$" sign
-     * followed by the actual hash value. For DES the string only contains the salt and actual hash. It's total length
-     * is dependent on the algorithm used:
+     * The resulting string starts with the marker string ({@code $6$}), continues with the salt value and ends with a
+     * {@code "$"} sign followed by the actual hash value. For DES the string only contains the salt and actual hash.
+     * It's total length is dependent on the algorithm used:
      * <ul>
      * <li>SHA-512: 106 chars
      * <li>SHA-256: 63 chars
