@@ -36,7 +36,7 @@ public class PhoneticEngineTest {
 
     private static final Integer TEN = Integer.valueOf(10);
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = "{0}-{1}-{2}-{3}")
     public static List<Object[]> data() {
         return Arrays
                 .asList(new Object[] { "Renault", "rinD|rinDlt|rina|rinalt|rino|rinolt|rinu|rinult", NameType.GENERIC, RuleType.APPROX, Boolean.TRUE, TEN },
