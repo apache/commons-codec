@@ -36,6 +36,9 @@ import java.math.BigInteger;
  * <li>Line separator: Default is CRLF ("\r\n")</li>
  * </ul>
  * <p>
+ * The URL-safe parameter is only applied to encode operations. Decoding seamlessly handles both modes.
+ * </p>
+ * <p>
  * Since this class operates directly on byte streams, and not character streams, it is hard-coded to only
  * encode/decode character encodings which are compatible with the lower 127 ASCII chart (ISO-8859-1, Windows-1252,
  * UTF-8, etc).
@@ -675,7 +678,10 @@ public class Base64 extends BaseNCodec {
     }
 
     /**
-     * Decodes a Base64 String into octets
+     * Decodes a Base64 String into octets.
+     * <p>
+     * <b>Note:</b> this method seamlessly handles data encoded in URL-safe or normal mode.
+     * </p>
      *
      * @param base64String
      *            String containing Base64 data
@@ -687,7 +693,10 @@ public class Base64 extends BaseNCodec {
     }
 
     /**
-     * Decodes Base64 data into octets
+     * Decodes Base64 data into octets.
+     * <p>
+     * <b>Note:</b> this method seamlessly handles data encoded in URL-safe or normal mode.
+     * </p>
      *
      * @param base64Data
      *            Byte array containing Base64 data
@@ -701,7 +710,7 @@ public class Base64 extends BaseNCodec {
 
     // Implementation of integer encoding used for crypto
     /**
-     * Decodes a byte64-encoded integer according to crypto standards such as W3C's XML-Signature
+     * Decodes a byte64-encoded integer according to crypto standards such as W3C's XML-Signature.
      *
      * @param pArray
      *            a byte array containing base64 character data
@@ -713,7 +722,7 @@ public class Base64 extends BaseNCodec {
     }
 
     /**
-     * Encodes to a byte64-encoded integer according to crypto standards such as W3C's XML-Signature
+     * Encodes to a byte64-encoded integer according to crypto standards such as W3C's XML-Signature.
      *
      * @param bigInt
      *            a BigInteger

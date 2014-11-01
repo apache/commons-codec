@@ -43,6 +43,7 @@ The <action> type attribute can be add,update,fix,remove.
   </properties>
   <body>
     <release version="1.10" date="DD Mmmm 2014" description="Feature and fix release.">
+      <action dev="tn" type="fix" issue="CODEC-185" due-to="Sean Busbey">Added clarification to javadoc of Base64 concerning the use of the urlSafe parameter</action>   
       <action dev="tn" type="fix" issue="CODEC-191" due-to="Igor Savin">Added clarification to the javadoc of Base[32|64]OutputStream that it is mandatory to call close()</action>   
       <action dev="ggregory" type="fix" issue="CODEC-188" due-to="Hendrik Saly">Add support for HMAC Message Authentication Code (MAC) digests</action>   
       <action dev="ggregory" type="fix" issue="CODEC-187" due-to="Michael Tobias, Thomas Neidhart">Beider Morse Phonetic Matching producing incorrect tokens</action>   
