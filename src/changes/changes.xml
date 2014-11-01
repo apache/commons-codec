@@ -42,7 +42,8 @@ The <action> type attribute can be add,update,fix,remove.
     <author>Gary Gregory</author>
   </properties>
   <body>
-    <release version="1.10" date="DD Mmmm 2014" description="Feature and fix release."> 
+    <release version="1.10" date="DD Mmmm 2014" description="Feature and fix release.">
+      <action dev="tn" type="fix" issue="CODEC-191" due-to="Igor Savin">Added clarification to the javadoc of Base[32|64]OutputStream that it is mandatory to call close()</action>   
       <action dev="ggregory" type="fix" issue="CODEC-188" due-to="Hendrik Saly">Add support for HMAC Message Authentication Code (MAC) digests</action>   
       <action dev="ggregory" type="fix" issue="CODEC-187" due-to="Michael Tobias, Thomas Neidhart">Beider Morse Phonetic Matching producing incorrect tokens</action>   
       <action dev="ggregory" type="fix" issue="CODEC-184" due-to="Cyrille Artho">NullPointerException in DoubleMetaPhone.isDoubleMetaphoneEqual when using empty strings</action>   
