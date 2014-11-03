@@ -51,9 +51,9 @@ import java.util.Set;
  * @version $Id$
  */
 public class Languages {
-    // Iimplementation note: This class is divided into two sections. The first part is a static factory interface that
+    // Implementation note: This class is divided into two sections. The first part is a static factory interface that
     // exposes org/apache/commons/codec/language/bm/%s_languages.txt for %s in NameType.* as a list of supported
-    // languages, and a second part that provides instance methods for accessing this set fo supported languages.
+    // languages, and a second part that provides instance methods for accessing this set for supported languages.
 
     /**
      * A set of languages.
@@ -74,7 +74,7 @@ public class Languages {
 
         public abstract LanguageSet restrictTo(LanguageSet other);
 
-        public abstract LanguageSet merge(LanguageSet other);
+        abstract LanguageSet merge(LanguageSet other);
     }
 
     /**
