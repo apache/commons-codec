@@ -42,7 +42,7 @@ The <action> type attribute can be add,update,fix,remove.
     <author>Gary Gregory</author>
   </properties>
   <body>
-    <release version="1.10" date="DD Mmmm 2014" description="Feature and fix release.">
+    <release version="1.10" date="DD November 2014" description="Feature and fix release.">
       <action dev="ggregory" type="add" issue="CODEC-192" due-to="Thomas Neidhart">Add Daitch–Mokotoff Soundex</action>   
       <action dev="tn" type="fix" issue="CODEC-185" due-to="Sean Busbey">Added clarification to javadoc of Base64 concerning the use of the urlSafe parameter</action>   
       <action dev="tn" type="fix" issue="CODEC-191" due-to="Igor Savin">Added clarification to the javadoc of Base[32|64]OutputStream that it is mandatory to call close()</action>   
