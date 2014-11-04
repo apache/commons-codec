@@ -17,7 +17,8 @@
 
 package org.apache.commons.codec.language.bm;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.List;
@@ -50,7 +51,13 @@ public class PhoneticEngineTest {
                                 "(elSink|elsink|helSink|helsink|helzink|xelsink)-(banhelsink|fanhelsink|fanhelzink|vanhelsink|vanhelzink|vanjelsink)",
                                 NameType.GENERIC,
                                 RuleType.EXACT,
-                                Boolean.FALSE, TEN });
+                                Boolean.FALSE, TEN },
+                        new Object[] {
+                                "Judenburg",
+                                "iudnbYrk|iudnbirk|iudnburk|xudnbirk|xudnburk|zudnbirk|zudnburk",
+                                NameType.GENERIC,
+                                RuleType.APPROX,
+                                Boolean.TRUE, TEN });
     }
 
     private final boolean concat;
