@@ -1,3 +1,52 @@
+              Apache Commons Codec 1.10 RELEASE NOTES
+
+The Apache Commons Codec team is pleased to announce the commons-codec-1.10 release!
+
+The Apache Commons Codec package contains simple encoder and decoders for
+     various formats such as Base64 and Hexadecimal.  In addition to these
+     widely used encoders and decoders, the codec package also maintains a
+     collection of phonetic encoding utilities.
+
+Changes in this version include:
+
+New features:
+
+o Add Daitch-Mokotoff Soundex  
+  Issue: CODEC-192. Thanks to Thomas Neidhart. 
+o Make possible to provide padding byte to BaseNCodec in constructor  
+  Issue: CODEC-181. Thanks to Ivan Martinez-Ortiz. 
+
+Fixed Bugs:
+
+o Added clarification to Javadoc of Base64 concerning the use of the urlSafe parameter  
+  Issue: CODEC-185. Thanks to Sean Busbey. 
+o Added clarification to the Javadoc of Base[32|64]OutputStream that it is mandatory to call close()  
+  Issue: CODEC-191. Thanks to Igor Savin. 
+o Add support for HMAC Message Authentication Code (MAC) digests  
+  Issue: CODEC-188. Thanks to Hendrik Saly. 
+o Beider Morse Phonetic Matching producing incorrect tokens  
+  Issue: CODEC-187. Thanks to Michael Tobias, Thomas Neidhart. 
+o NullPointerException in DoubleMetaPhone.isDoubleMetaphoneEqual when using empty strings  
+  Issue: CODEC-184. Thanks to Cyrille Artho. 
+o Fix Javadoc 1.8.0 errors  
+  Issue: CODEC-180. Thanks to Ville Skyttä. 
+o Fix Java 8 build Javadoc errors  
+  Issue: CODEC-189. 
+
+Changes:
+
+o Deprecate Charsets Charset constants in favor of Java 7's java.nio.charset.StandardCharsets  
+  Issue: CODEC-178. 
+o Update from commons-parent 34 to 35  
+  Issue: CODEC-190. 
+
+
+Have fun!
+-Apache Commons Codec team
+
+
+-------------------------------------------------------------------------------
+
               Apache Commons Codec 1.9 RELEASE NOTES
 
 The codec package contains simple encoder and decoders for
@@ -10,7 +59,7 @@ Performance and fix release. Requires a minimum of Java 1.6.
 Changes in this version include:
 
 Performance:
-CODEC-174: Improve performance of Beider Morse encoder. Thanks to Thomas Champagne.
+o CODEC-174: Improve performance of Beider Morse encoder. Thanks to Thomas Champagne.
 
 Fixed Bugs:
 o CODEC-175: Beider Morse does not close Scanners used to read config files. 
