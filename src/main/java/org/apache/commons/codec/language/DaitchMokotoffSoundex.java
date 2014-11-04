@@ -336,11 +336,11 @@ public class DaitchMokotoffSoundex implements StringEncoder {
         return str;
     }
 
-    /** Whether to use ascii folding prior to encoding. */
+    /** Whether to use ASCII folding prior to encoding. */
     private final boolean folding;
 
     /**
-     * Creates a new instance with ascii-folding enabled.
+     * Creates a new instance with ASCII-folding enabled.
      */
     public DaitchMokotoffSoundex() {
         this(true);
@@ -349,11 +349,11 @@ public class DaitchMokotoffSoundex implements StringEncoder {
     /**
      * Creates a new instance.
      * <p>
-     * With ascii-folding enabled, certain accented characters will be transformed to equivalent ascii characters, e.g.
+     * With ASCII-folding enabled, certain accented characters will be transformed to equivalent ASCII characters, e.g.
      * è -&gt; e.
      *
      * @param folding
-     *            if ascii-folding shall be performed before encoding
+     *            if ASCII-folding shall be performed before encoding
      */
     public DaitchMokotoffSoundex(final boolean folding) {
         this.folding = folding;
@@ -362,7 +362,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
     /**
      * Performs a cleanup of the input string before the actual soundex transformation.
      * <p>
-     * Removes all whitespace characters and performs ascii folding if enabled.
+     * Removes all whitespace characters and performs ASCII folding if enabled.
      *
      * @param input
      *            the input string to cleanup
