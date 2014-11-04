@@ -37,8 +37,10 @@ import org.apache.commons.codec.StringEncoder;
  * <p>
  * The Daitch-Mokotoff Soundex algorithm is a refinement of the Russel and American Soundex algorithms, yielding greater
  * accuracy in matching especially Slavish and Yiddish surnames with similar pronunciation but differences in spelling.
+ * </p>
  * <p>
  * The main differences compared to the other soundex variants are:
+ * </p>
  * <ul>
  * <li>coded names are 6 digits long
  * <li>the initial character of the name is coded
@@ -55,8 +57,10 @@ import org.apache.commons.codec.StringEncoder;
  * Note: this implementation has additional branching rules compared to the original description of the algorithm. The
  * rules can be customized by overriding the default rules contained in the resource file
  * {@code org/apache/commons/codec/language/dmrules.txt}.
+ * </p>
  * <p>
  * This class is thread-safe.
+ * </p>
  *
  * @see Soundex
  * @see <a href="http://en.wikipedia.org/wiki/Daitch%E2%80%93Mokotoff_Soundex"> Wikipedia - Daitch-Mokotoff Soundex</a>
@@ -351,6 +355,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
      * <p>
      * With ASCII-folding enabled, certain accented characters will be transformed to equivalent ASCII characters, e.g.
      * è -&gt; e.
+     * </p>
      *
      * @param folding
      *            if ASCII-folding shall be performed before encoding
@@ -363,6 +368,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
      * Performs a cleanup of the input string before the actual soundex transformation.
      * <p>
      * Removes all whitespace characters and performs ASCII folding if enabled.
+     * </p>
      *
      * @param input
      *            the input string to cleanup
@@ -391,6 +397,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
      * <p>
      * This method is provided in order to satisfy the requirements of the Encoder interface, and will throw an
      * EncoderException if the supplied object is not of type java.lang.String.
+     * </p>
      *
      * @see #soundex(String)
      *
@@ -417,7 +424,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
      *
      * @see #soundex(String)
      *
-     * @param str
+     * @param source
      *            A String object to encode
      * @return A DM Soundex code corresponding to the String supplied
      * @throws IllegalArgumentException
@@ -438,15 +445,19 @@ public class DaitchMokotoffSoundex implements StringEncoder {
      * <p>
      * In case a string is encoded into multiple codes (see branching rules), the result will contain all codes,
      * separated by '|'.
+     * </p>
      * <p>
      * Example: the name "AUERBACH" is encoded as both
+     * </p>
      * <ul>
      * <li>097400</li>
      * <li>097500</li>
      * </ul>
+     * <p>
      * Thus the result will be "097400|097500".
+     * </p>
      *
-     * @param str
+     * @param source
      *            A String object to encode
      * @return A string containing a set of DM Soundex codes corresponding to the String supplied
      * @throws IllegalArgumentException
@@ -466,7 +477,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
     }
 
     /**
-     * Perform the actual DM soundex algorithm on the input string.
+     * Perform the actual DM Soundex algorithm on the input string.
      *
      * @param source
      *            A String object to encode
