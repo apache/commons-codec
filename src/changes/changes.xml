@@ -44,8 +44,8 @@ The <action> type attribute can be add,update,fix,remove.
   <body>
     <release version="1.10" date="DD November 2014" description="Feature and fix release.">
       <action dev="ggregory" type="add" issue="CODEC-192" due-to="Thomas Neidhart">Add Daitch–Mokotoff Soundex</action>   
-      <action dev="tn" type="fix" issue="CODEC-185" due-to="Sean Busbey">Added clarification to javadoc of Base64 concerning the use of the urlSafe parameter</action>   
-      <action dev="tn" type="fix" issue="CODEC-191" due-to="Igor Savin">Added clarification to the javadoc of Base[32|64]OutputStream that it is mandatory to call close()</action>   
+      <action dev="tn" type="fix" issue="CODEC-185" due-to="Sean Busbey">Added clarification to Javadoc of Base64 concerning the use of the urlSafe parameter</action>   
+      <action dev="tn" type="fix" issue="CODEC-191" due-to="Igor Savin">Added clarification to the Javadoc of Base[32|64]OutputStream that it is mandatory to call close()</action>   
       <action dev="ggregory" type="fix" issue="CODEC-188" due-to="Hendrik Saly">Add support for HMAC Message Authentication Code (MAC) digests</action>   
       <action dev="ggregory" type="fix" issue="CODEC-187" due-to="Michael Tobias, Thomas Neidhart">Beider Morse Phonetic Matching producing incorrect tokens</action>   
       <action dev="ggregory" type="fix" issue="CODEC-184" due-to="Cyrille Artho">NullPointerException in DoubleMetaPhone.isDoubleMetaphoneEqual when using empty strings</action>   
@@ -125,7 +125,7 @@ The <action> type attribute can be add,update,fix,remove.
         BeiderMorseEncoder OOM issues.
       </action>
       <action issue="CODEC-131" dev="tn" type="fix" due-to="smolav">
-        DoubleMetaphone javadoc contains dead links.
+        DoubleMetaphone Javadoc contains dead links.
       </action>
       <action issue="CODEC-130" dev="ggregory" type="add" due-to="tn">
         Base64InputStream.skip skips underlying stream, not output.
