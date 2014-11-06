@@ -15,6 +15,8 @@ New features:
 
 o Add Daitch-Mokotoff Soundex  
   Issue: CODEC-192. Thanks to Thomas Neidhart. 
+o QuotedPrintableCodec does not support soft line break per the 'quoted-printable' example on Wikipedia
+  Issue: CODEC-121. Thanks to Thomas Neidhart, Java John.
 o Make possible to provide padding byte to BaseNCodec in constructor  
   Issue: CODEC-181. Thanks to Ivan Martinez-Ortiz. 
 
