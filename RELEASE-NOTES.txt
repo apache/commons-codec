@@ -7,6 +7,8 @@ The Apache Commons Codec package contains simple encoder and decoders for
      widely used encoders and decoders, the codec package also maintains a
      collection of phonetic encoding utilities.
 
+This feature and fix release requires a minimum of Java 1.6, same as 1.9.
+
 Changes in this version include:
 
 New features:
@@ -54,7 +56,7 @@ various formats such as Base64 and Hexadecimal.  In addition to these
 widely used encoders and decoders, the codec package also maintains a
 collection of phonetic encoding utilities.
 
-Performance and fix release. Requires a minimum of Java 1.6.
+This feature and fix release requires a minimum of Java 1.6, same as 1.8.
 
 Changes in this version include:
 
