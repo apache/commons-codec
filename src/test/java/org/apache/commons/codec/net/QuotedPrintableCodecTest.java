@@ -17,9 +17,7 @@
 
 package org.apache.commons.codec.net;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import java.nio.charset.UnsupportedCharsetException;
 
@@ -27,7 +25,6 @@ import org.apache.commons.codec.CharEncoding;
 import org.apache.commons.codec.Charsets;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -254,30 +251,87 @@ public class QuotedPrintableCodecTest {
     }
 
     @Test
-    @Ignore
-    /**
-     * The QuotedPrintableCodec documentation states that this is not supported.
-     *
-     * @throws Exception
-     * @see <a href="https://issues.apache.org/jira/browse/CODEC-121">CODEC-121</a>
-     */
     public void testSoftLineBreakDecode() throws Exception {
         final String qpdata = "If you believe that truth=3Dbeauty, then surely=20=\r\nmathematics is the most beautiful branch of philosophy.";
         final String expected = "If you believe that truth=beauty, then surely mathematics is the most beautiful branch of philosophy.";
-        assertEquals(expected, new QuotedPrintableCodec().decode(qpdata));
+
+        QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
+        assertEquals(expected, qpcodec.decode(qpdata));
+
+        String encoded = qpcodec.encode(expected);
+        assertEquals(expected, qpcodec.decode(encoded));
     }
 
     @Test
-    @Ignore
-    /**
-     * The QuotedPrintableCodec documentation states that this is not supported.
-     *
-     * @throws Exception
-     * @see <a href="https://issues.apache.org/jira/browse/CODEC-121">CODEC-121</a>
-     */
     public void testSoftLineBreakEncode() throws Exception {
-        final String qpdata = "If you believe that truth=3Dbeauty, then surely=20=\r\nmathematics is the most beautiful branch of philosophy.";
+        final String qpdata = "If you believe that truth=3Dbeauty, then surely mathematics is the most b=\r\neautiful branch of philosophy.";
         final String expected = "If you believe that truth=beauty, then surely mathematics is the most beautiful branch of philosophy.";
-        assertEquals(qpdata, new QuotedPrintableCodec().encode(expected));
+
+        QuotedPrintableCodec qpcodec = new QuotedPrintableCodec(true);
+        assertEquals(qpdata, qpcodec.encode(expected));
+
+        String decoded = qpcodec.decode(qpdata);
+        assertEquals(qpdata, qpcodec.encode(decoded));
+    }
+
+    @Test
+    public void testSkipNotEncodedCRLF() throws Exception {
+        String qpdata = "CRLF in an\n encoded text should be=20=\r\n\rskipped in the\r decoding.";
+        String expected = "CRLF in an encoded text should be skipped in the decoding.";
+
+        QuotedPrintableCodec qpcodec = new QuotedPrintableCodec(true);
+        assertEquals(expected, qpcodec.decode(qpdata));
+
+        String encoded = qpcodec.encode(expected);
+        assertEquals(expected, qpcodec.decode(encoded));
+    }
+
+    @Test
+    public void testTrailingSpecial() throws Exception {
+        final QuotedPrintableCodec qpcodec = new QuotedPrintableCodec(true);
+
+        String plain ="This is a example of a quoted-printable text file. This might contain sp=cial chars.";
+        String expected = "This is a example of a quoted-printable text file. This might contain sp=3D=\r\ncial chars.";
+        assertEquals(expected, qpcodec.encode(plain));
+                
+        plain ="This is a example of a quoted-printable text file. This might contain ta\tbs as well.";
+        expected = "This is a example of a quoted-printable text file. This might contain ta=09=\r\nbs as well.";
+        assertEquals(expected, qpcodec.encode(plain));
+    }
+
+    @Test
+    public void testUltimateSoftBreak() throws Exception {
+        final QuotedPrintableCodec qpcodec = new QuotedPrintableCodec(true);
+
+        String plain ="This is a example of a quoted-printable text file. There is no end to it\t";
+        String expected = "This is a example of a quoted-printable text file. There is no end to i=\r\nt=09";
+
+        assertEquals(expected, qpcodec.encode(plain));
+
+        plain ="This is a example of a quoted-printable text file. There is no end to it ";
+        expected = "This is a example of a quoted-printable text file. There is no end to i=\r\nt=20";
+
+        assertEquals(expected, qpcodec.encode(plain));
+
+        // whitespace before soft break
+        plain ="This is a example of a quoted-printable text file. There is no end to   ";
+        expected = "This is a example of a quoted-printable text file. There is no end to=20=\r\n =20";
+
+        assertEquals(expected, qpcodec.encode(plain));
+
+        // non-printable character before soft break
+        plain ="This is a example of a quoted-printable text file. There is no end to=  ";
+        expected = "This is a example of a quoted-printable text file. There is no end to=3D=\r\n =20";
+
+        assertEquals(expected, qpcodec.encode(plain));
+    }
+
+    @Test
+    public void testFinalBytes() throws Exception {
+        // whitespace, but does not need to be encoded
+        final String plain ="This is a example of a quoted=printable text file. There is no tt";
+        final String expected = "This is a example of a quoted=3Dprintable text file. There is no tt";
+
+        assertEquals(expected, new QuotedPrintableCodec(true).encode(plain));
     }
 }

@@ -201,7 +201,13 @@
 "lEndEr"	""	"$"	"lYnder" 
 "lendEr"	""	"$"	"lYnder" 
 "lEnder"	""	"$"	"lYnder" 
-             
+
+// burg = berg
+"bUrk" "" "$" "(burk|berk)"
+"burk" "" "$" "(burk|berk)"
+"bUrg" "" "$" "(burk|berk)"
+"burg" "" "$" "(burk|berk)"
+
 // CONSONANTS {z & Z; s & S} are approximately interchangeable
 "s" "" "[rmnl]" "z"
 "S" "" "[rmnl]" "z"

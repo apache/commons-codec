@@ -156,8 +156,6 @@ public class DaitchMokotoffSoundex implements StringEncoder {
         }
     }
 
-    // static identifiers used during parsing of the rule file
-
     /**
      * Inner class for storing rules.
      */
@@ -210,11 +208,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
 
     private static final String COMMENT = "//";
     private static final String DOUBLE_QUOTE = "\"";
-    /** Folding rules. */
-    private static final Map<Character, Character> FOLDINGS = new HashMap<Character, Character>();
 
-    /** The code length of a DM soundex value. */
-    private static final int MAX_LENGTH = 6;
     private static final String MULTILINE_COMMENT_END = "*/";
 
     private static final String MULTILINE_COMMENT_START = "/*";
@@ -222,8 +216,14 @@ public class DaitchMokotoffSoundex implements StringEncoder {
     /** The resource file containing the replacement and folding rules */
     private static final String RESOURCE_FILE = "org/apache/commons/codec/language/dmrules.txt";
 
+    /** The code length of a DM soundex value. */
+    private static final int MAX_LENGTH = 6;
+
     /** Transformation rules indexed by the first character of their pattern. */
     private static final Map<Character, List<Rule>> RULES = new HashMap<Character, List<Rule>>();
+
+    /** Folding rules. */
+    private static final Map<Character, Character> FOLDINGS = new HashMap<Character, Character>();
 
     static {
         final InputStream rulesIS = DaitchMokotoffSoundex.class.getClassLoader().getResourceAsStream(RESOURCE_FILE);
@@ -390,8 +390,6 @@ public class DaitchMokotoffSoundex implements StringEncoder {
         return sb.toString();
     }
 
-    // -- BEGIN STATIC METHODS --//
-
     /**
      * Encodes an Object using the Daitch-Mokotoff soundex algorithm without branching.
      * <p>
@@ -437,8 +435,6 @@ public class DaitchMokotoffSoundex implements StringEncoder {
         }
         return soundex(source, false)[0];
     }
-
-    // -- BEGIN INNER CLASSES --//
 
     /**
      * Encodes a String using the Daitch-Mokotoff soundex algorithm with branching.
