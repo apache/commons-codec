@@ -48,12 +48,12 @@ import org.apache.commons.codec.binary.StringUtils;
  * Depending on the selected {@code strict} parameter, this class will implement a different set of rules of the
  * quoted-printable spec:
  * <ul>
- *   <li>{@code strict=false}: only rules #1 and #2 are implemented 
+ *   <li>{@code strict=false}: only rules #1 and #2 are implemented
  *   <li>{@code strict=true}: all rules #1 through #5 are implemented
  * </ul>
  * Originally, this class only supported the non-strict mode, but the codec in this partial form could already be used
- * for certain applications that do not require quoted-printable line formatting (rules #3, #4, #5), for instance Q codec.
- * The strict mode has been added in 1.10.
+ * for certain applications that do not require quoted-printable line formatting (rules #3, #4, #5), for instance
+ * Q codec. The strict mode has been added in 1.10.
  * <p>
  * This class is immutable and thread-safe.
  *
@@ -278,7 +278,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
             printable = PRINTABLE_CHARS;
         }
         final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        
+
         if (strict) {
             int pos = 1;
             // encode up to buffer.length - 3, the last three octets will be treated
