@@ -42,7 +42,7 @@ The <action> type attribute can be add,update,fix,remove.
     <author>Gary Gregory</author>
   </properties>
   <body>
-    <release version="1.10" date="DD November 2014" description="Feature and fix release.">
+    <release version="1.10" date="5 November 2014" description="Feature and fix release.">
       <action dev="ggregory" type="add" issue="CODEC-192" due-to="Thomas Neidhart">Add Daitch-Mokotoff Soundex</action>   
       <action dev="ggregory" type="add" issue="CODEC-121" due-to="Thomas Neidhart, Java John">QuotedPrintableCodec does not support soft line break per the 'quoted-printable' example on Wikipedia</action>   
       <action dev="tn" type="fix" issue="CODEC-185" due-to="Sean Busbey">Added clarification to Javadoc of Base64 concerning the use of the urlSafe parameter</action>   
