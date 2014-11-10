@@ -233,7 +233,7 @@ public class HexTest {
     }
 
     @Test
-    public void testDecodeStringOddCharacters() {
+    public void testDecodeHexStringOddCharacters() {
         try {
             new Hex().decode("6");
             fail("An exception wasn't thrown when trying to decode an odd number of characters");
