@@ -206,13 +206,8 @@ public class HexTest {
     }
 
     @Test
-    public void testDecodeByteBufferEmpty() throws DecoderException {
-        assertTrue(Arrays.equals(new byte[0], new Hex().decode(ByteBuffer.allocate(0))));
-    }
-
-    @Test
-    public void testDecodeCharArrayEmpty() throws DecoderException {
-        assertTrue(Arrays.equals(new byte[0], Hex.decodeHex(new char[0])));
+    public void testDecodeByteArrayObjectEmpty() throws DecoderException {
+        assertTrue(Arrays.equals(new byte[0], (byte[]) new Hex().decode((Object) new byte[0])));
     }
 
     @Test
@@ -226,6 +221,16 @@ public class HexTest {
     }
 
     @Test
+    public void testDecodeByteBufferEmpty() throws DecoderException {
+        assertTrue(Arrays.equals(new byte[0], new Hex().decode(ByteBuffer.allocate(0))));
+    }
+
+    @Test
+    public void testDecodeByteBufferObjectEmpty() throws DecoderException {
+        assertTrue(Arrays.equals(new byte[0], (byte[]) new Hex().decode((Object) ByteBuffer.allocate(0))));
+    }
+
+    @Test
     public void testDecodeByteBufferOddCharacters() {
         ByteBuffer buffer = ByteBuffer.allocate(1);
         buffer.put((byte) 65);
@@ -235,6 +240,11 @@ public class HexTest {
         } catch (final DecoderException e) {
             // Expected exception
         }
+    }
+
+    @Test
+    public void testDecodeCharArrayEmpty() throws DecoderException {
+        assertTrue(Arrays.equals(new byte[0], Hex.decodeHex(new char[0])));
     }
 
     @Test
@@ -278,13 +288,23 @@ public class HexTest {
     }
 
     @Test
-    public void testDecodeByteArrayObjectEmpty() throws DecoderException {
-        assertTrue(Arrays.equals(new byte[0], (byte[]) new Hex().decode((Object) new byte[0])));
+    public void testEncodeByteArrayEmpty() throws EncoderException {
+        assertTrue(Arrays.equals(new byte[0], new Hex().encode(new byte[0])));
     }
 
     @Test
-    public void testDecodeByteBufferObjectEmpty() throws DecoderException {
-        assertTrue(Arrays.equals(new byte[0], (byte[]) new Hex().decode((Object) ByteBuffer.allocate(0))));
+    public void testEncodeByteArrayObjectEmpty() throws EncoderException {
+        assertTrue(Arrays.equals(new char[0], (char[]) new Hex().encode((Object) new byte[0])));
+    }
+
+    @Test
+    public void testEncodeByteBufferEmpty() throws EncoderException {
+        assertTrue(Arrays.equals(new byte[0], new Hex().encode(ByteBuffer.allocate(0))));
+    }
+
+    @Test
+    public void testEncodeByteBufferObjectEmpty() throws EncoderException {
+        assertTrue(Arrays.equals(new char[0], (char[]) new Hex().encode((Object) ByteBuffer.allocate(0))));
     }
 
     @Test
@@ -337,27 +357,8 @@ public class HexTest {
     }
 
     @Test
-    public void testEncodeHexByteBufferEmpty() throws EncoderException {
-        assertTrue(Arrays.equals(new char[0], Hex.encodeHex(ByteBuffer.allocate(0))));
-        assertTrue(Arrays.equals(new byte[0], new Hex().encode(ByteBuffer.allocate(0))));
-    }
-
-    @Test
     public void testEncodeHexByteArrayHelloWorldLowerCaseHex() {
         final byte[] b = StringUtils.getBytesUtf8("Hello World");
-        final String expected = "48656c6c6f20576f726c64";
-        char[] actual;
-        actual = Hex.encodeHex(b);
-        assertEquals(expected, new String(actual));
-        actual = Hex.encodeHex(b, true);
-        assertEquals(expected, new String(actual));
-        actual = Hex.encodeHex(b, false);
-        assertFalse(expected.equals(new String(actual)));
-    }
-
-    @Test
-    public void testEncodeHexByteBufferHelloWorldLowerCaseHex() {
-        final ByteBuffer b = StringUtils.getByteBufferUtf8("Hello World");
         final String expected = "48656c6c6f20576f726c64";
         char[] actual;
         actual = Hex.encodeHex(b);
@@ -382,6 +383,31 @@ public class HexTest {
     }
 
     @Test
+    public void testEncodeHexByteArrayZeroes() {
+        final char[] c = Hex.encodeHex(new byte[36]);
+        assertEquals("000000000000000000000000000000000000000000000000000000000000000000000000", new String(c));
+    }
+
+    @Test
+    public void testEncodeHexByteBufferEmpty() throws EncoderException {
+        assertTrue(Arrays.equals(new char[0], Hex.encodeHex(ByteBuffer.allocate(0))));
+        assertTrue(Arrays.equals(new byte[0], new Hex().encode(ByteBuffer.allocate(0))));
+    }
+
+    @Test
+    public void testEncodeHexByteBufferHelloWorldLowerCaseHex() {
+        final ByteBuffer b = StringUtils.getByteBufferUtf8("Hello World");
+        final String expected = "48656c6c6f20576f726c64";
+        char[] actual;
+        actual = Hex.encodeHex(b);
+        assertEquals(expected, new String(actual));
+        actual = Hex.encodeHex(b, true);
+        assertEquals(expected, new String(actual));
+        actual = Hex.encodeHex(b, false);
+        assertFalse(expected.equals(new String(actual)));
+    }
+
+    @Test
     public void testEncodeHexByteBufferHelloWorldUpperCaseHex() {
         final ByteBuffer b = StringUtils.getByteBufferUtf8("Hello World");
         final String expected = "48656C6C6F20576F726C64";
@@ -392,12 +418,6 @@ public class HexTest {
         assertFalse(expected.equals(new String(actual)));
         actual = Hex.encodeHex(b, false);
         assertTrue(expected.equals(new String(actual)));
-    }
-
-    @Test
-    public void testEncodeHexByteArrayZeroes() {
-        final char[] c = Hex.encodeHex(new byte[36]);
-        assertEquals("000000000000000000000000000000000000000000000000000000000000000000000000", new String(c));
     }
 
     @Test
@@ -419,26 +439,6 @@ public class HexTest {
     @Test
     public void testGetCharsetName() throws UnsupportedEncodingException, DecoderException {
         Assert.assertEquals(Charsets.UTF_8.name(), new Hex(Charsets.UTF_8).getCharsetName());
-    }
-
-    @Test
-    public void testEncodeByteArrayEmpty() throws EncoderException {
-        assertTrue(Arrays.equals(new byte[0], new Hex().encode(new byte[0])));
-    }
-
-    @Test
-    public void testEncodeByteArrayObjectEmpty() throws EncoderException {
-        assertTrue(Arrays.equals(new char[0], (char[]) new Hex().encode((Object) new byte[0])));
-    }
-
-    @Test
-    public void testEncodeByteBufferEmpty() throws EncoderException {
-        assertTrue(Arrays.equals(new byte[0], new Hex().encode(ByteBuffer.allocate(0))));
-    }
-
-    @Test
-    public void testEncodeByteBufferObjectEmpty() throws EncoderException {
-        assertTrue(Arrays.equals(new char[0], (char[]) new Hex().encode((Object) ByteBuffer.allocate(0))));
     }
 
     @Test
