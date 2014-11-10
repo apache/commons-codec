@@ -178,16 +178,6 @@ public class HexTest {
     }
 
     @Test
-    public void testDecodeByteArrayOddCharacters() {
-        try {
-            new Hex().decode(new byte[]{65});
-            fail("An exception wasn't thrown when trying to decode an odd number of characters");
-        } catch (final DecoderException e) {
-            // Expected exception
-        }
-    }
-
-    @Test
     public void testDecodeBadCharacterPos0() {
         try {
             new Hex().decode("q0");
@@ -202,6 +192,22 @@ public class HexTest {
         try {
             new Hex().decode("0q");
             fail("An exception wasn't thrown when trying to decode an illegal character");
+        } catch (final DecoderException e) {
+            // Expected exception
+        }
+    }
+
+    @Test
+    public void testDecodeByteArrayEmpty() throws DecoderException {
+        assertTrue(Arrays.equals(new byte[0], Hex.decodeHex(new char[0])));
+        assertTrue(Arrays.equals(new byte[0], new Hex().decode(new byte[0])));
+    }
+
+    @Test
+    public void testDecodeByteArrayOddCharacters() {
+        try {
+            new Hex().decode(new byte[]{65});
+            fail("An exception wasn't thrown when trying to decode an odd number of characters");
         } catch (final DecoderException e) {
             // Expected exception
         }
@@ -240,12 +246,6 @@ public class HexTest {
         } catch (final DecoderException e) {
             // Expected exception
         }
-    }
-
-    @Test
-    public void testDecodeByteArrayEmpty() throws DecoderException {
-        assertTrue(Arrays.equals(new byte[0], Hex.decodeHex(new char[0])));
-        assertTrue(Arrays.equals(new byte[0], new Hex().decode(new byte[0])));
     }
 
     @Test
@@ -303,17 +303,6 @@ public class HexTest {
     }
 
     @Test
-    public void testEncodeStringEmpty() throws EncoderException {
-        assertTrue(Arrays.equals(new char[0], (char[]) new Hex().encode("")));
-    }
-
-    @Test
-    public void testEncodeHexByteArrayZeroes() {
-        final char[] c = Hex.encodeHex(new byte[36]);
-        assertEquals("000000000000000000000000000000000000000000000000000000000000000000000000", new String(c));
-    }
-
-    @Test
     public void testEncodeHexByteArrayHelloWorldLowerCaseHex() {
         final byte[] b = StringUtils.getBytesUtf8("Hello World");
         final String expected = "48656c6c6f20576f726c64";
@@ -337,6 +326,17 @@ public class HexTest {
         assertFalse(expected.equals(new String(actual)));
         actual = Hex.encodeHex(b, false);
         assertTrue(expected.equals(new String(actual)));
+    }
+
+    @Test
+    public void testEncodeHexByteArrayZeroes() {
+        final char[] c = Hex.encodeHex(new byte[36]);
+        assertEquals("000000000000000000000000000000000000000000000000000000000000000000000000", new String(c));
+    }
+
+    @Test
+    public void testEncodeStringEmpty() throws EncoderException {
+        assertTrue(Arrays.equals(new char[0], (char[]) new Hex().encode("")));
     }
 
     @Test
