@@ -97,7 +97,7 @@ public class HexTest {
     /**
      * @param data
      */
-    private void checkDecodeHexOddCharacters(final char[] data) {
+    private void checkDecodeHexCharArrayOddCharacters(final char[] data) {
         try {
             Hex.decodeHex(data);
             fail("An exception wasn't thrown when trying to decode an odd number of characters");
@@ -218,18 +218,18 @@ public class HexTest {
     }
 
     @Test
-    public void testDecodeHexOddCharacters1() {
-        checkDecodeHexOddCharacters(new char[]{'A'});
+    public void testDecodeHexCharArrayOddCharacters1() {
+        checkDecodeHexCharArrayOddCharacters(new char[]{'A'});
     }
 
     @Test
-    public void testDecodeHexOddCharacters3() {
-        checkDecodeHexOddCharacters(new char[]{'A', 'B', 'C'});
+    public void testDecodeHexCharArrayOddCharacters3() {
+        checkDecodeHexCharArrayOddCharacters(new char[]{'A', 'B', 'C'});
     }
 
     @Test
-    public void testDecodeHexOddCharacters5() {
-        checkDecodeHexOddCharacters(new char[]{'A', 'B', 'C', 'D', 'E'});
+    public void testDecodeHexCharArrayOddCharacters5() {
+        checkDecodeHexCharArrayOddCharacters(new char[]{'A', 'B', 'C', 'D', 'E'});
     }
 
     @Test
