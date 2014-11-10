@@ -43,7 +43,7 @@ The <action> type attribute can be add,update,fix,remove.
   </properties>
   <body>
     <release version="1.11" date="DD MM 2014" description="Feature and fix release.">
-      
+      <action dev="ggregory" type="add" issue="CODEC-194">Support java.nio.ByteBuffer in org.apache.commons.codec.binary.Hex</action>         
     </release>   
     <release version="1.10" date="5 November 2014" description="Feature and fix release.">
       <action dev="ggregory" type="add" issue="CODEC-192" due-to="Thomas Neidhart">Add Daitch-Mokotoff Soundex</action>   
