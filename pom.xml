@@ -30,7 +30,7 @@ limitations under the License.
   <groupId>commons-codec</groupId>
   <artifactId>commons-codec</artifactId>
   <!-- Remember to update the version in default.properties as well -->
-  <version>1.10-SNAPSHOT</version>
+  <version>1.11-SNAPSHOT</version>
   <name>Apache Commons Codec</name>
   <inceptionYear>2002</inceptionYear>
   <description>
@@ -219,7 +219,7 @@ limitations under the License.
     <maven.compiler.source>1.6</maven.compiler.source>
     <maven.compiler.target>1.6</maven.compiler.target>
     <commons.componentid>codec</commons.componentid>
-    <commons.release.version>1.10</commons.release.version>
+    <commons.release.version>1.11</commons.release.version>
     <!-- The RC version used in the staging repository URL. -->
     <commons.rc.version>RC1</commons.rc.version>
     <commons.jira.id>CODEC</commons.jira.id>
