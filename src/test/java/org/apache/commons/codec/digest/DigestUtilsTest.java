@@ -18,11 +18,13 @@
 package org.apache.commons.codec.digest;
 
 import static org.apache.commons.codec.binary.StringUtils.getBytesUtf8;
+import static org.apache.commons.codec.binary.StringUtils.getByteBufferUtf8;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.security.MessageDigest;
 import java.util.Random;
 
@@ -79,7 +81,10 @@ public class DigestUtilsTest {
 
         assertEquals(DigestUtils.md2Hex(testData),
                 DigestUtils.md2Hex(new ByteArrayInputStream(testData)));
-    }
+
+        assertEquals(DigestUtils.md2Hex(testData),
+                DigestUtils.md2Hex(ByteBuffer.wrap(testData)));
+}
 
     /**
      * An MD2 hash converted to hex should always be 32 characters.
@@ -132,13 +137,16 @@ public class DigestUtilsTest {
 
         assertEquals(DigestUtils.md5Hex(testData),
                 DigestUtils.md5Hex(new ByteArrayInputStream(testData)));
-    }
+
+        assertEquals(DigestUtils.md5Hex(testData),
+                DigestUtils.md5Hex(ByteBuffer.wrap(testData)));
+}
 
     /**
      * An MD5 hash converted to hex should always be 32 characters.
      */
     @Test
-    public void testMd5HexLength() {
+    public void testMd5HexLengthForBytes() {
         String hashMe = "this is some string that is longer than 32 characters";
         String hash = DigestUtils.md5Hex(getBytesUtf8(hashMe));
         assertEquals(32, hash.length());
@@ -149,16 +157,44 @@ public class DigestUtilsTest {
     }
 
     /**
+     * An MD5 hash converted to hex should always be 32 characters.
+     */
+    @Test
+    public void testMd5HexLengthForByteBuffer() {
+        String hashMe = "this is some string that is longer than 32 characters";
+        String hash = DigestUtils.md5Hex(getByteBufferUtf8(hashMe));
+        assertEquals(32, hash.length());
+
+        hashMe = "length < 32";
+        hash = DigestUtils.md5Hex(getByteBufferUtf8(hashMe));
+        assertEquals(32, hash.length());
+    }
+
+    /**
      * An MD5 hash should always be a 16 element byte[].
      */
     @Test
-    public void testMd5Length() {
+    public void testMd5LengthForBytes() {
         String hashMe = "this is some string that is longer than 16 characters";
         byte[] hash = DigestUtils.md5(getBytesUtf8(hashMe));
         assertEquals(16, hash.length);
 
         hashMe = "length < 16";
         hash = DigestUtils.md5(getBytesUtf8(hashMe));
+        assertEquals(16, hash.length);
+    }
+
+    /**
+     * An MD5 hash should always be a 16 element byte[].
+     */
+    @Test
+    public void testMd5LengthForByteBuffer() {
+        String hashMe = "this is some string that is longer than 16 characters";
+        byte[] hash = DigestUtils.md5(getByteBufferUtf8(hashMe));
+        assertEquals(16, hash.length);
+
+        hashMe = "length < 16";
+        hash = DigestUtils.md5(getByteBufferUtf8(hashMe));
         assertEquals(16, hash.length);
     }
 
@@ -174,6 +210,8 @@ public class DigestUtilsTest {
             DigestUtils.sha1Hex("abcdbcdecdefdefgefghfghighij" + "hijkijkljklmklmnlmnomnopnopq"));
         assertEquals(DigestUtils.sha1Hex(testData),
                 DigestUtils.sha1Hex(new ByteArrayInputStream(testData)));
+        assertEquals(DigestUtils.sha1Hex(testData),
+                DigestUtils.sha1Hex(ByteBuffer.wrap(testData)));
     }
 
     @Test
@@ -189,6 +227,24 @@ public class DigestUtilsTest {
         messageDigest = DigestUtils.getSha1Digest();
         DigestUtils.updateDigest(messageDigest, d1.getBytes());
         DigestUtils.updateDigest(messageDigest, d2.getBytes());
+        final String actualResult = Hex.encodeHexString(messageDigest.digest());
+
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    public void testSha1UpdateWithByteBuffer(){
+        final String d1 = "C'est un homme qui rentre dans un café, et plouf";
+        final String d2 = "C'est un homme, c'est qu'une tête, on lui offre un cadeau: 'oh... encore un chapeau!'";
+
+        MessageDigest messageDigest = DigestUtils.getSha1Digest();
+        messageDigest.update(d1.getBytes());
+        messageDigest.update(d2.getBytes());
+        final String expectedResult = Hex.encodeHexString(messageDigest.digest());
+
+        messageDigest = DigestUtils.getSha1Digest();
+        DigestUtils.updateDigest(messageDigest, ByteBuffer.wrap(d1.getBytes()));
+        DigestUtils.updateDigest(messageDigest, ByteBuffer.wrap(d2.getBytes()));
         final String actualResult = Hex.encodeHexString(messageDigest.digest());
 
         assertEquals(expectedResult, actualResult);
@@ -224,6 +280,8 @@ public class DigestUtilsTest {
 
     assertEquals(DigestUtils.sha256Hex(testData),
             DigestUtils.sha256Hex(new ByteArrayInputStream(testData)));
+    assertEquals(DigestUtils.sha256Hex(testData),
+            DigestUtils.sha256Hex(ByteBuffer.wrap(testData)));
     }
 
     @Test
@@ -241,6 +299,8 @@ public class DigestUtilsTest {
                        "hijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu"));
     assertEquals(DigestUtils.sha384Hex(testData),
             DigestUtils.sha384Hex(new ByteArrayInputStream(testData)));
+    assertEquals(DigestUtils.sha384Hex(testData),
+            DigestUtils.sha384Hex(ByteBuffer.wrap(testData)));
     }
 
     @Test
@@ -258,6 +318,8 @@ public class DigestUtilsTest {
                        "hijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu"));
     assertEquals(DigestUtils.sha512Hex(testData),
             DigestUtils.sha512Hex(new ByteArrayInputStream(testData)));
+    assertEquals(DigestUtils.sha512Hex(testData),
+            DigestUtils.sha512Hex(ByteBuffer.wrap(testData)));
 }
 
     @SuppressWarnings("deprecation") // deliberate tests of deprecated code
