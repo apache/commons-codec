@@ -293,9 +293,13 @@ public class HexTest {
     }
 
     @Test
-    public void testEncodeEmpty() throws EncoderException {
+    public void testEncodeHexBytesEmpty() throws EncoderException {
         assertTrue(Arrays.equals(new char[0], Hex.encodeHex(new byte[0])));
         assertTrue(Arrays.equals(new byte[0], new Hex().encode(new byte[0])));
+    }
+
+    @Test
+    public void testEncodeStringEmpty() throws EncoderException {
         assertTrue(Arrays.equals(new char[0], (char[]) new Hex().encode("")));
     }
 
