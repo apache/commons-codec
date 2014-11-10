@@ -130,6 +130,22 @@ public class DigestUtils {
     }
 
     /**
+     * Returns an SHA-224 digest.
+     * <p>
+     * Java 8 only.
+     * </p>
+     *
+     * @return An SHA-224 digest instance.
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught on Java 7 and older, SHA-224 is a built-in
+     *             algorithm on Java 8
+     * @see MessageDigestAlgorithms#SHA_224
+     */
+    public static MessageDigest getSha224Digest() {
+        return getDigest(MessageDigestAlgorithms.SHA_224);
+    }
+
+    /**
      * Returns an SHA-256 digest.
      * <p>
      * Throws a <code>RuntimeException</code> on JRE versions prior to 1.4.0.
@@ -527,6 +543,135 @@ public static byte[] sha(final InputStream data) throws IOException {
         return Hex.encodeHexString(sha1(data));
     }
 
+    /**
+     * Calculates the SHA-224 digest and returns the value as a <code>byte[]</code>.
+     * <p>
+     * Throws a {@link IllegalArgumentException} on JRE versions prior to 1.4.0.
+     * </p>
+     *
+     * @param data
+     *            Data to digest
+     * @return SHA-224 digest
+     * @throws IllegalArgumentException thrown on JRE versions prior to 1.8.0.
+     * @since 1.11
+     */
+    public static byte[] sha224(final byte[] data) {
+        return getSha224Digest().digest(data);
+    }
+
+    /**
+     * Calculates the SHA-224 digest and returns the value as a <code>byte[]</code>.
+     *
+     * @param data
+     *            Data to digest
+     * @return SHA-224 digest
+     * @throws IllegalArgumentException thrown on JRE versions prior to 1.8.0.
+     * @since 1.11
+     */
+    public static byte[] sha224(final ByteBuffer data) {
+        return digest(getSha224Digest(), data);
+    }
+
+    /**
+     * Calculates the SHA-224 digest and returns the value as a <code>byte[]</code>.
+     * <p>
+     * Throws a {@link IllegalArgumentException} on JRE versions prior to 1.4.0.
+     * </p>
+     *
+     * @param data
+     *            Data to digest
+     * @return SHA-224 digest
+     * @throws IOException
+     *             On error reading from the stream
+     * @throws IllegalArgumentException thrown on JRE versions prior to 1.8.0.
+     * @since 1.11
+     */
+    public static byte[] sha224(final InputStream data) throws IOException {
+        return digest(getSha224Digest(), data);
+    }
+
+    /**
+     * Calculates the SHA-224 digest and returns the value as a <code>byte[]</code>.
+     * <p>
+     * Throws a {@link IllegalArgumentException} on JRE versions prior to 1.4.0.
+     * </p>
+     *
+     * @param data
+     *            Data to digest; converted to bytes using {@link StringUtils#getBytesUtf8(String)}
+     * @return SHA-224 digest
+     * @throws IllegalArgumentException thrown on JRE versions prior to 1.8.0.
+     * @since 1.11
+     */
+    public static byte[] sha224(final String data) {
+        return sha224(StringUtils.getBytesUtf8(data));
+    }
+
+    /**
+     * Calculates the SHA-224 digest and returns the value as a hex string.
+     * <p>
+     * Throws a {@link IllegalArgumentException} on JRE versions prior to 1.4.0.
+     * </p>
+     *
+     * @param data
+     *            Data to digest
+     * @return SHA-224 digest as a hex string
+     * @throws IllegalArgumentException thrown on JRE versions prior to 1.8.0.
+     * @since 1.11
+     */
+    public static String sha224Hex(final byte[] data) {
+        return Hex.encodeHexString(sha224(data));
+    }
+
+    /**
+     * Calculates the SHA-224 digest and returns the value as a hex string.
+     * <p>
+     * Throws a {@link IllegalArgumentException} on JRE versions prior to 1.4.0.
+     * </p>
+     *
+     * @param data
+     *            Data to digest
+     * @return SHA-224 digest as a hex string
+     * @throws IllegalArgumentException thrown on JRE versions prior to 1.8.0.
+     * @since 1.11
+     */
+    public static String sha224Hex(final ByteBuffer data) {
+        return Hex.encodeHexString(sha224(data));
+    }
+
+    /**
+     * Calculates the SHA-224 digest and returns the value as a hex string.
+     * <p>
+     * Throws a {@link IllegalArgumentException} on JRE versions prior to 1.4.0.
+     * </p>
+     *
+     * @param data
+     *            Data to digest
+     * @return SHA-224 digest as a hex string
+     * @throws IOException
+     *             On error reading from the stream
+     * @throws IllegalArgumentException thrown on JRE versions prior to 1.8.0.
+     * @since 1.11
+     */
+    public static String sha224Hex(final InputStream data) throws IOException {
+        return Hex.encodeHexString(sha224(data));
+    }
+
+    /**
+     * Calculates the SHA-224 digest and returns the value as a hex string.
+     * <p>
+     * Throws a {@link IllegalArgumentException} on JRE versions prior to 1.4.0.
+     * </p>
+     *
+     * @param data
+     *            Data to digest
+     * @return SHA-224 digest as a hex string
+     * @throws IllegalArgumentException thrown on JRE versions prior to 1.8.0.
+     * @since 1.11
+     */
+    public static String sha224Hex(final String data) {
+        return Hex.encodeHexString(sha224(data));
+    }
+    
     /**
      * Calculates the SHA-256 digest and returns the value as a <code>byte[]</code>.
      * <p>

@@ -43,6 +43,7 @@ The <action> type attribute can be add,update,fix,remove.
   </properties>
   <body>
     <release version="1.11" date="DD MM 2014" description="Feature and fix release.">
+      <action dev="ggregory" type="add" issue="CODEC-195">Support SHA-224 in DigestUtils on Java 8</action>         
       <action dev="ggregory" type="add" issue="CODEC-194">Support java.nio.ByteBuffer in org.apache.commons.codec.binary.Hex</action>         
       <action dev="ggregory" type="add" issue="CODEC-193">Support java.nio.ByteBuffer in DigestUtils</action>         
     </release>   

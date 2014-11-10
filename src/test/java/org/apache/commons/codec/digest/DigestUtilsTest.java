@@ -30,6 +30,9 @@ import java.util.Random;
 
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.binary.StringUtils;
+import org.apache.commons.lang3.JavaVersion;
+import org.apache.commons.lang3.SystemUtils;
+import org.junit.Assume;
 import org.junit.Test;
 
 /**
@@ -266,6 +269,16 @@ public class DigestUtilsTest {
         final String actualResult = Hex.encodeHexString(messageDigest.digest());
 
         assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    public void testSha224() throws IOException {
+        Assume.assumeTrue(SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_1_8));
+        assertEquals("d14a028c2a3a2bc9476102bb288234c415a2b01f828ea62ac5b3e42f", DigestUtils.sha224Hex(""));
+        assertEquals("730e109bd7a8a32b1cb9d9a09aa2325d2430587ddbc0c38bad911525",
+                DigestUtils.sha224Hex("The quick brown fox jumps over the lazy dog"));
+
+        // Examples from FIPS 180-4?
     }
 
     @Test
