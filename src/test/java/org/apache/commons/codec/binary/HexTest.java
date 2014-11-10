@@ -23,6 +23,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
 import java.util.Arrays;
@@ -199,8 +200,12 @@ public class HexTest {
 
     @Test
     public void testDecodeByteArrayEmpty() throws DecoderException {
-        assertTrue(Arrays.equals(new byte[0], Hex.decodeHex(new char[0])));
         assertTrue(Arrays.equals(new byte[0], new Hex().decode(new byte[0])));
+    }
+
+    @Test
+    public void testDecodeCharArrayEmpty() throws DecoderException {
+        assertTrue(Arrays.equals(new byte[0], Hex.decodeHex(new char[0])));
     }
 
     @Test
