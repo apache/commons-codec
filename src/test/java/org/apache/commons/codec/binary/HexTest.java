@@ -300,7 +300,7 @@ public class HexTest {
     }
 
     @Test
-    public void testEncodeZeroes() {
+    public void testEncodeHexBytesZeroes() {
         final char[] c = Hex.encodeHex(new byte[36]);
         assertEquals("000000000000000000000000000000000000000000000000000000000000000000000000", new String(c));
     }
