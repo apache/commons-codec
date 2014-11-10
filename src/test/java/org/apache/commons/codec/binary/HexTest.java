@@ -178,7 +178,7 @@ public class HexTest {
     }
 
     @Test
-    public void testDecodeArrayOddCharacters() {
+    public void testDecodeByteArrayOddCharacters() {
         try {
             new Hex().decode(new byte[]{65});
             fail("An exception wasn't thrown when trying to decode an odd number of characters");
@@ -297,7 +297,7 @@ public class HexTest {
     }
 
     @Test
-    public void testEncodeHexBytesEmpty() throws EncoderException {
+    public void testEncodeHexByteArrayEmpty() throws EncoderException {
         assertTrue(Arrays.equals(new char[0], Hex.encodeHex(new byte[0])));
         assertTrue(Arrays.equals(new byte[0], new Hex().encode(new byte[0])));
     }
@@ -308,13 +308,13 @@ public class HexTest {
     }
 
     @Test
-    public void testEncodeHexBytesZeroes() {
+    public void testEncodeHexByteArrayZeroes() {
         final char[] c = Hex.encodeHex(new byte[36]);
         assertEquals("000000000000000000000000000000000000000000000000000000000000000000000000", new String(c));
     }
 
     @Test
-    public void testEncodeHexBytesHelloWorldLowerCaseHex() {
+    public void testEncodeHexByteArrayHelloWorldLowerCaseHex() {
         final byte[] b = StringUtils.getBytesUtf8("Hello World");
         final String expected = "48656c6c6f20576f726c64";
         char[] actual;
@@ -327,7 +327,7 @@ public class HexTest {
     }
 
     @Test
-    public void testEncodeHexBytesHelloWorldUpperCaseHex() {
+    public void testEncodeHexByteArrayHelloWorldUpperCaseHex() {
         final byte[] b = StringUtils.getBytesUtf8("Hello World");
         final String expected = "48656C6C6F20576F726C64";
         char[] actual;
