@@ -33,8 +33,6 @@ import org.apache.commons.codec.binary.StringUtils;
  */
 public class DigestUtils {
 
-    private static final int STREAM_BUFFER_LENGTH = 1024;
-
     /**
      * Read through an InputStream and returns the digest for the data
      *
@@ -816,4 +814,6 @@ public class DigestUtils {
         messageDigest.update(StringUtils.getBytesUtf8(valueToDigest));
         return messageDigest;
     }
+
+    private static final int STREAM_BUFFER_LENGTH = 1024;
 }
