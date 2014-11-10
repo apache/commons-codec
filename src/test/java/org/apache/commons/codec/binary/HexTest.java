@@ -306,7 +306,7 @@ public class HexTest {
     }
 
     @Test
-    public void testHelloWorldLowerCaseHex() {
+    public void testEncodeHexBytesHelloWorldLowerCaseHex() {
         final byte[] b = StringUtils.getBytesUtf8("Hello World");
         final String expected = "48656c6c6f20576f726c64";
         char[] actual;
@@ -319,7 +319,7 @@ public class HexTest {
     }
 
     @Test
-    public void testHelloWorldUpperCaseHex() {
+    public void testEncodeHexBytesHelloWorldUpperCaseHex() {
         final byte[] b = StringUtils.getBytesUtf8("Hello World");
         final String expected = "48656C6C6F20576F726C64";
         char[] actual;
