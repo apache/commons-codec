@@ -162,6 +162,7 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
      * 
      * @throws IOException
      *             if an I/O error occurs.
+     * @since 1.11
      */
     public void eof() throws IOException {
         // Notify encoder of EOF (-1).
