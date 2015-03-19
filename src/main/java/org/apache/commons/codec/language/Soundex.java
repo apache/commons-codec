@@ -168,7 +168,7 @@ public class Soundex implements StringEncoder {
     }
 
     /**
-     * Used internally by the SoundEx algorithm.
+     * Used internally by the Soundex algorithm.
      *
      * Consonants from the same code group separated by W or H are treated as one.
      *
