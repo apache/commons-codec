@@ -185,12 +185,13 @@ public class Soundex implements StringEncoder {
         final char mappedChar = this.map(str.charAt(index));
         // HW rule check
         if (index > 1 && mappedChar != '0') {
-            final char hwChar = str.charAt(index - 1);
-            if ('H' == hwChar || 'W' == hwChar) {
-                final char preHWChar = str.charAt(index - 2);
-                final char firstCode = this.map(preHWChar);
-                if (firstCode == mappedChar || 'H' == preHWChar || 'W' == preHWChar) {
+            for (int i=index-1 ; i>=0 ; i--) {
+                final char prevChar = str.charAt(i);
+                if (this.map(prevChar)==mappedChar) {
                     return 0;
+                }
+                if ('H'!=prevChar && 'W'!=prevChar) {
+                    break;
                 }
             }
         }
