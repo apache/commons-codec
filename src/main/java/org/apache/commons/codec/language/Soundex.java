@@ -41,7 +41,7 @@ public class Soundex implements StringEncoder {
      *
      * @see #US_ENGLISH_MAPPING
      */
-    public static final String US_ENGLISH_MAPPING_STRING = "01230120022455012623010202";
+    public static final String US_ENGLISH_MAPPING_STRING = "0123012#02245501262301#202";
 
     /**
      * This is a default mapping of the 26 letters used in US English. A value of <code>0</code> for a letter position
@@ -168,37 +168,6 @@ public class Soundex implements StringEncoder {
     }
 
     /**
-     * Used internally by the Soundex algorithm.
-     *
-     * Consonants from the same code group separated by W or H are treated as one.
-     *
-     * @param str
-     *                  the cleaned working string to encode (in upper case).
-     * @param index
-     *                  the character position to encode
-     * @return Mapping code for a particular character
-     * @throws IllegalArgumentException
-     *                  if the character is not mapped
-     */
-    private char getMappingCode(final String str, final int index) {
-        // map() throws IllegalArgumentException
-        final char mappedChar = this.map(str.charAt(index));
-        // HW rule check
-        if (index > 1 && mappedChar != '0') {
-            for (int i=index-1 ; i>=0 ; i--) {
-                final char prevChar = str.charAt(i);
-                if (this.map(prevChar)==mappedChar) {
-                    return 0;
-                }
-                if ('H'!=prevChar && 'W'!=prevChar) {
-                    break;
-                }
-            }
-        }
-        return mappedChar;
-    }
-
-    /**
      * Returns the maxLength. Standard Soundex
      *
      * @deprecated This feature is not needed since the encoding size must be constant. Will be removed in 2.0.
@@ -268,14 +237,14 @@ public class Soundex implements StringEncoder {
         char last, mapped;
         int incount = 1, count = 1;
         out[0] = str.charAt(0);
-        // getMappingCode() throws IllegalArgumentException
-        last = getMappingCode(str, 0);
+        // map() throws IllegalArgumentException
+        last = this.map(str.charAt(0));
         while (incount < str.length() && count < out.length) {
-            mapped = getMappingCode(str, incount++);
-            if (mapped != 0) {
-                if (mapped != '0' && mapped != last) {
-                    out[count++] = mapped;
-                }
+            mapped = this.map(str.charAt(incount++));
+            if (mapped == '0') {
+                last = mapped;
+            } else if (mapped != '#' && mapped != last) {
+                out[count++] = mapped;
                 last = mapped;
             }
         }
