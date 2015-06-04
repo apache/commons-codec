@@ -20,6 +20,8 @@ package org.apache.commons.codec.binary;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import java.nio.charset.Charset;
+
 import org.apache.commons.codec.Charsets;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
@@ -33,6 +35,10 @@ import org.junit.Test;
  * @version $Id$
  */
 public class BinaryCodecTest {
+
+    @SuppressWarnings("deprecation") // TODO remove when Java 7 is minimum and Charsets constants can be replaced
+    private static final Charset CHARSET_UTF8 = Charsets.UTF_8;
+
     /** mask with bit zero based index 0 raised */
     private static final int BIT_0 = 0x01;
 
@@ -181,7 +187,7 @@ public class BinaryCodecTest {
         if (encodeMe == null) {
             decoded = instance.decode((byte[]) null);
         } else {
-            decoded = (byte[]) instance.decode((Object) encodeMe.getBytes(Charsets.UTF_8));
+            decoded = (byte[]) instance.decode((Object) encodeMe.getBytes(CHARSET_UTF8));
         }
         assertEquals(new String(bits), new String(decoded));
         if (encodeMe == null) {
@@ -199,84 +205,84 @@ public class BinaryCodecTest {
     public void testDecodeByteArray() {
         // With a single raw binary
         byte[] bits = new byte[1];
-        byte[] decoded = instance.decode("00000000".getBytes(Charsets.UTF_8));
+        byte[] decoded = instance.decode("00000000".getBytes(CHARSET_UTF8));
         assertEquals(new String(bits), new String(decoded));
         bits = new byte[1];
         bits[0] = BIT_0;
-        decoded = instance.decode("00000001".getBytes(Charsets.UTF_8));
+        decoded = instance.decode("00000001".getBytes(CHARSET_UTF8));
         assertEquals(new String(bits), new String(decoded));
         bits = new byte[1];
         bits[0] = BIT_0 | BIT_1;
-        decoded = instance.decode("00000011".getBytes(Charsets.UTF_8));
+        decoded = instance.decode("00000011".getBytes(CHARSET_UTF8));
         assertEquals(new String(bits), new String(decoded));
         bits = new byte[1];
         bits[0] = BIT_0 | BIT_1 | BIT_2;
-        decoded = instance.decode("00000111".getBytes(Charsets.UTF_8));
+        decoded = instance.decode("00000111".getBytes(CHARSET_UTF8));
         assertEquals(new String(bits), new String(decoded));
         bits = new byte[1];
         bits[0] = BIT_0 | BIT_1 | BIT_2 | BIT_3;
-        decoded = instance.decode("00001111".getBytes(Charsets.UTF_8));
+        decoded = instance.decode("00001111".getBytes(CHARSET_UTF8));
         assertEquals(new String(bits), new String(decoded));
         bits = new byte[1];
         bits[0] = BIT_0 | BIT_1 | BIT_2 | BIT_3 | BIT_4;
-        decoded = instance.decode("00011111".getBytes(Charsets.UTF_8));
+        decoded = instance.decode("00011111".getBytes(CHARSET_UTF8));
         assertEquals(new String(bits), new String(decoded));
         bits = new byte[1];
         bits[0] = BIT_0 | BIT_1 | BIT_2 | BIT_3 | BIT_4 | BIT_5;
-        decoded = instance.decode("00111111".getBytes(Charsets.UTF_8));
+        decoded = instance.decode("00111111".getBytes(CHARSET_UTF8));
         assertEquals(new String(bits), new String(decoded));
         bits = new byte[1];
         bits[0] = BIT_0 | BIT_1 | BIT_2 | BIT_3 | BIT_4 | BIT_5 | BIT_6;
-        decoded = instance.decode("01111111".getBytes(Charsets.UTF_8));
+        decoded = instance.decode("01111111".getBytes(CHARSET_UTF8));
         assertEquals(new String(bits), new String(decoded));
         bits = new byte[1];
         bits[0] = (byte) (BIT_0 | BIT_1 | BIT_2 | BIT_3 | BIT_4 | BIT_5 | BIT_6 | BIT_7);
-        decoded = instance.decode("11111111".getBytes(Charsets.UTF_8));
+        decoded = instance.decode("11111111".getBytes(CHARSET_UTF8));
         assertEquals(new String(bits), new String(decoded));
         // With a two raw binaries
         bits = new byte[2];
         bits[0] = (byte) (BIT_0 | BIT_1 | BIT_2 | BIT_3 | BIT_4 | BIT_5 | BIT_6 | BIT_7);
-        decoded = instance.decode("0000000011111111".getBytes(Charsets.UTF_8));
+        decoded = instance.decode("0000000011111111".getBytes(CHARSET_UTF8));
         assertEquals(new String(bits), new String(decoded));
         bits = new byte[2];
         bits[1] = BIT_0;
         bits[0] = (byte) (BIT_0 | BIT_1 | BIT_2 | BIT_3 | BIT_4 | BIT_5 | BIT_6 | BIT_7);
-        decoded = instance.decode("0000000111111111".getBytes(Charsets.UTF_8));
+        decoded = instance.decode("0000000111111111".getBytes(CHARSET_UTF8));
         assertEquals(new String(bits), new String(decoded));
         bits = new byte[2];
         bits[1] = BIT_0 | BIT_1;
         bits[0] = (byte) (BIT_0 | BIT_1 | BIT_2 | BIT_3 | BIT_4 | BIT_5 | BIT_6 | BIT_7);
-        decoded = instance.decode("0000001111111111".getBytes(Charsets.UTF_8));
+        decoded = instance.decode("0000001111111111".getBytes(CHARSET_UTF8));
         assertEquals(new String(bits), new String(decoded));
         bits = new byte[2];
         bits[1] = BIT_0 | BIT_1 | BIT_2;
         bits[0] = (byte) (BIT_0 | BIT_1 | BIT_2 | BIT_3 | BIT_4 | BIT_5 | BIT_6 | BIT_7);
-        decoded = instance.decode("0000011111111111".getBytes(Charsets.UTF_8));
+        decoded = instance.decode("0000011111111111".getBytes(CHARSET_UTF8));
         assertEquals(new String(bits), new String(decoded));
         bits = new byte[2];
         bits[1] = BIT_0 | BIT_1 | BIT_2 | BIT_3;
         bits[0] = (byte) (BIT_0 | BIT_1 | BIT_2 | BIT_3 | BIT_4 | BIT_5 | BIT_6 | BIT_7);
-        decoded = instance.decode("0000111111111111".getBytes(Charsets.UTF_8));
+        decoded = instance.decode("0000111111111111".getBytes(CHARSET_UTF8));
         assertEquals(new String(bits), new String(decoded));
         bits = new byte[2];
         bits[1] = BIT_0 | BIT_1 | BIT_2 | BIT_3 | BIT_4;
         bits[0] = (byte) (BIT_0 | BIT_1 | BIT_2 | BIT_3 | BIT_4 | BIT_5 | BIT_6 | BIT_7);
-        decoded = instance.decode("0001111111111111".getBytes(Charsets.UTF_8));
+        decoded = instance.decode("0001111111111111".getBytes(CHARSET_UTF8));
         assertEquals(new String(bits), new String(decoded));
         bits = new byte[2];
         bits[1] = BIT_0 | BIT_1 | BIT_2 | BIT_3 | BIT_4 | BIT_5;
         bits[0] = (byte) (BIT_0 | BIT_1 | BIT_2 | BIT_3 | BIT_4 | BIT_5 | BIT_6 | BIT_7);
-        decoded = instance.decode("0011111111111111".getBytes(Charsets.UTF_8));
+        decoded = instance.decode("0011111111111111".getBytes(CHARSET_UTF8));
         assertEquals(new String(bits), new String(decoded));
         bits = new byte[2];
         bits[1] = BIT_0 | BIT_1 | BIT_2 | BIT_3 | BIT_4 | BIT_5 | BIT_6;
         bits[0] = (byte) (BIT_0 | BIT_1 | BIT_2 | BIT_3 | BIT_4 | BIT_5 | BIT_6 | BIT_7);
-        decoded = instance.decode("0111111111111111".getBytes(Charsets.UTF_8));
+        decoded = instance.decode("0111111111111111".getBytes(CHARSET_UTF8));
         assertEquals(new String(bits), new String(decoded));
         bits = new byte[2];
         bits[1] = (byte) (BIT_0 | BIT_1 | BIT_2 | BIT_3 | BIT_4 | BIT_5 | BIT_6 | BIT_7);
         bits[0] = (byte) (BIT_0 | BIT_1 | BIT_2 | BIT_3 | BIT_4 | BIT_5 | BIT_6 | BIT_7);
-        decoded = instance.decode("1111111111111111".getBytes(Charsets.UTF_8));
+        decoded = instance.decode("1111111111111111".getBytes(CHARSET_UTF8));
         assertEquals(new String(bits), new String(decoded));
     }
 
@@ -484,84 +490,84 @@ public class BinaryCodecTest {
         assertEquals(0, BinaryCodec.fromAscii(new byte[0]).length);
         // With a single raw binary
         byte[] bits = new byte[1];
-        byte[] decoded = BinaryCodec.fromAscii("00000000".getBytes(Charsets.UTF_8));
+        byte[] decoded = BinaryCodec.fromAscii("00000000".getBytes(CHARSET_UTF8));
         assertEquals(new String(bits), new String(decoded));
         bits = new byte[1];
         bits[0] = BIT_0;
-        decoded = BinaryCodec.fromAscii("00000001".getBytes(Charsets.UTF_8));
+        decoded = BinaryCodec.fromAscii("00000001".getBytes(CHARSET_UTF8));
         assertEquals(new String(bits), new String(decoded));
         bits = new byte[1];
         bits[0] = BIT_0 | BIT_1;
-        decoded = BinaryCodec.fromAscii("00000011".getBytes(Charsets.UTF_8));
+        decoded = BinaryCodec.fromAscii("00000011".getBytes(CHARSET_UTF8));
         assertEquals(new String(bits), new String(decoded));
         bits = new byte[1];
         bits[0] = BIT_0 | BIT_1 | BIT_2;
-        decoded = BinaryCodec.fromAscii("00000111".getBytes(Charsets.UTF_8));
+        decoded = BinaryCodec.fromAscii("00000111".getBytes(CHARSET_UTF8));
         assertEquals(new String(bits), new String(decoded));
         bits = new byte[1];
         bits[0] = BIT_0 | BIT_1 | BIT_2 | BIT_3;
-        decoded = BinaryCodec.fromAscii("00001111".getBytes(Charsets.UTF_8));
+        decoded = BinaryCodec.fromAscii("00001111".getBytes(CHARSET_UTF8));
         assertEquals(new String(bits), new String(decoded));
         bits = new byte[1];
         bits[0] = BIT_0 | BIT_1 | BIT_2 | BIT_3 | BIT_4;
-        decoded = BinaryCodec.fromAscii("00011111".getBytes(Charsets.UTF_8));
+        decoded = BinaryCodec.fromAscii("00011111".getBytes(CHARSET_UTF8));
         assertEquals(new String(bits), new String(decoded));
         bits = new byte[1];
         bits[0] = BIT_0 | BIT_1 | BIT_2 | BIT_3 | BIT_4 | BIT_5;
-        decoded = BinaryCodec.fromAscii("00111111".getBytes(Charsets.UTF_8));
+        decoded = BinaryCodec.fromAscii("00111111".getBytes(CHARSET_UTF8));
         assertEquals(new String(bits), new String(decoded));
         bits = new byte[1];
         bits[0] = BIT_0 | BIT_1 | BIT_2 | BIT_3 | BIT_4 | BIT_5 | BIT_6;
-        decoded = BinaryCodec.fromAscii("01111111".getBytes(Charsets.UTF_8));
+        decoded = BinaryCodec.fromAscii("01111111".getBytes(CHARSET_UTF8));
         assertEquals(new String(bits), new String(decoded));
         bits = new byte[1];
         bits[0] = (byte) (BIT_0 | BIT_1 | BIT_2 | BIT_3 | BIT_4 | BIT_5 | BIT_6 | BIT_7);
-        decoded = BinaryCodec.fromAscii("11111111".getBytes(Charsets.UTF_8));
+        decoded = BinaryCodec.fromAscii("11111111".getBytes(CHARSET_UTF8));
         assertEquals(new String(bits), new String(decoded));
         // With a two raw binaries
         bits = new byte[2];
         bits[0] = (byte) (BIT_0 | BIT_1 | BIT_2 | BIT_3 | BIT_4 | BIT_5 | BIT_6 | BIT_7);
-        decoded = BinaryCodec.fromAscii("0000000011111111".getBytes(Charsets.UTF_8));
+        decoded = BinaryCodec.fromAscii("0000000011111111".getBytes(CHARSET_UTF8));
         assertEquals(new String(bits), new String(decoded));
         bits = new byte[2];
         bits[1] = BIT_0;
         bits[0] = (byte) (BIT_0 | BIT_1 | BIT_2 | BIT_3 | BIT_4 | BIT_5 | BIT_6 | BIT_7);
-        decoded = BinaryCodec.fromAscii("0000000111111111".getBytes(Charsets.UTF_8));
+        decoded = BinaryCodec.fromAscii("0000000111111111".getBytes(CHARSET_UTF8));
         assertEquals(new String(bits), new String(decoded));
         bits = new byte[2];
         bits[1] = BIT_0 | BIT_1;
         bits[0] = (byte) (BIT_0 | BIT_1 | BIT_2 | BIT_3 | BIT_4 | BIT_5 | BIT_6 | BIT_7);
-        decoded = BinaryCodec.fromAscii("0000001111111111".getBytes(Charsets.UTF_8));
+        decoded = BinaryCodec.fromAscii("0000001111111111".getBytes(CHARSET_UTF8));
         assertEquals(new String(bits), new String(decoded));
         bits = new byte[2];
         bits[1] = BIT_0 | BIT_1 | BIT_2;
         bits[0] = (byte) (BIT_0 | BIT_1 | BIT_2 | BIT_3 | BIT_4 | BIT_5 | BIT_6 | BIT_7);
-        decoded = BinaryCodec.fromAscii("0000011111111111".getBytes(Charsets.UTF_8));
+        decoded = BinaryCodec.fromAscii("0000011111111111".getBytes(CHARSET_UTF8));
         assertEquals(new String(bits), new String(decoded));
         bits = new byte[2];
         bits[1] = BIT_0 | BIT_1 | BIT_2 | BIT_3;
         bits[0] = (byte) (BIT_0 | BIT_1 | BIT_2 | BIT_3 | BIT_4 | BIT_5 | BIT_6 | BIT_7);
-        decoded = BinaryCodec.fromAscii("0000111111111111".getBytes(Charsets.UTF_8));
+        decoded = BinaryCodec.fromAscii("0000111111111111".getBytes(CHARSET_UTF8));
         assertEquals(new String(bits), new String(decoded));
         bits = new byte[2];
         bits[1] = BIT_0 | BIT_1 | BIT_2 | BIT_3 | BIT_4;
         bits[0] = (byte) (BIT_0 | BIT_1 | BIT_2 | BIT_3 | BIT_4 | BIT_5 | BIT_6 | BIT_7);
-        decoded = BinaryCodec.fromAscii("0001111111111111".getBytes(Charsets.UTF_8));
+        decoded = BinaryCodec.fromAscii("0001111111111111".getBytes(CHARSET_UTF8));
         assertEquals(new String(bits), new String(decoded));
         bits = new byte[2];
         bits[1] = BIT_0 | BIT_1 | BIT_2 | BIT_3 | BIT_4 | BIT_5;
         bits[0] = (byte) (BIT_0 | BIT_1 | BIT_2 | BIT_3 | BIT_4 | BIT_5 | BIT_6 | BIT_7);
-        decoded = BinaryCodec.fromAscii("0011111111111111".getBytes(Charsets.UTF_8));
+        decoded = BinaryCodec.fromAscii("0011111111111111".getBytes(CHARSET_UTF8));
         assertEquals(new String(bits), new String(decoded));
         bits = new byte[2];
         bits[1] = BIT_0 | BIT_1 | BIT_2 | BIT_3 | BIT_4 | BIT_5 | BIT_6;
         bits[0] = (byte) (BIT_0 | BIT_1 | BIT_2 | BIT_3 | BIT_4 | BIT_5 | BIT_6 | BIT_7);
-        decoded = BinaryCodec.fromAscii("0111111111111111".getBytes(Charsets.UTF_8));
+        decoded = BinaryCodec.fromAscii("0111111111111111".getBytes(CHARSET_UTF8));
         assertEquals(new String(bits), new String(decoded));
         bits = new byte[2];
         bits[1] = (byte) (BIT_0 | BIT_1 | BIT_2 | BIT_3 | BIT_4 | BIT_5 | BIT_6 | BIT_7);
         bits[0] = (byte) (BIT_0 | BIT_1 | BIT_2 | BIT_3 | BIT_4 | BIT_5 | BIT_6 | BIT_7);
-        decoded = BinaryCodec.fromAscii("1111111111111111".getBytes(Charsets.UTF_8));
+        decoded = BinaryCodec.fromAscii("1111111111111111".getBytes(CHARSET_UTF8));
         assertEquals(new String(bits), new String(decoded));
         assertEquals(0, BinaryCodec.fromAscii((byte[]) null).length);
     }

@@ -44,6 +44,7 @@ public class Md5CryptTest {
     }
 
     @Test
+    @SuppressWarnings("deprecation") // TODO remove when Java 7 is minimum and Charsets constants can be replaced
     public void testMd5CryptBytes() {
         // An empty Bytearray equals an empty String
         assertEquals("$1$foo$9mS5ExwgIECGE5YKlD5o91", Crypt.crypt(new byte[0], "$1$foo"));

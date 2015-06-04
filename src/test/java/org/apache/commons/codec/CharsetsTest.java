@@ -27,6 +27,7 @@ import org.junit.Test;
  *
  * @version $Id: CharEncodingTest.java 1298985 2012-03-09 19:12:49Z ggregory $
  */
+@SuppressWarnings("deprecation") // TODO remove when Java 7 is minimum and Charsets constants can be replaced
 public class CharsetsTest {
 
     @Test

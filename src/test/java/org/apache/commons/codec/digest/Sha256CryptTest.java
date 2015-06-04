@@ -40,6 +40,7 @@ public class Sha256CryptTest {
     }
 
     @Test
+    @SuppressWarnings("deprecation") // TODO remove when Java 7 is minimum and Charsets constants can be replaced
     public void testSha256CryptBytes() {
         // An empty Bytearray equals an empty String
         assertEquals("$5$foo$Fq9CX624QIfnCAmlGiPKLlAasdacKCRxZztPoeo7o0B", Crypt.crypt(new byte[0], "$5$foo"));
@@ -50,6 +51,7 @@ public class Sha256CryptTest {
     }
 
     @Test
+    @SuppressWarnings("deprecation") // TODO remove when Java 7 is minimum and Charsets constants can be replaced
     public void testSha2CryptRounds() {
         // minimum rounds?
         assertEquals("$5$rounds=1000$abcd$b8MCU4GEeZIekOy5ahQ8EWfT330hvYGVeDYkBxXBva.", Sha2Crypt.sha256Crypt("secret".getBytes(Charsets.UTF_8), "$5$rounds=50$abcd$"));

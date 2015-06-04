@@ -151,6 +151,7 @@ public class QuotedPrintableCodecTest {
     public void testEncodeUrlWithNullBitSet() throws Exception {
         final QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
         final String plain = "1+1 = 2";
+        @SuppressWarnings("deprecation") // TODO remove when Java 7 is minimum and Charsets constants can be replaced
         final String encoded = new String(QuotedPrintableCodec.
             encodeQuotedPrintable(null, plain.getBytes(Charsets.UTF_8)));
         assertEquals("Basic quoted-printable encoding test",
@@ -191,6 +192,7 @@ public class QuotedPrintableCodecTest {
         assertEquals("Basic quoted-printable encoding test",
             "1+1 =3D 2", encoded);
 
+        @SuppressWarnings("deprecation") // TODO remove when Java 7 is minimum and Charsets constants can be replaced
         final byte[] plainBA = plain.getBytes(Charsets.UTF_8);
         final byte[] encodedBA = (byte[]) qpcodec.encode((Object) plainBA);
         encoded = new String(encodedBA);
@@ -222,6 +224,7 @@ public class QuotedPrintableCodecTest {
         assertEquals("Basic quoted-printable decoding test",
             "1+1 = 2", decoded);
 
+        @SuppressWarnings("deprecation") // TODO remove when Java 7 is minimum and Charsets constants can be replaced
         final byte[] plainBA = plain.getBytes(Charsets.UTF_8);
         final byte[] decodedBA = (byte[]) qpcodec.decode((Object) plainBA);
         decoded = new String(decodedBA);

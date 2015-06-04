@@ -24,6 +24,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.math.BigInteger;
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -40,6 +41,9 @@ import org.junit.Test;
  * @version $Id$
  */
 public class Base64Test {
+
+    @SuppressWarnings("deprecation") // TODO remove when Java 7 is minimum and Charsets constants can be replaced
+    private static final Charset CHARSET_UTF8 = Charsets.UTF_8;
 
     private final Random random = new Random();
 
@@ -147,7 +151,7 @@ public class Base64Test {
         final BigInteger bigInt1 = new BigInteger("85739377120809420210425962799" + "0318636601332086981");
 
         assertEquals(encodedInt1, new String(Base64.encodeInteger(bigInt1)));
-        assertEquals(bigInt1, Base64.decodeInteger(encodedInt1.getBytes(Charsets.UTF_8)));
+        assertEquals(bigInt1, Base64.decodeInteger(encodedInt1.getBytes(CHARSET_UTF8)));
     }
 
     @Test
@@ -156,7 +160,7 @@ public class Base64Test {
         final BigInteger bigInt2 = new BigInteger("13936727572861167254666467268" + "91466679477132949611");
 
         assertEquals(encodedInt2, new String(Base64.encodeInteger(bigInt2)));
-        assertEquals(bigInt2, Base64.decodeInteger(encodedInt2.getBytes(Charsets.UTF_8)));
+        assertEquals(bigInt2, Base64.decodeInteger(encodedInt2.getBytes(CHARSET_UTF8)));
     }
 
     @Test
@@ -167,7 +171,7 @@ public class Base64Test {
             + "4495062430572478766856090958495998158114332651671116876320938126");
 
         assertEquals(encodedInt3, new String(Base64.encodeInteger(bigInt3)));
-        assertEquals(bigInt3, Base64.decodeInteger(encodedInt3.getBytes(Charsets.UTF_8)));
+        assertEquals(bigInt3, Base64.decodeInteger(encodedInt3.getBytes(CHARSET_UTF8)));
     }
 
     @Test
@@ -184,7 +188,7 @@ public class Base64Test {
             + "53542091716518238707344493641683483917");
 
         assertEquals(encodedInt4, new String(Base64.encodeInteger(bigInt4)));
-        assertEquals(bigInt4, Base64.decodeInteger(encodedInt4.getBytes(Charsets.UTF_8)));
+        assertEquals(bigInt4, Base64.decodeInteger(encodedInt4.getBytes(CHARSET_UTF8)));
     }
 
     @Test
@@ -269,7 +273,7 @@ public class Base64Test {
      */
     @Test
     public void testDecodePadMarkerIndex2() {
-        assertEquals("A", new String(Base64.decodeBase64("QQ==".getBytes(Charsets.UTF_8))));
+        assertEquals("A", new String(Base64.decodeBase64("QQ==".getBytes(CHARSET_UTF8))));
     }
 
     /**
@@ -277,30 +281,30 @@ public class Base64Test {
      */
     @Test
     public void testDecodePadMarkerIndex3() {
-        assertEquals("AA", new String(Base64.decodeBase64("QUE=".getBytes(Charsets.UTF_8))));
-        assertEquals("AAA", new String(Base64.decodeBase64("QUFB".getBytes(Charsets.UTF_8))));
+        assertEquals("AA", new String(Base64.decodeBase64("QUE=".getBytes(CHARSET_UTF8))));
+        assertEquals("AAA", new String(Base64.decodeBase64("QUFB".getBytes(CHARSET_UTF8))));
     }
 
     @Test
     public void testDecodePadOnly() {
-        assertEquals(0, Base64.decodeBase64("====".getBytes(Charsets.UTF_8)).length);
-        assertEquals("", new String(Base64.decodeBase64("====".getBytes(Charsets.UTF_8))));
+        assertEquals(0, Base64.decodeBase64("====".getBytes(CHARSET_UTF8)).length);
+        assertEquals("", new String(Base64.decodeBase64("====".getBytes(CHARSET_UTF8))));
         // Test truncated padding
-        assertEquals(0, Base64.decodeBase64("===".getBytes(Charsets.UTF_8)).length);
-        assertEquals(0, Base64.decodeBase64("==".getBytes(Charsets.UTF_8)).length);
-        assertEquals(0, Base64.decodeBase64("=".getBytes(Charsets.UTF_8)).length);
-        assertEquals(0, Base64.decodeBase64("".getBytes(Charsets.UTF_8)).length);
+        assertEquals(0, Base64.decodeBase64("===".getBytes(CHARSET_UTF8)).length);
+        assertEquals(0, Base64.decodeBase64("==".getBytes(CHARSET_UTF8)).length);
+        assertEquals(0, Base64.decodeBase64("=".getBytes(CHARSET_UTF8)).length);
+        assertEquals(0, Base64.decodeBase64("".getBytes(CHARSET_UTF8)).length);
     }
 
     @Test
     public void testDecodePadOnlyChunked() {
-        assertEquals(0, Base64.decodeBase64("====\n".getBytes(Charsets.UTF_8)).length);
-        assertEquals("", new String(Base64.decodeBase64("====\n".getBytes(Charsets.UTF_8))));
+        assertEquals(0, Base64.decodeBase64("====\n".getBytes(CHARSET_UTF8)).length);
+        assertEquals("", new String(Base64.decodeBase64("====\n".getBytes(CHARSET_UTF8))));
         // Test truncated padding
-        assertEquals(0, Base64.decodeBase64("===\n".getBytes(Charsets.UTF_8)).length);
-        assertEquals(0, Base64.decodeBase64("==\n".getBytes(Charsets.UTF_8)).length);
-        assertEquals(0, Base64.decodeBase64("=\n".getBytes(Charsets.UTF_8)).length);
-        assertEquals(0, Base64.decodeBase64("\n".getBytes(Charsets.UTF_8)).length);
+        assertEquals(0, Base64.decodeBase64("===\n".getBytes(CHARSET_UTF8)).length);
+        assertEquals(0, Base64.decodeBase64("==\n".getBytes(CHARSET_UTF8)).length);
+        assertEquals(0, Base64.decodeBase64("=\n".getBytes(CHARSET_UTF8)).length);
+        assertEquals(0, Base64.decodeBase64("\n".getBytes(CHARSET_UTF8)).length);
     }
 
     @Test
@@ -308,7 +312,7 @@ public class Base64Test {
 
         final String orig = "I am a late night coder.";
 
-        final byte[] encodedArray = Base64.encodeBase64(orig.getBytes(Charsets.UTF_8));
+        final byte[] encodedArray = Base64.encodeBase64(orig.getBytes(CHARSET_UTF8));
         final StringBuilder intermediate = new StringBuilder(new String(encodedArray));
 
         intermediate.insert(2, ' ');
@@ -316,7 +320,7 @@ public class Base64Test {
         intermediate.insert(10, '\r');
         intermediate.insert(15, '\n');
 
-        final byte[] encodedWithWS = intermediate.toString().getBytes(Charsets.UTF_8);
+        final byte[] encodedWithWS = intermediate.toString().getBytes(CHARSET_UTF8);
         final byte[] decodedWithWS = Base64.decodeBase64(encodedWithWS);
 
         final String dest = new String(decodedWithWS);
@@ -393,7 +397,7 @@ public class Base64Test {
     @Test
     public void testIgnoringNonBase64InDecode() throws Exception {
         assertEquals("The quick brown fox jumped over the lazy dogs.", new String(Base64
-                .decodeBase64("VGhlIH@$#$@%F1aWN@#@#@@rIGJyb3duIGZve\n\r\t%#%#%#%CBqd##$#$W1wZWQgb3ZlciB0aGUgbGF6eSBkb2dzLg==".getBytes(Charsets.UTF_8))));
+                .decodeBase64("VGhlIH@$#$@%F1aWN@#@#@@rIGJyb3duIGZve\n\r\t%#%#%#%CBqd##$#$W1wZWQgb3ZlciB0aGUgbGF6eSBkb2dzLg==".getBytes(CHARSET_UTF8))));
     }
 
     @Test
@@ -429,37 +433,37 @@ public class Base64Test {
     @Test
     public void testKnownDecodings() {
         assertEquals("The quick brown fox jumped over the lazy dogs.", new String(Base64
-                .decodeBase64("VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2dzLg==".getBytes(Charsets.UTF_8))));
+                .decodeBase64("VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2dzLg==".getBytes(CHARSET_UTF8))));
         assertEquals("It was the best of times, it was the worst of times.", new String(Base64
-                .decodeBase64("SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN0IG9mIHRpbWVzLg==".getBytes(Charsets.UTF_8))));
+                .decodeBase64("SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN0IG9mIHRpbWVzLg==".getBytes(CHARSET_UTF8))));
         assertEquals("http://jakarta.apache.org/commmons", new String(Base64
-                .decodeBase64("aHR0cDovL2pha2FydGEuYXBhY2hlLm9yZy9jb21tbW9ucw==".getBytes(Charsets.UTF_8))));
+                .decodeBase64("aHR0cDovL2pha2FydGEuYXBhY2hlLm9yZy9jb21tbW9ucw==".getBytes(CHARSET_UTF8))));
         assertEquals("AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz", new String(Base64
-                .decodeBase64("QWFCYkNjRGRFZUZmR2dIaElpSmpLa0xsTW1Obk9vUHBRcVJyU3NUdFV1VnZXd1h4WXlaeg==".getBytes(Charsets.UTF_8))));
+                .decodeBase64("QWFCYkNjRGRFZUZmR2dIaElpSmpLa0xsTW1Obk9vUHBRcVJyU3NUdFV1VnZXd1h4WXlaeg==".getBytes(CHARSET_UTF8))));
         assertEquals("{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }", new String(Base64.decodeBase64("eyAwLCAxLCAyLCAzLCA0LCA1LCA2LCA3LCA4LCA5IH0="
-                .getBytes(Charsets.UTF_8))));
-        assertEquals("xyzzy!", new String(Base64.decodeBase64("eHl6enkh".getBytes(Charsets.UTF_8))));
+                .getBytes(CHARSET_UTF8))));
+        assertEquals("xyzzy!", new String(Base64.decodeBase64("eHl6enkh".getBytes(CHARSET_UTF8))));
     }
 
     @Test
     public void testKnownEncodings() {
         assertEquals("VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2dzLg==", new String(Base64
-                .encodeBase64("The quick brown fox jumped over the lazy dogs.".getBytes(Charsets.UTF_8))));
+                .encodeBase64("The quick brown fox jumped over the lazy dogs.".getBytes(CHARSET_UTF8))));
         assertEquals(
                 "YmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJs\r\nYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFo\r\nIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBi\r\nbGFoIGJsYWg=\r\n",
                 new String(
                         Base64
                                 .encodeBase64Chunked("blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah"
-                                        .getBytes(Charsets.UTF_8))));
+                                        .getBytes(CHARSET_UTF8))));
         assertEquals("SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN0IG9mIHRpbWVzLg==", new String(Base64
-                .encodeBase64("It was the best of times, it was the worst of times.".getBytes(Charsets.UTF_8))));
+                .encodeBase64("It was the best of times, it was the worst of times.".getBytes(CHARSET_UTF8))));
         assertEquals("aHR0cDovL2pha2FydGEuYXBhY2hlLm9yZy9jb21tbW9ucw==", new String(Base64
-                .encodeBase64("http://jakarta.apache.org/commmons".getBytes(Charsets.UTF_8))));
+                .encodeBase64("http://jakarta.apache.org/commmons".getBytes(CHARSET_UTF8))));
         assertEquals("QWFCYkNjRGRFZUZmR2dIaElpSmpLa0xsTW1Obk9vUHBRcVJyU3NUdFV1VnZXd1h4WXlaeg==", new String(Base64
-                .encodeBase64("AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz".getBytes(Charsets.UTF_8))));
+                .encodeBase64("AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz".getBytes(CHARSET_UTF8))));
         assertEquals("eyAwLCAxLCAyLCAzLCA0LCA1LCA2LCA3LCA4LCA5IH0=", new String(Base64.encodeBase64("{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }"
-                .getBytes(Charsets.UTF_8))));
-        assertEquals("eHl6enkh", new String(Base64.encodeBase64("xyzzy!".getBytes(Charsets.UTF_8))));
+                .getBytes(CHARSET_UTF8))));
+        assertEquals("eHl6enkh", new String(Base64.encodeBase64("xyzzy!".getBytes(CHARSET_UTF8))));
     }
 
     @Test
@@ -501,7 +505,7 @@ public class Base64Test {
     public void testObjectDecodeWithValidParameter() throws Exception {
 
         final String original = "Hello World!";
-        final Object o = Base64.encodeBase64(original.getBytes(Charsets.UTF_8));
+        final Object o = Base64.encodeBase64(original.getBytes(CHARSET_UTF8));
 
         final Base64 b64 = new Base64();
         final Object oDecoded = b64.decode(o);
@@ -526,7 +530,7 @@ public class Base64Test {
     public void testObjectEncodeWithValidParameter() throws Exception {
 
         final String original = "Hello World!";
-        final Object origObj = original.getBytes(Charsets.UTF_8);
+        final Object origObj = original.getBytes(CHARSET_UTF8);
 
         final Base64 b64 = new Base64();
         final Object oEncoded = b64.encode(origObj);
@@ -539,7 +543,7 @@ public class Base64Test {
     @Test
     public void testObjectEncode() throws Exception {
         final Base64 b64 = new Base64();
-        assertEquals("SGVsbG8gV29ybGQ=", new String(b64.encode("Hello World".getBytes(Charsets.UTF_8))));
+        assertEquals("SGVsbG8gV29ybGQ=", new String(b64.encode("Hello World".getBytes(CHARSET_UTF8))));
     }
 
     @Test

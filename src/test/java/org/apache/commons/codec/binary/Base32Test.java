@@ -22,12 +22,16 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
+import java.nio.charset.Charset;
 import java.util.Arrays;
 
 import org.apache.commons.codec.Charsets;
 import org.junit.Test;
 
 public class Base32Test {
+
+    @SuppressWarnings("deprecation") // TODO remove when Java 7 is minimum and Charsets constants can be replaced
+    private static final Charset CHARSET_UTF8 = Charsets.UTF_8;
 
     private static final String [][] BASE32_TEST_CASES = { // RFC 4648
         {""       ,""},
@@ -74,7 +78,7 @@ public class Base32Test {
     public void testBase32Samples() throws Exception {
         final Base32 codec = new Base32();
         for (final String[] element : BASE32_TEST_CASES) {
-                assertEquals(element[1], codec.encodeAsString(element[0].getBytes(Charsets.UTF_8)));
+                assertEquals(element[1], codec.encodeAsString(element[0].getBytes(CHARSET_UTF8)));
         }
     }
 
@@ -82,7 +86,7 @@ public class Base32Test {
     public void testBase32HexSamples() throws Exception {
         final Base32 codec = new Base32(true);
         for (final String[] element : BASE32HEX_TEST_CASES) {
-                assertEquals(element[1], codec.encodeAsString(element[0].getBytes(Charsets.UTF_8)));
+                assertEquals(element[1], codec.encodeAsString(element[0].getBytes(CHARSET_UTF8)));
         }
     }
 
@@ -90,7 +94,7 @@ public class Base32Test {
     public void testBase32Chunked () throws Exception {
         final Base32 codec = new Base32(20);
         for (final String[] element : BASE32_TEST_CASES_CHUNKED) {
-                assertEquals(element[1], codec.encodeAsString(element[0].getBytes(Charsets.UTF_8)));
+                assertEquals(element[1], codec.encodeAsString(element[0].getBytes(CHARSET_UTF8)));
         }
     }
 
@@ -149,7 +153,7 @@ public class Base32Test {
         final Base32 codec = new Base32((byte)0x25); // '%' <=> 0x25
 
         for (final String[] element : BASE32_PAD_TEST_CASES) {
-                assertEquals(element[1], codec.encodeAsString(element[0].getBytes(Charsets.UTF_8)));
+                assertEquals(element[1], codec.encodeAsString(element[0].getBytes(CHARSET_UTF8)));
         }
     }
 
