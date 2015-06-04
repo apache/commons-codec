@@ -19,6 +19,7 @@
 package org.apache.commons.codec.binary;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 import java.util.Arrays;
@@ -151,4 +152,11 @@ public class Base32Test {
                 assertEquals(element[1], codec.encodeAsString(element[0].getBytes(Charsets.UTF_8)));
         }
     }
+
+    @Test
+    public void testCodec200() {
+        final Base32 codec = new Base32(true, (byte)'W'); // should be allowed
+        assertNotNull(codec);
+    }
+
 }
