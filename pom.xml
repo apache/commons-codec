@@ -217,7 +217,7 @@ limitations under the License.
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
-      <version>3.3.2</version>
+      <version>3.4</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
