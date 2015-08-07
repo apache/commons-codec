@@ -250,7 +250,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      *            array of bytes to be encoded
      * @return array of bytes containing quoted-printable data
      */
-    public static final byte[] encodeQuotedPrintable(BitSet printable, final byte[] bytes) {
+    public static final byte[] encodeQuotedPrintable(final BitSet printable, final byte[] bytes) {
         return encodeQuotedPrintable(printable, bytes, false);
     }
 
@@ -270,7 +270,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * @return array of bytes containing quoted-printable data
      * @since 1.10
      */
-    public static final byte[] encodeQuotedPrintable(BitSet printable, final byte[] bytes, boolean strict) {
+    public static final byte[] encodeQuotedPrintable(BitSet printable, final byte[] bytes, final boolean strict) {
         if (bytes == null) {
             return null;
         }
@@ -284,7 +284,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
             // encode up to buffer.length - 3, the last three octets will be treated
             // separately for simplification of note #3
             for (int i = 0; i < bytes.length - 3; i++) {
-                int b = getUnsignedOctet(i, bytes);
+                final int b = getUnsignedOctet(i, bytes);
                 if (pos < SAFE_LENGTH) {
                     // up to this length it is safe to add any byte, encoded or not
                     pos += encodeByte(b, !printable.get(b), buffer);

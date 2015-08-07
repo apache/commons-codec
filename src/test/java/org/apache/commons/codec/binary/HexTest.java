@@ -232,7 +232,7 @@ public class HexTest {
 
     @Test
     public void testDecodeByteBufferOddCharacters() {
-        ByteBuffer buffer = ByteBuffer.allocate(1);
+        final ByteBuffer buffer = ByteBuffer.allocate(1);
         buffer.put((byte) 65);
         try {
             new Hex().decode(buffer);

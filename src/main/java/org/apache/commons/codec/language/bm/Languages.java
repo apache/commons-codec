@@ -120,7 +120,7 @@ public class Languages {
             } else {
                 final SomeLanguages sl = (SomeLanguages) other;
                 final Set<String> ls = new HashSet<String>(Math.min(languages.size(), sl.languages.size()));
-                for (String lang : languages) {
+                for (final String lang : languages) {
                     if (sl.languages.contains(lang)) {
                         ls.add(lang);
                     }
@@ -138,7 +138,7 @@ public class Languages {
             } else {
                 final SomeLanguages sl = (SomeLanguages) other;
                 final Set<String> ls = new HashSet<String>(languages);
-                for (String lang : sl.languages) {
+                for (final String lang : sl.languages) {
                   ls.add(lang);
                 }
                 return from(ls);

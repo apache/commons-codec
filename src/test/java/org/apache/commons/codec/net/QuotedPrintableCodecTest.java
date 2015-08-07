@@ -258,10 +258,10 @@ public class QuotedPrintableCodecTest {
         final String qpdata = "If you believe that truth=3Dbeauty, then surely=20=\r\nmathematics is the most beautiful branch of philosophy.";
         final String expected = "If you believe that truth=beauty, then surely mathematics is the most beautiful branch of philosophy.";
 
-        QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
+        final QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
         assertEquals(expected, qpcodec.decode(qpdata));
 
-        String encoded = qpcodec.encode(expected);
+        final String encoded = qpcodec.encode(expected);
         assertEquals(expected, qpcodec.decode(encoded));
     }
 
@@ -270,22 +270,22 @@ public class QuotedPrintableCodecTest {
         final String qpdata = "If you believe that truth=3Dbeauty, then surely mathematics is the most b=\r\neautiful branch of philosophy.";
         final String expected = "If you believe that truth=beauty, then surely mathematics is the most beautiful branch of philosophy.";
 
-        QuotedPrintableCodec qpcodec = new QuotedPrintableCodec(true);
+        final QuotedPrintableCodec qpcodec = new QuotedPrintableCodec(true);
         assertEquals(qpdata, qpcodec.encode(expected));
 
-        String decoded = qpcodec.decode(qpdata);
+        final String decoded = qpcodec.decode(qpdata);
         assertEquals(qpdata, qpcodec.encode(decoded));
     }
 
     @Test
     public void testSkipNotEncodedCRLF() throws Exception {
-        String qpdata = "CRLF in an\n encoded text should be=20=\r\n\rskipped in the\r decoding.";
-        String expected = "CRLF in an encoded text should be skipped in the decoding.";
+        final String qpdata = "CRLF in an\n encoded text should be=20=\r\n\rskipped in the\r decoding.";
+        final String expected = "CRLF in an encoded text should be skipped in the decoding.";
 
-        QuotedPrintableCodec qpcodec = new QuotedPrintableCodec(true);
+        final QuotedPrintableCodec qpcodec = new QuotedPrintableCodec(true);
         assertEquals(expected, qpcodec.decode(qpdata));
 
-        String encoded = qpcodec.encode(expected);
+        final String encoded = qpcodec.encode(expected);
         assertEquals(expected, qpcodec.decode(encoded));
     }
 

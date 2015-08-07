@@ -182,7 +182,7 @@ public class PhoneticEngineRegressionTest {
         // see CODEC-187
         // comparison: http://stevemorse.org/census/soundex.html
 
-        Map<String, String> args = new TreeMap<String, String>();
+        final Map<String, String> args = new TreeMap<String, String>();
         args.put("nameType", "GENERIC");
         args.put("ruleType", "APPROX");
 

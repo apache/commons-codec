@@ -171,7 +171,7 @@ public class PhoneticEngine {
         private final Map<String, List<Rule>> finalRules;
         private final CharSequence input;
 
-        private PhonemeBuilder phonemeBuilder;
+        private final PhonemeBuilder phonemeBuilder;
         private int i;
         private final int maxPhonemes;
         private boolean found;

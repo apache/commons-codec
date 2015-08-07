@@ -186,7 +186,7 @@ public class BaseNCodecTest {
         };
 
         // When
-        byte actualPaddingByte = codec.pad;
+        final byte actualPaddingByte = codec.pad;
 
         // Then
         assertEquals(0x25, actualPaddingByte);
