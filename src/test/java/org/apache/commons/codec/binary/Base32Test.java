@@ -26,6 +26,7 @@ import java.nio.charset.Charset;
 import java.util.Arrays;
 
 import org.apache.commons.codec.Charsets;
+import org.apache.commons.lang3.ArrayUtils;
 import org.junit.Test;
 
 public class Base32Test {
@@ -73,6 +74,31 @@ public class Base32Test {
         {"fooba"  ,"MZXW6YTB"},
         {"foobar" ,"MZXW6YTBOI%%%%%%"},
     };
+
+	@Test
+	public void testBase64AtBufferStart() {
+		testBase64InBuffer(0, 100);
+	}
+
+	@Test
+	public void testBase64AtBufferEnd() {
+		testBase64InBuffer(100, 0);
+	}
+
+	@Test
+	public void testBase64AtBufferMiddle() {
+		testBase64InBuffer(100, 100);
+	}
+
+	private void testBase64InBuffer(int startPasSize, int endPadSize) {
+		final Base32 codec = new Base32();
+		for (final String[] element : BASE32_TEST_CASES) {
+			final byte[] bytes = element[0].getBytes(CHARSET_UTF8);
+			byte[] buffer = ArrayUtils.addAll(bytes, new byte[endPadSize]);
+			buffer = ArrayUtils.addAll(new byte[startPasSize], buffer);
+			assertEquals(element[1], StringUtils.newStringUtf8(codec.encode(buffer, startPasSize, bytes.length)));
+		}
+	}
 
     @Test
     public void testBase32Chunked () throws Exception {

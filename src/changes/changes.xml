@@ -49,6 +49,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action dev="ggregory" type="add" issue="CODEC-195" due-to="Gary Gregory">Support SHA-224 in DigestUtils on Java 8</action>         
       <action dev="ggregory" type="add" issue="CODEC-194" due-to="Gary Gregory">Support java.nio.ByteBuffer in org.apache.commons.codec.binary.Hex</action>         
       <action dev="ggregory" type="add" issue="CODEC-193" due-to="Michael Donaghy">Support java.nio.ByteBuffer in DigestUtils</action>         
+      <action dev="ggregory" type="add" issue="CODEC-202" due-to="Oleg Kalnichevski">Add BaseNCodec.encode(byte[], int, int) input with offset and length parameters for Base64 and Base32.</action>         
     </release>   
     <release version="1.10" date="5 November 2014" description="Feature and fix release.">
       <action dev="ggregory" type="add" issue="CODEC-192" due-to="Thomas Neidhart">Add Daitch-Mokotoff Soundex</action>   
