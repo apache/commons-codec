@@ -75,9 +75,9 @@ public class Base32Test {
     };
 
     @Test
-    public void testBase32Samples() throws Exception {
-        final Base32 codec = new Base32();
-        for (final String[] element : BASE32_TEST_CASES) {
+    public void testBase32Chunked () throws Exception {
+        final Base32 codec = new Base32(20);
+        for (final String[] element : BASE32_TEST_CASES_CHUNKED) {
                 assertEquals(element[1], codec.encodeAsString(element[0].getBytes(CHARSET_UTF8)));
         }
     }
@@ -91,31 +91,26 @@ public class Base32Test {
     }
 
     @Test
-    public void testBase32Chunked () throws Exception {
-        final Base32 codec = new Base32(20);
-        for (final String[] element : BASE32_TEST_CASES_CHUNKED) {
+    public void testBase32Samples() throws Exception {
+        final Base32 codec = new Base32();
+        for (final String[] element : BASE32_TEST_CASES) {
                 assertEquals(element[1], codec.encodeAsString(element[0].getBytes(CHARSET_UTF8)));
         }
     }
 
     @Test
-    public void testSingleCharEncoding() {
-        for (int i = 0; i < 20; i++) {
-            Base32 codec = new Base32();
-            final BaseNCodec.Context context = new BaseNCodec.Context();
-            final byte unencoded[] = new byte[i];
-            final byte allInOne[] = codec.encode(unencoded);
-            codec = new Base32();
-            for (int j=0; j< unencoded.length; j++) {
-                codec.encode(unencoded, j, 1, context);
-            }
-            codec.encode(unencoded, 0, -1, context);
-            final byte singly[] = new byte[allInOne.length];
-            codec.readResults(singly, 0, 100, context);
-            if (!Arrays.equals(allInOne, singly)){
-                fail();
-            }
+    public void testBase32SamplesNonDefaultPadding() throws Exception {
+        final Base32 codec = new Base32((byte)0x25); // '%' <=> 0x25
+
+        for (final String[] element : BASE32_PAD_TEST_CASES) {
+                assertEquals(element[1], codec.encodeAsString(element[0].getBytes(CHARSET_UTF8)));
         }
+    }
+
+    @Test
+    public void testCodec200() {
+        final Base32 codec = new Base32(true, (byte)'W'); // should be allowed
+        assertNotNull(codec);
     }
 
     @Test
@@ -149,18 +144,23 @@ public class Base32Test {
     }
 
     @Test
-    public void testBase32SamplesNonDefaultPadding() throws Exception {
-        final Base32 codec = new Base32((byte)0x25); // '%' <=> 0x25
-
-        for (final String[] element : BASE32_PAD_TEST_CASES) {
-                assertEquals(element[1], codec.encodeAsString(element[0].getBytes(CHARSET_UTF8)));
+    public void testSingleCharEncoding() {
+        for (int i = 0; i < 20; i++) {
+            Base32 codec = new Base32();
+            final BaseNCodec.Context context = new BaseNCodec.Context();
+            final byte unencoded[] = new byte[i];
+            final byte allInOne[] = codec.encode(unencoded);
+            codec = new Base32();
+            for (int j=0; j< unencoded.length; j++) {
+                codec.encode(unencoded, j, 1, context);
+            }
+            codec.encode(unencoded, 0, -1, context);
+            final byte singly[] = new byte[allInOne.length];
+            codec.readResults(singly, 0, 100, context);
+            if (!Arrays.equals(allInOne, singly)){
+                fail();
+            }
         }
-    }
-
-    @Test
-    public void testCodec200() {
-        final Base32 codec = new Base32(true, (byte)'W'); // should be allowed
-        assertNotNull(codec);
     }
 
 }
