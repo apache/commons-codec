@@ -19,6 +19,9 @@ package org.apache.commons.codec.binary;
 
 import java.math.BigInteger;
 
+import org.apache.commons.codec.binary.BaseNCodec.Context;
+
+
 /**
  * Provides Base64 encoding and decoding as defined by <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>.
  *
@@ -160,6 +163,12 @@ public class Base64 extends BaseNCodec {
      * <code>encodeSize = 4 + lineSeparator.length;</code>
      */
     private final int encodeSize;
+    
+    
+    /**
+     * Convenience variable to help keep track of the number of padding characters.
+     */
+    private int paddingCounter;
 
     /**
      * Creates a Base64 codec used for decoding (all modes) and encoding in URL-unsafe mode.
@@ -413,6 +422,10 @@ public class Base64 extends BaseNCodec {
      * garbage-out philosophy: it will not check the provided data for validity.
      * </p>
      * <p>
+     * The RFCs state that any padding ('=') signals the end of data, but some encoders incorrectly encode and pad data 
+     * in chunks. This implementation tolerates incorrect intermediary padding of data. 
+     * </p>
+     * <p>
      * Thanks to "commons" project in ws.apache.org for the bitwise operations, and general approach.
      * http://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/
      * </p>
@@ -434,55 +447,36 @@ public class Base64 extends BaseNCodec {
         if (inAvail < 0) {
             context.eof = true;
         }
+
         for (int i = 0; i < inAvail; i++) {
             final byte[] buffer = ensureBufferSize(decodeSize, context);
             final byte b = in[inPos++];
             if (b == pad) {
-                // We're done.
-                context.eof = true;
-                break;
-            } else {
-                if (b >= 0 && b < DECODE_TABLE.length) {
-                    final int result = DECODE_TABLE[b];
-                    if (result >= 0) {
-                        context.modulus = (context.modulus+1) % BYTES_PER_ENCODED_BLOCK;
-                        context.ibitWorkArea = (context.ibitWorkArea << BITS_PER_ENCODED_BYTE) + result;
-                        if (context.modulus == 0) {
-                            buffer[context.pos++] = (byte) ((context.ibitWorkArea >> 16) & MASK_8BITS);
-                            buffer[context.pos++] = (byte) ((context.ibitWorkArea >> 8) & MASK_8BITS);
-                            buffer[context.pos++] = (byte) (context.ibitWorkArea & MASK_8BITS);
-                        }
+                paddingCounter = paddingCounter + 1;
+
+                if (2 == paddingCounter) {
+                    decodeTail(context);
+                }
+            } else if (b >= 0 && b < DECODE_TABLE.length) {
+                if (1 == paddingCounter) {
+                    decodeTail(context);
+                }
+
+                final int result = DECODE_TABLE[b];
+                if (result >= 0) {
+                    context.modulus = (context.modulus + 1) % BYTES_PER_ENCODED_BLOCK;
+                    context.ibitWorkArea = (context.ibitWorkArea << BITS_PER_ENCODED_BYTE) + result;
+                    if (context.modulus == 0) {
+                        buffer[context.pos++] = (byte) ((context.ibitWorkArea >> 16) & MASK_8BITS);
+                        buffer[context.pos++] = (byte) ((context.ibitWorkArea >> 8) & MASK_8BITS);
+                        buffer[context.pos++] = (byte) (context.ibitWorkArea & MASK_8BITS);
                     }
                 }
             }
         }
 
-        // Two forms of EOF as far as base64 decoder is concerned: actual
-        // EOF (-1) and first time '=' character is encountered in stream.
-        // This approach makes the '=' padding characters completely optional.
-        if (context.eof && context.modulus != 0) {
-            final byte[] buffer = ensureBufferSize(decodeSize, context);
+        decodeTail(context);
 
-            // We have some spare bits remaining
-            // Output all whole multiples of 8 bits and ignore the rest
-            switch (context.modulus) {
-//              case 0 : // impossible, as excluded above
-                case 1 : // 6 bits - ignore entirely
-                    // TODO not currently tested; perhaps it is impossible?
-                    break;
-                case 2 : // 12 bits = 8 + 4
-                    context.ibitWorkArea = context.ibitWorkArea >> 4; // dump the extra 4 bits
-                    buffer[context.pos++] = (byte) ((context.ibitWorkArea) & MASK_8BITS);
-                    break;
-                case 3 : // 18 bits = 8 + 8 + 2
-                    context.ibitWorkArea = context.ibitWorkArea >> 2; // dump 2 bits
-                    buffer[context.pos++] = (byte) ((context.ibitWorkArea >> 8) & MASK_8BITS);
-                    buffer[context.pos++] = (byte) ((context.ibitWorkArea) & MASK_8BITS);
-                    break;
-                default:
-                    throw new IllegalStateException("Impossible modulus "+context.modulus);
-            }
-        }
     }
 
     /**
@@ -781,6 +775,38 @@ public class Base64 extends BaseNCodec {
     @Override
     protected boolean isInAlphabet(final byte octet) {
         return octet >= 0 && octet < decodeTable.length && decodeTable[octet] != -1;
+    }
+    
+
+    /**
+     * Process the bytes before padding. This is usually the end of the stream, but in some cases
+     * can signal the end of a chunk.
+     */
+    private void decodeTail(final Context context) {
+        // This approach makes the '=' padding characters completely optional at the end of the stream.
+        if (0 != context.modulus && (context.eof || 0 != paddingCounter)) {
+            final byte[] buffer = ensureBufferSize(decodeSize, context);
+
+            // We have some spare bits remaining
+            // Output all whole multiples of 8 bits and ignore the rest
+            switch (context.modulus) {
+                case 1: // 6 bits - ignore entirely
+                    break;
+                case 2: // 12 bits = 8 + 4
+                    context.ibitWorkArea = context.ibitWorkArea >> 4; // dump the extra 4 bits
+                    buffer[context.pos++] = (byte) ((context.ibitWorkArea) & MASK_8BITS);
+                    break;
+                case 3: // 18 bits = 8 + 8 + 2
+                    context.ibitWorkArea = context.ibitWorkArea >> 2; // dump 2 bits
+                    buffer[context.pos++] = (byte) ((context.ibitWorkArea >> 8) & MASK_8BITS);
+                    buffer[context.pos++] = (byte) ((context.ibitWorkArea) & MASK_8BITS);
+                    break;
+                default:
+                    throw new IllegalStateException("Impossible modulus " + context.modulus);
+            }
+            context.modulus = 0;
+            paddingCounter = 0;
+        }
     }
 
 }
