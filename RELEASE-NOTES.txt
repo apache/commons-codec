@@ -1,3 +1,36 @@
+              Apache Commons Codec 1.11 RELEASE NOTES
+
+The Apache Commons Codec team is pleased to announce the commons-codec-1.11 release!
+
+The Apache Commons Codec package contains simple encoder and decoders for
+     various formats such as Base64 and Hexadecimal.  In addition to these
+     widely used encoders and decoders, the codec package also maintains a
+     collection of phonetic encoding utilities.
+
+This feature and fix release requires a minimum of Java 1.6, same as 1.10.
+
+Changes in this version include:
+
+New features:
+
+o BaseNCodecOutputStream only supports writing EOF on close()  Issue: CODEC-183. Thanks to Steven Wurster. 
+o Support SHA-224 in DigestUtils on Java 8  Issue: CODEC-195. Thanks to Gary Gregory. 
+o Support java.nio.ByteBuffer in org.apache.commons.codec.binary.Hex  Issue: CODEC-194. Thanks to Gary Gregory. 
+o Support java.nio.ByteBuffer in DigestUtils  Issue: CODEC-193. Thanks to Michael Donaghy. 
+o Add BaseNCodec.encode(byte[], int, int) input with offset and length parameters for Base64 and Base32.  Issue: CODEC-202. Thanks to Oleg Kalnichevski. 
+
+Fixed Bugs:
+
+o Base32.HEX_DECODE_TABLE contains the wrong value 32  Issue: CODEC-200. Thanks to Luciano Vernaschi. 
+o Bug in HW rule in Soundex  Issue: CODEC-199. Thanks to Yossi Tamari. 
+
+
+
+Have fun!
+-Apache Commons Codec team
+
+-------------------------------------------------------------------------------
+
               Apache Commons Codec 1.10 RELEASE NOTES
 
 The Apache Commons Codec team is pleased to announce the commons-codec-1.10 release!

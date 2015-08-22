@@ -28,6 +28,7 @@
             <item name="Download"      href="http://commons.apache.org/codec/download_codec.cgi"/>
             <item name="Users guide"   href="/userguide.html"/>
             <item name="Javadoc trunk" href="/apidocs/index.html"/>            
+            <item name="Javadoc 1.11"  href="/archives/1.11/apidocs/index.html"/>
             <item name="Javadoc 1.10"  href="/archives/1.10/apidocs/index.html"/>
             <item name="Javadoc 1.9"   href="/archives/1.9/apidocs/index.html"/>
             <item name="Javadoc 1.8"   href="/archives/1.8/apidocs/index.html"/>
@@ -43,6 +44,7 @@
         </menu>
 
         <menu name="Site Archives">
+            <item name="Codec 1.11"       href="/archives/1.11/index.html"/>
             <item name="Codec 1.10"       href="/archives/1.10/index.html"/>
             <item name="Codec 1.9"        href="/archives/1.9/index.html"/>
             <item name="Codec 1.8"        href="/archives/1.8/index.html"/>
