@@ -96,10 +96,16 @@ public class HexTest {
         }
     }
 
-    /**
-     * @param data
-     */
     private void checkDecodeHexCharArrayOddCharacters(final char[] data) {
+        try {
+            Hex.decodeHex(data);
+            fail("An exception wasn't thrown when trying to decode an odd number of characters");
+        } catch (final DecoderException e) {
+            // Expected exception
+        }
+    }
+
+    private void checkDecodeHexCharArrayOddCharacters(String data) {
         try {
             Hex.decodeHex(data);
             fail("An exception wasn't thrown when trying to decode an odd number of characters");
@@ -243,8 +249,13 @@ public class HexTest {
     }
 
     @Test
-    public void testDecodeCharArrayEmpty() throws DecoderException {
+    public void testDecodeHexCharArrayEmpty() throws DecoderException {
         assertTrue(Arrays.equals(new byte[0], Hex.decodeHex(new char[0])));
+    }
+
+    @Test
+    public void testDecodeHexStringEmpty() throws DecoderException {
+        assertTrue(Arrays.equals(new byte[0], Hex.decodeHex("")));
     }
 
     @Test
@@ -260,6 +271,11 @@ public class HexTest {
     @Test
     public void testDecodeHexCharArrayOddCharacters1() {
         checkDecodeHexCharArrayOddCharacters(new char[] { 'A' });
+    }
+
+    @Test
+    public void testDecodeHexStringOddCharacters1() {
+        checkDecodeHexCharArrayOddCharacters("A");
     }
 
     @Test
@@ -318,7 +334,7 @@ public class HexTest {
     }
 
     @Test
-    public void testEncodeDecodeRandom() throws DecoderException, EncoderException {
+    public void testEncodeDecodeHexCharArrayRandom() throws DecoderException, EncoderException {
         final Random random = new Random();
 
         final Hex hex = new Hex();

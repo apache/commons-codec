@@ -1154,17 +1154,17 @@ public class Base64Test {
 		final byte[][] ids = new byte[4][];
 
 		// ids[0] was chosen so that it encodes with at least one +.
-		ids[0] = Hex.decodeHex("94ed8d0319e4493399560fb67404d370".toCharArray());
+		ids[0] = Hex.decodeHex("94ed8d0319e4493399560fb67404d370");
 
 		// ids[1] was chosen so that it encodes with both / and +.
-		ids[1] = Hex.decodeHex("2bf7cc2701fe4397b49ebeed5acc7090".toCharArray());
+		ids[1] = Hex.decodeHex("2bf7cc2701fe4397b49ebeed5acc7090");
 
 		// ids[2] was chosen so that it encodes with at least one /.
-		ids[2] = Hex.decodeHex("64be154b6ffa40258d1a01288e7c31ca".toCharArray());
+		ids[2] = Hex.decodeHex("64be154b6ffa40258d1a01288e7c31ca");
 
 		// ids[3] was chosen so that it encodes with both / and +, with /
 		// right at the beginning.
-		ids[3] = Hex.decodeHex("ff7f8fc01cdb471a8c8b5a9306183fe8".toCharArray());
+		ids[3] = Hex.decodeHex("ff7f8fc01cdb471a8c8b5a9306183fe8");
 
 		final byte[][] standard = new byte[4][];
 		standard[0] = StringUtils.getBytesUtf8("lO2NAxnkSTOZVg+2dATTcA==");

@@ -65,6 +65,22 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
         {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 
     /**
+     * Converts a String representing hexadecimal values into an array of bytes of those same values. The
+     * returned array will be half the length of the passed String, as it takes two characters to represent any given
+     * byte. An exception is thrown if the passed String has an odd number of elements.
+     *
+     * @param data
+     *            A String containing hexadecimal digits
+     * @return A byte array containing binary data decoded from the supplied char array.
+     * @throws DecoderException
+     *             Thrown if an odd number or illegal of characters is supplied
+     * @since 1.11
+     */
+    public static byte[] decodeHex(String data) throws DecoderException {
+        return decodeHex(data.toCharArray());
+    }
+
+    /**
      * Converts an array of characters representing hexadecimal values into an array of bytes of those same values. The
      * returned array will be half the length of the passed array, as it takes two characters to represent any given
      * byte. An exception is thrown if the passed char array has an odd number of elements.
