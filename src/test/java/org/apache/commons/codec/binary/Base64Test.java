@@ -1230,7 +1230,7 @@ public class Base64Test {
 		final byte[] b1 = StringUtils.getBytesUtf8("Hello World");
 		final byte[] b2 = new byte[0];
 		final byte[] b3 = null;
-		final byte[] b4 = Hex.decodeHex("2bf7cc2701fe4397b49ebeed5acc7090".toCharArray()); // for
+		final byte[] b4 = Hex.decodeHex("2bf7cc2701fe4397b49ebeed5acc7090"); // for
 																							// url-safe
 																							// tests
 
@@ -1254,7 +1254,7 @@ public class Base64Test {
 		final String s3 = null;
 		final String s4a = "K/fMJwH+Q5e0nr7tWsxwkA==\r\n";
 		final String s4b = "K_fMJwH-Q5e0nr7tWsxwkA";
-		final byte[] b4 = Hex.decodeHex("2bf7cc2701fe4397b49ebeed5acc7090".toCharArray()); // for
+		final byte[] b4 = Hex.decodeHex("2bf7cc2701fe4397b49ebeed5acc7090"); // for
 																							// url-safe
 																							// tests
 
