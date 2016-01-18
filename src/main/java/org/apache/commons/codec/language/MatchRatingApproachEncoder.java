@@ -163,9 +163,8 @@ public class MatchRatingApproachEncoder implements StringEncoder {
             final String firstThree = name.substring(0, THREE);
             final String lastThree = name.substring(nameLength - THREE, nameLength);
             return firstThree + lastThree;
-        } else {
-            return name;
         }
+        return name;
     }
 
     /**
@@ -335,9 +334,8 @@ public class MatchRatingApproachEncoder implements StringEncoder {
         // Final bit - subtract longest string from 6 and return this int value
         if (strA.length() > strB.length()) {
             return Math.abs(SIX - strA.length());
-        } else {
-            return Math.abs(SIX - strB.length());
         }
+        return Math.abs(SIX - strB.length());
     }
 
     /**
@@ -419,8 +417,7 @@ public class MatchRatingApproachEncoder implements StringEncoder {
         // return isVowel(firstLetter) ? (firstLetter + name) : name;
         if (isVowel(firstLetter)) {
             return firstLetter + name;
-        } else {
-            return name;
         }
+        return name;
     }
 }

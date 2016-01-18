@@ -237,8 +237,7 @@ public class PhoneticEngineRegressionTest {
         */
         if (languageSet == null) {
             return engine.encode(input);
-        } else {
-            return engine.encode(input, languageSet);
         }
+        return engine.encode(input, languageSet);
     }
 }

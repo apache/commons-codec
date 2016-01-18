@@ -286,42 +286,40 @@ public class DaitchMokotoffSoundex implements StringEncoder {
                     if (parts.length != 2) {
                         throw new IllegalArgumentException("Malformed folding statement split into " + parts.length +
                                 " parts: " + rawLine + " in " + location);
-                    } else {
-                        final String leftCharacter = parts[0];
-                        final String rightCharacter = parts[1];
-
-                        if (leftCharacter.length() != 1 || rightCharacter.length() != 1) {
-                            throw new IllegalArgumentException("Malformed folding statement - " +
-                                    "patterns are not single characters: " + rawLine + " in " + location);
-                        }
-
-                        asciiFoldings.put(leftCharacter.charAt(0), rightCharacter.charAt(0));
                     }
+                    final String leftCharacter = parts[0];
+                    final String rightCharacter = parts[1];
+
+                    if (leftCharacter.length() != 1 || rightCharacter.length() != 1) {
+                        throw new IllegalArgumentException("Malformed folding statement - " +
+                                "patterns are not single characters: " + rawLine + " in " + location);
+                    }
+
+                    asciiFoldings.put(leftCharacter.charAt(0), rightCharacter.charAt(0));
                 } else {
                     // rule
                     final String[] parts = line.split("\\s+");
                     if (parts.length != 4) {
                         throw new IllegalArgumentException("Malformed rule statement split into " + parts.length +
                                 " parts: " + rawLine + " in " + location);
-                    } else {
-                        try {
-                            final String pattern = stripQuotes(parts[0]);
-                            final String replacement1 = stripQuotes(parts[1]);
-                            final String replacement2 = stripQuotes(parts[2]);
-                            final String replacement3 = stripQuotes(parts[3]);
+                    }
+                    try {
+                        final String pattern = stripQuotes(parts[0]);
+                        final String replacement1 = stripQuotes(parts[1]);
+                        final String replacement2 = stripQuotes(parts[2]);
+                        final String replacement3 = stripQuotes(parts[3]);
 
-                            final Rule r = new Rule(pattern, replacement1, replacement2, replacement3);
-                            final char patternKey = r.pattern.charAt(0);
-                            List<Rule> rules = ruleMapping.get(patternKey);
-                            if (rules == null) {
-                                rules = new ArrayList<Rule>();
-                                ruleMapping.put(patternKey, rules);
-                            }
-                            rules.add(r);
-                        } catch (final IllegalArgumentException e) {
-                            throw new IllegalStateException(
-                                    "Problem parsing line '" + currentLine + "' in " + location, e);
+                        final Rule r = new Rule(pattern, replacement1, replacement2, replacement3);
+                        final char patternKey = r.pattern.charAt(0);
+                        List<Rule> rules = ruleMapping.get(patternKey);
+                        if (rules == null) {
+                            rules = new ArrayList<Rule>();
+                            ruleMapping.put(patternKey, rules);
                         }
+                        rules.add(r);
+                    } catch (final IllegalArgumentException e) {
+                        throw new IllegalStateException(
+                                "Problem parsing line '" + currentLine + "' in " + location, e);
                     }
                 }
             }

@@ -221,10 +221,9 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
                                   final ByteArrayOutputStream buffer) {
         if (encode) {
             return encodeQuotedPrintable(b, buffer);
-        } else {
-            buffer.write(b);
-            return 1;
         }
+        buffer.write(b);
+        return 1;
     }
 
     /**

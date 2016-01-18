@@ -373,9 +373,8 @@ public class Rule {
             final Set<String> langs = new HashSet<String>(Arrays.asList(in.split("[+]")));
 
             return new Phoneme(before, Languages.LanguageSet.from(langs));
-        } else {
-            return new Phoneme(ph, Languages.ANY_LANGUAGE);
         }
+        return new Phoneme(ph, Languages.ANY_LANGUAGE);
     }
 
     private static PhonemeExpr parsePhonemeExpr(final String ph) {
@@ -394,9 +393,8 @@ public class Rule {
             }
 
             return new PhonemeList(phs);
-        } else {
-            return parsePhoneme(ph);
         }
+        return parsePhoneme(ph);
     }
 
     private static Map<String, List<Rule>> parseRules(final Scanner scanner, final String location) {
@@ -436,50 +434,48 @@ public class Rule {
                         if (incl.contains(" ")) {
                             throw new IllegalArgumentException("Malformed import statement '" + rawLine + "' in " +
                                                                location);
-                        } else {
-                            lines.putAll(parseRules(createScanner(incl), location + "->" + incl));
                         }
+                        lines.putAll(parseRules(createScanner(incl), location + "->" + incl));
                     } else {
                         // rule
                         final String[] parts = line.split("\\s+");
                         if (parts.length != 4) {
                             throw new IllegalArgumentException("Malformed rule statement split into " + parts.length +
                                                                " parts: " + rawLine + " in " + location);
-                        } else {
-                            try {
-                                final String pat = stripQuotes(parts[0]);
-                                final String lCon = stripQuotes(parts[1]);
-                                final String rCon = stripQuotes(parts[2]);
-                                final PhonemeExpr ph = parsePhonemeExpr(stripQuotes(parts[3]));
-                                final int cLine = currentLine;
-                                final Rule r = new Rule(pat, lCon, rCon, ph) {
-                                    private final int myLine = cLine;
-                                    private final String loc = location;
+                        }
+                        try {
+                            final String pat = stripQuotes(parts[0]);
+                            final String lCon = stripQuotes(parts[1]);
+                            final String rCon = stripQuotes(parts[2]);
+                            final PhonemeExpr ph = parsePhonemeExpr(stripQuotes(parts[3]));
+                            final int cLine = currentLine;
+                            final Rule r = new Rule(pat, lCon, rCon, ph) {
+                                private final int myLine = cLine;
+                                private final String loc = location;
 
-                                    @Override
-                                    public String toString() {
-                                        final StringBuilder sb = new StringBuilder();
-                                        sb.append("Rule");
-                                        sb.append("{line=").append(myLine);
-                                        sb.append(", loc='").append(loc).append('\'');
-                                        sb.append(", pat='").append(pat).append('\'');
-                                        sb.append(", lcon='").append(lCon).append('\'');
-                                        sb.append(", rcon='").append(rCon).append('\'');
-                                        sb.append('}');
-                                        return sb.toString();
-                                    }
-                                };
-                                final String patternKey = r.pattern.substring(0,1);
-                                List<Rule> rules = lines.get(patternKey);
-                                if (rules == null) {
-                                    rules = new ArrayList<Rule>();
-                                    lines.put(patternKey, rules);
+                                @Override
+                                public String toString() {
+                                    final StringBuilder sb = new StringBuilder();
+                                    sb.append("Rule");
+                                    sb.append("{line=").append(myLine);
+                                    sb.append(", loc='").append(loc).append('\'');
+                                    sb.append(", pat='").append(pat).append('\'');
+                                    sb.append(", lcon='").append(lCon).append('\'');
+                                    sb.append(", rcon='").append(rCon).append('\'');
+                                    sb.append('}');
+                                    return sb.toString();
                                 }
-                                rules.add(r);
-                            } catch (final IllegalArgumentException e) {
-                                throw new IllegalStateException("Problem parsing line '" + currentLine + "' in " +
-                                                                location, e);
+                            };
+                            final String patternKey = r.pattern.substring(0,1);
+                            List<Rule> rules = lines.get(patternKey);
+                            if (rules == null) {
+                                rules = new ArrayList<Rule>();
+                                lines.put(patternKey, rules);
                             }
+                            rules.add(r);
+                        } catch (final IllegalArgumentException e) {
+                            throw new IllegalStateException("Problem parsing line '" + currentLine + "' in " +
+                                                            location, e);
                         }
                     }
                 }
@@ -513,14 +509,13 @@ public class Rule {
                             return input.length() == 0;
                         }
                     };
-                } else {
-                    return new RPattern() {
-                        @Override
-                        public boolean isMatch(final CharSequence input) {
-                            return input.equals(content);
-                        }
-                    };
                 }
+                return new RPattern() {
+                    @Override
+                    public boolean isMatch(final CharSequence input) {
+                        return input.equals(content);
+                    }
+                };
             } else if ((startsWith || endsWith) && content.length() == 0) {
                 // matches every string
                 return ALL_STRINGS_RMATCHER;

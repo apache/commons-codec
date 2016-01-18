@@ -139,9 +139,8 @@ public class Nysiis implements StringEncoder {
         if (curr == 'K') {
             if (next == 'N') {
                 return CHARS_NN;
-            } else {
-                return CHARS_C;
             }
+            return CHARS_C;
         }
 
         // 4. SCH -> SSS

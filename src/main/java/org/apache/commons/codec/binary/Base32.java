@@ -348,21 +348,20 @@ public class Base32 extends BaseNCodec {
                 // We're done.
                 context.eof = true;
                 break;
-            } else {
-                final byte[] buffer = ensureBufferSize(decodeSize, context);
-                if (b >= 0 && b < this.decodeTable.length) {
-                    final int result = this.decodeTable[b];
-                    if (result >= 0) {
-                        context.modulus = (context.modulus+1) % BYTES_PER_ENCODED_BLOCK;
-                        // collect decoded bytes
-                        context.lbitWorkArea = (context.lbitWorkArea << BITS_PER_ENCODED_BYTE) + result;
-                        if (context.modulus == 0) { // we can output the 5 bytes
-                            buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 32) & MASK_8BITS);
-                            buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 24) & MASK_8BITS);
-                            buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 16) & MASK_8BITS);
-                            buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 8) & MASK_8BITS);
-                            buffer[context.pos++] = (byte) (context.lbitWorkArea & MASK_8BITS);
-                        }
+            }
+            final byte[] buffer = ensureBufferSize(decodeSize, context);
+            if (b >= 0 && b < this.decodeTable.length) {
+                final int result = this.decodeTable[b];
+                if (result >= 0) {
+                    context.modulus = (context.modulus+1) % BYTES_PER_ENCODED_BLOCK;
+                    // collect decoded bytes
+                    context.lbitWorkArea = (context.lbitWorkArea << BITS_PER_ENCODED_BYTE) + result;
+                    if (context.modulus == 0) { // we can output the 5 bytes
+                        buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 32) & MASK_8BITS);
+                        buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 24) & MASK_8BITS);
+                        buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 16) & MASK_8BITS);
+                        buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 8) & MASK_8BITS);
+                        buffer[context.pos++] = (byte) (context.lbitWorkArea & MASK_8BITS);
                     }
                 }
             }

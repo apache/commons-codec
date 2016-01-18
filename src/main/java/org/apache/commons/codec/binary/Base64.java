@@ -441,17 +441,16 @@ public class Base64 extends BaseNCodec {
                 // We're done.
                 context.eof = true;
                 break;
-            } else {
-                if (b >= 0 && b < DECODE_TABLE.length) {
-                    final int result = DECODE_TABLE[b];
-                    if (result >= 0) {
-                        context.modulus = (context.modulus+1) % BYTES_PER_ENCODED_BLOCK;
-                        context.ibitWorkArea = (context.ibitWorkArea << BITS_PER_ENCODED_BYTE) + result;
-                        if (context.modulus == 0) {
-                            buffer[context.pos++] = (byte) ((context.ibitWorkArea >> 16) & MASK_8BITS);
-                            buffer[context.pos++] = (byte) ((context.ibitWorkArea >> 8) & MASK_8BITS);
-                            buffer[context.pos++] = (byte) (context.ibitWorkArea & MASK_8BITS);
-                        }
+            }
+            if (b >= 0 && b < DECODE_TABLE.length) {
+                final int result = DECODE_TABLE[b];
+                if (result >= 0) {
+                    context.modulus = (context.modulus+1) % BYTES_PER_ENCODED_BLOCK;
+                    context.ibitWorkArea = (context.ibitWorkArea << BITS_PER_ENCODED_BYTE) + result;
+                    if (context.modulus == 0) {
+                        buffer[context.pos++] = (byte) ((context.ibitWorkArea >> 16) & MASK_8BITS);
+                        buffer[context.pos++] = (byte) ((context.ibitWorkArea >> 8) & MASK_8BITS);
+                        buffer[context.pos++] = (byte) (context.ibitWorkArea & MASK_8BITS);
                     }
                 }
             }
