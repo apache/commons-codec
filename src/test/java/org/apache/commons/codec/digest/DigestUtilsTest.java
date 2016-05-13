@@ -333,7 +333,7 @@ public class DigestUtilsTest {
             DigestUtils.sha512Hex(new ByteArrayInputStream(testData)));
     assertEquals(DigestUtils.sha512Hex(testData),
             DigestUtils.sha512Hex(ByteBuffer.wrap(testData)));
-}
+    }
 
     @SuppressWarnings("deprecation") // deliberate tests of deprecated code
     @Test
