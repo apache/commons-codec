@@ -43,7 +43,7 @@ The <action> type attribute can be add,update,fix,remove.
   </properties>
   <body>
     <release version="1.11" date="DD MM 2015" description="Feature and fix release.">        
-      <action issue="CODEC-200" dev="sebb" type="fix" due-to="Luciano Vernaschi">Base32.HEX_DECODE_TABLE contains the wrong value 32</action>   
+      <action dev="sebb" type="fix" issue="CODEC-200" due-to="Luciano Vernaschi">Base32.HEX_DECODE_TABLE contains the wrong value 32</action>   
       <action dev="ggregory" type="fix" issue="CODEC-207" due-to="Gary Gregory">Charsets Javadoc breaks build when using Java 8</action>         
       <action dev="ggregory" type="fix" issue="CODEC-199" due-to="Yossi Tamari">Bug in HW rule in Soundex</action>         
       <action dev="ggregory" type="add" issue="CODEC-183" due-to="Steven Wurster">BaseNCodecOutputStream only supports writing EOF on close()</action>         
