@@ -42,7 +42,7 @@ import org.junit.Test;
  */
 public class DigestUtilsTest {
 
-    private final byte[] testData = new byte[1024*1024];
+    private final byte[] testData = new byte[1024 * 1024];
 
     /* (non-Javadoc)
      * @see junit.framework.TestCase#setUp()
