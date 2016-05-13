@@ -17,12 +17,14 @@
 
 package org.apache.commons.codec.digest;
 
-import static org.apache.commons.codec.binary.StringUtils.getBytesUtf8;
 import static org.apache.commons.codec.binary.StringUtils.getByteBufferUtf8;
+import static org.apache.commons.codec.binary.StringUtils.getBytesUtf8;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.security.MessageDigest;
@@ -32,7 +34,9 @@ import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.binary.StringUtils;
 import org.apache.commons.lang3.JavaVersion;
 import org.apache.commons.lang3.SystemUtils;
+import org.junit.After;
 import org.junit.Assume;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -43,12 +47,23 @@ import org.junit.Test;
 public class DigestUtilsTest {
 
     private final byte[] testData = new byte[1024 * 1024];
+    
+    private File testFile;
 
-    /* (non-Javadoc)
-     * @see junit.framework.TestCase#setUp()
-     */
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         new Random().nextBytes(testData);
+        testFile = File.createTempFile(DigestUtilsTest.class.getName(), ".dat");
+        FileOutputStream fos = new FileOutputStream(testFile);
+        fos.write(testData);
+        fos.close();
+    }
+
+    @After
+    public void tearDown() {
+        if (!testFile.delete()) {
+            testFile.deleteOnExit();
+        }
     }
 
     @Test
@@ -88,6 +103,11 @@ public class DigestUtilsTest {
         assertEquals(DigestUtils.md2Hex(testData),
                 DigestUtils.md2Hex(ByteBuffer.wrap(testData)));
 }
+
+    @Test
+    public void testMd2HexFile() throws IOException {
+        assertEquals(DigestUtils.md2Hex(testData), DigestUtils.md2Hex(testFile));
+    }
 
     /**
      * An MD2 hash converted to hex should always be 32 characters.
@@ -144,6 +164,11 @@ public class DigestUtilsTest {
         assertEquals(DigestUtils.md5Hex(testData),
                 DigestUtils.md5Hex(ByteBuffer.wrap(testData)));
 }
+
+    @Test
+    public void testMd5HexFile() throws IOException {
+        assertEquals(DigestUtils.md5Hex(testData), DigestUtils.md5Hex(testFile));
+    }
 
     /**
      * An MD5 hash converted to hex should always be 32 characters.
@@ -218,6 +243,11 @@ public class DigestUtilsTest {
     }
 
     @Test
+    public void testSha1HexFile() throws IOException {
+        assertEquals(DigestUtils.sha1Hex(testData), DigestUtils.sha1Hex(testFile));
+    }
+
+    @Test
     public void testSha1UpdateWithByteArray(){
         final String d1 = "C'est un homme qui rentre dans un café, et plouf";
         final String d2 = "C'est un homme, c'est qu'une tête, on lui offre un cadeau: 'oh... encore un chapeau!'";
@@ -273,12 +303,22 @@ public class DigestUtilsTest {
 
     @Test
     public void testSha224() throws IOException {
-        Assume.assumeTrue(SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_1_8));
+        assumeJava8();
         assertEquals("d14a028c2a3a2bc9476102bb288234c415a2b01f828ea62ac5b3e42f", DigestUtils.sha224Hex(""));
         assertEquals("730e109bd7a8a32b1cb9d9a09aa2325d2430587ddbc0c38bad911525",
                 DigestUtils.sha224Hex("The quick brown fox jumps over the lazy dog"));
 
         // Examples from FIPS 180-4?
+    }
+
+    private void assumeJava8() {
+        Assume.assumeTrue(SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_1_8));
+    }
+
+    @Test
+    public void testSha224HexFile() throws IOException {
+        assumeJava8();
+        assertEquals(DigestUtils.sha224Hex(testData), DigestUtils.sha224Hex(testFile));
     }
 
     @Test
@@ -295,6 +335,11 @@ public class DigestUtilsTest {
             DigestUtils.sha256Hex(new ByteArrayInputStream(testData)));
     assertEquals(DigestUtils.sha256Hex(testData),
             DigestUtils.sha256Hex(ByteBuffer.wrap(testData)));
+    }
+
+    @Test
+    public void testSha256HexFile() throws IOException {
+        assertEquals(DigestUtils.sha256Hex(testData), DigestUtils.sha256Hex(testFile));
     }
 
     @Test
@@ -317,6 +362,11 @@ public class DigestUtilsTest {
     }
 
     @Test
+    public void testSha384HexFile() throws IOException {
+        assertEquals(DigestUtils.sha384Hex(testData), DigestUtils.sha384Hex(testFile));
+    }
+
+    @Test
     public void testSha512() throws IOException {
     // Examples from FIPS 180-2
     assertEquals("ddaf35a193617abacc417349ae20413112e6fa4e89a97ea20a9eeee64b55d39a" +
@@ -329,10 +379,22 @@ public class DigestUtilsTest {
              "501d289e4900f7e4331b99dec4b5433ac7d329eeb6dd26545e96e55b874be909",
              DigestUtils.sha512Hex("abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmn" +
                        "hijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu"));
-    assertEquals(DigestUtils.sha512Hex(testData),
-            DigestUtils.sha512Hex(new ByteArrayInputStream(testData)));
-    assertEquals(DigestUtils.sha512Hex(testData),
-            DigestUtils.sha512Hex(ByteBuffer.wrap(testData)));
+    }
+
+    @Test
+    public void testSha512HexByteBuffer() throws IOException {
+        assertEquals(DigestUtils.sha512Hex(testData), DigestUtils.sha512Hex(ByteBuffer.wrap(testData)));
+    }
+
+    @Test
+    public void testSha512HexFile() throws IOException {
+        assertEquals(DigestUtils.sha512Hex(testData), DigestUtils.sha512Hex(testFile));
+    }
+
+    @Test
+    public void testSha512HexInputStream() throws IOException {
+        assertEquals(DigestUtils.sha512Hex(testData),
+                DigestUtils.sha512Hex(new ByteArrayInputStream(testData)));
     }
 
     @SuppressWarnings("deprecation") // deliberate tests of deprecated code
