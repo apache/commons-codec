@@ -19,6 +19,7 @@ package org.apache.commons.codec.digest;
 import java.io.File;
 import java.io.IOException;
 import java.security.MessageDigest;
+import java.util.Locale;
 
 import org.apache.commons.codec.binary.Hex;
 
@@ -77,7 +78,7 @@ public class Digest {
         if (messageDigest != null) {
             run("", messageDigest);
         } else {
-            run("", MessageDigestAlgorithm.valueOf(algorithm).getMessageDigest());
+            run("", MessageDigestAlgorithm.valueOf(algorithm.toUpperCase(Locale.ROOT)).getMessageDigest());
         }
     }
 
