@@ -40,6 +40,22 @@ public class DigestUtils {
     private static final int STREAM_BUFFER_LENGTH = 1024;
 
     /**
+     * Read through an ByteBuffer and returns the digest for the data. Provided for symmetry with other methods.
+     *
+     * @param messageDigest
+     *            The MessageDigest to use (e.g. MD5)
+     * @param data
+     *            Data to digest
+     * @return the digest
+     * @throws IOException
+     *             On error reading from the stream
+     * @since 1.11
+     */
+    public static byte[] digest(final MessageDigest messageDigest, final byte[] data) {
+        return messageDigest.digest(data);
+    }
+
+    /**
      * Read through an ByteBuffer and returns the digest for the data
      *
      * @param messageDigest
@@ -110,14 +126,16 @@ public class DigestUtils {
     }
 
     /**
-     * Returns a <code>MessageDigest</code> for the given <code>algorithm</code> or a default if there is a problem getting the algorithm.
+     * Returns a <code>MessageDigest</code> for the given <code>algorithm</code> or a default if there is a problem
+     * getting the algorithm.
      *
      * @param algorithm
-     *            the name of the algorithm requested. See <a
-     *            href="http://docs.oracle.com/javase/6/docs/technotes/guides/security/crypto/CryptoSpec.html#AppA"
-     *            >Appendix A in the Java Cryptography Architecture Reference Guide</a> for information about standard
+     *            the name of the algorithm requested. See
+     *            <a href="http://docs.oracle.com/javase/6/docs/technotes/guides/security/crypto/CryptoSpec.html#AppA" >
+     *            Appendix A in the Java Cryptography Architecture Reference Guide</a> for information about standard
      *            algorithm names.
-     * @param defaultMessageDigest The default MessageDigest.
+     * @param defaultMessageDigest
+     *            The default MessageDigest.
      * @return A digest instance.
      * @see MessageDigest#getInstance(String)
      * @throws IllegalArgumentException
@@ -143,7 +161,7 @@ public class DigestUtils {
      * @since 1.7
      */
     public static MessageDigest getMd2Digest() {
-        return getDigest(MessageDigestAlgorithms.MD2);
+        return MessageDigestAlgorithm.MD2.getMessageDigest();
     }
 
     /**
@@ -156,7 +174,7 @@ public class DigestUtils {
      * @see MessageDigestAlgorithms#MD5
      */
     public static MessageDigest getMd5Digest() {
-        return getDigest(MessageDigestAlgorithms.MD5);
+        return MessageDigestAlgorithm.MD5.getMessageDigest();
     }
 
     /**
@@ -170,7 +188,7 @@ public class DigestUtils {
      * @since 1.7
      */
     public static MessageDigest getSha1Digest() {
-        return getDigest(MessageDigestAlgorithms.SHA_1);
+        return MessageDigestAlgorithm.SHA_1.getMessageDigest();
     }
 
     /**
@@ -186,7 +204,7 @@ public class DigestUtils {
      * @see MessageDigestAlgorithms#SHA_224
      */
     public static MessageDigest getSha224Digest() {
-        return getDigest(MessageDigestAlgorithms.SHA_224);
+        return MessageDigestAlgorithm.SHA_224.getMessageDigest();
     }
 
     /**
@@ -202,7 +220,7 @@ public class DigestUtils {
      * @see MessageDigestAlgorithms#SHA_256
      */
     public static MessageDigest getSha256Digest() {
-        return getDigest(MessageDigestAlgorithms.SHA_256);
+        return MessageDigestAlgorithm.SHA_256.getMessageDigest();
     }
 
     /**
@@ -218,7 +236,7 @@ public class DigestUtils {
      * @see MessageDigestAlgorithms#SHA_384
      */
     public static MessageDigest getSha384Digest() {
-        return getDigest(MessageDigestAlgorithms.SHA_384);
+        return MessageDigestAlgorithm.SHA_384.getMessageDigest();
     }
 
     /**
@@ -234,7 +252,7 @@ public class DigestUtils {
      * @see MessageDigestAlgorithms#SHA_512
      */
     public static MessageDigest getSha512Digest() {
-        return getDigest(MessageDigestAlgorithms.SHA_512);
+        return MessageDigestAlgorithm.SHA_512.getMessageDigest();
     }
 
     /**

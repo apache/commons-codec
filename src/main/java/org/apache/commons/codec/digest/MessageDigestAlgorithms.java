@@ -25,13 +25,14 @@ import java.security.MessageDigest;
  * <p>
  * This class is immutable and thread-safe.
  * </p>
- * TODO 2.0 This should be an enum.
  *
  * @see <a href="http://docs.oracle.com/javase/6/docs/technotes/guides/security/StandardNames.html">Java Cryptography
  *      Architecture Standard Algorithm Name Documentation</a>
  * @since 1.7
+ * @deprecated Use the enum {@link MessageDigestAlgorithm}.
  * @version $Id$
  */
+@Deprecated
 public class MessageDigestAlgorithms {
 
     private MessageDigestAlgorithms() {
@@ -54,11 +55,11 @@ public class MessageDigestAlgorithms {
     public static final String SHA_1 = "SHA-1";
 
     /**
-     * The SHA-224 hash algorithm defined in the FIPS PUB 180-4. 
+     * The SHA-224 hash algorithm defined in the FIPS PUB 180-4.
      * <p>
      * Java 8 only.
      * </p>
-     * 
+     *
      * @since 1.11
      */
     public static final String SHA_224 = "SHA-224";

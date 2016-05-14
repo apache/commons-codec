@@ -50,6 +50,18 @@ public class DigestUtilsTest {
     
     private File testFile;
 
+    private void assumeJava8() {
+        Assume.assumeTrue(SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_1_8));
+    }
+
+    byte[] getTestData() {
+        return testData;
+    }
+
+    File getTestFile() {
+        return testFile;
+    }
+
     @Before
     public void setUp() throws Exception {
         new Random().nextBytes(testData);
@@ -309,10 +321,6 @@ public class DigestUtilsTest {
                 DigestUtils.sha224Hex("The quick brown fox jumps over the lazy dog"));
 
         // Examples from FIPS 180-4?
-    }
-
-    private void assumeJava8() {
-        Assume.assumeTrue(SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_1_8));
     }
 
     @Test
