@@ -55,16 +55,6 @@ public class MessageDigestAlgorithms {
     public static final String SHA_1 = "SHA-1";
 
     /**
-     * The SHA-224 hash algorithm defined in the FIPS PUB 180-4.
-     * <p>
-     * Java 8 only.
-     * </p>
-     *
-     * @since 1.11
-     */
-    public static final String SHA_224 = "SHA-224";
-
-    /**
      * The SHA-256 hash algorithm defined in the FIPS PUB 180-2.
      */
     public static final String SHA_256 = "SHA-256";
