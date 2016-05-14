@@ -19,6 +19,7 @@ package org.apache.commons.codec.digest;
 import java.io.File;
 import java.io.IOException;
 import java.security.MessageDigest;
+import java.util.Arrays;
 import java.util.Locale;
 
 import org.apache.commons.codec.binary.Hex;
@@ -116,6 +117,6 @@ public class Digest {
 
     @Override
     public String toString() {
-        return String.format("%s[%s]", super.toString(), args);
+        return String.format("%s %s", super.toString(), Arrays.toString(args));
     }
 }
