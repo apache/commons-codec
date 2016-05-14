@@ -70,6 +70,9 @@ import org.apache.commons.codec.StringEncoder;
  * @see <a href="http://stevemorse.org/phonetics/bmpm.htm">Beider-Morse Phonetic Matching</a>
  * @see <a href="http://stevemorse.org/phoneticinfo.htm">Reference implementation</a>
  *
+ * <p>
+ * This class is Not ThreadSafe
+ *
  * @since 1.6
  * @version $Id$
  */

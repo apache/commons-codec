@@ -30,7 +30,9 @@ import java.util.zip.Checksum;
  * java.util.zip.CRC32 in Java 1.6
  *
  * Copied from Hadoop 2.6.3.
- * 
+ * <p>
+ * This class is Not ThreadSafe
+ *
  * @see java.util.zip.CRC32
  * @since 1.11
  */
