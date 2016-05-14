@@ -703,7 +703,7 @@ public static byte[] sha(final byte[] data) {
     /**
      * Calculates the SHA-224 digest and returns the value as a <code>byte[]</code>.
      * <p>
-     * Throws a <code>RuntimeException</code> on JRE versions prior to 1.4.0.
+     * Throws a <code>RuntimeException</code> on JRE versions prior to 1.8.0.
      * </p>
      *
      * @param data
@@ -711,6 +711,7 @@ public static byte[] sha(final byte[] data) {
      * @return SHA-224 digest
      * @throws IOException
      *             On error reading from the stream
+     * @throws IllegalArgumentException thrown on JRE versions prior to 1.8.0.
      * @since 1.11
      */
     public static byte[] sha224(final File data) throws IOException {
@@ -720,7 +721,7 @@ public static byte[] sha(final byte[] data) {
     /**
      * Calculates the SHA-224 digest and returns the value as a <code>byte[]</code>.
      * <p>
-     * Throws a {@link IllegalArgumentException} on JRE versions prior to 1.4.0.
+     * Throws a {@link IllegalArgumentException} on JRE versions prior to 1.8.0.
      * </p>
      *
      * @param data
@@ -738,7 +739,7 @@ public static byte[] sha(final byte[] data) {
     /**
      * Calculates the SHA-224 digest and returns the value as a <code>byte[]</code>.
      * <p>
-     * Throws a {@link IllegalArgumentException} on JRE versions prior to 1.4.0.
+     * Throws a {@link IllegalArgumentException} on JRE versions prior to 1.8.0.
      * </p>
      *
      * @param data
@@ -754,7 +755,7 @@ public static byte[] sha(final byte[] data) {
     /**
      * Calculates the SHA-224 digest and returns the value as a hex string.
      * <p>
-     * Throws a {@link IllegalArgumentException} on JRE versions prior to 1.4.0.
+     * Throws a {@link IllegalArgumentException} on JRE versions prior to 1.8.0.
      * </p>
      *
      * @param data
@@ -770,7 +771,7 @@ public static byte[] sha(final byte[] data) {
     /**
      * Calculates the SHA-224 digest and returns the value as a hex string.
      * <p>
-     * Throws a {@link IllegalArgumentException} on JRE versions prior to 1.4.0.
+     * Throws a {@link IllegalArgumentException} on JRE versions prior to 1.8.0.
      * </p>
      *
      * @param data
@@ -786,7 +787,7 @@ public static byte[] sha(final byte[] data) {
     /**
      * Calculates the SHA-224 digest and returns the value as a hex string.
      * <p>
-     * Throws a {@link IllegalArgumentException} on JRE versions prior to 1.4.0.
+     * Throws a {@link IllegalArgumentException} on JRE versions prior to 1.8.0.
      * </p>
      *
      * @param data
@@ -804,7 +805,7 @@ public static byte[] sha(final byte[] data) {
     /**
      * Calculates the SHA-224 digest and returns the value as a hex string.
      * <p>
-     * Throws a {@link IllegalArgumentException} on JRE versions prior to 1.4.0.
+     * Throws a {@link IllegalArgumentException} on JRE versions prior to 1.8.0.
      * </p>
      *
      * @param data
@@ -822,7 +823,7 @@ public static byte[] sha(final byte[] data) {
     /**
      * Calculates the SHA-224 digest and returns the value as a hex string.
      * <p>
-     * Throws a {@link IllegalArgumentException} on JRE versions prior to 1.4.0.
+     * Throws a {@link IllegalArgumentException} on JRE versions prior to 1.8.0.
      * </p>
      *
      * @param data
