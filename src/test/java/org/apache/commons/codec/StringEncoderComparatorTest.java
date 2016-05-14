@@ -45,6 +45,7 @@ public class StringEncoderComparatorTest {
                     0 == sCompare.compare( "O'Brien", "O'Brian" ) );
     }
 
+    @SuppressWarnings("unchecked") // cannot easily avoid this warning
     @Test
     public void testComparatorWithDoubleMetaphone() throws Exception {
         final StringEncoderComparator sCompare = new StringEncoderComparator(new DoubleMetaphone());
@@ -54,7 +55,7 @@ public class StringEncoderComparatorTest {
 
         final String[] controlArray = { "Jordan", "Prior", "Pryor", "Sosa" };
 
-        Collections.sort(testList, sCompare);
+        Collections.sort(testList, sCompare); // unchecked
 
         final String[] resultArray = testList.toArray(new String[0]);
 
