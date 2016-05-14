@@ -47,6 +47,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action dev="ggregory" type="fix" issue="CODEC-207" due-to="Gary Gregory">Charsets Javadoc breaks build when using Java 8</action>         
       <action dev="ggregory" type="fix" issue="CODEC-199" due-to="Yossi Tamari">Bug in HW rule in Soundex</action>         
       <action dev="ggregory" type="fix" issue="CODEC-209" due-to="Gary Gregory">Javadoc for SHA-224 DigestUtils methods should mention Java 1.8.0 restriction instead of 1.4.0.</action>         
+      <action dev="ggregory" type="add" issue="CODEC-212" due-to="Gary Gregory">Create a minimal Digest command line utility: org.apache.commons.codec.digest.Digest</action>         
       <action dev="ggregory" type="add" issue="CODEC-211" due-to="Gary Gregory">Create enum MessageDigestAlgorithm and deprecate class MessageDigestAlgorithms</action>         
       <action dev="ggregory" type="add" issue="CODEC-210" due-to="Gary Gregory">Add DigestUtils.getDigest(String, MessageDigest)</action>         
       <action dev="ggregory" type="add" issue="CODEC-208" due-to="Gary Gregory">Make some DigestUtils APIs public</action>         
