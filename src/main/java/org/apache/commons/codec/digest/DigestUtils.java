@@ -42,15 +42,16 @@ public class DigestUtils {
     /**
      * Read through an ByteBuffer and returns the digest for the data
      *
-     * @param digest
+     * @param messageDigest
      *            The MessageDigest to use (e.g. MD5)
      * @param data
      *            Data to digest
      * @return the digest
      * @throws IOException
      *             On error reading from the stream
+     * @since 1.11
      */
-    private static byte[] digest(final MessageDigest messageDigest, final ByteBuffer data) {
+    public static byte[] digest(final MessageDigest messageDigest, final ByteBuffer data) {
         messageDigest.update(data);
         return messageDigest.digest();
     }
@@ -58,31 +59,33 @@ public class DigestUtils {
     /**
      * Read through a File and returns the digest for the data
      *
-     * @param digest
+     * @param messageDigest
      *            The MessageDigest to use (e.g. MD5)
      * @param data
      *            Data to digest
      * @return the digest
      * @throws IOException
      *             On error reading from the stream
+     * @since 1.11
      */
-    private static byte[] digest(final MessageDigest digest, final File data) throws IOException {
-        return updateDigest(digest, data).digest();
+    public static byte[] digest(final MessageDigest messageDigest, final File data) throws IOException {
+        return updateDigest(messageDigest, data).digest();
     }
 
     /**
      * Read through an InputStream and returns the digest for the data
      *
-     * @param digest
+     * @param messageDigest
      *            The MessageDigest to use (e.g. MD5)
      * @param data
      *            Data to digest
      * @return the digest
      * @throws IOException
      *             On error reading from the stream
+     * @since 1.11
      */
-    private static byte[] digest(final MessageDigest digest, final InputStream data) throws IOException {
-        return updateDigest(digest, data).digest();
+    public static byte[] digest(final MessageDigest messageDigest, final InputStream data) throws IOException {
+        return updateDigest(messageDigest, data).digest();
     }
 
     /**
@@ -103,6 +106,29 @@ public class DigestUtils {
             return MessageDigest.getInstance(algorithm);
         } catch (final NoSuchAlgorithmException e) {
             throw new IllegalArgumentException(e);
+        }
+    }
+
+    /**
+     * Returns a <code>MessageDigest</code> for the given <code>algorithm</code> or a default if there is a problem getting the algorithm.
+     *
+     * @param algorithm
+     *            the name of the algorithm requested. See <a
+     *            href="http://docs.oracle.com/javase/6/docs/technotes/guides/security/crypto/CryptoSpec.html#AppA"
+     *            >Appendix A in the Java Cryptography Architecture Reference Guide</a> for information about standard
+     *            algorithm names.
+     * @param defaultMessageDigest The default MessageDigest.
+     * @return A digest instance.
+     * @see MessageDigest#getInstance(String)
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught.
+     * @since 1.11
+     */
+    public static MessageDigest getDigest(final String algorithm, MessageDigest defaultMessageDigest) {
+        try {
+            return MessageDigest.getInstance(algorithm);
+        } catch (final Exception e) {
+            return defaultMessageDigest;
         }
     }
 

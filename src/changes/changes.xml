@@ -46,6 +46,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action dev="sebb" type="fix" issue="CODEC-200" due-to="Luciano Vernaschi">Base32.HEX_DECODE_TABLE contains the wrong value 32</action>   
       <action dev="ggregory" type="fix" issue="CODEC-207" due-to="Gary Gregory">Charsets Javadoc breaks build when using Java 8</action>         
       <action dev="ggregory" type="fix" issue="CODEC-199" due-to="Yossi Tamari">Bug in HW rule in Soundex</action>         
+      <action dev="ggregory" type="add" issue="CODEC-208" due-to="Gary Gregory">Make some DigestUtils APIs public</action>         
       <action dev="ggregory" type="add" issue="CODEC-206" due-to="Gary Gregory">Add java.io.File APIs to DigestUtils</action>         
       <action dev="ggregory" type="add" issue="CODEC-183" due-to="Steven Wurster">BaseNCodecOutputStream only supports writing EOF on close()</action>         
       <action dev="ggregory" type="add" issue="CODEC-195" due-to="Gary Gregory">Support SHA-224 in DigestUtils on Java 8</action>         
