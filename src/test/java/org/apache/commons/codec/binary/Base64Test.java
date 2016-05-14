@@ -1203,17 +1203,17 @@ public class Base64Test {
 
 			// Very important debugging output should anyone
 			// ever need to delve closely into this stuff.
-			if (false) {
-				System.out.println("reference: [" + Hex.encodeHexString(ids[i]) + "]");
-				System.out.println("standard:  [" + Hex.encodeHexString(decodedStandard) + "] From: ["
-						+ StringUtils.newStringUtf8(standard[i]) + "]");
-				System.out.println("safe1:     [" + Hex.encodeHexString(decodedUrlSafe1) + "] From: ["
-						+ StringUtils.newStringUtf8(urlSafe1[i]) + "]");
-				System.out.println("safe2:     [" + Hex.encodeHexString(decodedUrlSafe2) + "] From: ["
-						+ StringUtils.newStringUtf8(urlSafe2[i]) + "]");
-				System.out.println("safe3:     [" + Hex.encodeHexString(decodedUrlSafe3) + "] From: ["
-						+ StringUtils.newStringUtf8(urlSafe3[i]) + "]");
-			}
+//			{
+//				System.out.println("reference: [" + Hex.encodeHexString(ids[i]) + "]");
+//				System.out.println("standard:  [" + Hex.encodeHexString(decodedStandard) + "] From: ["
+//						+ StringUtils.newStringUtf8(standard[i]) + "]");
+//				System.out.println("safe1:     [" + Hex.encodeHexString(decodedUrlSafe1) + "] From: ["
+//						+ StringUtils.newStringUtf8(urlSafe1[i]) + "]");
+//				System.out.println("safe2:     [" + Hex.encodeHexString(decodedUrlSafe2) + "] From: ["
+//						+ StringUtils.newStringUtf8(urlSafe2[i]) + "]");
+//				System.out.println("safe3:     [" + Hex.encodeHexString(decodedUrlSafe3) + "] From: ["
+//						+ StringUtils.newStringUtf8(urlSafe3[i]) + "]");
+//			}
 
 			assertTrue("standard encode uuid", Arrays.equals(encodedStandard, standard[i]));
 			assertTrue("url-safe encode uuid", Arrays.equals(encodedUrlSafe, urlSafe3[i]));
