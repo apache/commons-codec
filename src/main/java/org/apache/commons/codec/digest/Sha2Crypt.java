@@ -128,7 +128,7 @@ public class Sha2Crypt {
      *             if the given salt is <code>null</code> or does not match the allowed pattern
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught
-     * @see MessageDigestAlgorithms
+     * @see MessageDigestAlgorithm
      */
     private static String sha2Crypt(final byte[] keyBytes, final String salt, final String saltPrefix,
             final int blocksize, final String algorithm) {
