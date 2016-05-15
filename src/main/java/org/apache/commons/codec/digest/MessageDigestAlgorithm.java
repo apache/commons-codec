@@ -74,7 +74,39 @@ public enum MessageDigestAlgorithm {
     /**
      * The SHA-512 hash algorithm defined in the FIPS PUB 180-2.
      */
-    SHA_512("SHA-512");
+    SHA_512("SHA-512"),
+
+    /**
+     * The SHA3-224 hash algorithm defined in the NIST FIPS 202.
+     * <p>
+     * Java 9 only.
+     * </p>
+     */
+    SHA3_224("SHA3-224"),
+
+    /**
+     * The SHA3-256 hash algorithm defined in the NIST FIPS 202.
+     * <p>
+     * Java 9 only.
+     * </p>
+     */
+    SHA3_256("SHA3-256"),
+
+    /**
+     * The SHA3-384 hash algorithm defined in the NIST FIPS 202.
+     * <p>
+     * Java 9 only.
+     * </p>
+     */
+    SHA3_384("SHA3-384"),
+
+    /**
+     * The SHA3-512 hash algorithm defined in the NIST FIPS 202.
+     * <p>
+     * Java 9 only.
+     * </p>
+     */
+    SHA3_512("SHA3-512");
 
     private final String algorithm;
 
