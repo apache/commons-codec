@@ -79,7 +79,7 @@ public class MessageDigestAlgorithmTest {
 
     @Test
     public void testAlgorithm() throws IOException, NoSuchAlgorithmException {
-        final String algorithm = messageDigestAlgorithm.getAlgorithm();
+        final String algorithm = messageDigestAlgorithm.getName();
         Assert.assertNotNull(algorithm);
         Assert.assertFalse(algorithm.isEmpty());
         Assume.assumeTrue(messageDigestAlgorithm.isAvailable());
@@ -122,7 +122,7 @@ public class MessageDigestAlgorithmTest {
     public void testGetMessageDigest() throws IOException, NoSuchAlgorithmException {
         Assume.assumeTrue(messageDigestAlgorithm.isAvailable());
         final MessageDigest messageDigest = messageDigestAlgorithm.getMessageDigest();
-        Assert.assertEquals(messageDigestAlgorithm.getAlgorithm(), messageDigest.getAlgorithm());
+        Assert.assertEquals(messageDigestAlgorithm.getName(), messageDigest.getAlgorithm());
     }
 
 }

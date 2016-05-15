@@ -171,7 +171,7 @@ public enum MessageDigestAlgorithm {
      *
      * @return the algorithm name.
      */
-    public String getAlgorithm() {
+    public String getName() {
         return algorithm;
     }
 

@@ -87,7 +87,7 @@ public class Digest {
         for (int i = 0; i < digestAlgorithms.length; i++) {
             final MessageDigestAlgorithm messageDigestAlgorithm = digestAlgorithms[i];
             if (messageDigestAlgorithm.isAvailable()) {
-                run(messageDigestAlgorithm.getAlgorithm() + " ", messageDigestAlgorithm);
+                run(messageDigestAlgorithm.getName() + " ", messageDigestAlgorithm);
             }
         }
     }

@@ -102,7 +102,7 @@ public class Sha2Crypt {
         if (salt == null) {
             salt = SHA256_PREFIX + B64.getRandomSalt(8);
         }
-        return sha2Crypt(keyBytes, salt, SHA256_PREFIX, SHA256_BLOCKSIZE, MessageDigestAlgorithm.SHA_256.getAlgorithm());
+        return sha2Crypt(keyBytes, salt, SHA256_PREFIX, SHA256_BLOCKSIZE, MessageDigestAlgorithm.SHA_256.getName());
     }
 
     /**
@@ -540,6 +540,6 @@ public class Sha2Crypt {
         if (salt == null) {
             salt = SHA512_PREFIX + B64.getRandomSalt(8);
         }
-        return sha2Crypt(keyBytes, salt, SHA512_PREFIX, SHA512_BLOCKSIZE, MessageDigestAlgorithm.SHA_512.getAlgorithm());
+        return sha2Crypt(keyBytes, salt, SHA512_PREFIX, SHA512_BLOCKSIZE, MessageDigestAlgorithm.SHA_512.getName());
     }
 }

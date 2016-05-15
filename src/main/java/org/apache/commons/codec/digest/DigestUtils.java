@@ -157,7 +157,7 @@ public class DigestUtils {
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught, which should never happen because MD2 is a
      *             built-in algorithm
-     * @see MessageDigestAlgorithms#MD2
+     * @see MessageDigestAlgorithm#MD2
      * @since 1.7
      */
     public static MessageDigest getMd2Digest() {
@@ -171,7 +171,7 @@ public class DigestUtils {
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught, which should never happen because MD5 is a
      *             built-in algorithm
-     * @see MessageDigestAlgorithms#MD5
+     * @see MessageDigestAlgorithm#MD5
      */
     public static MessageDigest getMd5Digest() {
         return MessageDigestAlgorithm.MD5.getMessageDigest();
@@ -184,7 +184,7 @@ public class DigestUtils {
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught, which should never happen because SHA-1 is a
      *             built-in algorithm
-     * @see MessageDigestAlgorithms#SHA_1
+     * @see MessageDigestAlgorithm#SHA_1
      * @since 1.7
      */
     public static MessageDigest getSha1Digest() {
@@ -201,7 +201,7 @@ public class DigestUtils {
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught on Java 7 and older, SHA-224 is a built-in
      *             algorithm on Java 8
-     * @see MessageDigestAlgorithms#SHA_224
+     * @see MessageDigestAlgorithm#SHA_224
      */
     public static MessageDigest getSha224Digest() {
         return MessageDigestAlgorithm.SHA_224.getMessageDigest();
@@ -217,7 +217,7 @@ public class DigestUtils {
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught, which should never happen because SHA-256 is a
      *             built-in algorithm
-     * @see MessageDigestAlgorithms#SHA_256
+     * @see MessageDigestAlgorithm#SHA_256
      */
     public static MessageDigest getSha256Digest() {
         return MessageDigestAlgorithm.SHA_256.getMessageDigest();
@@ -233,7 +233,7 @@ public class DigestUtils {
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught, which should never happen because SHA-384 is a
      *             built-in algorithm
-     * @see MessageDigestAlgorithms#SHA_384
+     * @see MessageDigestAlgorithm#SHA_384
      */
     public static MessageDigest getSha384Digest() {
         return MessageDigestAlgorithm.SHA_384.getMessageDigest();
@@ -249,7 +249,7 @@ public class DigestUtils {
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught, which should never happen because SHA-512 is a
      *             built-in algorithm
-     * @see MessageDigestAlgorithms#SHA_512
+     * @see MessageDigestAlgorithm#SHA_512
      */
     public static MessageDigest getSha512Digest() {
         return MessageDigestAlgorithm.SHA_512.getMessageDigest();
