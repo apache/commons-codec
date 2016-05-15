@@ -51,6 +51,14 @@ public enum HmacAlgorithms {
     /**
      * The HmacSHA256 Message Authentication Code (MAC) algorithm specified in RFC 2104 and FIPS PUB 180-2.
      * <p>
+     * Every implementation of the Java 8 platform is required to support this standard Mac algorithm.
+     * </p>
+     */
+    HMAC_SHA_224("HmacSHA224"),
+
+    /**
+     * The HmacSHA256 Message Authentication Code (MAC) algorithm specified in RFC 2104 and FIPS PUB 180-2.
+     * <p>
      * Every implementation of the Java platform is required to support this standard Mac algorithm.
      * </p>
      */
@@ -90,5 +98,5 @@ public enum HmacAlgorithms {
     public String toString() {
         return algorithm;
     }
-
+    
 }
