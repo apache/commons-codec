@@ -101,6 +101,8 @@ public class Digest {
             println(prefix, DigestUtils.digest(messageDigest, file));
         } else if (file.isDirectory()) {
             run(prefix, messageDigest, file.listFiles());
+        } else {
+            System.err.println("Parameter is file nor directory: '" + file + "'");
         }
     }
 
