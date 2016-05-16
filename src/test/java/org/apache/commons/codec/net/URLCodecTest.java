@@ -188,7 +188,6 @@ public class URLCodecTest {
     public void testEncodeUrlWithNullBitSet() throws Exception {
         final URLCodec urlCodec = new URLCodec();
         final String plain = "Hello there!";
-        @SuppressWarnings("deprecation") // TODO remove when Java 7 is minimum and Charsets constants can be replaced
         final String encoded = new String( URLCodec.encodeUrl(null, plain.getBytes(Charsets.UTF_8)));
         assertEquals("Basic URL encoding test",
             "Hello+there%21", encoded);
@@ -228,7 +227,6 @@ public class URLCodecTest {
         assertEquals("Basic URL encoding test",
             "Hello+there%21", encoded);
 
-        @SuppressWarnings("deprecation") // TODO remove when Java 7 is minimum and Charsets constants can be replaced
         final byte[] plainBA = plain.getBytes(Charsets.UTF_8);
         final byte[] encodedBA = (byte[]) urlCodec.encode((Object) plainBA);
         encoded = new String(encodedBA);
@@ -275,7 +273,6 @@ public class URLCodecTest {
         assertEquals("Basic URL decoding test",
             "Hello there!", decoded);
 
-        @SuppressWarnings("deprecation") // TODO remove when Java 7 is minimum and Charsets constants can be replaced
         final byte[] plainBA = plain.getBytes(Charsets.UTF_8);
         final byte[] decodedBA = (byte[]) urlCodec.decode((Object) plainBA);
         decoded = new String(decodedBA);
