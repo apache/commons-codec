@@ -41,7 +41,6 @@ public class Apr1CryptTest {
     }
 
     @Test
-    @SuppressWarnings("deprecation") // TODO remove when Java 7 is minimum and Charsets constants can be replaced
     public void testApr1CryptBytes() {
         // random salt
         final byte[] keyBytes = new byte[] { '!', 'b', 'c', '.' };
