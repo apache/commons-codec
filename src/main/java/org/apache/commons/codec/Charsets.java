@@ -91,22 +91,26 @@ public class Charsets {
      * CharEncodingISO Latin Alphabet No. 1, a.k.a. ISO-LATIN-1.
      * <p>
      * Every implementation of the Java platform is required to support this character encoding.
+     * </p>
+     * <p>
+     * On Java, use {@link java.nio.charset.StandardCharsets#ISO_8859_1} instead.
+     * </p>
      *
      * @see <a href="http://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
-     * @deprecated Use Java 7's {@link java.nio.charset.StandardCharsets#ISO_8859_1} instead
      */
-    @Deprecated
     public static final Charset ISO_8859_1 = Charset.forName(CharEncoding.ISO_8859_1);
 
     /**
      * Seven-bit ASCII, also known as ISO646-US, also known as the Basic Latin block of the Unicode character set.
      * <p>
      * Every implementation of the Java platform is required to support this character encoding.
+     * </p>
+     * <p>
+     * On Java, use {@link java.nio.charset.StandardCharsets#ISO_8859_1} instead.
+     * </p>
      *
      * @see <a href="http://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
-     * @deprecated Use Java 7's {@link java.nio.charset.StandardCharsets#US_ASCII} instead
      */
-    @Deprecated
     public static final Charset US_ASCII = Charset.forName(CharEncoding.US_ASCII);
 
     /**
@@ -114,43 +118,51 @@ public class Charsets {
      * (either order accepted on input, big-endian used on output)
      * <p>
      * Every implementation of the Java platform is required to support this character encoding.
+     * </p>
+     * <p>
+     * On Java, use {@link java.nio.charset.StandardCharsets#ISO_8859_1} instead.
+     * </p>
      *
      * @see <a href="http://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
-     * @deprecated Use Java 7's {@link java.nio.charset.StandardCharsets#UTF_16} instead
      */
-    @Deprecated
     public static final Charset UTF_16 = Charset.forName(CharEncoding.UTF_16);
 
     /**
      * Sixteen-bit Unicode Transformation Format, big-endian byte order.
      * <p>
      * Every implementation of the Java platform is required to support this character encoding.
+     * </p>
+     * <p>
+     * On Java, use {@link java.nio.charset.StandardCharsets#ISO_8859_1} instead.
+     * </p>
      *
      * @see <a href="http://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
-     * @deprecated Use Java 7's {@link java.nio.charset.StandardCharsets#UTF_16BE} instead
      */
-    @Deprecated
     public static final Charset UTF_16BE = Charset.forName(CharEncoding.UTF_16BE);
 
     /**
      * Sixteen-bit Unicode Transformation Format, little-endian byte order.
      * <p>
      * Every implementation of the Java platform is required to support this character encoding.
+     * </p>
+     * <p>
+     * On Java, use {@link java.nio.charset.StandardCharsets#ISO_8859_1} instead.
+     * </p>
      *
      * @see <a href="http://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
-     * @deprecated Use Java 7's {@link java.nio.charset.StandardCharsets#UTF_16LE} instead
      */
-    @Deprecated
     public static final Charset UTF_16LE = Charset.forName(CharEncoding.UTF_16LE);
 
     /**
      * Eight-bit Unicode Transformation Format.
      * <p>
      * Every implementation of the Java platform is required to support this character encoding.
+     * </p>
+     * <p>
+     * On Java, use {@link java.nio.charset.StandardCharsets#ISO_8859_1} instead.
+     * </p>
      *
      * @see <a href="http://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
-     * @deprecated Use Java 7's {@link java.nio.charset.StandardCharsets#UTF_8}
      */
-    @Deprecated
     public static final Charset UTF_8 = Charset.forName(CharEncoding.UTF_8);
 }
