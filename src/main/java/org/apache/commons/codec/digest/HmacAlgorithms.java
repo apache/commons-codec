@@ -243,7 +243,7 @@ public enum HmacAlgorithms {
 
     /**
      * Returns whether this algorithm is available
-     * 
+     *
      * @return whether this algorithm is available
      */
     public boolean isAvailable() {
