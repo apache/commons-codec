@@ -34,11 +34,11 @@ public class Digest {
     /**
      * Runs the digest algorithm in {@code args[0]} on the file in {@code args[1]}. If there is no {@code args[1]}, use
      * standard input.
-     * 
+     *
      * <p>
      * The algorithm can also be {@code ALL} or {@code *} to output one line for each known algorithm.
      * </p>
-     * 
+     *
      * @param args
      *            {@code args[0]} is one of {@link MessageDigestAlgorithm} name, {@link MessageDigest} name, {@code ALL}
      *            , or {@code *}. {@code args[1]} is a FILE.
@@ -67,7 +67,7 @@ public class Digest {
 
     private void println(String prefix, final byte[] digest) {
         final String sourceDesc = source == null ? "-" : source;
-        // The standard appears to be to print 
+        // The standard appears to be to print
         // hex, space, then either space or '*' followed by file
         // where '*' is used for binary files
         // shasum(1) has a -b option which generates " *" separator
