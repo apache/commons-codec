@@ -84,8 +84,7 @@ public class Digest {
     }
 
     private void run(MessageDigestAlgorithm[] digestAlgorithms) throws IOException {
-        for (int i = 0; i < digestAlgorithms.length; i++) {
-            final MessageDigestAlgorithm messageDigestAlgorithm = digestAlgorithms[i];
+        for (MessageDigestAlgorithm messageDigestAlgorithm : digestAlgorithms) {
             if (messageDigestAlgorithm.isAvailable()) {
                 run(messageDigestAlgorithm.getName() + " ", messageDigestAlgorithm);
             }
@@ -106,8 +105,8 @@ public class Digest {
     }
 
     private void run(String prefix, MessageDigest messageDigest, File[] files) throws IOException {
-        for (int i = 0; i < files.length; i++) {
-            println(prefix, DigestUtils.digest(messageDigest, files[i]));
+        for (File file : files) {
+            println(prefix, DigestUtils.digest(messageDigest, file));
         }
     }
 
