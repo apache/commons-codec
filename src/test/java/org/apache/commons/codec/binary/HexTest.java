@@ -448,13 +448,11 @@ public class HexTest {
     }
 
     @Test
-    @SuppressWarnings("deprecation") // TODO remove when Java 7 is minimum and Charsets constants can be replaced
     public void testGetCharset() throws UnsupportedEncodingException, DecoderException {
         Assert.assertEquals(Charsets.UTF_8, new Hex(Charsets.UTF_8).getCharset());
     }
 
     @Test
-    @SuppressWarnings("deprecation") // TODO remove when Java 7 is minimum and Charsets constants can be replaced
     public void testGetCharsetName() throws UnsupportedEncodingException, DecoderException {
         Assert.assertEquals(Charsets.UTF_8.name(), new Hex(Charsets.UTF_8).getCharsetName());
     }

@@ -504,7 +504,7 @@ public class Base64Codec13Test {
         }
     }
 
-    @SuppressWarnings("deprecation") // TODO remove when Java 7 is minimum and Charsets constants can be replaced
+
     private static byte[] utf8(final String s) {
 
         // We would use commons-codec-1.4.jar own utility method for this, but we

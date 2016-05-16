@@ -43,8 +43,6 @@ import org.junit.Test;
  */
 public class Base64Test {
 
-	@SuppressWarnings("deprecation") // TODO remove when Java 7 is minimum and
-										// Charsets constants can be replaced
 	private static final Charset CHARSET_UTF8 = Charsets.UTF_8;
 
 	private final Random random = new Random();

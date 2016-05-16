@@ -31,7 +31,7 @@ import org.junit.Test;
 
 public class Base32Test {
 
-    @SuppressWarnings("deprecation") // TODO remove when Java 7 is minimum and Charsets constants can be replaced
+
     private static final Charset CHARSET_UTF8 = Charsets.UTF_8;
 
     private static final String [][] BASE32_TEST_CASES = { // RFC 4648

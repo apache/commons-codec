@@ -36,7 +36,6 @@ import org.junit.Test;
  */
 public class BinaryCodecTest {
 
-    @SuppressWarnings("deprecation") // TODO remove when Java 7 is minimum and Charsets constants can be replaced
     private static final Charset CHARSET_UTF8 = Charsets.UTF_8;
 
     /** mask with bit zero based index 0 raised */
