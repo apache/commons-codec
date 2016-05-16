@@ -32,7 +32,6 @@ import org.apache.commons.codec.binary.StringUtils;
 /**
  * Simplifies common {@link javax.crypto.Mac} tasks. This class is immutable and thread-safe.
  *
- *
  * <p>
  * <strong>Note: Not all JCE implementations supports all algorithms. If not supported, an IllegalArgumentException is
  * thrown.</strong>
