@@ -67,7 +67,11 @@ public class Digest {
 
     private void println(String prefix, final byte[] digest) {
         final String sourceDesc = source == null ? "-" : source;
-        System.out.println(prefix + Hex.encodeHexString(digest) + " " + sourceDesc);
+        // The standard appears to be to print 
+        // hex, space, then either space or '*' followed by file
+        // where '*' is used for binary files
+        // shasum(1) has a -b option which generates " *" separator
+        System.out.println(prefix + Hex.encodeHexString(digest) + "  " + sourceDesc);
     }
 
     private void run() throws IOException {
