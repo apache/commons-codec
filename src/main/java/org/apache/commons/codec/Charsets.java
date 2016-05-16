@@ -93,7 +93,7 @@ public class Charsets {
      * Every implementation of the Java platform is required to support this character encoding.
      * </p>
      * <p>
-     * On Java, use {@link java.nio.charset.StandardCharsets#ISO_8859_1} instead.
+     * On Java 7 or later, use {@link java.nio.charset.StandardCharsets#ISO_8859_1} instead.
      * </p>
      *
      * @see <a href="http://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
@@ -106,7 +106,7 @@ public class Charsets {
      * Every implementation of the Java platform is required to support this character encoding.
      * </p>
      * <p>
-     * On Java, use {@link java.nio.charset.StandardCharsets#ISO_8859_1} instead.
+     * On Java 7 or later, use {@link java.nio.charset.StandardCharsets#ISO_8859_1} instead.
      * </p>
      *
      * @see <a href="http://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
@@ -120,7 +120,7 @@ public class Charsets {
      * Every implementation of the Java platform is required to support this character encoding.
      * </p>
      * <p>
-     * On Java, use {@link java.nio.charset.StandardCharsets#ISO_8859_1} instead.
+     * On Java 7 or later, use {@link java.nio.charset.StandardCharsets#ISO_8859_1} instead.
      * </p>
      *
      * @see <a href="http://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
@@ -133,7 +133,7 @@ public class Charsets {
      * Every implementation of the Java platform is required to support this character encoding.
      * </p>
      * <p>
-     * On Java, use {@link java.nio.charset.StandardCharsets#ISO_8859_1} instead.
+     * On Java 7 or later, use {@link java.nio.charset.StandardCharsets#ISO_8859_1} instead.
      * </p>
      *
      * @see <a href="http://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
@@ -146,7 +146,7 @@ public class Charsets {
      * Every implementation of the Java platform is required to support this character encoding.
      * </p>
      * <p>
-     * On Java, use {@link java.nio.charset.StandardCharsets#ISO_8859_1} instead.
+     * On Java 7 or later, use {@link java.nio.charset.StandardCharsets#ISO_8859_1} instead.
      * </p>
      *
      * @see <a href="http://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
@@ -159,7 +159,7 @@ public class Charsets {
      * Every implementation of the Java platform is required to support this character encoding.
      * </p>
      * <p>
-     * On Java, use {@link java.nio.charset.StandardCharsets#ISO_8859_1} instead.
+     * On Java 7 or later, use {@link java.nio.charset.StandardCharsets#ISO_8859_1} instead.
      * </p>
      *
      * @see <a href="http://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
