@@ -29,10 +29,10 @@ import java.security.MessageDigest;
  * @see <a href="http://docs.oracle.com/javase/6/docs/technotes/guides/security/StandardNames.html">Java Cryptography
  *      Architecture Standard Algorithm Name Documentation</a>
  * @since 1.7
- * @deprecated Use the enum {@link MessageDigestAlgorithm}.
+// * @deprecated Use the enum {@link MessageDigestAlgorithm}.
  * @version $Id$
  */
-@Deprecated
+//@Deprecated
 public class MessageDigestAlgorithms {
 
     private MessageDigestAlgorithms() {
@@ -68,5 +68,12 @@ public class MessageDigestAlgorithms {
      * The SHA-512 hash algorithm defined in the FIPS PUB 180-2.
      */
     public static final String SHA_512 = "SHA-512";
+
+    public static final String SHA_224 = "SHA_224";
+
+    public static String[] values() {
+        return new String[]{
+            MD2, MD5, SHA_1, SHA_224, SHA_256, SHA_384, SHA_512};
+    }
 
 }
