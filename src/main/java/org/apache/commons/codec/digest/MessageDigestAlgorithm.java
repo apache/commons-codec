@@ -24,6 +24,8 @@ import java.nio.ByteBuffer;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import org.apache.commons.codec.binary.Hex;
+
 /**
  * Standard {@link MessageDigest} algorithm names from the <cite>Java Cryptography Architecture Standard Algorithm Name
  * Documentation</cite>.
@@ -40,21 +42,33 @@ public enum MessageDigestAlgorithm {
 
     /**
      * The MD2 message digest algorithm defined in RFC 1319.
+     * <p>
+     * This MAC algorithm is <em>optional</em>; not all implementations support it.
+     * </p>
      */
     MD2("MD2"),
 
     /**
      * The MD5 message digest algorithm defined in RFC 1321.
+     * <p>
+     * Every implementation of the Java platform is required to support this standard MAC algorithm.
+     * </p>
      */
     MD5("MD5"),
 
     /**
      * The SHA-1 hash algorithm defined in the FIPS PUB 180-2.
+     * <p>
+     * Every implementation of the Java platform is required to support this standard MAC algorithm.
+     * </p>
      */
     SHA_1("SHA-1"),
 
     /**
      * The SHA-224 hash algorithm defined in the FIPS PUB 180-4.
+     * <p>
+     * This MAC algorithm is <em>optional</em>; not all implementations support it.
+     * </p>
      * <p>
      * Java 8 only.
      * </p>
@@ -63,21 +77,33 @@ public enum MessageDigestAlgorithm {
 
     /**
      * The SHA-256 hash algorithm defined in the FIPS PUB 180-2.
+     * <p>
+     * Every implementation of the Java platform is required to support this standard MAC algorithm.
+     * </p>
      */
     SHA_256("SHA-256"),
 
     /**
      * The SHA-384 hash algorithm defined in the FIPS PUB 180-2.
+     * <p>
+     * This MAC algorithm is <em>optional</em>; not all implementations support it.
+     * </p>
      */
     SHA_384("SHA-384"),
 
     /**
      * The SHA-512 hash algorithm defined in the FIPS PUB 180-2.
+     * <p>
+     * This MAC algorithm is <em>optional</em>; not all implementations support it.
+     * </p>
      */
     SHA_512("SHA-512"),
 
     /**
      * The SHA3-224 hash algorithm defined in the NIST FIPS 202.
+     * <p>
+     * This MAC algorithm is <em>optional</em>; not all implementations support it.
+     * </p>
      * <p>
      * Java 9 only.
      * </p>
@@ -87,6 +113,9 @@ public enum MessageDigestAlgorithm {
     /**
      * The SHA3-256 hash algorithm defined in the NIST FIPS 202.
      * <p>
+     * This MAC algorithm is <em>optional</em>; not all implementations support it.
+     * </p>
+     * <p>
      * Java 9 only.
      * </p>
      */
@@ -95,6 +124,9 @@ public enum MessageDigestAlgorithm {
     /**
      * The SHA3-384 hash algorithm defined in the NIST FIPS 202.
      * <p>
+     * This MAC algorithm is <em>optional</em>; not all implementations support it.
+     * </p>
+     * <p>
      * Java 9 only.
      * </p>
      */
@@ -102,6 +134,9 @@ public enum MessageDigestAlgorithm {
 
     /**
      * The SHA3-512 hash algorithm defined in the NIST FIPS 202.
+     * <p>
+     * This MAC algorithm is <em>optional</em>; not all implementations support it.
+     * </p>
      * <p>
      * Java 9 only.
      * </p>
@@ -128,6 +163,19 @@ public enum MessageDigestAlgorithm {
     }
 
     /**
+     * Read through a byte[] and returns the digest for the data
+     *
+     * @param data
+     *            Data to digest
+     * @return the digest
+     * @throws IOException
+     *             On error reading from the stream
+     */
+    public String digestHex(byte[] data) throws IOException {
+        return Hex.encodeHexString(digest(data));
+    }
+
+    /**
      * Read through a ByteBuffer and returns the digest for the data
      *
      * @param data
@@ -138,6 +186,19 @@ public enum MessageDigestAlgorithm {
      */
     public byte[] digest(ByteBuffer data) throws IOException {
         return DigestUtils.digest(getMessageDigest(), data);
+    }
+
+    /**
+     * Read through a ByteBuffer and returns the digest for the data
+     *
+     * @param data
+     *            Data to digest
+     * @return the digest
+     * @throws IOException
+     *             On error reading from the stream
+     */
+    public String digestHex(ByteBuffer data) throws IOException {
+        return Hex.encodeHexString(digest(data));
     }
 
     /**
@@ -154,6 +215,19 @@ public enum MessageDigestAlgorithm {
     }
 
     /**
+     * Read through a File and returns the digest for the data
+     *
+     * @param data
+     *            Data to digest
+     * @return the digest
+     * @throws IOException
+     *             On error reading from the stream
+     */
+    public String digestHex(File data) throws IOException {
+        return Hex.encodeHexString(digest(data));
+    }
+
+    /**
      * Read through an InputStream and returns the digest for the data
      *
      * @param data
@@ -164,6 +238,19 @@ public enum MessageDigestAlgorithm {
      */
     public byte[] digest(InputStream data) throws IOException {
         return DigestUtils.digest(getMessageDigest(), data);
+    }
+
+    /**
+     * Read through an InputStream and returns the digest for the data
+     *
+     * @param data
+     *            Data to digest
+     * @return the digest
+     * @throws IOException
+     *             On error reading from the stream
+     */
+    public String digestHex(InputStream data) throws IOException {
+        return Hex.encodeHexString(digest(data));
     }
 
     /**
