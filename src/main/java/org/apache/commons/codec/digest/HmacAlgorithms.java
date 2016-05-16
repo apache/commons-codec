@@ -17,6 +17,16 @@
 
 package org.apache.commons.codec.digest;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.security.Key;
+import java.security.NoSuchAlgorithmException;
+
+import javax.crypto.Mac;
+
+import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.codec.binary.StringUtils;
+
 /**
  * Standard {@link HmacUtils} algorithm names from the <cite>Java Cryptography Architecture Standard Algorithm Name
  * Documentation</cite>.
@@ -25,8 +35,12 @@ package org.apache.commons.codec.digest;
  * <strong>Note: Not all JCE implementations support all the algorithms in this enum.</strong>
  * </p>
  *
- * @see <a href="http://docs.oracle.com/javase/6/docs/technotes/guides/security/StandardNames.html">Java Cryptography
- *      Architecture Standard Algorithm Name Documentation</a>
+ * @see <a href="http://docs.oracle.com/javase/6/docs/technotes/guides/security/SunProviders.html#SunJCEProvider"> Java
+ *      6 Cryptography Architecture Sun Providers Documentation</a>
+ * @see <a href="http://docs.oracle.com/javase/7/docs/technotes/guides/security/SunProviders.html#SunJCEProvider"> Java
+ *      7 Cryptography Architecture Sun Providers Documentation</a>
+ * @see <a href="http://docs.oracle.com/javase/8/docs/technotes/guides/security/SunProviders.html#SunJCEProvider"> Java
+ *      8 Cryptography Architecture Sun Providers Documentation</a>
  * @since 1.10
  * @version $Id$
  */
@@ -51,7 +65,7 @@ public enum HmacAlgorithms {
     /**
      * The HmacSHA256 Message Authentication Code (MAC) algorithm specified in RFC 2104 and FIPS PUB 180-2.
      * <p>
-     * Every implementation of the Java 8 platform is required to support this standard MAC algorithm.
+     * Every implementation of the Java platform is required to support this standard MAC algorithm.
      * </p>
      */
     HMAC_SHA_224("HmacSHA224"),
@@ -80,23 +94,181 @@ public enum HmacAlgorithms {
      */
     HMAC_SHA_512("HmacSHA512");
 
-    private final String algorithm;
+    private final String name;
 
     private HmacAlgorithms(final String algorithm) {
-        this.algorithm = algorithm;
+        this.name = algorithm;
+    }
+
+    /**
+     * Returns an initialized <code>Mac</code> for the this algorithm.
+     * <p>
+     * Every implementation of the Java platform is required to support this standard Mac algorithm.
+     * </p>
+     *
+     * @param key
+     *            They key for the keyed digest (must not be null)
+     * @return A Mac instance initialized with the given key.
+     * @see Mac#getInstance(String)
+     * @see Mac#init(Key)
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
+     */
+    public Mac getHmac(final byte[] key) {
+        return HmacUtils.getInitializedMac(name, key);
+    }
+
+    /**
+     * Returns an initialized <code>Mac</code> for this algorithm.
+     *
+     * @param key
+     *            They key for the keyed digest (must not be null)
+     * @return A Mac instance initialized with the given key.
+     * @see Mac#getInstance(String)
+     * @see Mac#init(Key)
+     * @throws IllegalArgumentException
+     *             when key is null or invalid.
+     */
+    public Mac getInitializedMac(final byte[] key) {
+        return HmacUtils.getInitializedMac(name, key);
+    }
+
+    /**
+     * Gets the algorithm name.
+     *
+     * @return the algorithm name.
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Returns a keyed-Hash Message Authentication Code (HMAC) for the given key and value.
+     *
+     * @param key
+     *            They key for the keyed digest (must not be null)
+     * @param valueToDigest
+     *            The value (data) which should to digest (maybe empty or null)
+     * @return HMAC for the given key and value
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
+     */
+    public byte[] hmac(final byte[] key, final byte[] valueToDigest) {
+        try {
+            return getHmac(key).doFinal(valueToDigest);
+        } catch (final IllegalStateException e) {
+            // cannot happen
+            throw new IllegalArgumentException(e);
+        }
+    }
+
+    /**
+     * Returns a keyed-Hash Message Authentication Code (HMAC) for the given key and value.
+     *
+     * @param key
+     *            They key for the keyed digest (must not be null)
+     * @param valueToDigest
+     *            The value (data) which should to digest. The InputStream must not be null and will not be closed.
+     * @return HMAC for the given key and value
+     * @throws IOException
+     *             If an I/O error occurs.
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
+     */
+    public byte[] hmac(final byte[] key, final InputStream valueToDigest) throws IOException {
+        return HmacUtils.updateHmac(getHmac(key), valueToDigest).doFinal();
+    }
+
+    /**
+     * Returns a keyed-Hash Message Authentication Code (HMAC) for the given key and value.
+     *
+     * @param key
+     *            They key for the keyed digest (must not be null)
+     * @param valueToDigest
+     *            The value (data) which should to digest (maybe empty or null)
+     * @return HMAC for the given key and value
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
+     */
+    public byte[] hmac(final String key, final String valueToDigest) {
+        return hmac(StringUtils.getBytesUtf8(key), StringUtils.getBytesUtf8(valueToDigest));
+    }
+
+    /**
+     * Returns a keyed-Hash Message Authentication Code (HMAC) as a hex string (lowercase) for the given key and value.
+     *
+     * @param key
+     *            They key for the keyed digest (must not be null)
+     * @param valueToDigest
+     *            The value (data) which should to digest (maybe empty or null)
+     * @return HMAC for the given key and value as a hex string (lowercase)
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
+     */
+    public String hmacHex(final byte[] key, final byte[] valueToDigest) {
+        return Hex.encodeHexString(hmac(key, valueToDigest));
+    }
+
+    /**
+     * Returns a keyed-Hash Message Authentication Code (HMAC) as a hex string (lowercase) for the given key and value.
+     *
+     * @param key
+     *            They key for the keyed digest (must not be null)
+     * @param valueToDigest
+     *            The value (data) which should to digest. The InputStream must not be null and will not be closed.
+     * @return HMAC for the given key and value as a hex string (lowercase)
+     * @throws IOException
+     *             If an I/O error occurs.
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
+     */
+    public String hmacHex(final byte[] key, final InputStream valueToDigest) throws IOException {
+        return Hex.encodeHexString(hmac(key, valueToDigest));
+    }
+
+    /**
+     * Returns a keyed-Hash Message Authentication Code (HMAC) as a hex string (lowercase) for the given key and value.
+     *
+     * @param key
+     *            They key for the keyed digest (must not be null)
+     * @param valueToDigest
+     *            The value (data) which should to digest (maybe empty or null)
+     * @return HMAC for the given key and value as a hex string (lowercase)
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
+     */
+    public String hmacHex(final String key, final String valueToDigest) {
+        return Hex.encodeHexString(hmac(key, valueToDigest));
+    }
+
+    /**
+     * Returns whether this algorithm is available
+     * 
+     * @return whether this algorithm is available
+     */
+    public boolean isAvailable() {
+        try {
+            Mac.getInstance(name);
+            return true;
+        } catch (NoSuchAlgorithmException e) {
+            return false;
+        }
     }
 
     /**
      * The algorithm name
      *
-     * @see <a
-     *      href="http://docs.oracle.com/javase/6/docs/technotes/guides/security/SunProviders.html#SunJCEProvider">Java
-     *      Cryptography Architecture Sun Providers Documentation</a>
+     * @see <a href="http://docs.oracle.com/javase/6/docs/technotes/guides/security/SunProviders.html#SunJCEProvider">
+     *      Java 6 Cryptography Architecture Sun Providers Documentation</a>
+     * @see <a href="http://docs.oracle.com/javase/7/docs/technotes/guides/security/SunProviders.html#SunJCEProvider">
+     *      Java 7 Cryptography Architecture Sun Providers Documentation</a>
+     * @see <a href="http://docs.oracle.com/javase/8/docs/technotes/guides/security/SunProviders.html#SunJCEProvider">
+     *      Java 8 Cryptography Architecture Sun Providers Documentation</a>
      * @return The algorithm name ("HmacSHA512" for example)
      */
     @Override
     public String toString() {
-        return algorithm;
+        return name;
     }
-    
+
 }
