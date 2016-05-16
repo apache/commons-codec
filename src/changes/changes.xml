@@ -54,7 +54,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action dev="ggregory" type="add" issue="CODEC-211" due-to="Gary Gregory">Create enum MessageDigestAlgorithm and deprecate class MessageDigestAlgorithms</action>         
       <action dev="ggregory" type="add" issue="CODEC-210" due-to="Gary Gregory">Add DigestUtils.getDigest(String, MessageDigest)</action>         
       <action dev="ggregory" type="add" issue="CODEC-208" due-to="Gary Gregory">Make some DigestUtils APIs public</action>         
-      <action dev="ggregory" type="add" issue="CODEC-206" due-to="Gary Gregory">Add java.io.File APIs to DigestUtils</action>         
+      <action dev="ggregory" type="add" issue="CODEC-206" due-to="Gary Gregory">Add java.io.File APIs to MessageDigestAlgorithm</action>         
       <action dev="ggregory" type="add" issue="CODEC-183" due-to="Steven Wurster">BaseNCodecOutputStream only supports writing EOF on close()</action>         
       <action dev="ggregory" type="add" issue="CODEC-195" due-to="Gary Gregory">Support SHA-224 in DigestUtils on Java 8</action>         
       <action dev="ggregory" type="add" issue="CODEC-194" due-to="Gary Gregory">Support java.nio.ByteBuffer in org.apache.commons.codec.binary.Hex</action>         
