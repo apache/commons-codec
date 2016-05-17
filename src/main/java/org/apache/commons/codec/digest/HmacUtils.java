@@ -162,7 +162,7 @@ public final class HmacUtils {
      */
     @Deprecated
     public static Mac getInitializedMac(final HmacAlgorithms algorithm, final byte[] key) {
-        return algorithm.getInitializedMac(key);
+        return algorithm.getHmac(key);
     }
 
     /**

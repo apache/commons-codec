@@ -121,22 +121,6 @@ public enum HmacAlgorithms {
     }
 
     /**
-     * Returns an initialized <code>Mac</code> for this algorithm.
-     *
-     * @param key
-     *            They key for the keyed digest (must not be null)
-     * @return A Mac instance initialized with the given key.
-     * @see Mac#getInstance(String)
-     * @see Mac#init(Key)
-     * @throws IllegalArgumentException
-     *             when key is null or invalid.
-     * @since 1.11
-     */
-    public Mac getInitializedMac(final byte[] key) {
-        return HmacUtils.getInitializedMac(name, key);
-    }
-
-    /**
      * Gets the algorithm name.
      *
      * @return the algorithm name.
