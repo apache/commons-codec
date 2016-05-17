@@ -22,8 +22,6 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
-import org.apache.commons.codec.binary.Hex;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -43,24 +41,19 @@ public class MessageDigestAlgorithmTest {
 
     @Parameters(name = "{0}")
     public static Object[] data() {
-        return MessageDigestAlgorithm.values();
+        return MessageDigestAlgorithms.values();
     }
 
     private DigestUtilsTest digestUtilsTest;
 
-    private final MessageDigestAlgorithm messageDigestAlgorithm;
+    private final String messageDigestAlgorithm;
 
-    public MessageDigestAlgorithmTest(MessageDigestAlgorithm messageDigestAlgorithm) {
-        Assume.assumeTrue(messageDigestAlgorithm.isAvailable());
+    public MessageDigestAlgorithmTest(String messageDigestAlgorithm) {
         this.messageDigestAlgorithm = messageDigestAlgorithm;
     }
 
     private byte[] digestTestData() throws IOException {
-        return messageDigestAlgorithm.digest(getTestData());
-    }
-
-    private String digestTestDataHex() throws IOException {
-        return Hex.encodeHexString(digestTestData());
+        return DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm),getTestData());
     }
 
     private byte[] getTestData() {
@@ -85,76 +78,50 @@ public class MessageDigestAlgorithmTest {
 
     @Test
     public void testAlgorithm() throws IOException, NoSuchAlgorithmException {
-        final String algorithm = messageDigestAlgorithm.getName();
+        final String algorithm = messageDigestAlgorithm;
         Assert.assertNotNull(algorithm);
         Assert.assertFalse(algorithm.isEmpty());
-        Assume.assumeTrue(messageDigestAlgorithm.isAvailable());
+        Assume.assumeTrue(DigestUtils.isAvailable(messageDigestAlgorithm));
         MessageDigest.getInstance(algorithm);
     }
 
     @Test
     public void testDigestByteArray() throws IOException {
-        Assume.assumeTrue(messageDigestAlgorithm.isAvailable());
+        Assume.assumeTrue(DigestUtils.isAvailable(messageDigestAlgorithm));
         Assert.assertArrayEquals(digestTestData(),
-                DigestUtils.digest(messageDigestAlgorithm.getMessageDigest(), getTestData()));
-        Assert.assertArrayEquals(digestTestData(), messageDigestAlgorithm.digest(getTestData()));
-    }
-
-    @Test
-    public void testDigestByteArrayHex() throws IOException {
-        Assume.assumeTrue(messageDigestAlgorithm.isAvailable());
-        Assert.assertEquals(digestTestDataHex(), messageDigestAlgorithm.digestHex(getTestData()));
+                DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm), getTestData()));
+        Assert.assertArrayEquals(digestTestData(), DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm),getTestData()));
     }
 
     @Test
     public void testDigestByteBuffer() throws IOException {
-        Assume.assumeTrue(messageDigestAlgorithm.isAvailable());
+        Assume.assumeTrue(DigestUtils.isAvailable(messageDigestAlgorithm));
         Assert.assertArrayEquals(digestTestData(),
-                DigestUtils.digest(messageDigestAlgorithm.getMessageDigest(), ByteBuffer.wrap(getTestData())));
-        Assert.assertArrayEquals(digestTestData(), messageDigestAlgorithm.digest(ByteBuffer.wrap(getTestData())));
-    }
-
-    @Test
-    public void testDigestByteBufferHex() throws IOException {
-        Assume.assumeTrue(messageDigestAlgorithm.isAvailable());
-        Assert.assertEquals(digestTestDataHex(), messageDigestAlgorithm.digestHex(ByteBuffer.wrap(getTestData())));
+                DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm), ByteBuffer.wrap(getTestData())));
+        Assert.assertArrayEquals(digestTestData(), DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm),ByteBuffer.wrap(getTestData())));
     }
 
     @Test
     public void testDigestFile() throws IOException {
-        Assume.assumeTrue(messageDigestAlgorithm.isAvailable());
+        Assume.assumeTrue(DigestUtils.isAvailable(messageDigestAlgorithm));
         Assert.assertArrayEquals(digestTestData(),
-                DigestUtils.digest(messageDigestAlgorithm.getMessageDigest(), getTestFile()));
-        Assert.assertArrayEquals(digestTestData(), messageDigestAlgorithm.digest(getTestFile()));
-    }
-
-    @Test
-    public void testDigestFileHex() throws IOException {
-        Assume.assumeTrue(messageDigestAlgorithm.isAvailable());
-        Assert.assertEquals(digestTestDataHex(), messageDigestAlgorithm.digestHex(getTestFile()));
+                DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm), getTestFile()));
+        Assert.assertArrayEquals(digestTestData(), DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm),getTestFile()));
     }
 
     @Test
     public void testDigestInputStream() throws IOException {
-        Assume.assumeTrue(messageDigestAlgorithm.isAvailable());
+        Assume.assumeTrue(DigestUtils.isAvailable(messageDigestAlgorithm));
         Assert.assertArrayEquals(digestTestData(),
-                DigestUtils.digest(messageDigestAlgorithm.getMessageDigest(), new ByteArrayInputStream(getTestData())));
-        Assert.assertArrayEquals(digestTestData(),
-                messageDigestAlgorithm.digest(new ByteArrayInputStream(getTestData())));
-    }
-
-    @Test
-    public void testDigestInputStreamHex() throws IOException {
-        Assume.assumeTrue(messageDigestAlgorithm.isAvailable());
-        Assert.assertEquals(digestTestDataHex(),
-                messageDigestAlgorithm.digestHex(new ByteArrayInputStream(getTestData())));
+                DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm), new ByteArrayInputStream(getTestData())));
+        Assert.assertArrayEquals(digestTestData(), DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm),new ByteArrayInputStream(getTestData())));
     }
 
     @Test
     public void testGetMessageDigest() throws IOException, NoSuchAlgorithmException {
-        Assume.assumeTrue(messageDigestAlgorithm.isAvailable());
-        final MessageDigest messageDigest = messageDigestAlgorithm.getMessageDigest();
-        Assert.assertEquals(messageDigestAlgorithm.getName(), messageDigest.getAlgorithm());
+        Assume.assumeTrue(DigestUtils.isAvailable(messageDigestAlgorithm));
+        final MessageDigest messageDigest = DigestUtils.getDigest(messageDigestAlgorithm);
+        Assert.assertEquals(messageDigestAlgorithm, messageDigest.getAlgorithm());
     }
 
 }

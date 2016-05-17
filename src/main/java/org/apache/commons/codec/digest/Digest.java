@@ -76,21 +76,21 @@ public class Digest {
 
     private void run() throws IOException {
         if (algorithm.equalsIgnoreCase("ALL") || algorithm.equals("*")) {
-            run(MessageDigestAlgorithm.values());
+            run(MessageDigestAlgorithms.values());
             return;
         }
         final MessageDigest messageDigest = DigestUtils.getDigest(algorithm, null);
         if (messageDigest != null) {
             run("", messageDigest);
         } else {
-            run("", MessageDigestAlgorithm.valueOf(algorithm.toUpperCase(Locale.ROOT)).getMessageDigest());
+            run("", DigestUtils.getDigest(algorithm.toUpperCase(Locale.ROOT)));
         }
     }
 
-    private void run(MessageDigestAlgorithm[] digestAlgorithms) throws IOException {
-        for (MessageDigestAlgorithm messageDigestAlgorithm : digestAlgorithms) {
-            if (messageDigestAlgorithm.isAvailable()) {
-                run(messageDigestAlgorithm.getName() + " ", messageDigestAlgorithm);
+    private void run(String[] digestAlgorithms) throws IOException {
+        for (String messageDigestAlgorithm : digestAlgorithms) {
+            if (DigestUtils.isAvailable(messageDigestAlgorithm)) {
+                run(messageDigestAlgorithm + " ", messageDigestAlgorithm);
             }
         }
     }
@@ -116,8 +116,8 @@ public class Digest {
         }
     }
 
-    private void run(String prefix, final MessageDigestAlgorithm messageDigestAlgorithm) throws IOException {
-        run(prefix, messageDigestAlgorithm.getMessageDigest());
+    private void run(String prefix, final String messageDigestAlgorithm) throws IOException {
+        run(prefix, DigestUtils.getDigest(messageDigestAlgorithm));
     }
 
     @Override
