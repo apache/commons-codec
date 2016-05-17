@@ -63,10 +63,11 @@ public enum HmacAlgorithms {
     HMAC_SHA_1("HmacSHA1"),
 
     /**
-     * The HmacSHA256 Message Authentication Code (MAC) algorithm specified in RFC 2104 and FIPS PUB 180-2.
+     * The HmacSHA224 Message Authentication Code (MAC) algorithm specified in RFC 2104 and FIPS PUB 180-2.
      * <p>
-     * Every implementation of the Java platform is required to support this standard MAC algorithm.
+     * Every implementation of the Java 8+ platform is required to support this standard MAC algorithm.
      * </p>
+     * @since 1.11
      */
     HMAC_SHA_224("HmacSHA224"),
 
@@ -113,6 +114,7 @@ public enum HmacAlgorithms {
      * @see Mac#init(Key)
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
+     * @since 1.11
      */
     public Mac getHmac(final byte[] key) {
         return HmacUtils.getInitializedMac(name, key);
@@ -128,6 +130,7 @@ public enum HmacAlgorithms {
      * @see Mac#init(Key)
      * @throws IllegalArgumentException
      *             when key is null or invalid.
+     * @since 1.11
      */
     public Mac getInitializedMac(final byte[] key) {
         return HmacUtils.getInitializedMac(name, key);
@@ -137,6 +140,7 @@ public enum HmacAlgorithms {
      * Gets the algorithm name.
      *
      * @return the algorithm name.
+     * @since 1.11
      */
     public String getName() {
         return name;
@@ -152,6 +156,7 @@ public enum HmacAlgorithms {
      * @return HMAC for the given key and value
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
+     * @since 1.11
      */
     public byte[] hmac(final byte[] key, final byte[] valueToDigest) {
         try {
@@ -174,6 +179,7 @@ public enum HmacAlgorithms {
      *             If an I/O error occurs.
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
+     * @since 1.11
      */
     public byte[] hmac(final byte[] key, final InputStream valueToDigest) throws IOException {
         return HmacUtils.updateHmac(getHmac(key), valueToDigest).doFinal();
@@ -189,6 +195,7 @@ public enum HmacAlgorithms {
      * @return HMAC for the given key and value
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
+     * @since 1.11
      */
     public byte[] hmac(final String key, final String valueToDigest) {
         return hmac(StringUtils.getBytesUtf8(key), StringUtils.getBytesUtf8(valueToDigest));
@@ -204,6 +211,7 @@ public enum HmacAlgorithms {
      * @return HMAC for the given key and value as a hex string (lowercase)
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
+     * @since 1.11
      */
     public String hmacHex(final byte[] key, final byte[] valueToDigest) {
         return Hex.encodeHexString(hmac(key, valueToDigest));
@@ -221,6 +229,7 @@ public enum HmacAlgorithms {
      *             If an I/O error occurs.
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
+     * @since 1.11
      */
     public String hmacHex(final byte[] key, final InputStream valueToDigest) throws IOException {
         return Hex.encodeHexString(hmac(key, valueToDigest));
@@ -236,6 +245,7 @@ public enum HmacAlgorithms {
      * @return HMAC for the given key and value as a hex string (lowercase)
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
+     * @since 1.11
      */
     public String hmacHex(final String key, final String valueToDigest) {
         return Hex.encodeHexString(hmac(key, valueToDigest));
@@ -245,6 +255,7 @@ public enum HmacAlgorithms {
      * Returns whether this algorithm is available
      *
      * @return whether this algorithm is available
+     * @since 1.11
      */
     public boolean isAvailable() {
         try {
