@@ -772,7 +772,7 @@ public final class HmacUtils {
     // update
 
     /**
-     * Updates the given {@link Mac}. This generates a digest for valueToDigest and the key the Mac was initialized
+     * Updates the given {@link Mac} with the value.
      *
      * @param mac
      *            the initialized {@link Mac} to update
@@ -781,7 +781,6 @@ public final class HmacUtils {
      * @return the updated {@link Mac}
      * @throws IllegalStateException
      *             if the Mac was not initialized
-     * @since 1.x
      */
     public static Mac updateHmac(final Mac mac, final byte[] valueToDigest) {
         mac.reset();
@@ -790,7 +789,7 @@ public final class HmacUtils {
     }
 
     /**
-     * Updates the given {@link Mac}. This generates a digest for valueToDigest and the key the Mac was initialized
+     * Updates the given {@link Mac} with the value.
      *
      * @param mac
      *            the initialized {@link Mac} to update
@@ -804,7 +803,6 @@ public final class HmacUtils {
      *             If an I/O error occurs.
      * @throws IllegalStateException
      *             If the Mac was not initialized
-     * @since 1.x
      */
     public static Mac updateHmac(final Mac mac, final InputStream valueToDigest) throws IOException {
         mac.reset();
@@ -820,7 +818,7 @@ public final class HmacUtils {
     }
 
     /**
-     * Updates the given {@link Mac}. This generates a digest for valueToDigest and the key the Mac was initialized
+     * Updates the given {@link Mac} with the value.
      *
      * @param mac
      *            the initialized {@link Mac} to update
@@ -829,7 +827,6 @@ public final class HmacUtils {
      * @return the updated {@link Mac}
      * @throws IllegalStateException
      *             if the Mac was not initialized
-     * @since 1.x
      */
     public static Mac updateHmac(final Mac mac, final String valueToDigest) {
         mac.reset();
