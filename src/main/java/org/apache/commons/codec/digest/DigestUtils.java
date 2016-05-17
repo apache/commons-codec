@@ -32,7 +32,11 @@ import org.apache.commons.codec.binary.StringUtils;
 /**
  * Operations to simplify common {@link java.security.MessageDigest} tasks.
  * This class is immutable and thread-safe.
- *
+ * However the MessageDigest instances it creates generally won't be.
+ * <p>
+ * The {@link MessageDigestAlgorithms} class provides constants for standard
+ * digest algorithms that can be used with the {@link #getDigest(String)} method.
+ * @see MessageDigestAlgorithms
  * @version $Id$
  */
 public class DigestUtils {
@@ -40,7 +44,7 @@ public class DigestUtils {
     private static final int STREAM_BUFFER_LENGTH = 1024;
 
     /**
-     * Read through an ByteBuffer and returns the digest for the data. Provided for symmetry with other methods.
+     * Read through a byte array and returns the digest for the data. Provided for symmetry with other methods.
      *
      * @param messageDigest
      *            The MessageDigest to use (e.g. MD5)
