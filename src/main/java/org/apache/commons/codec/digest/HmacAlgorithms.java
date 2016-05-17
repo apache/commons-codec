@@ -108,7 +108,7 @@ public enum HmacAlgorithms {
      * </p>
      *
      * @param key
-     *            They key for the keyed digest (must not be null)
+     *            The key for the keyed digest (must not be null)
      * @return A Mac instance initialized with the given key.
      * @see Mac#getInstance(String)
      * @see Mac#init(Key)
@@ -134,9 +134,9 @@ public enum HmacAlgorithms {
      * Returns a keyed-Hash Message Authentication Code (HMAC) for the given key and value.
      *
      * @param key
-     *            They key for the keyed digest (must not be null)
+     *            The key for the keyed digest (must not be null)
      * @param valueToDigest
-     *            The value (data) which should to digest (maybe empty or null)
+     *            The value (data) to digest (maybe empty or null)
      * @return HMAC for the given key and value
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
@@ -155,9 +155,9 @@ public enum HmacAlgorithms {
      * Returns a keyed-Hash Message Authentication Code (HMAC) for the given key and value.
      *
      * @param key
-     *            They key for the keyed digest (must not be null)
+     *            The key for the keyed digest (must not be null)
      * @param valueToDigest
-     *            The value (data) which should to digest. The InputStream must not be null and will not be closed.
+     *            The value (data) to digest. The InputStream must not be null and will not be closed.
      * @return HMAC for the given key and value
      * @throws IOException
      *             If an I/O error occurs.
@@ -171,11 +171,12 @@ public enum HmacAlgorithms {
 
     /**
      * Returns a keyed-Hash Message Authentication Code (HMAC) for the given key and value.
+     * The Strings are converted to bytes using the UTF-8 charset.
      *
      * @param key
-     *            They key for the keyed digest (must not be null)
+     *            The key for the keyed digest (must not be null)
      * @param valueToDigest
-     *            The value (data) which should to digest (maybe empty or null)
+     *            The value (data) to digest (maybe empty or null)
      * @return HMAC for the given key and value
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
@@ -189,9 +190,9 @@ public enum HmacAlgorithms {
      * Returns a keyed-Hash Message Authentication Code (HMAC) as a hex string (lowercase) for the given key and value.
      *
      * @param key
-     *            They key for the keyed digest (must not be null)
+     *            The key for the keyed digest (must not be null)
      * @param valueToDigest
-     *            The value (data) which should to digest (maybe empty or null)
+     *            The value (data) to digest (maybe empty or null)
      * @return HMAC for the given key and value as a hex string (lowercase)
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
@@ -205,9 +206,9 @@ public enum HmacAlgorithms {
      * Returns a keyed-Hash Message Authentication Code (HMAC) as a hex string (lowercase) for the given key and value.
      *
      * @param key
-     *            They key for the keyed digest (must not be null)
+     *            The key for the keyed digest (must not be null)
      * @param valueToDigest
-     *            The value (data) which should to digest. The InputStream must not be null and will not be closed.
+     *            The value (data) to digest. The InputStream must not be null and will not be closed.
      * @return HMAC for the given key and value as a hex string (lowercase)
      * @throws IOException
      *             If an I/O error occurs.
@@ -223,9 +224,9 @@ public enum HmacAlgorithms {
      * Returns a keyed-Hash Message Authentication Code (HMAC) as a hex string (lowercase) for the given key and value.
      *
      * @param key
-     *            They key for the keyed digest (must not be null)
+     *            The key for the keyed digest (must not be null)
      * @param valueToDigest
-     *            The value (data) which should to digest (maybe empty or null)
+     *            The value (data) to digest (maybe empty or null)
      * @return HMAC for the given key and value as a hex string (lowercase)
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
