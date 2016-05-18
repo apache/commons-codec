@@ -112,7 +112,9 @@ public class Digest {
 
     private void run(String prefix, MessageDigest messageDigest, File[] files) throws IOException {
         for (File file : files) {
-            println(prefix, DigestUtils.digest(messageDigest, file));
+            if (file.isFile()) {
+                println(prefix, DigestUtils.digest(messageDigest, file));
+            }
         }
     }
 
