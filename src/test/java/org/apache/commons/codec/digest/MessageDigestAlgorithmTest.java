@@ -32,7 +32,7 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
 /**
- * Tests {@link MessageDigestAlgorithm}.
+ * Tests {@link MessageDigestAlgorithms}.
  *
  * @since 1.11
  */

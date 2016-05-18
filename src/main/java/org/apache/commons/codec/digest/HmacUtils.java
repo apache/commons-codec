@@ -833,4 +833,34 @@ public final class HmacUtils {
         mac.update(StringUtils.getBytesUtf8(valueToDigest));
         return mac;
     }
+
+    // Fluent interface code
+
+    private final Mac mac;
+    
+    private HmacUtils(Mac mac) {
+        this.mac = mac;
+    }
+
+    public static HmacUtils with(HmacAlgorithms algo, byte[] key) {
+        return with(algo.getName(), key);
+    }
+
+    public static HmacUtils with(String algo, byte[] key) {
+        Mac mac = getInitializedMac(algo, key);
+        return new HmacUtils(mac);
+    }
+
+    public HmacUtils updateHmac(byte[] valueToDigest) {
+        mac.update(valueToDigest);
+        return this;
+    }
+
+    public Mac getMac() {
+        return mac;
+    }
+
+    public byte[] doFinal() {
+        return mac.doFinal();
+    }
 }

@@ -40,7 +40,7 @@ public class Digest {
      * </p>
      *
      * @param args
-     *            {@code args[0]} is one of {@link MessageDigestAlgorithm} name, {@link MessageDigest} name, {@code ALL}
+     *            {@code args[0]} is one of {@link MessageDigestAlgorithms} name, {@link MessageDigest} name, {@code ALL}
      *            , or {@code *}. {@code args[1]} is a FILE.
      * @throws IOException
      */
