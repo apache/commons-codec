@@ -32,8 +32,15 @@ import java.security.MessageDigest;
  * Java 9 and up: SHA3-224, SHA3-256, SHA3-384, SHA3-512.
  * </p>
  * 
- * @see <a href="http://docs.oracle.com/javase/6/docs/technotes/guides/security/StandardNames.html">Java Cryptography
- *      Architecture Standard Algorithm Name Documentation</a>
+ * @see <a href="http://docs.oracle.com/javase/6/docs/technotes/guides/security/StandardNames.html#MessageDigest">
+ *      Java 6 Cryptography Architecture Standard Algorithm Name Documentation</a>
+ * @see <a href="http://docs.oracle.com/javase/7/docs/technotes/guides/security/StandardNames.html#MessageDigest">
+ *      Java 7 Cryptography Architecture Standard Algorithm Name Documentation</a>
+ * @see <a href="http://docs.oracle.com/javase/8/docs/technotes/guides/security/StandardNames.html#MessageDigest">
+ *      Java 8 Cryptography Architecture Standard Algorithm Name Documentation</a>
+ * @see <a href="http://download.java.net/java/jdk9/docs/technotes/guides/security/StandardNames.html#MessageDigest">
+ *      Java 9 Cryptography Architecture Standard Algorithm Name Documentation</a>
+ *
  * @see <a href="http://dx.doi.org/10.6028/NIST.FIPS.180-4">FIPS PUB 180-4</a>
  * @see <a href="http://dx.doi.org/10.6028/NIST.FIPS.202">FIPS PUB 202</a>
  * @since 1.7
