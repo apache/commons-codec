@@ -707,7 +707,7 @@ public static byte[] sha(final byte[] data) {
      * @since 1.11
      */
     public static byte[] sha224(final byte[] data) {
-        return getSha224Digest().digest(data);
+        return digest(getSha224Digest(), data);
     }
 
     /**
