@@ -37,7 +37,7 @@ import org.junit.runners.Parameterized.Parameters;
  * @since 1.11
  */
 @RunWith(Parameterized.class)
-public class MessageDigestAlgorithmTest {
+public class MessageDigestAlgorithmsTest {
 
     @Parameters(name = "{0}")
     public static Object[] data() {
@@ -48,7 +48,7 @@ public class MessageDigestAlgorithmTest {
 
     private final String messageDigestAlgorithm;
 
-    public MessageDigestAlgorithmTest(String messageDigestAlgorithm) {
+    public MessageDigestAlgorithmsTest(String messageDigestAlgorithm) {
         this.messageDigestAlgorithm = messageDigestAlgorithm;
     }
 
