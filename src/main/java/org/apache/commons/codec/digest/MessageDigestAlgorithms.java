@@ -35,10 +35,6 @@ import java.security.MessageDigest;
 //@Deprecated
 public class MessageDigestAlgorithms {
 
-    private MessageDigestAlgorithms() {
-        // cannot be instantiated.
-    }
-
     /**
      * The MD2 message digest algorithm defined in RFC 1319.
      */
@@ -53,6 +49,8 @@ public class MessageDigestAlgorithms {
      * The SHA-1 hash algorithm defined in the FIPS PUB 180-2.
      */
     public static final String SHA_1 = "SHA-1";
+
+    public static final String SHA_224 = "SHA_224";
 
     /**
      * The SHA-256 hash algorithm defined in the FIPS PUB 180-2.
@@ -69,11 +67,13 @@ public class MessageDigestAlgorithms {
      */
     public static final String SHA_512 = "SHA-512";
 
-    public static final String SHA_224 = "SHA_224";
-
     public static String[] values() {
         return new String[]{
             MD2, MD5, SHA_1, SHA_224, SHA_256, SHA_384, SHA_512};
+    }
+
+    private MessageDigestAlgorithms() {
+        // cannot be instantiated.
     }
 
 }
