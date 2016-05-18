@@ -353,18 +353,6 @@ public class DigestUtils {
      * @param data
      *            Data to digest
      * @return MD2 digest
-     * @since 1.11
-     */
-    public static byte[] md2(final ByteBuffer data) {
-        return digest(getMd2Digest(), data);
-    }
-
-    /**
-     * Calculates the MD2 digest and returns the value as a 16 element <code>byte[]</code>.
-     *
-     * @param data
-     *            Data to digest
-     * @return MD2 digest
      * @throws IOException
      *             On error reading from the stream
      * @since 1.7
@@ -394,18 +382,6 @@ public class DigestUtils {
      * @since 1.7
      */
     public static String md2Hex(final byte[] data) {
-        return Hex.encodeHexString(md2(data));
-    }
-
-    /**
-     * Calculates the MD2 digest and returns the value as a 32 character hex string.
-     *
-     * @param data
-     *            Data to digest
-     * @return MD2 digest as a hex string
-     * @since 1.11
-     */
-    public static String md2Hex(final ByteBuffer data) {
         return Hex.encodeHexString(md2(data));
     }
 
@@ -452,18 +428,6 @@ public class DigestUtils {
      * @param data
      *            Data to digest
      * @return MD5 digest
-     * @since 1.11
-     */
-    public static byte[] md5(final ByteBuffer data) {
-        return digest(getMd5Digest(), data);
-    }
-
-    /**
-     * Calculates the MD5 digest and returns the value as a 16 element <code>byte[]</code>.
-     *
-     * @param data
-     *            Data to digest
-     * @return MD5 digest
      * @throws IOException
      *             On error reading from the stream
      * @since 1.4
@@ -491,18 +455,6 @@ public class DigestUtils {
      * @return MD5 digest as a hex string
      */
     public static String md5Hex(final byte[] data) {
-        return Hex.encodeHexString(md5(data));
-    }
-
-    /**
-     * Calculates the MD5 digest and returns the value as a 32 character hex string.
-     *
-     * @param data
-     *            Data to digest
-     * @return MD5 digest as a hex string
-     * @since 1.11
-     */
-    public static String md5Hex(final ByteBuffer data) {
         return Hex.encodeHexString(md5(data));
     }
 
@@ -591,18 +543,6 @@ public static byte[] sha(final byte[] data) {
      * @param data
      *            Data to digest
      * @return SHA-1 digest
-     * @since 1.11
-     */
-    public static byte[] sha1(final ByteBuffer data) {
-        return digest(getSha1Digest(), data);
-    }
-
-    /**
-     * Calculates the SHA-1 digest and returns the value as a <code>byte[]</code>.
-     *
-     * @param data
-     *            Data to digest
-     * @return SHA-1 digest
      * @throws IOException
      *             On error reading from the stream
      * @since 1.7
@@ -631,18 +571,6 @@ public static byte[] sha(final byte[] data) {
      * @since 1.7
      */
     public static String sha1Hex(final byte[] data) {
-        return Hex.encodeHexString(sha1(data));
-    }
-
-    /**
-     * Calculates the SHA-1 digest and returns the value as a hex string.
-     *
-     * @param data
-     *            Data to digest
-     * @return SHA-1 digest as a hex string
-     * @since 1.11
-     */
-    public static String sha1Hex(final ByteBuffer data) {
         return Hex.encodeHexString(sha1(data));
     }
 
@@ -689,18 +617,6 @@ public static byte[] sha(final byte[] data) {
 
     /**
      * Calculates the SHA-256 digest and returns the value as a <code>byte[]</code>.
-     *
-     * @param data
-     *            Data to digest
-     * @return SHA-256 digest
-     * @since 1.11
-     */
-    public static byte[] sha256(final ByteBuffer data) {
-        return digest(getSha256Digest(), data);
-    }
-
-    /**
-     * Calculates the SHA-256 digest and returns the value as a <code>byte[]</code>.
      * <p>
      * Throws a <code>RuntimeException</code> on JRE versions prior to 1.4.0.
      * </p>
@@ -743,18 +659,6 @@ public static byte[] sha(final byte[] data) {
      * @since 1.4
      */
     public static String sha256Hex(final byte[] data) {
-        return Hex.encodeHexString(sha256(data));
-    }
-
-    /**
-     * Calculates the SHA-256 digest and returns the value as a hex string.
-     *
-     * @param data
-     *            Data to digest
-     * @return SHA-256 digest as a hex string
-     * @since 1.11
-     */
-    public static String sha256Hex(final ByteBuffer data) {
         return Hex.encodeHexString(sha256(data));
     }
 
@@ -807,18 +711,6 @@ public static byte[] sha(final byte[] data) {
 
     /**
      * Calculates the SHA-384 digest and returns the value as a <code>byte[]</code>.
-     *
-     * @param data
-     *            Data to digest
-     * @return SHA-384 digest
-     * @since 1.11
-     */
-    public static byte[] sha384(final ByteBuffer data) {
-        return digest(getSha384Digest(), data);
-    }
-
-    /**
-     * Calculates the SHA-384 digest and returns the value as a <code>byte[]</code>.
      * <p>
      * Throws a <code>RuntimeException</code> on JRE versions prior to 1.4.0.
      * </p>
@@ -861,18 +753,6 @@ public static byte[] sha(final byte[] data) {
      * @since 1.4
      */
     public static String sha384Hex(final byte[] data) {
-        return Hex.encodeHexString(sha384(data));
-    }
-
-    /**
-     * Calculates the SHA-384 digest and returns the value as a hex string.
-     *
-     * @param data
-     *            Data to digest
-     * @return SHA-384 digest as a hex string
-     * @since 1.11
-     */
-    public static String sha384Hex(final ByteBuffer data) {
         return Hex.encodeHexString(sha384(data));
     }
 
@@ -925,18 +805,6 @@ public static byte[] sha(final byte[] data) {
 
     /**
      * Calculates the SHA-512 digest and returns the value as a <code>byte[]</code>.
-     *
-     * @param data
-     *            Data to digest
-     * @return SHA-512 digest
-     * @since 1.11
-     */
-    public static byte[] sha512(final ByteBuffer data) {
-        return digest(getSha512Digest(), data);
-    }
-
-    /**
-     * Calculates the SHA-512 digest and returns the value as a <code>byte[]</code>.
      * <p>
      * Throws a <code>RuntimeException</code> on JRE versions prior to 1.4.0.
      * </p>
@@ -979,18 +847,6 @@ public static byte[] sha(final byte[] data) {
      * @since 1.4
      */
     public static String sha512Hex(final byte[] data) {
-        return Hex.encodeHexString(sha512(data));
-    }
-
-    /**
-     * Calculates the SHA-512 digest and returns the value as a hex string.
-     *
-     * @param data
-     *            Data to digest
-     * @return SHA-512 digest as a hex string
-     * @since 1.11
-     */
-    public static String sha512Hex(final ByteBuffer data) {
         return Hex.encodeHexString(sha512(data));
     }
 
