@@ -19,13 +19,17 @@ package org.apache.commons.codec.digest;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.nio.ByteBuffer;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -42,6 +46,39 @@ public class MessageDigestAlgorithmsTest {
     @Parameters(name = "{0}")
     public static Object[] data() {
         return MessageDigestAlgorithms.values();
+    }
+
+    private static boolean contains(String key) {
+        for(String s : MessageDigestAlgorithms.values()) {
+            if (s.equals(key)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @BeforeClass
+    public static void checkValues() throws Exception {
+        Field [] fields = MessageDigestAlgorithms.class.getDeclaredFields();
+        boolean ok = true;
+        int psf = 0;
+        for(Field f : fields) {
+            // Only interested in public fields
+            final int modifiers = f.getModifiers();
+            if (Modifier.isPublic(modifiers) && Modifier.isStatic(modifiers) && Modifier.isFinal(modifiers)) {
+                psf++;
+                if (!contains((String) f.get(null))) {
+                    System.out.println("Not found in MessageDigestAlgorithms.values(): "+f.getName());
+                    ok = false;
+                }
+            }
+        }
+        if (!ok) {
+            Assert.fail("One or more entries are missing from the MessageDigestAlgorithms.values() array");
+        }
+        if (psf != MessageDigestAlgorithms.values().length) {
+            Assert.fail("One or more unexpected entries found in the MessageDigestAlgorithms.values() array");
+        }
     }
 
     private DigestUtilsTest digestUtilsTest;
