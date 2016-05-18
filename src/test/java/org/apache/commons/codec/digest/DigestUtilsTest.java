@@ -17,7 +17,6 @@
 
 package org.apache.commons.codec.digest;
 
-import static org.apache.commons.codec.binary.StringUtils.getByteBufferUtf8;
 import static org.apache.commons.codec.binary.StringUtils.getBytesUtf8;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -111,9 +110,6 @@ public class DigestUtilsTest {
 
         assertEquals(DigestUtils.md2Hex(testData),
                 DigestUtils.md2Hex(new ByteArrayInputStream(testData)));
-
-        assertEquals(DigestUtils.md2Hex(testData),
-                DigestUtils.md2Hex(ByteBuffer.wrap(testData)));
 }
 
     /**
@@ -167,24 +163,7 @@ public class DigestUtilsTest {
 
         assertEquals(DigestUtils.md5Hex(testData),
                 DigestUtils.md5Hex(new ByteArrayInputStream(testData)));
-
-        assertEquals(DigestUtils.md5Hex(testData),
-                DigestUtils.md5Hex(ByteBuffer.wrap(testData)));
 }
-
-    /**
-     * An MD5 hash converted to hex should always be 32 characters.
-     */
-    @Test
-    public void testMd5HexLengthForByteBuffer() {
-        String hashMe = "this is some string that is longer than 32 characters";
-        String hash = DigestUtils.md5Hex(getByteBufferUtf8(hashMe));
-        assertEquals(32, hash.length());
-
-        hashMe = "length < 32";
-        hash = DigestUtils.md5Hex(getByteBufferUtf8(hashMe));
-        assertEquals(32, hash.length());
-    }
 
     /**
      * An MD5 hash converted to hex should always be 32 characters.
@@ -198,20 +177,6 @@ public class DigestUtilsTest {
         hashMe = "length < 32";
         hash = DigestUtils.md5Hex(getBytesUtf8(hashMe));
         assertEquals(32, hash.length());
-    }
-
-    /**
-     * An MD5 hash should always be a 16 element byte[].
-     */
-    @Test
-    public void testMd5LengthForByteBuffer() {
-        String hashMe = "this is some string that is longer than 16 characters";
-        byte[] hash = DigestUtils.md5(getByteBufferUtf8(hashMe));
-        assertEquals(16, hash.length);
-
-        hashMe = "length < 16";
-        hash = DigestUtils.md5(getByteBufferUtf8(hashMe));
-        assertEquals(16, hash.length);
     }
 
     /**
@@ -240,8 +205,6 @@ public class DigestUtilsTest {
             DigestUtils.sha1Hex("abcdbcdecdefdefgefghfghighij" + "hijkijkljklmklmnlmnomnopnopq"));
         assertEquals(DigestUtils.sha1Hex(testData),
                 DigestUtils.sha1Hex(new ByteArrayInputStream(testData)));
-        assertEquals(DigestUtils.sha1Hex(testData),
-                DigestUtils.sha1Hex(ByteBuffer.wrap(testData)));
     }
 
     @Test
@@ -301,9 +264,10 @@ public class DigestUtilsTest {
     @Test
     public void testSha224() throws IOException {
         assumeJava8();
-        assertEquals("d14a028c2a3a2bc9476102bb288234c415a2b01f828ea62ac5b3e42f", DigestUtils.sha224Hex(""));
+        assertEquals("d14a028c2a3a2bc9476102bb288234c415a2b01f828ea62ac5b3e42f",
+                DigestUtils.digest(MessageDigestAlgorithms.SHA_224,StringUtils.getBytesUtf8("")));
         assertEquals("730e109bd7a8a32b1cb9d9a09aa2325d2430587ddbc0c38bad911525",
-                DigestUtils.sha224Hex("The quick brown fox jumps over the lazy dog"));
+                DigestUtils.digest(MessageDigestAlgorithms.SHA_224,StringUtils.getBytesUtf8("The quick brown fox jumps over the lazy dog")));
 
         // Examples from FIPS 180-4?
     }
@@ -320,8 +284,6 @@ public class DigestUtilsTest {
 
     assertEquals(DigestUtils.sha256Hex(testData),
             DigestUtils.sha256Hex(new ByteArrayInputStream(testData)));
-    assertEquals(DigestUtils.sha256Hex(testData),
-            DigestUtils.sha256Hex(ByteBuffer.wrap(testData)));
     }
 
     @Test
@@ -339,8 +301,6 @@ public class DigestUtilsTest {
                        "hijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu"));
     assertEquals(DigestUtils.sha384Hex(testData),
             DigestUtils.sha384Hex(new ByteArrayInputStream(testData)));
-    assertEquals(DigestUtils.sha384Hex(testData),
-            DigestUtils.sha384Hex(ByteBuffer.wrap(testData)));
     }
 
     @Test
@@ -356,11 +316,6 @@ public class DigestUtilsTest {
              "501d289e4900f7e4331b99dec4b5433ac7d329eeb6dd26545e96e55b874be909",
              DigestUtils.sha512Hex("abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmn" +
                        "hijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu"));
-    }
-
-    @Test
-    public void testSha512HexByteBuffer() throws IOException {
-        assertEquals(DigestUtils.sha512Hex(testData), DigestUtils.sha512Hex(ByteBuffer.wrap(testData)));
     }
 
     @Test
