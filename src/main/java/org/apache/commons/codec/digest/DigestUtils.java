@@ -44,7 +44,7 @@ public class DigestUtils {
     private static final int STREAM_BUFFER_LENGTH = 1024;
 
     /**
-     * Read through a byte array and returns the digest for the data. Provided for symmetry with other methods.
+     * Reads through a byte array and returns the digest for the data. Provided for symmetry with other methods.
      *
      * @param messageDigest
      *            The MessageDigest to use (e.g. MD5)
@@ -60,7 +60,7 @@ public class DigestUtils {
     }
 
     /**
-     * Read through an ByteBuffer and returns the digest for the data
+     * Reads through a ByteBuffer and returns the digest for the data
      *
      * @param messageDigest
      *            The MessageDigest to use (e.g. MD5)
@@ -77,7 +77,7 @@ public class DigestUtils {
     }
 
     /**
-     * Read through a File and returns the digest for the data
+     * Reads through a File and returns the digest for the data
      *
      * @param messageDigest
      *            The MessageDigest to use (e.g. MD5)
@@ -93,7 +93,7 @@ public class DigestUtils {
     }
 
     /**
-     * Read through an InputStream and returns the digest for the data
+     * Reads through an InputStream and returns the digest for the data
      *
      * @param messageDigest
      *            The MessageDigest to use (e.g. MD5)
