@@ -50,6 +50,12 @@ public class MessageDigestAlgorithms {
      */
     public static final String SHA_1 = "SHA-1";
 
+    /**
+     * The SHA-224 hash algorithm defined in the FIPS PUB 180-3.
+     * <p>
+     * Present in Oracle Java 8.
+     * </p>
+     */
     public static final String SHA_224 = "SHA_224";
 
     /**
