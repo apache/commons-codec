@@ -17,7 +17,6 @@
 package org.apache.commons.codec.digest;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
@@ -105,14 +104,6 @@ public class HmacAlgorithmsTest {
         this.hmacAlgorithm = hmacAlgorithm;
         this.standardResultBytes = standardResultBytes;
         this.standardResultString = standardResultString;
-    }
-
-    private byte[] getTestData() {
-        return digestUtilsTest.getTestData();
-    }
-
-    private File getTestFile() {
-        return digestUtilsTest.getTestFile();
     }
 
     @Before
