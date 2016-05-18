@@ -35,6 +35,7 @@ import org.junit.Test;
  *
  * @version $Id$
  */
+@SuppressWarnings("deprecation") // temporarily ignore that HmacUtils is deprecated
 public class HmacUtilsTest {
     @Test
     public void testConstructor() {
