@@ -34,10 +34,11 @@ import java.security.MessageDigest;
  * 
  * @see <a href="http://docs.oracle.com/javase/6/docs/technotes/guides/security/StandardNames.html">Java Cryptography
  *      Architecture Standard Algorithm Name Documentation</a>
- * @since 1.7 // * @deprecated Use the enum {@link MessageDigestAlgorithm}.
+ * @see <a href="http://dx.doi.org/10.6028/NIST.FIPS.180-4">FIPS PUB 180-4</a>
+ * @see <a href="http://dx.doi.org/10.6028/NIST.FIPS.202">FIPS PUB 202</a>
+ * @since 1.7
  * @version $Id$
  */
-// @Deprecated
 public class MessageDigestAlgorithms {
 
     /**
@@ -81,17 +82,17 @@ public class MessageDigestAlgorithms {
     public static final String SHA_512 = "SHA-512";
 
     /**
-     * The SHA3-224 hash algorithm defined in the FIPS PUB 180-4.
+     * The SHA3-224 hash algorithm defined in the FIPS PUB 202.
      * <p>
      * Present in Oracle Java 9.
      * </p>
      * 
      * @since 1.11
      */
-    public static final String SHA3_224 = "SHA3_224";
+    public static final String SHA3_224 = "SHA3-224";
 
     /**
-     * The SHA3-256 hash algorithm defined in the FIPS PUB 180-4.
+     * The SHA3-256 hash algorithm defined in the FIPS PUB 202.
      * <p>
      * Present in Oracle Java 9.
      * </p>
@@ -101,7 +102,7 @@ public class MessageDigestAlgorithms {
     public static final String SHA3_256 = "SHA3-256";
 
     /**
-     * The SHA3-384 hash algorithm defined in the FIPS PUB 180-4.
+     * The SHA3-384 hash algorithm defined in the FIPS PUB 202.
      * <p>
      * Present in Oracle Java 9.
      * </p>
@@ -111,7 +112,7 @@ public class MessageDigestAlgorithms {
     public static final String SHA3_384 = "SHA3-384";
 
     /**
-     * The SHA3-512 hash algorithm defined in the FIPS PUB 180-4.
+     * The SHA3-512 hash algorithm defined in the FIPS PUB 202.
      * <p>
      * Present in Oracle Java 9.
      * </p>
