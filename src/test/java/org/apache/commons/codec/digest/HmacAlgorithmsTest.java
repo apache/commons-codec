@@ -35,7 +35,7 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
 /**
- * Tests {@link MessageDigestAlgorithm}.
+ * Tests {@link HmacAlgorithms}.
  *
  * @since 1.11
  */
