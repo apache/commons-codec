@@ -45,8 +45,8 @@ import org.apache.commons.codec.binary.StringUtils;
  * <pre>
  * import static org.apache.commons.codec.digest.MessageDigestAlgorithms.SHA_224;
  * ...
- * byte [] digest = DigestUtils.digest(SHA_224, dataToDigest);
- * byte [] pommed = DigestUtils.digest(SHA_224, new File("pom.xml"));
+ * byte [] digest = DigestUtils.with(SHA_224).update(dataToDigest).done();
+ * String hdigest = DigestUtils.with(SHA_224).update(new File("pom.xml")).asHex();
  * </pre>
  * </code>
  * @see MessageDigestAlgorithms
@@ -80,8 +80,7 @@ public class DigestUtils {
      * @param data
      *            Data to digest
      * @return the digest
-     * @throws IOException
-     *             On error reading from the stream
+     *
      * @since 1.11
      */
     public static byte[] digest(final MessageDigest messageDigest, final ByteBuffer data) {
@@ -119,72 +118,6 @@ public class DigestUtils {
      */
     public static byte[] digest(final MessageDigest messageDigest, final InputStream data) throws IOException {
         return updateDigest(messageDigest, data).digest();
-    }
-
-    /**
-     * Reads through a byte array and returns the digest for the data.
-     *
-     * @param digestName
-     *            The name of the algorithm to use (e.g. MessageDigestAlgoriths.MD5 or "MD5")
-     * @param data
-     *            Data to digest
-     * @return the digest
-     * @throws IOException
-     *             On error reading from the stream
-     * @since 1.11
-     */
-    public static byte[] digest(final String digestName, final byte[] data) {
-        return digest(getDigest(digestName), data);
-    }
-
-    /**
-     * Reads through a ByteBuffer and returns the digest for the data
-     *
-     * @param digestName
-     *            The name of the algorithm to use (e.g. MessageDigestAlgoriths.MD5 or "MD5")
-     * @param data
-     *            Data to digest
-     * @return the digest
-     * @throws IOException
-     *             On error reading from the stream
-     * @since 1.11
-     */
-    public static byte[] digest(final String digestName, final ByteBuffer data) {
-        MessageDigest messageDigest = getDigest(digestName);
-        messageDigest .update(data);
-        return messageDigest.digest();
-    }
-
-    /**
-     * Reads through a File and returns the digest for the data
-     *
-     * @param digestName
-     *            The name of the algorithm to use (e.g. MessageDigestAlgoriths.MD5 or "MD5")
-     * @param data
-     *            Data to digest
-     * @return the digest
-     * @throws IOException
-     *             On error reading from the stream
-     * @since 1.11
-     */
-    public static byte[] digest(final String digestName, final File data) throws IOException {
-        return updateDigest(getDigest(digestName), data).digest();
-    }
-
-    /**
-     * Reads through an InputStream and returns the digest for the data
-     *
-     * @param digestName
-     *            The name of the algorithm to use (e.g. MessageDigestAlgoriths.MD5 or "MD5")
-     * @param data
-     *            Data to digest
-     * @return the digest
-     * @throws IOException
-     *             On error reading from the stream
-     * @since 1.11
-     */
-    public static byte[] digest(final String digestName, final InputStream data) throws IOException {
-        return updateDigest(getDigest(digestName), data).digest();
     }
 
     /**
@@ -1030,4 +963,142 @@ public static byte[] sha(final byte[] data) {
         return getDigest(messageDigestAlgorithm, null) != null;
     }
 
+    // Fluent interface
+    
+    private final MessageDigest messageDigest;
+
+    DigestUtils() {
+        this.messageDigest = null;
+    }
+
+    private DigestUtils(MessageDigest digest) {
+        this.messageDigest = digest;
+    }
+
+    /**
+     * Returns a fluent instance for the digest algorithm.
+     * Does not reset the digest before use.
+     * @param digest the digest instance to use
+     * @return
+     */
+    public static DigestUtils with(MessageDigest digest) {
+        return new DigestUtils(digest);
+    }
+
+    /**
+     * Creates a {@link MessageDigest} and returns a fluent instance.
+     *
+     * @param name the name of digest algorithm to create, e.g. {@link MessageDigestAlgorithms#MD5}
+     * @return
+     */
+    public static DigestUtils with(String name) {
+        return new DigestUtils(getDigest(name));
+    }
+
+    /**
+     * Returns the message digest instance.
+     * @return the message digest instance
+     */
+    public MessageDigest getMessageDigest() {
+        return messageDigest;
+    }
+
+    /**
+     * Completes the hash computation and returns the hash
+     * accumulated by one or more invocations of an update method.
+     *
+     * @return the hash as a byte array
+     *
+     * @since 1.11
+     */
+    public byte[] done() {
+        return messageDigest.digest();
+    }
+
+    /**
+     * Completes the hash computation and returns the hash
+     * accumulated by one or more invocations of an update method.
+     *
+     * @return the hash as a hex String
+     *
+     * @since 1.11
+     */
+    public String asHex() {
+        return Hex.encodeHexString(messageDigest.digest());
+    }
+
+    /**
+     * Updates the {@link MessageDigest} in the {@link DigestUtils} instance
+     *
+     * @param valueToDigest
+     *            the value to update the {@link MessageDigest} with
+     * @return the updated {@link DigestUtils}
+     * @since 1.11
+     */
+    public DigestUtils update(final byte[] data) throws IOException {
+        messageDigest.update(data);
+        return this;
+    }
+
+    /**
+     * Updates the {@link MessageDigest} in the {@link DigestUtils} instance
+     *
+     * @param valueToDigest
+     *            the value to update the {@link MessageDigest} with
+     * @return the updated {@link DigestUtils}
+     * @since 1.11
+     */
+    public DigestUtils update(final ByteBuffer data) throws IOException {
+        messageDigest.update(data);
+        return this;
+    }
+
+    /**
+     * Updates the {@link MessageDigest} in the {@link DigestUtils} instance
+     *
+     * @param valueToDigest
+     *            the value to update the {@link MessageDigest} with
+     * @return the updated {@link DigestUtils}
+     * @since 1.11
+     */
+    public DigestUtils update(final String data) throws IOException {
+        messageDigest.update(StringUtils.getBytesUtf8(data));
+        return this;
+    }
+
+    /**
+     * Updates the {@link MessageDigest} in the {@link DigestUtils} instance
+     *
+     * @param valueToDigest
+     *            the value to update the {@link MessageDigest} with
+     * @return the updated {@link DigestUtils}
+     * @since 1.11
+     */
+    public DigestUtils update(final InputStream data) throws IOException {
+        final byte[] buffer = new byte[STREAM_BUFFER_LENGTH];
+        int read = data.read(buffer, 0, STREAM_BUFFER_LENGTH);
+
+        while (read > -1) {
+            messageDigest.update(buffer, 0, read);
+            read = data.read(buffer, 0, STREAM_BUFFER_LENGTH);
+        }
+        return this;
+    }
+
+    /**
+     * Updates the {@link MessageDigest} in the {@link DigestUtils} instance
+     *
+     * @param valueToDigest
+     *            the value to update the {@link MessageDigest} with
+     * @return the updated {@link DigestUtils}
+     * @since 1.11
+     */
+    public DigestUtils update(final File data) throws IOException {
+        final BufferedInputStream stream = new BufferedInputStream(new FileInputStream(data));
+        try {
+            return update(stream);
+        } finally {
+            stream.close();
+        }
+    }
 }
