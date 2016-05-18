@@ -28,11 +28,10 @@ import java.security.MessageDigest;
  *
  * @see <a href="http://docs.oracle.com/javase/6/docs/technotes/guides/security/StandardNames.html">Java Cryptography
  *      Architecture Standard Algorithm Name Documentation</a>
- * @since 1.7
-// * @deprecated Use the enum {@link MessageDigestAlgorithm}.
+ * @since 1.7 // * @deprecated Use the enum {@link MessageDigestAlgorithm}.
  * @version $Id$
  */
-//@Deprecated
+// @Deprecated
 public class MessageDigestAlgorithms {
 
     /**
@@ -55,6 +54,8 @@ public class MessageDigestAlgorithms {
      * <p>
      * Present in Oracle Java 8.
      * </p>
+     * 
+     * @since 1.11
      */
     public static final String SHA_224 = "SHA_224";
 
@@ -73,9 +74,14 @@ public class MessageDigestAlgorithms {
      */
     public static final String SHA_512 = "SHA-512";
 
+    /**
+     * Gets all constant values defined in this class.
+     * 
+     * @return all constant values defined in this class.
+     * @since 1.11
+     */
     public static String[] values() {
-        return new String[]{
-            MD2, MD5, SHA_1, SHA_224, SHA_256, SHA_384, SHA_512};
+        return new String[] { MD2, MD5, SHA_1, SHA_224, SHA_256, SHA_384, SHA_512 };
     }
 
     private MessageDigestAlgorithms() {
