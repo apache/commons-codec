@@ -17,8 +17,12 @@
 
 package org.apache.commons.codec.digest;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.ByteBuffer;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
@@ -26,16 +30,32 @@ import java.security.NoSuchAlgorithmException;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
+import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.binary.StringUtils;
 
 /**
  * Simplifies common {@link javax.crypto.Mac} tasks. This class is immutable and thread-safe.
- *
+ * However the Mac may not be.
  * <p>
- * <strong>Note: Not all JCE implementations supports all algorithms. If not supported, an IllegalArgumentException is
+ * <strong>Note: Not all JCE implementations support all algorithms. If not supported, an IllegalArgumentException is
  * thrown.</strong>
- * </p>
- *
+ * <p>
+ * Sample usage:
+ * <pre>
+ * byte[] key = {1,2,3,4}; // don't use this!
+ * String valueToDigest = "The quick brown fox jumps over the lazy dog";
+ * byte[] hmac = HmacUtils.use(HmacAlgorithms.HMAC_SHA_224).key(key).update(valueToDigest).doFinal();
+ * // Mac re-use
+ * HmacUtils hm1 = HmacUtils.use(HmacAlgorithms.HMAC_SHA_1).key(key);
+ * String hexPom = hm1.update(new File("pom.xml")).doFinalHex();
+ * String hexNot = hm1.update(new File("NOTICE.txt")).doFinalHex();
+ * // Mac key update
+ * String algo = "HmacNew";
+ * HmacUtils hm2 = HmacUtils.use(algo).key(key);
+ * byte[] key2 = {1,2,3,4,5}; // don't use this either!
+ * String hexPom2 = hm2.update(new File("pom.xml")).doFinalHex();
+ * String hexNot2 = hm2.key(key2).update(new File("NOTICE.txt")).doFinalHex();
+ * </pre>
  * @since 1.10
  * @version $Id$
  */
@@ -833,4 +853,198 @@ public final class HmacUtils {
         mac.update(StringUtils.getBytesUtf8(valueToDigest));
         return mac;
     }
+
+    HmacUtils() { // TODO why does test code try to instantiate this?
+        this(null);
+    }
+
+    // Fluent interface
+
+    private final Mac mac;
+
+    private HmacUtils(final Mac mac) {
+        this.mac = mac;
+    }
+
+
+    /**
+     * Creates an instance using the provided {@link Mac}
+     * If necessary, the
+     * key must be provided using the {@link #key(byte[])} method
+     * before it can be used further.
+     *
+     * @param algorithm to be used.
+     * @return the instance
+     * @since 1.11
+     */
+    public static HmacUtils use(final Mac mac) {
+        return new HmacUtils(mac);
+    }
+
+    /**
+     * Creates an instance using the provided algorithm type.
+     * The key must be provided using the {@link #key(byte[])} method
+     * before it can be used further.
+     *
+     * @param algorithm to be used.
+     * @return the instance
+     * @since 1.11
+     */
+    public static HmacUtils use(final String algorithm) {
+        try {
+            return new HmacUtils(Mac.getInstance(algorithm));
+        } catch (NoSuchAlgorithmException e) {
+            throw new IllegalArgumentException(e);
+        }
+    }
+
+    /**
+     * Creates an instance using the provided algorithm type.
+     * The key must be provided using the {@link #key(byte[])} method
+     * before it can be used further.
+     *
+     * @param algorithm to be used.
+     * @return the instance
+     * @since 1.11
+     */
+    public static HmacUtils use(final HmacAlgorithms algorithm) {
+        return use(algorithm.getName());
+    }
+
+    /**
+     * Updates the stored {@link Mac} with the new key.
+     * This resets the Mac ready for re-use.
+     *
+     * @param key the new key
+     * @return this instance
+     * @since 1.11
+     */
+    public HmacUtils key(byte[] key) {
+        final SecretKeySpec keySpec = new SecretKeySpec(key, mac.getAlgorithm());
+        try {
+            mac.init(keySpec);
+        } catch (InvalidKeyException e) {
+            throw new IllegalArgumentException(e);
+        }
+        return this;
+    }
+
+    /**
+     * Updates the stored {@link Mac} with the value.
+     *
+     * @param valueToDigest
+     *            the value to update the {@link Mac} with (maybe null or empty)
+     * @return the updated instance
+     * @throws IllegalStateException
+     *             if the Mac was not initialized
+     * @since 1.11
+     */
+    public HmacUtils update(final byte[] valueToDigest) {
+        mac.update(valueToDigest);
+        return this;
+    }
+    
+    /**
+     * Updates the stored {@link Mac} with the value.
+     *
+     * @param valueToDigest
+     *            the value to update the {@link Mac} with (maybe null or empty)
+     * @return the updated instance
+     * @throws IllegalStateException
+     *             if the Mac was not initialized
+     * @since 1.11
+     */
+    public HmacUtils update(final ByteBuffer valueToDigest) {
+        mac.update(valueToDigest);
+        return this;
+    }
+    
+    /**
+     * Updates the stored {@link Mac} with the value.
+     * String is converted to bytes using the UTF-8 charset.
+     * @param valueToDigest
+     *            the value to update the {@link Mac} with.
+     * @return the updated instance
+     * @throws IllegalStateException
+     *             if the Mac was not initialized
+     * @since 1.11
+     */
+    public HmacUtils update(final String valueToDigest) {
+        mac.update(StringUtils.getBytesUtf8(valueToDigest));
+        return this;
+    }
+    
+    /**
+     * Updates the stored {@link Mac} with the value.
+     *
+     * @param valueToDigest
+     *            the value to update the {@link Mac} with
+     *            <p>
+     *            The InputStream must not be null and will not be closed
+     *            </p>
+     * @return the updated instance
+     * @throws IOException
+     *             If an I/O error occurs.
+     * @throws IllegalStateException
+     *             If the Mac was not initialized
+     * @since 1.11
+     */
+    public HmacUtils update(final InputStream valueToDigest) throws IOException {
+        final byte[] buffer = new byte[STREAM_BUFFER_LENGTH];
+        int read;
+
+        while ((read = valueToDigest.read(buffer, 0, STREAM_BUFFER_LENGTH) ) > -1) {
+            mac.update(buffer, 0, read);
+        }
+        return this;
+    }
+
+    /**
+     * Updates the stored {@link Mac} with the value.
+     *
+     * @param valueToDigest
+     *            the value to update the {@link Mac} with
+     *            <p>
+     *            The InputStream must not be null and will not be closed
+     *            </p>
+     * @return the updated instance
+     * @throws IOException
+     *             If an I/O error occurs.
+     * @throws IllegalStateException
+     *             If the Mac was not initialized
+     * @since 1.11
+     */
+    public HmacUtils update(final File valueToDigest) throws IOException {
+        final BufferedInputStream stream = new BufferedInputStream(new FileInputStream(valueToDigest));
+        try {
+            return update(stream);
+        } finally {
+            stream.close();
+        }
+    }
+
+    /**
+     * Finishes the MAC operation and returns the result.
+     * The Mac can be re-used to produce further results from the same key.
+     * Or the key can be reset and the Mac reused.
+     *
+     * @return the result as a byte array
+     * @since 1.11
+     */
+    public byte[] doFinal() {
+        return mac.doFinal();
+    }
+
+    /**
+     * Finishes the MAC operation and returns the result.
+     * The Mac can be re-used to produce further results from the same key.
+     * Or the key can be reset and the Mac reused.
+     *
+     * @return the result as a Hex String
+     * @since 1.11
+     */
+    public String doFinalHex() {
+        return Hex.encodeHexString(mac.doFinal());
+    }
+
 }
