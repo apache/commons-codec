@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.codec.digest;
+package org.apache.commons.codec.cli;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,6 +23,8 @@ import java.util.Arrays;
 import java.util.Locale;
 
 import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.codec.digest.MessageDigestAlgorithms;
 
 /**
  * A minimal command line to run digest over files.
