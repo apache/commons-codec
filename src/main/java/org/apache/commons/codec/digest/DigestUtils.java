@@ -957,7 +957,7 @@ public static byte[] sha(final byte[] data) {
      * Test whether the algorithm is supported.
      * @param messageDigestAlgorithm the algorithm name
      * @return {@code true} if the algorithm can be found
-     * @since 1.7
+     * @since 1.11
      */
     public static boolean isAvailable(String messageDigestAlgorithm) {
         return getDigest(messageDigestAlgorithm, null) != null;
