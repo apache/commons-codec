@@ -1072,6 +1072,8 @@ public static byte[] sha(final byte[] data) {
      * @param data
      *            the data to update the {@link MessageDigest} with
      * @return the updated {@link DigestUtils}
+     * @throws IOException
+     *             If some I/O error occurs.
      * @since 1.11
      */
     public DigestUtils update(final InputStream data) throws IOException {
@@ -1091,6 +1093,10 @@ public static byte[] sha(final byte[] data) {
      * @param data
      *            the data to update the {@link MessageDigest} with
      * @return the updated {@link DigestUtils}
+     * @throws IOException
+     *             If some I/O error occurs.
+     * @throws SecurityException
+     *             if a security manager exists and its {@code checkRead} method denies read access to the file.
      * @since 1.11
      */
     public DigestUtils update(final File data) throws IOException {
