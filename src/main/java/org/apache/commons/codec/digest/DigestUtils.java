@@ -114,7 +114,7 @@ public class DigestUtils {
      * @return the digest
      * @throws IOException
      *             On error reading from the stream
-     * @since 1.11
+     * @since 1.11 (was private previously)
      */
     public static byte[] digest(final MessageDigest messageDigest, final InputStream data) throws IOException {
         return updateDigest(messageDigest, data).digest();
