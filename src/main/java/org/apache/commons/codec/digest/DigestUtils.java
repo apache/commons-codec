@@ -1035,7 +1035,7 @@ public static byte[] sha(final byte[] data) {
      * @return the updated {@link DigestUtils}
      * @since 1.11
      */
-    public DigestUtils update(final byte[] data) throws IOException {
+    public DigestUtils update(final byte[] data) {
         messageDigest.update(data);
         return this;
     }
@@ -1048,7 +1048,7 @@ public static byte[] sha(final byte[] data) {
      * @return the updated {@link DigestUtils}
      * @since 1.11
      */
-    public DigestUtils update(final ByteBuffer data) throws IOException {
+    public DigestUtils update(final ByteBuffer data) {
         messageDigest.update(data);
         return this;
     }
@@ -1061,7 +1061,7 @@ public static byte[] sha(final byte[] data) {
      * @return the updated {@link DigestUtils}
      * @since 1.11
      */
-    public DigestUtils update(final String data) throws IOException {
+    public DigestUtils update(final String data) {
         messageDigest.update(StringUtils.getBytesUtf8(data));
         return this;
     }
