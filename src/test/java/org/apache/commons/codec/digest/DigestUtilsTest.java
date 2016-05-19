@@ -19,7 +19,6 @@ package org.apache.commons.codec.digest;
 
 import static org.apache.commons.codec.binary.StringUtils.getBytesUtf8;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -75,11 +74,6 @@ public class DigestUtilsTest {
         if (!testFile.delete()) {
             testFile.deleteOnExit();
         }
-    }
-
-    @Test
-    public void testConstructable() {
-        assertNotNull(new DigestUtils());
     }
 
     @Test(expected=IllegalArgumentException.class)

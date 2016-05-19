@@ -17,7 +17,6 @@
 package org.apache.commons.codec.digest;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -37,10 +36,6 @@ import org.junit.Test;
  */
 @SuppressWarnings("deprecation") // temporarily ignore that HmacUtils is deprecated
 public class HmacUtilsTest {
-    @Test
-    public void testConstructor() {
-        assertNotNull(new HmacUtils());
-    }
 
     @Test(expected = IllegalArgumentException.class)
     public void testEmptyKey() {
