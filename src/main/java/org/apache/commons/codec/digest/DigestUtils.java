@@ -1030,8 +1030,8 @@ public static byte[] sha(final byte[] data) {
     /**
      * Updates the {@link MessageDigest} in the {@link DigestUtils} instance
      *
-     * @param valueToDigest
-     *            the value to update the {@link MessageDigest} with
+     * @param data
+     *            the data to update the {@link MessageDigest} with
      * @return the updated {@link DigestUtils}
      * @since 1.11
      */
@@ -1043,8 +1043,8 @@ public static byte[] sha(final byte[] data) {
     /**
      * Updates the {@link MessageDigest} in the {@link DigestUtils} instance
      *
-     * @param valueToDigest
-     *            the value to update the {@link MessageDigest} with
+     * @param data
+     *            the data to update the {@link MessageDigest} with
      * @return the updated {@link DigestUtils}
      * @since 1.11
      */
@@ -1056,8 +1056,8 @@ public static byte[] sha(final byte[] data) {
     /**
      * Updates the {@link MessageDigest} in the {@link DigestUtils} instance
      *
-     * @param valueToDigest
-     *            the value to update the {@link MessageDigest} with
+     * @param data
+     *            the data to update the {@link MessageDigest} with
      * @return the updated {@link DigestUtils}
      * @since 1.11
      */
@@ -1069,8 +1069,8 @@ public static byte[] sha(final byte[] data) {
     /**
      * Updates the {@link MessageDigest} in the {@link DigestUtils} instance
      *
-     * @param valueToDigest
-     *            the value to update the {@link MessageDigest} with
+     * @param data
+     *            the data to update the {@link MessageDigest} with
      * @return the updated {@link DigestUtils}
      * @since 1.11
      */
@@ -1088,8 +1088,8 @@ public static byte[] sha(final byte[] data) {
     /**
      * Updates the {@link MessageDigest} in the {@link DigestUtils} instance
      *
-     * @param valueToDigest
-     *            the value to update the {@link MessageDigest} with
+     * @param data
+     *            the data to update the {@link MessageDigest} with
      * @return the updated {@link DigestUtils}
      * @since 1.11
      */
