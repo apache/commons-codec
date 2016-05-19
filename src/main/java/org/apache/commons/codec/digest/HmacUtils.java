@@ -792,7 +792,7 @@ public final class HmacUtils {
     // update
 
     /**
-     * Updates the given {@link Mac} with the value.
+     * Resets and then updates the given {@link Mac} with the value.
      *
      * @param mac
      *            the initialized {@link Mac} to update
@@ -809,7 +809,7 @@ public final class HmacUtils {
     }
 
     /**
-     * Updates the given {@link Mac} with the value.
+     * Resets and then updates the given {@link Mac} with the value.
      *
      * @param mac
      *            the initialized {@link Mac} to update
@@ -838,7 +838,7 @@ public final class HmacUtils {
     }
 
     /**
-     * Updates the given {@link Mac} with the value.
+     * Resets and then updates the given {@link Mac} with the value.
      *
      * @param mac
      *            the initialized {@link Mac} to update
