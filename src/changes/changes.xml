@@ -45,7 +45,7 @@ The <action> type attribute can be add,update,fix,remove.
     <release version="1.11" date="DD MM 2015" description="Feature and fix release.">
       <!-- The first attribute below should be the issue id; makes it easier to navigate in the IDE outline -->
       
-      <action issue="CODEC-171" dev="sebb" type="add">Add support for CRC32-C</action>   
+      <action issue="CODEC-171" dev="sebb" type="add" due-to="Brett Okken">Add support for CRC32-C</action>   
       <action issue="CODEC-221" dev="sebb" type="update">HmacUtils.updateHmac calls reset() unnecessarily</action>   
       <action issue="CODEC-200" dev="sebb" type="fix" due-to="Luciano Vernaschi">Base32.HEX_DECODE_TABLE contains the wrong value 32</action>   
       <action dev="ggregory" type="fix" issue="CODEC-207" due-to="Gary Gregory">Charsets Javadoc breaks build when using Java 8</action>         
