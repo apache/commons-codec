@@ -28,6 +28,7 @@ import org.apache.commons.codec.binary.Hex;
  * A minimal command line to run digest over files.
  *
  * @see #main(String[])
+ * @since 1.11
  */
 public class Digest {
 
