@@ -967,7 +967,7 @@ public static byte[] sha(final byte[] data) {
     
     private final MessageDigest messageDigest;
 
-    DigestUtils() {
+    private DigestUtils() {
         this.messageDigest = null;
     }
 

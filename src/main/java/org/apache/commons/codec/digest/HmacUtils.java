@@ -854,7 +854,7 @@ public final class HmacUtils {
         return mac;
     }
 
-    HmacUtils() { // TODO why does test code try to instantiate this?
+    private HmacUtils() {
         this(null);
     }
 
