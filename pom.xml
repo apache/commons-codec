@@ -235,6 +235,10 @@ limitations under the License.
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <commons.encoding>UTF-8</commons.encoding>
     <checkstyle.header.file>${basedir}/LICENSE-header.txt</checkstyle.header.file>
+    <!-- Use 2.9.1 instead of 2.10-2.15; which seems to scan the 'target'
+    dir and wants license headers in .properties to be the header for
+    Java files. -->
+    <checkstyle.version>2.9.1</checkstyle.version>
   </properties>
   <build>
     <pluginManagement>
@@ -368,6 +372,17 @@ limitations under the License.
           <tarLongFileMode>gnu</tarLongFileMode>
         </configuration>
       </plugin>
+      <!-- Allow use of mvn checkstyle:checkstyle. Must agree with reporting section below. -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>${checkstyle.version}</version>
+        <configuration>
+          <configLocation>${basedir}/checkstyle.xml</configLocation>
+          <enableRulesSummary>false</enableRulesSummary>
+          <headerFile>${basedir}/LICENSE-header.txt</headerFile>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
   <reporting>
@@ -375,10 +390,7 @@ limitations under the License.
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
-        <!-- Use 2.9.1 instead of 2.10-2.15; which seems to scan the 'target'
-        dir and wants license headers in .properties to be the header for
-        Java files. -->
-        <version>2.9.1</version>
+        <version>${checkstyle.version}</version>
         <configuration>
           <configLocation>${basedir}/checkstyle.xml</configLocation>
           <enableRulesSummary>false</enableRulesSummary>
