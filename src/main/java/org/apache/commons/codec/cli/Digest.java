@@ -18,6 +18,7 @@ package org.apache.commons.codec.cli;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.util.Arrays;
 import java.util.Locale;
@@ -27,7 +28,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.codec.digest.MessageDigestAlgorithms;
 
 /**
- * A minimal command line to run digest over files.
+ * A minimal command line to run digest over files, directories or a string
  *
  * @see #main(String[])
  * @since 1.11
@@ -44,7 +45,8 @@ public class Digest {
      *
      * @param args
      *            {@code args[0]} is one of {@link MessageDigestAlgorithms} name, {@link MessageDigest} name, {@code ALL}
-     *            , or {@code *}. {@code args[1]} is a FILE.
+     *            , or {@code *}. 
+     *            {@code args[1]} is a FILE.
      * @throws IOException
      */
     public static void main(String[] args) throws IOException {
@@ -68,13 +70,17 @@ public class Digest {
         source = args.length == 1 ? null : args[1];
     }
 
-    private void println(String prefix, final byte[] digest) {
-        final String sourceDesc = source == null ? "-" : source;
+    private void println(final String prefix, final byte[] digest) {
+        println(prefix, digest, null);
+    }
+
+    private void println(final String prefix, final byte[] digest, String fileName) {
         // The standard appears to be to print
-        // hex, space, then either space or '*' followed by file
+        // hex, space, then either space or '*' followed by filename
         // where '*' is used for binary files
         // shasum(1) has a -b option which generates " *" separator
-        System.out.println(prefix + Hex.encodeHexString(digest) + "  " + sourceDesc);
+        // we don't distinguish binary files at present
+        System.out.println(prefix + Hex.encodeHexString(digest) + (fileName != null ? "  " + fileName : ""));
     }
 
     private void run() throws IOException {
@@ -105,18 +111,20 @@ public class Digest {
         }
         final File file = new File(source);
         if (file.isFile()) {
-            println(prefix, DigestUtils.digest(messageDigest, file));
+            println(prefix, DigestUtils.digest(messageDigest, file), source);
         } else if (file.isDirectory()) {
             run(prefix, messageDigest, file.listFiles());
         } else {
-            System.err.println("Parameter is file nor directory: '" + file + "'");
+            // use the default charset for the command-line parameter
+            final byte[] bytes = source.getBytes(Charset.defaultCharset());
+            println(prefix, DigestUtils.digest(messageDigest, bytes));
         }
     }
 
     private void run(String prefix, MessageDigest messageDigest, File[] files) throws IOException {
         for (File file : files) {
             if (file.isFile()) {
-                println(prefix, DigestUtils.digest(messageDigest, file));
+                println(prefix, DigestUtils.digest(messageDigest, file), file.getName());
             }
         }
     }
