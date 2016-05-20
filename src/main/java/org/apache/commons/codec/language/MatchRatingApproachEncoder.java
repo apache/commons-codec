@@ -380,7 +380,7 @@ public class MatchRatingApproachEncoder implements StringEncoder {
      * @return Single consonant word
      */
     String removeDoubleConsonants(final String name) {
-        String replacedName = name.toUpperCase();
+        String replacedName = name.toUpperCase(Locale.ENGLISH);
         for (final String dc : DOUBLE_CONSONANT) {
             if (replacedName.contains(dc)) {
                 final String singleLetter = dc.substring(0, 1);
