@@ -1,20 +1,20 @@
-/**
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
+ */
+/*
  * Some portions of this file Copyright (c) 2004-2006 Intel Corportation
  * and licensed under the BSD license.
  */
@@ -65,16 +65,16 @@ public class PureJavaCrc32C implements Checksum {
       final int c1 =(b[off+1] ^ (localCrc >>>= 8)) & 0xff;
       final int c2 =(b[off+2] ^ (localCrc >>>= 8)) & 0xff;
       final int c3 =(b[off+3] ^ (localCrc >>>= 8)) & 0xff;
-      localCrc = (T[T8_7_start + c0] ^ T[T8_6_start + c1])
-          ^ (T[T8_5_start + c2] ^ T[T8_4_start + c3]);
+      localCrc = (T[T8_7_start + c0] ^ T[T8_6_start + c1]) ^
+                 (T[T8_5_start + c2] ^ T[T8_4_start + c3]);
 
       final int c4 = b[off+4] & 0xff;
       final int c5 = b[off+5] & 0xff;
       final int c6 = b[off+6] & 0xff;
       final int c7 = b[off+7] & 0xff;
 
-      localCrc ^= (T[T8_3_start + c4] ^ T[T8_2_start + c5])
-           ^ (T[T8_1_start + c6] ^ T[T8_0_start + c7]);
+      localCrc ^= (T[T8_3_start + c4] ^ T[T8_2_start + c5]) ^
+                  (T[T8_1_start + c6] ^ T[T8_0_start + c7]);
 
       off += 8;
       len -= 8;

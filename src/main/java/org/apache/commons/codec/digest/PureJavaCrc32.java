@@ -1,13 +1,12 @@
-/**
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -72,14 +71,14 @@ public class PureJavaCrc32 implements Checksum {
     final int remainder = len & 0x7;
     int i = offset;
     for(final int end = offset + len - remainder; i < end; i += 8) {
-      final int x = localCrc
-          ^ ((((b[i  ] << 24) >>> 24) + ((b[i+1] << 24) >>> 16))
-           + (((b[i+2] << 24) >>> 8 ) +  (b[i+3] << 24)));
+      final int x = localCrc ^
+          ((((b[i  ] << 24) >>> 24) + ((b[i+1] << 24) >>> 16)) +
+          (((b[i+2] << 24) >>> 8 ) +  (b[i+3] << 24)));
 
-      localCrc = ((T[((x << 24) >>> 24) + 0x700] ^ T[((x << 16) >>> 24) + 0x600])
-                ^ (T[((x <<  8) >>> 24) + 0x500] ^ T[ (x        >>> 24) + 0x400]))
-               ^ ((T[((b[i+4] << 24) >>> 24) + 0x300] ^ T[((b[i+5] << 24) >>> 24) + 0x200])
-                ^ (T[((b[i+6] << 24) >>> 24) + 0x100] ^ T[((b[i+7] << 24) >>> 24)]));
+      localCrc = ((T[((x << 24) >>> 24) + 0x700] ^ T[((x << 16) >>> 24) + 0x600]) ^
+                 (T[((x <<  8) >>> 24) + 0x500] ^ T[ (x        >>> 24) + 0x400])) ^
+                 ((T[((b[i+4] << 24) >>> 24) + 0x300] ^ T[((b[i+5] << 24) >>> 24) + 0x200]) ^
+                 (T[((b[i+6] << 24) >>> 24) + 0x100] ^ T[((b[i+7] << 24) >>> 24)]));
     }
 
     /* loop unroll - duff's device style */

@@ -44,8 +44,8 @@ public class Digest {
      * </p>
      *
      * @param args
-     *            {@code args[0]} is one of {@link MessageDigestAlgorithms} name, {@link MessageDigest} name, {@code ALL}
-     *            , or {@code *}.
+     *            {@code args[0]} is one of {@link MessageDigestAlgorithms} name,
+     *            {@link MessageDigest} name, {@code ALL}, or {@code *}.
      *            {@code args[1+]} is a FILE/DIRECTORY/String.
      * @throws IOException if an error occurs
      */
