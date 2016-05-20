@@ -114,9 +114,11 @@ public class Crypt {
      * storedPwd.equals(crypt(enteredPwd, storedPwd))
      * </pre>
      * <p>
-     * The resulting string starts with the marker string ({@code $6$}), continues with the salt value and ends with a
-     * {@code "$"} sign followed by the actual hash value. For DES the string only contains the salt and actual hash.
-     * It's total length is dependent on the algorithm used:
+     * The resulting string starts with the marker string ({@code $n$}), where n is the same as the input salt.
+     * The salt is then appended, followed by a {@code "$"} sign.
+     * This is followed by the actual hash value.
+     * For DES the string only contains the salt and actual hash.
+     * The total length is dependent on the algorithm used:
      * <ul>
      * <li>SHA-512: 106 chars
      * <li>SHA-256: 63 chars
