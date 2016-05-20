@@ -235,10 +235,7 @@ limitations under the License.
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <commons.encoding>UTF-8</commons.encoding>
     <checkstyle.header.file>${basedir}/LICENSE-header.txt</checkstyle.header.file>
-    <!-- Use 2.9.1 instead of 2.10-2.15; which seems to scan the 'target'
-    dir and wants license headers in .properties to be the header for
-    Java files. -->
-    <checkstyle.version>2.9.1</checkstyle.version>
+    <checkstyle.version>2.17</checkstyle.version>
   </properties>
   <build>
     <pluginManagement>
