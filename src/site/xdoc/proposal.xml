@@ -22,18 +22,18 @@ limitations under the License.
  </properties>
 
  <body>
-  
+
    <section name="Proposal for Codec Package"><br/>
    <h4>January 24, 2002</h4>
-  
 
-  
+
+
 <subsection name="(0) Rationale">
   <p>
-   Many software projects have a need to use various formats of data, 
-   and to be able to switch between various formats.  The codec package 
-   seeks to encapsulate some of the most popular encode/decode 
-   algorithms in one easy to use, well tested package.  A base64 codec 
+   Many software projects have a need to use various formats of data,
+   and to be able to switch between various formats.  The codec package
+   seeks to encapsulate some of the most popular encode/decode
+   algorithms in one easy to use, well tested package.  A base64 codec
    is the first candidate, with others to follow soon.
   </p>
 

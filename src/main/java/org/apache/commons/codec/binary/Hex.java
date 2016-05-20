@@ -181,7 +181,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      *            a byte[] to convert to Hex characters
      * @param toDigits
      *            the output alphabet (must contain at least 16 chars)
-     * @return A char[] containing the appropriate characters from the alphabet 
+     * @return A char[] containing the appropriate characters from the alphabet
      *         For best results, this should be either upper- or lower-case hex.
      * @since 1.4
      */

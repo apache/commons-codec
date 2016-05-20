@@ -293,7 +293,7 @@ public class QuotedPrintableCodecTest {
         String plain ="This is a example of a quoted-printable text file. This might contain sp=cial chars.";
         String expected = "This is a example of a quoted-printable text file. This might contain sp=3D=\r\ncial chars.";
         assertEquals(expected, qpcodec.encode(plain));
-                
+
         plain ="This is a example of a quoted-printable text file. This might contain ta\tbs as well.";
         expected = "This is a example of a quoted-printable text file. This might contain ta=09=\r\nbs as well.";
         assertEquals(expected, qpcodec.encode(plain));

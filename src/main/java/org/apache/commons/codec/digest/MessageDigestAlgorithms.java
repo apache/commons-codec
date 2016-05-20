@@ -31,7 +31,7 @@ import java.security.MessageDigest;
  * <p>
  * Java 9 and up: SHA3-224, SHA3-256, SHA3-384, SHA3-512.
  * </p>
- * 
+ *
  * @see <a href="http://docs.oracle.com/javase/6/docs/technotes/guides/security/StandardNames.html#MessageDigest">
  *      Java 6 Cryptography Architecture Standard Algorithm Name Documentation</a>
  * @see <a href="http://docs.oracle.com/javase/7/docs/technotes/guides/security/StandardNames.html#MessageDigest">
@@ -68,7 +68,7 @@ public class MessageDigestAlgorithms {
      * <p>
      * Present in Oracle Java 8.
      * </p>
-     * 
+     *
      * @since 1.11
      */
     public static final String SHA_224 = "SHA-224";
@@ -93,7 +93,7 @@ public class MessageDigestAlgorithms {
      * <p>
      * Likely to be included in Oracle Java 9 GA.
      * </p>
-     * 
+     *
      * @since 1.11
      */
     public static final String SHA3_224 = "SHA3-224";
@@ -103,7 +103,7 @@ public class MessageDigestAlgorithms {
      * <p>
      * Likely to be included in Oracle Java 9 GA.
      * </p>
-     * 
+     *
      * @since 1.11
      */
     public static final String SHA3_256 = "SHA3-256";
@@ -113,7 +113,7 @@ public class MessageDigestAlgorithms {
      * <p>
      * Likely to be included in Oracle Java 9 GA.
      * </p>
-     * 
+     *
      * @since 1.11
      */
     public static final String SHA3_384 = "SHA3-384";
@@ -123,14 +123,14 @@ public class MessageDigestAlgorithms {
      * <p>
      * Likely to be included in Oracle Java 9 GA.
      * </p>
-     * 
+     *
      * @since 1.11
      */
     public static final String SHA3_512 = "SHA3-512";
 
     /**
      * Gets all constant values defined in this class.
-     * 
+     *
      * @return all constant values defined in this class.
      * @since 1.11
      */

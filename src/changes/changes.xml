@@ -44,56 +44,56 @@ The <action> type attribute can be add,update,fix,remove.
   <body>
     <release version="1.11" date="DD MM 2015" description="Feature and fix release.">
       <!-- The first attribute below should be the issue id; makes it easier to navigate in the IDE outline -->
-      
-      <action issue="CODEC-171" dev="sebb" type="add" due-to="Brett Okken">Add support for CRC32-C</action>   
-      <action issue="CODEC-221" dev="sebb" type="update">HmacUtils.updateHmac calls reset() unnecessarily</action>   
-      <action issue="CODEC-200" dev="sebb" type="fix" due-to="Luciano Vernaschi">Base32.HEX_DECODE_TABLE contains the wrong value 32</action>   
-      <action dev="ggregory" type="fix" issue="CODEC-207" due-to="Gary Gregory">Charsets Javadoc breaks build when using Java 8</action>         
-      <action dev="ggregory" type="fix" issue="CODEC-199" due-to="Yossi Tamari">Bug in HW rule in Soundex</action>         
-      <action dev="ggregory" type="fix" issue="CODEC-209" due-to="Gary Gregory">Javadoc for SHA-224 DigestUtils methods should mention Java 1.8.0 restriction instead of 1.4.0.</action>         
-      <action dev="ggregory" type="fix" issue="CODEC-219" due-to="Gary Gregory, Sebb">Don't deprecate Charsets Charset constants in favor of Java 7's java.nio.charset.StandardCharsets</action>         
-      <action dev="ggregory" type="add" issue="CODEC-218" due-to="Gary Gregory">Refactor HmacUtils methods into the HmacAlgorithms enum</action>         
-      <action dev="ggregory" type="add" issue="CODEC-217" due-to="Gary Gregory">Add HmacAlgorithms.HMAC_SHA_224 (Java 8 only)</action>         
-      <action dev="ggregory" type="add" issue="CODEC-213" due-to="Gary Gregory">Support JEP 287: SHA-3 Hash Algorithms</action>         
-      <action dev="ggregory" type="add" issue="CODEC-212" due-to="Gary Gregory">Create a minimal Digest command line utility: org.apache.commons.codec.digest.Digest</action>         
-      <action dev="ggregory" type="add" issue="CODEC-210" due-to="Gary Gregory">Add DigestUtils.getDigest(String, MessageDigest)</action>         
-      <action dev="ggregory" type="add" issue="CODEC-208" due-to="Gary Gregory">Make some DigestUtils APIs public</action>         
-      <action dev="ggregory" type="add" issue="CODEC-206" due-to="Gary Gregory">Add java.io.File APIs to MessageDigestAlgorithm</action>         
-      <action dev="ggregory" type="add" issue="CODEC-183" due-to="Steven Wurster">BaseNCodecOutputStream only supports writing EOF on close()</action>         
-      <action dev="ggregory" type="add" issue="CODEC-195" due-to="Gary Gregory">Support SHA-224 in DigestUtils on Java 8</action>         
-      <action dev="ggregory" type="add" issue="CODEC-194" due-to="Gary Gregory">Support java.nio.ByteBuffer in org.apache.commons.codec.binary.Hex</action>         
-      <action dev="ggregory" type="add" issue="CODEC-193" due-to="Michael Donaghy">Support java.nio.ByteBuffer in DigestUtils</action>         
+
+      <action issue="CODEC-171" dev="sebb" type="add" due-to="Brett Okken">Add support for CRC32-C</action>
+      <action issue="CODEC-221" dev="sebb" type="update">HmacUtils.updateHmac calls reset() unnecessarily</action>
+      <action issue="CODEC-200" dev="sebb" type="fix" due-to="Luciano Vernaschi">Base32.HEX_DECODE_TABLE contains the wrong value 32</action>
+      <action dev="ggregory" type="fix" issue="CODEC-207" due-to="Gary Gregory">Charsets Javadoc breaks build when using Java 8</action>
+      <action dev="ggregory" type="fix" issue="CODEC-199" due-to="Yossi Tamari">Bug in HW rule in Soundex</action>
+      <action dev="ggregory" type="fix" issue="CODEC-209" due-to="Gary Gregory">Javadoc for SHA-224 DigestUtils methods should mention Java 1.8.0 restriction instead of 1.4.0.</action>
+      <action dev="ggregory" type="fix" issue="CODEC-219" due-to="Gary Gregory, Sebb">Don't deprecate Charsets Charset constants in favor of Java 7's java.nio.charset.StandardCharsets</action>
+      <action dev="ggregory" type="add" issue="CODEC-218" due-to="Gary Gregory">Refactor HmacUtils methods into the HmacAlgorithms enum</action>
+      <action dev="ggregory" type="add" issue="CODEC-217" due-to="Gary Gregory">Add HmacAlgorithms.HMAC_SHA_224 (Java 8 only)</action>
+      <action dev="ggregory" type="add" issue="CODEC-213" due-to="Gary Gregory">Support JEP 287: SHA-3 Hash Algorithms</action>
+      <action dev="ggregory" type="add" issue="CODEC-212" due-to="Gary Gregory">Create a minimal Digest command line utility: org.apache.commons.codec.digest.Digest</action>
+      <action dev="ggregory" type="add" issue="CODEC-210" due-to="Gary Gregory">Add DigestUtils.getDigest(String, MessageDigest)</action>
+      <action dev="ggregory" type="add" issue="CODEC-208" due-to="Gary Gregory">Make some DigestUtils APIs public</action>
+      <action dev="ggregory" type="add" issue="CODEC-206" due-to="Gary Gregory">Add java.io.File APIs to MessageDigestAlgorithm</action>
+      <action dev="ggregory" type="add" issue="CODEC-183" due-to="Steven Wurster">BaseNCodecOutputStream only supports writing EOF on close()</action>
+      <action dev="ggregory" type="add" issue="CODEC-195" due-to="Gary Gregory">Support SHA-224 in DigestUtils on Java 8</action>
+      <action dev="ggregory" type="add" issue="CODEC-194" due-to="Gary Gregory">Support java.nio.ByteBuffer in org.apache.commons.codec.binary.Hex</action>
+      <action dev="ggregory" type="add" issue="CODEC-193" due-to="Michael Donaghy">Support java.nio.ByteBuffer in DigestUtils</action>
       <action dev="ggregory" type="add" issue="CODEC-202" due-to="Oleg Kalnichevski">Add BaseNCodec.encode(byte[], int, int) input with offset and length parameters for Base64 and Base32.</action>
       <action dev="ggregory" type="add" issue="CODEC-203" due-to="Gary Gregory">Add convenience method decodeHex(String).</action>
       <action dev="ggregory" type="add" issue="CODEC-205" due-to="Gary Gregory">Add faster CRC32 implementation.</action>
-    </release>   
-    <release version="1.10" date="5 November 2014" description="Feature and fix release.">
-      <action dev="ggregory" type="add" issue="CODEC-192" due-to="Thomas Neidhart">Add Daitch-Mokotoff Soundex</action>   
-      <action dev="ggregory" type="add" issue="CODEC-121" due-to="Thomas Neidhart, Java John">QuotedPrintableCodec does not support soft line break per the 'quoted-printable' example on Wikipedia</action>   
-      <action dev="tn" type="fix" issue="CODEC-185" due-to="Sean Busbey">Added clarification to Javadoc of Base64 concerning the use of the urlSafe parameter</action>   
-      <action dev="tn" type="fix" issue="CODEC-191" due-to="Igor Savin">Added clarification to the Javadoc of Base[32|64]OutputStream that it is mandatory to call close()</action>   
-      <action dev="ggregory" type="fix" issue="CODEC-188" due-to="Hendrik Saly">Add support for HMAC Message Authentication Code (MAC) digests</action>   
-      <action dev="ggregory" type="fix" issue="CODEC-187" due-to="Michael Tobias, Thomas Neidhart">Beider Morse Phonetic Matching producing incorrect tokens</action>   
-      <action dev="ggregory" type="fix" issue="CODEC-184" due-to="Cyrille Artho">NullPointerException in DoubleMetaPhone.isDoubleMetaphoneEqual when using empty strings</action>   
-      <action dev="ggregory" type="add" issue="CODEC-181" due-to="Ivan Martinez-Ortiz">Make possible to provide padding byte to BaseNCodec in constructor</action>   
-      <action dev="ggregory" type="fix" issue="CODEC-180" due-to="Ville Skyttä">Fix Javadoc 1.8.0 errors</action>   
-      <action dev="ggregory" type="update" issue="CODEC-178">Deprecate Charsets Charset constants in favor of Java 7's java.nio.charset.StandardCharsets</action>   
-      <action dev="ggregory" type="fix" issue="CODEC-189">Fix Java 8 build Javadoc errors</action>   
-      <action dev="ggregory" type="update" issue="CODEC-190">Update from commons-parent 34 to 35</action>   
     </release>
-    <release version="1.9" date="20 December 2013" description="Feature and fix release."> 
-      <action dev="ggregory" type="update" issue="CODEC-174" due-to="Thomas Champagne">Improve performance of Beider Morse encoder</action>   
-      <action dev="ggregory" type="fix" issue="CODEC-175">Beider Morse does not close Scanners used to read config files</action>   
-      <action dev="sebb" type="fix" issue="CODEC-172" due-to="Matt Bishop">Base32 decode table has spurious value</action>   
-      <action dev="ggregory" type="fix" issue="CODEC-170" due-to="Ron Wheeler, Henri Yandell">Link broken in Metaphone Javadoc</action>   
-      <action dev="ggregory" type="fix" issue="CODEC-176" due-to="Ville Skyttä">Spelling fixes in Javadoc and comments</action>   
+    <release version="1.10" date="5 November 2014" description="Feature and fix release.">
+      <action dev="ggregory" type="add" issue="CODEC-192" due-to="Thomas Neidhart">Add Daitch-Mokotoff Soundex</action>
+      <action dev="ggregory" type="add" issue="CODEC-121" due-to="Thomas Neidhart, Java John">QuotedPrintableCodec does not support soft line break per the 'quoted-printable' example on Wikipedia</action>
+      <action dev="tn" type="fix" issue="CODEC-185" due-to="Sean Busbey">Added clarification to Javadoc of Base64 concerning the use of the urlSafe parameter</action>
+      <action dev="tn" type="fix" issue="CODEC-191" due-to="Igor Savin">Added clarification to the Javadoc of Base[32|64]OutputStream that it is mandatory to call close()</action>
+      <action dev="ggregory" type="fix" issue="CODEC-188" due-to="Hendrik Saly">Add support for HMAC Message Authentication Code (MAC) digests</action>
+      <action dev="ggregory" type="fix" issue="CODEC-187" due-to="Michael Tobias, Thomas Neidhart">Beider Morse Phonetic Matching producing incorrect tokens</action>
+      <action dev="ggregory" type="fix" issue="CODEC-184" due-to="Cyrille Artho">NullPointerException in DoubleMetaPhone.isDoubleMetaphoneEqual when using empty strings</action>
+      <action dev="ggregory" type="add" issue="CODEC-181" due-to="Ivan Martinez-Ortiz">Make possible to provide padding byte to BaseNCodec in constructor</action>
+      <action dev="ggregory" type="fix" issue="CODEC-180" due-to="Ville Skyttä">Fix Javadoc 1.8.0 errors</action>
+      <action dev="ggregory" type="update" issue="CODEC-178">Deprecate Charsets Charset constants in favor of Java 7's java.nio.charset.StandardCharsets</action>
+      <action dev="ggregory" type="fix" issue="CODEC-189">Fix Java 8 build Javadoc errors</action>
+      <action dev="ggregory" type="update" issue="CODEC-190">Update from commons-parent 34 to 35</action>
+    </release>
+    <release version="1.9" date="20 December 2013" description="Feature and fix release.">
+      <action dev="ggregory" type="update" issue="CODEC-174" due-to="Thomas Champagne">Improve performance of Beider Morse encoder</action>
+      <action dev="ggregory" type="fix" issue="CODEC-175">Beider Morse does not close Scanners used to read config files</action>
+      <action dev="sebb" type="fix" issue="CODEC-172" due-to="Matt Bishop">Base32 decode table has spurious value</action>
+      <action dev="ggregory" type="fix" issue="CODEC-170" due-to="Ron Wheeler, Henri Yandell">Link broken in Metaphone Javadoc</action>
+      <action dev="ggregory" type="fix" issue="CODEC-176" due-to="Ville Skyttä">Spelling fixes in Javadoc and comments</action>
     </release>
     <release version="1.8" date="19 April 2013" description="Feature and fix release. Requires a minimum of Java 1.6.">
-      <action dev="ggregory" type="add" issue="CODEC-168" due-to="Daniel Cassidy">Add DigestUtils.updateDigest(MessageDigest, InputStream).</action>   
-      <action dev="julius" type="add" issue="CODEC-167">Add JUnit to test our decode with pad character in the middle.</action> 
-      <action dev="ggregory" type="add" issue="CODEC-161" due-to="crice">Add Match Rating Approach (MRA) phonetic algorithm encoder.</action>   
-      <action dev="ggregory" type="fix" issue="CODEC-163" due-to="leo141">ColognePhonetic encoder unnecessarily creates many char arrays on every loop run.</action>   
-      <action dev="sebb" type="fix" issue="CODEC-160">Base64.encodeBase64URLSafeString doesn't add padding characters at the end.</action>   
+      <action dev="ggregory" type="add" issue="CODEC-168" due-to="Daniel Cassidy">Add DigestUtils.updateDigest(MessageDigest, InputStream).</action>
+      <action dev="julius" type="add" issue="CODEC-167">Add JUnit to test our decode with pad character in the middle.</action>
+      <action dev="ggregory" type="add" issue="CODEC-161" due-to="crice">Add Match Rating Approach (MRA) phonetic algorithm encoder.</action>
+      <action dev="ggregory" type="fix" issue="CODEC-163" due-to="leo141">ColognePhonetic encoder unnecessarily creates many char arrays on every loop run.</action>
+      <action dev="sebb" type="fix" issue="CODEC-160">Base64.encodeBase64URLSafeString doesn't add padding characters at the end.</action>
     </release>
     <release version="1.7" date="11 September 2012" description="Feature and fix release. Requires a minimum of Java 1.6.">
       <action issue="CODEC-157" dev="ggregory" type="add" due-to="ggregory">

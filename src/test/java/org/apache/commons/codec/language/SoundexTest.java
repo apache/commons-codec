@@ -390,17 +390,17 @@ public class SoundexTest extends StringEncoderAbstractTest<Soundex> {
             Assert.assertEquals("", this.getStringEncoder().encode("\u00f6"));
         }
     }
-    
+
     /**
      * Tests example from http://en.wikipedia.org/wiki/Soundex#American_Soundex as of 2015-03-22.
      */
     @Test
     public void testWikipediaAmericanSoundex() {
-        Assert.assertEquals("R163", this.getStringEncoder().encode("Robert"));        
-        Assert.assertEquals("R163", this.getStringEncoder().encode("Rupert"));        
-        Assert.assertEquals("A261", this.getStringEncoder().encode("Ashcraft"));        
-        Assert.assertEquals("A261", this.getStringEncoder().encode("Ashcroft"));        
-        Assert.assertEquals("T522", this.getStringEncoder().encode("Tymczak"));        
-        Assert.assertEquals("P236", this.getStringEncoder().encode("Pfister"));        
+        Assert.assertEquals("R163", this.getStringEncoder().encode("Robert"));
+        Assert.assertEquals("R163", this.getStringEncoder().encode("Rupert"));
+        Assert.assertEquals("A261", this.getStringEncoder().encode("Ashcraft"));
+        Assert.assertEquals("A261", this.getStringEncoder().encode("Ashcroft"));
+        Assert.assertEquals("T522", this.getStringEncoder().encode("Tymczak"));
+        Assert.assertEquals("P236", this.getStringEncoder().encode("Pfister"));
     }
 }

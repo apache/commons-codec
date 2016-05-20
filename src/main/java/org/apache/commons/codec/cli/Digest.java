@@ -45,7 +45,7 @@ public class Digest {
      *
      * @param args
      *            {@code args[0]} is one of {@link MessageDigestAlgorithms} name, {@link MessageDigest} name, {@code ALL}
-     *            , or {@code *}. 
+     *            , or {@code *}.
      *            {@code args[1+]} is a FILE/DIRECTORY/String.
      * @throws IOException if an error occurs
      */
@@ -71,7 +71,7 @@ public class Digest {
             inputs = null;
         } else {
             inputs = new String[args.length -1];
-            System.arraycopy(args, 1, inputs, 0, inputs.length);            
+            System.arraycopy(args, 1, inputs, 0, inputs.length);
         }
     }
 

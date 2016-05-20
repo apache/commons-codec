@@ -33,7 +33,7 @@ import org.apache.commons.codec.binary.BaseNCodec.Context;
  * "https://commons.apache.org/proper/commons-io/apidocs/org/apache/commons/io/output/CloseShieldOutputStream.html"
  * >CloseShieldOutputStream</a>.
  * </p>
- * 
+ *
  * @since 1.5
  * @version $Id$
  */
@@ -159,7 +159,7 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
 
     /**
      * Writes EOF.
-     * 
+     *
      * @throws IOException
      *             if an I/O error occurs.
      * @since 1.11

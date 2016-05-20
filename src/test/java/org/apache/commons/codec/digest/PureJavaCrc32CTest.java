@@ -11,14 +11,14 @@ import org.junit.Test;
 public class PureJavaCrc32CTest {
 
     private final PureJavaCrc32C crc = new PureJavaCrc32C();
-    
+
     private byte[] data = new byte[32];
 
     @Test
     public void testZeros() {
         for(int i = 0; i < data.length; i ++) {
             data[i]= (byte) 0;
-        }        
+        }
         check(0x8a9136aa); // aa 36 91 8a
     }
 
@@ -34,7 +34,7 @@ public class PureJavaCrc32CTest {
     public void testIncreasing() {
         for(int i = 0; i < data.length; i ++) {
             data[i]= (byte) i;
-        }        
+        }
         check(0x46dd794e); // 4e 79 dd 46
     }
 
@@ -42,7 +42,7 @@ public class PureJavaCrc32CTest {
     public void testDecreasing() {
         for(int i = 0; i < data.length; i ++) {
             data[i]= (byte) (31-i);
-        }        
+        }
         check(0x113fdb5c); // 5c db 3f 11
     }
 

@@ -943,7 +943,7 @@ public final class HmacUtils {
         mac.update(valueToDigest);
         return this;
     }
-    
+
     /**
      * Updates the stored {@link Mac} with the value.
      *
@@ -958,7 +958,7 @@ public final class HmacUtils {
         mac.update(valueToDigest);
         return this;
     }
-    
+
     /**
      * Updates the stored {@link Mac} with the value.
      * String is converted to bytes using the UTF-8 charset.
@@ -973,7 +973,7 @@ public final class HmacUtils {
         mac.update(StringUtils.getBytesUtf8(valueToDigest));
         return this;
     }
-    
+
     /**
      * Updates the stored {@link Mac} with the value.
      *

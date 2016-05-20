@@ -17,7 +17,7 @@ limitations under the License.
 -->
 <!--
  To produce reports, use the reporting profile, for example: mvn -Preporting clean site
- You may need to use the -U option to update your environment if you get an error.  
+ You may need to use the -U option to update your environment if you get an error.
  -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
@@ -41,7 +41,7 @@ limitations under the License.
   </description>
   <prerequisites>
     <maven>3.0.0</maven>
-  </prerequisites>  
+  </prerequisites>
   <url>http://commons.apache.org/proper/commons-codec/</url>
   <issueManagement>
     <system>jira</system>
@@ -263,7 +263,7 @@ limitations under the License.
               </excludes>
           </configuration>
       </plugin>
-  
+
       <!-- Exclude cli from binary jar -->
       <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -274,7 +274,7 @@ limitations under the License.
               </excludes>
           </configuration>
       </plugin>
-  
+
       <!-- Create CLI jar -->
       <plugin>
           <artifactId>maven-antrun-plugin</artifactId>
@@ -375,8 +375,8 @@ limitations under the License.
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
-        <!-- Use 2.9.1 instead of 2.10-2.15; which seems to scan the 'target' 
-        dir and wants license headers in .properties to be the header for 
+        <!-- Use 2.9.1 instead of 2.10-2.15; which seems to scan the 'target'
+        dir and wants license headers in .properties to be the header for
         Java files. -->
         <version>2.9.1</version>
         <configuration>

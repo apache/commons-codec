@@ -55,7 +55,7 @@ limitations under the License.
     <target name="compile" depends="static" description="Compile shareable components">
         <javac srcdir="${source.home}" destdir="${build.home}/classes"
             source="${compile.source}" target="${compile.target}"
-            debug="${compile.debug}" deprecation="${compile.deprecation}" optimize="${compile.optimize}" 
+            debug="${compile.debug}" deprecation="${compile.deprecation}" optimize="${compile.optimize}"
             includeantruntime="${compile.includeantruntime}"
             encoding="${compile.encoding}">
             <classpath refid="compile.classpath"/>
@@ -191,7 +191,7 @@ limitations under the License.
     <target name="compile.tests" depends="compile" description="Compile unit test cases">
         <javac srcdir="${test.home}" destdir="${build.home}/tests"
             source="${compile.source}" target="${compile.target}"
-            debug="${compile.debug}" deprecation="${compile.deprecation}" optimize="${compile.optimize}" 
+            debug="${compile.debug}" deprecation="${compile.deprecation}" optimize="${compile.optimize}"
             includeantruntime="${compile.includeantruntime}"
             encoding="${compile.encoding}">
             <classpath refid="test.classpath"/>

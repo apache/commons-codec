@@ -960,7 +960,7 @@ public static byte[] sha(final byte[] data) {
     }
 
     // Fluent interface
-    
+
     private final MessageDigest messageDigest;
 
     private DigestUtils() {

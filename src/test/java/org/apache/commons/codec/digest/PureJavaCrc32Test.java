@@ -34,7 +34,7 @@ import org.junit.Test;
 /**
  * Unit test to verify that the pure-Java CRC32 algorithm gives
  * the same results as the built-in implementation.
- * 
+ *
  * Copied from Hadoop 2.6.3 (Renamed TestPureJavaCrc32 to PureJavaCrc32Test).
  * @since 1.11
  */
@@ -51,7 +51,7 @@ public class PureJavaCrc32Test {
     checkSame();
 
     checkOnBytes(new byte[] {40, 60, 97, -70}, false);
-    
+
     checkOnBytes("hello world!".getBytes("UTF-8"), false);
 
     for (int i = 0; i < 10000; i++) {
@@ -59,14 +59,14 @@ public class PureJavaCrc32Test {
       new Random().nextBytes(randomBytes);
       checkOnBytes(randomBytes, false);
     }
-    
+
   }
 
   private void checkOnBytes(byte[] bytes, boolean print) {
     theirs.reset();
     ours.reset();
     checkSame();
-    
+
     for (int i = 0; i < bytes.length; i++) {
       ours.update(bytes[i]);
       theirs.update(bytes[i]);
@@ -77,10 +77,10 @@ public class PureJavaCrc32Test {
       System.out.println("theirs:\t" + Long.toHexString(theirs.getValue())
                          + "\nours:\t" + Long.toHexString(ours.getValue()));
     }
-  
+
     theirs.reset();
     ours.reset();
-    
+
     ours.update(bytes, 0, bytes.length);
     theirs.update(bytes, 0, bytes.length);
     if (print) {
@@ -89,7 +89,7 @@ public class PureJavaCrc32Test {
     }
 
     checkSame();
-    
+
     if (bytes.length >= 10) {
       ours.update(bytes, 5, 5);
       theirs.update(bytes, 5, 5);
@@ -163,7 +163,7 @@ public class PureJavaCrc32Test {
     public String toString() {
       final StringBuilder b = new StringBuilder();
 
-      final String tableFormat = String.format("T%d_", 
+      final String tableFormat = String.format("T%d_",
         Integer.numberOfTrailingZeros(tables[0].length)) + "%d";
       final String startFormat = "  private static final int "+tableFormat+"_start = %d*256;";
 
@@ -190,7 +190,7 @@ public class PureJavaCrc32Test {
         System.exit(1);
       }
       long polynomial = Long.parseLong(args[0], 16);
-      
+
       int i = 8;
       final Table t = new Table(i, 16, polynomial);
       final String s = t.toString();
@@ -206,7 +206,7 @@ public class PureJavaCrc32Test {
       }
     }
   }
-  
+
   /**
    * Performance tests to compare performance of the Pure Java implementation
    * to the built-in java.util.zip implementation. This can be run from the
@@ -221,13 +221,13 @@ public class PureJavaCrc32Test {
     public static final int MAX_LEN = 32*1024*1024; // up to 32MB chunks
     public static final int BYTES_PER_SIZE = MAX_LEN * 4;
 
-    static final Class<? extends Checksum> zip = CRC32.class; 
+    static final Class<? extends Checksum> zip = CRC32.class;
     static final List<Class<? extends Checksum>> CRCS = new ArrayList<Class<? extends Checksum>>();
     static {
       CRCS.add(zip);
       CRCS.add(PureJavaCrc32.class);
     }
-      
+
 
     public static void main(String args[]) throws Exception {
       printSystemProperties(System.out);
@@ -329,7 +329,7 @@ public class PureJavaCrc32Test {
           final int index = i;
           threads[i] = new Thread() {
             final Checksum crc = ctor.newInstance();
-  
+
             @Override
             public void run() {
               final long st = System.nanoTime();
@@ -368,13 +368,13 @@ public class PureJavaCrc32Test {
       final long value;
       /** Speed (MB per second) */
       final double mbps;
-      
+
       BenchResult(long value, double mbps) {
         this.value = value;
         this.mbps = mbps;
       }
     }
-    
+
     private static void printSystemProperties(PrintStream out) {
       final String[] names = {
           "java.version",
