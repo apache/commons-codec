@@ -56,8 +56,8 @@ limitations under the License.
         <javac srcdir="${source.home}" destdir="${build.home}/classes"
             source="${compile.source}" target="${compile.target}"
             debug="${compile.debug}" deprecation="${compile.deprecation}" optimize="${compile.optimize}" 
-			includeantruntime="${compile.includeantruntime}"
-			encoding="${compile.encoding}">
+            includeantruntime="${compile.includeantruntime}"
+            encoding="${compile.encoding}">
             <classpath refid="compile.classpath"/>
         </javac>
         <copy todir="${build.home}/classes" filtering="on">
@@ -91,7 +91,7 @@ limitations under the License.
             bottom="${component.name} version ${component.version} - Copyright &amp;copy; 2002-${current.year} - Apache Software Foundation"
             use="true"
             link="http://download.oracle.com/javase/1.5.0/docs/api/"
-			encoding="${compile.encoding}">
+            encoding="${compile.encoding}">
             <classpath refid="compile.classpath"/>
         </javadoc>
     </target>
@@ -192,8 +192,8 @@ limitations under the License.
         <javac srcdir="${test.home}" destdir="${build.home}/tests"
             source="${compile.source}" target="${compile.target}"
             debug="${compile.debug}" deprecation="${compile.deprecation}" optimize="${compile.optimize}" 
-			includeantruntime="${compile.includeantruntime}"
-			encoding="${compile.encoding}">
+            includeantruntime="${compile.includeantruntime}"
+            encoding="${compile.encoding}">
             <classpath refid="test.classpath"/>
         </javac>
         <copy todir="${build.home}/tests" filtering="on">

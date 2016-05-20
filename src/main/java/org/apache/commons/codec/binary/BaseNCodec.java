@@ -429,19 +429,19 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         return encode(pArray, 0, pArray.length);
     }
 
-	/**
-	 * Encodes a byte[] containing binary data, into a byte[] containing
-	 * characters in the alphabet.
-	 *
-	 * @param pArray
-	 *            a byte array containing binary data
-	 * @param offset
-	 *            initial offset of the subarray.
-	 * @param length
-	 *            length of the subarray.
-	 * @return A byte array containing only the base N alphabetic character data
-	 * @since 1.11
-	 */
+    /**
+     * Encodes a byte[] containing binary data, into a byte[] containing
+     * characters in the alphabet.
+     *
+     * @param pArray
+     *            a byte array containing binary data
+     * @param offset
+     *            initial offset of the subarray.
+     * @param length
+     *            length of the subarray.
+     * @return A byte array containing only the base N alphabetic character data
+     * @since 1.11
+     */
     public byte[] encode(final byte[] pArray, int offset, int length) {
         if (pArray == null || pArray.length == 0) {
             return pArray;

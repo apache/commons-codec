@@ -170,7 +170,7 @@ public class BaseNCodecTest {
     @Test
     public void testProvidePaddingByte() {
         // Given
-    	codec = new BaseNCodec(0, 0, 0, 0, (byte)0x25) {
+        codec = new BaseNCodec(0, 0, 0, 0, (byte)0x25) {
             @Override
             protected boolean isInAlphabet(final byte b) {
                 return b=='O' || b == 'K'; // allow OK
