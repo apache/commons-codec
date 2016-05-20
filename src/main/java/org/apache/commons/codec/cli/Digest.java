@@ -63,7 +63,7 @@ public class Digest {
         }
         if (args.length == 0) {
             throw new IllegalArgumentException(
-                    String.format("Usage: java %s [algorithm] [FILE|DIRECTORY]", Digest.class.getName()));
+                    String.format("Usage: java %s [algorithm] [FILE|DIRECTORY|string]", Digest.class.getName()));
         }
         this.args = args;
         algorithm = args[0];
