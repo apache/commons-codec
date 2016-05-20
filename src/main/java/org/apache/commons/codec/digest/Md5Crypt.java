@@ -186,7 +186,7 @@ public class Md5Crypt {
         } else {
             final Pattern p = Pattern.compile("^" + prefix.replace("$", "\\$") + "([\\.\\/a-zA-Z0-9]{1,8}).*");
             final Matcher m = p.matcher(salt);
-            if (m == null || !m.find()) {
+            if (!m.find()) {
                 throw new IllegalArgumentException("Invalid salt value: " + salt);
             }
             saltString = m.group(1);

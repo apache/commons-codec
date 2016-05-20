@@ -90,7 +90,7 @@ public class PureJavaCrc32C implements Checksum {
       case 2: localCrc = (localCrc >>> 8) ^ T[T8_0_start + ((localCrc ^ b[off++]) & 0xff)];
       case 1: localCrc = (localCrc >>> 8) ^ T[T8_0_start + ((localCrc ^ b[off++]) & 0xff)];
       default:
-        /* nothing */
+        break; // satisfy Findbugs
     }
 
     // Publish crc out to object

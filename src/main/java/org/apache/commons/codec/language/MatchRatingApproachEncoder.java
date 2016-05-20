@@ -185,9 +185,9 @@ public class MatchRatingApproachEncoder implements StringEncoder {
 
         if (sumLength <= FOUR) {
             minRating = FIVE;
-        } else if (sumLength >= FIVE && sumLength <= SEVEN) {
+        } else if (sumLength <= SEVEN) { // aready know it is at least 5
             minRating = FOUR;
-        } else if (sumLength >= EIGHT && sumLength <= ELEVEN) {
+        } else if (sumLength <= ELEVEN) { // aready know it is at least 8
             minRating = THREE;
         } else if (sumLength == TWELVE) {
             minRating = TWO;

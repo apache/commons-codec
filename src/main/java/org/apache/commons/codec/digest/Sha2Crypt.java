@@ -143,7 +143,7 @@ public class Sha2Crypt {
         }
 
         final Matcher m = SALT_PATTERN.matcher(salt);
-        if (m == null || !m.find()) {
+        if (!m.find()) {
             throw new IllegalArgumentException("Invalid salt value: " + salt);
         }
         if (m.group(3) != null) {
