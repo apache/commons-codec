@@ -24,10 +24,7 @@
     <fileSets>
         <fileSet>
             <includes>
-                <include>build.properties.sample</include>
-                <include>build.xml</include>
-                <include>checkstyle.xml</include>
-                <include>default.properties</include>
+                <include>checkstyle*.xml</include>
                 <include>LICENSE.txt</include>
                 <include>LICENSE-header.txt</include>
                 <include>NOTICE.txt</include>
