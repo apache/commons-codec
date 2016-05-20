@@ -854,7 +854,8 @@ public final class HmacUtils {
         return mac;
     }
 
-    private HmacUtils() {
+    // public to maintain binary compatibility
+    public HmacUtils() {
         this(null);
     }
 

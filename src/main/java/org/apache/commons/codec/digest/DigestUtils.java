@@ -963,7 +963,8 @@ public static byte[] sha(final byte[] data) {
 
     private final MessageDigest messageDigest;
 
-    private DigestUtils() {
+    // public to maintain binary compatibility
+    public DigestUtils() {
         this.messageDigest = null;
     }
 
