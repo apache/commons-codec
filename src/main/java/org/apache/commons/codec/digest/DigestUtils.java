@@ -977,6 +977,7 @@ public static byte[] sha(final byte[] data) {
      * Does not reset the digest before use.
      * @param digest the digest instance to use
      * @return the fluent instance
+     * @since 1.11
      */
     public static DigestUtils with(MessageDigest digest) {
         return new DigestUtils(digest);
@@ -987,6 +988,7 @@ public static byte[] sha(final byte[] data) {
      *
      * @param name the name of digest algorithm to create, e.g. {@link MessageDigestAlgorithms#MD5}
      * @return the fluent instance
+     * @since 1.11
      */
     public static DigestUtils with(String name) {
         return new DigestUtils(getDigest(name));
@@ -995,6 +997,7 @@ public static byte[] sha(final byte[] data) {
     /**
      * Returns the message digest instance.
      * @return the message digest instance
+     * @since 1.11
      */
     public MessageDigest getMessageDigest() {
         return messageDigest;
