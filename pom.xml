@@ -252,6 +252,101 @@ limitations under the License.
       </plugins>
     </pluginManagement>
     <plugins>
+
+      <!-- Exclude cli from source jar -->
+      <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <configuration>
+              <excludes>
+                  <exclude>**/cli/**</exclude>
+              </excludes>
+          </configuration>
+      </plugin>
+  
+      <!-- Exclude cli from binary jar -->
+      <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <configuration>
+              <excludes>
+                  <exclude>**/cli/**</exclude>
+              </excludes>
+          </configuration>
+      </plugin>
+  
+      <!-- Create CLI jar -->
+      <plugin>
+          <artifactId>maven-antrun-plugin</artifactId>
+          <executions>
+              <execution>
+                  <phase>package</phase>
+                  <configuration>
+                      <target>
+                          <!--
+                              Create the binary cli jar, which will be added to the binary zip/tgz,
+                              but not deployed independently to Maven
+                          -->
+                          <jar destfile="target/commons-codec-cli-${project.version}.jar">
+                              <metainf dir="${basedir}" includes="NOTICE.txt,LICENSE.txt" />
+                              <manifest>
+                                  <attribute name="Extension-Name" value="org.apache.commons.net" />
+                                  <attribute name="Specification-Title" value="${project.name}" />
+                                  <attribute name="Implementation-Title" value="${project.name}" />
+                                  <attribute name="Implementation-Vendor" value="${project.organization.name}" />
+                                  <attribute name="Implementation-Version" value="${project.version}" />
+                                  <attribute name="Implementation-Vendor-Id" value="org.apache" />
+                                  <attribute name="Implementation-Build" value="${implementation.build}"/>
+                                  <attribute name="X-Compile-Source-JDK" value="${maven.compiler.source}" />
+                                  <attribute name="X-Compile-Target-JDK" value="${maven.compiler.target}" />
+                                  <attribute name="Main-Class" value="org.apache.commons.codec.cli.Digest" />
+                              </manifest>
+                              <fileset dir="target/classes" includes="org/apache/commons/codec/cli/**"/>
+                              <fileset dir="target/classes" includes="org/apache/commons/codec/BinaryDecoder.class"/>
+                              <fileset dir="target/classes" includes="org/apache/commons/codec/BinaryEncoder.class"/>
+                              <fileset dir="target/classes" includes="org/apache/commons/codec/Charsets.class"/>
+                              <fileset dir="target/classes" includes="org/apache/commons/codec/Decoder.class"/>
+                              <fileset dir="target/classes" includes="org/apache/commons/codec/DecoderException.class"/>
+                              <fileset dir="target/classes" includes="org/apache/commons/codec/Encoder.class"/>
+                              <fileset dir="target/classes" includes="org/apache/commons/codec/EncoderException.class"/>
+                              <fileset dir="target/classes" includes="org/apache/commons/codec/binary/Hex.class"/>
+                              <fileset dir="target/classes" includes="org/apache/commons/codec/digest/DigestUtils.class"/>
+                              <fileset dir="target/classes" includes="org/apache/commons/codec/digest/MessageDigestAlgorithms.class"/>
+                          </jar>
+                      </target>
+                  </configuration>
+                  <goals>
+                      <goal>run</goal>
+                  </goals>
+              </execution>
+          </executions>
+      </plugin>
+
+      <!--  Attaches the cli JAR to the Maven lifecycle
+            to ensure it will be signed and deployed as normal -->
+      <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>build-helper-maven-plugin</artifactId>
+          <executions>
+              <execution>
+                  <id>attach-artifacts</id>
+                  <phase>package</phase>
+                  <goals>
+                      <goal>attach-artifact</goal>
+                  </goals>
+                  <configuration>
+                      <artifacts>
+                          <artifact>
+                              <file>target/commons-codec-cli-${project.version}.jar</file>
+                              <type>jar</type>
+                              <classifier>cli</classifier>
+                          </artifact>
+                      </artifacts>
+                  </configuration>
+              </execution>
+          </executions>
+      </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
