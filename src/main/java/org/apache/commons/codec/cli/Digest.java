@@ -46,7 +46,7 @@ public class Digest {
      * @param args
      *            {@code args[0]} is one of {@link MessageDigestAlgorithms} name, {@link MessageDigest} name, {@code ALL}
      *            , or {@code *}. 
-     *            {@code args[1]} is a FILE.
+     *            {@code args[1+]} is a FILE/DIRECTORY/String.
      * @throws IOException
      */
     public static void main(String[] args) throws IOException {
@@ -55,7 +55,7 @@ public class Digest {
 
     private final String algorithm;
     private final String[] args;
-    private final String source;
+    private final String[] inputs;
 
     private Digest(final String[] args) {
         if (args == null) {
@@ -63,11 +63,16 @@ public class Digest {
         }
         if (args.length == 0) {
             throw new IllegalArgumentException(
-                    String.format("Usage: java %s [algorithm] [FILE|DIRECTORY|string]", Digest.class.getName()));
+                    String.format("Usage: java %s [algorithm] [FILE|DIRECTORY|string] ...", Digest.class.getName()));
         }
         this.args = args;
         algorithm = args[0];
-        source = args.length == 1 ? null : args[1];
+        if (args.length <= 1) {
+            inputs = null;
+        } else {
+            inputs = new String[args.length -1];
+            System.arraycopy(args, 1, inputs, 0, inputs.length);            
+        }
     }
 
     private void println(final String prefix, final byte[] digest) {
@@ -105,19 +110,21 @@ public class Digest {
     }
 
     private void run(String prefix, final MessageDigest messageDigest) throws IOException {
-        if (source == null) {
+        if (inputs == null) {
             println(prefix, DigestUtils.digest(messageDigest, System.in));
             return;
         }
-        final File file = new File(source);
-        if (file.isFile()) {
-            println(prefix, DigestUtils.digest(messageDigest, file), source);
-        } else if (file.isDirectory()) {
-            run(prefix, messageDigest, file.listFiles());
-        } else {
-            // use the default charset for the command-line parameter
-            final byte[] bytes = source.getBytes(Charset.defaultCharset());
-            println(prefix, DigestUtils.digest(messageDigest, bytes));
+        for(String source : inputs) {
+            final File file = new File(source);
+            if (file.isFile()) {
+                println(prefix, DigestUtils.digest(messageDigest, file), source);
+            } else if (file.isDirectory()) {
+                run(prefix, messageDigest, file.listFiles());
+            } else {
+                // use the default charset for the command-line parameter
+                final byte[] bytes = source.getBytes(Charset.defaultCharset());
+                println(prefix, DigestUtils.digest(messageDigest, bytes));
+            }
         }
     }
 
