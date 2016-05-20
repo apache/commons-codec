@@ -41,14 +41,12 @@ import org.apache.commons.codec.binary.StringUtils;
  * Note: the class has short-hand methods for all the algorithms present as standard in Java 6.
  * This approach requires lots of methods for each algorithm, and quickly becomes unwieldy.
  * The following code works with all algorithms:
- * <code>
  * <pre>
  * import static org.apache.commons.codec.digest.MessageDigestAlgorithms.SHA_224;
  * ...
  * byte [] digest = DigestUtils.with(SHA_224).update(dataToDigest).done();
  * String hdigest = DigestUtils.with(SHA_224).update(new File("pom.xml")).asHex();
  * </pre>
- * </code>
  * @see MessageDigestAlgorithms
  * @version $Id$
  */
@@ -64,8 +62,6 @@ public class DigestUtils {
      * @param data
      *            Data to digest
      * @return the digest
-     * @throws IOException
-     *             On error reading from the stream
      * @since 1.11
      */
     public static byte[] digest(final MessageDigest messageDigest, final byte[] data) {
@@ -979,7 +975,7 @@ public static byte[] sha(final byte[] data) {
      * Returns a fluent instance for the digest algorithm.
      * Does not reset the digest before use.
      * @param digest the digest instance to use
-     * @return
+     * @return the fluent instance
      */
     public static DigestUtils with(MessageDigest digest) {
         return new DigestUtils(digest);
@@ -989,7 +985,7 @@ public static byte[] sha(final byte[] data) {
      * Creates a {@link MessageDigest} and returns a fluent instance.
      *
      * @param name the name of digest algorithm to create, e.g. {@link MessageDigestAlgorithms#MD5}
-     * @return
+     * @return the fluent instance
      */
     public static DigestUtils with(String name) {
         return new DigestUtils(getDigest(name));

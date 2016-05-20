@@ -178,7 +178,7 @@ public final class HmacUtils {
      * @see Mac#init(Key)
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
-     * @deprecated Use {@link HmacAlgorithms#getInitializedMac(byte[])}.
+     * @deprecated Use {@link HmacAlgorithms#getHmac(byte[])}.
      */
     @Deprecated
     public static Mac getInitializedMac(final HmacAlgorithms algorithm, final byte[] key) {
@@ -873,7 +873,7 @@ public final class HmacUtils {
      * key must be provided using the {@link #key(byte[])} method
      * before it can be used further.
      *
-     * @param algorithm to be used.
+     * @param mac the {@link Mac} to be used.
      * @return the instance
      * @since 1.11
      */

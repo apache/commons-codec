@@ -47,7 +47,7 @@ public class Digest {
      *            {@code args[0]} is one of {@link MessageDigestAlgorithms} name, {@link MessageDigest} name, {@code ALL}
      *            , or {@code *}. 
      *            {@code args[1+]} is a FILE/DIRECTORY/String.
-     * @throws IOException
+     * @throws IOException if an error occurs
      */
     public static void main(String[] args) throws IOException {
         new Digest(args).run();
