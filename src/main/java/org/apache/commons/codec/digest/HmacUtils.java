@@ -42,19 +42,14 @@ import org.apache.commons.codec.binary.StringUtils;
  * <p>
  * Sample usage:
  * <pre>
+ * import static HmacAlgorithms.*;
  * byte[] key = {1,2,3,4}; // don't use this!
  * String valueToDigest = "The quick brown fox jumps over the lazy dog";
- * byte[] hmac = HmacUtils.use(HmacAlgorithms.HMAC_SHA_224).key(key).update(valueToDigest).doFinal();
+ * byte[] hmac = HmacUtils.use(HMAC_SHA_224, key).update(valueToDigest).doFinal();
  * // Mac re-use
- * HmacUtils hm1 = HmacUtils.use(HmacAlgorithms.HMAC_SHA_1).key(key);
+ * HmacUtils hm1 = HmacUtils.use("HmacAlgoName", key); // use a valid name here!
  * String hexPom = hm1.update(new File("pom.xml")).doFinalHex();
  * String hexNot = hm1.update(new File("NOTICE.txt")).doFinalHex();
- * // Mac key update
- * String algo = "HmacNew";
- * HmacUtils hm2 = HmacUtils.use(algo).key(key);
- * byte[] key2 = {1,2,3,4,5}; // don't use this either!
- * String hexPom2 = hm2.update(new File("pom.xml")).doFinalHex();
- * String hexNot2 = hm2.key(key2).update(new File("NOTICE.txt")).doFinalHex();
  * </pre>
  * @since 1.10
  * @version $Id$
@@ -854,7 +849,12 @@ public final class HmacUtils {
         return mac;
     }
 
-    // public to maintain binary compatibility
+    /**
+     * Preserves binary compatibity only.
+     * As for previous versions does not provide useful behaviour
+     * @deprecated since 1.11; only useful to preserve binary compatibility
+     */
+    @Deprecated
     public HmacUtils() {
         this(null);
     }
@@ -867,67 +867,36 @@ public final class HmacUtils {
         this.mac = mac;
     }
 
+    private HmacUtils(final String algorithm, final byte[] key) {
+        this(getInitializedMac(algorithm, key));
+    }
+
 
     /**
-     * Creates an instance using the provided {@link Mac}
-     * If necessary, the
-     * key must be provided using the {@link #key(byte[])} method
-     * before it can be used further.
+     * Creates an instance using the provided algorithm type.
      *
-     * @param mac the {@link Mac} to be used.
+     * @param algorithm to be used
+     * @param  key the key to be used
      * @return the instance
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      * @since 1.11
      */
-    public static HmacUtils use(final Mac mac) {
-        return new HmacUtils(mac);
+    public static HmacUtils use(final String algorithm, final byte[] key) {
+        return new HmacUtils(algorithm, key);
     }
 
     /**
      * Creates an instance using the provided algorithm type.
-     * The key must be provided using the {@link #key(byte[])} method
-     * before it can be used further.
      *
      * @param algorithm to be used.
      * @return the instance
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      * @since 1.11
      */
-    public static HmacUtils use(final String algorithm) {
-        try {
-            return new HmacUtils(Mac.getInstance(algorithm));
-        } catch (NoSuchAlgorithmException e) {
-            throw new IllegalArgumentException(e);
-        }
-    }
-
-    /**
-     * Creates an instance using the provided algorithm type.
-     * The key must be provided using the {@link #key(byte[])} method
-     * before it can be used further.
-     *
-     * @param algorithm to be used.
-     * @return the instance
-     * @since 1.11
-     */
-    public static HmacUtils use(final HmacAlgorithms algorithm) {
-        return use(algorithm.getName());
-    }
-
-    /**
-     * Updates the stored {@link Mac} with the new key.
-     * This resets the Mac ready for re-use.
-     *
-     * @param key the new key
-     * @return this instance
-     * @since 1.11
-     */
-    public HmacUtils key(byte[] key) {
-        final SecretKeySpec keySpec = new SecretKeySpec(key, mac.getAlgorithm());
-        try {
-            mac.init(keySpec);
-        } catch (InvalidKeyException e) {
-            throw new IllegalArgumentException(e);
-        }
-        return this;
+    public static HmacUtils use(final HmacAlgorithms algorithm, final byte[] key) {
+        return use(algorithm.getName(), key);
     }
 
     /**
@@ -1027,7 +996,6 @@ public final class HmacUtils {
     /**
      * Finishes the MAC operation and returns the result.
      * The Mac can be re-used to produce further results from the same key.
-     * Or the key can be reset and the Mac reused.
      *
      * @return the result as a byte array
      * @since 1.11
@@ -1039,7 +1007,6 @@ public final class HmacUtils {
     /**
      * Finishes the MAC operation and returns the result.
      * The Mac can be re-used to produce further results from the same key.
-     * Or the key can be reset and the Mac reused.
      *
      * @return the result as a Hex String
      * @since 1.11
