@@ -43,13 +43,13 @@ import org.apache.commons.codec.binary.StringUtils;
  * Sample usage:
  * <pre>
  * import static HmacAlgorithms.*;
- * byte[] key = {1,2,3,4}; // don't use this!
+ * byte[] key = {1,2,3,4}; // don't use this actual key!
  * String valueToDigest = "The quick brown fox jumps over the lazy dog";
- * byte[] hmac = HmacUtils.use(HMAC_SHA_224, key).update(valueToDigest).doFinal();
+ * byte[] hmac = HmacUtils.use(HMAC_SHA_224, key).hmac(valueToDigest);
  * // Mac re-use
  * HmacUtils hm1 = HmacUtils.use("HmacAlgoName", key); // use a valid name here!
- * String hexPom = hm1.update(new File("pom.xml")).doFinalHex();
- * String hexNot = hm1.update(new File("NOTICE.txt")).doFinalHex();
+ * String hexPom = hm1.hmacHex(new File("pom.xml"));
+ * String hexNot = hm1.hmacHex(new File("NOTICE.txt"));
  * </pre>
  * @since 1.10
  * @version $Id$
@@ -898,119 +898,153 @@ public final class HmacUtils {
     }
 
     /**
-     * Updates the stored {@link Mac} with the value.
+     * Returns the digest for the input data.
      *
-     * @param valueToDigest
-     *            the value to update the {@link Mac} with (maybe null or empty)
-     * @return the updated instance
-     * @throws IllegalStateException
-     *             if the Mac was not initialized
+     * @param valueToDigest the input to use
+     * @return the digest as a byte[]
+     * @throws IOException
+     *             If an I/O error occurs.
      * @since 1.11
      */
-    public HmacUtils update(final byte[] valueToDigest) {
+    public byte[] hmac(byte[] valueToDigest) {
+        return mac.doFinal(valueToDigest);
+    }
+
+    /**
+     * Returns the digest for the input data.
+     *
+     * @param valueToDigest the input to use
+     * @return the digest as a hex String
+     * @throws IOException
+     *             If an I/O error occurs.
+     * @since 1.11
+     */
+    public String hmacHex(byte[] valueToDigest) {
+        return Hex.encodeHexString(hmac(valueToDigest));
+    }
+
+    /**
+     * Returns the digest for the input data.
+     *
+     * @param valueToDigest the input to use, treated as UTF-8
+     * @return the digest as a byte[]
+     * @throws IOException
+     *             If an I/O error occurs.
+     * @since 1.11
+     */
+    public byte[] hmac(String valueToDigest) {
+        return mac.doFinal(StringUtils.getBytesUtf8(valueToDigest));
+    }
+
+    /**
+     * Returns the digest for the input data.
+     *
+     * @param valueToDigest the input to use, treated as UTF-8
+     * @return the digest as a hex String
+     * @throws IOException
+     *             If an I/O error occurs.
+     * @since 1.11
+     */
+    public String hmacHex(String valueToDigest) {
+        return Hex.encodeHexString(hmac(valueToDigest));
+    }
+
+    /**
+     * Returns the digest for the input data.
+     *
+     * @param valueToDigest the input to use
+     * @return the digest as a byte[]
+     * @throws IOException
+     *             If an I/O error occurs.
+     * @since 1.11
+     */
+    public byte[] hmac(ByteBuffer valueToDigest) {
         mac.update(valueToDigest);
-        return this;
+        return mac.doFinal();
     }
 
     /**
-     * Updates the stored {@link Mac} with the value.
+     * Returns the digest for the input data.
      *
-     * @param valueToDigest
-     *            the value to update the {@link Mac} with (maybe null or empty)
-     * @return the updated instance
-     * @throws IllegalStateException
-     *             if the Mac was not initialized
+     * @param valueToDigest the input to use
+     * @return the digest as a hex String
+     * @throws IOException
+     *             If an I/O error occurs.
      * @since 1.11
      */
-    public HmacUtils update(final ByteBuffer valueToDigest) {
-        mac.update(valueToDigest);
-        return this;
+    public String hmacHex(ByteBuffer valueToDigest) {
+        return Hex.encodeHexString(hmac(valueToDigest));
     }
 
     /**
-     * Updates the stored {@link Mac} with the value.
-     * String is converted to bytes using the UTF-8 charset.
-     * @param valueToDigest
-     *            the value to update the {@link Mac} with.
-     * @return the updated instance
-     * @throws IllegalStateException
-     *             if the Mac was not initialized
-     * @since 1.11
-     */
-    public HmacUtils update(final String valueToDigest) {
-        mac.update(StringUtils.getBytesUtf8(valueToDigest));
-        return this;
-    }
-
-    /**
-     * Updates the stored {@link Mac} with the value.
+     * Returns the digest for the stream.
      *
      * @param valueToDigest
-     *            the value to update the {@link Mac} with
+     *            the data to use
      *            <p>
      *            The InputStream must not be null and will not be closed
      *            </p>
-     * @return the updated instance
+     * @return the digest
      * @throws IOException
      *             If an I/O error occurs.
-     * @throws IllegalStateException
-     *             If the Mac was not initialized
      * @since 1.11
      */
-    public HmacUtils update(final InputStream valueToDigest) throws IOException {
+    public byte[] hmac(InputStream valueToDigest) throws IOException {
         final byte[] buffer = new byte[STREAM_BUFFER_LENGTH];
         int read;
 
         while ((read = valueToDigest.read(buffer, 0, STREAM_BUFFER_LENGTH) ) > -1) {
             mac.update(buffer, 0, read);
         }
-        return this;
+        return mac.doFinal();
     }
 
     /**
-     * Updates the stored {@link Mac} with the value.
+     * Returns the digest for the stream.
      *
      * @param valueToDigest
-     *            the value to update the {@link Mac} with
+     *            the data to use
      *            <p>
      *            The InputStream must not be null and will not be closed
      *            </p>
-     * @return the updated instance
+     * @return the digest as a hex String
      * @throws IOException
      *             If an I/O error occurs.
-     * @throws IllegalStateException
-     *             If the Mac was not initialized
      * @since 1.11
      */
-    public HmacUtils update(final File valueToDigest) throws IOException {
+    public String hmacHex(InputStream valueToDigest) throws IOException {
+        return Hex.encodeHexString(hmac(valueToDigest));
+    }
+
+    /**
+     * Returns the digest for the file.
+     *
+     * @param valueToDigest the file to use
+     * @return the digest
+     * @throws IOException
+     *             If an I/O error occurs.
+     * @since 1.11
+     */
+    public byte[] hmac(final File valueToDigest) throws IOException {
         final BufferedInputStream stream = new BufferedInputStream(new FileInputStream(valueToDigest));
         try {
-            return update(stream);
+            return hmac(stream);
         } finally {
             stream.close();
         }
     }
 
     /**
-     * Finishes the MAC operation and returns the result.
-     * The Mac can be re-used to produce further results from the same key.
+     * Returns the digest for the file.
      *
-     * @return the result as a byte array
+     * @param valueToDigest the file to use
+     * @return the digest as a hex String
+     * @throws IOException
+     *             If an I/O error occurs.
      * @since 1.11
      */
-    public byte[] doFinal() {
-        return mac.doFinal();
-    }
-
-    /**
-     * Finishes the MAC operation and returns the result.
-     * The Mac can be re-used to produce further results from the same key.
-     *
-     * @return the result as a Hex String
-     * @since 1.11
-     */
-    public String doFinalHex() {
-        return Hex.encodeHexString(mac.doFinal());
+    public String hmacHex(File valueToDigest) throws IOException {
+        return Hex.encodeHexString(hmac(valueToDigest));
     }
 
 }
