@@ -75,7 +75,7 @@ public final class HmacUtils {
      */
     @Deprecated
     public static Mac getHmacMd5(final byte[] key) {
-        return HmacAlgorithms.HMAC_MD5.getHmac(key);
+        return getInitializedMac(HmacAlgorithms.HMAC_MD5, key);
     }
 
     /**
@@ -95,7 +95,7 @@ public final class HmacUtils {
      */
     @Deprecated
     public static Mac getHmacSha1(final byte[] key) {
-        return HmacAlgorithms.HMAC_SHA_1.getHmac(key);
+        return getInitializedMac(HmacAlgorithms.HMAC_SHA_1, key);
     }
 
     /**
@@ -115,7 +115,7 @@ public final class HmacUtils {
      */
     @Deprecated
     public static Mac getHmacSha256(final byte[] key) {
-        return HmacAlgorithms.HMAC_SHA_256.getHmac(key);
+        return getInitializedMac(HmacAlgorithms.HMAC_SHA_256, key);
     }
 
     /**
@@ -135,7 +135,7 @@ public final class HmacUtils {
      */
     @Deprecated
     public static Mac getHmacSha384(final byte[] key) {
-        return HmacAlgorithms.HMAC_SHA_384.getHmac(key);
+        return getInitializedMac(HmacAlgorithms.HMAC_SHA_384, key);
     }
 
     /**
@@ -155,7 +155,7 @@ public final class HmacUtils {
      */
     @Deprecated
     public static Mac getHmacSha512(final byte[] key) {
-        return HmacAlgorithms.HMAC_SHA_512.getHmac(key);
+        return getInitializedMac(HmacAlgorithms.HMAC_SHA_512, key);
     }
 
     /**
@@ -173,11 +173,9 @@ public final class HmacUtils {
      * @see Mac#init(Key)
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
-     * @deprecated Use {@link HmacAlgorithms#getHmac(byte[])}.
      */
-    @Deprecated
     public static Mac getInitializedMac(final HmacAlgorithms algorithm, final byte[] key) {
-        return algorithm.getHmac(key);
+        return getInitializedMac(algorithm, key);
     }
 
     /**
