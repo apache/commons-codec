@@ -259,9 +259,9 @@ public class DigestUtilsTest {
     public void testSha224() throws IOException {
         assumeJava8();
         assertEquals("d14a028c2a3a2bc9476102bb288234c415a2b01f828ea62ac5b3e42f",
-                DigestUtils.with(MessageDigestAlgorithms.SHA_224).update(("")).asHex());
+                new DigestUtils(MessageDigestAlgorithms.SHA_224).digestAsHex(("")));
         assertEquals("730e109bd7a8a32b1cb9d9a09aa2325d2430587ddbc0c38bad911525",
-                DigestUtils.with(MessageDigestAlgorithms.SHA_224).update("The quick brown fox jumps over the lazy dog").asHex());
+                new DigestUtils(MessageDigestAlgorithms.SHA_224).digestAsHex("The quick brown fox jumps over the lazy dog"));
 
         // Examples from FIPS 180-4?
     }
