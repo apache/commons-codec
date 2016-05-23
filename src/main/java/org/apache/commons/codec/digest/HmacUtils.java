@@ -175,7 +175,7 @@ public final class HmacUtils {
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      */
     public static Mac getInitializedMac(final HmacAlgorithms algorithm, final byte[] key) {
-        return getInitializedMac(algorithm, key);
+        return getInitializedMac(algorithm.getName(), key);
     }
 
     /**
