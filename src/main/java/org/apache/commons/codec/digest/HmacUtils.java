@@ -45,9 +45,9 @@ import org.apache.commons.codec.binary.StringUtils;
  * import static HmacAlgorithms.*;
  * byte[] key = {1,2,3,4}; // don't use this actual key!
  * String valueToDigest = "The quick brown fox jumps over the lazy dog";
- * byte[] hmac = HmacUtils.use(HMAC_SHA_224, key).hmac(valueToDigest);
+ * byte[] hmac = new HmacUtils(HMAC_SHA_224, key).hmac(valueToDigest);
  * // Mac re-use
- * HmacUtils hm1 = HmacUtils.use("HmacAlgoName", key); // use a valid name here!
+ * HmacUtils hm1 = new HmacUtils("HmacAlgoName", key); // use a valid name here!
  * String hexPom = hm1.hmacHex(new File("pom.xml"));
  * String hexNot = hm1.hmacHex(new File("NOTICE.txt"));
  * </pre>
@@ -224,11 +224,11 @@ public final class HmacUtils {
      * @return HmacMD5 MAC for the given key and value
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
-     * @deprecated Use {@code HmacUtils.use(HmacAlgorithms.HMAC_MD5, byte[]).hmac(byte[])}
+     * @deprecated Use {@code new HmacUtils(HmacAlgorithms.HMAC_MD5, byte[]).hmac(byte[])}
      */
     @Deprecated
     public static byte[] hmacMd5(final byte[] key, final byte[] valueToDigest) {
-        return HmacUtils.use(HmacAlgorithms.HMAC_MD5, key).hmac(valueToDigest);
+        return new HmacUtils(HmacAlgorithms.HMAC_MD5, key).hmac(valueToDigest);
     }
 
     /**
@@ -246,11 +246,11 @@ public final class HmacUtils {
      *             If an I/O error occurs.
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
-     * @deprecated Use {@code HmacUtils.use(HmacAlgorithms.HMAC_MD5, byte[]).hmac(InputStream)}
+     * @deprecated Use {@code new HmacUtils(HmacAlgorithms.HMAC_MD5, byte[]).hmac(InputStream)}
      */
     @Deprecated
     public static byte[] hmacMd5(final byte[] key, final InputStream valueToDigest) throws IOException {
-        return HmacUtils.use(HmacAlgorithms.HMAC_MD5, key).hmac(valueToDigest);
+        return new HmacUtils(HmacAlgorithms.HMAC_MD5, key).hmac(valueToDigest);
     }
 
     /**
@@ -263,11 +263,11 @@ public final class HmacUtils {
      * @return HmacMD5 MAC for the given key and value
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
-     * @deprecated Use {@code HmacUtils.use(HmacAlgorithms.HMAC_MD5, String).hmac(String)}
+     * @deprecated Use {@code new HmacUtils(HmacAlgorithms.HMAC_MD5, String).hmac(String)}
      */
     @Deprecated
     public static byte[] hmacMd5(final String key, final String valueToDigest) {
-        return HmacUtils.use(HmacAlgorithms.HMAC_MD5, key).hmac(valueToDigest);
+        return new HmacUtils(HmacAlgorithms.HMAC_MD5, key).hmac(valueToDigest);
     }
 
     /**
@@ -280,11 +280,11 @@ public final class HmacUtils {
      * @return HmacMD5 MAC for the given key and value as a hex string (lowercase)
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
-     * @deprecated Use {@code HmacUtils.use(HmacAlgorithms.HMAC_MD5, byte[]).hmacHex(byte[])}
+     * @deprecated Use {@code new HmacUtils(HmacAlgorithms.HMAC_MD5, byte[]).hmacHex(byte[])}
      */
     @Deprecated
     public static String hmacMd5Hex(final byte[] key, final byte[] valueToDigest) {
-        return HmacUtils.use(HmacAlgorithms.HMAC_MD5, key).hmacHex(valueToDigest);
+        return new HmacUtils(HmacAlgorithms.HMAC_MD5, key).hmacHex(valueToDigest);
     }
 
     /**
@@ -302,11 +302,11 @@ public final class HmacUtils {
      *             If an I/O error occurs.
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
-     * @deprecated Use {@code HmacUtils.use(HmacAlgorithms.HMAC_MD5, byte[]).hmacHex(InputStream)}
+     * @deprecated Use {@code new HmacUtils(HmacAlgorithms.HMAC_MD5, byte[]).hmacHex(InputStream)}
      */
     @Deprecated
     public static String hmacMd5Hex(final byte[] key, final InputStream valueToDigest) throws IOException {
-        return HmacUtils.use(HmacAlgorithms.HMAC_MD5, key).hmacHex(valueToDigest);
+        return new HmacUtils(HmacAlgorithms.HMAC_MD5, key).hmacHex(valueToDigest);
     }
 
     /**
@@ -319,11 +319,11 @@ public final class HmacUtils {
      * @return HmacMD5 MAC for the given key and value as a hex string (lowercase)
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
-     * @deprecated Use {@code HmacUtils.use(HmacAlgorithms.HMAC_MD5, String).hmacHex(String)}
+     * @deprecated Use {@code new HmacUtils(HmacAlgorithms.HMAC_MD5, String).hmacHex(String)}
      */
     @Deprecated
     public static String hmacMd5Hex(final String key, final String valueToDigest) {
-        return HmacUtils.use(HmacAlgorithms.HMAC_MD5, key).hmacHex(valueToDigest);
+        return new HmacUtils(HmacAlgorithms.HMAC_MD5, key).hmacHex(valueToDigest);
     }
 
     // hmacSha1
@@ -338,11 +338,11 @@ public final class HmacUtils {
      * @return HmacSHA1 MAC for the given key and value
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
-     * @deprecated Use {@code HmacUtils.use(HmacAlgorithms.HMAC_SHA_1, byte[]).hmac(byte[])}
+     * @deprecated Use {@code new HmacUtils(HmacAlgorithms.HMAC_SHA_1, byte[]).hmac(byte[])}
      */
     @Deprecated
     public static byte[] hmacSha1(final byte[] key, final byte[] valueToDigest) {
-        return HmacUtils.use(HmacAlgorithms.HMAC_SHA_1, key).hmac(valueToDigest);
+        return new HmacUtils(HmacAlgorithms.HMAC_SHA_1, key).hmac(valueToDigest);
     }
 
     /**
@@ -360,11 +360,11 @@ public final class HmacUtils {
      *             If an I/O error occurs.
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
-     * @deprecated Use {@code HmacUtils.use(HmacAlgorithms.HMAC_SHA_1, byte[]).hmac(InputStream)}
+     * @deprecated Use {@code new HmacUtils(HmacAlgorithms.HMAC_SHA_1, byte[]).hmac(InputStream)}
      */
     @Deprecated
     public static byte[] hmacSha1(final byte[] key, final InputStream valueToDigest) throws IOException {
-        return HmacUtils.use(HmacAlgorithms.HMAC_SHA_1, key).hmac(valueToDigest);
+        return new HmacUtils(HmacAlgorithms.HMAC_SHA_1, key).hmac(valueToDigest);
     }
 
     /**
@@ -377,11 +377,11 @@ public final class HmacUtils {
      * @return HmacSHA1 MAC for the given key and value
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
-     * @deprecated Use {@code HmacUtils.use(HmacAlgorithms.HMAC_SHA_1, String).hmac(String)}
+     * @deprecated Use {@code new HmacUtils(HmacAlgorithms.HMAC_SHA_1, String).hmac(String)}
      */
     @Deprecated
     public static byte[] hmacSha1(final String key, final String valueToDigest) {
-        return HmacUtils.use(HmacAlgorithms.HMAC_SHA_1, key).hmac(valueToDigest);
+        return new HmacUtils(HmacAlgorithms.HMAC_SHA_1, key).hmac(valueToDigest);
     }
 
     /**
@@ -394,11 +394,11 @@ public final class HmacUtils {
      * @return HmacSHA1 MAC for the given key and value as hex string (lowercase)
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
-     * @deprecated Use {@code HmacUtils.use(HmacAlgorithms.HMAC_SHA_1, byte[]).hmacHex(byte[])}
+     * @deprecated Use {@code new HmacUtils(HmacAlgorithms.HMAC_SHA_1, byte[]).hmacHex(byte[])}
      */
     @Deprecated
     public static String hmacSha1Hex(final byte[] key, final byte[] valueToDigest) {
-        return HmacUtils.use(HmacAlgorithms.HMAC_SHA_1, key).hmacHex(valueToDigest);
+        return new HmacUtils(HmacAlgorithms.HMAC_SHA_1, key).hmacHex(valueToDigest);
     }
 
     /**
@@ -416,11 +416,11 @@ public final class HmacUtils {
      *             If an I/O error occurs.
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
-     * @deprecated Use {@code HmacUtils.use(HmacAlgorithms.HMAC_SHA_1, byte[]).hmacHex(InputStream)}
+     * @deprecated Use {@code new HmacUtils(HmacAlgorithms.HMAC_SHA_1, byte[]).hmacHex(InputStream)}
      */
     @Deprecated
     public static String hmacSha1Hex(final byte[] key, final InputStream valueToDigest) throws IOException {
-        return HmacUtils.use(HmacAlgorithms.HMAC_SHA_1, key).hmacHex(valueToDigest);
+        return new HmacUtils(HmacAlgorithms.HMAC_SHA_1, key).hmacHex(valueToDigest);
     }
 
     /**
@@ -433,11 +433,11 @@ public final class HmacUtils {
      * @return HmacSHA1 MAC for the given key and value as hex string (lowercase)
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
-     * @deprecated Use {@code HmacUtils.use(HmacAlgorithms.HMAC_SHA_1, String).hmacHex(String)}
+     * @deprecated Use {@code new HmacUtils(HmacAlgorithms.HMAC_SHA_1, String).hmacHex(String)}
      */
     @Deprecated
     public static String hmacSha1Hex(final String key, final String valueToDigest) {
-        return HmacUtils.use(HmacAlgorithms.HMAC_SHA_1, key).hmacHex(valueToDigest);
+        return new HmacUtils(HmacAlgorithms.HMAC_SHA_1, key).hmacHex(valueToDigest);
     }
 
     // hmacSha256
@@ -452,11 +452,11 @@ public final class HmacUtils {
      * @return HmacSHA256 MAC for the given key and value
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
-     * @deprecated Use {@code HmacUtils.use(HmacAlgorithms.HMAC_SHA_256, byte[]).hmac(byte[])}
+     * @deprecated Use {@code new HmacUtils(HmacAlgorithms.HMAC_SHA_256, byte[]).hmac(byte[])}
      */
     @Deprecated
     public static byte[] hmacSha256(final byte[] key, final byte[] valueToDigest) {
-        return HmacUtils.use(HmacAlgorithms.HMAC_SHA_256, key).hmac(valueToDigest);
+        return new HmacUtils(HmacAlgorithms.HMAC_SHA_256, key).hmac(valueToDigest);
     }
 
     /**
@@ -474,11 +474,11 @@ public final class HmacUtils {
      *             If an I/O error occurs.
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
-     * @deprecated Use {@code HmacUtils.use(HmacAlgorithms.HMAC_SHA_256, byte[]).hmac(InputStream)}
+     * @deprecated Use {@code new HmacUtils(HmacAlgorithms.HMAC_SHA_256, byte[]).hmac(InputStream)}
      */
     @Deprecated
     public static byte[] hmacSha256(final byte[] key, final InputStream valueToDigest) throws IOException {
-        return HmacUtils.use(HmacAlgorithms.HMAC_SHA_256, key).hmac(valueToDigest);
+        return new HmacUtils(HmacAlgorithms.HMAC_SHA_256, key).hmac(valueToDigest);
     }
 
     /**
@@ -491,11 +491,11 @@ public final class HmacUtils {
      * @return HmacSHA256 MAC for the given key and value
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
-     * @deprecated Use {@code HmacUtils.use(HmacAlgorithms.HMAC_SHA_256, String).hmac(String)}
+     * @deprecated Use {@code new HmacUtils(HmacAlgorithms.HMAC_SHA_256, String).hmac(String)}
      */
     @Deprecated
     public static byte[] hmacSha256(final String key, final String valueToDigest) {
-        return HmacUtils.use(HmacAlgorithms.HMAC_SHA_256, key).hmac(valueToDigest);
+        return new HmacUtils(HmacAlgorithms.HMAC_SHA_256, key).hmac(valueToDigest);
     }
 
     /**
@@ -508,11 +508,11 @@ public final class HmacUtils {
      * @return HmacSHA256 MAC for the given key and value as hex string (lowercase)
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
-     * @deprecated Use {@code HmacUtils.use(HmacAlgorithms.HMAC_SHA_256, byte[]).hmacHex(byte[])}
+     * @deprecated Use {@code new HmacUtils(HmacAlgorithms.HMAC_SHA_256, byte[]).hmacHex(byte[])}
      */
     @Deprecated
     public static String hmacSha256Hex(final byte[] key, final byte[] valueToDigest) {
-        return HmacUtils.use(HmacAlgorithms.HMAC_SHA_256, key).hmacHex(valueToDigest);
+        return new HmacUtils(HmacAlgorithms.HMAC_SHA_256, key).hmacHex(valueToDigest);
     }
 
     /**
@@ -530,11 +530,11 @@ public final class HmacUtils {
      *             If an I/O error occurs.
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
-     * @deprecated Use {@code HmacUtils.use(HmacAlgorithms.HMAC_SHA_256, byte[]).hmacHex(InputStream)}
+     * @deprecated Use {@code new HmacUtils(HmacAlgorithms.HMAC_SHA_256, byte[]).hmacHex(InputStream)}
      */
     @Deprecated
     public static String hmacSha256Hex(final byte[] key, final InputStream valueToDigest) throws IOException {
-        return HmacUtils.use(HmacAlgorithms.HMAC_SHA_256, key).hmacHex(valueToDigest);
+        return new HmacUtils(HmacAlgorithms.HMAC_SHA_256, key).hmacHex(valueToDigest);
     }
 
     /**
@@ -547,11 +547,11 @@ public final class HmacUtils {
      * @return HmacSHA256 MAC for the given key and value as hex string (lowercase)
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
-     * @deprecated Use {@code HmacUtils.use(HmacAlgorithms.HMAC_SHA_256, String).hmacHex(String)}
+     * @deprecated Use {@code new HmacUtils(HmacAlgorithms.HMAC_SHA_256, String).hmacHex(String)}
      */
     @Deprecated
     public static String hmacSha256Hex(final String key, final String valueToDigest) {
-        return HmacUtils.use(HmacAlgorithms.HMAC_SHA_256, key).hmacHex(valueToDigest);
+        return new HmacUtils(HmacAlgorithms.HMAC_SHA_256, key).hmacHex(valueToDigest);
     }
 
     // hmacSha384
@@ -566,11 +566,11 @@ public final class HmacUtils {
      * @return HmacSHA384 MAC for the given key and value
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
-     * @deprecated Use {@code HmacUtils.use(HmacAlgorithms.HMAC_SHA_384, byte[]).hmac(byte[])}
+     * @deprecated Use {@code new HmacUtils(HmacAlgorithms.HMAC_SHA_384, byte[]).hmac(byte[])}
      */
     @Deprecated
     public static byte[] hmacSha384(final byte[] key, final byte[] valueToDigest) {
-        return HmacUtils.use(HmacAlgorithms.HMAC_SHA_384, key).hmac(valueToDigest);
+        return new HmacUtils(HmacAlgorithms.HMAC_SHA_384, key).hmac(valueToDigest);
     }
 
     /**
@@ -588,11 +588,11 @@ public final class HmacUtils {
      *             If an I/O error occurs.
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
-     * @deprecated Use {@code HmacUtils.use(HmacAlgorithms.HMAC_SHA_384, byte[]).hmac(InputStream)}
+     * @deprecated Use {@code new HmacUtils(HmacAlgorithms.HMAC_SHA_384, byte[]).hmac(InputStream)}
      */
     @Deprecated
     public static byte[] hmacSha384(final byte[] key, final InputStream valueToDigest) throws IOException {
-        return HmacUtils.use(HmacAlgorithms.HMAC_SHA_384, key).hmac(valueToDigest);
+        return new HmacUtils(HmacAlgorithms.HMAC_SHA_384, key).hmac(valueToDigest);
     }
 
     /**
@@ -605,11 +605,11 @@ public final class HmacUtils {
      * @return HmacSHA384 MAC for the given key and value
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
-     * @deprecated Use {@code HmacUtils.use(HmacAlgorithms.HMAC_SHA_384, String).hmac(String)}
+     * @deprecated Use {@code new HmacUtils(HmacAlgorithms.HMAC_SHA_384, String).hmac(String)}
      */
     @Deprecated
     public static byte[] hmacSha384(final String key, final String valueToDigest) {
-        return HmacUtils.use(HmacAlgorithms.HMAC_SHA_384, key).hmac(valueToDigest);
+        return new HmacUtils(HmacAlgorithms.HMAC_SHA_384, key).hmac(valueToDigest);
     }
 
     /**
@@ -622,11 +622,11 @@ public final class HmacUtils {
      * @return HmacSHA384 MAC for the given key and value as hex string (lowercase)
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
-     * @deprecated Use {@code HmacUtils.use(HmacAlgorithms.HMAC_SHA_384, byte[]).hmacHex(byte[])}
+     * @deprecated Use {@code new HmacUtils(HmacAlgorithms.HMAC_SHA_384, byte[]).hmacHex(byte[])}
      */
     @Deprecated
     public static String hmacSha384Hex(final byte[] key, final byte[] valueToDigest) {
-        return HmacUtils.use(HmacAlgorithms.HMAC_SHA_384, key).hmacHex(valueToDigest);
+        return new HmacUtils(HmacAlgorithms.HMAC_SHA_384, key).hmacHex(valueToDigest);
     }
 
     /**
@@ -644,11 +644,11 @@ public final class HmacUtils {
      *             If an I/O error occurs.
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
-     * @deprecated Use {@code HmacUtils.use(HmacAlgorithms.HMAC_SHA_384, byte[]).hmacHex(InputStream)}
+     * @deprecated Use {@code new HmacUtils(HmacAlgorithms.HMAC_SHA_384, byte[]).hmacHex(InputStream)}
      */
     @Deprecated
     public static String hmacSha384Hex(final byte[] key, final InputStream valueToDigest) throws IOException {
-        return HmacUtils.use(HmacAlgorithms.HMAC_SHA_384, key).hmacHex(valueToDigest);
+        return new HmacUtils(HmacAlgorithms.HMAC_SHA_384, key).hmacHex(valueToDigest);
     }
 
     /**
@@ -661,11 +661,11 @@ public final class HmacUtils {
      * @return HmacSHA384 MAC for the given key and value as hex string (lowercase)
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
-     * @deprecated Use {@code HmacUtils.use(HmacAlgorithms.HMAC_SHA_384, String).hmacHex(String)}
+     * @deprecated Use {@code new HmacUtils(HmacAlgorithms.HMAC_SHA_384, String).hmacHex(String)}
      */
     @Deprecated
     public static String hmacSha384Hex(final String key, final String valueToDigest) {
-        return HmacUtils.use(HmacAlgorithms.HMAC_SHA_384, key).hmacHex(valueToDigest);
+        return new HmacUtils(HmacAlgorithms.HMAC_SHA_384, key).hmacHex(valueToDigest);
     }
 
     // hmacSha512
@@ -680,11 +680,11 @@ public final class HmacUtils {
      * @return HmacSHA512 MAC for the given key and value
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
-     * @deprecated Use {@code HmacUtils.use(HmacAlgorithms.HMAC_SHA_512, byte[]).hmac(byte[])}
+     * @deprecated Use {@code new HmacUtils(HmacAlgorithms.HMAC_SHA_512, byte[]).hmac(byte[])}
      */
     @Deprecated
     public static byte[] hmacSha512(final byte[] key, final byte[] valueToDigest) {
-        return HmacUtils.use(HmacAlgorithms.HMAC_SHA_512, key).hmac(valueToDigest);
+        return new HmacUtils(HmacAlgorithms.HMAC_SHA_512, key).hmac(valueToDigest);
     }
 
     /**
@@ -702,11 +702,11 @@ public final class HmacUtils {
      *             If an I/O error occurs.
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
-     * @deprecated Use {@code HmacUtils.use(HmacAlgorithms.HMAC_SHA_512, byte[]).hmac(InputStream)}
+     * @deprecated Use {@code new HmacUtils(HmacAlgorithms.HMAC_SHA_512, byte[]).hmac(InputStream)}
      */
     @Deprecated
     public static byte[] hmacSha512(final byte[] key, final InputStream valueToDigest) throws IOException {
-        return HmacUtils.use(HmacAlgorithms.HMAC_SHA_512, key).hmac(valueToDigest);
+        return new HmacUtils(HmacAlgorithms.HMAC_SHA_512, key).hmac(valueToDigest);
     }
 
     /**
@@ -719,11 +719,11 @@ public final class HmacUtils {
      * @return HmacSHA512 MAC for the given key and value
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
-     * @deprecated Use {@code HmacUtils.use(HmacAlgorithms.HMAC_SHA_512, String).hmac(String)}
+     * @deprecated Use {@code new HmacUtils(HmacAlgorithms.HMAC_SHA_512, String).hmac(String)}
      */
     @Deprecated
     public static byte[] hmacSha512(final String key, final String valueToDigest) {
-        return HmacUtils.use(HmacAlgorithms.HMAC_SHA_512, key).hmac(valueToDigest);
+        return new HmacUtils(HmacAlgorithms.HMAC_SHA_512, key).hmac(valueToDigest);
     }
 
     /**
@@ -736,11 +736,11 @@ public final class HmacUtils {
      * @return HmacSHA512 MAC for the given key and value as hex string (lowercase)
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
-     * @deprecated Use {@code HmacUtils.use(HmacAlgorithms.HMAC_SHA_512, byte[]).hmacHex(byte[])}
+     * @deprecated Use {@code new HmacUtils(HmacAlgorithms.HMAC_SHA_512, byte[]).hmacHex(byte[])}
      */
     @Deprecated
     public static String hmacSha512Hex(final byte[] key, final byte[] valueToDigest) {
-        return HmacUtils.use(HmacAlgorithms.HMAC_SHA_512, key).hmacHex(valueToDigest);
+        return new HmacUtils(HmacAlgorithms.HMAC_SHA_512, key).hmacHex(valueToDigest);
     }
 
     /**
@@ -758,11 +758,11 @@ public final class HmacUtils {
      *             If an I/O error occurs.
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
-     * @deprecated Use {@code HmacUtils.use(HmacAlgorithms.HMAC_SHA_512, byte[]).hmacHex(InputStream)}
+     * @deprecated Use {@code new HmacUtils(HmacAlgorithms.HMAC_SHA_512, byte[]).hmacHex(InputStream)}
      */
     @Deprecated
     public static String hmacSha512Hex(final byte[] key, final InputStream valueToDigest) throws IOException {
-        return HmacUtils.use(HmacAlgorithms.HMAC_SHA_512, key).hmacHex(valueToDigest);
+        return new HmacUtils(HmacAlgorithms.HMAC_SHA_512, key).hmacHex(valueToDigest);
     }
 
     /**
@@ -775,11 +775,11 @@ public final class HmacUtils {
      * @return HmacSHA512 MAC for the given key and value as hex string (lowercase)
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
-     * @deprecated Use {@code HmacUtils.use(HmacAlgorithms.HMAC_SHA_512, String).hmacHex(String)}
+     * @deprecated Use {@code new HmacUtils(HmacAlgorithms.HMAC_SHA_512, String).hmacHex(String)}
      */
     @Deprecated
     public static String hmacSha512Hex(final String key, final String valueToDigest) {
-        return HmacUtils.use(HmacAlgorithms.HMAC_SHA_512, key).hmacHex(valueToDigest);
+        return new HmacUtils(HmacAlgorithms.HMAC_SHA_512, key).hmacHex(valueToDigest);
     }
 
     // update
@@ -857,19 +857,26 @@ public final class HmacUtils {
         this(null);
     }
 
-    // Fluent interface
-
     private final Mac mac;
 
     private HmacUtils(final Mac mac) {
         this.mac = mac;
     }
 
-    private HmacUtils(final String algorithm, final byte[] key) {
+    /**
+     * Creates an instance using the provided algorithm type.
+     *
+     * @param algorithm to be used
+     * @param  key the key to be used
+     * @return the instance
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
+     * @since 1.11
+     */
+    public HmacUtils(final String algorithm, final byte[] key) {
         this(getInitializedMac(algorithm, key));
     }
 
-
     /**
      * Creates an instance using the provided algorithm type.
      *
@@ -880,8 +887,8 @@ public final class HmacUtils {
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      * @since 1.11
      */
-    public static HmacUtils use(final String algorithm, final byte[] key) {
-        return new HmacUtils(algorithm, key);
+    public HmacUtils(final String algorithm, final String key) {
+        this(algorithm, StringUtils.getBytesUtf8(key));
     }
 
     /**
@@ -894,22 +901,8 @@ public final class HmacUtils {
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      * @since 1.11
      */
-    public static HmacUtils use(final String algorithm, final String key) {
-        return new HmacUtils(algorithm, StringUtils.getBytesUtf8(key));
-    }
-
-    /**
-     * Creates an instance using the provided algorithm type.
-     *
-     * @param algorithm to be used
-     * @param  key the key to be used
-     * @return the instance
-     * @throws IllegalArgumentException
-     *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
-     * @since 1.11
-     */
-    public static HmacUtils use(final HmacAlgorithms algorithm, final String key) {
-        return new HmacUtils(algorithm.getName(), StringUtils.getBytesUtf8(key));
+    public HmacUtils(final HmacAlgorithms algorithm, final String key) {
+        this(algorithm.getName(), StringUtils.getBytesUtf8(key));
     }
 
     /**
@@ -921,8 +914,8 @@ public final class HmacUtils {
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      * @since 1.11
      */
-    public static HmacUtils use(final HmacAlgorithms algorithm, final byte[] key) {
-        return use(algorithm.getName(), key);
+    public HmacUtils(final HmacAlgorithms algorithm, final byte[] key) {
+        this(algorithm.getName(), key);
     }
 
     /**
