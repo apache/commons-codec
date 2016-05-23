@@ -59,6 +59,38 @@ public final class HmacUtils {
     private static final int STREAM_BUFFER_LENGTH = 1024;
 
     /**
+    * Returns whether this algorithm is available
+    *
+    *@param name the name to check
+    * @return whether this algorithm is available
+    * @since 1.11
+    */
+    public static boolean isAvailable(String name) {
+        try {
+            Mac.getInstance(name);
+            return true;
+        } catch (NoSuchAlgorithmException e) {
+            return false;
+        }
+    }
+
+    /**
+    * Returns whether this algorithm is available
+    *
+    *@param name the name to check
+    * @return whether this algorithm is available
+    * @since 1.11
+    */
+    public static boolean isAvailable(HmacAlgorithms name) {
+        try {
+            Mac.getInstance(name.getName());
+            return true;
+        } catch (NoSuchAlgorithmException e) {
+            return false;
+        }
+    }
+
+    /**
      * Returns an initialized <code>Mac</code> for the HmacMD5 algorithm.
      * <p>
      * Every implementation of the Java platform is required to support this standard Mac algorithm.
