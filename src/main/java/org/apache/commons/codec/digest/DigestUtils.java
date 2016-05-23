@@ -961,7 +961,12 @@ public static byte[] sha(final byte[] data) {
 
     private final MessageDigest messageDigest;
 
-    // public to maintain binary compatibility
+   /**
+    * Preserves binary compatibity only.
+    * As for previous versions does not provide useful behaviour
+    * @deprecated since 1.11; only useful to preserve binary compatibility
+    */
+   @Deprecated
     public DigestUtils() {
         this.messageDigest = null;
     }
