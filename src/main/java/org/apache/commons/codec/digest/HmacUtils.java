@@ -900,7 +900,6 @@ public final class HmacUtils {
      *
      * @param algorithm to be used
      * @param  key the key to be used
-     * @return the instance
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      * @since 1.11
@@ -914,7 +913,6 @@ public final class HmacUtils {
      *
      * @param algorithm to be used
      * @param  key the key to be used
-     * @return the instance
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      * @since 1.11
@@ -928,7 +926,6 @@ public final class HmacUtils {
      *
      * @param algorithm to be used
      * @param  key the key to be used
-     * @return the instance
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      * @since 1.11
@@ -941,7 +938,6 @@ public final class HmacUtils {
      * Creates an instance using the provided algorithm type.
      *
      * @param algorithm to be used.
-     * @return the instance
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      * @since 1.11
