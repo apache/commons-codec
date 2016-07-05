@@ -34,9 +34,6 @@ import org.junit.runners.Parameterized;
 @RunWith(Parameterized.class)
 public class LanguageGuessingTest {
 
-    private static String EXACT = "exact";
-    private static String ONE_OF = "one of";
-
     @Parameterized.Parameters(name = "{0}-{1}-{2}")
     public static List<Object[]> data() {
         return Arrays.asList(new Object[][] {
