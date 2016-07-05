@@ -60,16 +60,13 @@ public class LanguageGuessingTest {
                 { "\u00e1tz", "any", EXACT } }); // átz
     }
 
-    private final String exactness;
-
     private final Lang lang = Lang.instance(NameType.GENERIC);
     private final String language;
     private final String name;
 
-    public LanguageGuessingTest(final String name, final String language, final String exactness) {
+    public LanguageGuessingTest(final String name, final String language) {
         this.name = name;
         this.language = language;
-        this.exactness = exactness;
     }
 
     @Test
