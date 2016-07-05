@@ -952,8 +952,6 @@ public final class HmacUtils {
      *
      * @param valueToDigest the input to use
      * @return the digest as a byte[]
-     * @throws IOException
-     *             If an I/O error occurs.
      * @since 1.11
      */
     public byte[] hmac(byte[] valueToDigest) {
@@ -965,8 +963,6 @@ public final class HmacUtils {
      *
      * @param valueToDigest the input to use
      * @return the digest as a hex String
-     * @throws IOException
-     *             If an I/O error occurs.
      * @since 1.11
      */
     public String hmacHex(byte[] valueToDigest) {
@@ -978,8 +974,6 @@ public final class HmacUtils {
      *
      * @param valueToDigest the input to use, treated as UTF-8
      * @return the digest as a byte[]
-     * @throws IOException
-     *             If an I/O error occurs.
      * @since 1.11
      */
     public byte[] hmac(String valueToDigest) {
@@ -991,8 +985,6 @@ public final class HmacUtils {
      *
      * @param valueToDigest the input to use, treated as UTF-8
      * @return the digest as a hex String
-     * @throws IOException
-     *             If an I/O error occurs.
      * @since 1.11
      */
     public String hmacHex(String valueToDigest) {
@@ -1004,8 +996,6 @@ public final class HmacUtils {
      *
      * @param valueToDigest the input to use
      * @return the digest as a byte[]
-     * @throws IOException
-     *             If an I/O error occurs.
      * @since 1.11
      */
     public byte[] hmac(ByteBuffer valueToDigest) {
@@ -1018,8 +1008,6 @@ public final class HmacUtils {
      *
      * @param valueToDigest the input to use
      * @return the digest as a hex String
-     * @throws IOException
-     *             If an I/O error occurs.
      * @since 1.11
      */
     public String hmacHex(ByteBuffer valueToDigest) {
