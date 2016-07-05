@@ -304,7 +304,7 @@ public class HexTest {
     }
 
     @Test
-    public void testEncodeByteArrayEmpty() throws EncoderException {
+    public void testEncodeByteArrayEmpty() {
         assertTrue(Arrays.equals(new byte[0], new Hex().encode(new byte[0])));
     }
 
@@ -314,7 +314,7 @@ public class HexTest {
     }
 
     @Test
-    public void testEncodeByteBufferEmpty() throws EncoderException {
+    public void testEncodeByteBufferEmpty() {
         assertTrue(Arrays.equals(new byte[0], new Hex().encode(ByteBuffer.allocate(0))));
     }
 
@@ -367,7 +367,7 @@ public class HexTest {
     }
 
     @Test
-    public void testEncodeHexByteArrayEmpty() throws EncoderException {
+    public void testEncodeHexByteArrayEmpty() {
         assertTrue(Arrays.equals(new char[0], Hex.encodeHex(new byte[0])));
         assertTrue(Arrays.equals(new byte[0], new Hex().encode(new byte[0])));
     }
@@ -405,7 +405,7 @@ public class HexTest {
     }
 
     @Test
-    public void testEncodeHexByteBufferEmpty() throws EncoderException {
+    public void testEncodeHexByteBufferEmpty() {
         assertTrue(Arrays.equals(new char[0], Hex.encodeHex(ByteBuffer.allocate(0))));
         assertTrue(Arrays.equals(new byte[0], new Hex().encode(ByteBuffer.allocate(0))));
     }
@@ -448,12 +448,12 @@ public class HexTest {
     }
 
     @Test
-    public void testGetCharset() throws UnsupportedEncodingException, DecoderException {
+    public void testGetCharset() {
         Assert.assertEquals(Charsets.UTF_8, new Hex(Charsets.UTF_8).getCharset());
     }
 
     @Test
-    public void testGetCharsetName() throws UnsupportedEncodingException, DecoderException {
+    public void testGetCharsetName() {
         Assert.assertEquals(Charsets.UTF_8.name(), new Hex(Charsets.UTF_8).getCharsetName());
     }
 
