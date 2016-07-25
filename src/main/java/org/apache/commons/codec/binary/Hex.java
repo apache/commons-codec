@@ -227,6 +227,21 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
+     * Converts an array of bytes into a String representing the hexadecimal values of each byte in order. The returned
+     * String will be double the length of the passed array, as it takes two characters to represent any given byte.
+     *
+     * @param data
+     *            a byte[] to convert to Hex characters
+     * @param toLowerCase
+     *            <code>true</code> converts to lowercase, <code>false</code> to uppercase
+     * @return A String containing lower-case hexadecimal characters
+     * @since 1.11
+     */
+    public static String encodeHexString(final byte[] data, boolean toLowerCase) {
+        return new String(encodeHex(data, toLowerCase));
+    }
+
+    /**
      * Converts a byte buffer into a String representing the hexadecimal values of each byte in order. The returned
      * String will be double the length of the passed array, as it takes two characters to represent any given byte.
      *
@@ -237,6 +252,21 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      */
     public static String encodeHexString(final ByteBuffer data) {
         return new String(encodeHex(data));
+    }
+
+    /**
+     * Converts a byte buffer into a String representing the hexadecimal values of each byte in order. The returned
+     * String will be double the length of the passed array, as it takes two characters to represent any given byte.
+     *
+     * @param data
+     *            a byte buffer to convert to Hex characters
+     * @param toLowerCase
+     *            <code>true</code> converts to lowercase, <code>false</code> to uppercase
+     * @return A String containing lower-case hexadecimal characters
+     * @since 1.11
+     */
+    public static String encodeHexString(final ByteBuffer data, boolean toLowerCase) {
+        return new String(encodeHex(data, toLowerCase));
     }
 
     /**

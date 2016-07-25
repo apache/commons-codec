@@ -455,6 +455,26 @@ public class HexTest {
     }
 
     @Test
+    public void testEncodeHexByteString_ByteArrayBoolean_ToLowerCase() {
+        assertEquals("0a", Hex.encodeHexString(new byte[] { 10 }, true));
+    }
+
+    @Test
+    public void testEncodeHexByteString_ByteArrayBoolean_ToUpperCase() {
+        assertEquals("0A", Hex.encodeHexString(new byte[] { 10 }, false));
+    }
+
+    @Test
+    public void testEncodeHexByteString_ByteBufferBoolean_ToLowerCase() {
+        assertEquals("0a", Hex.encodeHexString(ByteBuffer.wrap(new byte[] { 10 }), true));
+    }
+
+    @Test
+    public void testEncodeHexByteString_ByteBufferBoolean_ToUpperCase() {
+        assertEquals("0A", Hex.encodeHexString(ByteBuffer.wrap(new byte[] { 10 }), false));
+    }
+
+    @Test
     public void testEncodeStringEmpty() throws EncoderException {
         assertTrue(Arrays.equals(new char[0], (char[]) new Hex().encode("")));
     }
