@@ -437,9 +437,21 @@ public class HexTest {
     }
 
     @Test
-    public void testEncodeHexByteBufferZeroes() {
+    public void testEncodeHex_ByteBufferOfZeroes() {
         final char[] c = Hex.encodeHex(ByteBuffer.allocate(36));
         assertEquals("000000000000000000000000000000000000000000000000000000000000000000000000", new String(c));
+    }
+
+    @Test
+    public void testEncodeHexByteString_ByteBufferOfZeroes() {
+        final String c = Hex.encodeHexString(ByteBuffer.allocate(36));
+        assertEquals("000000000000000000000000000000000000000000000000000000000000000000000000", c);
+    }
+
+    @Test
+    public void testEncodeHexByteString_ByteArrayOfZeroes() {
+        final String c = Hex.encodeHexString(new byte[36]);
+        assertEquals("000000000000000000000000000000000000000000000000000000000000000000000000", c);
     }
 
     @Test
