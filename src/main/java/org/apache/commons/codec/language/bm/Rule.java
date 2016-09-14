@@ -219,14 +219,22 @@ public class Rule {
 
                 final Languages ls = Languages.getInstance(s);
                 for (final String l : ls.getLanguages()) {
+                    final Scanner scanner = createScanner(s, rt, l);
                     try {
-                        rs.put(l, parseRules(createScanner(s, rt, l), createResourceName(s, rt, l)));
+                        rs.put(l, parseRules(scanner, createResourceName(s, rt, l)));
                     } catch (final IllegalStateException e) {
                         throw new IllegalStateException("Problem processing " + createResourceName(s, rt, l), e);
+                    } finally {
+                        scanner.close();
                     }
                 }
                 if (!rt.equals(RuleType.RULES)) {
-                    rs.put("common", parseRules(createScanner(s, rt, "common"), createResourceName(s, rt, "common")));
+                    final Scanner scanner = createScanner(s, rt, "common");
+                    try {
+                        rs.put("common", parseRules(scanner, createResourceName(s, rt, "common")));
+                    } finally {
+                        scanner.close();
+                    }
                 }
 
                 rts.put(rt, Collections.unmodifiableMap(rs));
@@ -435,7 +443,12 @@ public class Rule {
                             throw new IllegalArgumentException("Malformed import statement '" + rawLine + "' in " +
                                                                location);
                         }
-                        lines.putAll(parseRules(createScanner(incl), location + "->" + incl));
+                        final Scanner hashIncludeScanner = createScanner(incl);
+                        try {
+                            lines.putAll(parseRules(hashIncludeScanner, location + "->" + incl));
+                        } finally {
+                            hashIncludeScanner.close();
+                        }
                     } else {
                         // rule
                         final String[] parts = line.split("\\s+");
