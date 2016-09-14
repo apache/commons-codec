@@ -232,8 +232,11 @@ public class DaitchMokotoffSoundex implements StringEncoder {
         }
 
         final Scanner scanner = new Scanner(rulesIS, CharEncoding.UTF_8);
-        parseRules(scanner, RESOURCE_FILE, RULES, FOLDINGS);
-        scanner.close();
+        try {
+            parseRules(scanner, RESOURCE_FILE, RULES, FOLDINGS);
+        } finally {
+            scanner.close();
+        }
 
         // sort RULES by pattern length in descending order
         for (final Map.Entry<Character, List<Rule>> rule : RULES.entrySet()) {
