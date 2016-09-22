@@ -1,0 +1,12 @@
+*~
+*.swp
+.idea/
+.idea_modules/
+.idea/*
+.settings
+.cache
+.DS_Store
+target/
+.project
+.classpath
+.externalToolBuilders/*
