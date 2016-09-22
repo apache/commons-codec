@@ -45,7 +45,9 @@ The <action> type attribute can be add,update,fix,remove.
     <release version="1.11" date="2016-MM-DD" description="Feature and fix release.">
       <!-- The first attribute below should be the issue id; makes it easier to navigate in the IDE outline -->
 
-	  <action issue="CODEC-225" dev="jochen" type="fix" due-to="Svetlin Zarev">Fix minor resource leaks</action>
+      <action issue="CODEC-220" dev="sebb" type="add">Fluent interface for DigestUtils</action>
+      <action issue="CODEC-222" dev="sebb" type="add">Fluent interface for HmacUtils</action>
+      <action issue="CODEC-225" dev="jochen" type="fix" due-to="Svetlin Zarev">Fix minor resource leaks</action>
       <action issue="CODEC-223" dev="sebb" type="remove">Drop obsolete Ant build</action>
       <action issue="CODEC-171" dev="sebb" type="add" due-to="Brett Okken">Add support for CRC32-C</action>
       <action issue="CODEC-221" dev="sebb" type="update">HmacUtils.updateHmac calls reset() unnecessarily</action>
