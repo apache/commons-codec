@@ -102,7 +102,7 @@ Fixed Bugs:
 o CODEC-175: Beider Morse does not close Scanners used to read config files. 
 o CODEC-172: Base32 decode table has spurious value. Thanks to Matt Bishop. 
 o CODEC-170: Link broken in Metaphone Javadoc. Thanks to Ron Wheeler, Henri Yandell. 
-o CODEC-176: Spelling fixes in Javadoc and comments. Thanks to Ville Skytt‰. 
+o CODEC-176: Spelling fixes in Javadoc and comments. Thanks to Ville Skytt√§. 
 
 
 For complete information on Apache Commons Codec, including instructions on how to submit bug reports,
