@@ -417,7 +417,7 @@ limitations under the License.
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>findbugs-maven-plugin</artifactId>
-	<version>${commons.findbugs.version}</version>
+	    <version>${commons.findbugs.version}</version>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
