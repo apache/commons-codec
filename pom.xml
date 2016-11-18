@@ -96,7 +96,7 @@ limitations under the License.
       <id>ggregory</id>
       <email>ggregory@apache.org</email>
       <url>http://www.garygregory.com</url>
-      <timezone>-5</timezone>
+      <timezone>-8</timezone>
     </developer>
     <developer>
       <name>David Graham</name>
