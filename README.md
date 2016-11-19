@@ -43,6 +43,11 @@
 Apache Commons Codec
 ===================
 
+[![Build Status](https://travis-ci.org/apache/commons-codec.svg?branch=master)](https://travis-ci.org/apache/commons-codec)
+[![Coverage Status](https://coveralls.io/repos/apache/commons-codec/badge.svg?branch=master)](https://coveralls.io/r/apache/commons-codec)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.apache.commons/commons-codec/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.apache.commons/commons-codec/)
+[![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
+
 The Apache Commons Codec package contains simple encoder and decoders for
      various formats such as Base64 and Hexadecimal.  In addition to these
      widely used encoders and decoders, the codec package also maintains a
