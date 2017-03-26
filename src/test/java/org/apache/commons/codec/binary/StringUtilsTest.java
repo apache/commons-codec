@@ -208,4 +208,33 @@ public class StringUtilsTest {
         final String actual = StringUtils.newStringUtf8(BYTES_FIXTURE);
         Assert.assertEquals(expected, actual);
     }
+
+    @Test
+    public void testEqualsString() {
+        Assert.assertTrue(StringUtils.equals(null, null));
+        Assert.assertFalse(StringUtils.equals("abc", null));
+        Assert.assertFalse(StringUtils.equals(null, "abc"));
+        Assert.assertTrue(StringUtils.equals("abc", "abc"));
+        Assert.assertFalse(StringUtils.equals("abc", "abcd"));
+        Assert.assertFalse(StringUtils.equals("abcd", "abc"));
+        Assert.assertFalse(StringUtils.equals("abc", "ABC"));
+    }
+
+    @Test
+    public void testEqualsCS1() {
+        Assert.assertFalse(StringUtils.equals(new StringBuilder("abc"), null));
+        Assert.assertFalse(StringUtils.equals(null, new StringBuilder("abc")));
+        Assert.assertTrue(StringUtils.equals(new StringBuilder("abc"), new StringBuilder("abc")));
+        Assert.assertFalse(StringUtils.equals(new StringBuilder("abc"), new StringBuilder("abcd")));
+        Assert.assertFalse(StringUtils.equals(new StringBuilder("abcd"), new StringBuilder("abc")));
+        Assert.assertFalse(StringUtils.equals(new StringBuilder("abc"), new StringBuilder("ABC")));
+    }
+
+    @Test
+    public void testEqualsCS2() {
+        Assert.assertTrue(StringUtils.equals("abc", new StringBuilder("abc")));
+        Assert.assertFalse(StringUtils.equals(new StringBuilder("abc"), "abcd"));
+        Assert.assertFalse(StringUtils.equals("abcd", new StringBuilder("abc")));
+        Assert.assertFalse(StringUtils.equals(new StringBuilder("abc"), "ABC"));
+    }
 }
