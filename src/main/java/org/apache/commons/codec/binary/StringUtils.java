@@ -285,9 +285,6 @@ public class StringUtils {
      *            The {@link Charset} to encode the <code>String</code>
      * @return A new <code>String</code> decoded from the specified array of bytes using the given charset,
      *         or <code>null</code> if the input byte array was <code>null</code>.
-     * @throws NullPointerException
-     *             Thrown if {@link Charsets#UTF_8} is not initialized, which should never happen since it is
-     *             required by the Java platform specification.
      */
     private static String newString(final byte[] bytes, final Charset charset) {
         return bytes == null ? null : new String(bytes, charset);
