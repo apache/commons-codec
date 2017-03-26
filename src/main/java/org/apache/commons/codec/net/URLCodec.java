@@ -48,11 +48,6 @@ import org.apache.commons.codec.binary.StringUtils;
 public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, StringDecoder {
 
     /**
-     * Radix used in encoding and decoding.
-     */
-    static final int RADIX = 16;
-
-    /**
      * The default charset used for string decoding and encoding.
      *
      * @deprecated TODO: This field will be changed to a private final Charset in 2.0. (CODEC-126)
@@ -147,8 +142,8 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
                 buffer.write(b);
             } else {
                 buffer.write(ESCAPE_CHAR);
-                final char hex1 = Character.toUpperCase(Character.forDigit((b >> 4) & 0xF, RADIX));
-                final char hex2 = Character.toUpperCase(Character.forDigit(b & 0xF, RADIX));
+                final char hex1 = Utils.hexDigit(b >> 4);
+                final char hex2 = Utils.hexDigit(b);
                 buffer.write(hex1);
                 buffer.write(hex2);
             }

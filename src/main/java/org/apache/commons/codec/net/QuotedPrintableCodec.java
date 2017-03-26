@@ -181,8 +181,8 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      */
     private static final int encodeQuotedPrintable(final int b, final ByteArrayOutputStream buffer) {
         buffer.write(ESCAPE_CHAR);
-        final char hex1 = Character.toUpperCase(Character.forDigit((b >> 4) & 0xF, 16));
-        final char hex2 = Character.toUpperCase(Character.forDigit(b & 0xF, 16));
+        final char hex1 = Utils.hexDigit(b >> 4);
+        final char hex2 = Utils.hexDigit(b);
         buffer.write(hex1);
         buffer.write(hex2);
         return 3;
