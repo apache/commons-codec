@@ -282,9 +282,11 @@ public class StringUtils {
      * @param bytes
      *            The bytes to be decoded into characters
      * @param charset
-     *            The {@link Charset} to encode the <code>String</code>
+     *            The {@link Charset} to encode the <code>String</code>; not {@code null}
      * @return A new <code>String</code> decoded from the specified array of bytes using the given charset,
      *         or <code>null</code> if the input byte array was <code>null</code>.
+     * @throws NullPointerException
+     *             Thrown if charset is {@code null}
      */
     private static String newString(final byte[] bytes, final Charset charset) {
         return bytes == null ? null : new String(bytes, charset);
