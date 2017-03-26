@@ -64,31 +64,39 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      * Release 1.5 made this field final.
      */
     protected static final byte ESCAPE_CHAR = '%';
+
     /**
      * BitSet of www-form-url safe characters.
+     * @deprecated Will be removed in 2.0 (CODEC-230)
      */
-    protected static final BitSet WWW_FORM_URL = new BitSet(256);
+    @Deprecated
+    protected static final BitSet WWW_FORM_URL;
+
+    private static final BitSet WWW_FORM_URL_SAFE = new BitSet(256);
 
     // Static initializer for www_form_url
     static {
         // alpha characters
         for (int i = 'a'; i <= 'z'; i++) {
-            WWW_FORM_URL.set(i);
+            WWW_FORM_URL_SAFE.set(i);
         }
         for (int i = 'A'; i <= 'Z'; i++) {
-            WWW_FORM_URL.set(i);
+            WWW_FORM_URL_SAFE.set(i);
         }
         // numeric characters
         for (int i = '0'; i <= '9'; i++) {
-            WWW_FORM_URL.set(i);
+            WWW_FORM_URL_SAFE.set(i);
         }
         // special chars
-        WWW_FORM_URL.set('-');
-        WWW_FORM_URL.set('_');
-        WWW_FORM_URL.set('.');
-        WWW_FORM_URL.set('*');
+        WWW_FORM_URL_SAFE.set('-');
+        WWW_FORM_URL_SAFE.set('_');
+        WWW_FORM_URL_SAFE.set('.');
+        WWW_FORM_URL_SAFE.set('*');
         // blank to be replaced with +
-        WWW_FORM_URL.set(' ');
+        WWW_FORM_URL_SAFE.set(' ');
+
+        // Create a copy in case anyone (ab)uses it
+        WWW_FORM_URL = (BitSet) WWW_FORM_URL_SAFE.clone();
     }
 
 
@@ -123,7 +131,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
             return null;
         }
         if (urlsafe == null) {
-            urlsafe = WWW_FORM_URL;
+            urlsafe = WWW_FORM_URL_SAFE;
         }
 
         final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -191,7 +199,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      */
     @Override
     public byte[] encode(final byte[] bytes) {
-        return encodeUrl(WWW_FORM_URL, bytes);
+        return encodeUrl(WWW_FORM_URL_SAFE, bytes);
     }
 
 
