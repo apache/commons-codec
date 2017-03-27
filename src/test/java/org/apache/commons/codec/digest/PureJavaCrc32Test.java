@@ -54,9 +54,11 @@ public class PureJavaCrc32Test {
 
     checkOnBytes("hello world!".getBytes("UTF-8"), false);
 
+    final Random random1 = new Random();
+    final Random random2 = new Random();
     for (int i = 0; i < 10000; i++) {
-      byte randomBytes[] = new byte[new Random().nextInt(2048)];
-      new Random().nextBytes(randomBytes);
+      byte randomBytes[] = new byte[random1.nextInt(2048)];
+      random2.nextBytes(randomBytes);
       checkOnBytes(randomBytes, false);
     }
 
