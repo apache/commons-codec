@@ -45,6 +45,7 @@ The <action> type attribute can be add,update,fix,remove.
     <release version="1.11" date="2017-MM-DD" description="Feature and fix release.">
       <!-- The first attribute below should be the issue id; makes it easier to navigate in the IDE outline -->
 
+      <action issue="CODEC-144" dev="sebb" type="fix">BaseNCodec: encodeToString and encodeAsString methods are identical</action>
       <action issue="CODEC-232" dev="sebb" type="fix">URLCodec is neither immutable nor threadsafe</action>
       <action issue="CODEC-231" dev="sebb" type="fix">StringUtils.equals(CharSequence cs1, CharSequence cs2) can fail with String Index OBE</action>
       <action issue="CODEC-230" dev="sebb" type="fix">URLCodec.WWW_FORM_URL should be private</action>

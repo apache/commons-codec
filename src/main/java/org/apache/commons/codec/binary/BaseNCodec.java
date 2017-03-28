@@ -356,6 +356,8 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      *
      * @param pArray a byte array containing binary data
      * @return String containing only character data in the appropriate alphabet.
+     * @since 1.5
+     * This is a duplicate of {@link #encodeToString(byte[])}; it was merged during refactoring.
     */
     public String encodeAsString(final byte[] pArray){
         return StringUtils.newStringUtf8(encode(pArray));
