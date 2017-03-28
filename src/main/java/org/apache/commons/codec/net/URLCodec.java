@@ -37,7 +37,7 @@ import org.apache.commons.codec.binary.StringUtils;
  * {@link java.net.URLDecoder} on older Java platforms, as these classes in Java versions below
  * 1.4 rely on the platform's default charset encoding.
  * <p>
- * This class is immutable and thread-safe.
+ * This class is thread-safe since 1.11
  *
  * @see <a href="http://www.w3.org/TR/html4/interact/forms.html#h-17.13.4.1">Chapter 17.13.4 Form content types</a>
  *           of the <a href="http://www.w3.org/TR/html4/">HTML 4.01 Specification</a>
@@ -53,7 +53,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      * @deprecated TODO: This field will be changed to a private final Charset in 2.0. (CODEC-126)
      */
     @Deprecated
-    protected String charset;
+    protected volatile String charset; // added volatile: see CODEC-232
 
     /**
      * Release 1.5 made this field final.
@@ -62,7 +62,9 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
 
     /**
      * BitSet of www-form-url safe characters.
-     * @deprecated Will be removed in 2.0 (CODEC-230)
+     * This is a copy of the internal BitSet which is now used for the conversion.
+     * Changes to this field are ignored.
+     * @deprecated 1.11 Will be removed in 2.0 (CODEC-230)
      */
     @Deprecated
     protected static final BitSet WWW_FORM_URL;
