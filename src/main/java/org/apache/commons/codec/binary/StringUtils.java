@@ -105,7 +105,6 @@ public class StringUtils {
      * @param charset
      *            The {@link Charset} to encode the <code>String</code>
      * @return the encoded bytes
-     * @since 1.11
      */
     private static ByteBuffer getByteBuffer(final String string, final Charset charset) {
         if (string == null) {
