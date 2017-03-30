@@ -352,7 +352,7 @@ public class SoundexTest extends StringEncoderAbstractTest<Soundex> {
     /**
      * Fancy characters are not mapped by the default US mapping.
      *
-     * http://issues.apache.org/bugzilla/show_bug.cgi?id=29080
+     * https://issues.apache.org/jira/browse/CODEC-30
      */
     @Test
     public void testUsMappingEWithAcute() {
@@ -373,7 +373,7 @@ public class SoundexTest extends StringEncoderAbstractTest<Soundex> {
     /**
      * Fancy characters are not mapped by the default US mapping.
      *
-     * http://issues.apache.org/bugzilla/show_bug.cgi?id=29080
+     * https://issues.apache.org/jira/browse/CODEC-30
      */
     @Test
     public void testUsMappingOWithDiaeresis() {
