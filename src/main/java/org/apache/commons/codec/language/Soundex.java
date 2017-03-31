@@ -41,7 +41,7 @@ public class Soundex implements StringEncoder {
      *
      * @see #US_ENGLISH_MAPPING
      */
-    public static final String US_ENGLISH_MAPPING_STRING = "0123012#02245501262301#202";
+    public static final String US_ENGLISH_MAPPING_STRING = "01230120022455012623010202";
 
     /**
      * This is a default mapping of the 26 letters used in US English. A value of <code>0</code> for a letter position
@@ -179,15 +179,6 @@ public class Soundex implements StringEncoder {
     }
 
     /**
-     * Returns the soundex mapping.
-     *
-     * @return soundexMapping.
-     */
-    private char[] getSoundexMapping() {
-        return this.soundexMapping;
-    }
-
-    /**
      * Maps the given upper-case character to its Soundex code.
      *
      * @param ch
@@ -198,10 +189,10 @@ public class Soundex implements StringEncoder {
      */
     private char map(final char ch) {
         final int index = ch - 'A';
-        if (index < 0 || index >= this.getSoundexMapping().length) {
+        if (index < 0 || index >= this.soundexMapping.length) {
             throw new IllegalArgumentException("The character is not mapped: " + ch);
         }
-        return this.getSoundexMapping()[index];
+        return this.soundexMapping[index];
     }
 
     /**
@@ -234,19 +225,20 @@ public class Soundex implements StringEncoder {
             return str;
         }
         final char out[] = {'0', '0', '0', '0'};
-        char last, mapped;
-        int incount = 1, count = 1;
-        out[0] = str.charAt(0);
-        // map() throws IllegalArgumentException
-        last = this.map(str.charAt(0));
-        while (incount < str.length() && count < out.length) {
-            mapped = this.map(str.charAt(incount++));
-            if (mapped == '0') {
-                last = mapped;
-            } else if (mapped != '#' && mapped != last) {
-                out[count++] = mapped;
-                last = mapped;
+        int count = 0;
+        final char first = str.charAt(0);
+        out[count++] = first;
+        char lastDigit = map(first); // previous digit
+        for(int i = 1; i < str.length() && count < out.length ; i++) {
+            char ch = str.charAt(i);
+            if (ch == 'H' || ch == 'W') { // these are ignored completely
+                continue;
             }
+            char digit = map(ch);
+            if (digit != '0' && digit != lastDigit) { // don't store vowels or repeats
+                out[count++] = digit;
+            }
+            lastDigit = digit;
         }
         return new String(out);
     }

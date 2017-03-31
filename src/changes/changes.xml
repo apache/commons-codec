@@ -59,7 +59,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action issue="CODEC-221" dev="sebb" type="update">HmacUtils.updateHmac calls reset() unnecessarily</action>
       <action issue="CODEC-200" dev="sebb" type="fix" due-to="Luciano Vernaschi">Base32.HEX_DECODE_TABLE contains the wrong value 32</action>
       <action issue="CODEC-207" dev="ggregory" type="fix" due-to="Gary Gregory">Charsets Javadoc breaks build when using Java 8</action>
-      <action issue="CODEC-199" dev="ggregory" type="fix" due-to="Yossi Tamari">Bug in HW rule in Soundex</action>
+      <action issue="CODEC-199" dev="ggregory/sebb" type="fix" due-to="Yossi Tamari">Bug in HW rule in Soundex</action>
       <action issue="CODEC-209" dev="ggregory" type="fix" due-to="Gary Gregory">Javadoc for SHA-224 DigestUtils methods should mention Java 1.8.0 restriction instead of 1.4.0.</action>
       <action issue="CODEC-219" dev="ggregory" type="fix" due-to="Gary Gregory, Sebb">Don't deprecate Charsets Charset constants in favor of Java 7's java.nio.charset.StandardCharsets</action>
       <action issue="CODEC-217" dev="ggregory" type="add" due-to="Gary Gregory">Add HmacAlgorithms.HMAC_SHA_224 (Java 8 only)</action>
