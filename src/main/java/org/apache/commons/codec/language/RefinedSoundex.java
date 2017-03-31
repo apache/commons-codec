@@ -32,8 +32,22 @@ import org.apache.commons.codec.StringEncoder;
 public class RefinedSoundex implements StringEncoder {
 
     /**
+     * Mapping:
+     * <pre>
+     * 0: A E I O U Y H W 
+     * 1: B P
+     * 2: F V
+     * 3: C K S
+     * 4: G J
+     * 5: Q X Z
+     * 6: D T
+     * 7: L
+     * 8: M N
+     * 9: R
+     * </pre>
      * @since 1.4
      */
+    //                                                      ABCDEFGHIJKLMNOPQRSTUVWXYZ
     public static final String US_ENGLISH_MAPPING_STRING = "01360240043788015936020505";
 
    /**
