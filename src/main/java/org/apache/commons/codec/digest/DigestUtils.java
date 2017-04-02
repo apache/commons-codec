@@ -413,17 +413,17 @@ public class DigestUtils {
     }
 
     /**
- * Calculates the SHA-1 digest and returns the value as a <code>byte[]</code>.
- *
- * @param data
- *            Data to digest
- * @return SHA-1 digest
- * @deprecated (1.11) Use {@link #sha1(byte[])}
- */
-@Deprecated
-public static byte[] sha(final byte[] data) {
-    return sha1(data);
-}
+     * Calculates the SHA-1 digest and returns the value as a <code>byte[]</code>.
+     *
+     * @param data
+     *            Data to digest
+     * @return SHA-1 digest
+     * @deprecated (1.11) Use {@link #sha1(byte[])}
+     */
+    @Deprecated
+    public static byte[] sha(final byte[] data) {
+        return sha1(data);
+    }
 
     /**
      * Calculates the SHA-1 digest and returns the value as a <code>byte[]</code>.
