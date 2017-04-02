@@ -32,15 +32,31 @@ import org.apache.commons.codec.StringEncoder;
 public class Soundex implements StringEncoder {
 
     /**
+     * The marker character used to indicate a silent (ignored) character.
+     * These are ignored except when they appear as the first character.
+     * <p>
+     * Note: the {@link #US_ENGLISH_MAPPING_STRING} does not use this mechanism
+     * because changing it might break existing code. Mappings that don't contain
+     * a silent marker code are treated as though H and W are silent.
+     * <p>
+     * To override this, use the {@link #Soundex(String, boolean)} constructor.
+     * @since 1.11
+     */
+    public static final char SILENT_MARKER = '-';
+
+    /**
      * This is a default mapping of the 26 letters used in US English. A value of <code>0</code> for a letter position
-     * means do not encode.
+     * means do not encode, but treat as a separator when it occurs between consonants with the same code.
      * <p>
      * (This constant is provided as both an implementation convenience and to allow Javadoc to pick
      * up the value for the constant values page.)
-     * </p>
-     *
+     * <p>
+     * <b>Note that letters H and W are treated specially.</b>
+     * They are ignored (after the first letter) and don't act as separators
+     * between consonants with the same code.
      * @see #US_ENGLISH_MAPPING
      */
+    //                                                      ABCDEFGHIJKLMNOPQRSTUVWXYZ
     public static final String US_ENGLISH_MAPPING_STRING = "01230120022455012623010202";
 
     /**
@@ -53,10 +69,43 @@ public class Soundex implements StringEncoder {
 
     /**
      * An instance of Soundex using the US_ENGLISH_MAPPING mapping.
+     * This treats H and W as silent letters.
+     * Apart from when they appear as the first letter, they are ignored.
+     * They don't act as separators between duplicate codes.
      *
      * @see #US_ENGLISH_MAPPING
+     * @see #US_ENGLISH_MAPPING_STRING
      */
     public static final Soundex US_ENGLISH = new Soundex();
+
+    /**
+     * An instance of Soundex using the Simplified Soundex mapping, as described here:
+     * http://west-penwith.org.uk/misc/soundex.htm
+     * <p>
+     * This treats H and W the same as vowels (AEIOUY).
+     * Such letters aren't encoded (after the first), but they do
+     * act as separators when dropping duplicate codes.
+     * The mapping is otherwise the same as for {@link #US_ENGLISH}
+     * <p>
+     * @since 1.11
+     */
+    public static final Soundex US_ENGLISH_SIMPLIFIED = new Soundex(US_ENGLISH_MAPPING_STRING, false);
+
+    /**
+     * An instance of Soundex using the mapping as per the Genealogy site:
+     * http://www.genealogy.com/articles/research/00000060.html
+     * <p>
+     * This treats vowels (AEIOUY), H and W as silent letters.
+     * Such letters are ignored (after the first) and do not
+     * act as separators when dropping duplicate codes.
+     * <p>
+     * The codes for consonants are otherwise the same as for 
+     * {@link #US_ENGLISH_MAPPING_STRING} and {@link #US_ENGLISH_SIMPLIFIED}
+     *
+     * @since 1.11
+     */
+    public static final Soundex US_ENGLISH_GENEALOGY = new Soundex("-123-12--22455-12623-1-2-2");
+    //                                                              ABCDEFGHIJKLMNOPQRSTUVWXYZ
 
     /**
      * The maximum length of a Soundex code - Soundex codes are only four characters by definition.
@@ -73,6 +122,15 @@ public class Soundex implements StringEncoder {
     private final char[] soundexMapping;
 
     /**
+     * Should H and W be treated specially?
+     * <p>
+     * In versions of the code prior to 1.11,
+     * the code always treated H and W as silent (ignored) letters.
+     * If this field is false, H and W are no longer special-cased.
+     */
+    private final boolean specialCaseHW;
+
+    /**
      * Creates an instance using US_ENGLISH_MAPPING
      *
      * @see Soundex#Soundex(char[])
@@ -80,6 +138,7 @@ public class Soundex implements StringEncoder {
      */
     public Soundex() {
         this.soundexMapping = US_ENGLISH_MAPPING;
+        this.specialCaseHW = true;
     }
 
     /**
@@ -88,6 +147,8 @@ public class Soundex implements StringEncoder {
      *
      * Every letter of the alphabet is "mapped" to a numerical value. This char array holds the values to which each
      * letter is mapped. This implementation contains a default map for US_ENGLISH
+     * <p>
+     * If the mapping contains an instance of {@link #SILENT_MARKER} then H and W are not given special treatment
      *
      * @param mapping
      *                  Mapping array to use when finding the corresponding code for a given character
@@ -95,6 +156,31 @@ public class Soundex implements StringEncoder {
     public Soundex(final char[] mapping) {
         this.soundexMapping = new char[mapping.length];
         System.arraycopy(mapping, 0, this.soundexMapping, 0, mapping.length);
+        this.specialCaseHW = !hasMarker(this.soundexMapping);
+    }
+
+    private boolean hasMarker(char[] mapping) {
+        for(char ch : mapping) {
+            if (ch == SILENT_MARKER) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Creates a refined soundex instance using a custom mapping. This constructor can be used to customize the mapping,
+     * and/or possibly provide an internationalized mapping for a non-Western character set.
+     * <p>
+     * If the mapping contains an instance of {@link #SILENT_MARKER} then H and W are not given special treatment
+     *
+     * @param mapping
+     *            Mapping string to use when finding the corresponding code for a given character
+     * @since 1.4
+     */
+    public Soundex(final String mapping) {
+        this.soundexMapping = mapping.toCharArray();
+        this.specialCaseHW = !hasMarker(this.soundexMapping);
     }
 
     /**
@@ -103,10 +189,12 @@ public class Soundex implements StringEncoder {
      *
      * @param mapping
      *            Mapping string to use when finding the corresponding code for a given character
-     * @since 1.4
+     * @param specialCaseHW if true, then 
+     * @since 1.11
      */
-    public Soundex(final String mapping) {
+    public Soundex(final String mapping, boolean specialCaseHW) {
         this.soundexMapping = mapping.toCharArray();
+        this.specialCaseHW = specialCaseHW;
     }
 
     /**
@@ -190,7 +278,7 @@ public class Soundex implements StringEncoder {
     private char map(final char ch) {
         final int index = ch - 'A';
         if (index < 0 || index >= this.soundexMapping.length) {
-            throw new IllegalArgumentException("The character is not mapped: " + ch);
+            throw new IllegalArgumentException("The character is not mapped: " + ch + " (index=" + index + ")");
         }
         return this.soundexMapping[index];
     }
@@ -231,10 +319,13 @@ public class Soundex implements StringEncoder {
         char lastDigit = map(first); // previous digit
         for(int i = 1; i < str.length() && count < out.length ; i++) {
             char ch = str.charAt(i);
-            if (ch == 'H' || ch == 'W') { // these are ignored completely
+            if ((this.specialCaseHW) && (ch == 'H' || ch == 'W')) { // these are ignored completely
                 continue;
             }
             char digit = map(ch);
+            if (digit == SILENT_MARKER) {
+                continue;
+            }
             if (digit != '0' && digit != lastDigit) { // don't store vowels or repeats
                 out[count++] = digit;
             }

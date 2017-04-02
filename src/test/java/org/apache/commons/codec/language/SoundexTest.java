@@ -403,4 +403,33 @@ public class SoundexTest extends StringEncoderAbstractTest<Soundex> {
         Assert.assertEquals("T522", this.getStringEncoder().encode("Tymczak"));
         Assert.assertEquals("P236", this.getStringEncoder().encode("Pfister"));
     }
+
+    @Test
+// examples and algorithm rules from:  http://www.genealogy.com/articles/research/00000060.html
+    public void testGenealogy() { // treat vowels and HW as silent
+        Soundex s = Soundex.US_ENGLISH_GENEALOGY;
+        Assert.assertEquals("H251", s.encode("Heggenburger"));
+        Assert.assertEquals("B425", s.encode("Blackman"));
+        Assert.assertEquals("S530", s.encode("Schmidt"));
+        Assert.assertEquals("L150", s.encode("Lippmann"));
+        // Additional local example
+        Assert.assertEquals("D200", s.encode("Dodds")); // 'o' is not a separator here - it is silent
+        Assert.assertEquals("D200", s.encode("Dhdds")); // 'h' is silent
+        Assert.assertEquals("D200", s.encode("Dwdds")); // 'w' is silent
+    }
+
+    @Test
+// examples and algorithm rules from:  http://west-penwith.org.uk/misc/soundex.htm
+    public void testSimplifiedSoundex() { // treat vowels and HW as separators
+        Soundex s = Soundex.US_ENGLISH_SIMPLIFIED;
+        Assert.assertEquals("W452", s.encode("WILLIAMS"));
+        Assert.assertEquals("B625", s.encode("BARAGWANATH"));
+        Assert.assertEquals("D540", s.encode("DONNELL"));
+        Assert.assertEquals("L300", s.encode("LLOYD"));
+        Assert.assertEquals("W422", s.encode("WOOLCOCK"));
+        // Additional local examples
+        Assert.assertEquals("D320", s.encode("Dodds"));
+        Assert.assertEquals("D320", s.encode("Dwdds")); // w is a separator
+        Assert.assertEquals("D320", s.encode("Dhdds")); // h is a separator
+    }
 }

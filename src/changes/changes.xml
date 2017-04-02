@@ -45,6 +45,7 @@ The <action> type attribute can be add,update,fix,remove.
     <release version="1.11" date="2017-MM-DD" description="Feature and fix release.">
       <!-- The first attribute below should be the issue id; makes it easier to navigate in the IDE outline -->
 
+      <action issue="CODEC-233" dev="sebb" type="update" due-to="Yossi Tamari">Soundex should support more algorithm variants</action>
       <action issue="CODEC-145" dev="sebb" type="fix" due-to="Jesse Glick">Base64.encodeBase64String could better use newStringUsAscii (ditto encodeBase64URLSafeString)</action>
       <action issue="CODEC-144" dev="sebb" type="fix">BaseNCodec: encodeToString and encodeAsString methods are identical</action>
       <action issue="CODEC-232" dev="sebb" type="fix">URLCodec is neither immutable nor threadsafe</action>
