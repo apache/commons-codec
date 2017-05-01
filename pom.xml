@@ -220,6 +220,12 @@ limitations under the License.
       <version>3.4</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.brotli</groupId>
+      <artifactId>dec</artifactId>
+      <version>0.1.1</version>
+      <scope>compile</scope>
+    </dependency>
   </dependencies>
   <properties>
     <maven.compiler.source>1.6</maven.compiler.source>
