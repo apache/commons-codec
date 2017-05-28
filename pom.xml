@@ -225,6 +225,7 @@ limitations under the License.
     <maven.compiler.source>1.6</maven.compiler.source>
     <maven.compiler.target>1.6</maven.compiler.target>
     <commons.componentid>codec</commons.componentid>
+    <commons.module.name>org.apache.commons.codec</commons.module.name>
     <commons.release.version>1.11</commons.release.version>
     <!-- The RC version used in the staging repository URL. -->
     <commons.rc.version>RC1</commons.rc.version>
