@@ -21,10 +21,13 @@ import static org.apache.commons.codec.binary.StringUtils.getBytesUtf8;
 import static org.junit.Assert.assertEquals;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.security.DigestInputStream;
+import java.security.DigestOutputStream;
 import java.security.MessageDigest;
 import java.util.Random;
 
@@ -44,6 +47,8 @@ import org.junit.Test;
  */
 public class DigestUtilsTest {
 
+    private static final String MD5_OF_ABC = "900150983cd24fb0d6963f7d28e17f72";
+    private static final String SHA1_OF_ABC = "a9993e364706816aba3e25717850c26c9cd0d89d";
     private final byte[] testData = new byte[1024 * 1024];
 
     private File testFile;
@@ -141,7 +146,7 @@ public class DigestUtilsTest {
 
         assertEquals("0cc175b9c0f1b6a831c399e269772661", DigestUtils.md5Hex("a"));
 
-        assertEquals("900150983cd24fb0d6963f7d28e17f72", DigestUtils.md5Hex("abc"));
+        assertEquals(MD5_OF_ABC, DigestUtils.md5Hex("abc"));
 
         assertEquals("f96b697d7cb7938d525a2f31aaf161d0", DigestUtils.md5Hex("message digest"));
 
@@ -190,9 +195,9 @@ public class DigestUtilsTest {
     @Test
     public void testSha1Hex() throws IOException {
         // Examples from FIPS 180-1
-        assertEquals("a9993e364706816aba3e25717850c26c9cd0d89d", DigestUtils.sha1Hex("abc"));
+        assertEquals(SHA1_OF_ABC, DigestUtils.sha1Hex("abc"));
 
-        assertEquals("a9993e364706816aba3e25717850c26c9cd0d89d", DigestUtils.sha1Hex(getBytesUtf8("abc")));
+        assertEquals(SHA1_OF_ABC, DigestUtils.sha1Hex(getBytesUtf8("abc")));
 
         assertEquals(
             "84983e441c3bd26ebaae4aa1f95129e5e54670f1",
@@ -322,9 +327,9 @@ public class DigestUtilsTest {
     @Test
     public void testShaHex() throws IOException {
         // Examples from FIPS 180-1
-        assertEquals("a9993e364706816aba3e25717850c26c9cd0d89d", DigestUtils.shaHex("abc"));
+        assertEquals(SHA1_OF_ABC, DigestUtils.shaHex("abc"));
 
-        assertEquals("a9993e364706816aba3e25717850c26c9cd0d89d", DigestUtils.shaHex(getBytesUtf8("abc")));
+        assertEquals(SHA1_OF_ABC, DigestUtils.shaHex(getBytesUtf8("abc")));
 
         assertEquals(
             "84983e441c3bd26ebaae4aa1f95129e5e54670f1",
@@ -369,6 +374,33 @@ public class DigestUtilsTest {
         final String actualResult = Hex.encodeHexString(messageDigest.digest());
 
         assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    public void testToHexString() throws IOException {
+        MessageDigest md5 = DigestUtils.getMd5Digest();
+        DigestUtils.updateDigest(md5, "abc");
+        assertEquals(MD5_OF_ABC, DigestUtils.toHexString(md5));
+        // check digest was not been reset
+        assertEquals(MD5_OF_ABC, DigestUtils.toHexString(md5));
+
+        assertEquals(MD5_OF_ABC.toUpperCase(), DigestUtils.toHexString(md5, false));
+
+        DigestOutputStream os = new DigestOutputStream(new ByteArrayOutputStream(), DigestUtils.getMd5Digest());
+        byte[] abc = {'a', 'b', 'c'};
+        os.write(abc);
+        assertEquals(MD5_OF_ABC, DigestUtils.toHexString(os));
+        assertEquals(MD5_OF_ABC.toUpperCase(), DigestUtils.toHexString(os,false));
+        os.close();
+
+        DigestInputStream is = new DigestInputStream(new ByteArrayInputStream(abc),DigestUtils.getMd5Digest());
+
+        //noinspection StatementWithEmptyBody
+        while(is.read() >0);
+        assertEquals(MD5_OF_ABC, DigestUtils.toHexString(is));
+        assertEquals(MD5_OF_ABC.toUpperCase(), DigestUtils.toHexString(is,false));
+
+
     }
 
 }
