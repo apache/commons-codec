@@ -23,6 +23,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
+import java.security.DigestInputStream;
+import java.security.DigestOutputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -851,6 +853,125 @@ public class DigestUtils {
     @Deprecated
     public static String shaHex(final String data) {
         return sha1Hex(data);
+    }
+
+    /**
+     * Returns the value of a MessageDigest as a hex string.
+     *
+     * <p>
+     *     If {@code messageDigest} implements {@link Cloneable} then it will will be cloned
+     *     before the digest is extracted, allowing for intermediate values to be generated.
+     *     If the digest does not support implement {@link Cloneable} then the state will be reset.
+     *     See the overiew of {@link MessageDigest} for more information.
+     * </p>
+     *
+     * @param messageDigest  the digest to convert.
+     * @return The value of the computed digest represented as lowercase hexadecimal digits.
+     * @since 1.11
+     */
+    public static String toHexString(MessageDigest messageDigest) {
+        return toHexString(messageDigest, true);
+    }
+
+    /**
+     * Return the value of a MessageDigest as a hex string.
+     *
+     * <p>
+     *     If {@code messageDigest} implements {@link Cloneable} then it will will be cloned
+     *     before the digest is extracted, allowing for intermediate values to be generated.
+     *     If the digest does not support implement {@link Cloneable} then the state will be reset.
+     *     See the overiew of {@link MessageDigest} for more information.
+     * </p>
+     *
+     * @param messageDigest  the digest to convert.
+     * @param useLowerCase should the result use lowercase hexadecimal digits?
+     * @return The value of the computed digest represented as a hexadecimal string.
+     * @since 1.11
+     */
+
+    public static String toHexString(MessageDigest messageDigest, boolean useLowerCase) {
+        MessageDigest possiblyClonedDigest;
+        try {
+            possiblyClonedDigest = (MessageDigest) messageDigest.clone();
+        } catch (CloneNotSupportedException e) {
+            possiblyClonedDigest = messageDigest;
+        }
+
+        return Hex.encodeHexString(possiblyClonedDigest.digest(),useLowerCase);
+    }
+
+    /**
+     * Return a lowercase hexadecimal representation of the {@link MessageDigest}
+     * associated with the DigestInputStream. This method does <strong>NOT</strong> read data from the stream.
+     * <p>
+     *     If the digest implements {@link Cloneable} then it will will be cloned
+     *     before the digest is extracted, allowing for intermediate values to be generated.
+     *     If the digest does not support implement {@link Cloneable} then the state will be reset.
+     *     See the overview of {@link MessageDigest} for more information.
+     * </p>
+     *
+     * @param stream the digest output stream holding the digest to use. .
+     * @return The value of the digest as a lowercase hexadecimal string.
+     * @since 1.11
+     */
+    public static String toHexString(DigestInputStream stream) {
+        return toHexString(stream,true);
+    }
+    /**
+     * Return a hexadecimal representation of the {@link MessageDigest}  associated with the DigestInputStream .
+     *     This method does <strong>NOT</strong> read data from the stream.
+     * <p>
+     *     If the digest implements {@link Cloneable} then it will will be cloned
+     *     before the digest is extracted, allowing for intermediate values to be generated.
+     *     If the digest does not support implement {@link Cloneable} then the state will be reset.
+     *     See the overview of {@link MessageDigest} for more information.
+     * </p>
+     *
+     * @param stream the digest output stream holding the digest to use. .
+     * @param useLowerCase should the result use lowercase  digits?
+     * @return The value of the digest  as a hexadecimal string.
+     * @since 1.11
+     */
+    public static String toHexString(DigestInputStream stream, boolean useLowerCase) {
+        return toHexString(stream.getMessageDigest(),useLowerCase);
+    }
+
+    /**
+     * Return a lowercase hexadecimal representation of the {@link MessageDigest}  associated with a DigestOutputStream.
+     *
+     * <p>
+     *     If the digest implements {@link Cloneable} then it will will be cloned
+     *     before the digest is extracted, allowing for intermediate values to be generated.
+     *     If the digest does not support implement {@link Cloneable} then the state will be reset.
+     *     See the overview of {@link MessageDigest} for more information.
+     * </p>
+     *
+     * @param stream the digest output stream holding the digest to use. .
+     * @return The value of the digest  as a lowercase hexadecimal string.
+     * @since 1.11
+     */
+
+    public static String toHexString(DigestOutputStream stream) {
+        return toHexString(stream,true);
+    }
+
+    /**
+     * Return a hexadecimal representation of the {@link MessageDigest}  associated with a DigestOutputStream .
+     *
+     * <p>
+     *     If the digest implements {@link Cloneable} then it will will be cloned
+     *     before the digest is extracted, allowing for intermediate values to be generated.
+     *     If the digest does not support implement {@link Cloneable} then the state will be reset.
+     *     See the overview of {@link MessageDigest} for more information.
+     * </p>
+     *
+     * @param stream the digest output stream holding the digest to use. .
+     * @param useLowerCase should the result use lowercase  digits?
+     * @return The value of the digest  as a hexadecimal string.
+     * @since 1.11
+     */
+    public static String toHexString(DigestOutputStream stream, boolean useLowerCase) {
+        return toHexString(stream.getMessageDigest(),useLowerCase);
     }
 
     /**
