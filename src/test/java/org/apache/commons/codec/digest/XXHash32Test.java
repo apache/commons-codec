@@ -1,0 +1,98 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package org.apache.commons.codec.digest;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URI;
+import java.net.URL;
+import java.util.Arrays;
+import java.util.Collection;
+
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
+import org.junit.runner.RunWith;
+
+@RunWith(Parameterized.class)
+public class XXHash32Test {
+
+    private final File file;
+    private final String expectedChecksum;
+
+    public XXHash32Test(String path, String c) throws IOException {
+        final URL url = XXHash32Test.class.getClassLoader().getResource(path);
+        if (url == null) {
+            throw new FileNotFoundException("couldn't find " + path);
+        }
+        URI uri = null;
+        try {
+            uri = url.toURI();
+        } catch (final java.net.URISyntaxException ex) {
+            throw new IOException(ex);
+        }
+        file = new File(uri);
+        expectedChecksum = c;
+    }
+
+    @Parameters
+    public static Collection<Object[]> factory() {
+        return Arrays.asList(new Object[][] {
+            // reference checksums created with xxh32sum
+            { "bla.tar", "fbb5c8d1" },
+            { "bla.tar.xz", "4106a208" },
+        });
+    }
+
+    @Test
+    public void verifyChecksum() throws IOException {
+        XXHash32 h = new XXHash32();
+        FileInputStream s = new FileInputStream(file);
+        try {
+            byte[] b = toByteArray(s);
+            h.update(b, 0, b.length);
+        } finally {
+            s.close();
+        }
+        Assert.assertEquals("checksum for " + file.getName(), expectedChecksum, Long.toHexString(h.getValue()));
+    }
+
+    private static byte[] toByteArray(final InputStream input) throws IOException {
+        final ByteArrayOutputStream output = new ByteArrayOutputStream();
+        copy(input, output, 10240);
+        return output.toByteArray();
+    }
+
+    private static long copy(final InputStream input, final OutputStream output, final int buffersize) throws IOException {
+        final byte[] buffer = new byte[buffersize];
+        int n = 0;
+        long count=0;
+        while (-1 != (n = input.read(buffer))) {
+            output.write(buffer, 0, n);
+            count += n;
+        }
+        return count;
+    }
+}
