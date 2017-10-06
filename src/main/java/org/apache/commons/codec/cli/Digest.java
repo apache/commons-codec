@@ -102,7 +102,7 @@ public class Digest {
     }
 
     private void run(String[] digestAlgorithms) throws IOException {
-        for (String messageDigestAlgorithm : digestAlgorithms) {
+        for (final String messageDigestAlgorithm : digestAlgorithms) {
             if (DigestUtils.isAvailable(messageDigestAlgorithm)) {
                 run(messageDigestAlgorithm + " ", messageDigestAlgorithm);
             }
@@ -114,7 +114,7 @@ public class Digest {
             println(prefix, DigestUtils.digest(messageDigest, System.in));
             return;
         }
-        for(String source : inputs) {
+        for(final String source : inputs) {
             final File file = new File(source);
             if (file.isFile()) {
                 println(prefix, DigestUtils.digest(messageDigest, file), source);
@@ -132,7 +132,7 @@ public class Digest {
     }
 
     private void run(String prefix, MessageDigest messageDigest, File[] files) throws IOException {
-        for (File file : files) {
+        for (final File file : files) {
             if (file.isFile()) {
                 println(prefix, DigestUtils.digest(messageDigest, file), file.getName());
             }

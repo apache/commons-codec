@@ -57,7 +57,7 @@ public class PureJavaCrc32Test {
     final Random random1 = new Random();
     final Random random2 = new Random();
     for (int i = 0; i < 10000; i++) {
-      byte randomBytes[] = new byte[random1.nextInt(2048)];
+      final byte randomBytes[] = new byte[random1.nextInt(2048)];
       random2.nextBytes(randomBytes);
       checkOnBytes(randomBytes, false);
     }
@@ -175,7 +175,7 @@ public class PureJavaCrc32Test {
       }
 
       b.append("  private static final int[] T = new int[] {");
-      for(String s : toStrings(tableFormat)) {
+      for(final String s : toStrings(tableFormat)) {
         b.append("\n");
         b.append(s);
       }
@@ -191,9 +191,9 @@ public class PureJavaCrc32Test {
             " <polynomial>");
         System.exit(1);
       }
-      long polynomial = Long.parseLong(args[0], 16);
+      final long polynomial = Long.parseLong(args[0], 16);
 
-      int i = 8;
+      final int i = 8;
       final Table t = new Table(i, 16, polynomial);
       final String s = t.toString();
       System.out.println(s);
@@ -250,7 +250,7 @@ public class PureJavaCrc32Test {
       out.printf("\nPerformance Table (The unit is MB/sec; #T = #Theads)\n");
 
       // Warm up implementations to get jit going.
-      for (Class<? extends Checksum> c : crcs) {
+      for (final Class<? extends Checksum> c : crcs) {
         doBench(c, 1, bytes, 2);
         doBench(c, 1, bytes, 2101);
       }
@@ -287,7 +287,7 @@ public class PureJavaCrc32Test {
 
         BenchResult expected = null;
         final List<BenchResult> previous = new ArrayList<BenchResult>();
-        for(Class<? extends Checksum> c : crcs) {
+        for(final Class<? extends Checksum> c : crcs) {
           System.gc();
 
           final BenchResult result = doBench(c, numThreads, bytes, size);
@@ -305,7 +305,7 @@ public class PureJavaCrc32Test {
           }
 
           //compare result with previous
-          for(BenchResult p : previous) {
+          for(final BenchResult p : previous) {
             final double diff = (result.mbps - p.mbps) / p.mbps * 100;
             printCell(String.format("%5.1f%%", diff), diffStr.length(), out);
           }
@@ -340,7 +340,7 @@ public class PureJavaCrc32Test {
                 crc.update(bytes, 0, size);
               }
               final long et = System.nanoTime();
-              double secsElapsed = (et - st) / 1000000000.0d;
+              final double secsElapsed = (et - st) / 1000000000.0d;
               results[index] = new BenchResult(crc.getValue(), mbProcessed/secsElapsed);
             }
           };
@@ -392,7 +392,7 @@ public class PureJavaCrc32Test {
           "os.version"
       };
       final Properties p = System.getProperties();
-      for(String n : names) {
+      for(final String n : names) {
         out.println(n + " = " + p.getProperty(n));
       }
     }

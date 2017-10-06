@@ -66,7 +66,7 @@ public class PureJavaCrc32CTest {
     private void check(int expected) {
         crc.reset();
         crc.update(data, 0, data.length);
-        int actual = (int) crc.getValue();
+        final int actual = (int) crc.getValue();
         Assert.assertEquals(Integer.toHexString(expected), Integer.toHexString(actual));
     }
 

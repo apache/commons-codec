@@ -47,7 +47,7 @@ public class PureJavaCrc32C implements Checksum {
 
   @Override
   public long getValue() {
-    long ret = crc;
+    final long ret = crc;
     return (~ret) & 0xffffffffL;
   }
 

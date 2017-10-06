@@ -69,7 +69,7 @@ public final class HmacUtils {
         try {
             Mac.getInstance(name);
             return true;
-        } catch (NoSuchAlgorithmException e) {
+        } catch (final NoSuchAlgorithmException e) {
             return false;
         }
     }
@@ -85,7 +85,7 @@ public final class HmacUtils {
         try {
             Mac.getInstance(name.getName());
             return true;
-        } catch (NoSuchAlgorithmException e) {
+        } catch (final NoSuchAlgorithmException e) {
             return false;
         }
     }

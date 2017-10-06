@@ -130,7 +130,7 @@ public class Base64Test {
         final byte[] bytesUtf8 = StringUtils.getBytesUtf8(content);
         byte[] buffer = ArrayUtils.addAll(bytesUtf8, new byte[endPadSize]);
         buffer = ArrayUtils.addAll(new byte[startPasSize], buffer);
-        byte[] encodedBytes = new Base64().encode(buffer, startPasSize, bytesUtf8.length);
+        final byte[] encodedBytes = new Base64().encode(buffer, startPasSize, bytesUtf8.length);
         encodedContent = StringUtils.newStringUtf8(encodedBytes);
         assertEquals("encoding hello world", "SGVsbG8gV29ybGQ=", encodedContent);
     }

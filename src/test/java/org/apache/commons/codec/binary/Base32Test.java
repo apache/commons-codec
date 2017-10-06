@@ -52,7 +52,7 @@ public class Base32Test {
 //            BASE32_BINARY_TEST_CASES[2][0] = new Hex().decode("739ce739ce");
 
     static {
-        Hex hex = new Hex();
+        final Hex hex = new Hex();
         try {
             BASE32_BINARY_TEST_CASES = new Object[][] {
                     new Object[] { hex.decode("623a01735836e9a126e12fbf95e013ee6892997c"),
@@ -62,7 +62,7 @@ public class Base32Test {
                     new Object[] { hex.decode("739ce42108"),
                                    "OOOOIIII" }
             };
-        } catch (DecoderException de) {
+        } catch (final DecoderException de) {
             throw new Error(":(", de);
         }
     }

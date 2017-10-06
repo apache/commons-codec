@@ -49,7 +49,7 @@ public class MessageDigestAlgorithmsTest {
     }
 
     private static boolean contains(String key) {
-        for(String s : MessageDigestAlgorithms.values()) {
+        for(final String s : MessageDigestAlgorithms.values()) {
             if (s.equals(key)) {
                 return true;
             }
@@ -59,10 +59,10 @@ public class MessageDigestAlgorithmsTest {
 
     @BeforeClass
     public static void checkValues() throws Exception {
-        Field [] fields = MessageDigestAlgorithms.class.getDeclaredFields();
+        final Field [] fields = MessageDigestAlgorithms.class.getDeclaredFields();
         boolean ok = true;
         int psf = 0;
-        for(Field f : fields) {
+        for(final Field f : fields) {
             // Only interested in public fields
             final int modifiers = f.getModifiers();
             if (Modifier.isPublic(modifiers) && Modifier.isStatic(modifiers) && Modifier.isFinal(modifiers)) {

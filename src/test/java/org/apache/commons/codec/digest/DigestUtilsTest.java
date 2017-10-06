@@ -64,7 +64,7 @@ public class DigestUtilsTest {
     public void setUp() throws Exception {
         new Random().nextBytes(testData);
         testFile = File.createTempFile(DigestUtilsTest.class.getName(), ".dat");
-        FileOutputStream fos = new FileOutputStream(testFile);
+        final FileOutputStream fos = new FileOutputStream(testFile);
         fos.write(testData);
         fos.close();
     }
