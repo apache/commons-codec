@@ -28,7 +28,7 @@ public class PureJavaCrc32CTest {
 
     private final PureJavaCrc32C crc = new PureJavaCrc32C();
 
-    private byte[] data = new byte[32];
+    private final byte[] data = new byte[32];
 
     @Test
     public void testZeros() {
