@@ -57,7 +57,7 @@ public class PureJavaCrc32C implements Checksum {
   }
 
   @Override
-  public void update(byte[] b, int off, int len) {
+  public void update(final byte[] b, int off, int len) {
     int localCrc = crc;
 
     while(len > 7) {
@@ -98,7 +98,7 @@ public class PureJavaCrc32C implements Checksum {
   }
 
   @Override
-  final public void update(int b) {
+  final public void update(final int b) {
     crc = (crc >>> 8) ^ T[T8_0_start + ((crc ^ b) & 0xff)];
   }
 

@@ -99,7 +99,7 @@ public class PureJavaCrc32 implements Checksum {
   }
 
   @Override
-  final public void update(int b) {
+  final public void update(final int b) {
     crc = (crc >>> 8) ^ T[(((crc ^ b) << 24) >>> 24)];
   }
 

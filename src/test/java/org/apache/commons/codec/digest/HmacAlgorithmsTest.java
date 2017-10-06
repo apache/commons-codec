@@ -99,7 +99,7 @@ public class HmacAlgorithmsTest {
     private final byte[] standardResultBytes;
     private final String standardResultString;
 
-    public HmacAlgorithmsTest(HmacAlgorithms hmacAlgorithm, byte[] standardResultBytes, String standardResultString) {
+    public HmacAlgorithmsTest(final HmacAlgorithms hmacAlgorithm, final byte[] standardResultBytes, final String standardResultString) {
         Assume.assumeTrue(HmacUtils.isAvailable(hmacAlgorithm));
         this.hmacAlgorithm = hmacAlgorithm;
         this.standardResultBytes = standardResultBytes;

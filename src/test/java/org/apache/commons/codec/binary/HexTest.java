@@ -105,7 +105,7 @@ public class HexTest {
         }
     }
 
-    private void checkDecodeHexCharArrayOddCharacters(String data) {
+    private void checkDecodeHexCharArrayOddCharacters(final String data) {
         try {
             Hex.decodeHex(data);
             fail("An exception wasn't thrown when trying to decode an odd number of characters");

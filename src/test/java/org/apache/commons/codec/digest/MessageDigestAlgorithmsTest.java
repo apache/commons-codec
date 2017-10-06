@@ -48,7 +48,7 @@ public class MessageDigestAlgorithmsTest {
         return MessageDigestAlgorithms.values();
     }
 
-    private static boolean contains(String key) {
+    private static boolean contains(final String key) {
         for(final String s : MessageDigestAlgorithms.values()) {
             if (s.equals(key)) {
                 return true;
@@ -85,7 +85,7 @@ public class MessageDigestAlgorithmsTest {
 
     private final String messageDigestAlgorithm;
 
-    public MessageDigestAlgorithmsTest(String messageDigestAlgorithm) {
+    public MessageDigestAlgorithmsTest(final String messageDigestAlgorithm) {
         this.messageDigestAlgorithm = messageDigestAlgorithm;
     }
 

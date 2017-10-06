@@ -444,7 +444,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * @return A byte array containing only the base N alphabetic character data
      * @since 1.11
      */
-    public byte[] encode(final byte[] pArray, int offset, int length) {
+    public byte[] encode(final byte[] pArray, final int offset, final int length) {
         if (pArray == null || pArray.length == 0) {
             return pArray;
         }

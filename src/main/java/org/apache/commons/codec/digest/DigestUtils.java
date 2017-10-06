@@ -154,7 +154,7 @@ public class DigestUtils {
      *             when a {@link NoSuchAlgorithmException} is caught.
      * @since 1.11
      */
-    public static MessageDigest getDigest(final String algorithm, MessageDigest defaultMessageDigest) {
+    public static MessageDigest getDigest(final String algorithm, final MessageDigest defaultMessageDigest) {
         try {
             return MessageDigest.getInstance(algorithm);
         } catch (final Exception e) {
@@ -955,7 +955,7 @@ public class DigestUtils {
      * @return {@code true} if the algorithm can be found
      * @since 1.11
      */
-    public static boolean isAvailable(String messageDigestAlgorithm) {
+    public static boolean isAvailable(final String messageDigestAlgorithm) {
         return getDigest(messageDigestAlgorithm, null) != null;
     }
 
@@ -980,7 +980,7 @@ public class DigestUtils {
      * @param digest the {@link MessageDigest} to use
      * @since 1.11
      */
-    public DigestUtils(MessageDigest digest) {
+    public DigestUtils(final MessageDigest digest) {
         this.messageDigest = digest;
     }
 
@@ -996,7 +996,7 @@ public class DigestUtils {
      *             when a {@link NoSuchAlgorithmException} is caught.
      * @since 1.11
      */
-    public DigestUtils(String name) {
+    public DigestUtils(final String name) {
         this(getDigest(name));
     }
 

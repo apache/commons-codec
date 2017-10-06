@@ -58,7 +58,7 @@ class Utils {
      * @param b the input int
      * @return the upper case hex digit of the lower 4 bits of the int.
      */
-    static char hexDigit(int b) {
+    static char hexDigit(final int b) {
         return Character.toUpperCase(Character.forDigit(b & 0xF, RADIX));
     }
 

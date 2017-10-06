@@ -159,7 +159,7 @@ public class Soundex implements StringEncoder {
         this.specialCaseHW = !hasMarker(this.soundexMapping);
     }
 
-    private boolean hasMarker(char[] mapping) {
+    private boolean hasMarker(final char[] mapping) {
         for(final char ch : mapping) {
             if (ch == SILENT_MARKER) {
                 return true;
@@ -192,7 +192,7 @@ public class Soundex implements StringEncoder {
      * @param specialCaseHW if true, then 
      * @since 1.11
      */
-    public Soundex(final String mapping, boolean specialCaseHW) {
+    public Soundex(final String mapping, final boolean specialCaseHW) {
         this.soundexMapping = mapping.toCharArray();
         this.specialCaseHW = specialCaseHW;
     }

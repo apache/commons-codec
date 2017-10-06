@@ -124,7 +124,7 @@ public class Base64Test {
         testBase64InBuffer(100, 100);
     }
 
-    private void testBase64InBuffer(int startPasSize, int endPadSize) {
+    private void testBase64InBuffer(final int startPasSize, final int endPadSize) {
         final String content = "Hello World";
         String encodedContent;
         final byte[] bytesUtf8 = StringUtils.getBytesUtf8(content);

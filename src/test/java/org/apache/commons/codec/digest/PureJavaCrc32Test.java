@@ -64,7 +64,7 @@ public class PureJavaCrc32Test {
 
   }
 
-  private void checkOnBytes(byte[] bytes, boolean print) {
+  private void checkOnBytes(final byte[] bytes, final boolean print) {
     theirs.reset();
     ours.reset();
     checkSame();
@@ -111,7 +111,7 @@ public class PureJavaCrc32Test {
     private final int[][] tables;
 
     private Table(final int nBits, final int nTables,
-        long polynomial) {
+        final long polynomial) {
       tables = new int[nTables][];
       final int size = 1 << nBits;
       for(int i = 0; i < tables.length; i++) {
@@ -144,7 +144,7 @@ public class PureJavaCrc32Test {
       }
     }
 
-    String[] toStrings(String nameformat) {
+    String[] toStrings(final String nameformat) {
       final String[] s = new String[tables.length];
       for (int j = 0; j < tables.length; j++) {
         final int[] t = tables[j];
@@ -185,7 +185,7 @@ public class PureJavaCrc32Test {
     }
 
     /** Generate CRC-32 lookup tables */
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(final String[] args) throws FileNotFoundException {
       if (args.length != 1) {
         System.err.println("Usage: " + Table.class.getName() +
             " <polynomial>");
@@ -231,12 +231,12 @@ public class PureJavaCrc32Test {
     }
 
 
-    public static void main(String args[]) throws Exception {
+    public static void main(final String args[]) throws Exception {
       printSystemProperties(System.out);
       doBench(CRCS, System.out);
     }
 
-    private static void printCell(String s, int width, PrintStream out) {
+    private static void printCell(final String s, final int width, final PrintStream out) {
       final int w = s.length() > width? s.length(): width;
       out.printf(" %" + w + "s |", s);
     }
@@ -315,7 +315,7 @@ public class PureJavaCrc32Test {
       }
     }
 
-    private static BenchResult doBench(Class<? extends Checksum> clazz,
+    private static BenchResult doBench(final Class<? extends Checksum> clazz,
         final int numThreads, final byte[] bytes, final int size)
             throws Exception {
 
@@ -371,13 +371,13 @@ public class PureJavaCrc32Test {
       /** Speed (MB per second) */
       final double mbps;
 
-      BenchResult(long value, double mbps) {
+      BenchResult(final long value, final double mbps) {
         this.value = value;
         this.mbps = mbps;
       }
     }
 
-    private static void printSystemProperties(PrintStream out) {
+    private static void printSystemProperties(final PrintStream out) {
       final String[] names = {
           "java.version",
           "java.runtime.name",

@@ -63,7 +63,7 @@ public class PureJavaCrc32CTest {
     }
 
     // Using int because only want 32 bits
-    private void check(int expected) {
+    private void check(final int expected) {
         crc.reset();
         crc.update(data, 0, data.length);
         final int actual = (int) crc.getValue();

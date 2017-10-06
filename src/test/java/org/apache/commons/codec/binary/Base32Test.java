@@ -111,7 +111,7 @@ public class Base32Test {
         testBase64InBuffer(100, 100);
     }
 
-    private void testBase64InBuffer(int startPasSize, int endPadSize) {
+    private void testBase64InBuffer(final int startPasSize, final int endPadSize) {
         final Base32 codec = new Base32();
         for (final String[] element : BASE32_TEST_CASES) {
             final byte[] bytes = element[0].getBytes(CHARSET_UTF8);

@@ -42,7 +42,7 @@ public class XXHash32Test {
     private final File file;
     private final String expectedChecksum;
 
-    public XXHash32Test(String path, String c) throws IOException {
+    public XXHash32Test(final String path, final String c) throws IOException {
         final URL url = XXHash32Test.class.getClassLoader().getResource(path);
         if (url == null) {
             throw new FileNotFoundException("couldn't find " + path);

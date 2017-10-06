@@ -49,7 +49,7 @@ public class Digest {
      *            {@code args[1+]} is a FILE/DIRECTORY/String.
      * @throws IOException if an error occurs
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(final String[] args) throws IOException {
         new Digest(args).run();
     }
 
@@ -79,7 +79,7 @@ public class Digest {
         println(prefix, digest, null);
     }
 
-    private void println(final String prefix, final byte[] digest, String fileName) {
+    private void println(final String prefix, final byte[] digest, final String fileName) {
         // The standard appears to be to print
         // hex, space, then either space or '*' followed by filename
         // where '*' is used for binary files
@@ -101,7 +101,7 @@ public class Digest {
         }
     }
 
-    private void run(String[] digestAlgorithms) throws IOException {
+    private void run(final String[] digestAlgorithms) throws IOException {
         for (final String messageDigestAlgorithm : digestAlgorithms) {
             if (DigestUtils.isAvailable(messageDigestAlgorithm)) {
                 run(messageDigestAlgorithm + " ", messageDigestAlgorithm);
@@ -109,7 +109,7 @@ public class Digest {
         }
     }
 
-    private void run(String prefix, final MessageDigest messageDigest) throws IOException {
+    private void run(final String prefix, final MessageDigest messageDigest) throws IOException {
         if (inputs == null) {
             println(prefix, DigestUtils.digest(messageDigest, System.in));
             return;
@@ -131,7 +131,7 @@ public class Digest {
         }
     }
 
-    private void run(String prefix, MessageDigest messageDigest, File[] files) throws IOException {
+    private void run(final String prefix, final MessageDigest messageDigest, final File[] files) throws IOException {
         for (final File file : files) {
             if (file.isFile()) {
                 println(prefix, DigestUtils.digest(messageDigest, file), file.getName());
@@ -139,7 +139,7 @@ public class Digest {
         }
     }
 
-    private void run(String prefix, final String messageDigestAlgorithm) throws IOException {
+    private void run(final String prefix, final String messageDigestAlgorithm) throws IOException {
         run(prefix, DigestUtils.getDigest(messageDigestAlgorithm));
     }
 

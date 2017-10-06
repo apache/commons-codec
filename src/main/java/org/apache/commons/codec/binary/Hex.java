@@ -76,7 +76,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      *             Thrown if an odd number or illegal of characters is supplied
      * @since 1.11
      */
-    public static byte[] decodeHex(String data) throws DecoderException {
+    public static byte[] decodeHex(final String data) throws DecoderException {
         return decodeHex(data.toCharArray());
     }
 
@@ -237,7 +237,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * @return A String containing lower-case hexadecimal characters
      * @since 1.11
      */
-    public static String encodeHexString(final byte[] data, boolean toLowerCase) {
+    public static String encodeHexString(final byte[] data, final boolean toLowerCase) {
         return new String(encodeHex(data, toLowerCase));
     }
 
@@ -265,7 +265,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * @return A String containing lower-case hexadecimal characters
      * @since 1.11
      */
-    public static String encodeHexString(final ByteBuffer data, boolean toLowerCase) {
+    public static String encodeHexString(final ByteBuffer data, final boolean toLowerCase) {
         return new String(encodeHex(data, toLowerCase));
     }
 

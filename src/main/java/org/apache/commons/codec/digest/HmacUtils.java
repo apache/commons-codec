@@ -65,7 +65,7 @@ public final class HmacUtils {
     * @return whether this algorithm is available
     * @since 1.11
     */
-    public static boolean isAvailable(String name) {
+    public static boolean isAvailable(final String name) {
         try {
             Mac.getInstance(name);
             return true;
@@ -81,7 +81,7 @@ public final class HmacUtils {
     * @return whether this algorithm is available
     * @since 1.11
     */
-    public static boolean isAvailable(HmacAlgorithms name) {
+    public static boolean isAvailable(final HmacAlgorithms name) {
         try {
             Mac.getInstance(name.getName());
             return true;
@@ -954,7 +954,7 @@ public final class HmacUtils {
      * @return the digest as a byte[]
      * @since 1.11
      */
-    public byte[] hmac(byte[] valueToDigest) {
+    public byte[] hmac(final byte[] valueToDigest) {
         return mac.doFinal(valueToDigest);
     }
 
@@ -965,7 +965,7 @@ public final class HmacUtils {
      * @return the digest as a hex String
      * @since 1.11
      */
-    public String hmacHex(byte[] valueToDigest) {
+    public String hmacHex(final byte[] valueToDigest) {
         return Hex.encodeHexString(hmac(valueToDigest));
     }
 
@@ -976,7 +976,7 @@ public final class HmacUtils {
      * @return the digest as a byte[]
      * @since 1.11
      */
-    public byte[] hmac(String valueToDigest) {
+    public byte[] hmac(final String valueToDigest) {
         return mac.doFinal(StringUtils.getBytesUtf8(valueToDigest));
     }
 
@@ -987,7 +987,7 @@ public final class HmacUtils {
      * @return the digest as a hex String
      * @since 1.11
      */
-    public String hmacHex(String valueToDigest) {
+    public String hmacHex(final String valueToDigest) {
         return Hex.encodeHexString(hmac(valueToDigest));
     }
 
@@ -998,7 +998,7 @@ public final class HmacUtils {
      * @return the digest as a byte[]
      * @since 1.11
      */
-    public byte[] hmac(ByteBuffer valueToDigest) {
+    public byte[] hmac(final ByteBuffer valueToDigest) {
         mac.update(valueToDigest);
         return mac.doFinal();
     }
@@ -1010,7 +1010,7 @@ public final class HmacUtils {
      * @return the digest as a hex String
      * @since 1.11
      */
-    public String hmacHex(ByteBuffer valueToDigest) {
+    public String hmacHex(final ByteBuffer valueToDigest) {
         return Hex.encodeHexString(hmac(valueToDigest));
     }
 
@@ -1027,7 +1027,7 @@ public final class HmacUtils {
      *             If an I/O error occurs.
      * @since 1.11
      */
-    public byte[] hmac(InputStream valueToDigest) throws IOException {
+    public byte[] hmac(final InputStream valueToDigest) throws IOException {
         final byte[] buffer = new byte[STREAM_BUFFER_LENGTH];
         int read;
 
@@ -1050,7 +1050,7 @@ public final class HmacUtils {
      *             If an I/O error occurs.
      * @since 1.11
      */
-    public String hmacHex(InputStream valueToDigest) throws IOException {
+    public String hmacHex(final InputStream valueToDigest) throws IOException {
         return Hex.encodeHexString(hmac(valueToDigest));
     }
 
@@ -1081,7 +1081,7 @@ public final class HmacUtils {
      *             If an I/O error occurs.
      * @since 1.11
      */
-    public String hmacHex(File valueToDigest) throws IOException {
+    public String hmacHex(final File valueToDigest) throws IOException {
         return Hex.encodeHexString(hmac(valueToDigest));
     }
 
