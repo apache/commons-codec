@@ -69,9 +69,9 @@ public class PureJavaCrc32Test {
     ours.reset();
     checkSame();
 
-    for (int i = 0; i < bytes.length; i++) {
-      ours.update(bytes[i]);
-      theirs.update(bytes[i]);
+    for (byte b : bytes) {
+      ours.update(b);
+      theirs.update(b);
       checkSame();
     }
 
@@ -347,11 +347,11 @@ public class PureJavaCrc32Test {
         }
       }
 
-      for(int i = 0; i < threads.length; i++) {
-        threads[i].start();
+      for (Thread thread : threads) {
+        thread.start();
       }
-      for(int i = 0; i < threads.length; i++) {
-        threads[i].join();
+      for (Thread thread : threads) {
+        thread.join();
       }
 
       final long expected = results[0].value;
