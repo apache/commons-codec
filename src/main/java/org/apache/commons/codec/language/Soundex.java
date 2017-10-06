@@ -99,7 +99,7 @@ public class Soundex implements StringEncoder {
      * Such letters are ignored (after the first) and do not
      * act as separators when dropping duplicate codes.
      * <p>
-     * The codes for consonants are otherwise the same as for 
+     * The codes for consonants are otherwise the same as for
      * {@link #US_ENGLISH_MAPPING_STRING} and {@link #US_ENGLISH_SIMPLIFIED}
      *
      * @since 1.11
@@ -189,7 +189,7 @@ public class Soundex implements StringEncoder {
      *
      * @param mapping
      *            Mapping string to use when finding the corresponding code for a given character
-     * @param specialCaseHW if true, then 
+     * @param specialCaseHW if true, then
      * @since 1.11
      */
     public Soundex(final String mapping, final boolean specialCaseHW) {

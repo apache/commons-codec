@@ -34,7 +34,7 @@ public class RefinedSoundex implements StringEncoder {
     /**
      * Mapping:
      * <pre>
-     * 0: A E I O U Y H W 
+     * 0: A E I O U Y H W
      * 1: B P
      * 2: F V
      * 3: C K S
