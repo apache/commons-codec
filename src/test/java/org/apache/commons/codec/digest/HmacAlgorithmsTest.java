@@ -19,11 +19,15 @@ package org.apache.commons.codec.digest;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import javax.crypto.Mac;
 
+import org.apache.commons.lang3.JavaVersion;
+import org.apache.commons.lang3.SystemUtils;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -59,6 +63,11 @@ public class HmacAlgorithmsTest {
 
     static final String STANDARD_SHA1_RESULT_STRING = "de7c9b85b8b78aa6bc8a7a36f70a90701c9db4d9";
 
+    static final byte[] STANDARD_SHA224_RESULT_BYTES = new byte[] { -120, -1, -117, 84, 103, 93, 57, -72, -9, 35, 34,
+            -26, 95, -7, 69, -59, 45, -106, 55, -103, -120, -83, -94, 86, 57, 116, 126, 105 };
+
+    static final String STANDARD_SHA224_RESULT_STRING = "88ff8b54675d39b8f72322e65ff945c52d96379988ada25639747e69";
+
     static final byte[] STANDARD_SHA256_RESULT_BYTES = new byte[] { -9, -68, -125, -12, 48, 83, -124, 36, -79, 50, -104,
             -26, -86, 111, -79, 67, -17, 77, 89, -95, 73, 70, 23, 89, -105, 71, -99, -68, 45, 26, 60, -40 };
 
@@ -84,12 +93,19 @@ public class HmacAlgorithmsTest {
     // TODO HMAC_SHA_224
     @Parameters(name = "{0}")
     public static Collection<Object[]> data() {
-        return Arrays.asList(
+        List<Object[]> list = Arrays.asList(
+        // @formatter:off
                 new Object[][] { { HmacAlgorithms.HMAC_MD5, STANDARD_MD5_RESULT_BYTES, STANDARD_MD5_RESULT_STRING },
                         { HmacAlgorithms.HMAC_SHA_1, STANDARD_SHA1_RESULT_BYTES, STANDARD_SHA1_RESULT_STRING },
                         { HmacAlgorithms.HMAC_SHA_256, STANDARD_SHA256_RESULT_BYTES, STANDARD_SHA256_RESULT_STRING },
                         { HmacAlgorithms.HMAC_SHA_384, STANDARD_SHA384_RESULT_BYTES, STANDARD_SHA384_RESULT_STRING },
                         { HmacAlgorithms.HMAC_SHA_512, STANDARD_SHA512_RESULT_BYTES, STANDARD_SHA512_RESULT_STRING } });
+        // @formatter:on
+        if (SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_1_8)) {
+            list = new ArrayList<Object[]>(list);
+            list.add(new Object[] {HmacAlgorithms.HMAC_SHA_224, STANDARD_SHA224_RESULT_BYTES, STANDARD_SHA224_RESULT_STRING});
+        }
+        return list;
     }
 
     private DigestUtilsTest digestUtilsTest;
