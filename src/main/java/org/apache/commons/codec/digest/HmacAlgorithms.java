@@ -31,6 +31,9 @@ package org.apache.commons.codec.digest;
  *      7 Cryptography Architecture Sun Providers Documentation</a>
  * @see <a href="http://docs.oracle.com/javase/8/docs/technotes/guides/security/SunProviders.html#SunJCEProvider"> Java
  *      8 Cryptography Architecture Sun Providers Documentation</a>
+ * @see <a href=
+ *      "http://docs.oracle.com/javase/9/security/oracleproviders.htm#JSSEC-GUID-A47B1249-593C-4C38-A0D0-68FA7681E0A7">
+ *      Java 9 Cryptography Architecture Sun Providers Documentation</a>
  * @since 1.10
  * @version $Id$
  */
@@ -110,6 +113,9 @@ public enum HmacAlgorithms {
      *      Java 7 Cryptography Architecture Sun Providers Documentation</a>
      * @see <a href="http://docs.oracle.com/javase/8/docs/technotes/guides/security/SunProviders.html#SunJCEProvider">
      *      Java 8 Cryptography Architecture Sun Providers Documentation</a>
+     * @see <a href=
+     *      "http://docs.oracle.com/javase/9/security/oracleproviders.htm#JSSEC-GUID-A47B1249-593C-4C38-A0D0-68FA7681E0A7">
+     *      Java 9 Cryptography Architecture Sun Providers Documentation</a>
      * @return The algorithm name ("HmacSHA512" for example)
      */
     @Override
