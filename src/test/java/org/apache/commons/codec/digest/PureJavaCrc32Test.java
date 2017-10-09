@@ -69,7 +69,7 @@ public class PureJavaCrc32Test {
     ours.reset();
     checkSame();
 
-    for (byte b : bytes) {
+    for (final byte b : bytes) {
       ours.update(b);
       theirs.update(b);
       checkSame();
@@ -347,10 +347,10 @@ public class PureJavaCrc32Test {
         }
       }
 
-      for (Thread thread : threads) {
+      for (final Thread thread : threads) {
         thread.start();
       }
-      for (Thread thread : threads) {
+      for (final Thread thread : threads) {
         thread.join();
       }
 
