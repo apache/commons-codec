@@ -27,9 +27,8 @@ import java.util.zip.Checksum;
  *
  * <p>Copied from Commons Compress 1.14
  * <a href="https://git-wip-us.apache.org/repos/asf?p=commons-compress.git;a=blob;f=src/main/java/org/apache/commons/compress/compressors/lz4/XXHash32.java;h=a406ffc197449be594d46f0d2712b2d4786a1e68;hb=HEAD">https://git-wip-us.apache.org/repos/asf?p=commons-compress.git;a=blob;f=src/main/java/org/apache/commons/compress/compressors/lz4/XXHash32.java;h=a406ffc197449be594d46f0d2712b2d4786a1e68;hb=HEAD</a></p>
- *
+ * <p>NotThreadSafe</p>
  * @see <a href="http://cyan4973.github.io/xxHash/">xxHash</a>
- * @NotThreadSafe
  * @since 1.11
  */
 public class XXHash32 implements Checksum {
