@@ -266,15 +266,20 @@ limitations under the License.
           </configuration>
       </plugin>
 
-      <!-- Exclude cli from binary jar -->
+      <!-- Exclude cli from binary jar and add Java 9 Automatic-Module-Name -->
       <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-jar-plugin</artifactId>
-          <configuration>
-              <excludes>
-                  <exclude>**/cli/**</exclude>
-              </excludes>
-          </configuration>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive combine.children="append">
+            <!-- Temporary fix, remove this after this has implemented in parent pom -->
+            <manifestEntries>
+              <Automatic-Module-Name>${commons.module.name}</Automatic-Module-Name>
+            </manifestEntries>
+          </archive>
+          <excludes>
+            <exclude>**/cli/**</exclude>
+          </excludes>
+        </configuration>
       </plugin>
 
       <!-- Create CLI jar -->

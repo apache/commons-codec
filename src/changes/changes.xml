@@ -79,6 +79,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action issue="CODEC-203" dev="ggregory" type="add" due-to="Gary Gregory">Add convenience method decodeHex(String).</action>
       <action issue="CODEC-205" dev="ggregory" type="add" due-to="Gary Gregory">Add faster CRC32 implementation.</action>
       <action issue="CODEC-224" dev="ggregory" type="add" due-to="Gary Gregory">Add convenience API org.apache.commons.codec.binary.Hex.encodeHexString(byte[]|ByteBuffer, boolean).</action>
+      <action issue="CODEC-242" dev="ggregory" type="add" due-to="Gary Gregory">Add Automatic-Module-Name manifest entry for Java 9.</action>
     </release>
     <release version="1.10" date="5 November 2014" description="Feature and fix release.">
       <action dev="ggregory" type="add" issue="CODEC-192" due-to="Thomas Neidhart">Add Daitch-Mokotoff Soundex</action>
