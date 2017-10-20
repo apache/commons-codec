@@ -42,7 +42,9 @@ The <action> type attribute can be add,update,fix,remove.
     <author>Apache Commons Developers</author>
   </properties>
   <body>
-    <release version="1.11" date="2017-MM-DD" description="Feature and fix release.">
+    <release version="1.12" date="2017-MM-DD" description="Feature and fix release.">
+    </release>
+    <release version="1.11" date="2017-10-20" description="Feature and fix release.">
       <!-- The first attribute below should be the issue id; makes it easier to navigate in the IDE outline -->
 
       <action issue="CODEC-241" type="add">Add support for XXHash32</action>
