@@ -38,7 +38,7 @@ public class PhoneticEngineRegressionTest {
         Map<String, String> args;
 
         // concat is true, ruleType is EXACT
-        args = new TreeMap<String, String>();
+        args = new TreeMap<>();
         args.put("nameType", "GENERIC");
         assertEquals(encode(args, true, "Angelo"), "YngYlo|Yngilo|agilo|angYlo|angilo|aniilo|anilo|anxilo|anzilo|ogilo|ongYlo|ongilo|oniilo|onilo|onxilo|onzilo");
         args.put("ruleType", "EXACT");
@@ -49,7 +49,7 @@ public class PhoneticEngineRegressionTest {
         assertEquals(encode(args, true, "1234"), "");
 
         // concat is false, ruleType is EXACT
-        args = new TreeMap<String, String>();
+        args = new TreeMap<>();
         assertEquals(encode(args, false, "Angelo"), "YngYlo|Yngilo|agilo|angYlo|angilo|aniilo|anilo|anxilo|anzilo|ogilo|ongYlo|ongilo|oniilo|onilo|onxilo|onzilo");
         args.put("ruleType", "EXACT");
         assertEquals(encode(args, false, "Angelo"), "anZelo|andZelo|angelo|anhelo|anjelo|anxelo");
@@ -59,7 +59,7 @@ public class PhoneticEngineRegressionTest {
         assertEquals(encode(args, false, "1234"), "");
 
         // concat is true, ruleType is APPROX
-        args = new TreeMap<String, String>();
+        args = new TreeMap<>();
         assertEquals(encode(args, true, "Angelo"), "YngYlo|Yngilo|agilo|angYlo|angilo|aniilo|anilo|anxilo|anzilo|ogilo|ongYlo|ongilo|oniilo|onilo|onxilo|onzilo");
         args.put("ruleType", "APPROX");
         assertEquals(encode(args, true, "Angelo"), "YngYlo|Yngilo|agilo|angYlo|angilo|aniilo|anilo|anxilo|anzilo|ogilo|ongYlo|ongilo|oniilo|onilo|onxilo|onzilo");
@@ -69,7 +69,7 @@ public class PhoneticEngineRegressionTest {
         assertEquals(encode(args, true, "1234"), "");
 
         // concat is false, ruleType is APPROX
-        args = new TreeMap<String, String>();
+        args = new TreeMap<>();
         assertEquals(encode(args, false, "Angelo"), "YngYlo|Yngilo|agilo|angYlo|angilo|aniilo|anilo|anxilo|anzilo|ogilo|ongYlo|ongilo|oniilo|onilo|onxilo|onzilo");
         args.put("ruleType", "APPROX");
         assertEquals(encode(args, false, "Angelo"), "YngYlo|Yngilo|agilo|angYlo|angilo|aniilo|anilo|anxilo|anzilo|ogilo|ongYlo|ongilo|oniilo|onilo|onxilo|onzilo");
@@ -84,7 +84,7 @@ public class PhoneticEngineRegressionTest {
         Map<String, String> args;
 
         // concat is true, ruleType is EXACT
-        args = new TreeMap<String, String>();
+        args = new TreeMap<>();
         args.put("nameType", "ASHKENAZI");
         assertEquals(encode(args, true, "Angelo"), "YngYlo|Yngilo|angYlo|angilo|anilo|anxilo|anzilo|ongYlo|ongilo|onilo|onxilo|onzilo");
         args.put("ruleType", "EXACT");
@@ -95,7 +95,7 @@ public class PhoneticEngineRegressionTest {
         assertEquals(encode(args, true, "1234"), "");
 
         // concat is false, ruleType is EXACT
-        args = new TreeMap<String, String>();
+        args = new TreeMap<>();
         args.put("nameType", "ASHKENAZI");
         assertEquals(encode(args, false, "Angelo"), "YngYlo|Yngilo|angYlo|angilo|anilo|anxilo|anzilo|ongYlo|ongilo|onilo|onxilo|onzilo");
         args.put("ruleType", "EXACT");
@@ -106,7 +106,7 @@ public class PhoneticEngineRegressionTest {
         assertEquals(encode(args, false, "1234"), "");
 
         // concat is true, ruleType is APPROX
-        args = new TreeMap<String, String>();
+        args = new TreeMap<>();
         args.put("nameType", "ASHKENAZI");
         assertEquals(encode(args, true, "Angelo"), "YngYlo|Yngilo|angYlo|angilo|anilo|anxilo|anzilo|ongYlo|ongilo|onilo|onxilo|onzilo");
         args.put("ruleType", "APPROX");
@@ -117,7 +117,7 @@ public class PhoneticEngineRegressionTest {
         assertEquals(encode(args, true, "1234"), "");
 
         // concat is false, ruleType is APPROX
-        args = new TreeMap<String, String>();
+        args = new TreeMap<>();
         args.put("nameType", "ASHKENAZI");
         assertEquals(encode(args, false, "Angelo"), "YngYlo|Yngilo|angYlo|angilo|anilo|anxilo|anzilo|ongYlo|ongilo|onilo|onxilo|onzilo");
         args.put("ruleType", "APPROX");
@@ -133,7 +133,7 @@ public class PhoneticEngineRegressionTest {
         Map<String, String> args;
 
         // concat is true, ruleType is EXACT
-        args = new TreeMap<String, String>();
+        args = new TreeMap<>();
         args.put("nameType", "SEPHARDIC");
         assertEquals(encode(args, true, "Angelo"), "anhila|anhilu|anzila|anzilu|nhila|nhilu|nzila|nzilu");
         args.put("ruleType", "EXACT");
@@ -144,7 +144,7 @@ public class PhoneticEngineRegressionTest {
         assertEquals(encode(args, true, "1234"), "");
 
         // concat is false, ruleType is EXACT
-        args = new TreeMap<String, String>();
+        args = new TreeMap<>();
         args.put("nameType", "SEPHARDIC");
         assertEquals(encode(args, false, "Angelo"), "anhila|anhilu|anzila|anzilu|nhila|nhilu|nzila|nzilu");
         args.put("ruleType", "EXACT");
@@ -155,7 +155,7 @@ public class PhoneticEngineRegressionTest {
         assertEquals(encode(args, false, "1234"), "");
 
         // concat is true, ruleType is APPROX
-        args = new TreeMap<String, String>();
+        args = new TreeMap<>();
         args.put("nameType", "SEPHARDIC");
         assertEquals(encode(args, true, "Angelo"), "anhila|anhilu|anzila|anzilu|nhila|nhilu|nzila|nzilu");
         args.put("ruleType", "APPROX");
@@ -166,7 +166,7 @@ public class PhoneticEngineRegressionTest {
         assertEquals(encode(args, true, "1234"), "");
 
         // concat is false, ruleType is APPROX
-        args = new TreeMap<String, String>();
+        args = new TreeMap<>();
         args.put("nameType", "SEPHARDIC");
         assertEquals(encode(args, false, "Angelo"), "anhila|anhilu|anzila|anzilu|nhila|nhilu|nzila|nzilu");
         args.put("ruleType", "APPROX");
@@ -182,7 +182,7 @@ public class PhoneticEngineRegressionTest {
         // see CODEC-187
         // comparison: http://stevemorse.org/census/soundex.html
 
-        final Map<String, String> args = new TreeMap<String, String>();
+        final Map<String, String> args = new TreeMap<>();
         args.put("nameType", "GENERIC");
         args.put("ruleType", "APPROX");
 
@@ -223,7 +223,7 @@ public class PhoneticEngineRegressionTest {
         if (languageSetArg == null || languageSetArg.equals("auto")) {
             languageSet = null;
         } else {
-            languageSet = Languages.LanguageSet.from(new HashSet<String>(Arrays.asList(languageSetArg.split(","))));
+            languageSet = Languages.LanguageSet.from(new HashSet<>(Arrays.asList(languageSetArg.split(","))));
         }
 
         /*

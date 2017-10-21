@@ -102,7 +102,7 @@ public class HmacAlgorithmsTest {
                         { HmacAlgorithms.HMAC_SHA_512, STANDARD_SHA512_RESULT_BYTES, STANDARD_SHA512_RESULT_STRING } });
         // @formatter:on
         if (SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_1_8)) {
-            list = new ArrayList<Object[]>(list);
+            list = new ArrayList<>(list);
             list.add(new Object[] {HmacAlgorithms.HMAC_SHA_224, STANDARD_SHA224_RESULT_BYTES, STANDARD_SHA224_RESULT_STRING});
         }
         return list;

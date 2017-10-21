@@ -224,7 +224,7 @@ public class PureJavaCrc32Test {
     public static final int BYTES_PER_SIZE = MAX_LEN * 4;
 
     static final Class<? extends Checksum> zip = CRC32.class;
-    static final List<Class<? extends Checksum>> CRCS = new ArrayList<Class<? extends Checksum>>();
+    static final List<Class<? extends Checksum>> CRCS = new ArrayList<>();
     static {
       CRCS.add(zip);
       CRCS.add(PureJavaCrc32.class);
@@ -286,7 +286,7 @@ public class PureJavaCrc32Test {
         printCell(String.valueOf(numThreads), numThreadsStr.length(), out);
 
         BenchResult expected = null;
-        final List<BenchResult> previous = new ArrayList<BenchResult>();
+        final List<BenchResult> previous = new ArrayList<>();
         for(final Class<? extends Checksum> c : crcs) {
           System.gc();
 
