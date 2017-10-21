@@ -222,8 +222,8 @@ limitations under the License.
     </dependency>
   </dependencies>
   <properties>
-    <maven.compiler.source>1.6</maven.compiler.source>
-    <maven.compiler.target>1.6</maven.compiler.target>
+    <maven.compiler.source>1.7</maven.compiler.source>
+    <maven.compiler.target>1.7</maven.compiler.target>
     <commons.componentid>codec</commons.componentid>
     <commons.module.name>org.apache.commons.codec</commons.module.name>
     <commons.release.version>1.12</commons.release.version>
