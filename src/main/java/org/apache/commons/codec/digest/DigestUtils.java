@@ -896,11 +896,8 @@ public class DigestUtils {
      * @since 1.11
      */
     public static MessageDigest updateDigest(final MessageDigest digest, final File data) throws IOException {
-        final BufferedInputStream stream = new BufferedInputStream(new FileInputStream(data));
-        try {
+        try (final BufferedInputStream stream = new BufferedInputStream(new FileInputStream(data))) {
             return updateDigest(digest, stream);
-        } finally {
-            stream.close();
         }
     }
 

@@ -175,8 +175,7 @@ public class Languages {
             throw new IllegalArgumentException("Unable to resolve required resource: " + languagesResourceName);
         }
 
-        final Scanner lsScanner = new Scanner(langIS, ResourceConstants.ENCODING);
-        try {
+        try (final Scanner lsScanner = new Scanner(langIS, ResourceConstants.ENCODING)) {
             boolean inExtendedComment = false;
             while (lsScanner.hasNextLine()) {
                 final String line = lsScanner.nextLine().trim();
@@ -192,8 +191,6 @@ public class Languages {
                     }
                 }
             }
-        } finally {
-            lsScanner.close();
         }
 
         return new Languages(Collections.unmodifiableSet(ls));

@@ -51,15 +51,13 @@ public class Base64OutputStreamTest {
         final byte[] codec98_1024 = new byte[1024];
         System.arraycopy(codec98, 0, codec98_1024, 0, codec98.length);
         final ByteArrayOutputStream data = new ByteArrayOutputStream(1024);
-        final Base64OutputStream stream = new Base64OutputStream(data, false);
-        stream.write(codec98_1024, 0, 1024);
-        stream.close();
+        try (final Base64OutputStream stream = new Base64OutputStream(data, false)) {
+            stream.write(codec98_1024, 0, 1024);
+        }
 
         final byte[] decodedBytes = data.toByteArray();
         final String decoded = StringUtils.newStringUtf8(decodedBytes);
-        assertEquals(
-            "codec-98 NPE Base64OutputStream", Base64TestData.CODEC_98_NPE_DECODED, decoded
-        );
+        assertEquals("codec-98 NPE Base64OutputStream", Base64TestData.CODEC_98_NPE_DECODED, decoded);
     }
 
 
@@ -295,36 +293,36 @@ public class Base64OutputStreamTest {
     public void testWriteOutOfBounds() throws Exception {
         final byte[] buf = new byte[1024];
         final ByteArrayOutputStream bout = new ByteArrayOutputStream();
-        final Base64OutputStream out = new Base64OutputStream(bout);
+        try (final Base64OutputStream out = new Base64OutputStream(bout)) {
 
-        try {
-            out.write(buf, -1, 1);
-            fail("Expected Base64OutputStream.write(buf, -1, 1) to throw a IndexOutOfBoundsException");
-        } catch (final IndexOutOfBoundsException ioobe) {
-            // Expected
-        }
+            try {
+                out.write(buf, -1, 1);
+                fail("Expected Base64OutputStream.write(buf, -1, 1) to throw a IndexOutOfBoundsException");
+            } catch (final IndexOutOfBoundsException ioobe) {
+                // Expected
+            }
 
-        try {
-            out.write(buf, 1, -1);
-            fail("Expected Base64OutputStream.write(buf, 1, -1) to throw a IndexOutOfBoundsException");
-        } catch (final IndexOutOfBoundsException ioobe) {
-            // Expected
-        }
+            try {
+                out.write(buf, 1, -1);
+                fail("Expected Base64OutputStream.write(buf, 1, -1) to throw a IndexOutOfBoundsException");
+            } catch (final IndexOutOfBoundsException ioobe) {
+                // Expected
+            }
 
-        try {
-            out.write(buf, buf.length + 1, 0);
-            fail("Expected Base64OutputStream.write(buf, buf.length + 1, 0) to throw a IndexOutOfBoundsException");
-        } catch (final IndexOutOfBoundsException ioobe) {
-            // Expected
-        }
+            try {
+                out.write(buf, buf.length + 1, 0);
+                fail("Expected Base64OutputStream.write(buf, buf.length + 1, 0) to throw a IndexOutOfBoundsException");
+            } catch (final IndexOutOfBoundsException ioobe) {
+                // Expected
+            }
 
-        try {
-            out.write(buf, buf.length - 1, 2);
-            fail("Expected Base64OutputStream.write(buf, buf.length - 1, 2) to throw a IndexOutOfBoundsException");
-        } catch (final IndexOutOfBoundsException ioobe) {
-            // Expected
+            try {
+                out.write(buf, buf.length - 1, 2);
+                fail("Expected Base64OutputStream.write(buf, buf.length - 1, 2) to throw a IndexOutOfBoundsException");
+            } catch (final IndexOutOfBoundsException ioobe) {
+                // Expected
+            }
         }
-        out.close();
     }
 
     /**
@@ -336,14 +334,11 @@ public class Base64OutputStreamTest {
     @Test
     public void testWriteToNullCoverage() throws Exception {
         final ByteArrayOutputStream bout = new ByteArrayOutputStream();
-        final Base64OutputStream out = new Base64OutputStream(bout);
-        try {
+        try (final Base64OutputStream out = new Base64OutputStream(bout)) {
             out.write(null, 0, 0);
             fail("Expcted Base64OutputStream.write(null) to throw a NullPointerException");
         } catch (final NullPointerException e) {
             // Expected
-        } finally {
-            out.close();
         }
     }
 

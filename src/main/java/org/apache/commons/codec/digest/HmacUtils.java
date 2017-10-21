@@ -1064,11 +1064,8 @@ public final class HmacUtils {
      * @since 1.11
      */
     public byte[] hmac(final File valueToDigest) throws IOException {
-        final BufferedInputStream stream = new BufferedInputStream(new FileInputStream(valueToDigest));
-        try {
+        try (final BufferedInputStream stream = new BufferedInputStream(new FileInputStream(valueToDigest))) {
             return hmac(stream);
-        } finally {
-            stream.close();
         }
     }
 

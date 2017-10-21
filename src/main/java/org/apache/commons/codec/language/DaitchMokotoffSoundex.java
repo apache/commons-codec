@@ -231,11 +231,8 @@ public class DaitchMokotoffSoundex implements StringEncoder {
             throw new IllegalArgumentException("Unable to load resource: " + RESOURCE_FILE);
         }
 
-        final Scanner scanner = new Scanner(rulesIS, CharEncoding.UTF_8);
-        try {
+        try (final Scanner scanner = new Scanner(rulesIS, CharEncoding.UTF_8)) {
             parseRules(scanner, RESOURCE_FILE, RULES, FOLDINGS);
-        } finally {
-            scanner.close();
         }
 
         // sort RULES by pattern length in descending order

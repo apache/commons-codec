@@ -184,30 +184,25 @@ public class PureJavaCrc32Test {
       return b.toString();
     }
 
-    /** Generate CRC-32 lookup tables */
-    public static void main(final String[] args) throws FileNotFoundException {
-      if (args.length != 1) {
-        System.err.println("Usage: " + Table.class.getName() +
-            " <polynomial>");
-        System.exit(1);
-      }
-      final long polynomial = Long.parseLong(args[0], 16);
+        /** Generate CRC-32 lookup tables */
+        public static void main(final String[] args) throws FileNotFoundException {
+            if (args.length != 1) {
+                System.err.println("Usage: " + Table.class.getName() + " <polynomial>");
+                System.exit(1);
+            }
+            final long polynomial = Long.parseLong(args[0], 16);
 
-      final int i = 8;
-      final Table t = new Table(i, 16, polynomial);
-      final String s = t.toString();
-      System.out.println(s);
+            final int i = 8;
+            final Table t = new Table(i, 16, polynomial);
+            final String s = t.toString();
+            System.out.println(s);
 
-      //print to a file
-      final PrintStream out = new PrintStream(
-          new FileOutputStream("table" + i + ".txt"), true);
-      try {
-        out.println(s);
-      } finally {
-        out.close();
-      }
+            // print to a file
+            try (final PrintStream out = new PrintStream(new FileOutputStream("table" + i + ".txt"), true)) {
+                out.println(s);
+            }
+        }
     }
-  }
 
   /**
    * Performance tests to compare performance of the Pure Java implementation

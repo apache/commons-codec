@@ -69,12 +69,9 @@ public class XXHash32Test {
     @Test
     public void verifyChecksum() throws IOException {
         final XXHash32 h = new XXHash32();
-        final FileInputStream s = new FileInputStream(file);
-        try {
+        try (final FileInputStream s = new FileInputStream(file)) {
             final byte[] b = toByteArray(s);
             h.update(b, 0, b.length);
-        } finally {
-            s.close();
         }
         Assert.assertEquals("checksum for " + file.getName(), expectedChecksum, Long.toHexString(h.getValue()));
     }

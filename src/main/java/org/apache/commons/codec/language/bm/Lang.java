@@ -134,8 +134,7 @@ public class Lang {
             throw new IllegalStateException("Unable to resolve required resource:" + LANGUAGE_RULES_RN);
         }
 
-        final Scanner scanner = new Scanner(lRulesIS, ResourceConstants.ENCODING);
-        try {
+        try (final Scanner scanner = new Scanner(lRulesIS, ResourceConstants.ENCODING)) {
             boolean inExtendedComment = false;
             while (scanner.hasNextLine()) {
                 final String rawLine = scanner.nextLine();
@@ -178,8 +177,6 @@ public class Lang {
                     }
                 }
             }
-        } finally {
-            scanner.close();
         }
         return new Lang(rules, languages);
     }

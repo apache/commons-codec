@@ -57,10 +57,9 @@ public class Base64InputStreamTest {
     @Test
     public void testCodec130() throws IOException {
         final ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        final Base64OutputStream base64os = new Base64OutputStream(bos);
-
-        base64os.write(StringUtils.getBytesUtf8(STRING_FIXTURE));
-        base64os.close();
+        try (final Base64OutputStream base64os = new Base64OutputStream(bos)) {
+            base64os.write(StringUtils.getBytesUtf8(STRING_FIXTURE));
+        }
 
         final ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
         final Base64InputStream ins = new Base64InputStream(bis);
@@ -78,13 +77,10 @@ public class Base64InputStreamTest {
      */
     @Test
     public void testCodec105() throws IOException {
-        final Base64InputStream in = new Base64InputStream(new Codec105ErrorInputStream(), true, 0, null);
-        try {
+        try (final Base64InputStream in = new Base64InputStream(new Codec105ErrorInputStream(), true, 0, null)) {
             for (int i = 0; i < 5; i++) {
                 in.read();
             }
-        } finally {
-            in.close();
         }
     }
 
@@ -98,14 +94,14 @@ public class Base64InputStreamTest {
     public void testCodec101() throws Exception {
         final byte[] codec101 = StringUtils.getBytesUtf8(Base64TestData.CODEC_101_MULTIPLE_OF_3);
         final ByteArrayInputStream bais = new ByteArrayInputStream(codec101);
-        final Base64InputStream in = new Base64InputStream(bais);
-        final byte[] result = new byte[8192];
-        int c = in.read(result);
-        assertTrue("Codec101: First read successful [c=" + c + "]", c > 0);
+        try (final Base64InputStream in = new Base64InputStream(bais)) {
+            final byte[] result = new byte[8192];
+            int c = in.read(result);
+            assertTrue("Codec101: First read successful [c=" + c + "]", c > 0);
 
-        c = in.read(result);
-        assertTrue("Codec101: Second read should report end-of-stream [c=" + c + "]", c < 0);
-        in.close();
+            c = in.read(result);
+            assertTrue("Codec101: Second read should report end-of-stream [c=" + c + "]", c < 0);
+        }
     }
 
     /**
@@ -129,10 +125,10 @@ public class Base64InputStreamTest {
         final ByteArrayInputStream bais = new ByteArrayInputStream(codec101);
         final Base64InputStream in = new Base64InputStream(bais);
         final InputStreamReader isr = new InputStreamReader(in);
-        final BufferedReader br = new BufferedReader(isr);
-        final String line = br.readLine();
-        assertNotNull("Codec101:  InputStreamReader works!", line);
-        br.close();
+        try (final BufferedReader br = new BufferedReader(isr)) {
+            final String line = br.readLine();
+            assertNotNull("Codec101:  InputStreamReader works!", line);
+        }
     }
 
     /**
@@ -162,15 +158,15 @@ public class Base64InputStreamTest {
     @Test
     public void testAvailable() throws Throwable {
         final InputStream ins = new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));
-        final Base64InputStream b64stream = new Base64InputStream(ins);
-        assertEquals(1, b64stream.available());
-        assertEquals(6, b64stream.skip(10));
-        // End of stream reached
-        assertEquals(0, b64stream.available());
-        assertEquals(-1, b64stream.read());
-        assertEquals(-1, b64stream.read());
-        assertEquals(0, b64stream.available());
-        b64stream.close();
+        try (final Base64InputStream b64stream = new Base64InputStream(ins)) {
+            assertEquals(1, b64stream.available());
+            assertEquals(6, b64stream.skip(10));
+            // End of stream reached
+            assertEquals(0, b64stream.available());
+            assertEquals(-1, b64stream.read());
+            assertEquals(-1, b64stream.read());
+            assertEquals(0, b64stream.available());
+        }
     }
 
     /**
@@ -403,10 +399,10 @@ public class Base64InputStreamTest {
     public void testMarkSupported() throws Exception {
         final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
         final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
-        final Base64InputStream in = new Base64InputStream(bin, true, 4, new byte[] { 0, 0, 0 });
-        // Always returns false for now.
-        assertFalse("Base64InputStream.markSupported() is false", in.markSupported());
-        in.close();
+        try (final Base64InputStream in = new Base64InputStream(bin, true, 4, new byte[] { 0, 0, 0 })) {
+            // Always returns false for now.
+            assertFalse("Base64InputStream.markSupported() is false", in.markSupported());
+        }
     }
 
     /**
@@ -420,10 +416,10 @@ public class Base64InputStreamTest {
         final byte[] buf = new byte[1024];
         int bytesRead = 0;
         final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
-        final Base64InputStream in = new Base64InputStream(bin, true, 4, new byte[] { 0, 0, 0 });
-        bytesRead = in.read(buf, 0, 0);
-        assertEquals("Base64InputStream.read(buf, 0, 0) returns 0", 0, bytesRead);
-        in.close();
+        try (final Base64InputStream in = new Base64InputStream(bin, true, 4, new byte[] { 0, 0, 0 })) {
+            bytesRead = in.read(buf, 0, 0);
+            assertEquals("Base64InputStream.read(buf, 0, 0) returns 0", 0, bytesRead);
+        }
     }
 
     /**
@@ -436,14 +432,12 @@ public class Base64InputStreamTest {
     public void testReadNull() throws Exception {
         final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
         final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
-        final Base64InputStream in = new Base64InputStream(bin, true, 4, new byte[] { 0, 0, 0 });
-        try {
+        try (final Base64InputStream in = new Base64InputStream(bin, true, 4, new byte[] { 0, 0, 0 })) {
             in.read(null, 0, 0);
             fail("Base64InputStream.read(null, 0, 0) to throw a NullPointerException");
         } catch (final NullPointerException e) {
             // Expected
         }
-        in.close();
     }
 
     /**
@@ -456,36 +450,36 @@ public class Base64InputStreamTest {
         final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
         final byte[] buf = new byte[1024];
         final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
-        final Base64InputStream in = new Base64InputStream(bin, true, 4, new byte[] { 0, 0, 0 });
+        try (final Base64InputStream in = new Base64InputStream(bin, true, 4, new byte[] { 0, 0, 0 })) {
 
-        try {
-            in.read(buf, -1, 0);
-            fail("Expected Base64InputStream.read(buf, -1, 0) to throw IndexOutOfBoundsException");
-        } catch (final IndexOutOfBoundsException e) {
-            // Expected
-        }
+            try {
+                in.read(buf, -1, 0);
+                fail("Expected Base64InputStream.read(buf, -1, 0) to throw IndexOutOfBoundsException");
+            } catch (final IndexOutOfBoundsException e) {
+                // Expected
+            }
 
-        try {
-            in.read(buf, 0, -1);
-            fail("Expected Base64InputStream.read(buf, 0, -1) to throw IndexOutOfBoundsException");
-        } catch (final IndexOutOfBoundsException e) {
-            // Expected
-        }
+            try {
+                in.read(buf, 0, -1);
+                fail("Expected Base64InputStream.read(buf, 0, -1) to throw IndexOutOfBoundsException");
+            } catch (final IndexOutOfBoundsException e) {
+                // Expected
+            }
 
-        try {
-            in.read(buf, buf.length + 1, 0);
-            fail("Base64InputStream.read(buf, buf.length + 1, 0) throws IndexOutOfBoundsException");
-        } catch (final IndexOutOfBoundsException e) {
-            // Expected
-        }
+            try {
+                in.read(buf, buf.length + 1, 0);
+                fail("Base64InputStream.read(buf, buf.length + 1, 0) throws IndexOutOfBoundsException");
+            } catch (final IndexOutOfBoundsException e) {
+                // Expected
+            }
 
-        try {
-            in.read(buf, buf.length - 1, 2);
-            fail("Base64InputStream.read(buf, buf.length - 1, 2) throws IndexOutOfBoundsException");
-        } catch (final IndexOutOfBoundsException e) {
-            // Expected
+            try {
+                in.read(buf, buf.length - 1, 2);
+                fail("Base64InputStream.read(buf, buf.length - 1, 2) throws IndexOutOfBoundsException");
+            } catch (final IndexOutOfBoundsException e) {
+                // Expected
+            }
         }
-        in.close();
     }
 
     /**
@@ -496,12 +490,12 @@ public class Base64InputStreamTest {
     @Test
     public void testSkipBig() throws Throwable {
         final InputStream ins = new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));
-        final Base64InputStream b64stream = new Base64InputStream(ins);
-        assertEquals(6, b64stream.skip(Integer.MAX_VALUE));
-        // End of stream reached
-        assertEquals(-1, b64stream.read());
-        assertEquals(-1, b64stream.read());
-        b64stream.close();
+        try (final Base64InputStream b64stream = new Base64InputStream(ins)) {
+            assertEquals(6, b64stream.skip(Integer.MAX_VALUE));
+            // End of stream reached
+            assertEquals(-1, b64stream.read());
+            assertEquals(-1, b64stream.read());
+        }
     }
 
     /**
@@ -512,14 +506,14 @@ public class Base64InputStreamTest {
     @Test
     public void testSkipNone() throws Throwable {
         final InputStream ins = new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));
-        final Base64InputStream b64stream = new Base64InputStream(ins);
-        final byte[] actualBytes = new byte[6];
-        assertEquals(0, b64stream.skip(0));
-        b64stream.read(actualBytes, 0, actualBytes.length);
-        assertArrayEquals(actualBytes, new byte[] { 0, 0, 0, (byte) 255, (byte) 255, (byte) 255 });
-        // End of stream reached
-        assertEquals(-1, b64stream.read());
-        b64stream.close();
+        try (final Base64InputStream b64stream = new Base64InputStream(ins)) {
+            final byte[] actualBytes = new byte[6];
+            assertEquals(0, b64stream.skip(0));
+            b64stream.read(actualBytes, 0, actualBytes.length);
+            assertArrayEquals(actualBytes, new byte[] { 0, 0, 0, (byte) 255, (byte) 255, (byte) 255 });
+            // End of stream reached
+            assertEquals(-1, b64stream.read());
+        }
     }
 
     /**
@@ -530,13 +524,13 @@ public class Base64InputStreamTest {
     @Test
     public void testSkipPastEnd() throws Throwable {
         final InputStream ins = new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));
-        final Base64InputStream b64stream = new Base64InputStream(ins);
-        // due to CODEC-130, skip now skips correctly decoded characters rather than encoded
-        assertEquals(6, b64stream.skip(10));
-        // End of stream reached
-        assertEquals(-1, b64stream.read());
-        assertEquals(-1, b64stream.read());
-        b64stream.close();
+        try (final Base64InputStream b64stream = new Base64InputStream(ins)) {
+            // due to CODEC-130, skip now skips correctly decoded characters rather than encoded
+            assertEquals(6, b64stream.skip(10));
+            // End of stream reached
+            assertEquals(-1, b64stream.read());
+            assertEquals(-1, b64stream.read());
+        }
     }
 
     /**
@@ -547,13 +541,13 @@ public class Base64InputStreamTest {
     @Test
     public void testSkipToEnd() throws Throwable {
         final InputStream ins = new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));
-        final Base64InputStream b64stream = new Base64InputStream(ins);
-        // due to CODEC-130, skip now skips correctly decoded characters rather than encoded
-        assertEquals(6, b64stream.skip(6));
-        // End of stream reached
-        assertEquals(-1, b64stream.read());
-        assertEquals(-1, b64stream.read());
-        b64stream.close();
+        try (final Base64InputStream b64stream = new Base64InputStream(ins)) {
+            // due to CODEC-130, skip now skips correctly decoded characters rather than encoded
+            assertEquals(6, b64stream.skip(6));
+            // End of stream reached
+            assertEquals(-1, b64stream.read());
+            assertEquals(-1, b64stream.read());
+        }
     }
 
     /**
@@ -564,8 +558,8 @@ public class Base64InputStreamTest {
     @Test(expected=IllegalArgumentException.class)
     public void testSkipWrongArgument() throws Throwable {
         final InputStream ins = new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));
-        final Base64InputStream b64stream = new Base64InputStream(ins);
-        b64stream.skip(-10);
-        b64stream.close();
+        try (final Base64InputStream b64stream = new Base64InputStream(ins)) {
+            b64stream.skip(-10);
+        }
     }
 }
