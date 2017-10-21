@@ -89,7 +89,7 @@ public class MessageDigestAlgorithmsTest {
         this.messageDigestAlgorithm = messageDigestAlgorithm;
     }
 
-    private byte[] digestTestData() throws IOException {
+    private byte[] digestTestData() {
         return DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm),getTestData());
     }
 
@@ -114,7 +114,7 @@ public class MessageDigestAlgorithmsTest {
     }
 
     @Test
-    public void testAlgorithm() throws IOException, NoSuchAlgorithmException {
+    public void testAlgorithm() throws NoSuchAlgorithmException {
         final String algorithm = messageDigestAlgorithm;
         Assert.assertNotNull(algorithm);
         Assert.assertFalse(algorithm.isEmpty());
@@ -123,7 +123,7 @@ public class MessageDigestAlgorithmsTest {
     }
 
     @Test
-    public void testDigestByteArray() throws IOException {
+    public void testDigestByteArray() {
         Assume.assumeTrue(DigestUtils.isAvailable(messageDigestAlgorithm));
         Assert.assertArrayEquals(digestTestData(),
                 DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm), getTestData()));
@@ -131,7 +131,7 @@ public class MessageDigestAlgorithmsTest {
     }
 
     @Test
-    public void testDigestByteBuffer() throws IOException {
+    public void testDigestByteBuffer() {
         Assume.assumeTrue(DigestUtils.isAvailable(messageDigestAlgorithm));
         Assert.assertArrayEquals(digestTestData(),
                 DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm), ByteBuffer.wrap(getTestData())));
@@ -155,7 +155,7 @@ public class MessageDigestAlgorithmsTest {
     }
 
     @Test
-    public void testGetMessageDigest() throws IOException, NoSuchAlgorithmException {
+    public void testGetMessageDigest() {
         Assume.assumeTrue(DigestUtils.isAvailable(messageDigestAlgorithm));
         final MessageDigest messageDigest = DigestUtils.getDigest(messageDigestAlgorithm);
         Assert.assertEquals(messageDigestAlgorithm, messageDigest.getAlgorithm());

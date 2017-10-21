@@ -43,7 +43,7 @@ public class HmacUtilsTest {
     }
 
     @Test
-    public void testGetHMac() throws IOException {
+    public void testGetHMac() {
         Assert.assertArrayEquals(HmacAlgorithmsTest.STANDARD_MD5_RESULT_BYTES,
                 HmacUtils.getHmacMd5(HmacAlgorithmsTest.STANDARD_KEY_BYTES).doFinal(HmacAlgorithmsTest.STANDARD_PHRASE_BYTES));
         Assert.assertArrayEquals(HmacAlgorithmsTest.STANDARD_SHA1_RESULT_BYTES,
@@ -80,7 +80,7 @@ public class HmacUtilsTest {
     }
 
     @Test
-    public void testHmacSha1UpdateWithByteArray() throws IOException {
+    public void testHmacSha1UpdateWithByteArray() {
         final Mac mac = HmacUtils.getHmacSha1(HmacAlgorithmsTest.STANDARD_KEY_BYTES);
         HmacUtils.updateHmac(mac, HmacAlgorithmsTest.STANDARD_PHRASE_BYTES);
         assertEquals(HmacAlgorithmsTest.STANDARD_SHA1_RESULT_STRING, Hex.encodeHexString(mac.doFinal()));
@@ -98,7 +98,7 @@ public class HmacUtilsTest {
     }
 
     @Test
-    public void testHmacSha1UpdateWithString() throws IOException {
+    public void testHmacSha1UpdateWithString() {
         final Mac mac = HmacUtils.getHmacSha1(HmacAlgorithmsTest.STANDARD_KEY_BYTES);
         HmacUtils.updateHmac(mac, HmacAlgorithmsTest.STANDARD_PHRASE_STRING);
         assertEquals(HmacAlgorithmsTest.STANDARD_SHA1_RESULT_STRING, Hex.encodeHexString(mac.doFinal()));
@@ -107,7 +107,7 @@ public class HmacUtilsTest {
     }
 
     @Test
-    public void testInitializedMac() throws IOException {
+    public void testInitializedMac() {
         final Mac md5Mac = HmacUtils.getInitializedMac(HmacAlgorithms.HMAC_MD5, HmacAlgorithmsTest.STANDARD_KEY_BYTES);
         final Mac md5Mac2 = HmacUtils.getInitializedMac("HmacMD5", HmacAlgorithmsTest.STANDARD_KEY_BYTES);
         Assert.assertArrayEquals(HmacAlgorithmsTest.STANDARD_MD5_RESULT_BYTES, HmacUtils.updateHmac(md5Mac, HmacAlgorithmsTest.STANDARD_PHRASE_STRING)
@@ -117,12 +117,12 @@ public class HmacUtilsTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testInitializedMacNullAlgo() throws IOException {
+    public void testInitializedMacNullAlgo() {
         HmacUtils.getInitializedMac((String) null, HmacAlgorithmsTest.STANDARD_KEY_BYTES);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testInitializedMacNullKey() throws IOException {
+    public void testInitializedMacNullKey() {
         HmacUtils.getInitializedMac(HmacAlgorithms.HMAC_MD5, null);
     }
 
@@ -147,7 +147,7 @@ public class HmacUtilsTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testMd5HMacFail() throws IOException {
+    public void testMd5HMacFail() {
         HmacUtils.hmacMd5((byte[]) null, HmacAlgorithmsTest.STANDARD_PHRASE_BYTES);
     }
 
@@ -178,7 +178,7 @@ public class HmacUtilsTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testSha1HMacFail() throws IOException {
+    public void testSha1HMacFail() {
         HmacUtils.hmacSha1((byte[]) null, HmacAlgorithmsTest.STANDARD_PHRASE_BYTES);
     }
 
@@ -199,7 +199,7 @@ public class HmacUtilsTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testSha256HMacFail() throws IOException {
+    public void testSha256HMacFail() {
         HmacUtils.hmacSha256((byte[]) null, HmacAlgorithmsTest.STANDARD_PHRASE_BYTES);
     }
 
@@ -220,7 +220,7 @@ public class HmacUtilsTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testSha384HMacFail() throws IOException {
+    public void testSha384HMacFail() {
         HmacUtils.hmacSha384((byte[]) null, HmacAlgorithmsTest.STANDARD_PHRASE_BYTES);
     }
 
@@ -241,7 +241,7 @@ public class HmacUtilsTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testSha512HMacFail() throws IOException {
+    public void testSha512HMacFail() {
         HmacUtils.hmacSha512((byte[]) null, HmacAlgorithmsTest.STANDARD_PHRASE_BYTES);
     }
 }

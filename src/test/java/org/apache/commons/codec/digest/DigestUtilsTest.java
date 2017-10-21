@@ -256,7 +256,7 @@ public class DigestUtilsTest {
     }
 
     @Test
-    public void testSha224() throws IOException {
+    public void testSha224() {
         assumeJava8();
         assertEquals("d14a028c2a3a2bc9476102bb288234c415a2b01f828ea62ac5b3e42f",
                 new DigestUtils(MessageDigestAlgorithms.SHA_224).digestAsHex(("")));
@@ -298,7 +298,7 @@ public class DigestUtilsTest {
     }
 
     @Test
-    public void testSha512() throws IOException {
+    public void testSha512() {
     // Examples from FIPS 180-2
     assertEquals("ddaf35a193617abacc417349ae20413112e6fa4e89a97ea20a9eeee64b55d39a" +
             "2192992a274fc1a836ba3c23a3feebbd454d4423643ce80e2a9ac94fa54ca49f",
