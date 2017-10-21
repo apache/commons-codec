@@ -331,7 +331,7 @@ public class PureJavaCrc32Test {
             public void run() {
               final long st = System.nanoTime();
               crc.reset();
-              for (int i = 0; i < trials; i++) {
+              for (int trialIndex = 0; trialIndex < trials; trialIndex++) {
                 crc.update(bytes, 0, size);
               }
               final long et = System.nanoTime();
