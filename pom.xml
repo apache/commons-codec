@@ -242,6 +242,7 @@ limitations under the License.
     <commons.jacoco.version>0.7.9</commons.jacoco.version>
   </properties>
   <build>
+    <defaultGoal>clean verify apache-rat:check clirr:check javadoc:javadoc</defaultGoal>
     <pluginManagement>
       <plugins>
         <plugin>
