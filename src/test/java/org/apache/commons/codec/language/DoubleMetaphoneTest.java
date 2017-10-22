@@ -1165,7 +1165,7 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest<DoubleMetapho
         this.validateFixture(FIXTURE);
         final StringBuilder failures = new StringBuilder();
         final StringBuilder matches = new StringBuilder();
-        final String cr = System.getProperty("line.separator");
+        final String cr = System.lineSeparator();
         matches.append("private static final String[][] MATCHES = {" + cr);
         int failCount = 0;
         for (int i = 0; i < FIXTURE.length; i++) {
