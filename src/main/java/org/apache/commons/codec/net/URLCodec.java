@@ -220,17 +220,17 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      *
      * @param str
      *            string to convert to a URL safe form
-     * @param charset
+     * @param charsetName
      *            the charset for str
      * @return URL safe string
      * @throws UnsupportedEncodingException
      *             Thrown if charset is not supported
      */
-    public String encode(final String str, final String charset) throws UnsupportedEncodingException {
+    public String encode(final String str, final String charsetName) throws UnsupportedEncodingException {
         if (str == null) {
             return null;
         }
-        return StringUtils.newStringUsAscii(encode(str.getBytes(charset)));
+        return StringUtils.newStringUsAscii(encode(str.getBytes(charsetName)));
     }
 
     /**
@@ -263,7 +263,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      *
      * @param str
      *            URL safe string to convert into its original form
-     * @param charset
+     * @param charsetName
      *            the original string charset
      * @return original string
      * @throws DecoderException
@@ -271,11 +271,11 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      * @throws UnsupportedEncodingException
      *             Thrown if charset is not supported
      */
-    public String decode(final String str, final String charset) throws DecoderException, UnsupportedEncodingException {
+    public String decode(final String str, final String charsetName) throws DecoderException, UnsupportedEncodingException {
         if (str == null) {
             return null;
         }
-        return new String(decode(StringUtils.getBytesUsAscii(str)), charset);
+        return new String(decode(StringUtils.getBytesUsAscii(str)), charsetName);
     }
 
     /**
