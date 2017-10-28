@@ -271,7 +271,8 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      * @throws UnsupportedEncodingException
      *             Thrown if charset is not supported
      */
-    public String decode(final String str, final String charsetName) throws DecoderException, UnsupportedEncodingException {
+    public String decode(final String str, final String charsetName)
+            throws DecoderException, UnsupportedEncodingException {
         if (str == null) {
             return null;
         }
