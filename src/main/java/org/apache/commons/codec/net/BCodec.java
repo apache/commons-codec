@@ -45,7 +45,7 @@ import org.apache.commons.codec.binary.Base64;
  */
 public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder {
     /**
-     * The default charset used for string decoding and encoding.
+     * The default Charset used for string decoding and encoding.
      */
     private final Charset charset;
 
@@ -57,10 +57,10 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     }
 
     /**
-     * Constructor which allows for the selection of a default charset
+     * Constructor which allows for the selection of a default Charset
      *
      * @param charset
-     *            the default string charset to use.
+     *            the default string Charset to use.
      *
      * @see <a href="http://download.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      * @since 1.7
@@ -70,13 +70,13 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     }
 
     /**
-     * Constructor which allows for the selection of a default charset
+     * Constructor which allows for the selection of a default Charset
      *
      * @param charsetName
-     *            the default charset to use.
+     *            the default Charset to use.
      * @throws java.nio.charset.UnsupportedCharsetException
-     *             If the named charset is unavailable
-     * @since 1.7 throws UnsupportedCharsetException if the named charset is unavailable
+     *             If the named Charset is unavailable
+     * @since 1.7 throws UnsupportedCharsetException if the named Charset is unavailable
      * @see <a href="http://download.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      */
     public BCodec(final String charsetName) {
@@ -105,61 +105,61 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     }
 
     /**
-     * Encodes a string into its Base64 form using the specified charset. Unsafe characters are escaped.
+     * Encodes a string into its Base64 form using the specified Charset. Unsafe characters are escaped.
      *
-     * @param value
+     * @param strSource
      *            string to convert to Base64 form
-     * @param charset
-     *            the charset for <code>value</code>
+     * @param sourceCharset
+     *            the Charset for <code>value</code>
      * @return Base64 string
      * @throws EncoderException
      *             thrown if a failure condition is encountered during the encoding process.
      * @since 1.7
      */
-    public String encode(final String value, final Charset charset) throws EncoderException {
-        if (value == null) {
+    public String encode(final String strSource, final Charset sourceCharset) throws EncoderException {
+        if (strSource == null) {
             return null;
         }
-        return encodeText(value, charset);
+        return encodeText(strSource, sourceCharset);
     }
 
     /**
-     * Encodes a string into its Base64 form using the specified charset. Unsafe characters are escaped.
+     * Encodes a string into its Base64 form using the specified Charset. Unsafe characters are escaped.
      *
-     * @param value
+     * @param strSource
      *            string to convert to Base64 form
-     * @param charset
-     *            the charset for <code>value</code>
+     * @param sourceCharset
+     *            the Charset for <code>value</code>
      * @return Base64 string
      * @throws EncoderException
      *             thrown if a failure condition is encountered during the encoding process.
      */
-    public String encode(final String value, final String charset) throws EncoderException {
-        if (value == null) {
+    public String encode(final String strSource, final String sourceCharset) throws EncoderException {
+        if (strSource == null) {
             return null;
         }
         try {
-            return this.encodeText(value, charset);
+            return this.encodeText(strSource, sourceCharset);
         } catch (final UnsupportedEncodingException e) {
             throw new EncoderException(e.getMessage(), e);
         }
     }
 
     /**
-     * Encodes a string into its Base64 form using the default charset. Unsafe characters are escaped.
+     * Encodes a string into its Base64 form using the default Charset. Unsafe characters are escaped.
      *
-     * @param value
+     * @param strSource
      *            string to convert to Base64 form
      * @return Base64 string
      * @throws EncoderException
      *             thrown if a failure condition is encountered during the encoding process.
      */
     @Override
-    public String encode(final String value) throws EncoderException {
-        if (value == null) {
+    public String encode(final String strSource) throws EncoderException {
+        if (strSource == null) {
             return null;
         }
-        return encode(value, this.getCharset());
+        return encode(strSource, this.getCharset());
     }
 
     /**
@@ -185,7 +185,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     }
 
     /**
-     * Encodes an object into its Base64 form using the default charset. Unsafe characters are escaped.
+     * Encodes an object into its Base64 form using the default Charset. Unsafe characters are escaped.
      *
      * @param value
      *            object to convert to Base64 form
@@ -231,9 +231,9 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     }
 
     /**
-     * Gets the default charset name used for string decoding and encoding.
+     * Gets the default Charset name used for string decoding and encoding.
      *
-     * @return the default charset name
+     * @return the default Charset name
      * @since 1.7
      */
     public Charset getCharset() {
@@ -241,9 +241,9 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     }
 
     /**
-     * Gets the default charset name used for string decoding and encoding.
+     * Gets the default Charset name used for string decoding and encoding.
      *
-     * @return the default charset name
+     * @return the default Charset name
      */
     public String getDefaultCharset() {
         return this.charset.name();
