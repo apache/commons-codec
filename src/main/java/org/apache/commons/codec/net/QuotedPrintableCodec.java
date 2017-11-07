@@ -435,18 +435,18 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      *
      * @param str
      *            quoted-printable string to convert into its original form
-     * @param charset
+     * @param sourceCharset
      *            the original string charset
      * @return original string
      * @throws DecoderException
      *             Thrown if quoted-printable decoding is unsuccessful
      * @since 1.7
      */
-    public String decode(final String str, final Charset charset) throws DecoderException {
+    public String decode(final String str, final Charset sourceCharset) throws DecoderException {
         if (str == null) {
             return null;
         }
-        return new String(this.decode(StringUtils.getBytesUsAscii(str)), charset);
+        return new String(this.decode(StringUtils.getBytesUsAscii(str)), sourceCharset);
     }
 
     /**
@@ -455,7 +455,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      *
      * @param str
      *            quoted-printable string to convert into its original form
-     * @param charset
+     * @param sourceCharset
      *            the original string charset
      * @return original string
      * @throws DecoderException
@@ -463,11 +463,11 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * @throws UnsupportedEncodingException
      *             Thrown if charset is not supported
      */
-    public String decode(final String str, final String charset) throws DecoderException, UnsupportedEncodingException {
+    public String decode(final String str, final String sourceCharset) throws DecoderException, UnsupportedEncodingException {
         if (str == null) {
             return null;
         }
-        return new String(decode(StringUtils.getBytesUsAscii(str)), charset);
+        return new String(decode(StringUtils.getBytesUsAscii(str)), sourceCharset);
     }
 
     /**
@@ -565,16 +565,16 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      *
      * @param str
      *            string to convert to quoted-printable form
-     * @param charset
+     * @param sourceCharset
      *            the charset for str
      * @return quoted-printable string
      * @since 1.7
      */
-    public String encode(final String str, final Charset charset) {
+    public String encode(final String str, final Charset sourceCharset) {
         if (str == null) {
             return null;
         }
-        return StringUtils.newStringUsAscii(this.encode(str.getBytes(charset)));
+        return StringUtils.newStringUsAscii(this.encode(str.getBytes(sourceCharset)));
     }
 
     /**
@@ -586,16 +586,16 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      *
      * @param str
      *            string to convert to quoted-printable form
-     * @param charset
+     * @param sourceCharset
      *            the charset for str
      * @return quoted-printable string
      * @throws UnsupportedEncodingException
      *             Thrown if the charset is not supported
      */
-    public String encode(final String str, final String charset) throws UnsupportedEncodingException {
+    public String encode(final String str, final String sourceCharset) throws UnsupportedEncodingException {
         if (str == null) {
             return null;
         }
-        return StringUtils.newStringUsAscii(encode(str.getBytes(charset)));
+        return StringUtils.newStringUsAscii(encode(str.getBytes(sourceCharset)));
     }
 }
