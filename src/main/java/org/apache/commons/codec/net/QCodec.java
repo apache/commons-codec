@@ -197,18 +197,18 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      *
      * @param str
      *            string to convert to quoted-printable form
-     * @param charset
+     * @param sourceCharset
      *            the charset for str
      * @return quoted-printable string
      * @throws EncoderException
      *             thrown if a failure condition is encountered during the encoding process.
      * @since 1.7
      */
-    public String encode(final String str, final Charset charset) throws EncoderException {
+    public String encode(final String str, final Charset sourceCharset) throws EncoderException {
         if (str == null) {
             return null;
         }
-        return encodeText(str, charset);
+        return encodeText(str, sourceCharset);
     }
 
     /**
@@ -216,18 +216,18 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      *
      * @param str
      *            string to convert to quoted-printable form
-     * @param charset
+     * @param sourceCharset
      *            the charset for str
      * @return quoted-printable string
      * @throws EncoderException
      *             thrown if a failure condition is encountered during the encoding process.
      */
-    public String encode(final String str, final String charset) throws EncoderException {
+    public String encode(final String str, final String sourceCharset) throws EncoderException {
         if (str == null) {
             return null;
         }
         try {
-            return encodeText(str, charset);
+            return encodeText(str, sourceCharset);
         } catch (final UnsupportedEncodingException e) {
             throw new EncoderException(e.getMessage(), e);
         }
