@@ -17,12 +17,16 @@
 
 package org.apache.commons.codec.net;
 
-import java.nio.charset.Charset;
-import java.util.Arrays;
-import org.apache.commons.codec.DecoderException;
-import org.apache.commons.codec.EncoderException;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+
+import java.nio.charset.Charset;
+import java.util.Arrays;
+
+import org.apache.commons.codec.DecoderException;
+import org.apache.commons.codec.EncoderException;
+import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -40,6 +44,15 @@ public class PercentCodecTest {
         final String decodedS = new String(decoded, "UTF-8");
         assertEquals("Basic PercentCodec encoding test", input, encodedS);
         assertEquals("Basic PercentCodec decoding test", input, decodedS);
+    }
+
+    @Test
+    @Ignore
+    public void testBasicSpace() throws Exception {
+        PercentCodec percentCodec = new PercentCodec();
+        final String input = " ";
+        byte[] encoded = percentCodec.encode(input.getBytes(Charset.forName("UTF-8")));
+        Assert.assertArrayEquals("%20".getBytes(Charset.forName("UTF-8")), encoded);
     }
 
     @Test
