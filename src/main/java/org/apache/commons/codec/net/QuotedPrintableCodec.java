@@ -416,7 +416,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * or only a subset of quoted-printable encoding specification (rule #1 and rule #2) as defined in
      * RFC 1521 and is suitable for encoding binary data and unformatted text.
      *
-     * @param str
+     * @param sourceStr
      *            string to convert to quoted-printable form
      * @return quoted-printable string
      * @throws EncoderException
@@ -425,15 +425,15 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * @see #getCharset()
      */
     @Override
-    public String encode(final String str) throws EncoderException {
-        return this.encode(str, getCharset());
+    public String encode(final String sourceStr) throws EncoderException {
+        return this.encode(sourceStr, getCharset());
     }
 
     /**
      * Decodes a quoted-printable string into its original form using the specified string charset. Escaped characters
      * are converted back to their original representation.
      *
-     * @param str
+     * @param sourceStr
      *            quoted-printable string to convert into its original form
      * @param sourceCharset
      *            the original string charset
@@ -442,18 +442,18 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      *             Thrown if quoted-printable decoding is unsuccessful
      * @since 1.7
      */
-    public String decode(final String str, final Charset sourceCharset) throws DecoderException {
-        if (str == null) {
+    public String decode(final String sourceStr, final Charset sourceCharset) throws DecoderException {
+        if (sourceStr == null) {
             return null;
         }
-        return new String(this.decode(StringUtils.getBytesUsAscii(str)), sourceCharset);
+        return new String(this.decode(StringUtils.getBytesUsAscii(sourceStr)), sourceCharset);
     }
 
     /**
      * Decodes a quoted-printable string into its original form using the specified string charset. Escaped characters
      * are converted back to their original representation.
      *
-     * @param str
+     * @param sourceStr
      *            quoted-printable string to convert into its original form
      * @param sourceCharset
      *            the original string charset
@@ -463,18 +463,18 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * @throws UnsupportedEncodingException
      *             Thrown if charset is not supported
      */
-    public String decode(final String str, final String sourceCharset) throws DecoderException, UnsupportedEncodingException {
-        if (str == null) {
+    public String decode(final String sourceStr, final String sourceCharset) throws DecoderException, UnsupportedEncodingException {
+        if (sourceStr == null) {
             return null;
         }
-        return new String(decode(StringUtils.getBytesUsAscii(str)), sourceCharset);
+        return new String(decode(StringUtils.getBytesUsAscii(sourceStr)), sourceCharset);
     }
 
     /**
      * Decodes a quoted-printable string into its original form using the default string charset. Escaped characters are
      * converted back to their original representation.
      *
-     * @param str
+     * @param sourceStr
      *            quoted-printable string to convert into its original form
      * @return original string
      * @throws DecoderException
@@ -482,8 +482,8 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * @see #getCharset()
      */
     @Override
-    public String decode(final String str) throws DecoderException {
-        return this.decode(str, this.getCharset());
+    public String decode(final String sourceStr) throws DecoderException {
+        return this.decode(sourceStr, this.getCharset());
     }
 
     /**
@@ -563,18 +563,18 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * or only a subset of quoted-printable encoding specification (rule #1 and rule #2) as defined in
      * RFC 1521 and is suitable for encoding binary data and unformatted text.
      *
-     * @param str
+     * @param sourceStr
      *            string to convert to quoted-printable form
      * @param sourceCharset
      *            the charset for str
      * @return quoted-printable string
      * @since 1.7
      */
-    public String encode(final String str, final Charset sourceCharset) {
-        if (str == null) {
+    public String encode(final String sourceStr, final Charset sourceCharset) {
+        if (sourceStr == null) {
             return null;
         }
-        return StringUtils.newStringUsAscii(this.encode(str.getBytes(sourceCharset)));
+        return StringUtils.newStringUsAscii(this.encode(sourceStr.getBytes(sourceCharset)));
     }
 
     /**
@@ -584,7 +584,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * or only a subset of quoted-printable encoding specification (rule #1 and rule #2) as defined in
      * RFC 1521 and is suitable for encoding binary data and unformatted text.
      *
-     * @param str
+     * @param sourceStr
      *            string to convert to quoted-printable form
      * @param sourceCharset
      *            the charset for str
@@ -592,10 +592,10 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * @throws UnsupportedEncodingException
      *             Thrown if the charset is not supported
      */
-    public String encode(final String str, final String sourceCharset) throws UnsupportedEncodingException {
-        if (str == null) {
+    public String encode(final String sourceStr, final String sourceCharset) throws UnsupportedEncodingException {
+        if (sourceStr == null) {
             return null;
         }
-        return StringUtils.newStringUsAscii(encode(str.getBytes(sourceCharset)));
+        return StringUtils.newStringUsAscii(encode(sourceStr.getBytes(sourceCharset)));
     }
 }
