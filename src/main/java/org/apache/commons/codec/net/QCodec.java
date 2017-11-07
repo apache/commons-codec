@@ -51,7 +51,7 @@ import org.apache.commons.codec.StringEncoder;
  */
 public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder {
     /**
-     * The default charset used for string decoding and encoding.
+     * The default Charset used for string decoding and encoding.
      */
     private final Charset charset;
 
@@ -117,10 +117,10 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     }
 
     /**
-     * Constructor which allows for the selection of a default charset.
+     * Constructor which allows for the selection of a default Charset.
      *
      * @param charset
-     *            the default string charset to use.
+     *            the default string Charset to use.
      *
      * @see <a href="http://download.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      * @since 1.7
@@ -131,13 +131,13 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     }
 
     /**
-     * Constructor which allows for the selection of a default charset.
+     * Constructor which allows for the selection of a default Charset.
      *
      * @param charsetName
-     *            the charset to use.
+     *            the Charset to use.
      * @throws java.nio.charset.UnsupportedCharsetException
-     *             If the named charset is unavailable
-     * @since 1.7 throws UnsupportedCharsetException if the named charset is unavailable
+     *             If the named Charset is unavailable
+     * @since 1.7 throws UnsupportedCharsetException if the named Charset is unavailable
      * @see <a href="http://download.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      */
     public QCodec(final String charsetName) {
@@ -193,12 +193,12 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     }
 
     /**
-     * Encodes a string into its quoted-printable form using the specified charset. Unsafe characters are escaped.
+     * Encodes a string into its quoted-printable form using the specified Charset. Unsafe characters are escaped.
      *
      * @param sourceStr
      *            string to convert to quoted-printable form
      * @param sourceCharset
-     *            the charset for sourceStr
+     *            the Charset for sourceStr
      * @return quoted-printable string
      * @throws EncoderException
      *             thrown if a failure condition is encountered during the encoding process.
@@ -212,12 +212,12 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     }
 
     /**
-     * Encodes a string into its quoted-printable form using the specified charset. Unsafe characters are escaped.
+     * Encodes a string into its quoted-printable form using the specified Charset. Unsafe characters are escaped.
      *
      * @param sourceStr
      *            string to convert to quoted-printable form
      * @param sourceCharset
-     *            the charset for sourceStr
+     *            the Charset for sourceStr
      * @return quoted-printable string
      * @throws EncoderException
      *             thrown if a failure condition is encountered during the encoding process.
@@ -234,7 +234,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     }
 
     /**
-     * Encodes a string into its quoted-printable form using the default charset. Unsafe characters are escaped.
+     * Encodes a string into its quoted-printable form using the default Charset. Unsafe characters are escaped.
      *
      * @param sourceStr
      *            string to convert to quoted-printable form
@@ -273,7 +273,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     }
 
     /**
-     * Encodes an object into its quoted-printable form using the default charset. Unsafe characters are escaped.
+     * Encodes an object into its quoted-printable form using the default Charset. Unsafe characters are escaped.
      *
      * @param obj
      *            object to convert to quoted-printable form
@@ -319,9 +319,9 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     }
 
     /**
-     * Gets the default charset name used for string decoding and encoding.
+     * Gets the default Charset name used for string decoding and encoding.
      *
-     * @return the default charset name
+     * @return the default Charset name
      * @since 1.7
      */
     public Charset getCharset() {
@@ -329,9 +329,9 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     }
 
     /**
-     * Gets the default charset name used for string decoding and encoding.
+     * Gets the default Charset name used for string decoding and encoding.
      *
-     * @return the default charset name
+     * @return the default Charset name
      */
     public String getDefaultCharset() {
         return this.charset.name();
