@@ -122,9 +122,8 @@ public class PercentCodec implements BinaryEncoder, BinaryDecoder {
         boolean willEncode = expectedEncodingBytes != bytes.length;
         if (willEncode || (plusForSpace && containsSpace(bytes))) {
             return doEncode(bytes, expectedEncodingBytes, willEncode);
-        } else {
-            return bytes;
         }
+        return bytes;
     }
 
     private byte[] doEncode(final byte[] bytes, int expectedLength, boolean willEncode) {
