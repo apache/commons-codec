@@ -26,7 +26,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 /**
- * Percent cÎ¿dec test cases
+ * Percent codec test cases.
  */
 public class PercentCodecTest {
 
