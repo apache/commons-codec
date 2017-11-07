@@ -29,7 +29,6 @@ import org.apache.commons.codec.EncoderException;
  * special US-ASCII characters can be specified in order to perform proper URI encoding for the different parts
  * of the URI.
  * <p>
- * <p>
  * This class is immutable. It is also thread-safe besides using BitSet which is not thread-safe, but its public
  * interface only call the access
  * </p>
@@ -63,7 +62,7 @@ public class PercentCodec implements BinaryEncoder, BinaryDecoder {
      */
     public PercentCodec() {
         this.plusForSpace = false;
-        insertAlwaysEncodeChars(null);
+        insertAlwaysEncodeChar(ESCAPE_CHAR);
     }
 
     /**
@@ -80,28 +79,27 @@ public class PercentCodec implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
-     * Adds the byte arra into a BitSet for faster lookup
+     * Adds the byte array into a BitSet for faster lookup
      *
      * @param alwaysEncodeChars
      */
     private void insertAlwaysEncodeChars(final byte[] alwaysEncodeChars) {
         if (alwaysEncodeChars != null) {
             for (byte b : alwaysEncodeChars) {
-                this.alwaysEncodeChars.set(b);
-                updateAlwaysEncodeCharsRange(b);
+                insertAlwaysEncodeChar(b);
             }
         }
-        this.alwaysEncodeChars.set(ESCAPE_CHAR);
-        updateAlwaysEncodeCharsRange(ESCAPE_CHAR);
+        insertAlwaysEncodeChar(ESCAPE_CHAR);
     }
 
     /**
-     * Maintains the min and max of the characters of the {@code BitSet alwaysEncodeChars} in order to avoid look-ups
-     * when a byte is out of this range.
+     * Inserts a single character into a BitSet and maintains the min and max of the characters of the
+     * {@code BitSet alwaysEncodeChars} in order to avoid look-ups when a byte is out of this range.
      *
      * @param b the byte that is candidate for min and max limit
      */
-    private void updateAlwaysEncodeCharsRange(final byte b) {
+    private void insertAlwaysEncodeChar(final byte b) {
+        this.alwaysEncodeChars.set(b);
         if (b < alwaysEncodeCharsMin) {
             alwaysEncodeCharsMin = b;
         }
@@ -156,7 +154,7 @@ public class PercentCodec implements BinaryEncoder, BinaryDecoder {
     private int expectedEncodingBytes(final byte[] bytes) {
         int byteCount = 0;
         for (final byte b : bytes) {
-            byteCount += (canEncode(b)) ? 3: 1;
+            byteCount += canEncode(b) ? 3: 1;
         }
         return byteCount;
     }
@@ -171,11 +169,15 @@ public class PercentCodec implements BinaryEncoder, BinaryDecoder {
     }
 
     private boolean canEncode(final byte c) {
-        return !isAsciiChar(c) || (c >= alwaysEncodeCharsMin && c <= alwaysEncodeCharsMax && alwaysEncodeChars.get(c));
+        return !isAsciiChar(c) || (inAlwaysEncodeCharsRange(c) && alwaysEncodeChars.get(c));
     }
 
-    private boolean isAsciiChar(final int c) {
-        return c >= 0 && c <= 127;
+    private boolean inAlwaysEncodeCharsRange(final byte c) {
+        return c >= alwaysEncodeCharsMin && c <= alwaysEncodeCharsMax;
+    }
+
+    private boolean isAsciiChar(final byte c) {
+        return c >= 0;
     }
 
     /**
@@ -214,7 +216,7 @@ public class PercentCodec implements BinaryEncoder, BinaryDecoder {
         int byteCount = 0;
         for (int i = 0; i < bytes.length; ) {
             byte b = bytes[i];
-            i += (b == ESCAPE_CHAR) ? 3: 1;
+            i += b == ESCAPE_CHAR ? 3: 1;
             byteCount++;
         }
         return byteCount;
