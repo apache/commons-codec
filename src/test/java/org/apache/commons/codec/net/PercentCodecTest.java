@@ -20,7 +20,7 @@ package org.apache.commons.codec.net;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 import org.apache.commons.codec.DecoderException;
@@ -38,7 +38,7 @@ public class PercentCodecTest {
     public void testBasicEncodeDecode() throws Exception {
         PercentCodec percentCodec = new PercentCodec();
         final String input = "abcdABCD";
-        byte[] encoded = percentCodec.encode(input.getBytes(Charset.forName("UTF-8")));
+        byte[] encoded = percentCodec.encode(input.getBytes(StandardCharsets.UTF_8));
         final String encodedS = new String(encoded, "UTF-8");
         byte[] decoded = percentCodec.decode(encoded);
         final String decodedS = new String(decoded, "UTF-8");
@@ -51,15 +51,15 @@ public class PercentCodecTest {
     public void testBasicSpace() throws Exception {
         PercentCodec percentCodec = new PercentCodec();
         final String input = " ";
-        byte[] encoded = percentCodec.encode(input.getBytes(Charset.forName("UTF-8")));
-        Assert.assertArrayEquals("%20".getBytes(Charset.forName("UTF-8")), encoded);
+        byte[] encoded = percentCodec.encode(input.getBytes(StandardCharsets.UTF_8));
+        Assert.assertArrayEquals("%20".getBytes(StandardCharsets.UTF_8), encoded);
     }
 
     @Test
     public void testConfigurablePercentEncoder() throws Exception {
         final String input = "abc123_-.*\u03B1\u03B2";
         PercentCodec percentCodec = new PercentCodec("abcdef".getBytes("UTF-8"), false);
-        byte[] encoded = percentCodec.encode(input.getBytes(Charset.forName("UTF-8")));
+        byte[] encoded = percentCodec.encode(input.getBytes(StandardCharsets.UTF_8));
         final String encodedS = new String(encoded, "UTF-8");
         assertEquals("Configurable PercentCodec encoding test", "%61%62%63123_-.*%CE%B1%CE%B2", encodedS);
         final byte[] decoded = percentCodec.decode(encoded);
@@ -117,7 +117,7 @@ public class PercentCodecTest {
     public void testPercentEncoderDecoderWithPlusForSpace() throws Exception {
         final String input = "a b c d";
         PercentCodec percentCodec = new PercentCodec(null, true);
-        byte[] encoded = percentCodec.encode(input.getBytes(Charset.forName("UTF-8")));
+        byte[] encoded = percentCodec.encode(input.getBytes(StandardCharsets.UTF_8));
         final String encodedS = new String(encoded, "UTF-8");
         assertEquals("PercentCodec plus for space encoding test", "a+b+c+d", encodedS);
         byte[] decode = percentCodec.decode(encoded);
@@ -128,7 +128,7 @@ public class PercentCodecTest {
     public void testSafeCharEncodeDecodeObject() throws Exception {
         PercentCodec percentCodec = new PercentCodec(null, true);
         final String input = "abc123_-.*";
-        Object encoded = percentCodec.encode((Object) input.getBytes(Charset.forName("UTF-8")));
+        Object encoded = percentCodec.encode((Object) input.getBytes(StandardCharsets.UTF_8));
         final String encodedS = new String((byte[]) encoded, "UTF-8");
         Object decoded = percentCodec.decode(encoded);
         final String decodedS = new String((byte[]) decoded, "UTF-8");
@@ -140,7 +140,7 @@ public class PercentCodecTest {
     public void testUnsafeCharEncodeDecode() throws Exception {
         PercentCodec percentCodec = new PercentCodec();
         final String input = "\u03B1\u03B2\u03B3\u03B4\u03B5\u03B6% ";
-        byte[] encoded = percentCodec.encode(input.getBytes(Charset.forName("UTF-8")));
+        byte[] encoded = percentCodec.encode(input.getBytes(StandardCharsets.UTF_8));
         final String encodedS = new String(encoded, "UTF-8");
         byte[] decoded = percentCodec.decode(encoded);
         final String decodedS = new String(decoded, "UTF-8");
