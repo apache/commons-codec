@@ -26,13 +26,13 @@ import org.apache.commons.codec.Charsets;
 
 /**
  * Converts String to and from bytes using the encodings required by the Java specification. These encodings are
- * specified in <a href="http://download.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">
+ * specified in <a href="http://download.oracle.com/javase/7/docs/api/java/nio/charset/Charset.html">
  * Standard charsets</a>.
  *
  * <p>This class is immutable and thread-safe.</p>
  *
  * @see CharEncoding
- * @see <a href="http://download.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
+ * @see <a href="http://download.oracle.com/javase/7/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
  * @version $Id$
  * @since 1.4
  */
@@ -123,7 +123,7 @@ public class StringUtils {
      * @throws NullPointerException
      *             Thrown if {@link Charsets#UTF_8} is not initialized, which should never happen since it is
      *             required by the Java platform specification.
-     * @see <a href="http://download.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
+     * @see <a href="http://download.oracle.com/javase/7/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      * @see #getBytesUnchecked(String, String)
      * @since 1.11
      */
@@ -142,7 +142,7 @@ public class StringUtils {
      *             Thrown if {@link Charsets#ISO_8859_1} is not initialized, which should never happen since it is
      *             required by the Java platform specification.
      * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
-     * @see <a href="http://download.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
+     * @see <a href="http://download.oracle.com/javase/7/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      * @see #getBytesUnchecked(String, String)
      */
     public static byte[] getBytesIso8859_1(final String string) {
@@ -191,7 +191,7 @@ public class StringUtils {
      *             Thrown if {@link Charsets#US_ASCII} is not initialized, which should never happen since it is
      *             required by the Java platform specification.
      * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
-     * @see <a href="http://download.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
+     * @see <a href="http://download.oracle.com/javase/7/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      * @see #getBytesUnchecked(String, String)
      */
     public static byte[] getBytesUsAscii(final String string) {
@@ -209,7 +209,7 @@ public class StringUtils {
      *             Thrown if {@link Charsets#UTF_16} is not initialized, which should never happen since it is
      *             required by the Java platform specification.
      * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
-     * @see <a href="http://download.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
+     * @see <a href="http://download.oracle.com/javase/7/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      * @see #getBytesUnchecked(String, String)
      */
     public static byte[] getBytesUtf16(final String string) {
@@ -227,7 +227,7 @@ public class StringUtils {
      *             Thrown if {@link Charsets#UTF_16BE} is not initialized, which should never happen since it is
      *             required by the Java platform specification.
      * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
-     * @see <a href="http://download.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
+     * @see <a href="http://download.oracle.com/javase/7/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      * @see #getBytesUnchecked(String, String)
      */
     public static byte[] getBytesUtf16Be(final String string) {
@@ -245,7 +245,7 @@ public class StringUtils {
      *             Thrown if {@link Charsets#UTF_16LE} is not initialized, which should never happen since it is
      *             required by the Java platform specification.
      * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
-     * @see <a href="http://download.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
+     * @see <a href="http://download.oracle.com/javase/7/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      * @see #getBytesUnchecked(String, String)
      */
     public static byte[] getBytesUtf16Le(final String string) {
@@ -263,7 +263,7 @@ public class StringUtils {
      *             Thrown if {@link Charsets#UTF_8} is not initialized, which should never happen since it is
      *             required by the Java platform specification.
      * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
-     * @see <a href="http://download.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
+     * @see <a href="http://download.oracle.com/javase/7/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      * @see #getBytesUnchecked(String, String)
      */
     public static byte[] getBytesUtf8(final String string) {
