@@ -103,7 +103,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
         PRINTABLE_CHARS.set('~');
     }
 
-    private static final byte BLANK = 32;
+    private static final byte SPACE = 32;
 
     private static final byte UNDERSCORE = 95;
 
@@ -157,7 +157,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
         final byte[] data = QuotedPrintableCodec.encodeQuotedPrintable(PRINTABLE_CHARS, bytes);
         if (this.encodeBlanks) {
             for (int i = 0; i < data.length; i++) {
-                if (data[i] == BLANK) {
+                if (data[i] == SPACE) {
                     data[i] = UNDERSCORE;
                 }
             }
@@ -184,7 +184,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
                 if (b != UNDERSCORE) {
                     tmp[i] = b;
                 } else {
-                    tmp[i] = BLANK;
+                    tmp[i] = SPACE;
                 }
             }
             return QuotedPrintableCodec.decodeQuotedPrintable(tmp);
