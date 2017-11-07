@@ -41,15 +41,19 @@ public class PercentCodec implements BinaryEncoder, BinaryDecoder {
     /**
      * The escape character used by the Percent-Encoding in order to introduce an encoded character.
      */
+    
     private final byte ESCAPE_CHAR = '%';
+    
     /**
      * The bit set used to store the character that should be always encoded
      */
     private final BitSet alwaysEncodeChars = new BitSet();
+    
     /**
      * The flag defining if the space character should be encoded as '+'
      */
     private final boolean plusForSpace;
+    
     /**
      * The minimum and maximum code of the bytes that is inserted in the bit set, used to prevent look-ups
      */
