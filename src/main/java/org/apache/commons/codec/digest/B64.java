@@ -16,7 +16,7 @@
  */
 package org.apache.commons.codec.digest;
 
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Base64 like method to convert binary bytes into ASCII chars.
@@ -65,14 +65,18 @@ class B64 {
 
     /**
      * Generates a string of random chars from the B64T set.
+     * <p>
+     * The salt is generated with {@link ThreadLocalRandom}.
+     * </p>
      *
      * @param num
      *            Number of chars to generate.
      */
     static String getRandomSalt(final int num) {
-        final StringBuilder saltString = new StringBuilder();
+        final StringBuilder saltString = new StringBuilder(num);
+        final ThreadLocalRandom current = ThreadLocalRandom.current();
         for (int i = 1; i <= num; i++) {
-            saltString.append(B64T.charAt(new Random().nextInt(B64T.length())));
+            saltString.append(B64T.charAt(current.nextInt(B64T.length())));
         }
         return saltString.toString();
     }
