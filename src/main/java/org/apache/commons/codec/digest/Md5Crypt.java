@@ -70,7 +70,7 @@ public class Md5Crypt {
      * 
      * @param keyBytes plaintext string to hash.
      * @return the hash value
-     * @throws RuntimeException when a {@link java.security.NoSuchAlgorithmException} is caught. *
+     * @throws IllegalArgumentException when a {@link java.security.NoSuchAlgorithmException} is caught. *
      * @see #apr1Crypt(byte[], String)
      */
     public static String apr1Crypt(final byte[] keyBytes) {
@@ -93,7 +93,7 @@ public class Md5Crypt {
      * @return the hash value
      * @throws IllegalArgumentException
      *             if the salt does not match the allowed pattern
-     * @throws RuntimeException
+     * @throws IllegalArgumentException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
     public static String apr1Crypt(final byte[] keyBytes, String salt) {
@@ -114,7 +114,7 @@ public class Md5Crypt {
      * @param keyBytes
      *            plaintext string to hash.
      * @return the hash value
-     * @throws RuntimeException
+     * @throws IllegalArgumentException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      * @see #apr1Crypt(byte[], String)
      */
@@ -137,7 +137,7 @@ public class Md5Crypt {
      * @return the hash value
      * @throws IllegalArgumentException
      *             if the salt does not match the allowed pattern
-     * @throws RuntimeException
+     * @throws IllegalArgumentException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
     public static String apr1Crypt(final String keyBytes, final String salt) {
@@ -156,7 +156,7 @@ public class Md5Crypt {
      * @param keyBytes
      *            plaintext string to hash.
      * @return the hash value
-     * @throws RuntimeException
+     * @throws IllegalArgumentException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      * @see #md5Crypt(byte[], String)
      */
@@ -179,7 +179,7 @@ public class Md5Crypt {
      * @return the hash value
      * @throws IllegalArgumentException
      *             if the salt does not match the allowed pattern
-     * @throws RuntimeException
+     * @throws IllegalArgumentException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
     public static String md5Crypt(final byte[] keyBytes, final String salt) {
@@ -203,7 +203,7 @@ public class Md5Crypt {
      * @return the hash value
      * @throws IllegalArgumentException
      *             if the salt does not match the allowed pattern
-     * @throws RuntimeException
+     * @throws IllegalArgumentException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
     public static String md5Crypt(final byte[] keyBytes, final String salt, final String prefix) {
