@@ -83,7 +83,7 @@ public class Sha2Crypt {
      * @param keyBytes
      *            plaintext to hash
      * @return complete hash value
-     * @throws RuntimeException
+     * @throws IllegalArgumentException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
     public static String sha256Crypt(final byte[] keyBytes) {
@@ -104,7 +104,7 @@ public class Sha2Crypt {
      * @return complete hash value including salt
      * @throws IllegalArgumentException
      *             if the salt does not match the allowed pattern
-     * @throws RuntimeException
+     * @throws IllegalArgumentException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
     public static String sha256Crypt(final byte[] keyBytes, String salt) {
@@ -528,7 +528,7 @@ public class Sha2Crypt {
      * @param keyBytes
      *            plaintext to hash
      * @return complete hash value
-     * @throws RuntimeException
+     * @throws IllegalArgumentException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
     public static String sha512Crypt(final byte[] keyBytes) {
@@ -549,7 +549,7 @@ public class Sha2Crypt {
      * @return complete hash value including salt
      * @throws IllegalArgumentException
      *             if the salt does not match the allowed pattern
-     * @throws RuntimeException
+     * @throws IllegalArgumentException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
     public static String sha512Crypt(final byte[] keyBytes, String salt) {

@@ -47,7 +47,7 @@ public class Crypt {
      * @param keyBytes
      *            plaintext password
      * @return hash value
-     * @throws RuntimeException
+     * @throws IllegalArgumentException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
     public static String crypt(final byte[] keyBytes) {
@@ -69,7 +69,7 @@ public class Crypt {
      * @return hash value
      * @throws IllegalArgumentException
      *             if the salt does not match the allowed pattern
-     * @throws RuntimeException
+     * @throws IllegalArgumentException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
     public static String crypt(final byte[] keyBytes, final String salt) {
@@ -100,7 +100,7 @@ public class Crypt {
      * @param key
      *            plaintext password
      * @return hash value
-     * @throws RuntimeException
+     * @throws IllegalArgumentException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
     public static String crypt(final String key) {
@@ -161,7 +161,7 @@ public class Crypt {
      * @return hash value, i.e. encrypted password including the salt string
      * @throws IllegalArgumentException
      *             if the salt does not match the allowed pattern
-     * @throws RuntimeException
+     * @throws IllegalArgumentException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught. *
      */
     public static String crypt(final String key, final String salt) {
