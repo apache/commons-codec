@@ -17,7 +17,9 @@
 package org.apache.commons.codec.digest;
 
 import java.security.MessageDigest;
+import java.security.SecureRandom;
 import java.util.Arrays;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -60,13 +62,16 @@ public class Md5Crypt {
     private static final int ROUNDS = 1000;
 
     /**
-     * See {@link #apr1Crypt(String, String)} for details.
-     *
-     * @param keyBytes
-     *            plaintext string to hash.
+     * See {@link #apr1Crypt(byte[], String)} for details.
+     * <p>
+     * A salt is generated for you using {@link ThreadLocalRandom}; for more secure salts consider using
+     * {@link SecureRandom} to generate your own salts and calling {@link #apr1Crypt(byte[], String)}.
+     * </p>
+     * 
+     * @param keyBytes plaintext string to hash.
      * @return the hash value
-     * @throws RuntimeException
-     *             when a {@link java.security.NoSuchAlgorithmException} is caught. *
+     * @throws RuntimeException when a {@link java.security.NoSuchAlgorithmException} is caught. *
+     * @see #apr1Crypt(byte[], String)
      */
     public static String apr1Crypt(final byte[] keyBytes) {
         return apr1Crypt(keyBytes, APR1_PREFIX + B64.getRandomSalt(8));
@@ -74,10 +79,17 @@ public class Md5Crypt {
 
     /**
      * See {@link #apr1Crypt(String, String)} for details.
+     * <p>
+     * A salt is generated for you using {@link ThreadLocalRandom}; for more secure salts consider using
+     * {@link SecureRandom} to generate your own salts.
+     * </p>
      *
      * @param keyBytes
      *            plaintext string to hash.
-     * @param salt An APR1 salt.
+     * @param salt
+     *            An APR1 salt. The salt may be null, in which case a salt is generated for you using
+     *            {@link ThreadLocalRandom}; for more secure salts consider using {@link SecureRandom} to generate your
+     *            own salts.
      * @return the hash value
      * @throws IllegalArgumentException
      *             if the salt does not match the allowed pattern
@@ -94,12 +106,17 @@ public class Md5Crypt {
 
     /**
      * See {@link #apr1Crypt(String, String)} for details.
+     * <p>
+     * A salt is generated for you using {@link ThreadLocalRandom}; for more secure salts consider using
+     * {@link SecureRandom} to generate your own salts and calling {@link #apr1Crypt(byte[], String)}.
+     * </p>
      *
      * @param keyBytes
      *            plaintext string to hash.
      * @return the hash value
      * @throws RuntimeException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
+     * @see #apr1Crypt(byte[], String)
      */
     public static String apr1Crypt(final String keyBytes) {
         return apr1Crypt(keyBytes.getBytes(Charsets.UTF_8));
@@ -114,8 +131,9 @@ public class Md5Crypt {
      * @param keyBytes
      *            plaintext string to hash.
      * @param salt
-     *            salt string including the prefix and optionally garbage at the end. Will be generated randomly if
-     *            null.
+     *            salt string including the prefix and optionally garbage at the end. The salt may be null, in which
+     *            case a salt is generated for you using {@link ThreadLocalRandom}; for more secure salts consider using
+     *            {@link SecureRandom} to generate your own salts.
      * @return the hash value
      * @throws IllegalArgumentException
      *             if the salt does not match the allowed pattern
@@ -129,13 +147,18 @@ public class Md5Crypt {
     /**
      * Generates a libc6 crypt() compatible "$1$" hash value.
      * <p>
-     * See {@link Crypt#crypt(String, String)} for details.
-     *
+     * See {@link #md5Crypt(byte[], String)} for details.
+     *</p>
+     * <p>
+     * A salt is generated for you using {@link ThreadLocalRandom}; for more secure salts consider using
+     * {@link SecureRandom} to generate your own salts and calling {@link #md5Crypt(byte[], String)}.
+     * </p>
      * @param keyBytes
      *            plaintext string to hash.
      * @return the hash value
      * @throws RuntimeException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
+     * @see #md5Crypt(byte[], String)
      */
     public static String md5Crypt(final byte[] keyBytes) {
         return md5Crypt(keyBytes, MD5_PREFIX + B64.getRandomSalt(8));
@@ -145,12 +168,14 @@ public class Md5Crypt {
      * Generates a libc crypt() compatible "$1$" MD5 based hash value.
      * <p>
      * See {@link Crypt#crypt(String, String)} for details.
-     *
+     * </p>
+     * 
      * @param keyBytes
      *            plaintext string to hash.
      * @param salt
-     *            salt string including the prefix and optionally garbage at the end. Will be generated randomly if
-     *            null.
+     *            salt string including the prefix and optionally garbage at the end. The salt may be null, in which
+     *            case a salt is generated for you using {@link ThreadLocalRandom}; for more secure salts consider using
+     *            {@link SecureRandom} to generate your own salts.
      * @return the hash value
      * @throws IllegalArgumentException
      *             if the salt does not match the allowed pattern
@@ -165,11 +190,16 @@ public class Md5Crypt {
      * Generates a libc6 crypt() "$1$" or Apache htpasswd "$apr1$" hash value.
      * <p>
      * See {@link Crypt#crypt(String, String)} or {@link #apr1Crypt(String, String)} for details.
-     *
+     * </p>
+     * 
      * @param keyBytes
      *            plaintext string to hash.
-     * @param salt May be null.
-     * @param prefix salt prefix
+     * @param salt
+     *            real salt value without prefix or "rounds=". The salt may be null, in which case a salt is generated for
+     *            you using {@link ThreadLocalRandom}; for more secure salts consider using {@link SecureRandom} to
+     *            generate your own salts.
+     * @param prefix
+     *            salt prefix
      * @return the hash value
      * @throws IllegalArgumentException
      *             if the salt does not match the allowed pattern
