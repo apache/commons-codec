@@ -16,7 +16,8 @@
  */
 package org.apache.commons.codec.digest;
 
-import java.util.Random;
+import java.security.SecureRandom;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.apache.commons.codec.Charsets;
 
@@ -172,7 +173,9 @@ public class UnixCrypt {
     /**
      * Generates a crypt(3) compatible hash using the DES algorithm.
      * <p>
-     * As no salt is given, a random one will be used.
+     * A salt is generated for you using {@link ThreadLocalRandom}; for more secure salts consider using
+     * {@link SecureRandom} to generate your own salts and calling {@link #crypt(byte[], String)}.
+     * </p>
      *
      * @param original
      *            plaintext password
@@ -186,18 +189,21 @@ public class UnixCrypt {
      * Generates a crypt(3) compatible hash using the DES algorithm.
      * <p>
      * Using unspecified characters as salt results incompatible hash values.
-     *
+     * </p>
+     * 
      * @param original
      *            plaintext password
      * @param salt
-     *            a two character string drawn from [a-zA-Z0-9./] or null for a random one
+     *            a two character string drawn from [a-zA-Z0-9./]. The salt may be null, in which case a salt is
+     *            generated for you using {@link ThreadLocalRandom}; for more secure salts consider using
+     *            {@link SecureRandom} to generate your own salts.
      * @return a 13 character string starting with the salt string
      * @throws IllegalArgumentException
      *             if the salt does not match the allowed pattern
      */
     public static String crypt(final byte[] original, String salt) {
         if (salt == null) {
-            final Random randomGenerator = new Random();
+            final ThreadLocalRandom randomGenerator = ThreadLocalRandom.current();
             final int numSaltChars = SALT_CHARS.length;
             salt = "" + SALT_CHARS[randomGenerator.nextInt(numSaltChars)] +
                     SALT_CHARS[randomGenerator.nextInt(numSaltChars)];
@@ -253,7 +259,9 @@ public class UnixCrypt {
     /**
      * Generates a crypt(3) compatible hash using the DES algorithm.
      * <p>
-     * As no salt is given, a random one is used.
+     * A salt is generated for you using {@link ThreadLocalRandom}; for more secure salts consider using
+     * {@link SecureRandom} to generate your own salts and calling {@link #crypt(String, String)}.
+     * </p>
      *
      * @param original
      *            plaintext password
@@ -269,7 +277,9 @@ public class UnixCrypt {
      * @param original
      *            plaintext password
      * @param salt
-     *            a two character string drawn from [a-zA-Z0-9./] or null for a random one
+     *            a two character string drawn from [a-zA-Z0-9./]. The salt may be null, in which case a salt is
+     *            generated for you using {@link ThreadLocalRandom}; for more secure salts consider using
+     *            {@link SecureRandom} to generate your own salts.
      * @return a 13 character string starting with the salt string
      * @throws IllegalArgumentException
      *             if the salt does not match the allowed pattern
