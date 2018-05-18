@@ -43,7 +43,7 @@ public class Crypt {
      * A salt is generated for you using {@link ThreadLocalRandom}; for more secure salts consider using
      * {@link SecureRandom} to generate your own salts and calling {@link #crypt(byte[], String)}.
      * </p>
-     * 
+     *
      * @param keyBytes
      *            plaintext password
      * @return hash value
@@ -95,7 +95,7 @@ public class Crypt {
      * A salt is generated for you using {@link ThreadLocalRandom}; for more secure salts consider using
      * {@link SecureRandom} to generate your own salts and calling {@link #crypt(String, String)}.
      * </p>
-     * 
+     *
      * @see #crypt(String, String)
      * @param key
      *            plaintext password

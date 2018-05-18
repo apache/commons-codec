@@ -190,7 +190,7 @@ public class UnixCrypt {
      * <p>
      * Using unspecified characters as salt results incompatible hash values.
      * </p>
-     * 
+     *
      * @param original
      *            plaintext password
      * @param salt

@@ -67,7 +67,7 @@ public class Md5Crypt {
      * A salt is generated for you using {@link ThreadLocalRandom}; for more secure salts consider using
      * {@link SecureRandom} to generate your own salts and calling {@link #apr1Crypt(byte[], String)}.
      * </p>
-     * 
+     *
      * @param keyBytes plaintext string to hash.
      * @return the hash value
      * @throws IllegalArgumentException when a {@link java.security.NoSuchAlgorithmException} is caught. *
@@ -169,7 +169,7 @@ public class Md5Crypt {
      * <p>
      * See {@link Crypt#crypt(String, String)} for details.
      * </p>
-     * 
+     *
      * @param keyBytes
      *            plaintext string to hash.
      * @param salt
@@ -191,7 +191,7 @@ public class Md5Crypt {
      * <p>
      * See {@link Crypt#crypt(String, String)} or {@link #apr1Crypt(String, String)} for details.
      * </p>
-     * 
+     *
      * @param keyBytes
      *            plaintext string to hash.
      * @param salt

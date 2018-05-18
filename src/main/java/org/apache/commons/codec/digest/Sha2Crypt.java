@@ -79,7 +79,7 @@ public class Sha2Crypt {
      * A salt is generated for you using {@link ThreadLocalRandom}; for more secure salts consider using
      * {@link SecureRandom} to generate your own salts and calling {@link #sha256Crypt(byte[], String)}.
      * </p>
-     * 
+     *
      * @param keyBytes
      *            plaintext to hash
      * @return complete hash value
