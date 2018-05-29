@@ -19,6 +19,7 @@ package org.apache.commons.codec.language;
 
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoderAbstractTest;
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -142,7 +143,10 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest<ColognePhonet
             {"ganz", "G\u00e4nse"}, // Gänse
             {"Miyagi", "Miyako"}};
         for (final String[] element : data) {
-            this.getStringEncoder().isEncodeEqual(element[1], element[0]);
+            // This just compares and only shows we do not blow up
+            final boolean encodeEqual = this.getStringEncoder().isEncodeEqual(element[1], element[0]);
+            // Fails for https://issues.apache.org/jira/browse/CODEC-246
+            // Assert.assertTrue(element[1] + " != " + element[0], encodeEqual);
         }
     }
 
