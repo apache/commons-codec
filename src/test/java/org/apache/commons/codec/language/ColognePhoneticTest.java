@@ -136,6 +136,7 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest<ColognePhonet
     public void testIsEncodeEquals() {
         //@formatter:off
         final String[][] data = {
+            {"Mueller", "M\u00fcller"},
             {"Meyer", "Mayr"},
             {"house", "house"},
             {"House", "house"},
@@ -149,23 +150,7 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest<ColognePhonet
             Assert.assertTrue(element[1] + " != " + element[0], encodeEqual);
         }
     }
-
-    @Test
-    @Ignore("https://issues.apache.org/jira/browse/CODEC-246")
-    public void testIsEncodeEqualsCodec246() {
-        //@formatter:off
-        final String[][] data = {
-            {"Meyer", "M\u00fcller"}, // Müller
-            };
-        //@formatter:on
-        for (final String[] element : data) {
-            // This just compares and only shows we do not blow up
-            final boolean encodeEqual = this.getStringEncoder().isEncodeEqual(element[1], element[0]);
-            // Fails for https://issues.apache.org/jira/browse/CODEC-246
-            Assert.assertTrue(element[1] + " != " + element[0], encodeEqual);
-        }
-    }
-
+    
     @Test
     public void testVariationsMella() throws EncoderException {
         final String data[] = {"mella", "milah", "moulla", "mellah", "muehle", "mule"};
