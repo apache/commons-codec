@@ -91,7 +91,7 @@ public class MessageDigestAlgorithms {
     /**
      * The SHA3-224 hash algorithm defined in the FIPS PUB 202.
      * <p>
-     * Likely to be included in Oracle Java 9 GA.
+     * Included starting in Oracle Java 9 GA.
      * </p>
      *
      * @since 1.11
@@ -101,7 +101,7 @@ public class MessageDigestAlgorithms {
     /**
      * The SHA3-256 hash algorithm defined in the FIPS PUB 202.
      * <p>
-     * Likely to be included in Oracle Java 9 GA.
+     * Included starting in Oracle Java 9 GA.
      * </p>
      *
      * @since 1.11
@@ -111,7 +111,7 @@ public class MessageDigestAlgorithms {
     /**
      * The SHA3-384 hash algorithm defined in the FIPS PUB 202.
      * <p>
-     * Likely to be included in Oracle Java 9 GA.
+     * Included starting in Oracle Java 9 GA.
      * </p>
      *
      * @since 1.11
@@ -121,7 +121,7 @@ public class MessageDigestAlgorithms {
     /**
      * The SHA3-512 hash algorithm defined in the FIPS PUB 202.
      * <p>
-     * Likely to be included in Oracle Java 9 GA.
+     * Included starting in Oracle Java 9 GA.
      * </p>
      *
      * @since 1.11
