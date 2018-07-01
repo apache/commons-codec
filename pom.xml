@@ -39,9 +39,6 @@ limitations under the License.
      widely used encoders and decoders, the codec package also maintains a
      collection of phonetic encoding utilities.
   </description>
-  <prerequisites>
-    <maven>3.0.0</maven>
-  </prerequisites>
   <url>http://commons.apache.org/proper/commons-codec/</url>
   <issueManagement>
     <system>jira</system>
