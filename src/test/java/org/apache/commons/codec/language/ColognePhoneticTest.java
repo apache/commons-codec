@@ -162,4 +162,10 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest<ColognePhonet
         final String data[] = {"Meier", "Maier", "Mair", "Meyer", "Meyr", "Mejer", "Major"};
         this.checkEncodingVariations("67", data);
     }
+    
+    @Test
+    public void testSpecialCharsBetweenSameLetters() throws EncoderException {
+        final String data[] = {"Test test", "Testtest", "Test-test", "TesT#Test", "TesT?test"};
+        this.checkEncodingVariations("28282", data);
+    }
 }

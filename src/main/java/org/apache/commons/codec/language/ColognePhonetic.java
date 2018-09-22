@@ -396,7 +396,9 @@ public class ColognePhonetic implements StringEncoder {
             }
 
             lastChar = chr;
-            lastCode = code;
+            if (code != '-') {
+                lastCode = code;
+            }
         }
         return output.toString();
     }
