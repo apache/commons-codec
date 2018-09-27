@@ -286,12 +286,6 @@ public class ColognePhonetic implements StringEncoder {
      * <li>small sharp s, German</li>
      * </ul>
      */
-    private static final char[][] PREPROCESS_MAP = new char[][]{
-        {'\u00C4', 'A'}, // capital a, umlaut mark
-        {'\u00DC', 'U'}, // capital u, umlaut mark
-        {'\u00D6', 'O'}, // capital o, umlaut mark
-        {'\u00DF', 'S'} // small sharp s, German
-    };
 
     /*
      * Returns whether the array contains the key, or not.
@@ -321,10 +315,8 @@ public class ColognePhonetic implements StringEncoder {
             return null;
         }
 
-        text = preprocess(text);
-
-        final CologneOutputBuffer output = new CologneOutputBuffer(text.length() * 2);
-        final CologneInputBuffer input = new CologneInputBuffer(text.toCharArray());
+        final CologneInputBuffer input = new CologneInputBuffer(preprocess(text));
+        final CologneOutputBuffer output = new CologneOutputBuffer(input.length() * 2);
 
         char nextChar;
 
@@ -423,23 +415,27 @@ public class ColognePhonetic implements StringEncoder {
     }
 
     /**
-     * Converts the string to upper case and replaces germanic characters as defined in {@link #PREPROCESS_MAP}.
+     * Converts the string to upper case and replaces Germanic umlaut characters
      */
-    private String preprocess(String text) {
-        text = text.toUpperCase(Locale.GERMAN);
-
-        final char[] chrs = text.toCharArray();
+    private char[] preprocess(String text) {
+        // This converts German small sharp s (Eszett) to SS
+        final char[] chrs = text.toUpperCase(Locale.GERMAN).toCharArray();
 
         for (int index = 0; index < chrs.length; index++) {
-            if (chrs[index] > 'Z') {
-                for (final char[] element : PREPROCESS_MAP) {
-                    if (chrs[index] == element[0]) {
-                        chrs[index] = element[1];
-                        break;
-                    }
-                }
+            switch (chrs[index]) {
+                case '\u00C4': // capital A, umlaut mark
+                    chrs[index] = 'A';
+                    break;
+                case '\u00DC': // capital U, umlaut mark
+                    chrs[index] = 'U';
+                    break;
+                case '\u00D6': // capital O, umlaut mark
+                    chrs[index] = 'O';
+                    break;
+                default:
+                    break;
             }
         }
-        return new String(chrs);
+        return chrs;
     }
 }
