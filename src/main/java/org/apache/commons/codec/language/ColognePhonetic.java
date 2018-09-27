@@ -320,8 +320,11 @@ public class ColognePhonetic implements StringEncoder {
 
         char nextChar;
 
-        char lastChar = '-';
-        char lastCode = '/';
+        final char CHAR_FIRST_POS = '/'; // are we processing the first character?
+        final char CHAR_IGNORE = '-';    // is this character to be ignored?
+
+        char lastChar = CHAR_IGNORE;
+        char lastCode = CHAR_FIRST_POS;
         char code;
         char chr;
 
@@ -331,16 +334,16 @@ public class ColognePhonetic implements StringEncoder {
             if (input.length() > 0) {
                 nextChar = input.getNextChar();
             } else {
-                nextChar = '-';
+                nextChar = CHAR_IGNORE;
             }
 
             if (arrayContains(AEIJOUY, chr)) {
                 code = '0';
             } else if (chr == 'H' || chr < 'A' || chr > 'Z') {
-                if (lastCode == '/') {
-                    continue;
+                if (lastCode == CHAR_FIRST_POS) {
+                    continue; // ignore leading unwanted characters
                 }
-                code = '-';
+                code = CHAR_IGNORE;
             } else if (chr == 'B' || (chr == 'P' && nextChar != 'H')) {
                 code = '1';
             } else if ((chr == 'D' || chr == 'T') && !arrayContains(SCZ, nextChar)) {
@@ -355,7 +358,7 @@ public class ColognePhonetic implements StringEncoder {
             } else if (chr == 'S' || chr == 'Z') {
                 code = '8';
             } else if (chr == 'C') {
-                if (lastCode == '/') {
+                if (lastCode == CHAR_FIRST_POS) {
                     if (arrayContains(AHKLOQRUX, nextChar)) {
                         code = '4';
                     } else {
@@ -378,9 +381,10 @@ public class ColognePhonetic implements StringEncoder {
                 code = '6';
             } else {
                 code = chr;
+                throw new RuntimeException();
             }
 
-            if (code != '-' && (lastCode != code && (code != '0' || lastCode == '/') || code < '0' || code > '8')) {
+            if (code != CHAR_IGNORE && (lastCode != code && (code != '0' || lastCode == CHAR_FIRST_POS) || code < '0' || code > '8')) {
                 output.addRight(code);
             }
 
