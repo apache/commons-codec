@@ -325,12 +325,10 @@ public class ColognePhonetic implements StringEncoder {
         char code;
         char chr;
 
-        int rightLength = input.length();
-
-        while (rightLength > 0) {
+        while (input.length() > 0) {
             chr = input.removeNext();
 
-            if ((rightLength = input.length()) > 0) {
+            if (input.length() > 0) {
                 nextChar = input.getNextChar();
             } else {
                 nextChar = '-';
@@ -354,7 +352,6 @@ public class ColognePhonetic implements StringEncoder {
             } else if (chr == 'X' && !arrayContains(CKQ, lastChar)) {
                 code = '4';
                 input.addLeft('S');
-                rightLength++;
             } else if (chr == 'S' || chr == 'Z') {
                 code = '8';
             } else if (chr == 'C') {
