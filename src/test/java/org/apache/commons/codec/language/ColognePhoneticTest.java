@@ -17,8 +17,13 @@
 
 package org.apache.commons.codec.language;
 
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Set;
+
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoderAbstractTest;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -30,9 +35,72 @@ import org.junit.Test;
  */
 public class ColognePhoneticTest extends StringEncoderAbstractTest<ColognePhonetic> {
 
+    private static final Set<String> TESTSET = new HashSet<String>();
+
+    private static boolean hasTestCase(String re) {
+        for(String s : TESTSET) {
+            if (s.matches(re)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Character sequences to be tested by the code
+    private static final String MATCHES[] = {
+            ".*[AEIOUJY].*",         // A, E, I, J, O, U, Y
+            ".*H.*",                 // H
+            ".*B.*",                 // B
+            ".*P[^H].*",             // P not before H
+            ".*[DT][^CSZ].*",        // D,T not before C,S,Z
+            ".*[FVW].*",             // F,V,W
+            ".*PH.*",                // P before H
+            ".*[GKQ].*",             // G,K,Q
+            "C[AHKLOQRUX].*",        // Initial C before A, H, K, L, O, Q, R, U, X
+            ".*[^SZ]C[AHKLOQRUX].*", // C before A, H, K, L, O, Q, R, U, X but not after S, Z
+            ".*[^CKQ]X.*",           // X not after C,K,Q
+            ".*L.*",                 // L
+            ".*[MN].*",              // M,N
+            ".*R.*",                 // R
+            ".*[SZ].*",              // S,Z
+            ".*[SZ]C.*",             // C after S,Z
+            "C[^AHKLOQRUX].*",       // Initial C except before A, H, K, L, O, Q, R, U, X
+            ".+C[^AHKLOQRUX].*",     // C except before A, H, K, L, O, Q, R, U, X
+            ".*[DT][CSZ].*",         // D,T before C,S,Z
+            ".*[CKQ]X.*",            // X after C,K,Q
+    };
+
+    @AfterClass
+    // Check that all possible input sequence conditions are represented
+    public static void finishTests() {
+        boolean ok = true;
+        int errors = 0;
+        for(String m : MATCHES) {
+            if (!hasTestCase(m)) {
+                System.out.println(m + " has no test case");
+                errors++;
+            }
+        }
+        Assert.assertEquals("Not expecting any missing test cases", 0, errors);
+    }
+
+    @Override
+    // Capture test strings for later checking
+    public void checkEncoding(String expected, String source) throws EncoderException {
+        // Note that the German letter Eszett is converted to SS by toUpperCase, so we don't need to replace it
+        TESTSET.add(source.toUpperCase(Locale.GERMAN).replace('Ä', 'A').replace('Ö', 'O').replace('Ü', 'U'));
+        super.checkEncoding(expected, source);
+    }
+
     @Override
     protected ColognePhonetic createStringEncoder() {
         return new ColognePhonetic();
+    }
+
+    @Test(expected=org.junit.ComparisonFailure.class)
+    // Ensure that override still allows tests to work
+    public void testCanFail() throws EncoderException {
+        this.checkEncoding("/", "Fehler");
     }
 
     @Test
@@ -123,6 +191,8 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest<ColognePhonet
             {"Arbeitsamt", "071862"},
             {"Eberhard", "01772"},
             {"Eberhardt", "01772"},
+            {"Celsius", "8588"},
+            {"Ace", "08"},
             {"heithabu", "021"}};
         this.checkEncodings(data);
     }
