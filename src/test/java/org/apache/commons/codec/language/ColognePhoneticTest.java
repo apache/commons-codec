@@ -66,6 +66,7 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest<ColognePhonet
             {"\u00E4", "0"}, // a-umlaut
             {"\u00F6", "0"}, // o-umlaut
             {"\u00FC", "0"}, // u-umlaut
+            {"\u00DF", "8"}, // small sharp s
             {"aa", "0"},
             {"ha", "0"},
             {"h", ""},
@@ -94,6 +95,7 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest<ColognePhonet
     public void testExamples() throws EncoderException {
         final String[][] data = {
             {"m\u00DCller", "657"}, // mÜller - why upper case U-umlaut?
+            {"m\u00FCller", "657"}, // müller - add equivalent lower-case
             {"schmidt", "862"},
             {"schneider", "8627"},
             {"fischer", "387"},
@@ -102,6 +104,7 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest<ColognePhonet
             {"becker", "147"},
             {"hoffmann", "0366"},
             {"sch\u00C4fer", "837"}, // schÄfer - why upper case A-umlaut ?
+            {"sch\u00e4fer", "837"}, // schäfer - add equivalent lower-case
             {"Breschnew", "17863"},
             {"Wikipedia", "3412"},
             {"peter", "127"},
