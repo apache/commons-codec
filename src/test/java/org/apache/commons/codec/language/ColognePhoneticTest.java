@@ -73,7 +73,6 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest<ColognePhonet
     @AfterClass
     // Check that all possible input sequence conditions are represented
     public static void finishTests() {
-        boolean ok = true;
         int errors = 0;
         for(String m : MATCHES) {
             if (!hasTestCase(m)) {
