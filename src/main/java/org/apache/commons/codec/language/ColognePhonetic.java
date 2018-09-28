@@ -151,8 +151,8 @@ import org.apache.commons.codec.StringEncoder;
  *
  * <h4>Example:</h4>
  *
- * <code>"M</code>&uuml;<code>ller-L</code>&uuml;
- * <code>denscheidt" =&gt; "MULLERLUDENSCHEIDT" =&gt; "6005507500206880022"</code>
+ * <code>"M</code>&uuml;<code>ller-L</code>&uuml;<code>denscheidt"
+ * =&gt; "MULLERLUDENSCHEIDT" =&gt; "6005507500206880022"</code>
  *
  * </li>
  *
