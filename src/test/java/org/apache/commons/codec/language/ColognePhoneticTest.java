@@ -154,6 +154,7 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest<ColognePhonet
             {"cl", "45"},
             {"acl", "085"},
             {"mn", "6"},
+            {"{mn}","6"}, // test chars above Z
             {"r", "7"}};
         this.checkEncodings(data);
     }
