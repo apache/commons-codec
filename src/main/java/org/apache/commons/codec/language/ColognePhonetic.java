@@ -381,7 +381,6 @@ public class ColognePhonetic implements StringEncoder {
                 code = '6';
             } else {
                 code = chr;
-                throw new RuntimeException();
             }
 
             if (code != CHAR_IGNORE && (lastCode != code && (code != '0' || lastCode == CHAR_FIRST_POS) || code < '0' || code > '8')) {
