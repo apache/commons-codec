@@ -233,4 +233,13 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest<ColognePhonet
         final String data[] = {"Meier", "Maier", "Mair", "Meyer", "Meyr", "Mejer", "Major"};
         this.checkEncodingVariations("67", data);
     }
+
+    // Allow command-line testing
+    public static void main(String args[]) {
+        ColognePhonetic coder = new ColognePhonetic();
+        for(String arg : args) {
+            String code = coder.encode(arg);
+            System.out.println("'" + arg + "' = '" + code + "'");
+        }
+    }
 }
