@@ -235,6 +235,12 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest<ColognePhonet
         this.checkEncodingVariations("67", data);
     }
 
+    @Test
+    public void testSpecialCharsBetweenSameLetters() throws EncoderException {
+        final String data[] = {"Test test", "Testtest", "Test-test", "TesT#Test", "TesT?test"};
+        this.checkEncodingVariations("28282", data);
+    }
+
     // Allow command-line testing
     public static void main(String args[]) {
         ColognePhonetic coder = new ColognePhonetic();

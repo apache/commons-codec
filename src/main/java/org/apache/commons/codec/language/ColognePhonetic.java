@@ -337,13 +337,13 @@ public class ColognePhonetic implements StringEncoder {
                 nextChar = CHAR_IGNORE;
             }
 
+            // OK to ignore H here because it only affects nextChar which has already been set up
+            if (chr == 'H' || chr < 'A' || chr > 'Z') {
+                    continue; // ignore unwanted characters
+            }
+
             if (arrayContains(AEIJOUY, chr)) {
                 code = '0';
-            } else if (chr == 'H' || chr < 'A' || chr > 'Z') {
-                if (lastCode == CHAR_FIRST_POS) {
-                    continue; // ignore leading unwanted characters
-                }
-                code = CHAR_IGNORE;
             } else if (chr == 'B' || (chr == 'P' && nextChar != 'H')) {
                 code = '1';
             } else if ((chr == 'D' || chr == 'T') && !arrayContains(SCZ, nextChar)) {
@@ -380,7 +380,7 @@ public class ColognePhonetic implements StringEncoder {
             } else if (chr == 'M' || chr == 'N') {
                 code = '6';
             } else {
-                code = chr;
+                code = chr; // should not happen?
             }
 
             if (code != CHAR_IGNORE && (lastCode != code && (code != '0' || lastCode == CHAR_FIRST_POS) || code < '0' || code > '8')) {
