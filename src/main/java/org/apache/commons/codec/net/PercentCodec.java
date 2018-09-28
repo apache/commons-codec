@@ -230,7 +230,7 @@ public class PercentCodec implements BinaryEncoder, BinaryDecoder {
      *
      * @param obj the object to encode
      * @return the encoding result byte[] as Object
-     * @throws EncoderException
+     * @throws EncoderException if the object is not a byte array
      */
     @Override
     public Object encode(final Object obj) throws EncoderException {
@@ -248,7 +248,7 @@ public class PercentCodec implements BinaryEncoder, BinaryDecoder {
      *
      * @param obj the object to decode
      * @return the decoding result byte[] as Object
-     * @throws DecoderException
+     * @throws DecoderException if the object is not a byte array
      */
     @Override
     public Object decode(final Object obj) throws DecoderException {
