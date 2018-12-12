@@ -49,23 +49,23 @@ import org.apache.commons.codec.StringEncoder;
  * <tr>
  * <th>Letter</th>
  * <th>Context</th>
- * <th align="center">Code</th>
+ * <th>Code</th>
  * </tr>
  * <tr>
  * <td>A, E, I, J, O, U, Y</td>
  * <td></td>
- * <td align="center">0</td>
+ * <td>0</td>
  * </tr>
  * <tr>
  *
  * <td>H</td>
  * <td></td>
- * <td align="center">-</td>
+ * <td>-</td>
  * </tr>
  * <tr>
  * <td>B</td>
  * <td></td>
- * <td rowspan="2" align="center">1</td>
+ * <td rowspan="2">1</td>
  * </tr>
  * <tr>
  * <td>P</td>
@@ -75,12 +75,12 @@ import org.apache.commons.codec.StringEncoder;
  * <tr>
  * <td>D, T</td>
  * <td>not before C, S, Z</td>
- * <td align="center">2</td>
+ * <td>2</td>
  * </tr>
  * <tr>
  * <td>F, V, W</td>
  * <td></td>
- * <td rowspan="2" align="center">3</td>
+ * <td rowspan="2">3</td>
  * </tr>
  * <tr>
  *
@@ -90,7 +90,7 @@ import org.apache.commons.codec.StringEncoder;
  * <tr>
  * <td>G, K, Q</td>
  * <td></td>
- * <td rowspan="3" align="center">4</td>
+ * <td rowspan="3">4</td>
  * </tr>
  * <tr>
  * <td rowspan="2">C</td>
@@ -103,29 +103,29 @@ import org.apache.commons.codec.StringEncoder;
  * <tr>
  * <td>X</td>
  * <td>not after C, K, Q</td>
- * <td align="center">48</td>
+ * <td>48</td>
  * </tr>
  * <tr>
  * <td>L</td>
  * <td></td>
  *
- * <td align="center">5</td>
+ * <td>5</td>
  * </tr>
  * <tr>
  * <td>M, N</td>
  * <td></td>
- * <td align="center">6</td>
+ * <td>6</td>
  * </tr>
  * <tr>
  * <td>R</td>
  * <td></td>
- * <td align="center">7</td>
+ * <td>7</td>
  * </tr>
  *
  * <tr>
  * <td>S, Z</td>
  * <td></td>
- * <td rowspan="6" align="center">8</td>
+ * <td rowspan="6">8</td>
  * </tr>
  * <tr>
  * <td rowspan="3">C</td>
