@@ -93,7 +93,7 @@ limitations under the License.
       <id>ggregory</id>
       <email>ggregory@apache.org</email>
       <url>http://www.garygregory.com</url>
-      <timezone>-8</timezone>
+      <timezone>-7</timezone>
     </developer>
     <developer>
       <name>David Graham</name>
