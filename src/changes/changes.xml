@@ -48,6 +48,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action issue="CODEC-244" dev="ggregory" type="update">Update from Java 6 to Java 7</action>
       <action issue="CODEC-240" dev="ggregory" type="add" due-to="Ioannis Sermetziadis">Add Percent-Encoding Codec (described in RFC3986 and RFC7578)</action>
       <action issue="CODEC-246" dev="ggregory" type="fix" due-to="Oscar Luis Vera Pérez">ColognePhoneticTest.testIsEncodeEquals missing assertions</action>
+      <action issue="CODEC-251" dev="ggregory" type="add" due-to="Gary Gregory">Add SHA-3 methods in DigestUtils</action>
     </release>
     <release version="1.11" date="2017-10-20" description="Feature and fix release.">
       <!-- The first attribute below should be the issue id; makes it easier to navigate in the IDE outline -->
