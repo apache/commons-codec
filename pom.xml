@@ -30,7 +30,7 @@ limitations under the License.
   <groupId>commons-codec</groupId>
   <artifactId>commons-codec</artifactId>
   <!-- Remember to update the version in default.properties as well -->
-  <version>1.12-SNAPSHOT</version>
+  <version>1.12</version>
   <name>Apache Commons Codec</name>
   <inceptionYear>2002</inceptionYear>
   <description>
@@ -111,6 +111,11 @@ limitations under the License.
       <name>Thomas Neidhart</name>
       <id>tn</id>
       <email>tn@apache.org</email>
+    </developer>
+    <developer>
+      <name>Rob Tompkins</name>
+      <id>chtompki</id>
+      <email>chtompki@apache.org</email>
     </developer>
   </developers>
   <contributors>
@@ -223,9 +228,6 @@ limitations under the License.
     <maven.compiler.target>1.7</maven.compiler.target>
     <commons.componentid>codec</commons.componentid>
     <commons.module.name>org.apache.commons.codec</commons.module.name>
-    <commons.release.version>1.12</commons.release.version>
-    <!-- The RC version used in the staging repository URL. -->
-    <commons.rc.version>RC1</commons.rc.version>
     <commons.jira.id>CODEC</commons.jira.id>
     <commons.jira.pid>12310464</commons.jira.pid>
     <!-- Ensure copies work OK (can be removed later when this is in parent POM) -->
@@ -234,6 +236,19 @@ limitations under the License.
     <commons.encoding>UTF-8</commons.encoding>
     <checkstyle.header.file>${basedir}/LICENSE-header.txt</checkstyle.header.file>
     <checkstyle.version>2.17</checkstyle.version>
+    <!-- generate report even if there are binary incompatible changes -->
+    <commons.japicmp.breakBuildOnBinaryIncompatibleModifications>false</commons.japicmp.breakBuildOnBinaryIncompatibleModifications>
+    <!-- 0.12.0 dies with a NullPointerException -->
+    <commons.japicmp.version>0.13.0</commons.japicmp.version>
+    <japicmp.skip>false</japicmp.skip>
+
+    <!-- Commons Release Plugin -->
+    <commons.bc.version>1.12</commons.bc.version>
+    <commons.rc.version>RC1</commons.rc.version>
+    <commons.release.isDistModule>true</commons.release.isDistModule>
+    <commons.distSvnStagingUrl>scm:svn:https://dist.apache.org/repos/dist/dev/commons/${commons.componentid}</commons.distSvnStagingUrl>
+    <commons.releaseManagerName>Rob Tompkins</commons.releaseManagerName>
+    <commons.releaseManagerKey>B6E73D84EA4FCC47166087253FAAD2CD5ECBB314</commons.releaseManagerKey>
   </properties>
   <build>
     <defaultGoal>clean verify apache-rat:check clirr:check javadoc:javadoc</defaultGoal>
