@@ -112,6 +112,11 @@ limitations under the License.
       <id>tn</id>
       <email>tn@apache.org</email>
     </developer>
+    <developer>
+      <name>Rob Tompkins</name>
+      <id>chtompki</id>
+      <email>chtompki@apache.org</email>
+    </developer>
   </developers>
   <contributors>
     <contributor>
