@@ -19,6 +19,7 @@ package org.apache.commons.codec.digest;
 import java.security.MessageDigest;
 import java.security.SecureRandom;
 import java.util.Arrays;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -75,6 +76,23 @@ public class Md5Crypt {
      */
     public static String apr1Crypt(final byte[] keyBytes) {
         return apr1Crypt(keyBytes, APR1_PREFIX + B64.getRandomSalt(8));
+    }
+
+    /**
+     * See {@link #apr1Crypt(byte[], String)} for details.
+     * <p>
+     * A salt is generated for you using the user provided {@link Random}.
+     * </p>
+     *
+     * @param keyBytes plaintext string to hash.
+     * @param random an arbitrary {@link Random} for the user's reason.
+     * @param random the instance of {@link Random} to use for generating the salt. Consider using {@link SecureRandom}
+     *            or {@link ThreadLocalRandom}.
+     * @throws IllegalArgumentException when a {@link java.security.NoSuchAlgorithmException} is caught. *
+     * @see #apr1Crypt(byte[], String)
+     */
+    public static String apr1Crypt(final byte[] keyBytes, final Random random) {
+        return apr1Crypt(keyBytes, APR1_PREFIX + B64.getRandomSalt(8, random));
     }
 
     /**
@@ -165,6 +183,28 @@ public class Md5Crypt {
     }
 
     /**
+     * Generates a libc6 crypt() compatible "$1$" hash value.
+     * <p>
+     * See {@link #md5Crypt(byte[], String)} for details.
+     *</p>
+     * <p>
+     * A salt is generated for you using the instance of {@link Random} you supply.
+     * </p>
+     * @param keyBytes
+     *            plaintext string to hash.
+     * @param random
+     *            the instance of {@link Random} to use for generating the salt. Consider using {@link SecureRandom}
+     *            or {@link ThreadLocalRandom}.
+     * @return the hash value
+     * @throws IllegalArgumentException
+     *             when a {@link java.security.NoSuchAlgorithmException} is caught.
+     * @see #md5Crypt(byte[], String)
+     */
+    public static String md5Crypt(final byte[] keyBytes, final Random random) {
+        return md5Crypt(keyBytes, MD5_PREFIX + B64.getRandomSalt(8, random));
+    }
+
+    /**
      * Generates a libc crypt() compatible "$1$" MD5 based hash value.
      * <p>
      * See {@link Crypt#crypt(String, String)} for details.
@@ -207,12 +247,39 @@ public class Md5Crypt {
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
     public static String md5Crypt(final byte[] keyBytes, final String salt, final String prefix) {
+        return md5Crypt(keyBytes, salt, prefix, new SecureRandom());
+    }
+
+    /**
+     * Generates a libc6 crypt() "$1$" or Apache htpasswd "$apr1$" hash value.
+     * <p>
+     * See {@link Crypt#crypt(String, String)} or {@link #apr1Crypt(String, String)} for details.
+     * </p>
+     *
+     * @param keyBytes
+     *            plaintext string to hash.
+     * @param salt
+     *            real salt value without prefix or "rounds=". The salt may be null, in which case a salt is generated for
+     *            you using {@link ThreadLocalRandom}; for more secure salts consider using {@link SecureRandom} to
+     *            generate your own salts.
+     * @param prefix
+     *            salt prefix
+     * @param random
+     *            the instance of {@link Random} to use for generating the salt. Consider using {@link SecureRandom}
+     *            or {@link ThreadLocalRandom}.
+     * @return the hash value
+     * @throws IllegalArgumentException
+     *             if the salt does not match the allowed pattern
+     * @throws IllegalArgumentException
+     *             when a {@link java.security.NoSuchAlgorithmException} is caught.
+     */
+    public static String md5Crypt(final byte[] keyBytes, final String salt, final String prefix, final Random random) {
         final int keyLen = keyBytes.length;
 
         // Extract the real salt from the given string which can be a complete hash string.
         String saltString;
         if (salt == null) {
-            saltString = B64.getRandomSalt(8);
+            saltString = B64.getRandomSalt(8, random);
         } else {
             final Pattern p = Pattern.compile("^" + prefix.replace("$", "\\$") + "([\\.\\/a-zA-Z0-9]{1,8}).*");
             final Matcher m = p.matcher(salt);

@@ -18,7 +18,7 @@ package org.apache.commons.codec.digest;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.Random;
 
 /**
  * Base64 like method to convert binary bytes into ASCII chars.
@@ -65,26 +65,42 @@ class B64 {
         }
     }
 
+  /**
+   * Generates a string of random chars from the B64T set.
+   * <p>
+   * The salt is generated with {@link SecureRandom}.
+   * </p>
+   *
+   * @param num Number of chars to generate.
+   * @return a random salt {@link String}.
+   */
+  static String getRandomSalt(final int num) {
+    final StringBuilder saltString = new StringBuilder(num);
+    try {
+      final SecureRandom current = SecureRandom.getInstance("SHA1PRNG");
+      for (int i = 1; i <= num; i++) {
+        saltString.append(B64T.charAt(current.nextInt(B64T.length())));
+      }
+    } catch (NoSuchAlgorithmException e) {
+      throw new RuntimeException(e);
+    }
+    return saltString.toString();
+  }
+
     /**
      * Generates a string of random chars from the B64T set.
      * <p>
-     * The salt is generated with {@link ThreadLocalRandom}.
+     * The salt is generated with the {@link Random} provided.
      * </p>
      *
-     * @param num
-     *            Number of chars to generate.
+     * @param num Number of chars to generate.
+     * @param random an instance of {@link Random}.
+     * @return a random salt {@link String}.
      */
-    static String getRandomSalt(final int num) {
+    static String getRandomSalt(final int num, final Random random) {
         final StringBuilder saltString = new StringBuilder(num);
-        ThreadLocal<SecureRandom> secureRandomThreadLocal = new ThreadLocal<SecureRandom>();
-        try {
-            secureRandomThreadLocal.set(SecureRandom.getInstance("SHA1PRNG"));
-            final SecureRandom current = secureRandomThreadLocal.get();
-            for (int i = 1; i <= num; i++) {
-                saltString.append(B64T.charAt(current.nextInt(B64T.length())));
-            }
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
+        for (int i = 1; i <= num; i++) {
+            saltString.append(B64T.charAt(random.nextInt(B64T.length())));
         }
         return saltString.toString();
     }

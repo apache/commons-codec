@@ -23,6 +23,8 @@ import static org.junit.Assert.assertTrue;
 import org.apache.commons.codec.Charsets;
 import org.junit.Test;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class Apr1CryptTest {
 
     @Test
@@ -56,12 +58,28 @@ public class Apr1CryptTest {
     }
 
     @Test
+    public void testApr1CryptBytesWithThreadLocalRandom() {
+        // random salt
+        final byte[] keyBytes = new byte[] { '!', 'b', 'c', '.' };
+        ThreadLocalRandom threadLocalRandom = ThreadLocalRandom.current();
+        final String hash = Md5Crypt.apr1Crypt(keyBytes, threadLocalRandom);
+        assertEquals(hash, Md5Crypt.apr1Crypt("!bc.", hash));
+
+        // An empty Bytearray equals an empty String
+        assertEquals("$apr1$foo$P27KyD1htb4EllIPEYhqi0", Md5Crypt.apr1Crypt(new byte[0], "$apr1$foo"));
+        // UTF-8 stores \u00e4 "a with diaeresis" as two bytes 0xc3 0xa4.
+        assertEquals("$apr1$./$EeFrYzWWbmTyGdf4xULYc.", Md5Crypt.apr1Crypt("t\u00e4st", "$apr1$./$"));
+        // ISO-8859-1 stores "a with diaeresis" as single byte 0xe4.
+        assertEquals("$apr1$./$kCwT1pY9qXAJElYG9q1QE1", Md5Crypt.apr1Crypt("t\u00e4st".getBytes(Charsets.ISO_8859_1), "$apr1$./$"));
+    }
+
+    @Test
     public void testApr1CryptExplicitCall() {
         // When explicitly called the prefix is optional
         assertEquals("$apr1$1234$mAlH7FRST6FiRZ.kcYL.j1", Md5Crypt.apr1Crypt("secret", "1234"));
         // When explicitly called without salt, a random one will be used.
         assertTrue(Md5Crypt.apr1Crypt("secret".getBytes()).matches("^\\$apr1\\$[a-zA-Z0-9./]{0,8}\\$.{1,}$"));
-        assertTrue(Md5Crypt.apr1Crypt("secret".getBytes(), null).matches("^\\$apr1\\$[a-zA-Z0-9./]{0,8}\\$.{1,}$"));
+        assertTrue(Md5Crypt.apr1Crypt("secret".getBytes(), (String) null).matches("^\\$apr1\\$[a-zA-Z0-9./]{0,8}\\$.{1,}$"));
     }
 
     @Test

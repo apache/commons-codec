@@ -23,6 +23,8 @@ import static org.junit.Assert.assertTrue;
 import org.apache.commons.codec.Charsets;
 import org.junit.Test;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class Md5CryptTest {
 
     @Test
@@ -56,7 +58,14 @@ public class Md5CryptTest {
     @Test
     public void testMd5CryptExplicitCall() {
         assertTrue(Md5Crypt.md5Crypt("secret".getBytes()).matches("^\\$1\\$[a-zA-Z0-9./]{0,8}\\$.{1,}$"));
-        assertTrue(Md5Crypt.md5Crypt("secret".getBytes(), null).matches("^\\$1\\$[a-zA-Z0-9./]{0,8}\\$.{1,}$"));
+        assertTrue(Md5Crypt.md5Crypt("secret".getBytes(), (String) null).matches("^\\$1\\$[a-zA-Z0-9./]{0,8}\\$.{1,}$"));
+    }
+
+    @Test
+    public void testMd5CryptExplicitCallWithThreadLocalRandom() {
+        ThreadLocalRandom threadLocalRandom = ThreadLocalRandom.current();
+        assertTrue(Md5Crypt.md5Crypt("secret".getBytes(), threadLocalRandom).matches("^\\$1\\$[a-zA-Z0-9./]{0,8}\\$.{1,}$"));
+        assertTrue(Md5Crypt.md5Crypt("secret".getBytes(), (String) null).matches("^\\$1\\$[a-zA-Z0-9./]{0,8}\\$.{1,}$"));
     }
 
     @Test
