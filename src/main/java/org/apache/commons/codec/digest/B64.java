@@ -16,6 +16,8 @@
  */
 package org.apache.commons.codec.digest;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -74,9 +76,15 @@ class B64 {
      */
     static String getRandomSalt(final int num) {
         final StringBuilder saltString = new StringBuilder(num);
-        final ThreadLocalRandom current = ThreadLocalRandom.current();
-        for (int i = 1; i <= num; i++) {
-            saltString.append(B64T.charAt(current.nextInt(B64T.length())));
+        ThreadLocal<SecureRandom> secureRandomThreadLocal = new ThreadLocal<SecureRandom>();
+        try {
+            secureRandomThreadLocal.set(SecureRandom.getInstance("SHA1PRNG"));
+            final SecureRandom current = secureRandomThreadLocal.get();
+            for (int i = 1; i <= num; i++) {
+                saltString.append(B64T.charAt(current.nextInt(B64T.length())));
+            }
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
         }
         return saltString.toString();
     }
