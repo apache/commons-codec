@@ -246,8 +246,8 @@ limitations under the License.
     <japicmp.skip>false</japicmp.skip>
 
     <!-- Commons Release Plugin -->
-    <commons.bc.version>1.12</commons.bc.version>
-    <commons.rc.version>RC1</commons.rc.version>
+    <commons.bc.version>1.11</commons.bc.version>
+    <commons.rc.version>RC2</commons.rc.version>
     <commons.release.isDistModule>true</commons.release.isDistModule>
     <commons.distSvnStagingUrl>scm:svn:https://dist.apache.org/repos/dist/dev/commons/${commons.componentid}</commons.distSvnStagingUrl>
     <commons.releaseManagerName>Rob Tompkins</commons.releaseManagerName>
