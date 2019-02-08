@@ -507,7 +507,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
 
             // use an EMPTY_LIST to avoid false positive warnings wrt potential null pointer access
             @SuppressWarnings("unchecked")
-            final List<Branch> nextBranches = branching ? new ArrayList<Branch>() : Collections.EMPTY_LIST;
+            final List<Branch> nextBranches = branching ? new ArrayList<>() : Collections.EMPTY_LIST;
 
             for (final Rule rule : rules) {
                 if (rule.matches(inputContext)) {
