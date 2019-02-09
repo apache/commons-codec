@@ -207,7 +207,7 @@ public class UnixCrypt {
             final int numSaltChars = SALT_CHARS.length;
             salt = "" + SALT_CHARS[randomGenerator.nextInt(numSaltChars)] +
                     SALT_CHARS[randomGenerator.nextInt(numSaltChars)];
-        } else if (!salt.matches("^[" + B64.B64T + "]{2,}$")) {
+        } else if (!salt.matches("^[" + B64.B64T_STRING + "]{2,}$")) {
             throw new IllegalArgumentException("Invalid salt value: " + salt);
         }
 

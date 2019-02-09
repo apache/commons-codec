@@ -26,7 +26,7 @@ public class B64Test {
     @Test
     public void testB64T() {
         assertNotNull(new B64()); // for the 100% code coverage :)
-        assertEquals(64, B64.B64T.length());
+        assertEquals(64, B64.B64T_ARRAY.length);
     }
 
     @Test

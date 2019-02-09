@@ -19,10 +19,10 @@ package org.apache.commons.codec.digest;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * Base64 like method to convert binary bytes into ASCII chars.
- *
+ * Base64-like method to convert binary bytes into ASCII chars.
+ * <p>
  * TODO: Can Base64 be reused?
- *
+ * </p>
  * <p>
  * This class is immutable and thread-safe.
  * </p>
@@ -35,7 +35,12 @@ class B64 {
     /**
      * Table with characters for Base64 transformation.
      */
-    static final String B64T = "./0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    static final String B64T_STRING = "./0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
+    /**
+     * Table with characters for Base64 transformation.
+     */
+    static final char[] B64T_ARRAY = B64T_STRING.toCharArray();
 
     /**
      * Base64 like conversion of bytes to ASCII chars.
@@ -58,7 +63,7 @@ class B64 {
         // It's effectively a "for" loop but kept to resemble the original C code.
         int n = outLen;
         while (n-- > 0) {
-            buffer.append(B64T.charAt(w & 0x3f));
+            buffer.append(B64T_ARRAY[w & 0x3f]);
             w >>= 6;
         }
     }
@@ -76,7 +81,7 @@ class B64 {
         final StringBuilder saltString = new StringBuilder(num);
         final ThreadLocalRandom current = ThreadLocalRandom.current();
         for (int i = 1; i <= num; i++) {
-            saltString.append(B64T.charAt(current.nextInt(B64T.length())));
+            saltString.append(B64T_ARRAY[current.nextInt(B64T_ARRAY.length)]);
         }
         return saltString.toString();
     }
