@@ -16,7 +16,6 @@
  */
 package org.apache.commons.codec.language;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -30,6 +29,7 @@ import java.util.Set;
 
 import org.apache.commons.codec.CharEncoding;
 import org.apache.commons.codec.EncoderException;
+import org.apache.commons.codec.Resources;
 import org.apache.commons.codec.StringEncoder;
 
 /**
@@ -226,12 +226,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
     private static final Map<Character, Character> FOLDINGS = new HashMap<>();
 
     static {
-        final InputStream rulesIS = DaitchMokotoffSoundex.class.getClassLoader().getResourceAsStream(RESOURCE_FILE);
-        if (rulesIS == null) {
-            throw new IllegalArgumentException("Unable to load resource: " + RESOURCE_FILE);
-        }
-
-        try (final Scanner scanner = new Scanner(rulesIS, CharEncoding.UTF_8)) {
+        try (final Scanner scanner = new Scanner(Resources.getInputStream(RESOURCE_FILE), CharEncoding.UTF_8)) {
             parseRules(scanner, RESOURCE_FILE, RULES, FOLDINGS);
         }
 

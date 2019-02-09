@@ -17,7 +17,6 @@
 
 package org.apache.commons.codec.language.bm;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -29,6 +28,8 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.regex.Pattern;
+
+import org.apache.commons.codec.Resources;
 
 /**
  * Language guessing utility.
@@ -128,13 +129,8 @@ public class Lang {
      */
     public static Lang loadFromResource(final String languageRulesResourceName, final Languages languages) {
         final List<LangRule> rules = new ArrayList<>();
-        final InputStream lRulesIS = Lang.class.getClassLoader().getResourceAsStream(languageRulesResourceName);
-
-        if (lRulesIS == null) {
-            throw new IllegalStateException("Unable to resolve required resource:" + LANGUAGE_RULES_RN);
-        }
-
-        try (final Scanner scanner = new Scanner(lRulesIS, ResourceConstants.ENCODING)) {
+        try (final Scanner scanner = new Scanner(Resources.getInputStream(languageRulesResourceName),
+                ResourceConstants.ENCODING)) {
             boolean inExtendedComment = false;
             while (scanner.hasNextLine()) {
                 final String rawLine = scanner.nextLine();

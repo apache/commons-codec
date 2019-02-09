@@ -115,7 +115,7 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest<StringEnco
         Rule.getInstance(NameType.GENERIC, RuleType.APPROX, "noSuchLanguage");
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testInvalidLangIllegalStateException() {
         Lang.loadFromResource("thisIsAMadeUpResourceName", Languages.getInstance(NameType.GENERIC));
     }

@@ -17,7 +17,6 @@
 
 package org.apache.commons.codec.language.bm;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -32,6 +31,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.codec.Resources;
 import org.apache.commons.codec.language.bm.Languages.LanguageSet;
 
 /**
@@ -254,24 +254,12 @@ public class Rule {
 
     private static Scanner createScanner(final NameType nameType, final RuleType rt, final String lang) {
         final String resName = createResourceName(nameType, rt, lang);
-        final InputStream rulesIS = Languages.class.getClassLoader().getResourceAsStream(resName);
-
-        if (rulesIS == null) {
-            throw new IllegalArgumentException("Unable to load resource: " + resName);
-        }
-
-        return new Scanner(rulesIS, ResourceConstants.ENCODING);
+        return new Scanner(Resources.getInputStream(resName), ResourceConstants.ENCODING);
     }
 
     private static Scanner createScanner(final String lang) {
         final String resName = String.format("org/apache/commons/codec/language/bm/%s.txt", lang);
-        final InputStream rulesIS = Languages.class.getClassLoader().getResourceAsStream(resName);
-
-        if (rulesIS == null) {
-            throw new IllegalArgumentException("Unable to load resource: " + resName);
-        }
-
-        return new Scanner(rulesIS, ResourceConstants.ENCODING);
+        return new Scanner(Resources.getInputStream(resName), ResourceConstants.ENCODING);
     }
 
     private static boolean endsWith(final CharSequence input, final CharSequence suffix) {

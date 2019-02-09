@@ -17,7 +17,6 @@
 
 package org.apache.commons.codec.language.bm;
 
-import java.io.InputStream;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashSet;
@@ -26,20 +25,24 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.Set;
 
+import org.apache.commons.codec.Resources;
+
 /**
  * Language codes.
  * <p>
- * Language codes are typically loaded from resource files. These are UTF-8 encoded text files. They are
- * systematically named following the pattern:
- * <blockquote>org/apache/commons/codec/language/bm/${{@link NameType#getName()} languages.txt</blockquote>
+ * Language codes are typically loaded from resource files. These are UTF-8
+ * encoded text files. They are systematically named following the pattern:
+ * <blockquote>org/apache/commons/codec/language/bm/${{@link NameType#getName()}
+ * languages.txt</blockquote>
  * <p>
  * The format of these resources is the following:
  * <ul>
  * <li><b>Language:</b> a single string containing no whitespace</li>
- * <li><b>End-of-line comments:</b> Any occurrence of '//' will cause all text following on that line to be
- * discarded as a comment.</li>
- * <li><b>Multi-line comments:</b> Any line starting with '/*' will start multi-line commenting mode.
- * This will skip all content until a line ending in '*' and '/' is found.</li>
+ * <li><b>End-of-line comments:</b> Any occurrence of '//' will cause all text
+ * following on that line to be discarded as a comment.</li>
+ * <li><b>Multi-line comments:</b> Any line starting with '/*' will start
+ * multi-line commenting mode. This will skip all content until a line ending in
+ * '*' and '/' is found.</li>
  * <li><b>Blank lines:</b> All blank lines will be skipped.</li>
  * </ul>
  * <p>
@@ -51,9 +54,12 @@ import java.util.Set;
  * @version $Id$
  */
 public class Languages {
-    // Implementation note: This class is divided into two sections. The first part is a static factory interface that
-    // exposes org/apache/commons/codec/language/bm/%s_languages.txt for %s in NameType.* as a list of supported
-    // languages, and a second part that provides instance methods for accessing this set for supported languages.
+    // Implementation note: This class is divided into two sections. The first part
+    // is a static factory interface that
+    // exposes org/apache/commons/codec/language/bm/%s_languages.txt for %s in
+    // NameType.* as a list of supported
+    // languages, and a second part that provides instance methods for accessing
+    // this set for supported languages.
 
     /**
      * A set of languages.
@@ -139,7 +145,7 @@ public class Languages {
                 final SomeLanguages sl = (SomeLanguages) other;
                 final Set<String> ls = new HashSet<>(languages);
                 for (final String lang : sl.languages) {
-                  ls.add(lang);
+                    ls.add(lang);
                 }
                 return from(ls);
             }
@@ -169,13 +175,8 @@ public class Languages {
     public static Languages getInstance(final String languagesResourceName) {
         // read languages list
         final Set<String> ls = new HashSet<>();
-        final InputStream langIS = Languages.class.getClassLoader().getResourceAsStream(languagesResourceName);
-
-        if (langIS == null) {
-            throw new IllegalArgumentException("Unable to resolve required resource: " + languagesResourceName);
-        }
-
-        try (final Scanner lsScanner = new Scanner(langIS, ResourceConstants.ENCODING)) {
+        try (final Scanner lsScanner = new Scanner(Resources.getInputStream(languagesResourceName),
+                ResourceConstants.ENCODING)) {
             boolean inExtendedComment = false;
             while (lsScanner.hasNextLine()) {
                 final String line = lsScanner.nextLine().trim();
@@ -191,9 +192,8 @@ public class Languages {
                     }
                 }
             }
+            return new Languages(Collections.unmodifiableSet(ls));
         }
-
-        return new Languages(Collections.unmodifiableSet(ls));
     }
 
     private static String langResourceName(final NameType nameType) {
