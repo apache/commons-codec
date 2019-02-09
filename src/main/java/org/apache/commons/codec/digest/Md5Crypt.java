@@ -65,8 +65,8 @@ public class Md5Crypt {
     /**
      * See {@link #apr1Crypt(byte[], String)} for details.
      * <p>
-     * A salt is generated for you using {@link ThreadLocalRandom}; for more secure salts consider using
-     * {@link SecureRandom} to generate your own salts and calling {@link #apr1Crypt(byte[], String)}.
+     * A salt is generated for you using {@link SecureRandom}; your own {@link Random} in
+     * {@link #apr1Crypt(byte[], Random)}.
      * </p>
      *
      * @param keyBytes plaintext string to hash.
@@ -98,8 +98,7 @@ public class Md5Crypt {
     /**
      * See {@link #apr1Crypt(String, String)} for details.
      * <p>
-     * A salt is generated for you using {@link ThreadLocalRandom}; for more secure salts consider using
-     * {@link SecureRandom} to generate your own salts.
+     * A salt is generated for you using {@link SecureRandom}
      * </p>
      *
      * @param keyBytes
@@ -207,7 +206,8 @@ public class Md5Crypt {
     /**
      * Generates a libc crypt() compatible "$1$" MD5 based hash value.
      * <p>
-     * See {@link Crypt#crypt(String, String)} for details.
+     * See {@link Crypt#crypt(String, String)} for details. We use {@link SecureRandom} for seed generation by
+     * default.
      * </p>
      *
      * @param keyBytes
@@ -229,7 +229,8 @@ public class Md5Crypt {
     /**
      * Generates a libc6 crypt() "$1$" or Apache htpasswd "$apr1$" hash value.
      * <p>
-     * See {@link Crypt#crypt(String, String)} or {@link #apr1Crypt(String, String)} for details.
+     * See {@link Crypt#crypt(String, String)} or {@link #apr1Crypt(String, String)} for details. We use
+     * {@link SecureRandom by default}.
      * </p>
      *
      * @param keyBytes

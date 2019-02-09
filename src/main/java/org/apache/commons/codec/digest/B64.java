@@ -75,11 +75,7 @@ class B64 {
    * @return a random salt {@link String}.
    */
   static String getRandomSalt(final int num) {
-    try {
-      return getRandomSalt(num, SecureRandom.getInstanceStrong());
-    } catch (NoSuchAlgorithmException e) {
-      throw new IllegalStateException(e);
-    }
+    return getRandomSalt(num, new SecureRandom());
   }
 
     /**

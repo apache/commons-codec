@@ -19,7 +19,6 @@ o Wrong value calculated by Cologne Phonetic if a special character is placed be
 o ColognePhoneticTest.testIsEncodeEquals missing assertions  Issue: CODEC-246. Thanks to Oscar Luis Vera Pérez.
 
 Changes:
-o Update from Java 6 to Java 7  Issue: CODEC-244.
 o Update from Java 7 to Java 8  Issue: CODEC-253.
 
 
