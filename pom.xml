@@ -248,6 +248,7 @@ limitations under the License.
     <!-- Commons Release Plugin -->
     <commons.bc.version>1.11</commons.bc.version>
     <commons.rc.version>RC2</commons.rc.version>
+    <commons.release-plugin.version>1.5</commons.release-plugin.version>
     <commons.release.isDistModule>true</commons.release.isDistModule>
     <commons.distSvnStagingUrl>scm:svn:https://dist.apache.org/repos/dist/dev/commons/${commons.componentid}</commons.distSvnStagingUrl>
     <commons.releaseManagerName>Rob Tompkins</commons.releaseManagerName>
