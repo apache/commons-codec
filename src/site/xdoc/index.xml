@@ -71,7 +71,8 @@ Various <a href="project-reports.html">project reports</a> are also available.
 The Javadoc API documents are available online:
 </p>
 <ul>
-  <li><a href="apidocs/index.html">Javadoc trunk</a></li>
+  <li><a href="apidocs/index.html">Javadoc git (master)</a></li>
+  <li><a href="archives/1.12/apidocs/index.html">Javadoc 1.12</a></li>
   <li><a href="archives/1.11/apidocs/index.html">Javadoc 1.11</a></li>
   <li><a href="archives/1.10/apidocs/index.html">Javadoc 1.10</a></li>
   <li><a href="archives/1.9/apidocs/index.html">Javadoc 1.9</a></li>
@@ -86,14 +87,14 @@ The <a href="source-repository.html">subversion repository</a> can be
 <!-- ================================================== -->
 <section name="Releases">
 <ul>
-  <li><a href="http://commons.apache.org/codec/download_codec.cgi">Codec 1.11 (mirrors)</a> requires Java 1.6</li>
+  <li><a href="http://commons.apache.org/codec/download_codec.cgi">Codec 1.12 (mirrors)</a> requires Java 1.7</li>
+  <li><a href="http://archive.apache.org/dist/commons/codec/">Codec 1.11 (archives)</a> requires Java 1.6</li>
   <li><a href="http://archive.apache.org/dist/commons/codec/">Codec 1.10 (archives)</a> requires Java 1.6</li>
   <li><a href="http://archive.apache.org/dist/commons/codec/">Codec 1.9 (archives)</a> requires Java 1.6</li>
   <li><a href="http://archive.apache.org/dist/commons/codec/">Codec 1.8 (archives)</a> requires Java 1.6</li>
   <li><a href="http://archive.apache.org/dist/commons/codec/">Codec 1.7 (archives)</a> requires Java 1.6</li>
   <li><a href="http://archive.apache.org/dist/commons/codec/">Codec 1.6 (archives)</a> requires Java 1.5</li>
   <li><a href="http://archive.apache.org/dist/commons/codec/">Codec 1.5 (archives)</a> requires Java 1.4</li>
-  <li><a href="http://archive.apache.org/dist/commons/codec/">Codec 1.4 (archives)</a> requires Java 1.4</li>
 </ul>
 <p>
 See the

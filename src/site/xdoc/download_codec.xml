@@ -102,7 +102,7 @@ limitations under the License.
         It is essential that you
         <a href="https://www.apache.org/info/verification.html">verify the integrity</a>
         of downloaded files, preferably using the <code>PGP</code> signature (<code>*.asc</code> files);
-        failing that using the <code>MD5</code> hash (<code>*.md5</code> checksum files).
+        failing that using the <code>SHA512</code> hash (<code>*.sha512</code> checksum files).
       </p>
       <p>
         The <a href="https://www.apache.org/dist/commons/KEYS">KEYS</a>
@@ -111,32 +111,32 @@ limitations under the License.
       </p>
     </subsection>
     </section>
-    <section name="Apache Commons Codec 1.11 ">
+    <section name="Apache Commons Codec 1.12 ">
       <subsection name="Binaries">
         <table>
           <tr>
-              <td><a href="[preferred]/commons/codec/binaries/commons-codec-1.11-bin.tar.gz">commons-codec-1.11-bin.tar.gz</a></td>
-              <td><a href="https://www.apache.org/dist/commons/codec/binaries/commons-codec-1.11-bin.tar.gz.md5">md5</a></td>
-              <td><a href="https://www.apache.org/dist/commons/codec/binaries/commons-codec-1.11-bin.tar.gz.asc">pgp</a></td>
+              <td><a href="[preferred]/commons/codec/binaries/commons-codec-1.12-bin.tar.gz">commons-codec-1.12-bin.tar.gz</a></td>
+              <td><a href="https://www.apache.org/dist/commons/codec/binaries/commons-codec-1.12-bin.tar.gz.sha512">sha512</a></td>
+              <td><a href="https://www.apache.org/dist/commons/codec/binaries/commons-codec-1.12-bin.tar.gz.asc">pgp</a></td>
           </tr>
           <tr>
-              <td><a href="[preferred]/commons/codec/binaries/commons-codec-1.11-bin.zip">commons-codec-1.11-bin.zip</a></td>
-              <td><a href="https://www.apache.org/dist/commons/codec/binaries/commons-codec-1.11-bin.zip.md5">md5</a></td>
-              <td><a href="https://www.apache.org/dist/commons/codec/binaries/commons-codec-1.11-bin.zip.asc">pgp</a></td>
+              <td><a href="[preferred]/commons/codec/binaries/commons-codec-1.12-bin.zip">commons-codec-1.12-bin.zip</a></td>
+              <td><a href="https://www.apache.org/dist/commons/codec/binaries/commons-codec-1.12-bin.zip.sha512">sha512</a></td>
+              <td><a href="https://www.apache.org/dist/commons/codec/binaries/commons-codec-1.12-bin.zip.asc">pgp</a></td>
           </tr>
         </table>
       </subsection>
       <subsection name="Source">
         <table>
           <tr>
-              <td><a href="[preferred]/commons/codec/source/commons-codec-1.11-src.tar.gz">commons-codec-1.11-src.tar.gz</a></td>
-              <td><a href="https://www.apache.org/dist/commons/codec/source/commons-codec-1.11-src.tar.gz.md5">md5</a></td>
-              <td><a href="https://www.apache.org/dist/commons/codec/source/commons-codec-1.11-src.tar.gz.asc">pgp</a></td>
+              <td><a href="[preferred]/commons/codec/source/commons-codec-1.12-src.tar.gz">commons-codec-1.12-src.tar.gz</a></td>
+              <td><a href="https://www.apache.org/dist/commons/codec/source/commons-codec-1.12-src.tar.gz.sha512">sha512</a></td>
+              <td><a href="https://www.apache.org/dist/commons/codec/source/commons-codec-1.12-src.tar.gz.asc">pgp</a></td>
           </tr>
           <tr>
-              <td><a href="[preferred]/commons/codec/source/commons-codec-1.11-src.zip">commons-codec-1.11-src.zip</a></td>
-              <td><a href="https://www.apache.org/dist/commons/codec/source/commons-codec-1.11-src.zip.md5">md5</a></td>
-              <td><a href="https://www.apache.org/dist/commons/codec/source/commons-codec-1.11-src.zip.asc">pgp</a></td>
+              <td><a href="[preferred]/commons/codec/source/commons-codec-1.12-src.zip">commons-codec-1.12-src.zip</a></td>
+              <td><a href="https://www.apache.org/dist/commons/codec/source/commons-codec-1.12-src.zip.sha512">sha512</a></td>
+              <td><a href="https://www.apache.org/dist/commons/codec/source/commons-codec-1.12-src.zip.asc">pgp</a></td>
           </tr>
         </table>
       </subsection>

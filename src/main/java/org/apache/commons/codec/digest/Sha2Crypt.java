@@ -20,6 +20,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Arrays;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -99,8 +100,8 @@ public class Sha2Crypt {
      *            plaintext to hash
      * @param salt
      *            real salt value without prefix or "rounds=". The salt may be null, in which case a salt is generated for
-     *            you using {@link ThreadLocalRandom}; for more secure salts consider using {@link SecureRandom} to
-     *            generate your own salts.
+     *            you using {@link SecureRandom}. If one does not want to use {@link SecureRandom}, you can pass your
+     *            own {@link Random} in {@link #sha256Crypt(byte[], String, Random)}.
      * @return complete hash value including salt
      * @throws IllegalArgumentException
      *             if the salt does not match the allowed pattern
@@ -110,6 +111,31 @@ public class Sha2Crypt {
     public static String sha256Crypt(final byte[] keyBytes, String salt) {
         if (salt == null) {
             salt = SHA256_PREFIX + B64.getRandomSalt(8);
+        }
+        return sha2Crypt(keyBytes, salt, SHA256_PREFIX, SHA256_BLOCKSIZE, MessageDigestAlgorithms.SHA_256);
+    }
+
+    /**
+     * Generates a libc6 crypt() compatible "$5$" hash value.
+     * <p>
+     * See {@link Crypt#crypt(String, String)} for details.
+     * </p>
+     * @param keyBytes
+     *            plaintext to hash
+     * @param salt
+     *            real salt value without prefix or "rounds=".
+     * @param random
+     *            the instance of {@link Random} to use for generating the salt. Consider using {@link SecureRandom}
+     *            or {@link ThreadLocalRandom}.
+     * @return complete hash value including salt
+     * @throws IllegalArgumentException
+     *             if the salt does not match the allowed pattern
+     * @throws IllegalArgumentException
+     *             when a {@link java.security.NoSuchAlgorithmException} is caught.
+     */
+    public static String sha256Crypt(final byte[] keyBytes, String salt, Random random) {
+        if (salt == null) {
+            salt = SHA256_PREFIX + B64.getRandomSalt(8, random);
         }
         return sha2Crypt(keyBytes, salt, SHA256_PREFIX, SHA256_BLOCKSIZE, MessageDigestAlgorithms.SHA_256);
     }
@@ -543,9 +569,10 @@ public class Sha2Crypt {
      * @param keyBytes
      *            plaintext to hash
      * @param salt
-     *            real salt value without prefix or "rounds=". The salt may be null, in which case a salt is generated for
-     *            you using {@link ThreadLocalRandom}; for more secure salts consider using {@link SecureRandom} to
-     *            generate your own salts.
+     *            real salt value without prefix or "rounds=". The salt may be null, in which case a salt is generated
+     *            for you using {@link SecureRandom}; if you want to use a {@link Random} object other than
+     *            {@link SecureRandom} then we suggest you provide it using
+     *            {@link #sha512Crypt(byte[], String, Random)}.
      * @return complete hash value including salt
      * @throws IllegalArgumentException
      *             if the salt does not match the allowed pattern
@@ -555,6 +582,35 @@ public class Sha2Crypt {
     public static String sha512Crypt(final byte[] keyBytes, String salt) {
         if (salt == null) {
             salt = SHA512_PREFIX + B64.getRandomSalt(8);
+        }
+        return sha2Crypt(keyBytes, salt, SHA512_PREFIX, SHA512_BLOCKSIZE, MessageDigestAlgorithms.SHA_512);
+    }
+
+
+
+    /**
+     * Generates a libc6 crypt() compatible "$6$" hash value.
+     * <p>
+     * See {@link Crypt#crypt(String, String)} for details.
+     * </p>
+     * @param keyBytes
+     *            plaintext to hash
+     * @param salt
+     *            real salt value without prefix or "rounds=". The salt may be null, in which case a salt is generated for
+     *            you using {@link ThreadLocalRandom}; for more secure salts consider using {@link SecureRandom} to
+     *            generate your own salts.
+     * @param random
+     *            the instance of {@link Random} to use for generating the salt. Consider using {@link SecureRandom}
+     *            or {@link ThreadLocalRandom}.
+     * @return complete hash value including salt
+     * @throws IllegalArgumentException
+     *             if the salt does not match the allowed pattern
+     * @throws IllegalArgumentException
+     *             when a {@link java.security.NoSuchAlgorithmException} is caught.
+     */
+    public static String sha512Crypt(final byte[] keyBytes, String salt, final Random random) {
+        if (salt == null) {
+            salt = SHA512_PREFIX + B64.getRandomSalt(8, random);
         }
         return sha2Crypt(keyBytes, salt, SHA512_PREFIX, SHA512_BLOCKSIZE, MessageDigestAlgorithms.SHA_512);
     }

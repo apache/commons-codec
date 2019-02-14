@@ -1,3 +1,33 @@
+              Apache Commons Codec 1.12 RELEASE NOTES
+
+The Apache Commons Codec team is pleased to announce the commons-codec-1.12 release!
+
+The Apache Commons Codec package contains simple encoder and decoders for
+     various formats such as Base64 and Hexadecimal.  In addition to these
+     widely used encoders and decoders, the codec package also maintains a
+     collection of phonetic encoding utilities.
+
+Changes in this version include:
+
+New features:
+o Add Percent-Encoding Codec (described in RFC3986 and RFC7578)  Issue: CODEC-240. Thanks to Ioannis Sermetziadis.
+o Add SHA-3 methods in DigestUtils  Issue: CODEC-251. Thanks to Gary Gregory.
+
+Fixed Bugs:
+o B64 salt generator: Random -> ThreadLocalRandom  Issue: CODEC-252.
+o Wrong value calculated by Cologne Phonetic if a special character is placed between equal letters  Issue: CODEC-250. Thanks to Alex Volodko.
+o ColognePhoneticTest.testIsEncodeEquals missing assertions  Issue: CODEC-246. Thanks to Oscar Luis Vera Pérez.
+
+Changes:
+o Update from Java 7 to Java 8  Issue: CODEC-253.
+
+
+Have fun!
+-Apache Commons Codec team
+
+
+-------------------------------------------------------------------------------
+
               Apache Commons Codec 1.11 RELEASE NOTES
 
 The Apache Commons Codec team is pleased to announce the commons-codec-1.11-SNAPSHOT release!

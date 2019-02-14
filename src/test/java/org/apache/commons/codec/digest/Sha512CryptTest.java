@@ -20,6 +20,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.apache.commons.codec.Charsets;
 import org.junit.Ignore;
@@ -54,6 +55,12 @@ public class Sha512CryptTest {
     public void testSha512CryptExplicitCall() {
         assertTrue(Sha2Crypt.sha512Crypt("secret".getBytes()).matches("^\\$6\\$[a-zA-Z0-9./]{0,16}\\$.{1,}$"));
         assertTrue(Sha2Crypt.sha512Crypt("secret".getBytes(), null).matches("^\\$6\\$[a-zA-Z0-9./]{0,16}\\$.{1,}$"));
+    }
+
+    @Test
+    public void testSha512CryptExplicitCallThreadLocalRandom() {
+        ThreadLocalRandom threadLocalRandom = ThreadLocalRandom.current();
+        assertTrue(Sha2Crypt.sha512Crypt("secret".getBytes(), null, threadLocalRandom).matches("^\\$6\\$[a-zA-Z0-9./]{0,16}\\$.{1,}$"));
     }
 
     @Test(expected = NullPointerException.class)
