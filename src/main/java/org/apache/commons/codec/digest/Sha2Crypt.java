@@ -132,6 +132,7 @@ public class Sha2Crypt {
      *             if the salt does not match the allowed pattern
      * @throws IllegalArgumentException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
+     * @since 1.12
      */
     public static String sha256Crypt(final byte[] keyBytes, String salt, Random random) {
         if (salt == null) {
@@ -607,6 +608,7 @@ public class Sha2Crypt {
      *             if the salt does not match the allowed pattern
      * @throws IllegalArgumentException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
+     * @since 1.12
      */
     public static String sha512Crypt(final byte[] keyBytes, String salt, final Random random) {
         if (salt == null) {
