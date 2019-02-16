@@ -143,7 +143,7 @@ public class QCodecTest {
         assertEquals( "Encoding a null Object should return null", null, result);
 
         try {
-            final Object dObj = new Double(3.0);
+            final Object dObj = Double.valueOf(3.0d);
             qcodec.encode( dObj );
             fail( "Trying to url encode a Double object should cause an exception.");
         } catch (final EncoderException ee) {
@@ -169,7 +169,7 @@ public class QCodecTest {
         assertEquals( "Decoding a null Object should return null", null, result);
 
         try {
-            final Object dObj = new Double(3.0);
+            final Object dObj = Double.valueOf(3.0d);
             qcodec.decode( dObj );
             fail( "Trying to url encode a Double object should cause an exception.");
         } catch (final DecoderException ee) {
