@@ -99,9 +99,9 @@ public class Sha2Crypt {
      * @param keyBytes
      *            plaintext to hash
      * @param salt
-     *            real salt value without prefix or "rounds=". The salt may be null, in which case a salt is generated for
-     *            you using {@link SecureRandom}. If one does not want to use {@link SecureRandom}, you can pass your
-     *            own {@link Random} in {@link #sha256Crypt(byte[], String, Random)}.
+     *            real salt value without prefix or "rounds=". The salt may be null, in which case a salt
+     *            is generated for you using {@link SecureRandom}. If one does not want to use {@link SecureRandom},
+     *            you can pass your own {@link Random} in {@link #sha256Crypt(byte[], String, Random)}.
      * @return complete hash value including salt
      * @throws IllegalArgumentException
      *             if the salt does not match the allowed pattern
@@ -597,9 +597,9 @@ public class Sha2Crypt {
      * @param keyBytes
      *            plaintext to hash
      * @param salt
-     *            real salt value without prefix or "rounds=". The salt may be null, in which case a salt is generated for
-     *            you using {@link ThreadLocalRandom}; for more secure salts consider using {@link SecureRandom} to
-     *            generate your own salts.
+     *            real salt value without prefix or "rounds=". The salt may be null, in which case a salt
+     *            is generated for you using {@link ThreadLocalRandom}; for more secure salts consider using
+     *            {@link SecureRandom} to generate your own salts.
      * @param random
      *            the instance of {@link Random} to use for generating the salt. Consider using {@link SecureRandom}
      *            or {@link ThreadLocalRandom}.

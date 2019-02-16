@@ -21,14 +21,14 @@ import java.io.InputStream;
 
 /**
  * Consider this class package private. Helps load resources.
- * 
+ *
  * @since 1.12
  */
 public class Resources {
 
     /**
      * Opens the given named resource from the given class.
-     * 
+     *
      * @param name The resource name.
      * @return An input stream.
      */

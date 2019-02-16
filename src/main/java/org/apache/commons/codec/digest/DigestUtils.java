@@ -221,7 +221,8 @@ public class DigestUtils {
      *
      * @return An SHA3-224 digest instance.
      * @throws IllegalArgumentException
-     *             when a {@link NoSuchAlgorithmException} is caught, which should not happen on Oracle Java 9 and greater.
+     *             when a {@link NoSuchAlgorithmException} is caught, which should not happen on
+     *             Oracle Java 9 andgreater.
      * @see MessageDigestAlgorithms#SHA3_224
      * @since 1.12
      */
@@ -234,7 +235,8 @@ public class DigestUtils {
      *
      * @return An SHA3-256 digest instance.
      * @throws IllegalArgumentException
-     *             when a {@link NoSuchAlgorithmException} is caught, which should not happen on Oracle Java 9 and greater.
+     *             when a {@link NoSuchAlgorithmException} is caught, which should not happen on
+     *             Oracle Java 9 and greater.
      * @see MessageDigestAlgorithms#SHA3_256
      * @since 1.12
      */
@@ -247,7 +249,8 @@ public class DigestUtils {
      *
      * @return An SHA3-384 digest instance.
      * @throws IllegalArgumentException
-     *             when a {@link NoSuchAlgorithmException} is caught, which should not happen on Oracle Java 9 and greater.
+     *             when a {@link NoSuchAlgorithmException} is caught, which should not happen on
+     *             Oracle Java 9 and greater.
      * @see MessageDigestAlgorithms#SHA3_384
      * @since 1.12
      */
@@ -260,7 +263,8 @@ public class DigestUtils {
      *
      * @return An SHA3-512 digest instance.
      * @throws IllegalArgumentException
-     *             when a {@link NoSuchAlgorithmException} is caught, which should not happen on Oracle Java 9 and greater.
+     *             when a {@link NoSuchAlgorithmException} is caught, which should not happen
+     *             on Oracle Java 9 and greater.
      * @see MessageDigestAlgorithms#SHA3_512
      * @since 1.12
      */
@@ -273,8 +277,8 @@ public class DigestUtils {
      *
      * @return An SHA-384 digest instance.
      * @throws IllegalArgumentException
-     *             when a {@link NoSuchAlgorithmException} is caught, which should never happen because SHA-384 is a
-     *             built-in algorithm
+     *             when a {@link NoSuchAlgorithmException} is caught, which should never happen
+     *             because SHA-384 is a built-in algorithm
      * @see MessageDigestAlgorithms#SHA_384
      */
     public static MessageDigest getSha384Digest() {
@@ -286,8 +290,8 @@ public class DigestUtils {
      *
      * @return An SHA-512 digest instance.
      * @throws IllegalArgumentException
-     *             when a {@link NoSuchAlgorithmException} is caught, which should never happen because SHA-512 is a
-     *             built-in algorithm
+     *             when a {@link NoSuchAlgorithmException} is caught, which should never happen
+     *             because SHA-512 is a built-in algorithm
      * @see MessageDigestAlgorithms#SHA_512
      */
     public static MessageDigest getSha512Digest() {
