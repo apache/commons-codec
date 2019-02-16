@@ -16,7 +16,6 @@
  */
 package org.apache.commons.codec.digest;
 
-import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Random;
 
