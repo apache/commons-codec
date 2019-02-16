@@ -85,9 +85,9 @@ public class Md5Crypt {
      * </p>
      *
      * @param keyBytes plaintext string to hash.
-     * @param random an arbitrary {@link Random} for the user's reason.
      * @param random the instance of {@link Random} to use for generating the salt. Consider using {@link SecureRandom}
      *            or {@link ThreadLocalRandom}.
+     * @return the hash value
      * @throws IllegalArgumentException when a {@link java.security.NoSuchAlgorithmException} is caught. *
      * @see #apr1Crypt(byte[], String)
      * @since 1.12
