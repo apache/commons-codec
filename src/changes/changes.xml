@@ -43,9 +43,12 @@ The <action> type attribute can be add,update,fix,remove.
   </properties>
   <body>
 
+    <release version="1.13" date="YYYY-MM-DD" description="TBD">
+      <!--Nothing yet -->
+    </release>
+
     <release version="1.12" date="2019-02-04" description="Feature and fix release.">
       <!-- The first attribute below should be the issue id; makes it easier to navigate in the IDE outline -->
-      <action issue="CODEC-253" dev="chtompki" type="update">Update from Java 7 to Java 8</action>
       <action issue="CODEC-252" dev="chtompki" type="fix">B64 salt generator: Random -> ThreadLocalRandom</action>
       <action issue="CODEC-250" dev="sebb" type="fix" due-to="Alex Volodko">Wrong value calculated by Cologne Phonetic if a special character is placed between equal letters</action>
       <action issue="CODEC-244" dev="ggregory" type="update">Update from Java 6 to Java 7</action>
