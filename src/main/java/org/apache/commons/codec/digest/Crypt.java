@@ -63,8 +63,9 @@ public class Crypt {
      * @param keyBytes
      *            plaintext password
      * @param salt
-     *            real salt value without prefix or "rounds=". The salt may be null, in which case a salt is generated for
-     *            you using {@link ThreadLocalRandom}; for more secure salts consider using {@link SecureRandom} to
+     *            real salt value without prefix or "rounds=". The salt may be null,
+     *            in which case a salt is generated for you using {@link ThreadLocalRandom};
+     *            for more secure salts consider using {@link SecureRandom} to
      *            generate your own salts.
      * @return hash value
      * @throws IllegalArgumentException
@@ -155,9 +156,9 @@ public class Crypt {
      * @param key
      *            plaintext password as entered by the used
      * @param salt
-     *            real salt value without prefix or "rounds=". The salt may be null, in which case a salt is generated for
-     *            you using {@link ThreadLocalRandom}; for more secure salts consider using {@link SecureRandom} to
-     *            generate your own salts.
+     *            real salt value without prefix or "rounds=". The salt may be null, in which case a
+     *            salt is generated for you using {@link ThreadLocalRandom}; for more secure salts
+     *            consider using {@link SecureRandom} to generate your own salts.
      * @return hash value, i.e. encrypted password including the salt string
      * @throws IllegalArgumentException
      *             if the salt does not match the allowed pattern

@@ -74,7 +74,7 @@ public abstract class StringEncoderAbstractTest<T extends StringEncoder> {
         boolean exceptionThrown = false;
         try {
             final StringEncoder encoder = this.getStringEncoder();
-            encoder.encode(new Float(3.4));
+            encoder.encode(Float.valueOf(3.4f));
         } catch (final Exception e) {
             exceptionThrown = true;
         }

@@ -463,7 +463,8 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * @throws UnsupportedEncodingException
      *             Thrown if Charset is not supported
      */
-    public String decode(final String sourceStr, final String sourceCharset) throws DecoderException, UnsupportedEncodingException {
+    public String decode(final String sourceStr, final String sourceCharset)
+            throws DecoderException, UnsupportedEncodingException {
         if (sourceStr == null) {
             return null;
         }

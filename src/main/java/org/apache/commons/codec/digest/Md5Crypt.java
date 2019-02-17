@@ -238,9 +238,9 @@ public class Md5Crypt {
      * @param keyBytes
      *            plaintext string to hash.
      * @param salt
-     *            real salt value without prefix or "rounds=". The salt may be null, in which case a salt is generated for
-     *            you using {@link ThreadLocalRandom}; for more secure salts consider using {@link SecureRandom} to
-     *            generate your own salts.
+     *            real salt value without prefix or "rounds=". The salt may be null, in which case a salt
+     *            is generated for you using {@link ThreadLocalRandom}; for more secure salts consider
+     *            using {@link SecureRandom} to generate your own salts.
      * @param prefix
      *            salt prefix
      * @return the hash value
@@ -262,9 +262,9 @@ public class Md5Crypt {
      * @param keyBytes
      *            plaintext string to hash.
      * @param salt
-     *            real salt value without prefix or "rounds=". The salt may be null, in which case a salt is generated for
-     *            you using {@link ThreadLocalRandom}; for more secure salts consider using {@link SecureRandom} to
-     *            generate your own salts.
+     *            real salt value without prefix or "rounds=". The salt may be null, in which case a salt
+     *            is generated for you using {@link ThreadLocalRandom}; for more secure salts consider
+     *            using {@link SecureRandom} to generate your own salts.
      * @param prefix
      *            salt prefix
      * @param random

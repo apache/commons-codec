@@ -69,7 +69,7 @@ public class StringEncoderComparatorTest {
         final StringEncoderComparator sCompare =
             new StringEncoderComparator( new DoubleMetaphone() );
 
-        final int compare = sCompare.compare(new Double(3.0), Long.valueOf(3));
+        final int compare = sCompare.compare(Double.valueOf(3.0d), Long.valueOf(3));
         assertEquals( "Trying to compare objects that make no sense to the underlying encoder should return a zero compare code",
                                 0, compare);
     }

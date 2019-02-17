@@ -383,7 +383,8 @@ public class ColognePhonetic implements StringEncoder {
                 code = chr; // should not happen?
             }
 
-            if (code != CHAR_IGNORE && (lastCode != code && (code != '0' || lastCode == CHAR_FIRST_POS) || code < '0' || code > '8')) {
+            if (code != CHAR_IGNORE &&
+                    (lastCode != code && (code != '0' || lastCode == CHAR_FIRST_POS) || code < '0' || code > '8')) {
                 output.addRight(code);
             }
 
