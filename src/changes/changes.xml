@@ -44,7 +44,7 @@ The <action> type attribute can be add,update,fix,remove.
   <body>
 
     <release version="1.13" date="YYYY-MM-DD" description="TBD">
-      <!--Nothing yet -->
+      <action issue="CODEC-257" dev="ggregory" type="update">Update from Java 7 to Java 8</action>      
     </release>
 
     <release version="1.12" date="2019-02-04" description="Feature and fix release.">

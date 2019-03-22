@@ -35,7 +35,7 @@ import org.junit.Test;
  */
 public class ColognePhoneticTest extends StringEncoderAbstractTest<ColognePhonetic> {
 
-    private static final Set<String> TESTSET = new HashSet<String>();
+    private static final Set<String> TESTSET = new HashSet<>();
 
     private static boolean hasTestCase(String re) {
         for(String s : TESTSET) {
