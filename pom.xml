@@ -275,7 +275,7 @@ limitations under the License.
         <artifactId>apache-rat-plugin</artifactId>
         <configuration>
           <excludes>
-            <exclude>src/site/resources/.htaccess</exclude>
+            <exclude>src/test/resources/bla.tar.xz</exclude>
           </excludes>
         </configuration>
       </plugin>
