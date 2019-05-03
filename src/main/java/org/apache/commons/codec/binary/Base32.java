@@ -381,30 +381,36 @@ public class Base32 extends BaseNCodec {
             //  we ignore partial bytes, i.e. only multiples of 8 count
             switch (context.modulus) {
                 case 2 : // 10 bits, drop 2 and output one byte
-                    buffer[context.pos++] = (byte) (dropBits(2, context) & MASK_8BITS);
+                    validateCharacter(2, context);
+                    buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 2) & MASK_8BITS);
                     break;
                 case 3 : // 15 bits, drop 7 and output 1 byte
-                    buffer[context.pos++] = (byte) (dropBits(7, context) & MASK_8BITS);
+                    validateCharacter(7, context);
+                    buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 7) & MASK_8BITS);
                     break;
                 case 4 : // 20 bits = 2*8 + 4
-                    context.lbitWorkArea = dropBits(4, context); // drop 4 bits
+                    validateCharacter(4, context);
+                    context.lbitWorkArea = context.lbitWorkArea >> 4; // drop 4 bits
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 8) & MASK_8BITS);
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea) & MASK_8BITS);
                     break;
                 case 5 : // 25bits = 3*8 + 1
-                    context.lbitWorkArea = dropBits(1, context);
+                    validateCharacter(1, context);
+                    context.lbitWorkArea = context.lbitWorkArea >> 1;
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 16) & MASK_8BITS);
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 8) & MASK_8BITS);
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea) & MASK_8BITS);
                     break;
                 case 6 : // 30bits = 3*8 + 6
-                    context.lbitWorkArea = dropBits(6, context);
+                    validateCharacter(6, context);
+                    context.lbitWorkArea = context.lbitWorkArea >> 6;
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 16) & MASK_8BITS);
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 8) & MASK_8BITS);
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea) & MASK_8BITS);
                     break;
                 case 7 : // 35 = 4*8 +3
-                    context.lbitWorkArea = dropBits(3, context);
+                    validateCharacter(3, context);
+                    context.lbitWorkArea = context.lbitWorkArea >> 3;
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 24) & MASK_8BITS);
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 16) & MASK_8BITS);
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 8) & MASK_8BITS);
@@ -543,23 +549,18 @@ public class Base32 extends BaseNCodec {
 
     /**
      * <p>
-     * Drops the specified number of least significant bits from the
-     * {@link #bitWorkArea}.
+     * Validates whether the character is possible in the context of the set of possible base 32 values.
      * </p>
-     *
-     * @param numBitsToDrop number of least significant bits to drop
-     *
-     * @return the value of {@link #bitWorkArea} after dropping the specified number
-     *         of least significant bits
-     *
-     * @throws IllegalArgumentException if the bits being dropped contain any
-     *                                  non-zero value
+     * 
+     * @param numBits number of least significant bits to check
+     * @param context the context to be used
+     * 
+     * @throws IllegalArgumentException if the bits being checked contain any non-zero value
      */
-    private long dropBits(int numBitsToDrop, Context context) {
-        if ((context.lbitWorkArea & numBitsToDrop) != 0) {
+    private void validateCharacter(int numBits, Context context) {
+        if ((context.lbitWorkArea & numBits) != 0) {
             throw new IllegalArgumentException(
                 "Last encoded character (before the paddings if any) is a valid base 32 alphabet but not a possible value");
-            }
-            return context.lbitWorkArea >> numBitsToDrop;
+        }
     }
 }
