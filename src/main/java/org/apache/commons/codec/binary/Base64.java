@@ -421,7 +421,7 @@ public class Base64 extends BaseNCodec {
      * @param inPos
      *            Position to start reading data from.
      * @param inAvail
-     *            Amount of bytes available from input for encoding.
+     *            Amount of bytes available from input for decoding.
      * @param context
      *            the context to be used
      */
@@ -469,11 +469,11 @@ public class Base64 extends BaseNCodec {
                     // TODO not currently tested; perhaps it is impossible?
                     break;
                 case 2 : // 12 bits = 8 + 4
-                    context.ibitWorkArea = context.ibitWorkArea >> 4; // dump the extra 4 bits
+                    context.ibitWorkArea = (int) dropBits(4, context); // dump the extra 4 bits
                     buffer[context.pos++] = (byte) ((context.ibitWorkArea) & MASK_8BITS);
                     break;
                 case 3 : // 18 bits = 8 + 8 + 2
-                    context.ibitWorkArea = context.ibitWorkArea >> 2; // dump 2 bits
+                    context.ibitWorkArea = (int) dropBits(2, context); // dump 2 bits
                     buffer[context.pos++] = (byte) ((context.ibitWorkArea >> 8) & MASK_8BITS);
                     buffer[context.pos++] = (byte) ((context.ibitWorkArea) & MASK_8BITS);
                     break;
@@ -781,4 +781,25 @@ public class Base64 extends BaseNCodec {
         return octet >= 0 && octet < decodeTable.length && decodeTable[octet] != -1;
     }
 
+    /**
+     * <p>
+     * Drops the specified number of least significant bits from the
+     * {@link #bitWorkArea}.
+     * </p>
+     *
+     * @param numBitsToDrop number of least significant bits to drop
+     *
+     * @return the value of {@link #bitWorkArea} after dropping the specified number
+     *         of least significant bits
+     *
+     * @throws IllegalArgumentException if the bits being dropped contain any
+     *                                  non-zero value
+     */
+    private long dropBits(int numBitsToDrop, Context context) {
+        if ((context.ibitWorkArea & numBitsToDrop) != 0) {
+            throw new IllegalArgumentException(
+                "Last encoded character (before the paddings if any) is a valid base 64 alphabet but not a possible value");
+        }
+        return context.ibitWorkArea >> numBitsToDrop;
+    }
 }
