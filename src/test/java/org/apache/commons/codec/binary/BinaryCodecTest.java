@@ -41,25 +41,25 @@ public class BinaryCodecTest {
     /** Mask with bit zero-based index 0 raised. */
     private static final int BIT_0 = 0x01;
 
-    /** Mask with bit zero-based index 0 raised. */
+    /** Mask with bit zero-based index 1 raised. */
     private static final int BIT_1 = 0x02;
 
-    /** Mask with bit zero-based index 0 raised. */
+    /** Mask with bit zero-based index 2 raised. */
     private static final int BIT_2 = 0x04;
 
-    /** Mask with bit zero-based index 0 raised. */
+    /** Mask with bit zero-based index 3 raised. */
     private static final int BIT_3 = 0x08;
 
-    /** Mask with bit zero-based index 0 raised. */
+    /** Mask with bit zero-based index 4 raised. */
     private static final int BIT_4 = 0x10;
 
-    /** Mask with bit zero-based index 0 raised. */
+    /** Mask with bit zero-based index 5 raised. */
     private static final int BIT_5 = 0x20;
 
-    /** Mask with bit zero-based index 0 raised. */
+    /** Mask with bit zero-based index 6 raised. */
     private static final int BIT_6 = 0x40;
 
-    /** Mask with bit zero-based index 0 raised. */
+    /** Mask with bit zero-based index 7 raised. */
     private static final int BIT_7 = 0x80;
 
     /** An instance of the binary codec. */
