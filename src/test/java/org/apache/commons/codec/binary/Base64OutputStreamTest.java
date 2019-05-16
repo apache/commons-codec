@@ -28,7 +28,6 @@ import java.util.Arrays;
 import org.junit.Test;
 
 /**
- * @version $Id $
  * @since 1.4
  */
 public class Base64OutputStreamTest {

@@ -25,7 +25,6 @@ import java.io.InputStream;
  *
  * Recreates the bug described in CODEC-105.
  *
- * @version $Id $
  * @since 1.5
  */
 public class Codec105ErrorInputStream extends InputStream {

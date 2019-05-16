@@ -26,7 +26,6 @@ import org.apache.commons.codec.StringEncoder;
  * This is an algorithm created by the Caversham Project at the University of Otago. It implements the Caverphone 2.0
  * algorithm:
  *
- * @version $Id: Caverphone.java 1079535 2011-03-08 20:54:37Z ggregory $
  * @see <a href="http://en.wikipedia.org/wiki/Caverphone">Wikipedia - Caverphone</a>
  * @see <a href="http://caversham.otago.ac.nz/files/working/ctp150804.pdf">Caverphone 2.0 specification</a>
  * @since 1.4

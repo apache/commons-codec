@@ -28,7 +28,6 @@ import org.apache.commons.codec.StringEncoder;
  *
  * <p>This class is immutable and thread-safe.</p>
  *
- * @version $Id: Caverphone.java 1075947 2011-03-01 17:56:14Z ggregory $
  * @see <a href="http://en.wikipedia.org/wiki/Caverphone">Wikipedia - Caverphone</a>
  * @since 1.5
  */

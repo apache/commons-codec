@@ -25,7 +25,6 @@ import org.junit.Test;
 /**
  * Sanity checks for {@link Charsets}.
  *
- * @version $Id: CharEncodingTest.java 1298985 2012-03-09 19:12:49Z ggregory $
  */
 public class CharsetsTest {
 
