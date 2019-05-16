@@ -34,7 +34,6 @@ import org.junit.Test;
 /**
  * Quoted-printable codec test cases
  *
- * @version $Id$
  */
 public class QCodecTest {
 

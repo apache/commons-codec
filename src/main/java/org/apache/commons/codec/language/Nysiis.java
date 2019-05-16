@@ -65,7 +65,6 @@ import org.apache.commons.codec.StringEncoder;
  * @see <a href="http://www.dropby.com/NYSIIS.html">NYSIIS on dropby.com</a>
  * @see Soundex
  * @since 1.7
- * @version $Id$
  */
 public class Nysiis implements StringEncoder {
 

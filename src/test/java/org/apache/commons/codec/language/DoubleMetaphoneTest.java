@@ -32,7 +32,6 @@ import org.junit.Test;
  * <p>Keep this file in UTF-8 encoding for proper Javadoc processing.</p>
  *
  * @see "http://www.cuj.com/documents/s=8038/cuj0006philips/"
- * @version $Id$
  */
 public class DoubleMetaphoneTest extends StringEncoderAbstractTest<DoubleMetaphone> {
 

@@ -26,7 +26,6 @@ import org.junit.Test;
 /**
  * Tests {@link StringUtils}
  *
- * @version $Id$
  */
 public class StringUtilsTest {
 

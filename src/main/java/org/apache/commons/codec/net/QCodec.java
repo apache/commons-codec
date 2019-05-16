@@ -47,7 +47,6 @@ import org.apache.commons.codec.StringEncoder;
  *          Header Extensions for Non-ASCII Text</a>
  *
  * @since 1.3
- * @version $Id$
  */
 public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder {
     /**

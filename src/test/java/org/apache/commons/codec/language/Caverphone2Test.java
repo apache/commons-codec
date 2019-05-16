@@ -25,7 +25,6 @@ import org.junit.Test;
 /**
  * Tests Caverphone2.
  *
- * @version $Id$
  * @since 1.5
  */
 public class Caverphone2Test extends StringEncoderAbstractTest<Caverphone2> {

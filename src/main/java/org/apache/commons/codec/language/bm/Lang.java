@@ -67,7 +67,6 @@ import org.apache.commons.codec.Resources;
  * Port of lang.php
  *
  * @since 1.6
- * @version $Id$
  */
 public class Lang {
     // Implementation note: This class is divided into two sections. The first part is a static factory interface that

@@ -40,7 +40,6 @@ import org.junit.Test;
 /**
  * Tests DigestUtils methods.
  *
- * @version $Id$
  */
 public class DigestUtilsTest {
 

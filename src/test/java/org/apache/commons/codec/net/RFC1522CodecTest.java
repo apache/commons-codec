@@ -27,7 +27,6 @@ import org.junit.Test;
 /**
  * RFC 1522 compliant codec test cases
  *
- * @version $Id$
  */
 public class RFC1522CodecTest {
 

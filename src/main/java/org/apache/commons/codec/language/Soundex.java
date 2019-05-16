@@ -27,7 +27,6 @@ import org.apache.commons.codec.StringEncoder;
  * This class is thread-safe.
  * Although not strictly immutable, the {@link #maxLength} field is not actually used.
  *
- * @version $Id$
  */
 public class Soundex implements StringEncoder {
 

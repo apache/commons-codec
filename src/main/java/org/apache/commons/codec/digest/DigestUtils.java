@@ -48,7 +48,6 @@ import org.apache.commons.codec.binary.StringUtils;
  * String hdigest = new DigestUtils(SHA_224).digestAsHex(new File("pom.xml"));
  * </pre>
  * @see MessageDigestAlgorithms
- * @version $Id$
  */
 public class DigestUtils {
 

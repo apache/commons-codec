@@ -61,7 +61,6 @@ import org.apache.commons.codec.binary.StringUtils;
  *          Mechanisms for Specifying and Describing the Format of Internet Message Bodies </a>
  *
  * @since 1.3
- * @version $Id$
  */
 public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, StringDecoder {
     /**

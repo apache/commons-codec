@@ -28,7 +28,6 @@ import org.apache.commons.codec.Charsets;
  * <p>
  * This class is immutable and thread-safe.
  *
- * @version $Id$
  * @since 1.7
  */
 public class Crypt {

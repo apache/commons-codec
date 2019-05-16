@@ -48,7 +48,6 @@ import org.apache.commons.codec.language.bm.Rule.Phoneme;
  * Ported from phoneticengine.php
  *
  * @since 1.6
- * @version $Id$
  */
 public class PhoneticEngine {
 

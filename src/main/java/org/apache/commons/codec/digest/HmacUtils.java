@@ -52,7 +52,6 @@ import org.apache.commons.codec.binary.StringUtils;
  * String hexNot = hm1.hmacHex(new File("NOTICE.txt"));
  * </pre>
  * @since 1.10
- * @version $Id$
  */
 public final class HmacUtils {
 

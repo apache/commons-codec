@@ -24,7 +24,6 @@ import org.apache.commons.codec.DecoderException;
  *
  * <p>This class is immutable and thread-safe.</p>
  *
- * @version $Id$
  * @since 1.4
  */
 class Utils {

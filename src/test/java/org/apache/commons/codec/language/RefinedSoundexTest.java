@@ -26,7 +26,6 @@ import org.junit.Test;
 /**
  * Tests RefinedSoundex.
  *
- * @version $Id$
  */
 public class RefinedSoundexTest extends StringEncoderAbstractTest<RefinedSoundex> {
 

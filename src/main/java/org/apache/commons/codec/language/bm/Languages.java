@@ -51,7 +51,6 @@ import org.apache.commons.codec.Resources;
  * This class is immutable and thread-safe.
  *
  * @since 1.6
- * @version $Id$
  */
 public class Languages {
     // Implementation note: This class is divided into two sections. The first part

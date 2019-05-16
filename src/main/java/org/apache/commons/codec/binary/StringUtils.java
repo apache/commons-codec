@@ -33,7 +33,6 @@ import org.apache.commons.codec.Charsets;
  *
  * @see CharEncoding
  * @see <a href="http://download.oracle.com/javase/7/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
- * @version $Id$
  * @since 1.4
  */
 public class StringUtils {

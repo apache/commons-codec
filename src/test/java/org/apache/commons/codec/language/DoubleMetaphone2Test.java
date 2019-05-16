@@ -29,7 +29,6 @@ import org.junit.Test;
  * href="http://swoodbridge.com/DoubleMetaPhone/surnames.txt">PHP test program</a>.
  *
  * @see <a href="http://swoodbridge.com/DoubleMetaPhone/surnames.txt">PHP test program</a>
- * @version $Id$
  */
 public class DoubleMetaphone2Test extends StringEncoderAbstractTest<DoubleMetaphone> {
 

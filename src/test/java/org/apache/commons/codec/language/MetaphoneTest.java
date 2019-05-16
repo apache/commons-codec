@@ -25,7 +25,6 @@ import org.apache.commons.codec.StringEncoderAbstractTest;
 import org.junit.Test;
 
 /**
- * @version $Id$
  */
 public class MetaphoneTest extends StringEncoderAbstractTest<Metaphone> {
 

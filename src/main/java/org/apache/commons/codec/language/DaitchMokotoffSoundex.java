@@ -66,7 +66,6 @@ import org.apache.commons.codec.StringEncoder;
  * @see <a href="http://en.wikipedia.org/wiki/Daitch%E2%80%93Mokotoff_Soundex"> Wikipedia - Daitch-Mokotoff Soundex</a>
  * @see <a href="http://www.avotaynu.com/soundex.htm">Avotaynu - Soundexing and Genealogy</a>
  *
- * @version $Id$
  * @since 1.10
  */
 public class DaitchMokotoffSoundex implements StringEncoder {

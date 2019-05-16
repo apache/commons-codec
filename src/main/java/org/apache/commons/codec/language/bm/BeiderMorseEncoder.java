@@ -74,7 +74,6 @@ import org.apache.commons.codec.StringEncoder;
  * This class is Not ThreadSafe
  * </p>
  * @since 1.6
- * @version $Id$
  */
 public class BeiderMorseEncoder implements StringEncoder {
     // Implementation note: This class is a spring-friendly facade to PhoneticEngine. It allows read/write configuration

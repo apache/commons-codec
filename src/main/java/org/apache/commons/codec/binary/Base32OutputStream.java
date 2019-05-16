@@ -36,7 +36,6 @@ import java.io.OutputStream;
  * final padding will be omitted and the resulting data will be incomplete/inconsistent.
  * </p>
  *
- * @version $Id$
  * @see <a href="http://www.ietf.org/rfc/rfc4648.txt">RFC 4648</a>
  * @since 1.5
  */

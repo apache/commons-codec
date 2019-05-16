@@ -48,7 +48,6 @@ import org.apache.commons.codec.StringEncoder;
  * is used to ensure safe publication of the value between threads, and must not invoke {@link #setMaxCodeLen(int)}
  * after initial setup.
  *
- * @version $Id$
  */
 public class Metaphone implements StringEncoder {
 

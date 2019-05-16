@@ -23,7 +23,6 @@ import org.junit.Test;
 /**
  * Sanity checks for {@link CharEncoding}.
  *
- * @version $Id$
  */
 public class CharEncodingTest {
 

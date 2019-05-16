@@ -28,7 +28,6 @@ import java.util.Random;
  * This class is immutable and thread-safe.
  * </p>
  *
- * @version $Id$
  * @since 1.7
  */
 class B64 {

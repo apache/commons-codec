@@ -44,7 +44,6 @@ import java.security.MessageDigest;
  * @see <a href="http://dx.doi.org/10.6028/NIST.FIPS.180-4">FIPS PUB 180-4</a>
  * @see <a href="http://dx.doi.org/10.6028/NIST.FIPS.202">FIPS PUB 202</a>
  * @since 1.7
- * @version $Id$
  */
 public class MessageDigestAlgorithms {
 

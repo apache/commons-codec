@@ -43,7 +43,6 @@ import org.apache.commons.codec.binary.StringUtils;
  *           of the <a href="http://www.w3.org/TR/html4/">HTML 4.01 Specification</a>
  *
  * @since 1.2
- * @version $Id$
  */
 public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, StringDecoder {
 

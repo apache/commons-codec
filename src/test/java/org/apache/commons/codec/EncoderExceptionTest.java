@@ -25,7 +25,6 @@ import org.junit.Test;
 /**
  * Tests {@link EncoderException}.
  *
- * @version $Id$
  */
 public class EncoderExceptionTest {
 

@@ -32,7 +32,6 @@ import org.junit.Test;
 /**
  * URL codec test cases
  *
- * @version $Id$
  */
 public class URLCodecTest {
 

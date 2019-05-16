@@ -26,7 +26,6 @@ import java.util.Comparator;
  *
  * <p>This class is immutable and thread-safe.</p>
  *
- * @version $Id$
  */
 @SuppressWarnings("rawtypes")
 // TODO ought to implement Comparator<String> but that's not possible whilst maintaining binary compatibility.

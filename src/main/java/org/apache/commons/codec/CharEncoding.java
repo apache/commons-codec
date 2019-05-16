@@ -53,7 +53,6 @@ package org.apache.commons.codec;
  *
  * @see <a href="http://download.oracle.com/javase/7/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
  * @since 1.4
- * @version $Id$
  */
 public class CharEncoding {
     /**

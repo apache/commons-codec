@@ -23,7 +23,6 @@ package org.apache.commons.codec.language.bm;
  * specifically tuned to family names, and may not work well at all for general text.
  *
  * @since 1.6
- * @version $Id$
  */
 public enum NameType {
 

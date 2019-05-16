@@ -25,7 +25,6 @@ import org.apache.commons.codec.StringEncoder;
  *
  * <p>This class is immutable and thread-safe.</p>
  *
- * @version $Id$
  * @since 1.3
  */
 final class SoundexUtils {

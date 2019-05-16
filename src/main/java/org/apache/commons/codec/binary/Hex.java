@@ -34,7 +34,6 @@ import org.apache.commons.codec.EncoderException;
  * This class is thread-safe.
  *
  * @since 1.1
- * @version $Id$
  */
 public class Hex implements BinaryEncoder, BinaryDecoder {
 

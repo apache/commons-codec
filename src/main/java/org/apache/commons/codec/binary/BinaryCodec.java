@@ -31,7 +31,6 @@ import org.apache.commons.codec.EncoderException;
  * TODO: also might be good to generate boolean[] from byte[] et cetera.
  *
  * @since 1.3
- * @version $Id$
  */
 public class BinaryCodec implements BinaryDecoder, BinaryEncoder {
     /*

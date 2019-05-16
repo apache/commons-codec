@@ -32,7 +32,6 @@ import org.junit.Test;
 /**
  * Tests HmacUtils methods.
  *
- * @version $Id$
  */
 public class HmacUtilsTest {
 

@@ -77,7 +77,6 @@ import org.apache.commons.codec.language.bm.Languages.LanguageSet;
  * </ul>
  *
  * @since 1.6
- * @version $Id$
  */
 public class Rule {
 

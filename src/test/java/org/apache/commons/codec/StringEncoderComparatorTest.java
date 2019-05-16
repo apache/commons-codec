@@ -31,7 +31,6 @@ import org.junit.Test;
 /**
  * Test cases for the StingEncoderComparator.
  *
- * @version $Id$
  */
 public class StringEncoderComparatorTest {
 
