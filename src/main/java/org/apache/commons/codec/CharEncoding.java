@@ -29,19 +29,19 @@ package org.apache.commons.codec;
  * </p>
  *
  * <ul>
- * <li><code>US-ASCII</code><br>
- * Seven-bit ASCII, a.k.a. ISO646-US, a.k.a. the Basic Latin block of the Unicode character set.</li>
- * <li><code>ISO-8859-1</code><br>
- * ISO Latin Alphabet No. 1, a.k.a. ISO-LATIN-1.</li>
- * <li><code>UTF-8</code><br>
- * Eight-bit Unicode Transformation Format.</li>
- * <li><code>UTF-16BE</code><br>
- * Sixteen-bit Unicode Transformation Format, big-endian byte order.</li>
- * <li><code>UTF-16LE</code><br>
- * Sixteen-bit Unicode Transformation Format, little-endian byte order.</li>
- * <li><code>UTF-16</code><br>
+ * <li><code>US-ASCII</code><p>
+ * Seven-bit ASCII, a.k.a. ISO646-US, a.k.a. the Basic Latin block of the Unicode character set.</p></li>
+ * <li><code>ISO-8859-1</code><p>
+ * ISO Latin Alphabet No. 1, a.k.a. ISO-LATIN-1.</p></li>
+ * <li><code>UTF-8</code><p>
+ * Eight-bit Unicode Transformation Format.</p></li>
+ * <li><code>UTF-16BE</code><p>
+ * Sixteen-bit Unicode Transformation Format, big-endian byte order.</p></li>
+ * <li><code>UTF-16LE</code><p>
+ * Sixteen-bit Unicode Transformation Format, little-endian byte order.</p></li>
+ * <li><code>UTF-16</code><p>
  * Sixteen-bit Unicode Transformation Format, byte order specified by a mandatory initial byte-order mark (either order
- * accepted on input, big-endian used on output.)</li>
+ * accepted on input, big-endian used on output.)</p></li>
  * </ul>
  *
  * This perhaps would best belong in the [lang] project. Even if a similar interface is defined in [lang], it is not
@@ -55,10 +55,12 @@ package org.apache.commons.codec;
  * @since 1.4
  */
 public class CharEncoding {
+    
     /**
      * CharEncodingISO Latin Alphabet No. 1, a.k.a. ISO-LATIN-1.
      * <p>
      * Every implementation of the Java platform is required to support this character encoding.
+     * </p>
      *
      * @see <a href="http://download.oracle.com/javase/7/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      */
@@ -68,6 +70,7 @@ public class CharEncoding {
      * Seven-bit ASCII, also known as ISO646-US, also known as the Basic Latin block of the Unicode character set.
      * <p>
      * Every implementation of the Java platform is required to support this character encoding.
+     * </p>
      *
      * @see <a href="http://download.oracle.com/javase/7/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      */
@@ -78,6 +81,7 @@ public class CharEncoding {
      * (either order accepted on input, big-endian used on output)
      * <p>
      * Every implementation of the Java platform is required to support this character encoding.
+     * </p>
      *
      * @see <a href="http://download.oracle.com/javase/7/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      */
@@ -87,6 +91,7 @@ public class CharEncoding {
      * Sixteen-bit Unicode Transformation Format, big-endian byte order.
      * <p>
      * Every implementation of the Java platform is required to support this character encoding.
+     * </p>
      *
      * @see <a href="http://download.oracle.com/javase/7/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      */
@@ -96,6 +101,7 @@ public class CharEncoding {
      * Sixteen-bit Unicode Transformation Format, little-endian byte order.
      * <p>
      * Every implementation of the Java platform is required to support this character encoding.
+     * </p>
      *
      * @see <a href="http://download.oracle.com/javase/7/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      */
@@ -105,6 +111,7 @@ public class CharEncoding {
      * Eight-bit Unicode Transformation Format.
      * <p>
      * Every implementation of the Java platform is required to support this character encoding.
+     * </p>
      *
      * @see <a href="http://download.oracle.com/javase/7/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      */

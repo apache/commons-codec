@@ -31,19 +31,23 @@ import org.apache.commons.codec.Charsets;
  * <p>
  * Based on the public domain ("beer-ware") C implementation from Poul-Henning Kamp which was found at: <a
  * href="http://www.freebsd.org/cgi/cvsweb.cgi/src/lib/libcrypt/crypt-md5.c?rev=1.1;content-type=text%2Fplain">
- * crypt-md5.c @ freebsd.org</a><br>
+ * crypt-md5.c @ freebsd.org</a>
+ * </p>
  * <p>
  * Source:
- *
+ * </p>
  * <pre>
  * $FreeBSD: src/lib/libcrypt/crypt-md5.c,v 1.1 1999/01/21 13:50:09 brandon Exp $
  * </pre>
  * <p>
  * Conversion to Kotlin and from there to Java in 2012.
+ * </p>
  * <p>
  * The C style comments are from the original C code, the ones with "//" from the port.
+ * </p>
  * <p>
  * This class is immutable and thread-safe.
+ * </p>
  *
  * @since 1.7
  */

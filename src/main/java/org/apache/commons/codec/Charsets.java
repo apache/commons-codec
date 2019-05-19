@@ -30,19 +30,19 @@ import java.nio.charset.Charset;
  * </p>
  *
  * <ul>
- * <li><code>US-ASCII</code><br>
- * Seven-bit ASCII, a.k.a. ISO646-US, a.k.a. the Basic Latin block of the Unicode character set.</li>
- * <li><code>ISO-8859-1</code><br>
- * ISO Latin Alphabet No. 1, a.k.a. ISO-LATIN-1.</li>
- * <li><code>UTF-8</code><br>
- * Eight-bit Unicode Transformation Format.</li>
- * <li><code>UTF-16BE</code><br>
- * Sixteen-bit Unicode Transformation Format, big-endian byte order.</li>
- * <li><code>UTF-16LE</code><br>
- * Sixteen-bit Unicode Transformation Format, little-endian byte order.</li>
- * <li><code>UTF-16</code><br>
+ * <li><code>US-ASCII</code><p>
+ * Seven-bit ASCII, a.k.a. ISO646-US, a.k.a. the Basic Latin block of the Unicode character set.</p></li>
+ * <li><code>ISO-8859-1</code><p>
+ * ISO Latin Alphabet No. 1, a.k.a. ISO-LATIN-1.</p></li>
+ * <li><code>UTF-8</code><p>
+ * Eight-bit Unicode Transformation Format.</p></li>
+ * <li><code>UTF-16BE</code><p>
+ * Sixteen-bit Unicode Transformation Format, big-endian byte order.</p></li>
+ * <li><code>UTF-16LE</code><p>
+ * Sixteen-bit Unicode Transformation Format, little-endian byte order.</p></li>
+ * <li><code>UTF-16</code><p>
  * Sixteen-bit Unicode Transformation Format, byte order specified by a mandatory initial byte-order mark (either order
- * accepted on input, big-endian used on output.)</li>
+ * accepted on input, big-endian used on output.)</p></li>
  * </ul>
  *
  * This perhaps would best belong in the Commons Lang project. Even if a similar class is defined in Commons Lang, it is
