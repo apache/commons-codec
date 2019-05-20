@@ -45,6 +45,7 @@ The <action> type attribute can be add,update,fix,remove.
 
     <release version="1.13" date="YYYY-MM-DD" description="TBD">
       <action issue="CODEC-257" dev="ggregory" type="update">Update from Java 7 to Java 8</action>      
+      <action issue="CODEC-134" dev="tmousaw-ptc" type="fix">Reject any decode request for a value that is impossible to encode to for Base32/Base64 rather than blindly decoding.</action>      
     </release>
 
     <release version="1.12" date="2019-02-04" description="Feature and fix release.">
