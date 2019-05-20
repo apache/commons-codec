@@ -33,6 +33,12 @@ import org.junit.Test;
  *
  */
 public class BCodecTest {
+    private static final String[] BASE64_IMPOSSIBLE_CASES = {
+            "ZE==",
+            "ZmC=",
+            "Zm9vYE==",
+            "Zm9vYmC=",
+    };
 
     static final int SWISS_GERMAN_STUFF_UNICODE[] =
         { 0x47, 0x72, 0xFC, 0x65, 0x7A, 0x69, 0x5F, 0x7A, 0xE4, 0x6D, 0xE4 };
@@ -145,6 +151,19 @@ public class BCodecTest {
             fail("Trying to url encode a Double object should cause an exception.");
         } catch (final DecoderException ee) {
             // Exception expected, test segment passes.
+        }
+    }
+    
+    @Test
+    public void testBase64ImpossibleSamples() {
+        BCodec codec = new BCodec();
+        for (String s : BASE64_IMPOSSIBLE_CASES) {
+            try {
+                codec.decode(s);
+                fail();
+            } catch (DecoderException ex) {
+                // expected
+            }
         }
     }
 }

@@ -332,7 +332,7 @@ public class Base32 extends BaseNCodec {
      * @param inPos
      *            Position to start reading data from.
      * @param inAvail
-     *            Amount of bytes available from input for encoding.
+     *            Amount of bytes available from input for decoding.
      * @param context the context to be used
      *
      * Output is written to {@link Context#buffer} as 8-bit octets, using {@link Context#pos} as the buffer position
@@ -381,29 +381,35 @@ public class Base32 extends BaseNCodec {
             //  we ignore partial bytes, i.e. only multiples of 8 count
             switch (context.modulus) {
                 case 2 : // 10 bits, drop 2 and output one byte
+                    validateCharacter(2, context);
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 2) & MASK_8BITS);
                     break;
                 case 3 : // 15 bits, drop 7 and output 1 byte
+                    validateCharacter(7, context);
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 7) & MASK_8BITS);
                     break;
                 case 4 : // 20 bits = 2*8 + 4
+                    validateCharacter(4, context);
                     context.lbitWorkArea = context.lbitWorkArea >> 4; // drop 4 bits
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 8) & MASK_8BITS);
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea) & MASK_8BITS);
                     break;
                 case 5 : // 25bits = 3*8 + 1
+                    validateCharacter(1, context);
                     context.lbitWorkArea = context.lbitWorkArea >> 1;
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 16) & MASK_8BITS);
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 8) & MASK_8BITS);
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea) & MASK_8BITS);
                     break;
                 case 6 : // 30bits = 3*8 + 6
+                    validateCharacter(6, context);
                     context.lbitWorkArea = context.lbitWorkArea >> 6;
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 16) & MASK_8BITS);
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 8) & MASK_8BITS);
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea) & MASK_8BITS);
                     break;
                 case 7 : // 35 = 4*8 +3
+                    validateCharacter(3, context);
                     context.lbitWorkArea = context.lbitWorkArea >> 3;
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 24) & MASK_8BITS);
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 16) & MASK_8BITS);
@@ -539,5 +545,22 @@ public class Base32 extends BaseNCodec {
     @Override
     public boolean isInAlphabet(final byte octet) {
         return octet >= 0 && octet < decodeTable.length && decodeTable[octet] != -1;
+    }
+
+    /**
+     * <p>
+     * Validates whether the character is possible in the context of the set of possible base 32 values.
+     * </p>
+     * 
+     * @param numBits number of least significant bits to check
+     * @param context the context to be used
+     * 
+     * @throws IllegalArgumentException if the bits being checked contain any non-zero value
+     */
+    private void validateCharacter(int numBits, Context context) {
+        if ((context.lbitWorkArea & numBits) != 0) {
+            throw new IllegalArgumentException(
+                "Last encoded character (before the paddings if any) is a valid base 32 alphabet but not a possible value");
+        }
     }
 }

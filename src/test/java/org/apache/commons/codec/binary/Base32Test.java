@@ -46,6 +46,30 @@ public class Base32Test {
         {"foobar" ,"MZXW6YTBOI======"},
     };
 
+    private static final String[] BASE32_IMPOSSIBLE_CASES = {
+        "MC======",
+        "MZXE====",
+        "MZXWB===",
+        "MZXW6YB=",
+        "MZXW6YTBOC======"
+        };
+
+    private static final String[] BASE32_IMPOSSIBLE_CASES_CHUNKED = {
+        "M2======\r\n",
+        "MZX0====\r\n",
+        "MZXW0===\r\n",
+        "MZXW6Y2=\r\n",
+        "MZXW6YTBO2======\r\n"
+    };
+
+    private static final String[] BASE32HEX_IMPOSSIBLE_CASES = {
+        "C2======",
+        "CPN4====",
+        "CPNM1===",
+        "CPNMUO1=",
+        "CPNMUOJ1E2======"
+    };
+
     private static final Object[][] BASE32_BINARY_TEST_CASES;
 
     //            { null, "O0o0O0o0" }
@@ -248,4 +272,29 @@ public class Base32Test {
         }
     }
 
+    @Test
+    public void testBase32ImpossibleSamples() {
+        testImpossibleCases(new Base32(), BASE32_IMPOSSIBLE_CASES);
+    }
+
+    @Test
+    public void testBase32ImpossibleChunked() {
+        testImpossibleCases(new Base32(20), BASE32_IMPOSSIBLE_CASES_CHUNKED);
+    }
+
+    @Test
+    public void testBase32HexImpossibleSamples() {
+        testImpossibleCases(new Base32(true), BASE32HEX_IMPOSSIBLE_CASES);
+    }
+
+    private void testImpossibleCases(Base32 codec, String[] impossible_cases) {
+        for (String impossible : impossible_cases) {
+            try {
+                codec.decode(impossible);
+                fail();
+            } catch (IllegalArgumentException ex) {
+                // expected
+            }
+        }
+    }
 }
