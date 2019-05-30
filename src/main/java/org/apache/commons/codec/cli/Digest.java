@@ -81,7 +81,7 @@ public class Digest {
 
     private void println(final String prefix, final byte[] digest, final String fileName) {
         // The standard appears to be to print
-        // hex, space, then either space or '*' followed by filename
+        // hex, space, then either space or '*' followed by file name
         // where '*' is used for binary files
         // shasum(1) has a -b option which generates " *" separator
         // we don't distinguish binary files at present
