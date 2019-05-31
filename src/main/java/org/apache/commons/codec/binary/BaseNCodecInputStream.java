@@ -68,16 +68,18 @@ public class BaseNCodecInputStream extends FilterInputStream {
      * <p>The {@link #mark} method of {@link BaseNCodecInputStream} does nothing.</p>
      *
      * @param readLimit the maximum limit of bytes that can be read before the mark position becomes invalid.
+     * @see #markSupported()
      * @since 1.7
      */
     @Override
     public synchronized void mark(final int readLimit) {
+        // noop
     }
 
     /**
      * {@inheritDoc}
      *
-     * @return always returns <code>false</code>
+     * @return Always returns <code>false</code>
      */
     @Override
     public boolean markSupported() {
