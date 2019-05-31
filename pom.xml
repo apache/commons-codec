@@ -283,17 +283,17 @@ limitations under the License.
             </links>
             <tags>
               <tag>
-                <name>Immutable</name>
+                <name>org.apache.commons.Immutable</name>
                 <placement>a</placement>
                 <head>This class is immutable</head>
               </tag>
               <tag>
-                <name>NotThreadSafe</name>
+                <name>org.apache.commons.NotThreadSafe</name>
                 <placement>a</placement>
                 <head>This class is not thread-safe</head>
               </tag>
               <tag>
-                <name>ThreadSafe</name>
+                <name>org.apache.commons.ThreadSafe</name>
                 <placement>a</placement>
                 <head>This class is thread-safe</head>
               </tag>
@@ -378,17 +378,17 @@ limitations under the License.
           </links>
           <tags>
             <tag>
-              <name>Immutable</name>
+              <name>org.apache.commons.Immutable</name>
               <placement>a</placement>
               <head>This class is immutable</head>
             </tag>
             <tag>
-              <name>NotThreadSafe</name>
+              <name>org.apache.commons.NotThreadSafe</name>
               <placement>a</placement>
               <head>This class is not thread-safe</head>
             </tag>
             <tag>
-              <name>ThreadSafe</name>
+              <name>org.apache.commons.ThreadSafe</name>
               <placement>a</placement>
               <head>This class is thread-safe</head>
             </tag>
