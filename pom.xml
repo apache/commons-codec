@@ -266,6 +266,40 @@ limitations under the License.
             </ignorePathsToDelete>
           </configuration>
         </plugin>
+        <!-- Override Javadoc config in parent pom to add JCIP tags -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>${commons.javadoc.version}</version>
+          <configuration> 
+            <quiet>true</quiet>
+            <source>${maven.compiler.source}</source>
+            <encoding>${commons.encoding}</encoding>
+            <docencoding>${commons.docEncoding}</docencoding>
+            <linksource>true</linksource>
+            <links>
+              <link>${commons.javadoc.java.link}</link>
+              <link>${commons.javadoc.javaee.link}</link>
+            </links>
+            <tags>
+              <tag>
+                <name>Immutable</name>
+                <placement>a</placement>
+                <head>This class is immutable</head>
+              </tag>
+              <tag>
+                <name>NotThreadSafe</name>
+                <placement>a</placement>
+                <head>This class is not thread-safe</head>
+              </tag>
+              <tag>
+                <name>ThreadSafe</name>
+                <placement>a</placement>
+                <head>This class is thread-safe</head>
+              </tag>
+            </tags>
+          </configuration> 
+        </plugin>
       </plugins>
     </pluginManagement>
     <plugins>
