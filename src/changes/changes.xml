@@ -38,7 +38,7 @@ The <action> type attribute can be add,update,fix,remove.
 
 <document>
   <properties>
-    <title>Changes</title>
+    <title>Apache Commons Codec Release Notes</title>
     <author>Apache Commons Developers</author>
   </properties>
   <body>
