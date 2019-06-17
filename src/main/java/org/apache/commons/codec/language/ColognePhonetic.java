@@ -315,6 +315,7 @@ public class ColognePhonetic implements StringEncoder {
 
         char lastChar = CHAR_IGNORE;
         char lastCode = CHAR_FIRST_POS;
+        boolean firstChar = true; // are we generating the first digit?
         char code;
         char chr;
 
@@ -328,7 +329,7 @@ public class ColognePhonetic implements StringEncoder {
             }
 
             // OK to ignore H here because it only affects nextChar which has already been set up
-            if (chr == 'H' || chr < 'A' || chr > 'Z') {
+            if (chr < 'A' || chr > 'Z') {
                     continue; // ignore unwanted characters
             }
 
@@ -348,7 +349,7 @@ public class ColognePhonetic implements StringEncoder {
             } else if (chr == 'S' || chr == 'Z') {
                 code = '8';
             } else if (chr == 'C') {
-                if (lastCode == CHAR_FIRST_POS) {
+                if (firstChar) {
                     if (arrayContains(AHKLOQRUX, nextChar)) {
                         code = '4';
                     } else {
@@ -369,13 +370,15 @@ public class ColognePhonetic implements StringEncoder {
                 code = '5';
             } else if (chr == 'M' || chr == 'N') {
                 code = '6';
+            } else if (chr == 'H') {
+                code = CHAR_IGNORE;
             } else {
                 code = chr; // should not happen?
             }
 
-            if (code != CHAR_IGNORE &&
-                    (lastCode != code && (code != '0' || lastCode == CHAR_FIRST_POS) || code < '0' || code > '8')) {
+            if (code != CHAR_IGNORE && lastCode != code && (code != '0' || firstChar)) {
                 output.addRight(code);
+                firstChar = false; // no longer processing first output digit
             }
 
             lastChar = chr;
