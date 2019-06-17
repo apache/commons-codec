@@ -328,7 +328,6 @@ public class ColognePhonetic implements StringEncoder {
                 nextChar = CHAR_IGNORE;
             }
 
-            // OK to ignore H here because it only affects nextChar which has already been set up
             if (chr < 'A' || chr > 'Z') {
                     continue; // ignore unwanted characters
             }
