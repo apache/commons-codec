@@ -277,16 +277,6 @@ public class ColognePhonetic implements StringEncoder {
         }
     }
 
-    /**
-     * Maps some Germanic characters to plain for internal processing. The following characters are mapped:
-     * <ul>
-     * <li>capital a, umlaut mark</li>
-     * <li>capital u, umlaut mark</li>
-     * <li>capital o, umlaut mark</li>
-     * <li>small sharp s, German</li>
-     * </ul>
-     */
-
     /*
      * Returns whether the array contains the key, or not.
      */
@@ -417,6 +407,13 @@ public class ColognePhonetic implements StringEncoder {
 
     /**
      * Converts the string to upper case and replaces Germanic umlaut characters
+     * The following characters are mapped:
+     * <ul>
+     * <li>capital A, umlaut mark</li>
+     * <li>capital U, umlaut mark</li>
+     * <li>capital O, umlaut mark</li>
+     * <li>small sharp s, German</li>
+     * </ul>
      */
     private char[] preprocess(String text) {
         // This converts German small sharp s (Eszett) to SS
