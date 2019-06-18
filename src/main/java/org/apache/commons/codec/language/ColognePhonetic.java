@@ -192,6 +192,8 @@ public class ColognePhonetic implements StringEncoder {
     private static final char[] AHKOQUX = new char[] { 'A', 'H', 'K', 'O', 'Q', 'U', 'X' };
     private static final char[] DTX = new char[] { 'D', 'T', 'X' };
 
+    private static final char CHAR_IGNORE = '-';    // is this character to be ignored?
+
     /**
      * This class is not thread-safe; the field {@link #length} is mutable.
      * However, it is not shared between threads, as it is constructed on demand
@@ -227,13 +229,25 @@ public class ColognePhonetic implements StringEncoder {
 
     private class CologneOutputBuffer extends CologneBuffer {
 
+        private char lastCode;
+
         public CologneOutputBuffer(final int buffSize) {
             super(buffSize);
+            lastCode = '/'; // impossible value
         }
 
-        public void addRight(final char chr) {
-            data[length] = chr;
-            length++;
+        /**
+         * Store the next code in the output buffer, keeping track of the previous code.
+         * '0' is only stored if it is the first entry.
+         * Ignored chars are never stored.
+         * If the code is the same as the last code (whether stored or not) it is not stored.
+         */
+        public void put(final char code) {
+            if (code != CHAR_IGNORE && lastCode != code && (code != '0' || length == 0)) {
+                data[length] = code;
+                length++;
+            }
+            lastCode = code;
         }
 
         @Override
@@ -248,11 +262,6 @@ public class ColognePhonetic implements StringEncoder {
 
         public CologneInputBuffer(final char[] data) {
             super(data);
-        }
-
-        public void addLeft(final char ch) {
-            length++;
-            data[getNextPos()] = ch;
         }
 
         @Override
@@ -310,13 +319,7 @@ public class ColognePhonetic implements StringEncoder {
 
         char nextChar;
 
-        final char CHAR_FIRST_POS = '/'; // are we processing the first character?
-        final char CHAR_IGNORE = '-';    // is this character to be ignored?
-
         char lastChar = CHAR_IGNORE;
-        char lastCode = CHAR_FIRST_POS;
-        boolean firstChar = true; // are we generating the first digit?
-        char code;
         char chr;
 
         while (input.length() > 0) {
@@ -333,55 +336,49 @@ public class ColognePhonetic implements StringEncoder {
             }
 
             if (arrayContains(AEIJOUY, chr)) {
-                code = '0';
+                output.put('0');
             } else if (chr == 'B' || (chr == 'P' && nextChar != 'H')) {
-                code = '1';
+                output.put('1');
             } else if ((chr == 'D' || chr == 'T') && !arrayContains(CSZ, nextChar)) {
-                code = '2';
+                output.put('2');
             } else if (arrayContains(FPVW, chr)) {
-                code = '3';
+                output.put('3');
             } else if (arrayContains(GKQ, chr)) {
-                code = '4';
+                output.put('4');
             } else if (chr == 'X' && !arrayContains(CKQ, lastChar)) {
-                code = '4';
-                input.addLeft('S');
+                output.put('4');
+                output.put('8');
             } else if (chr == 'S' || chr == 'Z') {
-                code = '8';
+                output.put('8');
             } else if (chr == 'C') {
-                if (firstChar) {
+                if (output.length() == 0) {
                     if (arrayContains(AHKLOQRUX, nextChar)) {
-                        code = '4';
+                        output.put('4');
                     } else {
-                        code = '8';
+                        output.put('8');
                     }
                 } else {
                     if (arrayContains(SZ, lastChar) || !arrayContains(AHKOQUX, nextChar)) {
-                        code = '8';
+                        output.put('8');
                     } else {
-                        code = '4';
+                        output.put('4');
                     }
                 }
             } else if (arrayContains(DTX, chr)) {
-                code = '8';
+                output.put('8');
             } else if (chr == 'R') {
-                code = '7';
+                output.put('7');
             } else if (chr == 'L') {
-                code = '5';
+                output.put('5');
             } else if (chr == 'M' || chr == 'N') {
-                code = '6';
+                output.put('6');
             } else if (chr == 'H') {
-                code = CHAR_IGNORE;
+                output.put(CHAR_IGNORE); // needed by put
             } else {
-                code = chr; // should not happen?
-            }
-
-            if (code != CHAR_IGNORE && lastCode != code && (code != '0' || firstChar)) {
-                output.addRight(code);
-                firstChar = false; // no longer processing first output digit
+                // ignored; should not happen
             }
 
             lastChar = chr;
-            lastCode = code;
         }
         return output.toString();
     }

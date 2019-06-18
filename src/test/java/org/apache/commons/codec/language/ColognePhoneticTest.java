@@ -194,6 +194,7 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest<ColognePhonet
             {"Celsius", "8588"},
             {"Ace", "08"},
             {"shch", "84"}, // CODEC-254
+            {"xch", "484"}, // CODEC-255
             {"heithabu", "021"}};
         this.checkEncodings(data);
     }
