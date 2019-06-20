@@ -500,7 +500,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
             }
 
             // use an EMPTY_LIST to avoid false positive warnings wrt potential null pointer access
-            final List<Branch> nextBranches = branching ? new ArrayList<>() : Collections.<Branch>emptyList();
+            final List<Branch> nextBranches = branching ? new ArrayList<Branch>() : Collections.<Branch>emptyList();
 
             for (final Rule rule : rules) {
                 if (rule.matches(inputContext)) {
