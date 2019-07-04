@@ -39,7 +39,7 @@ limitations under the License.
      widely used encoders and decoders, the codec package also maintains a
      collection of phonetic encoding utilities.
   </description>
-  <url>http://commons.apache.org/proper/commons-codec/</url>
+  <url>https://commons.apache.org/proper/commons-codec/</url>
   <issueManagement>
     <system>jira</system>
     <url>http://issues.apache.org/jira/browse/CODEC</url>

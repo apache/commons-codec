@@ -87,7 +87,7 @@ The <a href="source-repository.html">subversion repository</a> can be
 <!-- ================================================== -->
 <section name="Releases">
 <ul>
-  <li><a href="http://commons.apache.org/codec/download_codec.cgi">Codec 1.12 (mirrors)</a> requires Java 1.7</li>
+  <li><a href="https://commons.apache.org/codec/download_codec.cgi">Codec 1.12 (mirrors)</a> requires Java 1.7</li>
   <li><a href="http://archive.apache.org/dist/commons/codec/">Codec 1.11 (archives)</a> requires Java 1.6</li>
   <li><a href="http://archive.apache.org/dist/commons/codec/">Codec 1.10 (archives)</a> requires Java 1.6</li>
   <li><a href="http://archive.apache.org/dist/commons/codec/">Codec 1.9 (archives)</a> requires Java 1.6</li>
@@ -98,7 +98,7 @@ The <a href="source-repository.html">subversion repository</a> can be
 </ul>
 <p>
 See the
-<a href="http://commons.apache.org/codec/download_codec.cgi">Download Page</a>
+<a href="https://commons.apache.org/codec/download_codec.cgi">Download Page</a>
 for the latest releases.<br />
 </p>
 <p>

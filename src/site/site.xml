@@ -25,7 +25,7 @@
     <body>
         <menu name="Codec">
             <item name="Overview"      href="/index.html"/>
-            <item name="Download"      href="http://commons.apache.org/codec/download_codec.cgi"/>
+            <item name="Download"      href="https://commons.apache.org/codec/download_codec.cgi"/>
             <item name="Users guide"   href="/userguide.html"/>
             <item name="Javadoc trunk" href="/apidocs/index.html"/>
             <item name="Javadoc 1.12"  href="/archives/1.12/apidocs/index.html"/>
