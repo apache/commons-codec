@@ -1290,7 +1290,7 @@ public class Base64Test {
     /**
      * Tests a lineSeparator much bigger than DEFAULT_BUFFER_SIZE.
      *
-     * @see "<a href='http://mail-archives.apache.org/mod_mbox/commons-dev/201202.mbox/%3C4F3C85D7.5060706@snafu.de%3E'>dev@commons.apache.org</a>"
+     * @see "<a href='https://mail-archives.apache.org/mod_mbox/commons-dev/201202.mbox/%3C4F3C85D7.5060706@snafu.de%3E'>dev@commons.apache.org</a>"
      */
     @Test
     @Ignore
