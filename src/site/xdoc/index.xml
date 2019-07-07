@@ -88,13 +88,13 @@ The <a href="source-repository.html">subversion repository</a> can be
 <section name="Releases">
 <ul>
   <li><a href="https://commons.apache.org/codec/download_codec.cgi">Codec 1.12 (mirrors)</a> requires Java 1.7</li>
-  <li><a href="http://archive.apache.org/dist/commons/codec/">Codec 1.11 (archives)</a> requires Java 1.6</li>
-  <li><a href="http://archive.apache.org/dist/commons/codec/">Codec 1.10 (archives)</a> requires Java 1.6</li>
-  <li><a href="http://archive.apache.org/dist/commons/codec/">Codec 1.9 (archives)</a> requires Java 1.6</li>
-  <li><a href="http://archive.apache.org/dist/commons/codec/">Codec 1.8 (archives)</a> requires Java 1.6</li>
-  <li><a href="http://archive.apache.org/dist/commons/codec/">Codec 1.7 (archives)</a> requires Java 1.6</li>
-  <li><a href="http://archive.apache.org/dist/commons/codec/">Codec 1.6 (archives)</a> requires Java 1.5</li>
-  <li><a href="http://archive.apache.org/dist/commons/codec/">Codec 1.5 (archives)</a> requires Java 1.4</li>
+  <li><a href="https://archive.apache.org/dist/commons/codec/">Codec 1.11 (archives)</a> requires Java 1.6</li>
+  <li><a href="https://archive.apache.org/dist/commons/codec/">Codec 1.10 (archives)</a> requires Java 1.6</li>
+  <li><a href="https://archive.apache.org/dist/commons/codec/">Codec 1.9 (archives)</a> requires Java 1.6</li>
+  <li><a href="https://archive.apache.org/dist/commons/codec/">Codec 1.8 (archives)</a> requires Java 1.6</li>
+  <li><a href="https://archive.apache.org/dist/commons/codec/">Codec 1.7 (archives)</a> requires Java 1.6</li>
+  <li><a href="https://archive.apache.org/dist/commons/codec/">Codec 1.6 (archives)</a> requires Java 1.5</li>
+  <li><a href="https://archive.apache.org/dist/commons/codec/">Codec 1.5 (archives)</a> requires Java 1.4</li>
 </ul>
 <p>
 See the
@@ -105,7 +105,7 @@ for the latest releases.<br />
 <a href="changes-report.html">Change reports</a> are also available.
 </p>
 <p>
-For previous releases, see the <a href="http://archive.apache.org/dist/commons/codec/">Apache Archive</a>
+For previous releases, see the <a href="https://archive.apache.org/dist/commons/codec/">Apache Archive</a>
 </p>
 </section>
 <!-- ================================================== -->
