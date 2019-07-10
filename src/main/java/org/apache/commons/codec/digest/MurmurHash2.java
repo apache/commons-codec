@@ -31,7 +31,6 @@ package org.apache.commons.codec.digest;
  * 
  * Public domain.
  * 
- * @author Viliam Holub
  * @see <a href="https://en.wikipedia.org/wiki/MurmurHash">MurmurHash</a>
  * @since 1.13
  */
