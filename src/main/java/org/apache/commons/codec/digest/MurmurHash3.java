@@ -70,16 +70,33 @@ public final class MurmurHash3 {
 	private MurmurHash3() {
 	}
 
+	/**
+	 * Generates 32 bit hash from two longs with default seed value.
+	 * 
+	 * @param l0 long to hash
+	 * @param l1 long to hash
+	 * @return 32 bit hash
+	 */
 	public static int hash32(long l0, long l1) {
 		return hash32(l0, l1, DEFAULT_SEED);
 	}
 
+	/**
+	 * Generates 32 bit hash from a long with default seed value.
+	 * 
+	 * @param l0 long to hash
+	 * @return 32 bit hash
+	 */
 	public static int hash32(long l0) {
 		return hash32(l0, DEFAULT_SEED);
 	}
 
 	/**
-	 * Murmur3 32-bit variant.
+	 * Generates 32 bit hash from a long with the given seed.
+	 * 
+	 * @param l0   long to hash
+	 * @param seed initial seed value
+	 * @return 32 bit hash
 	 */
 	public static int hash32(long l0, int seed) {
 		int hash = seed;
@@ -92,7 +109,12 @@ public final class MurmurHash3 {
 	}
 
 	/**
-	 * Murmur3 32-bit variant.
+	 * Generates 32 bit hash from two longs with the given seed.
+	 * 
+	 * @param l0   long to hash
+	 * @param l1   long to hash
+	 * @param seed initial seed value
+	 * @return 32 bit hash
 	 */
 	public static int hash32(long l0, long l1, int seed) {
 		int hash = seed;
@@ -108,46 +130,57 @@ public final class MurmurHash3 {
 	}
 
 	/**
-	 * Murmur3 32-bit variant.
+	 * Generates 32 bit hash from byte array with the default seed.
 	 *
 	 * @param data - input byte array
-	 * @return - hashcode
+	 * @return 32 bit hash
 	 */
 	public static int hash32(byte[] data) {
 		return hash32(data, 0, data.length, DEFAULT_SEED);
 	}
 
 	/**
-	 * Murmur3 32-bit variant.
+	 * Generates 32 bit hash from a string with the default seed.
 	 *
-	 * @param data   - input byte array
-	 * @param length - length of array
-	 * @return - hashcode
+	 * @param data - input string
+	 * @return 32 bit hash
 	 */
-	public static int hash32(byte[] data, int length) {
-		return hash32(data, 0, length, DEFAULT_SEED);
+	public static int hash32(String data) {
+		byte[] origin = data.getBytes();
+		return hash32(origin, 0, origin.length, DEFAULT_SEED);
 	}
 
 	/**
-	 * Murmur3 32-bit variant.
+	 * Generates 32 bit hash from byte array with the default seed.
+	 *
+	 * @param data   - input byte array
+	 * @param length - length of array
+	 * @return 32 bit hash
+	 */
+	public static int hash32(byte[] data, int length) {
+		return hash32(data, length, DEFAULT_SEED);
+	}
+
+	/**
+	 * Generates 32 bit hash from byte array with the given length and seed.
 	 *
 	 * @param data   - input byte array
 	 * @param length - length of array
 	 * @param seed   - seed. (default 0)
-	 * @return - hashcode
+	 * @return 32 bit hash
 	 */
 	public static int hash32(byte[] data, int length, int seed) {
 		return hash32(data, 0, length, seed);
 	}
 
 	/**
-	 * Murmur3 32-bit variant.
+	 * Generates 32 bit hash from byte array with the given length, offset and seed.
 	 *
 	 * @param data   - input byte array
 	 * @param offset - offset of data
 	 * @param length - length of array
 	 * @param seed   - seed. (default 0)
-	 * @return - hashcode
+	 * @return 32 bit hash
 	 */
 	public static int hash32(byte[] data, int offset, int length, int seed) {
 		int hash = seed;
@@ -183,36 +216,24 @@ public final class MurmurHash3 {
 		return fmix32(length, hash);
 	}
 
-	private static int mix32(int k, int hash) {
-		k *= C1_32;
-		k = Integer.rotateLeft(k, R1_32);
-		k *= C2_32;
-		hash ^= k;
-		return Integer.rotateLeft(hash, R2_32) * M_32 + N_32;
-	}
-
-	private static int fmix32(int length, int hash) {
-		hash ^= length;
-		hash ^= (hash >>> 16);
-		hash *= 0x85ebca6b;
-		hash ^= (hash >>> 13);
-		hash *= 0xc2b2ae35;
-		hash ^= (hash >>> 16);
-
-		return hash;
-	}
-
 	/**
 	 * Murmur3 64-bit variant. This is essentially MSB 8 bytes of Murmur3 128-bit
 	 * variant.
 	 *
 	 * @param data - input byte array
-	 * @return - hashcode
+	 * @return 64 bit hash
 	 */
 	public static long hash64(byte[] data) {
 		return hash64(data, 0, data.length, DEFAULT_SEED);
 	}
 
+	/**
+	 * Murmur3 64-bit variant. This is essentially MSB 8 bytes of Murmur3 128-bit
+	 * variant.
+	 * 
+	 * @param data - input long
+	 * @return 64 bit hash
+	 */
 	public static long hash64(long data) {
 		long hash = DEFAULT_SEED;
 		long k = Long.reverseBytes(data);
@@ -229,6 +250,13 @@ public final class MurmurHash3 {
 		return hash;
 	}
 
+	/**
+	 * Murmur3 64-bit variant. This is essentially MSB 8 bytes of Murmur3 128-bit
+	 * variant.
+	 * 
+	 * @param data - input int
+	 * @return 64 bit hash
+	 */
 	public static long hash64(int data) {
 		long k1 = Integer.reverseBytes(data) & (-1L >>> 32);
 		int length = Integer.BYTES;
@@ -243,6 +271,13 @@ public final class MurmurHash3 {
 		return hash;
 	}
 
+	/**
+	 * Murmur3 64-bit variant. This is essentially MSB 8 bytes of Murmur3 128-bit
+	 * variant.
+	 * 
+	 * @param data - input short
+	 * @return 64 bit hash
+	 */
 	public static long hash64(short data) {
 		long hash = DEFAULT_SEED;
 		long k1 = 0;
@@ -259,18 +294,27 @@ public final class MurmurHash3 {
 		return hash;
 	}
 
+	/**
+	 * Generates 64 bit hash from byte array with the given length, offset and
+	 * default seed.
+	 *
+	 * @param data   - input byte array
+	 * @param offset - offset of data
+	 * @param length - length of array
+	 * @return 64 bit hash
+	 */
 	public static long hash64(byte[] data, int offset, int length) {
 		return hash64(data, offset, length, DEFAULT_SEED);
 	}
 
 	/**
-	 * Murmur3 64-bit variant. This is essentially MSB 8 bytes of Murmur3 128-bit
-	 * variant.
+	 * Generates 64 bit hash from byte array with the given length, offset and seed.
 	 *
 	 * @param data   - input byte array
+	 * @param offset - offset of data
 	 * @param length - length of array
-	 * @param seed   - seed. (default is 0)
-	 * @return - hashcode
+	 * @param seed   - seed. (default 0)
+	 * @return 64 bit hash
 	 */
 	public static long hash64(byte[] data, int offset, int length, int seed) {
 		long hash = seed;
@@ -327,10 +371,21 @@ public final class MurmurHash3 {
 	 * Murmur3 128-bit variant.
 	 *
 	 * @param data - input byte array
-	 * @return - hashcode (2 longs)
+	 * @return - 128 bit hash (2 longs)
 	 */
 	public static long[] hash128(byte[] data) {
 		return hash128(data, 0, data.length, DEFAULT_SEED);
+	}
+
+	/**
+	 * Murmur3 128-bit variant.
+	 *
+	 * @param data - input String
+	 * @return - 128 bit hash (2 longs)
+	 */
+	public static long[] hash128(String data) {
+		byte[] origin = data.getBytes();
+		return hash128(origin, 0, origin.length, DEFAULT_SEED);
 	}
 
 	/**
@@ -340,7 +395,7 @@ public final class MurmurHash3 {
 	 * @param offset - the first element of array
 	 * @param length - length of array
 	 * @param seed   - seed. (default is 0)
-	 * @return - hashcode (2 longs)
+	 * @return - 128 bit hash (2 longs)
 	 */
 	public static long[] hash128(byte[] data, int offset, int length, int seed) {
 		long h1 = seed;
@@ -439,6 +494,25 @@ public final class MurmurHash3 {
 		h2 += h1;
 
 		return new long[] { h1, h2 };
+	}
+
+	private static int mix32(int k, int hash) {
+		k *= C1_32;
+		k = Integer.rotateLeft(k, R1_32);
+		k *= C2_32;
+		hash ^= k;
+		return Integer.rotateLeft(hash, R2_32) * M_32 + N_32;
+	}
+
+	private static int fmix32(int length, int hash) {
+		hash ^= length;
+		hash ^= (hash >>> 16);
+		hash *= 0x85ebca6b;
+		hash ^= (hash >>> 13);
+		hash *= 0xc2b2ae35;
+		hash ^= (hash >>> 16);
+
+		return hash;
 	}
 
 	private static long fmix64(long h) {
