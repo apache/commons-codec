@@ -55,7 +55,7 @@ package org.apache.commons.codec;
  * @since 1.4
  */
 public class CharEncoding {
-    
+
     /**
      * CharEncodingISO Latin Alphabet No. 1, a.k.a. ISO-LATIN-1.
      * <p>

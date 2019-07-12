@@ -19,18 +19,18 @@ package org.apache.commons.codec.digest;
 
 /**
  * MurmurHash2 yields a 32-bit or 64-bit value.
- * 
+ *
  * MurmurHash is a non-cryptographic hash function suitable for general
  * hash-based lookup. The name comes from two basic operations, multiply (MU)
  * and rotate (R), used in its inner loop. Unlike cryptographic hash functions,
  * it is not specifically designed to be difficult to reverse by an adversary,
  * making it unsuitable for cryptographic purposes.
- * 
+ *
  * This is a re-implementation of the original C code plus some additional
  * features.
- * 
+ *
  * Public domain.
- * 
+ *
  * @see <a href="https://en.wikipedia.org/wiki/MurmurHash">MurmurHash</a>
  * @since 1.13
  */
@@ -42,7 +42,7 @@ public final class MurmurHash2 {
 
 	/**
 	 * Generates 32 bit hash from byte array of the given length and seed.
-	 * 
+	 *
 	 * @param data   byte array to hash
 	 * @param length length of the array to hash
 	 * @param seed   initial seed value
@@ -89,7 +89,7 @@ public final class MurmurHash2 {
 
 	/**
 	 * Generates 32 bit hash from byte array with default seed value.
-	 * 
+	 *
 	 * @param data   byte array to hash
 	 * @param length length of the array to hash
 	 * @return 32 bit hash of the given array
@@ -100,7 +100,7 @@ public final class MurmurHash2 {
 
 	/**
 	 * Generates 32 bit hash from a string.
-	 * 
+	 *
 	 * @param text string to hash
 	 * @return 32 bit hash of the given string
 	 */
@@ -111,7 +111,7 @@ public final class MurmurHash2 {
 
 	/**
 	 * Generates 32 bit hash from a substring.
-	 * 
+	 *
 	 * @param text   string to hash
 	 * @param from   starting index
 	 * @param length length of the substring to hash
@@ -123,7 +123,7 @@ public final class MurmurHash2 {
 
 	/**
 	 * Generates 64 bit hash from byte array of the given length and seed.
-	 * 
+	 *
 	 * @param data   byte array to hash
 	 * @param length length of the array to hash
 	 * @param seed   initial seed value
@@ -179,7 +179,7 @@ public final class MurmurHash2 {
 
 	/**
 	 * Generates 64 bit hash from byte array with default seed value.
-	 * 
+	 *
 	 * @param data   byte array to hash
 	 * @param length length of the array to hash
 	 * @return 64 bit hash of the given string
@@ -190,7 +190,7 @@ public final class MurmurHash2 {
 
 	/**
 	 * Generates 64 bit hash from a string.
-	 * 
+	 *
 	 * @param text string to hash
 	 * @return 64 bit hash of the given string
 	 */
@@ -201,7 +201,7 @@ public final class MurmurHash2 {
 
 	/**
 	 * Generates 64 bit hash from a substring.
-	 * 
+	 *
 	 * @param text   string to hash
 	 * @param from   starting index
 	 * @param length length of the substring to hash

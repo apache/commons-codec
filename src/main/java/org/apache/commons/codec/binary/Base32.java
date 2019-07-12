@@ -551,10 +551,10 @@ public class Base32 extends BaseNCodec {
      * <p>
      * Validates whether the character is possible in the context of the set of possible base 32 values.
      * </p>
-     * 
+     *
      * @param numBits number of least significant bits to check
      * @param context the context to be used
-     * 
+     *
      * @throws IllegalArgumentException if the bits being checked contain any non-zero value
      */
     private void validateCharacter(int numBits, Context context) {

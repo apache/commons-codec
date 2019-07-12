@@ -19,13 +19,13 @@ package org.apache.commons.codec.digest;
 
 /**
  * MurmurHash3 yields a 32-bit or 128-bit value.
- * 
+ *
  * MurmurHash is a non-cryptographic hash function suitable for general
  * hash-based lookup. The name comes from two basic operations, multiply (MU)
  * and rotate (R), used in its inner loop. Unlike cryptographic hash functions,
  * it is not specifically designed to be difficult to reverse by an adversary,
  * making it unsuitable for cryptographic purposes.
- * 
+ *
  * 32-bit Java port of
  * https://code.google.com/p/smhasher/source/browse/trunk/MurmurHash3.cpp#94
  * 128-bit Java port of
@@ -34,10 +34,10 @@ package org.apache.commons.codec.digest;
  * This is a public domain code with no copyrights. From homepage of MurmurHash
  * (https://code.google.com/p/smhasher/), "All MurmurHash versions are public
  * domain software, and the author disclaims all copyright to their code."
- * 
+ *
  * Copied from Apache Hive:
  * https://github.com/apache/hive/blob/master/storage-api/src/java/org/apache/hive/common/util/Murmur3.java
- * 
+ *
  * @see <a href="https://en.wikipedia.org/wiki/MurmurHash">MurmurHash</a>
  * @since 1.13
  */
@@ -48,10 +48,10 @@ public final class MurmurHash3 {
 
   /** TODO Replace on Java 8 with Integer.BYTES. */
   static final int INTEGER_BYTES = Integer.SIZE / Byte.SIZE;
-  
+
   /** TODO Replace on Java 8 with Short.BYTES. */
   static final int SHORT_BYTES = Short.SIZE / Byte.SIZE;
-    
+
 	// from 64-bit linear congruential generator
 	public static final long NULL_HASHCODE = 2862933555777941757L;
 
@@ -81,7 +81,7 @@ public final class MurmurHash3 {
 
 	/**
 	 * Generates 32 bit hash from two longs with default seed value.
-	 * 
+	 *
 	 * @param l0 long to hash
 	 * @param l1 long to hash
 	 * @return 32 bit hash
@@ -92,7 +92,7 @@ public final class MurmurHash3 {
 
 	/**
 	 * Generates 32 bit hash from a long with default seed value.
-	 * 
+	 *
 	 * @param l0 long to hash
 	 * @return 32 bit hash
 	 */
@@ -102,7 +102,7 @@ public final class MurmurHash3 {
 
 	/**
 	 * Generates 32 bit hash from a long with the given seed.
-	 * 
+	 *
 	 * @param l0   long to hash
 	 * @param seed initial seed value
 	 * @return 32 bit hash
@@ -119,7 +119,7 @@ public final class MurmurHash3 {
 
 	/**
 	 * Generates 32 bit hash from two longs with the given seed.
-	 * 
+	 *
 	 * @param l0   long to hash
 	 * @param l1   long to hash
 	 * @param seed initial seed value
@@ -239,7 +239,7 @@ public final class MurmurHash3 {
 	/**
 	 * Murmur3 64-bit variant. This is essentially MSB 8 bytes of Murmur3 128-bit
 	 * variant.
-	 * 
+	 *
 	 * @param data - input long
 	 * @return 64 bit hash
 	 */
@@ -262,7 +262,7 @@ public final class MurmurHash3 {
 	/**
 	 * Murmur3 64-bit variant. This is essentially MSB 8 bytes of Murmur3 128-bit
 	 * variant.
-	 * 
+	 *
 	 * @param data - input int
 	 * @return 64 bit hash
 	 */
@@ -283,7 +283,7 @@ public final class MurmurHash3 {
 	/**
 	 * Murmur3 64-bit variant. This is essentially MSB 8 bytes of Murmur3 128-bit
 	 * variant.
-	 * 
+	 *
 	 * @param data - input short
 	 * @return 64 bit hash
 	 */
