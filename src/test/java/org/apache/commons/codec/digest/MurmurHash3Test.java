@@ -34,14 +34,14 @@ public class MurmurHash3Test {
 	public void test32_String() {
 		// Arrange
 		String origin = TEST;
-		
+
 		// Act
 		int result = MurmurHash3.hash32(origin);
 
 		// Assert
 		assertEquals(-436507231, result);
 	}
-	
+
 	@Test
 	public void testHashCodeM3_64() {
 		byte[] origin =TEST.getBytes();
@@ -145,7 +145,7 @@ public class MurmurHash3Test {
 	public void test128_String() {
 		// Arrange
 		String origin = TEST;
-		
+
 		// Act
 		long[] result = MurmurHash3.hash128(origin);
 

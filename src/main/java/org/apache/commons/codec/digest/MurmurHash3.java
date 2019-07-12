@@ -545,8 +545,9 @@ public final class MurmurHash3 {
 		}
 
 		public final void add(byte[] data, int offset, int length) {
-			if (length == 0)
-				return;
+			if (length == 0) {
+                return;
+            }
 			totalLen += length;
 			if (tailLen + length < 4) {
 				System.arraycopy(data, offset, tail, tailLen, length);
@@ -595,8 +596,9 @@ public final class MurmurHash3 {
 
 			int consumed = (nblocks << 2);
 			tailLen = length2 - consumed;
-			if (consumed == length2)
-				return;
+			if (consumed == length2) {
+                return;
+            }
 			System.arraycopy(data, offset + consumed, tail, 0, tailLen);
 		}
 

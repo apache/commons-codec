@@ -84,9 +84,10 @@ public class MurmurHash2Test {
 	public void testHash32ByteArrayIntInt() {
 		for (int i = 0; i < input.length; i++) {
 			int hash = MurmurHash2.hash32(input[i], input[i].length, 0x71b4954d);
-			if (hash != results32_seed[i])
-				fail(String.format("Unexpected hash32 result for example %d: 0x%08x instead of 0x%08x", i, hash,
+			if (hash != results32_seed[i]) {
+                fail(String.format("Unexpected hash32 result for example %d: 0x%08x instead of 0x%08x", i, hash,
 						results32_seed[i]));
+            }
 		}
 	}
 
@@ -94,9 +95,10 @@ public class MurmurHash2Test {
 	public void testHash32ByteArrayInt() {
 		for (int i = 0; i < input.length; i++) {
 			int hash = MurmurHash2.hash32(input[i], input[i].length);
-			if (hash != results32_standard[i])
-				fail(String.format("Unexpected hash32 result for example %d: 0x%08x instead of 0x%08x", i, hash,
+			if (hash != results32_standard[i]) {
+                fail(String.format("Unexpected hash32 result for example %d: 0x%08x instead of 0x%08x", i, hash,
 						results32_standard[i]));
+            }
 		}
 	}
 

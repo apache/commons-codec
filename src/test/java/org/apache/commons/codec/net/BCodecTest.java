@@ -153,7 +153,7 @@ public class BCodecTest {
             // Exception expected, test segment passes.
         }
     }
-    
+
     @Test
     public void testBase64ImpossibleSamples() {
         BCodec codec = new BCodec();
