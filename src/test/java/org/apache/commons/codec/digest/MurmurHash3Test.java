@@ -58,9 +58,9 @@ public class MurmurHash3Test {
 	@Test
 	public void test64() {
 		final int seed = 123, iters = 1000000;
-		ByteBuffer SHORT_BUFFER = ByteBuffer.allocate(Short.BYTES);
-		ByteBuffer INT_BUFFER = ByteBuffer.allocate(Integer.BYTES);
-		ByteBuffer LONG_BUFFER = ByteBuffer.allocate(Long.BYTES);
+		ByteBuffer SHORT_BUFFER = ByteBuffer.allocate(MurmurHash3.SHORT_BYTES);
+		ByteBuffer INT_BUFFER = ByteBuffer.allocate(MurmurHash3.INTEGER_BYTES);
+		ByteBuffer LONG_BUFFER = ByteBuffer.allocate(MurmurHash3.LONG_BYTES);
 		Random rdm = new Random(seed);
 		for (int i = 0; i < iters; ++i) {
 			long ln = rdm.nextLong();
@@ -84,7 +84,7 @@ public class MurmurHash3Test {
 	@Test
 	public void test128_Short() {
 		// Arrange
-		ByteBuffer BUFFER = ByteBuffer.allocate(Short.BYTES);
+		ByteBuffer BUFFER = ByteBuffer.allocate(MurmurHash3.SHORT_BYTES);
 		BUFFER.putShort(0, (short) 2);
 
 		// Act
@@ -99,7 +99,7 @@ public class MurmurHash3Test {
 	@Test
 	public void test128_Int() {
 		// Arrange
-		ByteBuffer BUFFER = ByteBuffer.allocate(Integer.BYTES);
+		ByteBuffer BUFFER = ByteBuffer.allocate(MurmurHash3.INTEGER_BYTES);
 		BUFFER.putInt(0, 3);
 
 		// Act
@@ -114,7 +114,7 @@ public class MurmurHash3Test {
 	@Test
 	public void test128_Long() {
 		// Arrange
-		ByteBuffer BUFFER = ByteBuffer.allocate(Long.BYTES);
+		ByteBuffer BUFFER = ByteBuffer.allocate(MurmurHash3.LONG_BYTES);
 		BUFFER.putLong(0, 8675309L);
 
 		// Act
@@ -129,7 +129,7 @@ public class MurmurHash3Test {
 	@Test
 	public void test128_Double() {
 		// Arrange
-		ByteBuffer BUFFER = ByteBuffer.allocate(Double.BYTES);
+		ByteBuffer BUFFER = ByteBuffer.allocate(Double.SIZE / Byte.SIZE);
 		BUFFER.putDouble(0, 456.987);
 
 		// Act
@@ -179,11 +179,11 @@ public class MurmurHash3Test {
 
 	@Test
 	public void testTwoLongOrdered() {
-		ByteBuffer buffer = ByteBuffer.allocate(Long.BYTES * 2);
+		ByteBuffer buffer = ByteBuffer.allocate(MurmurHash3.LONG_BYTES * 2);
 		for (long i = 0; i < 1000; i++) {
 			for (long j = 0; j < 1000; j++) {
 				buffer.putLong(0, i);
-				buffer.putLong(Long.BYTES, j);
+				buffer.putLong(MurmurHash3.LONG_BYTES, j);
 				assertEquals(MurmurHash3.hash32(buffer.array()), MurmurHash3.hash32(i, j));
 			}
 		}
@@ -191,14 +191,14 @@ public class MurmurHash3Test {
 
 	@Test
 	public void testTwoLongRandom() {
-		ByteBuffer buffer = ByteBuffer.allocate(Long.BYTES * 2);
+		ByteBuffer buffer = ByteBuffer.allocate(MurmurHash3.LONG_BYTES * 2);
 		Random random = new Random();
 		for (long i = 0; i < 1000; i++) {
 			for (long j = 0; j < 1000; j++) {
 				long x = random.nextLong();
 				long y = random.nextLong();
 				buffer.putLong(0, x);
-				buffer.putLong(Long.BYTES, y);
+				buffer.putLong(MurmurHash3.LONG_BYTES, y);
 				assertEquals(MurmurHash3.hash32(buffer.array()), MurmurHash3.hash32(x, y));
 			}
 		}
@@ -206,7 +206,7 @@ public class MurmurHash3Test {
 
 	@Test
 	public void testSingleLongOrdered() {
-		ByteBuffer buffer = ByteBuffer.allocate(Long.BYTES);
+		ByteBuffer buffer = ByteBuffer.allocate(MurmurHash3.LONG_BYTES);
 		for (long i = 0; i < 1000; i++) {
 			buffer.putLong(0, i);
 			assertEquals(MurmurHash3.hash32(buffer.array()), MurmurHash3.hash32(i));
@@ -215,7 +215,7 @@ public class MurmurHash3Test {
 
 	@Test
 	public void testSingleLongRandom() {
-		ByteBuffer buffer = ByteBuffer.allocate(Long.BYTES);
+		ByteBuffer buffer = ByteBuffer.allocate(MurmurHash3.LONG_BYTES);
 		Random random = new Random();
 		for (long i = 0; i < 1000; i++) {
 			long x = random.nextLong();

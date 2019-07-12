@@ -44,13 +44,13 @@ package org.apache.commons.codec.digest;
 public final class MurmurHash3 {
 
   /** TODO Replace on Java 8 with Long.BYTES. */
-  private static final int LONG_BYTES = Long.SIZE / Byte.SIZE;
+  static final int LONG_BYTES = Long.SIZE / Byte.SIZE;
 
   /** TODO Replace on Java 8 with Integer.BYTES. */
-  private static final int INTEGER_BYTES = Integer.SIZE / Integer.SIZE;
+  static final int INTEGER_BYTES = Integer.SIZE / Byte.SIZE;
   
   /** TODO Replace on Java 8 with Short.BYTES. */
-  private static final int SHORT_BYTES = Short.SIZE / Short.SIZE;
+  static final int SHORT_BYTES = Short.SIZE / Byte.SIZE;
     
 	// from 64-bit linear congruential generator
 	public static final long NULL_HASHCODE = 2862933555777941757L;
