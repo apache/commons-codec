@@ -38,8 +38,14 @@ import java.security.MessageDigest;
  *      Java 7 Cryptography Architecture Standard Algorithm Name Documentation</a>
  * @see <a href="http://docs.oracle.com/javase/8/docs/technotes/guides/security/StandardNames.html#MessageDigest">
  *      Java 8 Cryptography Architecture Standard Algorithm Name Documentation</a>
- * @see <a href="http://download.java.net/java/jdk9/docs/technotes/guides/security/StandardNames.html#MessageDigest">
+ * @see <a href="https://docs.oracle.com/javase/9/docs/specs/security/standard-names.html#messagedigest-algorithms">
  *      Java 9 Cryptography Architecture Standard Algorithm Name Documentation</a>
+ * @see <a href="https://docs.oracle.com/javase/10/docs/specs/security/standard-names.html#messagedigest-algorithms">
+ *      Java 10 Cryptography Architecture Standard Algorithm Name Documentation</a>
+ * @see <a href="https://docs.oracle.com/en/java/javase/11/docs/specs/security/standard-names.html#messagedigest-algorithms">
+ *      Java 11 Cryptography Architecture Standard Algorithm Name Documentation</a>
+ * @see <a href="https://docs.oracle.com/en/java/javase/12/docs/specs/security/standard-names.html#messagedigest-algorithms">
+ *      Java 12 Cryptography Architecture Standard Algorithm Name Documentation</a>
  *
  * @see <a href="http://dx.doi.org/10.6028/NIST.FIPS.180-4">FIPS PUB 180-4</a>
  * @see <a href="http://dx.doi.org/10.6028/NIST.FIPS.202">FIPS PUB 202</a>
