@@ -43,6 +43,15 @@ package org.apache.commons.codec.digest;
  */
 public final class MurmurHash3 {
 
+  /** TODO Replace on Java 8 with Long.BYTES. */
+  private static final int LONG_BYTES = Long.SIZE / Byte.SIZE;
+
+  /** TODO Replace on Java 8 with Integer.BYTES. */
+  private static final int INTEGER_BYTES = Integer.SIZE / Integer.SIZE;
+  
+  /** TODO Replace on Java 8 with Short.BYTES. */
+  private static final int SHORT_BYTES = Short.SIZE / Short.SIZE;
+    
 	// from 64-bit linear congruential generator
 	public static final long NULL_HASHCODE = 2862933555777941757L;
 
@@ -105,7 +114,7 @@ public final class MurmurHash3 {
 		hash = mix32((int) r0, hash);
 		hash = mix32((int) (r0 >>> 32), hash);
 
-		return fmix32(Long.BYTES, hash);
+		return fmix32(LONG_BYTES, hash);
 	}
 
 	/**
@@ -126,7 +135,7 @@ public final class MurmurHash3 {
 		hash = mix32((int) (r1), hash);
 		hash = mix32((int) (r1 >>> 32), hash);
 
-		return fmix32(Long.BYTES * 2, hash);
+		return fmix32(LONG_BYTES * 2, hash);
 	}
 
 	/**
@@ -237,7 +246,7 @@ public final class MurmurHash3 {
 	public static long hash64(long data) {
 		long hash = DEFAULT_SEED;
 		long k = Long.reverseBytes(data);
-		int length = Long.BYTES;
+		int length = LONG_BYTES;
 		// mix functions
 		k *= C1;
 		k = Long.rotateLeft(k, R1);
@@ -259,7 +268,7 @@ public final class MurmurHash3 {
 	 */
 	public static long hash64(int data) {
 		long k1 = Integer.reverseBytes(data) & (-1L >>> 32);
-		int length = Integer.BYTES;
+		int length = INTEGER_BYTES;
 		long hash = DEFAULT_SEED;
 		k1 *= C1;
 		k1 = Long.rotateLeft(k1, R1);
@@ -289,7 +298,7 @@ public final class MurmurHash3 {
 		hash ^= k1;
 
 		// finalization
-		hash ^= Short.BYTES;
+		hash ^= SHORT_BYTES;
 		hash = fmix64(hash);
 		return hash;
 	}
