@@ -61,7 +61,7 @@ public class Apr1CryptTest {
     public void testApr1CryptBytesWithThreadLocalRandom() {
         // random salt
         final byte[] keyBytes = new byte[] { '!', 'b', 'c', '.' };
-        ThreadLocalRandom threadLocalRandom = ThreadLocalRandom.current();
+        final ThreadLocalRandom threadLocalRandom = ThreadLocalRandom.current();
         final String hash = Md5Crypt.apr1Crypt(keyBytes, threadLocalRandom);
         assertEquals(hash, Md5Crypt.apr1Crypt("!bc.", hash));
 

@@ -60,7 +60,7 @@ public class Sha256CryptTest {
 
     @Test
     public void testSha2CryptRoundsThreadLocalRandom() {
-        ThreadLocalRandom random = ThreadLocalRandom.current();
+        final ThreadLocalRandom random = ThreadLocalRandom.current();
         // minimum rounds?
         assertEquals("$5$rounds=1000$abcd$b8MCU4GEeZIekOy5ahQ8EWfT330hvYGVeDYkBxXBva.", Sha2Crypt.sha256Crypt("secret".getBytes(Charsets.UTF_8), "$5$rounds=50$abcd$", random));
         assertEquals("$5$rounds=1001$abcd$SQsJZs7KXKdd2DtklI3TY3tkD7UYA99RD0FBLm4Sk48", Sha2Crypt.sha256Crypt("secret".getBytes(Charsets.UTF_8), "$5$rounds=1001$abcd$", random));

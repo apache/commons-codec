@@ -37,8 +37,8 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest<ColognePhonet
 
     private static final Set<String> TESTSET = new HashSet<>();
 
-    private static boolean hasTestCase(String re) {
-        for(String s : TESTSET) {
+    private static boolean hasTestCase(final String re) {
+        for(final String s : TESTSET) {
             if (s.matches(re)) {
                 return true;
             }
@@ -74,7 +74,7 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest<ColognePhonet
     // Check that all possible input sequence conditions are represented
     public static void finishTests() {
         int errors = 0;
-        for(String m : MATCHES) {
+        for(final String m : MATCHES) {
             if (!hasTestCase(m)) {
                 System.out.println(m + " has no test case");
                 errors++;
@@ -85,7 +85,7 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest<ColognePhonet
 
     @Override
     // Capture test strings for later checking
-    public void checkEncoding(String expected, String source) throws EncoderException {
+    public void checkEncoding(final String expected, final String source) throws EncoderException {
         // Note that the German letter Eszett is converted to SS by toUpperCase, so we don't need to replace it
         TESTSET.add(source.toUpperCase(Locale.GERMAN).replace('Ä', 'A').replace('Ö', 'O').replace('Ü', 'U'));
         super.checkEncoding(expected, source);
@@ -244,10 +244,10 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest<ColognePhonet
     }
 
     // Allow command-line testing
-    public static void main(String args[]) {
-        ColognePhonetic coder = new ColognePhonetic();
-        for(String arg : args) {
-            String code = coder.encode(arg);
+    public static void main(final String args[]) {
+        final ColognePhonetic coder = new ColognePhonetic();
+        for(final String arg : args) {
+            final String code = coder.encode(arg);
             System.out.println("'" + arg + "' = '" + code + "'");
         }
     }

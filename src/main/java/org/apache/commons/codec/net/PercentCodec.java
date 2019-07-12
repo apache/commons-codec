@@ -89,7 +89,7 @@ public class PercentCodec implements BinaryEncoder, BinaryDecoder {
      */
     private void insertAlwaysEncodeChars(final byte[] alwaysEncodeCharsArray) {
         if (alwaysEncodeCharsArray != null) {
-            for (byte b : alwaysEncodeCharsArray) {
+            for (final byte b : alwaysEncodeCharsArray) {
                 insertAlwaysEncodeChar(b);
             }
         }
@@ -122,15 +122,15 @@ public class PercentCodec implements BinaryEncoder, BinaryDecoder {
             return null;
         }
 
-        int expectedEncodingBytes = expectedEncodingBytes(bytes);
-        boolean willEncode = expectedEncodingBytes != bytes.length;
+        final int expectedEncodingBytes = expectedEncodingBytes(bytes);
+        final boolean willEncode = expectedEncodingBytes != bytes.length;
         if (willEncode || (plusForSpace && containsSpace(bytes))) {
             return doEncode(bytes, expectedEncodingBytes, willEncode);
         }
         return bytes;
     }
 
-    private byte[] doEncode(final byte[] bytes, int expectedLength, boolean willEncode) {
+    private byte[] doEncode(final byte[] bytes, final int expectedLength, final boolean willEncode) {
         final ByteBuffer buffer = ByteBuffer.allocate(expectedLength);
         for (final byte b : bytes) {
             if (willEncode && canEncode(b)) {
@@ -218,7 +218,7 @@ public class PercentCodec implements BinaryEncoder, BinaryDecoder {
     private int expectedDecodingBytes(final byte[] bytes) {
         int byteCount = 0;
         for (int i = 0; i < bytes.length; ) {
-            byte b = bytes[i];
+            final byte b = bytes[i];
             i += b == ESCAPE_CHAR ? 3: 1;
             byteCount++;
         }

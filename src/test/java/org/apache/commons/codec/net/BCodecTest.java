@@ -156,12 +156,12 @@ public class BCodecTest {
 
     @Test
     public void testBase64ImpossibleSamples() {
-        BCodec codec = new BCodec();
-        for (String s : BASE64_IMPOSSIBLE_CASES) {
+        final BCodec codec = new BCodec();
+        for (final String s : BASE64_IMPOSSIBLE_CASES) {
             try {
                 codec.decode(s);
                 fail();
-            } catch (DecoderException ex) {
+            } catch (final DecoderException ex) {
                 // expected
             }
         }

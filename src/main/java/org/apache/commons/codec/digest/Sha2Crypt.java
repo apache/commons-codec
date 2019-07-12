@@ -133,7 +133,7 @@ public class Sha2Crypt {
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      * @since 1.12
      */
-    public static String sha256Crypt(final byte[] keyBytes, String salt, Random random) {
+    public static String sha256Crypt(final byte[] keyBytes, String salt, final Random random) {
         if (salt == null) {
             salt = SHA256_PREFIX + B64.getRandomSalt(8, random);
         }

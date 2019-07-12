@@ -86,7 +86,7 @@ public final class MurmurHash3 {
 	 * @param l1 long to hash
 	 * @return 32 bit hash
 	 */
-	public static int hash32(long l0, long l1) {
+	public static int hash32(final long l0, final long l1) {
 		return hash32(l0, l1, DEFAULT_SEED);
 	}
 
@@ -96,7 +96,7 @@ public final class MurmurHash3 {
 	 * @param l0 long to hash
 	 * @return 32 bit hash
 	 */
-	public static int hash32(long l0) {
+	public static int hash32(final long l0) {
 		return hash32(l0, DEFAULT_SEED);
 	}
 
@@ -107,7 +107,7 @@ public final class MurmurHash3 {
 	 * @param seed initial seed value
 	 * @return 32 bit hash
 	 */
-	public static int hash32(long l0, int seed) {
+	public static int hash32(final long l0, final int seed) {
 		int hash = seed;
 		final long r0 = Long.reverseBytes(l0);
 
@@ -125,7 +125,7 @@ public final class MurmurHash3 {
 	 * @param seed initial seed value
 	 * @return 32 bit hash
 	 */
-	public static int hash32(long l0, long l1, int seed) {
+	public static int hash32(final long l0, final long l1, final int seed) {
 		int hash = seed;
 		final long r0 = Long.reverseBytes(l0);
 		final long r1 = Long.reverseBytes(l1);
@@ -144,7 +144,7 @@ public final class MurmurHash3 {
 	 * @param data - input byte array
 	 * @return 32 bit hash
 	 */
-	public static int hash32(byte[] data) {
+	public static int hash32(final byte[] data) {
 		return hash32(data, 0, data.length, DEFAULT_SEED);
 	}
 
@@ -154,8 +154,8 @@ public final class MurmurHash3 {
 	 * @param data - input string
 	 * @return 32 bit hash
 	 */
-	public static int hash32(String data) {
-		byte[] origin = data.getBytes();
+	public static int hash32(final String data) {
+		final byte[] origin = data.getBytes();
 		return hash32(origin, 0, origin.length, DEFAULT_SEED);
 	}
 
@@ -166,7 +166,7 @@ public final class MurmurHash3 {
 	 * @param length - length of array
 	 * @return 32 bit hash
 	 */
-	public static int hash32(byte[] data, int length) {
+	public static int hash32(final byte[] data, final int length) {
 		return hash32(data, length, DEFAULT_SEED);
 	}
 
@@ -178,7 +178,7 @@ public final class MurmurHash3 {
 	 * @param seed   - seed. (default 0)
 	 * @return 32 bit hash
 	 */
-	public static int hash32(byte[] data, int length, int seed) {
+	public static int hash32(final byte[] data, final int length, final int seed) {
 		return hash32(data, 0, length, seed);
 	}
 
@@ -191,21 +191,21 @@ public final class MurmurHash3 {
 	 * @param seed   - seed. (default 0)
 	 * @return 32 bit hash
 	 */
-	public static int hash32(byte[] data, int offset, int length, int seed) {
+	public static int hash32(final byte[] data, final int offset, final int length, final int seed) {
 		int hash = seed;
 		final int nblocks = length >> 2;
 
 		// body
 		for (int i = 0; i < nblocks; i++) {
-			int i_4 = i << 2;
-			int k = (data[offset + i_4] & 0xff) | ((data[offset + i_4 + 1] & 0xff) << 8)
+			final int i_4 = i << 2;
+			final int k = (data[offset + i_4] & 0xff) | ((data[offset + i_4 + 1] & 0xff) << 8)
 					| ((data[offset + i_4 + 2] & 0xff) << 16) | ((data[offset + i_4 + 3] & 0xff) << 24);
 
 			hash = mix32(k, hash);
 		}
 
 		// tail
-		int idx = nblocks << 2;
+		final int idx = nblocks << 2;
 		int k1 = 0;
 		switch (length - idx) {
 		case 3:
@@ -232,7 +232,7 @@ public final class MurmurHash3 {
 	 * @param data - input byte array
 	 * @return 64 bit hash
 	 */
-	public static long hash64(byte[] data) {
+	public static long hash64(final byte[] data) {
 		return hash64(data, 0, data.length, DEFAULT_SEED);
 	}
 
@@ -243,10 +243,10 @@ public final class MurmurHash3 {
 	 * @param data - input long
 	 * @return 64 bit hash
 	 */
-	public static long hash64(long data) {
+	public static long hash64(final long data) {
 		long hash = DEFAULT_SEED;
 		long k = Long.reverseBytes(data);
-		int length = LONG_BYTES;
+		final int length = LONG_BYTES;
 		// mix functions
 		k *= C1;
 		k = Long.rotateLeft(k, R1);
@@ -266,9 +266,9 @@ public final class MurmurHash3 {
 	 * @param data - input int
 	 * @return 64 bit hash
 	 */
-	public static long hash64(int data) {
+	public static long hash64(final int data) {
 		long k1 = Integer.reverseBytes(data) & (-1L >>> 32);
-		int length = INTEGER_BYTES;
+		final int length = INTEGER_BYTES;
 		long hash = DEFAULT_SEED;
 		k1 *= C1;
 		k1 = Long.rotateLeft(k1, R1);
@@ -287,7 +287,7 @@ public final class MurmurHash3 {
 	 * @param data - input short
 	 * @return 64 bit hash
 	 */
-	public static long hash64(short data) {
+	public static long hash64(final short data) {
 		long hash = DEFAULT_SEED;
 		long k1 = 0;
 		k1 ^= ((long) data & 0xff) << 8;
@@ -312,7 +312,7 @@ public final class MurmurHash3 {
 	 * @param length - length of array
 	 * @return 64 bit hash
 	 */
-	public static long hash64(byte[] data, int offset, int length) {
+	public static long hash64(final byte[] data, final int offset, final int length) {
 		return hash64(data, offset, length, DEFAULT_SEED);
 	}
 
@@ -325,7 +325,7 @@ public final class MurmurHash3 {
 	 * @param seed   - seed. (default 0)
 	 * @return 64 bit hash
 	 */
-	public static long hash64(byte[] data, int offset, int length, int seed) {
+	public static long hash64(final byte[] data, final int offset, final int length, final int seed) {
 		long hash = seed;
 		final int nblocks = length >> 3;
 
@@ -347,7 +347,7 @@ public final class MurmurHash3 {
 
 		// tail
 		long k1 = 0;
-		int tailStart = nblocks << 3;
+		final int tailStart = nblocks << 3;
 		switch (length - tailStart) {
 		case 7:
 			k1 ^= ((long) data[offset + tailStart + 6] & 0xff) << 48;
@@ -382,7 +382,7 @@ public final class MurmurHash3 {
 	 * @param data - input byte array
 	 * @return - 128 bit hash (2 longs)
 	 */
-	public static long[] hash128(byte[] data) {
+	public static long[] hash128(final byte[] data) {
 		return hash128(data, 0, data.length, DEFAULT_SEED);
 	}
 
@@ -392,8 +392,8 @@ public final class MurmurHash3 {
 	 * @param data - input String
 	 * @return - 128 bit hash (2 longs)
 	 */
-	public static long[] hash128(String data) {
-		byte[] origin = data.getBytes();
+	public static long[] hash128(final String data) {
+		final byte[] origin = data.getBytes();
 		return hash128(origin, 0, origin.length, DEFAULT_SEED);
 	}
 
@@ -406,7 +406,7 @@ public final class MurmurHash3 {
 	 * @param seed   - seed. (default is 0)
 	 * @return - 128 bit hash (2 longs)
 	 */
-	public static long[] hash128(byte[] data, int offset, int length, int seed) {
+	public static long[] hash128(final byte[] data, final int offset, final int length, final int seed) {
 		long h1 = seed;
 		long h2 = seed;
 		final int nblocks = length >> 4;
@@ -446,7 +446,7 @@ public final class MurmurHash3 {
 		// tail
 		long k1 = 0;
 		long k2 = 0;
-		int tailStart = nblocks << 4;
+		final int tailStart = nblocks << 4;
 		switch (length - tailStart) {
 		case 15:
 			k2 ^= (long) (data[offset + tailStart + 14] & 0xff) << 48;
@@ -513,7 +513,7 @@ public final class MurmurHash3 {
 		return Integer.rotateLeft(hash, R2_32) * M_32 + N_32;
 	}
 
-	private static int fmix32(int length, int hash) {
+	private static int fmix32(final int length, int hash) {
 		hash ^= length;
 		hash ^= (hash >>> 16);
 		hash *= 0x85ebca6b;
@@ -539,12 +539,12 @@ public final class MurmurHash3 {
 		int totalLen;
 		int hash;
 
-		public final void start(int hash) {
+		public final void start(final int hash) {
 			tailLen = totalLen = 0;
 			this.hash = hash;
 		}
 
-		public final void add(byte[] data, int offset, int length) {
+		public final void add(final byte[] data, int offset, final int length) {
 			if (length == 0) {
                 return;
             }
@@ -578,12 +578,12 @@ public final class MurmurHash3 {
 				hash ^= k;
 				hash = Integer.rotateLeft(hash, R2_32) * M_32 + N_32;
 			}
-			int length2 = length - offset2;
+			final int length2 = length - offset2;
 			offset += offset2;
 			final int nblocks = length2 >> 2;
 
 			for (int i = 0; i < nblocks; i++) {
-				int i_4 = (i << 2) + offset;
+				final int i_4 = (i << 2) + offset;
 				int k = orBytes(data[i_4], data[i_4 + 1], data[i_4 + 2], data[i_4 + 3]);
 
 				// mix functions
@@ -594,7 +594,7 @@ public final class MurmurHash3 {
 				hash = Integer.rotateLeft(hash, R2_32) * M_32 + N_32;
 			}
 
-			int consumed = (nblocks << 2);
+			final int consumed = (nblocks << 2);
 			tailLen = length2 - consumed;
 			if (consumed == length2) {
                 return;
@@ -630,7 +630,7 @@ public final class MurmurHash3 {
 		}
 	}
 
-	private static int orBytes(byte b1, byte b2, byte b3, byte b4) {
+	private static int orBytes(final byte b1, final byte b2, final byte b3, final byte b4) {
 		return (b1 & 0xff) | ((b2 & 0xff) << 8) | ((b3 & 0xff) << 16) | ((b4 & 0xff) << 24);
 	}
 }

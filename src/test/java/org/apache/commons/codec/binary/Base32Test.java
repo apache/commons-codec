@@ -287,12 +287,12 @@ public class Base32Test {
         testImpossibleCases(new Base32(true), BASE32HEX_IMPOSSIBLE_CASES);
     }
 
-    private void testImpossibleCases(Base32 codec, String[] impossible_cases) {
-        for (String impossible : impossible_cases) {
+    private void testImpossibleCases(final Base32 codec, final String[] impossible_cases) {
+        for (final String impossible : impossible_cases) {
             try {
                 codec.decode(impossible);
                 fail();
-            } catch (IllegalArgumentException ex) {
+            } catch (final IllegalArgumentException ex) {
                 // expected
             }
         }

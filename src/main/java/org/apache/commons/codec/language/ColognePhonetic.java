@@ -309,7 +309,7 @@ public class ColognePhonetic implements StringEncoder {
      * @param text The source text to encode
      * @return the corresponding encoding according to the <i>K&ouml;lner Phonetik</i> algorithm
      */
-    public String colognePhonetic(String text) {
+    public String colognePhonetic(final String text) {
         if (text == null) {
             return null;
         }
@@ -414,7 +414,7 @@ public class ColognePhonetic implements StringEncoder {
      * <li>small sharp s, German</li>
      * </ul>
      */
-    private char[] preprocess(String text) {
+    private char[] preprocess(final String text) {
         // This converts German small sharp s (Eszett) to SS
         final char[] chrs = text.toUpperCase(Locale.GERMAN).toCharArray();
 

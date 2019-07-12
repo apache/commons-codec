@@ -1306,12 +1306,12 @@ public class Base64Test {
 
     @Test
     public void testBase64ImpossibleSamples() {
-        Base64 codec = new Base64();
-        for (String s : BASE64_IMPOSSIBLE_CASES) {
+        final Base64 codec = new Base64();
+        for (final String s : BASE64_IMPOSSIBLE_CASES) {
             try {
                 codec.decode(s);
                 fail();
-            } catch (IllegalArgumentException ex) {
+            } catch (final IllegalArgumentException ex) {
                 // expected
             }
         }

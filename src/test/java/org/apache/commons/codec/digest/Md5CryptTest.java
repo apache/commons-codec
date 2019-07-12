@@ -63,7 +63,7 @@ public class Md5CryptTest {
 
     @Test
     public void testMd5CryptExplicitCallWithThreadLocalRandom() {
-        ThreadLocalRandom threadLocalRandom = ThreadLocalRandom.current();
+        final ThreadLocalRandom threadLocalRandom = ThreadLocalRandom.current();
         assertTrue(Md5Crypt.md5Crypt("secret".getBytes(), threadLocalRandom).matches("^\\$1\\$[a-zA-Z0-9./]{0,8}\\$.{1,}$"));
         assertTrue(Md5Crypt.md5Crypt("secret".getBytes(), (String) null).matches("^\\$1\\$[a-zA-Z0-9./]{0,8}\\$.{1,}$"));
     }

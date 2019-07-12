@@ -59,7 +59,7 @@ public class Sha512CryptTest {
 
     @Test
     public void testSha512CryptExplicitCallThreadLocalRandom() {
-        ThreadLocalRandom threadLocalRandom = ThreadLocalRandom.current();
+        final ThreadLocalRandom threadLocalRandom = ThreadLocalRandom.current();
         assertTrue(Sha2Crypt.sha512Crypt("secret".getBytes(), null, threadLocalRandom).matches("^\\$6\\$[a-zA-Z0-9./]{0,16}\\$.{1,}$"));
     }
 
