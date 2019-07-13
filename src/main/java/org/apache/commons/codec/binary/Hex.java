@@ -19,6 +19,7 @@ package org.apache.commons.codec.binary;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
+import java.util.Arrays;
 
 import org.apache.commons.codec.BinaryDecoder;
 import org.apache.commons.codec.BinaryEncoder;
@@ -209,7 +210,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * @since 1.11
      */
     protected static char[] encodeHex(final ByteBuffer data, final char[] toDigits) {
-        return encodeHex(data.array(), toDigits);
+        return encodeHex(bufferToArray(data), toDigits);
     }
 
     /**
@@ -353,7 +354,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * @since 1.11
      */
     public byte[] decode(final ByteBuffer buffer) throws DecoderException {
-        return decodeHex(new String(buffer.array(), getCharset()).toCharArray());
+        return decodeHex(new String(bufferToArray(buffer), getCharset()).toCharArray());
     }
 
     /**
@@ -447,7 +448,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
         if (object instanceof String) {
             byteArray = ((String) object).getBytes(this.getCharset());
         } else if (object instanceof ByteBuffer) {
-            byteArray = ((ByteBuffer) object).array();
+            byteArray = bufferToArray((ByteBuffer) object);
         } else {
             try {
                 byteArray = (byte[]) object;
@@ -486,5 +487,20 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
     @Override
     public String toString() {
         return super.toString() + "[charsetName=" + this.charset + "]";
+    }
+
+    private static byte[] bufferToArray(ByteBuffer byteBuffer) {
+        int size = byteBuffer.remaining();
+
+        if (byteBuffer.hasArray()) {
+            int offset = byteBuffer.arrayOffset() + byteBuffer.position();
+            return offset == 0 && size == byteBuffer.array().length
+                    ? byteBuffer.array()
+                    : Arrays.copyOfRange(byteBuffer.array(), offset, offset + size);
+        }
+
+        final byte[] bytes = new byte[size];
+        byteBuffer.duplicate().get(bytes);
+        return bytes;
     }
 }
