@@ -93,7 +93,7 @@ limitations under the License.
       <id>ggregory</id>
       <email>ggregory@apache.org</email>
       <url>http://www.garygregory.com</url>
-      <timezone>-7</timezone>
+      <timezone>-5</timezone>
     </developer>
     <developer>
       <name>David Graham</name>
@@ -241,20 +241,20 @@ limitations under the License.
     <checkstyle.header.file>${basedir}/LICENSE-header.txt</checkstyle.header.file>
     <checkstyle.version>2.17</checkstyle.version>
 
-    <commons.jacoco.version>0.8.3</commons.jacoco.version>
+    <commons.jacoco.version>0.8.4</commons.jacoco.version>
 
     <!-- generate report even if there are binary incompatible changes -->
     <commons.japicmp.breakBuildOnBinaryIncompatibleModifications>false</commons.japicmp.breakBuildOnBinaryIncompatibleModifications>
     <japicmp.skip>false</japicmp.skip>
 
     <!-- Commons Release Plugin -->
-    <commons.bc.version>1.11</commons.bc.version>
+    <commons.bc.version>1.12</commons.bc.version>
     <commons.rc.version>RC3</commons.rc.version>
     <commons.release-plugin.version>1.5</commons.release-plugin.version>
     <commons.release.isDistModule>true</commons.release.isDistModule>
     <commons.distSvnStagingUrl>scm:svn:https://dist.apache.org/repos/dist/dev/commons/${commons.componentid}</commons.distSvnStagingUrl>
-    <commons.releaseManagerName>Rob Tompkins</commons.releaseManagerName>
-    <commons.releaseManagerKey>B6E73D84EA4FCC47166087253FAAD2CD5ECBB314</commons.releaseManagerKey>
+    <commons.releaseManagerName>Gary Gregory</commons.releaseManagerName>    
+    <commons.releaseManagerKey>86fdc7e2a11262cb</commons.releaseManagerKey>
   </properties>
   <build>
     <defaultGoal>clean verify apache-rat:check clirr:check javadoc:javadoc</defaultGoal>
