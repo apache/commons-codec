@@ -48,7 +48,7 @@ public class HexTest {
     protected ByteBuffer allocate(final int capacity) {
         return ByteBuffer.allocate(capacity);
     }
-    
+
     private boolean charsetSanityCheck(final String name) {
         final String source = "the quick brown dog jumped over the lazy fox";
         try {
