@@ -24,27 +24,29 @@
 
     <body>
         <menu name="Codec">
-            <item name="Overview"      href="/index.html"/>
-            <item name="Download"      href="https://commons.apache.org/codec/download_codec.cgi"/>
-            <item name="Users guide"   href="/userguide.html"/>
-            <item name="Javadoc trunk" href="/apidocs/index.html"/>
-            <item name="Javadoc 1.12"  href="/archives/1.12/apidocs/index.html"/>
-            <item name="Javadoc 1.11"  href="/archives/1.11/apidocs/index.html"/>
-            <item name="Javadoc 1.10"  href="/archives/1.10/apidocs/index.html"/>
-            <item name="Javadoc 1.9"   href="/archives/1.9/apidocs/index.html"/>
-            <item name="Javadoc 1.8"   href="/archives/1.8/apidocs/index.html"/>
-            <item name="Javadoc 1.7"   href="/archives/1.7/apidocs/index.html"/>
+            <item name="Overview"        href="/index.html"/>
+            <item name="Download"        href="https://commons.apache.org/codec/download_codec.cgi"/>
+            <item name="Users guide"     href="/userguide.html"/>
+            <item name="Javadoc current" href="/apidocs/index.html"/>
+            <item name="Javadoc 1.13"    href="/archives/1.13/apidocs/index.html"/>
+            <item name="Javadoc 1.12"    href="/archives/1.12/apidocs/index.html"/>
+            <item name="Javadoc 1.11"    href="/archives/1.11/apidocs/index.html"/>
+            <item name="Javadoc 1.10"    href="/archives/1.10/apidocs/index.html"/>
+            <item name="Javadoc 1.9"     href="/archives/1.9/apidocs/index.html"/>
+            <item name="Javadoc 1.8"     href="/archives/1.8/apidocs/index.html"/>
+            <item name="Javadoc 1.7"     href="/archives/1.7/apidocs/index.html"/>
         </menu>
 
         <menu name="Development">
-            <item name="Release Notes"        href="/changes-report.html"/>
-            <item name="Mailing Lists"        href="/mail-lists.html"/>
-            <item name="Issue Tracking"       href="/issue-tracking.html"/>
-            <item name="Source Repository"    href="/source-repository.html"/>
-            <item name="Javadoc trunk"        href="/apidocs/index.html"/>
+            <item name="Release Notes"     href="/changes-report.html"/>
+            <item name="Mailing Lists"     href="/mail-lists.html"/>
+            <item name="Issue Tracking"    href="/issue-tracking.html"/>
+            <item name="Source Repository" href="/source-repository.html"/>
+            <item name="Javadoc current"   href="/apidocs/index.html"/>
         </menu>
 
         <menu name="Site Archives">
+            <item name="Codec 1.13"       href="/archives/1.13/index.html"/>
             <item name="Codec 1.12"       href="/archives/1.12/index.html"/>
             <item name="Codec 1.11"       href="/archives/1.11/index.html"/>
             <item name="Codec 1.10"       href="/archives/1.10/index.html"/>
