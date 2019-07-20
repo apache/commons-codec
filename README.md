@@ -25,7 +25,7 @@
  | commons-build-plugin/trunk/src/main/resources/commons-xdoc-templates |
  +======================================================================+
  |                                                                      |
- | 1) Re-generate using: mvn commons:readme-md                          |
+ | 1) Re-generate using: mvn commons-build:readme-md                    |
  |                                                                      |
  | 2) Set the following properties in the component's pom:              |
  |    - commons.componentid (required, alphabetic, lower case)          |
@@ -43,8 +43,10 @@
 Apache Commons Codec
 ===================
 
-[![Build Status](https://travis-ci.org/apache/commons-codec.svg?branch=trunk)](https://travis-ci.org/apache/commons-codec)
-[![Coverage Status](https://coveralls.io/repos/apache/commons-codec/badge.svg?branch=trunk)](https://coveralls.io/r/apache/commons-codec)
+[![Build Status](https://travis-ci.org/apache/commons-codec.svg)](https://travis-ci.org/apache/commons-codec)
+[![Coverage Status](https://coveralls.io/repos/apache/commons-codec/badge.svg)](https://coveralls.io/r/apache/commons-codec)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/commons-codec/commons-codec/badge.svg)](https://maven-badges.herokuapp.com/maven-central/commons-codec/commons-codec/)
+[![Javadocs](https://javadoc.io/badge/commons-codec/commons-codec/1.13.svg)](https://javadoc.io/doc/commons-codec/commons-codec/1.13)
 
 The Apache Commons Codec package contains simple encoder and decoders for
      various formats such as Base64 and Hexadecimal.  In addition to these
@@ -55,7 +57,7 @@ Documentation
 -------------
 
 More information can be found on the [Apache Commons Codec homepage](https://commons.apache.org/proper/commons-codec).
-The [Javadoc](https://commons.apache.org/proper/commons-codec/javadocs/api-release) can be browsed.
+The [Javadoc](https://commons.apache.org/proper/commons-codec/apidocs) can be browsed.
 Questions related to the usage of Apache Commons Codec should be posted to the [user mailing list][ml].
 
 Where can I get the latest release?
@@ -68,7 +70,7 @@ Alternatively you can pull it from the central Maven repositories:
 <dependency>
   <groupId>commons-codec</groupId>
   <artifactId>commons-codec</artifactId>
-  <version>1.12</version>
+  <version>1.13</version>
 </dependency>
 ```
 
