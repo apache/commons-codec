@@ -252,7 +252,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
         if (byteBuffer.hasArray()) {
             return byteBuffer.array();
         }
-        byte[] byteArray = new byte[byteBuffer.remaining()];
+        final byte[] byteArray = new byte[byteBuffer.remaining()];
         byteBuffer.get(byteArray);
         return byteArray;
     }
