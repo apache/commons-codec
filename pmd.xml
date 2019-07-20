@@ -20,7 +20,7 @@ limitations under the License.
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
   <description>Excludes from default PMD rules.</description>
-  <rule ref="rulesets/java/unnecessary.xml">
+  <rule ref="category/java/codestyle.xml">
     <exclude name="UselessParentheses"/>
   </rule>
 </ruleset>
