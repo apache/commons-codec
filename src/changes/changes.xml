@@ -43,7 +43,7 @@ The <action> type attribute can be add,update,fix,remove.
   </properties>
   <body>
 
-    <release version="1.13" date="2019-MM-DD" description="Feature and fix release.">
+    <release version="1.13" date="2019-07-20" description="Feature and fix release.">
       <action issue="CODEC-255" dev="sebb" due-to="Holger Grote" type="fix">ColognePhonetic handles x incorrectly</action>      
       <action issue="CODEC-254" dev="sebb" due-to="Holger Grote" type="fix">ColognePhonetic does not treat the letter H correctly</action>      
       <action issue="CODEC-134" dev="tmousaw-ptc" type="fix">Reject any decode request for a value that is impossible to encode to for Base32/Base64 rather than blindly decoding.</action>
