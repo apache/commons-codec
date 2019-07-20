@@ -1,3 +1,36 @@
+              Apache Apache Commons Codec 1.13 RELEASE NOTES
+
+The Apache Commons Codec package contains simple encoder and decoders for
+various formats such as Base64 and Hexadecimal.  In addition to these
+widely used encoders and decoders, the codec package also maintains a
+collection of phonetic encoding utilities.
+
+Feature and fix release.
+
+Changes in this version include:
+
+New features:
+o CODEC-236:  MurmurHash2 for 32-bit or 64-bit value. Thanks to Viliam Holub.
+o CODEC-236:  MurmurHash3 for 32-bit or 128-bit value. Thanks to Austin Appleby.
+
+Fixed Bugs:
+o CODEC-255:  ColognePhonetic handles x incorrectly Thanks to Holger Grote.
+o CODEC-254:  ColognePhonetic does not treat the letter H correctly Thanks to Holger Grote.
+o CODEC-134:  Reject any decode request for a value that is impossible to encode to for Base32/Base64 rather than blindly decoding.
+
+Changes:
+o CODEC-236:  Broken direct java.nio.ByteBuffer support in org.apache.commons.codec.binary.Hex. Thanks to Tomas Shestakov, Gary Gregory.
+
+
+For complete information on Apache Commons Codec, including instructions on how to submit bug reports,
+patches, or suggestions for improvement, see the Apache Apache Commons Codec website:
+
+Visit https://commons.apache.org/proper/commons-codec/
+Download from https://commons.apache.org/proper/commons-codec/download_codec.cgi
+
+
+-------------------------------------------------------------------------------
+
               Apache Commons Codec 1.12 RELEASE NOTES
 
 The Apache Commons Codec team is pleased to announce the commons-codec-1.12 release!
