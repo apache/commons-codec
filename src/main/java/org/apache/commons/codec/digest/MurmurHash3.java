@@ -461,7 +461,7 @@ public final class MurmurHash3 {
 		case 10:
 			k2 ^= (long) (data[offset + tailStart + 9] & 0xff) << 8;
 		case 9:
-			k2 ^= (long) (data[offset + tailStart + 8] & 0xff);
+			k2 ^= data[offset + tailStart + 8] & 0xff;
 			k2 *= C2;
 			k2 = Long.rotateLeft(k2, R3);
 			k2 *= C1;
@@ -482,7 +482,7 @@ public final class MurmurHash3 {
 		case 2:
 			k1 ^= (long) (data[offset + tailStart + 1] & 0xff) << 8;
 		case 1:
-			k1 ^= (long) (data[offset + tailStart] & 0xff);
+			k1 ^= data[offset + tailStart] & 0xff;
 			k1 *= C1;
 			k1 = Long.rotateLeft(k1, R1);
 			k1 *= C2;
