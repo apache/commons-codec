@@ -80,7 +80,7 @@ The Javadoc API documents are available online:
   <li><a href="archives/1.7/apidocs/index.html">Javadoc 1.7</a></li>
 </ul>
 <p>
-The <a href="source-repository.html">subversion repository</a> can be
+The <a href="scm.html">subversion repository</a> can be
 <a href="https://gitbox.apache.org/repos/asf?p=commons-codec.git">browsed</a>.
 </p>
 </section>
