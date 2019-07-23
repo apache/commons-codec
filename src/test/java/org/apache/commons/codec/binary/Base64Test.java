@@ -128,7 +128,7 @@ public class Base64Test {
         Base64 b64 = new Base64();
         Base64 b64customEncoding = new Base64(encodeTable);
 
-        final String content = "Hello World - this ";
+        final String content = "! Hello World - this §$%";
 
         byte[] encodedBytes = b64.encode(StringUtils.getBytesUtf8(content));
         String encodedContent = StringUtils.newStringUtf8(encodedBytes);
@@ -144,6 +144,13 @@ public class Base64Test {
                         .replaceAll("A", ".").replaceAll("B", "-") // replace alphabet adjustments
                         .replaceAll("=", "") // remove padding (not default alphabet)
                 , encodedContentCustom);
+
+
+        // try decode encoded content
+        final byte[] decode = b64customEncoding.decode(encodedBytesCustom);
+        final String decodeString = StringUtils.newStringUtf8(decode);
+
+        Assert.assertEquals(content, decodeString);
     }
 
     @Test
