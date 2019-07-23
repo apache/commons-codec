@@ -79,7 +79,7 @@ public class Base64 extends BaseNCodec {
      * Thanks to "commons" project in ws.apache.org for this code.
      * http://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/
      */
-    public static final byte[] STANDARD_ENCODE_TABLE = {
+    private static final byte[] STANDARD_ENCODE_TABLE = {
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
             'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
             'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
@@ -92,7 +92,7 @@ public class Base64 extends BaseNCodec {
      * changed to - and _ to make the encoded Base64 results more URL-SAFE.
      * This table is only used when the Base64's mode is set to URL-SAFE.
      */
-    public static final byte[] URL_SAFE_ENCODE_TABLE = {
+    private static final byte[] URL_SAFE_ENCODE_TABLE = {
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
             'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
             'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
