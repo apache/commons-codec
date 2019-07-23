@@ -116,6 +116,14 @@ public class Base64Test {
         assertEquals("decode hello world", "Hello World", decodeString);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testCustomEncodingAlphabet_illegal() {
+        byte[] encodeTable = {
+                '.', '-', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M'
+        };
+        Base64 b64customEncoding = new Base64(encodeTable);
+    }
+
     @Test
     public void testCustomEncodingAlphabet() {
         // created a duplicate of STANDARD_ENCODE_TABLE and replaced two chars with

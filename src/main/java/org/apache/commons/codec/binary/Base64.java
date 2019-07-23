@@ -310,6 +310,9 @@ public class Base64 extends BaseNCodec {
         if (encodeTable == STANDARD_ENCODE_TABLE || encodeTable == URL_SAFE_ENCODE_TABLE) {
             decodeTable = DEFAULT_DECODE_TABLE;
         } else {
+            if (encodeTable.length != 64) {
+                throw new IllegalArgumentException("encodeTable must be exactly 64 bytes long");
+            }
             decodeTable = calculateDecodeTable(encodeTable);
         }
 
