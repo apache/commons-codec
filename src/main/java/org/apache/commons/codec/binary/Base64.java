@@ -274,10 +274,28 @@ public class Base64 extends BaseNCodec {
         this(lineLength, lineSeparator, urlSafe ? URL_SAFE_ENCODE_TABLE : STANDARD_ENCODE_TABLE);
     }
 
-    public Base64(byte[] encodeTable) {
-        this(0, CHUNK_SEPARATOR, encodeTable);
+    /**
+     * Creates a Base64 codec used for decoding and encoding with non-standard encodingTable-table
+     *
+     * @param encodingTable
+     *          The manual encodeTable - a byte array of 64 chars
+     */
+    public Base64(byte[] encodingTable) {
+        this(0, CHUNK_SEPARATOR, encodingTable);
     }
 
+    /**
+     * Creates a Base64 codec used for decoding and encoding with non-standard encode-table and given lineLength and lineSeparator
+     *
+     * @param lineLength
+     *            Each line of encoded data will be at most of the given length (rounded down to nearest multiple of
+     *            4). If lineLength &lt;= 0, then the output will not be divided into lines (chunks). Ignored when
+     *            decoding.
+     * @param lineSeparator
+     *            Each line of encoded data will end with this sequence of bytes.
+     * @param encodingTable
+     *          The manual encodeTable - a byte array of 64 chars
+     */
     public Base64(final int lineLength, final byte[] lineSeparator, byte[] encodingTable) {
         super(BYTES_PER_UNENCODED_BLOCK, BYTES_PER_ENCODED_BLOCK,
                 lineLength,
