@@ -111,7 +111,7 @@ public class Base64 extends BaseNCodec {
      * Thanks to "commons" project in ws.apache.org for this code.
      * http://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/
      */
-    private static final byte[] DECODE_TABLE = {
+    private static final byte[] DEFAULT_DECODE_TABLE = {
         //   0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
             -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 00-0f
             -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 10-1f
@@ -134,14 +134,18 @@ public class Base64 extends BaseNCodec {
     // some state be preserved between calls of encode() and decode().
 
     /**
-     * Encode table to use: either STANDARD or URL_SAFE. Note: the DECODE_TABLE above remains static because it is able
-     * to decode both STANDARD and URL_SAFE streams, but the encodeTable must be a member variable so we can switch
-     * between the two modes.
+     * Encode table to use: either STANDARD or URL_SAFE or custom.
+     * Note: the DEFAULT_DECODE_TABLE above remains static for STANDARD and URL_SAFA
+     * because it is able to decode both STANDARD and URL_SAFE streams,
+     * but the encodeTable must be a member variable so we can switch
+     * between modes.
      */
     private final byte[] encodeTable;
 
-    // Only one decode table currently; keep for consistency with Base32 code
-    private final byte[] decodeTable = DECODE_TABLE;
+    /**
+     * Decode table to use
+     */
+    private final byte[] decodeTable;
 
     /**
      * Line separator for encoding. Not used when decoding. Only used if lineLength &gt; 0.
@@ -300,6 +304,15 @@ public class Base64 extends BaseNCodec {
         super(BYTES_PER_UNENCODED_BLOCK, BYTES_PER_ENCODED_BLOCK,
                 lineLength,
                 lineSeparator == null ? 0 : lineSeparator.length);
+
+        this.encodeTable = encodeTable;
+
+        if (encodeTable == STANDARD_ENCODE_TABLE || encodeTable == URL_SAFE_ENCODE_TABLE) {
+            decodeTable = DEFAULT_DECODE_TABLE;
+        } else {
+            decodeTable = calculateDecodeTable(encodeTable);
+        }
+
         // TODO could be simplified if there is no requirement to reject invalid line sep when length <=0
         // @see test case Base64Test.testConstructors()
         if (lineSeparator != null) {
@@ -320,7 +333,23 @@ public class Base64 extends BaseNCodec {
             this.lineSeparator = null;
         }
         this.decodeSize = this.encodeSize - 1;
-        this.encodeTable = encodeTable;
+    }
+
+    /**
+     * calculates a decode table for a given encode table
+     *
+     * @param encodeTable
+     * @return decodeTable
+     */
+    private byte[] calculateDecodeTable(byte[] encodeTable) {
+        byte[] decodeTable = new byte[256];
+        for (int i=0; i < 256; i++) {
+            decodeTable[i] = -1;
+        }
+        for (int i=0; i < encodeTable.length; i++) {
+            decodeTable[(int) encodeTable[i]] = (byte) i;
+        }
+        return decodeTable;
     }
 
     /**
@@ -467,8 +496,8 @@ public class Base64 extends BaseNCodec {
                 context.eof = true;
                 break;
             }
-            if (b >= 0 && b < DECODE_TABLE.length) {
-                final int result = DECODE_TABLE[b];
+            if (b >= 0 && b < decodeTable.length) {
+                final int result = decodeTable[b];
                 if (result >= 0) {
                     context.modulus = (context.modulus+1) % BYTES_PER_ENCODED_BLOCK;
                     context.ibitWorkArea = (context.ibitWorkArea << BITS_PER_ENCODED_BYTE) + result;
@@ -535,7 +564,7 @@ public class Base64 extends BaseNCodec {
      * @since 1.4
      */
     public static boolean isBase64(final byte octet) {
-        return octet == PAD_DEFAULT || (octet >= 0 && octet < DECODE_TABLE.length && DECODE_TABLE[octet] != -1);
+        return octet == PAD_DEFAULT || (octet >= 0 && octet < DEFAULT_DECODE_TABLE.length && DEFAULT_DECODE_TABLE[octet] != -1);
     }
 
     /**
