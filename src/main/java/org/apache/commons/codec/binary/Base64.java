@@ -271,6 +271,14 @@ public class Base64 extends BaseNCodec {
      * @since 1.4
      */
     public Base64(final int lineLength, final byte[] lineSeparator, final boolean urlSafe) {
+        this(lineLength, lineSeparator, urlSafe ? URL_SAFE_ENCODE_TABLE : STANDARD_ENCODE_TABLE);
+    }
+
+    public Base64(byte[] encodeTable) {
+        this(0, CHUNK_SEPARATOR, encodeTable);
+    }
+
+    public Base64(final int lineLength, final byte[] lineSeparator, byte[] encodingTable) {
         super(BYTES_PER_UNENCODED_BLOCK, BYTES_PER_ENCODED_BLOCK,
                 lineLength,
                 lineSeparator == null ? 0 : lineSeparator.length);
@@ -294,7 +302,7 @@ public class Base64 extends BaseNCodec {
             this.lineSeparator = null;
         }
         this.decodeSize = this.encodeSize - 1;
-        this.encodeTable = urlSafe ? URL_SAFE_ENCODE_TABLE : STANDARD_ENCODE_TABLE;
+        this.encodeTable = encodingTable;
     }
 
     /**
