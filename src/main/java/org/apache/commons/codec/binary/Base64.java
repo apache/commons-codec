@@ -79,7 +79,7 @@ public class Base64 extends BaseNCodec {
      * Thanks to "commons" project in ws.apache.org for this code.
      * http://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/
      */
-    private static final byte[] STANDARD_ENCODE_TABLE = {
+    public static final byte[] STANDARD_ENCODE_TABLE = {
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
             'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
             'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
@@ -92,7 +92,7 @@ public class Base64 extends BaseNCodec {
      * changed to - and _ to make the encoded Base64 results more URL-SAFE.
      * This table is only used when the Base64's mode is set to URL-SAFE.
      */
-    private static final byte[] URL_SAFE_ENCODE_TABLE = {
+    public static final byte[] URL_SAFE_ENCODE_TABLE = {
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
             'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
             'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
@@ -275,13 +275,13 @@ public class Base64 extends BaseNCodec {
     }
 
     /**
-     * Creates a Base64 codec used for decoding and encoding with non-standard encodingTable-table
+     * Creates a Base64 codec used for decoding and encoding with non-standard encodeTable-table
      *
-     * @param encodingTable
+     * @param encodeTable
      *          The manual encodeTable - a byte array of 64 chars
      */
-    public Base64(byte[] encodingTable) {
-        this(0, CHUNK_SEPARATOR, encodingTable);
+    public Base64(byte[] encodeTable) {
+        this(0, CHUNK_SEPARATOR, encodeTable);
     }
 
     /**
@@ -293,10 +293,10 @@ public class Base64 extends BaseNCodec {
      *            decoding.
      * @param lineSeparator
      *            Each line of encoded data will end with this sequence of bytes.
-     * @param encodingTable
+     * @param encodeTable
      *          The manual encodeTable - a byte array of 64 chars
      */
-    public Base64(final int lineLength, final byte[] lineSeparator, byte[] encodingTable) {
+    public Base64(final int lineLength, final byte[] lineSeparator, byte[] encodeTable) {
         super(BYTES_PER_UNENCODED_BLOCK, BYTES_PER_ENCODED_BLOCK,
                 lineLength,
                 lineSeparator == null ? 0 : lineSeparator.length);
@@ -320,7 +320,7 @@ public class Base64 extends BaseNCodec {
             this.lineSeparator = null;
         }
         this.decodeSize = this.encodeSize - 1;
-        this.encodeTable = encodingTable;
+        this.encodeTable = encodeTable;
     }
 
     /**
@@ -339,7 +339,7 @@ public class Base64 extends BaseNCodec {
      * the data to encode, and once with inAvail set to "-1" to alert encoder that EOF has been reached, to flush last
      * remaining bytes (if not multiple of 3).
      * </p>
-     * <p><b>Note: no padding is added when encoding using the URL-safe alphabet.</b></p>
+     * <p><b>Note: no padding is added when encoding not using the default alphabet.</b></p>
      * <p>
      * Thanks to "commons" project in ws.apache.org for the bitwise operations, and general approach.
      * http://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/
