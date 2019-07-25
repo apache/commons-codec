@@ -328,6 +328,15 @@ limitations under the License.
           <headerFile>${basedir}/LICENSE-header.txt</headerFile>
         </configuration>
       </plugin>
+      <!-- Specify source for JDK 11+ javadoc tool to ignore the 'unamed' module.
+           See: https://bugs.openjdk.java.net/browse/JDK-8212233.
+           To be removed with parent 49. -->
+      <plugin>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+          <source>${maven.compiler.source}</source>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
   <reporting>
