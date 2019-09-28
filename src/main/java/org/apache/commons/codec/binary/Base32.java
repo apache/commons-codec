@@ -77,6 +77,25 @@ public class Base32 extends BaseNCodec {
     };
 
     /**
+     * This array is a lookup table that translates Unicode characters drawn from the "Base32 Alphabet" (as specified
+     * in Table 3 of RFC 4648) into their 5-bit positive integer equivalents. Characters that are not in the Base32
+     * alphabet but fall within the bounds of the array are translated to -1.
+     * Look-alike characters are 0 (zero) and 1 (one).
+     */
+    private static final byte[] DECODE_TABLE_WITH_LOOKALIKES = {
+         //  0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
+            -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 00-0f
+            -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 10-1f
+            -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 20-2f
+            14,  8, 26, 27, 28, 29, 30, 31, -1, -1, -1, -1, -1, -1, -1, -1, // 30-3f 0-7
+            -1,  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, // 40-4f A-O
+            15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25,                     // 50-5a P-Z
+                                                        -1, -1, -1, -1, -1, // 5b - 5f [-_
+            -1,  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, // 60 - 6f `-o
+            15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25,                     // 70 - 7a p-z
+    };
+
+    /**
      * This array is a lookup table that translates 5-bit positive integer index values into their "Base32 Alphabet"
      * equivalents as specified in Table 3 of RFC 4648.
      */
@@ -100,6 +119,24 @@ public class Base32 extends BaseNCodec {
             -1, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, // 40-4f A-O
             25, 26, 27, 28, 29, 30, 31,                                     // 50-56 P-V
                                         -1, -1, -1, -1, -1, -1, -1, -1, -1, // 57-5f Z-_
+            -1, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, // 60-6f `-o
+            25, 26, 27, 28, 29, 30, 31                                      // 70-76 p-v
+    };
+
+    /**
+     * This array is a lookup table that translates Unicode characters drawn from the "Base32 Hex Alphabet" (as
+     * specified in Table 4 of RFC 4648) into their 5-bit positive integer equivalents. Characters that are not in the
+     * Base32 Hex alphabet but fall within the bounds of the array are translated to -1.
+     */
+    private static final byte[] HEX_DECODE_TABLE_WITH_LOOKALIKES = {
+         //  0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
+            -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 00-0f
+            -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 10-1f
+            -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 20-2f
+             0,  1,  2,  3,  4,  5,  6,  7,  8,  9, -1, -1, -1, -1, -1, -1, // 30-3f 2-7
+            -1, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, // 40-4f A-O
+            25, 26, 27, 28, 29, 30, 31,                                     // 50-57 P-V
+                                        -1, -1, -1, -1, -1, -1, -1, -1, -1, // 57-5f W-_
             -1, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, // 60-6f `-o
             25, 26, 27, 28, 29, 30, 31                                      // 70-76 p-v
     };
@@ -192,10 +229,40 @@ public class Base32 extends BaseNCodec {
      * When encoding the line length is 0 (no chunking).
      * </p>
      * @param useHex if {@code true} then use Base32 Hex alphabet
+     * @param allowLookalikes
+     *            if {@code true}, then allow look-alike characters like {@code 0} -&gt; {@code O}
+     *            and {@code 1} -&gt; {@code O} when decoding, otherwise ignore look-alike characters
+     */
+    public Base32(final boolean useHex, final boolean allowLookalikes) {
+        this(0, null, useHex, allowLookalikes, PAD_DEFAULT);
+    }
+
+    /**
+     * Creates a Base32 codec used for decoding and encoding.
+     * <p>
+     * When encoding the line length is 0 (no chunking).
+     * </p>
+     * @param useHex if {@code true} then use Base32 Hex alphabet
      * @param pad byte used as padding byte.
      */
     public Base32(final boolean useHex, final byte pad) {
         this(0, null, useHex, pad);
+    }
+
+
+    /**
+     * Creates a Base32 codec used for decoding and encoding.
+     * <p>
+     * When encoding the line length is 0 (no chunking).
+     * </p>
+     * @param useHex if {@code true} then use Base32 Hex alphabet
+     * @param allowLookalikes
+     *            if {@code true}, then allow look-alike characters like {@code 0} -&gt; {@code O}
+     *            and {@code 1} -&gt; {@code O} when decoding, otherwise ignore look-alike characters
+     * @param pad byte used as padding byte.
+     */
+    public Base32(final boolean useHex, final boolean allowLookalikes, final byte pad) {
+        this(0, null, useHex, allowLookalikes, pad);
     }
 
     /**
@@ -277,20 +344,80 @@ public class Base32 extends BaseNCodec {
      *            Each line of encoded data will end with this sequence of bytes.
      * @param useHex
      *            if {@code true}, then use Base32 Hex alphabet, otherwise use Base32 alphabet
+     * @throws IllegalArgumentException
+     *             The provided lineSeparator included some Base32 characters. That's not going to work! Or the
+     *             lineLength &gt; 0 and lineSeparator is null.
+     */
+    public Base32(final int lineLength, final byte[] lineSeparator, final boolean useHex, final boolean allowLookalikes) {
+        this(lineLength, lineSeparator, useHex, allowLookalikes, PAD_DEFAULT);
+    }
+
+    /**
+     * Creates a Base32 / Base32 Hex codec used for decoding and encoding.
+     * <p>
+     * When encoding the line length and line separator are given in the constructor.
+     * </p>
+     * <p>
+     * Line lengths that aren't multiples of 8 will still essentially end up being multiples of 8 in the encoded data.
+     * </p>
+     *
+     * @param lineLength
+     *            Each line of encoded data will be at most of the given length (rounded down to nearest multiple of
+     *            8). If lineLength &lt;= 0, then the output will not be divided into lines (chunks). Ignored when
+     *            decoding.
+     * @param lineSeparator
+     *            Each line of encoded data will end with this sequence of bytes.
+     * @param useHex
+     *            if {@code true}, then use Base32 Hex alphabet, otherwise use Base32 alphabet
      * @param pad byte used as padding byte.
      * @throws IllegalArgumentException
      *             The provided lineSeparator included some Base32 characters. That's not going to work! Or the
      *             lineLength &gt; 0 and lineSeparator is null.
      */
     public Base32(final int lineLength, final byte[] lineSeparator, final boolean useHex, final byte pad) {
+        this(lineLength, lineSeparator, useHex, false, pad);
+    }
+
+    /**
+     * Creates a Base32 / Base32 Hex codec used for decoding and encoding.
+     * <p>
+     * When encoding the line length and line separator are given in the constructor.
+     * </p>
+     * <p>
+     * Line lengths that aren't multiples of 8 will still essentially end up being multiples of 8 in the encoded data.
+     * </p>
+     *
+     * @param lineLength
+     *            Each line of encoded data will be at most of the given length (rounded down to nearest multiple of
+     *            8). If lineLength &lt;= 0, then the output will not be divided into lines (chunks). Ignored when
+     *            decoding.
+     * @param lineSeparator
+     *            Each line of encoded data will end with this sequence of bytes.
+     * @param useHex
+     *            if {@code true}, then use Base32 Hex alphabet, otherwise use Base32 alphabet
+     * @param allowLookalikes
+     *            if {@code true}, then allow look-alike characters like {@code 0} -&gt; {@code O}
+     *            and {@code 1} -&gt; {@code O} when decoding, otherwise ignore-alike characters.
+     * @param pad byte used as padding byte.
+     * @throws IllegalArgumentException
+     *             The provided lineSeparator included some Base32 characters. That's not going to work! Or the
+     *             lineLength &gt; 0 and lineSeparator is null.
+     */
+    public Base32(final int lineLength, final byte[] lineSeparator, final boolean useHex, final boolean allowLookalikes, final byte pad) {
         super(BYTES_PER_UNENCODED_BLOCK, BYTES_PER_ENCODED_BLOCK, lineLength,
                 lineSeparator == null ? 0 : lineSeparator.length, pad);
         if (useHex) {
             this.encodeTable = HEX_ENCODE_TABLE;
-            this.decodeTable = HEX_DECODE_TABLE;
+            if(allowLookalikes)
+                this.decodeTable = HEX_DECODE_TABLE_WITH_LOOKALIKES;
+            else
+                this.decodeTable = HEX_DECODE_TABLE;
         } else {
             this.encodeTable = ENCODE_TABLE;
-            this.decodeTable = DECODE_TABLE;
+            if(allowLookalikes)
+                this.decodeTable = DECODE_TABLE_WITH_LOOKALIKES;
+            else
+                this.decodeTable = DECODE_TABLE;
         }
         if (lineLength > 0) {
             if (lineSeparator == null) {
