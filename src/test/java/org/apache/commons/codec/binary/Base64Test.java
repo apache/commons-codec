@@ -32,6 +32,7 @@ import org.apache.commons.codec.Charsets;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.lang3.ArrayUtils;
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -113,6 +114,56 @@ public class Base64Test {
         final byte[] decode = b64.decode("SGVsbG{\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9}8gV29ybGQ=");
         final String decodeString = StringUtils.newStringUtf8(decode);
         assertEquals("decode hello world", "Hello World", decodeString);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testCustomEncodingAlphabet_illegal() {
+        byte[] encodeTable = {
+                '.', '-', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M'
+        };
+        Base64 b64customEncoding = new Base64(encodeTable);
+    }
+
+    @Test
+    public void testCustomEncodingAlphabet() {
+        // created a duplicate of STANDARD_ENCODE_TABLE and replaced two chars with
+        // custom values not already present in table
+        // A => .   B => -
+        byte[] encodeTable = {
+                '.', '-', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+                'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+                'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+                'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+                '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '/'
+        };
+
+        // two instances: one with default table and one with adjusted encoding table
+        Base64 b64 = new Base64();
+        Base64 b64customEncoding = new Base64(encodeTable);
+
+        final String content = "! Hello World - this §$%";
+
+        byte[] encodedBytes = b64.encode(StringUtils.getBytesUtf8(content));
+        String encodedContent = StringUtils.newStringUtf8(encodedBytes);
+
+        byte[] encodedBytesCustom = b64customEncoding.encode(StringUtils.getBytesUtf8(content));
+        String encodedContentCustom = StringUtils.newStringUtf8(encodedBytesCustom);
+
+        Assert.assertTrue("testing precondition not met - ecodedContent should contain parts of modified table",
+                encodedContent.contains("A") && encodedContent.contains("B"));
+
+        Assert.assertEquals("custom encoding mismatch to expected - " + encodedContentCustom,
+                encodedContent
+                        .replaceAll("A", ".").replaceAll("B", "-") // replace alphabet adjustments
+                        .replaceAll("=", "") // remove padding (not default alphabet)
+                , encodedContentCustom);
+
+
+        // try decode encoded content
+        final byte[] decode = b64customEncoding.decode(encodedBytesCustom);
+        final String decodeString = StringUtils.newStringUtf8(decode);
+
+        Assert.assertEquals(content, decodeString);
     }
 
     @Test
