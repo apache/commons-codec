@@ -278,7 +278,6 @@ public class MurmurHash3Test {
             byte[] arr = new byte[bytes.length + offset];
             System.arraycopy(bytes, 0, arr, offset, bytes.length);
             int seed = 1;
-            long[] result;
             for (int len=0; len<bytes.length; len++) {
               seed *= 0x9e3779b1;
               int h = MurmurHash3.hash32(arr, offset, len, seed);
