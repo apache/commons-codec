@@ -208,19 +208,19 @@ public final class MurmurHash3 {
 		final int idx = nblocks << 2;
 		int k1 = 0;
 		switch (length - idx) {
-		case 3:
-			k1 ^= data[offset + idx + 2] << 16;
-		case 2:
-			k1 ^= data[offset + idx + 1] << 8;
-		case 1:
-			k1 ^= data[offset + idx];
-
-			// mix functions
-			k1 *= C1_32;
-			k1 = Integer.rotateLeft(k1, R1_32);
-			k1 *= C2_32;
-			hash ^= k1;
-		}
+    	case 3:
+            k1 = (data[offset + idx + 2] & 0xff) << 16;
+            // fallthrough
+        case 2:
+            k1 |= (data[offset + idx + 1] & 0xff) << 8;
+            // fallthrough
+        case 1:
+            k1 |= (data[offset + idx] & 0xff);
+            k1 *= C1_32;
+            k1 = (k1 << 15) | (k1 >>> 17);  // ROTL32(k1,15);
+            k1 *= C2_32;
+            hash ^= k1;
+    }
 
 		return fmix32(length, hash);
 	}
@@ -407,8 +407,13 @@ public final class MurmurHash3 {
 	 * @return - 128 bit hash (2 longs)
 	 */
 	public static long[] hash128(final byte[] data, final int offset, final int length, final int seed) {
-		long h1 = seed;
-		long h2 = seed;
+	 // The original algorithm does have a 32 bit unsigned seed.
+	    // We have to mask to match the behavior of the unsigned types and prevent sign extension.
+	    long h1 = seed & 0x00000000FFFFFFFFL;
+	    long h2 = seed & 0x00000000FFFFFFFFL;
+//
+//		long h1 = seed;
+//		long h2 = seed;
 		final int nblocks = length >> 4;
 
 		// body
@@ -606,11 +611,11 @@ public final class MurmurHash3 {
 			int k1 = 0;
 			switch (tailLen) {
 			case 3:
-				k1 ^= tail[2] << 16;
+				k1 ^= (tail[2] & 0xff) << 16;
 			case 2:
-				k1 ^= tail[1] << 8;
+				k1 ^= (tail[1] & 0xff) << 8;
 			case 1:
-				k1 ^= tail[0];
+				k1 ^= (tail[0] & 0xff);
 
 				// mix functions
 				k1 *= C1_32;
