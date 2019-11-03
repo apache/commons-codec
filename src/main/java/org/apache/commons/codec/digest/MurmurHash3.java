@@ -17,8 +17,6 @@
 
 package org.apache.commons.codec.digest;
 
-import java.nio.charset.StandardCharsets;
-
 /**
  * MurmurHash3 yields a 32-bit or 128-bit value.
  *
@@ -75,7 +73,7 @@ public final class MurmurHash3 {
 	private static final int M = 5;
 	private static final int N1 = 0x52dce729;
 	private static final int N2 = 0x38495ab5;
-	private static final long UINT_MASK = 0x00000000FFFFFFFFL;
+	private static final long UINT_MASK = 0xffffffffL;
 
 	public static final int DEFAULT_SEED = 104729;
 
@@ -159,7 +157,7 @@ public final class MurmurHash3 {
 	 * @return 32 bit hash
 	 */
 	public static int hash32(final String data) {
-		final byte[] origin = data.getBytes(StandardCharsets.UTF_8);
+		final byte[] origin = data.getBytes();
 		return hash32(origin, 0, origin.length, DEFAULT_SEED);
 	}
 
@@ -212,23 +210,23 @@ public final class MurmurHash3 {
 		final int idx = nblocks << 2;
 		int k1 = 0;
 		/*
-         * The original algorithm uses unsigned bytes.
-         * We have to mask to match the behavior of the unsigned bytes and prevent sign extension.
-         */
+		 * The original algorithm uses unsigned bytes.
+		 * We have to mask to match the behavior of the unsigned bytes and prevent sign extension.
+		 */
 		switch (length - idx) {
-    	case 3:
-            k1 = (data[offset + idx + 2] & UBYTE_MASK) << 16;
-            // fallthrough
-        case 2:
-            k1 |= (data[offset + idx + 1] & UBYTE_MASK) << 8;
-            // fallthrough
-        case 1:
-            k1 |= (data[offset + idx] & UBYTE_MASK);
-            k1 *= C1_32;
-            k1 = (k1 << 15) | (k1 >>> 17);  // ROTL32(k1,15);
-            k1 *= C2_32;
-            hash ^= k1;
-    }
+		case 3:
+			k1 ^= (data[offset + idx + 2] & UBYTE_MASK) << 16;
+			// fallthrough
+		case 2:
+			k1 ^= (data[offset + idx + 1] & UBYTE_MASK) << 8;
+			// fallthrough
+		case 1:
+			k1 ^= (data[offset + idx] & UBYTE_MASK);
+			k1 *= C1_32;
+			k1 = Integer.rotateLeft(k1, R1_32);
+			k1 *= C2_32;
+			hash ^= k1;
+	}
 
 		return fmix32(length, hash);
 	}
@@ -401,7 +399,7 @@ public final class MurmurHash3 {
 	 * @return - 128 bit hash (2 longs)
 	 */
 	public static long[] hash128(final String data) {
-		final byte[] origin = data.getBytes(StandardCharsets.UTF_8);
+		final byte[] origin = data.getBytes();
 		return hash128(origin, 0, origin.length, DEFAULT_SEED);
 	}
 
@@ -415,10 +413,10 @@ public final class MurmurHash3 {
 	 * @return - 128 bit hash (2 longs)
 	 */
 	public static long[] hash128(final byte[] data, final int offset, final int length, final int seed) {
-	    // The original algorithm does have a 32 bit unsigned seed.
-	    // We have to mask to match the behavior of the unsigned types and prevent sign extension.
-	    long h1 = seed & UINT_MASK;
-	    long h2 = seed & UINT_MASK;
+		// The original algorithm does have a 32 bit unsigned seed.
+		// We have to mask to match the behavior of the unsigned types and prevent sign extension.
+		long h1 = seed & UINT_MASK;
+		long h2 = seed & UINT_MASK;
 
 		final int nblocks = length >> 4;
 
@@ -615,8 +613,8 @@ public final class MurmurHash3 {
 
 		/*
 		 * The original algorithm uses unsigned bytes.
-         * We have to mask to match the behavior of the unsigned bytes and prevent sign extension.
-         */
+		 * We have to mask to match the behavior of the unsigned bytes and prevent sign extension.
+		 */
 		public final int end() {
 			int k1 = 0;
 			switch (tailLen) {
