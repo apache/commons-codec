@@ -18,8 +18,8 @@
 
 package org.apache.commons.codec.binary;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
@@ -118,6 +118,14 @@ public class Base32Test {
         {"foob"   ,"MZXW6YQ%"},
         {"fooba"  ,"MZXW6YTB"},
         {"foobar" ,"MZXW6YTBOI%%%%%%"},
+    };
+
+    private static final String[][] BASE32_LOOKALIKES = {
+            { "O0oOI1iI", "OOOOIIII" }
+    };
+
+    private static final String[][] BASE32_HEX_LOOKALIKES = {
+            { "O0oOI1iI", "OOOOIIII" }
     };
 
     @Test
@@ -297,4 +305,19 @@ public class Base32Test {
             }
         }
     }
+     @Test
+     public void testBase32Lookalikes() throws Exception {
+         final Base32 codec = new Base32(false, true);
+         for(String[] element : BASE32_LOOKALIKES)
+             assertArrayEquals(codec.decode(element[0]),
+                               codec.decode(element[1]));
+     }
+
+     @Test
+     public void testBase32HexLookalikes() throws Exception {
+         final Base32 codec = new Base32(false, true);
+         for(String[] element : BASE32_HEX_LOOKALIKES)
+             assertArrayEquals(codec.decode(element[0]),
+                               codec.decode(element[1]));
+     }
 }
