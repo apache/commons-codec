@@ -17,6 +17,8 @@
 
 package org.apache.commons.codec.digest;
 
+import java.nio.charset.StandardCharsets;
+
 /**
  * MurmurHash3 yields a 32-bit or 128-bit value.
  *
@@ -155,7 +157,7 @@ public final class MurmurHash3 {
 	 * @return 32 bit hash
 	 */
 	public static int hash32(final String data) {
-		final byte[] origin = data.getBytes();
+		final byte[] origin = data.getBytes(StandardCharsets.UTF_8);
 		return hash32(origin, 0, origin.length, DEFAULT_SEED);
 	}
 
@@ -207,6 +209,10 @@ public final class MurmurHash3 {
 		// tail
 		final int idx = nblocks << 2;
 		int k1 = 0;
+		/*
+         * The original algorithm uses unsigned bytes.
+         * We have to mask to match the behavior of the unsigned bytes and prevent sign extension.
+         */
 		switch (length - idx) {
     	case 3:
             k1 = (data[offset + idx + 2] & 0xff) << 16;
@@ -393,7 +399,7 @@ public final class MurmurHash3 {
 	 * @return - 128 bit hash (2 longs)
 	 */
 	public static long[] hash128(final String data) {
-		final byte[] origin = data.getBytes();
+		final byte[] origin = data.getBytes(StandardCharsets.UTF_8);
 		return hash128(origin, 0, origin.length, DEFAULT_SEED);
 	}
 
@@ -407,13 +413,11 @@ public final class MurmurHash3 {
 	 * @return - 128 bit hash (2 longs)
 	 */
 	public static long[] hash128(final byte[] data, final int offset, final int length, final int seed) {
-	 // The original algorithm does have a 32 bit unsigned seed.
+	    // The original algorithm does have a 32 bit unsigned seed.
 	    // We have to mask to match the behavior of the unsigned types and prevent sign extension.
 	    long h1 = seed & 0x00000000FFFFFFFFL;
 	    long h2 = seed & 0x00000000FFFFFFFFL;
-//
-//		long h1 = seed;
-//		long h2 = seed;
+
 		final int nblocks = length >> 4;
 
 		// body
@@ -607,6 +611,10 @@ public final class MurmurHash3 {
 			System.arraycopy(data, offset + consumed, tail, 0, tailLen);
 		}
 
+		/*
+		 * The original algorithm uses unsigned bytes.
+         * We have to mask to match the behavior of the unsigned bytes and prevent sign extension.
+         */
 		public final int end() {
 			int k1 = 0;
 			switch (tailLen) {
