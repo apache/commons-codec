@@ -64,6 +64,7 @@ public final class MurmurHash3 {
 	private static final int R2_32 = 13;
 	private static final int M_32 = 5;
 	private static final int N_32 = 0xe6546b64;
+	private static final int UBYTE_MASK = 0xff;
 
 	// Constants for 128 bit variant
 	private static final long C1 = 0x87c37b91114253d5L;
@@ -74,6 +75,7 @@ public final class MurmurHash3 {
 	private static final int M = 5;
 	private static final int N1 = 0x52dce729;
 	private static final int N2 = 0x38495ab5;
+	private static final long UINT_MASK = 0x00000000FFFFFFFFL;
 
 	public static final int DEFAULT_SEED = 104729;
 
@@ -215,13 +217,13 @@ public final class MurmurHash3 {
          */
 		switch (length - idx) {
     	case 3:
-            k1 = (data[offset + idx + 2] & 0xff) << 16;
+            k1 = (data[offset + idx + 2] & UBYTE_MASK) << 16;
             // fallthrough
         case 2:
-            k1 |= (data[offset + idx + 1] & 0xff) << 8;
+            k1 |= (data[offset + idx + 1] & UBYTE_MASK) << 8;
             // fallthrough
         case 1:
-            k1 |= (data[offset + idx] & 0xff);
+            k1 |= (data[offset + idx] & UBYTE_MASK);
             k1 *= C1_32;
             k1 = (k1 << 15) | (k1 >>> 17);  // ROTL32(k1,15);
             k1 *= C2_32;
@@ -296,8 +298,8 @@ public final class MurmurHash3 {
 	public static long hash64(final short data) {
 		long hash = DEFAULT_SEED;
 		long k1 = 0;
-		k1 ^= ((long) data & 0xff) << 8;
-		k1 ^= ((long) ((data & 0xFF00) >> 8) & 0xff);
+		k1 ^= ((long) data & UBYTE_MASK) << 8;
+		k1 ^= ((long) ((data & 0xFF00) >> 8) & UBYTE_MASK);
 		k1 *= C1;
 		k1 = Long.rotateLeft(k1, R1);
 		k1 *= C2;
@@ -338,10 +340,10 @@ public final class MurmurHash3 {
 		// body
 		for (int i = 0; i < nblocks; i++) {
 			final int i8 = i << 3;
-			long k = ((long) data[offset + i8] & 0xff) | (((long) data[offset + i8 + 1] & 0xff) << 8)
-					| (((long) data[offset + i8 + 2] & 0xff) << 16) | (((long) data[offset + i8 + 3] & 0xff) << 24)
-					| (((long) data[offset + i8 + 4] & 0xff) << 32) | (((long) data[offset + i8 + 5] & 0xff) << 40)
-					| (((long) data[offset + i8 + 6] & 0xff) << 48) | (((long) data[offset + i8 + 7] & 0xff) << 56);
+			long k = ((long) data[offset + i8] & UBYTE_MASK) | (((long) data[offset + i8 + 1] & UBYTE_MASK) << 8)
+					| (((long) data[offset + i8 + 2] & UBYTE_MASK) << 16) | (((long) data[offset + i8 + 3] & UBYTE_MASK) << 24)
+					| (((long) data[offset + i8 + 4] & UBYTE_MASK) << 32) | (((long) data[offset + i8 + 5] & UBYTE_MASK) << 40)
+					| (((long) data[offset + i8 + 6] & UBYTE_MASK) << 48) | (((long) data[offset + i8 + 7] & UBYTE_MASK) << 56);
 
 			// mix functions
 			k *= C1;
@@ -356,19 +358,19 @@ public final class MurmurHash3 {
 		final int tailStart = nblocks << 3;
 		switch (length - tailStart) {
 		case 7:
-			k1 ^= ((long) data[offset + tailStart + 6] & 0xff) << 48;
+			k1 ^= ((long) data[offset + tailStart + 6] & UBYTE_MASK) << 48;
 		case 6:
-			k1 ^= ((long) data[offset + tailStart + 5] & 0xff) << 40;
+			k1 ^= ((long) data[offset + tailStart + 5] & UBYTE_MASK) << 40;
 		case 5:
-			k1 ^= ((long) data[offset + tailStart + 4] & 0xff) << 32;
+			k1 ^= ((long) data[offset + tailStart + 4] & UBYTE_MASK) << 32;
 		case 4:
-			k1 ^= ((long) data[offset + tailStart + 3] & 0xff) << 24;
+			k1 ^= ((long) data[offset + tailStart + 3] & UBYTE_MASK) << 24;
 		case 3:
-			k1 ^= ((long) data[offset + tailStart + 2] & 0xff) << 16;
+			k1 ^= ((long) data[offset + tailStart + 2] & UBYTE_MASK) << 16;
 		case 2:
-			k1 ^= ((long) data[offset + tailStart + 1] & 0xff) << 8;
+			k1 ^= ((long) data[offset + tailStart + 1] & UBYTE_MASK) << 8;
 		case 1:
-			k1 ^= ((long) data[offset + tailStart] & 0xff);
+			k1 ^= ((long) data[offset + tailStart] & UBYTE_MASK);
 			k1 *= C1;
 			k1 = Long.rotateLeft(k1, R1);
 			k1 *= C2;
@@ -415,23 +417,23 @@ public final class MurmurHash3 {
 	public static long[] hash128(final byte[] data, final int offset, final int length, final int seed) {
 	    // The original algorithm does have a 32 bit unsigned seed.
 	    // We have to mask to match the behavior of the unsigned types and prevent sign extension.
-	    long h1 = seed & 0x00000000FFFFFFFFL;
-	    long h2 = seed & 0x00000000FFFFFFFFL;
+	    long h1 = seed & UINT_MASK;
+	    long h2 = seed & UINT_MASK;
 
 		final int nblocks = length >> 4;
 
 		// body
 		for (int i = 0; i < nblocks; i++) {
 			final int i16 = i << 4;
-			long k1 = ((long) data[offset + i16] & 0xff) | (((long) data[offset + i16 + 1] & 0xff) << 8)
-					| (((long) data[offset + i16 + 2] & 0xff) << 16) | (((long) data[offset + i16 + 3] & 0xff) << 24)
-					| (((long) data[offset + i16 + 4] & 0xff) << 32) | (((long) data[offset + i16 + 5] & 0xff) << 40)
-					| (((long) data[offset + i16 + 6] & 0xff) << 48) | (((long) data[offset + i16 + 7] & 0xff) << 56);
+			long k1 = ((long) data[offset + i16] & UBYTE_MASK) | (((long) data[offset + i16 + 1] & UBYTE_MASK) << 8)
+					| (((long) data[offset + i16 + 2] & UBYTE_MASK) << 16) | (((long) data[offset + i16 + 3] & UBYTE_MASK) << 24)
+					| (((long) data[offset + i16 + 4] & UBYTE_MASK) << 32) | (((long) data[offset + i16 + 5] & UBYTE_MASK) << 40)
+					| (((long) data[offset + i16 + 6] & UBYTE_MASK) << 48) | (((long) data[offset + i16 + 7] & UBYTE_MASK) << 56);
 
-			long k2 = ((long) data[offset + i16 + 8] & 0xff) | (((long) data[offset + i16 + 9] & 0xff) << 8)
-					| (((long) data[offset + i16 + 10] & 0xff) << 16) | (((long) data[offset + i16 + 11] & 0xff) << 24)
-					| (((long) data[offset + i16 + 12] & 0xff) << 32) | (((long) data[offset + i16 + 13] & 0xff) << 40)
-					| (((long) data[offset + i16 + 14] & 0xff) << 48) | (((long) data[offset + i16 + 15] & 0xff) << 56);
+			long k2 = ((long) data[offset + i16 + 8] & UBYTE_MASK) | (((long) data[offset + i16 + 9] & UBYTE_MASK) << 8)
+					| (((long) data[offset + i16 + 10] & UBYTE_MASK) << 16) | (((long) data[offset + i16 + 11] & UBYTE_MASK) << 24)
+					| (((long) data[offset + i16 + 12] & UBYTE_MASK) << 32) | (((long) data[offset + i16 + 13] & UBYTE_MASK) << 40)
+					| (((long) data[offset + i16 + 14] & UBYTE_MASK) << 48) | (((long) data[offset + i16 + 15] & UBYTE_MASK) << 56);
 
 			// mix functions for k1
 			k1 *= C1;
@@ -458,40 +460,40 @@ public final class MurmurHash3 {
 		final int tailStart = nblocks << 4;
 		switch (length - tailStart) {
 		case 15:
-			k2 ^= (long) (data[offset + tailStart + 14] & 0xff) << 48;
+			k2 ^= (long) (data[offset + tailStart + 14] & UBYTE_MASK) << 48;
 		case 14:
-			k2 ^= (long) (data[offset + tailStart + 13] & 0xff) << 40;
+			k2 ^= (long) (data[offset + tailStart + 13] & UBYTE_MASK) << 40;
 		case 13:
-			k2 ^= (long) (data[offset + tailStart + 12] & 0xff) << 32;
+			k2 ^= (long) (data[offset + tailStart + 12] & UBYTE_MASK) << 32;
 		case 12:
-			k2 ^= (long) (data[offset + tailStart + 11] & 0xff) << 24;
+			k2 ^= (long) (data[offset + tailStart + 11] & UBYTE_MASK) << 24;
 		case 11:
-			k2 ^= (long) (data[offset + tailStart + 10] & 0xff) << 16;
+			k2 ^= (long) (data[offset + tailStart + 10] & UBYTE_MASK) << 16;
 		case 10:
-			k2 ^= (long) (data[offset + tailStart + 9] & 0xff) << 8;
+			k2 ^= (long) (data[offset + tailStart + 9] & UBYTE_MASK) << 8;
 		case 9:
-			k2 ^= data[offset + tailStart + 8] & 0xff;
+			k2 ^= data[offset + tailStart + 8] & UBYTE_MASK;
 			k2 *= C2;
 			k2 = Long.rotateLeft(k2, R3);
 			k2 *= C1;
 			h2 ^= k2;
 
 		case 8:
-			k1 ^= (long) (data[offset + tailStart + 7] & 0xff) << 56;
+			k1 ^= (long) (data[offset + tailStart + 7] & UBYTE_MASK) << 56;
 		case 7:
-			k1 ^= (long) (data[offset + tailStart + 6] & 0xff) << 48;
+			k1 ^= (long) (data[offset + tailStart + 6] & UBYTE_MASK) << 48;
 		case 6:
-			k1 ^= (long) (data[offset + tailStart + 5] & 0xff) << 40;
+			k1 ^= (long) (data[offset + tailStart + 5] & UBYTE_MASK) << 40;
 		case 5:
-			k1 ^= (long) (data[offset + tailStart + 4] & 0xff) << 32;
+			k1 ^= (long) (data[offset + tailStart + 4] & UBYTE_MASK) << 32;
 		case 4:
-			k1 ^= (long) (data[offset + tailStart + 3] & 0xff) << 24;
+			k1 ^= (long) (data[offset + tailStart + 3] & UBYTE_MASK) << 24;
 		case 3:
-			k1 ^= (long) (data[offset + tailStart + 2] & 0xff) << 16;
+			k1 ^= (long) (data[offset + tailStart + 2] & UBYTE_MASK) << 16;
 		case 2:
-			k1 ^= (long) (data[offset + tailStart + 1] & 0xff) << 8;
+			k1 ^= (long) (data[offset + tailStart + 1] & UBYTE_MASK) << 8;
 		case 1:
-			k1 ^= data[offset + tailStart] & 0xff;
+			k1 ^= data[offset + tailStart] & UBYTE_MASK;
 			k1 *= C1;
 			k1 = Long.rotateLeft(k1, R1);
 			k1 *= C2;
@@ -619,11 +621,11 @@ public final class MurmurHash3 {
 			int k1 = 0;
 			switch (tailLen) {
 			case 3:
-				k1 ^= (tail[2] & 0xff) << 16;
+				k1 ^= (tail[2] & UBYTE_MASK) << 16;
 			case 2:
-				k1 ^= (tail[1] & 0xff) << 8;
+				k1 ^= (tail[1] & UBYTE_MASK) << 8;
 			case 1:
-				k1 ^= (tail[0] & 0xff);
+				k1 ^= (tail[0] & UBYTE_MASK);
 
 				// mix functions
 				k1 *= C1_32;
@@ -644,6 +646,6 @@ public final class MurmurHash3 {
 	}
 
 	private static int orBytes(final byte b1, final byte b2, final byte b3, final byte b4) {
-		return (b1 & 0xff) | ((b2 & 0xff) << 8) | ((b3 & 0xff) << 16) | ((b4 & 0xff) << 24);
+		return (b1 & UBYTE_MASK) | ((b2 & UBYTE_MASK) << 8) | ((b3 & UBYTE_MASK) << 16) | ((b4 & UBYTE_MASK) << 24);
 	}
 }
