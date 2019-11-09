@@ -41,6 +41,9 @@ The <action> type attribute can be add,update,fix,remove.
     <author>Apache Commons Developers</author>
   </properties>
   <body>
+  	<release version="1.14"  description="Feature and fix release.">
+      <action issue="CODEC-264" dev="claude" due-to="Claude Warren" type="fix">Fixed sign extensions in Murmur3 hashes</action>
+    </release>      
 
     <release version="1.13" date="2019-07-20" description="Feature and fix release.">
       <action issue="CODEC-255" dev="sebb" due-to="Holger Grote" type="fix">ColognePhonetic handles x incorrectly</action>      

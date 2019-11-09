@@ -705,7 +705,7 @@ public final class MurmurHash3 {
 
         return fmix32(LONG_BYTES, hash);
     }
-
+    
     /**
      * Generates 32 bit hash from two longs with default seed value.
      *
@@ -716,7 +716,7 @@ public final class MurmurHash3 {
     public static int hash32_x86(final long l0, final long l1) {
         return hash32_x86(l0, l1, DEFAULT_SEED);
     }
-
+    
     /**
      * Generates 32 bit hash from two longs with the given seed.
      *
