@@ -705,7 +705,7 @@ public final class MurmurHash3 {
 
         return fmix32(LONG_BYTES, hash);
     }
-    
+
     /**
      * Generates 32 bit hash from two longs with default seed value.
      *
@@ -716,7 +716,7 @@ public final class MurmurHash3 {
     public static int hash32_x86(final long l0, final long l1) {
         return hash32_x86(l0, l1, DEFAULT_SEED);
     }
-    
+
     /**
      * Generates 32 bit hash from two longs with the given seed.
      *
@@ -791,13 +791,13 @@ public final class MurmurHash3 {
      * @param seed   the  seed.
      * @return 32 bit hash
      */
-    public static int hash32_x86(byte[] data, int offset, int len, int seed) {
+    public static int hash32_x86(byte[] data, int offset, int length, int seed) {
 
         final int c1 = 0xcc9e2d51;
         final int c2 = 0x1b873593;
 
         int h1 = seed;
-        int roundedEnd = offset + (len & 0xfffffffc);  // round down to 4 byte block
+        int roundedEnd = offset + (length & 0xfffffffc);  // round down to 4 byte block
 
         for (int i=offset; i<roundedEnd; i+=4) {
             // little endian load order
@@ -814,7 +814,7 @@ public final class MurmurHash3 {
         // tail
         int k1 = 0;
 
-        switch(len & 0x03) {
+        switch(length & 0x03) {
         case 3:
             k1 = (data[roundedEnd + 2] & UBYTE_MASK) << 16;
             // fallthrough
@@ -830,7 +830,7 @@ public final class MurmurHash3 {
         }
 
         // finalization
-        h1 ^= len;
+        h1 ^= length;
 
         // fmix(h1);
         h1 ^= h1 >>> 16;
@@ -953,7 +953,7 @@ public final class MurmurHash3 {
     /**
      * Gets a long from a byte buffer in little endian byte order.
      * byte must be at least offset+7 bytes long.
-     * @param buff The buffer.
+     * @param buf The buffer.
      * @param offset the start of the long.
      * @return the 8 bytes as a little endian long.
      */
@@ -1026,7 +1026,7 @@ public final class MurmurHash3 {
      * @param seed   seed.
      * @return 128 bit hash (2 longs)
      */
-    public static long[] hash128_x64(byte[] key, int offset, int len, int seed) {
+    public static long[] hash128_x64(byte[] key, int offset, int length, int seed) {
         /* The original algorithm does have a 32 bit unsigned seed.
          We have to mask to match the behavior of the unsigned types and prevent sign extension.
          */
@@ -1036,7 +1036,7 @@ public final class MurmurHash3 {
         final long c1 = 0x87c37b91114253d5L;
         final long c2 = 0x4cf5ad432745937fL;
 
-        int roundedEnd = offset + (len & 0xfffffff0);  // round down to 16 byte block
+        int roundedEnd = offset + (length & 0xfffffff0);  // round down to 16 byte block
         for (int i=offset; i<roundedEnd; i+=16) {
             long k1 = getLongLittleEndian(key, i);
             long k2 = getLongLittleEndian(key, i+8);
@@ -1049,7 +1049,7 @@ public final class MurmurHash3 {
         long k1 = 0;
         long k2 = 0;
 
-        switch (len & 15) {
+        switch (length & 15) {
         case 15: k2  = (key[roundedEnd+14] & UBYTE_LONG_MASK) << 48;
         case 14: k2 |= (key[roundedEnd+13] & UBYTE_LONG_MASK) << 40;
         case 13: k2 |= (key[roundedEnd+12] & UBYTE_LONG_MASK) << 32;
@@ -1072,7 +1072,7 @@ public final class MurmurHash3 {
         //----------
         // finalization
 
-        h1 ^= len; h2 ^= len;
+        h1 ^= length; h2 ^= length;
 
         h1 += h2;
         h2 += h1;
