@@ -225,7 +225,7 @@ public class MurmurHash3Test {
         }
     }
 
-	@Test
+    @Test
     public void test32_x86_String() {
         // Arrange
         final String origin = TEST;
