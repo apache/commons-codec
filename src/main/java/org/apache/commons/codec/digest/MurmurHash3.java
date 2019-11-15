@@ -355,51 +355,51 @@ public final class MurmurHash3 {
         long hash = seed;
         final int nblocks = length >> 3;
 
-            // body
-            for (int i = 0; i < nblocks; i++) {
-                final int i8 = i << 3;
-                long k = ((long) data[offset + i8] & 0xff) | (((long) data[offset + i8 + 1] & 0xff) << 8)
-                        | (((long) data[offset + i8 + 2] & 0xff) << 16) | (((long) data[offset + i8 + 3] & 0xff) << 24)
-                        | (((long) data[offset + i8 + 4] & 0xff) << 32) | (((long) data[offset + i8 + 5] & 0xff) << 40)
-                        | (((long) data[offset + i8 + 6] & 0xff) << 48) | (((long) data[offset + i8 + 7] & 0xff) << 56);
+        // body
+        for (int i = 0; i < nblocks; i++) {
+            final int i8 = i << 3;
+            long k = ((long) data[offset + i8] & 0xff) | (((long) data[offset + i8 + 1] & 0xff) << 8)
+                    | (((long) data[offset + i8 + 2] & 0xff) << 16) | (((long) data[offset + i8 + 3] & 0xff) << 24)
+                    | (((long) data[offset + i8 + 4] & 0xff) << 32) | (((long) data[offset + i8 + 5] & 0xff) << 40)
+                    | (((long) data[offset + i8 + 6] & 0xff) << 48) | (((long) data[offset + i8 + 7] & 0xff) << 56);
 
-                // mix functions
-                k *= C1;
-                k = Long.rotateLeft(k, R1);
-                k *= C2;
-                hash ^= k;
-                hash = Long.rotateLeft(hash, R2) * M + N1;
-            }
+            // mix functions
+            k *= C1;
+            k = Long.rotateLeft(k, R1);
+            k *= C2;
+            hash ^= k;
+            hash = Long.rotateLeft(hash, R2) * M + N1;
+        }
 
-            // tail
-            long k1 = 0;
-            final int tailStart = nblocks << 3;
-            switch (length - tailStart) {
-            case 7:
-                k1 ^= ((long) data[offset + tailStart + 6] & 0xff) << 48;
-            case 6:
-                k1 ^= ((long) data[offset + tailStart + 5] & 0xff) << 40;
-            case 5:
-                k1 ^= ((long) data[offset + tailStart + 4] & 0xff) << 32;
-            case 4:
-                k1 ^= ((long) data[offset + tailStart + 3] & 0xff) << 24;
-            case 3:
-                k1 ^= ((long) data[offset + tailStart + 2] & 0xff) << 16;
-            case 2:
-                k1 ^= ((long) data[offset + tailStart + 1] & 0xff) << 8;
-            case 1:
-                k1 ^= ((long) data[offset + tailStart] & 0xff);
-                k1 *= C1;
-                k1 = Long.rotateLeft(k1, R1);
-                k1 *= C2;
-                hash ^= k1;
-            }
+        // tail
+        long k1 = 0;
+        final int tailStart = nblocks << 3;
+        switch (length - tailStart) {
+        case 7:
+            k1 ^= ((long) data[offset + tailStart + 6] & 0xff) << 48;
+        case 6:
+            k1 ^= ((long) data[offset + tailStart + 5] & 0xff) << 40;
+        case 5:
+            k1 ^= ((long) data[offset + tailStart + 4] & 0xff) << 32;
+        case 4:
+            k1 ^= ((long) data[offset + tailStart + 3] & 0xff) << 24;
+        case 3:
+            k1 ^= ((long) data[offset + tailStart + 2] & 0xff) << 16;
+        case 2:
+            k1 ^= ((long) data[offset + tailStart + 1] & 0xff) << 8;
+        case 1:
+            k1 ^= ((long) data[offset + tailStart] & 0xff);
+            k1 *= C1;
+            k1 = Long.rotateLeft(k1, R1);
+            k1 *= C2;
+            hash ^= k1;
+        }
 
-            // finalization
-            hash ^= length;
-            hash = fmix64(hash);
+        // finalization
+        hash ^= length;
+        hash = fmix64(hash);
 
-            return hash;
+        return hash;
     }
 
     /**
@@ -458,98 +458,98 @@ public final class MurmurHash3 {
         long h2 = seed;
         final int nblocks = length >> 4;
 
-                // body
-                for (int i = 0; i < nblocks; i++) {
-                    final int i16 = i << 4;
-                    long k1 = ((long) data[offset + i16] & 0xff) | (((long) data[offset + i16 + 1] & 0xff) << 8)
-                            | (((long) data[offset + i16 + 2] & 0xff) << 16) | (((long) data[offset + i16 + 3] & 0xff) << 24)
-                            | (((long) data[offset + i16 + 4] & 0xff) << 32) | (((long) data[offset + i16 + 5] & 0xff) << 40)
-                            | (((long) data[offset + i16 + 6] & 0xff) << 48) | (((long) data[offset + i16 + 7] & 0xff) << 56);
+        // body
+        for (int i = 0; i < nblocks; i++) {
+            final int i16 = i << 4;
+            long k1 = ((long) data[offset + i16] & 0xff) | (((long) data[offset + i16 + 1] & 0xff) << 8)
+                    | (((long) data[offset + i16 + 2] & 0xff) << 16) | (((long) data[offset + i16 + 3] & 0xff) << 24)
+                    | (((long) data[offset + i16 + 4] & 0xff) << 32) | (((long) data[offset + i16 + 5] & 0xff) << 40)
+                    | (((long) data[offset + i16 + 6] & 0xff) << 48) | (((long) data[offset + i16 + 7] & 0xff) << 56);
 
-                    long k2 = ((long) data[offset + i16 + 8] & 0xff) | (((long) data[offset + i16 + 9] & 0xff) << 8)
-                            | (((long) data[offset + i16 + 10] & 0xff) << 16) | (((long) data[offset + i16 + 11] & 0xff) << 24)
-                            | (((long) data[offset + i16 + 12] & 0xff) << 32) | (((long) data[offset + i16 + 13] & 0xff) << 40)
-                            | (((long) data[offset + i16 + 14] & 0xff) << 48) | (((long) data[offset + i16 + 15] & 0xff) << 56);
+            long k2 = ((long) data[offset + i16 + 8] & 0xff) | (((long) data[offset + i16 + 9] & 0xff) << 8)
+                    | (((long) data[offset + i16 + 10] & 0xff) << 16) | (((long) data[offset + i16 + 11] & 0xff) << 24)
+                    | (((long) data[offset + i16 + 12] & 0xff) << 32) | (((long) data[offset + i16 + 13] & 0xff) << 40)
+                    | (((long) data[offset + i16 + 14] & 0xff) << 48) | (((long) data[offset + i16 + 15] & 0xff) << 56);
 
-                    // mix functions for k1
-                    k1 *= C1;
-                    k1 = Long.rotateLeft(k1, R1);
-                    k1 *= C2;
-                    h1 ^= k1;
-                    h1 = Long.rotateLeft(h1, R2);
-                    h1 += h2;
-                    h1 = h1 * M + N1;
+            // mix functions for k1
+            k1 *= C1;
+            k1 = Long.rotateLeft(k1, R1);
+            k1 *= C2;
+            h1 ^= k1;
+            h1 = Long.rotateLeft(h1, R2);
+            h1 += h2;
+            h1 = h1 * M + N1;
 
-                    // mix functions for k2
-                    k2 *= C2;
-                    k2 = Long.rotateLeft(k2, R3);
-                    k2 *= C1;
-                    h2 ^= k2;
-                    h2 = Long.rotateLeft(h2, R1);
-                    h2 += h1;
-                    h2 = h2 * M + N2;
-                }
+            // mix functions for k2
+            k2 *= C2;
+            k2 = Long.rotateLeft(k2, R3);
+            k2 *= C1;
+            h2 ^= k2;
+            h2 = Long.rotateLeft(h2, R1);
+            h2 += h1;
+            h2 = h2 * M + N2;
+        }
 
-                // tail
-                long k1 = 0;
-                long k2 = 0;
-                final int tailStart = nblocks << 4;
-                switch (length - tailStart) {
-                case 15:
-                    k2 ^= (long) (data[offset + tailStart + 14] & 0xff) << 48;
-                case 14:
-                    k2 ^= (long) (data[offset + tailStart + 13] & 0xff) << 40;
-                case 13:
-                    k2 ^= (long) (data[offset + tailStart + 12] & 0xff) << 32;
-                case 12:
-                    k2 ^= (long) (data[offset + tailStart + 11] & 0xff) << 24;
-                case 11:
-                    k2 ^= (long) (data[offset + tailStart + 10] & 0xff) << 16;
-                case 10:
-                    k2 ^= (long) (data[offset + tailStart + 9] & 0xff) << 8;
-                case 9:
-                    k2 ^= data[offset + tailStart + 8] & 0xff;
-                    k2 *= C2;
-                    k2 = Long.rotateLeft(k2, R3);
-                    k2 *= C1;
-                    h2 ^= k2;
+        // tail
+        long k1 = 0;
+        long k2 = 0;
+        final int tailStart = nblocks << 4;
+        switch (length - tailStart) {
+        case 15:
+            k2 ^= (long) (data[offset + tailStart + 14] & 0xff) << 48;
+        case 14:
+            k2 ^= (long) (data[offset + tailStart + 13] & 0xff) << 40;
+        case 13:
+            k2 ^= (long) (data[offset + tailStart + 12] & 0xff) << 32;
+        case 12:
+            k2 ^= (long) (data[offset + tailStart + 11] & 0xff) << 24;
+        case 11:
+            k2 ^= (long) (data[offset + tailStart + 10] & 0xff) << 16;
+        case 10:
+            k2 ^= (long) (data[offset + tailStart + 9] & 0xff) << 8;
+        case 9:
+            k2 ^= data[offset + tailStart + 8] & 0xff;
+            k2 *= C2;
+            k2 = Long.rotateLeft(k2, R3);
+            k2 *= C1;
+            h2 ^= k2;
 
-                case 8:
-                    k1 ^= (long) (data[offset + tailStart + 7] & 0xff) << 56;
-                case 7:
-                    k1 ^= (long) (data[offset + tailStart + 6] & 0xff) << 48;
-                case 6:
-                    k1 ^= (long) (data[offset + tailStart + 5] & 0xff) << 40;
-                case 5:
-                    k1 ^= (long) (data[offset + tailStart + 4] & 0xff) << 32;
-                case 4:
-                    k1 ^= (long) (data[offset + tailStart + 3] & 0xff) << 24;
-                case 3:
-                    k1 ^= (long) (data[offset + tailStart + 2] & 0xff) << 16;
-                case 2:
-                    k1 ^= (long) (data[offset + tailStart + 1] & 0xff) << 8;
-                case 1:
-                    k1 ^= data[offset + tailStart] & 0xff;
-                    k1 *= C1;
-                    k1 = Long.rotateLeft(k1, R1);
-                    k1 *= C2;
-                    h1 ^= k1;
-                }
+        case 8:
+            k1 ^= (long) (data[offset + tailStart + 7] & 0xff) << 56;
+        case 7:
+            k1 ^= (long) (data[offset + tailStart + 6] & 0xff) << 48;
+        case 6:
+            k1 ^= (long) (data[offset + tailStart + 5] & 0xff) << 40;
+        case 5:
+            k1 ^= (long) (data[offset + tailStart + 4] & 0xff) << 32;
+        case 4:
+            k1 ^= (long) (data[offset + tailStart + 3] & 0xff) << 24;
+        case 3:
+            k1 ^= (long) (data[offset + tailStart + 2] & 0xff) << 16;
+        case 2:
+            k1 ^= (long) (data[offset + tailStart + 1] & 0xff) << 8;
+        case 1:
+            k1 ^= data[offset + tailStart] & 0xff;
+            k1 *= C1;
+            k1 = Long.rotateLeft(k1, R1);
+            k1 *= C2;
+            h1 ^= k1;
+        }
 
-                // finalization
-                h1 ^= length;
-                h2 ^= length;
+        // finalization
+        h1 ^= length;
+        h2 ^= length;
 
-                h1 += h2;
-                h2 += h1;
+        h1 += h2;
+        h2 += h1;
 
-                h1 = fmix64(h1);
-                h2 = fmix64(h2);
+        h1 = fmix64(h1);
+        h2 = fmix64(h2);
 
-                h1 += h2;
-                h2 += h1;
+        h1 += h2;
+        h2 += h1;
 
-                return new long[] { h1, h2 };
+        return new long[] { h1, h2 };
     }
 
     private static int mix32(int k, int hash) {
@@ -629,24 +629,24 @@ public final class MurmurHash3 {
             offset += offset2;
             final int nblocks = length2 >> 2;
 
-                    for (int i = 0; i < nblocks; i++) {
-                        final int i_4 = (i << 2) + offset;
-                        int k = orBytes(data[i_4], data[i_4 + 1], data[i_4 + 2], data[i_4 + 3]);
+            for (int i = 0; i < nblocks; i++) {
+                final int i_4 = (i << 2) + offset;
+                int k = orBytes(data[i_4], data[i_4 + 1], data[i_4 + 2], data[i_4 + 3]);
 
-                        // mix functions
-                        k *= C1_32;
-                        k = Integer.rotateLeft(k, R1_32);
-                        k *= C2_32;
-                        hash ^= k;
-                        hash = Integer.rotateLeft(hash, R2_32) * M_32 + N_32;
-                    }
+                // mix functions
+                k *= C1_32;
+                k = Integer.rotateLeft(k, R1_32);
+                k *= C2_32;
+                hash ^= k;
+                hash = Integer.rotateLeft(hash, R2_32) * M_32 + N_32;
+            }
 
-                    final int consumed = (nblocks << 2);
-                    tailLen = length2 - consumed;
-                    if (consumed == length2) {
-                        return;
-                    }
-                    System.arraycopy(data, offset + consumed, tail, 0, tailLen);
+            final int consumed = (nblocks << 2);
+            tailLen = length2 - consumed;
+            if (consumed == length2) {
+                return;
+            }
+            System.arraycopy(data, offset + consumed, tail, 0, tailLen);
         }
 
         public final int end() {
