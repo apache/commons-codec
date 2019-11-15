@@ -361,7 +361,7 @@ public class MurmurHash3Test {
     }
 
     @Test
-    public void testCorrectValues() throws Exception {
+    public void testCorrectValues_x64() throws Exception {
         byte[] bytes = "Now is the time for all good men to come to the aid of their country".getBytes("UTF-8");
         int hash=0;
         for (int i=0; i<bytes.length; i++) {
@@ -408,7 +408,7 @@ public class MurmurHash3Test {
       }
 
       @Test
-      public void testStringHash() {
+      public void testUTF8StringHash_x64() {
         doString("hello!");
         doString("ABCD");
         doString("\u0123");
