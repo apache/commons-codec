@@ -37,8 +37,11 @@ import java.nio.charset.StandardCharsets;
  * (https://code.google.com/p/smhasher/), "All MurmurHash versions are public
  * domain software, and the author disclaims all copyright to their code."
  *
- * Copied from Apache Hive:
+ * Original methods copied from Apache Hive:
  * https://github.com/apache/hive/blob/master/storage-api/src/java/org/apache/hive/common/util/Murmur3.java
+ *
+ * hash128_x64 and hash32_x86 and supporting methods based on code from Yonik Seeley:
+ * https://github.com/yonik/java_util
  *
  * @see <a href="https://en.wikipedia.org/wiki/MurmurHash">MurmurHash</a>
  * @since 1.13
@@ -704,7 +707,7 @@ public final class MurmurHash3 {
 
         return fmix32(LONG_BYTES, hash);
     }
-    
+
     /**
      * Generates 32 bit hash from two longs with default seed value.
      *
@@ -715,7 +718,7 @@ public final class MurmurHash3 {
     public static int hash32_x86(final long l0, final long l1) {
         return hash32_x86(l0, l1, DEFAULT_SEED);
     }
-    
+
     /**
      * Generates 32 bit hash from two longs with the given seed.
      *
@@ -742,6 +745,7 @@ public final class MurmurHash3 {
      *
      * @param data input byte array
      * @return 32 bit hash
+     * @since 1.14
      */
     public static int hash32_x86(final byte[] data) {
         return hash32_x86(data, 0, data.length, DEFAULT_SEED);
@@ -752,6 +756,7 @@ public final class MurmurHash3 {
      *
      * @param data input string
      * @return 32 bit hash
+     * @since 1.14
      */
     public static int hash32_x86(final String data) {
         return hash32_x86(data, 0, data.length(), DEFAULT_SEED);
@@ -763,6 +768,7 @@ public final class MurmurHash3 {
      * @param data   input byte array
      * @param length length of array
      * @return 32 bit hash
+     * @since 1.14
      */
     public static int hash32_x86(final byte[] data, final int length) {
         return hash32_x86(data, length, DEFAULT_SEED);
@@ -775,6 +781,7 @@ public final class MurmurHash3 {
      * @param length length of array
      * @param seed   seed. (default 0)
      * @return 32 bit hash
+     * @since 1.14
      */
     public static int hash32_x86(final byte[] data, final int length, final int seed) {
         return hash32_x86(data, 0, length, seed);
@@ -789,6 +796,7 @@ public final class MurmurHash3 {
      * @param length length of array
      * @param seed   the  seed.
      * @return 32 bit hash
+     * @since 1.14
      */
     public static int hash32_x86(byte[] data, int offset, int length, int seed) {
 
@@ -851,6 +859,7 @@ public final class MurmurHash3 {
      * @param len the number of characters to hash.
      * @param seed the seed.
      * @return 32 bit hash
+     * @since 1.14
      */
     public static int hash32_x86(CharSequence data, int offset, int len, int seed) {
 
@@ -955,6 +964,7 @@ public final class MurmurHash3 {
      * @param buf The buffer.
      * @param offset the start of the long.
      * @return the 8 bytes as a little endian long.
+     * @since 1.14
      */
     public static final long getLongLittleEndian(byte[] buf, int offset) {
         return     ((long)buf[offset+7]    << 56)   // no mask needed
@@ -973,6 +983,7 @@ public final class MurmurHash3 {
      * uses DEFAULT_SEED
      * @param data - input byte array
      * @return - 128 bit hash (2 longs)
+     * @since 1.14
      */
     public static long[] hash128_x64(final byte[] data) {
         return hash128_x64(data, DEFAULT_SEED);
@@ -984,6 +995,7 @@ public final class MurmurHash3 {
      * @param data input byte array
      * @param seed the seed
      * @return 128 bit hash (2 longs)
+     * @since 1.14
      */
     public static long[] hash128_x64(final byte[] data, int seed) {
         return hash128_x64(data, 0, data.length, seed);
@@ -997,6 +1009,7 @@ public final class MurmurHash3 {
      *
      * @param data input string.
      * @return 128 bit hash (2 longs)
+     * @since 1.14
      */
     public static long[] hash128_x64(final String data) {
         return hash128_x64(data, DEFAULT_SEED);
@@ -1010,6 +1023,7 @@ public final class MurmurHash3 {
      * @param data Input string.
      * @param seed The seed.
      * @return 128 bit hash (2 longs)
+     * @since 1.14
      */
     public static long[] hash128_x64(final String data, int seed) {
         final byte[] origin = data.getBytes(StandardCharsets.UTF_8);
@@ -1024,6 +1038,7 @@ public final class MurmurHash3 {
      * @param length length of array
      * @param seed   seed.
      * @return 128 bit hash (2 longs)
+     * @since 1.14
      */
     public static long[] hash128_x64(byte[] key, int offset, int length, int seed) {
         /* The original algorithm does have a 32 bit unsigned seed.
