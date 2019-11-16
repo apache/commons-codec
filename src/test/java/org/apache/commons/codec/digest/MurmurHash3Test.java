@@ -25,6 +25,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 import org.apache.commons.codec.digest.MurmurHash3.IncrementalHash32;
+import org.apache.commons.codec.digest.MurmurHash3.IncrementalHash32_x86;
 import org.junit.Test;
 
 public class MurmurHash3Test {
@@ -163,6 +164,28 @@ public class MurmurHash3Test {
         new Random(seed).nextBytes(bytes);
         final int expected = MurmurHash3.hash32(bytes, arraySize);
         final MurmurHash3.IncrementalHash32 same = new IncrementalHash32(), diff = new IncrementalHash32();
+        for (int blockSize = 1; blockSize <= arraySize; ++blockSize) {
+            final byte[] block = new byte[blockSize];
+            same.start(MurmurHash3.DEFAULT_SEED);
+            diff.start(MurmurHash3.DEFAULT_SEED);
+            for (int offset = 0; offset < arraySize; offset += blockSize) {
+                final int length = Math.min(arraySize - offset, blockSize);
+                same.add(bytes, offset, length);
+                System.arraycopy(bytes, offset, block, 0, length);
+                diff.add(block, 0, length);
+            }
+            assertEquals("Block size " + blockSize, expected, same.end());
+            assertEquals("Block size " + blockSize, expected, diff.end());
+        }
+    }
+
+    @Test
+    public void testIncremental_x86() {
+        final int seed = 123, arraySize = 1023;
+        final byte[] bytes = new byte[arraySize];
+        new Random(seed).nextBytes(bytes);
+        final int expected = MurmurHash3.hash32_x86(bytes, arraySize);
+        final MurmurHash3.IncrementalHash32_x86 same = new IncrementalHash32_x86(), diff = new IncrementalHash32_x86();
         for (int blockSize = 1; blockSize <= arraySize; ++blockSize) {
             final byte[] block = new byte[blockSize];
             same.start(MurmurHash3.DEFAULT_SEED);
