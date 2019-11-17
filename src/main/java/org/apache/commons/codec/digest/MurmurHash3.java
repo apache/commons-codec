@@ -587,75 +587,9 @@ public final class MurmurHash3 {
      * @deprecated use IncrementalHash32_x86
      */
     @Deprecated
-    public static class IncrementalHash32 {
-        byte[] tail = new byte[3];
-        int tailLen;
-        int totalLen;
-        int hash;
+    public static class IncrementalHash32 extends IncrementalHash32x86{
 
-        public final void start(final int hash) {
-            tailLen = totalLen = 0;
-            this.hash = hash;
-        }
-
-        public final void add(final byte[] data, int offset, final int length) {
-            if (length == 0) {
-                return;
-            }
-            totalLen += length;
-            if (tailLen + length < 4) {
-                System.arraycopy(data, offset, tail, tailLen, length);
-                tailLen += length;
-                return;
-            }
-            int offset2 = 0;
-            if (tailLen > 0) {
-                offset2 = (4 - tailLen);
-                int k = -1;
-                switch (tailLen) {
-                case 1:
-                    k = orBytes(tail[0], data[offset], data[offset + 1], data[offset + 2]);
-                    break;
-                case 2:
-                    k = orBytes(tail[0], tail[1], data[offset], data[offset + 1]);
-                    break;
-                case 3:
-                    k = orBytes(tail[0], tail[1], tail[2], data[offset]);
-                    break;
-                default:
-                    throw new AssertionError(tailLen);
-                }
-                // mix functions
-                k *= C1_32;
-                k = Integer.rotateLeft(k, R1_32);
-                k *= C2_32;
-                hash ^= k;
-                hash = Integer.rotateLeft(hash, R2_32) * M_32 + N_32;
-            }
-            final int length2 = length - offset2;
-            offset += offset2;
-            final int nblocks = length2 >> 2;
-
-            for (int i = 0; i < nblocks; i++) {
-                final int i_4 = (i << 2) + offset;
-                int k = orBytes(data[i_4], data[i_4 + 1], data[i_4 + 2], data[i_4 + 3]);
-
-                // mix functions
-                k *= C1_32;
-                k = Integer.rotateLeft(k, R1_32);
-                k *= C2_32;
-                hash ^= k;
-                hash = Integer.rotateLeft(hash, R2_32) * M_32 + N_32;
-            }
-
-            final int consumed = (nblocks << 2);
-            tailLen = length2 - consumed;
-            if (consumed == length2) {
-                return;
-            }
-            System.arraycopy(data, offset + consumed, tail, 0, tailLen);
-        }
-
+        @Override
         public final int end() {
             int k1 = 0;
             switch (tailLen) {
@@ -753,7 +687,7 @@ public final class MurmurHash3 {
             System.arraycopy(data, offset + consumed, tail, 0, tailLen);
         }
 
-        public final int end() {
+        public int end() {
             int k1 = 0;
             switch (tailLen) {
             case 3:
