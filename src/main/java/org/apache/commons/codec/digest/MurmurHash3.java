@@ -554,7 +554,7 @@ public final class MurmurHash3 {
      *
      * <pre>
      * int seed = 104729;
-     * long hash = hash64(data, offset, length, seed);
+     * long hash = MurmurHash3.hash64(data, offset, length, seed);
      * <pre>
      *
      * @param data The input byte array
@@ -645,8 +645,9 @@ public final class MurmurHash3 {
      * This is a helper method that will produce the same result as:
      *
      * <pre>
+     * int offset = 0;
      * int seed = 104729;
-     * int hash = hash128(data, 0, data.length, seed);
+     * int hash = MurmurHash3.hash128(data, offset, data.length, seed);
      * </pre>
      *
      * <p>Note: The sign extension bug in {@link #hash128(byte[], int, int, int)} does not effect
@@ -661,6 +662,24 @@ public final class MurmurHash3 {
     }
 
     /**
+     * Generates 128-bit hash from the byte array with a seed of zero.
+     * This is a helper method that will produce the same result as:
+     *
+     * <pre>
+     * int offset = 0;
+     * int seed = 0;
+     * int hash = MurmurHash3.hash128x64(data, offset, data.length, 0);
+     * </pre>
+     *
+     * @param data The input byte array
+     * @return The 128-bit hash (2 longs)
+     * @see #hash128x64(byte[], int, int, int)
+     */
+    public static long[] hash128x64(final byte[] data) {
+        return hash128x64(data, 0, data.length, 0);
+    }
+
+    /**
      * Generates 128-bit hash from a string with a default seed.
      * The string is converted to bytes using the default encoding.
      * This is a helper method that will produce the same result as:
@@ -668,7 +687,7 @@ public final class MurmurHash3 {
      * <pre>
      * int seed = 104729;
      * byte[] bytes = data.getBytes();
-     * int hash = hash128(bytes, 0, bytes.length, seed);
+     * int hash = MurmurHash3.hash128(bytes, 0, bytes.length, seed);
      * </pre>
      *
      * <p>Note: The sign extension bug in {@link #hash128(byte[], int, int, int)} does not effect
@@ -697,11 +716,46 @@ public final class MurmurHash3 {
      * @param length The length of array
      * @param seed The initial seed value
      * @return The 128-bit hash (2 longs)
+     * @deprecated Use {@link #hash128x64(byte[], int, int, int)}. This corrects the seed initialisation.
      */
+    @Deprecated
     public static long[] hash128(final byte[] data, final int offset, final int length, final int seed) {
         // ************
         // Note: This fails to apply masking using 0xffffffffL to the seed.
         // ************
+        return hash128x64(data, offset, length, seed);
+    }
+
+    /**
+     * Generates 128-bit hash from the byte array with the given offset, length and seed.
+     *
+     * <p>This is an implementation of the 128-bit hash function {@code MurmurHash3_x64_128}
+     * from from Austin Applyby's original MurmurHash3 {@code c++} code in SMHasher.</p>
+     *
+     * @param data The input byte array
+     * @param offset The first element of array
+     * @param length The length of array
+     * @param seed The initial seed value
+     * @return The 128-bit hash (2 longs)
+     */
+    public static long[] hash128x64(final byte[] data, final int offset, final int length, final int seed) {
+        // Use an unsigned 32-bit integer as the seed
+        return hash128x64(data, offset, length, seed & 0xffffffffL);
+    }
+
+    /**
+     * Generates 128-bit hash from the byte array with the given offset, length and seed.
+     *
+     * <p>This is an implementation of the 128-bit hash function {@code MurmurHash3_x64_128}
+     * from from Austin Applyby's original MurmurHash3 {@code c++} code in SMHasher.</p>
+     *
+     * @param data The input byte array
+     * @param offset The first element of array
+     * @param length The length of array
+     * @param seed The initial seed value
+     * @return The 128-bit hash (2 longs)
+     */
+    private static long[] hash128x64(final byte[] data, final int offset, final int length, final long seed) {
         long h1 = seed;
         long h2 = seed;
         final int nblocks = length >> 4;

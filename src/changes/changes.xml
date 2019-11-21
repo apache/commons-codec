@@ -43,6 +43,7 @@ The <action> type attribute can be add,update,fix,remove.
   <body>
 
     <release version="1.14" date="TBD" description="Feature and fix release.">
+      <action issue="CODEC-264" dev="aherbert" due-to="Claude Warren" type="add">Add MurmurHash3.hash128x64 methods to fix sign extension error during seeding in hash128 methods.</action>
       <action issue="CODEC-267" dev="aherbert" due-to="Claude Warren" type="add">Add MurmurHash3.hash32x86 methods and IncrementalHash32x86 to fix sign extension error in hash32 methods.</action>
       <action issue="CODEC-269" dev="aherbert" type="fix">Allow repeat calls to MurmurHash3.IncrementalHash32.end() to generate the same value.</action>
     </release>
