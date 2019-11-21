@@ -597,6 +597,7 @@ public class MurmurHash3Test {
             offset += block;
             final int h2 = inc.end();
             Assert.assertEquals("Hashes differ", h1, h2);
+            Assert.assertEquals("Hashes differ after no additional data", h1, inc.end());
         }
     }
 }

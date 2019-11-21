@@ -923,6 +923,8 @@ public final class MurmurHash3 {
          * @return The 32-bit hash
          */
         public final int end() {
+            // Allow calling end() again after adding no data to return the same result.
+            int result = hash;
             // ************
             // Note: This fails to apply masking using 0xff to the 3 remaining bytes.
             // ************
@@ -939,12 +941,12 @@ public final class MurmurHash3 {
                 k1 *= C1_32;
                 k1 = Integer.rotateLeft(k1, R1_32);
                 k1 *= C2_32;
-                hash ^= k1;
+                result ^= k1;
             }
 
             // finalization
-            hash ^= totalLen;
-            return fmix32(hash);
+            result ^= totalLen;
+            return fmix32(result);
         }
 
         /**
