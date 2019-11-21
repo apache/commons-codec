@@ -438,7 +438,7 @@ public final class MurmurHash3 {
      * long hash = MurmurHash3.hash64(ByteBuffer.allocate(8)
      *                                          .putLong(data)
      *                                          .array(), offset, 8, seed);
-     * <pre>
+     * </pre>
      *
      * @param data The long to hash
      * @return The 64-bit hash
@@ -475,7 +475,7 @@ public final class MurmurHash3 {
      * long hash = MurmurHash3.hash64(ByteBuffer.allocate(4)
      *                                          .putInt(data)
      *                                          .array(), offset, 4, seed);
-     * <pre>
+     * </pre>
      *
      * @param data The int to hash
      * @return The 64-bit hash
@@ -510,7 +510,7 @@ public final class MurmurHash3 {
      * long hash = MurmurHash3.hash64(ByteBuffer.allocate(2)
      *                                          .putShort(data)
      *                                          .array(), offset, 2, seed);
-     * <pre>
+     * </pre>
      *
      * @param data The short to hash
      * @return The 64-bit hash
@@ -545,7 +545,7 @@ public final class MurmurHash3 {
      * int offset = 0;
      * int seed = 104729;
      * long hash = MurmurHash3.hash64(data, offset, data.length, seed);
-     * <pre>
+     * </pre>
      *
      * @param data The input byte array
      * @return The 64-bit hash
@@ -567,7 +567,7 @@ public final class MurmurHash3 {
      * <pre>
      * int seed = 104729;
      * long hash = MurmurHash3.hash64(data, offset, length, seed);
-     * <pre>
+     * </pre>
      *
      * @param data The input byte array
      * @param offset The offset of data
@@ -590,7 +590,7 @@ public final class MurmurHash3 {
      * of data processed in the MurmurHash3 {@code MurmurHash3_x64_128} method. However the hash
      * is not mixed with a hash chunk from the next 8 bytes of data. The method will not return
      * the same value as the first or second 64-bits of the function
-     * {@link #hash128(byte[], int, int, int)}.<p>
+     * {@link #hash128(byte[], int, int, int)}.</p>
      *
      * <p>Use of this method is not advised. Use the first long returned from
      * {@link #hash128x64(byte[], int, int, int)}.<p>
