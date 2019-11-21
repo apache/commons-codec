@@ -436,8 +436,8 @@ public final class MurmurHash3 {
      * int offset = 0;
      * int seed = 104729;
      * long hash = MurmurHash3.hash64(ByteBuffer.allocate(8)
-     *                              .putLong(data)
-     *                              .array(), offset, 8, seed);
+     *                                          .putLong(data)
+     *                                          .array(), offset, 8, seed);
      * <pre>
      *
      * @param data The long to hash
