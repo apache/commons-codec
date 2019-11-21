@@ -93,15 +93,19 @@ public class MurmurHash3Test {
      */
     @Test
     public void testHash32LongLong() {
+        // As described in the javadoc
+        final int offset = 0;
+        final int seed = 104729;
+
         final int length = MurmurHash3.LONG_BYTES * 2;
         final ByteBuffer buffer = ByteBuffer.allocate(length);
+        final byte[] bytes = buffer.array();
         final long[] data = createLongTestData();
-        final int seed = MurmurHash3.DEFAULT_SEED;
         for (final long i : data) {
             for (final long j : data) {
                 buffer.putLong(0, i);
                 buffer.putLong(MurmurHash3.LONG_BYTES, j);
-                Assert.assertEquals(MurmurHash3.hash32(buffer.array(), length, seed), MurmurHash3.hash32(i, j));
+                Assert.assertEquals(MurmurHash3.hash32(bytes, offset, length, seed), MurmurHash3.hash32(i, j));
             }
         }
     }
@@ -111,15 +115,19 @@ public class MurmurHash3Test {
      */
     @Test
     public void testHash32LongLongSeed() {
+        // As described in the javadoc
+        final int offset = 0;
+        final int seed = 104729;
+
         final int length = MurmurHash3.LONG_BYTES * 2;
         final ByteBuffer buffer = ByteBuffer.allocate(length);
+        final byte[] bytes = buffer.array();
         final long[] data = createLongTestData();
-        final int seed = ThreadLocalRandom.current().nextInt();
         for (final long i : data) {
             for (final long j : data) {
                 buffer.putLong(0, i);
                 buffer.putLong(MurmurHash3.LONG_BYTES, j);
-                Assert.assertEquals(MurmurHash3.hash32(buffer.array(), length, seed), MurmurHash3.hash32(i, j, seed));
+                Assert.assertEquals(MurmurHash3.hash32(bytes, offset, length, seed), MurmurHash3.hash32(i, j, seed));
             }
         }
     }
@@ -129,13 +137,17 @@ public class MurmurHash3Test {
      */
     @Test
     public void testHash32Long() {
+        // As described in the javadoc
+        final int offset = 0;
+        final int seed = 104729;
+
         final int length = MurmurHash3.LONG_BYTES;
         final ByteBuffer buffer = ByteBuffer.allocate(length);
+        final byte[] bytes = buffer.array();
         final long[] data = createLongTestData();
-        final int seed = MurmurHash3.DEFAULT_SEED;
         for (final long i : data) {
             buffer.putLong(0, i);
-            Assert.assertEquals(MurmurHash3.hash32(buffer.array(), length, seed), MurmurHash3.hash32(i));
+            Assert.assertEquals(MurmurHash3.hash32(bytes, offset, length, seed), MurmurHash3.hash32(i));
         }
     }
 
@@ -144,13 +156,17 @@ public class MurmurHash3Test {
      */
     @Test
     public void testHash32LongSeed() {
+        // As described in the javadoc
+        final int offset = 0;
+        final int seed = 104729;
+
         final int length = MurmurHash3.LONG_BYTES;
         final ByteBuffer buffer = ByteBuffer.allocate(length);
+        final byte[] bytes = buffer.array();
         final long[] data = createLongTestData();
-        final int seed = ThreadLocalRandom.current().nextInt();
         for (final long i : data) {
             buffer.putLong(0, i);
-            Assert.assertEquals(MurmurHash3.hash32(buffer.array(), length, seed), MurmurHash3.hash32(i, seed));
+            Assert.assertEquals(MurmurHash3.hash32(bytes, offset, length, seed), MurmurHash3.hash32(i, seed));
         }
     }
 
@@ -465,6 +481,10 @@ public class MurmurHash3Test {
      */
     @Test
     public void testHash64WithPrimitives() {
+        // As described in the javadoc
+        final int offset = 0;
+        final int seed = 104729;
+
         final int iters = 1000;
         final ByteBuffer shortBuffer = ByteBuffer.allocate(MurmurHash3.SHORT_BYTES);
         final ByteBuffer intBuffer = ByteBuffer.allocate(MurmurHash3.INTEGER_BYTES);
@@ -478,11 +498,11 @@ public class MurmurHash3Test {
             final int in = (int) (ln >>> 3);
             final short sn = (short) (ln >>> 5);
             shortBuffer.putShort(0, sn);
-            Assert.assertEquals(MurmurHash3.hash64(shortBytes), MurmurHash3.hash64(sn));
+            Assert.assertEquals(MurmurHash3.hash64(shortBytes, offset, shortBytes.length, seed), MurmurHash3.hash64(sn));
             intBuffer.putInt(0, in);
-            Assert.assertEquals(MurmurHash3.hash64(intBytes), MurmurHash3.hash64(in));
+            Assert.assertEquals(MurmurHash3.hash64(intBytes, offset, intBytes.length, seed), MurmurHash3.hash64(in));
             longBuffer.putLong(0, ln);
-            Assert.assertEquals(MurmurHash3.hash64(longBytes), MurmurHash3.hash64(ln));
+            Assert.assertEquals(MurmurHash3.hash64(longBytes, offset, longBytes.length, seed), MurmurHash3.hash64(ln));
         }
     }
 
