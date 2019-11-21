@@ -24,6 +24,7 @@ import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.apache.commons.codec.digest.MurmurHash3.IncrementalHash32;
+import org.apache.commons.codec.digest.MurmurHash3.IncrementalHash32x86;
 import org.junit.Test;
 
 /**
@@ -349,7 +350,7 @@ public class MurmurHash3Test {
      * if the final 1, 2, or 3 bytes are negative.
      */
     @Test
-    public void testHash32With1TrailingSignedByteIsInvalid() {
+    public void testHash32WithTrailingNegativeSignedBytesIsInvalid() {
         // import mmh3
         // import numpy as np
         // mmh3.hash(np.uint8([-1]))
@@ -364,6 +365,71 @@ public class MurmurHash3Test {
         Assert.assertNotEquals(-1309567588, MurmurHash3.hash32(new byte[] {-1, 0}, 0, 2, 0));
         Assert.assertNotEquals(-363779670, MurmurHash3.hash32(new byte[] {-1, 0, 0}, 0, 3, 0));
         Assert.assertNotEquals(-225068062, MurmurHash3.hash32(new byte[] {0, -1, 0}, 0, 3, 0));
+    }
+
+    /**
+     * Test the {@link MurmurHash3#hash32x86(byte[])} algorithm.
+     *
+     * <p>Reference data is taken from the Python library {@code mmh3}.</p>
+     *
+     * @see <a href="https://pypi.org/project/mmh3/">mmh3</a>
+     */
+    @Test
+    public void testhash32x86() {
+        // Note: Default seed is zero.
+
+        // mmh3.hash(bytes, 0)
+        Assert.assertEquals(1546271276, MurmurHash3.hash32x86(RANDOM_BYTES));
+
+        // Test with all sizes up to 31 bytes. This ensures a full round of 16-bytes plus up to
+        // 15 bytes remaining.
+        // for x in range(0, 32):
+        //   print(mmh3.hash(bytes[:x], 0), ',')
+        final int[] answers = {0, -1353253853, 915381745, -734983419, 1271125654, -1042265893, -1204521619, 735845843,
+            138310876, -1918938664, 1399647898, -1126342309, 2067593280, 1220975287, 1941281084, -1289513180, 942412060,
+            -618173583, -269546647, -1645631262, 1162379906, -1960125577, -1856773195, 1980513522, 1174612855,
+            905810751, 1044578220, -1758486689, -491393913, 839836946, -435014415, 2044851178,};
+        for (int i = 0; i < answers.length; i++) {
+            final byte[] bytes = Arrays.copyOf(RANDOM_BYTES, i);
+            Assert.assertEquals(answers[i], MurmurHash3.hash32x86(bytes));
+        }
+    }
+
+    /**
+     * Test the {@link MurmurHash3#hash32x86(byte[], int, int, int)} algorithm.
+     *
+     * <p>Reference data is taken from the Python library {@code mmh3}.</p>
+     *
+     * @see <a href="https://pypi.org/project/mmh3/">mmh3</a>
+     */
+    @Test
+    public void testHash32x86WithOffsetLengthAndSeed() {
+        // Data as above for testing MurmurHash3.hash32(byte[], int, int, int).
+        final int seed = -42;
+        final int offset = 13;
+        final int[] answers = {192929823, -27171978, -1282326280, -816314453, -1176217753, -1904531247, 1962794233,
+            -1302316624, -1151850323, -1464386748, -369299427, 972232488, 1747314487, 2137398916, 690986564,
+            -1985866226, -678669121, -2123325690, -253319081, 46181235, 656058278, 1401175653, 1750113912, -1567219725,
+            2032742772, -2024269989, -305340794, 1161737942, -661265418, 172838872, -650122718, -1934812417,};
+        for (int i = 0; i < answers.length; i++) {
+            Assert.assertEquals(answers[i], MurmurHash3.hash32x86(RANDOM_BYTES, offset, i, seed));
+        }
+    }
+
+    /**
+     * Test to demonstrate {@link MurmurHash3#hash32x86(byte[], int, int, int)} is OK
+     * if the final 1, 2, or 3 bytes are negative.
+     */
+    @Test
+    public void testHash32x86WithTrailingNegativeSignedBytes() {
+        // Data as above for testing MurmurHash3.hash32(byte[], int, int, int).
+        // This test uses assertEquals().
+        Assert.assertEquals(-43192051, MurmurHash3.hash32x86(new byte[] {-1}, 0, 1, 0));
+        Assert.assertEquals(-582037868, MurmurHash3.hash32x86(new byte[] {0, -1}, 0, 2, 0));
+        Assert.assertEquals(922088087, MurmurHash3.hash32x86(new byte[] {0, 0, -1}, 0, 3, 0));
+        Assert.assertEquals(-1309567588, MurmurHash3.hash32x86(new byte[] {-1, 0}, 0, 2, 0));
+        Assert.assertEquals(-363779670, MurmurHash3.hash32x86(new byte[] {-1, 0, 0}, 0, 3, 0));
+        Assert.assertEquals(-225068062, MurmurHash3.hash32x86(new byte[] {0, -1, 0}, 0, 3, 0));
     }
 
     /**
@@ -593,6 +659,60 @@ public class MurmurHash3Test {
         for (final int block : blocks) {
             total += block;
             final int h1 = MurmurHash3.hash32(bytes, 0, total, seed);
+            inc.add(bytes, offset, block);
+            offset += block;
+            final int h2 = inc.end();
+            Assert.assertEquals("Hashes differ", h1, h2);
+            Assert.assertEquals("Hashes differ after no additional data", h1, inc.end());
+        }
+    }
+
+    /**
+     * Test {@link IncrementalHash32x86} returns the same values as
+     * {@link MurmurHash3#hash32x86(byte[], int, int, int)}.
+     */
+    @Test
+    public void testIncrementalHash32x86() {
+        final byte[] bytes = new byte[1023];
+        ThreadLocalRandom.current().nextBytes(bytes);
+        // The seed does not matter
+        for (final int seed : new int[] {-567, 0, 6787990}) {
+            // Cases are constructed to hit all edge cases of processing:
+            // Nothing added
+            assertIncrementalHash32x86(bytes, seed, 0, 0);
+            // Add single bytes
+            assertIncrementalHash32x86(bytes, seed, 1, 1, 1, 1, 1, 1, 1, 1);
+            // Leading unprocessed 1, 2, 3
+            assertIncrementalHash32x86(bytes, seed, 1, 4);
+            assertIncrementalHash32x86(bytes, seed, 2, 4);
+            assertIncrementalHash32x86(bytes, seed, 3, 4);
+            // Trailing unprocessed 1, 2, 3
+            assertIncrementalHash32x86(bytes, seed, 4, 1);
+            assertIncrementalHash32x86(bytes, seed, 4, 2);
+            assertIncrementalHash32x86(bytes, seed, 4, 3);
+            // Complete blocks
+            assertIncrementalHash32x86(bytes, seed, 4, 16, 64);
+        }
+    }
+
+    /**
+     * Assert {@link IncrementalHash32x86} returns the same values as
+     * {@link MurmurHash3#hash32x86(byte[], int, int, int)}.
+     *
+     * <p>The bytes are added to the incremental hash in the given blocks.</p>
+     *
+     * @param bytes the bytes
+     * @param seed the seed
+     * @param blocks the blocks
+     */
+    private static void assertIncrementalHash32x86(byte[] bytes, int seed, int... blocks) {
+        int offset = 0;
+        int total = 0;
+        final IncrementalHash32x86 inc = new IncrementalHash32x86();
+        inc.start(seed);
+        for (final int block : blocks) {
+            total += block;
+            final int h1 = MurmurHash3.hash32x86(bytes, 0, total, seed);
             inc.add(bytes, offset, block);
             offset += block;
             final int h2 = inc.end();

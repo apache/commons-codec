@@ -217,7 +217,9 @@ public final class MurmurHash3 {
      * @param data The input byte array
      * @return The 32-bit hash
      * @see #hash32(byte[], int, int, int)
+     * @deprecated Use {@link #hash32x86(byte[], int, int, int)}. This corrects the processing of trailing bytes.
      */
+    @Deprecated
     public static int hash32(final byte[] data) {
         return hash32(data, 0, data.length, DEFAULT_SEED);
     }
@@ -240,7 +242,9 @@ public final class MurmurHash3 {
      * @param data The input string
      * @return The 32-bit hash
      * @see #hash32(byte[], int, int, int)
+     * @deprecated Use {@link #hash32x86(byte[], int, int, int)}. This corrects the processing of trailing bytes.
      */
+    @Deprecated
     public static int hash32(final String data) {
         final byte[] bytes = data.getBytes();
         return hash32(bytes, 0, bytes.length, DEFAULT_SEED);
@@ -263,7 +267,9 @@ public final class MurmurHash3 {
      * @param length The length of array
      * @return The 32-bit hash
      * @see #hash32(byte[], int, int, int)
+     * @deprecated Use {@link #hash32x86(byte[], int, int, int)}. This corrects the processing of trailing bytes.
      */
+    @Deprecated
     public static int hash32(final byte[] data, final int length) {
         return hash32(data, length, DEFAULT_SEED);
     }
@@ -285,7 +291,9 @@ public final class MurmurHash3 {
      * @param seed The initial seed value
      * @return The 32-bit hash
      * @see #hash32(byte[], int, int, int)
+     * @deprecated Use {@link #hash32x86(byte[], int, int, int)}. This corrects the processing of trailing bytes.
      */
+    @Deprecated
     public static int hash32(final byte[] data, final int length, final int seed) {
         return hash32(data, 0, length, seed);
     }
@@ -305,7 +313,9 @@ public final class MurmurHash3 {
      * @param length The length of array
      * @param seed The initial seed value
      * @return The 32-bit hash
+     * @deprecated Use {@link #hash32x86(byte[], int, int, int)}. This corrects the processing of trailing bytes.
      */
+    @Deprecated
     public static int hash32(final byte[] data, final int offset, final int length, final int seed) {
         int hash = seed;
         final int nblocks = length >> 2;
@@ -330,6 +340,69 @@ public final class MurmurHash3 {
             k1 ^= data[index + 1] << 8;
         case 1:
             k1 ^= data[index];
+
+            // mix functions
+            k1 *= C1_32;
+            k1 = Integer.rotateLeft(k1, R1_32);
+            k1 *= C2_32;
+            hash ^= k1;
+        }
+
+        hash ^= length;
+        return fmix32(hash);
+    }
+
+    /**
+     * Generates 32-bit hash from the byte array with a seed of zero.
+     * This is a helper method that will produce the same result as:
+     *
+     * <pre>
+     * int offset = 0;
+     * int seed = 0;
+     * int hash = hash32x86(data, offset, data.length, seed);
+     * </pre>
+     *
+     * @param data The input byte array
+     * @return The 32-bit hash
+     * @see #hash32x86(byte[], int, int, int)
+     */
+    public static int hash32x86(final byte[] data) {
+        return hash32x86(data, 0, data.length, 0);
+    }
+
+    /**
+     * Generates 32-bit hash from the byte array with the given offset, length and seed.
+     *
+     * <p>This is an implementation of the 32-bit hash function {@code MurmurHash3_x86_32}
+     * from from Austin Applyby's original MurmurHash3 {@code c++} code in SMHasher.</p>
+     *
+     * @param data The input byte array
+     * @param offset The offset of data
+     * @param length The length of array
+     * @param seed The initial seed value
+     * @return The 32-bit hash
+     */
+    public static int hash32x86(final byte[] data, final int offset, final int length, final int seed) {
+        int hash = seed;
+        final int nblocks = length >> 2;
+
+        // body
+        for (int i = 0; i < nblocks; i++) {
+            final int index = offset + (i << 2);
+            final int k = getLittleEndianInt(data, index);
+            hash = mix32(k, hash);
+        }
+
+        // tail
+        final int index = offset + (nblocks << 2);
+        int k1 = 0;
+        switch (offset + length - index) {
+        case 3:
+            k1 ^= (data[index + 2] & 0xff) << 16;
+        case 2:
+            k1 ^= (data[index + 1] & 0xff) << 8;
+        case 1:
+            k1 ^= (data[index] & 0xff);
 
             // mix functions
             k1 *= C1_32;
@@ -804,12 +877,8 @@ public final class MurmurHash3 {
      *
      * <p>This is an implementation of the 32-bit hash function {@code MurmurHash3_x86_32}
      * from from Austin Applyby's original MurmurHash3 {@code c++} code in SMHasher.</p>
-     *
-     * <p>This implementation contains a sign-extension bug in the finalisation step of
-     * any bytes left over from dividing the length by 4. This manifests if any of these
-     * bytes are negative.<p>
      */
-    public static class IncrementalHash32 {
+    public static class IncrementalHash32x86 {
         /** The size of byte blocks that are processed together. */
         private static final int BLOCK_SIZE = 4;
 
@@ -916,26 +985,33 @@ public final class MurmurHash3 {
          * Generate the 32-bit hash value. Repeat calls to this method with no additional data
          * will generate the same hash value.
          *
-         * <p>This implementation contains a sign-extension bug in the finalisation step of
-         * any bytes left over from dividing the length by 4. This manifests if any of these
-         * bytes are negative.<p>
-         *
          * @return The 32-bit hash
          */
         public final int end() {
             // Allow calling end() again after adding no data to return the same result.
+            return finalise(hash, unprocessedLength, unprocessed, totalLen);
+        }
+
+        /**
+         * Finalise the running hash to the output 32-bit hash by processing remaining bytes
+         * and performing final mixing.
+         *
+         * @param hash The running hash
+         * @param unprocessedLength The number of unprocessed bytes in the tail data.
+         * @param unprocessed Up to 3 unprocessed bytes from input data.
+         * @param totalLen The total number of input bytes added since the start.
+         * @return The 32-bit hash
+         */
+        int finalise(int hash, int unprocessedLength, byte[] unprocessed, int totalLen) {
             int result = hash;
-            // ************
-            // Note: This fails to apply masking using 0xff to the 3 remaining bytes.
-            // ************
             int k1 = 0;
             switch (unprocessedLength) {
             case 3:
-                k1 ^= unprocessed[2] << 16;
+                k1 ^= (unprocessed[2] & 0xff) << 16;
             case 2:
-                k1 ^= unprocessed[1] << 8;
+                k1 ^= (unprocessed[1] & 0xff) << 8;
             case 1:
-                k1 ^= unprocessed[0];
+                k1 ^= (unprocessed[0] & 0xff);
 
                 // mix functions
                 k1 *= C1_32;
@@ -962,6 +1038,59 @@ public final class MurmurHash3 {
          */
         private static int orBytes(final byte b1, final byte b2, final byte b3, final byte b4) {
             return (b1 & 0xff) | ((b2 & 0xff) << 8) | ((b3 & 0xff) << 16) | ((b4 & 0xff) << 24);
+        }
+    }
+
+    /**
+     * Generates 32-bit hash from input bytes. Bytes can be added incrementally and the new
+     * hash computed.
+     *
+     * <p>This is an implementation of the 32-bit hash function {@code MurmurHash3_x86_32}
+     * from from Austin Applyby's original MurmurHash3 {@code c++} code in SMHasher.</p>
+     *
+     * <p>This implementation contains a sign-extension bug in the finalisation step of
+     * any bytes left over from dividing the length by 4. This manifests if any of these
+     * bytes are negative.<p>
+     *
+     * @deprecated Use IncrementalHash32x86. This corrects the processing of trailing bytes.
+     */
+    @Deprecated
+    public static class IncrementalHash32 extends IncrementalHash32x86 {
+        /**
+         * {@inheritDoc}
+         *
+         * <p>This implementation contains a sign-extension bug in the finalisation step of
+         * any bytes left over from dividing the length by 4. This manifests if any of these
+         * bytes are negative.<p>
+         *
+         * @deprecated Use IncrementalHash32x86. This corrects the processing of trailing bytes.
+         */
+        @Override
+        @Deprecated
+        int finalise(int hash, int unprocessedLength, byte[] unprocessed, int totalLen) {
+            int result = hash;
+            // ************
+            // Note: This fails to apply masking using 0xff to the 3 remaining bytes.
+            // ************
+            int k1 = 0;
+            switch (unprocessedLength) {
+            case 3:
+                k1 ^= unprocessed[2] << 16;
+            case 2:
+                k1 ^= unprocessed[1] << 8;
+            case 1:
+                k1 ^= unprocessed[0];
+
+                // mix functions
+                k1 *= C1_32;
+                k1 = Integer.rotateLeft(k1, R1_32);
+                k1 *= C2_32;
+                result ^= k1;
+            }
+
+            // finalization
+            result ^= totalLen;
+            return fmix32(result);
         }
     }
 }
