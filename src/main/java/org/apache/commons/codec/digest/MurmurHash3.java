@@ -18,7 +18,7 @@
 package org.apache.commons.codec.digest;
 
 /**
- * MurmurHash3 yields a 32-bit or 128-bit value.
+ * Implementation of the MurmurHash3 32-bit and 128-bit hash functions.
  *
  * <p>MurmurHash is a non-cryptographic hash function suitable for general
  * hash-based lookup. The name comes from two basic operations, multiply (MU)
@@ -859,7 +859,6 @@ public final class MurmurHash3 {
 
         return new long[] { h1, h2 };
     }
-
 
     /**
      * Gets the little-endian long from 8 bytes starting at the specified index.
