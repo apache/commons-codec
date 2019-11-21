@@ -97,11 +97,12 @@ public final class MurmurHash3 {
      * This is a helper method that will produce the same result as:
      *
      * <pre>
+     * int offset = 0;
      * int seed = 104729;
-     * int hash = hash32(ByteBuffer.allocate(16)
-     *                             .putLong(data1)
-     *                             .putLong(data2)
-     *                             .array(), 16, seed);
+     * int hash = MurmurHash3.hash32(ByteBuffer.allocate(16)
+     *                                         .putLong(data1)
+     *                                         .putLong(data2)
+     *                                         .array(), offset, 16, seed);
      * </pre>
      *
      * <p>Note: The sign extension bug in {@link #hash32(byte[], int, int, int)} does not affect
@@ -110,7 +111,7 @@ public final class MurmurHash3 {
      * @param data1 The first long to hash
      * @param data2 The second long to hash
      * @return The 32-bit hash
-     * @see #hash32(byte[], int, int)
+     * @see #hash32(byte[], int, int, int)
      */
     public static int hash32(final long data1, final long data2) {
         return hash32(data1, data2, DEFAULT_SEED);
@@ -121,10 +122,11 @@ public final class MurmurHash3 {
      * This is a helper method that will produce the same result as:
      *
      * <pre>
-     * int hash = hash32(ByteBuffer.allocate(16)
-     *                             .putLong(data1)
-     *                             .putLong(data2)
-     *                             .array(), 16, seed);
+     * int offset = 0;
+     * int hash = MurmurHash3.hash32(ByteBuffer.allocate(16)
+     *                                         .putLong(data1)
+     *                                         .putLong(data2)
+     *                                         .array(), offset, 16, seed);
      * </pre>
      *
      * <p>Note: The sign extension bug in {@link #hash32(byte[], int, int, int)} does not affect
@@ -134,7 +136,7 @@ public final class MurmurHash3 {
      * @param data2 The second long to hash
      * @param seed The initial seed value
      * @return The 32-bit hash
-     * @see #hash32(byte[], int, int)
+     * @see #hash32(byte[], int, int, int)
      */
     public static int hash32(final long data1, final long data2, final int seed) {
         int hash = seed;
@@ -155,10 +157,11 @@ public final class MurmurHash3 {
      * This is a helper method that will produce the same result as:
      *
      * <pre>
+     * int offset = 0;
      * int seed = 104729;
-     * int hash = hash32(ByteBuffer.allocate(8)
-     *                             .putLong(data)
-     *                             .array(), 8, seed);
+     * int hash = MurmurHash3.hash32(ByteBuffer.allocate(8)
+     *                                         .putLong(data)
+     *                                         .array(), offset, 8, seed);
      * </pre>
      *
      * <p>Note: The sign extension bug in {@link #hash32(byte[], int, int, int)} does not affect
@@ -166,7 +169,7 @@ public final class MurmurHash3 {
      *
      * @param data The long to hash
      * @return The 32-bit hash
-     * @see #hash32(byte[], int, int)
+     * @see #hash32(byte[], int, int, int)
      */
     public static int hash32(final long data) {
         return hash32(data, DEFAULT_SEED);
@@ -177,9 +180,10 @@ public final class MurmurHash3 {
      * This is a helper method that will produce the same result as:
      *
      * <pre>
-     * int hash = hash32(ByteBuffer.allocate(8)
-     *                             .putLong(data)
-     *                             .array(), 8, seed);
+     * int offset = 0;
+     * int hash = MurmurHash3.hash32(ByteBuffer.allocate(8)
+     *                                         .putLong(data)
+     *                                         .array(), offset, 8, seed);
      * </pre>
      *
      * <p>Note: The sign extension bug in {@link #hash32(byte[], int, int, int)} does not affect
@@ -188,7 +192,7 @@ public final class MurmurHash3 {
      * @param data The long to hash
      * @param seed The initial seed value
      * @return The 32-bit hash
-     * @see #hash32(byte[], int, int)
+     * @see #hash32(byte[], int, int, int)
      */
     public static int hash32(final long data, final int seed) {
         int hash = seed;
@@ -206,8 +210,9 @@ public final class MurmurHash3 {
      * This is a helper method that will produce the same result as:
      *
      * <pre>
+     * int offset = 0;
      * int seed = 104729;
-     * int hash = hash32(data, 0, data.length, seed);
+     * int hash = MurmurHash3.hash32(data, offset, data.length, seed);
      * </pre>
      *
      * <p>This implementation contains a sign-extension bug in the finalisation step of
@@ -230,9 +235,10 @@ public final class MurmurHash3 {
      * This is a helper method that will produce the same result as:
      *
      * <pre>
+     * int offset = 0;
      * int seed = 104729;
      * byte[] bytes = data.getBytes();
-     * int hash = hash32(bytes, 0, bytes.length, seed);
+     * int hash = MurmurHash3.hash32(bytes, offset, bytes.length, seed);
      * </pre>
      *
      * <p>This implementation contains a sign-extension bug in the finalisation step of
@@ -242,7 +248,7 @@ public final class MurmurHash3 {
      * @param data The input string
      * @return The 32-bit hash
      * @see #hash32(byte[], int, int, int)
-     * @deprecated Use {@link #hash32x86(byte[], int, int, int)}. This corrects the processing of trailing bytes.
+     * @deprecated Use {@link #hash32x86(byte[], int, int, int)} with the String byte data. This corrects the processing of trailing bytes.
      */
     @Deprecated
     public static int hash32(final String data) {
@@ -255,8 +261,9 @@ public final class MurmurHash3 {
      * This is a helper method that will produce the same result as:
      *
      * <pre>
+     * int offset = 0;
      * int seed = 104729;
-     * int hash = hash32(data, 0, data.length, seed);
+     * int hash = MurmurHash3.hash32(data, offset, length, seed);
      * </pre>
      *
      * <p>This implementation contains a sign-extension bug in the finalisation step of
@@ -279,7 +286,8 @@ public final class MurmurHash3 {
      * helper method that will produce the same result as:
      *
      * <pre>
-     * int hash = hash32(data, 0, data.length, seed);
+     * int offset = 0;
+     * int hash = MurmurHash3.hash32(data, offset, length, seed);
      * </pre>
      *
      * <p>This implementation contains a sign-extension bug in the finalisation step of
@@ -359,7 +367,7 @@ public final class MurmurHash3 {
      * <pre>
      * int offset = 0;
      * int seed = 0;
-     * int hash = hash32x86(data, offset, data.length, seed);
+     * int hash = MurmurHash3.hash32x86(data, offset, data.length, seed);
      * </pre>
      *
      * @param data The input byte array
@@ -425,10 +433,11 @@ public final class MurmurHash3 {
      * <p>This is a helper method that will produce the same result as:</p>
      *
      * <pre>
+     * int offset = 0;
      * int seed = 104729;
-     * long hash = hash64(ByteBuffer.allocate(8)
+     * long hash = MurmurHash3.hash64(ByteBuffer.allocate(8)
      *                              .putLong(data)
-     *                              .array(), 0, 8, seed);
+     *                              .array(), offset, 8, seed);
      * <pre>
      *
      * @param data The long to hash
@@ -461,10 +470,11 @@ public final class MurmurHash3 {
      * <p>This is a helper method that will produce the same result as:</p>
      *
      * <pre>
+     * int offset = 0;
      * int seed = 104729;
-     * long hash = hash64(ByteBuffer.allocate(4)
-     *                              .putInt(data)
-     *                              .array(), 0, 4, seed);
+     * long hash = MurmurHash3.hash64(ByteBuffer.allocate(4)
+     *                                          .putInt(data)
+     *                                          .array(), offset, 4, seed);
      * <pre>
      *
      * @param data The int to hash
@@ -495,10 +505,11 @@ public final class MurmurHash3 {
      * <p>This is a helper method that will produce the same result as:</p>
      *
      * <pre>
+     * int offset = 0;
      * int seed = 104729;
-     * long hash = hash64(ByteBuffer.allocate(2)
-     *                              .putShort(data)
-     *                              .array(), 0, 2, seed);
+     * long hash = MurmurHash3.hash64(ByteBuffer.allocate(2)
+     *                                          .putShort(data)
+     *                                          .array(), offset, 2, seed);
      * <pre>
      *
      * @param data The short to hash
@@ -531,8 +542,9 @@ public final class MurmurHash3 {
      * <p>This is a helper method that will produce the same result as:</p>
      *
      * <pre>
+     * int offset = 0;
      * int seed = 104729;
-     * long hash = hash64(data, 0, data.length, seed);
+     * long hash = MurmurHash3.hash64(data, offset, data.length, seed);
      * <pre>
      *
      * @param data The input byte array
@@ -581,7 +593,7 @@ public final class MurmurHash3 {
      * {@link #hash128(byte[], int, int, int)}.<p>
      *
      * <p>Use of this method is not advised. Use the first long returned from
-     * {@link #hash128(byte[], int, int, int)}.<p>
+     * {@link #hash128x64(byte[], int, int, int)}.<p>
      *
      * @param data The input byte array
      * @param offset The offset of data
@@ -668,7 +680,7 @@ public final class MurmurHash3 {
      * <pre>
      * int offset = 0;
      * int seed = 0;
-     * int hash = MurmurHash3.hash128x64(data, offset, data.length, 0);
+     * int hash = MurmurHash3.hash128x64(data, offset, data.length, seed);
      * </pre>
      *
      * @param data The input byte array
@@ -685,9 +697,10 @@ public final class MurmurHash3 {
      * This is a helper method that will produce the same result as:
      *
      * <pre>
+     * int offset = 0;
      * int seed = 104729;
      * byte[] bytes = data.getBytes();
-     * int hash = MurmurHash3.hash128(bytes, 0, bytes.length, seed);
+     * int hash = MurmurHash3.hash128(bytes, offset, bytes.length, seed);
      * </pre>
      *
      * <p>Note: The sign extension bug in {@link #hash128(byte[], int, int, int)} does not effect
