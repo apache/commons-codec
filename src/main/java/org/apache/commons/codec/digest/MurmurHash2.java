@@ -53,12 +53,12 @@ public final class MurmurHash2 {
     }
 
     /**
-     * Generates 32 bit hash from byte array with the given length and seed.
+     * Generates a 32-bit hash from byte array with the given length and seed.
      *
-     * @param data   byte array to hash
-     * @param length length of the array to hash
-     * @param seed   initial seed value
-     * @return 32 bit hash of the given array
+     * @param data The input byte array
+     * @param length The length of the array
+     * @param seed The initial seed value
+     * @return The 32-bit hash
      */
     public static int hash32(final byte[] data, final int length, final int seed) {
         // 'm' and 'r' are mixing constants generated offline.
@@ -105,17 +105,17 @@ public final class MurmurHash2 {
     }
 
     /**
-     * Generates 32 bit hash from byte array with the given length and a default seed value.
+     * Generates a 32-bit hash from byte array with the given length and a default seed value.
      * This is a helper method that will produce the same result as:
      *
      * <pre>
      * int seed = 0x9747b28c;
-     * int hash = MurmurHash2.hash32(data, offset, length, seed);
+     * int hash = MurmurHash2.hash32(data, length, seed);
      * </pre>
      *
-     * @param data   byte array to hash
-     * @param length length of the array to hash
-     * @return 32 bit hash of the given array
+     * @param data The input byte array
+     * @param length The length of the array
+     * @return The 32-bit hash
      * @see #hash32(byte[], int, int)
      */
     public static int hash32(final byte[] data, final int length) {
@@ -123,7 +123,7 @@ public final class MurmurHash2 {
     }
 
     /**
-     * Generates 32 bit hash from a string with a default seed.
+     * Generates a 32-bit hash from a string with a default seed.
      * The string is converted to bytes using the default encoding.
      * This is a helper method that will produce the same result as:
      *
@@ -133,8 +133,8 @@ public final class MurmurHash2 {
      * int hash = MurmurHash2.hash32(bytes, bytes.length, seed);
      * </pre>
      *
-     * @param text string to hash
-     * @return 32 bit hash of the given string
+     * @param text The input string
+     * @return The 32-bit hash
      * @see #hash32(byte[], int, int)
      */
     public static int hash32(final String text) {
@@ -143,7 +143,7 @@ public final class MurmurHash2 {
     }
 
     /**
-     * Generates 32 bit hash from a substring with a default seed value.
+     * Generates a 32-bit hash from a substring with a default seed value.
      * The string is converted to bytes using the default encoding.
      * This is a helper method that will produce the same result as:
      *
@@ -153,10 +153,10 @@ public final class MurmurHash2 {
      * int hash = MurmurHash2.hash32(bytes, bytes.length, seed);
      * </pre>
      *
-     * @param text   string to hash
-     * @param from   starting index
-     * @param length length of the substring to hash
-     * @return 32 bit hash of the given string
+     * @param text The input string
+     * @param from The starting index
+     * @param length The length of the substring
+     * @return The 32-bit hash
      * @see #hash32(byte[], int, int)
      */
     public static int hash32(final String text, final int from, final int length) {
@@ -164,12 +164,12 @@ public final class MurmurHash2 {
     }
 
     /**
-     * Generates 64 bit hash from byte array of the given length and seed.
+     * Generates a 64-bit hash from byte array of the given length and seed.
      *
-     * @param data   byte array to hash
-     * @param length length of the array to hash
-     * @param seed   initial seed value
-     * @return 64 bit hash of the given array
+     * @param data The input byte array
+     * @param length The length of the array
+     * @param seed The initial seed value
+     * @return The 64-bit hash of the given array
      */
     public static long hash64(final byte[] data, final int length, final int seed) {
         final long m = 0xc6a4a7935bd1e995L;
@@ -219,17 +219,17 @@ public final class MurmurHash2 {
     }
 
     /**
-     * Generates 64 bit hash from byte array with given length and a default seed value.
+     * Generates a 64-bit hash from byte array with given length and a default seed value.
      * This is a helper method that will produce the same result as:
      *
      * <pre>
      * int seed = 0xe17a1465;
-     * int hash = MurmurHash2.hash64(data, offset, length, seed);
+     * int hash = MurmurHash2.hash64(data, length, seed);
      * </pre>
      *
-     * @param data   byte array to hash
-     * @param length length of the array to hash
-     * @return 64 bit hash of the given string
+     * @param data The input byte array
+     * @param length The length of the array
+     * @return The 64-bit hash
      * @see #hash64(byte[], int, int)
      */
     public static long hash64(final byte[] data, final int length) {
@@ -237,7 +237,7 @@ public final class MurmurHash2 {
     }
 
     /**
-     * Generates 64 bit hash from a string with a default seed.
+     * Generates a 64-bit hash from a string with a default seed.
      * The string is converted to bytes using the default encoding.
      * This is a helper method that will produce the same result as:
      *
@@ -247,8 +247,8 @@ public final class MurmurHash2 {
      * int hash = MurmurHash2.hash64(bytes, bytes.length, seed);
      * </pre>
      *
-     * @param text string to hash
-     * @return 64 bit hash of the given string
+     * @param text The input string
+     * @return The 64-bit hash
      * @see #hash64(byte[], int, int)
      */
     public static long hash64(final String text) {
@@ -257,7 +257,7 @@ public final class MurmurHash2 {
     }
 
     /**
-     * Generates 64 bit hash from a substring with a default seed value.
+     * Generates a 64-bit hash from a substring with a default seed value.
      * The string is converted to bytes using the default encoding.
      * This is a helper method that will produce the same result as:
      *
@@ -267,10 +267,10 @@ public final class MurmurHash2 {
      * int hash = MurmurHash2.hash64(bytes, bytes.length, seed);
      * </pre>
      *
-     * @param text   string to hash
-     * @param from   starting index
-     * @param length length of the substring to hash
-     * @return 64 bit hash of the given array
+     * @param text The The input string
+     * @param from The starting index
+     * @param length The length of the substring
+     * @return The 64-bit hash
      * @see #hash64(byte[], int, int)
      */
     public static long hash64(final String text, final int from, final int length) {
