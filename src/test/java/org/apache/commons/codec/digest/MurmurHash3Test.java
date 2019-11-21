@@ -747,6 +747,10 @@ public class MurmurHash3Test {
             assertIncrementalHash32(bytes, seed, 4, 3);
             // Complete blocks
             assertIncrementalHash32(bytes, seed, 4, 16, 64);
+            // Some random blocks
+            for (int i = 0; i < 10; i++) {
+                assertIncrementalHash32x86(bytes, seed, createRandomBlocks(bytes.length));
+            }
         }
     }
 
@@ -801,6 +805,10 @@ public class MurmurHash3Test {
             assertIncrementalHash32x86(bytes, seed, 4, 3);
             // Complete blocks
             assertIncrementalHash32x86(bytes, seed, 4, 16, 64);
+            // Some random blocks
+            for (int i = 0; i < 10; i++) {
+                assertIncrementalHash32x86(bytes, seed, createRandomBlocks(bytes.length));
+            }
         }
     }
 
@@ -828,5 +836,24 @@ public class MurmurHash3Test {
             Assert.assertEquals("Hashes differ", h1, h2);
             Assert.assertEquals("Hashes differ after no additional data", h1, inc.end());
         }
+    }
+
+    /**
+     * Creates the random blocks of data to process up to max length.
+     *
+     * @param maxLength the max length
+     * @return the blocks
+     */
+    private static int[] createRandomBlocks(int maxLength) {
+        int[] blocks = new int[20];
+        int count = 0;
+        int length = 0;
+        while (count < blocks.length && length < maxLength) {
+            // range of 1 to 8 for up to two 4 byte blocks
+            final int size = ThreadLocalRandom.current().nextInt(1, 9);
+            blocks[count++] = size;
+            length += size;
+        }
+        return Arrays.copyOf(blocks, count);
     }
 }
