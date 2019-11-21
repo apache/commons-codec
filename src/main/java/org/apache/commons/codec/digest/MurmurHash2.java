@@ -48,6 +48,14 @@ package org.apache.commons.codec.digest;
  */
 public final class MurmurHash2 {
 
+    // Constants for 32-bit variant
+    private static final int M32 = 0x5bd1e995;
+    private static final int R32 = 24;
+
+    // Constants for 64-bit variant
+    private static final long M64 = 0xc6a4a7935bd1e995L;
+    private static final int R64 = 47;
+
     /** No instance methods. */
     private MurmurHash2() {
     }
@@ -61,11 +69,6 @@ public final class MurmurHash2 {
      * @return The 32-bit hash
      */
     public static int hash32(final byte[] data, final int length, final int seed) {
-        // 'm' and 'r' are mixing constants generated offline.
-        // They're not really 'magic', they just happen to work well.
-        final int m = 0x5bd1e995;
-        final int r = 24;
-
         // Initialize the hash to a random value
         int h = seed ^ length;
 
@@ -76,10 +79,10 @@ public final class MurmurHash2 {
         for (int i = 0; i < nblocks; i++) {
             final int index = (i << 2);
             int k = getLittleEndianInt(data, index);
-            k *= m;
-            k ^= k >>> r;
-            k *= m;
-            h *= m;
+            k *= M32;
+            k ^= k >>> R32;
+            k *= M32;
+            h *= M32;
             h ^= k;
         }
 
@@ -92,13 +95,13 @@ public final class MurmurHash2 {
             h ^= (data[index + 1] & 0xff) << 8;
         case 1:
             h ^= (data[index] & 0xff);
-            h *= m;
+            h *= M32;
         }
 
         // Do a few final mixes of the hash to ensure the last few
         // bytes are well-incorporated.
         h ^= h >>> 13;
-        h *= m;
+        h *= M32;
         h ^= h >>> 15;
 
         return h;
@@ -172,10 +175,7 @@ public final class MurmurHash2 {
      * @return The 64-bit hash of the given array
      */
     public static long hash64(final byte[] data, final int length, final int seed) {
-        final long m = 0xc6a4a7935bd1e995L;
-        final int r = 47;
-
-        long h = (seed & 0xffffffffl) ^ (length * m);
+        long h = (seed & 0xffffffffL) ^ (length * M64);
 
         final int nblocks = length >> 3;
 
@@ -184,12 +184,12 @@ public final class MurmurHash2 {
             final int index = (i << 3);
             long k = getLittleEndianLong(data, index);
 
-            k *= m;
-            k ^= k >>> r;
-            k *= m;
+            k *= M64;
+            k ^= k >>> R64;
+            k *= M64;
 
             h ^= k;
-            h *= m;
+            h *= M64;
         }
 
         final int index = (nblocks << 3);
@@ -208,12 +208,12 @@ public final class MurmurHash2 {
             h ^= ((long) data[index + 1] & 0xff) << 8;
         case 1:
             h ^= ((long) data[index] & 0xff);
-            h *= m;
+            h *= M64;
         }
 
-        h ^= h >>> r;
-        h *= m;
-        h ^= h >>> r;
+        h ^= h >>> R64;
+        h *= M64;
+        h ^= h >>> R64;
 
         return h;
     }
