@@ -373,6 +373,7 @@ public final class MurmurHash3 {
      * @param data The input byte array
      * @return The 32-bit hash
      * @see #hash32x86(byte[], int, int, int)
+     * @since 1.14
      */
     public static int hash32x86(final byte[] data) {
         return hash32x86(data, 0, data.length, 0);
@@ -389,6 +390,7 @@ public final class MurmurHash3 {
      * @param length The length of array
      * @param seed The initial seed value
      * @return The 32-bit hash
+     * @since 1.14
      */
     public static int hash32x86(final byte[] data, final int offset, final int length, final int seed) {
         int hash = seed;
@@ -686,6 +688,7 @@ public final class MurmurHash3 {
      * @param data The input byte array
      * @return The 128-bit hash (2 longs)
      * @see #hash128x64(byte[], int, int, int)
+     * @since 1.14
      */
     public static long[] hash128x64(final byte[] data) {
         return hash128x64(data, 0, data.length, 0);
@@ -750,6 +753,7 @@ public final class MurmurHash3 {
      * @param length The length of array
      * @param seed The initial seed value
      * @return The 128-bit hash (2 longs)
+     * @since 1.14
      */
     public static long[] hash128x64(final byte[] data, final int offset, final int length, final int seed) {
         // Use an unsigned 32-bit integer as the seed
@@ -943,6 +947,8 @@ public final class MurmurHash3 {
      *
      * <p>This is an implementation of the 32-bit hash function {@code MurmurHash3_x86_32}
      * from from Austin Applyby's original MurmurHash3 {@code c++} code in SMHasher.</p>
+     *
+     * @since 1.14
      */
     public static class IncrementalHash32x86 {
         /** The size of byte blocks that are processed together. */
