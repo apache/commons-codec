@@ -71,6 +71,16 @@ public class Base32Test {
         "CPNMUOJ1E2======"
     };
 
+    /**
+     * Copy of the standard base-32 encoding table. Used to test decoding the final
+     * character of encoded bytes.
+     */
+    private static final byte[] ENCODE_TABLE = {
+            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+            'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+            '2', '3', '4', '5', '6', '7',
+    };
+
     private static final Object[][] BASE32_BINARY_TEST_CASES;
 
     //            { null, "O0o0O0o0" }
@@ -295,6 +305,75 @@ public class Base32Test {
                 fail();
             } catch (final IllegalArgumentException ex) {
                 // expected
+            }
+        }
+    }
+
+    @Test
+    public void testBase32DecodingOfTrailing10Bits() {
+        assertBase32DecodingOfTrailingBits(10);
+    }
+
+    @Test
+    public void testBase32DecodingOfTrailing15Bits() {
+        assertBase32DecodingOfTrailingBits(15);
+    }
+
+    @Test
+    public void testBase32DecodingOfTrailing20Bits() {
+        assertBase32DecodingOfTrailingBits(20);
+    }
+
+    @Test
+    public void testBase32DecodingOfTrailing25Bits() {
+        assertBase32DecodingOfTrailingBits(25);
+    }
+
+    @Test
+    public void testBase32DecodingOfTrailing30Bits() {
+        assertBase32DecodingOfTrailingBits(30);
+    }
+
+    @Test
+    public void testBase32DecodingOfTrailing35Bits() {
+        assertBase32DecodingOfTrailingBits(35);
+    }
+
+    /**
+     * Test base 32 decoding of the final trailing bits. Trailing encoded bytes
+     * cannot fit exactly into 5-bit characters so the last character has a limited
+     * alphabet where the final bits are zero. This asserts that illegal final
+     * characters throw an exception when decoding.
+     *
+     * @param nbits the number of trailing bits (must be a factor of 5 and {@code <40})
+     */
+    private static void assertBase32DecodingOfTrailingBits(int nbits) {
+        final Base32 codec = new Base32();
+        // Create the encoded bytes. The first characters must be valid so fill with 'zero'.
+        final byte[] encoded = new byte[nbits / 5];
+        Arrays.fill(encoded, ENCODE_TABLE[0]);
+        // Compute how many bits would be discarded from 8-bit bytes
+        final int discard = nbits % 8;
+        final int emptyBitsMask = (1 << discard) - 1;
+        // Enumerate all 32 possible final characters in the last position
+        final int last = encoded.length - 1;
+        for (int i = 0; i < 32; i++) {
+            encoded[last] = ENCODE_TABLE[i];
+            // If the lower bits are set we expect an exception. This is not a valid
+            // final character.
+            if ((i & emptyBitsMask) != 0) {
+                try {
+                    codec.decode(encoded);
+                    fail("Final base-32 digit should not be allowed");
+                } catch (final IllegalArgumentException ex) {
+                    // expected
+                }
+            } else {
+                // Otherwise this should decode
+                final byte[] decoded = codec.decode(encoded);
+                // Compute the bits that were encoded. This should match the final decoded byte.
+                final int bitsEncoded = i >> discard;
+                assertEquals("Invalid decoding of last character", bitsEncoded, decoded[decoded.length - 1]);
             }
         }
     }

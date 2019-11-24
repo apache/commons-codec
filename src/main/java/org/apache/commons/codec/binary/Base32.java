@@ -114,8 +114,20 @@ public class Base32 extends BaseNCodec {
             'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
     };
 
+    /** Mask used to extract 7 bits, used when decoding final trailing character. */
+    private static final long MASK_7BITS = 0x7fL;
+    /** Mask used to extract 6 bits, used when decoding final trailing character. */
+    private static final long MASK_6BITS = 0x3fL;
     /** Mask used to extract 5 bits, used when encoding Base32 bytes */
     private static final int MASK_5BITS = 0x1f;
+    /** Mask used to extract 4 bits, used when decoding final trailing character. */
+    private static final long MASK_4BITS = 0x0fL;
+    /** Mask used to extract 3 bits, used when decoding final trailing character. */
+    private static final long MASK_3BITS = 0x07L;
+    /** Mask used to extract 2 bits, used when decoding final trailing character. */
+    private static final long MASK_2BITS = 0x03L;
+    /** Mask used to extract 1 bits, used when decoding final trailing character. */
+    private static final long MASK_1BITS = 0x01L;
 
     // The static final fields above are used for the original static byte[] methods on Base32.
     // The private member fields below are used with the new streaming approach, which requires
@@ -335,7 +347,8 @@ public class Base32 extends BaseNCodec {
      *            Amount of bytes available from input for decoding.
      * @param context the context to be used
      *
-     * Output is written to {@link Context#buffer} as 8-bit octets, using {@link Context#pos} as the buffer position
+     * Output is written to {@link org.apache.commons.codec.binary.BaseNCodec.Context#buffer Context#buffer}
+     * as 8-bit octets, using {@link org.apache.commons.codec.binary.BaseNCodec.Context#pos Context#pos} as the buffer position
      */
     @Override
     void decode(final byte[] in, int inPos, final int inAvail, final Context context) {
@@ -381,35 +394,35 @@ public class Base32 extends BaseNCodec {
             //  we ignore partial bytes, i.e. only multiples of 8 count
             switch (context.modulus) {
                 case 2 : // 10 bits, drop 2 and output one byte
-                    validateCharacter(2, context);
+                    validateCharacter(MASK_2BITS, context);
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 2) & MASK_8BITS);
                     break;
                 case 3 : // 15 bits, drop 7 and output 1 byte
-                    validateCharacter(7, context);
+                    validateCharacter(MASK_7BITS, context);
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 7) & MASK_8BITS);
                     break;
                 case 4 : // 20 bits = 2*8 + 4
-                    validateCharacter(4, context);
+                    validateCharacter(MASK_4BITS, context);
                     context.lbitWorkArea = context.lbitWorkArea >> 4; // drop 4 bits
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 8) & MASK_8BITS);
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea) & MASK_8BITS);
                     break;
                 case 5 : // 25bits = 3*8 + 1
-                    validateCharacter(1, context);
+                    validateCharacter(MASK_1BITS, context);
                     context.lbitWorkArea = context.lbitWorkArea >> 1;
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 16) & MASK_8BITS);
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 8) & MASK_8BITS);
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea) & MASK_8BITS);
                     break;
                 case 6 : // 30bits = 3*8 + 6
-                    validateCharacter(6, context);
+                    validateCharacter(MASK_6BITS, context);
                     context.lbitWorkArea = context.lbitWorkArea >> 6;
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 16) & MASK_8BITS);
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 8) & MASK_8BITS);
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea) & MASK_8BITS);
                     break;
                 case 7 : // 35 = 4*8 +3
-                    validateCharacter(3, context);
+                    validateCharacter(MASK_3BITS, context);
                     context.lbitWorkArea = context.lbitWorkArea >> 3;
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 24) & MASK_8BITS);
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 16) & MASK_8BITS);
@@ -548,19 +561,23 @@ public class Base32 extends BaseNCodec {
     }
 
     /**
-     * <p>
-     * Validates whether the character is possible in the context of the set of possible base 32 values.
-     * </p>
+     * Validates whether decoding the final trailing character is possible in the context
+     * of the set of possible base 32 values.
      *
-     * @param numBits number of least significant bits to check
+     * <p>The character is valid if the lower bits within the provided mask are zero. This
+     * is used to test the final trailing base-32 digit is zero in the bits that will be discarded.
+     *
+     * @param emptyBitsMask The mask of the lower bits that should be empty
      * @param context the context to be used
      *
      * @throws IllegalArgumentException if the bits being checked contain any non-zero value
      */
-    private void validateCharacter(final int numBits, final Context context) {
-        if ((context.lbitWorkArea & numBits) != 0) {
+    private static void validateCharacter(final long emptyBitsMask, final Context context) {
+        // Use the long bit work area
+        if ((context.lbitWorkArea & emptyBitsMask) != 0) {
             throw new IllegalArgumentException(
-                "Last encoded character (before the paddings if any) is a valid base 32 alphabet but not a possible value");
+                "Last encoded character (before the paddings if any) is a valid base 32 alphabet but not a possible value. " +
+                "Expected the discarded bits to be zero.");
         }
     }
 }
