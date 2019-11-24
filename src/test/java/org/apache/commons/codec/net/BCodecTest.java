@@ -34,10 +34,12 @@ import org.junit.Test;
  */
 public class BCodecTest {
     private static final String[] BASE64_IMPOSSIBLE_CASES = {
-            "ZE==",
-            "ZmC=",
-            "Zm9vYE==",
-            "Zm9vYmC=",
+            // Require the RFC 1522 "encoded-word" header
+            "=?ASCII?B?ZE==?=",
+            "=?ASCII?B?ZmC=?=",
+            "=?ASCII?B?Zm9vYE==?=",
+            "=?ASCII?B?Zm9vYmC=?=",
+            "=?ASCII?B?AB==?="
     };
 
     static final int SWISS_GERMAN_STUFF_UNICODE[] =

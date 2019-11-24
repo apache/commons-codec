@@ -49,6 +49,7 @@ public class Base64Test {
         "ZmC=",
         "Zm9vYE==",
         "Zm9vYmC=",
+        "AB",
     };
 
     private final Random random = new Random();

@@ -51,7 +51,8 @@ public class Base32Test {
         "MZXE====",
         "MZXWB===",
         "MZXW6YB=",
-        "MZXW6YTBOC======"
+        "MZXW6YTBOC======",
+        "AB======"
         };
 
     private static final String[] BASE32_IMPOSSIBLE_CASES_CHUNKED = {
