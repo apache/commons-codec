@@ -712,15 +712,29 @@ public class MurmurHash3Test {
         for (int i = 0; i < answers.length; i++) {
             Assert.assertArrayEquals("Length: " + i, answers[i], MurmurHash3.hash128x64(RANDOM_BYTES, offset, i, seed));
         }
+    }
 
+    /**
+     * Test the {@link MurmurHash3#hash128x64(byte[], int, int, int)} algorithm.
+     * 
+     * <p>Explicit test for a negative seed. The original implementation has a sign extension error
+     * for negative seeds.
+     *
+     * <p>Reference data is taken from the Python library {@code mmh3}.</p>
+     *
+     * @see <a href="https://pypi.org/project/mmh3/">mmh3</a>
+     */
+    @Test
+    public void testHash128x64WithOffsetLengthAndNegativeSeed() {
         // Seed can be negative
-        final int seed2 = -42;
+        final int seed = -42;
+        final int offset = 13;
 
         // Test with all sizes up to 31 bytes. This ensures a full round of 16-bytes plus up to
         // 15 bytes remaining.
         // for x in range(0, 32):
         //   print(mmh3.hash64(bytes[13:x+13], -42), ',')
-        final long[][] answers2 = {{7182599573337898253L, -6490979146667806054L},
+        final long[][] answers = {{7182599573337898253L, -6490979146667806054L},
             {-461284136738605467L, 7073284964362976233L}, {-3090354666589400212L, 2978755180788824810L},
             {5052807367580803906L, -4497188744879598335L}, {5003711854877353474L, -6616808651483337088L},
             {2043501804923817748L, -760668448196918637L}, {6813003268375229932L, -1818545210475363684L},
@@ -738,7 +752,7 @@ public class MurmurHash3Test {
             {-8580307083590783934L, 3634449965473715778L}, {6705664584730187559L, 5192304951463791556L},
             {-6426410954037604142L, -1579122709247558101L},};
         for (int i = 0; i < answers.length; i++) {
-            Assert.assertArrayEquals("Length: " + i, answers2[i], MurmurHash3.hash128x64(RANDOM_BYTES, offset, i, seed2));
+            Assert.assertArrayEquals("Length: " + i, answers[i], MurmurHash3.hash128x64(RANDOM_BYTES, offset, i, seed));
         }
     }
 
