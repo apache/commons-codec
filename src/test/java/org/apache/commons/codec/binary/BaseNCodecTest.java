@@ -23,6 +23,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import org.apache.commons.codec.binary.BaseNCodec.Context;
+import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -190,5 +193,175 @@ public class BaseNCodecTest {
 
         // Then
         assertEquals(0x25, actualPaddingByte);
+    }
+
+    @Test
+    public void testEnsureBufferSize() {
+        final BaseNCodec ncodec = new NoOpBaseNCodec();
+        final Context context = new Context();
+        Assert.assertNull("Initial buffer should be null", context.buffer);
+
+        // Test initialisation
+        context.pos = 76979;
+        context.readPos = 273;
+        ncodec.ensureBufferSize(0, context);
+        Assert.assertNotNull("buffer should be initialised", context.buffer);
+        Assert.assertEquals("buffer should be initialised to default size", ncodec.getDefaultBufferSize(), context.buffer.length);
+        Assert.assertEquals("context position", 0, context.pos);
+        Assert.assertEquals("context read position", 0, context.readPos);
+
+        // Test when no expansion is required
+        ncodec.ensureBufferSize(1, context);
+        Assert.assertEquals("buffer should not expand unless required", ncodec.getDefaultBufferSize(), context.buffer.length);
+
+        // Test expansion
+        int length = context.buffer.length;
+        context.pos = length;
+        int extra = 1;
+        ncodec.ensureBufferSize(extra, context);
+        Assert.assertTrue("buffer should expand", context.buffer.length >= length + extra);
+
+        // Test expansion beyond double the buffer size.
+        // Hits the edge case where the required capacity is more than the default expansion.
+        length = context.buffer.length;
+        context.pos = length;
+        extra = length * 10;
+        ncodec.ensureBufferSize(extra, context);
+        Assert.assertTrue("buffer should expand beyond double capacity", context.buffer.length >= length + extra);
+    }
+
+    /**
+     * Test to expand to the max buffer size.
+     */
+    @Test
+    public void testEnsureBufferSizeExpandsToMaxBufferSize() {
+        assertEnsureBufferSizeExpandsToMaxBufferSize(false);
+    }
+
+    /**
+     * Test to expand to beyond the max buffer size.
+     *
+     * <p>Note: If the buffer is required to expand to above the max buffer size it may not work
+     * on all VMs and may have to be annotated with @Ignore.</p>
+     */
+    @Test
+    public void testEnsureBufferSizeExpandsToBeyondMaxBufferSize() {
+        assertEnsureBufferSizeExpandsToMaxBufferSize(true);
+    }
+
+    private static void assertEnsureBufferSizeExpandsToMaxBufferSize(boolean exceedMaxBufferSize) {
+        // This test is memory hungry.
+        // By default expansion will double the buffer size.
+        // Using a buffer that must be doubled to get close to 2GiB requires at least 3GiB
+        // of memory for the test (1GiB existing + 2GiB new).
+        // As a compromise we use an empty buffer and rely on the expansion switching
+        // to the minimum required capacity if doubling is not enough.
+
+        // To effectively use a full buffer of ~1GiB change the following for: 1 << 30.
+        // Setting to zero has the lowest memory footprint for this test.
+        final int length = 0;
+
+        final long presumableFreeMemory = getPresumableFreeMemory();
+        // 2GiB + 32 KiB + length
+        // 2GiB: Buffer to allocate
+        // 32KiB: Some head room
+        // length: Existing buffer
+        final long estimatedMemory = (1L << 31) + 32 * 1024 + length;
+        Assume.assumeTrue("Not enough free memory for the test", presumableFreeMemory > estimatedMemory);
+
+        final int max = Integer.MAX_VALUE - 8;
+
+        // Check the conservative maximum buffer size can actually be exceeded by the VM
+        // otherwise the test is not valid.
+        if (exceedMaxBufferSize) {
+            assumeCanAllocateBufferSize(max + 1);
+            // Free-memory.
+            // This may not be necessary as the byte[] is now out of scope
+            System.gc();
+        }
+
+        final BaseNCodec ncodec = new NoOpBaseNCodec();
+        final Context context = new Context();
+
+        // Allocate the initial buffer
+        context.buffer = new byte[length];
+        context.pos = length;
+        // Compute the extra to reach or exceed the max buffer size
+        int extra = max - length;
+        if (exceedMaxBufferSize) {
+            extra++;
+        }
+        ncodec.ensureBufferSize(extra, context);
+        Assert.assertTrue(context.buffer.length >= length + extra);
+    }
+
+    /**
+     * Verify this VM can allocate the given size byte array. Otherwise skip the test.
+     */
+    private static void assumeCanAllocateBufferSize(int size) {
+        byte[] bytes = null;
+        try {
+            bytes = new byte[size];
+        } catch (OutOfMemoryError ignore) {
+            // ignore
+        }
+        Assume.assumeTrue("Cannot allocate array of size: " + size, bytes != null);
+    }
+
+    /**
+     * Gets the presumable free memory; an estimate of the amount of memory that could be allocated.
+     *
+     * <p>This performs a garbage clean-up and the obtains the presumed amount of free memory
+     * that can be allocated in this VM. This is computed as:<p>
+     *
+     * <pre>
+     * System.gc();
+     * long allocatedMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+     * long presumableFreeMemory = Runtime.getRuntime().maxMemory() - allocatedMemory;
+     * </pre>
+     *
+     * @return the presumable free memory
+     * @see <a href="https://stackoverflow.com/a/18366283">
+     *     Christian Fries StackOverflow answer on Java available memory</a>
+     */
+    static long getPresumableFreeMemory() {
+        System.gc();
+        final long allocatedMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+        return Runtime.getRuntime().maxMemory() - allocatedMemory;
+    }
+
+    @Test(expected = OutOfMemoryError.class)
+    public void testEnsureBufferSizeThrowsOnOverflow() {
+        final BaseNCodec ncodec = new NoOpBaseNCodec();
+        final Context context = new Context();
+
+        final int length = 10;
+        context.buffer = new byte[length];
+        context.pos = length;
+        final int extra = Integer.MAX_VALUE;
+        ncodec.ensureBufferSize(extra, context);
+    }
+
+    /**
+     * Extend BaseNCodec without implementation (no operations = NoOp).
+     * Used for testing the memory allocation in {@link BaseNCodec#ensureBufferSize(int, Context)}.
+     */
+    private static class NoOpBaseNCodec extends BaseNCodec {
+        NoOpBaseNCodec() {
+            super(0, 0, 0, 0);
+        }
+
+        @Override
+        void encode(byte[] pArray, int i, int length, Context context) {
+        }
+
+        @Override
+        void decode(byte[] pArray, int i, int length, Context context) {
+        }
+
+        @Override
+        protected boolean isInAlphabet(byte value) {
+            return false;
+        }
     }
 }
