@@ -1306,7 +1306,6 @@ public class Base64Test {
      * @see "<a href='https://mail-archives.apache.org/mod_mbox/commons-dev/201202.mbox/%3C4F3C85D7.5060706@snafu.de%3E'>dev@commons.apache.org</a>"
      */
     @Test
-    @Ignore
     public void testHugeLineSeparator() {
         final int BaseNCodec_DEFAULT_BUFFER_SIZE = 8192;
         final int Base64_BYTES_PER_ENCODED_BLOCK = 4;
