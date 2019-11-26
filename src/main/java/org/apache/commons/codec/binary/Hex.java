@@ -249,10 +249,17 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
     }
 
     private static byte[] toByteArray(final ByteBuffer byteBuffer) {
+        final int remaining = byteBuffer.remaining();
+        // Use the underlying buffer if possible
         if (byteBuffer.hasArray()) {
-            return byteBuffer.array();
+            final byte[] byteArray = byteBuffer.array();
+            if (remaining == byteArray.length) {
+                //byteBuffer.position(remaining);
+                return byteArray;
+            }
         }
-        final byte[] byteArray = new byte[byteBuffer.remaining()];
+        // Copy the bytes
+        final byte[] byteArray = new byte[remaining];
         byteBuffer.get(byteArray);
         return byteArray;
     }
