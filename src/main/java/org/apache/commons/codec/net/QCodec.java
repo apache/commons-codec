@@ -37,7 +37,7 @@ import org.apache.commons.codec.StringEncoder;
  * handling software.
  * <p>
  * This class is conditionally thread-safe.
- * The instance field {@link #encodeBlanks} is mutable {@link #setEncodeBlanks(boolean)}
+ * The instance field for encoding blanks is mutable {@link #setEncodeBlanks(boolean)}
  * but is not volatile, and accesses are not synchronised.
  * If an instance of the class is shared between threads, the caller needs to ensure that suitable synchronisation
  * is used to ensure safe publication of the value between threads, and must not invoke

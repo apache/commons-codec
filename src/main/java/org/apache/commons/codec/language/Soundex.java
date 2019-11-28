@@ -24,9 +24,8 @@ import org.apache.commons.codec.StringEncoder;
  * Encodes a string into a Soundex value. Soundex is an encoding used to relate similar names, but can also be used as a
  * general purpose scheme to find word with similar phonemes.
  *
- * This class is thread-safe.
- * Although not strictly immutable, the {@link #maxLength} field is not actually used.
- *
+ * <p>This class is thread-safe.
+ * Although not strictly immutable, the mutable fields are not actually used.</p>
  */
 public class Soundex implements StringEncoder {
 
@@ -53,7 +52,6 @@ public class Soundex implements StringEncoder {
      * <b>Note that letters H and W are treated specially.</b>
      * They are ignored (after the first letter) and don't act as separators
      * between consonants with the same code.
-     * @see #US_ENGLISH_MAPPING
      */
     //                                                      ABCDEFGHIJKLMNOPQRSTUVWXYZ
     public static final String US_ENGLISH_MAPPING_STRING = "01230120022455012623010202";
@@ -72,7 +70,6 @@ public class Soundex implements StringEncoder {
      * Apart from when they appear as the first letter, they are ignored.
      * They don't act as separators between duplicate codes.
      *
-     * @see #US_ENGLISH_MAPPING
      * @see #US_ENGLISH_MAPPING_STRING
      */
     public static final Soundex US_ENGLISH = new Soundex();
@@ -133,7 +130,7 @@ public class Soundex implements StringEncoder {
      * Creates an instance using US_ENGLISH_MAPPING
      *
      * @see Soundex#Soundex(char[])
-     * @see Soundex#US_ENGLISH_MAPPING
+     * @see Soundex#US_ENGLISH_MAPPING_STRING
      */
     public Soundex() {
         this.soundexMapping = US_ENGLISH_MAPPING;

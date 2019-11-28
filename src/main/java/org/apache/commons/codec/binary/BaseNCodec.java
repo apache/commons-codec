@@ -179,7 +179,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     private final int chunkSeparatorLength;
 
     /**
-     * Note <code>lineLength</code> is rounded down to the nearest multiple of {@link #encodedBlockSize}
+     * Note <code>lineLength</code> is rounded down to the nearest multiple of the encoded block size.
      * If <code>chunkSeparatorLength</code> is zero, then chunking is disabled.
      * @param unencodedBlockSize the size of an unencoded block (e.g. Base64 = 3)
      * @param encodedBlockSize the size of an encoded block (e.g. Base64 = 4)
@@ -192,7 +192,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
-     * Note <code>lineLength</code> is rounded down to the nearest multiple of {@link #encodedBlockSize}
+     * Note <code>lineLength</code> is rounded down to the nearest multiple of the encoded block size.
      * If <code>chunkSeparatorLength</code> is zero, then chunking is disabled.
      * @param unencodedBlockSize the size of an unencoded block (e.g. Base64 = 3)
      * @param encodedBlockSize the size of an encoded block (e.g. Base64 = 4)
@@ -234,7 +234,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     /**
      * Get the default buffer size. Can be overridden.
      *
-     * @return {@link #DEFAULT_BUFFER_SIZE}
+     * @return the default buffer size.
      */
     protected int getDefaultBufferSize() {
         return DEFAULT_BUFFER_SIZE;

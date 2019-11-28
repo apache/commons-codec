@@ -25,7 +25,7 @@ import org.apache.commons.codec.binary.StringUtils;
  * Encodes a string into a double metaphone value. This Implementation is based on the algorithm by <CITE>Lawrence
  * Philips</CITE>.
  * <p>
- * This class is conditionally thread-safe. The instance field {@link #maxCodeLen} is mutable
+ * This class is conditionally thread-safe. The instance field for the maximum code length is mutable
  * {@link #setMaxCodeLen(int)} but is not volatile, and accesses are not synchronized. If an instance of the class is
  * shared between threads, the caller needs to ensure that suitable synchronization is used to ensure safe publication
  * of the value between threads, and must not invoke {@link #setMaxCodeLen(int)} after initial setup.

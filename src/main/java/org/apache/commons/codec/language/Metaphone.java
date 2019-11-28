@@ -42,7 +42,7 @@ import org.apache.commons.codec.StringEncoder;
  * For more information, see <a href="https://issues.apache.org/jira/browse/CODEC-57">CODEC-57</a>.
  * <p>
  * This class is conditionally thread-safe.
- * The instance field {@link #maxCodeLen} is mutable {@link #setMaxCodeLen(int)}
+ * The instance field for maximum code length is mutable {@link #setMaxCodeLen(int)}
  * but is not volatile, and accesses are not synchronized.
  * If an instance of the class is shared between threads, the caller needs to ensure that suitable synchronization
  * is used to ensure safe publication of the value between threads, and must not invoke {@link #setMaxCodeLen(int)}
