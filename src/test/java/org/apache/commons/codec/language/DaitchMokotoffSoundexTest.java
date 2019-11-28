@@ -89,8 +89,7 @@ public class DaitchMokotoffSoundexTest extends StringEncoderAbstractTest<DaitchM
     /**
      * Test data from http://www.myatt.demon.co.uk/sxalg.htm
      *
-     * @throws EncoderException
-     */
+     * @throws EncoderException for some failure scenarios     */
     @Test
     public void testEncodeIgnoreHyphens() throws EncoderException {
         this.checkEncodingVariations("565463", new String[] { "KINGSMITH", "-KINGSMITH", "K-INGSMITH", "KI-NGSMITH",

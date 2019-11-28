@@ -54,8 +54,7 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest<StringEnco
     /**
      * Tests we do not blow up.
      *
-     * @throws EncoderException
-     */
+     * @throws EncoderException for some failure scenarios     */
     @Test
     public void testAllChars() throws EncoderException {
         final BeiderMorseEncoder bmpm = createGenericApproxEncoder();
@@ -102,8 +101,7 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest<StringEnco
      * Tests https://issues.apache.org/jira/browse/CODEC-125?focusedCommentId=13071566&page=com.atlassian.jira.plugin.system.issuetabpanels:
      * comment-tabpanel#comment-13071566
      *
-     * @throws EncoderException
-     */
+     * @throws EncoderException for some failure scenarios     */
     @Test
     public void testEncodeGna() throws EncoderException {
         final BeiderMorseEncoder bmpm = createGenericApproxEncoder();
@@ -183,9 +181,9 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest<StringEnco
     }
 
     /**
-     * (Un)luckily, the worse performing test because of the data in {@link #TEST_CHARS}
+     * (Un)luckily, the worse performing test because of the data in the test characters.
      *
-     * @throws EncoderException
+     * @throws EncoderException for some failure scenarios
      */
     @Test(/* timeout = 20000L */)
     public void testSpeedCheck() throws EncoderException {

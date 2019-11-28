@@ -38,8 +38,7 @@ public class NysiisTest extends StringEncoderAbstractTest<Nysiis> {
      * @param testValues
      *            an array of String pairs where each pair's first element is the input and the second element the
      *            expected encoding.
-     * @throws EncoderException
-     */
+     * @throws EncoderException for some failure scenarios     */
     private void assertEncodings(final String[]... testValues) throws EncoderException {
         for (final String[] arr : testValues) {
             Assert.assertEquals("Problem with " + arr[0], arr[1], this.fullNysiis.encode(arr[0]));
@@ -83,8 +82,7 @@ public class NysiisTest extends StringEncoderAbstractTest<Nysiis> {
      * Tests data gathered from around the internet.
      *
      * @see <a href="http://www.dropby.com/NYSIISTextStrings.html">http://www.dropby.com/NYSIISTextStrings.html</a>
-     * @throws EncoderException
-     */
+     * @throws EncoderException for some failure scenarios     */
     @Test
     public void testDropBy() throws EncoderException {
         // Explanation of differences between this implementation and the one at dropby.com is
@@ -151,8 +149,7 @@ public class NysiisTest extends StringEncoderAbstractTest<Nysiis> {
     /**
      * Tests data gathered from around the internets.
      *
-     * @throws EncoderException
-     */
+     * @throws EncoderException for some failure scenarios     */
     @Test
     public void testOthers() throws EncoderException {
         this.assertEncodings(
@@ -168,8 +165,7 @@ public class NysiisTest extends StringEncoderAbstractTest<Nysiis> {
     /**
      * Tests rule 1: Translate first characters of name: MAC → MCC, KN → N, K → C, PH, PF → FF, SCH → SSS
      *
-     * @throws EncoderException
-     */
+     * @throws EncoderException for some failure scenarios     */
     @Test
     public void testRule1() throws EncoderException {
         this.assertEncodings(
@@ -184,8 +180,7 @@ public class NysiisTest extends StringEncoderAbstractTest<Nysiis> {
     /**
      * Tests rule 2: Translate last characters of name: EE → Y, IE → Y, DT, RT, RD, NT, ND → D
      *
-     * @throws EncoderException
-     */
+     * @throws EncoderException for some failure scenarios     */
     @Test
     public void testRule2() throws EncoderException {
         this.assertEncodings(
@@ -201,8 +196,7 @@ public class NysiisTest extends StringEncoderAbstractTest<Nysiis> {
     /**
      * Tests rule 4.1: EV → AF else A, E, I, O, U → A
      *
-     * @throws EncoderException
-     */
+     * @throws EncoderException for some failure scenarios     */
     @Test
     public void testRule4Dot1() throws EncoderException {
         this.assertEncodings(
@@ -217,8 +211,7 @@ public class NysiisTest extends StringEncoderAbstractTest<Nysiis> {
     /**
      * Tests rule 4.2: Q → G, Z → S, M → N
      *
-     * @throws EncoderException
-     */
+     * @throws EncoderException for some failure scenarios     */
     @Test
     public void testRule4Dot2() throws EncoderException {
         this.assertEncodings(
@@ -230,8 +223,7 @@ public class NysiisTest extends StringEncoderAbstractTest<Nysiis> {
     /**
      * Tests rule 5: If last character is S, remove it.
      *
-     * @throws EncoderException
-     */
+     * @throws EncoderException for some failure scenarios     */
     @Test
     public void testRule5() throws EncoderException {
         this.assertEncodings(
@@ -242,8 +234,7 @@ public class NysiisTest extends StringEncoderAbstractTest<Nysiis> {
     /**
      * Tests rule 6: If last characters are AY, replace with Y.
      *
-     * @throws EncoderException
-     */
+     * @throws EncoderException for some failure scenarios     */
     @Test
     public void testRule6() throws EncoderException {
         this.assertEncodings(
@@ -254,8 +245,7 @@ public class NysiisTest extends StringEncoderAbstractTest<Nysiis> {
     /**
      * Tests rule 7: If last character is A, remove it.
      *
-     * @throws EncoderException
-     */
+     * @throws EncoderException for some failure scenarios     */
     @Test
     public void testRule7() throws EncoderException {
         this.assertEncodings(

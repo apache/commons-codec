@@ -193,8 +193,7 @@ public class SoundexTest extends StringEncoderAbstractTest<Soundex> {
     /**
      * Test data from http://www.myatt.demon.co.uk/sxalg.htm
      *
-     * @throws EncoderException
-     */
+     * @throws EncoderException for some failure scenarios     */
     @Test
     public void testEncodeIgnoreHyphens() throws EncoderException {
         this.checkEncodingVariations("K525", new String[]{
@@ -245,8 +244,7 @@ public class SoundexTest extends StringEncoderAbstractTest<Soundex> {
     /**
      * Consonants from the same code group separated by W or H are treated as one.
      *
-     * @throws EncoderException
-     */
+     * @throws EncoderException for some failure scenarios     */
     @Test
     public void testHWRuleEx3() throws EncoderException {
         Assert.assertEquals("S460", this.getStringEncoder().encode("Sgler"));
@@ -286,8 +284,7 @@ public class SoundexTest extends StringEncoderAbstractTest<Soundex> {
      * http://support.microsoft.com/default.aspx?scid=http://support.microsoft.com:80/support
      * /kb/articles/Q100/3/65.asp&NoWebContent=1
      *
-     * @throws EncoderException
-     */
+     * @throws EncoderException for some failure scenarios     */
     @Test
     public void testMsSqlServer2() throws EncoderException {
         this.checkEncodingVariations("E625", new String[]{"Erickson", "Erickson", "Erikson", "Ericson", "Ericksen", "Ericsen"});

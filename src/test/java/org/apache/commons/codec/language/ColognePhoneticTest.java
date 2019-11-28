@@ -115,8 +115,7 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest<ColognePhonet
     /**
      * Tests [CODEC-122]
      *
-     * @throws EncoderException
-     */
+     * @throws EncoderException for some failure scenarios     */
     @Test
     public void testAychlmajrForCodec122() throws EncoderException {
         this.checkEncoding("04567", "Aychlmajr");
