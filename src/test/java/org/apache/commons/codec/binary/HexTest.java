@@ -249,6 +249,7 @@ public class HexTest {
         // Effectively set remaining == 0 => empty
         bb.flip();
         assertTrue(Arrays.equals(new byte[0], new Hex().decode(bb)));
+        assertEquals(0, bb.remaining());
     }
 
     @Test
@@ -258,16 +259,19 @@ public class HexTest {
 
     @Test
     public void testDecodeByteBufferOddCharacters() {
-        checkDecodeHexByteBufferOddCharacters(ByteBuffer.wrap(new byte[] { 65 }));
+        final ByteBuffer bb = allocate(1);
+        bb.put((byte) 65);
+        bb.flip();
+        checkDecodeHexByteBufferOddCharacters(bb);
     }
 
     @Test
     public void testDecodeByteBufferWithLimitOddCharacters() {
-        final ByteBuffer buffer = allocate(10);
-        buffer.put(1, (byte) 65);
-        buffer.position(1);
-        buffer.limit(2);
-        checkDecodeHexByteBufferOddCharacters(buffer);
+        final ByteBuffer bb = allocate(10);
+        bb.put(1, (byte) 65);
+        bb.position(1);
+        bb.limit(2);
+        checkDecodeHexByteBufferOddCharacters(bb);
     }
 
     @Test
@@ -334,6 +338,7 @@ public class HexTest {
             bb.position(i * 2);
             bb.limit(i * 2 + 4);
             assertEquals(new String(Arrays.copyOfRange(expected, i, i + 2)), new String(new Hex().decode(bb)));
+            assertEquals(0, bb.remaining());
         }
     }
 
@@ -358,6 +363,7 @@ public class HexTest {
         // Effectively set remaining == 0 => empty
         bb.flip();
         assertTrue(Arrays.equals(new byte[0], new Hex().encode(bb)));
+        assertEquals(0, bb.remaining());
     }
 
     @Test
@@ -457,12 +463,20 @@ public class HexTest {
         final ByteBuffer b = StringUtils.getByteBufferUtf8("Hello World");
         final String expected = "48656c6c6f20576f726c64";
         char[] actual;
+        // Default lower-case
         actual = Hex.encodeHex(b);
         assertEquals(expected, new String(actual));
+        assertEquals(0, b.remaining());
+        // lower-case
+        b.flip();
         actual = Hex.encodeHex(b, true);
         assertEquals(expected, new String(actual));
+        assertEquals(0, b.remaining());
+        // upper-case
+        b.flip();
         actual = Hex.encodeHex(b, false);
-        assertFalse(expected.equals(new String(actual)));
+        assertEquals(expected.toUpperCase(), new String(actual));
+        assertEquals(0, b.remaining());
     }
 
     @Test
@@ -470,12 +484,20 @@ public class HexTest {
         final ByteBuffer b = StringUtils.getByteBufferUtf8("Hello World");
         final String expected = "48656C6C6F20576F726C64";
         char[] actual;
+        // Default lower-case
         actual = Hex.encodeHex(b);
-        assertFalse(expected.equals(new String(actual)));
+        assertEquals(expected.toLowerCase(), new String(actual));
+        assertEquals(0, b.remaining());
+        // lower-case
+        b.flip();
         actual = Hex.encodeHex(b, true);
-        assertFalse(expected.equals(new String(actual)));
+        assertEquals(expected.toLowerCase(), new String(actual));
+        assertEquals(0, b.remaining());
+        // upper-case
+        b.flip();
         actual = Hex.encodeHex(b, false);
-        assertTrue(expected.equals(new String(actual)));
+        assertEquals(expected, new String(actual));
+        assertEquals(0, b.remaining());
     }
 
     @Test
@@ -486,13 +508,18 @@ public class HexTest {
 
     @Test
     public void testEncodeHex_ByteBufferWithLimit() {
-        final ByteBuffer bb = ByteBuffer.wrap(new byte[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15});
+        final ByteBuffer bb = allocate(16);
+        for (int i = 0; i < 16; i++) {
+            bb.put((byte) i);
+        }
+        bb.flip();
         final String expected = "000102030405060708090a0b0c0d0e0f";
         // Test pairs of bytes
         for (int i = 0; i < 15; i++) {
             bb.position(i);
             bb.limit(i + 2);
             assertEquals(expected.substring(i * 2, i * 2 + 4), new String(Hex.encodeHex(bb)));
+            assertEquals(0, bb.remaining());
         }
     }
 
@@ -507,9 +534,11 @@ public class HexTest {
         final ByteBuffer bb = allocate(36);
         bb.limit(3);
         assertEquals("000000", Hex.encodeHexString(bb));
+        assertEquals(0, bb.remaining());
         bb.position(1);
         bb.limit(3);
         assertEquals("0000", Hex.encodeHexString(bb));
+        assertEquals(0, bb.remaining());
     }
 
     @Test
@@ -530,12 +559,18 @@ public class HexTest {
 
     @Test
     public void testEncodeHexByteString_ByteBufferBoolean_ToLowerCase() {
-        assertEquals("0a", Hex.encodeHexString(ByteBuffer.wrap(new byte[] { 10 }), true));
+        final ByteBuffer bb = allocate(1);
+        bb.put((byte) 10);
+        bb.flip();
+        assertEquals("0a", Hex.encodeHexString(bb, true));
     }
 
     @Test
     public void testEncodeHexByteString_ByteBufferBoolean_ToUpperCase() {
-        assertEquals("0A", Hex.encodeHexString(ByteBuffer.wrap(new byte[] { 10 }), false));
+        final ByteBuffer bb = allocate(1);
+        bb.put((byte) 10);
+        bb.flip();
+        assertEquals("0A", Hex.encodeHexString(bb, false));
     }
 
     @Test
@@ -545,6 +580,7 @@ public class HexTest {
         bb.position(1);
         bb.limit(2);
         assertEquals("0a", Hex.encodeHexString(bb, true));
+        assertEquals(0, bb.remaining());
     }
 
     @Test
@@ -554,6 +590,7 @@ public class HexTest {
         bb.position(1);
         bb.limit(2);
         assertEquals("0A", Hex.encodeHexString(bb, false));
+        assertEquals(0, bb.remaining());
     }
 
     @Test
