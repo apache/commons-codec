@@ -63,6 +63,11 @@ public class MessageDigestAlgorithmsTest {
         boolean ok = true;
         int psf = 0;
         for(final Field f : fields) {
+            // Ignore cobertura instrumentation fields
+            if (f.getName().contains("cobertura")) {
+                continue;
+            }
+
             // Only interested in public fields
             final int modifiers = f.getModifiers();
             if (Modifier.isPublic(modifiers) && Modifier.isStatic(modifiers) && Modifier.isFinal(modifiers)) {
