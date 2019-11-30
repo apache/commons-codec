@@ -20,9 +20,11 @@ package org.apache.commons.codec.digest;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.RandomAccessFile;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -96,6 +98,20 @@ public class DigestUtils {
      * @since 1.11
      */
     public static byte[] digest(final MessageDigest messageDigest, final File data) throws IOException {
+        return updateDigest(messageDigest, data).digest();
+    }
+
+    /**
+     * Reads through a RandomAccessFile using non-blocking-io (NIO) and returns the digest for the data
+     *
+     * @param messageDigest The MessageDigest to use (e.g. MD5)
+     * @param data          Data to digest
+     * @return the digest
+     * @throws IOException On error reading from the stream
+     * @since 1.14
+     */
+    public static byte[] digest(final MessageDigest messageDigest, final RandomAccessFile data) throws IOException {
+        data.seek(0);
         return updateDigest(messageDigest, data).digest();
     }
 
@@ -1205,6 +1221,29 @@ public class DigestUtils {
         try (final BufferedInputStream stream = new BufferedInputStream(new FileInputStream(data))) {
             return updateDigest(digest, stream);
         }
+    }
+
+    /**
+     * Reads through a RandomAccessFile and updates the digest for the data
+     * using non-blocking-io (NIO)
+     *
+     * @param digest The MessageDigest to use (e.g. MD5)
+     * @param data   Data to digest
+     * @return the digest
+     * @throws IOException On error reading from the stream
+     * @since 1.14
+     */
+    public static MessageDigest updateDigest(final MessageDigest digest, final RandomAccessFile data) throws IOException {
+        final FileChannel channel = data.getChannel();
+        final ByteBuffer buffer = ByteBuffer.allocate(STREAM_BUFFER_LENGTH);
+
+        while (channel.read(buffer) > 0) {
+            buffer.flip();
+            digest.update(buffer);
+            buffer.clear();
+        }
+
+        return digest;
     }
 
     /**

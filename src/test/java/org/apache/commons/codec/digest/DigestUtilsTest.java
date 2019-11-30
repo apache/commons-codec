@@ -24,6 +24,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.security.MessageDigest;
 import java.util.Random;
@@ -47,6 +48,10 @@ public class DigestUtilsTest {
 
     private File testFile;
 
+    private File testRandomAccessFile;
+
+    private RandomAccessFile testRandomAccessFileWrapper;
+
     private void assumeJava8() {
         Assume.assumeTrue(SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_1_8));
     }
@@ -63,6 +68,10 @@ public class DigestUtilsTest {
         return testFile;
     }
 
+    RandomAccessFile getTestRandomAccessFile() {
+        return testRandomAccessFileWrapper;
+    }
+
     @Before
     public void setUp() throws Exception {
         new Random().nextBytes(testData);
@@ -70,12 +79,22 @@ public class DigestUtilsTest {
         try (final FileOutputStream fos = new FileOutputStream(testFile)) {
             fos.write(testData);
         }
+
+        testRandomAccessFile = File.createTempFile(DigestUtilsTest.class.getName(), ".dat");
+        try (final FileOutputStream fos = new FileOutputStream(testRandomAccessFile)) {
+            fos.write(testData);
+        }
+        testRandomAccessFileWrapper = new RandomAccessFile(testRandomAccessFile, "rw");
     }
 
     @After
     public void tearDown() {
         if (!testFile.delete()) {
             testFile.deleteOnExit();
+        }
+
+        if (!testRandomAccessFile.delete()) {
+            testRandomAccessFile.deleteOnExit();
         }
     }
 
