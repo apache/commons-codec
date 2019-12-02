@@ -25,6 +25,7 @@ import static org.junit.Assert.fail;
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.charset.UnsupportedCharsetException;
 import java.util.Arrays;
 import java.util.Random;
@@ -45,8 +46,34 @@ public class HexTest {
 
     private final static boolean LOG = false;
 
+    /**
+     * Allocate a ByteBuffer.
+     * 
+     * <p>The default implementation uses {@link ByteBuffer#allocate(int)}.
+     * The method is overridden in AllocateDirectHexTest to use
+     * {@link ByteBuffer#allocateDirect(int)}
+     *
+     * @param capacity the capacity
+     * @return the byte buffer
+     */
     protected ByteBuffer allocate(final int capacity) {
         return ByteBuffer.allocate(capacity);
+    }
+
+    /**
+     * Encodes the given string into a byte buffer using the UTF-8 charset.
+     * 
+     * <p>The buffer is allocated using {@link #allocate(int)}.
+     *
+     * @param string the String to encode
+     * @return the byte buffer
+     */
+    private ByteBuffer getByteBufferUtf8(String string) {
+        final byte[] bytes = string.getBytes(StandardCharsets.UTF_8);
+        final ByteBuffer bb = allocate(bytes.length);
+        bb.put(bytes);
+        bb.flip();
+        return bb;
     }
 
     private boolean charsetSanityCheck(final String name) {
@@ -331,7 +358,7 @@ public class HexTest {
 
     @Test
     public void testDecodeByteBufferWithLimit() throws DecoderException {
-        final ByteBuffer bb = StringUtils.getByteBufferUtf8("000102030405060708090a0b0c0d0e0f");
+        final ByteBuffer bb = getByteBufferUtf8("000102030405060708090a0b0c0d0e0f");
         final byte[] expected = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
         // Test pairs of bytes
         for (int i = 0; i < 15; i++) {
@@ -460,7 +487,7 @@ public class HexTest {
 
     @Test
     public void testEncodeHexByteBufferHelloWorldLowerCaseHex() {
-        final ByteBuffer b = StringUtils.getByteBufferUtf8("Hello World");
+        final ByteBuffer b = getByteBufferUtf8("Hello World");
         final String expected = "48656c6c6f20576f726c64";
         char[] actual;
         // Default lower-case
@@ -481,7 +508,7 @@ public class HexTest {
 
     @Test
     public void testEncodeHexByteBufferHelloWorldUpperCaseHex() {
-        final ByteBuffer b = StringUtils.getByteBufferUtf8("Hello World");
+        final ByteBuffer b = getByteBufferUtf8("Hello World");
         final String expected = "48656C6C6F20576F726C64";
         char[] actual;
         // Default lower-case
