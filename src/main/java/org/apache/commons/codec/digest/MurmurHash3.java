@@ -104,19 +104,16 @@ public final class MurmurHash3 {
      * <pre>
      * int offset = 0;
      * int seed = 104729;
-     * int hash = MurmurHash3.hash32(ByteBuffer.allocate(16)
-     *                                         .putLong(data1)
-     *                                         .putLong(data2)
-     *                                         .array(), offset, 16, seed);
+     * int hash = MurmurHash3.hash32x86(ByteBuffer.allocate(16)
+     *                                            .putLong(data1)
+     *                                            .putLong(data2)
+     *                                            .array(), offset, 16, seed);
      * </pre>
-     *
-     * <p>Note: The sign extension bug in {@link #hash32(byte[], int, int, int)} does not affect
-     * this result as there are no bytes left over from dividing the length by 4.<p>
      *
      * @param data1 The first long to hash
      * @param data2 The second long to hash
      * @return The 32-bit hash
-     * @see #hash32(byte[], int, int, int)
+     * @see #hash32x86(byte[], int, int, int)
      */
     public static int hash32(final long data1, final long data2) {
         return hash32(data1, data2, DEFAULT_SEED);
@@ -128,20 +125,17 @@ public final class MurmurHash3 {
      *
      * <pre>
      * int offset = 0;
-     * int hash = MurmurHash3.hash32(ByteBuffer.allocate(16)
-     *                                         .putLong(data1)
-     *                                         .putLong(data2)
-     *                                         .array(), offset, 16, seed);
+     * int hash = MurmurHash3.hash32x86(ByteBuffer.allocate(16)
+     *                                            .putLong(data1)
+     *                                            .putLong(data2)
+     *                                            .array(), offset, 16, seed);
      * </pre>
-     *
-     * <p>Note: The sign extension bug in {@link #hash32(byte[], int, int, int)} does not affect
-     * this result as there are no bytes left over from dividing the length by 4.<p>
      *
      * @param data1 The first long to hash
      * @param data2 The second long to hash
      * @param seed The initial seed value
      * @return The 32-bit hash
-     * @see #hash32(byte[], int, int, int)
+     * @see #hash32x86(byte[], int, int, int)
      */
     public static int hash32(final long data1, final long data2, final int seed) {
         int hash = seed;
@@ -164,17 +158,14 @@ public final class MurmurHash3 {
      * <pre>
      * int offset = 0;
      * int seed = 104729;
-     * int hash = MurmurHash3.hash32(ByteBuffer.allocate(8)
-     *                                         .putLong(data)
-     *                                         .array(), offset, 8, seed);
+     * int hash = MurmurHash3.hash32x86(ByteBuffer.allocate(8)
+     *                                            .putLong(data)
+     *                                            .array(), offset, 8, seed);
      * </pre>
-     *
-     * <p>Note: The sign extension bug in {@link #hash32(byte[], int, int, int)} does not affect
-     * this result as there are no bytes left over from dividing the length by 4.<p>
      *
      * @param data The long to hash
      * @return The 32-bit hash
-     * @see #hash32(byte[], int, int, int)
+     * @see #hash32x86(byte[], int, int, int)
      */
     public static int hash32(final long data) {
         return hash32(data, DEFAULT_SEED);
@@ -186,18 +177,15 @@ public final class MurmurHash3 {
      *
      * <pre>
      * int offset = 0;
-     * int hash = MurmurHash3.hash32(ByteBuffer.allocate(8)
-     *                                         .putLong(data)
-     *                                         .array(), offset, 8, seed);
+     * int hash = MurmurHash3.hash32x86(ByteBuffer.allocate(8)
+     *                                            .putLong(data)
+     *                                            .array(), offset, 8, seed);
      * </pre>
-     *
-     * <p>Note: The sign extension bug in {@link #hash32(byte[], int, int, int)} does not affect
-     * this result as there are no bytes left over from dividing the length by 4.<p>
      *
      * @param data The long to hash
      * @param seed The initial seed value
      * @return The 32-bit hash
-     * @see #hash32(byte[], int, int, int)
+     * @see #hash32x86(byte[], int, int, int)
      */
     public static int hash32(final long data, final int seed) {
         int hash = seed;

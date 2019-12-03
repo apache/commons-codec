@@ -105,7 +105,7 @@ public class MurmurHash3Test {
             for (final long j : data) {
                 buffer.putLong(0, i);
                 buffer.putLong(MurmurHash3.LONG_BYTES, j);
-                Assert.assertEquals(MurmurHash3.hash32(bytes, offset, length, seed), MurmurHash3.hash32(i, j));
+                Assert.assertEquals(MurmurHash3.hash32x86(bytes, offset, length, seed), MurmurHash3.hash32(i, j));
             }
         }
     }
@@ -127,7 +127,7 @@ public class MurmurHash3Test {
             for (final long j : data) {
                 buffer.putLong(0, i);
                 buffer.putLong(MurmurHash3.LONG_BYTES, j);
-                Assert.assertEquals(MurmurHash3.hash32(bytes, offset, length, seed), MurmurHash3.hash32(i, j, seed));
+                Assert.assertEquals(MurmurHash3.hash32x86(bytes, offset, length, seed), MurmurHash3.hash32(i, j, seed));
             }
         }
     }
@@ -147,7 +147,7 @@ public class MurmurHash3Test {
         final long[] data = createLongTestData();
         for (final long i : data) {
             buffer.putLong(0, i);
-            Assert.assertEquals(MurmurHash3.hash32(bytes, offset, length, seed), MurmurHash3.hash32(i));
+            Assert.assertEquals(MurmurHash3.hash32x86(bytes, offset, length, seed), MurmurHash3.hash32(i));
         }
     }
 
@@ -166,7 +166,7 @@ public class MurmurHash3Test {
         final long[] data = createLongTestData();
         for (final long i : data) {
             buffer.putLong(0, i);
-            Assert.assertEquals(MurmurHash3.hash32(bytes, offset, length, seed), MurmurHash3.hash32(i, seed));
+            Assert.assertEquals(MurmurHash3.hash32x86(bytes, offset, length, seed), MurmurHash3.hash32(i, seed));
         }
     }
 
