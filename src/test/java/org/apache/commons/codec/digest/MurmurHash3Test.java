@@ -716,7 +716,7 @@ public class MurmurHash3Test {
 
     /**
      * Test the {@link MurmurHash3#hash128x64(byte[], int, int, int)} algorithm.
-     * 
+     *
      * <p>Explicit test for a negative seed. The original implementation has a sign extension error
      * for negative seeds.
      *

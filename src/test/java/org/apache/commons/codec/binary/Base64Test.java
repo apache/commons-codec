@@ -1402,7 +1402,7 @@ public class Base64Test {
         // 1GiB: Input buffer to encode
         // 1GiB: Existing working buffer (due to doubling of default buffer size of 8192)
         // ~2GiB: New working buffer to allocate (due to doubling)
-        // ~1.33GiB: Expected output size (since the working buffer is copied at the end) 
+        // ~1.33GiB: Expected output size (since the working buffer is copied at the end)
         // 32KiB: Some head room
         final long estimatedMemory = (long) size1GiB * 4 + expectedLength + 32 * 1024;
         Assume.assumeTrue("Not enough free memory for the test", presumableFreeMemory > estimatedMemory);
