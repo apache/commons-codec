@@ -62,7 +62,6 @@ public final class MurmurHash3 {
     /**
      * A default seed to use for the murmur hash algorithm.
      * Has the value {@code 104729}.
-     *
      */
     public static final int DEFAULT_SEED = 104729;
 
