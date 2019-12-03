@@ -253,7 +253,8 @@ public final class MurmurHash3 {
      * @param data The input string
      * @return The 32-bit hash
      * @see #hash32(byte[], int, int, int)
-     * @deprecated Use {@link #hash32x86(byte[], int, int, int)} with the String byte data. This corrects the processing of trailing bytes.
+     * @deprecated Use {@link #hash32x86(byte[], int, int, int)} with the bytes returned from
+     * {@link String#getBytes(java.nio.charset.Charset)}. This corrects the processing of trailing bytes.
      */
     @Deprecated
     public static int hash32(final String data) {
@@ -751,7 +752,10 @@ public final class MurmurHash3 {
      * @param data The input String
      * @return The 128-bit hash (2 longs)
      * @see #hash128(byte[], int, int, int)
+     * @deprecated Use {@link #hash128x64(byte[])} using the bytes returned from
+     * {@link String#getBytes(java.nio.charset.Charset)}.
      */
+    @Deprecated
     public static long[] hash128(final String data) {
         final byte[] bytes = data.getBytes();
         return hash128(bytes, 0, bytes.length, DEFAULT_SEED);
