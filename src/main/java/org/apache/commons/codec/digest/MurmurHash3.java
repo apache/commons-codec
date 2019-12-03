@@ -53,7 +53,10 @@ package org.apache.commons.codec.digest;
 public final class MurmurHash3 {
     /**
      * A random number to use for a hash code.
+     *
+     * @deprecated This is not used internally and will be removed in a future release.
      */
+    @Deprecated
     public static final long NULL_HASHCODE = 2862933555777941757L;
 
     /**
