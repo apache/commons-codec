@@ -39,7 +39,9 @@ package org.apache.commons.codec.digest;
  * </blockquote>
  *
  * <p>Original adaption from Apache Hive. That adaption contains a {@code hash64} method
- * that is not part of the original MurmurHash3 code.<p>
+ * that is not part of the original MurmurHash3 code. It is not recommended to use these methods.
+ * They will be removed in a future release. To obtain a 64-bit hash use half of the bits
+ * from the {@code hash128x64} methods using the input data converted to bytes.<p>
  *
  * @see <a href="https://en.wikipedia.org/wiki/MurmurHash">MurmurHash</a>
  * @see <a href="https://github.com/aappleby/smhasher/blob/master/src/MurmurHash3.cpp">
@@ -428,9 +430,12 @@ public final class MurmurHash3 {
     /**
      * Generates 64-bit hash from a long with a default seed.
      *
+     * <p><strong>This is not part of the original MurmurHash3 {@code c++} implementation.</strong></p>
+     *
      * <p>This is a Murmur3-like 64-bit variant.
-     * <strong>This is not part of the original MurmurHash3 {@code c++} implementation.</strong>
-     * It may be removed in a future release.</p>
+     * The method does not produce the same result as either half of the hash bytes from
+     * {@linkplain #hash128x64(byte[])} with the same byte data from the {@code long}.
+     * This method will be removed in a future release.</p>
      *
      * <p>This is a helper method that will produce the same result as:</p>
      *
@@ -445,7 +450,10 @@ public final class MurmurHash3 {
      * @param data The long to hash
      * @return The 64-bit hash
      * @see #hash64(byte[], int, int, int)
+     * @deprecated Not part of the MurmurHash3 implementation.
+     * Use half of the hash bytes from {@link #hash128x64(byte[])} with the bytes from the {@code long}.
      */
+    @Deprecated
     public static long hash64(final long data) {
         long hash = DEFAULT_SEED;
         long k = Long.reverseBytes(data);
@@ -465,9 +473,12 @@ public final class MurmurHash3 {
     /**
      * Generates 64-bit hash from an int with a default seed.
      *
+     * <p><strong>This is not part of the original MurmurHash3 {@code c++} implementation.</strong></p>
+     *
      * <p>This is a Murmur3-like 64-bit variant.
-     * <strong>This is not part of the original MurmurHash3 {@code c++} implementation.</strong>
-     * It may be removed in a future release.</p>
+     * The method does not produce the same result as either half of the hash bytes from
+     * {@linkplain #hash128x64(byte[])} with the same byte data from the {@code int}.
+     * This method will be removed in a future release.</p>
      *
      * <p>This is a helper method that will produce the same result as:</p>
      *
@@ -482,7 +493,10 @@ public final class MurmurHash3 {
      * @param data The int to hash
      * @return The 64-bit hash
      * @see #hash64(byte[], int, int, int)
+     * @deprecated Not part of the MurmurHash3 implementation.
+     * Use half of the hash bytes from {@link #hash128x64(byte[])} with the bytes from the {@code int}.
      */
+    @Deprecated
     public static long hash64(final int data) {
         long k1 = Integer.reverseBytes(data) & (-1L >>> 32);
         final int length = INTEGER_BYTES;
@@ -500,9 +514,12 @@ public final class MurmurHash3 {
     /**
      * Generates 64-bit hash from a short with a default seed.
      *
+     * <p><strong>This is not part of the original MurmurHash3 {@code c++} implementation.</strong></p>
+     *
      * <p>This is a Murmur3-like 64-bit variant.
-     * <strong>This is not part of the original MurmurHash3 {@code c++} implementation.</strong>
-     * It may be removed in a future release.</p>
+     * The method does not produce the same result as either half of the hash bytes from
+     * {@linkplain #hash128x64(byte[])} with the same byte data from the {@code short}.
+     * This method will be removed in a future release.</p>
      *
      * <p>This is a helper method that will produce the same result as:</p>
      *
@@ -517,7 +534,10 @@ public final class MurmurHash3 {
      * @param data The short to hash
      * @return The 64-bit hash
      * @see #hash64(byte[], int, int, int)
+     * @deprecated Not part of the MurmurHash3 implementation.
+     * Use half of the hash bytes from {@link #hash128x64(byte[])} with the bytes from the {@code short}.
      */
+    @Deprecated
     public static long hash64(final short data) {
         long hash = DEFAULT_SEED;
         long k1 = 0;
@@ -537,9 +557,12 @@ public final class MurmurHash3 {
     /**
      * Generates 64-bit hash from a byte array with a default seed.
      *
+     * <p><strong>This is not part of the original MurmurHash3 {@code c++} implementation.</strong></p>
+     *
      * <p>This is a Murmur3-like 64-bit variant.
-     * <strong>This is not part of the original MurmurHash3 {@code c++} implementation.</strong>
-     * It may be removed in a future release.</p>
+     * The method does not produce the same result as either half of the hash bytes from
+     * {@linkplain #hash128x64(byte[])} with the same byte data.
+     * This method will be removed in a future release.</p>
      *
      * <p>This is a helper method that will produce the same result as:</p>
      *
@@ -552,7 +575,10 @@ public final class MurmurHash3 {
      * @param data The input byte array
      * @return The 64-bit hash
      * @see #hash64(byte[], int, int, int)
+     * @deprecated Not part of the MurmurHash3 implementation.
+     * Use half of the hash bytes from {@link #hash128x64(byte[])}.
      */
+    @Deprecated
     public static long hash64(final byte[] data) {
         return hash64(data, 0, data.length, DEFAULT_SEED);
     }
@@ -560,9 +586,12 @@ public final class MurmurHash3 {
     /**
      * Generates 64-bit hash from a byte array with the given offset and length and a default seed.
      *
+     * <p><strong>This is not part of the original MurmurHash3 {@code c++} implementation.</strong></p>
+     *
      * <p>This is a Murmur3-like 64-bit variant.
-     * <strong>This is not part of the original MurmurHash3 {@code c++} implementation.</strong>
-     * It may be removed in a future release.</p>
+     * The method does not produce the same result as either half of the hash bytes from
+     * {@linkplain #hash128x64(byte[])} with the same byte data.
+     * This method will be removed in a future release.</p>
      *
      * <p>This is a helper method that will produce the same result as:</p>
      *
@@ -576,7 +605,10 @@ public final class MurmurHash3 {
      * @param length The length of array
      * @return The 64-bit hash
      * @see #hash64(byte[], int, int, int)
+     * @deprecated Not part of the MurmurHash3 implementation.
+     * Use half of the hash bytes from {@link #hash128x64(byte[], int, int, int)}.
      */
+    @Deprecated
     public static long hash64(final byte[] data, final int offset, final int length) {
         return hash64(data, offset, length, DEFAULT_SEED);
     }
@@ -584,9 +616,10 @@ public final class MurmurHash3 {
     /**
      * Generates 64-bit hash from a byte array with the given offset, length and seed.
      *
+     * <p><strong>This is not part of the original MurmurHash3 {@code c++} implementation.</strong></p>
+     *
      * <p>This is a Murmur3-like 64-bit variant.
-     * <strong>This is not part of the original MurmurHash3 {@code c++} implementation.</strong>
-     * It may be removed in a future release.</p>
+     * This method will be removed in a future release.</p>
      *
      * <p>This algorithm processes 8 bytes chunks of data in a manner similar to the 16 byte chunks
      * of data processed in the MurmurHash3 {@code MurmurHash3_x64_128} method. However the hash
@@ -602,7 +635,10 @@ public final class MurmurHash3 {
      * @param length The length of array
      * @param seed The initial seed value
      * @return The 64-bit hash
+     * @deprecated Not part of the MurmurHash3 implementation.
+     * Use half of the hash bytes from {@link #hash128x64(byte[], int, int, int)}.
      */
+    @Deprecated
     public static long hash64(final byte[] data, final int offset, final int length, final int seed) {
         // ************
         // Note: This fails to apply masking using 0xffffffffL to the seed.
@@ -961,7 +997,7 @@ public final class MurmurHash3 {
         /** The total number of input bytes added since the start. */
         private int totalLen;
         /**
-         * The current running hash. 
+         * The current running hash.
          * This must be finalised to generate the 32-bit hash value.
          */
         private int hash;
