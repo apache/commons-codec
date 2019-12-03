@@ -558,6 +558,27 @@ public final class MurmurHash3 {
     }
 
     /**
+     * Generates 64-bit hash from a string with a default seed.
+     * The string is converted to bytes using the default encoding.
+     * This is a helper method that will produce the same result as:
+     *
+     * <pre>
+     * int offset = 0;
+     * int seed = 104729;
+     * byte[] bytes = data.getBytes();
+     * int hash = MurmurHash3.hash64(bytes, offset, bytes.length, seed);
+     * </pre>
+     *
+     * @param data The input String
+     * @return The 64-bit hash
+     * @see #hash64(byte[], int, int, int)
+     */
+    public static long hash64(final String data) {
+        final byte[] bytes = data.getBytes();
+        return hash64(bytes, 0, bytes.length, DEFAULT_SEED);
+    }
+
+    /**
      * Generates 64-bit hash from a byte array with the given offset and length and a default seed.
      *
      * <p>This is a Murmur3-like 64-bit variant.

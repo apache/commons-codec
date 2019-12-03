@@ -507,6 +507,37 @@ public class MurmurHash3Test {
     }
 
     /**
+     * Test the {@link MurmurHash3#hash64(String)} algorithm. This only tests it can return
+     * the same value as {@link MurmurHash3#hash64(byte[], int, int, int)} if the string
+     * is converted to bytes using the method {@link String#getBytes()}.
+     *
+     * <p>The test uses random strings created with random unicode code points.</p>
+     */
+    @Test
+    public void testHash64String() {
+        final int seed = 104729;
+        // Range is end exclusive so this is random strings of length 1-10
+        final int minSize = 1;
+        final int maxSize = 11;
+        // The Unicode Standard, Version 7.0, contains 112,956 characters
+        final int codePoints = 112956;
+        final char[] chars = new char[(maxSize - minSize) * 2];
+        for (int i = 0; i < 1000; i++) {
+            int pos = 0;
+            final int size = ThreadLocalRandom.current().nextInt(minSize, maxSize);
+            for (int j = 0; j < size; j++) {
+                final int codePoint = ThreadLocalRandom.current().nextInt(codePoints);
+                pos += Character.toChars(codePoint, chars, pos);
+            }
+            final String text = String.copyValueOf(chars, 0, pos);
+            final byte[] bytes = text.getBytes();
+            final long h1 = MurmurHash3.hash64(bytes, 0, bytes.length, seed);
+            final long h2 = MurmurHash3.hash64(text);
+            Assert.assertEquals(h1, h2);
+        }
+    }
+
+    /**
      * Test the {@link MurmurHash3#hash64(byte[])} method is Murmur3-like but does not match
      * the bits returned from {@link MurmurHash3#hash128(byte[])}.
      *
