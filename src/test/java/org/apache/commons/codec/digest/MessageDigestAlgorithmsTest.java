@@ -19,6 +19,7 @@ package org.apache.commons.codec.digest;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.nio.ByteBuffer;
@@ -106,6 +107,10 @@ public class MessageDigestAlgorithmsTest {
         return digestUtilsTest.getTestFile();
     }
 
+    private RandomAccessFile getTestRandomAccessFile() {
+        return digestUtilsTest.getTestRandomAccessFile();
+    }
+
     @Before
     public void setUp() throws Exception {
         digestUtilsTest = new DigestUtilsTest();
@@ -149,6 +154,25 @@ public class MessageDigestAlgorithmsTest {
         Assert.assertArrayEquals(digestTestData(),
                 DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm), getTestFile()));
         Assert.assertArrayEquals(digestTestData(), DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm),getTestFile()));
+    }
+
+    @Test
+    public void testNonBlockingDigestRandomAccessFile() throws IOException {
+        Assume.assumeTrue(DigestUtils.isAvailable(messageDigestAlgorithm));
+
+        final byte[] expected = digestTestData();
+
+        Assert.assertArrayEquals(expected,
+                DigestUtils.digest(
+                        DigestUtils.getDigest(messageDigestAlgorithm), getTestRandomAccessFile()
+                )
+        );
+
+        Assert.assertArrayEquals(expected,
+                DigestUtils.digest(
+                        DigestUtils.getDigest(messageDigestAlgorithm), getTestRandomAccessFile()
+                )
+        );
     }
 
     @Test
