@@ -167,7 +167,7 @@ public class MessageDigestAlgorithmsTest {
                         DigestUtils.getDigest(messageDigestAlgorithm), getTestRandomAccessFile()
                 )
         );
-
+        getTestRandomAccessFile().seek(0);
         Assert.assertArrayEquals(expected,
                 DigestUtils.digest(
                         DigestUtils.getDigest(messageDigestAlgorithm), getTestRandomAccessFile()
