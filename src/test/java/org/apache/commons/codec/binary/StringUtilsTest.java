@@ -18,6 +18,8 @@
 package org.apache.commons.codec.binary;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 import org.junit.Assert;
@@ -235,5 +237,13 @@ public class StringUtilsTest {
         Assert.assertFalse(StringUtils.equals(new StringBuilder("abc"), "abcd"));
         Assert.assertFalse(StringUtils.equals("abcd", new StringBuilder("abc")));
         Assert.assertFalse(StringUtils.equals(new StringBuilder("abc"), "ABC"));
+    }
+
+    @Test
+    public void testByteBufferUtf8() {
+        Assert.assertNull("Should be null safe", StringUtils.getByteBufferUtf8(null));
+        final String text = "asdhjfhsadiogasdjhagsdygfjasfgsdaksjdhfk";
+        final ByteBuffer bb = StringUtils.getByteBufferUtf8(text);
+        Assert.assertArrayEquals(text.getBytes(StandardCharsets.UTF_8), bb.array());
     }
 }
