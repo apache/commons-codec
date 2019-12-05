@@ -43,7 +43,8 @@ The <action> type attribute can be add,update,fix,remove.
   <body>
 
     <release version="1.14" date="TBD" description="Feature and fix release.">
-      <action issue="CODEC-259" dev="aherbert" type="add">Hex: Only use an available ByteBuffer backing array if the length equals the remaining byte count.</action>
+      <action issue="CODEC-261" dev="aherbert" type="fix">Hex: Allow encoding read-only ByteBuffer.</action>
+      <action issue="CODEC-259" dev="aherbert" type="fix">Hex: Only use an available ByteBuffer backing array if the length equals the remaining byte count.</action>
       <action issue="CODEC-268" dev="aherbert" type="update">MurmurHash3: Deprecate hash64 methods and hash methods accepting a String that use the default encoding.</action>
       <action issue="CODEC-265" dev="aherbert" type="fix">BaseNCodec to expand buffer using overflow conscious code.</action>
       <action issue="CODEC-270" dev="aherbert" type="fix">Base32/64: Fixed decoding check that all the final trailing bits to discard are zero.</action>
