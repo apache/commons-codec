@@ -620,6 +620,16 @@ public class HexTest {
         assertEquals(0, bb.remaining());
     }
 
+    /**
+     * Test encoding of a read only byte buffer.
+     * See CODEC-261.
+     */
+    @Test
+    public void testEncodeHexReadOnlyByteBuffer() {
+        final char[] chars = Hex.encodeHex(ByteBuffer.wrap(new byte[]{10}).asReadOnlyBuffer());
+        assertEquals("0a", String.valueOf(chars));
+    }
+
     @Test
     public void testEncodeStringEmpty() throws EncoderException {
         assertTrue(Arrays.equals(new char[0], (char[]) new Hex().encode("")));
