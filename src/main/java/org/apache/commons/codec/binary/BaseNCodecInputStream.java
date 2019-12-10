@@ -49,8 +49,8 @@ public class BaseNCodecInputStream extends FilterInputStream {
     /**
      * {@inheritDoc}
      *
-     * @return <code>0</code> if the {@link InputStream} has reached <code>EOF</code>,
-     * <code>1</code> otherwise
+     * @return {@code 0} if the {@link InputStream} has reached {@code EOF},
+     * {@code 1} otherwise
      * @since 1.7
      */
     @Override
@@ -79,7 +79,7 @@ public class BaseNCodecInputStream extends FilterInputStream {
     /**
      * {@inheritDoc}
      *
-     * @return Always returns <code>false</code>
+     * @return Always returns {@code false}
      */
     @Override
     public boolean markSupported() {
@@ -87,7 +87,7 @@ public class BaseNCodecInputStream extends FilterInputStream {
     }
 
     /**
-     * Reads one <code>byte</code> from this input stream.
+     * Reads one {@code byte} from this input stream.
      *
      * @return the byte as an integer in the range 0 to 255. Returns -1 if EOF has been reached.
      * @throws IOException
@@ -107,7 +107,7 @@ public class BaseNCodecInputStream extends FilterInputStream {
     }
 
     /**
-     * Attempts to read <code>len</code> bytes into the specified <code>b</code> array starting at <code>offset</code>
+     * Attempts to read {@code len} bytes into the specified {@code b} array starting at {@code offset}
      * from this InputStream.
      *
      * @param b

@@ -191,7 +191,7 @@ public class DoubleMetaphone implements StringEncoder {
 
     /**
      * Encode the value using DoubleMetaphone.  It will only work if
-     * <code>obj</code> is a <code>String</code> (like <code>Metaphone</code>).
+     * {@code obj} is a {@code String} (like {@code Metaphone}).
      *
      * @param obj Object to encode (should be of type String)
      * @return An encoded Object (will be of type String)
@@ -217,13 +217,13 @@ public class DoubleMetaphone implements StringEncoder {
     }
 
     /**
-     * Check if the Double Metaphone values of two <code>String</code> values
+     * Check if the Double Metaphone values of two {@code String} values
      * are equal.
      *
      * @param value1 The left-hand side of the encoded {@link String#equals(Object)}.
      * @param value2 The right-hand side of the encoded {@link String#equals(Object)}.
-     * @return <code>true</code> if the encoded <code>String</code>s are equal;
-     *          <code>false</code> otherwise.
+     * @return {@code true} if the encoded {@code String}s are equal;
+     *          {@code false} otherwise.
      * @see #isDoubleMetaphoneEqual(String,String,boolean)
      */
     public boolean isDoubleMetaphoneEqual(final String value1, final String value2) {
@@ -231,14 +231,14 @@ public class DoubleMetaphone implements StringEncoder {
     }
 
     /**
-     * Check if the Double Metaphone values of two <code>String</code> values
+     * Check if the Double Metaphone values of two {@code String} values
      * are equal, optionally using the alternate value.
      *
      * @param value1 The left-hand side of the encoded {@link String#equals(Object)}.
      * @param value2 The right-hand side of the encoded {@link String#equals(Object)}.
-     * @param alternate use the alternate value if <code>true</code>.
-     * @return <code>true</code> if the encoded <code>String</code>s are equal;
-     *          <code>false</code> otherwise.
+     * @param alternate use the alternate value if {@code true}.
+     * @return {@code true} if the encoded {@code String}s are equal;
+     *          {@code false} otherwise.
      */
     public boolean isDoubleMetaphoneEqual(final String value1, final String value2, final boolean alternate) {
         return StringUtils.equals(doubleMetaphone(value1, alternate), doubleMetaphone(value2, alternate));
@@ -867,7 +867,7 @@ public class DoubleMetaphone implements StringEncoder {
 
     /**
      * Determines whether or not the value starts with a silent letter.  It will
-     * return <code>true</code> if the value starts with any of 'GN', 'KN',
+     * return {@code true} if the value starts with any of 'GN', 'KN',
      * 'PN', 'WR' or 'PS'.
      */
     private boolean isSilentStart(final String value) {
@@ -896,8 +896,8 @@ public class DoubleMetaphone implements StringEncoder {
     }
 
     /*
-     * Gets the character at index <code>index</code> if available, otherwise
-     * it returns <code>Character.MIN_VALUE</code> so that there is some sort
+     * Gets the character at index {@code index} if available, otherwise
+     * it returns {@code Character.MIN_VALUE} so that there is some sort
      * of a default.
      */
     protected char charAt(final String value, final int index) {
@@ -908,8 +908,8 @@ public class DoubleMetaphone implements StringEncoder {
     }
 
     /*
-     * Determines whether <code>value</code> contains any of the criteria starting at index <code>start</code> and
-     * matching up to length <code>length</code>.
+     * Determines whether {@code value} contains any of the criteria starting at index {@code start} and
+     * matching up to length {@code length}.
      */
     protected static boolean contains(final String value, final int start, final int length,
                                       final String... criteria) {

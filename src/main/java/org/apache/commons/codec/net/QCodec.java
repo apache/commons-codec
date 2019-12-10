@@ -301,7 +301,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      *            quoted-printable object to convert into its original form
      * @return original object
      * @throws DecoderException
-     *             Thrown if the argument is not a <code>String</code>. Thrown if a failure condition is encountered
+     *             Thrown if the argument is not a {@code String}. Thrown if a failure condition is encountered
      *             during the decode process.
      */
     @Override
@@ -339,7 +339,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     /**
      * Tests if optional transformation of SPACE characters is to be used
      *
-     * @return <code>true</code> if SPACE characters are to be transformed, <code>false</code> otherwise
+     * @return {@code true} if SPACE characters are to be transformed, {@code false} otherwise
      */
     public boolean isEncodeBlanks() {
         return this.encodeBlanks;
@@ -349,7 +349,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * Defines whether optional transformation of SPACE characters is to be used
      *
      * @param b
-     *            <code>true</code> if SPACE characters are to be transformed, <code>false</code> otherwise
+     *            {@code true} if SPACE characters are to be transformed, {@code false} otherwise
      */
     public void setEncodeBlanks(final boolean b) {
         this.encodeBlanks = b;

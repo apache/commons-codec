@@ -160,7 +160,7 @@ public class Sha2Crypt {
      *            {@link MessageDigest} algorithm identifier string
      * @return complete hash value including prefix and salt
      * @throws IllegalArgumentException
-     *             if the given salt is <code>null</code> or does not match the allowed pattern
+     *             if the given salt is {@code null} or does not match the allowed pattern
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught
      * @see MessageDigestAlgorithms

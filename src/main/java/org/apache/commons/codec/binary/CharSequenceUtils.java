@@ -18,7 +18,7 @@ package org.apache.commons.codec.binary;
 
 /**
  * <p>
- * Operations on {@link CharSequence} that are <code>null</code> safe.
+ * Operations on {@link CharSequence} that are {@code null} safe.
  * </p>
  * <p>
  * Copied from Apache Commons Lang r1586295 on April 10, 2014 (day of 3.3.2 release).
@@ -33,15 +33,15 @@ public class CharSequenceUtils {
      * Green implementation of regionMatches.
      *
      * @param cs
-     *            the <code>CharSequence</code> to be processed
+     *            the {@code CharSequence} to be processed
      * @param ignoreCase
      *            whether or not to be case insensitive
      * @param thisStart
-     *            the index to start on the <code>cs</code> CharSequence
+     *            the index to start on the {@code cs} CharSequence
      * @param substring
-     *            the <code>CharSequence</code> to be looked for
+     *            the {@code CharSequence} to be looked for
      * @param start
-     *            the index to start on the <code>substring</code> CharSequence
+     *            the index to start on the {@code substring} CharSequence
      * @param length
      *            character length of the region
      * @return whether the region matched

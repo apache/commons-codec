@@ -142,7 +142,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * given byte.
      *
      * @param data        a byte[] to convert to Hex characters
-     * @param toLowerCase <code>true</code> converts to lowercase, <code>false</code> to uppercase
+     * @param toLowerCase {@code true} converts to lowercase, {@code false} to uppercase
      * @return A char[] containing hexadecimal characters in the selected case
      * @since 1.4
      */
@@ -159,7 +159,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * the value {@link ByteBuffer#remaining() remaining()} will be zero.</p>
      *
      * @param data        a byte buffer to convert to Hex characters
-     * @param toLowerCase <code>true</code> converts to lowercase, <code>false</code> to uppercase
+     * @param toLowerCase {@code true} converts to lowercase, {@code false} to uppercase
      * @return A char[] containing hexadecimal characters in the selected case
      * @since 1.11
      */
@@ -224,7 +224,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * String will be double the length of the passed array, as it takes two characters to represent any given byte.
      *
      * @param data        a byte[] to convert to Hex characters
-     * @param toLowerCase <code>true</code> converts to lowercase, <code>false</code> to uppercase
+     * @param toLowerCase {@code true} converts to lowercase, {@code false} to uppercase
      * @return A String containing lower-case hexadecimal characters
      * @since 1.11
      */
@@ -255,7 +255,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * the value {@link ByteBuffer#remaining() remaining()} will be zero.</p>
      *
      * @param data        a byte buffer to convert to Hex characters
-     * @param toLowerCase <code>true</code> converts to lowercase, <code>false</code> to uppercase
+     * @param toLowerCase {@code true} converts to lowercase, {@code false} to uppercase
      * @return A String containing lower-case hexadecimal characters
      * @since 1.11
      */

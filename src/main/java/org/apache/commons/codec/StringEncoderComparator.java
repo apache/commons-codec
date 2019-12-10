@@ -61,7 +61,7 @@ public class StringEncoderComparator implements Comparator {
      * Compares two strings based not on the strings themselves, but on an encoding of the two strings using the
      * StringEncoder this Comparator was created with.
      *
-     * If an {@link EncoderException} is encountered, return <code>0</code>.
+     * If an {@link EncoderException} is encountered, return {@code 0}.
      *
      * @param o1
      *            the object to compare

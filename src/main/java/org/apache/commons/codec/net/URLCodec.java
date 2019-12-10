@@ -332,7 +332,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      *            URL safe object to convert into its original form
      * @return original object
      * @throws DecoderException
-     *             Thrown if the argument is not a <code>String</code> or <code>byte[]</code>. Thrown if a failure
+     *             Thrown if the argument is not a {@code String} or {@code byte[]}. Thrown if a failure
      *             condition is encountered during the decode process.
      */
     @Override
@@ -359,7 +359,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
     }
 
     /**
-     * The <code>String</code> encoding used for decoding and encoding.
+     * The {@code String} encoding used for decoding and encoding.
      *
      * @return Returns the encoding.
      *

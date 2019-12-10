@@ -43,7 +43,7 @@ public class Soundex implements StringEncoder {
     public static final char SILENT_MARKER = '-';
 
     /**
-     * This is a default mapping of the 26 letters used in US English. A value of <code>0</code> for a letter position
+     * This is a default mapping of the 26 letters used in US English. A value of {@code 0} for a letter position
      * means do not encode, but treat as a separator when it occurs between consonants with the same code.
      * <p>
      * (This constant is provided as both an implementation convenience and to allow Javadoc to pick
@@ -57,7 +57,7 @@ public class Soundex implements StringEncoder {
     public static final String US_ENGLISH_MAPPING_STRING = "01230120022455012623010202";
 
     /**
-     * This is a default mapping of the 26 letters used in US English. A value of <code>0</code> for a letter position
+     * This is a default mapping of the 26 letters used in US English. A value of {@code 0} for a letter position
      * means do not encode.
      *
      * @see Soundex#Soundex(char[])
@@ -269,7 +269,7 @@ public class Soundex implements StringEncoder {
      *                  An upper-case character.
      * @return A Soundex code.
      * @throws IllegalArgumentException
-     *                  Thrown if <code>ch</code> is not mapped.
+     *                  Thrown if {@code ch} is not mapped.
      */
     private char map(final char ch) {
         final int index = ch - 'A';

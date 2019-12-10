@@ -672,8 +672,8 @@ public class Rule {
 
     /**
      * Decides if the pattern and context match the input starting at a position. It is a match if the
-     * <code>lContext</code> matches <code>input</code> up to <code>i</code>, <code>pattern</code> matches at i and
-     * <code>rContext</code> matches from the end of the match of <code>pattern</code> to the end of <code>input</code>.
+     * {@code lContext} matches {@code input} up to {@code i}, {@code pattern} matches at i and
+     * {@code rContext} matches from the end of the match of {@code pattern} to the end of {@code input}.
      *
      * @param input
      *            the input String

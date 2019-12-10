@@ -33,7 +33,7 @@ import org.apache.commons.codec.StringEncoder;
  * <b>Encoding overview</b>
  * <p>
  * Beider-Morse phonetic encodings is a multi-step process. Firstly, a table of rules is consulted to guess what
- * language the word comes from. For example, if it ends in "<code>ault</code>" then it infers that the word is French.
+ * language the word comes from. For example, if it ends in "{@code ault}" then it infers that the word is French.
  * Next, the word is translated into a phonetic representation using a language-specific phonetics table. Some runs of
  * letters can be pronounced in multiple ways, and a single run of letters may be potentially broken up into phonemes at
  * different places, so this stage results in a set of possible language-specific phonetic representations. Lastly, this
@@ -45,25 +45,25 @@ import org.apache.commons.codec.StringEncoder;
  * <p>
  * Some names are treated as having multiple parts. This can be due to two things. Firstly, they may be hyphenated. In
  * this case, each individual hyphenated word is encoded, and then these are combined end-to-end for the final encoding.
- * Secondly, some names have standard prefixes, for example, "<code>Mac/Mc</code>" in Scottish (English) names. As
+ * Secondly, some names have standard prefixes, for example, "{@code Mac/Mc}" in Scottish (English) names. As
  * sometimes it is ambiguous whether the prefix is intended or is an accident of the spelling, the word is encoded once
  * with the prefix and once without it. The resulting encoding contains one and then the other result.
  * <p>
  * <b>Encoding format</b>
  * <p>
  * Individual phonetic spellings of an input word are represented in upper- and lower-case roman characters. Where there
- * are multiple possible phonetic representations, these are joined with a pipe (<code>|</code>) character. If multiple
+ * are multiple possible phonetic representations, these are joined with a pipe ({@code |}) character. If multiple
  * hyphenated words where found, or if the word may contain a name prefix, each encoded word is placed in elipses and
- * these blocks are then joined with hyphens. For example, "<code>d'ortley</code>" has a possible prefix. The form
- * without prefix encodes to "<code>ortlaj|ortlej</code>", while the form with prefix encodes to "
- * <code>dortlaj|dortlej</code>". Thus, the full, combined encoding is "<code>(ortlaj|ortlej)-(dortlaj|dortlej)</code>".
+ * these blocks are then joined with hyphens. For example, "{@code d'ortley}" has a possible prefix. The form
+ * without prefix encodes to "{@code ortlaj|ortlej}", while the form with prefix encodes to "
+ * {@code dortlaj|dortlej}". Thus, the full, combined encoding is "{@code (ortlaj|ortlej)-(dortlaj|dortlej)}".
  * <p>
  * The encoded forms are often quite a bit longer than the input strings. This is because a single input may have many
- * potential phonetic interpretations. For example, "<code>Renault</code>" encodes to "
- * <code>rYnDlt|rYnalt|rYnult|rinDlt|rinalt|rinult</code>". The <code>APPROX</code> rules will tend to produce larger
+ * potential phonetic interpretations. For example, "{@code Renault}" encodes to "
+ * {@code rYnDlt|rYnalt|rYnult|rinDlt|rinalt|rinult}". The {@code APPROX} rules will tend to produce larger
  * encodings as they consider a wider range of possible, approximate phonetic interpretations of the original word.
  * Down-stream applications may wish to further process the encoding for indexing or lookup purposes, for example, by
- * splitting on pipe (<code>|</code>) and indexing under each of these alternatives.
+ * splitting on pipe ({@code |}) and indexing under each of these alternatives.
  * <p>
  * <b>Note</b>: this version of the Beider-Morse encoding is equivalent with v3.4 of the reference implementation.
  * </p>

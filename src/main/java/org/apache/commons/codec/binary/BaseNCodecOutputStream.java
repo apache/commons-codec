@@ -54,7 +54,7 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
     }
 
     /**
-     * Writes the specified <code>byte</code> to this output stream.
+     * Writes the specified {@code byte} to this output stream.
      *
      * @param i
      *            source byte
@@ -68,7 +68,7 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
     }
 
     /**
-     * Writes <code>len</code> bytes from the specified <code>b</code> array starting at <code>offset</code> to this
+     * Writes {@code len} bytes from the specified {@code b} array starting at {@code offset} to this
      * output stream.
      *
      * @param b

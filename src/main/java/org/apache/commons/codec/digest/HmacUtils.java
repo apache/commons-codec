@@ -90,7 +90,7 @@ public final class HmacUtils {
     }
 
     /**
-     * Returns an initialized <code>Mac</code> for the HmacMD5 algorithm.
+     * Returns an initialized {@code Mac} for the HmacMD5 algorithm.
      * <p>
      * Every implementation of the Java platform is required to support this standard Mac algorithm.
      * </p>
@@ -110,7 +110,7 @@ public final class HmacUtils {
     }
 
     /**
-     * Returns an initialized <code>Mac</code> for the HmacSHA1 algorithm.
+     * Returns an initialized {@code Mac} for the HmacSHA1 algorithm.
      * <p>
      * Every implementation of the Java platform is required to support this standard Mac algorithm.
      * </p>
@@ -130,7 +130,7 @@ public final class HmacUtils {
     }
 
     /**
-     * Returns an initialized <code>Mac</code> for the HmacSHA256 algorithm.
+     * Returns an initialized {@code Mac} for the HmacSHA256 algorithm.
      * <p>
      * Every implementation of the Java platform is required to support this standard Mac algorithm.
      * </p>
@@ -150,7 +150,7 @@ public final class HmacUtils {
     }
 
     /**
-     * Returns an initialized <code>Mac</code> for the HmacSHA384 algorithm.
+     * Returns an initialized {@code Mac} for the HmacSHA384 algorithm.
      * <p>
      * Every implementation of the Java platform is <em>not</em> required to support this Mac algorithm.
      * </p>
@@ -170,7 +170,7 @@ public final class HmacUtils {
     }
 
     /**
-     * Returns an initialized <code>Mac</code> for the HmacSHA512 algorithm.
+     * Returns an initialized {@code Mac} for the HmacSHA512 algorithm.
      * <p>
      * Every implementation of the Java platform is <em>not</em> required to support this Mac algorithm.
      * </p>
@@ -190,7 +190,7 @@ public final class HmacUtils {
     }
 
     /**
-     * Returns an initialized <code>Mac</code> for the given <code>algorithm</code>.
+     * Returns an initialized {@code Mac} for the given {@code algorithm}.
      *
      * @param algorithm
      *            the name of the algorithm requested. See
@@ -210,7 +210,7 @@ public final class HmacUtils {
     }
 
     /**
-     * Returns an initialized <code>Mac</code> for the given <code>algorithm</code>.
+     * Returns an initialized {@code Mac} for the given {@code algorithm}.
      *
      * @param algorithm
      *            the name of the algorithm requested. See

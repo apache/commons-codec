@@ -140,7 +140,7 @@ public class Base32 extends BaseNCodec {
 
     /**
      * Convenience variable to help us determine when our buffer is going to run out of room and needs resizing.
-     * <code>decodeSize = {@link #BYTES_PER_ENCODED_BLOCK} - 1 + lineSeparator.length;</code>
+     * {@code decodeSize = {@link #BYTES_PER_ENCODED_BLOCK} - 1 + lineSeparator.length;}
      */
     private final int decodeSize;
 
@@ -151,7 +151,7 @@ public class Base32 extends BaseNCodec {
 
     /**
      * Convenience variable to help us determine when our buffer is going to run out of room and needs resizing.
-     * <code>encodeSize = {@link #BYTES_PER_ENCODED_BLOCK} + lineSeparator.length;</code>
+     * {@code encodeSize = {@link #BYTES_PER_ENCODED_BLOCK} + lineSeparator.length;}
      */
     private final int encodeSize;
 

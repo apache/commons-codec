@@ -176,7 +176,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      *            byte to encode
      * @param buffer
      *            the buffer to write to
-     * @return The number of bytes written to the <code>buffer</code>
+     * @return The number of bytes written to the {@code buffer}
      */
     private static final int encodeQuotedPrintable(final int b, final ByteArrayOutputStream buffer) {
         buffer.write(ESCAPE_CHAR);
@@ -188,14 +188,14 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
     }
 
     /**
-     * Return the byte at position <code>index</code> of the byte array and
+     * Return the byte at position {@code index} of the byte array and
      * make sure it is unsigned.
      *
      * @param index
      *            position in the array
      * @param bytes
      *            the byte array
-     * @return the unsigned octet at position <code>index</code> from the array
+     * @return the unsigned octet at position {@code index} from the array
      */
     private static int getUnsignedOctet(final int index, final byte[] bytes) {
         int b = bytes[index];
@@ -230,7 +230,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      *
      * @param b
      *            byte to be checked
-     * @return <code>true</code> if the byte is either a space or tab character
+     * @return {@code true} if the byte is either a space or tab character
      */
     private static boolean isWhitespace(final int b) {
         return b == SPACE || b == TAB;
@@ -519,7 +519,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      *            quoted-printable object to convert into its original form
      * @return original object
      * @throws DecoderException
-     *             Thrown if the argument is not a <code>String</code> or <code>byte[]</code>. Thrown if a failure
+     *             Thrown if the argument is not a {@code String} or {@code byte[]}. Thrown if a failure
      *             condition is encountered during the decode process.
      */
     @Override

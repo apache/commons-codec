@@ -191,11 +191,11 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     private final int chunkSeparatorLength;
 
     /**
-     * Note <code>lineLength</code> is rounded down to the nearest multiple of the encoded block size.
-     * If <code>chunkSeparatorLength</code> is zero, then chunking is disabled.
+     * Note {@code lineLength} is rounded down to the nearest multiple of the encoded block size.
+     * If {@code chunkSeparatorLength} is zero, then chunking is disabled.
      * @param unencodedBlockSize the size of an unencoded block (e.g. Base64 = 3)
      * @param encodedBlockSize the size of an encoded block (e.g. Base64 = 4)
-     * @param lineLength if &gt; 0, use chunking with a length <code>lineLength</code>
+     * @param lineLength if &gt; 0, use chunking with a length {@code lineLength}
      * @param chunkSeparatorLength the chunk separator length, if relevant
      */
     protected BaseNCodec(final int unencodedBlockSize, final int encodedBlockSize,
@@ -204,11 +204,11 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
-     * Note <code>lineLength</code> is rounded down to the nearest multiple of the encoded block size.
-     * If <code>chunkSeparatorLength</code> is zero, then chunking is disabled.
+     * Note {@code lineLength} is rounded down to the nearest multiple of the encoded block size.
+     * If {@code chunkSeparatorLength} is zero, then chunking is disabled.
      * @param unencodedBlockSize the size of an unencoded block (e.g. Base64 = 3)
      * @param encodedBlockSize the size of an encoded block (e.g. Base64 = 4)
-     * @param lineLength if &gt; 0, use chunking with a length <code>lineLength</code>
+     * @param lineLength if &gt; 0, use chunking with a length {@code lineLength}
      * @param chunkSeparatorLength the chunk separator length, if relevant
      * @param pad byte used as padding byte.
      */
@@ -321,7 +321,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
-     * Ensure that the buffer has room for <code>size</code> bytes
+     * Ensure that the buffer has room for {@code size} bytes
      *
      * @param size minimum spare space required
      * @param context the context to be used
@@ -532,12 +532,12 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     abstract void decode(byte[] pArray, int i, int length, Context context);
 
     /**
-     * Returns whether or not the <code>octet</code> is in the current alphabet.
+     * Returns whether or not the {@code octet} is in the current alphabet.
      * Does not allow whitespace or pad.
      *
      * @param value The value to test
      *
-     * @return <code>true</code> if the value is defined in the current alphabet, <code>false</code> otherwise.
+     * @return {@code true} if the value is defined in the current alphabet, {@code false} otherwise.
      */
     protected abstract boolean isInAlphabet(byte value);
 
@@ -546,10 +546,10 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * The method optionally treats whitespace and pad as valid.
      *
      * @param arrayOctet byte array to test
-     * @param allowWSPad if <code>true</code>, then whitespace and PAD are also allowed
+     * @param allowWSPad if {@code true}, then whitespace and PAD are also allowed
      *
-     * @return <code>true</code> if all bytes are valid characters in the alphabet or if the byte array is empty;
-     *         <code>false</code>, otherwise
+     * @return {@code true} if all bytes are valid characters in the alphabet or if the byte array is empty;
+     *         {@code false}, otherwise
      */
     public boolean isInAlphabet(final byte[] arrayOctet, final boolean allowWSPad) {
         for (final byte octet : arrayOctet) {
@@ -566,8 +566,8 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * The method treats whitespace and PAD as valid.
      *
      * @param basen String to test
-     * @return <code>true</code> if all characters in the String are valid characters in the alphabet or if
-     *         the String is empty; <code>false</code>, otherwise
+     * @return {@code true} if all characters in the String are valid characters in the alphabet or if
+     *         the String is empty; {@code false}, otherwise
      * @see #isInAlphabet(byte[], boolean)
      */
     public boolean isInAlphabet(final String basen) {
@@ -581,7 +581,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      *
      * @param arrayOctet
      *            byte array to test
-     * @return <code>true</code> if any byte is a valid character in the alphabet or PAD; <code>false</code> otherwise
+     * @return {@code true} if any byte is a valid character in the alphabet or PAD; {@code false} otherwise
      */
     protected boolean containsAlphabetOrPad(final byte[] arrayOctet) {
         if (arrayOctet == null) {

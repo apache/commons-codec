@@ -206,7 +206,7 @@ public class MatchRatingApproachEncoder implements StringEncoder {
      *            First of the 2 strings (names) to compare
      * @param name2
      *            Second of the 2 names to compare
-     * @return <code>true</code> if the encodings are identical <code>false</code> otherwise.
+     * @return {@code true} if the encodings are identical {@code false} otherwise.
      */
     public boolean isEncodeEquals(String name1, String name2) {
         // Bulletproof for trivial input - NINO

@@ -109,7 +109,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * @param strSource
      *            string to convert to Base64 form
      * @param sourceCharset
-     *            the Charset for <code>value</code>
+     *            the Charset for {@code value}
      * @return Base64 string
      * @throws EncoderException
      *             thrown if a failure condition is encountered during the encoding process.
@@ -128,7 +128,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * @param strSource
      *            string to convert to Base64 form
      * @param sourceCharset
-     *            the Charset for <code>value</code>
+     *            the Charset for {@code value}
      * @return Base64 string
      * @throws EncoderException
      *             thrown if a failure condition is encountered during the encoding process.
@@ -213,7 +213,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      *            Base64 object to convert into its original form
      * @return original object
      * @throws DecoderException
-     *             Thrown if the argument is not a <code>String</code>. Thrown if a failure condition is encountered
+     *             Thrown if the argument is not a {@code String}. Thrown if a failure condition is encountered
      *             during the decode process.
      */
     @Override

@@ -29,7 +29,7 @@ public interface Encoder {
 
     /**
      * Encodes an "Object" and returns the encoded content as an Object. The Objects here may just be
-     * <code>byte[]</code> or <code>String</code>s depending on the implementation used.
+     * {@code byte[]} or {@code String}s depending on the implementation used.
      *
      * @param source
      *            An object to encode

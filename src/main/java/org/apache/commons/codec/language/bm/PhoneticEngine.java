@@ -83,7 +83,7 @@ public class PhoneticEngine {
         }
 
         /**
-         * Creates a new phoneme builder containing all phonemes in this one extended by <code>str</code>.
+         * Creates a new phoneme builder containing all phonemes in this one extended by {@code str}.
          *
          * @param str   the characters to append to the phonemes
          */
@@ -156,10 +156,10 @@ public class PhoneticEngine {
 
     /**
      * A function closure capturing the application of a list of rules to an input sequence at a particular offset.
-     * After invocation, the values <code>i</code> and <code>found</code> are updated. <code>i</code> points to the
-     * index of the next char in <code>input</code> that must be processed next (the input up to that index having been
-     * processed already), and <code>found</code> indicates if a matching rule was found or not. In the case where a
-     * matching rule was found, <code>phonemeBuilder</code> is replaced with a new builder containing the phonemes
+     * After invocation, the values {@code i} and {@code found} are updated. {@code i} points to the
+     * index of the next char in {@code input} that must be processed next (the input up to that index having been
+     * processed already), and {@code found} indicates if a matching rule was found or not. In the case where a
+     * matching rule was found, {@code phonemeBuilder} is replaced with a new builder containing the phonemes
      * updated by the matching rule.
      *
      * Although this class is not thread-safe (it has mutable unprotected fields), it is not shared between threads
@@ -198,9 +198,9 @@ public class PhoneticEngine {
         /**
          * Invokes the rules. Loops over the rules list, stopping at the first one that has a matching context
          * and pattern. Then applies this rule to the phoneme builder to produce updated phonemes. If there was no
-         * match, <code>i</code> is advanced one and the character is silently dropped from the phonetic spelling.
+         * match, {@code i} is advanced one and the character is silently dropped from the phonetic spelling.
          *
-         * @return <code>this</code>
+         * @return {@code this}
          */
         public RulesApplication invoke() {
             this.found = false;
@@ -251,7 +251,7 @@ public class PhoneticEngine {
      * Joins some strings with an internal separator.
      * @param strings   Strings to join
      * @param sep       String to separate them with
-     * @return a single String consisting of each element of <code>strings</code> interleaved by <code>sep</code>
+     * @return a single String consisting of each element of {@code strings} interleaved by {@code sep}
      */
     private static String join(final Iterable<String> strings, final String sep) {
         final StringBuilder sb = new StringBuilder();
