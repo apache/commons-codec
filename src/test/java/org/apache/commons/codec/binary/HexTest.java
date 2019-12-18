@@ -48,7 +48,7 @@ public class HexTest {
 
     /**
      * Allocate a ByteBuffer.
-     * 
+     *
      * <p>The default implementation uses {@link ByteBuffer#allocate(int)}.
      * The method is overridden in AllocateDirectHexTest to use
      * {@link ByteBuffer#allocateDirect(int)}
@@ -62,7 +62,7 @@ public class HexTest {
 
     /**
      * Encodes the given string into a byte buffer using the UTF-8 charset.
-     * 
+     *
      * <p>The buffer is allocated using {@link #allocate(int)}.
      *
      * @param string the String to encode
