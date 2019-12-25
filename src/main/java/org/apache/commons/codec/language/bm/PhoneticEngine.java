@@ -27,6 +27,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -177,9 +178,7 @@ public class PhoneticEngine {
 
         public RulesApplication(final Map<String, List<Rule>> finalRules, final CharSequence input,
                                 final PhonemeBuilder phonemeBuilder, final int i, final int maxPhonemes) {
-            if (finalRules == null) {
-                throw new NullPointerException("The finalRules argument must not be null");
-            }
+            Objects.requireNonNull(finalRules, "finalRules");
             this.finalRules = finalRules;
             this.phonemeBuilder = phonemeBuilder;
             this.input = input;
@@ -327,9 +326,7 @@ public class PhoneticEngine {
      */
     private PhonemeBuilder applyFinalRules(final PhonemeBuilder phonemeBuilder,
                                            final Map<String, List<Rule>> finalRules) {
-        if (finalRules == null) {
-            throw new NullPointerException("finalRules can not be null");
-        }
+        Objects.requireNonNull(finalRules, "finalRules");
         if (finalRules.isEmpty()) {
             return phonemeBuilder;
         }

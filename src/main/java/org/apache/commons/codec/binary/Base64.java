@@ -18,6 +18,7 @@
 package org.apache.commons.codec.binary;
 
 import java.math.BigInteger;
+import java.util.Objects;
 
 /**
  * Provides Base64 encoding and decoding as defined by <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>.
@@ -730,18 +731,16 @@ public class Base64 extends BaseNCodec {
     /**
      * Encodes to a byte64-encoded integer according to crypto standards such as W3C's XML-Signature.
      *
-     * @param bigInt
+     * @param bigInteger
      *            a BigInteger
      * @return A byte array containing base64 character data
      * @throws NullPointerException
      *             if null is passed in
      * @since 1.4
      */
-    public static byte[] encodeInteger(final BigInteger bigInt) {
-        if (bigInt == null) {
-            throw new NullPointerException("encodeInteger called with null parameter");
-        }
-        return encodeBase64(toIntegerBytes(bigInt), false);
+    public static byte[] encodeInteger(final BigInteger bigInteger) {
+        Objects.requireNonNull(bigInteger, "bigInteger");
+        return encodeBase64(toIntegerBytes(bigInteger), false);
     }
 
     /**

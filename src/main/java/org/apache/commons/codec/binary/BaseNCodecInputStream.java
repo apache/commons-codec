@@ -22,6 +22,7 @@ import static org.apache.commons.codec.binary.BaseNCodec.EOF;
 import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Objects;
 
 import org.apache.commons.codec.binary.BaseNCodec.Context;
 
@@ -110,7 +111,7 @@ public class BaseNCodecInputStream extends FilterInputStream {
      * Attempts to read {@code len} bytes into the specified {@code b} array starting at {@code offset}
      * from this InputStream.
      *
-     * @param b
+     * @param array
      *            destination byte array
      * @param offset
      *            where to start writing the bytes
@@ -126,12 +127,11 @@ public class BaseNCodecInputStream extends FilterInputStream {
      *             if offset, len or buffer size are invalid
      */
     @Override
-    public int read(final byte b[], final int offset, final int len) throws IOException {
-        if (b == null) {
-            throw new NullPointerException();
-        } else if (offset < 0 || len < 0) {
+    public int read(final byte array[], final int offset, final int len) throws IOException {
+        Objects.requireNonNull(array, "array");
+        if (offset < 0 || len < 0) {
             throw new IndexOutOfBoundsException();
-        } else if (offset > b.length || offset + len > b.length) {
+        } else if (offset > array.length || offset + len > array.length) {
             throw new IndexOutOfBoundsException();
         } else if (len == 0) {
             return 0;
@@ -163,7 +163,7 @@ public class BaseNCodecInputStream extends FilterInputStream {
                         baseNCodec.decode(buf, 0, c, context);
                     }
                 }
-                readLen = baseNCodec.readResults(b, offset, len, context);
+                readLen = baseNCodec.readResults(array, offset, len, context);
             }
             return readLen;
         }
