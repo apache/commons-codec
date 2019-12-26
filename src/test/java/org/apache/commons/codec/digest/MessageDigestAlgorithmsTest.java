@@ -44,20 +44,6 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(Parameterized.class)
 public class MessageDigestAlgorithmsTest {
 
-    @Parameters(name = "{0}")
-    public static Object[] data() {
-        return MessageDigestAlgorithms.values();
-    }
-
-    private static boolean contains(final String key) {
-        for(final String s : MessageDigestAlgorithms.values()) {
-            if (s.equals(key)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     @BeforeClass
     public static void checkValues() throws Exception {
         final Field [] fields = MessageDigestAlgorithms.class.getDeclaredFields();
@@ -85,6 +71,20 @@ public class MessageDigestAlgorithmsTest {
         if (psf != MessageDigestAlgorithms.values().length) {
             Assert.fail("One or more unexpected entries found in the MessageDigestAlgorithms.values() array");
         }
+    }
+
+    private static boolean contains(final String key) {
+        for(final String s : MessageDigestAlgorithms.values()) {
+            if (s.equals(key)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Parameters(name = "{0}")
+    public static Object[] data() {
+        return MessageDigestAlgorithms.values();
     }
 
     private DigestUtilsTest digestUtilsTest;
@@ -157,6 +157,21 @@ public class MessageDigestAlgorithmsTest {
     }
 
     @Test
+    public void testDigestInputStream() throws IOException {
+        Assume.assumeTrue(DigestUtils.isAvailable(messageDigestAlgorithm));
+        Assert.assertArrayEquals(digestTestData(),
+                DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm), new ByteArrayInputStream(getTestData())));
+        Assert.assertArrayEquals(digestTestData(), DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm),new ByteArrayInputStream(getTestData())));
+    }
+
+    @Test
+    public void testGetMessageDigest() {
+        Assume.assumeTrue(DigestUtils.isAvailable(messageDigestAlgorithm));
+        final MessageDigest messageDigest = DigestUtils.getDigest(messageDigestAlgorithm);
+        Assert.assertEquals(messageDigestAlgorithm, messageDigest.getAlgorithm());
+    }
+
+    @Test
     public void testNonBlockingDigestRandomAccessFile() throws IOException {
         Assume.assumeTrue(DigestUtils.isAvailable(messageDigestAlgorithm));
 
@@ -173,21 +188,6 @@ public class MessageDigestAlgorithmsTest {
                         DigestUtils.getDigest(messageDigestAlgorithm), getTestRandomAccessFile()
                 )
         );
-    }
-
-    @Test
-    public void testDigestInputStream() throws IOException {
-        Assume.assumeTrue(DigestUtils.isAvailable(messageDigestAlgorithm));
-        Assert.assertArrayEquals(digestTestData(),
-                DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm), new ByteArrayInputStream(getTestData())));
-        Assert.assertArrayEquals(digestTestData(), DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm),new ByteArrayInputStream(getTestData())));
-    }
-
-    @Test
-    public void testGetMessageDigest() {
-        Assume.assumeTrue(DigestUtils.isAvailable(messageDigestAlgorithm));
-        final MessageDigest messageDigest = DigestUtils.getDigest(messageDigestAlgorithm);
-        Assert.assertEquals(messageDigestAlgorithm, messageDigest.getAlgorithm());
     }
 
 }
