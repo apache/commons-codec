@@ -23,6 +23,9 @@ import java.io.RandomAccessFile;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.nio.ByteBuffer;
+import java.nio.file.OpenOption;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -107,6 +110,10 @@ public class MessageDigestAlgorithmsTest {
         return digestUtilsTest.getTestFile();
     }
 
+    private Path getTestPath() {
+        return digestUtilsTest.getTestPath();
+    }
+
     private RandomAccessFile getTestRandomAccessFile() {
         return digestUtilsTest.getTestRandomAccessFile();
     }
@@ -152,8 +159,9 @@ public class MessageDigestAlgorithmsTest {
     public void testDigestFile() throws IOException {
         Assume.assumeTrue(DigestUtils.isAvailable(messageDigestAlgorithm));
         Assert.assertArrayEquals(digestTestData(),
-                DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm), getTestFile()));
-        Assert.assertArrayEquals(digestTestData(), DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm),getTestFile()));
+            DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm), getTestFile()));
+        Assert.assertArrayEquals(digestTestData(),
+            DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm), getTestFile()));
     }
 
     @Test
@@ -162,6 +170,24 @@ public class MessageDigestAlgorithmsTest {
         Assert.assertArrayEquals(digestTestData(),
                 DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm), new ByteArrayInputStream(getTestData())));
         Assert.assertArrayEquals(digestTestData(), DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm),new ByteArrayInputStream(getTestData())));
+    }
+
+    private void testDigestPath(OpenOption... options) throws IOException {
+        Assume.assumeTrue(DigestUtils.isAvailable(messageDigestAlgorithm));
+        Assert.assertArrayEquals(digestTestData(),
+            DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm), getTestPath(), options));
+        Assert.assertArrayEquals(digestTestData(),
+            DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm), getTestPath(), options));
+    }
+
+    @Test
+    public void testDigestPathOpenOptionsEmpty() throws IOException {
+        testDigestPath();
+    }
+
+    @Test
+    public void testDigestPathStandardOpenOptionRead() throws IOException {
+        testDigestPath(StandardOpenOption.READ);
     }
 
     @Test

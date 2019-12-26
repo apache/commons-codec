@@ -26,6 +26,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.util.Random;
 
@@ -43,6 +45,8 @@ import org.junit.Test;
  *
  */
 public class DigestUtilsTest {
+
+    private static final String EMPTY_STRING = "";
 
     private final byte[] testData = new byte[1024 * 1024];
 
@@ -66,6 +70,10 @@ public class DigestUtilsTest {
 
     File getTestFile() {
         return testFile;
+    }
+
+    Path getTestPath() {
+        return testFile.toPath();
     }
 
     RandomAccessFile getTestRandomAccessFile() {
@@ -106,7 +114,7 @@ public class DigestUtilsTest {
     @Test
     public void testMd2Hex() throws IOException {
         // Examples from RFC 1319
-        assertEquals("8350e5a3e24c153df2275c9f80692773", DigestUtils.md2Hex(""));
+        assertEquals("8350e5a3e24c153df2275c9f80692773", DigestUtils.md2Hex(EMPTY_STRING));
 
         assertEquals("32ec01ec4a6dac72c0ab96fb34c0b5d1", DigestUtils.md2Hex("a"));
 
@@ -159,7 +167,7 @@ public class DigestUtilsTest {
     @Test
     public void testMd5Hex() throws IOException {
         // Examples from RFC 1321
-        assertEquals("d41d8cd98f00b204e9800998ecf8427e", DigestUtils.md5Hex(""));
+        assertEquals("d41d8cd98f00b204e9800998ecf8427e", DigestUtils.md5Hex(EMPTY_STRING));
 
         assertEquals("0cc175b9c0f1b6a831c399e269772661", DigestUtils.md5Hex("a"));
 
@@ -278,14 +286,28 @@ public class DigestUtilsTest {
     }
 
     @Test
-    public void testSha224() {
+    public void testSha224_StringAsHex() {
         assumeJava8();
         assertEquals("d14a028c2a3a2bc9476102bb288234c415a2b01f828ea62ac5b3e42f",
-                new DigestUtils(MessageDigestAlgorithms.SHA_224).digestAsHex(("")));
+                new DigestUtils(MessageDigestAlgorithms.SHA_224).digestAsHex(EMPTY_STRING));
         assertEquals("730e109bd7a8a32b1cb9d9a09aa2325d2430587ddbc0c38bad911525",
                 new DigestUtils(MessageDigestAlgorithms.SHA_224).digestAsHex("The quick brown fox jumps over the lazy dog"));
 
         // Examples from FIPS 180-4?
+    }
+
+    @Test
+    public void testSha224_FileAsHex() throws IOException {
+        assumeJava8();
+        assertEquals("d14a028c2a3a2bc9476102bb288234c415a2b01f828ea62ac5b3e42f",
+                new DigestUtils(MessageDigestAlgorithms.SHA_224).digestAsHex(new File("src/test/resources/empty.bin")));
+    }
+
+    @Test
+    public void testSha224_PathAsHex() throws IOException {
+        assumeJava8();
+        assertEquals("d14a028c2a3a2bc9476102bb288234c415a2b01f828ea62ac5b3e42f",
+                new DigestUtils(MessageDigestAlgorithms.SHA_224).digestAsHex(Paths.get("src/test/resources/empty.bin")));
     }
 
     @Test
@@ -342,7 +364,7 @@ public class DigestUtilsTest {
         // https://csrc.nist.gov/CSRC/media/Projects/Cryptographic-Standards-and-Guidelines/documents/examples/SHA3-224_Msg0.pdf
         assertEquals(
                 "6b4e03423667dbb73b6e15454f0eb1abd4597f9a1b078e3f5b5a6bc7",
-                DigestUtils.sha3_224Hex(""));
+                DigestUtils.sha3_224Hex(EMPTY_STRING));
     }
 
     @Test
@@ -353,7 +375,7 @@ public class DigestUtilsTest {
         // https://csrc.nist.gov/CSRC/media/Projects/Cryptographic-Standards-and-Guidelines/documents/examples/SHA3-256_Msg0.pdf
         assertEquals(
                 "a7ffc6f8bf1ed76651c14756a061d662f580ff4de43b49fa82d80a4b80f8434a",
-                DigestUtils.sha3_256Hex(""));
+                DigestUtils.sha3_256Hex(EMPTY_STRING));
     }
 
     @Test
@@ -364,7 +386,7 @@ public class DigestUtilsTest {
         // https://csrc.nist.gov/CSRC/media/Projects/Cryptographic-Standards-and-Guidelines/documents/examples/SHA3-384_Msg0.pdf
         assertEquals(
                 "0c63a75b845e4f7d01107d852e4c2485c51a50aaaa94fc61995e71bbee983a2ac3713831264adb47fb6bd1e058d5f004",
-                DigestUtils.sha3_384Hex(""));
+                DigestUtils.sha3_384Hex(EMPTY_STRING));
     }
 
     @Test
@@ -375,7 +397,7 @@ public class DigestUtilsTest {
         // https://csrc.nist.gov/CSRC/media/Projects/Cryptographic-Standards-and-Guidelines/documents/examples/SHA3-512_Msg0.pdf
         assertEquals(
                 "a69f73cca23a9ac5c8b567dc185a756e97c982164fe25859e0d1dcc1475c80a615b2123af1f5f94c11e3e9402c3ac558f500199d95b6d3e301758586281dcd26",
-                DigestUtils.sha3_512Hex(""));
+                DigestUtils.sha3_512Hex(EMPTY_STRING));
     }
 
     @Test

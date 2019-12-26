@@ -280,6 +280,7 @@ limitations under the License.
         <configuration>
           <excludes>
             <exclude>src/test/resources/bla.tar.xz</exclude>
+            <exclude>src/test/resources/empty.bin</exclude>
           </excludes>
         </configuration>
       </plugin>

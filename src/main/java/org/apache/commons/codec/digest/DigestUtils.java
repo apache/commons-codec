@@ -20,11 +20,14 @@ package org.apache.commons.codec.digest;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.RandomAccessFile;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.nio.file.Files;
+import java.nio.file.OpenOption;
+import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -115,6 +118,24 @@ public class DigestUtils {
      */
     public static byte[] digest(final MessageDigest messageDigest, final InputStream data) throws IOException {
         return updateDigest(messageDigest, data).digest();
+    }
+
+    /**
+     * Reads through a File and returns the digest for the data
+     *
+     * @param messageDigest
+     *            The MessageDigest to use (e.g. MD5)
+     * @param data
+     *            Data to digest
+     * @param options
+     *            options How to open the file
+     * @return the digest
+     * @throws IOException
+     *             On error reading from the stream
+     * @since 1.14
+     */
+    public static byte[] digest(final MessageDigest messageDigest, final Path data, final OpenOption... options) throws IOException {
+        return updateDigest(messageDigest, data, options).digest();
     }
 
     /**
@@ -1267,6 +1288,26 @@ public class DigestUtils {
         return digest;
     }
 
+    /**
+     * Reads through a Path and updates the digest for the data
+     *
+     * @param digest
+     *            The MessageDigest to use (e.g. MD5)
+     * @param path
+     *            Data to digest
+     * @param options
+     *            options How to open the file
+     * @return the digest
+     * @throws IOException
+     *             On error reading from the stream
+     * @since 1.14
+     */
+    public static MessageDigest updateDigest(final MessageDigest digest, final Path path, final OpenOption... options) throws IOException {
+        try (final BufferedInputStream inputStream = new BufferedInputStream(Files.newInputStream(path, options))) {
+            return updateDigest(digest, inputStream);
+        }
+    }
+
 
     /**
      * Reads through a RandomAccessFile and updates the digest for the data using non-blocking-io (NIO)
@@ -1398,6 +1439,22 @@ public class DigestUtils {
     }
 
     /**
+     * Reads through a File and returns the digest for the data
+     *
+     * @param data
+     *            Data to digest
+     * @param options
+     *            options How to open the file
+     * @return the digest
+     * @throws IOException
+     *             On error reading from the stream
+     * @since 1.14
+     */
+    public byte[] digest(final Path data, final OpenOption... options) throws IOException {
+        return updateDigest(messageDigest, data, options).digest();
+    }
+
+    /**
      * Reads through a byte array and returns the digest for the data.
      *
      * @param data
@@ -1446,6 +1503,22 @@ public class DigestUtils {
      */
     public String digestAsHex(final File data) throws IOException {
         return Hex.encodeHexString(digest(data));
+    }
+
+    /**
+     * Reads through a File and returns the digest for the data
+     *
+     * @param data
+     *            Data to digest
+     * @param options
+     *            options How to open the file
+     * @return the digest as a hex string
+     * @throws IOException
+     *             On error reading from the stream
+     * @since 1.11
+     */
+    public String digestAsHex(final Path data, final OpenOption... options) throws IOException {
+        return Hex.encodeHexString(digest(data, options));
     }
 
     /**

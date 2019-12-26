@@ -52,6 +52,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action issue="CODEC-267" dev="aherbert" due-to="Claude Warren" type="add">Add MurmurHash3.hash32x86 methods and IncrementalHash32x86 to fix sign extension error in hash32 methods.</action>
       <action issue="CODEC-269" dev="aherbert" type="fix">Allow repeat calls to MurmurHash3.IncrementalHash32.end() to generate the same value.</action>
       <action issue="CODEC-272" dev="ggregory" type="add" due-to="Behrang, Alex Herbert, Gary Gregory">Add RandomAccessFile digest methods #31.</action>
+      <action issue="CODEC-273" dev="ggregory" type="add" due-to="Gary Gregory">Add Path APIs to org.apache.commons.codec.digest.DigestUtils similar to File APIs.</action>
     </release>
 
     <release version="1.13" date="2019-07-20" description="Feature and fix release.">
