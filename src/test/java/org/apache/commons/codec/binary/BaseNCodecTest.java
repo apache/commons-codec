@@ -249,7 +249,7 @@ public class BaseNCodecTest {
         assertEnsureBufferSizeExpandsToMaxBufferSize(true);
     }
 
-    private static void assertEnsureBufferSizeExpandsToMaxBufferSize(boolean exceedMaxBufferSize) {
+    private static void assertEnsureBufferSizeExpandsToMaxBufferSize(final boolean exceedMaxBufferSize) {
         // This test is memory hungry.
         // By default expansion will double the buffer size.
         // Using a buffer that must be doubled to get close to 2GiB requires at least 3GiB
@@ -298,11 +298,11 @@ public class BaseNCodecTest {
     /**
      * Verify this VM can allocate the given size byte array. Otherwise skip the test.
      */
-    private static void assumeCanAllocateBufferSize(int size) {
+    private static void assumeCanAllocateBufferSize(final int size) {
         byte[] bytes = null;
         try {
             bytes = new byte[size];
-        } catch (OutOfMemoryError ignore) {
+        } catch (final OutOfMemoryError ignore) {
             // ignore
         }
         Assume.assumeTrue("Cannot allocate array of size: " + size, bytes != null);
@@ -352,15 +352,15 @@ public class BaseNCodecTest {
         }
 
         @Override
-        void encode(byte[] pArray, int i, int length, Context context) {
+        void encode(final byte[] pArray, final int i, final int length, final Context context) {
         }
 
         @Override
-        void decode(byte[] pArray, int i, int length, Context context) {
+        void decode(final byte[] pArray, final int i, final int length, final Context context) {
         }
 
         @Override
-        protected boolean isInAlphabet(byte value) {
+        protected boolean isInAlphabet(final byte value) {
             return false;
         }
     }

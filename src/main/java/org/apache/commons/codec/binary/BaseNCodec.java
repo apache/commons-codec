@@ -289,7 +289,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      *         a value greater than {@code 0} if {@code x > y} as
      *         unsigned values
      */
-    private static int compareUnsigned(int x, int y) {
+    private static int compareUnsigned(final int x, final int y) {
         return Integer.compare(x + Integer.MIN_VALUE, y + Integer.MIN_VALUE);
     }
 
@@ -302,7 +302,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * @return the capacity
      * @throws OutOfMemoryError if the {@code minCapacity} is negative
      */
-    private static int createPositiveCapacity(int minCapacity) {
+    private static int createPositiveCapacity(final int minCapacity) {
         if (minCapacity < 0) {
             // overflow
             throw new OutOfMemoryError("Unable to allocate array size: " + (minCapacity & 0xffffffffL));

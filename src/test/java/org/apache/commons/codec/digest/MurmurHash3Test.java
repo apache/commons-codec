@@ -322,7 +322,7 @@ public class MurmurHash3Test {
      * @param length the length
      * @return true, if negative bytes exist
      */
-    private static boolean negativeBytes(byte[] bytes, int start, int length) {
+    private static boolean negativeBytes(final byte[] bytes, final int start, final int length) {
         for (int i = start; i < start + length; i++) {
             if (bytes[i] < 0) {
                 return true;
@@ -798,7 +798,7 @@ public class MurmurHash3Test {
      * @param seed the seed
      * @param blocks the blocks
      */
-    private static void assertIncrementalHash32(byte[] bytes, int seed, int... blocks) {
+    private static void assertIncrementalHash32(final byte[] bytes, final int seed, final int... blocks) {
         int offset = 0;
         int total = 0;
         final IncrementalHash32 inc = new IncrementalHash32();
@@ -856,7 +856,7 @@ public class MurmurHash3Test {
      * @param seed the seed
      * @param blocks the blocks
      */
-    private static void assertIncrementalHash32x86(byte[] bytes, int seed, int... blocks) {
+    private static void assertIncrementalHash32x86(final byte[] bytes, final int seed, final int... blocks) {
         int offset = 0;
         int total = 0;
         final IncrementalHash32x86 inc = new IncrementalHash32x86();
@@ -878,8 +878,8 @@ public class MurmurHash3Test {
      * @param maxLength the max length
      * @return the blocks
      */
-    private static int[] createRandomBlocks(int maxLength) {
-        int[] blocks = new int[20];
+    private static int[] createRandomBlocks(final int maxLength) {
+        final int[] blocks = new int[20];
         int count = 0;
         int length = 0;
         while (count < blocks.length && length < maxLength) {

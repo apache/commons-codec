@@ -1104,7 +1104,7 @@ public final class MurmurHash3 {
          * @param totalLen The total number of input bytes added since the start.
          * @return The 32-bit hash
          */
-        int finalise(int hash, int unprocessedLength, byte[] unprocessed, int totalLen) {
+        int finalise(final int hash, final int unprocessedLength, final byte[] unprocessed, final int totalLen) {
             int result = hash;
             int k1 = 0;
             switch (unprocessedLength) {
@@ -1169,7 +1169,7 @@ public final class MurmurHash3 {
          */
         @Override
         @Deprecated
-        int finalise(int hash, int unprocessedLength, byte[] unprocessed, int totalLen) {
+        int finalise(final int hash, final int unprocessedLength, final byte[] unprocessed, final int totalLen) {
             int result = hash;
             // ************
             // Note: This fails to apply masking using 0xff to the 3 remaining bytes.

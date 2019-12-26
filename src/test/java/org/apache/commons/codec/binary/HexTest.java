@@ -68,7 +68,7 @@ public class HexTest {
      * @param string the String to encode
      * @return the byte buffer
      */
-    private ByteBuffer getByteBufferUtf8(String string) {
+    private ByteBuffer getByteBufferUtf8(final String string) {
         final byte[] bytes = string.getBytes(StandardCharsets.UTF_8);
         final ByteBuffer bb = allocate(bytes.length);
         bb.put(bytes);

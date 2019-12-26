@@ -1347,7 +1347,7 @@ public class Base64Test {
      *
      * @param nbits the number of trailing bits (must be a factor of 6 and {@code <24})
      */
-    private static void assertBase64DecodingOfTrailingBits(int nbits) {
+    private static void assertBase64DecodingOfTrailingBits(final int nbits) {
         final Base64 codec = new Base64();
         // Create the encoded bytes. The first characters must be valid so fill with 'zero'.
         final byte[] encoded = new byte[nbits / 6];
@@ -1390,7 +1390,7 @@ public class Base64Test {
 
         // Expecting a size of 4 output bytes per 3 input bytes plus the trailing bytes
         // padded to a block size of 4.
-        int blocks = (int) Math.ceil(size1GiB / 3.0);
+        final int blocks = (int) Math.ceil(size1GiB / 3.0);
         final int expectedLength = 4 * blocks;
 
         // This test is memory hungry. Check we can run it.

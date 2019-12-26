@@ -347,7 +347,7 @@ public class Base32Test {
      *
      * @param nbits the number of trailing bits (must be a factor of 5 and {@code <40})
      */
-    private static void assertBase32DecodingOfTrailingBits(int nbits) {
+    private static void assertBase32DecodingOfTrailingBits(final int nbits) {
         final Base32 codec = new Base32();
         // Create the encoded bytes. The first characters must be valid so fill with 'zero'.
         final byte[] encoded = new byte[nbits / 5];
