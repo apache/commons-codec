@@ -1217,8 +1217,8 @@ public class DigestUtils {
      * @since 1.11
      */
     public static MessageDigest updateDigest(final MessageDigest digest, final File data) throws IOException {
-        try (final BufferedInputStream stream = new BufferedInputStream(new FileInputStream(data))) {
-            return updateDigest(digest, stream);
+        try (final BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(data))) {
+            return updateDigest(digest, inputStream);
         }
     }
 
@@ -1248,20 +1248,20 @@ public class DigestUtils {
      *
      * @param digest
      *            The MessageDigest to use (e.g. MD5)
-     * @param data
+     * @param inputStream
      *            Data to digest
      * @return the digest
      * @throws IOException
      *             On error reading from the stream
      * @since 1.8
      */
-    public static MessageDigest updateDigest(final MessageDigest digest, final InputStream data) throws IOException {
+    public static MessageDigest updateDigest(final MessageDigest digest, final InputStream inputStream) throws IOException {
         final byte[] buffer = new byte[STREAM_BUFFER_LENGTH];
-        int read = data.read(buffer, 0, STREAM_BUFFER_LENGTH);
+        int read = inputStream.read(buffer, 0, STREAM_BUFFER_LENGTH);
 
         while (read > -1) {
             digest.update(buffer, 0, read);
-            read = data.read(buffer, 0, STREAM_BUFFER_LENGTH);
+            read = inputStream.read(buffer, 0, STREAM_BUFFER_LENGTH);
         }
 
         return digest;
