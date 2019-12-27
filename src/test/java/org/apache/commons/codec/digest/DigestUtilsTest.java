@@ -112,9 +112,30 @@ public class DigestUtilsTest {
         }
     }
 
+    @Test
+    public void testDigestAs() throws IOException {
+        final String expected = "d41d8cd98f00b204e9800998ecf8427e";
+        final String pathname = "src/test/resources/empty.bin";
+        final String algo = MessageDigestAlgorithms.MD5;
+        assertEquals(expected, new DigestUtils(algo).digestAsHex(new File(pathname)));
+        try (final FileInputStream inputStream = new FileInputStream(pathname)) {
+            assertEquals(expected, new DigestUtils(algo).digestAsHex(inputStream));
+        }
+        final byte[] allBytes = Files.readAllBytes(Paths.get(pathname));
+        assertEquals(expected, new DigestUtils(algo).digestAsHex(allBytes));
+        assertEquals(expected, new DigestUtils(algo).digestAsHex(ByteBuffer.wrap(allBytes)));
+    }
+
     @Test(expected=IllegalArgumentException.class)
     public void testInternalNoSuchAlgorithmException() {
         DigestUtils.getDigest("Bogus Bogus");
+    }
+
+    @Test
+    public void testIsAvailable() {
+        assertTrue(DigestUtils.isAvailable(MessageDigestAlgorithms.MD5));
+        assertFalse(DigestUtils.isAvailable("FOO"));
+        assertFalse(DigestUtils.isAvailable(null));
     }
 
     @Test
@@ -169,7 +190,7 @@ public class DigestUtilsTest {
         hash = DigestUtils.md2(getBytesUtf8(hashMe));
         assertEquals(16, hash.length);
     }
-
+    
     @Test
     public void testMd5Hex() throws IOException {
         // Examples from RFC 1321
@@ -195,13 +216,6 @@ public class DigestUtilsTest {
                 DigestUtils.md5Hex(new ByteArrayInputStream(testData)));
     }
 
-    @Test
-    public void testIsAvailable() {
-        assertTrue(DigestUtils.isAvailable(MessageDigestAlgorithms.MD5));
-        assertFalse(DigestUtils.isAvailable("FOO"));
-        assertFalse(DigestUtils.isAvailable(null));
-    }
-    
     /**
      * An MD5 hash converted to hex should always be 32 characters.
      */
@@ -299,36 +313,11 @@ public class DigestUtilsTest {
     }
 
     @Test
-    public void testSha224_StringAsHex() {
-        assumeJava8();
-        assertEquals("d14a028c2a3a2bc9476102bb288234c415a2b01f828ea62ac5b3e42f",
-                new DigestUtils(MessageDigestAlgorithms.SHA_224).digestAsHex(EMPTY_STRING));
-        assertEquals("730e109bd7a8a32b1cb9d9a09aa2325d2430587ddbc0c38bad911525",
-                new DigestUtils(MessageDigestAlgorithms.SHA_224).digestAsHex("The quick brown fox jumps over the lazy dog"));
-
-        // Examples from FIPS 180-4?
-    }
-
-    @Test
     public void testSha224_FileAsHex() throws IOException {
         assumeJava8();
         final String expected = "d14a028c2a3a2bc9476102bb288234c415a2b01f828ea62ac5b3e42f";
         final String pathname = "src/test/resources/empty.bin";
         final String algo = MessageDigestAlgorithms.SHA_224;
-        assertEquals(expected, new DigestUtils(algo).digestAsHex(new File(pathname)));
-        try (final FileInputStream inputStream = new FileInputStream(pathname)) {
-            assertEquals(expected, new DigestUtils(algo).digestAsHex(inputStream));
-        }
-        final byte[] allBytes = Files.readAllBytes(Paths.get(pathname));
-        assertEquals(expected, new DigestUtils(algo).digestAsHex(allBytes));
-        assertEquals(expected, new DigestUtils(algo).digestAsHex(ByteBuffer.wrap(allBytes)));
-    }
-
-    @Test
-    public void testDigestAs() throws IOException {
-        final String expected = "d41d8cd98f00b204e9800998ecf8427e";
-        final String pathname = "src/test/resources/empty.bin";
-        final String algo = MessageDigestAlgorithms.MD5;
         assertEquals(expected, new DigestUtils(algo).digestAsHex(new File(pathname)));
         try (final FileInputStream inputStream = new FileInputStream(pathname)) {
             assertEquals(expected, new DigestUtils(algo).digestAsHex(inputStream));
@@ -346,6 +335,17 @@ public class DigestUtilsTest {
     }
 
     @Test
+    public void testSha224_StringAsHex() {
+        assumeJava8();
+        assertEquals("d14a028c2a3a2bc9476102bb288234c415a2b01f828ea62ac5b3e42f",
+                new DigestUtils(MessageDigestAlgorithms.SHA_224).digestAsHex(EMPTY_STRING));
+        assertEquals("730e109bd7a8a32b1cb9d9a09aa2325d2430587ddbc0c38bad911525",
+                new DigestUtils(MessageDigestAlgorithms.SHA_224).digestAsHex("The quick brown fox jumps over the lazy dog"));
+
+        // Examples from FIPS 180-4?
+    }
+
+    @Test
     public void testSha256() throws IOException {
     // Examples from FIPS 180-2
     assertEquals("ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
@@ -357,6 +357,84 @@ public class DigestUtilsTest {
 
     assertEquals(DigestUtils.sha256Hex(testData),
             DigestUtils.sha256Hex(new ByteArrayInputStream(testData)));
+    }
+
+    @Test
+    public void testSha256HexInputStream() throws IOException {
+        assertEquals(DigestUtils.sha256Hex(testData),
+                DigestUtils.sha256Hex(new ByteArrayInputStream(testData)));
+    }
+
+    @Test
+    public void testSha3_224() {
+        assumeJava9();
+        // Examples from https://csrc.nist.gov/projects/cryptographic-standards-and-guidelines/example-values
+        //
+        // https://csrc.nist.gov/CSRC/media/Projects/Cryptographic-Standards-and-Guidelines/documents/examples/SHA3-224_Msg0.pdf
+        assertEquals(
+                "6b4e03423667dbb73b6e15454f0eb1abd4597f9a1b078e3f5b5a6bc7",
+                DigestUtils.sha3_224Hex(EMPTY_STRING));
+    }
+
+    @Test
+    public void testSha3_224HexInputStream() throws IOException {
+        assumeJava9();
+        assertEquals(DigestUtils.sha3_224Hex(testData),
+                DigestUtils.sha3_224Hex(new ByteArrayInputStream(testData)));
+    }
+
+    @Test
+    public void testSha3_256() {
+        assumeJava9();
+        // Examples from https://csrc.nist.gov/projects/cryptographic-standards-and-guidelines/example-values
+        //
+        // https://csrc.nist.gov/CSRC/media/Projects/Cryptographic-Standards-and-Guidelines/documents/examples/SHA3-256_Msg0.pdf
+        assertEquals(
+                "a7ffc6f8bf1ed76651c14756a061d662f580ff4de43b49fa82d80a4b80f8434a",
+                DigestUtils.sha3_256Hex(EMPTY_STRING));
+    }
+
+    @Test
+    public void testSha3_256HexInputStream() throws IOException {
+        assumeJava9();
+        assertEquals(DigestUtils.sha3_256Hex(testData),
+                DigestUtils.sha3_256Hex(new ByteArrayInputStream(testData)));
+    }
+
+    @Test
+    public void testSha3_384() {
+        assumeJava9();
+        // Examples from https://csrc.nist.gov/projects/cryptographic-standards-and-guidelines/example-values
+        //
+        // https://csrc.nist.gov/CSRC/media/Projects/Cryptographic-Standards-and-Guidelines/documents/examples/SHA3-384_Msg0.pdf
+        assertEquals(
+                "0c63a75b845e4f7d01107d852e4c2485c51a50aaaa94fc61995e71bbee983a2ac3713831264adb47fb6bd1e058d5f004",
+                DigestUtils.sha3_384Hex(EMPTY_STRING));
+    }
+
+    @Test
+    public void testSha3_384HexInputStream() throws IOException {
+        assumeJava9();
+        assertEquals(DigestUtils.sha3_384Hex(testData),
+                DigestUtils.sha3_384Hex(new ByteArrayInputStream(testData)));
+    }
+
+    @Test
+    public void testSha3_512() {
+        assumeJava9();
+        // Examples from https://csrc.nist.gov/projects/cryptographic-standards-and-guidelines/example-values
+        //
+        // https://csrc.nist.gov/CSRC/media/Projects/Cryptographic-Standards-and-Guidelines/documents/examples/SHA3-512_Msg0.pdf
+        assertEquals(
+                "a69f73cca23a9ac5c8b567dc185a756e97c982164fe25859e0d1dcc1475c80a615b2123af1f5f94c11e3e9402c3ac558f500199d95b6d3e301758586281dcd26",
+                DigestUtils.sha3_512Hex(EMPTY_STRING));
+    }
+
+    @Test
+    public void testSha3_512HexInputStream() throws IOException {
+        assumeJava9();
+        assertEquals(DigestUtils.sha3_512Hex(testData),
+                DigestUtils.sha3_512Hex(new ByteArrayInputStream(testData)));
     }
 
     @Test
@@ -374,6 +452,12 @@ public class DigestUtilsTest {
                        "hijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu"));
     assertEquals(DigestUtils.sha384Hex(testData),
             DigestUtils.sha384Hex(new ByteArrayInputStream(testData)));
+    }
+
+    @Test
+    public void testSha384HexInputStream() throws IOException {
+        assertEquals(DigestUtils.sha384Hex(testData),
+                DigestUtils.sha384Hex(new ByteArrayInputStream(testData)));
     }
 
     @Test
@@ -439,93 +523,9 @@ public class DigestUtilsTest {
     }
 
     @Test
-    public void testSha3_224() {
-        assumeJava9();
-        // Examples from https://csrc.nist.gov/projects/cryptographic-standards-and-guidelines/example-values
-        //
-        // https://csrc.nist.gov/CSRC/media/Projects/Cryptographic-Standards-and-Guidelines/documents/examples/SHA3-224_Msg0.pdf
-        assertEquals(
-                "6b4e03423667dbb73b6e15454f0eb1abd4597f9a1b078e3f5b5a6bc7",
-                DigestUtils.sha3_224Hex(EMPTY_STRING));
-    }
-
-    @Test
-    public void testSha3_256() {
-        assumeJava9();
-        // Examples from https://csrc.nist.gov/projects/cryptographic-standards-and-guidelines/example-values
-        //
-        // https://csrc.nist.gov/CSRC/media/Projects/Cryptographic-Standards-and-Guidelines/documents/examples/SHA3-256_Msg0.pdf
-        assertEquals(
-                "a7ffc6f8bf1ed76651c14756a061d662f580ff4de43b49fa82d80a4b80f8434a",
-                DigestUtils.sha3_256Hex(EMPTY_STRING));
-    }
-
-    @Test
-    public void testSha3_384() {
-        assumeJava9();
-        // Examples from https://csrc.nist.gov/projects/cryptographic-standards-and-guidelines/example-values
-        //
-        // https://csrc.nist.gov/CSRC/media/Projects/Cryptographic-Standards-and-Guidelines/documents/examples/SHA3-384_Msg0.pdf
-        assertEquals(
-                "0c63a75b845e4f7d01107d852e4c2485c51a50aaaa94fc61995e71bbee983a2ac3713831264adb47fb6bd1e058d5f004",
-                DigestUtils.sha3_384Hex(EMPTY_STRING));
-    }
-
-    @Test
-    public void testSha3_512() {
-        assumeJava9();
-        // Examples from https://csrc.nist.gov/projects/cryptographic-standards-and-guidelines/example-values
-        //
-        // https://csrc.nist.gov/CSRC/media/Projects/Cryptographic-Standards-and-Guidelines/documents/examples/SHA3-512_Msg0.pdf
-        assertEquals(
-                "a69f73cca23a9ac5c8b567dc185a756e97c982164fe25859e0d1dcc1475c80a615b2123af1f5f94c11e3e9402c3ac558f500199d95b6d3e301758586281dcd26",
-                DigestUtils.sha3_512Hex(EMPTY_STRING));
-    }
-
-    @Test
-    public void testSha256HexInputStream() throws IOException {
-        assertEquals(DigestUtils.sha256Hex(testData),
-                DigestUtils.sha256Hex(new ByteArrayInputStream(testData)));
-    }
-
-    @Test
-    public void testSha384HexInputStream() throws IOException {
-        assertEquals(DigestUtils.sha384Hex(testData),
-                DigestUtils.sha384Hex(new ByteArrayInputStream(testData)));
-    }
-
-    @Test
     public void testSha512HexInputStream() throws IOException {
         assertEquals(DigestUtils.sha512Hex(testData),
                 DigestUtils.sha512Hex(new ByteArrayInputStream(testData)));
-    }
-
-    @Test
-    public void testSha3_224HexInputStream() throws IOException {
-        assumeJava9();
-        assertEquals(DigestUtils.sha3_224Hex(testData),
-                DigestUtils.sha3_224Hex(new ByteArrayInputStream(testData)));
-    }
-
-    @Test
-    public void testSha3_256HexInputStream() throws IOException {
-        assumeJava9();
-        assertEquals(DigestUtils.sha3_256Hex(testData),
-                DigestUtils.sha3_256Hex(new ByteArrayInputStream(testData)));
-    }
-
-    @Test
-    public void testSha3_384HexInputStream() throws IOException {
-        assumeJava9();
-        assertEquals(DigestUtils.sha3_384Hex(testData),
-                DigestUtils.sha3_384Hex(new ByteArrayInputStream(testData)));
-    }
-
-    @Test
-    public void testSha3_512HexInputStream() throws IOException {
-        assumeJava9();
-        assertEquals(DigestUtils.sha3_512Hex(testData),
-                DigestUtils.sha3_512Hex(new ByteArrayInputStream(testData)));
     }
 
     @SuppressWarnings("deprecation") // deliberate tests of deprecated code
