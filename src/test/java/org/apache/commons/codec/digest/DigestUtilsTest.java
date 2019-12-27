@@ -19,6 +19,7 @@ package org.apache.commons.codec.digest;
 
 import static org.apache.commons.codec.binary.StringUtils.getBytesUtf8;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertArrayEquals;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -29,6 +30,7 @@ import java.nio.ByteBuffer;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
+import java.util.Locale;
 import java.util.Random;
 
 import org.apache.commons.codec.binary.Hex;
@@ -354,6 +356,53 @@ public class DigestUtilsTest {
              "501d289e4900f7e4331b99dec4b5433ac7d329eeb6dd26545e96e55b874be909",
              DigestUtils.sha512Hex("abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmn" +
                        "hijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu"));
+    }
+
+    @Test
+    public void testSha512_224() throws Exception {
+        assumeJava9();
+        // Examples from
+        // https://csrc.nist.gov/CSRC/media/Projects/Cryptographic-Standards-and-Guidelines/documents/examples/SHA512_224.pdf
+        final String stringInput = "abc";
+        final byte[] bytesInput = getBytesUtf8(stringInput);
+        final String resultString = "4634270F707B6A54DAAE7530460842E20E37ED265CEEE9A43E8924AA".toLowerCase(Locale.ROOT);
+        final byte[] resultBytes = Hex.decodeHex(resultString);
+        //
+        assertArrayEquals(resultBytes, DigestUtils.sha512_224(bytesInput));
+        assertArrayEquals(resultBytes, DigestUtils.sha512_224(new ByteArrayInputStream(bytesInput)));
+        assertArrayEquals(resultBytes, DigestUtils.sha512_224(stringInput));
+        //
+        assertEquals(resultString, DigestUtils.sha512_224Hex(bytesInput));
+        assertEquals(resultString, DigestUtils.sha512_224Hex(new ByteArrayInputStream(bytesInput)));
+        assertEquals(resultString, DigestUtils.sha512_224Hex(stringInput));
+        // Example 2
+        assertEquals("23FEC5BB94D60B23308192640B0C453335D664734FE40E7268674AF9".toLowerCase(Locale.ROOT),
+            DigestUtils.sha512_224Hex(
+                "abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu"));
+    }
+
+    @Test
+    public void testSha512_256() throws Exception {
+        assumeJava9();
+        // Examples from
+        // https://csrc.nist.gov/CSRC/media/Projects/Cryptographic-Standards-and-Guidelines/documents/examples/SHA512_256.pdf
+        final String stringInput = "abc";
+        final byte[] bytesInput = getBytesUtf8(stringInput);
+        final String resultString = "53048E2681941EF99B2E29B76B4C7DABE4C2D0C634FC6D46E0E2F13107E7AF23"
+            .toLowerCase(Locale.ROOT);
+        final byte[] resultBytes = Hex.decodeHex(resultString);
+        //
+        assertArrayEquals(resultBytes, DigestUtils.sha512_256(bytesInput));
+        assertArrayEquals(resultBytes, DigestUtils.sha512_256(new ByteArrayInputStream(bytesInput)));
+        assertArrayEquals(resultBytes, DigestUtils.sha512_256(stringInput));
+        //
+        assertEquals(resultString, DigestUtils.sha512_256Hex(bytesInput));
+        assertEquals(resultString, DigestUtils.sha512_256Hex(new ByteArrayInputStream(bytesInput)));
+        assertEquals(resultString, DigestUtils.sha512_256Hex(stringInput));
+        // Example 2
+        assertEquals("3928E184FB8690F840DA3988121D31BE65CB9D3EF83EE6146FEAC861E19B563A".toLowerCase(Locale.ROOT),
+            DigestUtils.sha512_256Hex(
+                "abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu"));
     }
 
     @Test

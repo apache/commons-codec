@@ -334,6 +334,30 @@ public class DigestUtils {
     }
 
     /**
+     * Returns an SHA-512/224 digest.
+     *
+     * @return An SHA-512/224 digest instance.
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught.
+     * @see MessageDigestAlgorithms#SHA_512_224
+     */
+    public static MessageDigest getSha512_224Digest() {
+        return getDigest(MessageDigestAlgorithms.SHA_512_224);
+    }
+
+    /**
+     * Returns an SHA-512/256 digest.
+     *
+     * @return An SHA-512/256 digest instance.
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught.
+     * @see MessageDigestAlgorithms#SHA_512_224
+     */
+    public static MessageDigest getSha512_256Digest() {
+        return getDigest(MessageDigestAlgorithms.SHA_512_256);
+    }
+
+    /**
      * Returns an SHA-1 digest.
      *
      * @return An SHA-1 digest instance.
@@ -1090,6 +1114,30 @@ public class DigestUtils {
     }
 
     /**
+     * Calculates the SHA-512/224 digest and returns the value as a {@code byte[]}.
+     *
+     * @param data
+     *            Data to digest
+     * @return SHA-512/224 digest
+     * @since 1.14
+     */
+    public static byte[] sha512_224(final byte[] data) {
+        return getSha512_224Digest().digest(data);
+    }
+
+    /**
+     * Calculates the SHA-512/256 digest and returns the value as a {@code byte[]}.
+     *
+     * @param data
+     *            Data to digest
+     * @return SHA-512/256 digest
+     * @since 1.14
+     */
+    public static byte[] sha512_256(final byte[] data) {
+        return getSha512_256Digest().digest(data);
+    }
+
+    /**
      * Calculates the SHA-512 digest and returns the value as a {@code byte[]}.
      *
      * @param data
@@ -1101,6 +1149,34 @@ public class DigestUtils {
      */
     public static byte[] sha512(final InputStream data) throws IOException {
         return digest(getSha512Digest(), data);
+    }
+
+    /**
+     * Calculates the SHA-512/224 digest and returns the value as a {@code byte[]}.
+     *
+     * @param data
+     *            Data to digest
+     * @return SHA-512/224 digest
+     * @throws IOException
+     *             On error reading from the stream
+     * @since 1.14
+     */
+    public static byte[] sha512_224(final InputStream data) throws IOException {
+        return digest(getSha512_224Digest(), data);
+    }
+
+    /**
+     * Calculates the SHA-512/256 digest and returns the value as a {@code byte[]}.
+     *
+     * @param data
+     *            Data to digest
+     * @return SHA-512/256 digest
+     * @throws IOException
+     *             On error reading from the stream
+     * @since 1.14
+     */
+    public static byte[] sha512_256(final InputStream data) throws IOException {
+        return digest(getSha512_256Digest(), data);
     }
 
     /**
@@ -1116,6 +1192,30 @@ public class DigestUtils {
     }
 
     /**
+     * Calculates the SHA-512/224 digest and returns the value as a {@code byte[]}.
+     *
+     * @param data
+     *            Data to digest; converted to bytes using {@link StringUtils#getBytesUtf8(String)}
+     * @return SHA-512/224 digest
+     * @since 1.14
+     */
+    public static byte[] sha512_224(final String data) {
+        return sha512_224(StringUtils.getBytesUtf8(data));
+    }
+
+    /**
+     * Calculates the SHA-512/256 digest and returns the value as a {@code byte[]}.
+     *
+     * @param data
+     *            Data to digest; converted to bytes using {@link StringUtils#getBytesUtf8(String)}
+     * @return SHA-512/224 digest
+     * @since 1.14
+     */
+    public static byte[] sha512_256(final String data) {
+        return sha512_256(StringUtils.getBytesUtf8(data));
+    }
+
+    /**
      * Calculates the SHA-512 digest and returns the value as a hex string.
      *
      * @param data
@@ -1125,6 +1225,58 @@ public class DigestUtils {
      */
     public static String sha512Hex(final byte[] data) {
         return Hex.encodeHexString(sha512(data));
+    }
+
+    /**
+     * Calculates the SHA-512/224 digest and returns the value as a hex string.
+     *
+     * @param data
+     *            Data to digest
+     * @return SHA-512/224 digest as a hex string
+     * @since 1.14
+     */
+    public static String sha512_224Hex(final byte[] data) {
+        return Hex.encodeHexString(sha512_224(data));
+    }
+
+    /**
+     * Calculates the SHA-512/256 digest and returns the value as a hex string.
+     *
+     * @param data
+     *            Data to digest
+     * @return SHA-512/256 digest as a hex string
+     * @since 1.14
+     */
+    public static String sha512_256Hex(final byte[] data) {
+        return Hex.encodeHexString(sha512_256(data));
+    }
+
+    /**
+     * Calculates the SHA-512/224 digest and returns the value as a hex string.
+     *
+     * @param data
+     *            Data to digest
+     * @return SHA-512/224 digest as a hex string
+     * @throws IOException 
+     *             On error reading from the stream
+     * @since 1.14
+     */
+    public static String sha512_224Hex(final InputStream data) throws IOException {
+        return Hex.encodeHexString(sha512_224(data));
+    }
+
+    /**
+     * Calculates the SHA-512/256 digest and returns the value as a hex string.
+     *
+     * @param data
+     *            Data to digest
+     * @return SHA-512/256 digest as a hex string
+     * @throws IOException 
+     *             On error reading from the stream
+     * @since 1.14
+     */
+    public static String sha512_256Hex(final InputStream data) throws IOException {
+        return Hex.encodeHexString(sha512_256(data));
     }
 
     /**
@@ -1151,6 +1303,30 @@ public class DigestUtils {
      */
     public static String sha512Hex(final String data) {
         return Hex.encodeHexString(sha512(data));
+    }
+
+    /**
+     * Calculates the SHA-512/224 digest and returns the value as a hex string.
+     *
+     * @param data
+     *            Data to digest
+     * @return SHA-512/224 digest as a hex string
+     * @since 1.14
+     */
+    public static String sha512_224Hex(final String data) {
+        return Hex.encodeHexString(sha512_224(data));
+    }
+
+    /**
+     * Calculates the SHA-512/256 digest and returns the value as a hex string.
+     *
+     * @param data
+     *            Data to digest
+     * @return SHA-512/256 digest as a hex string
+     * @since 1.14
+     */
+    public static String sha512_256Hex(final String data) {
+        return Hex.encodeHexString(sha512_256(data));
     }
 
     /**

@@ -94,9 +94,29 @@ public class MessageDigestAlgorithms {
     public static final String SHA_512 = "SHA-512";
 
     /**
+     * The SHA-512 hash algorithm defined in the FIPS PUB 180-4.
+     * <p>
+     * Included starting in Oracle Java 9.
+     * </p>
+     * 
+     * @since 1.14
+     */
+    public static final String SHA_512_224 = "SHA-512/224";
+
+    /**
+     * The SHA-512 hash algorithm defined in the FIPS PUB 180-4.
+     * <p>
+     * Included starting in Oracle Java 9.
+     * </p>
+     * 
+     * @since 1.14
+     */
+    public static final String SHA_512_256 = "SHA-512/256";
+
+    /**
      * The SHA3-224 hash algorithm defined in the FIPS PUB 202.
      * <p>
-     * Included starting in Oracle Java 9 GA.
+     * Included starting in Oracle Java 9.
      * </p>
      *
      * @since 1.11
@@ -106,7 +126,7 @@ public class MessageDigestAlgorithms {
     /**
      * The SHA3-256 hash algorithm defined in the FIPS PUB 202.
      * <p>
-     * Included starting in Oracle Java 9 GA.
+     * Included starting in Oracle Java 9.
      * </p>
      *
      * @since 1.11
@@ -116,7 +136,7 @@ public class MessageDigestAlgorithms {
     /**
      * The SHA3-384 hash algorithm defined in the FIPS PUB 202.
      * <p>
-     * Included starting in Oracle Java 9 GA.
+     * Included starting in Oracle Java 9.
      * </p>
      *
      * @since 1.11
@@ -126,7 +146,7 @@ public class MessageDigestAlgorithms {
     /**
      * The SHA3-512 hash algorithm defined in the FIPS PUB 202.
      * <p>
-     * Included starting in Oracle Java 9 GA.
+     * Included starting in Oracle Java 9.
      * </p>
      *
      * @since 1.11
@@ -142,7 +162,7 @@ public class MessageDigestAlgorithms {
     public static String[] values() {
         // N.B. do not use a constant array here as that can be changed externally by accident or design
         return new String[] {
-            MD2, MD5, SHA_1, SHA_224, SHA_256, SHA_384, SHA_512, SHA3_224, SHA3_256, SHA3_384, SHA3_512
+            MD2, MD5, SHA_1, SHA_224, SHA_256, SHA_384, SHA_512, SHA_512_224, SHA_512_256, SHA3_224, SHA3_256, SHA3_384, SHA3_512
         };
     }
 

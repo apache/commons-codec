@@ -53,6 +53,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action issue="CODEC-269" dev="aherbert" type="fix">Allow repeat calls to MurmurHash3.IncrementalHash32.end() to generate the same value.</action>
       <action issue="CODEC-272" dev="ggregory" type="add" due-to="Behrang, Alex Herbert, Gary Gregory">Add RandomAccessFile digest methods #31.</action>
       <action issue="CODEC-273" dev="ggregory" type="add" due-to="Gary Gregory">Add Path APIs to org.apache.commons.codec.digest.DigestUtils similar to File APIs.</action>
+      <action issue="CODEC-274" dev="ggregory" type="add" due-to="Gary Gregory">Add SHA-512/224 and SHA-512/256 to DigestUtils for Java 9 and up.</action>
     </release>
 
     <release version="1.13" date="2019-07-20" description="Feature and fix release.">
