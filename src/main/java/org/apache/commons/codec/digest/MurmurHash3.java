@@ -1015,7 +1015,7 @@ public final class MurmurHash3 {
          * @param length The length of array
          */
         public final void add(final byte[] data, final int offset, final int length) {
-            if (length == 0) {
+            if (length <= 0) {
                 // Nothing to add
                 return;
             }
