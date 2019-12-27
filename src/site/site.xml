@@ -28,6 +28,7 @@
             <item name="Download"        href="https://commons.apache.org/codec/download_codec.cgi"/>
             <item name="Users guide"     href="/userguide.html"/>
             <item name="Javadoc current" href="/apidocs/index.html"/>
+            <item name="Javadoc 1.14"    href="/archives/1.14/apidocs/index.html"/>
             <item name="Javadoc 1.13"    href="/archives/1.13/apidocs/index.html"/>
             <item name="Javadoc 1.12"    href="/archives/1.12/apidocs/index.html"/>
             <item name="Javadoc 1.11"    href="/archives/1.11/apidocs/index.html"/>
@@ -43,16 +44,6 @@
             <item name="Issue Tracking"    href="/issue-tracking.html"/>
             <item name="Source Repository" href="/scm.html"/>
             <item name="Javadoc current"   href="/apidocs/index.html"/>
-        </menu>
-
-        <menu name="Site Archives">
-            <item name="Codec 1.13"       href="/archives/1.13/index.html"/>
-            <item name="Codec 1.12"       href="/archives/1.12/index.html"/>
-            <item name="Codec 1.11"       href="/archives/1.11/index.html"/>
-            <item name="Codec 1.10"       href="/archives/1.10/index.html"/>
-            <item name="Codec 1.9"        href="/archives/1.9/index.html"/>
-            <item name="Codec 1.8"        href="/archives/1.8/index.html"/>
-            <item name="Codec 1.7"        href="/archives/1.7/index.html"/>
         </menu>
 
     </body>
