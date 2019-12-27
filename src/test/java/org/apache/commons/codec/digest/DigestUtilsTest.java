@@ -22,6 +22,7 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -124,6 +125,13 @@ public class DigestUtilsTest {
         final byte[] allBytes = Files.readAllBytes(Paths.get(pathname));
         assertEquals(expected, new DigestUtils(algo).digestAsHex(allBytes));
         assertEquals(expected, new DigestUtils(algo).digestAsHex(ByteBuffer.wrap(allBytes)));
+    }
+
+    @Test
+    public void testGetMessageDigest() {
+        final DigestUtils digestUtils = new DigestUtils(MessageDigestAlgorithms.MD5);
+        assertNotNull(digestUtils.getMessageDigest());
+        assertEquals(MessageDigestAlgorithms.MD5, digestUtils.getMessageDigest().getAlgorithm());
     }
 
     @Test(expected=IllegalArgumentException.class)
@@ -318,13 +326,14 @@ public class DigestUtilsTest {
         final String expected = "d14a028c2a3a2bc9476102bb288234c415a2b01f828ea62ac5b3e42f";
         final String pathname = "src/test/resources/empty.bin";
         final String algo = MessageDigestAlgorithms.SHA_224;
-        assertEquals(expected, new DigestUtils(algo).digestAsHex(new File(pathname)));
+        final DigestUtils digestUtils = new DigestUtils(algo);
+        assertEquals(expected, digestUtils.digestAsHex(new File(pathname)));
         try (final FileInputStream inputStream = new FileInputStream(pathname)) {
-            assertEquals(expected, new DigestUtils(algo).digestAsHex(inputStream));
+            assertEquals(expected, digestUtils.digestAsHex(inputStream));
         }
         final byte[] allBytes = Files.readAllBytes(Paths.get(pathname));
-        assertEquals(expected, new DigestUtils(algo).digestAsHex(allBytes));
-        assertEquals(expected, new DigestUtils(algo).digestAsHex(ByteBuffer.wrap(allBytes)));
+        assertEquals(expected, digestUtils.digestAsHex(allBytes));
+        assertEquals(expected, digestUtils.digestAsHex(ByteBuffer.wrap(allBytes)));
     }
 
     @Test
