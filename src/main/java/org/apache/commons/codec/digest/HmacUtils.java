@@ -879,7 +879,7 @@ public final class HmacUtils {
     }
 
     /**
-     * Preserves binary compatibity only.
+     * Preserves binary compatibility only.
      * As for previous versions does not provide useful behaviour
      * @deprecated since 1.11; only useful to preserve binary compatibility
      */
