@@ -18,15 +18,19 @@
 package org.apache.commons.codec.digest;
 
 import static org.apache.commons.codec.binary.StringUtils.getBytesUtf8;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
@@ -189,8 +193,15 @@ public class DigestUtilsTest {
 
         assertEquals(DigestUtils.md5Hex(testData),
                 DigestUtils.md5Hex(new ByteArrayInputStream(testData)));
-}
+    }
 
+    @Test
+    public void testIsAvailable() {
+        assertTrue(DigestUtils.isAvailable(MessageDigestAlgorithms.MD5));
+        assertFalse(DigestUtils.isAvailable("FOO"));
+        assertFalse(DigestUtils.isAvailable(null));
+    }
+    
     /**
      * An MD5 hash converted to hex should always be 32 characters.
      */
@@ -301,8 +312,30 @@ public class DigestUtilsTest {
     @Test
     public void testSha224_FileAsHex() throws IOException {
         assumeJava8();
-        assertEquals("d14a028c2a3a2bc9476102bb288234c415a2b01f828ea62ac5b3e42f",
-                new DigestUtils(MessageDigestAlgorithms.SHA_224).digestAsHex(new File("src/test/resources/empty.bin")));
+        final String expected = "d14a028c2a3a2bc9476102bb288234c415a2b01f828ea62ac5b3e42f";
+        final String pathname = "src/test/resources/empty.bin";
+        final String algo = MessageDigestAlgorithms.SHA_224;
+        assertEquals(expected, new DigestUtils(algo).digestAsHex(new File(pathname)));
+        try (final FileInputStream inputStream = new FileInputStream(pathname)) {
+            assertEquals(expected, new DigestUtils(algo).digestAsHex(inputStream));
+        }
+        final byte[] allBytes = Files.readAllBytes(Paths.get(pathname));
+        assertEquals(expected, new DigestUtils(algo).digestAsHex(allBytes));
+        assertEquals(expected, new DigestUtils(algo).digestAsHex(ByteBuffer.wrap(allBytes)));
+    }
+
+    @Test
+    public void testDigestAs() throws IOException {
+        final String expected = "d41d8cd98f00b204e9800998ecf8427e";
+        final String pathname = "src/test/resources/empty.bin";
+        final String algo = MessageDigestAlgorithms.MD5;
+        assertEquals(expected, new DigestUtils(algo).digestAsHex(new File(pathname)));
+        try (final FileInputStream inputStream = new FileInputStream(pathname)) {
+            assertEquals(expected, new DigestUtils(algo).digestAsHex(inputStream));
+        }
+        final byte[] allBytes = Files.readAllBytes(Paths.get(pathname));
+        assertEquals(expected, new DigestUtils(algo).digestAsHex(allBytes));
+        assertEquals(expected, new DigestUtils(algo).digestAsHex(ByteBuffer.wrap(allBytes)));
     }
 
     @Test
