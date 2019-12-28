@@ -33,7 +33,7 @@ package org.apache.commons.codec.digest;
  * <p>This is a re-implementation of the original C code plus some additional
  * features.</p>
  *
- * <p>This is public domain code with no copyrights. From homepage of
+ * <p>This is public domain code with no copyrights. From home page of
  * <a href="https://github.com/aappleby/smhasher">SMHasher</a>:</p>
  *
  * <blockquote>

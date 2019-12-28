@@ -30,7 +30,7 @@ package org.apache.commons.codec.digest;
  * and the 128-bit hash function {@code MurmurHash3_x64_128} from Austin Applyby's
  * original {@code c++} code in SMHasher.</p>
  *
- * <p>This is public domain code with no copyrights. From homepage of
+ * <p>This is public domain code with no copyrights. From home page of
  * <a href="https://github.com/aappleby/smhasher">SMHasher</a>:</p>
  *
  * <blockquote>
