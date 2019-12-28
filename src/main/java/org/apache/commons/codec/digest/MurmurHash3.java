@@ -754,7 +754,7 @@ public final class MurmurHash3 {
      * <p>This is an implementation of the 128-bit hash function {@code MurmurHash3_x64_128}
      * from from Austin Applyby's original MurmurHash3 {@code c++} code in SMHasher.</p>
      *
-     * <p>This implementation contains a sign-extension bug in the seed initialisation.
+     * <p>This implementation contains a sign-extension bug in the seed initialization.
      * This manifests if the seed is negative.<p>
      *
      * @param data The input byte array
@@ -762,7 +762,7 @@ public final class MurmurHash3 {
      * @param length The length of array
      * @param seed The initial seed value
      * @return The 128-bit hash (2 longs)
-     * @deprecated Use {@link #hash128x64(byte[], int, int, int)}. This corrects the seed initialisation.
+     * @deprecated Use {@link #hash128x64(byte[], int, int, int)}. This corrects the seed initialization.
      */
     @Deprecated
     public static long[] hash128(final byte[] data, final int offset, final int length, final int seed) {

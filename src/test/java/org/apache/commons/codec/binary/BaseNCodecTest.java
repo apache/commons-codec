@@ -201,7 +201,7 @@ public class BaseNCodecTest {
         final Context context = new Context();
         Assert.assertNull("Initial buffer should be null", context.buffer);
 
-        // Test initialisation
+        // Test initialization
         context.pos = 76979;
         context.readPos = 273;
         ncodec.ensureBufferSize(0, context);
