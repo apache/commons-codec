@@ -1054,7 +1054,7 @@ public final class MurmurHash3 {
                     k = orBytes(unprocessed[0], unprocessed[1], unprocessed[2], data[offset]);
                     break;
                 default:
-                    throw new AssertionError("Unprocessed length should be 1, 2, or 3: " + unprocessedLength);
+                    throw new IllegalStateException("Unprocessed length should be 1, 2, or 3: " + unprocessedLength);
                 }
                 hash = mix32(k, hash);
                 // Update the offset and length
