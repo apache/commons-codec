@@ -1030,8 +1030,9 @@ public final class MurmurHash3 {
             //                main block
             //                                remaining
 
-            // Check if the unprocessed bytes and new bytes can fill a block of 4
-            if (unprocessedLength + length < BLOCK_SIZE) {
+            // Check if the unprocessed bytes and new bytes can fill a block of 4.
+            // Make this overflow safe in the event that length is Integer.MAX_VALUE.
+            if (unprocessedLength + length - BLOCK_SIZE < 0) {
                 // Not enough so add to the unprocessed bytes
                 System.arraycopy(data, offset, unprocessed, unprocessedLength, length);
                 unprocessedLength += length;
