@@ -17,6 +17,9 @@
 
 package org.apache.commons.codec.digest;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+
 /**
  * Implementation of the MurmurHash3 32-bit and 128-bit hash functions.
  *
@@ -54,6 +57,13 @@ package org.apache.commons.codec.digest;
  * @since 1.13
  */
 public final class MurmurHash3 {
+
+    /**
+     * Default Charset used to convert strings into bytes.
+     * 
+     * Consider private; package private for tests only.
+     */
+    static final Charset GET_BYTES_CHARSET = StandardCharsets.UTF_8;
 
     /**
      * A random number to use for a hash code.
@@ -233,7 +243,7 @@ public final class MurmurHash3 {
      * <pre>
      * int offset = 0;
      * int seed = 104729;
-     * byte[] bytes = data.getBytes();
+     * byte[] bytes = data.getBytes(StandardCharsets.UTF_8);
      * int hash = MurmurHash3.hash32(bytes, offset, bytes.length, seed);
      * </pre>
      *
@@ -249,7 +259,7 @@ public final class MurmurHash3 {
      */
     @Deprecated
     public static int hash32(final String data) {
-        final byte[] bytes = data.getBytes();
+        final byte[] bytes = data.getBytes(GET_BYTES_CHARSET);
         return hash32(bytes, 0, bytes.length, DEFAULT_SEED);
     }
 
@@ -751,7 +761,7 @@ public final class MurmurHash3 {
      * <pre>
      * int offset = 0;
      * int seed = 104729;
-     * byte[] bytes = data.getBytes();
+     * byte[] bytes = data.getBytes(StandardCharsets.UTF_8);
      * int hash = MurmurHash3.hash128(bytes, offset, bytes.length, seed);
      * </pre>
      *
@@ -766,7 +776,7 @@ public final class MurmurHash3 {
      */
     @Deprecated
     public static long[] hash128(final String data) {
-        final byte[] bytes = data.getBytes();
+        final byte[] bytes = data.getBytes(GET_BYTES_CHARSET);
         return hash128(bytes, 0, bytes.length, DEFAULT_SEED);
     }
 
