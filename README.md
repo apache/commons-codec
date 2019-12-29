@@ -46,7 +46,7 @@ Apache Commons Codec
 [![Build Status](https://travis-ci.org/apache/commons-codec.svg)](https://travis-ci.org/apache/commons-codec)
 [![Coverage Status](https://coveralls.io/repos/apache/commons-codec/badge.svg)](https://coveralls.io/r/apache/commons-codec)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/commons-codec/commons-codec/badge.svg)](https://maven-badges.herokuapp.com/maven-central/commons-codec/commons-codec/)
-[![Javadocs](https://javadoc.io/badge/commons-codec/commons-codec/1.13.svg)](https://javadoc.io/doc/commons-codec/commons-codec/1.13)
+[![Javadocs](https://javadoc.io/badge/commons-codec/commons-codec/1.14-SNAPSHOT.svg)](https://javadoc.io/doc/commons-codec/commons-codec/1.14-SNAPSHOT)
 
 The Apache Commons Codec package contains simple encoder and decoders for
      various formats such as Base64 and Hexadecimal.  In addition to these
@@ -70,7 +70,7 @@ Alternatively you can pull it from the central Maven repositories:
 <dependency>
   <groupId>commons-codec</groupId>
   <artifactId>commons-codec</artifactId>
-  <version>1.13</version>
+  <version>1.14-SNAPSHOT</version>
 </dependency>
 ```
 
