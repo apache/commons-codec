@@ -1,3 +1,42 @@
+              Apache Apache Commons Codec 1.14 RELEASE NOTES
+              December 29 2019
+
+The Apache Commons Codec package contains simple encoder and decoders for
+various formats such as Base64 and Hexadecimal.  In addition to these
+widely used encoders and decoders, the codec package also maintains a
+collection of phonetic encoding utilities.
+
+Feature and fix release.
+
+Changes in this version include:
+
+New features:
+o CODEC-264:  Add MurmurHash3.hash128x64 methods to fix sign extension error during seeding in hash128 methods. Thanks to Claude Warren.
+o CODEC-267:  Add MurmurHash3.hash32x86 methods and IncrementalHash32x86 to fix sign extension error in hash32 methods. Thanks to Claude Warren.
+o CODEC-272:  Add RandomAccessFile digest methods #31. Thanks to Behrang, Alex Herbert, Gary Gregory.
+o CODEC-273:  Add Path APIs to org.apache.commons.codec.digest.DigestUtils similar to File APIs. Thanks to Gary Gregory.
+o CODEC-274:  Add SHA-512/224 and SHA-512/256 to DigestUtils for Java 9 and up. Thanks to Gary Gregory.
+o CODEC-275:  Add missing note in javadoc when sign extension error is present #34. Thanks to Claude Warren.
+
+Fixed Bugs:
+o CODEC-261:  Hex: Allow encoding read-only ByteBuffer.
+o CODEC-259:  Hex: Only use an available ByteBuffer backing array if the length equals the remaining byte count.
+o CODEC-265:  BaseNCodec to expand buffer using overflow conscious code.
+o CODEC-270:  Base32/64: Fixed decoding check that all the final trailing bits to discard are zero.
+o CODEC-269:  Allow repeat calls to MurmurHash3.IncrementalHash32.end() to generate the same value.
+
+Changes:
+o CODEC-268:  MurmurHash3: Deprecate hash64 methods and hash methods accepting a String that use the default encoding.
+
+For complete information on Apache Commons Codec, including instructions on how to submit bug reports,
+patches, or suggestions for improvement, see the Apache Apache Commons Codec website:
+
+https://commons.apache.org/proper/commons-codec/
+
+Download page: https://commons.apache.org/proper/commons-codec/download_pool.cgi
+
+-------------------------------------------------------------------------------
+
               Apache Apache Commons Codec 1.13 RELEASE NOTES
 
 The Apache Commons Codec package contains simple encoder and decoders for
@@ -27,7 +66,6 @@ patches, or suggestions for improvement, see the Apache Apache Commons Codec web
 
 Visit https://commons.apache.org/proper/commons-codec/
 Download from https://commons.apache.org/proper/commons-codec/download_codec.cgi
-
 
 -------------------------------------------------------------------------------
 
@@ -63,7 +101,7 @@ Have fun!
 
               Apache Commons Codec 1.11 RELEASE NOTES
 
-The Apache Commons Codec team is pleased to announce the commons-codec-1.11-SNAPSHOT release!
+The Apache Commons Codec team is pleased to announce the commons-codec-1.11 release!
 
 The Apache Commons Codec package contains simple encoder and decoders for
      various formats such as Base64 and Hexadecimal.  In addition to these
