@@ -16,95 +16,29 @@ limitations under the License.
 -->
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-  <head>
-  </head>
-  <body>
-    <p>Interfaces and classes used by
-    the various implementations in the sub-packages.</p>
+<head>
+</head>
+<body>
+	<p>Interfaces and classes used by the various implementations in
+		the sub-packages.</p>
 
-    <p>Definitive implementations of commonly used encoders and decoders.</p>
+	<p>Definitive implementations of commonly used encoders and
+		decoders.</p>
 
-    <p>Codec is currently comprised of a modest set of utilities and a
-    simple framework for String encoding and decoding in three categories:
-    Binary Encoders, Language Encoders, and Network Encoders. </p>
+	<p>Codec is currently comprised of a modest set of utilities and a
+		simple framework for String encoding and decoding in the following
+		packages:</p>
 
-    <h2>
-      <a id="Common_Encoders"></a>Common Encoders
-    </h2>
+	<ul>
+		<li><a href="binary/package-summary.html">Binary codecs.</a></li>
+		<li><a href="cli/package-summary.html">Command line utility.</a></li>
+		<li><a href="digest/package-summary.html">Digests and hashers</a></li>
+		<li><a href="language/package-summary.html">Common language
+				and phonetic encoders.</a></li>
+		<li><a href="language/bm/package-summary.html">Beider-Morse
+				codec.</a></li>
+		<li><a href="net/package-summary.html">Network codecs.</a></li>
+	</ul>
 
-    <table border="1">
-      <caption>Binary Encoders</caption>
-  	  <tbody>
-        <tr>
-          <td> 
-            <a href="binary/Base64.html">
-              org.apache.commons.codec.binary.Base64</a>
-          </td>
-          <td> 
-            Provides Base64 content-transfer-encoding as defined in 
-            <a href="http://www.ietf.org/rfc/rfc2045.txt"> RFC 2045</a> 
-          </td>
-          <td>Production</td>
-        </tr>
-        <tr>
-          <td>
-           <a href="binary/Hex.html">
-             org.apache.commons.codec.binary.Hex</a>
-          </td>
-          <td> 
-            Converts an array of bytes into an array of characters
-            representing the hexadecimal values of each byte in order 
-          </td>
-          <td>Production</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <h2> 
-      <a id="Language_Encoders">Language Encoders</a> 
-    </h2>
-    <p> 
-      Codec contains a number of commonly used language and phonetic
-      encoders
-    </p>
-
-    <table border="1">
-      <caption>Language Encoders</caption>
-      <tbody>
-        <tr>
-          <td> 
-            <a href="#">org.apache.commons.codec.language.Soundex</a>
-          </td>
-          <td>Implementation of the Soundex algorithm.</td>
-          <td>Production</td>
-        </tr>
-        <tr>
-          <td> 
-            <a href="#">org.apache.commons.codec.language.Metaphone</a>
-          </td>
-          <td>Implementation of the Metaphone algorithm.</td>
-          <td>Production</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <h2>
-      <a id="Network_Encoders">Network Encoders</a>
-    </h2>
-    <p> Codec contains network related encoders </p>
-
-    <table border="1">
-      <caption>Network Encoders</caption>
-      <tbody>
-        <tr>
-          <td> 
-            <a href="#">org.apache.commons.codec.net.URLCodec</a>
-          </td>
-          <td>Implements the 'www-form-urlencoded' encoding scheme.</td>
-          <td>Production</td>
-        </tr>
-      </tbody>
-    </table>
-    <br>
-  </body>
+</body>
 </html>
