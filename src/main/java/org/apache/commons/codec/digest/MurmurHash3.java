@@ -51,6 +51,7 @@ package org.apache.commons.codec.digest;
  * @since 1.13
  */
 public final class MurmurHash3 {
+
     /**
      * A random number to use for a hash code.
      *
@@ -945,7 +946,7 @@ public final class MurmurHash3 {
     }
 
     /**
-     * Perform the intermediate mix step of the 32-bit hash function {@code MurmurHash3_x86_32}.
+     * Performs the intermediate mix step of the 32-bit hash function {@code MurmurHash3_x86_32}.
      *
      * @param k The data to add to the hash
      * @param hash The current hash
@@ -960,7 +961,7 @@ public final class MurmurHash3 {
     }
 
     /**
-     * Perform the final avalanche mix step of the 32-bit hash function {@code MurmurHash3_x86_32}.
+     * Performs the final avalanche mix step of the 32-bit hash function {@code MurmurHash3_x86_32}.
      *
      * @param hash The current hash
      * @return The final hash
@@ -975,7 +976,7 @@ public final class MurmurHash3 {
     }
 
     /**
-     * Perform the final avalanche mix step of the 64-bit hash function {@code MurmurHash3_x64_128}.
+     * Performs the final avalanche mix step of the 64-bit hash function {@code MurmurHash3_x64_128}.
      *
      * @param hash The current hash
      * @return The final hash
@@ -999,15 +1000,19 @@ public final class MurmurHash3 {
      * @since 1.14
      */
     public static class IncrementalHash32x86 {
+
         /** The size of byte blocks that are processed together. */
         private static final int BLOCK_SIZE = 4;
 
         /** Up to 3 unprocessed bytes from input data. */
         private final byte[] unprocessed = new byte[3];
+
         /** The number of unprocessed bytes in the tail data. */
         private int unprocessedLength;
+
         /** The total number of input bytes added since the start. */
         private int totalLen;
+
         /**
          * The current running hash.
          * This must be finalised to generate the 32-bit hash value.
@@ -1015,7 +1020,7 @@ public final class MurmurHash3 {
         private int hash;
 
         /**
-         * Start a new incremental hash.
+         * Starts a new incremental hash.
          *
          * @param seed The initial seed value
          */
@@ -1114,7 +1119,7 @@ public final class MurmurHash3 {
         }
 
         /**
-         * Finalise the running hash to the output 32-bit hash by processing remaining bytes
+         * Finalize the running hash to the output 32-bit hash by processing remaining bytes
          * and performing final mixing.
          *
          * @param hash The running hash
@@ -1147,7 +1152,7 @@ public final class MurmurHash3 {
         }
 
         /**
-         * Combine the bytes using an Or operation ({@code | } in a little-endian representation
+         * Combines the bytes using an Or operation ({@code | } in a little-endian representation
          * of a 32-bit integer; byte 1 will be the least significant byte, byte 4 the most
          * significant.
          *
@@ -1177,6 +1182,7 @@ public final class MurmurHash3 {
      */
     @Deprecated
     public static class IncrementalHash32 extends IncrementalHash32x86 {
+
         /**
          * {@inheritDoc}
          *
