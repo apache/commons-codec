@@ -49,7 +49,7 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
 
     /**
      * TODO should this be protected?
-     * 
+     *
      * @param out the underlying output or null.
      * @param basedCodec a BaseNCodec.
      * @param doEncode true to encode, false to decode, TODO should be an enum?

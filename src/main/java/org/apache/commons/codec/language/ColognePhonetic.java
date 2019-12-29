@@ -241,8 +241,8 @@ public class ColognePhonetic implements StringEncoder {
          * '0' is only stored if it is the first entry.
          * Ignored chars are never stored.
          * If the code is the same as the last code (whether stored or not) it is not stored.
-         * 
-         * @param code the code to store. 
+         *
+         * @param code the code to store.
          */
         public void put(final char code) {
             if (code != CHAR_IGNORE && lastCode != code && (code != '0' || length == 0)) {
@@ -404,7 +404,7 @@ public class ColognePhonetic implements StringEncoder {
 
     /**
      * Compares the first encoded string to the second encoded string.
-     * 
+     *
      * @param text1 source text to encode before testing for equality.
      * @param text2 source text to encode before testing for equality.
      * @return {@code true} if the encoding the first string equals the encoding of the second string, {@code false}

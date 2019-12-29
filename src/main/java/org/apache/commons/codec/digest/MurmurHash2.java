@@ -17,6 +17,9 @@
 
 package org.apache.commons.codec.digest;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+
 /**
  * Implementation of the MurmurHash2 32-bit and 64-bit hash functions.
  *
@@ -47,6 +50,13 @@ package org.apache.commons.codec.digest;
  * @since 1.13
  */
 public final class MurmurHash2 {
+
+    /**
+     * Default Charset used to convert strings into bytes.
+     * 
+     * Consider private; package private for tests only.
+     */
+    static final Charset GET_BYTES_CHARSET = StandardCharsets.UTF_8;
 
     // Constants for 32-bit variant
     private static final int M32 = 0x5bd1e995;
@@ -132,7 +142,7 @@ public final class MurmurHash2 {
      *
      * <pre>
      * int seed = 0x9747b28c;
-     * byte[] bytes = data.getBytes();
+     * byte[] bytes = data.getBytes(StandardCharsets.UTF_8);
      * int hash = MurmurHash2.hash32(bytes, bytes.length, seed);
      * </pre>
      *
@@ -141,7 +151,7 @@ public final class MurmurHash2 {
      * @see #hash32(byte[], int, int)
      */
     public static int hash32(final String text) {
-        final byte[] bytes = text.getBytes();
+        final byte[] bytes = text.getBytes(GET_BYTES_CHARSET);
         return hash32(bytes, bytes.length);
     }
 
@@ -152,7 +162,7 @@ public final class MurmurHash2 {
      *
      * <pre>
      * int seed = 0x9747b28c;
-     * byte[] bytes = text.substring(from, from + length).getBytes();
+     * byte[] bytes = text.substring(from, from + length).getBytes(StandardCharsets.UTF_8);
      * int hash = MurmurHash2.hash32(bytes, bytes.length, seed);
      * </pre>
      *
@@ -243,7 +253,7 @@ public final class MurmurHash2 {
      *
      * <pre>
      * int seed = 0xe17a1465;
-     * byte[] bytes = data.getBytes();
+     * byte[] bytes = data.getBytes(StandardCharsets.UTF_8);
      * int hash = MurmurHash2.hash64(bytes, bytes.length, seed);
      * </pre>
      *
@@ -252,7 +262,7 @@ public final class MurmurHash2 {
      * @see #hash64(byte[], int, int)
      */
     public static long hash64(final String text) {
-        final byte[] bytes = text.getBytes();
+        final byte[] bytes = text.getBytes(GET_BYTES_CHARSET);
         return hash64(bytes, bytes.length);
     }
 
@@ -263,7 +273,7 @@ public final class MurmurHash2 {
      *
      * <pre>
      * int seed = 0xe17a1465;
-     * byte[] bytes = text.substring(from, from + length).getBytes();
+     * byte[] bytes = text.substring(from, from + length).getBytes(StandardCharsets.UTF_8);
      * int hash = MurmurHash2.hash64(bytes, bytes.length, seed);
      * </pre>
      *

@@ -17,40 +17,53 @@
 
 package org.apache.commons.codec.digest;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+
 /**
  * Implementation of the MurmurHash3 32-bit and 128-bit hash functions.
  *
- * <p>MurmurHash is a non-cryptographic hash function suitable for general
- * hash-based lookup. The name comes from two basic operations, multiply (MU)
- * and rotate (R), used in its inner loop. Unlike cryptographic hash functions,
- * it is not specifically designed to be difficult to reverse by an adversary,
- * making it unsuitable for cryptographic purposes.</p>
+ * <p>
+ * MurmurHash is a non-cryptographic hash function suitable for general hash-based lookup. The name comes from two basic
+ * operations, multiply (MU) and rotate (R), used in its inner loop. Unlike cryptographic hash functions, it is not
+ * specifically designed to be difficult to reverse by an adversary, making it unsuitable for cryptographic purposes.
+ * </p>
  *
- * <p>This contains a Java port of the 32-bit hash function {@code MurmurHash3_x86_32}
- * and the 128-bit hash function {@code MurmurHash3_x64_128} from Austin Applyby's
- * original {@code c++} code in SMHasher.</p>
+ * <p>
+ * This contains a Java port of the 32-bit hash function {@code MurmurHash3_x86_32} and the 128-bit hash function
+ * {@code MurmurHash3_x64_128} from Austin Applyby's original {@code c++} code in SMHasher.
+ * </p>
  *
- * <p>This is public domain code with no copyrights. From home page of
- * <a href="https://github.com/aappleby/smhasher">SMHasher</a>:</p>
+ * <p>
+ * This is public domain code with no copyrights. From home page of
+ * <a href="https://github.com/aappleby/smhasher">SMHasher</a>:
+ * </p>
  *
- * <blockquote>
- * "All MurmurHash versions are public domain software, and the author
- * disclaims all copyright to their code."
- * </blockquote>
+ * <blockquote> "All MurmurHash versions are public domain software, and the author disclaims all copyright to their
+ * code." </blockquote>
  *
- * <p>Original adaption from Apache Hive. That adaption contains a {@code hash64} method
- * that is not part of the original MurmurHash3 code. It is not recommended to use these methods.
- * They will be removed in a future release. To obtain a 64-bit hash use half of the bits
- * from the {@code hash128x64} methods using the input data converted to bytes.<p>
+ * <p>
+ * Original adaption from Apache Hive. That adaption contains a {@code hash64} method that is not part of the original
+ * MurmurHash3 code. It is not recommended to use these methods. They will be removed in a future release. To obtain a
+ * 64-bit hash use half of the bits from the {@code hash128x64} methods using the input data converted to bytes.
+ * <p>
  *
  * @see <a href="https://en.wikipedia.org/wiki/MurmurHash">MurmurHash</a>
- * @see <a href="https://github.com/aappleby/smhasher/blob/master/src/MurmurHash3.cpp">
- *   Original MurmurHash3 c++ code</a>
- * @see <a href="https://github.com/apache/hive/blob/master/storage-api/src/java/org/apache/hive/common/util/Murmur3.java">
- *   Apache Hive Murmer3</a>
+ * @see <a href="https://github.com/aappleby/smhasher/blob/master/src/MurmurHash3.cpp"> Original MurmurHash3 c++
+ *      code</a>
+ * @see <a href=
+ *      "https://github.com/apache/hive/blob/master/storage-api/src/java/org/apache/hive/common/util/Murmur3.java">
+ *      Apache Hive Murmer3</a>
  * @since 1.13
  */
 public final class MurmurHash3 {
+
+    /**
+     * Default Charset used to convert strings into bytes.
+     * 
+     * Consider private; package private for tests only.
+     */
+    static final Charset GET_BYTES_CHARSET = StandardCharsets.UTF_8;
 
     /**
      * A random number to use for a hash code.
@@ -230,7 +243,7 @@ public final class MurmurHash3 {
      * <pre>
      * int offset = 0;
      * int seed = 104729;
-     * byte[] bytes = data.getBytes();
+     * byte[] bytes = data.getBytes(StandardCharsets.UTF_8);
      * int hash = MurmurHash3.hash32(bytes, offset, bytes.length, seed);
      * </pre>
      *
@@ -246,7 +259,7 @@ public final class MurmurHash3 {
      */
     @Deprecated
     public static int hash32(final String data) {
-        final byte[] bytes = data.getBytes();
+        final byte[] bytes = data.getBytes(GET_BYTES_CHARSET);
         return hash32(bytes, 0, bytes.length, DEFAULT_SEED);
     }
 
@@ -748,7 +761,7 @@ public final class MurmurHash3 {
      * <pre>
      * int offset = 0;
      * int seed = 104729;
-     * byte[] bytes = data.getBytes();
+     * byte[] bytes = data.getBytes(StandardCharsets.UTF_8);
      * int hash = MurmurHash3.hash128(bytes, offset, bytes.length, seed);
      * </pre>
      *
@@ -763,7 +776,7 @@ public final class MurmurHash3 {
      */
     @Deprecated
     public static long[] hash128(final String data) {
-        final byte[] bytes = data.getBytes();
+        final byte[] bytes = data.getBytes(GET_BYTES_CHARSET);
         return hash128(bytes, 0, bytes.length, DEFAULT_SEED);
     }
 
