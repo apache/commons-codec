@@ -198,7 +198,7 @@ public class DigestUtilsTest {
         hash = DigestUtils.md2(getBytesUtf8(hashMe));
         assertEquals(16, hash.length);
     }
-    
+
     @Test
     public void testMd5Hex() throws IOException {
         // Examples from RFC 1321

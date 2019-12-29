@@ -98,7 +98,7 @@ public class MessageDigestAlgorithms {
      * <p>
      * Included starting in Oracle Java 9.
      * </p>
-     * 
+     *
      * @since 1.14
      */
     public static final String SHA_512_224 = "SHA-512/224";
@@ -108,7 +108,7 @@ public class MessageDigestAlgorithms {
      * <p>
      * Included starting in Oracle Java 9.
      * </p>
-     * 
+     *
      * @since 1.14
      */
     public static final String SHA_512_256 = "SHA-512/256";

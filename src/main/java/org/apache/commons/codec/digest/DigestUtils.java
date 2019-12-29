@@ -134,7 +134,8 @@ public class DigestUtils {
      *             On error reading from the stream
      * @since 1.14
      */
-    public static byte[] digest(final MessageDigest messageDigest, final Path data, final OpenOption... options) throws IOException {
+    public static byte[] digest(final MessageDigest messageDigest, final Path data, final OpenOption... options)
+        throws IOException {
         return updateDigest(messageDigest, data, options).digest();
     }
 
@@ -1195,7 +1196,7 @@ public class DigestUtils {
      * @param data
      *            Data to digest
      * @return SHA-512/224 digest as a hex string
-     * @throws IOException 
+     * @throws IOException
      *             On error reading from the stream
      * @since 1.14
      */
@@ -1271,7 +1272,7 @@ public class DigestUtils {
      * @param data
      *            Data to digest
      * @return SHA-512/256 digest as a hex string
-     * @throws IOException 
+     * @throws IOException
      *             On error reading from the stream
      * @since 1.14
      */
@@ -1452,7 +1453,8 @@ public class DigestUtils {
      *             On error reading from the stream
      * @since 1.8
      */
-    public static MessageDigest updateDigest(final MessageDigest digest, final InputStream inputStream) throws IOException {
+    public static MessageDigest updateDigest(final MessageDigest digest, final InputStream inputStream)
+        throws IOException {
         final byte[] buffer = new byte[STREAM_BUFFER_LENGTH];
         int read = inputStream.read(buffer, 0, STREAM_BUFFER_LENGTH);
 
@@ -1478,12 +1480,12 @@ public class DigestUtils {
      *             On error reading from the stream
      * @since 1.14
      */
-    public static MessageDigest updateDigest(final MessageDigest digest, final Path path, final OpenOption... options) throws IOException {
+    public static MessageDigest updateDigest(final MessageDigest digest, final Path path, final OpenOption... options)
+        throws IOException {
         try (final BufferedInputStream inputStream = new BufferedInputStream(Files.newInputStream(path, options))) {
             return updateDigest(digest, inputStream);
         }
     }
-
 
     /**
      * Reads through a RandomAccessFile and updates the digest for the data using non-blocking-io (NIO)
