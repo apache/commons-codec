@@ -430,7 +430,7 @@ public final class MurmurHash3 {
      * This method will be removed in a future release.</p>
      *
      * <p>Note: The sign extension bug in {@link #hash64(byte[], int, int, int)} does not effect
-     * this result as the default seed is positive.<p>
+     * this result as the default seed is positive.</p>
      *
      * <p>This is a helper method that will produce the same result as:</p>
      *
@@ -476,7 +476,7 @@ public final class MurmurHash3 {
      * This method will be removed in a future release.</p>
      *
      * <p>Note: The sign extension bug in {@link #hash64(byte[], int, int, int)} does not effect
-     * this result as the default seed is positive.<p>
+     * this result as the default seed is positive.</p>
      *
      * <p>This is a helper method that will produce the same result as:</p>
      *
@@ -520,7 +520,7 @@ public final class MurmurHash3 {
      * This method will be removed in a future release.</p>
      *
      * <p>Note: The sign extension bug in {@link #hash64(byte[], int, int, int)} does not effect
-     * this result as the default seed is positive.<p>
+     * this result as the default seed is positive.</p>
      *
      * <p>This is a helper method that will produce the same result as:</p>
      *
@@ -566,7 +566,7 @@ public final class MurmurHash3 {
      * This method will be removed in a future release.</p>
      *
      * <p>Note: The sign extension bug in {@link #hash64(byte[], int, int, int)} does not effect
-     * this result as the default seed is positive.<p>
+     * this result as the default seed is positive.</p>
      *
      * <p>This is a helper method that will produce the same result as:</p>
      *
@@ -598,7 +598,7 @@ public final class MurmurHash3 {
      * This method will be removed in a future release.</p>
      *
      * <p>Note: The sign extension bug in {@link #hash64(byte[], int, int, int)} does not effect
-     * this result as the default seed is positive.<p>
+     * this result as the default seed is positive.</p>
      *
      * <p>This is a helper method that will produce the same result as:</p>
      *
@@ -629,7 +629,7 @@ public final class MurmurHash3 {
      * This method will be removed in a future release.</p>
      *
      * <p>This implementation contains a sign-extension bug in the seed initialization.
-     * This manifests if the seed is negative.<p>
+     * This manifests if the seed is negative.</p>
      *
      * <p>This algorithm processes 8 bytes chunks of data in a manner similar to the 16 byte chunks
      * of data processed in the MurmurHash3 {@code MurmurHash3_x64_128} method. However the hash
@@ -711,7 +711,7 @@ public final class MurmurHash3 {
      * </pre>
      *
      * <p>Note: The sign extension bug in {@link #hash128(byte[], int, int, int)} does not effect
-     * this result as the default seed is positive.<p>
+     * this result as the default seed is positive.</p>
      *
      * @param data The input byte array
      * @return The 128-bit hash (2 longs)
@@ -753,7 +753,7 @@ public final class MurmurHash3 {
      * </pre>
      *
      * <p>Note: The sign extension bug in {@link #hash128(byte[], int, int, int)} does not effect
-     * this result as the default seed is positive.<p>
+     * this result as the default seed is positive.</p>
      *
      * @param data The input String
      * @return The 128-bit hash (2 longs)
