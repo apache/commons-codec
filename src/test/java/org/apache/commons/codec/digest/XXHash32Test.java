@@ -76,6 +76,24 @@ public class XXHash32Test {
         Assert.assertEquals("checksum for " + file.getName(), expectedChecksum, Long.toHexString(h.getValue()));
     }
 
+    @Test
+    public void verifyIncrementalChecksum() throws IOException {
+        final XXHash32 h = new XXHash32();
+        try (final FileInputStream s = new FileInputStream(file)) {
+            final byte[] b = toByteArray(s);
+            // Hit the case where the hash should be reset
+            h.update(b[0]);
+            h.reset();
+            // Pass in chunks
+            h.update(b[0]);
+            h.update(b, 1, b.length - 2);
+            h.update(b, b.length - 1, 1);
+            // Check the hash ignores negative length
+            h.update(b, 0, -1);
+        }
+        Assert.assertEquals("checksum for " + file.getName(), expectedChecksum, Long.toHexString(h.getValue()));
+    }
+
     private static byte[] toByteArray(final InputStream input) throws IOException {
         final ByteArrayOutputStream output = new ByteArrayOutputStream();
         copy(input, output, 10240);
