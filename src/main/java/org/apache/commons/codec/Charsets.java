@@ -17,6 +17,7 @@
 package org.apache.commons.codec;
 
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Charsets required of every implementation of the Java platform.
@@ -97,7 +98,7 @@ public class Charsets {
      *
      * @see <a href="http://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      */
-    public static final Charset ISO_8859_1 = Charset.forName(CharEncoding.ISO_8859_1);
+    public static final Charset ISO_8859_1 = StandardCharsets.ISO_8859_1;
 
     /**
      * Seven-bit ASCII, also known as ISO646-US, also known as the Basic Latin block of the Unicode character set.
@@ -110,7 +111,7 @@ public class Charsets {
      *
      * @see <a href="http://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      */
-    public static final Charset US_ASCII = Charset.forName(CharEncoding.US_ASCII);
+    public static final Charset US_ASCII = StandardCharsets.US_ASCII;
 
     /**
      * Sixteen-bit Unicode Transformation Format, The byte order specified by a mandatory initial byte-order mark
@@ -124,7 +125,7 @@ public class Charsets {
      *
      * @see <a href="http://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      */
-    public static final Charset UTF_16 = Charset.forName(CharEncoding.UTF_16);
+    public static final Charset UTF_16 = StandardCharsets.UTF_16;
 
     /**
      * Sixteen-bit Unicode Transformation Format, big-endian byte order.
@@ -137,7 +138,7 @@ public class Charsets {
      *
      * @see <a href="http://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      */
-    public static final Charset UTF_16BE = Charset.forName(CharEncoding.UTF_16BE);
+    public static final Charset UTF_16BE = StandardCharsets.UTF_16BE;
 
     /**
      * Sixteen-bit Unicode Transformation Format, little-endian byte order.
@@ -150,7 +151,7 @@ public class Charsets {
      *
      * @see <a href="http://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      */
-    public static final Charset UTF_16LE = Charset.forName(CharEncoding.UTF_16LE);
+    public static final Charset UTF_16LE = StandardCharsets.UTF_16LE;
 
     /**
      * Eight-bit Unicode Transformation Format.
@@ -163,5 +164,5 @@ public class Charsets {
      *
      * @see <a href="http://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      */
-    public static final Charset UTF_8 = Charset.forName(CharEncoding.UTF_8);
+    public static final Charset UTF_8 = StandardCharsets.UTF_8;
 }
