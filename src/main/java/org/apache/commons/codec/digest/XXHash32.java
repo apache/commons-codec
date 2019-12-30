@@ -162,8 +162,18 @@ public class XXHash32 implements Checksum {
         return hash & 0xffffffffl;
     }
 
+    /**
+     * Gets the little-endian int from 4 bytes starting at the specified index.
+     *
+     * @param buffer The data
+     * @param idx The index
+     * @return The little-endian int
+     */
     private static int getInt(final byte[] buffer, final int idx) {
-        return (int) (fromLittleEndian(buffer, idx, 4) & 0xffffffffl);
+        return ((buffer[idx    ] & 0xff)      ) |
+               ((buffer[idx + 1] & 0xff) <<  8) |
+               ((buffer[idx + 2] & 0xff) << 16) |
+               ((buffer[idx + 3] & 0xff) << 24);
     }
 
     private void initializeState() {
@@ -191,24 +201,5 @@ public class XXHash32 implements Checksum {
         state[3] = s3;
 
         stateUpdated = true;
-    }
-
-    /**
-     * Reads the given byte array as a little endian long.
-     * @param bytes the byte array to convert
-     * @param off the offset into the array that starts the value
-     * @param length the number of bytes representing the value
-     * @return the number read
-     * @throws IllegalArgumentException if len is bigger than eight
-     */
-    private static long fromLittleEndian(final byte[] bytes, final int off, final int length) {
-        if (length > 8) {
-            throw new IllegalArgumentException("can't read more than eight bytes into a long value");
-        }
-        long l = 0;
-        for (int i = 0; i < length; i++) {
-            l |= (bytes[off + i] & 0xffl) << (8 * i);
-        }
-        return l;
     }
 }
