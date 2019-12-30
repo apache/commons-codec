@@ -18,6 +18,7 @@
 package org.apache.commons.codec.digest;
 
 import org.junit.Assert;
+import org.junit.Assume;
 
 import java.nio.ByteBuffer;
 import java.util.Arrays;
@@ -889,5 +890,38 @@ public class MurmurHash3Test {
             length += size;
         }
         return Arrays.copyOf(blocks, count);
+    }
+
+    /**
+     * This test hits an edge case where a very large number of bytes is added to the incremental
+     * hash. The data is constructed so that an integer counter of unprocessed bytes will
+     * overflow. If this is not handled correctly then the code throws an exception when it
+     * copies more data into the unprocessed bytes array.
+     */
+    @Test
+    public void testIncrementalHashWithUnprocessedBytesAndHugeLengthArray() {
+        // Assert the test precondition that a large array added to unprocessed bytes
+        // will overflow an integer counter. We use the smallest hugeLength possible
+        // as some VMs cannot allocate maximum length arrays.
+        final int unprocessedSize = 3;
+        final int hugeLength = Integer.MAX_VALUE - 2;
+        Assert.assertTrue("This should overflow to negative", unprocessedSize + hugeLength < 4);
+
+        // Check the test can be run
+        byte[] bytes = null;
+        try {
+            bytes = new byte[hugeLength];
+        } catch (OutOfMemoryError ignore) {
+            // Some VMs cannot allocate an array this large.
+            // Some test environments may not have enough available memory for this.
+        }
+        Assume.assumeTrue("Cannot allocate array of length " + hugeLength, bytes != null);
+
+        final IncrementalHash32x86 inc = new IncrementalHash32x86();
+        inc.start(0);
+        // Add bytes that should be unprocessed
+        inc.add(bytes, 0, unprocessedSize);
+        // Add a huge number of bytes to overflow an integer counter of unprocessed bytes.
+        inc.add(bytes, 0, hugeLength);
     }
 }
