@@ -1,5 +1,5 @@
               Apache Apache Commons Codec 1.14 RELEASE NOTES
-              December 29 2019
+              December 30 2019
 
 The Apache Commons Codec package contains simple encoder and decoders for
 various formats such as Base64 and Hexadecimal.  In addition to these
@@ -24,9 +24,13 @@ o CODEC-259:  Hex: Only use an available ByteBuffer backing array if the length 
 o CODEC-265:  BaseNCodec to expand buffer using overflow conscious code.
 o CODEC-270:  Base32/64: Fixed decoding check that all the final trailing bits to discard are zero.
 o CODEC-269:  Allow repeat calls to MurmurHash3.IncrementalHash32.end() to generate the same value.
+o CODEC-276:  Reliance on default encoding in MurmurHash2 and MurmurHash3. Thanks to Gary Gregory.
 
 Changes:
 o CODEC-268:  MurmurHash3: Deprecate hash64 methods and hash methods accepting a String that use the default encoding.
+o CODEC-277:  Don't reload standard Charsets in org.apache.commons.codec.Charsets. Thanks to Gary Gregory.
+o CODEC-278:  Deprecate Charset constants in org.apache.commons.codec.Charsets in favor of java.nio.charset.StandardCharsets. Thanks to Gary Gregory.
+
 
 For complete information on Apache Commons Codec, including instructions on how to submit bug reports,
 patches, or suggestions for improvement, see the Apache Apache Commons Codec website:
