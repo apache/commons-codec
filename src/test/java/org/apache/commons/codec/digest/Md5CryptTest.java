@@ -20,9 +20,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import org.apache.commons.codec.Charsets;
 import org.junit.Test;
 
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Md5CryptTest {
@@ -52,7 +52,7 @@ public class Md5CryptTest {
         // UTF-8 stores \u00e4 "a with diaeresis" as two bytes 0xc3 0xa4.
         assertEquals("$1$./$52agTEQZs877L9jyJnCNZ1", Crypt.crypt("t\u00e4st", "$1$./$"));
         // ISO-8859-1 stores "a with diaeresis" as single byte 0xe4.
-        assertEquals("$1$./$J2UbKzGe0Cpe63WZAt6p//", Crypt.crypt("t\u00e4st".getBytes(Charsets.ISO_8859_1), "$1$./$"));
+        assertEquals("$1$./$J2UbKzGe0Cpe63WZAt6p//", Crypt.crypt("t\u00e4st".getBytes(StandardCharsets.ISO_8859_1), "$1$./$"));
     }
 
     @Test

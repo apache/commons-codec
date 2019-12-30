@@ -19,6 +19,7 @@ package org.apache.commons.codec.binary;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.codec.BinaryDecoder;
 import org.apache.commons.codec.BinaryEncoder;
@@ -28,7 +29,7 @@ import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 
 /**
- * Converts hexadecimal Strings. The charset used for certain operation can be set, the default is set in
+ * Converts hexadecimal Strings. The Charset used for certain operation can be set, the default is set in
  * {@link #DEFAULT_CHARSET_NAME}
  *
  * This class is thread-safe.
@@ -38,11 +39,11 @@ import org.apache.commons.codec.EncoderException;
 public class Hex implements BinaryEncoder, BinaryDecoder {
 
     /**
-     * Default charset is {@link Charsets#UTF_8}
+     * Default charset is {@link StandardCharsets#UTF_8}
      *
      * @since 1.7
      */
-    public static final Charset DEFAULT_CHARSET = Charsets.UTF_8;
+    public static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
 
     /**
      * Default charset name is {@link CharEncoding#UTF_8}

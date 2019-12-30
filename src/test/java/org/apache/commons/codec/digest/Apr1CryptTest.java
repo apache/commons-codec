@@ -20,9 +20,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 
-import org.apache.commons.codec.Charsets;
 import org.junit.Test;
 
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Apr1CryptTest {
@@ -54,7 +54,7 @@ public class Apr1CryptTest {
         // UTF-8 stores \u00e4 "a with diaeresis" as two bytes 0xc3 0xa4.
         assertEquals("$apr1$./$EeFrYzWWbmTyGdf4xULYc.", Md5Crypt.apr1Crypt("t\u00e4st", "$apr1$./$"));
         // ISO-8859-1 stores "a with diaeresis" as single byte 0xe4.
-        assertEquals("$apr1$./$kCwT1pY9qXAJElYG9q1QE1", Md5Crypt.apr1Crypt("t\u00e4st".getBytes(Charsets.ISO_8859_1), "$apr1$./$"));
+        assertEquals("$apr1$./$kCwT1pY9qXAJElYG9q1QE1", Md5Crypt.apr1Crypt("t\u00e4st".getBytes(StandardCharsets.ISO_8859_1), "$apr1$./$"));
     }
 
     @Test
@@ -70,7 +70,7 @@ public class Apr1CryptTest {
         // UTF-8 stores \u00e4 "a with diaeresis" as two bytes 0xc3 0xa4.
         assertEquals("$apr1$./$EeFrYzWWbmTyGdf4xULYc.", Md5Crypt.apr1Crypt("t\u00e4st", "$apr1$./$"));
         // ISO-8859-1 stores "a with diaeresis" as single byte 0xe4.
-        assertEquals("$apr1$./$kCwT1pY9qXAJElYG9q1QE1", Md5Crypt.apr1Crypt("t\u00e4st".getBytes(Charsets.ISO_8859_1), "$apr1$./$"));
+        assertEquals("$apr1$./$kCwT1pY9qXAJElYG9q1QE1", Md5Crypt.apr1Crypt("t\u00e4st".getBytes(StandardCharsets.ISO_8859_1), "$apr1$./$"));
     }
 
     @Test

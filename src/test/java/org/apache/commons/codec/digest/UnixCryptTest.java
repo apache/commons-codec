@@ -21,7 +21,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 
-import org.apache.commons.codec.Charsets;
+import java.nio.charset.StandardCharsets;
+
 import org.junit.Test;
 
 public class UnixCryptTest {
@@ -49,7 +50,7 @@ public class UnixCryptTest {
         // UTF-8 stores \u00e4 "a with diaeresis" as two bytes 0xc3 0xa4.
         assertEquals("./287bds2PjVw", Crypt.crypt("t\u00e4st", "./"));
         // ISO-8859-1 stores "a with diaeresis" as single byte 0xe4.
-        assertEquals("./bLIFNqo9XKQ", Crypt.crypt("t\u00e4st".getBytes(Charsets.ISO_8859_1), "./"));
+        assertEquals("./bLIFNqo9XKQ", Crypt.crypt("t\u00e4st".getBytes(StandardCharsets.ISO_8859_1), "./"));
         assertEquals("./bLIFNqo9XKQ", Crypt.crypt(new byte[]{(byte) 0x74, (byte) 0xe4, (byte) 0x73, (byte) 0x74}, "./"));
     }
 

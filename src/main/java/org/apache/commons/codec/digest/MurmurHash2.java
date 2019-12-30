@@ -17,8 +17,7 @@
 
 package org.apache.commons.codec.digest;
 
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
+import org.apache.commons.codec.binary.StringUtils;
 
 /**
  * Implementation of the MurmurHash2 32-bit and 64-bit hash functions.
@@ -50,13 +49,6 @@ import java.nio.charset.StandardCharsets;
  * @since 1.13
  */
 public final class MurmurHash2 {
-
-    /**
-     * Default Charset used to convert strings into bytes.
-     * 
-     * Consider private; package private for tests only.
-     */
-    static final Charset GET_BYTES_CHARSET = StandardCharsets.UTF_8;
 
     // Constants for 32-bit variant
     private static final int M32 = 0x5bd1e995;
@@ -137,7 +129,10 @@ public final class MurmurHash2 {
 
     /**
      * Generates a 32-bit hash from a string with a default seed.
-     * The string is converted to bytes using the default encoding.
+     * <p>
+     * Before 1.14 the string was converted using default encoding.
+     * Since 1.14 the string is converted to bytes using UTF-8 encoding.
+     * </p>
      * This is a helper method that will produce the same result as:
      *
      * <pre>
@@ -151,7 +146,7 @@ public final class MurmurHash2 {
      * @see #hash32(byte[], int, int)
      */
     public static int hash32(final String text) {
-        final byte[] bytes = text.getBytes(GET_BYTES_CHARSET);
+        final byte[] bytes = StringUtils.getBytesUtf8(text);
         return hash32(bytes, bytes.length);
     }
 
@@ -248,7 +243,10 @@ public final class MurmurHash2 {
 
     /**
      * Generates a 64-bit hash from a string with a default seed.
-     * The string is converted to bytes using the default encoding.
+     * <p>
+     * Before 1.14 the string was converted using default encoding.
+     * Since 1.14 the string is converted to bytes using UTF-8 encoding.
+     * </p>
      * This is a helper method that will produce the same result as:
      *
      * <pre>
@@ -262,7 +260,7 @@ public final class MurmurHash2 {
      * @see #hash64(byte[], int, int)
      */
     public static long hash64(final String text) {
-        final byte[] bytes = text.getBytes(GET_BYTES_CHARSET);
+        final byte[] bytes = StringUtils.getBytesUtf8(text);
         return hash64(bytes, bytes.length);
     }
 

@@ -16,10 +16,9 @@
  */
 package org.apache.commons.codec.digest;
 
+import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.util.concurrent.ThreadLocalRandom;
-
-import org.apache.commons.codec.Charsets;
 
 /**
  * Unix crypt(3) algorithm implementation.
@@ -267,7 +266,7 @@ public class UnixCrypt {
      * @return a 13 character string starting with the salt string
      */
     public static String crypt(final String original) {
-        return crypt(original.getBytes(Charsets.UTF_8));
+        return crypt(original.getBytes(StandardCharsets.UTF_8));
     }
 
     /**
@@ -284,7 +283,7 @@ public class UnixCrypt {
      *             if the salt does not match the allowed pattern
      */
     public static String crypt(final String original, final String salt) {
-        return crypt(original.getBytes(Charsets.UTF_8), salt);
+        return crypt(original.getBytes(StandardCharsets.UTF_8), salt);
     }
 
     private static int[] body(final int schedule[], final int eSwap0, final int eSwap1) {

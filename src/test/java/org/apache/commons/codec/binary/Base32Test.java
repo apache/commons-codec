@@ -24,9 +24,9 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
-import org.apache.commons.codec.Charsets;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.lang3.ArrayUtils;
 import org.junit.Test;
@@ -34,7 +34,7 @@ import org.junit.Test;
 public class Base32Test {
 
 
-    private static final Charset CHARSET_UTF8 = Charsets.UTF_8;
+    private static final Charset CHARSET_UTF8 = StandardCharsets.UTF_8;
 
     private static final String [][] BASE32_TEST_CASES = { // RFC 4648
         {""       ,""},

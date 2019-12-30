@@ -19,10 +19,10 @@ package org.apache.commons.codec.net;
 
 import static org.junit.Assert.*;
 
+import java.nio.charset.StandardCharsets;
 import java.nio.charset.UnsupportedCharsetException;
 
 import org.apache.commons.codec.CharEncoding;
-import org.apache.commons.codec.Charsets;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 import org.junit.Test;
@@ -151,7 +151,7 @@ public class QuotedPrintableCodecTest {
         final QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
         final String plain = "1+1 = 2";
         final String encoded = new String(QuotedPrintableCodec.
-            encodeQuotedPrintable(null, plain.getBytes(Charsets.UTF_8)));
+            encodeQuotedPrintable(null, plain.getBytes(StandardCharsets.UTF_8)));
         assertEquals("Basic quoted-printable encoding test",
             "1+1 =3D 2", encoded);
         assertEquals("Basic quoted-printable decoding test",
@@ -190,7 +190,7 @@ public class QuotedPrintableCodecTest {
         assertEquals("Basic quoted-printable encoding test",
             "1+1 =3D 2", encoded);
 
-        final byte[] plainBA = plain.getBytes(Charsets.UTF_8);
+        final byte[] plainBA = plain.getBytes(StandardCharsets.UTF_8);
         final byte[] encodedBA = (byte[]) qpcodec.encode((Object) plainBA);
         encoded = new String(encodedBA);
         assertEquals("Basic quoted-printable encoding test",
@@ -221,7 +221,7 @@ public class QuotedPrintableCodecTest {
         assertEquals("Basic quoted-printable decoding test",
             "1+1 = 2", decoded);
 
-        final byte[] plainBA = plain.getBytes(Charsets.UTF_8);
+        final byte[] plainBA = plain.getBytes(StandardCharsets.UTF_8);
         final byte[] decodedBA = (byte[]) qpcodec.decode((Object) plainBA);
         decoded = new String(decodedBA);
         assertEquals("Basic quoted-printable decoding test",

@@ -20,6 +20,8 @@ package org.apache.commons.codec.digest;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
+import org.apache.commons.codec.binary.StringUtils;
+
 /**
  * Implementation of the MurmurHash3 32-bit and 128-bit hash functions.
  *
@@ -57,13 +59,6 @@ import java.nio.charset.StandardCharsets;
  * @since 1.13
  */
 public final class MurmurHash3 {
-
-    /**
-     * Default Charset used to convert strings into bytes.
-     * 
-     * Consider private; package private for tests only.
-     */
-    static final Charset GET_BYTES_CHARSET = StandardCharsets.UTF_8;
 
     /**
      * A random number to use for a hash code.
@@ -221,7 +216,7 @@ public final class MurmurHash3 {
      * int hash = MurmurHash3.hash32(data, offset, data.length, seed);
      * </pre>
      *
-     * <p>This implementation contains a sign-extension bug in the finalisation step of
+     * <p>This implementation contains a sign-extension bug in the finalization step of
      * any bytes left over from dividing the length by 4. This manifests if any of these
      * bytes are negative.<p>
      *
@@ -237,7 +232,10 @@ public final class MurmurHash3 {
 
     /**
      * Generates 32-bit hash from a string with a default seed.
-     * The string is converted to bytes using the default encoding.
+     * <p>
+     * Before 1.14 the string was converted using default encoding.
+     * Since 1.14 the string is converted to bytes using UTF-8 encoding.
+     * </p>
      * This is a helper method that will produce the same result as:
      *
      * <pre>
@@ -247,7 +245,7 @@ public final class MurmurHash3 {
      * int hash = MurmurHash3.hash32(bytes, offset, bytes.length, seed);
      * </pre>
      *
-     * <p>This implementation contains a sign-extension bug in the finalisation step of
+     * <p>This implementation contains a sign-extension bug in the finalization step of
      * any bytes left over from dividing the length by 4. This manifests if any of these
      * bytes are negative.<p>
      *
@@ -259,7 +257,7 @@ public final class MurmurHash3 {
      */
     @Deprecated
     public static int hash32(final String data) {
-        final byte[] bytes = data.getBytes(GET_BYTES_CHARSET);
+        final byte[] bytes = StringUtils.getBytesUtf8(data);
         return hash32(bytes, 0, bytes.length, DEFAULT_SEED);
     }
 
@@ -273,7 +271,7 @@ public final class MurmurHash3 {
      * int hash = MurmurHash3.hash32(data, offset, length, seed);
      * </pre>
      *
-     * <p>This implementation contains a sign-extension bug in the finalisation step of
+     * <p>This implementation contains a sign-extension bug in the finalization step of
      * any bytes left over from dividing the length by 4. This manifests if any of these
      * bytes are negative.<p>
      *
@@ -297,7 +295,7 @@ public final class MurmurHash3 {
      * int hash = MurmurHash3.hash32(data, offset, length, seed);
      * </pre>
      *
-     * <p>This implementation contains a sign-extension bug in the finalisation step of
+     * <p>This implementation contains a sign-extension bug in the finalization step of
      * any bytes left over from dividing the length by 4. This manifests if any of these
      * bytes are negative.<p>
      *
@@ -319,7 +317,7 @@ public final class MurmurHash3 {
      * <p>This is an implementation of the 32-bit hash function {@code MurmurHash3_x86_32}
      * from from Austin Applyby's original MurmurHash3 {@code c++} code in SMHasher.</p>
      *
-     * <p>This implementation contains a sign-extension bug in the finalisation step of
+     * <p>This implementation contains a sign-extension bug in the finalization step of
      * any bytes left over from dividing the length by 4. This manifests if any of these
      * bytes are negative.<p>
      *
@@ -755,7 +753,10 @@ public final class MurmurHash3 {
 
     /**
      * Generates 128-bit hash from a string with a default seed.
-     * The string is converted to bytes using the default encoding.
+     * <p>
+     * Before 1.14 the string was converted using default encoding.
+     * Since 1.14 the string is converted to bytes using UTF-8 encoding.
+     * </p>
      * This is a helper method that will produce the same result as:
      *
      * <pre>
@@ -776,7 +777,7 @@ public final class MurmurHash3 {
      */
     @Deprecated
     public static long[] hash128(final String data) {
-        final byte[] bytes = data.getBytes(GET_BYTES_CHARSET);
+        final byte[] bytes = StringUtils.getBytesUtf8(data);
         return hash128(bytes, 0, bytes.length, DEFAULT_SEED);
     }
 
@@ -1188,7 +1189,7 @@ public final class MurmurHash3 {
      * <p>This is an implementation of the 32-bit hash function {@code MurmurHash3_x86_32}
      * from from Austin Applyby's original MurmurHash3 {@code c++} code in SMHasher.</p>
      *
-     * <p>This implementation contains a sign-extension bug in the finalisation step of
+     * <p>This implementation contains a sign-extension bug in the finalization step of
      * any bytes left over from dividing the length by 4. This manifests if any of these
      * bytes are negative.<p>
      *
@@ -1200,7 +1201,7 @@ public final class MurmurHash3 {
         /**
          * {@inheritDoc}
          *
-         * <p>This implementation contains a sign-extension bug in the finalisation step of
+         * <p>This implementation contains a sign-extension bug in the finalization step of
          * any bytes left over from dividing the length by 4. This manifests if any of these
          * bytes are negative.<p>
          *
