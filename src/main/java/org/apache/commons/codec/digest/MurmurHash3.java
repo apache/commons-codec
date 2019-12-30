@@ -237,7 +237,10 @@ public final class MurmurHash3 {
 
     /**
      * Generates 32-bit hash from a string with a default seed.
-     * The string is converted to bytes using the default encoding.
+     * <p>
+     * Before 1.14 the string was converted using default encoding. 
+     * Since 1.14 the string is converted to bytes using UTF-8 encoding.
+     * </p>
      * This is a helper method that will produce the same result as:
      *
      * <pre>
@@ -755,7 +758,10 @@ public final class MurmurHash3 {
 
     /**
      * Generates 128-bit hash from a string with a default seed.
-     * The string is converted to bytes using the default encoding.
+     * <p>
+     * Before 1.14 the string was converted using default encoding. 
+     * Since 1.14 the string is converted to bytes using UTF-8 encoding.
+     * </p>
      * This is a helper method that will produce the same result as:
      *
      * <pre>
