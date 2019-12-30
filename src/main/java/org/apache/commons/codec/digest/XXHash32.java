@@ -55,6 +55,8 @@ public class XXHash32 implements Checksum {
 
     private int totalLen;
     private int pos;
+    /** Set to true when the state array has been updated since the last reset. */
+    private boolean stateUpdated;
 
     /**
      * Creates an XXHash32 instance with a seed of 0.
@@ -77,6 +79,7 @@ public class XXHash32 implements Checksum {
         initializeState();
         totalLen = 0;
         pos = 0;
+        stateUpdated = false;
     }
 
     @Override
@@ -94,12 +97,16 @@ public class XXHash32 implements Checksum {
 
         final int end = off + len;
 
-        if (pos + len < BUF_SIZE) {
+        // Check if the unprocessed bytes and new bytes can fill a block of 16.
+        // Make this overflow safe in the event that len is Integer.MAX_VALUE.
+        // Equivalent to: (pos + len < BUF_SIZE)
+        if (pos + len - BUF_SIZE < 0) {
             System.arraycopy(b, off, buffer, pos, len);
             pos += len;
             return;
         }
 
+        // Process left-over bytes with new bytes
         if (pos > 0) {
             final int size = BUF_SIZE - pos;
             System.arraycopy(b, off, buffer, pos, size);
@@ -113,22 +120,27 @@ public class XXHash32 implements Checksum {
             off += BUF_SIZE;
         }
 
+        // Handle left-over bytes
         if (off < end) {
             pos = end - off;
             System.arraycopy(b, off, buffer, 0, pos);
+        } else {
+            pos = 0;
         }
     }
 
     @Override
     public long getValue() {
         int hash;
-        if (totalLen > BUF_SIZE) {
+        if (stateUpdated) {
+            // Hash with the state
             hash =
                 rotateLeft(state[0],  1) +
                 rotateLeft(state[1],  7) +
                 rotateLeft(state[2], 12) +
                 rotateLeft(state[3], 18);
         } else {
+            // Hash using the original seed from position 2
             hash = state[2] + PRIME5;
         }
         hash += totalLen;
@@ -178,7 +190,7 @@ public class XXHash32 implements Checksum {
         state[2] = s2;
         state[3] = s3;
 
-        pos = 0;
+        stateUpdated = true;
     }
 
     /**
