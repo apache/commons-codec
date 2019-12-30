@@ -130,7 +130,7 @@ public final class MurmurHash2 {
     /**
      * Generates a 32-bit hash from a string with a default seed.
      * <p>
-     * Before 1.14 the string was converted using default encoding. 
+     * Before 1.14 the string was converted using default encoding.
      * Since 1.14 the string is converted to bytes using UTF-8 encoding.
      * </p>
      * This is a helper method that will produce the same result as:
@@ -244,7 +244,7 @@ public final class MurmurHash2 {
     /**
      * Generates a 64-bit hash from a string with a default seed.
      * <p>
-     * Before 1.14 the string was converted using default encoding. 
+     * Before 1.14 the string was converted using default encoding.
      * Since 1.14 the string is converted to bytes using UTF-8 encoding.
      * </p>
      * This is a helper method that will produce the same result as:

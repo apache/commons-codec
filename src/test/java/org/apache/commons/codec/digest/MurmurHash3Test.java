@@ -23,6 +23,7 @@ import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
+import org.apache.commons.codec.binary.StringUtils;
 import org.apache.commons.codec.digest.MurmurHash3.IncrementalHash32;
 import org.apache.commons.codec.digest.MurmurHash3.IncrementalHash32x86;
 import org.junit.Test;
@@ -355,7 +356,7 @@ public class MurmurHash3Test {
                 pos += Character.toChars(codePoint, chars, pos);
             }
             final String text = String.copyValueOf(chars, 0, pos);
-            final byte[] bytes = text.getBytes(MurmurHash3.GET_BYTES_CHARSET);
+            final byte[] bytes = StringUtils.getBytesUtf8(text);
             final int h1 = MurmurHash3.hash32(bytes, 0, bytes.length, seed);
             final int h2 = MurmurHash3.hash32(text);
             Assert.assertEquals(h1, h2);
@@ -455,7 +456,7 @@ public class MurmurHash3Test {
      */
     @Test
     public void testHash64() {
-        final byte[] origin = TEST_HASH64.getBytes(MurmurHash3.GET_BYTES_CHARSET);
+        final byte[] origin = StringUtils.getBytesUtf8(TEST_HASH64);
         final long hash = MurmurHash3.hash64(origin);
         Assert.assertEquals(5785358552565094607L, hash);
     }
@@ -466,7 +467,7 @@ public class MurmurHash3Test {
      */
     @Test
     public void testHash64WithOffsetAndLength() {
-        final byte[] origin = TEST_HASH64.getBytes(MurmurHash3.GET_BYTES_CHARSET);
+        final byte[] origin = StringUtils.getBytesUtf8(TEST_HASH64);
         final byte[] originOffset = new byte[origin.length + 150];
         Arrays.fill(originOffset, (byte) 123);
         System.arraycopy(origin, 0, originOffset, 150, origin.length);
@@ -627,7 +628,7 @@ public class MurmurHash3Test {
                 pos += Character.toChars(codePoint, chars, pos);
             }
             final String text = String.copyValueOf(chars, 0, pos);
-            final byte[] bytes = text.getBytes(MurmurHash3.GET_BYTES_CHARSET);
+            final byte[] bytes = StringUtils.getBytesUtf8(text);
             final long[] h1 = MurmurHash3.hash128(bytes, 0, bytes.length, seed);
             final long[] h2 = MurmurHash3.hash128(text);
             Assert.assertArrayEquals(h1, h2);
