@@ -216,7 +216,7 @@ public final class MurmurHash3 {
      * int hash = MurmurHash3.hash32(data, offset, data.length, seed);
      * </pre>
      *
-     * <p>This implementation contains a sign-extension bug in the finalisation step of
+     * <p>This implementation contains a sign-extension bug in the finalization step of
      * any bytes left over from dividing the length by 4. This manifests if any of these
      * bytes are negative.<p>
      *
@@ -245,7 +245,7 @@ public final class MurmurHash3 {
      * int hash = MurmurHash3.hash32(bytes, offset, bytes.length, seed);
      * </pre>
      *
-     * <p>This implementation contains a sign-extension bug in the finalisation step of
+     * <p>This implementation contains a sign-extension bug in the finalization step of
      * any bytes left over from dividing the length by 4. This manifests if any of these
      * bytes are negative.<p>
      *
@@ -271,7 +271,7 @@ public final class MurmurHash3 {
      * int hash = MurmurHash3.hash32(data, offset, length, seed);
      * </pre>
      *
-     * <p>This implementation contains a sign-extension bug in the finalisation step of
+     * <p>This implementation contains a sign-extension bug in the finalization step of
      * any bytes left over from dividing the length by 4. This manifests if any of these
      * bytes are negative.<p>
      *
@@ -295,7 +295,7 @@ public final class MurmurHash3 {
      * int hash = MurmurHash3.hash32(data, offset, length, seed);
      * </pre>
      *
-     * <p>This implementation contains a sign-extension bug in the finalisation step of
+     * <p>This implementation contains a sign-extension bug in the finalization step of
      * any bytes left over from dividing the length by 4. This manifests if any of these
      * bytes are negative.<p>
      *
@@ -317,7 +317,7 @@ public final class MurmurHash3 {
      * <p>This is an implementation of the 32-bit hash function {@code MurmurHash3_x86_32}
      * from from Austin Applyby's original MurmurHash3 {@code c++} code in SMHasher.</p>
      *
-     * <p>This implementation contains a sign-extension bug in the finalisation step of
+     * <p>This implementation contains a sign-extension bug in the finalization step of
      * any bytes left over from dividing the length by 4. This manifests if any of these
      * bytes are negative.<p>
      *
@@ -1188,7 +1188,7 @@ public final class MurmurHash3 {
      * <p>This is an implementation of the 32-bit hash function {@code MurmurHash3_x86_32}
      * from from Austin Applyby's original MurmurHash3 {@code c++} code in SMHasher.</p>
      *
-     * <p>This implementation contains a sign-extension bug in the finalisation step of
+     * <p>This implementation contains a sign-extension bug in the finalization step of
      * any bytes left over from dividing the length by 4. This manifests if any of these
      * bytes are negative.<p>
      *
@@ -1200,7 +1200,7 @@ public final class MurmurHash3 {
         /**
          * {@inheritDoc}
          *
-         * <p>This implementation contains a sign-extension bug in the finalisation step of
+         * <p>This implementation contains a sign-extension bug in the finalization step of
          * any bytes left over from dividing the length by 4. This manifests if any of these
          * bytes are negative.<p>
          *
