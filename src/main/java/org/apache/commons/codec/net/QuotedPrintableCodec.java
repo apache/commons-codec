@@ -21,6 +21,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.nio.charset.IllegalCharsetNameException;
+import java.nio.charset.StandardCharsets;
 import java.nio.charset.UnsupportedCharsetException;
 import java.util.BitSet;
 
@@ -110,7 +111,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * Default constructor, assumes default Charset of {@link Charsets#UTF_8}
      */
     public QuotedPrintableCodec() {
-        this(Charsets.UTF_8, false);
+        this(StandardCharsets.UTF_8, false);
     }
 
     /**
@@ -121,7 +122,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * @since 1.10
      */
     public QuotedPrintableCodec(final boolean strict) {
-        this(Charsets.UTF_8, strict);
+        this(StandardCharsets.UTF_8, strict);
     }
 
     /**

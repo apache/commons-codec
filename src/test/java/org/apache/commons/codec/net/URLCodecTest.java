@@ -22,9 +22,9 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.codec.CharEncoding;
-import org.apache.commons.codec.Charsets;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 import org.junit.Test;
@@ -187,7 +187,7 @@ public class URLCodecTest {
     public void testEncodeUrlWithNullBitSet() throws Exception {
         final URLCodec urlCodec = new URLCodec();
         final String plain = "Hello there!";
-        final String encoded = new String( URLCodec.encodeUrl(null, plain.getBytes(Charsets.UTF_8)));
+        final String encoded = new String( URLCodec.encodeUrl(null, plain.getBytes(StandardCharsets.UTF_8)));
         assertEquals("Basic URL encoding test",
             "Hello+there%21", encoded);
         assertEquals("Basic URL decoding test",
@@ -226,7 +226,7 @@ public class URLCodecTest {
         assertEquals("Basic URL encoding test",
             "Hello+there%21", encoded);
 
-        final byte[] plainBA = plain.getBytes(Charsets.UTF_8);
+        final byte[] plainBA = plain.getBytes(StandardCharsets.UTF_8);
         final byte[] encodedBA = (byte[]) urlCodec.encode((Object) plainBA);
         encoded = new String(encodedBA);
         assertEquals("Basic URL encoding test",
@@ -272,7 +272,7 @@ public class URLCodecTest {
         assertEquals("Basic URL decoding test",
             "Hello there!", decoded);
 
-        final byte[] plainBA = plain.getBytes(Charsets.UTF_8);
+        final byte[] plainBA = plain.getBytes(StandardCharsets.UTF_8);
         final byte[] decodedBA = (byte[]) urlCodec.decode((Object) plainBA);
         decoded = new String(decodedBA);
         assertEquals("Basic URL decoding test",

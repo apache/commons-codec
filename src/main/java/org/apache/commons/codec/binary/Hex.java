@@ -19,6 +19,7 @@ package org.apache.commons.codec.binary;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.codec.BinaryDecoder;
 import org.apache.commons.codec.BinaryEncoder;
@@ -42,7 +43,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      *
      * @since 1.7
      */
-    public static final Charset DEFAULT_CHARSET = Charsets.UTF_8;
+    public static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
 
     /**
      * Default charset name is {@link CharEncoding#UTF_8}

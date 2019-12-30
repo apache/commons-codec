@@ -30,7 +30,6 @@ import java.nio.charset.UnsupportedCharsetException;
 import java.util.Arrays;
 import java.util.Random;
 
-import org.apache.commons.codec.Charsets;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 import org.junit.Assert;
@@ -637,12 +636,12 @@ public class HexTest {
 
     @Test
     public void testGetCharset() {
-        Assert.assertEquals(Charsets.UTF_8, new Hex(Charsets.UTF_8).getCharset());
+        Assert.assertEquals(StandardCharsets.UTF_8, new Hex(StandardCharsets.UTF_8).getCharset());
     }
 
     @Test
     public void testGetCharsetName() {
-        Assert.assertEquals(Charsets.UTF_8.name(), new Hex(Charsets.UTF_8).getCharsetName());
+        Assert.assertEquals(StandardCharsets.UTF_8.name(), new Hex(StandardCharsets.UTF_8).getCharsetName());
     }
 
     @Test

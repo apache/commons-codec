@@ -19,8 +19,8 @@ package org.apache.commons.codec.net;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
-import org.apache.commons.codec.Charsets;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringDecoder;
@@ -52,7 +52,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * Default constructor.
      */
     public BCodec() {
-        this(Charsets.UTF_8);
+        this(StandardCharsets.UTF_8);
     }
 
     /**

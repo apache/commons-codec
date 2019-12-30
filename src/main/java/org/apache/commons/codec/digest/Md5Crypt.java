@@ -16,6 +16,7 @@
  */
 package org.apache.commons.codec.digest;
 
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.SecureRandom;
 import java.util.Arrays;
@@ -23,8 +24,6 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.apache.commons.codec.Charsets;
 
 /**
  * The libc crypt() "$1$" and Apache "$apr1$" MD5-based hash algorithm.
@@ -140,7 +139,7 @@ public class Md5Crypt {
      * @see #apr1Crypt(byte[], String)
      */
     public static String apr1Crypt(final String keyBytes) {
-        return apr1Crypt(keyBytes.getBytes(Charsets.UTF_8));
+        return apr1Crypt(keyBytes.getBytes(StandardCharsets.UTF_8));
     }
 
     /**
@@ -162,7 +161,7 @@ public class Md5Crypt {
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
     public static String apr1Crypt(final String keyBytes, final String salt) {
-        return apr1Crypt(keyBytes.getBytes(Charsets.UTF_8), salt);
+        return apr1Crypt(keyBytes.getBytes(StandardCharsets.UTF_8), salt);
     }
 
     /**
@@ -295,7 +294,7 @@ public class Md5Crypt {
             }
             saltString = m.group(1);
         }
-        final byte[] saltBytes = saltString.getBytes(Charsets.UTF_8);
+        final byte[] saltBytes = saltString.getBytes(StandardCharsets.UTF_8);
 
         final MessageDigest ctx = DigestUtils.getMd5Digest();
 
@@ -307,7 +306,7 @@ public class Md5Crypt {
         /*
          * Then our magic string
          */
-        ctx.update(prefix.getBytes(Charsets.UTF_8));
+        ctx.update(prefix.getBytes(StandardCharsets.UTF_8));
 
         /*
          * Then the raw salt

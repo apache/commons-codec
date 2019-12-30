@@ -20,6 +20,7 @@ package org.apache.commons.codec.binary;
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.codec.CharEncoding;
 import org.apache.commons.codec.Charsets;
@@ -127,7 +128,7 @@ public class StringUtils {
      * @since 1.11
      */
     public static ByteBuffer getByteBufferUtf8(final String string) {
-        return getByteBuffer(string, Charsets.UTF_8);
+        return getByteBuffer(string, StandardCharsets.UTF_8);
     }
 
     /**
@@ -145,7 +146,7 @@ public class StringUtils {
      * @see #getBytesUnchecked(String, String)
      */
     public static byte[] getBytesIso8859_1(final String string) {
-        return getBytes(string, Charsets.ISO_8859_1);
+        return getBytes(string, StandardCharsets.ISO_8859_1);
     }
 
 
@@ -194,7 +195,7 @@ public class StringUtils {
      * @see #getBytesUnchecked(String, String)
      */
     public static byte[] getBytesUsAscii(final String string) {
-        return getBytes(string, Charsets.US_ASCII);
+        return getBytes(string, StandardCharsets.US_ASCII);
     }
 
     /**
@@ -212,7 +213,7 @@ public class StringUtils {
      * @see #getBytesUnchecked(String, String)
      */
     public static byte[] getBytesUtf16(final String string) {
-        return getBytes(string, Charsets.UTF_16);
+        return getBytes(string, StandardCharsets.UTF_16);
     }
 
     /**
@@ -230,7 +231,7 @@ public class StringUtils {
      * @see #getBytesUnchecked(String, String)
      */
     public static byte[] getBytesUtf16Be(final String string) {
-        return getBytes(string, Charsets.UTF_16BE);
+        return getBytes(string, StandardCharsets.UTF_16BE);
     }
 
     /**
@@ -248,7 +249,7 @@ public class StringUtils {
      * @see #getBytesUnchecked(String, String)
      */
     public static byte[] getBytesUtf16Le(final String string) {
-        return getBytes(string, Charsets.UTF_16LE);
+        return getBytes(string, StandardCharsets.UTF_16LE);
     }
 
     /**
@@ -266,7 +267,7 @@ public class StringUtils {
      * @see #getBytesUnchecked(String, String)
      */
     public static byte[] getBytesUtf8(final String string) {
-        return getBytes(string, Charsets.UTF_8);
+        return getBytes(string, StandardCharsets.UTF_8);
     }
 
     private static IllegalStateException newIllegalStateException(final String charsetName,
@@ -333,7 +334,7 @@ public class StringUtils {
      * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
      */
     public static String newStringIso8859_1(final byte[] bytes) {
-        return newString(bytes, Charsets.ISO_8859_1);
+        return newString(bytes, StandardCharsets.ISO_8859_1);
     }
 
     /**
@@ -349,7 +350,7 @@ public class StringUtils {
      * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
      */
     public static String newStringUsAscii(final byte[] bytes) {
-        return newString(bytes, Charsets.US_ASCII);
+        return newString(bytes, StandardCharsets.US_ASCII);
     }
 
     /**
@@ -365,7 +366,7 @@ public class StringUtils {
      * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
      */
     public static String newStringUtf16(final byte[] bytes) {
-        return newString(bytes, Charsets.UTF_16);
+        return newString(bytes, StandardCharsets.UTF_16);
     }
 
     /**
@@ -381,7 +382,7 @@ public class StringUtils {
      * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
      */
     public static String newStringUtf16Be(final byte[] bytes) {
-        return newString(bytes, Charsets.UTF_16BE);
+        return newString(bytes, StandardCharsets.UTF_16BE);
     }
 
     /**
@@ -397,7 +398,7 @@ public class StringUtils {
      * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
      */
     public static String newStringUtf16Le(final byte[] bytes) {
-        return newString(bytes, Charsets.UTF_16LE);
+        return newString(bytes, StandardCharsets.UTF_16LE);
     }
 
     /**
@@ -413,7 +414,7 @@ public class StringUtils {
      * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
      */
     public static String newStringUtf8(final byte[] bytes) {
-        return newString(bytes, Charsets.UTF_8);
+        return newString(bytes, StandardCharsets.UTF_8);
     }
 
 }

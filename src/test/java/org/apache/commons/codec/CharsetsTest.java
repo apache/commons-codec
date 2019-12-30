@@ -18,6 +18,7 @@
 package org.apache.commons.codec;
 
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -38,32 +39,32 @@ public class CharsetsTest {
 
     @Test
     public void testIso8859_1() {
-        Assert.assertEquals("ISO-8859-1", Charsets.ISO_8859_1.name());
+        Assert.assertEquals("ISO-8859-1", StandardCharsets.ISO_8859_1.name());
     }
 
     @Test
     public void testUsAscii() {
-        Assert.assertEquals("US-ASCII", Charsets.US_ASCII.name());
+        Assert.assertEquals("US-ASCII", StandardCharsets.US_ASCII.name());
     }
 
     @Test
     public void testUtf16() {
-        Assert.assertEquals("UTF-16", Charsets.UTF_16.name());
+        Assert.assertEquals("UTF-16", StandardCharsets.UTF_16.name());
     }
 
     @Test
     public void testUtf16Be() {
-        Assert.assertEquals("UTF-16BE", Charsets.UTF_16BE.name());
+        Assert.assertEquals("UTF-16BE", StandardCharsets.UTF_16BE.name());
     }
 
     @Test
     public void testUtf16Le() {
-        Assert.assertEquals("UTF-16LE", Charsets.UTF_16LE.name());
+        Assert.assertEquals("UTF-16LE", StandardCharsets.UTF_16LE.name());
     }
 
     @Test
     public void testUtf8() {
-        Assert.assertEquals("UTF-8", Charsets.UTF_8.name());
+        Assert.assertEquals("UTF-8", StandardCharsets.UTF_8.name());
     }
 
 }

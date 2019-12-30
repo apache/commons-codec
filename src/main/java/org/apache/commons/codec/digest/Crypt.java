@@ -16,10 +16,9 @@
  */
 package org.apache.commons.codec.digest;
 
+import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.util.concurrent.ThreadLocalRandom;
-
-import org.apache.commons.codec.Charsets;
 
 /**
  * GNU libc crypt(3) compatible hash method.
@@ -165,6 +164,6 @@ public class Crypt {
      *             when a {@link java.security.NoSuchAlgorithmException} is caught. *
      */
     public static String crypt(final String key, final String salt) {
-        return crypt(key.getBytes(Charsets.UTF_8), salt);
+        return crypt(key.getBytes(StandardCharsets.UTF_8), salt);
     }
 }
