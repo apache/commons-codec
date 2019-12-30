@@ -121,7 +121,7 @@ public class StringUtils {
      *            the String to encode, may be {@code null}
      * @return encoded bytes, or {@code null} if the input string was {@code null}
      * @throws NullPointerException
-     *             Thrown if {@link Charsets#UTF_8} is not initialized, which should never happen since it is
+     *             Thrown if {@link StandardCharsets#UTF_8} is not initialized, which should never happen since it is
      *             required by the Java platform specification.
      * @see <a href="http://download.oracle.com/javase/7/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      * @see #getBytesUnchecked(String, String)
@@ -139,7 +139,7 @@ public class StringUtils {
      *            the String to encode, may be {@code null}
      * @return encoded bytes, or {@code null} if the input string was {@code null}
      * @throws NullPointerException
-     *             Thrown if {@link Charsets#ISO_8859_1} is not initialized, which should never happen since it is
+     *             Thrown if {@link StandardCharsets#ISO_8859_1} is not initialized, which should never happen since it is
      *             required by the Java platform specification.
      * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
      * @see <a href="http://download.oracle.com/javase/7/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
@@ -188,7 +188,7 @@ public class StringUtils {
      *            the String to encode, may be {@code null}
      * @return encoded bytes, or {@code null} if the input string was {@code null}
      * @throws NullPointerException
-     *             Thrown if {@link Charsets#US_ASCII} is not initialized, which should never happen since it is
+     *             Thrown if {@link StandardCharsets#US_ASCII} is not initialized, which should never happen since it is
      *             required by the Java platform specification.
      * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
      * @see <a href="http://download.oracle.com/javase/7/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
@@ -206,7 +206,7 @@ public class StringUtils {
      *            the String to encode, may be {@code null}
      * @return encoded bytes, or {@code null} if the input string was {@code null}
      * @throws NullPointerException
-     *             Thrown if {@link Charsets#UTF_16} is not initialized, which should never happen since it is
+     *             Thrown if {@link StandardCharsets#UTF_16} is not initialized, which should never happen since it is
      *             required by the Java platform specification.
      * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
      * @see <a href="http://download.oracle.com/javase/7/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
@@ -224,7 +224,7 @@ public class StringUtils {
      *            the String to encode, may be {@code null}
      * @return encoded bytes, or {@code null} if the input string was {@code null}
      * @throws NullPointerException
-     *             Thrown if {@link Charsets#UTF_16BE} is not initialized, which should never happen since it is
+     *             Thrown if {@link StandardCharsets#UTF_16BE} is not initialized, which should never happen since it is
      *             required by the Java platform specification.
      * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
      * @see <a href="http://download.oracle.com/javase/7/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
@@ -242,7 +242,7 @@ public class StringUtils {
      *            the String to encode, may be {@code null}
      * @return encoded bytes, or {@code null} if the input string was {@code null}
      * @throws NullPointerException
-     *             Thrown if {@link Charsets#UTF_16LE} is not initialized, which should never happen since it is
+     *             Thrown if {@link StandardCharsets#UTF_16LE} is not initialized, which should never happen since it is
      *             required by the Java platform specification.
      * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
      * @see <a href="http://download.oracle.com/javase/7/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
@@ -260,7 +260,7 @@ public class StringUtils {
      *            the String to encode, may be {@code null}
      * @return encoded bytes, or {@code null} if the input string was {@code null}
      * @throws NullPointerException
-     *             Thrown if {@link Charsets#UTF_8} is not initialized, which should never happen since it is
+     *             Thrown if {@link StandardCharsets#UTF_8} is not initialized, which should never happen since it is
      *             required by the Java platform specification.
      * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
      * @see <a href="http://download.oracle.com/javase/7/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
@@ -329,7 +329,7 @@ public class StringUtils {
      * @return A new {@code String} decoded from the specified array of bytes using the ISO-8859-1 charset, or
      *         {@code null} if the input byte array was {@code null}.
      * @throws NullPointerException
-     *             Thrown if {@link Charsets#ISO_8859_1} is not initialized, which should never happen since it is
+     *             Thrown if {@link StandardCharsets#ISO_8859_1} is not initialized, which should never happen since it is
      *             required by the Java platform specification.
      * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
      */
@@ -345,7 +345,7 @@ public class StringUtils {
      * @return A new {@code String} decoded from the specified array of bytes using the US-ASCII charset,
      *         or {@code null} if the input byte array was {@code null}.
      * @throws NullPointerException
-     *             Thrown if {@link Charsets#US_ASCII} is not initialized, which should never happen since it is
+     *             Thrown if {@link StandardCharsets#US_ASCII} is not initialized, which should never happen since it is
      *             required by the Java platform specification.
      * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
      */
@@ -361,7 +361,7 @@ public class StringUtils {
      * @return A new {@code String} decoded from the specified array of bytes using the UTF-16 charset
      *         or {@code null} if the input byte array was {@code null}.
      * @throws NullPointerException
-     *             Thrown if {@link Charsets#UTF_16} is not initialized, which should never happen since it is
+     *             Thrown if {@link StandardCharsets#UTF_16} is not initialized, which should never happen since it is
      *             required by the Java platform specification.
      * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
      */
@@ -377,7 +377,7 @@ public class StringUtils {
      * @return A new {@code String} decoded from the specified array of bytes using the UTF-16BE charset,
      *         or {@code null} if the input byte array was {@code null}.
      * @throws NullPointerException
-     *             Thrown if {@link Charsets#UTF_16BE} is not initialized, which should never happen since it is
+     *             Thrown if {@link StandardCharsets#UTF_16BE} is not initialized, which should never happen since it is
      *             required by the Java platform specification.
      * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
      */
@@ -393,7 +393,7 @@ public class StringUtils {
      * @return A new {@code String} decoded from the specified array of bytes using the UTF-16LE charset,
      *         or {@code null} if the input byte array was {@code null}.
      * @throws NullPointerException
-     *             Thrown if {@link Charsets#UTF_16LE} is not initialized, which should never happen since it is
+     *             Thrown if {@link StandardCharsets#UTF_16LE} is not initialized, which should never happen since it is
      *             required by the Java platform specification.
      * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
      */
@@ -409,7 +409,7 @@ public class StringUtils {
      * @return A new {@code String} decoded from the specified array of bytes using the UTF-8 charset,
      *         or {@code null} if the input byte array was {@code null}.
      * @throws NullPointerException
-     *             Thrown if {@link Charsets#UTF_8} is not initialized, which should never happen since it is
+     *             Thrown if {@link StandardCharsets#UTF_8} is not initialized, which should never happen since it is
      *             required by the Java platform specification.
      * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
      */

@@ -108,7 +108,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
     }
 
     /**
-     * Default constructor, assumes default Charset of {@link Charsets#UTF_8}
+     * Default constructor, assumes default Charset of {@link StandardCharsets#UTF_8}
      */
     public QuotedPrintableCodec() {
         this(StandardCharsets.UTF_8, false);

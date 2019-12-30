@@ -29,7 +29,7 @@ import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 
 /**
- * Converts hexadecimal Strings. The charset used for certain operation can be set, the default is set in
+ * Converts hexadecimal Strings. The Charset used for certain operation can be set, the default is set in
  * {@link #DEFAULT_CHARSET_NAME}
  *
  * This class is thread-safe.
@@ -39,7 +39,7 @@ import org.apache.commons.codec.EncoderException;
 public class Hex implements BinaryEncoder, BinaryDecoder {
 
     /**
-     * Default charset is {@link Charsets#UTF_8}
+     * Default charset is {@link StandardCharsets#UTF_8}
      *
      * @since 1.7
      */
