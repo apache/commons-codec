@@ -41,8 +41,8 @@ public class BaseNCodecInputStream extends FilterInputStream {
 
     private final Context context = new Context();
 
-    protected BaseNCodecInputStream(final InputStream in, final BaseNCodec baseNCodec, final boolean doEncode) {
-        super(in);
+    protected BaseNCodecInputStream(final InputStream input, final BaseNCodec baseNCodec, final boolean doEncode) {
+        super(input);
         this.doEncode = doEncode;
         this.baseNCodec = baseNCodec;
     }

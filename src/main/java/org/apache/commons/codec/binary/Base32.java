@@ -343,14 +343,14 @@ public class Base32 extends BaseNCodec {
      * octets, using {@link org.apache.commons.codec.binary.BaseNCodec.Context#pos Context#pos} as the buffer position
      * </p>
      *
-     * @param in byte[] array of ascii data to Base32 decode.
+     * @param input byte[] array of ascii data to Base32 decode.
      * @param inPos Position to start reading data from.
      * @param inAvail Amount of bytes available from input for decoding.
      * @param context the context to be used
      *
      */
     @Override
-    void decode(final byte[] in, int inPos, final int inAvail, final Context context) {
+    void decode(final byte[] input, int inPos, final int inAvail, final Context context) {
         // package protected for access from I/O streams
 
         if (context.eof) {
@@ -360,7 +360,7 @@ public class Base32 extends BaseNCodec {
             context.eof = true;
         }
         for (int i = 0; i < inAvail; i++) {
-            final byte b = in[inPos++];
+            final byte b = input[inPos++];
             if (b == pad) {
                 // We're done.
                 context.eof = true;
@@ -442,7 +442,7 @@ public class Base32 extends BaseNCodec {
      * remaining bytes (if not multiple of 5).
      * </p>
      *
-     * @param in
+     * @param input
      *            byte[] array of binary data to Base32 encode.
      * @param inPos
      *            Position to start reading data from.
@@ -451,7 +451,7 @@ public class Base32 extends BaseNCodec {
      * @param context the context to be used
      */
     @Override
-    void encode(final byte[] in, int inPos, final int inAvail, final Context context) {
+    void encode(final byte[] input, int inPos, final int inAvail, final Context context) {
         // package protected for access from I/O streams
 
         if (context.eof) {
@@ -522,7 +522,7 @@ public class Base32 extends BaseNCodec {
             for (int i = 0; i < inAvail; i++) {
                 final byte[] buffer = ensureBufferSize(encodeSize, context);
                 context.modulus = (context.modulus+1) % BYTES_PER_UNENCODED_BLOCK;
-                int b = in[inPos++];
+                int b = input[inPos++];
                 if (b < 0) {
                     b += 256;
                 }
