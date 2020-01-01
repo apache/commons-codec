@@ -24,7 +24,6 @@ matrix:
 jdk:
   - oraclejdk11
   - openjdk8
-  - openjdk10
   - openjdk11
   - openjdk12
   - openjdk13
