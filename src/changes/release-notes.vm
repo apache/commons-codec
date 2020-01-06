@@ -28,7 +28,7 @@ $release.description.replaceAll("  ", "
 ## set up indent sizes. Only change indent1
 #set($props=${project.properties})
 #set($jiralen=$props.get("commons.jira.id").length())
-## indent1 =   POOL-nnnn:
+## indent1 =   codec-nnnn:
 #set($blanklen=$jiralen+6)## +6 for "-nnnn:"
 ## must be at least as long as the longest JIRA id
 #set($blanks="                                  ")
@@ -102,4 +102,4 @@ patches, or suggestions for improvement, see the Apache ${project.name} website:
 
 ${project.url}
 
-Download page: ${project.url}download_pool.cgi
+Download page: ${project.url}download_codec.cgi

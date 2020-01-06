@@ -37,7 +37,7 @@ patches, or suggestions for improvement, see the Apache Apache Commons Codec web
 
 https://commons.apache.org/proper/commons-codec/
 
-Download page: https://commons.apache.org/proper/commons-codec/download_pool.cgi
+Download page: https://commons.apache.org/proper/commons-codec/download_codec.cgi
 
 -------------------------------------------------------------------------------
 
