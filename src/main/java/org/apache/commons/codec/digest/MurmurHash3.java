@@ -800,9 +800,12 @@ public final class MurmurHash3 {
     @Deprecated
     public static long[] hash128(final byte[] data, final int offset, final int length, final int seed) {
         // ************
-        // Note: This fails to apply masking using 0xffffffffL to the seed.
+        // Note: This deliberately fails to apply masking using 0xffffffffL to the seed
+        // to maintain behavioural compatibility with the original version.
+        // The implicit conversion to a long will extend a negative sign
+        // bit through the upper 32-bits of the long seed. These should be zero.
         // ************
-        return hash128x64(data, offset, length, seed);
+        return hash128x64Internal(data, offset, length, seed);
     }
 
     /**
@@ -820,7 +823,7 @@ public final class MurmurHash3 {
      */
     public static long[] hash128x64(final byte[] data, final int offset, final int length, final int seed) {
         // Use an unsigned 32-bit integer as the seed
-        return hash128x64(data, offset, length, seed & 0xffffffffL);
+        return hash128x64Internal(data, offset, length, seed & 0xffffffffL);
     }
 
     /**
@@ -835,7 +838,7 @@ public final class MurmurHash3 {
      * @param seed The initial seed value
      * @return The 128-bit hash (2 longs)
      */
-    private static long[] hash128x64(final byte[] data, final int offset, final int length, final long seed) {
+    private static long[] hash128x64Internal(final byte[] data, final int offset, final int length, final long seed) {
         long h1 = seed;
         long h2 = seed;
         final int nblocks = length >> 4;
