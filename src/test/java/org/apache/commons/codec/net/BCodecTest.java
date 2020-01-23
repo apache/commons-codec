@@ -26,6 +26,7 @@ import java.nio.charset.UnsupportedCharsetException;
 import org.apache.commons.codec.CharEncoding;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -157,6 +158,7 @@ public class BCodecTest {
     }
 
     @Test
+    @Ignore("CODEC-280: Disabled strict decoding by default. The BCodec uses the default so this test does not fail the impossible cases.")
     public void testBase64ImpossibleSamples() {
         final BCodec codec = new BCodec();
         for (final String s : BASE64_IMPOSSIBLE_CASES) {

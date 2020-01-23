@@ -17,6 +17,7 @@
 
 package org.apache.commons.codec.binary;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -1319,6 +1320,7 @@ public class Base64Test {
     @Test
     public void testBase64ImpossibleSamples() {
         final Base64 codec = new Base64();
+        codec.setStrictDecoding(true);
         for (final String s : BASE64_IMPOSSIBLE_CASES) {
             try {
                 codec.decode(s);
@@ -1327,6 +1329,11 @@ public class Base64Test {
                 // expected
             }
         }
+    }
+
+    @Test
+    public void testBase64DecodingOfTrailing6Bits() {
+        assertBase64DecodingOfTrailingBits(6);
     }
 
     @Test
@@ -1349,31 +1356,49 @@ public class Base64Test {
      */
     private static void assertBase64DecodingOfTrailingBits(final int nbits) {
         final Base64 codec = new Base64();
-        // Create the encoded bytes. The first characters must be valid so fill with 'zero'.
-        final byte[] encoded = new byte[nbits / 6];
-        Arrays.fill(encoded, STANDARD_ENCODE_TABLE[0]);
+        // Requires strict decoding
+        codec.setStrictDecoding(true);
+        assertTrue(codec.isStrictDecoding());
+        // A lenient decoder should not re-encode to the same bytes
+        final Base64 defaultCodec = new Base64();
+        assertFalse(defaultCodec.isStrictDecoding());
+
+        // Create the encoded bytes. The first characters must be valid so fill with 'zero'
+        // then pad to the block size.
+        final int length = nbits / 6;
+        final byte[] encoded = new byte[4];
+        Arrays.fill(encoded, 0, length, STANDARD_ENCODE_TABLE[0]);
+        Arrays.fill(encoded, length, encoded.length, (byte) '=');
         // Compute how many bits would be discarded from 8-bit bytes
         final int discard = nbits % 8;
         final int emptyBitsMask = (1 << discard) - 1;
+        // Special case when an impossible number of trailing characters
+        final boolean invalid = length == 1;
         // Enumerate all 64 possible final characters in the last position
-        final int last = encoded.length - 1;
+        final int last = length - 1;
         for (int i = 0; i < 64; i++) {
             encoded[last] = STANDARD_ENCODE_TABLE[i];
             // If the lower bits are set we expect an exception. This is not a valid
             // final character.
-            if ((i & emptyBitsMask) != 0) {
+            if (invalid || (i & emptyBitsMask) != 0) {
                 try {
                     codec.decode(encoded);
                     fail("Final base-64 digit should not be allowed");
                 } catch (final IllegalArgumentException ex) {
                     // expected
                 }
+                // The default lenient mode should decode this
+                final byte[] decoded = defaultCodec.decode(encoded);
+                // Re-encoding should not match the original array as it was invalid
+                assertFalse(Arrays.equals(encoded, defaultCodec.encode(decoded)));
             } else {
                 // Otherwise this should decode
                 final byte[] decoded = codec.decode(encoded);
                 // Compute the bits that were encoded. This should match the final decoded byte.
                 final int bitsEncoded = i >> discard;
                 assertEquals("Invalid decoding of last character", bitsEncoded, decoded[decoded.length - 1]);
+                // Re-encoding should match the original array (requires the same padding character)
+                assertArrayEquals(encoded, codec.encode(decoded));
             }
         }
     }

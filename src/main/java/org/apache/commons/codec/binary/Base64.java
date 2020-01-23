@@ -470,8 +470,8 @@ public class Base64 extends BaseNCodec {
             // Output all whole multiples of 8 bits and ignore the rest
             switch (context.modulus) {
 //              case 0 : // impossible, as excluded above
-                case 1 : // 6 bits - ignore entirely
-                    // TODO not currently tested; perhaps it is impossible?
+                case 1 : // 6 bits - either ignore entirely, or raise an exception
+                    validateTrailingCharacter();
                     break;
                 case 2 : // 12 bits = 8 + 4
                     validateCharacter(MASK_4BITS, context);
@@ -787,6 +787,20 @@ public class Base64 extends BaseNCodec {
     }
 
     /**
+     * Validates whether decoding allows an entire final trailing character that cannot be
+     * used for a complete byte.
+     *
+     * @throws IllegalArgumentException if strict decoding is enabled
+     */
+    private void validateTrailingCharacter() {
+        if (isStrictDecoding()) {
+            throw new IllegalArgumentException(
+                "Strict decoding: Last encoded character (before the paddings if any) is a valid base 64 alphabet but not a possible encoding. " +
+                "Decoding requries at least two trailing 6-bit characters to create bytes.");
+        }
+    }
+
+    /**
      * Validates whether decoding the final trailing character is possible in the context
      * of the set of possible base 64 values.
      *
@@ -798,11 +812,11 @@ public class Base64 extends BaseNCodec {
      *
      * @throws IllegalArgumentException if the bits being checked contain any non-zero value
      */
-    private static void validateCharacter(final int emptyBitsMask, final Context context) {
-        if ((context.ibitWorkArea & emptyBitsMask) != 0) {
+    private void validateCharacter(final int emptyBitsMask, final Context context) {
+        if (isStrictDecoding() && (context.ibitWorkArea & emptyBitsMask) != 0) {
             throw new IllegalArgumentException(
-                "Last encoded character (before the paddings if any) is a valid base 64 alphabet but not a possible value. " +
-                "Expected the discarded bits to be zero.");
+                "Strict decoding: Last encoded character (before the paddings if any) is a valid base 64 alphabet but not a possible encoding. " +
+                "Expected the discarded bits from the character to be zero.");
         }
     }
 }
