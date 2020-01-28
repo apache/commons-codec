@@ -231,7 +231,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
-     * Sets the decoding behaviour when the input bytes contain leftover trailing bits that 
+     * Sets the decoding behaviour when the input bytes contain leftover trailing bits that
      * cannot be created by a valid encoding. These can be bits that are unused from the final
      * character or entire characters. The default mode is lenient decoding. Set this to
      * {@code true} to enable strict decoding.
@@ -242,7 +242,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      *     are not part of a valid encoding. Any unused bits from the final character must
      *     be zero. Impossible counts of entire final characters are not allowed.
      * </ul>
-     * 
+     *
      * <p>When strict decoding is enabled it is expected that the decoded bytes will be re-encoded
      * to a byte array that matches the original, i.e. no changes occur on the final
      * character. This requires that the input bytes use the same padding and alphabet

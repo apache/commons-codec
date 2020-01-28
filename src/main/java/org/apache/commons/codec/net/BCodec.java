@@ -49,6 +49,12 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     private final Charset charset;
 
     /**
+     * If true then decoding should throw an exception for impossible combinations of bits at the
+     * end of the byte input. The default is to decode as much of them as possible.
+     */
+    private boolean strictDecoding;
+
+    /**
      * Default constructor.
      */
     public BCodec() {
@@ -82,6 +88,40 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
         this(Charset.forName(charsetName));
     }
 
+    /**
+     * Sets the decoding behaviour when the input bytes contain leftover trailing bits that
+     * cannot be created by a valid Base64 encoding. This setting is transferred to the instance
+     * of {@link Base64} used to perform decoding.
+     *
+     * <p>The default is false for lenient encoding. Decoding will compose trailing bits
+     * into 8-bit bytes and discard the remainder.
+     *
+     * <p>Set to true to enable strict decoding. Decoding will raise a
+     * {@link DecoderException} if trailing bits are not part of a valid Base64 encoding.
+     *
+     * @param strictDecoding Set to true to enable strict decoding; otherwise use lenient decoding.
+     * @see org.apache.commons.codec.binary.BaseNCodec#setStrictDecoding(boolean) BaseNCodec.setStrictDecoding(boolean)
+     * @since 1.15
+     */
+    public void setStrictDecoding(boolean strictDecoding) {
+        this.strictDecoding = strictDecoding;
+    }
+
+    /**
+     * Returns true if decoding behaviour is strict. Decoding will raise a
+     * {@link DecoderException} if trailing bits are not part of a valid Base64 encoding.
+     *
+     * <p>The default is false for lenient encoding. Decoding will compose trailing bits
+     * into 8-bit bytes and discard the remainder.
+     *
+     * @return true if using strict decoding
+     * @see #setStrictDecoding(boolean)
+     * @since 1.15
+     */
+    public boolean isStrictDecoding() {
+        return strictDecoding;
+    }
+
     @Override
     protected String getEncoding() {
         return "B";
@@ -100,7 +140,9 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
         if (bytes == null) {
             return null;
         }
-        return Base64.decodeBase64(bytes);
+        final Base64 codec = new Base64();
+        codec.setStrictDecoding(strictDecoding);
+        return codec.decode(bytes);
     }
 
     /**
