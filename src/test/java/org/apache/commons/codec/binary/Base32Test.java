@@ -19,8 +19,10 @@
 package org.apache.commons.codec.binary;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.nio.charset.Charset;
@@ -299,6 +301,7 @@ public class Base32Test {
     }
 
     private void testImpossibleCases(final Base32 codec, final String[] impossible_cases) {
+        codec.setStrictDecoding(true);
         for (final String impossible : impossible_cases) {
             try {
                 codec.decode(impossible);
@@ -307,6 +310,11 @@ public class Base32Test {
                 // expected
             }
         }
+    }
+
+    @Test
+    public void testBase32DecodingOfTrailing5Bits() {
+        assertBase32DecodingOfTrailingBits(5);
     }
 
     @Test
@@ -349,31 +357,49 @@ public class Base32Test {
      */
     private static void assertBase32DecodingOfTrailingBits(final int nbits) {
         final Base32 codec = new Base32();
-        // Create the encoded bytes. The first characters must be valid so fill with 'zero'.
-        final byte[] encoded = new byte[nbits / 5];
-        Arrays.fill(encoded, ENCODE_TABLE[0]);
+        // Requires strict decoding
+        codec.setStrictDecoding(true);
+        assertTrue(codec.isStrictDecoding());
+        // A lenient decoder should not re-encode to the same bytes
+        final Base32 defaultCodec = new Base32();
+        assertFalse(defaultCodec.isStrictDecoding());
+
+        // Create the encoded bytes. The first characters must be valid so fill with 'zero'
+        // then pad to the block size.
+        final int length = nbits / 5;
+        final byte[] encoded = new byte[8];
+        Arrays.fill(encoded, 0, length, ENCODE_TABLE[0]);
+        Arrays.fill(encoded, length, encoded.length, (byte) '=');
         // Compute how many bits would be discarded from 8-bit bytes
         final int discard = nbits % 8;
         final int emptyBitsMask = (1 << discard) - 1;
+        // Special case when an impossible number of trailing characters
+        final boolean invalid = length == 1 || length == 3 || length == 6;
         // Enumerate all 32 possible final characters in the last position
-        final int last = encoded.length - 1;
+        final int last = length - 1;
         for (int i = 0; i < 32; i++) {
             encoded[last] = ENCODE_TABLE[i];
             // If the lower bits are set we expect an exception. This is not a valid
             // final character.
-            if ((i & emptyBitsMask) != 0) {
+            if (invalid || (i & emptyBitsMask) != 0) {
                 try {
                     codec.decode(encoded);
                     fail("Final base-32 digit should not be allowed");
                 } catch (final IllegalArgumentException ex) {
                     // expected
                 }
+                // The default lenient mode should decode this
+                final byte[] decoded = defaultCodec.decode(encoded);
+                // Re-encoding should not match the original array as it was invalid
+                assertFalse(Arrays.equals(encoded, defaultCodec.encode(decoded)));
             } else {
                 // Otherwise this should decode
                 final byte[] decoded = codec.decode(encoded);
                 // Compute the bits that were encoded. This should match the final decoded byte.
                 final int bitsEncoded = i >> discard;
                 assertEquals("Invalid decoding of last character", bitsEncoded, decoded[decoded.length - 1]);
+                // Re-encoding should match the original array (requires the same padding character)
+                assertArrayEquals(encoded, codec.encode(decoded));
             }
         }
     }

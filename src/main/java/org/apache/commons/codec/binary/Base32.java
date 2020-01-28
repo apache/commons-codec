@@ -114,10 +114,6 @@ public class Base32 extends BaseNCodec {
             'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
     };
 
-    /** Mask used to extract 7 bits, used when decoding final trailing character. */
-    private static final long MASK_7BITS = 0x7fL;
-    /** Mask used to extract 6 bits, used when decoding final trailing character. */
-    private static final long MASK_6BITS = 0x3fL;
     /** Mask used to extract 5 bits, used when encoding Base32 bytes */
     private static final int MASK_5BITS = 0x1f;
     /** Mask used to extract 4 bits, used when decoding final trailing character. */
@@ -387,17 +383,26 @@ public class Base32 extends BaseNCodec {
         // Two forms of EOF as far as Base32 decoder is concerned: actual
         // EOF (-1) and first time '=' character is encountered in stream.
         // This approach makes the '=' padding characters completely optional.
-        if (context.eof && context.modulus >= 2) { // if modulus < 2, nothing to do
+        if (context.eof && context.modulus > 0) { // if modulus == 0, nothing to do
             final byte[] buffer = ensureBufferSize(decodeSize, context);
 
-            //  we ignore partial bytes, i.e. only multiples of 8 count
+            // We ignore partial bytes, i.e. only multiples of 8 count.
+            // Any combination not part of a valid encoding is either partially decoded
+            // or will raise an exception. Possible trailing characters are 2, 4, 5, 7.
+            // It is not possible to encode with 1, 3, 6 trailing characters.
+            // For backwards compatibility 3 & 6 chars are decoded anyway rather than discarded.
+            // See the encode(byte[]) method EOF section.
             switch (context.modulus) {
+//              case 0 : // impossible, as excluded above
+                case 1 : // 5 bits - either ignore entirely, or raise an exception
+                    validateTrailingCharacters();
                 case 2 : // 10 bits, drop 2 and output one byte
                     validateCharacter(MASK_2BITS, context);
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 2) & MASK_8BITS);
                     break;
-                case 3 : // 15 bits, drop 7 and output 1 byte
-                    validateCharacter(MASK_7BITS, context);
+                case 3 : // 15 bits, drop 7 and output 1 byte, or raise an exception
+                    validateTrailingCharacters();
+                    // Not possible from a valid encoding but decode anyway
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 7) & MASK_8BITS);
                     break;
                 case 4 : // 20 bits = 2*8 + 4
@@ -406,21 +411,22 @@ public class Base32 extends BaseNCodec {
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 8) & MASK_8BITS);
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea) & MASK_8BITS);
                     break;
-                case 5 : // 25bits = 3*8 + 1
+                case 5 : // 25 bits = 3*8 + 1
                     validateCharacter(MASK_1BITS, context);
                     context.lbitWorkArea = context.lbitWorkArea >> 1;
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 16) & MASK_8BITS);
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 8) & MASK_8BITS);
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea) & MASK_8BITS);
                     break;
-                case 6 : // 30bits = 3*8 + 6
-                    validateCharacter(MASK_6BITS, context);
+                case 6 : // 30 bits = 3*8 + 6, or raise an exception
+                    validateTrailingCharacters();
+                    // Not possible from a valid encoding but decode anyway
                     context.lbitWorkArea = context.lbitWorkArea >> 6;
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 16) & MASK_8BITS);
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 8) & MASK_8BITS);
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea) & MASK_8BITS);
                     break;
-                case 7 : // 35 = 4*8 +3
+                case 7 : // 35 bits = 4*8 +3
                     validateCharacter(MASK_3BITS, context);
                     context.lbitWorkArea = context.lbitWorkArea >> 3;
                     buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 24) & MASK_8BITS);
@@ -560,6 +566,20 @@ public class Base32 extends BaseNCodec {
     }
 
     /**
+     * Validates whether decoding allows final trailing characters that cannot be
+     * created during encoding.
+     *
+     * @throws IllegalArgumentException if strict decoding is enabled
+     */
+    private void validateTrailingCharacters() {
+        if (isStrictDecoding()) {
+            throw new IllegalArgumentException(
+                "Strict decoding: Last encoded character(s) (before the paddings if any) are valid base 32 alphabet but not a possible encoding. " +
+                "Decoding requries either 2, 4, 5, or 7 trailing 5-bit characters to create bytes.");
+        }
+    }
+
+    /**
      * Validates whether decoding the final trailing character is possible in the context
      * of the set of possible base 32 values.
      *
@@ -571,12 +591,12 @@ public class Base32 extends BaseNCodec {
      *
      * @throws IllegalArgumentException if the bits being checked contain any non-zero value
      */
-    private static void validateCharacter(final long emptyBitsMask, final Context context) {
+    private void validateCharacter(final long emptyBitsMask, final Context context) {
         // Use the long bit work area
-        if ((context.lbitWorkArea & emptyBitsMask) != 0) {
+        if (isStrictDecoding() && (context.lbitWorkArea & emptyBitsMask) != 0) {
             throw new IllegalArgumentException(
-                "Last encoded character (before the paddings if any) is a valid base 32 alphabet but not a possible value. " +
-                "Expected the discarded bits to be zero.");
+                "Strict decoding: Last encoded character (before the paddings if any) is a valid base 32 alphabet but not a possible encoding. " +
+                "Expected the discarded bits from the character to be zero.");
         }
     }
 }

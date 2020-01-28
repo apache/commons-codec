@@ -23,6 +23,7 @@ import org.apache.commons.codec.BinaryDecoder;
 import org.apache.commons.codec.BinaryEncoder;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
+import org.apache.commons.codec.binary.BaseNCodec.Context;
 
 /**
  * Abstract superclass for Base-N encoders and decoders.
@@ -191,6 +192,12 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     private final int chunkSeparatorLength;
 
     /**
+     * If true then decoding should throw an exception for impossible combinations of bits at the
+     * end of the byte input. The default is to decode as much of them as possible.
+     */
+    private boolean strictDecoding;
+
+    /**
      * Note {@code lineLength} is rounded down to the nearest multiple of the encoded block size.
      * If {@code chunkSeparatorLength} is zero, then chunking is disabled.
      * @param unencodedBlockSize the size of an unencoded block (e.g. Base64 = 3)
@@ -221,6 +228,47 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         this.chunkSeparatorLength = chunkSeparatorLength;
 
         this.pad = pad;
+    }
+
+    /**
+     * Sets the decoding behaviour when the input bytes contain leftover trailing bits that
+     * cannot be created by a valid encoding. These can be bits that are unused from the final
+     * character or entire characters. The default mode is lenient decoding. Set this to
+     * {@code true} to enable strict decoding.
+     * <ul>
+     * <li>Lenient: Any trailing bits are composed into 8-bit bytes where possible.
+     *     The remainder are discarded.
+     * <li>Strict: The decoding will raise an {@link IllegalArgumentException} if trailing bits
+     *     are not part of a valid encoding. Any unused bits from the final character must
+     *     be zero. Impossible counts of entire final characters are not allowed.
+     * </ul>
+     *
+     * <p>When strict decoding is enabled it is expected that the decoded bytes will be re-encoded
+     * to a byte array that matches the original, i.e. no changes occur on the final
+     * character. This requires that the input bytes use the same padding and alphabet
+     * as the encoder.
+     *
+     * @param strictDecoding Set to true to enable strict decoding; otherwise use lenient decoding.
+     * @see #encode(byte[])
+     * @since 1.15
+     */
+    public void setStrictDecoding(boolean strictDecoding) {
+        this.strictDecoding = strictDecoding;
+    }
+
+    /**
+     * Returns true if decoding behaviour is strict. Decoding will raise an
+     * {@link IllegalArgumentException} if trailing bits are not part of a valid encoding.
+     *
+     * <p>The default is false for lenient encoding. Decoding will compose trailing bits
+     * into 8-bit bytes and discard the remainder.
+     *
+     * @return true if using strict decoding
+     * @see #setStrictDecoding(boolean)
+     * @since 1.15
+     */
+    public boolean isStrictDecoding() {
+        return strictDecoding;
     }
 
     /**
