@@ -44,7 +44,7 @@ public class XXHash32OverflowTest {
         byte[] bytes = null;
         try {
             bytes = new byte[hugeLength];
-        } catch (OutOfMemoryError ignore) {
+        } catch (final OutOfMemoryError ignore) {
             // Some VMs cannot allocate an array this large.
             // Some test environments may not have enough available memory for this.
         }

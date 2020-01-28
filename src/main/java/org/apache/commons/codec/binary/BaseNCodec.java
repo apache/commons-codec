@@ -23,7 +23,6 @@ import org.apache.commons.codec.BinaryDecoder;
 import org.apache.commons.codec.BinaryEncoder;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
-import org.apache.commons.codec.binary.BaseNCodec.Context;
 
 /**
  * Abstract superclass for Base-N encoders and decoders.

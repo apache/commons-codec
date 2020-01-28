@@ -23,7 +23,6 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.codec.CharEncoding;
-import org.apache.commons.codec.Charsets;
 
 /**
  * Converts String to and from bytes using the encodings required by the Java specification. These encodings are

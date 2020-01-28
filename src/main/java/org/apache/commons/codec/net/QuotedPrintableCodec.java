@@ -27,7 +27,6 @@ import java.util.BitSet;
 
 import org.apache.commons.codec.BinaryDecoder;
 import org.apache.commons.codec.BinaryEncoder;
-import org.apache.commons.codec.Charsets;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringDecoder;
