@@ -132,8 +132,7 @@ public class DoubleMetaphone implements StringEncoder {
                 index = handleJ(value, result, index, slavoGermanic);
                 break;
             case 'K':
-                result.append('K');
-                index = charAt(value, index + 1) == 'K' ? index + 2 : index + 1;
+                index = handleK(value, result, index);
                 break;
             case 'L':
                 index = handleL(value, result, index);
@@ -540,6 +539,25 @@ public class DoubleMetaphone implements StringEncoder {
                     index++;
                 }
             }
+        return index;
+    }
+
+    /**
+     * Handles 'K' cases.
+     */
+    private int handleK(final String value, final DoubleMetaphoneResult result, int index) {
+        result.append('K');
+        if (charAt(value, index + 1) == 'K') {
+            index += 2;
+        } else if ((charAt(value, index + 1) == 'C')) { //-- in "Kirkcaldy", "kc" should be encoded "K" instead of "KK" --//
+            final DoubleMetaphoneResult nextCharResult = new DoubleMetaphoneResult(this.getMaxCodeLen());
+            int nextCharIndex = handleC(value, nextCharResult, index + 1);
+            if (nextCharResult.getPrimary().equals("K")) {
+                index = nextCharIndex;
+            }
+        } else {
+            index++;
+        }
         return index;
     }
 
