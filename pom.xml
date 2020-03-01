@@ -274,6 +274,9 @@ limitations under the License.
   <properties>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
+    <!-- Fix to build on JDK 7: version 4.0.0 requires Java 8. -->
+    <!-- Can be dropped when CP 49 is released -->
+    <commons.felix.version>3.5.1</commons.felix.version>
     <commons.componentid>codec</commons.componentid>
     <commons.module.name>org.apache.commons.codec</commons.module.name>
     <commons.jira.id>CODEC</commons.jira.id>

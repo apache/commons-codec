@@ -24,12 +24,17 @@ import java.io.InputStream;
 
 import org.apache.commons.codec.CodecPolicy;
 import org.junit.Test;
+import org.junit.jupiter.api.function.Executable;
 
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class Base32InputStreamTest {
 
@@ -421,11 +426,10 @@ public class Base32InputStreamTest {
     public void testReadNull() throws Exception {
         final byte[] decoded = StringUtils.getBytesUtf8(Base32TestData.STRING_FIXTURE);
         final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
-        try (final Base32InputStream in = new Base32InputStream(bin, true, 4, new byte[] { 0, 0, 0 })) {
-            in.read(null, 0, 0);
-            fail("Base32InputStream.read(null, 0, 0) to throw a NullPointerException");
-        } catch (final NullPointerException e) {
-            // Expected
+        try (final Base32InputStream in = new Base32InputStream(bin, true, 4, new byte[]{0, 0, 0})) {
+            final Executable testMethod = () -> in.read(null, 0, 0);
+            final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+            assertThat(thrown.getMessage(), is(equalTo("array")));
         }
     }
 
