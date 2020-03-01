@@ -1,12 +1,39 @@
+
 *~
 *.swp
+.cache
+
+# Maven
+*.log
+build.properties
+maven-eclipse.xml
+pom.xml.next
+pom.xml.releaseBackup
+pom.xml.tag
+pom.xml.versionsBackup
+release.properties
+site-content/
+target/
+
+# Eclipse
+.checkstyle
+.classpath
+.externalToolBuilders/
+.project
+.settings/
+
+# IntelliJ
+*.iml
+*.ipr
 .idea/
 .idea_modules/
-.idea/*
-.settings
-.cache
+.iws
+bin/
+
+# Mac
+._*
 .DS_Store
-target/
-.project
-.classpath
-.externalToolBuilders/*
+
+# Windows
+[Dd]esktop.ini
+Thumbs.db
