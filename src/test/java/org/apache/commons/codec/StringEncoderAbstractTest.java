@@ -21,6 +21,12 @@ import java.util.Locale;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.jupiter.api.function.Executable;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  */
@@ -59,13 +65,9 @@ public abstract class StringEncoderAbstractTest<T extends StringEncoder> {
     }
 
     @Test
-    public void testEncodeNull() throws Exception {
+    public void testEncodeNull() throws EncoderException {
         final StringEncoder encoder = this.getStringEncoder();
-        try {
-            encoder.encode(null);
-        } catch (final EncoderException ee) {
-            // An exception should be thrown
-        }
+        encoder.encode(null);
     }
 
     @Test
