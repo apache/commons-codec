@@ -24,12 +24,19 @@ import java.io.InputStream;
 
 import org.apache.commons.codec.CodecPolicy;
 import org.junit.Test;
+import org.junit.jupiter.api.function.Executable;
 
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.core.IsNull.nullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class Base32InputStreamTest {
 
@@ -442,33 +449,32 @@ public class Base32InputStreamTest {
         final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
         try (final Base32InputStream in = new Base32InputStream(bin, true, 4, new byte[] { 0, 0, 0 })) {
 
-            try {
-                in.read(buf, -1, 0);
-                fail("Expected Base32InputStream.read(buf, -1, 0) to throw IndexOutOfBoundsException");
-            } catch (final IndexOutOfBoundsException e) {
-                // Expected
-            }
-
-            try {
-                in.read(buf, 0, -1);
-                fail("Expected Base32InputStream.read(buf, 0, -1) to throw IndexOutOfBoundsException");
-            } catch (final IndexOutOfBoundsException e) {
-                // Expected
-            }
-
-            try {
-                in.read(buf, buf.length + 1, 0);
-                fail("Base32InputStream.read(buf, buf.length + 1, 0) throws IndexOutOfBoundsException");
-            } catch (final IndexOutOfBoundsException e) {
-                // Expected
-            }
-
-            try {
-                in.read(buf, buf.length - 1, 2);
-                fail("Base32InputStream.read(buf, buf.length - 1, 2) throws IndexOutOfBoundsException");
-            } catch (final IndexOutOfBoundsException e) {
-                // Expected
-            }
+            assertAll(
+                    () -> {
+                        final Executable testMethod = () -> in.read(buf, -1, 0);
+                        final String message = "Expected Base32InputStream.read(buf, -1, 0) to throw IndexOutOfBoundsException";
+                        final IndexOutOfBoundsException thrown = assertThrows(IndexOutOfBoundsException.class, testMethod, message);
+                        assertThat(message, thrown.getMessage(), is(nullValue()));
+                    },
+                    () -> {
+                        final Executable testMethod = () -> in.read(buf, 0, -1);
+                        final String message = "Expected Base32InputStream.read(buf, 0, -1) to throw IndexOutOfBoundsException";
+                        final IndexOutOfBoundsException thrown = assertThrows(IndexOutOfBoundsException.class, testMethod, message);
+                        assertThat(message, thrown.getMessage(), is(nullValue()));
+                    },
+                    () -> {
+                        final Executable testMethod = () -> in.read(buf, buf.length + 1, 0);
+                        final String message = "Base32InputStream.read(buf, buf.length + 1, 0) throws IndexOutOfBoundsException";
+                        final IndexOutOfBoundsException thrown = assertThrows(IndexOutOfBoundsException.class, testMethod, message);
+                        assertThat(message, thrown.getMessage(), is(nullValue()));
+                    },
+                    () -> {
+                        final Executable testMethod = () -> in.read(buf, buf.length - 1, 2);
+                        final String message = "Base32InputStream.read(buf, buf.length - 1, 2) throws IndexOutOfBoundsException";
+                        final IndexOutOfBoundsException thrown = assertThrows(IndexOutOfBoundsException.class, testMethod, message);
+                        assertThat(message, thrown.getMessage(), is(nullValue()));
+                    }
+            );
         }
     }
 
