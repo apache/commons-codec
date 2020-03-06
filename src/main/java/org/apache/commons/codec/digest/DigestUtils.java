@@ -192,6 +192,7 @@ public class DigestUtils {
      */
     public static MessageDigest getDigest(final String algorithm, final MessageDigest defaultMessageDigest) {
         try {
+            /** potential insecure algorithm (MD2, MD5, SHA1, SHA256) called here */
             return MessageDigest.getInstance(algorithm);
         } catch (final Exception e) {
             return defaultMessageDigest;
