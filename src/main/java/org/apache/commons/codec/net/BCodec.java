@@ -89,7 +89,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     }
 
     /**
-     * Sets the decoding behaviour when the input bytes contain leftover trailing bits that
+     * Sets the decoding behavior when the input bytes contain leftover trailing bits that
      * cannot be created by a valid Base64 encoding. This setting is transferred to the instance
      * of {@link Base64} used to perform decoding.
      *
@@ -108,7 +108,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     }
 
     /**
-     * Returns true if decoding behaviour is strict. Decoding will raise a
+     * Returns true if decoding behavior is strict. Decoding will raise a
      * {@link DecoderException} if trailing bits are not part of a valid Base64 encoding.
      *
      * <p>The default is false for lenient encoding. Decoding will compose trailing bits

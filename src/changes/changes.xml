@@ -251,7 +251,7 @@ The <action> type attribute can be add,update,fix,remove.
         Add test(s) to check that encodeBase64() does not chunk output.
       </action>
       <action dev="sebb" type="fix" issue="CODEC-97" due-to="mjryall">
-        Base64 default constructor behaviour changed to enable chunking in 1.4.
+        Base64 default constructor behavior changed to enable chunking in 1.4.
       </action>
       <action dev="ggregory" type="fix" issue="CODEC-99" due-to="julius">
         Base64.encodeBase64String() shouldn't chunk.

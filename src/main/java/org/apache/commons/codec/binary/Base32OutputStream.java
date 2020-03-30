@@ -24,8 +24,8 @@ import java.io.OutputStream;
  * is 76 characters and the default lineEnding is CRLF, but these can be overridden by using the appropriate
  * constructor.
  * <p>
- * The default behaviour of the Base32OutputStream is to ENCODE, whereas the default behaviour of the Base32InputStream
- * is to DECODE. But this behaviour can be overridden by using a different constructor.
+ * The default behavior of the Base32OutputStream is to ENCODE, whereas the default behavior of the Base32InputStream
+ * is to DECODE. But this behavior can be overridden by using a different constructor.
  * </p>
  * <p>
  * Since this class operates directly on byte streams, and not character streams, it is hard-coded to only encode/decode

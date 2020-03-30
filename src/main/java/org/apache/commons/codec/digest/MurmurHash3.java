@@ -798,7 +798,7 @@ public final class MurmurHash3 {
     public static long[] hash128(final byte[] data, final int offset, final int length, final int seed) {
         // ************
         // Note: This deliberately fails to apply masking using 0xffffffffL to the seed
-        // to maintain behavioural compatibility with the original version.
+        // to maintain behavioral compatibility with the original version.
         // The implicit conversion to a long will extend a negative sign
         // bit through the upper 32-bits of the long seed. These should be zero.
         // ************

@@ -24,8 +24,8 @@ import java.io.InputStream;
  * is 76 characters and the default lineEnding is CRLF, but these can be overridden by using the appropriate
  * constructor.
  * <p>
- * The default behaviour of the Base64InputStream is to DECODE, whereas the default behaviour of the Base64OutputStream
- * is to ENCODE, but this behaviour can be overridden by using a different constructor.
+ * The default behavior of the Base64InputStream is to DECODE, whereas the default behavior of the Base64OutputStream
+ * is to ENCODE, but this behavior can be overridden by using a different constructor.
  * </p>
  * <p>
  * This class implements section <cite>6.8. Base64 Content-Transfer-Encoding</cite> from RFC 2045 <cite>Multipurpose

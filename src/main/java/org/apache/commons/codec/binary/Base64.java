@@ -564,7 +564,7 @@ public class Base64 extends BaseNCodec {
     /**
      * Encodes binary data using the base64 algorithm but does not chunk the output.
      *
-     * NOTE:  We changed the behaviour of this method from multi-line chunking (commons-codec-1.4) to
+     * NOTE:  We changed the behavior of this method from multi-line chunking (commons-codec-1.4) to
      * single-line non-chunking (commons-codec-1.5).
      *
      * @param binaryData
