@@ -27,7 +27,8 @@ jdk:
   - openjdk11
   - openjdk12
   - openjdk13
-  - openjdk-ea  
+  - openjdk14  
+  - openjdk-ea
 
 script:
   - mvn
