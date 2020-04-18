@@ -567,7 +567,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      */
     protected byte[] ensureBufferSize(final int size, final Context context){
         if (context.buffer == null) {
-            context.buffer = new byte[getDefaultBufferSize()];
+            context.buffer = new byte[Math.max(size, getDefaultBufferSize())];
             context.pos = 0;
             context.readPos = 0;
 
