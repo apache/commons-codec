@@ -17,6 +17,7 @@
 
 package org.apache.commons.codec.binary;
 
+import org.apache.commons.codec.CodecPolicy;
 import org.apache.commons.codec.DecoderException;
 
 import java.nio.charset.Charset;
@@ -66,6 +67,19 @@ public class Base16 extends BaseNCodec {
         this.charset = charset;
     }
 
+    /**
+     * Creates a Base16 codec used for decoding and encoding.
+     *
+     * @param toLowerCase {@code true} converts to lowercase, {@code false} to uppercase.
+     * @param charset the charset.
+     * @param decodingPolicy Decoding policy.
+     */
+    protected Base16(final boolean toLowerCase, final Charset charset, final CodecPolicy decodingPolicy) {
+        super(BYTES_PER_UNENCODED_BLOCK, BYTES_PER_ENCODED_BLOCK, 0, 0,
+                PAD_DEFAULT, decodingPolicy);
+        this.toLowerCase = toLowerCase;
+        this.charset = charset;
+    }
 
     @Override
     void encode(final byte[] data, final int offset, final int length, final Context context) {
@@ -88,11 +102,11 @@ public class Base16 extends BaseNCodec {
 
     @Override
     void decode(final byte[] data, final int offset, final int length, final Context context) {
-        if (context.eof) {
-            return;
-        }
-        if (length < 0) {
+        if (context.eof || length < 0) {
             context.eof = true;
+            if (context.ibitWorkArea > 0) {
+                validateTrailingCharacter();
+            }
             return;
         }
 
@@ -134,6 +148,20 @@ public class Base16 extends BaseNCodec {
         // we have one char of a hex-pair left over
         if (copyLen < dataLen) {
             context.ibitWorkArea = data[offset + dataLen - 1];   // store 1/2 byte for next invocation of decode
+        }
+    }
+
+    /**
+     * Validates whether decoding allows an entire final trailing character that cannot be
+     * used for a complete byte.
+     *
+     * @throws IllegalArgumentException if strict decoding is enabled
+     */
+    private void validateTrailingCharacter() {
+        if (isStrictDecoding()) {
+            throw new IllegalArgumentException("Strict decoding: Last encoded character is a valid base 16 alphabet" +
+                    "character but not a possible encoding. " +
+                    "Decoding requires at least two characters to create one byte.");
         }
     }
 

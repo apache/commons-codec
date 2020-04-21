@@ -17,6 +17,7 @@
 
 package org.apache.commons.codec.binary;
 
+import org.apache.commons.codec.CodecPolicy;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.lang3.ArrayUtils;
@@ -28,6 +29,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Random;
 
+import static org.apache.commons.codec.CharEncoding.UTF_8;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -616,5 +618,23 @@ public class Base16Test {
         final String decoded = StringUtils.newStringUtf8(decodedBytes);
 
         assertEquals("Until next time!", decoded);
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testStrictDecoding() {
+        final String encoded = "aabbccdde";  // Note the trailing `e` which does not make up a hex-pair and so is only 1/2 byte
+
+        final Base16 b16 = new Base16(true, CHARSET_UTF8, CodecPolicy.STRICT);
+        b16.decode(StringUtils.getBytesUtf8(encoded));
+    }
+
+    @Test
+    public void testLenientDecoding() {
+        final String encoded = "aabbccdde";  // Note the trailing `e` which does not make up a hex-pair and so is only 1/2 byte
+
+        final Base16 b16 = new Base16(true, CHARSET_UTF8, CodecPolicy.LENIENT);
+
+        final byte[] decoded = b16.decode(StringUtils.getBytesUtf8(encoded));
+        assertArrayEquals(new byte[] {(byte)0xaa, (byte)0xbb, (byte)0xcc, (byte)0xdd}, decoded);
     }
 }
