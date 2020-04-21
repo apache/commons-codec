@@ -618,7 +618,7 @@ public class Base32 extends BaseNCodec {
         if (isStrictDecoding()) {
             throw new IllegalArgumentException(
                 "Strict decoding: Last encoded character(s) (before the paddings if any) are valid base 32 alphabet but not a possible encoding. " +
-                "Decoding requries either 2, 4, 5, or 7 trailing 5-bit characters to create bytes.");
+                "Decoding requires either 2, 4, 5, or 7 trailing 5-bit characters to create bytes.");
         }
     }
 }
