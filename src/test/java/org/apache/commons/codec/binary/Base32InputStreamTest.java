@@ -557,4 +557,32 @@ public class Base32InputStreamTest {
             b32stream.skip(-10);
         }
     }
+
+    /**
+     * Test strict decoding.
+     *
+     * @throws Exception
+     *             for some failure scenarios.
+     */
+    @Test
+    public void testStrictDecoding() throws Exception {
+        for (final String s : Base32Test.BASE32_IMPOSSIBLE_CASES) {
+            final byte[] encoded = StringUtils.getBytesUtf8(s);
+            Base32InputStream in = new Base32InputStream(new ByteArrayInputStream(encoded), false);
+            // Default is lenient decoding; it should not throw
+            assertFalse(in.isStrictDecoding());
+            Base32TestData.streamToBytes(in);
+
+            // Strict decoding should throw
+            in = new Base32InputStream(new ByteArrayInputStream(encoded), false);
+            in.setStrictDecoding(true);
+            assertTrue(in.isStrictDecoding());
+            try {
+                Base32TestData.streamToBytes(in);
+                fail();
+            } catch (final IllegalArgumentException ex) {
+                // expected
+            }
+        }
+    }
 }

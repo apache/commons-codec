@@ -18,6 +18,7 @@
 package org.apache.commons.codec.binary;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -341,4 +342,36 @@ public class Base64OutputStreamTest {
         }
     }
 
+    /**
+     * Test strict decoding.
+     *
+     * @throws Exception
+     *             for some failure scenarios.
+     */
+    @Test
+    public void testStrictDecoding() throws Exception {
+        for (final String s : Base64Test.BASE64_IMPOSSIBLE_CASES) {
+            final byte[] encoded = StringUtils.getBytesUtf8(s);
+            ByteArrayOutputStream bout = new ByteArrayOutputStream();
+            Base64OutputStream out = new Base64OutputStream(bout, false);
+            // Default is lenient decoding; it should not throw
+            assertFalse(out.isStrictDecoding());
+            out.write(encoded);
+            out.close();
+            assertTrue(bout.size() > 0);
+
+            // Strict decoding should throw
+            bout = new ByteArrayOutputStream();
+            out = new Base64OutputStream(bout, false);
+            out.setStrictDecoding(true);
+            assertTrue(out.isStrictDecoding());
+            try {
+                out.write(encoded);
+                out.close();
+                fail();
+            } catch (final IllegalArgumentException ex) {
+                // expected
+            }
+        }
+    }
 }

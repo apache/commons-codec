@@ -570,4 +570,32 @@ public class Base64InputStreamTest {
             b64stream.skip(-10);
         }
     }
+
+    /**
+     * Test strict decoding.
+     *
+     * @throws Exception
+     *             for some failure scenarios.
+     */
+    @Test
+    public void testStrictDecoding() throws Exception {
+        for (final String s : Base64Test.BASE64_IMPOSSIBLE_CASES) {
+            final byte[] encoded = StringUtils.getBytesUtf8(s);
+            Base64InputStream in = new Base64InputStream(new ByteArrayInputStream(encoded), false);
+            // Default is lenient decoding; it should not throw
+            assertFalse(in.isStrictDecoding());
+            Base64TestData.streamToBytes(in);
+
+            // Strict decoding should throw
+            in = new Base64InputStream(new ByteArrayInputStream(encoded), false);
+            in.setStrictDecoding(true);
+            assertTrue(in.isStrictDecoding());
+            try {
+                Base64TestData.streamToBytes(in);
+                fail();
+            } catch (final IllegalArgumentException ex) {
+                // expected
+            }
+        }
+    }
 }

@@ -61,6 +61,40 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
     }
 
     /**
+     * Sets the decoding behavior when the input bytes contain leftover trailing bits that
+     * cannot be created by a valid encoding. This setting is transferred to the instance
+     * of {@link BaseNCodec} used to perform decoding.
+     *
+     * <p>The default is false for lenient encoding. Decoding will compose trailing bits
+     * into 8-bit bytes and discard the remainder.
+     *
+     * <p>Set to true to enable strict decoding. Decoding will raise an
+     * {@link IllegalArgumentException} if trailing bits are not part of a valid encoding.
+     *
+     * @param strictDecoding Set to true to enable strict decoding; otherwise use lenient decoding.
+     * @see BaseNCodec#setStrictDecoding(boolean)
+     * @since 1.15
+     */
+    public void setStrictDecoding(boolean strictDecoding) {
+        baseNCodec.setStrictDecoding(strictDecoding);
+    }
+
+    /**
+     * Returns true if decoding behavior is strict. Decoding will raise an
+     * {@link IllegalArgumentException} if trailing bits are not part of a valid encoding.
+     *
+     * <p>The default is false for lenient encoding. Decoding will compose trailing bits
+     * into 8-bit bytes and discard the remainder.
+     *
+     * @return true if using strict decoding
+     * @see #setStrictDecoding(boolean)
+     * @since 1.15
+     */
+    public boolean isStrictDecoding() {
+        return baseNCodec.isStrictDecoding();
+    }
+
+    /**
      * Writes the specified {@code byte} to this output stream.
      *
      * @param i

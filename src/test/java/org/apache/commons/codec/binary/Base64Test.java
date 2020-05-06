@@ -45,7 +45,11 @@ public class Base64Test {
 
     private static final Charset CHARSET_UTF8 = StandardCharsets.UTF_8;
 
-    private static final String[] BASE64_IMPOSSIBLE_CASES = {
+    /**
+     * Example test cases with valid characters but impossible combinations of
+     * trailing characters (i.e. cannot be created during encoding).
+     */
+    static final String[] BASE64_IMPOSSIBLE_CASES = {
         "ZE==",
         "ZmC=",
         "Zm9vYE==",

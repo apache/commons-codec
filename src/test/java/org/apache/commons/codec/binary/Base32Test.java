@@ -48,7 +48,11 @@ public class Base32Test {
         {"foobar" ,"MZXW6YTBOI======"},
     };
 
-    private static final String[] BASE32_IMPOSSIBLE_CASES = {
+    /**
+     * Example test cases with valid characters but impossible combinations of
+     * trailing characters (i.e. cannot be created during encoding).
+     */
+    static final String[] BASE32_IMPOSSIBLE_CASES = {
         "MC======",
         "MZXE====",
         "MZXWB===",

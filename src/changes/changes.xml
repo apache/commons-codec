@@ -45,6 +45,7 @@ The <action> type attribute can be add,update,fix,remove.
     <release version="1.15" date="YYYY-MM-DD" description="Feature and fix release.">
       <action issue="CODEC-264" dev="aherbert" due-to="Andy Seaborne" type="fix">MurmurHash3: Ensure hash128 maintains the sign extension bug.</action>
       <action issue="CODEC-280" dev="aherbert" type="update">Base32/Base64/BCodec: Added strict decoding property to control handling of trailing bits. Default lenient mode discards them without error. Strict mode raise an exception.</action>
+      <action issue="CODEC-289" dev="aherbert" type="update">Base32/Base64 Input/OutputStream: Added strict decoding property to control handling of trailing bits. Default lenient mode discards them without error. Strict mode raise an exception.</action>
     </release>
 
     <release version="1.14" date="2019-12-30" description="Feature and fix release.">
