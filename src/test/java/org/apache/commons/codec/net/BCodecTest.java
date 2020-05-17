@@ -21,9 +21,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
+import java.nio.charset.StandardCharsets;
 import java.nio.charset.UnsupportedCharsetException;
 
 import org.apache.commons.codec.CharEncoding;
+import org.apache.commons.codec.CodecPolicy;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 import org.junit.Assert;
@@ -158,15 +160,28 @@ public class BCodecTest {
     }
 
     @Test
-    public void testBase64ImpossibleSamples() throws DecoderException {
+    public void testBase64ImpossibleSamplesDefault() throws DecoderException {
         final BCodec codec = new BCodec();
         // Default encoding is lenient
         Assert.assertFalse(codec.isStrictDecoding());
         for (final String s : BASE64_IMPOSSIBLE_CASES) {
             codec.decode(s);
         }
-        // Use strict mode to prevent impossible cases
-        codec.setStrictDecoding(true);
+    }
+
+    @Test
+    public void testBase64ImpossibleSamplesLenient() throws DecoderException {
+        final BCodec codec = new BCodec(StandardCharsets.UTF_8, CodecPolicy.LENIENT);
+        // Default encoding is lenient
+        Assert.assertFalse(codec.isStrictDecoding());
+        for (final String s : BASE64_IMPOSSIBLE_CASES) {
+            codec.decode(s);
+        }
+    }
+
+    @Test
+    public void testBase64ImpossibleSamplesStrict() throws DecoderException {
+        final BCodec codec = new BCodec(StandardCharsets.UTF_8, CodecPolicy.STRICT);
         Assert.assertTrue(codec.isStrictDecoding());
         for (final String s : BASE64_IMPOSSIBLE_CASES) {
             try {
@@ -177,4 +192,5 @@ public class BCodecTest {
             }
         }
     }
+
 }

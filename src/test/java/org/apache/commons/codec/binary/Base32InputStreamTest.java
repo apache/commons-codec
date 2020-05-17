@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 
+import org.apache.commons.codec.CodecPolicy;
 import org.junit.Test;
 
 public class Base32InputStreamTest {
@@ -574,8 +575,7 @@ public class Base32InputStreamTest {
             Base32TestData.streamToBytes(in);
 
             // Strict decoding should throw
-            in = new Base32InputStream(new ByteArrayInputStream(encoded), false);
-            in.setStrictDecoding(true);
+            in = new Base32InputStream(new ByteArrayInputStream(encoded), false, 0, null, CodecPolicy.STRICT);
             assertTrue(in.isStrictDecoding());
             try {
                 Base32TestData.streamToBytes(in);

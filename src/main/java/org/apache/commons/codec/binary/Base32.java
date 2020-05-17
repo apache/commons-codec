@@ -17,6 +17,8 @@
 
 package org.apache.commons.codec.binary;
 
+import org.apache.commons.codec.CodecPolicy;
+
 /**
  * Provides Base32 encoding and decoding as defined by <a href="http://www.ietf.org/rfc/rfc4648.txt">RFC 4648</a>.
  *
@@ -50,13 +52,6 @@ public class Base32 extends BaseNCodec {
     private static final int BITS_PER_ENCODED_BYTE = 5;
     private static final int BYTES_PER_ENCODED_BLOCK = 8;
     private static final int BYTES_PER_UNENCODED_BLOCK = 5;
-
-    /**
-     * Chunk separator per RFC 2045 section 2.1.
-     *
-     * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045 section 2.1</a>
-     */
-    private static final byte[] CHUNK_SEPARATOR = {'\r', '\n'};
 
     /**
      * This array is a lookup table that translates Unicode characters drawn from the "Base32 Alphabet" (as specified
@@ -200,10 +195,10 @@ public class Base32 extends BaseNCodec {
      * When encoding the line length is 0 (no chunking).
      * </p>
      * @param useHex if {@code true} then use Base32 Hex alphabet
-     * @param pad byte used as padding byte.
+     * @param padding byte used as padding byte.
      */
-    public Base32(final boolean useHex, final byte pad) {
-        this(0, null, useHex, pad);
+    public Base32(final boolean useHex, final byte padding) {
+        this(0, null, useHex, padding);
     }
 
     /**
@@ -237,7 +232,7 @@ public class Base32 extends BaseNCodec {
      * @param lineSeparator
      *            Each line of encoded data will end with this sequence of bytes.
      * @throws IllegalArgumentException
-     *             The provided lineSeparator included some Base32 characters. That's not going to work!
+     *             Thrown when the {@code lineSeparator} contains Base32 characters.
      */
     public Base32(final int lineLength, final byte[] lineSeparator) {
         this(lineLength, lineSeparator, false, PAD_DEFAULT);
@@ -261,7 +256,7 @@ public class Base32 extends BaseNCodec {
      * @param useHex
      *            if {@code true}, then use Base32 Hex alphabet, otherwise use Base32 alphabet
      * @throws IllegalArgumentException
-     *             The provided lineSeparator included some Base32 characters. That's not going to work! Or the
+     *             Thrown when the {@code lineSeparator} contains Base32 characters. Or the
      *             lineLength &gt; 0 and lineSeparator is null.
      */
     public Base32(final int lineLength, final byte[] lineSeparator, final boolean useHex) {
@@ -285,14 +280,41 @@ public class Base32 extends BaseNCodec {
      *            Each line of encoded data will end with this sequence of bytes.
      * @param useHex
      *            if {@code true}, then use Base32 Hex alphabet, otherwise use Base32 alphabet
-     * @param pad byte used as padding byte.
+     * @param padding byte used as padding byte.
      * @throws IllegalArgumentException
-     *             The provided lineSeparator included some Base32 characters. That's not going to work! Or the
+     *             Thrown when the {@code lineSeparator} contains Base32 characters. Or the
      *             lineLength &gt; 0 and lineSeparator is null.
      */
-    public Base32(final int lineLength, final byte[] lineSeparator, final boolean useHex, final byte pad) {
+    public Base32(final int lineLength, final byte[] lineSeparator, final boolean useHex, final byte padding) {
+        this(lineLength, lineSeparator, useHex, padding, DECODING_POLICY_DEFAULT);
+    }
+
+    /**
+     * Creates a Base32 / Base32 Hex codec used for decoding and encoding.
+     * <p>
+     * When encoding the line length and line separator are given in the constructor.
+     * </p>
+     * <p>
+     * Line lengths that aren't multiples of 8 will still essentially end up being multiples of 8 in the encoded data.
+     * </p>
+     *
+     * @param lineLength
+     *            Each line of encoded data will be at most of the given length (rounded down to nearest multiple of
+     *            8). If lineLength &lt;= 0, then the output will not be divided into lines (chunks). Ignored when
+     *            decoding.
+     * @param lineSeparator
+     *            Each line of encoded data will end with this sequence of bytes.
+     * @param useHex
+     *            if {@code true}, then use Base32 Hex alphabet, otherwise use Base32 alphabet
+     * @param padding byte used as padding byte.
+     * @param decodingPolicy The decoding policy.
+     * @throws IllegalArgumentException
+     *             Thrown when the {@code lineSeparator} contains Base32 characters. Or the
+     *             lineLength &gt; 0 and lineSeparator is null.
+     */
+    public Base32(final int lineLength, final byte[] lineSeparator, final boolean useHex, final byte padding, CodecPolicy decodingPolicy) {
         super(BYTES_PER_UNENCODED_BLOCK, BYTES_PER_ENCODED_BLOCK, lineLength,
-                lineSeparator == null ? 0 : lineSeparator.length, pad);
+                lineSeparator == null ? 0 : lineSeparator.length, padding, decodingPolicy);
         if (useHex) {
             this.encodeTable = HEX_ENCODE_TABLE;
             this.decodeTable = HEX_DECODE_TABLE;
@@ -318,7 +340,7 @@ public class Base32 extends BaseNCodec {
         }
         this.decodeSize = this.encodeSize - 1;
 
-        if (isInAlphabet(pad) || isWhiteSpace(pad)) {
+        if (isInAlphabet(padding) || isWhiteSpace(padding)) {
             throw new IllegalArgumentException("pad must not be in alphabet or whitespace");
         }
     }
@@ -436,7 +458,7 @@ public class Base32 extends BaseNCodec {
                     break;
                 default:
                     // modulus can be 0-7, and we excluded 0,1 already
-                    throw new IllegalStateException("Impossible modulus "+context.modulus);
+                    throw new IllegalStateException("Impossible modulus " + context.modulus);
             }
         }
     }
@@ -516,7 +538,7 @@ public class Base32 extends BaseNCodec {
                     buffer[context.pos++] = pad;
                     break;
                 default:
-                    throw new IllegalStateException("Impossible modulus "+context.modulus);
+                    throw new IllegalStateException("Impossible modulus " + context.modulus);
             }
             context.currentLinePos += context.pos - savedPos; // keep track of current line position
             // if currentPos == 0 we are at the start of a line, so don't add CRLF

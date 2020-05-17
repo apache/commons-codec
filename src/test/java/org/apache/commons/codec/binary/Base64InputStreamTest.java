@@ -32,6 +32,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 
+import org.apache.commons.codec.CodecPolicy;
 import org.junit.Test;
 
 /**
@@ -587,8 +588,7 @@ public class Base64InputStreamTest {
             Base64TestData.streamToBytes(in);
 
             // Strict decoding should throw
-            in = new Base64InputStream(new ByteArrayInputStream(encoded), false);
-            in.setStrictDecoding(true);
+            in = new Base64InputStream(new ByteArrayInputStream(encoded), false, 0, null, CodecPolicy.STRICT);
             assertTrue(in.isStrictDecoding());
             try {
                 Base64TestData.streamToBytes(in);

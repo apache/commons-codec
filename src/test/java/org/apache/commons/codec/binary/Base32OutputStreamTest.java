@@ -25,11 +25,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.util.Arrays;
 
+import org.apache.commons.codec.CodecPolicy;
 import org.junit.Test;
 
 public class Base32OutputStreamTest {
 
-    private final static byte[] CRLF = {(byte) '\r', (byte) '\n'};
+    private final static byte[] CR_LF = {(byte) '\r', (byte) '\n'};
 
     private final static byte[] LF = {(byte) '\n'};
 
@@ -84,8 +85,8 @@ public class Base32OutputStreamTest {
     private void testBase32EmptyOutputStream(final int chunkSize) throws Exception {
         final byte[] emptyEncoded = new byte[0];
         final byte[] emptyDecoded = new byte[0];
-        testByteByByte(emptyEncoded, emptyDecoded, chunkSize, CRLF);
-        testByChunk(emptyEncoded, emptyDecoded, chunkSize, CRLF);
+        testByteByByte(emptyEncoded, emptyDecoded, chunkSize, CR_LF);
+        testByChunk(emptyEncoded, emptyDecoded, chunkSize, CR_LF);
     }
 
     /**
@@ -99,7 +100,7 @@ public class Base32OutputStreamTest {
         // Hello World test.
         byte[] encoded = StringUtils.getBytesUtf8(Base32TestData.BASE32_FIXTURE);
         byte[] decoded = StringUtils.getBytesUtf8(Base32TestData.STRING_FIXTURE);
-        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CRLF);
+        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CR_LF);
 
 //        // Single Byte test.
 //        encoded = StringUtils.getBytesUtf8("AA==\r\n");
@@ -134,7 +135,7 @@ public class Base32OutputStreamTest {
         // Hello World test.
         byte[] encoded = StringUtils.getBytesUtf8(Base32TestData.BASE32_FIXTURE);
         byte[] decoded = StringUtils.getBytesUtf8(Base32TestData.STRING_FIXTURE);
-        testByteByByte(encoded, decoded, 76, CRLF);
+        testByteByByte(encoded, decoded, 76, CR_LF);
 
 //        // Single Byte test.
 //        encoded = StringUtils.getBytesUtf8("AA==\r\n");
@@ -354,8 +355,7 @@ public class Base32OutputStreamTest {
 
             // Strict decoding should throw
             bout = new ByteArrayOutputStream();
-            out = new Base32OutputStream(bout, false);
-            out.setStrictDecoding(true);
+            out = new Base32OutputStream(bout, false, 0, null, CodecPolicy.STRICT);
             assertTrue(out.isStrictDecoding());
             try {
                 out.write(encoded);

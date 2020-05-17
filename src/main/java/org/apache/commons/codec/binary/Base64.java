@@ -20,6 +20,8 @@ package org.apache.commons.codec.binary;
 import java.math.BigInteger;
 import java.util.Objects;
 
+import org.apache.commons.codec.CodecPolicy;
+
 /**
  * Provides Base64 encoding and decoding as defined by <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>.
  *
@@ -61,17 +63,6 @@ public class Base64 extends BaseNCodec {
     private static final int BITS_PER_ENCODED_BYTE = 6;
     private static final int BYTES_PER_UNENCODED_BLOCK = 3;
     private static final int BYTES_PER_ENCODED_BLOCK = 4;
-
-    /**
-     * Chunk separator per RFC 2045 section 2.1.
-     *
-     * <p>
-     * N.B. The next major release may break compatibility and make this field private.
-     * </p>
-     *
-     * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045 section 2.1</a>
-     */
-    static final byte[] CHUNK_SEPARATOR = {'\r', '\n'};
 
     /**
      * This array is a lookup table that translates 6-bit positive integer index values into their "Base64 Alphabet"
@@ -272,13 +263,47 @@ public class Base64 extends BaseNCodec {
      *            operations. Decoding seamlessly handles both modes.
      *            <b>Note: no padding is added when using the URL-safe alphabet.</b>
      * @throws IllegalArgumentException
-     *             The provided lineSeparator included some base64 characters. That's not going to work!
+     *             Thrown when the {@code lineSeparator} contains Base64 characters.
      * @since 1.4
      */
     public Base64(final int lineLength, final byte[] lineSeparator, final boolean urlSafe) {
+        this(lineLength, lineSeparator, urlSafe, DECODING_POLICY_DEFAULT);
+    }
+
+    /**
+     * Creates a Base64 codec used for decoding (all modes) and encoding in URL-unsafe mode.
+     * <p>
+     * When encoding the line length and line separator are given in the constructor, and the encoding table is
+     * STANDARD_ENCODE_TABLE.
+     * </p>
+     * <p>
+     * Line lengths that aren't multiples of 4 will still essentially end up being multiples of 4 in the encoded data.
+     * </p>
+     * <p>
+     * When decoding all variants are supported.
+     * </p>
+     *
+     * @param lineLength
+     *            Each line of encoded data will be at most of the given length (rounded down to nearest multiple of
+     *            4). If lineLength &lt;= 0, then the output will not be divided into lines (chunks). Ignored when
+     *            decoding.
+     * @param lineSeparator
+     *            Each line of encoded data will end with this sequence of bytes.
+     * @param urlSafe
+     *            Instead of emitting '+' and '/' we emit '-' and '_' respectively. urlSafe is only applied to encode
+     *            operations. Decoding seamlessly handles both modes.
+     *            <b>Note: no padding is added when using the URL-safe alphabet.</b>
+     * @param decodingPolicy The decoding policy.
+     * @throws IllegalArgumentException
+     *             Thrown when the {@code lineSeparator} contains Base64 characters.
+     * @since 1.15
+     */
+    public Base64(final int lineLength, final byte[] lineSeparator, final boolean urlSafe, final CodecPolicy decodingPolicy) {
         super(BYTES_PER_UNENCODED_BLOCK, BYTES_PER_ENCODED_BLOCK,
                 lineLength,
-                lineSeparator == null ? 0 : lineSeparator.length);
+                lineSeparator == null ? 0 : lineSeparator.length,
+                PAD_DEFAULT,
+                decodingPolicy);
         // TODO could be simplified if there is no requirement to reject invalid line sep when length <=0
         // @see test case Base64Test.testConstructors()
         if (lineSeparator != null) {
@@ -372,7 +397,7 @@ public class Base64 extends BaseNCodec {
                     }
                     break;
                 default:
-                    throw new IllegalStateException("Impossible modulus "+context.modulus);
+                    throw new IllegalStateException("Impossible modulus " + context.modulus);
             }
             context.currentLinePos += context.pos - savedPos; // keep track of current line position
             // if currentPos == 0 we are at the start of a line, so don't add CRLF
@@ -485,7 +510,7 @@ public class Base64 extends BaseNCodec {
                     buffer[context.pos++] = (byte) ((context.ibitWorkArea) & MASK_8BITS);
                     break;
                 default:
-                    throw new IllegalStateException("Impossible modulus "+context.modulus);
+                    throw new IllegalStateException("Impossible modulus " + context.modulus);
             }
         }
     }
@@ -819,4 +844,5 @@ public class Base64 extends BaseNCodec {
                 "Expected the discarded bits from the character to be zero.");
         }
     }
+
 }

@@ -30,6 +30,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Random;
 
+import org.apache.commons.codec.CodecPolicy;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.lang3.ArrayUtils;
@@ -1323,8 +1324,7 @@ public class Base64Test {
 
     @Test
     public void testBase64ImpossibleSamples() {
-        final Base64 codec = new Base64();
-        codec.setStrictDecoding(true);
+        final Base64 codec = new Base64(0, null, false, CodecPolicy.STRICT);
         for (final String s : BASE64_IMPOSSIBLE_CASES) {
             try {
                 codec.decode(s);
@@ -1359,9 +1359,8 @@ public class Base64Test {
      * @param nbits the number of trailing bits (must be a factor of 6 and {@code <24})
      */
     private static void assertBase64DecodingOfTrailingBits(final int nbits) {
-        final Base64 codec = new Base64();
+        final Base64 codec = new Base64(0, null, false, CodecPolicy.STRICT);
         // Requires strict decoding
-        codec.setStrictDecoding(true);
         assertTrue(codec.isStrictDecoding());
         // A lenient decoder should not re-encode to the same bytes
         final Base64 defaultCodec = new Base64();

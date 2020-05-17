@@ -18,9 +18,9 @@
 
 package org.apache.commons.codec.binary;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -29,6 +29,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
+import org.apache.commons.codec.CodecPolicy;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.lang3.ArrayUtils;
 import org.junit.Test;
@@ -291,21 +292,24 @@ public class Base32Test {
 
     @Test
     public void testBase32ImpossibleSamples() {
-        testImpossibleCases(new Base32(), BASE32_IMPOSSIBLE_CASES);
+        testImpossibleCases(new Base32(0, null, false, BaseNCodec.PAD_DEFAULT, CodecPolicy.STRICT),
+            BASE32_IMPOSSIBLE_CASES);
     }
 
     @Test
     public void testBase32ImpossibleChunked() {
-        testImpossibleCases(new Base32(20), BASE32_IMPOSSIBLE_CASES_CHUNKED);
+        testImpossibleCases(
+            new Base32(20, BaseNCodec.CHUNK_SEPARATOR, false, BaseNCodec.PAD_DEFAULT, CodecPolicy.STRICT),
+            BASE32_IMPOSSIBLE_CASES_CHUNKED);
     }
 
     @Test
     public void testBase32HexImpossibleSamples() {
-        testImpossibleCases(new Base32(true), BASE32HEX_IMPOSSIBLE_CASES);
+        testImpossibleCases(new Base32(0, null, true, BaseNCodec.PAD_DEFAULT, CodecPolicy.STRICT),
+            BASE32HEX_IMPOSSIBLE_CASES);
     }
 
     private void testImpossibleCases(final Base32 codec, final String[] impossible_cases) {
-        codec.setStrictDecoding(true);
         for (final String impossible : impossible_cases) {
             try {
                 codec.decode(impossible);
@@ -360,9 +364,8 @@ public class Base32Test {
      * @param nbits the number of trailing bits (must be a factor of 5 and {@code <40})
      */
     private static void assertBase32DecodingOfTrailingBits(final int nbits) {
-        final Base32 codec = new Base32();
         // Requires strict decoding
-        codec.setStrictDecoding(true);
+        final Base32 codec = new Base32(0, null, false, BaseNCodec.PAD_DEFAULT, CodecPolicy.STRICT);
         assertTrue(codec.isStrictDecoding());
         // A lenient decoder should not re-encode to the same bytes
         final Base32 defaultCodec = new Base32();

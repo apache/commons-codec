@@ -21,11 +21,13 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
+import org.apache.commons.codec.CodecPolicy;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringDecoder;
 import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.binary.BaseNCodec;
 
 /**
  * Identical to the Base64 encoding defined by <a href="http://www.ietf.org/rfc/rfc1521.txt">RFC 1521</a>
@@ -43,6 +45,12 @@ import org.apache.commons.codec.binary.Base64;
  * @since 1.3
  */
 public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder {
+
+    /**
+     * The default decoding policy.
+     */
+    private static final CodecPolicy DECODING_POLICY_DEFAULT = CodecPolicy.LENIENT;
+
     /**
      * The default Charset used for string decoding and encoding.
      */
@@ -52,7 +60,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * If true then decoding should throw an exception for impossible combinations of bits at the
      * end of the byte input. The default is to decode as much of them as possible.
      */
-    private boolean strictDecoding;
+    private final CodecPolicy decodingPolicy;
 
     /**
      * Default constructor.
@@ -72,6 +80,22 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      */
     public BCodec(final Charset charset) {
         this.charset = charset;
+        this.decodingPolicy = DECODING_POLICY_DEFAULT;
+    }
+
+    /**
+     * Constructor which allows for the selection of a default Charset.
+     *
+     * @param charset
+     *            the default string Charset to use.
+     * @param decodingPolicy The decoding policy.
+     *
+     * @see <a href="http://download.oracle.com/javase/7/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
+     * @since 1.15
+     */
+    public BCodec(final Charset charset, final CodecPolicy decodingPolicy) {
+        this.charset = charset;
+        this.decodingPolicy = decodingPolicy;
     }
 
     /**
@@ -89,25 +113,6 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     }
 
     /**
-     * Sets the decoding behavior when the input bytes contain leftover trailing bits that
-     * cannot be created by a valid Base64 encoding. This setting is transferred to the instance
-     * of {@link Base64} used to perform decoding.
-     *
-     * <p>The default is false for lenient encoding. Decoding will compose trailing bits
-     * into 8-bit bytes and discard the remainder.
-     *
-     * <p>Set to true to enable strict decoding. Decoding will raise a
-     * {@link DecoderException} if trailing bits are not part of a valid Base64 encoding.
-     *
-     * @param strictDecoding Set to true to enable strict decoding; otherwise use lenient decoding.
-     * @see org.apache.commons.codec.binary.BaseNCodec#setStrictDecoding(boolean) BaseNCodec.setStrictDecoding(boolean)
-     * @since 1.15
-     */
-    public void setStrictDecoding(boolean strictDecoding) {
-        this.strictDecoding = strictDecoding;
-    }
-
-    /**
      * Returns true if decoding behavior is strict. Decoding will raise a
      * {@link DecoderException} if trailing bits are not part of a valid Base64 encoding.
      *
@@ -115,11 +120,10 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * into 8-bit bytes and discard the remainder.
      *
      * @return true if using strict decoding
-     * @see #setStrictDecoding(boolean)
      * @since 1.15
      */
     public boolean isStrictDecoding() {
-        return strictDecoding;
+        return decodingPolicy == CodecPolicy.STRICT;
     }
 
     @Override
@@ -140,9 +144,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
         if (bytes == null) {
             return null;
         }
-        final Base64 codec = new Base64();
-        codec.setStrictDecoding(strictDecoding);
-        return codec.decode(bytes);
+        return new Base64(0, BaseNCodec.getChunkSeparator(), false, decodingPolicy).decode(bytes);
     }
 
     /**
