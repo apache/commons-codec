@@ -580,11 +580,12 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
-     * Returns the decoding behavior policy. Decoding will raise an {@link IllegalArgumentException} if trailing bits
-     * are not part of a valid encoding.
-     *
+     * Returns the decoding behavior policy.
+     * 
      * <p>
-     * The default is lenient. Decoding will compose trailing bits into 8-bit bytes and discard the remainder.
+     * The default is lenient. If the decoding policy is strict, then decoding will raise an
+     * {@link IllegalArgumentException} if trailing bits are not part of a valid encoding. Decoding will compose
+     * trailing bits into 8-bit bytes and discard the remainder.
      * </p>
      *
      * @return true if using strict decoding
