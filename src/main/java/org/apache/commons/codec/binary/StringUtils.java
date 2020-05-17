@@ -89,22 +89,6 @@ public class StringUtils {
      *            The {@link Charset} to encode the {@code String}
      * @return the encoded bytes
      */
-    private static byte[] getBytes(final String string, final Charset charset) {
-        if (string == null) {
-            return null;
-        }
-        return string.getBytes(charset);
-    }
-
-    /**
-     * Calls {@link String#getBytes(Charset)}
-     *
-     * @param string
-     *            The string to encode (if null, return null).
-     * @param charset
-     *            The {@link Charset} to encode the {@code String}
-     * @return the encoded bytes
-     */
     private static ByteBuffer getByteBuffer(final String string, final Charset charset) {
         if (string == null) {
             return null;
@@ -128,6 +112,22 @@ public class StringUtils {
      */
     public static ByteBuffer getByteBufferUtf8(final String string) {
         return getByteBuffer(string, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * Calls {@link String#getBytes(Charset)}
+     *
+     * @param string
+     *            The string to encode (if null, return null).
+     * @param charset
+     *            The {@link Charset} to encode the {@code String}
+     * @return the encoded bytes
+     */
+    private static byte[] getBytes(final String string, final Charset charset) {
+        if (string == null) {
+            return null;
+        }
+        return string.getBytes(charset);
     }
 
     /**

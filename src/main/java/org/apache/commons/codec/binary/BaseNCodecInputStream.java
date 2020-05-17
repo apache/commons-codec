@@ -48,20 +48,6 @@ public class BaseNCodecInputStream extends FilterInputStream {
     }
 
     /**
-     * Returns true if decoding behavior is strict. Decoding will raise an
-     * {@link IllegalArgumentException} if trailing bits are not part of a valid encoding.
-     *
-     * <p>The default is false for lenient encoding. Decoding will compose trailing bits
-     * into 8-bit bytes and discard the remainder.
-     *
-     * @return true if using strict decoding
-     * @since 1.15
-     */
-    public boolean isStrictDecoding() {
-        return baseNCodec.isStrictDecoding();
-    }
-
-    /**
      * {@inheritDoc}
      *
      * @return {@code 0} if the {@link InputStream} has reached {@code EOF},
@@ -76,6 +62,20 @@ public class BaseNCodecInputStream extends FilterInputStream {
         //       just return 1 as a safe guess.
 
         return context.eof ? 0 : 1;
+    }
+
+    /**
+     * Returns true if decoding behavior is strict. Decoding will raise an
+     * {@link IllegalArgumentException} if trailing bits are not part of a valid encoding.
+     *
+     * <p>The default is false for lenient encoding. Decoding will compose trailing bits
+     * into 8-bit bytes and discard the remainder.
+     *
+     * @return true if using strict decoding
+     * @since 1.15
+     */
+    public boolean isStrictDecoding() {
+        return baseNCodec.isStrictDecoding();
     }
 
     /**

@@ -193,6 +193,104 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     static final byte[] CHUNK_SEPARATOR = {'\r', '\n'};
 
     /**
+     * Compares two {@code int} values numerically treating the values
+     * as unsigned. Taken from JDK 1.8.
+     *
+     * <p>TODO: Replace with JDK 1.8 Integer::compareUnsigned(int, int).</p>
+     *
+     * @param  x the first {@code int} to compare
+     * @param  y the second {@code int} to compare
+     * @return the value {@code 0} if {@code x == y}; a value less
+     *         than {@code 0} if {@code x < y} as unsigned values; and
+     *         a value greater than {@code 0} if {@code x > y} as
+     *         unsigned values
+     */
+    private static int compareUnsigned(final int x, final int y) {
+        return Integer.compare(x + Integer.MIN_VALUE, y + Integer.MIN_VALUE);
+    }
+
+    /**
+     * Create a positive capacity at least as large the minimum required capacity.
+     * If the minimum capacity is negative then this throws an OutOfMemoryError as no array
+     * can be allocated.
+     *
+     * @param minCapacity the minimum capacity
+     * @return the capacity
+     * @throws OutOfMemoryError if the {@code minCapacity} is negative
+     */
+    private static int createPositiveCapacity(final int minCapacity) {
+        if (minCapacity < 0) {
+            // overflow
+            throw new OutOfMemoryError("Unable to allocate array size: " + (minCapacity & 0xffffffffL));
+        }
+        // This is called when we require buffer expansion to a very big array.
+        // Use the conservative maximum buffer size if possible, otherwise the biggest required.
+        //
+        // Note: In this situation JDK 1.8 java.util.ArrayList returns Integer.MAX_VALUE.
+        // This excludes some VMs that can exceed MAX_BUFFER_SIZE but not allocate a full
+        // Integer.MAX_VALUE length array.
+        // The result is that we may have to allocate an array of this size more than once if
+        // the capacity must be expanded again.
+        return (minCapacity > MAX_BUFFER_SIZE) ?
+            minCapacity :
+            MAX_BUFFER_SIZE;
+    }
+
+    /**
+     * Gets a copy of the chunk separator per RFC 2045 section 2.1.
+     *
+     * @return the chunk separator
+     * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045 section 2.1</a>
+     * @since 1.15
+     */
+    public static byte[] getChunkSeparator() {
+        return CHUNK_SEPARATOR.clone();
+    }
+
+    /**
+     * Checks if a byte value is whitespace or not.
+     * Whitespace is taken to mean: space, tab, CR, LF
+     * @param byteToCheck
+     *            the byte to check
+     * @return true if byte is whitespace, false otherwise
+     */
+    protected static boolean isWhiteSpace(final byte byteToCheck) {
+        switch (byteToCheck) {
+            case ' ' :
+            case '\n' :
+            case '\r' :
+            case '\t' :
+                return true;
+            default :
+                return false;
+        }
+    }
+
+    /**
+     * Increases our buffer by the {@link #DEFAULT_BUFFER_RESIZE_FACTOR}.
+     * @param context the context to be used
+     * @param minCapacity the minimum required capacity
+     * @return the resized byte[] buffer
+     * @throws OutOfMemoryError if the {@code minCapacity} is negative
+     */
+    private static byte[] resizeBuffer(final Context context, final int minCapacity) {
+        // Overflow-conscious code treats the min and new capacity as unsigned.
+        final int oldCapacity = context.buffer.length;
+        int newCapacity = oldCapacity * DEFAULT_BUFFER_RESIZE_FACTOR;
+        if (compareUnsigned(newCapacity, minCapacity) < 0) {
+            newCapacity = minCapacity;
+        }
+        if (compareUnsigned(newCapacity, MAX_BUFFER_SIZE) > 0) {
+            newCapacity = createPositiveCapacity(minCapacity);
+        }
+
+        final byte[] b = new byte[newCapacity];
+        System.arraycopy(context.buffer, 0, b, 0, context.buffer.length);
+        context.buffer = b;
+        return b;
+    }
+
+    /**
      * @deprecated Use {@link #pad}. Will be removed in 2.0.
      */
     @Deprecated
@@ -288,47 +386,6 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
-     * Returns true if decoding behavior is strict. Decoding will raise an {@link IllegalArgumentException} if trailing
-     * bits are not part of a valid encoding.
-     *
-     * <p>
-     * The default is false for lenient encoding. Decoding will compose trailing bits into 8-bit bytes and discard the
-     * remainder.
-     * </p>
-     *
-     * @return true if using strict decoding
-     * @since 1.15
-     */
-    public boolean isStrictDecoding() {
-        return decodingPolicy == CodecPolicy.STRICT;
-    }
-
-    /**
-     * Returns the decoding behavior policy. Decoding will raise an {@link IllegalArgumentException} if trailing bits
-     * are not part of a valid encoding.
-     *
-     * <p>
-     * The default is lenient. Decoding will compose trailing bits into 8-bit bytes and discard the remainder.
-     * </p>
-     *
-     * @return true if using strict decoding
-     * @since 1.15
-     */
-    public CodecPolicy getCodecPolicy() {
-        return decodingPolicy;
-    }
-
-    /**
-     * Returns true if this object has buffered data for reading.
-     *
-     * @param context the context to be used
-     * @return true if there is data still available for reading.
-     */
-    boolean hasData(final Context context) {  // package protected for access from I/O streams
-        return context.buffer != null;
-    }
-
-    /**
      * Returns the amount of buffered data available for reading.
      *
      * @param context the context to be used
@@ -339,204 +396,48 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
-     * Get the default buffer size. Can be overridden.
+     * Tests a given byte array to see if it contains any characters within the alphabet or PAD.
      *
-     * @return the default buffer size.
+     * Intended for use in checking line-ending arrays
+     *
+     * @param arrayOctet
+     *            byte array to test
+     * @return {@code true} if any byte is a valid character in the alphabet or PAD; {@code false} otherwise
      */
-    protected int getDefaultBufferSize() {
-        return DEFAULT_BUFFER_SIZE;
-    }
-
-    /**
-     * Increases our buffer by the {@link #DEFAULT_BUFFER_RESIZE_FACTOR}.
-     * @param context the context to be used
-     * @param minCapacity the minimum required capacity
-     * @return the resized byte[] buffer
-     * @throws OutOfMemoryError if the {@code minCapacity} is negative
-     */
-    private static byte[] resizeBuffer(final Context context, final int minCapacity) {
-        // Overflow-conscious code treats the min and new capacity as unsigned.
-        final int oldCapacity = context.buffer.length;
-        int newCapacity = oldCapacity * DEFAULT_BUFFER_RESIZE_FACTOR;
-        if (compareUnsigned(newCapacity, minCapacity) < 0) {
-            newCapacity = minCapacity;
+    protected boolean containsAlphabetOrPad(final byte[] arrayOctet) {
+        if (arrayOctet == null) {
+            return false;
         }
-        if (compareUnsigned(newCapacity, MAX_BUFFER_SIZE) > 0) {
-            newCapacity = createPositiveCapacity(minCapacity);
-        }
-
-        final byte[] b = new byte[newCapacity];
-        System.arraycopy(context.buffer, 0, b, 0, context.buffer.length);
-        context.buffer = b;
-        return b;
-    }
-
-    /**
-     * Compares two {@code int} values numerically treating the values
-     * as unsigned. Taken from JDK 1.8.
-     *
-     * <p>TODO: Replace with JDK 1.8 Integer::compareUnsigned(int, int).</p>
-     *
-     * @param  x the first {@code int} to compare
-     * @param  y the second {@code int} to compare
-     * @return the value {@code 0} if {@code x == y}; a value less
-     *         than {@code 0} if {@code x < y} as unsigned values; and
-     *         a value greater than {@code 0} if {@code x > y} as
-     *         unsigned values
-     */
-    private static int compareUnsigned(final int x, final int y) {
-        return Integer.compare(x + Integer.MIN_VALUE, y + Integer.MIN_VALUE);
-    }
-
-    /**
-     * Create a positive capacity at least as large the minimum required capacity.
-     * If the minimum capacity is negative then this throws an OutOfMemoryError as no array
-     * can be allocated.
-     *
-     * @param minCapacity the minimum capacity
-     * @return the capacity
-     * @throws OutOfMemoryError if the {@code minCapacity} is negative
-     */
-    private static int createPositiveCapacity(final int minCapacity) {
-        if (minCapacity < 0) {
-            // overflow
-            throw new OutOfMemoryError("Unable to allocate array size: " + (minCapacity & 0xffffffffL));
-        }
-        // This is called when we require buffer expansion to a very big array.
-        // Use the conservative maximum buffer size if possible, otherwise the biggest required.
-        //
-        // Note: In this situation JDK 1.8 java.util.ArrayList returns Integer.MAX_VALUE.
-        // This excludes some VMs that can exceed MAX_BUFFER_SIZE but not allocate a full
-        // Integer.MAX_VALUE length array.
-        // The result is that we may have to allocate an array of this size more than once if
-        // the capacity must be expanded again.
-        return (minCapacity > MAX_BUFFER_SIZE) ?
-            minCapacity :
-            MAX_BUFFER_SIZE;
-    }
-
-    /**
-     * Ensure that the buffer has room for {@code size} bytes
-     *
-     * @param size minimum spare space required
-     * @param context the context to be used
-     * @return the buffer
-     */
-    protected byte[] ensureBufferSize(final int size, final Context context){
-        if (context.buffer == null) {
-            context.buffer = new byte[getDefaultBufferSize()];
-            context.pos = 0;
-            context.readPos = 0;
-
-            // Overflow-conscious:
-            // x + y > z  ==  x + y - z > 0
-        } else if (context.pos + size - context.buffer.length > 0) {
-            return resizeBuffer(context, context.pos + size);
-        }
-        return context.buffer;
-    }
-
-    /**
-     * Extracts buffered data into the provided byte[] array, starting at position bPos, up to a maximum of bAvail
-     * bytes. Returns how many bytes were actually extracted.
-     * <p>
-     * Package protected for access from I/O streams.
-     *
-     * @param b
-     *            byte[] array to extract the buffered data into.
-     * @param bPos
-     *            position in byte[] array to start extraction at.
-     * @param bAvail
-     *            amount of bytes we're allowed to extract. We may extract fewer (if fewer are available).
-     * @param context
-     *            the context to be used
-     * @return The number of bytes successfully extracted into the provided byte[] array.
-     */
-    int readResults(final byte[] b, final int bPos, final int bAvail, final Context context) {
-        if (context.buffer != null) {
-            final int len = Math.min(available(context), bAvail);
-            System.arraycopy(context.buffer, context.readPos, b, bPos, len);
-            context.readPos += len;
-            if (context.readPos >= context.pos) {
-                context.buffer = null; // so hasData() will return false, and this method can return -1
-            }
-            return len;
-        }
-        return context.eof ? EOF : 0;
-    }
-
-    /**
-     * Gets a copy of the chunk separator per RFC 2045 section 2.1.
-     *
-     * @return the chunk separator
-     * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045 section 2.1</a>
-     * @since 1.15
-     */
-    public static byte[] getChunkSeparator() {
-        return CHUNK_SEPARATOR.clone();
-    }
-
-    /**
-     * Checks if a byte value is whitespace or not.
-     * Whitespace is taken to mean: space, tab, CR, LF
-     * @param byteToCheck
-     *            the byte to check
-     * @return true if byte is whitespace, false otherwise
-     */
-    protected static boolean isWhiteSpace(final byte byteToCheck) {
-        switch (byteToCheck) {
-            case ' ' :
-            case '\n' :
-            case '\r' :
-            case '\t' :
+        for (final byte element : arrayOctet) {
+            if (pad == element || isInAlphabet(element)) {
                 return true;
-            default :
-                return false;
+            }
         }
+        return false;
     }
 
     /**
-     * Encodes an Object using the Base-N algorithm. This method is provided in order to satisfy the requirements of
-     * the Encoder interface, and will throw an EncoderException if the supplied object is not of type byte[].
-     *
-     * @param obj
-     *            Object to encode
-     * @return An object (of type byte[]) containing the Base-N encoded data which corresponds to the byte[] supplied.
-     * @throws EncoderException
-     *             if the parameter supplied is not of type byte[]
-     */
-    @Override
-    public Object encode(final Object obj) throws EncoderException {
-        if (!(obj instanceof byte[])) {
-            throw new EncoderException("Parameter supplied to Base-N encode is not a byte[]");
-        }
-        return encode((byte[]) obj);
-    }
-
-    /**
-     * Encodes a byte[] containing binary data, into a String containing characters in the Base-N alphabet.
-     * Uses UTF8 encoding.
+     * Decodes a byte[] containing characters in the Base-N alphabet.
      *
      * @param pArray
-     *            a byte array containing binary data
-     * @return A String containing only Base-N character data
+     *            A byte array containing Base-N character data
+     * @return a byte array containing binary data
      */
-    public String encodeToString(final byte[] pArray) {
-        return StringUtils.newStringUtf8(encode(pArray));
+    @Override
+    public byte[] decode(final byte[] pArray) {
+        if (pArray == null || pArray.length == 0) {
+            return pArray;
+        }
+        final Context context = new Context();
+        decode(pArray, 0, pArray.length, context);
+        decode(pArray, 0, EOF, context); // Notify decoder of EOF.
+        final byte[] result = new byte[context.pos];
+        readResults(result, 0, result.length, context);
+        return result;
     }
 
-    /**
-     * Encodes a byte[] containing binary data, into a String containing characters in the appropriate alphabet.
-     * Uses UTF8 encoding.
-     *
-     * @param pArray a byte array containing binary data
-     * @return String containing only character data in the appropriate alphabet.
-     * @since 1.5
-     * This is a duplicate of {@link #encodeToString(byte[])}; it was merged during refactoring.
-    */
-    public String encodeAsString(final byte[] pArray){
-        return StringUtils.newStringUtf8(encode(pArray));
-    }
+    // package protected for access from I/O streams
+    abstract void decode(byte[] pArray, int i, int length, Context context);
 
     /**
      * Decodes an Object using the Base-N algorithm. This method is provided in order to satisfy the requirements of
@@ -569,26 +470,6 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      */
     public byte[] decode(final String pArray) {
         return decode(StringUtils.getBytesUtf8(pArray));
-    }
-
-    /**
-     * Decodes a byte[] containing characters in the Base-N alphabet.
-     *
-     * @param pArray
-     *            A byte array containing Base-N character data
-     * @return a byte array containing binary data
-     */
-    @Override
-    public byte[] decode(final byte[] pArray) {
-        if (pArray == null || pArray.length == 0) {
-            return pArray;
-        }
-        final Context context = new Context();
-        decode(pArray, 0, pArray.length, context);
-        decode(pArray, 0, EOF, context); // Notify decoder of EOF.
-        final byte[] result = new byte[context.pos];
-        readResults(result, 0, result.length, context);
-        return result;
     }
 
     /**
@@ -634,8 +515,122 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     // package protected for access from I/O streams
     abstract void encode(byte[] pArray, int i, int length, Context context);
 
-    // package protected for access from I/O streams
-    abstract void decode(byte[] pArray, int i, int length, Context context);
+    /**
+     * Encodes an Object using the Base-N algorithm. This method is provided in order to satisfy the requirements of
+     * the Encoder interface, and will throw an EncoderException if the supplied object is not of type byte[].
+     *
+     * @param obj
+     *            Object to encode
+     * @return An object (of type byte[]) containing the Base-N encoded data which corresponds to the byte[] supplied.
+     * @throws EncoderException
+     *             if the parameter supplied is not of type byte[]
+     */
+    @Override
+    public Object encode(final Object obj) throws EncoderException {
+        if (!(obj instanceof byte[])) {
+            throw new EncoderException("Parameter supplied to Base-N encode is not a byte[]");
+        }
+        return encode((byte[]) obj);
+    }
+
+    /**
+     * Encodes a byte[] containing binary data, into a String containing characters in the appropriate alphabet.
+     * Uses UTF8 encoding.
+     *
+     * @param pArray a byte array containing binary data
+     * @return String containing only character data in the appropriate alphabet.
+     * @since 1.5
+     * This is a duplicate of {@link #encodeToString(byte[])}; it was merged during refactoring.
+    */
+    public String encodeAsString(final byte[] pArray){
+        return StringUtils.newStringUtf8(encode(pArray));
+    }
+
+    /**
+     * Encodes a byte[] containing binary data, into a String containing characters in the Base-N alphabet.
+     * Uses UTF8 encoding.
+     *
+     * @param pArray
+     *            a byte array containing binary data
+     * @return A String containing only Base-N character data
+     */
+    public String encodeToString(final byte[] pArray) {
+        return StringUtils.newStringUtf8(encode(pArray));
+    }
+
+    /**
+     * Ensure that the buffer has room for {@code size} bytes
+     *
+     * @param size minimum spare space required
+     * @param context the context to be used
+     * @return the buffer
+     */
+    protected byte[] ensureBufferSize(final int size, final Context context){
+        if (context.buffer == null) {
+            context.buffer = new byte[getDefaultBufferSize()];
+            context.pos = 0;
+            context.readPos = 0;
+
+            // Overflow-conscious:
+            // x + y > z  ==  x + y - z > 0
+        } else if (context.pos + size - context.buffer.length > 0) {
+            return resizeBuffer(context, context.pos + size);
+        }
+        return context.buffer;
+    }
+
+    /**
+     * Returns the decoding behavior policy. Decoding will raise an {@link IllegalArgumentException} if trailing bits
+     * are not part of a valid encoding.
+     *
+     * <p>
+     * The default is lenient. Decoding will compose trailing bits into 8-bit bytes and discard the remainder.
+     * </p>
+     *
+     * @return true if using strict decoding
+     * @since 1.15
+     */
+    public CodecPolicy getCodecPolicy() {
+        return decodingPolicy;
+    }
+
+    /**
+     * Get the default buffer size. Can be overridden.
+     *
+     * @return the default buffer size.
+     */
+    protected int getDefaultBufferSize() {
+        return DEFAULT_BUFFER_SIZE;
+    }
+
+    /**
+     * Calculates the amount of space needed to encode the supplied array.
+     *
+     * @param pArray byte[] array which will later be encoded
+     *
+     * @return amount of space needed to encoded the supplied array.
+     * Returns a long since a max-len array will require &gt; Integer.MAX_VALUE
+     */
+    public long getEncodedLength(final byte[] pArray) {
+        // Calculate non-chunked size - rounded up to allow for padding
+        // cast to long is needed to avoid possibility of overflow
+        long len = ((pArray.length + unencodedBlockSize-1)  / unencodedBlockSize) * (long) encodedBlockSize;
+        if (lineLength > 0) { // We're using chunking
+            // Round up to nearest multiple
+            len += ((len + lineLength-1) / lineLength) * chunkSeparatorLength;
+        }
+        return len;
+    }
+
+    /**
+     * Returns true if this object has buffered data for reading.
+     *
+     * @param context the context to be used
+     * @return true if there is data still available for reading.
+     */
+    boolean hasData(final Context context) {  // package protected for access from I/O streams
+        return context.buffer != null;
+    }
 
     /**
      * Returns whether or not the {@code octet} is in the current alphabet.
@@ -681,42 +676,47 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
-     * Tests a given byte array to see if it contains any characters within the alphabet or PAD.
+     * Returns true if decoding behavior is strict. Decoding will raise an {@link IllegalArgumentException} if trailing
+     * bits are not part of a valid encoding.
      *
-     * Intended for use in checking line-ending arrays
+     * <p>
+     * The default is false for lenient encoding. Decoding will compose trailing bits into 8-bit bytes and discard the
+     * remainder.
+     * </p>
      *
-     * @param arrayOctet
-     *            byte array to test
-     * @return {@code true} if any byte is a valid character in the alphabet or PAD; {@code false} otherwise
+     * @return true if using strict decoding
+     * @since 1.15
      */
-    protected boolean containsAlphabetOrPad(final byte[] arrayOctet) {
-        if (arrayOctet == null) {
-            return false;
-        }
-        for (final byte element : arrayOctet) {
-            if (pad == element || isInAlphabet(element)) {
-                return true;
-            }
-        }
-        return false;
+    public boolean isStrictDecoding() {
+        return decodingPolicy == CodecPolicy.STRICT;
     }
 
     /**
-     * Calculates the amount of space needed to encode the supplied array.
+     * Extracts buffered data into the provided byte[] array, starting at position bPos, up to a maximum of bAvail
+     * bytes. Returns how many bytes were actually extracted.
+     * <p>
+     * Package protected for access from I/O streams.
      *
-     * @param pArray byte[] array which will later be encoded
-     *
-     * @return amount of space needed to encoded the supplied array.
-     * Returns a long since a max-len array will require &gt; Integer.MAX_VALUE
+     * @param b
+     *            byte[] array to extract the buffered data into.
+     * @param bPos
+     *            position in byte[] array to start extraction at.
+     * @param bAvail
+     *            amount of bytes we're allowed to extract. We may extract fewer (if fewer are available).
+     * @param context
+     *            the context to be used
+     * @return The number of bytes successfully extracted into the provided byte[] array.
      */
-    public long getEncodedLength(final byte[] pArray) {
-        // Calculate non-chunked size - rounded up to allow for padding
-        // cast to long is needed to avoid possibility of overflow
-        long len = ((pArray.length + unencodedBlockSize-1)  / unencodedBlockSize) * (long) encodedBlockSize;
-        if (lineLength > 0) { // We're using chunking
-            // Round up to nearest multiple
-            len += ((len + lineLength-1) / lineLength) * chunkSeparatorLength;
+    int readResults(final byte[] b, final int bPos, final int bAvail, final Context context) {
+        if (context.buffer != null) {
+            final int len = Math.min(available(context), bAvail);
+            System.arraycopy(context.buffer, context.readPos, b, bPos, len);
+            context.readPos += len;
+            if (context.readPos >= context.pos) {
+                context.buffer = null; // so hasData() will return false, and this method can return -1
+            }
+            return len;
         }
-        return len;
+        return context.eof ? EOF : 0;
     }
 }

@@ -61,6 +61,75 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
     }
 
     /**
+     * Closes this output stream and releases any system resources associated with the stream.
+     * <p>
+     * To write the EOF marker without closing the stream, call {@link #eof()} or use an
+     * <a href="https://commons.apache.org/proper/commons-io/">Apache Commons IO</a> <a href=
+     * "https://commons.apache.org/proper/commons-io/apidocs/org/apache/commons/io/output/CloseShieldOutputStream.html"
+     * >CloseShieldOutputStream</a>.
+     * </p>
+     *
+     * @throws IOException
+     *             if an I/O error occurs.
+     */
+    @Override
+    public void close() throws IOException {
+        eof();
+        flush();
+        out.close();
+    }
+
+    /**
+     * Writes EOF.
+     *
+     * @throws IOException
+     *             if an I/O error occurs.
+     * @since 1.11
+     */
+    public void eof() throws IOException {
+        // Notify encoder of EOF (-1).
+        if (doEncode) {
+            baseNCodec.encode(singleByte, 0, EOF, context);
+        } else {
+            baseNCodec.decode(singleByte, 0, EOF, context);
+        }
+    }
+
+    /**
+     * Flushes this output stream and forces any buffered output bytes to be written out to the stream.
+     *
+     * @throws IOException
+     *             if an I/O error occurs.
+     */
+    @Override
+    public void flush() throws IOException {
+        flush(true);
+    }
+
+    /**
+     * Flushes this output stream and forces any buffered output bytes to be written out to the stream. If propagate is
+     * true, the wrapped stream will also be flushed.
+     *
+     * @param propagate
+     *            boolean flag to indicate whether the wrapped OutputStream should also be flushed.
+     * @throws IOException
+     *             if an I/O error occurs.
+     */
+    private void flush(final boolean propagate) throws IOException {
+        final int avail = baseNCodec.available(context);
+        if (avail > 0) {
+            final byte[] buf = new byte[avail];
+            final int c = baseNCodec.readResults(buf, 0, avail, context);
+            if (c > 0) {
+                out.write(buf, 0, c);
+            }
+        }
+        if (propagate) {
+            out.flush();
+        }
+    }
+
+    /**
      * Returns true if decoding behavior is strict. Decoding will raise an
      * {@link IllegalArgumentException} if trailing bits are not part of a valid encoding.
      *
@@ -72,20 +141,6 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
      */
     public boolean isStrictDecoding() {
         return baseNCodec.isStrictDecoding();
-    }
-
-    /**
-     * Writes the specified {@code byte} to this output stream.
-     *
-     * @param i
-     *            source byte
-     * @throws IOException
-     *             if an I/O error occurs.
-     */
-    @Override
-    public void write(final int i) throws IOException {
-        singleByte[0] = (byte) i;
-        write(singleByte, 0, 1);
     }
 
     /**
@@ -124,72 +179,17 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
     }
 
     /**
-     * Flushes this output stream and forces any buffered output bytes to be written out to the stream. If propagate is
-     * true, the wrapped stream will also be flushed.
+     * Writes the specified {@code byte} to this output stream.
      *
-     * @param propagate
-     *            boolean flag to indicate whether the wrapped OutputStream should also be flushed.
-     * @throws IOException
-     *             if an I/O error occurs.
-     */
-    private void flush(final boolean propagate) throws IOException {
-        final int avail = baseNCodec.available(context);
-        if (avail > 0) {
-            final byte[] buf = new byte[avail];
-            final int c = baseNCodec.readResults(buf, 0, avail, context);
-            if (c > 0) {
-                out.write(buf, 0, c);
-            }
-        }
-        if (propagate) {
-            out.flush();
-        }
-    }
-
-    /**
-     * Flushes this output stream and forces any buffered output bytes to be written out to the stream.
-     *
+     * @param i
+     *            source byte
      * @throws IOException
      *             if an I/O error occurs.
      */
     @Override
-    public void flush() throws IOException {
-        flush(true);
-    }
-
-    /**
-     * Closes this output stream and releases any system resources associated with the stream.
-     * <p>
-     * To write the EOF marker without closing the stream, call {@link #eof()} or use an
-     * <a href="https://commons.apache.org/proper/commons-io/">Apache Commons IO</a> <a href=
-     * "https://commons.apache.org/proper/commons-io/apidocs/org/apache/commons/io/output/CloseShieldOutputStream.html"
-     * >CloseShieldOutputStream</a>.
-     * </p>
-     *
-     * @throws IOException
-     *             if an I/O error occurs.
-     */
-    @Override
-    public void close() throws IOException {
-        eof();
-        flush();
-        out.close();
-    }
-
-    /**
-     * Writes EOF.
-     *
-     * @throws IOException
-     *             if an I/O error occurs.
-     * @since 1.11
-     */
-    public void eof() throws IOException {
-        // Notify encoder of EOF (-1).
-        if (doEncode) {
-            baseNCodec.encode(singleByte, 0, EOF, context);
-        } else {
-            baseNCodec.decode(singleByte, 0, EOF, context);
-        }
+    public void write(final int i) throws IOException {
+        singleByte[0] = (byte) i;
+        write(singleByte, 0, 1);
     }
 
 }

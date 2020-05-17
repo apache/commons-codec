@@ -172,17 +172,6 @@ public class Base32 extends BaseNCodec {
      * <p>
      * When encoding the line length is 0 (no chunking).
      * </p>
-     * @param pad byte used as padding byte.
-     */
-    public Base32(final byte pad) {
-        this(false, pad);
-    }
-
-    /**
-     * Creates a Base32 codec used for decoding and encoding.
-     * <p>
-     * When encoding the line length is 0 (no chunking).
-     * </p>
      * @param useHex if {@code true} then use Base32 Hex alphabet
      */
     public Base32(final boolean useHex) {
@@ -199,6 +188,17 @@ public class Base32 extends BaseNCodec {
      */
     public Base32(final boolean useHex, final byte padding) {
         this(0, null, useHex, padding);
+    }
+
+    /**
+     * Creates a Base32 codec used for decoding and encoding.
+     * <p>
+     * When encoding the line length is 0 (no chunking).
+     * </p>
+     * @param pad byte used as padding byte.
+     */
+    public Base32(final byte pad) {
+        this(false, pad);
     }
 
     /**
@@ -588,20 +588,6 @@ public class Base32 extends BaseNCodec {
     }
 
     /**
-     * Validates whether decoding allows final trailing characters that cannot be
-     * created during encoding.
-     *
-     * @throws IllegalArgumentException if strict decoding is enabled
-     */
-    private void validateTrailingCharacters() {
-        if (isStrictDecoding()) {
-            throw new IllegalArgumentException(
-                "Strict decoding: Last encoded character(s) (before the paddings if any) are valid base 32 alphabet but not a possible encoding. " +
-                "Decoding requries either 2, 4, 5, or 7 trailing 5-bit characters to create bytes.");
-        }
-    }
-
-    /**
      * Validates whether decoding the final trailing character is possible in the context
      * of the set of possible base 32 values.
      *
@@ -619,6 +605,20 @@ public class Base32 extends BaseNCodec {
             throw new IllegalArgumentException(
                 "Strict decoding: Last encoded character (before the paddings if any) is a valid base 32 alphabet but not a possible encoding. " +
                 "Expected the discarded bits from the character to be zero.");
+        }
+    }
+
+    /**
+     * Validates whether decoding allows final trailing characters that cannot be
+     * created during encoding.
+     *
+     * @throws IllegalArgumentException if strict decoding is enabled
+     */
+    private void validateTrailingCharacters() {
+        if (isStrictDecoding()) {
+            throw new IllegalArgumentException(
+                "Strict decoding: Last encoded character(s) (before the paddings if any) are valid base 32 alphabet but not a possible encoding. " +
+                "Decoding requries either 2, 4, 5, or 7 trailing 5-bit characters to create bytes.");
         }
     }
 }
