@@ -681,7 +681,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * bits are not part of a valid encoding.
      *
      * <p>
-     * The default is false for lenient encoding. Decoding will compose trailing bits into 8-bit bytes and discard the
+     * The default is false for lenient decoding. Decoding will compose trailing bits into 8-bit bytes and discard the
      * remainder.
      * </p>
      *
