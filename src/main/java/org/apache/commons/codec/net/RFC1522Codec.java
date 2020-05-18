@@ -76,8 +76,7 @@ abstract class RFC1522Codec {
         buffer.append(SEP);
         buffer.append(this.getEncoding());
         buffer.append(SEP);
-        final byte [] rawData = this.doEncoding(text.getBytes(charset));
-        buffer.append(StringUtils.newStringUsAscii(rawData));
+        buffer.append(StringUtils.newStringUsAscii(this.doEncoding(text.getBytes(charset))));
         buffer.append(POSTFIX);
         return buffer.toString();
     }
