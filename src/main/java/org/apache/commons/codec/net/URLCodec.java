@@ -36,8 +36,10 @@ import org.apache.commons.codec.binary.StringUtils;
  * This codec is meant to be a replacement for standard Java classes {@link java.net.URLEncoder} and
  * {@link java.net.URLDecoder} on older Java platforms, as these classes in Java versions below
  * 1.4 rely on the platform's default charset encoding.
+ * </p>
  * <p>
- * This class is thread-safe since 1.11
+ * This class is thread-safe as of 1.11
+ * </p>
  *
  * @see <a href="http://www.w3.org/TR/html4/interact/forms.html#h-17.13.4.1">Chapter 17.13.4 Form content types</a>
  *           of the <a href="http://www.w3.org/TR/html4/">HTML 4.01 Specification</a>

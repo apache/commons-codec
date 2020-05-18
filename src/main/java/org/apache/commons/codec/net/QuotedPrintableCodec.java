@@ -42,20 +42,26 @@ import org.apache.commons.codec.binary.StringUtils;
  * data remains largely recognizable by humans. A body which is entirely ASCII may also be encoded in Quoted-Printable
  * to ensure the integrity of the data should the message pass through a character- translating, and/or line-wrapping
  * gateway.
+ * </p>
  * <p>
  * Note:
+ * </p>
  * <p>
  * Depending on the selected {@code strict} parameter, this class will implement a different set of rules of the
  * quoted-printable spec:
+ * </p>
  * <ul>
- *   <li>{@code strict=false}: only rules #1 and #2 are implemented
- *   <li>{@code strict=true}: all rules #1 through #5 are implemented
+ *   <li>{@code strict=false}: only rules #1 and #2 are implemented</li>
+ *   <li>{@code strict=true}: all rules #1 through #5 are implemented</li>
  * </ul>
+ * <p>
  * Originally, this class only supported the non-strict mode, but the codec in this partial form could already be used
  * for certain applications that do not require quoted-printable line formatting (rules #3, #4, #5), for instance
  * Q codec. The strict mode has been added in 1.10.
+ * </p>
  * <p>
  * This class is immutable and thread-safe.
+ * </p>
  *
  * @see <a href="http://www.ietf.org/rfc/rfc1521.txt">RFC 1521 MIME (Multipurpose Internet Mail Extensions) Part One:
  *          Mechanisms for Specifying and Describing the Format of Internet Message Bodies </a>

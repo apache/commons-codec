@@ -35,6 +35,7 @@ import org.apache.commons.codec.StringEncoder;
  * <a href="http://www.ietf.org/rfc/rfc1522.txt">RFC 1522</a> describes techniques to allow the encoding of non-ASCII
  * text in various portions of a RFC 822 [2] message header, in a manner which is unlikely to confuse existing message
  * handling software.
+ * </p>
  * <p>
  * This class is conditionally thread-safe.
  * The instance field for encoding blanks is mutable {@link #setEncodeBlanks(boolean)}
@@ -42,6 +43,7 @@ import org.apache.commons.codec.StringEncoder;
  * If an instance of the class is shared between threads, the caller needs to ensure that suitable synchronisation
  * is used to ensure safe publication of the value between threads, and must not invoke
  * {@link #setEncodeBlanks(boolean)} after initial setup.
+ * </p>
  *
  * @see <a href="http://www.ietf.org/rfc/rfc1522.txt">MIME (Multipurpose Internet Mail Extensions) Part Two: Message
  *          Header Extensions for Non-ASCII Text</a>
