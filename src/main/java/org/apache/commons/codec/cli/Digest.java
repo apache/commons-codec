@@ -114,7 +114,7 @@ public class Digest {
             println(prefix, DigestUtils.digest(messageDigest, System.in));
             return;
         }
-        for(final String source : inputs) {
+        for (final String source : inputs) {
             final File file = new File(source);
             if (file.isFile()) {
                 println(prefix, DigestUtils.digest(messageDigest, file), source);
