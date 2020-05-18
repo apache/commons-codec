@@ -81,8 +81,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * @since 1.7
      */
     public BCodec(final Charset charset) {
-        this.charset = charset;
-        this.decodingPolicy = DECODING_POLICY_DEFAULT;
+        this(charset, DECODING_POLICY_DEFAULT);
     }
 
     /**
