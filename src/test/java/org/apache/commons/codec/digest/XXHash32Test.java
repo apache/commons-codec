@@ -62,9 +62,9 @@ public class XXHash32Test {
         return Arrays.asList(new Object[][] {
             // reference checksums created with xxh32sum
             // http://cyan4973.github.io/xxHash/
-            { "bla.tar", "fbb5c8d1" },
-            { "bla.tar.xz", "4106a208" },
-            { "small.bin", "f66c26f8" },
+            { "org/apache/commons/codec/bla.tar", "fbb5c8d1" },
+            { "org/apache/commons/codec/bla.tar.xz", "4106a208" },
+            { "org/apache/commons/codec/small.bin", "f66c26f8" },
         });
     }
 

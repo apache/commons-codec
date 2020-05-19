@@ -276,9 +276,9 @@ limitations under the License.
         <artifactId>apache-rat-plugin</artifactId>
         <configuration>
           <excludes>
-            <exclude>src/test/resources/bla.tar.xz</exclude>
-            <exclude>src/test/resources/empty.bin</exclude>
-            <exclude>src/test/resources/small.bin</exclude>
+            <exclude>src/test/resources/org/apache/commons/codec/bla.tar.xz</exclude>
+            <exclude>src/test/resources/org/apache/commons/codec/empty.bin</exclude>
+            <exclude>src/test/resources/org/apache/commons/codec/small.bin</exclude>
           </excludes>
         </configuration>
       </plugin>
@@ -345,9 +345,9 @@ limitations under the License.
         <artifactId>apache-rat-plugin</artifactId>
         <configuration>
           <excludes>
-            <exclude>src/test/resources/bla.tar.xz</exclude>
-            <exclude>src/test/resources/empty.bin</exclude>
-            <exclude>src/test/resources/small.bin</exclude>
+            <exclude>src/test/resources/org/apache/commons/codec/bla.tar.xz</exclude>
+            <exclude>src/test/resources/org/apache/commons/codec/empty.bin</exclude>
+            <exclude>src/test/resources/org/apache/commons/codec/small.bin</exclude>
           </excludes>
         </configuration>
       </plugin>

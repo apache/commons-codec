@@ -116,7 +116,7 @@ public class DigestUtilsTest {
     @Test
     public void testDigestAs() throws IOException {
         final String expected = "d41d8cd98f00b204e9800998ecf8427e";
-        final String pathname = "src/test/resources/empty.bin";
+        final String pathname = "src/test/resources/org/apache/commons/codec/empty.bin";
         final String algo = MessageDigestAlgorithms.MD5;
         assertEquals(expected, new DigestUtils(algo).digestAsHex(new File(pathname)));
         try (final FileInputStream inputStream = new FileInputStream(pathname)) {
@@ -324,7 +324,7 @@ public class DigestUtilsTest {
     public void testSha224_FileAsHex() throws IOException {
         assumeJava8();
         final String expected = "d14a028c2a3a2bc9476102bb288234c415a2b01f828ea62ac5b3e42f";
-        final String pathname = "src/test/resources/empty.bin";
+        final String pathname = "src/test/resources/org/apache/commons/codec/empty.bin";
         final String algo = MessageDigestAlgorithms.SHA_224;
         final DigestUtils digestUtils = new DigestUtils(algo);
         assertEquals(expected, digestUtils.digestAsHex(new File(pathname)));
@@ -340,7 +340,7 @@ public class DigestUtilsTest {
     public void testSha224_PathAsHex() throws IOException {
         assumeJava8();
         assertEquals("d14a028c2a3a2bc9476102bb288234c415a2b01f828ea62ac5b3e42f",
-                new DigestUtils(MessageDigestAlgorithms.SHA_224).digestAsHex(Paths.get("src/test/resources/empty.bin")));
+                new DigestUtils(MessageDigestAlgorithms.SHA_224).digestAsHex(Paths.get("src/test/resources/org/apache/commons/codec/empty.bin")));
     }
 
     @Test
