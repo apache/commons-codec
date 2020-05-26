@@ -15,23 +15,23 @@
 
 language: java
 sudo: false
-
+cache:
+  directories:
+    - $HOME/.m2
 matrix:
   include:
     - os: linux-ppc64le
       jdk: openjdk8
-
-jdk:
-  - oraclejdk11
-  - openjdk8
-  - openjdk11
-  - openjdk12
-  - openjdk13
-  - openjdk14  
-  - openjdk-ea
-
+    - jdk: openjdk8
+    - jdk: openjdk11
+    - jdk: openjdk12
+    - jdk: openjdk13
+    - jdk: openjdk14
+    - jdk: oraclejdk11
+    - jdk: openjdk-ea
+  allow_failures:
+    - jdk: openjdk-ea
 script:
   - mvn
-
 after_success:
   - mvn clean cobertura:cobertura coveralls:report -Ptravis-cobertura
