@@ -18,9 +18,6 @@
 package org.apache.commons.codec.binary;
 
 import org.apache.commons.codec.CodecPolicy;
-import org.apache.commons.codec.DecoderException;
-
-import java.nio.charset.Charset;
 
 /**
  * Provides Base16 encoding and decoding.
@@ -29,79 +26,118 @@ import java.nio.charset.Charset;
  * This class is thread-safe.
  * </p>
  *
+ * @see <a href="https://tools.ietf.org/html/rfc4648#section-8">RFC 4648 - 8. Base 16 Encoding</a>
+ *
  * @since 1.15
  */
 public class Base16 extends BaseNCodec {
 
-    private static final int BYTES_PER_UNENCODED_BLOCK = 1;
+    /**
+     * BASE16 characters are 4 bits in length.
+     * They are formed by taking an 8-bit group,
+     * which is converted into two BASE16 characters.
+     */
+    private static final int BITS_PER_ENCODED_BYTE = 4;
     private static final int BYTES_PER_ENCODED_BLOCK = 2;
+    private static final int BYTES_PER_UNENCODED_BLOCK = 1;
 
-    private final boolean toLowerCase;
-    private final Charset charset;
+    /**
+     * This array is a lookup table that translates Unicode characters drawn from the "Base16 Alphabet" (as specified
+     * in Table 5 of RFC 4648) into their 4-bit positive integer equivalents. Characters that are not in the Base16
+     * alphabet but fall within the bounds of the array are translated to -1.
+     */
+    private static final byte[] UPPER_CASE_DECODE_TABLE = {
+            //  0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
+            -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 00-0f
+            -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 10-1f
+            -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 20-2f
+             0,  1,  2,  3,  4,  5,  6,  7,  8,  9, -1, -1, -1, -1, -1, -1, // 30-3f 0-9
+            -1, 10, 11, 12, 13, 14, 15                                      // 40-46 A-F
+    };
+
+    /**
+     * This array is a lookup table that translates 4-bit positive integer index values into their "Base16 Alphabet"
+     * equivalents as specified in Table 5 of RFC 4648.
+     */
+    private static final byte[] UPPER_CASE_ENCODE_TABLE = {
+            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+            'A', 'B', 'C', 'D', 'E', 'F'
+    };
+
+    /**
+     * This array is a lookup table that translates Unicode characters drawn from the a lower-case "Base16 Alphabet"
+     * into their 4-bit positive integer equivalents. Characters that are not in the Base16
+     * alphabet but fall within the bounds of the array are translated to -1.
+     */
+    private static final byte[] LOWER_CASE_DECODE_TABLE = {
+            //  0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
+            -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 00-0f
+            -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 10-1f
+            -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 20-2f
+             0,  1,  2,  3,  4,  5,  6,  7,  8,  9, -1, -1, -1, -1, -1, -1, // 30-3f 0-9
+            -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 40-4f
+            -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 50-5f
+            -1, 10, 11, 12, 13, 14, 15                                      // 60-66 a-f
+    };
+
+    /**
+     * This array is a lookup table that translates 4-bit positive integer index values into their "Base16 Alphabet"
+     * lower-case equivalents.
+     */
+    private static final byte[] LOWER_CASE_ENCODE_TABLE = {
+            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+            'a', 'b', 'c', 'd', 'e', 'f'
+    };
+
+    /** Mask used to extract 4 bits, used when decoding character. */
+    private static final int MASK_4BITS = 0x0f;
+
+    /**
+     * Decode table to use.
+     */
+    private final byte[] decodeTable;
+
+    /**
+     * Encode table to use.
+     */
+    private final byte[] encodeTable;
 
     /**
      * Creates a Base16 codec used for decoding and encoding.
      */
-    protected Base16() {
-        this(Hex.DEFAULT_CHARSET);
+    public Base16() {
+        this(false);
     }
 
     /**
      * Creates a Base16 codec used for decoding and encoding.
      *
-     * @param charset the charset.
+     * @param lowerCase if {@code true} then use a lower-case Base16 alphabet.
      */
-    protected Base16(final Charset charset) {
-        this(true, charset);
+    public Base16(final boolean lowerCase) {
+        this(lowerCase, DECODING_POLICY_DEFAULT);
     }
 
     /**
      * Creates a Base16 codec used for decoding and encoding.
      *
-     * @param toLowerCase {@code true} converts to lowercase, {@code false} to uppercase.
-     * @param charset the charset.
-     */
-    protected Base16(final boolean toLowerCase, final Charset charset) {
-        super(BYTES_PER_UNENCODED_BLOCK, BYTES_PER_ENCODED_BLOCK, 0, 0);
-        this.toLowerCase = toLowerCase;
-        this.charset = charset;
-    }
-
-    /**
-     * Creates a Base16 codec used for decoding and encoding.
-     *
-     * @param toLowerCase {@code true} converts to lowercase, {@code false} to uppercase.
-     * @param charset the charset.
+     * @param lowerCase if {@code true} then use a lower-case Base16 alphabet.
      * @param decodingPolicy Decoding policy.
      */
-    protected Base16(final boolean toLowerCase, final Charset charset, final CodecPolicy decodingPolicy) {
+    public Base16(final boolean lowerCase, final CodecPolicy decodingPolicy) {
         super(BYTES_PER_UNENCODED_BLOCK, BYTES_PER_ENCODED_BLOCK, 0, 0,
                 PAD_DEFAULT, decodingPolicy);
-        this.toLowerCase = toLowerCase;
-        this.charset = charset;
+        if (lowerCase) {
+            this.encodeTable = LOWER_CASE_ENCODE_TABLE;
+            this.decodeTable = LOWER_CASE_DECODE_TABLE;
+        } else {
+            this.encodeTable = UPPER_CASE_ENCODE_TABLE;
+            this.decodeTable = UPPER_CASE_DECODE_TABLE;
+        }
     }
 
     @Override
-    void encode(final byte[] data, final int offset, final int length, final Context context) {
-        if (context.eof) {
-            return;
-        }
-        if (length < 0) {
-            context.eof = true;
-            return;
-        }
-
-        final char[] chars = Hex.encodeHex(data, offset, length, toLowerCase);
-        final byte[] encoded = new String(chars).getBytes(charset);
-
-        final byte[] buffer = ensureBufferSize(encoded.length, context);
-        System.arraycopy(encoded, 0, buffer, context.pos, encoded.length);
-
-        context.pos += encoded.length;
-    }
-
-    @Override
-    void decode(final byte[] data, final int offset, final int length, final Context context) {
+    void decode(final byte[] data, int offset, final int length, final Context context) {
         if (context.eof || length < 0) {
             context.eof = true;
             if (context.ibitWorkArea > 0) {
@@ -119,36 +155,71 @@ public class Base16 extends BaseNCodec {
             return;
         }
 
-        // NOTE: Each pair of bytes is really a pair of hex-chars, therefore each pair represents one byte
-
         // we must have an even number of chars to decode
-        final char[] encodedChars = new char[availableChars % 2 == 0 ? availableChars : availableChars - 1];
+        final int charsToProcess = availableChars % BYTES_PER_ENCODED_BLOCK == 0 ? availableChars : availableChars - 1;
 
-        // copy all (or part of) data into encodedChars
+        final byte[] buffer = ensureBufferSize(charsToProcess / BYTES_PER_ENCODED_BLOCK, context);
+
+        int result;
         int i = 0;
         if (dataLen < availableChars) {
             // we have 1/2 byte from previous invocation to decode
-            encodedChars[i++] = (char)context.ibitWorkArea;
-            context.ibitWorkArea = -1; // reset for next iteration!
-        }
-        final int copyLen = encodedChars.length - i;
-        for (int j = offset; j < copyLen + offset; j++) {
-            encodedChars[i++] = (char) data[j];
+            result = decodeTable[context.ibitWorkArea] << BITS_PER_ENCODED_BYTE;
+            result |= decodeTable[data[offset++]];
+            i = 2;
+
+            buffer[context.pos++] = (byte)result;
+
+            // reset for next invocation!
+            context.ibitWorkArea = -1;
         }
 
-        // decode encodedChars into buffer
-        final byte[] buffer = ensureBufferSize(encodedChars.length / 2, context);
-        try {
-            final int written = Hex.decodeHex(encodedChars, buffer, context.pos);
-            context.pos += written;
-        } catch (final DecoderException e) {
-            throw new RuntimeException(e);  // this method ensures that this cannot happen at runtime!
+        while (i < charsToProcess) {
+            result = decodeTable[data[offset++]] << BITS_PER_ENCODED_BYTE;
+            result |= decodeTable[data[offset++]];
+            i += 2;
+            buffer[context.pos++] = (byte)result;
         }
 
         // we have one char of a hex-pair left over
-        if (copyLen < dataLen) {
-            context.ibitWorkArea = data[offset + dataLen - 1];   // store 1/2 byte for next invocation of decode
+        if (i < dataLen) {
+            context.ibitWorkArea = data[i];   // store 1/2 byte for next invocation of decode
         }
+    }
+
+    @Override
+    void encode(final byte[] data, final int offset, final int length, final Context context) {
+        if (context.eof) {
+            return;
+        }
+
+        if (length < 0) {
+            context.eof = true;
+            return;
+        }
+
+        final byte[] buffer = ensureBufferSize(length * BYTES_PER_ENCODED_BLOCK, context);
+
+        final int end = offset + length;
+        for (int i = offset; i < end; i++) {
+            final int value = data[i];
+            final int high = (value >> BITS_PER_ENCODED_BYTE) & MASK_4BITS;
+            final int low = value & MASK_4BITS;
+            buffer[context.pos++] = encodeTable[high];
+            buffer[context.pos++] = encodeTable[low];
+        }
+    }
+
+    /**
+     * Returns whether or not the {@code octet} is in the Base16 alphabet.
+     *
+     * @param octet The value to test.
+     *
+     * @return {@code true} if the value is defined in the the Base16 alphabet {@code false} otherwise.
+     */
+    @Override
+    public boolean isInAlphabet(final byte octet) {
+        return octet >= 0 && octet < decodeTable.length && decodeTable[octet] != -1;
     }
 
     /**
@@ -163,134 +234,5 @@ public class Base16 extends BaseNCodec {
                     "character but not a possible encoding. " +
                     "Decoding requires at least two characters to create one byte.");
         }
-    }
-
-    @Override
-    protected boolean isInAlphabet(final byte value) {
-        if (value >= '0' && value <= '9') {
-            return true;
-        }
-
-        if (toLowerCase) {
-            return value >= 'a' && value <= 'f';
-        } else {
-            return value >= 'A' && value <= 'F';
-        }
-    }
-
-    /**
-     * Returns whether or not the {@code c} is in the base 16 alphabet.
-     *
-     * @param c The value to test
-     * @return {@code true} if the value is defined in the the base 16 alphabet, {@code false} otherwise.
-     */
-    public static boolean isBase16(final char c) {
-        return
-                (c >= '0' && c <= '9')
-                || (c >= 'A' && c <= 'F')
-                || (c >= 'a' && c <= 'f');
-    }
-
-    /**
-     * Tests a given String to see if it contains only valid characters within the Base16 alphabet.
-     *
-     * @param base16 String to test
-     * @return {@code true} if all characters in the String are valid characters in the Base16 alphabet or if
-     *      the String is empty; {@code false}, otherwise
-     */
-    public static boolean isBase16(final String base16) {
-        return isBase16(base16.toCharArray());
-    }
-
-    /**
-     * Tests a given char array to see if it contains only valid characters within the Base16 alphabet.
-     *
-     * @param arrayChars char array to test
-     * @return {@code true} if all chars are valid characters in the Base16 alphabet or if the char array is empty;
-     *         {@code false}, otherwise
-     */
-    public static boolean isBase16(final char[] arrayChars) {
-        for (int i = 0; i < arrayChars.length; i++) {
-            if (!isBase16(arrayChars[i])) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
-     * Tests a given char array to see if it contains only valid characters within the Base16 alphabet.
-     *
-     * @param arrayChars byte array to test
-     * @return {@code true} if all chars are valid characters in the Base16 alphabet or if the byte array is empty;
-     *         {@code false}, otherwise
-     */
-    public static boolean isBase16(final byte[] arrayChars) {
-        for (int i = 0; i < arrayChars.length; i++) {
-            if (!isBase16((char) arrayChars[i])) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
-     * Encodes binary data using the base16 algorithm.
-     *
-     * @param binaryData Array containing binary data to encode.
-     * @return Base16-encoded data.
-     */
-    public static byte[] encodeBase16(final byte[] binaryData) {
-        return encodeBase16(binaryData, true, Hex.DEFAULT_CHARSET, Integer.MAX_VALUE);
-    }
-
-    /**
-     * Encodes binary data using the base16 algorithm.
-     *
-     * @param binaryData Array containing binary data to encode.
-     * @param toLowerCase {@code true} converts to lowercase, {@code false} to uppercase.
-     * @param charset the charset.
-     * @param maxResultSize The maximum result size to accept.
-     * @return Base16-encoded data.
-     * @throws IllegalArgumentException Thrown when the input array needs an output array bigger than maxResultSize
-     */
-    public static byte[] encodeBase16(final byte[] binaryData,  final boolean toLowerCase, final Charset charset,
-            final int maxResultSize) {
-        if (binaryData == null || binaryData.length == 0) {
-            return binaryData;
-        }
-
-        // Create this so can use the super-class method
-        // Also ensures that the same roundings are performed by the ctor and the code
-        final Base16 b16 = new Base16(toLowerCase, charset);
-        final long len = b16.getEncodedLength(binaryData);
-        if (len > maxResultSize) {
-            throw new IllegalArgumentException("Input array too big, the output array would be bigger (" +
-                    len +
-                    ") than the specified maximum size of " +
-                    maxResultSize);
-        }
-
-        return b16.encode(binaryData);
-    }
-
-    /**
-     * Decodes a Base16 String into octets.
-     *
-     * @param base16String String containing Base16 data
-     * @return Array containing decoded data.
-     */
-    public static byte[] decodeBase16(final String base16String) {
-        return new Base16().decode(base16String);
-    }
-
-    /**
-     * Decodes Base16 data into octets.
-     *
-     * @param base16Data Byte array containing Base16 data
-     * @return Array containing decoded data.
-     */
-    public static byte[] decodeBase16(final byte[] base16Data) {
-        return new Base16().decode(base16Data);
     }
 }

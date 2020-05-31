@@ -17,8 +17,9 @@
 
 package org.apache.commons.codec.binary;
 
+import org.apache.commons.codec.CodecPolicy;
+
 import java.io.InputStream;
-import java.nio.charset.Charset;
 
 /**
  * Provides Base16 encoding and decoding in a streaming fashion (unlimited size).
@@ -48,7 +49,7 @@ public class Base16InputStream extends BaseNCodecInputStream {
      * @param doEncode true if we should encode all data read from us, false if we should decode.
      */
     public Base16InputStream(final InputStream in, final boolean doEncode) {
-        this(in, doEncode, true, Hex.DEFAULT_CHARSET);
+        this(in, doEncode, false);
     }
 
     /**
@@ -57,11 +58,24 @@ public class Base16InputStream extends BaseNCodecInputStream {
      *
      * @param in InputStream to wrap.
      * @param doEncode true if we should encode all data read from us, false if we should decode.
-     * @param toLowerCase {@code true} converts to lowercase, {@code false} to uppercase.
-     * @param charset the charset.
+     * @param lowerCase if {@code true} then use a lower-case Base16 alphabet.
      */
     public Base16InputStream(final InputStream in, final boolean doEncode,
-            final boolean toLowerCase, final Charset charset) {
-        super(in, new Base16(toLowerCase, charset), doEncode);
+            final boolean lowerCase) {
+        this(in, doEncode, lowerCase, CodecPolicy.LENIENT);
+    }
+
+    /**
+     * Creates a Base16InputStream such that all data read is either Base16-encoded or Base16-decoded from the original
+     * provided InputStream.
+     *
+     * @param in InputStream to wrap.
+     * @param doEncode true if we should encode all data read from us, false if we should decode.
+     * @param lowerCase if {@code true} then use a lower-case Base16 alphabet.
+     * @param decodingPolicy Decoding policy.
+     */
+    public Base16InputStream(final InputStream in, final boolean doEncode,
+            final boolean lowerCase, final CodecPolicy decodingPolicy) {
+        super(in, new Base16(lowerCase, decodingPolicy), doEncode);
     }
 }

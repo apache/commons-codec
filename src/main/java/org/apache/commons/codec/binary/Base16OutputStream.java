@@ -17,8 +17,9 @@
 
 package org.apache.commons.codec.binary;
 
+import org.apache.commons.codec.CodecPolicy;
+
 import java.io.OutputStream;
-import java.nio.charset.Charset;
 
 /**
  * Provides Hex encoding and decoding in a streaming fashion (unlimited size).
@@ -48,7 +49,7 @@ public class Base16OutputStream extends BaseNCodecOutputStream {
      * @param doEncode true if we should encode all data written to us, false if we should decode.
      */
     public Base16OutputStream(final OutputStream out, final boolean doEncode) {
-        this(out, doEncode, true, Hex.DEFAULT_CHARSET);
+        this(out, doEncode, false);
     }
 
     /**
@@ -57,11 +58,24 @@ public class Base16OutputStream extends BaseNCodecOutputStream {
      *
      * @param out OutputStream to wrap.
      * @param doEncode true if we should encode all data written to us, false if we should decode.
-     * @param toLowerCase {@code true} converts to lowercase, {@code false} to uppercase.
-     * @param charset the charset.
+     * @param lowerCase if {@code true} then use a lower-case Base16 alphabet.
      */
     public Base16OutputStream(final OutputStream out, final boolean doEncode,
-            final boolean toLowerCase, final Charset charset) {
-        super(out, new Base16(toLowerCase, charset), doEncode);
+            final boolean lowerCase) {
+        this(out, doEncode, lowerCase, CodecPolicy.LENIENT);
+    }
+
+    /**
+     * Creates a Base16OutputStream such that all data written is either Hex-encoded or Hex-decoded to the
+     * original provided OutputStream.
+     *
+     * @param out OutputStream to wrap.
+     * @param doEncode true if we should encode all data written to us, false if we should decode.
+     * @param lowerCase if {@code true} then use a lower-case Base16 alphabet.
+     * @param decodingPolicy Decoding policy.
+     */
+    public Base16OutputStream(final OutputStream out, final boolean doEncode,
+            final boolean lowerCase, final CodecPolicy decodingPolicy) {
+        super(out, new Base16(lowerCase, decodingPolicy), doEncode);
     }
 }

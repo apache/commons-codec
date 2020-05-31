@@ -54,7 +54,7 @@ public class Base16OutputStreamTest {
     @Test
     public void testBase16OutputStreamByChunk() throws Exception {
         // Hello World test.
-        byte[] encoded = StringUtils.getBytesUtf8("48656c6c6f20576f726c64");
+        byte[] encoded = StringUtils.getBytesUtf8("48656C6C6F20576F726C64");
         byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
         testByChunk(encoded, decoded);
 
@@ -68,7 +68,7 @@ public class Base16OutputStreamTest {
             final byte[][] randomData = Base16TestData.randomData(i);
             encoded = randomData[1];
             decoded = randomData[0];
-            testByChunk(encoded, decoded);
+            testByChunk(encoded, decoded, true);
         }
     }
 
@@ -80,7 +80,7 @@ public class Base16OutputStreamTest {
     @Test
     public void testBase16OutputStreamByteByByte() throws IOException {
         // Hello World test.
-        byte[] encoded = StringUtils.getBytesUtf8("48656c6c6f20576f726c64");
+        byte[] encoded = StringUtils.getBytesUtf8("48656C6C6F20576F726C64");
         byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
         testByteByByte(encoded, decoded);
 
@@ -94,7 +94,7 @@ public class Base16OutputStreamTest {
             final byte[][] randomData = Base16TestData.randomData(i);
             encoded = randomData[1];
             decoded = randomData[0];
-            testByteByByte(encoded, decoded);
+            testByteByByte(encoded, decoded, true);
         }
     }
 
@@ -105,43 +105,12 @@ public class Base16OutputStreamTest {
      * By "[WRAP-WRAP-WRAP-etc...]" we mean situation where the Base16OutputStream wraps itself in encode and decode
      * mode over and over again.
      *
-     * @param encoded
-     *            base16 encoded data
-     * @param decoded
-     *            the data from above, but decoded
-     * @throws IOException
-     *             Usually signifies a bug in the Base16 commons-codec implementation.
+     * @param encoded base16 encoded data
+     * @param decoded the data from above, but decoded
+     * @throws IOException Usually signifies a bug in the Base16 commons-codec implementation.
      */
     private void testByChunk(final byte[] encoded, final byte[] decoded) throws IOException {
-
-        // Start with encode.
-        ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
-        OutputStream out = new Base16OutputStream(byteOut, true);
-        out.write(decoded);
-        out.close();
-        byte[] output = byteOut.toByteArray();
-        assertArrayEquals("Streaming chunked base16 encode", encoded, output);
-
-        // Now let's try decode.
-        byteOut = new ByteArrayOutputStream();
-        out = new Base16OutputStream(byteOut, false);
-        out.write(encoded);
-        out.close();
-        output = byteOut.toByteArray();
-        assertArrayEquals("Streaming chunked base16 decode", decoded, output);
-
-        // I always wanted to do this! (wrap encoder with decoder etc etc).
-        byteOut = new ByteArrayOutputStream();
-        out = byteOut;
-        for (int i = 0; i < 10; i++) {
-            out = new Base16OutputStream(out, false);
-            out = new Base16OutputStream(out, true);
-        }
-        out.write(decoded);
-        out.close();
-        output = byteOut.toByteArray();
-
-        assertArrayEquals("Streaming chunked base16 wrap-wrap-wrap!", decoded, output);
+        testByChunk(encoded, decoded, false);
     }
 
     /**
@@ -151,60 +120,110 @@ public class Base16OutputStreamTest {
      * By "[WRAP-WRAP-WRAP-etc...]" we mean situation where the Base16OutputStream wraps itself in encode and decode
      * mode over and over again.
      *
-     * @param encoded
-     *            base16 encoded data
-     * @param decoded
-     *            the data from above, but decoded
-     * @throws IOException
-     *             Usually signifies a bug in the Base16 commons-codec implementation.
+     * @param encoded base16 encoded data
+     * @param decoded the data from above, but decoded
+     * @param lowerCase if {@code true} then use a lower-case Base16 alphabet
+     * @throws IOException Usually signifies a bug in the Base16 commons-codec implementation.
      */
-    private void testByteByByte(final byte[] encoded, final byte[] decoded) throws IOException {
+    private void testByChunk(final byte[] encoded, final byte[] decoded, final boolean lowerCase) throws IOException {
 
         // Start with encode.
-        ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
-        OutputStream out = new Base16OutputStream(byteOut, true);
-        for (final byte element : decoded) {
-            out.write(element);
+        try (final ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
+                final OutputStream out = new Base16OutputStream(byteOut, true, lowerCase)) {
+            out.write(decoded);
+            final byte[] output = byteOut.toByteArray();
+            assertArrayEquals("Streaming chunked base16 encode", encoded, output);
         }
-        out.close();
-        byte[] output = byteOut.toByteArray();
-        assertArrayEquals("Streaming byte-by-byte base16 encode", encoded, output);
 
         // Now let's try decode.
-        byteOut = new ByteArrayOutputStream();
-        out = new Base16OutputStream(byteOut, false);
-        for (final byte element : encoded) {
-            out.write(element);
+        try (final ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
+                final OutputStream out = new Base16OutputStream(byteOut, false, lowerCase)) {
+            out.write(encoded);
+            final byte[] output = byteOut.toByteArray();
+            assertArrayEquals("Streaming chunked base16 decode", decoded, output);
         }
-        out.close();
-        output = byteOut.toByteArray();
-        assertArrayEquals("Streaming byte-by-byte base16 decode", decoded, output);
+
+        // wrap encoder with decoder
+        try (final ByteArrayOutputStream byteOut = new ByteArrayOutputStream()) {
+            final OutputStream decoderOut = new Base16OutputStream(byteOut, false, lowerCase);
+            final OutputStream encoderOut = new Base16OutputStream(decoderOut, true, lowerCase);
+
+            encoderOut.write(decoded);
+            final byte[] output = byteOut.toByteArray();
+
+            assertArrayEquals("Streaming chunked base16 wrap-wrap!", decoded, output);
+        }
+    }
+
+    /**
+     * Test method does three tests on the supplied data: 1. encoded ---[DECODE]--> decoded 2. decoded ---[ENCODE]-->
+     * encoded 3. decoded ---[WRAP-WRAP-WRAP-etc...] --> decoded
+     * <p/>
+     * By "[WRAP-WRAP-WRAP-etc...]" we mean situation where the Base16OutputStream wraps itself in encode and decode
+     * mode over and over again.
+     *
+     * @param encoded base16 encoded data
+     * @param decoded the data from above, but decoded
+     * @throws IOException Usually signifies a bug in the Base16 commons-codec implementation.
+     */
+    private void testByteByByte(final byte[] encoded, final byte[] decoded) throws IOException {
+        testByteByByte(encoded, decoded, false);
+    }
+
+    /**
+     * Test method does three tests on the supplied data: 1. encoded ---[DECODE]--> decoded 2. decoded ---[ENCODE]-->
+     * encoded 3. decoded ---[WRAP-WRAP-WRAP-etc...] --> decoded
+     * <p/>
+     * By "[WRAP-WRAP-WRAP-etc...]" we mean situation where the Base16OutputStream wraps itself in encode and decode
+     * mode over and over again.
+     *
+     * @param encoded base16 encoded data
+     * @param decoded the data from above, but decoded
+     * @throws IOException Usually signifies a bug in the Base16 commons-codec implementation.
+     */
+    private void testByteByByte(final byte[] encoded, final byte[] decoded, final boolean lowerCase) throws IOException {
+
+        // Start with encode.
+        try (final ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
+                final OutputStream out = new Base16OutputStream(byteOut, true, lowerCase)) {
+            for (final byte element : decoded) {
+                out.write(element);
+            }
+            final byte[] output = byteOut.toByteArray();
+            assertArrayEquals("Streaming byte-by-byte base16 encode", encoded, output);
+        }
+
+        // Now let's try decode.
+        try (final ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
+                final OutputStream out = new Base16OutputStream(byteOut, false, lowerCase)) {
+            for (final byte element : encoded) {
+                out.write(element);
+            }
+            final byte[] output = byteOut.toByteArray();
+            assertArrayEquals("Streaming byte-by-byte base16 decode", decoded, output);
+        }
 
         // Now let's try decode with tonnes of flushes.
-        byteOut = new ByteArrayOutputStream();
-        out = new Base16OutputStream(byteOut, false);
-        for (final byte element : encoded) {
-            out.write(element);
-            out.flush();
+        try (final ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
+                final OutputStream out = new Base16OutputStream(byteOut, false, lowerCase)) {
+            for (final byte element : encoded) {
+                out.write(element);
+                out.flush();
+            }
+            final byte[] output = byteOut.toByteArray();
+            assertArrayEquals("Streaming byte-by-byte flush() base16 decode", decoded, output);
         }
-        out.close();
-        output = byteOut.toByteArray();
-        assertArrayEquals("Streaming byte-by-byte flush() base16 decode", decoded, output);
 
-        // I always wanted to do this! (wrap encoder with decoder etc etc).
-        byteOut = new ByteArrayOutputStream();
-        out = byteOut;
-        for (int i = 0; i < 10; i++) {
-            out = new Base16OutputStream(out, false);
-            out = new Base16OutputStream(out, true);
+        // wrap encoder with decoder
+        try (final ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
+                final OutputStream decoderOut = new Base16OutputStream(byteOut, false, lowerCase);
+                final OutputStream encoderOut = new Base16OutputStream(decoderOut, true, lowerCase)) {
+            for (final byte element : decoded) {
+                encoderOut.write(element);
+            }
+            final byte[] output = byteOut.toByteArray();
+            assertArrayEquals("Streaming byte-by-byte base16 wrap-wrap!", decoded, output);
         }
-        for (final byte element : decoded) {
-            out.write(element);
-        }
-        out.close();
-        output = byteOut.toByteArray();
-
-        assertArrayEquals("Streaming byte-by-byte base16 wrap-wrap-wrap!", decoded, output);
     }
 
     /**
