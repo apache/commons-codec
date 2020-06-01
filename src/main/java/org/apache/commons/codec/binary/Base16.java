@@ -151,7 +151,7 @@ public class Base16 extends BaseNCodec {
 
         // small optimisation to short-cut the rest of this method when it is fed byte-by-byte
         if (availableChars == 1 && availableChars == dataLen) {
-            context.ibitWorkArea = data[offset];   // store 1/2 byte for next invocation of decode
+            context.ibitWorkArea = decodeOctet(data[offset]) + 1;   // store 1/2 byte for next invocation of decode, we offset by +1 as empty-value is 0
             return;
         }
 
@@ -164,27 +164,40 @@ public class Base16 extends BaseNCodec {
         int i = 0;
         if (dataLen < availableChars) {
             // we have 1/2 byte from previous invocation to decode
-            result = decodeTable[context.ibitWorkArea] << BITS_PER_ENCODED_BYTE;
-            result |= decodeTable[data[offset++]];
+            result = (context.ibitWorkArea - 1) << BITS_PER_ENCODED_BYTE;
+            result |= decodeOctet(data[offset++]);
             i = 2;
 
             buffer[context.pos++] = (byte)result;
 
-            // reset for next invocation!
-            context.ibitWorkArea = -1;
+            // reset to empty-value for next invocation!
+            context.ibitWorkArea = 0;
         }
 
         while (i < charsToProcess) {
-            result = decodeTable[data[offset++]] << BITS_PER_ENCODED_BYTE;
-            result |= decodeTable[data[offset++]];
+            result = decodeOctet(data[offset++]) << BITS_PER_ENCODED_BYTE;
+            result |= decodeOctet(data[offset++]);
             i += 2;
             buffer[context.pos++] = (byte)result;
         }
 
         // we have one char of a hex-pair left over
         if (i < dataLen) {
-            context.ibitWorkArea = data[i];   // store 1/2 byte for next invocation of decode
+            context.ibitWorkArea = decodeOctet(data[i]) + 1;   // store 1/2 byte for next invocation of decode, we offset by +1 as empty-value is 0
         }
+    }
+
+    private int decodeOctet(final byte octet) {
+        int decoded = -1;
+        if (octet >= 0 && octet < decodeTable.length) {
+            decoded = decodeTable[octet];
+        }
+
+        if (decoded == -1) {
+            throw new IllegalArgumentException("Invalid octet in encoded value: " + (int)octet);
+        }
+
+        return decoded;
     }
 
     @Override

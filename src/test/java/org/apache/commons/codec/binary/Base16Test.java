@@ -205,16 +205,17 @@ public class Base16Test {
 
     @Test
     public void testNonBase16Test() {
-        final byte[] bArray = { '%' };
+        final byte[] invalidEncodedChars = { '/', ':', '@', 'G', '%', '`', 'g' };
 
-        try {
-            final Base16 b16 = new Base16();
-            final byte[] result = b16.decode(bArray);
-
-            assertEquals("The result should be empty as the test encoded content did "
-                    + "not contain any valid base 16 characters", 0, result.length);
-        } catch (final Exception e) {
-            fail("Exception was thrown when trying to decode invalid Base16 encoded data");
+        final byte[] encoded = new byte[1];
+        for (final byte invalidEncodedChar : invalidEncodedChars) {
+            try {
+                encoded[0] = invalidEncodedChar;
+                new Base16().decode(encoded);
+                fail("IllegalArgumentException should have been thrown when trying to decode invalid Base16 char: " + (char)invalidEncodedChar);
+            } catch (final Exception e) {
+                assertTrue(e instanceof IllegalArgumentException);
+            }
         }
     }
 
@@ -591,14 +592,15 @@ public class Base16Test {
         final byte[] data = new byte[1];
 
         final Base16 b16 = new Base16();
+        assertEquals(0, context.ibitWorkArea);
 
         data[0] = (byte) 'E';
         b16.decode(data, 0, 1, context);
-        assertEquals(69, context.ibitWorkArea);
+        assertEquals(15, context.ibitWorkArea);
 
         data[0] = (byte) 'F';
         b16.decode(data, 0, 1, context);
-        assertEquals(-1, context.ibitWorkArea);
+        assertEquals(0, context.ibitWorkArea);
 
         assertEquals(-17, context.buffer[0]);
     }
