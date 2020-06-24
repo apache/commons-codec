@@ -220,7 +220,12 @@ public class Base16 extends BaseNCodec {
             return;
         }
 
-        final byte[] buffer = ensureBufferSize(length * BYTES_PER_ENCODED_BLOCK, context);
+        final int size = length * BYTES_PER_ENCODED_BLOCK;
+        if (size < 0) {
+            throw new IllegalArgumentException("Input length exceeds maximum size for encoded data: " + length);
+        }
+
+        final byte[] buffer = ensureBufferSize(size, context);
 
         final int end = offset + length;
         for (int i = offset; i < end; i++) {

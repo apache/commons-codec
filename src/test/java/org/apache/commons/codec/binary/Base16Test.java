@@ -483,6 +483,7 @@ public class Base16Test {
      *
      * @see <a href="https://issues.apache.org/jira/projects/CODEC/issues/CODEC-265">CODEC-265</a>
      */
+    @Test
     public void testCodec265_over() {
         // almost 1GiB file to encode: 2^29 bytes
         final int size1GiB = 1 << 29;
@@ -508,6 +509,12 @@ public class Base16Test {
         final byte[] bytes = new byte[size1GiB];
         final byte[] encoded = new Base16().encode(bytes);
         assertEquals(expectedLength, encoded.length);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void checkEncodeLengthBounds() {
+        final Base16 base16 = new Base16();
+        base16.encode(new byte[10], 0, 1 << 30);
     }
 
     @Test
