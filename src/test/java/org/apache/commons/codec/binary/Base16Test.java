@@ -117,7 +117,7 @@ public class Base16Test {
     @Test
     public void testConstructor_LowerCase() {
         final Base16 Base16 = new Base16(true);
-        final byte[] encoded = Base16.encode(Base16TestData.DECODED);
+        final byte[] encoded = Base16.encode(BaseNTestData.DECODED);
         final String expectedResult = Base16TestData.ENCODED_UTF8_LOWERCASE;
         final String result = StringUtils.newStringUtf8(encoded);
         assertEquals("new Base16(true)", expectedResult, result);
@@ -126,7 +126,7 @@ public class Base16Test {
     @Test
     public void testConstructor_LowerCase_DecodingPolicy() {
         final Base16 Base16 = new Base16(false, CodecPolicy.STRICT);
-        final byte[] encoded = Base16.encode(Base16TestData.DECODED);
+        final byte[] encoded = Base16.encode(BaseNTestData.DECODED);
         final String expectedResult = Base16TestData.ENCODED_UTF8_UPPERCASE;
         final String result = StringUtils.newStringUtf8(encoded);
         assertEquals("new Base16(false, CodecPolicy.STRICT)", result, expectedResult);

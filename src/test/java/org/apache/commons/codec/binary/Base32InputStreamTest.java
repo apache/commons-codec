@@ -57,7 +57,7 @@ public class Base32InputStreamTest {
 
         // we skip the first character read from the reader
         ins.skip(1);
-        final byte[] decodedBytes = Base32TestData.streamToBytes(ins, new byte[64]);
+        final byte[] decodedBytes = BaseNTestData.streamToBytes(ins, new byte[64]);
         final String str = StringUtils.newStringUtf8(decodedBytes);
 
         assertEquals(STRING_FIXTURE.substring(1), str);
@@ -222,7 +222,7 @@ public class Base32InputStreamTest {
         // test random data of sizes 0 thru 150
         final BaseNCodec codec = new Base32();
         for (int i = 0; i <= 150; i++) {
-            final byte[][] randomData = Base32TestData.randomData(codec, i);
+            final byte[][] randomData = BaseNTestData.randomData(codec, i);
             encoded = randomData[1];
             decoded = randomData[0];
             testByChunk(encoded, decoded, 0, LF);
@@ -256,7 +256,7 @@ public class Base32InputStreamTest {
         // test random data of sizes 0 thru 150
         final BaseNCodec codec = new Base32();
         for (int i = 0; i <= 150; i++) {
-            final byte[][] randomData = Base32TestData.randomData(codec, i);
+            final byte[][] randomData = BaseNTestData.randomData(codec, i);
             encoded = randomData[1];
             decoded = randomData[0];
             testByteByByte(encoded, decoded, 0, LF);
@@ -287,7 +287,7 @@ public class Base32InputStreamTest {
         InputStream in;
 
         in = new Base32InputStream(new ByteArrayInputStream(decoded), true, chunkSize, separator);
-        byte[] output = Base32TestData.streamToBytes(in);
+        byte[] output = BaseNTestData.streamToBytes(in);
 
         assertEquals("EOF", -1, in.read());
         assertEquals("Still EOF", -1, in.read());
@@ -295,7 +295,7 @@ public class Base32InputStreamTest {
 
         // Now let's try decode.
         in = new Base32InputStream(new ByteArrayInputStream(encoded));
-        output = Base32TestData.streamToBytes(in);
+        output = BaseNTestData.streamToBytes(in);
 
         assertEquals("EOF", -1, in.read());
         assertEquals("Still EOF", -1, in.read());
@@ -307,7 +307,7 @@ public class Base32InputStreamTest {
             in = new Base32InputStream(in, true, chunkSize, separator);
             in = new Base32InputStream(in, false);
         }
-        output = Base32TestData.streamToBytes(in);
+        output = BaseNTestData.streamToBytes(in);
 
         assertEquals("EOF", -1, in.read());
         assertEquals("Still EOF", -1, in.read());
@@ -572,13 +572,13 @@ public class Base32InputStreamTest {
             Base32InputStream in = new Base32InputStream(new ByteArrayInputStream(encoded), false);
             // Default is lenient decoding; it should not throw
             assertFalse(in.isStrictDecoding());
-            Base32TestData.streamToBytes(in);
+            BaseNTestData.streamToBytes(in);
 
             // Strict decoding should throw
             in = new Base32InputStream(new ByteArrayInputStream(encoded), false, 0, null, CodecPolicy.STRICT);
             assertTrue(in.isStrictDecoding());
             try {
-                Base32TestData.streamToBytes(in);
+                BaseNTestData.streamToBytes(in);
                 fail();
             } catch (final IllegalArgumentException ex) {
                 // expected

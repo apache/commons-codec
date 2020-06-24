@@ -244,7 +244,7 @@ public class Base32Test {
     public void testRandomBytes() {
         for (int i = 0; i < 20; i++) {
             final Base32 codec = new Base32();
-            final byte[][] b = Base32TestData.randomData(codec, i);
+            final byte[][] b = BaseNTestData.randomData(codec, i);
             assertEquals(""+i+" "+codec.lineLength,b[1].length,codec.getEncodedLength(b[0]));
             //assertEquals(b[0],codec.decode(b[1]));
         }
@@ -254,7 +254,7 @@ public class Base32Test {
     public void testRandomBytesChunked() {
         for (int i = 0; i < 20; i++) {
             final Base32 codec = new Base32(10);
-            final byte[][] b = Base32TestData.randomData(codec, i);
+            final byte[][] b = BaseNTestData.randomData(codec, i);
             assertEquals(""+i+" "+codec.lineLength,b[1].length,codec.getEncodedLength(b[0]));
             //assertEquals(b[0],codec.decode(b[1]));
         }
@@ -264,7 +264,7 @@ public class Base32Test {
     public void testRandomBytesHex() {
         for (int i = 0; i < 20; i++) {
             final Base32 codec = new Base32(true);
-            final byte[][] b = Base32TestData.randomData(codec, i);
+            final byte[][] b = BaseNTestData.randomData(codec, i);
             assertEquals(""+i+" "+codec.lineLength,b[1].length,codec.getEncodedLength(b[0]));
             //assertEquals(b[0],codec.decode(b[1]));
         }

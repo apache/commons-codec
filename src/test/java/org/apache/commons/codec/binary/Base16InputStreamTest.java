@@ -92,12 +92,13 @@ public class Base16InputStreamTest {
 
         // OpenSSL interop test.
         encoded = StringUtils.getBytesUtf8(Base16TestData.ENCODED_UTF8_UPPERCASE);
-        decoded = Base16TestData.DECODED;
+        decoded = BaseNTestData.DECODED;
         testByChunk(encoded, decoded);
 
         // test random data of sizes 0 thru 150
+        final BaseNCodec codec = new Base16(true);
         for (int i = 0; i <= 150; i++) {
-            final byte[][] randomData = Base16TestData.randomData(i);
+            final byte[][] randomData = BaseNTestData.randomData(codec, i);
             encoded = randomData[1];
             decoded = randomData[0];
             testByChunk(encoded, decoded, true);
@@ -123,12 +124,13 @@ public class Base16InputStreamTest {
 
         // OpenSSL interop test.
         encoded = StringUtils.getBytesUtf8(Base16TestData.ENCODED_UTF8_UPPERCASE);
-        decoded = Base16TestData.DECODED;
+        decoded = BaseNTestData.DECODED;
         testByteByByte(encoded, decoded);
 
         // test random data of sizes 0 thru 150
+        final BaseNCodec codec = new Base16(true);
         for (int i = 0; i <= 150; i++) {
-            final byte[][] randomData = Base16TestData.randomData(i);
+            final byte[][] randomData = BaseNTestData.randomData(codec, i);
             encoded = randomData[1];
             decoded = randomData[0];
             testByteByByte(encoded, decoded, true);
@@ -166,7 +168,7 @@ public class Base16InputStreamTest {
 
         // Start with encode.
         try (final InputStream in = new Base16InputStream(new ByteArrayInputStream(decoded), true, lowerCase)) {
-            final byte[] output = Base16TestData.streamToBytes(in);
+            final byte[] output = BaseNTestData.streamToBytes(in);
 
             assertEquals("EOF", -1, in.read());
             assertEquals("Still EOF", -1, in.read());
@@ -175,7 +177,7 @@ public class Base16InputStreamTest {
 
         // Now let's try decode.
         try (final InputStream in = new Base16InputStream(new ByteArrayInputStream(encoded), false, lowerCase)) {
-            final byte[] output = Base16TestData.streamToBytes(in);
+            final byte[] output = BaseNTestData.streamToBytes(in);
 
             assertEquals("EOF", -1, in.read());
             assertEquals("Still EOF", -1, in.read());
@@ -187,7 +189,7 @@ public class Base16InputStreamTest {
                 final InputStream inEncode = new Base16InputStream(in, true, lowerCase);
                 final InputStream inDecode = new Base16InputStream(inEncode, false, lowerCase)) {
 
-            final byte[] output = Base16TestData.streamToBytes(inDecode);
+            final byte[] output = BaseNTestData.streamToBytes(inDecode);
 
             assertEquals("EOF", -1, inDecode.read());
             assertEquals("Still EOF", -1, inDecode.read());

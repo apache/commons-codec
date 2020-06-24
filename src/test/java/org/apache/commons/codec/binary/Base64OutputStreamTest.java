@@ -111,18 +111,19 @@ public class Base64OutputStreamTest {
 
         // OpenSSL interop test.
         encoded = StringUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE);
-        decoded = Base64TestData.DECODED;
+        decoded = BaseNTestData.DECODED;
         testByChunk(encoded, decoded, BaseNCodec.PEM_CHUNK_SIZE, LF);
 
         // Single Line test.
         final String singleLine = Base64TestData.ENCODED_64_CHARS_PER_LINE.replaceAll("\n", "");
         encoded = StringUtils.getBytesUtf8(singleLine);
-        decoded = Base64TestData.DECODED;
+        decoded = BaseNTestData.DECODED;
         testByChunk(encoded, decoded, 0, LF);
 
         // test random data of sizes 0 thru 150
+        final BaseNCodec codec = new Base64(0, null, false);
         for (int i = 0; i <= 150; i++) {
-            final byte[][] randomData = Base64TestData.randomData(i, false);
+            final byte[][] randomData = BaseNTestData.randomData(codec, i);
             encoded = randomData[1];
             decoded = randomData[0];
             testByChunk(encoded, decoded, 0, LF);
@@ -149,18 +150,19 @@ public class Base64OutputStreamTest {
 
         // OpenSSL interop test.
         encoded = StringUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE);
-        decoded = Base64TestData.DECODED;
+        decoded = BaseNTestData.DECODED;
         testByteByByte(encoded, decoded, 64, LF);
 
         // Single Line test.
         final String singleLine = Base64TestData.ENCODED_64_CHARS_PER_LINE.replaceAll("\n", "");
         encoded = StringUtils.getBytesUtf8(singleLine);
-        decoded = Base64TestData.DECODED;
+        decoded = BaseNTestData.DECODED;
         testByteByByte(encoded, decoded, 0, LF);
 
         // test random data of sizes 0 thru 150
+        final BaseNCodec codec = new Base64(0, null, false);
         for (int i = 0; i <= 150; i++) {
-            final byte[][] randomData = Base64TestData.randomData(i, false);
+            final byte[][] randomData = BaseNTestData.randomData(codec, i);
             encoded = randomData[1];
             decoded = randomData[0];
             testByteByByte(encoded, decoded, 0, LF);

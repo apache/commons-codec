@@ -64,8 +64,9 @@ public class Base16OutputStreamTest {
         testByChunk(encoded, decoded);
 
         // test random data of sizes 0 thru 150
+        final BaseNCodec codec = new Base16(true);
         for (int i = 0; i <= 150; i++) {
-            final byte[][] randomData = Base16TestData.randomData(i);
+            final byte[][] randomData = BaseNTestData.randomData(codec, i);
             encoded = randomData[1];
             decoded = randomData[0];
             testByChunk(encoded, decoded, true);
@@ -90,8 +91,9 @@ public class Base16OutputStreamTest {
         testByteByByte(encoded, decoded);
 
         // test random data of sizes 0 thru 150
+        final BaseNCodec codec = new Base16(true);
         for (int i = 0; i <= 150; i++) {
-            final byte[][] randomData = Base16TestData.randomData(i);
+            final byte[][] randomData = BaseNTestData.randomData(codec, i);
             encoded = randomData[1];
             decoded = randomData[0];
             testByteByByte(encoded, decoded, true);
