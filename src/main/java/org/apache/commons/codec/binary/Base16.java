@@ -26,6 +26,15 @@ import org.apache.commons.codec.CodecPolicy;
  * This class is thread-safe.
  * </p>
  *
+ * This implementation strictly follows RFC 4648, and as such unlike
+ * the {@link Base32} and {@link Base64} implementations,
+ * it does not ignore invalid alphabet characters or whitespace,
+ * neither does it offer chunking or padding characters.
+ *
+ * The only additional feature above those specified in RFC 4648
+ * is support for working with a lower-case alphabet in addition
+ * to the default upper-case alphabet.
+ *
  * @see <a href="https://tools.ietf.org/html/rfc4648#section-8">RFC 4648 - 8. Base 16 Encoding</a>
  *
  * @since 1.15
