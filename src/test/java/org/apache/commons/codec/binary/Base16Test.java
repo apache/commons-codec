@@ -32,6 +32,7 @@ import java.util.Random;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -116,8 +117,8 @@ public class Base16Test {
 
     @Test
     public void testConstructor_LowerCase() {
-        final Base16 Base16 = new Base16(true);
-        final byte[] encoded = Base16.encode(BaseNTestData.DECODED);
+        final Base16 base16 = new Base16(true);
+        final byte[] encoded = base16.encode(BaseNTestData.DECODED);
         final String expectedResult = Base16TestData.ENCODED_UTF8_LOWERCASE;
         final String result = StringUtils.newStringUtf8(encoded);
         assertEquals("new Base16(true)", expectedResult, result);
@@ -125,11 +126,11 @@ public class Base16Test {
 
     @Test
     public void testConstructor_LowerCase_DecodingPolicy() {
-        final Base16 Base16 = new Base16(false, CodecPolicy.STRICT);
-        final byte[] encoded = Base16.encode(BaseNTestData.DECODED);
+        final Base16 base16 = new Base16(false, CodecPolicy.STRICT);
+        final byte[] encoded = base16.encode(BaseNTestData.DECODED);
         final String expectedResult = Base16TestData.ENCODED_UTF8_UPPERCASE;
         final String result = StringUtils.newStringUtf8(encoded);
-        assertEquals("new Base16(false, CodecPolicy.STRICT)", result, expectedResult);
+        assertEquals("new base16(false, CodecPolicy.STRICT)", result, expectedResult);
     }
 
     /**
@@ -435,27 +436,27 @@ public class Base16Test {
 
     @Test
     public void testByteToStringVariations() throws DecoderException {
-        final Base16 Base16 = new Base16();
+        final Base16 base16 = new Base16();
         final byte[] b1 = StringUtils.getBytesUtf8("Hello World");
         final byte[] b2 = new byte[0];
         final byte[] b3 = null;
 
-        assertEquals("byteToString Hello World", "48656C6C6F20576F726C64", Base16.encodeToString(b1));
+        assertEquals("byteToString Hello World", "48656C6C6F20576F726C64", base16.encodeToString(b1));
         assertEquals("byteToString static Hello World", "48656C6C6F20576F726C64", StringUtils.newStringUtf8(new Base16().encode(b1)));
-        assertEquals("byteToString \"\"", "", Base16.encodeToString(b2));
+        assertEquals("byteToString \"\"", "", base16.encodeToString(b2));
         assertEquals("byteToString static \"\"", "", StringUtils.newStringUtf8(new Base16().encode(b2)));
-        assertEquals("byteToString null", null, Base16.encodeToString(b3));
+        assertEquals("byteToString null", null, base16.encodeToString(b3));
         assertEquals("byteToString static null", null, StringUtils.newStringUtf8(new Base16().encode(b3)));
     }
 
     @Test
     public void testStringToByteVariations() throws DecoderException {
-        final Base16 Base16 = new Base16();
+        final Base16 base16 = new Base16();
         final String s1 = "48656C6C6F20576F726C64";
         final String s2 = "";
         final String s3 = null;
 
-        assertEquals("StringToByte Hello World", "Hello World", StringUtils.newStringUtf8(Base16.decode(s1)));
+        assertEquals("StringToByte Hello World", "Hello World", StringUtils.newStringUtf8(base16.decode(s1)));
         assertEquals("StringToByte Hello World", "Hello World",
                 StringUtils.newStringUtf8((byte[]) new Base16().decode((Object) s1)));
         assertEquals("StringToByte static Hello World", "Hello World",
@@ -587,22 +588,23 @@ public class Base16Test {
     @Test
     public void testDecodeSingleBytesOptimisation() {
         final BaseNCodec.Context context = new BaseNCodec.Context();
-        context.ibitWorkArea = 0;
+        assertEquals(0, context.ibitWorkArea);
+        assertNull(context.buffer);
 
         final byte[] data = new byte[1];
 
         final Base16 b16 = new Base16();
-        assertEquals(0, context.ibitWorkArea);
 
         data[0] = (byte) 'E';
         b16.decode(data, 0, 1, context);
         assertEquals(15, context.ibitWorkArea);
+        assertNull(context.buffer);
 
         data[0] = (byte) 'F';
         b16.decode(data, 0, 1, context);
         assertEquals(0, context.ibitWorkArea);
 
-        assertEquals(-17, context.buffer[0]);
+        assertEquals((byte)0xEF, context.buffer[0]);
     }
 
     @Test(expected=IllegalArgumentException.class)

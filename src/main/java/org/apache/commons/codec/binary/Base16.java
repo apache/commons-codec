@@ -149,14 +149,14 @@ public class Base16 extends BaseNCodec {
     void decode(final byte[] data, int offset, final int length, final Context context) {
         if (context.eof || length < 0) {
             context.eof = true;
-            if (context.ibitWorkArea > 0) {
+            if (context.ibitWorkArea != 0) {
                 validateTrailingCharacter();
             }
             return;
         }
 
         final int dataLen = Math.min(data.length - offset, length);
-        final int availableChars = (context.ibitWorkArea > 0 ? 1 : 0) + dataLen;
+        final int availableChars = (context.ibitWorkArea != 0 ? 1 : 0) + dataLen;
 
         // small optimisation to short-cut the rest of this method when it is fed byte-by-byte
         if (availableChars == 1 && availableChars == dataLen) {
@@ -198,7 +198,7 @@ public class Base16 extends BaseNCodec {
 
     private int decodeOctet(final byte octet) {
         int decoded = -1;
-        if (octet >= 0 && octet < decodeTable.length) {
+        if ((octet & 0xff) < decodeTable.length) {
             decoded = decodeTable[octet];
         }
 
@@ -241,7 +241,7 @@ public class Base16 extends BaseNCodec {
      */
     @Override
     public boolean isInAlphabet(final byte octet) {
-        return octet >= 0 && octet < decodeTable.length && decodeTable[octet] != -1;
+        return (octet & 0xff) < decodeTable.length && decodeTable[octet] != -1;
     }
 
     /**
