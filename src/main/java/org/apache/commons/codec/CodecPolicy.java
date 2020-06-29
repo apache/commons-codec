@@ -30,7 +30,7 @@ public enum CodecPolicy {
     STRICT,
 
     /**
-     * The strict policy. Data that causes a codec to fail should not throw an exception.
+     * The lenient policy. Data that causes a codec to fail should not throw an exception.
      */
     LENIENT
 }
