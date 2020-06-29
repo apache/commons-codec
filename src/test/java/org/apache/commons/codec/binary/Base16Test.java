@@ -543,6 +543,7 @@ public class Base16Test {
         assertFalse(b16.isInAlphabet((byte) ('0' - 1)));
         assertFalse(b16.isInAlphabet((byte) ('9' + 1)));
         assertFalse(b16.isInAlphabet((byte) ('a' - 1)));
+        assertFalse(b16.isInAlphabet((byte) ('f' + 1)));
         assertFalse(b16.isInAlphabet((byte) ('z' + 1)));
 
         // upper-case
@@ -560,6 +561,7 @@ public class Base16Test {
         assertFalse(b16.isInAlphabet((byte) ('9' + 1)));
         assertFalse(b16.isInAlphabet((byte) ('A' - 1)));
         assertFalse(b16.isInAlphabet((byte) ('F' + 1)));
+        assertFalse(b16.isInAlphabet((byte) ('Z' + 1)));
     }
 
     @Test
