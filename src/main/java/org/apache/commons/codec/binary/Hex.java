@@ -54,13 +54,13 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
     /**
      * Used to build output as Hex
      */
-    static final char[] DIGITS_LOWER = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd',
+    private static final char[] DIGITS_LOWER = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd',
             'e', 'f' };
 
     /**
      * Used to build output as Hex
      */
-    static final char[] DIGITS_UPPER = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D',
+    private static final char[] DIGITS_UPPER = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D',
             'E', 'F' };
 
     /**
@@ -73,38 +73,17 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * @throws DecoderException Thrown if an odd number or illegal of characters is supplied
      */
     public static byte[] decodeHex(final char[] data) throws DecoderException {
-        final byte[] out = new byte[data.length >> 1];
-        decodeHex(data, out, 0);
-        return out;
-    }
 
-    /**
-     * Converts an array of characters representing hexadecimal values into an array of bytes of those same values. The
-     * returned array will be half the length of the passed array, as it takes two characters to represent any given
-     * byte. An exception is thrown if the passed char array has an odd number of elements.
-     *
-     * @param data An array of characters containing hexadecimal digits
-     * @param out A byte array to contain the binary data decoded from the supplied char array.
-     * @param outOffset The position within {@code out} to start writing the decoded bytes.
-     * @return the number of bytes written to {@code out}.
-     * @throws DecoderException Thrown if an odd number or illegal of characters is supplied
-     *
-     * @since 1.15
-     */
-    public static int decodeHex(final char[] data, final byte[] out, final int outOffset) throws DecoderException {
         final int len = data.length;
 
         if ((len & 0x01) != 0) {
             throw new DecoderException("Odd number of characters.");
         }
 
-        final int outLen = len >> 1;
-        if (out.length - outOffset < outLen) {
-            throw new DecoderException("out is not large enough to accommodate decoded data.");
-        }
+        final byte[] out = new byte[len >> 1];
 
         // two characters form the hex value.
-        for (int i = outOffset, j = 0; j < len; i++) {
+        for (int i = 0, j = 0; j < len; i++) {
             int f = toDigit(data[j], j) << 4;
             j++;
             f = f | toDigit(data[j], j);
@@ -112,7 +91,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
             out[i] = (byte) (f & 0xFF);
         }
 
-        return outLen;
+        return out;
     }
 
     /**
@@ -169,62 +148,12 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
     protected static char[] encodeHex(final byte[] data, final char[] toDigits) {
         final int l = data.length;
         final char[] out = new char[l << 1];
-        encodeHex(data, 0, data.length, toDigits, out, 0);
-        return out;
-    }
-
-    /**
-     * Converts an array of bytes into an array of characters representing the hexadecimal values of each byte in order.
-     *
-     * @param data a byte[] to convert to Hex characters
-     * @param dataOffset the position in {@code data} to start encoding from
-     * @param dataLen the number of bytes from {@code dataOffset} to encode
-     * @param toLowerCase {@code true} converts to lowercase, {@code false} to uppercase
-     * @return A char[] containing the appropriate characters from the alphabet For best results, this should be either
-     *         upper- or lower-case hex.
-     * @since 1.15
-     */
-    protected static char[] encodeHex(final byte[] data, final int dataOffset, final int dataLen,
-            final boolean toLowerCase) {
-        final char[] out = new char[dataLen << 1];
-        encodeHex(data, dataOffset, dataLen, toLowerCase ? DIGITS_LOWER : DIGITS_UPPER, out, 0);
-        return out;
-    }
-
-    /**
-     * Converts an array of bytes into an array of characters representing the hexadecimal values of each byte in order.
-     *
-     * @param data a byte[] to convert to Hex characters
-     * @param dataOffset the position in {@code data} to start encoding from
-     * @param dataLen the number of bytes from {@code dataOffset} to encode
-     * @param toLowerCase {@code true} converts to lowercase, {@code false} to uppercase
-     * @param out a char[] which will hold the resultant appropriate characters from the alphabet.
-     * @param outOffset the position within {@code out} at which to start writing the encoded characters.
-     * @since 1.15
-     */
-    protected static void encodeHex(final byte[] data, final int dataOffset, final int dataLen,
-            final boolean toLowerCase, final char[] out, final int outOffset) {
-        encodeHex(data, dataOffset, dataLen, toLowerCase ? DIGITS_LOWER : DIGITS_UPPER, out, outOffset);
-    }
-
-    /**
-     * Converts an array of bytes into an array of characters representing the hexadecimal values of each byte in order.
-     *
-     * @param data a byte[] to convert to Hex characters
-     * @param dataOffset the position in {@code data} to start encoding from
-     * @param dataLen the number of bytes from {@code dataOffset} to encode
-     * @param toDigits the output alphabet (must contain at least 16 chars)
-     * @param out a char[] which will hold the resultant appropriate characters from the alphabet.
-     * @param outOffset the position within {@code out} at which to start writing the encoded characters.
-     * @since 1.15
-     */
-    protected static void encodeHex(final byte[] data, final int dataOffset, final int dataLen, final char[] toDigits,
-            final char[] out, final int outOffset) {
         // two characters form the hex value.
-        for (int i = dataOffset, j = outOffset; i < dataOffset + dataLen; i++) {
+        for (int i = 0, j = 0; i < l; i++) {
             out[j++] = toDigits[(0xF0 & data[i]) >>> 4];
             out[j++] = toDigits[0x0F & data[i]];
         }
+        return out;
     }
 
     /**
