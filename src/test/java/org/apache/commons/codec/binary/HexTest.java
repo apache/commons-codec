@@ -17,6 +17,7 @@
 
 package org.apache.commons.codec.binary;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -340,6 +341,18 @@ public class HexTest {
         checkDecodeHexCharArrayOddCharacters(new char[] { 'A', 'B', 'C', 'D', 'E' });
     }
 
+    @Test(expected = DecoderException.class)
+    public void testDecodeHexCharArrayOutBufferUnderSized() throws DecoderException {
+        final byte[] out = new byte[4];
+        Hex.decodeHex("aabbccddeeff".toCharArray(), out, 0);
+    }
+
+    @Test(expected = DecoderException.class)
+    public void testDecodeHexCharArrayOutBufferUnderSizedByOffset() throws DecoderException {
+        final byte[] out = new byte[6];
+        Hex.decodeHex("aabbccddeeff".toCharArray(), out, 1);
+    }
+
     @Test
     public void testDecodeHexStringOddCharacters() {
         try {
@@ -437,6 +450,27 @@ public class HexTest {
             encodedStringChars = (char[]) hex.encode(dataString);
             decodedBytes = (byte[]) hex.decode(new String(encodedStringChars));
             assertTrue(Arrays.equals(StringUtils.getBytesUtf8(dataString), decodedBytes));
+        }
+    }
+
+    @Test
+    public void testEncodeDecodeHexCharArrayRandomToOutput() throws DecoderException, EncoderException {
+        final Random random = new Random();
+        for (int i = 5; i > 0; i--) {
+            final byte[] data = new byte[random.nextInt(10000) + 1];
+            random.nextBytes(data);
+
+            // lower-case
+            final char[] lowerEncodedChars = new char[data.length * 2];
+            Hex.encodeHex(data, 0, data.length, true, lowerEncodedChars, 0);
+            final byte[] decodedLowerCaseBytes = Hex.decodeHex(lowerEncodedChars);
+            assertArrayEquals(data, decodedLowerCaseBytes);
+
+            // upper-case
+            final char[] upperEncodedChars = new char[data.length * 2];
+            Hex.encodeHex(data, 0, data.length, false, upperEncodedChars, 0);
+            final byte[] decodedUpperCaseBytes = Hex.decodeHex(upperEncodedChars);
+            assertArrayEquals(data, decodedUpperCaseBytes);
         }
     }
 
