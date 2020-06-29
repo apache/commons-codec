@@ -21,7 +21,6 @@ import org.apache.commons.codec.CodecPolicy;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.lang3.ArrayUtils;
-import org.junit.Assume;
 import org.junit.Test;
 
 import java.nio.charset.Charset;
@@ -476,39 +475,6 @@ public class Base16Test {
             }
         }
         return buf.toString();
-    }
-
-    /**
-     * Test for CODEC-265: Encode a ~1GiB file.
-     *
-     * @see <a href="https://issues.apache.org/jira/projects/CODEC/issues/CODEC-265">CODEC-265</a>
-     */
-    @Test
-    public void testCodec265_over() {
-        // almost 1GiB file to encode: 2^29 bytes
-        final int size1GiB = 1 << 29;
-
-        // Expecting a size of 2 output bytes per 1 input byte
-        final int blocks = size1GiB;
-        final int expectedLength = 2 * blocks;
-
-        // This test is memory hungry. Check we can run it.
-        final long presumableFreeMemory = BaseNCodecTest.getPresumableFreeMemory();
-
-        // Estimate the maximum memory required:
-        // 1GiB + 1GiB + ~2GiB + ~1.33GiB + 32 KiB  = ~5.33GiB
-        //
-        // 1GiB: Input buffer to encode
-        // 1GiB: Existing working buffer (due to doubling of default buffer size of 8192)
-        // ~2GiB: New working buffer to allocate (due to doubling)
-        // ~1.33GiB: Expected output size (since the working buffer is copied at the end)
-        // 32KiB: Some head room
-        final long estimatedMemory = (long) size1GiB * 4 + expectedLength + 32 * 1024;
-        Assume.assumeTrue("Not enough free memory for the test", presumableFreeMemory > estimatedMemory);
-
-        final byte[] bytes = new byte[size1GiB];
-        final byte[] encoded = new Base16().encode(bytes);
-        assertEquals(expectedLength, encoded.length);
     }
 
     @Test(expected = IllegalArgumentException.class)
