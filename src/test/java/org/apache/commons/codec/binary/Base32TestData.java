@@ -31,6 +31,4 @@ public class Base32TestData {
     static final String BASE32_FIXTURE = "JBSWY3DPEBLW64TMMQ======\r\n";
 //  static final String BASE32HEX_FIXTURE = "91IMOR3F41BMUSJCCG======";
 
-    // Some utility code to help test chunked reads of the InputStream.
-
 }
