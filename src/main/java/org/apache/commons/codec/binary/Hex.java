@@ -184,7 +184,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      *         upper- or lower-case hex.
      * @since 1.15
      */
-    protected static char[] encodeHex(final byte[] data, final int dataOffset, final int dataLen,
+    public static char[] encodeHex(final byte[] data, final int dataOffset, final int dataLen,
             final boolean toLowerCase) {
         final char[] out = new char[dataLen << 1];
         encodeHex(data, dataOffset, dataLen, toLowerCase ? DIGITS_LOWER : DIGITS_UPPER, out, 0);
@@ -202,7 +202,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * @param outOffset the position within {@code out} at which to start writing the encoded characters.
      * @since 1.15
      */
-    protected static void encodeHex(final byte[] data, final int dataOffset, final int dataLen,
+    public static void encodeHex(final byte[] data, final int dataOffset, final int dataLen,
             final boolean toLowerCase, final char[] out, final int outOffset) {
         encodeHex(data, dataOffset, dataLen, toLowerCase ? DIGITS_LOWER : DIGITS_UPPER, out, outOffset);
     }
