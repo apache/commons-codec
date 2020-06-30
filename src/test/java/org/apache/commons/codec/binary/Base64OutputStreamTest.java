@@ -17,17 +17,17 @@
 
 package org.apache.commons.codec.binary;
 
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
+
+import org.apache.commons.codec.CodecPolicy;
+import org.junit.Test;
+
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-
-import java.io.ByteArrayOutputStream;
-import java.io.OutputStream;
-import java.util.Arrays;
-
-import org.apache.commons.codec.CodecPolicy;
-import org.junit.Test;
 
 /**
  * @since 1.4
@@ -111,18 +111,19 @@ public class Base64OutputStreamTest {
 
         // OpenSSL interop test.
         encoded = StringUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE);
-        decoded = Base64TestData.DECODED;
+        decoded = BaseNTestData.DECODED;
         testByChunk(encoded, decoded, BaseNCodec.PEM_CHUNK_SIZE, LF);
 
         // Single Line test.
         final String singleLine = Base64TestData.ENCODED_64_CHARS_PER_LINE.replaceAll("\n", "");
         encoded = StringUtils.getBytesUtf8(singleLine);
-        decoded = Base64TestData.DECODED;
+        decoded = BaseNTestData.DECODED;
         testByChunk(encoded, decoded, 0, LF);
 
         // test random data of sizes 0 thru 150
+        final BaseNCodec codec = new Base64(0, null, false);
         for (int i = 0; i <= 150; i++) {
-            final byte[][] randomData = Base64TestData.randomData(i, false);
+            final byte[][] randomData = BaseNTestData.randomData(codec, i);
             encoded = randomData[1];
             decoded = randomData[0];
             testByChunk(encoded, decoded, 0, LF);
@@ -149,18 +150,19 @@ public class Base64OutputStreamTest {
 
         // OpenSSL interop test.
         encoded = StringUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE);
-        decoded = Base64TestData.DECODED;
+        decoded = BaseNTestData.DECODED;
         testByteByByte(encoded, decoded, 64, LF);
 
         // Single Line test.
         final String singleLine = Base64TestData.ENCODED_64_CHARS_PER_LINE.replaceAll("\n", "");
         encoded = StringUtils.getBytesUtf8(singleLine);
-        decoded = Base64TestData.DECODED;
+        decoded = BaseNTestData.DECODED;
         testByteByByte(encoded, decoded, 0, LF);
 
         // test random data of sizes 0 thru 150
+        final BaseNCodec codec = new Base64(0, null, false);
         for (int i = 0; i <= 150; i++) {
-            final byte[][] randomData = Base64TestData.randomData(i, false);
+            final byte[][] randomData = BaseNTestData.randomData(codec, i);
             encoded = randomData[1];
             decoded = randomData[0];
             testByteByByte(encoded, decoded, 0, LF);
@@ -193,7 +195,7 @@ public class Base64OutputStreamTest {
         out.write(decoded);
         out.close();
         byte[] output = byteOut.toByteArray();
-        assertTrue("Streaming chunked base64 encode", Arrays.equals(output, encoded));
+        assertArrayEquals("Streaming chunked base64 encode", encoded, output);
 
         // Now let's try decode.
         byteOut = new ByteArrayOutputStream();
@@ -201,7 +203,7 @@ public class Base64OutputStreamTest {
         out.write(encoded);
         out.close();
         output = byteOut.toByteArray();
-        assertTrue("Streaming chunked base64 decode", Arrays.equals(output, decoded));
+        assertArrayEquals("Streaming chunked base64 decode", decoded, output);
 
         // I always wanted to do this! (wrap encoder with decoder etc etc).
         byteOut = new ByteArrayOutputStream();
@@ -214,7 +216,7 @@ public class Base64OutputStreamTest {
         out.close();
         output = byteOut.toByteArray();
 
-        assertTrue("Streaming chunked base64 wrap-wrap-wrap!", Arrays.equals(output, decoded));
+        assertArrayEquals("Streaming chunked base64 wrap-wrap-wrap!", decoded, output);
     }
 
     /**
@@ -245,7 +247,7 @@ public class Base64OutputStreamTest {
         }
         out.close();
         byte[] output = byteOut.toByteArray();
-        assertTrue("Streaming byte-by-byte base64 encode", Arrays.equals(output, encoded));
+        assertArrayEquals("Streaming byte-by-byte base64 encode", encoded, output);
 
         // Now let's try decode.
         byteOut = new ByteArrayOutputStream();
@@ -255,7 +257,7 @@ public class Base64OutputStreamTest {
         }
         out.close();
         output = byteOut.toByteArray();
-        assertTrue("Streaming byte-by-byte base64 decode", Arrays.equals(output, decoded));
+        assertArrayEquals("Streaming byte-by-byte base64 decode", decoded, output);
 
         // Now let's try decode with tonnes of flushes.
         byteOut = new ByteArrayOutputStream();
@@ -266,7 +268,7 @@ public class Base64OutputStreamTest {
         }
         out.close();
         output = byteOut.toByteArray();
-        assertTrue("Streaming byte-by-byte flush() base64 decode", Arrays.equals(output, decoded));
+        assertArrayEquals("Streaming byte-by-byte flush() base64 decode", decoded, output);
 
         // I always wanted to do this! (wrap encoder with decoder etc etc).
         byteOut = new ByteArrayOutputStream();
@@ -281,7 +283,7 @@ public class Base64OutputStreamTest {
         out.close();
         output = byteOut.toByteArray();
 
-        assertTrue("Streaming byte-by-byte base64 wrap-wrap-wrap!", Arrays.equals(output, decoded));
+        assertArrayEquals("Streaming byte-by-byte base64 wrap-wrap-wrap!", decoded, output);
     }
 
     /**

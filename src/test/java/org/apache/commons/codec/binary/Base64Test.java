@@ -186,7 +186,7 @@ public class Base64Test {
      */
     @Test
     public void testChunkedEncodeMultipleOf76() {
-        final byte[] expectedEncode = Base64.encodeBase64(Base64TestData.DECODED, true);
+        final byte[] expectedEncode = Base64.encodeBase64(BaseNTestData.DECODED, true);
         // convert to "\r\n" so we're equal to the old openssl encoding test
         // stored
         // in Base64TestData.ENCODED_76_CHARS_PER_LINE:
@@ -309,7 +309,7 @@ public class Base64Test {
     @Test
     public void testConstructor_Int_ByteArray_Boolean() {
         final Base64 base64 = new Base64(65, new byte[] { '\t' }, false);
-        final byte[] encoded = base64.encode(Base64TestData.DECODED);
+        final byte[] encoded = base64.encode(BaseNTestData.DECODED);
         String expectedResult = Base64TestData.ENCODED_64_CHARS_PER_LINE;
         expectedResult = expectedResult.replace('\n', '\t');
         final String result = StringUtils.newStringUtf8(encoded);
@@ -320,7 +320,7 @@ public class Base64Test {
     public void testConstructor_Int_ByteArray_Boolean_UrlSafe() {
         // url-safe variation
         final Base64 base64 = new Base64(64, new byte[] { '\t' }, true);
-        final byte[] encoded = base64.encode(Base64TestData.DECODED);
+        final byte[] encoded = base64.encode(BaseNTestData.DECODED);
         String expectedResult = Base64TestData.ENCODED_64_CHARS_PER_LINE;
         expectedResult = expectedResult.replaceAll("=", ""); // url-safe has no
                                                                 // == padding.
@@ -450,7 +450,7 @@ public class Base64Test {
 
     private void testEncodeOverMaxSize(final int maxSize) throws Exception {
         try {
-            Base64.encodeBase64(Base64TestData.DECODED, true, false, maxSize);
+            Base64.encodeBase64(BaseNTestData.DECODED, true, false, maxSize);
             fail("Expected " + IllegalArgumentException.class.getName());
         } catch (final IllegalArgumentException e) {
             // Expected
@@ -1149,15 +1149,16 @@ public class Base64Test {
     @Test
     public void testUrlSafe() {
         // test random data of sizes 0 thru 150
+        final BaseNCodec codec = new Base64(true);
         for (int i = 0; i <= 150; i++) {
-            final byte[][] randomData = Base64TestData.randomData(i, true);
+            final byte[][] randomData = BaseNTestData.randomData(codec, i);
             final byte[] encoded = randomData[1];
             final byte[] decoded = randomData[0];
             final byte[] result = Base64.decodeBase64(encoded);
             assertTrue("url-safe i=" + i, Arrays.equals(decoded, result));
-            assertFalse("url-safe i=" + i + " no '='", Base64TestData.bytesContain(encoded, (byte) '='));
-            assertFalse("url-safe i=" + i + " no '\\'", Base64TestData.bytesContain(encoded, (byte) '\\'));
-            assertFalse("url-safe i=" + i + " no '+'", Base64TestData.bytesContain(encoded, (byte) '+'));
+            assertFalse("url-safe i=" + i + " no '='", BaseNTestData.bytesContain(encoded, (byte) '='));
+            assertFalse("url-safe i=" + i + " no '\\'", BaseNTestData.bytesContain(encoded, (byte) '\\'));
+            assertFalse("url-safe i=" + i + " no '+'", BaseNTestData.bytesContain(encoded, (byte) '+'));
         }
 
     }

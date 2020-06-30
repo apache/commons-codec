@@ -17,23 +17,22 @@
 
 package org.apache.commons.codec.binary;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 
 import org.apache.commons.codec.CodecPolicy;
 import org.junit.Test;
+
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * @since 1.4
@@ -66,7 +65,7 @@ public class Base64InputStreamTest {
 
         // we skip the first character read from the reader
         ins.skip(1);
-        final byte[] decodedBytes = Base64TestData.streamToBytes(ins, new byte[64]);
+        final byte[] decodedBytes = BaseNTestData.streamToBytes(ins, new byte[64]);
         final String str = StringUtils.newStringUtf8(decodedBytes);
 
         assertEquals(STRING_FIXTURE.substring(1), str);
@@ -144,7 +143,7 @@ public class Base64InputStreamTest {
         final Base64InputStream stream = new Base64InputStream(data);
 
         // This line causes an NPE in commons-codec-1.4.jar:
-        final byte[] decodedBytes = Base64TestData.streamToBytes(stream, new byte[1024]);
+        final byte[] decodedBytes = BaseNTestData.streamToBytes(stream, new byte[1024]);
 
         final String decoded = StringUtils.newStringUtf8(decodedBytes);
         assertEquals("codec-98 NPE Base64InputStream", Base64TestData.CODEC_98_NPE_DECODED, decoded);
@@ -219,18 +218,19 @@ public class Base64InputStreamTest {
 
         // OpenSSL interop test.
         encoded = StringUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE);
-        decoded = Base64TestData.DECODED;
+        decoded = BaseNTestData.DECODED;
         testByChunk(encoded, decoded, BaseNCodec.PEM_CHUNK_SIZE, LF);
 
         // Single Line test.
         final String singleLine = Base64TestData.ENCODED_64_CHARS_PER_LINE.replaceAll("\n", "");
         encoded = StringUtils.getBytesUtf8(singleLine);
-        decoded = Base64TestData.DECODED;
+        decoded = BaseNTestData.DECODED;
         testByChunk(encoded, decoded, 0, LF);
 
         // test random data of sizes 0 thru 150
+        final BaseNCodec codec = new Base64(0, null, false);
         for (int i = 0; i <= 150; i++) {
-            final byte[][] randomData = Base64TestData.randomData(i, false);
+            final byte[][] randomData = BaseNTestData.randomData(codec, i);
             encoded = randomData[1];
             decoded = randomData[0];
             testByChunk(encoded, decoded, 0, LF);
@@ -257,18 +257,19 @@ public class Base64InputStreamTest {
 
         // OpenSSL interop test.
         encoded = StringUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE);
-        decoded = Base64TestData.DECODED;
+        decoded = BaseNTestData.DECODED;
         testByteByByte(encoded, decoded, BaseNCodec.PEM_CHUNK_SIZE, LF);
 
         // Single Line test.
         final String singleLine = Base64TestData.ENCODED_64_CHARS_PER_LINE.replaceAll("\n", "");
         encoded = StringUtils.getBytesUtf8(singleLine);
-        decoded = Base64TestData.DECODED;
+        decoded = BaseNTestData.DECODED;
         testByteByByte(encoded, decoded, 0, LF);
 
         // test random data of sizes 0 thru 150
+        final BaseNCodec codec = new Base64(0, null, false);
         for (int i = 0; i <= 150; i++) {
-            final byte[][] randomData = Base64TestData.randomData(i, false);
+            final byte[][] randomData = BaseNTestData.randomData(codec, i);
             encoded = randomData[1];
             decoded = randomData[0];
             testByteByByte(encoded, decoded, 0, LF);
@@ -298,21 +299,21 @@ public class Base64InputStreamTest {
         // Start with encode.
         InputStream in;
         in = new Base64InputStream(new ByteArrayInputStream(decoded), true, chunkSize, separator);
-        byte[] output = Base64TestData.streamToBytes(in);
+        byte[] output = BaseNTestData.streamToBytes(in);
 
         assertEquals("EOF", -1, in.read());
         assertEquals("Still EOF", -1, in.read());
-        assertTrue("Streaming base64 encode", Arrays.equals(output, encoded));
+        assertArrayEquals("Streaming base64 encode", encoded, output);
 
         in.close();
 
         // Now let's try decode.
         in = new Base64InputStream(new ByteArrayInputStream(encoded));
-        output = Base64TestData.streamToBytes(in);
+        output = BaseNTestData.streamToBytes(in);
 
         assertEquals("EOF", -1, in.read());
         assertEquals("Still EOF", -1, in.read());
-        assertTrue("Streaming base64 decode", Arrays.equals(output, decoded));
+        assertArrayEquals("Streaming base64 decode", decoded, output);
 
         // I always wanted to do this! (wrap encoder with decoder etc etc).
         in = new ByteArrayInputStream(decoded);
@@ -320,11 +321,11 @@ public class Base64InputStreamTest {
             in = new Base64InputStream(in, true, chunkSize, separator);
             in = new Base64InputStream(in, false);
         }
-        output = Base64TestData.streamToBytes(in);
+        output = BaseNTestData.streamToBytes(in);
 
         assertEquals("EOF", -1, in.read());
         assertEquals("Still EOF", -1, in.read());
-        assertTrue("Streaming base64 wrap-wrap-wrap!", Arrays.equals(output, decoded));
+        assertArrayEquals("Streaming base64 wrap-wrap-wrap!", decoded, output);
         in.close();
     }
 
@@ -358,7 +359,7 @@ public class Base64InputStreamTest {
 
         assertEquals("EOF", -1, in.read());
         assertEquals("Still EOF", -1, in.read());
-        assertTrue("Streaming base64 encode", Arrays.equals(output, encoded));
+        assertArrayEquals("Streaming base64 encode", encoded, output);
 
         in.close();
         // Now let's try decode.
@@ -370,7 +371,7 @@ public class Base64InputStreamTest {
 
         assertEquals("EOF", -1, in.read());
         assertEquals("Still EOF", -1, in.read());
-        assertTrue("Streaming base64 decode", Arrays.equals(output, decoded));
+        assertArrayEquals("Streaming base64 decode", decoded, output);
 
         in.close();
 
@@ -387,7 +388,7 @@ public class Base64InputStreamTest {
 
         assertEquals("EOF", -1, in.read());
         assertEquals("Still EOF", -1, in.read());
-        assertTrue("Streaming base64 wrap-wrap-wrap!", Arrays.equals(output, decoded));
+        assertArrayEquals("Streaming base64 wrap-wrap-wrap!", decoded, output);
         in.close();
     }
 
@@ -585,13 +586,13 @@ public class Base64InputStreamTest {
             Base64InputStream in = new Base64InputStream(new ByteArrayInputStream(encoded), false);
             // Default is lenient decoding; it should not throw
             assertFalse(in.isStrictDecoding());
-            Base64TestData.streamToBytes(in);
+            BaseNTestData.streamToBytes(in);
 
             // Strict decoding should throw
             in = new Base64InputStream(new ByteArrayInputStream(encoded), false, 0, null, CodecPolicy.STRICT);
             assertTrue(in.isStrictDecoding());
             try {
-                Base64TestData.streamToBytes(in);
+                BaseNTestData.streamToBytes(in);
                 fail();
             } catch (final IllegalArgumentException ex) {
                 // expected

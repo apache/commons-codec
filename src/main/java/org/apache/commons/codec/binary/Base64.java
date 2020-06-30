@@ -841,7 +841,7 @@ public class Base64 extends BaseNCodec {
         if (isStrictDecoding()) {
             throw new IllegalArgumentException(
                 "Strict decoding: Last encoded character (before the paddings if any) is a valid base 64 alphabet but not a possible encoding. " +
-                "Decoding requries at least two trailing 6-bit characters to create bytes.");
+                "Decoding requires at least two trailing 6-bit characters to create bytes.");
         }
     }
 
