@@ -301,7 +301,7 @@ public class Base16InputStreamTest {
     /**
      * Tests read with null.
      *
-     * @throws Exception for some failure scenarios.
+     * @throws IOException for some failure scenarios.
      */
     @Test
     public void testReadNull() throws IOException {
