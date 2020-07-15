@@ -30,7 +30,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.charset.UnsupportedCharsetException;
 import java.util.Arrays;
 import java.util.Random;
-
+import java.util.concurrent.ThreadLocalRandom;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 import org.junit.Assert;
@@ -422,12 +422,11 @@ public class HexTest {
 
     @Test
     public void testEncodeDecodeHexCharArrayRandom() throws DecoderException, EncoderException {
-        final Random random = new Random();
 
         final Hex hex = new Hex();
         for (int i = 5; i > 0; i--) {
-            final byte[] data = new byte[random.nextInt(10000) + 1];
-            random.nextBytes(data);
+            final byte[] data = new byte[ThreadLocalRandom.current().nextInt(10000) + 1];
+            ThreadLocalRandom.current().nextBytes(data);
 
             // static API
             final char[] encodedChars = Hex.encodeHex(data);
@@ -455,10 +454,9 @@ public class HexTest {
 
     @Test
     public void testEncodeDecodeHexCharArrayRandomToOutput() throws DecoderException, EncoderException {
-        final Random random = new Random();
         for (int i = 5; i > 0; i--) {
-            final byte[] data = new byte[random.nextInt(10000) + 1];
-            random.nextBytes(data);
+            final byte[] data = new byte[ThreadLocalRandom.current().nextInt(10000) + 1];
+            ThreadLocalRandom.current().nextBytes(data);
 
             // lower-case
             final char[] lowerEncodedChars = new char[data.length * 2];
