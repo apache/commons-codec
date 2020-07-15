@@ -17,7 +17,6 @@
 
 package org.apache.commons.codec.binary;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -70,7 +69,7 @@ public class HexTest {
      * @return the byte buffer
      */
     private ByteBuffer getByteBufferUtf8(final String string) {
-        final byte[] bytes = string.getBytes(UTF_8);
+        final byte[] bytes = string.getBytes(StandardCharsets.UTF_8);
         final ByteBuffer bb = allocate(bytes.length);
         bb.put(bytes);
         bb.flip();
@@ -586,7 +585,7 @@ public class HexTest {
 
     @Test
     public void testEncodeHexPartialInput() {
-        final byte data[] = "hello world".getBytes(UTF_8);
+        final byte data[] = "hello world".getBytes(StandardCharsets.UTF_8);
 
         char[] hex = Hex.encodeHex(data, 0, 0, true);
         assertArrayEquals(new char[0], hex);
@@ -612,7 +611,7 @@ public class HexTest {
 
     @Test(expected=ArrayIndexOutOfBoundsException.class)
     public void testEncodeHexPartialInputUnderbounds() {
-        final byte data[] = "hello world".getBytes(UTF_8);
+        final byte data[] = "hello world".getBytes(StandardCharsets.UTF_8);
 
         final char[] hex = Hex.encodeHex(data, -2, 10, true);
         assertArrayEquals("64".toCharArray(), hex);
@@ -620,7 +619,7 @@ public class HexTest {
 
     @Test(expected=ArrayIndexOutOfBoundsException.class)
     public void testEncodeHexPartialInputOverbounds() {
-        final byte data[] = "hello world".getBytes(UTF_8);
+        final byte data[] = "hello world".getBytes(StandardCharsets.UTF_8);
 
         final char[] hex = Hex.encodeHex(data, 9, 10, true);
         assertArrayEquals("64".toCharArray(), hex);
@@ -713,12 +712,12 @@ public class HexTest {
 
     @Test
     public void testGetCharset() {
-        Assert.assertEquals(UTF_8, new Hex(UTF_8).getCharset());
+        Assert.assertEquals(StandardCharsets.UTF_8, new Hex(StandardCharsets.UTF_8).getCharset());
     }
 
     @Test
     public void testGetCharsetName() {
-        Assert.assertEquals(UTF_8.name(), new Hex(UTF_8).getCharsetName());
+        Assert.assertEquals(StandardCharsets.UTF_8.name(), new Hex(StandardCharsets.UTF_8).getCharsetName());
     }
 
     @Test
