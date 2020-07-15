@@ -216,9 +216,8 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * @param toDigits the output alphabet (must contain at least 16 chars)
      * @param out a char[] which will hold the resultant appropriate characters from the alphabet.
      * @param outOffset the position within {@code out} at which to start writing the encoded characters.
-     * @since 1.15
      */
-    protected static void encodeHex(final byte[] data, final int dataOffset, final int dataLen, final char[] toDigits,
+    private static void encodeHex(final byte[] data, final int dataOffset, final int dataLen, final char[] toDigits,
             final char[] out, final int outOffset) {
         // two characters form the hex value.
         for (int i = dataOffset, j = outOffset; i < dataOffset + dataLen; i++) {
