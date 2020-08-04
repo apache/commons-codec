@@ -96,7 +96,7 @@ public final class HmacUtils {
      * </p>
      *
      * @param key
-     *            They key for the keyed digest (must not be null)
+     *            The key for the keyed digest (must not be null)
      * @return A Mac instance initialized with the given key.
      * @see Mac#getInstance(String)
      * @see Mac#init(Key)
@@ -116,7 +116,7 @@ public final class HmacUtils {
      * </p>
      *
      * @param key
-     *            They key for the keyed digest (must not be null)
+     *            The key for the keyed digest (must not be null)
      * @return A Mac instance initialized with the given key.
      * @see Mac#getInstance(String)
      * @see Mac#init(Key)
@@ -136,7 +136,7 @@ public final class HmacUtils {
      * </p>
      *
      * @param key
-     *            They key for the keyed digest (must not be null)
+     *            The key for the keyed digest (must not be null)
      * @return A Mac instance initialized with the given key.
      * @see Mac#getInstance(String)
      * @see Mac#init(Key)
@@ -156,7 +156,7 @@ public final class HmacUtils {
      * </p>
      *
      * @param key
-     *            They key for the keyed digest (must not be null)
+     *            The key for the keyed digest (must not be null)
      * @return A Mac instance initialized with the given key.
      * @see Mac#getInstance(String)
      * @see Mac#init(Key)
@@ -176,7 +176,7 @@ public final class HmacUtils {
      * </p>
      *
      * @param key
-     *            They key for the keyed digest (must not be null)
+     *            The key for the keyed digest (must not be null)
      * @return A Mac instance initialized with the given key.
      * @see Mac#getInstance(String)
      * @see Mac#init(Key)
@@ -198,7 +198,7 @@ public final class HmacUtils {
      *            >Appendix A in the Java Cryptography Architecture Reference Guide</a> for information about standard
      *            algorithm names.
      * @param key
-     *            They key for the keyed digest (must not be null)
+     *            The key for the keyed digest (must not be null)
      * @return A Mac instance initialized with the given key.
      * @see Mac#getInstance(String)
      * @see Mac#init(Key)
@@ -218,7 +218,7 @@ public final class HmacUtils {
      *            >Appendix A in the Java Cryptography Architecture Reference Guide</a> for information about standard
      *            algorithm names.
      * @param key
-     *            They key for the keyed digest (must not be null)
+     *            The key for the keyed digest (must not be null)
      * @return A Mac instance initialized with the given key.
      * @see Mac#getInstance(String)
      * @see Mac#init(Key)
@@ -249,7 +249,7 @@ public final class HmacUtils {
      * Returns a HmacMD5 Message Authentication Code (MAC) for the given key and value.
      *
      * @param key
-     *            They key for the keyed digest (must not be null)
+     *            The key for the keyed digest (must not be null)
      * @param valueToDigest
      *            The value (data) which should to digest (maybe empty or null)
      * @return HmacMD5 MAC for the given key and value
@@ -266,7 +266,7 @@ public final class HmacUtils {
      * Returns a HmacMD5 Message Authentication Code (MAC) for the given key and value.
      *
      * @param key
-     *            They key for the keyed digest (must not be null)
+     *            The key for the keyed digest (must not be null)
      * @param valueToDigest
      *            The value (data) which should to digest
      *            <p>
@@ -288,7 +288,7 @@ public final class HmacUtils {
      * Returns a HmacMD5 Message Authentication Code (MAC) for the given key and value.
      *
      * @param key
-     *            They key for the keyed digest (must not be null)
+     *            The key for the keyed digest (must not be null)
      * @param valueToDigest
      *            The value (data) which should to digest (maybe empty or null)
      * @return HmacMD5 MAC for the given key and value
@@ -305,7 +305,7 @@ public final class HmacUtils {
      * Returns a HmacMD5 Message Authentication Code (MAC) as a hex string (lowercase) for the given key and value.
      *
      * @param key
-     *            They key for the keyed digest (must not be null)
+     *            The key for the keyed digest (must not be null)
      * @param valueToDigest
      *            The value (data) which should to digest (maybe empty or null)
      * @return HmacMD5 MAC for the given key and value as a hex string (lowercase)
@@ -322,7 +322,7 @@ public final class HmacUtils {
      * Returns a HmacMD5 Message Authentication Code (MAC) as a hex string (lowercase) for the given key and value.
      *
      * @param key
-     *            They key for the keyed digest (must not be null)
+     *            The key for the keyed digest (must not be null)
      * @param valueToDigest
      *            The value (data) which should to digest
      *            <p>
@@ -344,7 +344,7 @@ public final class HmacUtils {
      * Returns a HmacMD5 Message Authentication Code (MAC) as a hex string (lowercase) for the given key and value.
      *
      * @param key
-     *            They key for the keyed digest (must not be null)
+     *            The key for the keyed digest (must not be null)
      * @param valueToDigest
      *            The value (data) which should to digest (maybe empty or null)
      * @return HmacMD5 MAC for the given key and value as a hex string (lowercase)
@@ -363,7 +363,7 @@ public final class HmacUtils {
      * Returns a HmacSHA1 Message Authentication Code (MAC) for the given key and value.
      *
      * @param key
-     *            They key for the keyed digest (must not be null)
+     *            The key for the keyed digest (must not be null)
      * @param valueToDigest
      *            The value (data) which should to digest (maybe empty or null)
      * @return HmacSHA1 MAC for the given key and value
@@ -380,7 +380,7 @@ public final class HmacUtils {
      * Returns a HmacSHA1 Message Authentication Code (MAC) for the given key and value.
      *
      * @param key
-     *            They key for the keyed digest (must not be null)
+     *            The key for the keyed digest (must not be null)
      * @param valueToDigest
      *            The value (data) which should to digest
      *            <p>
@@ -402,7 +402,7 @@ public final class HmacUtils {
      * Returns a HmacSHA1 Message Authentication Code (MAC) for the given key and value.
      *
      * @param key
-     *            They key for the keyed digest (must not be null)
+     *            The key for the keyed digest (must not be null)
      * @param valueToDigest
      *            The value (data) which should to digest (maybe empty or null)
      * @return HmacSHA1 MAC for the given key and value
@@ -419,7 +419,7 @@ public final class HmacUtils {
      * Returns a HmacSHA1 Message Authentication Code (MAC) as hex string (lowercase) for the given key and value.
      *
      * @param key
-     *            They key for the keyed digest (must not be null)
+     *            The key for the keyed digest (must not be null)
      * @param valueToDigest
      *            The value (data) which should to digest (maybe empty or null)
      * @return HmacSHA1 MAC for the given key and value as hex string (lowercase)
@@ -436,7 +436,7 @@ public final class HmacUtils {
      * Returns a HmacSHA1 Message Authentication Code (MAC) as hex string (lowercase) for the given key and value.
      *
      * @param key
-     *            They key for the keyed digest (must not be null)
+     *            The key for the keyed digest (must not be null)
      * @param valueToDigest
      *            The value (data) which should to digest
      *            <p>
@@ -458,7 +458,7 @@ public final class HmacUtils {
      * Returns a HmacSHA1 Message Authentication Code (MAC) as hex string (lowercase) for the given key and value.
      *
      * @param key
-     *            They key for the keyed digest (must not be null)
+     *            The key for the keyed digest (must not be null)
      * @param valueToDigest
      *            The value (data) which should to digest (maybe empty or null)
      * @return HmacSHA1 MAC for the given key and value as hex string (lowercase)
@@ -477,7 +477,7 @@ public final class HmacUtils {
      * Returns a HmacSHA256 Message Authentication Code (MAC) for the given key and value.
      *
      * @param key
-     *            They key for the keyed digest (must not be null)
+     *            The key for the keyed digest (must not be null)
      * @param valueToDigest
      *            The value (data) which should to digest (maybe empty or null)
      * @return HmacSHA256 MAC for the given key and value
@@ -494,7 +494,7 @@ public final class HmacUtils {
      * Returns a HmacSHA256 Message Authentication Code (MAC) for the given key and value.
      *
      * @param key
-     *            They key for the keyed digest (must not be null)
+     *            The key for the keyed digest (must not be null)
      * @param valueToDigest
      *            The value (data) which should to digest
      *            <p>
@@ -516,7 +516,7 @@ public final class HmacUtils {
      * Returns a HmacSHA256 Message Authentication Code (MAC) for the given key and value.
      *
      * @param key
-     *            They key for the keyed digest (must not be null)
+     *            The key for the keyed digest (must not be null)
      * @param valueToDigest
      *            The value (data) which should to digest (maybe empty or null)
      * @return HmacSHA256 MAC for the given key and value
@@ -533,7 +533,7 @@ public final class HmacUtils {
      * Returns a HmacSHA256 Message Authentication Code (MAC) as hex string (lowercase) for the given key and value.
      *
      * @param key
-     *            They key for the keyed digest (must not be null)
+     *            The key for the keyed digest (must not be null)
      * @param valueToDigest
      *            The value (data) which should to digest (maybe empty or null)
      * @return HmacSHA256 MAC for the given key and value as hex string (lowercase)
@@ -550,7 +550,7 @@ public final class HmacUtils {
      * Returns a HmacSHA256 Message Authentication Code (MAC) as hex string (lowercase) for the given key and value.
      *
      * @param key
-     *            They key for the keyed digest (must not be null)
+     *            The key for the keyed digest (must not be null)
      * @param valueToDigest
      *            The value (data) which should to digest
      *            <p>
@@ -572,7 +572,7 @@ public final class HmacUtils {
      * Returns a HmacSHA256 Message Authentication Code (MAC) as hex string (lowercase) for the given key and value.
      *
      * @param key
-     *            They key for the keyed digest (must not be null)
+     *            The key for the keyed digest (must not be null)
      * @param valueToDigest
      *            The value (data) which should to digest (maybe empty or null)
      * @return HmacSHA256 MAC for the given key and value as hex string (lowercase)
@@ -591,7 +591,7 @@ public final class HmacUtils {
      * Returns a HmacSHA384 Message Authentication Code (MAC) for the given key and value.
      *
      * @param key
-     *            They key for the keyed digest (must not be null)
+     *            The key for the keyed digest (must not be null)
      * @param valueToDigest
      *            The value (data) which should to digest (maybe empty or null)
      * @return HmacSHA384 MAC for the given key and value
@@ -608,7 +608,7 @@ public final class HmacUtils {
      * Returns a HmacSHA384 Message Authentication Code (MAC) for the given key and value.
      *
      * @param key
-     *            They key for the keyed digest (must not be null)
+     *            The key for the keyed digest (must not be null)
      * @param valueToDigest
      *            The value (data) which should to digest
      *            <p>
@@ -630,7 +630,7 @@ public final class HmacUtils {
      * Returns a HmacSHA384 Message Authentication Code (MAC) for the given key and value.
      *
      * @param key
-     *            They key for the keyed digest (must not be null)
+     *            The key for the keyed digest (must not be null)
      * @param valueToDigest
      *            The value (data) which should to digest (maybe empty or null)
      * @return HmacSHA384 MAC for the given key and value
@@ -647,7 +647,7 @@ public final class HmacUtils {
      * Returns a HmacSHA384 Message Authentication Code (MAC) as hex string (lowercase) for the given key and value.
      *
      * @param key
-     *            They key for the keyed digest (must not be null)
+     *            The key for the keyed digest (must not be null)
      * @param valueToDigest
      *            The value (data) which should to digest (maybe empty or null)
      * @return HmacSHA384 MAC for the given key and value as hex string (lowercase)
@@ -664,7 +664,7 @@ public final class HmacUtils {
      * Returns a HmacSHA384 Message Authentication Code (MAC) as hex string (lowercase) for the given key and value.
      *
      * @param key
-     *            They key for the keyed digest (must not be null)
+     *            The key for the keyed digest (must not be null)
      * @param valueToDigest
      *            The value (data) which should to digest
      *            <p>
@@ -686,7 +686,7 @@ public final class HmacUtils {
      * Returns a HmacSHA384 Message Authentication Code (MAC) as hex string (lowercase) for the given key and value.
      *
      * @param key
-     *            They key for the keyed digest (must not be null)
+     *            The key for the keyed digest (must not be null)
      * @param valueToDigest
      *            The value (data) which should to digest (maybe empty or null)
      * @return HmacSHA384 MAC for the given key and value as hex string (lowercase)
@@ -705,7 +705,7 @@ public final class HmacUtils {
      * Returns a HmacSHA512 Message Authentication Code (MAC) for the given key and value.
      *
      * @param key
-     *            They key for the keyed digest (must not be null)
+     *            The key for the keyed digest (must not be null)
      * @param valueToDigest
      *            The value (data) which should to digest (maybe empty or null)
      * @return HmacSHA512 MAC for the given key and value
@@ -722,7 +722,7 @@ public final class HmacUtils {
      * Returns a HmacSHA512 Message Authentication Code (MAC) for the given key and value.
      *
      * @param key
-     *            They key for the keyed digest (must not be null)
+     *            The key for the keyed digest (must not be null)
      * @param valueToDigest
      *            The value (data) which should to digest
      *            <p>
@@ -744,7 +744,7 @@ public final class HmacUtils {
      * Returns a HmacSHA512 Message Authentication Code (MAC) for the given key and value.
      *
      * @param key
-     *            They key for the keyed digest (must not be null)
+     *            The key for the keyed digest (must not be null)
      * @param valueToDigest
      *            The value (data) which should to digest (maybe empty or null)
      * @return HmacSHA512 MAC for the given key and value
@@ -761,7 +761,7 @@ public final class HmacUtils {
      * Returns a HmacSHA512 Message Authentication Code (MAC) as hex string (lowercase) for the given key and value.
      *
      * @param key
-     *            They key for the keyed digest (must not be null)
+     *            The key for the keyed digest (must not be null)
      * @param valueToDigest
      *            The value (data) which should to digest (maybe empty or null)
      * @return HmacSHA512 MAC for the given key and value as hex string (lowercase)
@@ -778,7 +778,7 @@ public final class HmacUtils {
      * Returns a HmacSHA512 Message Authentication Code (MAC) as hex string (lowercase) for the given key and value.
      *
      * @param key
-     *            They key for the keyed digest (must not be null)
+     *            The key for the keyed digest (must not be null)
      * @param valueToDigest
      *            The value (data) which should to digest
      *            <p>
@@ -800,7 +800,7 @@ public final class HmacUtils {
      * Returns a HmacSHA512 Message Authentication Code (MAC) as hex string (lowercase) for the given key and value.
      *
      * @param key
-     *            They key for the keyed digest (must not be null)
+     *            The key for the keyed digest (must not be null)
      * @param valueToDigest
      *            The value (data) which should to digest (maybe empty or null)
      * @return HmacSHA512 MAC for the given key and value as hex string (lowercase)
