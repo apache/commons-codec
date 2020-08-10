@@ -49,7 +49,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action                   dev="ggregory" type="update" due-to="Gary Gregory">Update tests from JUnit 4.12 to 4.13.</action>
       <action issue="CODEC-290" dev="aherbert" due-to="Adam Retter" type="add">Base16Codec and Base16Input/OutputStream</action>
       <action issue="CODEC-291" dev="aherbert" due-to="Adam Retter" type="add">Hex encode/decode with existing arrays</action>
-      <action                   dev="ggregory" type="update" due-to="Dependabot">Update actions/checkout from v1 to v2.3.1 #50.</action>
+      <action                   dev="ggregory" type="update" due-to="Dependabot">Update actions/checkout from v1 to v2.3.2 #50, #56.</action>
     </release>
 
     <release version="1.14" date="2019-12-30" description="Feature and fix release.">
