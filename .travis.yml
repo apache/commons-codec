@@ -20,8 +20,6 @@ cache:
     - $HOME/.m2
 matrix:
   include:
-    - os: linux-ppc64le
-      jdk: openjdk8
     - jdk: openjdk8
     - jdk: openjdk11
     - jdk: openjdk14
