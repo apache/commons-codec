@@ -283,6 +283,7 @@ limitations under the License.
         <artifactId>apache-rat-plugin</artifactId>
         <configuration>
           <excludes>
+            <exclude>.mvn/wrapper/maven-wrapper.properties</exclude>
             <exclude>src/test/resources/org/apache/commons/codec/bla.tar.xz</exclude>
             <exclude>src/test/resources/org/apache/commons/codec/empty.bin</exclude>
             <exclude>src/test/resources/org/apache/commons/codec/small.bin</exclude>
@@ -352,6 +353,7 @@ limitations under the License.
         <artifactId>apache-rat-plugin</artifactId>
         <configuration>
           <excludes>
+            <exclude>.mvn/wrapper/maven-wrapper.properties</exclude>
             <exclude>src/test/resources/org/apache/commons/codec/bla.tar.xz</exclude>
             <exclude>src/test/resources/org/apache/commons/codec/empty.bin</exclude>
             <exclude>src/test/resources/org/apache/commons/codec/small.bin</exclude>
