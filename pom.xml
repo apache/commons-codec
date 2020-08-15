@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <!--
- To produce reports, use the reporting profile, for example: mvn -Preporting clean site
+ To produce reports, use the reporting profile, for example: ./mvnw -Preporting clean site
  You may need to use the -U option to update your environment if you get an error.
  -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
@@ -391,7 +391,7 @@ limitations under the License.
           <tarLongFileMode>gnu</tarLongFileMode>
         </configuration>
       </plugin>
-      <!-- Allow use of mvn checkstyle:checkstyle. Must agree with reporting section below. -->
+      <!-- Allow use of ./mvnw checkstyle:checkstyle. Must agree with reporting section below. -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
