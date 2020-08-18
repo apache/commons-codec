@@ -227,7 +227,7 @@ limitations under the License.
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
       <!-- 3.9+ needs Java8 -->
-      <version>3.11</version>
+      <version>3.8</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
