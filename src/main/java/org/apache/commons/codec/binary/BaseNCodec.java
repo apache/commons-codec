@@ -182,6 +182,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
 
     /**
      * The default decoding policy.
+     * @since 1.15
      */
     protected static final CodecPolicy DECODING_POLICY_DEFAULT = CodecPolicy.LENIENT;
 

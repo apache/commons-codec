@@ -311,6 +311,7 @@ public class Base32 extends BaseNCodec {
      * @throws IllegalArgumentException
      *             Thrown when the {@code lineSeparator} contains Base32 characters. Or the
      *             lineLength &gt; 0 and lineSeparator is null.
+     * @since 1.15
      */
     public Base32(final int lineLength, final byte[] lineSeparator, final boolean useHex, final byte padding, CodecPolicy decodingPolicy) {
         super(BYTES_PER_UNENCODED_BLOCK, BYTES_PER_ENCODED_BLOCK, lineLength,
@@ -365,7 +366,6 @@ public class Base32 extends BaseNCodec {
      * @param inPos Position to start reading data from.
      * @param inAvail Amount of bytes available from input for decoding.
      * @param context the context to be used
-     *
      */
     @Override
     void decode(final byte[] input, int inPos, final int inAvail, final Context context) {

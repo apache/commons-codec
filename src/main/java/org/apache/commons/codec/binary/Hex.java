@@ -88,7 +88,6 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * @param outOffset The position within {@code out} to start writing the decoded bytes.
      * @return the number of bytes written to {@code out}.
      * @throws DecoderException Thrown if an odd number of characters or illegal characters are supplied
-     *
      * @since 1.15
      */
     public static int decodeHex(final char[] data, final byte[] out, final int outOffset) throws DecoderException {
