@@ -139,21 +139,21 @@ public class Base32Test {
     };
 
     @Test
-    public void testBase64AtBufferStart() {
-        testBase64InBuffer(0, 100);
+    public void testBase32AtBufferStart() {
+        testBase32InBuffer(0, 100);
     }
 
     @Test
-    public void testBase64AtBufferEnd() {
-        testBase64InBuffer(100, 0);
+    public void testBase32AtBufferEnd() {
+        testBase32InBuffer(100, 0);
     }
 
     @Test
-    public void testBase64AtBufferMiddle() {
-        testBase64InBuffer(100, 100);
+    public void testBase32AtBufferMiddle() {
+        testBase32InBuffer(100, 100);
     }
 
-    private void testBase64InBuffer(final int startPasSize, final int endPadSize) {
+    private void testBase32InBuffer(final int startPasSize, final int endPadSize) {
         final Base32 codec = new Base32();
         for (final String[] element : BASE32_TEST_CASES) {
             final byte[] bytes = element[0].getBytes(CHARSET_UTF8);
