@@ -28,7 +28,7 @@ import static org.junit.Assert.fail;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
-
+import junit.framework.Assert;
 import org.apache.commons.codec.CodecPolicy;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.lang3.ArrayUtils;
@@ -276,6 +276,18 @@ public class Base32Test {
         } catch (final IllegalArgumentException ignored) {
             // Expected
         }
+        try {
+            base32 = new Base32(32, new byte[] { '\n'}, false, (byte) 'A');
+            fail("Should have rejected attempt to use 'A' as padding");
+        } catch (final IllegalArgumentException ignored) {
+            // Expected
+        }
+        try {
+            base32 = new Base32(32, new byte[] { '\n'}, false, (byte) ' ');
+            fail("Should have rejected attempt to use ' ' as padding");
+        } catch (final IllegalArgumentException ignored) {
+            // Expected
+        }
         base32 = new Base32(32, new byte[] { ' ', '$', '\n', '\r', '\t' }); // OK
         assertNotNull(base32);
     }
@@ -297,6 +309,54 @@ public class Base32Test {
         result = new Base32().decode(empty);
         assertEquals("empty Base32 decode", 0, result.length);
         assertEquals("empty Base32 encode", null, new Base32().decode((byte[]) null));
+    }
+
+    @Test
+    public void testIsInAlphabet() {
+        // invalid bounds
+        Base32 b32 = new Base32(true);
+        assertFalse(b32.isInAlphabet((byte)0));
+        assertFalse(b32.isInAlphabet((byte)1));
+        assertFalse(b32.isInAlphabet((byte)-1));
+        assertFalse(b32.isInAlphabet((byte)-15));
+        assertFalse(b32.isInAlphabet((byte)-32));
+        assertFalse(b32.isInAlphabet((byte)127));
+        assertFalse(b32.isInAlphabet((byte)128));
+        assertFalse(b32.isInAlphabet((byte)255));
+
+        // default table
+        b32 = new Base32(false);
+        for (char c = '2'; c <= '7'; c++) {
+            assertTrue(b32.isInAlphabet((byte) c));
+        }
+        for (char c = 'A'; c <= 'Z'; c++) {
+            assertTrue(b32.isInAlphabet((byte) c));
+        }
+        for (char c = 'a'; c <= 'z'; c++) {
+            assertTrue(b32.isInAlphabet((byte) c));
+        }
+        assertFalse(b32.isInAlphabet((byte) ('1')));
+        assertFalse(b32.isInAlphabet((byte) ('8')));
+        assertFalse(b32.isInAlphabet((byte) ('A' - 1)));
+        assertFalse(b32.isInAlphabet((byte) ('Z' + 1)));
+
+        // hex table
+        b32 = new Base32(true);
+        for (char c = '0'; c <= '9'; c++) {
+            assertTrue(b32.isInAlphabet((byte) c));
+        }
+        for (char c = 'A'; c <= 'V'; c++) {
+            assertTrue(b32.isInAlphabet((byte) c));
+        }
+        for (char c = 'a'; c <= 'v'; c++) {
+            assertTrue(b32.isInAlphabet((byte) c));
+        }
+        assertFalse(b32.isInAlphabet((byte) ('0' - 1)));
+        assertFalse(b32.isInAlphabet((byte) ('9' + 1)));
+        assertFalse(b32.isInAlphabet((byte) ('A' - 1)));
+        assertFalse(b32.isInAlphabet((byte) ('V' + 1)));
+        assertFalse(b32.isInAlphabet((byte) ('a' - 1)));
+        assertFalse(b32.isInAlphabet((byte) ('v' + 1)));
     }
 
     @Test
