@@ -240,6 +240,46 @@ public class Base32Test {
         assertNotNull(codec);
     }
 
+    @Test
+    public void testConstructors() {
+        Base32 base32;
+        base32 = new Base32();
+        base32 = new Base32(-1);
+        base32 = new Base32(-1, new byte[] {});
+        base32 = new Base32(32, new byte[] {});
+        base32 = new Base32(32, new byte[] {}, false);
+        // This is different behaviour than Base64 which validates the separator
+        // even when line length is negative.
+        base32 = new Base32(-1, new byte[] { 'A' });
+        try {
+            base32 = new Base32(32, null);
+            fail("Should have rejected null line separator");
+        } catch (final IllegalArgumentException ignored) {
+            // Expected
+        }
+        try {
+            base32 = new Base32(32, new byte[] { 'A' });
+            fail("Should have rejected attempt to use 'A' as a line separator");
+        } catch (final IllegalArgumentException ignored) {
+            // Expected
+        }
+        try {
+            base32 = new Base32(32, new byte[] { '=' });
+            fail("Should have rejected attempt to use '=' as a line separator");
+        } catch (final IllegalArgumentException ignored) {
+            // Expected
+        }
+        base32 = new Base32(32, new byte[] { '$' }); // OK
+        try {
+            base32 = new Base32(32, new byte[] { 'A', '$' });
+            fail("Should have rejected attempt to use 'A$' as a line separator");
+        } catch (final IllegalArgumentException ignored) {
+            // Expected
+        }
+        base32 = new Base32(32, new byte[] { ' ', '$', '\n', '\r', '\t' }); // OK
+        assertNotNull(base32);
+    }
+
     /**
      * Test encode and decode of empty byte array.
      */
