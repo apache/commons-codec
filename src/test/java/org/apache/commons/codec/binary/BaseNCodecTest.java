@@ -51,6 +51,33 @@ public class BaseNCodecTest {
         };
     }
 
+    /**
+     * Test the Context string representation has debugging info.
+     * This is not part of the API and the test should be changed if the string
+     * format is updated.
+     */
+    @Test
+    public void testContextToString() {
+        final Context context = new Context();
+        context.buffer = new byte[3];
+        context.currentLinePos = 13;
+        context.eof = true;
+        context.ibitWorkArea = 777;
+        context.lbitWorkArea = 999;
+        context.modulus = 5;
+        context.pos = 42;
+        context.readPos = 981;
+        final String text = context.toString();
+        Assert.assertTrue(text.contains("[0, 0, 0]"));
+        Assert.assertTrue(text.contains("13"));
+        Assert.assertTrue(text.contains("true"));
+        Assert.assertTrue(text.contains("777"));
+        Assert.assertTrue(text.contains("999"));
+        Assert.assertTrue(text.contains("5"));
+        Assert.assertTrue(text.contains("42"));
+        Assert.assertTrue(text.contains("981"));
+    }
+
     @Test
     public void testBaseNCodec() {
         assertNotNull(codec);
