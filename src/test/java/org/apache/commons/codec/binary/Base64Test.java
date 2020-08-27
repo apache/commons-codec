@@ -1363,9 +1363,11 @@ public class Base64Test {
         final Base64 codec = new Base64(0, null, false, CodecPolicy.STRICT);
         // Requires strict decoding
         assertTrue(codec.isStrictDecoding());
+        assertEquals(CodecPolicy.STRICT, codec.getCodecPolicy());
         // A lenient decoder should not re-encode to the same bytes
         final Base64 defaultCodec = new Base64();
         assertFalse(defaultCodec.isStrictDecoding());
+        assertEquals(CodecPolicy.LENIENT, defaultCodec.getCodecPolicy());
 
         // Create the encoded bytes. The first characters must be valid so fill with 'zero'
         // then pad to the block size.

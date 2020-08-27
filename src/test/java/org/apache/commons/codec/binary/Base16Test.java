@@ -587,6 +587,7 @@ public class Base16Test {
         final String encoded = "aabbccdde";  // Note the trailing `e` which does not make up a hex-pair and so is only 1/2 byte
 
         final Base16 b16 = new Base16(true, CodecPolicy.STRICT);
+        assertEquals(CodecPolicy.STRICT, b16.getCodecPolicy());
         b16.decode(StringUtils.getBytesUtf8(encoded));
     }
 
@@ -595,6 +596,7 @@ public class Base16Test {
         final String encoded = "aabbccdde";  // Note the trailing `e` which does not make up a hex-pair and so is only 1/2 byte
 
         final Base16 b16 = new Base16(true, CodecPolicy.LENIENT);
+        assertEquals(CodecPolicy.LENIENT, b16.getCodecPolicy());
 
         final byte[] decoded = b16.decode(StringUtils.getBytesUtf8(encoded));
         assertArrayEquals(new byte[] {(byte)0xaa, (byte)0xbb, (byte)0xcc, (byte)0xdd}, decoded);

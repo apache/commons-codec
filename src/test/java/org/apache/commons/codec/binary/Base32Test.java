@@ -367,9 +367,11 @@ public class Base32Test {
         // Requires strict decoding
         final Base32 codec = new Base32(0, null, false, BaseNCodec.PAD_DEFAULT, CodecPolicy.STRICT);
         assertTrue(codec.isStrictDecoding());
+        assertEquals(CodecPolicy.STRICT, codec.getCodecPolicy());
         // A lenient decoder should not re-encode to the same bytes
         final Base32 defaultCodec = new Base32();
         assertFalse(defaultCodec.isStrictDecoding());
+        assertEquals(CodecPolicy.LENIENT, defaultCodec.getCodecPolicy());
 
         // Create the encoded bytes. The first characters must be valid so fill with 'zero'
         // then pad to the block size.
