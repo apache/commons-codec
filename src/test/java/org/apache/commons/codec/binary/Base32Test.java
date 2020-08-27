@@ -240,6 +240,25 @@ public class Base32Test {
         assertNotNull(codec);
     }
 
+    /**
+     * Test encode and decode of empty byte array.
+     */
+    @Test
+    public void testEmptyBase32() {
+        byte[] empty = new byte[0];
+        byte[] result = new Base32().encode(empty);
+        assertEquals("empty Base32 encode", 0, result.length);
+        assertEquals("empty Base32 encode", null, new Base32().encode(null));
+        result = new Base32().encode(empty, 0, 1);
+        assertEquals("empty Base32 encode with offset", 0, result.length);
+        assertEquals("empty Base32 encode with offset", null, new Base32().encode(null));
+
+        empty = new byte[0];
+        result = new Base32().decode(empty);
+        assertEquals("empty Base32 decode", 0, result.length);
+        assertEquals("empty Base32 encode", null, new Base32().decode((byte[]) null));
+    }
+
     @Test
     public void testRandomBytes() {
         for (int i = 0; i < 20; i++) {

@@ -141,6 +141,9 @@ public class Base16Test {
         byte[] result = new Base16().encode(empty);
         assertEquals("empty Base16 encode", 0, result.length);
         assertEquals("empty Base16 encode", null, new Base16().encode(null));
+        result = new Base16().encode(empty, 0, 1);
+        assertEquals("empty Base16 encode with offset", 0, result.length);
+        assertEquals("empty Base16 encode with offset", null, new Base16().encode(null));
 
         empty = new byte[0];
         result = new Base16().decode(empty);
