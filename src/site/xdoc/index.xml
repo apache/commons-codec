@@ -72,7 +72,8 @@ The Javadoc API documents are available online:
 </p>
 <ul>
   <li><a href="apidocs/index.html">Javadoc current (git master)</a></li>
-  <li><a href="archives/1.13/apidocs/index.html">Javadoc 1.14</a></li>
+  <li><a href="archives/1.15/apidocs/index.html">Javadoc 1.15</a></li>
+  <li><a href="archives/1.14/apidocs/index.html">Javadoc 1.14</a></li>
   <li><a href="archives/1.13/apidocs/index.html">Javadoc 1.13</a></li>
   <li><a href="archives/1.12/apidocs/index.html">Javadoc 1.12</a></li>
   <li><a href="archives/1.11/apidocs/index.html">Javadoc 1.11</a></li>
@@ -89,7 +90,8 @@ The <a href="scm.html">subversion repository</a> can be
 <!-- ================================================== -->
 <section name="Releases">
 <ul>
-  <li><a href="https://commons.apache.org/codec/download_codec.cgi">Codec 1.14 (mirrors)</a> requires Java 7</li>
+  <li><a href="https://commons.apache.org/codec/download_codec.cgi">Codec 1.15 (mirrors)</a> requires Java 7</li>
+  <li><a href="https://archive.apache.org/dist/commons/codec/">Codec 1.14 (archives)</a> requires Java 7</li>
   <li><a href="https://archive.apache.org/dist/commons/codec/">Codec 1.13 (archives)</a> requires Java 7</li>
   <li><a href="https://archive.apache.org/dist/commons/codec/">Codec 1.12 (archives)</a> requires Java 7</li>
   <li><a href="https://archive.apache.org/dist/commons/codec/">Codec 1.11 (archives)</a> requires Java 6</li>
