@@ -1,4 +1,48 @@
-              Apache Apache Commons Codec 1.14 RELEASE NOTES
+              Apache Commons Codec 1.15 RELEASE NOTES
+              September 1 2020
+
+The Apache Commons Codec package contains simple encoder and decoders for
+various formats such as Base64 and Hexadecimal.  In addition to these
+widely used encoders and decoders, the codec package also maintains a
+collection of phonetic encoding utilities.
+
+Feature and fix release.
+
+Changes in this version include:
+
+New features:
+o CODEC-290:  Base16Codec and Base16Input/OutputStream. Thanks to Adam Retter.
+o CODEC-291:  Hex encode/decode with existing arrays. Thanks to Adam Retter.
+
+Fixed Bugs:
+o CODEC-264:  MurmurHash3: Ensure hash128 maintains the sign extension bug.
+              Thanks to Andy Seaborne.
+
+Changes:
+o CODEC-280:  Base32/Base64/BCodec: Added strict decoding property to control
+              handling of trailing bits. Default lenient mode discards them
+              without error. Strict mode raise an exception.
+o CODEC-289:  Base32/Base64 Input/OutputStream: Added strict decoding property
+              to control handling of trailing bits. Default lenient mode
+              discards them without error. Strict mode raise an exception.
+o             Update tests from JUnit 4.12 to 4.13. Thanks to Gary Gregory.
+o             Update actions/checkout from v1 to v2.3.2 #50, #56.
+              Thanks to Dependabot.
+o             Update actions/setup-java from v1.4.0 to v1.4.1 #57.
+              Thanks to Dependabot.
+
+
+For complete information on Apache Commons Codec, including instructions on how
+to submit bug reports, patches, or suggestions for improvement, see the
+Apache Commons Codec website:
+
+https://commons.apache.org/proper/commons-codec/
+
+Download page: https://commons.apache.org/proper/commons-codec/download_codec.cgi
+
+-------------------------------------------------------------------------------
+
+              Apache Commons Codec 1.14 RELEASE NOTES
               December 30 2019
 
 The Apache Commons Codec package contains simple encoder and decoders for
@@ -33,7 +77,7 @@ o CODEC-278:  Deprecate Charset constants in org.apache.commons.codec.Charsets i
 
 
 For complete information on Apache Commons Codec, including instructions on how to submit bug reports,
-patches, or suggestions for improvement, see the Apache Apache Commons Codec website:
+patches, or suggestions for improvement, see the Apache Commons Codec website:
 
 https://commons.apache.org/proper/commons-codec/
 
@@ -41,7 +85,7 @@ Download page: https://commons.apache.org/proper/commons-codec/download_codec.cg
 
 -------------------------------------------------------------------------------
 
-              Apache Apache Commons Codec 1.13 RELEASE NOTES
+              Apache Commons Codec 1.13 RELEASE NOTES
 
 The Apache Commons Codec package contains simple encoder and decoders for
 various formats such as Base64 and Hexadecimal.  In addition to these
@@ -66,7 +110,7 @@ o CODEC-236:  Broken direct java.nio.ByteBuffer support in org.apache.commons.co
 
 
 For complete information on Apache Commons Codec, including instructions on how to submit bug reports,
-patches, or suggestions for improvement, see the Apache Apache Commons Codec website:
+patches, or suggestions for improvement, see the Apache Commons Codec website:
 
 Visit https://commons.apache.org/proper/commons-codec/
 Download from https://commons.apache.org/proper/commons-codec/download_codec.cgi

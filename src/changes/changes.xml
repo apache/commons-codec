@@ -42,13 +42,16 @@ The <action> type attribute can be add,update,fix,remove.
   </properties>
   <body>
 
-    <release version="1.15" date="YYYY-MM-DD" description="Feature and fix release.">
+    <release version="1.16" date="TBD" description="Feature and fix release.">
+    </release>
+
+    <release version="1.15" date="2020-09-01" description="Feature and fix release.">
       <action issue="CODEC-264" dev="aherbert" due-to="Andy Seaborne" type="fix">MurmurHash3: Ensure hash128 maintains the sign extension bug.</action>
       <action issue="CODEC-280" dev="aherbert" type="update">Base32/Base64/BCodec: Added strict decoding property to control handling of trailing bits. Default lenient mode discards them without error. Strict mode raise an exception.</action>
       <action issue="CODEC-289" dev="aherbert" type="update">Base32/Base64 Input/OutputStream: Added strict decoding property to control handling of trailing bits. Default lenient mode discards them without error. Strict mode raise an exception.</action>
       <action                   dev="ggregory" type="update" due-to="Gary Gregory">Update tests from JUnit 4.12 to 4.13.</action>
-      <action issue="CODEC-290" dev="aherbert" due-to="Adam Retter" type="add">Base16Codec and Base16Input/OutputStream</action>
-      <action issue="CODEC-291" dev="aherbert" due-to="Adam Retter" type="add">Hex encode/decode with existing arrays</action>
+      <action issue="CODEC-290" dev="aherbert" due-to="Adam Retter" type="add">Base16Codec and Base16Input/OutputStream.</action>
+      <action issue="CODEC-291" dev="aherbert" due-to="Adam Retter" type="add">Hex encode/decode with existing arrays.</action>
       <action                   dev="ggregory" type="update" due-to="Dependabot">Update actions/checkout from v1 to v2.3.2 #50, #56.</action>
       <action                   dev="ggregory" type="update" due-to="Dependabot">Update actions/setup-java from v1.4.0 to v1.4.1 #57.</action>
     </release>
