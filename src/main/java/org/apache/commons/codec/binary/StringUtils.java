@@ -138,8 +138,8 @@ public class StringUtils {
      *            the String to encode, may be {@code null}
      * @return encoded bytes, or {@code null} if the input string was {@code null}
      * @throws NullPointerException
-     *             Thrown if {@link StandardCharsets#ISO_8859_1} is not initialized, which should never happen since it is
-     *             required by the Java platform specification.
+     *             Thrown if {@link StandardCharsets#ISO_8859_1} is not initialized, which should never happen
+     *             since it is required by the Java platform specification.
      * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
      * @see <a href="http://download.oracle.com/javase/7/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      * @see #getBytesUnchecked(String, String)
@@ -328,8 +328,8 @@ public class StringUtils {
      * @return A new {@code String} decoded from the specified array of bytes using the ISO-8859-1 charset, or
      *         {@code null} if the input byte array was {@code null}.
      * @throws NullPointerException
-     *             Thrown if {@link StandardCharsets#ISO_8859_1} is not initialized, which should never happen since it is
-     *             required by the Java platform specification.
+     *             Thrown if {@link StandardCharsets#ISO_8859_1} is not initialized, which should never happen
+     *             since it is required by the Java platform specification.
      * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
      */
     public static String newStringIso8859_1(final byte[] bytes) {

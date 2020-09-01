@@ -580,7 +580,8 @@ public class Base64 extends BaseNCodec {
      *             Thrown when the {@code lineSeparator} contains Base64 characters.
      * @since 1.15
      */
-    public Base64(final int lineLength, final byte[] lineSeparator, final boolean urlSafe, final CodecPolicy decodingPolicy) {
+    public Base64(final int lineLength, final byte[] lineSeparator, final boolean urlSafe,
+                  final CodecPolicy decodingPolicy) {
         super(BYTES_PER_UNENCODED_BLOCK, BYTES_PER_ENCODED_BLOCK,
                 lineLength,
                 lineSeparator == null ? 0 : lineSeparator.length,
@@ -826,7 +827,8 @@ public class Base64 extends BaseNCodec {
     private void validateCharacter(final int emptyBitsMask, final Context context) {
         if (isStrictDecoding() && (context.ibitWorkArea & emptyBitsMask) != 0) {
             throw new IllegalArgumentException(
-                "Strict decoding: Last encoded character (before the paddings if any) is a valid base 64 alphabet but not a possible encoding. " +
+                "Strict decoding: Last encoded character (before the paddings if any) is a valid " +
+                "base 64 alphabet but not a possible encoding. " +
                 "Expected the discarded bits from the character to be zero.");
         }
     }
@@ -840,7 +842,8 @@ public class Base64 extends BaseNCodec {
     private void validateTrailingCharacter() {
         if (isStrictDecoding()) {
             throw new IllegalArgumentException(
-                "Strict decoding: Last encoded character (before the paddings if any) is a valid base 64 alphabet but not a possible encoding. " +
+                "Strict decoding: Last encoded character (before the paddings if any) is a valid " +
+                "base 64 alphabet but not a possible encoding. " +
                 "Decoding requires at least two trailing 6-bit characters to create bytes.");
         }
     }

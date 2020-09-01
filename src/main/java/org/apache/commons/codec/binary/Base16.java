@@ -162,7 +162,8 @@ public class Base16 extends BaseNCodec {
 
         // small optimisation to short-cut the rest of this method when it is fed byte-by-byte
         if (availableChars == 1 && availableChars == dataLen) {
-            context.ibitWorkArea = decodeOctet(data[offset]) + 1;   // store 1/2 byte for next invocation of decode, we offset by +1 as empty-value is 0
+            // store 1/2 byte for next invocation of decode, we offset by +1 as empty-value is 0
+            context.ibitWorkArea = decodeOctet(data[offset]) + 1;
             return;
         }
 
@@ -194,7 +195,8 @@ public class Base16 extends BaseNCodec {
 
         // we have one char of a hex-pair left over
         if (i < dataLen) {
-            context.ibitWorkArea = decodeOctet(data[i]) + 1;   // store 1/2 byte for next invocation of decode, we offset by +1 as empty-value is 0
+            // store 1/2 byte for next invocation of decode, we offset by +1 as empty-value is 0
+            context.ibitWorkArea = decodeOctet(data[i]) + 1;
         }
     }
 

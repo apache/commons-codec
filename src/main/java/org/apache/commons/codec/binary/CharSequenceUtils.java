@@ -31,7 +31,7 @@ public class CharSequenceUtils {
 
     /**
      * Green implementation of regionMatches.
-     * 
+     *
      * <p>Note: This function differs from the current implementation in Apache Commons Lang
      * where the input indices are not valid. It is only used within this package.
      *

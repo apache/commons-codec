@@ -123,7 +123,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * @return A byte array containing binary data decoded from the supplied char array.
      * @throws DecoderException Thrown if an odd number of characters or illegal characters are supplied
      * @since 1.11
-     */ 
+     */
     public static byte[] decodeHex(final String data) throws DecoderException {
         return decodeHex(data.toCharArray());
     }

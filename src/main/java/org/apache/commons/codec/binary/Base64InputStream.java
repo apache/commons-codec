@@ -38,8 +38,8 @@ import org.apache.commons.codec.CodecPolicy;
  * character encodings which are compatible with the lower 127 ASCII chart (ISO-8859-1, Windows-1252, UTF-8, etc).
  * </p>
  * <p>
- * You can set the decoding behavior when the input bytes contain leftover trailing bits that cannot be created by a valid
- * encoding. These can be bits that are unused from the final character or entire characters. The default mode is
+ * You can set the decoding behavior when the input bytes contain leftover trailing bits that cannot be created by a
+ * valid encoding. These can be bits that are unused from the final character or entire characters. The default mode is
  * lenient decoding.
  * </p>
  * <ul>

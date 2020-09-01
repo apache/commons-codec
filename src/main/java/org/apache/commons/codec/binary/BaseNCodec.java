@@ -33,8 +33,8 @@ import org.apache.commons.codec.EncoderException;
  * This class is thread-safe.
  * </p>
  *
- * You can set the decoding behavior when the input bytes contain leftover trailing bits that cannot be created by a valid
- * encoding. These can be bits that are unused from the final character or entire characters. The default mode is
+ * You can set the decoding behavior when the input bytes contain leftover trailing bits that cannot be created by a
+ * valid encoding. These can be bits that are unused from the final character or entire characters. The default mode is
  * lenient decoding.
  * <ul>
  * <li>Lenient: Any trailing bits are composed into 8-bit bytes where possible. The remainder are discarded.
@@ -376,7 +376,8 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * @since 1.15
      */
     protected BaseNCodec(final int unencodedBlockSize, final int encodedBlockSize,
-                         final int lineLength, final int chunkSeparatorLength, final byte pad, final CodecPolicy decodingPolicy) {
+                         final int lineLength, final int chunkSeparatorLength, final byte pad,
+                         final CodecPolicy decodingPolicy) {
         this.unencodedBlockSize = unencodedBlockSize;
         this.encodedBlockSize = encodedBlockSize;
         final boolean useChunking = lineLength > 0 && chunkSeparatorLength > 0;
@@ -582,7 +583,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
 
     /**
      * Returns the decoding behavior policy.
-     * 
+     *
      * <p>
      * The default is lenient. If the decoding policy is strict, then decoding will raise an
      * {@link IllegalArgumentException} if trailing bits are not part of a valid encoding. Decoding will compose

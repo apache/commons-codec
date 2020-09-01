@@ -94,7 +94,7 @@ public class Base32 extends BaseNCodec {
              0,  1,  2,  3,  4,  5,  6,  7,  8,  9, -1, -1, -1, -1, -1, -1, // 30-3f 0-9
             -1, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, // 40-4f A-O
             25, 26, 27, 28, 29, 30, 31,                                     // 50-56 P-V
-                                        -1, -1, -1, -1, -1, -1, -1, -1, -1, // 57-5f 
+                                        -1, -1, -1, -1, -1, -1, -1, -1, -1, // 57-5f
             -1, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, // 60-6f a-o
             25, 26, 27, 28, 29, 30, 31                                      // 70-76 p-v
     };
@@ -313,7 +313,8 @@ public class Base32 extends BaseNCodec {
      *             lineLength &gt; 0 and lineSeparator is null.
      * @since 1.15
      */
-    public Base32(final int lineLength, final byte[] lineSeparator, final boolean useHex, final byte padding, CodecPolicy decodingPolicy) {
+    public Base32(final int lineLength, final byte[] lineSeparator, final boolean useHex,
+                  final byte padding, CodecPolicy decodingPolicy) {
         super(BYTES_PER_UNENCODED_BLOCK, BYTES_PER_ENCODED_BLOCK, lineLength,
                 lineSeparator == null ? 0 : lineSeparator.length, padding, decodingPolicy);
         if (useHex) {
@@ -603,7 +604,8 @@ public class Base32 extends BaseNCodec {
         // Use the long bit work area
         if (isStrictDecoding() && (context.lbitWorkArea & emptyBitsMask) != 0) {
             throw new IllegalArgumentException(
-                "Strict decoding: Last encoded character (before the paddings if any) is a valid base 32 alphabet but not a possible encoding. " +
+                "Strict decoding: Last encoded character (before the paddings if any) is a valid " +
+                "base 32 alphabet but not a possible encoding. " +
                 "Expected the discarded bits from the character to be zero.");
         }
     }
@@ -617,7 +619,8 @@ public class Base32 extends BaseNCodec {
     private void validateTrailingCharacters() {
         if (isStrictDecoding()) {
             throw new IllegalArgumentException(
-                "Strict decoding: Last encoded character(s) (before the paddings if any) are valid base 32 alphabet but not a possible encoding. " +
+                "Strict decoding: Last encoded character(s) (before the paddings if any) are valid " +
+                "base 32 alphabet but not a possible encoding. " +
                 "Decoding requires either 2, 4, 5, or 7 trailing 5-bit characters to create bytes.");
         }
     }

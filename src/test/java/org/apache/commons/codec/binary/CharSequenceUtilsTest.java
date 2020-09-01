@@ -27,8 +27,8 @@ import org.junit.Test;
  * Tests {@link org.apache.commons.codec.binary.CharSequenceUtils}.
  *
  * <p>Tests copied from Apache Commons Lang 3.11. The implementation in codec is based on
- * an earlier version of Lang and some tests fail. The CharSequenceUtils class is public but 
- * the method is package private. The failing tests have been commented out and the 
+ * an earlier version of Lang and some tests fail. The CharSequenceUtils class is public but
+ * the method is package private. The failing tests have been commented out and the
  * implementation left unchanged.
  */
 public class CharSequenceUtilsTest {
@@ -111,7 +111,7 @@ public class CharSequenceUtilsTest {
                     invoke();
                     Assert.fail(msg + " but nothing was thrown.");
                 } catch (Exception ex) {
-                    assertTrue(msg + " but was " + ex.getClass().getSimpleName(), 
+                    assertTrue(msg + " but was " + ex.getClass().getSimpleName(),
                             data.throwable.isAssignableFrom(ex.getClass()));
                 }
             } else {
