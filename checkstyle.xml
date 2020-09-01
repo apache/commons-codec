@@ -65,6 +65,8 @@ limitations under the License.
       <property name="option" value="eol" />
     </module>
     <module name="LineLength">
+      <!-- Ignore lines that begin with " * ", such as within a Javadoc comment. -->
+      <property name="ignorePattern" value="^ *\* *[^ ]"/>
       <property name="max" value="120"/>
     </module>
   </module>
