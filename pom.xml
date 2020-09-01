@@ -332,6 +332,7 @@ limitations under the License.
           <configLocation>${basedir}/checkstyle.xml</configLocation>
           <enableRulesSummary>false</enableRulesSummary>
           <headerFile>${basedir}/LICENSE-header.txt</headerFile>
+          <resourceExcludes>NOTICE.txt,LICENSE.txt,**/pom.properties,**/sha512.properties</resourceExcludes>
         </configuration>
       </plugin>
       <!-- Specify source for JDK 11+ javadoc tool to ignore the 'unamed' module.
