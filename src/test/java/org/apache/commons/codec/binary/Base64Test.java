@@ -225,11 +225,12 @@ public class Base64Test {
 
     @Test
     public void testCodeInteger3() {
-        final String encodedInt3 = "FKIhdgaG5LGKiEtF1vHy4f3y700zaD6QwDS3IrNVGzNp2"
-                + "rY+1LFWTK6D44AyiC1n8uWz1itkYMZF0/aKDK0Yjg==";
+        final String encodedInt3 = "FKIhdgaG5LGKiEtF1vHy4f3y700zaD6QwDS3IrNVGzNp2" +
+            "rY+1LFWTK6D44AyiC1n8uWz1itkYMZF0/aKDK0Yjg==";
         final BigInteger bigInt3 = new BigInteger(
-                "10806548154093873461951748545" + "1196989136416448805819079363524309897749044958112417136240557"
-                        + "4495062430572478766856090958495998158114332651671116876320938126");
+            "10806548154093873461951748545" +
+            "1196989136416448805819079363524309897749044958112417136240557" +
+            "4495062430572478766856090958495998158114332651671116876320938126");
 
         assertEquals(encodedInt3, new String(Base64.encodeInteger(bigInt3)));
         assertEquals(bigInt3, Base64.decodeInteger(encodedInt3.getBytes(CHARSET_UTF8)));
@@ -237,15 +238,16 @@ public class Base64Test {
 
     @Test
     public void testCodeInteger4() {
-        final String encodedInt4 = "ctA8YGxrtngg/zKVvqEOefnwmViFztcnPBYPlJsvh6yKI"
-                + "4iDm68fnp4Mi3RrJ6bZAygFrUIQLxLjV+OJtgJAEto0xAs+Mehuq1DkSFEpP3o"
-                + "DzCTOsrOiS1DwQe4oIb7zVk/9l7aPtJMHW0LVlMdwZNFNNJoqMcT2ZfCPrfvYv" + "Q0=";
-        final BigInteger bigInt4 = new BigInteger(
-                "80624726256040348115552042320" + "6968135001872753709424419772586693950232350200555646471175944"
-                        + "519297087885987040810778908507262272892702303774422853675597"
-                        + "748008534040890923814202286633163248086055216976551456088015"
-                        + "338880713818192088877057717530169381044092839402438015097654"
-                        + "53542091716518238707344493641683483917");
+        final String encodedInt4 = "ctA8YGxrtngg/zKVvqEOefnwmViFztcnPBYPlJsvh6yKI" +
+            "4iDm68fnp4Mi3RrJ6bZAygFrUIQLxLjV+OJtgJAEto0xAs+Mehuq1DkSFEpP3o" +
+            "DzCTOsrOiS1DwQe4oIb7zVk/9l7aPtJMHW0LVlMdwZNFNNJoqMcT2ZfCPrfvYv" +
+            "Q0=";
+        final BigInteger bigInt4 = new BigInteger("80624726256040348115552042320" +
+            "6968135001872753709424419772586693950232350200555646471175944" +
+            "519297087885987040810778908507262272892702303774422853675597" +
+            "748008534040890923814202286633163248086055216976551456088015" +
+            "338880713818192088877057717530169381044092839402438015097654" +
+            "53542091716518238707344493641683483917");
 
         assertEquals(encodedInt4, new String(Base64.encodeInteger(bigInt4)));
         assertEquals(bigInt4, Base64.decodeInteger(encodedInt4.getBytes(CHARSET_UTF8)));
@@ -545,12 +547,12 @@ public class Base64Test {
             final Base64 b64 = new Base64();
             final byte[] result = b64.decode(bArray);
 
-            assertEquals("The result should be empty as the test encoded content did "
-                    + "not contain any valid base 64 characters", 0, result.length);
+            assertEquals("The result should be empty as the test encoded content did " +
+                "not contain any valid base 64 characters", 0, result.length);
         } catch (final Exception e) {
-            fail("Exception was thrown when trying to decode "
-                    + "invalid base64 encoded data - RFC 2045 requires that all "
-                    + "non base64 character be discarded, an exception should not" + " have been thrown");
+            fail("Exception was thrown when trying to decode " +
+                "invalid base64 encoded data - RFC 2045 requires that all " +
+                "non base64 character be discarded, an exception should not" + " have been thrown");
         }
     }
 

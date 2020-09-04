@@ -137,9 +137,9 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest<StringEnco
 
     @Test
     public void testOOM() throws EncoderException {
-        final String phrase = "200697900'-->&#1913348150;</  bceaeef >aadaabcf\"aedfbff<!--\'-->?>cae"
-                + "cfaaa><?&#<!--</script>&lang&fc;aadeaf?>>&bdquo<    cc =\"abff\"    /></   afe  >"
-                + "<script><!-- f(';<    cf aefbeef = \"bfabadcf\" ebbfeedd = fccabeb >";
+        final String phrase = "200697900'-->&#1913348150;</  bceaeef >aadaabcf\"aedfbff<!--\'-->?>cae" +
+            "cfaaa><?&#<!--</script>&lang&fc;aadeaf?>>&bdquo<    cc =\"abff\"    /></   afe  >" +
+            "<script><!-- f(';<    cf aefbeef = \"bfabadcf\" ebbfeedd = fccabeb >";
 
         final BeiderMorseEncoder encoder = new BeiderMorseEncoder();
         encoder.setNameType(NameType.GENERIC);
