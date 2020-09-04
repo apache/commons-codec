@@ -24,4 +24,11 @@ limitations under the License.
 <suppressions>
     <suppress checks="Header" files="LICENSE.txt"/>
     <suppress checks="Header" files="NOTICE.txt"/>
+    <!-- Be more lenient on tests. -->
+    <suppress checks="Javadoc" files=".*[/\\]test[/\\].*" />
+    <suppress checks="MultipleStringLiterals" files=".*[/\\]test[/\\].*" />
+    <suppress checks="DesignForExtension" files=".*[/\\]test[/\\].*" />
+    <suppress checks="LineLength" files=".*[/\\]test[/\\].*" />
+    <suppress checks="IllegalCatch" files=".*[/\\]test[/\\].*" />
+    <suppress checks="MethodLength" files="(MersenneTwister64|Well44497[ab]|MultiplyWithCarry256)Test" />
 </suppressions>

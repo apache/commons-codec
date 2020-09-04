@@ -332,6 +332,7 @@ limitations under the License.
           <configLocation>${basedir}/checkstyle.xml</configLocation>
           <enableRulesSummary>false</enableRulesSummary>
           <headerFile>${basedir}/LICENSE-header.txt</headerFile>
+          <includeTestSourceDirectory>true</includeTestSourceDirectory>
           <resourceExcludes>NOTICE.txt,LICENSE.txt,**/pom.properties,**/sha512.properties</resourceExcludes>
         </configuration>
       </plugin>
@@ -367,6 +368,7 @@ limitations under the License.
           <configLocation>${basedir}/checkstyle.xml</configLocation>
           <enableRulesSummary>false</enableRulesSummary>
           <headerFile>${basedir}/LICENSE-header.txt</headerFile>
+          <includeTestSourceDirectory>true</includeTestSourceDirectory>
         </configuration>
         <!-- We need to specify reportSets because 2.9.1 creates two reports -->
         <reportSets>
