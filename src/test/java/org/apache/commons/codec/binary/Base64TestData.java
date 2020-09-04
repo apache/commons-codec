@@ -28,7 +28,11 @@ import java.util.Random;
  */
 public class Base64TestData {
 
-    public static final String CODEC_101_MULTIPLE_OF_3 = "124";
+    /**
+     * A valid base 64 encoding that has a length that is a multiple of 3.
+     * @see <a href="https://issues.apache.org/jira/browse/CODEC-101">Codec 101</a>
+     */
+    public static final String CODEC_101_INPUT_LENGTH_IS_MULTIPLE_OF_3 = "124";
 
     public static final String CODEC_98_NPE
         = "YWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWjAxMjM";

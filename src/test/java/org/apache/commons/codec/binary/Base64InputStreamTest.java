@@ -91,7 +91,7 @@ public class Base64InputStreamTest {
      */
     @Test
     public void testCodec101() throws Exception {
-        final byte[] codec101 = StringUtils.getBytesUtf8(Base64TestData.CODEC_101_MULTIPLE_OF_3);
+        final byte[] codec101 = StringUtils.getBytesUtf8(Base64TestData.CODEC_101_INPUT_LENGTH_IS_MULTIPLE_OF_3);
         final ByteArrayInputStream bais = new ByteArrayInputStream(codec101);
         try (final Base64InputStream in = new Base64InputStream(bais)) {
             final byte[] result = new byte[8192];
@@ -120,7 +120,7 @@ public class Base64InputStreamTest {
      */
     @Test
     public void testInputStreamReader() throws Exception {
-        final byte[] codec101 = StringUtils.getBytesUtf8(Base64TestData.CODEC_101_MULTIPLE_OF_3);
+        final byte[] codec101 = StringUtils.getBytesUtf8(Base64TestData.CODEC_101_INPUT_LENGTH_IS_MULTIPLE_OF_3);
         final ByteArrayInputStream bais = new ByteArrayInputStream(codec101);
         final Base64InputStream in = new Base64InputStream(bais);
         final InputStreamReader isr = new InputStreamReader(in);
