@@ -43,6 +43,7 @@ The <action> type attribute can be add,update,fix,remove.
   <body>
 
     <release version="1.16" date="TBD" description="Feature and fix release.">
+      <action                   dev="ggregory" type="update" due-to="Dependabot">Update build actions/setup-java from v1.4.1 to v1.4.2 #60.</action>
     </release>
 
     <release version="1.15" date="2020-09-01" description="Feature and fix release.">
