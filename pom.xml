@@ -245,7 +245,7 @@ limitations under the License.
     <checkstyle.header.file>${basedir}/LICENSE-header.txt</checkstyle.header.file>
     <checkstyle.version>2.17</checkstyle.version>
     <commons.japicmp.version>0.14.3</commons.japicmp.version>
-    <commons.jacoco.version>0.8.5</commons.jacoco.version>
+    <commons.jacoco.version>0.8.6</commons.jacoco.version>
 
     <!-- generate report even if there are binary incompatible changes -->
     <commons.japicmp.breakBuildOnBinaryIncompatibleModifications>false</commons.japicmp.breakBuildOnBinaryIncompatibleModifications>
