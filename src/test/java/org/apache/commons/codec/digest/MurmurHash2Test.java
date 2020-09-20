@@ -64,16 +64,16 @@ public class MurmurHash2Test {
             0xa7da1996, 0xfe776c70 };
 
     /** Murmur 64bit hash results, default library seed. */
-    static final long[] results64_standard = { 0x4987cb15118a83d9l, 0x28e2a79e3f0394d9l, 0x8f4600d786fc5c05l,
-            0xa09b27fea4b54af3l, 0x25f34447525bfd1el, 0x32fad4c21379c7bfl, 0x4b30b99a9d931921l, 0x4e5dab004f936cdbl,
-            0x06825c27bc96cf40l, 0xff4bf2f8a4823905l, 0x7f7e950c064e6367l, 0x821ade90caaa5889l, 0x6d28c915d791686al,
-            0x9c32649372163ba2l, 0xd66ae956c14d5212l, 0x38ed30ee5161200fl, 0x9bfae0a4e613fc3cl, };
+    static final long[] results64_standard = { 0x4987cb15118a83d9L, 0x28e2a79e3f0394d9L, 0x8f4600d786fc5c05L,
+            0xa09b27fea4b54af3L, 0x25f34447525bfd1eL, 0x32fad4c21379c7bfL, 0x4b30b99a9d931921L, 0x4e5dab004f936cdbL,
+            0x06825c27bc96cf40L, 0xff4bf2f8a4823905L, 0x7f7e950c064e6367L, 0x821ade90caaa5889L, 0x6d28c915d791686aL,
+            0x9c32649372163ba2L, 0xd66ae956c14d5212L, 0x38ed30ee5161200fL, 0x9bfae0a4e613fc3cL, };
 
     /** Murmur 64bit hash results, special test seed. */
-    static final long[] results64_seed = { 0x0822b1481a92e97bl, 0xf8a9223fef0822ddl, 0x4b49e56affae3a89l,
-            0xc970296e32e1d1c1l, 0xe2f9f88789f1b08fl, 0x2b0459d9b4c10c61l, 0x377e97ea9197ee89l, 0xd2ccad460751e0e7l,
-            0xff162ca8d6da8c47l, 0xf12e051405769857l, 0xdabba41293d5b035l, 0xacf326b0bb690d0el, 0x0617f431bc1a8e04l,
-            0x15b81f28d576e1b2l, 0x28c1fe59e4f8e5bal, 0x694dd315c9354ca9l, 0xa97052a8f088ae6cl };
+    static final long[] results64_seed = { 0x0822b1481a92e97bL, 0xf8a9223fef0822ddL, 0x4b49e56affae3a89L,
+            0xc970296e32e1d1c1L, 0xe2f9f88789f1b08fL, 0x2b0459d9b4c10c61L, 0x377e97ea9197ee89L, 0xd2ccad460751e0e7L,
+            0xff162ca8d6da8c47L, 0xf12e051405769857L, 0xdabba41293d5b035L, 0xacf326b0bb690d0eL, 0x0617f431bc1a8e04L,
+            0x15b81f28d576e1b2L, 0x28c1fe59e4f8e5baL, 0x694dd315c9354ca9L, 0xa97052a8f088ae6cL };
 
     /** Dummy test text. */
     static final String text = "Lorem ipsum dolor sit amet, consectetur adipisicing elit";

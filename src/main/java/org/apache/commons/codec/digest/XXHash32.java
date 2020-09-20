@@ -40,9 +40,9 @@ public class XXHash32 implements Checksum {
     private static final int BUF_SIZE = 16;
     private static final int ROTATE_BITS = 13;
 
-    private static final int PRIME1 = (int) 2654435761l;
-    private static final int PRIME2 = (int) 2246822519l;
-    private static final int PRIME3 = (int) 3266489917l;
+    private static final int PRIME1 = (int) 2654435761L;
+    private static final int PRIME2 = (int) 2246822519L;
+    private static final int PRIME3 = (int) 3266489917L;
     private static final int PRIME4 =  668265263;
     private static final int PRIME5 =  374761393;
 
@@ -159,7 +159,7 @@ public class XXHash32 implements Checksum {
         hash ^= hash >>> 13;
         hash *= PRIME3;
         hash ^= hash >>> 16;
-        return hash & 0xffffffffl;
+        return hash & 0xffffffffL;
     }
 
     /**
