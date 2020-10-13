@@ -261,6 +261,9 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
             case '\n' :
             case '\r' :
             case '\t' :
+            case '\f' :
+            // Vertical tab character
+            case '\u000B' :
                 return true;
             default :
                 return false;

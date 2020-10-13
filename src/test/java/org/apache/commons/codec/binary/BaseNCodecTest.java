@@ -108,6 +108,8 @@ public class BaseNCodecTest {
         assertTrue(BaseNCodec.isWhiteSpace((byte) '\n'));
         assertTrue(BaseNCodec.isWhiteSpace((byte) '\r'));
         assertTrue(BaseNCodec.isWhiteSpace((byte) '\t'));
+        assertTrue(BaseNCodec.isWhiteSpace((byte) '\f'));
+        assertTrue(BaseNCodec.isWhiteSpace((byte) '\u000B'));
     }
 //
 //    @Test
