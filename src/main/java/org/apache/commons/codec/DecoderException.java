@@ -38,7 +38,6 @@ public class DecoderException extends Exception {
      * @since 1.4
      */
     public DecoderException() {
-        super();
     }
 
     /**

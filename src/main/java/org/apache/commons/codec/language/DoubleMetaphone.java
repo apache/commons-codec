@@ -62,7 +62,6 @@ public class DoubleMetaphone implements StringEncoder {
      * Creates an instance of this DoubleMetaphone encoder
      */
     public DoubleMetaphone() {
-        super();
     }
 
     /**

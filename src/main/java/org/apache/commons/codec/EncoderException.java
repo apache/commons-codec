@@ -39,7 +39,6 @@ public class EncoderException extends Exception {
      * @since 1.4
      */
     public EncoderException() {
-        super();
     }
 
     /**

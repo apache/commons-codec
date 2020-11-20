@@ -111,7 +111,6 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      * @param charset the default string charset to use.
      */
     public URLCodec(final String charset) {
-        super();
         this.charset = charset;
     }
 

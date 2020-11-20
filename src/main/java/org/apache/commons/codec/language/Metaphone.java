@@ -75,7 +75,6 @@ public class Metaphone implements StringEncoder {
      * Creates an instance of the Metaphone encoder
      */
     public Metaphone() {
-        super();
     }
 
     /**

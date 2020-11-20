@@ -37,7 +37,6 @@ public abstract class AbstractCaverphone implements StringEncoder {
      * Creates an instance of the Caverphone encoder
      */
     public AbstractCaverphone() {
-        super();
     }
 
     /**

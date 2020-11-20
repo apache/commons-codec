@@ -43,7 +43,6 @@ public class Caverphone implements StringEncoder {
      * Creates an instance of the Caverphone encoder
      */
     public Caverphone() {
-        super();
     }
 
     /**

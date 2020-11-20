@@ -127,7 +127,6 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * @since 1.7
      */
     public QCodec(final Charset charset) {
-        super();
         this.charset = charset;
     }
 
