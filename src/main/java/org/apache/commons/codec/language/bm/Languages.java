@@ -123,14 +123,14 @@ public class Languages {
             } else if (other == ANY_LANGUAGE) {
                 return this;
             } else {
-                final SomeLanguages sl = (SomeLanguages) other;
-                final Set<String> ls = new HashSet<>(Math.min(languages.size(), sl.languages.size()));
+                final SomeLanguages someLanguages = (SomeLanguages) other;
+                final Set<String> set = new HashSet<>(Math.min(languages.size(), someLanguages.languages.size()));
                 for (final String lang : languages) {
-                    if (sl.languages.contains(lang)) {
-                        ls.add(lang);
+                    if (someLanguages.languages.contains(lang)) {
+                        set.add(lang);
                     }
                 }
-                return from(ls);
+                return from(set);
             }
         }
 
@@ -141,12 +141,10 @@ public class Languages {
             } else if (other == ANY_LANGUAGE) {
                 return other;
             } else {
-                final SomeLanguages sl = (SomeLanguages) other;
-                final Set<String> ls = new HashSet<>(languages);
-                for (final String lang : sl.languages) {
-                    ls.add(lang);
-                }
-                return from(ls);
+                final SomeLanguages someLanguages = (SomeLanguages) other;
+                final Set<String> set = new HashSet<>(languages);
+                set.addAll(someLanguages.languages);
+                return from(set);
             }
         }
 
