@@ -18,6 +18,7 @@ package org.apache.commons.codec.digest;
 
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
+import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -217,9 +218,7 @@ public class UnixCrypt {
         final int eSwap0 = CON_SALT[charZero];
         final int eSwap1 = CON_SALT[charOne] << 4;
         final byte key[] = new byte[8];
-        for (int i = 0; i < key.length; i++) {
-            key[i] = 0;
-        }
+        Arrays.fill(key, (byte) 0);
 
         for (int i = 0; i < key.length && i < original.length; i++) {
             final int iChar = original[i];

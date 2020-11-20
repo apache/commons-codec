@@ -16,6 +16,8 @@
  */
 package org.apache.commons.codec.digest;
 
+import java.util.Arrays;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -32,17 +34,13 @@ public class PureJavaCrc32CTest {
 
     @Test
     public void testZeros() {
-        for(int i = 0; i < data.length; i ++) {
-            data[i]= (byte) 0;
-        }
+        Arrays.fill(data, (byte) 0);
         check(0x8a9136aa); // aa 36 91 8a
     }
 
     @Test
     public void testOnes() {
-        for(int i = 0; i < data.length; i ++) {
-            data[i]= (byte) 0xFF;
-        }
+        Arrays.fill(data, (byte) 0xFF);
         check(0x62a8ab43); // 43 ab a8 62
     }
 
