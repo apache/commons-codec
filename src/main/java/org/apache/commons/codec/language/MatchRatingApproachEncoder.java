@@ -247,8 +247,7 @@ public class MatchRatingApproachEncoder implements StringEncoder {
         // 5. Obtain the minimum rating value by calculating the length sum of the
         // encoded Strings and sending it down.
         final int sumLength = Math.abs(name1.length() + name2.length());
-        int minRating = 0;
-        minRating = getMinRating(sumLength);
+        int minRating = getMinRating(sumLength);
 
         // 6. Process the encoded Strings from left to right and remove any
         // identical characters found from both Strings respectively.
