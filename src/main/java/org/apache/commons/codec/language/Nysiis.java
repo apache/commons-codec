@@ -126,20 +126,23 @@ public class Nysiis implements StringEncoder {
         }
 
         // 2. Q -> G, Z -> S, M -> N
-        if (curr == 'Q') {
-            return CHARS_G;
-        } else if (curr == 'Z') {
-            return CHARS_S;
-        } else if (curr == 'M') {
-            return CHARS_N;
-        }
+        
 
         // 3. KN -> NN else K -> C
-        if (curr == 'K') {
+        switch (curr) {
+        case 'Q':
+            return CHARS_G;
+        case 'Z':
+            return CHARS_S;
+        case 'M':
+            return CHARS_N;
+        case 'K':
             if (next == 'N') {
                 return CHARS_NN;
             }
             return CHARS_C;
+        default:
+            break;
         }
 
         // 4. SCH -> SSS

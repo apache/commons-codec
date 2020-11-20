@@ -368,17 +368,24 @@ public class ColognePhonetic implements StringEncoder {
                 }
             } else if (arrayContains(DTX, chr)) {
                 output.put('8');
-            } else if (chr == 'R') {
-                output.put('7');
-            } else if (chr == 'L') {
-                output.put('5');
-            } else if (chr == 'M' || chr == 'N') {
-                output.put('6');
-            } else if (chr == 'H') {
-                output.put(CHAR_IGNORE); // needed by put
-            } else {
-                // ignored; should not happen
-            }
+            } else
+                switch (chr) {
+                case 'R':
+                    output.put('7');
+                    break;
+                case 'L':
+                    output.put('5');
+                    break;
+                case 'M':
+                case 'N':
+                    output.put('6');
+                    break;
+                case 'H':
+                    output.put(CHAR_IGNORE); // needed by put
+                    break;
+                default:
+                    break;
+                }
 
             lastChar = chr;
         }
