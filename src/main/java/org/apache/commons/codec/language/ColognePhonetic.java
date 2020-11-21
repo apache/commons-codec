@@ -368,7 +368,7 @@ public class ColognePhonetic implements StringEncoder {
                 }
             } else if (arrayContains(DTX, chr)) {
                 output.put('8');
-            } else
+            } else {
                 switch (chr) {
                 case 'R':
                     output.put('7');
@@ -386,6 +386,7 @@ public class ColognePhonetic implements StringEncoder {
                 default:
                     break;
                 }
+            }
 
             lastChar = chr;
         }
