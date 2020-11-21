@@ -89,7 +89,7 @@ public enum HmacAlgorithms {
 
     private final String name;
 
-    private HmacAlgorithms(final String algorithm) {
+    HmacAlgorithms(final String algorithm) {
         this.name = algorithm;
     }
 
