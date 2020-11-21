@@ -110,7 +110,7 @@ public class CharSequenceUtilsTest {
                 try {
                     invoke();
                     Assert.fail(msg + " but nothing was thrown.");
-                } catch (Exception ex) {
+                } catch (final Exception ex) {
                     assertTrue(msg + " but was " + ex.getClass().getSimpleName(),
                             data.throwable.isAssignableFrom(ex.getClass()));
                 }

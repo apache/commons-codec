@@ -172,7 +172,7 @@ public class MessageDigestAlgorithmsTest {
         Assert.assertArrayEquals(digestTestData(), DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm),new ByteArrayInputStream(getTestData())));
     }
 
-    private void testDigestPath(OpenOption... options) throws IOException {
+    private void testDigestPath(final OpenOption... options) throws IOException {
         Assume.assumeTrue(DigestUtils.isAvailable(messageDigestAlgorithm));
         Assert.assertArrayEquals(digestTestData(),
             DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm), getTestPath(), options));

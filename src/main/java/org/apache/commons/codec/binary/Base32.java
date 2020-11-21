@@ -314,7 +314,7 @@ public class Base32 extends BaseNCodec {
      * @since 1.15
      */
     public Base32(final int lineLength, final byte[] lineSeparator, final boolean useHex,
-                  final byte padding, CodecPolicy decodingPolicy) {
+                  final byte padding, final CodecPolicy decodingPolicy) {
         super(BYTES_PER_UNENCODED_BLOCK, BYTES_PER_ENCODED_BLOCK, lineLength,
                 lineSeparator == null ? 0 : lineSeparator.length, padding, decodingPolicy);
         if (useHex) {
