@@ -312,7 +312,7 @@ public final class MurmurHash3 {
      * Generates 32-bit hash from the byte array with the given offset, length and seed.
      *
      * <p>This is an implementation of the 32-bit hash function {@code MurmurHash3_x86_32}
-     * from from Austin Applyby's original MurmurHash3 {@code c++} code in SMHasher.</p>
+     * from Austin Applyby's original MurmurHash3 {@code c++} code in SMHasher.</p>
      *
      * <p>This implementation contains a sign-extension bug in the finalization step of
      * any bytes left over from dividing the length by 4. This manifests if any of these
@@ -385,7 +385,7 @@ public final class MurmurHash3 {
      * Generates 32-bit hash from the byte array with the given offset, length and seed.
      *
      * <p>This is an implementation of the 32-bit hash function {@code MurmurHash3_x86_32}
-     * from from Austin Applyby's original MurmurHash3 {@code c++} code in SMHasher.</p>
+     * from Austin Applyby's original MurmurHash3 {@code c++} code in SMHasher.</p>
      *
      * @param data The input byte array
      * @param offset The offset of data
@@ -782,7 +782,7 @@ public final class MurmurHash3 {
      * Generates 128-bit hash from the byte array with the given offset, length and seed.
      *
      * <p>This is an implementation of the 128-bit hash function {@code MurmurHash3_x64_128}
-     * from from Austin Applyby's original MurmurHash3 {@code c++} code in SMHasher.</p>
+     * from Austin Applyby's original MurmurHash3 {@code c++} code in SMHasher.</p>
      *
      * <p>This implementation contains a sign-extension bug in the seed initialization.
      * This manifests if the seed is negative.<p>
@@ -809,7 +809,7 @@ public final class MurmurHash3 {
      * Generates 128-bit hash from the byte array with the given offset, length and seed.
      *
      * <p>This is an implementation of the 128-bit hash function {@code MurmurHash3_x64_128}
-     * from from Austin Applyby's original MurmurHash3 {@code c++} code in SMHasher.</p>
+     * from Austin Applyby's original MurmurHash3 {@code c++} code in SMHasher.</p>
      *
      * @param data The input byte array
      * @param offset The first element of array
@@ -827,7 +827,7 @@ public final class MurmurHash3 {
      * Generates 128-bit hash from the byte array with the given offset, length and seed.
      *
      * <p>This is an implementation of the 128-bit hash function {@code MurmurHash3_x64_128}
-     * from from Austin Applyby's original MurmurHash3 {@code c++} code in SMHasher.</p>
+     * from Austin Applyby's original MurmurHash3 {@code c++} code in SMHasher.</p>
      *
      * @param data The input byte array
      * @param offset The first element of array
@@ -1009,7 +1009,7 @@ public final class MurmurHash3 {
      * hash computed.
      *
      * <p>This is an implementation of the 32-bit hash function {@code MurmurHash3_x86_32}
-     * from from Austin Applyby's original MurmurHash3 {@code c++} code in SMHasher.</p>
+     * from Austin Applyby's original MurmurHash3 {@code c++} code in SMHasher.</p>
      *
      * @since 1.14
      */
@@ -1187,7 +1187,7 @@ public final class MurmurHash3 {
      * hash computed.
      *
      * <p>This is an implementation of the 32-bit hash function {@code MurmurHash3_x86_32}
-     * from from Austin Applyby's original MurmurHash3 {@code c++} code in SMHasher.</p>
+     * from Austin Applyby's original MurmurHash3 {@code c++} code in SMHasher.</p>
      *
      * <p>This implementation contains a sign-extension bug in the finalization step of
      * any bytes left over from dividing the length by 4. This manifests if any of these
