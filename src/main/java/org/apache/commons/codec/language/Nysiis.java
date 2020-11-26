@@ -126,7 +126,7 @@ public class Nysiis implements StringEncoder {
         }
 
         // 2. Q -> G, Z -> S, M -> N
-        
+
 
         // 3. KN -> NN else K -> C
         switch (curr) {
