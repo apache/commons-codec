@@ -283,7 +283,7 @@ public class Md5Crypt {
         final int keyLen = keyBytes.length;
 
         // Extract the real salt from the given string which can be a complete hash string.
-        String saltString;
+        final String saltString;
         if (salt == null) {
             saltString = B64.getRandomSalt(8, random);
         } else {

@@ -151,7 +151,7 @@ public class Base64Test {
 
     private void testBase64InBuffer(final int startPasSize, final int endPadSize) {
         final String content = "Hello World";
-        String encodedContent;
+        final String encodedContent;
         final byte[] bytesUtf8 = StringUtils.getBytesUtf8(content);
         byte[] buffer = ArrayUtils.addAll(bytesUtf8, new byte[endPadSize]);
         buffer = ArrayUtils.addAll(new byte[startPasSize], buffer);

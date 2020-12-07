@@ -89,7 +89,7 @@ public class Metaphone implements StringEncoder {
      */
     public String metaphone(final String txt) {
         boolean hard = false;
-        int txtLength;
+        final int txtLength;
         if (txt == null || (txtLength = txt.length()) == 0) {
             return "";
         }

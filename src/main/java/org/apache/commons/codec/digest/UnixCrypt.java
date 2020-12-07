@@ -220,7 +220,8 @@ public class UnixCrypt {
         final byte key[] = new byte[8];
         Arrays.fill(key, (byte) 0);
 
-        for (int i = 0; i < key.length && i < original.length; i++) {
+        final int originalLength = original.length;
+        for (int i = 0; i < key.length && i < originalLength; i++) {
             final int iChar = original[i];
             key[i] = (byte) (iChar << 1);
         }

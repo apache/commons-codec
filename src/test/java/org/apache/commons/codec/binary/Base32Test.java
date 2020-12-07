@@ -27,7 +27,6 @@ import static org.junit.Assert.fail;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
-import junit.framework.Assert;
 import org.apache.commons.codec.CodecPolicy;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.lang3.ArrayUtils;
@@ -206,7 +205,7 @@ public class Base32Test {
     public void testBase32BinarySamples() throws Exception {
         final Base32 codec = new Base32();
         for (final Object[] element : BASE32_BINARY_TEST_CASES) {
-            String expected;
+            final String expected;
             if(element.length > 2) {
                 expected = (String)element[2];
             } else {

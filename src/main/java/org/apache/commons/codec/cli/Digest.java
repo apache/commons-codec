@@ -61,16 +61,17 @@ public class Digest {
         if (args == null) {
             throw new IllegalArgumentException("args");
         }
-        if (args.length == 0) {
+        final int argsLength = args.length;
+        if (argsLength == 0) {
             throw new IllegalArgumentException(
                     String.format("Usage: java %s [algorithm] [FILE|DIRECTORY|string] ...", Digest.class.getName()));
         }
         this.args = args;
         algorithm = args[0];
-        if (args.length <= 1) {
+        if (argsLength <= 1) {
             inputs = null;
         } else {
-            inputs = new String[args.length -1];
+            inputs = new String[argsLength - 1];
             System.arraycopy(args, 1, inputs, 0, inputs.length);
         }
     }
