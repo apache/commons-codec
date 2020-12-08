@@ -87,7 +87,7 @@ public class PercentCodec implements BinaryEncoder, BinaryDecoder {
      *
      * @param alwaysEncodeCharsArray
      */
-    private void insertAlwaysEncodeChars(final byte[] alwaysEncodeCharsArray) {
+    private void insertAlwaysEncodeChars(byte[] alwaysEncodeCharsArray) {
         if (alwaysEncodeCharsArray != null) {
             for (final byte b : alwaysEncodeCharsArray) {
                 insertAlwaysEncodeChar(b);
