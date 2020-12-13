@@ -166,9 +166,9 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * @since 1.4
      */
     protected static char[] encodeHex(final byte[] data, final char[] toDigits) {
-        final int l = data.length;
-        final char[] out = new char[l << 1];
-        encodeHex(data, 0, data.length, toDigits, out, 0);
+        final int dataLength = data.length;
+        final char[] out = new char[dataLength << 1];
+        encodeHex(data, 0, dataLength, toDigits, out, 0);
         return out;
     }
 
@@ -519,7 +519,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      */
     @Override
     public Object encode(final Object object) throws EncoderException {
-        byte[] byteArray;
+        final byte[] byteArray;
         if (object instanceof String) {
             byteArray = ((String) object).getBytes(this.getCharset());
         } else if (object instanceof ByteBuffer) {

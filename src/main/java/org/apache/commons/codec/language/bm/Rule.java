@@ -84,8 +84,10 @@ public class Rule {
         public static final Comparator<Phoneme> COMPARATOR = new Comparator<Phoneme>() {
             @Override
             public int compare(final Phoneme o1, final Phoneme o2) {
-                for (int i = 0; i < o1.phonemeText.length(); i++) {
-                    if (i >= o2.phonemeText.length()) {
+                final int o1Length = o1.phonemeText.length();
+                final int o2Length = o2.phonemeText.length();
+                for (int i = 0; i < o1Length; i++) {
+                    if (i >= o2Length) {
                         return +1;
                     }
                     final int c = o1.phonemeText.charAt(i) - o2.phonemeText.charAt(i);
@@ -94,7 +96,7 @@ public class Rule {
                     }
                 }
 
-                if (o1.phonemeText.length() < o2.phonemeText.length()) {
+                if (o1Length < o2Length) {
                     return -1;
                 }
 
@@ -205,6 +207,9 @@ public class Rule {
 
     private static final String HASH_INCLUDE = "#include";
 
+    private static final int HASH_INCLUDE_LENGTH = HASH_INCLUDE.length();
+
+
     private static final Map<NameType, Map<RuleType, Map<String, Map<String, List<Rule>>>>> RULES =
             new EnumMap<>(NameType.class);
 
@@ -262,10 +267,13 @@ public class Rule {
     }
 
     private static boolean endsWith(final CharSequence input, final CharSequence suffix) {
-        if (suffix.length() > input.length()) {
+        final int suffixLength = suffix.length();
+        final int inputLength = input.length();
+
+        if (suffixLength > inputLength) {
             return false;
         }
-        for (int i = input.length() - 1, j = suffix.length() - 1; j >= 0; i--, j--) {
+        for (int i = inputLength - 1, j = suffixLength - 1; j >= 0; i--, j--) {
             if (input.charAt(i) != suffix.charAt(j)) {
                 return false;
             }
@@ -419,7 +427,7 @@ public class Rule {
 
                     if (line.startsWith(HASH_INCLUDE)) {
                         // include statement
-                        final String incl = line.substring(HASH_INCLUDE.length()).trim();
+                        final String incl = line.substring(HASH_INCLUDE_LENGTH).trim();
                         if (incl.contains(" ")) {
                             throw new IllegalArgumentException("Malformed import statement '" + rawLine + "' in " +
                                                                location);
@@ -492,7 +500,7 @@ public class Rule {
         if (!boxes) {
             if (startsWith && endsWith) {
                 // exact match
-                if (content.length() == 0) {
+                if (content.isEmpty()) {
                     // empty
                     return new RPattern() {
                         @Override
@@ -507,7 +515,7 @@ public class Rule {
                         return input.equals(content);
                     }
                 };
-            } else if ((startsWith || endsWith) && content.length() == 0) {
+            } else if ((startsWith || endsWith) && content.isEmpty()) {
                 // matches every string
                 return ALL_STRINGS_RMATCHER;
             } else if (startsWith) {

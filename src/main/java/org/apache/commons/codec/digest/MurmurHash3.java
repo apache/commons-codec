@@ -1078,8 +1078,8 @@ public final class MurmurHash3 {
             }
 
             // Combine unprocessed bytes with new bytes.
-            int newOffset;
-            int newLength;
+            final int newOffset;
+            final int newLength;
             if (unprocessedLength > 0) {
                 int k = -1;
                 switch (unprocessedLength) {

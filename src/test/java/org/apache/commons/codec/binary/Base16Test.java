@@ -85,7 +85,7 @@ public class Base16Test {
 
     private void testBase16InBuffer(final int startPasSize, final int endPadSize) {
         final String content = "Hello World";
-        String encodedContent;
+        final String encodedContent;
         final byte[] bytesUtf8 = StringUtils.getBytesUtf8(content);
         byte[] buffer = ArrayUtils.addAll(bytesUtf8, new byte[endPadSize]);
         buffer = ArrayUtils.addAll(new byte[startPasSize], buffer);

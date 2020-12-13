@@ -282,12 +282,13 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
             printable = PRINTABLE_CHARS;
         }
         final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        final int bytesLength = bytes.length;
 
         if (strict) {
             int pos = 1;
             // encode up to buffer.length - 3, the last three octets will be treated
             // separately for simplification of note #3
-            for (int i = 0; i < bytes.length - 3; i++) {
+            for (int i = 0; i < bytesLength - 3; i++) {
                 final int b = getUnsignedOctet(i, bytes);
                 if (pos < SAFE_LENGTH) {
                     // up to this length it is safe to add any byte, encoded or not
@@ -306,7 +307,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
 
             // rule #3: whitespace at the end of a line *must* be encoded
             // if we would do a soft break line after this octet, encode whitespace
-            int b = getUnsignedOctet(bytes.length - 3, bytes);
+            int b = getUnsignedOctet(bytesLength - 3, bytes);
             boolean encode = !printable.get(b) || (isWhitespace(b) && pos > SAFE_LENGTH - 5);
             pos += encodeByte(b, encode, buffer);
 
@@ -318,10 +319,10 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
                 buffer.write(CR);
                 buffer.write(LF);
             }
-            for (int i = bytes.length - 2; i < bytes.length; i++) {
+            for (int i = bytesLength - 2; i < bytesLength; i++) {
                 b = getUnsignedOctet(i, bytes);
                 // rule #3: trailing whitespace shall be encoded
-                encode = !printable.get(b) || (i > bytes.length - 2 && isWhitespace(b));
+                encode = !printable.get(b) || (i > bytesLength - 2 && isWhitespace(b));
                 encodeByte(b, encode, buffer);
             }
         } else {

@@ -205,8 +205,8 @@ public class PhoneticEngineRegressionTest {
      * regressions in Commons-Codec.
      */
     private static String encode(final Map<String, String> args, final boolean concat, final String input) {
-        Languages.LanguageSet languageSet;
-        PhoneticEngine engine;
+        final Languages.LanguageSet languageSet;
+        final PhoneticEngine engine;
 
         // PhoneticEngine = NameType + RuleType + concat
         // we use common-codec's defaults: GENERIC + APPROX + true

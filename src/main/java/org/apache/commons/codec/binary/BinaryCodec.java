@@ -80,13 +80,14 @@ public class BinaryCodec implements BinaryDecoder, BinaryEncoder {
         if (isEmpty(ascii)) {
             return EMPTY_BYTE_ARRAY;
         }
+        final int asciiLength = ascii.length;
         // get length/8 times bytes with 3 bit shifts to the right of the length
-        final byte[] l_raw = new byte[ascii.length >> 3];
+        final byte[] l_raw = new byte[asciiLength >> 3];
         /*
          * We decr index jj by 8 as we go along to not recompute indices using multiplication every time inside the
          * loop.
          */
-        for (int ii = 0, jj = ascii.length - 1; ii < l_raw.length; ii++, jj -= 8) {
+        for (int ii = 0, jj = asciiLength - 1; ii < l_raw.length; ii++, jj -= 8) {
             for (int bits = 0; bits < BITS.length; ++bits) {
                 if (ascii[jj - bits] == '1') {
                     l_raw[ii] |= BITS[bits];
@@ -112,13 +113,14 @@ public class BinaryCodec implements BinaryDecoder, BinaryEncoder {
         if (ascii == null || ascii.length == 0) {
             return EMPTY_BYTE_ARRAY;
         }
+        final int asciiLength = ascii.length;
         // get length/8 times bytes with 3 bit shifts to the right of the length
-        final byte[] l_raw = new byte[ascii.length >> 3];
+        final byte[] l_raw = new byte[asciiLength >> 3];
         /*
          * We decr index jj by 8 as we go along to not recompute indices using multiplication every time inside the
          * loop.
          */
-        for (int ii = 0, jj = ascii.length - 1; ii < l_raw.length; ii++, jj -= 8) {
+        for (int ii = 0, jj = asciiLength - 1; ii < l_raw.length; ii++, jj -= 8) {
             for (int bits = 0; bits < BITS.length; ++bits) {
                 if (ascii[jj - bits] == '1') {
                     l_raw[ii] |= BITS[bits];
@@ -152,13 +154,14 @@ public class BinaryCodec implements BinaryDecoder, BinaryEncoder {
         if (isEmpty(raw)) {
             return EMPTY_BYTE_ARRAY;
         }
+        final int rawLength = raw.length;
         // get 8 times the bytes with 3 bit shifts to the left of the length
-        final byte[] l_ascii = new byte[raw.length << 3];
+        final byte[] l_ascii = new byte[rawLength << 3];
         /*
          * We decr index jj by 8 as we go along to not recompute indices using multiplication every time inside the
          * loop.
          */
-        for (int ii = 0, jj = l_ascii.length - 1; ii < raw.length; ii++, jj -= 8) {
+        for (int ii = 0, jj = l_ascii.length - 1; ii < rawLength; ii++, jj -= 8) {
             for (int bits = 0; bits < BITS.length; ++bits) {
                 if ((raw[ii] & BITS[bits]) == 0) {
                     l_ascii[jj - bits] = '0';
@@ -182,13 +185,14 @@ public class BinaryCodec implements BinaryDecoder, BinaryEncoder {
         if (isEmpty(raw)) {
             return EMPTY_CHAR_ARRAY;
         }
+        final int rawLength = raw.length;
         // get 8 times the bytes with 3 bit shifts to the left of the length
-        final char[] l_ascii = new char[raw.length << 3];
+        final char[] l_ascii = new char[rawLength << 3];
         /*
          * We decr index jj by 8 as we go along to not recompute indices using multiplication every time inside the
          * loop.
          */
-        for (int ii = 0, jj = l_ascii.length - 1; ii < raw.length; ii++, jj -= 8) {
+        for (int ii = 0, jj = l_ascii.length - 1; ii < rawLength; ii++, jj -= 8) {
             for (int bits = 0; bits < BITS.length; ++bits) {
                 if ((raw[ii] & BITS[bits]) == 0) {
                     l_ascii[jj - bits] = '0';
