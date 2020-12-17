@@ -246,7 +246,7 @@ public class Base32Test {
         base32 = new Base32(-1, new byte[] {});
         base32 = new Base32(32, new byte[] {});
         base32 = new Base32(32, new byte[] {}, false);
-        // This is different behaviour than Base64 which validates the separator
+        // This is different behavior than Base64 which validates the separator
         // even when line length is negative.
         base32 = new Base32(-1, new byte[] { 'A' });
         try {
