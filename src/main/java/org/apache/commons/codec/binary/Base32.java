@@ -334,8 +334,7 @@ public class Base32 extends BaseNCodec {
                 throw new IllegalArgumentException("lineSeparator must not contain Base32 characters: [" + sep + "]");
             }
             this.encodeSize = BYTES_PER_ENCODED_BLOCK + lineSeparator.length;
-            this.lineSeparator = new byte[lineSeparator.length];
-            System.arraycopy(lineSeparator, 0, this.lineSeparator, 0, lineSeparator.length);
+            this.lineSeparator = lineSeparator.clone();
         } else {
             this.encodeSize = BYTES_PER_ENCODED_BLOCK;
             this.lineSeparator = null;

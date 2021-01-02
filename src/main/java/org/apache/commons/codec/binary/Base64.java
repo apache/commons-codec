@@ -596,8 +596,7 @@ public class Base64 extends BaseNCodec {
             }
             if (lineLength > 0){ // null line-sep forces no chunking rather than throwing IAE
                 this.encodeSize = BYTES_PER_ENCODED_BLOCK + lineSeparator.length;
-                this.lineSeparator = new byte[lineSeparator.length];
-                System.arraycopy(lineSeparator, 0, this.lineSeparator, 0, lineSeparator.length);
+                this.lineSeparator = lineSeparator.clone();
             } else {
                 this.encodeSize = BYTES_PER_ENCODED_BLOCK;
                 this.lineSeparator = null;

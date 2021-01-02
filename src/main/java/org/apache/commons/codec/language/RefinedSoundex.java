@@ -87,8 +87,7 @@ public class RefinedSoundex implements StringEncoder {
      *                  a given character
      */
     public RefinedSoundex(final char[] mapping) {
-        this.soundexMapping = new char[mapping.length];
-        System.arraycopy(mapping, 0, this.soundexMapping, 0, mapping.length);
+        this.soundexMapping = mapping.clone();
     }
 
     /**

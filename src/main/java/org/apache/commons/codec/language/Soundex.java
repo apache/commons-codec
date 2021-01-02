@@ -150,8 +150,7 @@ public class Soundex implements StringEncoder {
      *                  Mapping array to use when finding the corresponding code for a given character
      */
     public Soundex(final char[] mapping) {
-        this.soundexMapping = new char[mapping.length];
-        System.arraycopy(mapping, 0, this.soundexMapping, 0, mapping.length);
+        this.soundexMapping = mapping.clone();
         this.specialCaseHW = !hasMarker(this.soundexMapping);
     }
 
