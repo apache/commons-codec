@@ -236,9 +236,7 @@ public final class HmacUtils {
             final Mac mac = Mac.getInstance(algorithm);
             mac.init(keySpec);
             return mac;
-        } catch (final NoSuchAlgorithmException e) {
-            throw new IllegalArgumentException(e);
-        } catch (final InvalidKeyException e) {
+        } catch (final NoSuchAlgorithmException | InvalidKeyException e) {
             throw new IllegalArgumentException(e);
         }
     }

@@ -105,14 +105,7 @@ public class HexTest {
                 log("FAILED charsetSanityCheck=Interesting Java charset oddity: Roundtrip failed for " + name);
             }
             return equals;
-        } catch (final UnsupportedEncodingException e) {
-            // Should NEVER happen since we are getting the name from the Charset class.
-            if (LOG) {
-                log("FAILED charsetSanityCheck=" + name + ", e=" + e);
-                log(e);
-            }
-            return false;
-        } catch (final UnsupportedOperationException e) {
+        } catch (final UnsupportedEncodingException | UnsupportedOperationException e) {
             // Caught here with:
             // x-JISAutoDetect on Windows XP and Java Sun 1.4.2_19 x86 32-bits
             // x-JISAutoDetect on Windows XP and Java Sun 1.5.0_17 x86 32-bits
