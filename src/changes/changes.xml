@@ -49,7 +49,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action                   dev="ggregory" type="update" due-to="Dependabot">Bump actions/setup-java from v1.4.2 to v1.4.3 #62.</action>
       <action                   dev="ggregory" type="update" due-to="Dependabot">Bump actions/checkout from v2.3.2 to v2.3.4 #65.</action> 
       <action issue="CODEC-295" dev="ggregory" type="update" due-to="Arturo Bernal">Minor improvements #67.</action> 
-      <action                   dev="ggregory" type="update" due-to="Gary Gregory">Update commons.japicmp.version 0.14.3 -> 0.15.1.</action>
+      <action                   dev="ggregory" type="update" due-to="Gary Gregory">Update commons.japicmp.version 0.14.3 -> 0.15.2.</action>
     </release>
 
     <release version="1.15" date="2020-09-01" description="Feature and fix release.">
