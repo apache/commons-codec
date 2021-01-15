@@ -323,6 +323,9 @@ public class Metaphone implements StringEncoder {
                 } // end switch
                 n++;
             } // end else from symb != 'C'
+            if (code.length() > this.getMaxCodeLen()) {
+                code.setLength(this.getMaxCodeLen());
+            }
         }
         return code.toString();
     }

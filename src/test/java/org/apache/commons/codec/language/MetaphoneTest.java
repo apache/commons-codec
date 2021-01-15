@@ -460,14 +460,14 @@ public class MetaphoneTest extends StringEncoderAbstractTest<Metaphone> {
     @Test
     public void testExceedLength() {
         // should be AKSKS, but istruncated by Max Code Length
-        assertEquals( "AKSKS", this.getStringEncoder().metaphone("AXEAXE") );
+        assertEquals( "AKSK", this.getStringEncoder().metaphone("AXEAXE") );
     }
 
     @Test
     public void testSetMaxLengthWithTruncation() {
         // should be AKSKS, but istruncated by Max Code Length
         this.getStringEncoder().setMaxCodeLen( 6 );
-        assertEquals( "AKSKSKS", this.getStringEncoder().metaphone("AXEAXEAXE") );
+        assertEquals( "AKSKSK", this.getStringEncoder().metaphone("AXEAXEAXE") );
     }
 
     public void validateFixture(final String[][] pairs) {
