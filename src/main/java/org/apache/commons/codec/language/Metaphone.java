@@ -189,7 +189,7 @@ public class Metaphone implements StringEncoder {
                         break;
                     }
                     if (isNextChar(local, n, 'H')) { // detect CH
-                        if (n == 0 &&
+                        if (n > 0 &&
                             wdsz >= 3 &&
                             isVowel(local,2) ) { // CH consonant -> K consonant
                             code.append('K');

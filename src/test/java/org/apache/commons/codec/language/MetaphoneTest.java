@@ -405,8 +405,10 @@ public class MetaphoneTest extends StringEncoderAbstractTest<Metaphone> {
         assertEquals( "SKTL", this.getStringEncoder().metaphone("SCHEDULE") );
         assertEquals( "SKMT", this.getStringEncoder().metaphone("SCHEMATIC") );
 
-        assertEquals( "KRKT", this.getStringEncoder().metaphone("CHARACTER") );
+        assertEquals( "XRKTR", this.getStringEncoder().metaphone("CHARACTER") );
         assertEquals( "TX", this.getStringEncoder().metaphone("TEACH") );
+
+        assertEquals("XR", this.getStringEncoder().metaphone("CHERI"));
     }
 
     @Test
