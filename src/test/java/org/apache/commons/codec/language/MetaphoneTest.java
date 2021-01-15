@@ -402,11 +402,13 @@ public class MetaphoneTest extends StringEncoderAbstractTest<Metaphone> {
 
     @Test
     public void testTranslateOfSCHAndCH() {
-        assertEquals( "SKTL", this.getStringEncoder().metaphone("SCHEDULE") );
-        assertEquals( "SKMT", this.getStringEncoder().metaphone("SCHEMATIC") );
-
-        assertEquals( "KRKT", this.getStringEncoder().metaphone("CHARACTER") );
+        assertEquals( "SXTL", this.getStringEncoder().metaphone("SCHEDULE") );
+        assertEquals( "SXMT", this.getStringEncoder().metaphone("SCHEMATIC") );
+        assertEquals( "XRKT", this.getStringEncoder().metaphone("CHARACTER") );
         assertEquals( "TX", this.getStringEncoder().metaphone("TEACH") );
+        assertEquals("XR", this.getStringEncoder().metaphone("CHERI"));
+        assertEquals("ALBR", this.getStringEncoder().metaphone("Albrecht"));
+
     }
 
     @Test
@@ -458,14 +460,14 @@ public class MetaphoneTest extends StringEncoderAbstractTest<Metaphone> {
     @Test
     public void testExceedLength() {
         // should be AKSKS, but istruncated by Max Code Length
-        assertEquals( "AKSK", this.getStringEncoder().metaphone("AXEAXE") );
+        assertEquals( "AKSKS", this.getStringEncoder().metaphone("AXEAXE") );
     }
 
     @Test
     public void testSetMaxLengthWithTruncation() {
         // should be AKSKS, but istruncated by Max Code Length
         this.getStringEncoder().setMaxCodeLen( 6 );
-        assertEquals( "AKSKSK", this.getStringEncoder().metaphone("AXEAXEAXE") );
+        assertEquals( "AKSKSKS", this.getStringEncoder().metaphone("AXEAXEAXE") );
     }
 
     public void validateFixture(final String[][] pairs) {
