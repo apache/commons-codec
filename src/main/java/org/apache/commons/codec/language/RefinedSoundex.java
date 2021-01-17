@@ -189,7 +189,7 @@ public class RefinedSoundex implements StringEncoder {
             return null;
         }
         str = SoundexUtils.clean(str);
-        if (str.length() == 0) {
+        if (str.isEmpty()) {
             return str;
         }
 

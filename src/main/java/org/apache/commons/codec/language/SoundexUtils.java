@@ -38,7 +38,7 @@ final class SoundexUtils {
      * @return A clean String.
      */
     static String clean(final String str) {
-        if (str == null || str.length() == 0) {
+        if (str == null || str.isEmpty()) {
             return str;
         }
         final int len = str.length();

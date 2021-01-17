@@ -253,7 +253,7 @@ public class Nysiis implements StringEncoder {
         // Use the same clean rules as Soundex
         str = SoundexUtils.clean(str);
 
-        if (str.length() == 0) {
+        if (str.isEmpty()) {
             return str;
         }
 

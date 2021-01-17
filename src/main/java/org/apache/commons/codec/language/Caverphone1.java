@@ -43,7 +43,7 @@ public class Caverphone1 extends AbstractCaverphone {
     @Override
     public String encode(final String source) {
         String txt = source;
-        if (txt == null || txt.length() == 0) {
+        if (txt == null || txt.isEmpty()) {
             return SIX_1;
         }
 

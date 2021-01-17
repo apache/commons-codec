@@ -199,7 +199,7 @@ public class ColognePhonetic implements StringEncoder {
      * However, it is not shared between threads, as it is constructed on demand
      * by the method {@link ColognePhonetic#colognePhonetic(String)}
      */
-    private abstract class CologneBuffer {
+    abstract class CologneBuffer {
 
         protected final char[] data;
 
@@ -224,6 +224,10 @@ public class ColognePhonetic implements StringEncoder {
         @Override
         public String toString() {
             return new String(copyData(0, length));
+        }
+
+        public boolean isEmpty() {
+            return length() == 0;
         }
     }
 
@@ -353,7 +357,7 @@ public class ColognePhonetic implements StringEncoder {
             } else if (chr == 'S' || chr == 'Z') {
                 output.put('8');
             } else if (chr == 'C') {
-                if (output.length() == 0) {
+                if (output.isEmpty()) {
                     if (arrayContains(AHKLOQRUX, nextChar)) {
                         output.put('4');
                     } else {
