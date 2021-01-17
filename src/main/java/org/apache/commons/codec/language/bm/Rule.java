@@ -421,7 +421,7 @@ public class Rule {
                     // trim leading-trailing whitespace
                     line = line.trim();
 
-                    if (line.length() == 0) {
+                    if (line.isEmpty()) {
                         continue; // empty lines can be safely skipped
                     }
 
