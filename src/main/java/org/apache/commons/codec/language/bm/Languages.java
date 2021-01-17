@@ -184,7 +184,7 @@ public class Languages {
                 } else {
                     if (line.startsWith(ResourceConstants.EXT_CMT_START)) {
                         inExtendedComment = true;
-                    } else if (line.length() > 0) {
+                    } else if (!line.isEmpty()) {
                         ls.add(line);
                     }
                 }

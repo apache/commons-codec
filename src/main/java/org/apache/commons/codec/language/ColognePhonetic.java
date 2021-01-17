@@ -328,10 +328,10 @@ public class ColognePhonetic implements StringEncoder {
         char lastChar = CHAR_IGNORE;
         char chr;
 
-        while (input.length() > 0) {
+        while (!input.isEmpty()) {
             chr = input.removeNext();
 
-            if (input.length() > 0) {
+            if (!input.isEmpty()) {
                 nextChar = input.getNextChar();
             } else {
                 nextChar = CHAR_IGNORE;

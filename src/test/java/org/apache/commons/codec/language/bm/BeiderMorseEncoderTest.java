@@ -147,7 +147,7 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest<StringEnco
         encoder.setMaxPhonemes(10);
 
         final String phonemes = encoder.encode(phrase);
-        assertTrue(phonemes.length() > 0);
+        assertFalse(phonemes.isEmpty());
 
         final String[] phonemeArr = phonemes.split("\\|");
         assertTrue(phonemeArr.length <= 10);
