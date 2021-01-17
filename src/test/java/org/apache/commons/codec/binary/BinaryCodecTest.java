@@ -62,7 +62,7 @@ public class BinaryCodecTest {
     private static final int BIT_7 = 0x80;
 
     /** An instance of the binary codec. */
-    BinaryCodec instance = null;
+    BinaryCodec instance;
 
     @Before
     public void setUp() throws Exception {

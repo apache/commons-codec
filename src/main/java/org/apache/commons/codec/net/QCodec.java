@@ -108,7 +108,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
 
     private static final byte UNDERSCORE = 95;
 
-    private boolean encodeBlanks = false;
+    private boolean encodeBlanks;
 
     /**
      * Default constructor.
