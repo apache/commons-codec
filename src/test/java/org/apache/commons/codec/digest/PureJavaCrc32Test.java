@@ -334,8 +334,8 @@ public class PureJavaCrc32Test {
                 crc.update(bytes, 0, size);
               }
               final long et = System.nanoTime();
-              final double secsElapsed = (et - st) / 1000000000.0d;
-              results[index] = new BenchResult(crc.getValue(), mbProcessed/secsElapsed);
+              final double secondsElapsed = (et - st) / 1000000000.0d;
+              results[index] = new BenchResult(crc.getValue(), mbProcessed/secondsElapsed);
             }
           };
         }
