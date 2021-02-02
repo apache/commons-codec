@@ -35,11 +35,11 @@ public class CacheSubSequencePerformanceTest {
     }
 
     private void test(final CharSequence input, final int times) {
-        final long beginTime = System.currentTimeMillis();
+        final long beginTimeMillis = System.currentTimeMillis();
         for (int i = 0; i < times; i++) {
             test(input);
         }
-        System.out.println(System.currentTimeMillis() - beginTime + " millis");
+        System.out.println(System.currentTimeMillis() - beginTimeMillis + " millis");
     }
 
     private void test(final CharSequence input) {
