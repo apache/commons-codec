@@ -231,8 +231,8 @@ public class BaseNCodecTest {
         context.pos = 76979;
         context.readPos = 273;
         ncodec.ensureBufferSize(0, context);
-        Assert.assertNotNull("buffer should be initialised", context.buffer);
-        Assert.assertEquals("buffer should be initialised to default size", ncodec.getDefaultBufferSize(), context.buffer.length);
+        Assert.assertNotNull("buffer should be initialized", context.buffer);
+        Assert.assertEquals("buffer should be initialized to default size", ncodec.getDefaultBufferSize(), context.buffer.length);
         Assert.assertEquals("context position", 0, context.pos);
         Assert.assertEquals("context read position", 0, context.readPos);
 
