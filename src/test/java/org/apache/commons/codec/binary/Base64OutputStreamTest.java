@@ -115,7 +115,7 @@ public class Base64OutputStreamTest {
         testByChunk(encoded, decoded, BaseNCodec.PEM_CHUNK_SIZE, LF);
 
         // Single Line test.
-        final String singleLine = Base64TestData.ENCODED_64_CHARS_PER_LINE.replaceAll("\n", "");
+        final String singleLine = Base64TestData.ENCODED_64_CHARS_PER_LINE.replace("\n", "");
         encoded = StringUtils.getBytesUtf8(singleLine);
         decoded = BaseNTestData.DECODED;
         testByChunk(encoded, decoded, 0, LF);
@@ -154,7 +154,7 @@ public class Base64OutputStreamTest {
         testByteByByte(encoded, decoded, 64, LF);
 
         // Single Line test.
-        final String singleLine = Base64TestData.ENCODED_64_CHARS_PER_LINE.replaceAll("\n", "");
+        final String singleLine = Base64TestData.ENCODED_64_CHARS_PER_LINE.replace("\n", "");
         encoded = StringUtils.getBytesUtf8(singleLine);
         decoded = BaseNTestData.DECODED;
         testByteByByte(encoded, decoded, 0, LF);

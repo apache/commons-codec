@@ -65,29 +65,29 @@ public class Caverphone1 extends AbstractCaverphone {
         txt = txt.replaceAll("mb$", "m2");
 
         // 4. Handle replacements
-        txt = txt.replaceAll("cq", "2q");
-        txt = txt.replaceAll("ci", "si");
-        txt = txt.replaceAll("ce", "se");
-        txt = txt.replaceAll("cy", "sy");
-        txt = txt.replaceAll("tch", "2ch");
-        txt = txt.replaceAll("c", "k");
-        txt = txt.replaceAll("q", "k");
-        txt = txt.replaceAll("x", "k");
-        txt = txt.replaceAll("v", "f");
-        txt = txt.replaceAll("dg", "2g");
-        txt = txt.replaceAll("tio", "sio");
-        txt = txt.replaceAll("tia", "sia");
-        txt = txt.replaceAll("d", "t");
-        txt = txt.replaceAll("ph", "fh");
-        txt = txt.replaceAll("b", "p");
-        txt = txt.replaceAll("sh", "s2");
-        txt = txt.replaceAll("z", "s");
+        txt = txt.replace("cq", "2q");
+        txt = txt.replace("ci", "si");
+        txt = txt.replace("ce", "se");
+        txt = txt.replace("cy", "sy");
+        txt = txt.replace("tch", "2ch");
+        txt = txt.replace("c", "k");
+        txt = txt.replace("q", "k");
+        txt = txt.replace("x", "k");
+        txt = txt.replace("v", "f");
+        txt = txt.replace("dg", "2g");
+        txt = txt.replace("tio", "sio");
+        txt = txt.replace("tia", "sia");
+        txt = txt.replace("d", "t");
+        txt = txt.replace("ph", "fh");
+        txt = txt.replace("b", "p");
+        txt = txt.replace("sh", "s2");
+        txt = txt.replace("z", "s");
         txt = txt.replaceAll("^[aeiou]", "A");
         // 3 is a temporary placeholder marking a vowel
         txt = txt.replaceAll("[aeiou]", "3");
-        txt = txt.replaceAll("3gh3", "3kh3");
-        txt = txt.replaceAll("gh", "22");
-        txt = txt.replaceAll("g", "k");
+        txt = txt.replace("3gh3", "3kh3");
+        txt = txt.replace("gh", "22");
+        txt = txt.replace("g", "k");
         txt = txt.replaceAll("s+", "S");
         txt = txt.replaceAll("t+", "T");
         txt = txt.replaceAll("p+", "P");
@@ -95,26 +95,26 @@ public class Caverphone1 extends AbstractCaverphone {
         txt = txt.replaceAll("f+", "F");
         txt = txt.replaceAll("m+", "M");
         txt = txt.replaceAll("n+", "N");
-        txt = txt.replaceAll("w3", "W3");
-        txt = txt.replaceAll("wy", "Wy"); // 1.0 only
-        txt = txt.replaceAll("wh3", "Wh3");
-        txt = txt.replaceAll("why", "Why"); // 1.0 only
-        txt = txt.replaceAll("w", "2");
+        txt = txt.replace("w3", "W3");
+        txt = txt.replace("wy", "Wy"); // 1.0 only
+        txt = txt.replace("wh3", "Wh3");
+        txt = txt.replace("why", "Why"); // 1.0 only
+        txt = txt.replace("w", "2");
         txt = txt.replaceAll("^h", "A");
-        txt = txt.replaceAll("h", "2");
-        txt = txt.replaceAll("r3", "R3");
-        txt = txt.replaceAll("ry", "Ry"); // 1.0 only
-        txt = txt.replaceAll("r", "2");
-        txt = txt.replaceAll("l3", "L3");
-        txt = txt.replaceAll("ly", "Ly"); // 1.0 only
-        txt = txt.replaceAll("l", "2");
-        txt = txt.replaceAll("j", "y"); // 1.0 only
-        txt = txt.replaceAll("y3", "Y3"); // 1.0 only
-        txt = txt.replaceAll("y", "2"); // 1.0 only
+        txt = txt.replace("h", "2");
+        txt = txt.replace("r3", "R3");
+        txt = txt.replace("ry", "Ry"); // 1.0 only
+        txt = txt.replace("r", "2");
+        txt = txt.replace("l3", "L3");
+        txt = txt.replace("ly", "Ly"); // 1.0 only
+        txt = txt.replace("l", "2");
+        txt = txt.replace("j", "y"); // 1.0 only
+        txt = txt.replace("y3", "Y3"); // 1.0 only
+        txt = txt.replace("y", "2"); // 1.0 only
 
         // 5. Handle removals
-        txt = txt.replaceAll("2", "");
-        txt = txt.replaceAll("3", "");
+        txt = txt.replace("2", "");
+        txt = txt.replace("3", "");
 
         // 6. put six 1s on the end
         txt = txt + SIX_1;

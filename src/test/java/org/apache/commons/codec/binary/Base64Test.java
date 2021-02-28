@@ -190,7 +190,7 @@ public class Base64Test {
         // convert to "\r\n" so we're equal to the old openssl encoding test
         // stored
         // in Base64TestData.ENCODED_76_CHARS_PER_LINE:
-        final String actualResult = Base64TestData.ENCODED_76_CHARS_PER_LINE.replaceAll("\n", "\r\n");
+        final String actualResult = Base64TestData.ENCODED_76_CHARS_PER_LINE.replace("\n", "\r\n");
         final byte[] actualEncode = StringUtils.getBytesUtf8(actualResult);
         assertTrue("chunkedEncodeMultipleOf76", Arrays.equals(expectedEncode, actualEncode));
     }
@@ -324,7 +324,7 @@ public class Base64Test {
         final Base64 base64 = new Base64(64, new byte[] { '\t' }, true);
         final byte[] encoded = base64.encode(BaseNTestData.DECODED);
         String expectedResult = Base64TestData.ENCODED_64_CHARS_PER_LINE;
-        expectedResult = expectedResult.replaceAll("=", ""); // url-safe has no
+        expectedResult = expectedResult.replace("=", ""); // url-safe has no
                                                                 // == padding.
         expectedResult = expectedResult.replace('\n', '\t');
         expectedResult = expectedResult.replace('+', '-');

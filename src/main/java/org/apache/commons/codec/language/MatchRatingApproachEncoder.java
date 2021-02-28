@@ -405,11 +405,11 @@ public class MatchRatingApproachEncoder implements StringEncoder {
         // Extract first letter
         final String firstLetter = name.substring(0, 1);
 
-        name = name.replaceAll("A", EMPTY);
-        name = name.replaceAll("E", EMPTY);
-        name = name.replaceAll("I", EMPTY);
-        name = name.replaceAll("O", EMPTY);
-        name = name.replaceAll("U", EMPTY);
+        name = name.replace("A", EMPTY);
+        name = name.replace("E", EMPTY);
+        name = name.replace("I", EMPTY);
+        name = name.replace("O", EMPTY);
+        name = name.replace("U", EMPTY);
 
         name = name.replaceAll("\\s{2,}\\b", SPACE);
 
