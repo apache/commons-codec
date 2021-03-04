@@ -17,6 +17,8 @@
 
 package org.apache.commons.codec.language;
 
+import org.apache.commons.codec.binary.StringUtils;
+
 /**
  * Encodes a string into a Caverphone 2.0 value.
  *
@@ -43,7 +45,7 @@ public class Caverphone2 extends AbstractCaverphone {
     @Override
     public String encode(final String source) {
         String txt = source;
-        if (txt == null || txt.isEmpty()) {
+        if (SoundexUtils.isEmpty(txt)) {
             return TEN_1;
         }
 

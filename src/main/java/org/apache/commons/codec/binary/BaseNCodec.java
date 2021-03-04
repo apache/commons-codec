@@ -427,7 +427,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      */
     @Override
     public byte[] decode(final byte[] pArray) {
-        if (pArray == null || pArray.length == 0) {
+        if (BinaryCodec.isEmpty(pArray)) {
             return pArray;
         }
         final Context context = new Context();
@@ -483,7 +483,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      */
     @Override
     public byte[] encode(final byte[] pArray) {
-        if (pArray == null || pArray.length == 0) {
+        if (BinaryCodec.isEmpty(pArray)) {
             return pArray;
         }
         return encode(pArray, 0, pArray.length);
@@ -503,7 +503,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * @since 1.11
      */
     public byte[] encode(final byte[] pArray, final int offset, final int length) {
-        if (pArray == null || pArray.length == 0) {
+        if (BinaryCodec.isEmpty(pArray)) {
             return pArray;
         }
         final Context context = new Context();

@@ -136,8 +136,10 @@ public class BinaryCodec implements BinaryDecoder, BinaryEncoder {
      * @param array
      *            the source array
      * @return {@code true} if the given array is {@code null} or empty (size 0.)
+     *
+     * @since 1.16 change visibility to public
      */
-    private static boolean isEmpty(final byte[] array) {
+    static boolean isEmpty(final byte[] array) {
         return array == null || array.length == 0;
     }
 

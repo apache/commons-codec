@@ -235,7 +235,7 @@ public class Base64 extends BaseNCodec {
      */
     public static byte[] encodeBase64(final byte[] binaryData, final boolean isChunked,
                                       final boolean urlSafe, final int maxResultSize) {
-        if (binaryData == null || binaryData.length == 0) {
+        if (BinaryCodec.isEmpty(binaryData)) {
             return binaryData;
         }
 
