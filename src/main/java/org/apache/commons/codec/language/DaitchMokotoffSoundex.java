@@ -520,11 +520,10 @@ public class DaitchMokotoffSoundex implements StringEncoder {
 
                             nextBranch.processNextReplacement(nextReplacement, force);
 
-                            if (branching) {
-                                nextBranches.add(nextBranch);
-                            } else {
+                            if (!branching) {
                                 break;
                             }
+                            nextBranches.add(nextBranch);
                         }
                     }
 

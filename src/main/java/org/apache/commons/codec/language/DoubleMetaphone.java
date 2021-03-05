@@ -354,26 +354,27 @@ public class DoubleMetaphone implements StringEncoder {
         if (index > 0 && contains(value, index, 4, "CHAE")) {   // Michael
             result.append('K', 'X');
             return index + 2;
-        } else if (conditionCH0(value, index)) {
+        }
+        if (conditionCH0(value, index)) {
             //-- Greek roots ("chemistry", "chorus", etc.) --//
             result.append('K');
             return index + 2;
-        } else if (conditionCH1(value, index)) {
+        }
+        if (conditionCH1(value, index)) {
             //-- Germanic, Greek, or otherwise 'ch' for 'kh' sound --//
             result.append('K');
             return index + 2;
-        } else {
-            if (index > 0) {
-                if (contains(value, 0, 2, "MC")) {
-                    result.append('K');
-                } else {
-                    result.append('X', 'K');
-                }
-            } else {
-                result.append('X');
-            }
-            return index + 2;
         }
+        if (index > 0) {
+            if (contains(value, 0, 2, "MC")) {
+                result.append('K');
+            } else {
+                result.append('X', 'K');
+            }
+        } else {
+            result.append('X');
+        }
+        return index + 2;
     }
 
     /**
@@ -779,17 +780,19 @@ public class DoubleMetaphone implements StringEncoder {
     private boolean conditionC0(final String value, final int index) {
         if (contains(value, index, 4, "CHIA")) {
             return true;
-        } else if (index <= 1) {
-            return false;
-        } else if (isVowel(charAt(value, index - 2))) {
-            return false;
-        } else if (!contains(value, index - 1, 3, "ACH")) {
-            return false;
-        } else {
-            final char c = charAt(value, index + 2);
-            return (c != 'I' && c != 'E') ||
-                    contains(value, index - 2, 6, "BACHER", "MACHER");
         }
+        if (index <= 1) {
+            return false;
+        }
+        if (isVowel(charAt(value, index - 2))) {
+            return false;
+        }
+        if (!contains(value, index - 1, 3, "ACH")) {
+            return false;
+        }
+        final char c = charAt(value, index + 2);
+        return (c != 'I' && c != 'E') ||
+                contains(value, index - 2, 6, "BACHER", "MACHER");
     }
 
     /**
@@ -798,14 +801,15 @@ public class DoubleMetaphone implements StringEncoder {
     private boolean conditionCH0(final String value, final int index) {
         if (index != 0) {
             return false;
-        } else if (!contains(value, index + 1, 5, "HARAC", "HARIS") &&
+        }
+        if (!contains(value, index + 1, 5, "HARAC", "HARIS") &&
                    !contains(value, index + 1, 3, "HOR", "HYM", "HIA", "HEM")) {
             return false;
-        } else if (contains(value, 0, 5, "CHORE")) {
-            return false;
-        } else {
-            return true;
         }
+        if (contains(value, 0, 5, "CHORE")) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -826,13 +830,13 @@ public class DoubleMetaphone implements StringEncoder {
         if (index == value.length() - 3 &&
             contains(value, index - 1, 4, "ILLO", "ILLA", "ALLE")) {
             return true;
-        } else if ((contains(value, value.length() - 2, 2, "AS", "OS") ||
+        }
+        if ((contains(value, value.length() - 2, 2, "AS", "OS") ||
                     contains(value, value.length() - 1, 1, "A", "O")) &&
                    contains(value, index - 1, 4, "ALLE")) {
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**

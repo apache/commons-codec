@@ -166,9 +166,11 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
         Objects.requireNonNull(array, "array");
         if (offset < 0 || len < 0) {
             throw new IndexOutOfBoundsException();
-        } else if (offset > array.length || offset + len > array.length) {
+        }
+        if (offset > array.length || offset + len > array.length) {
             throw new IndexOutOfBoundsException();
-        } else if (len > 0) {
+        }
+        if (len > 0) {
             if (doEncode) {
                 baseNCodec.encode(array, offset, len, context);
             } else {

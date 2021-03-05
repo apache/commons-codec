@@ -456,11 +456,11 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     public Object decode(final Object obj) throws DecoderException {
         if (obj instanceof byte[]) {
             return decode((byte[]) obj);
-        } else if (obj instanceof String) {
-            return decode((String) obj);
-        } else {
-            throw new DecoderException("Parameter supplied to Base-N decode is not a byte[] or a String");
         }
+        if (obj instanceof String) {
+            return decode((String) obj);
+        }
+        throw new DecoderException("Parameter supplied to Base-N decode is not a byte[] or a String");
     }
 
     /**

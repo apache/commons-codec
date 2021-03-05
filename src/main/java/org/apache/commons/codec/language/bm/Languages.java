@@ -120,32 +120,32 @@ public class Languages {
         public LanguageSet restrictTo(final LanguageSet other) {
             if (other == NO_LANGUAGES) {
                 return other;
-            } else if (other == ANY_LANGUAGE) {
-                return this;
-            } else {
-                final SomeLanguages someLanguages = (SomeLanguages) other;
-                final Set<String> set = new HashSet<>(Math.min(languages.size(), someLanguages.languages.size()));
-                for (final String lang : languages) {
-                    if (someLanguages.languages.contains(lang)) {
-                        set.add(lang);
-                    }
-                }
-                return from(set);
             }
+            if (other == ANY_LANGUAGE) {
+                return this;
+            }
+            final SomeLanguages someLanguages = (SomeLanguages) other;
+            final Set<String> set = new HashSet<>(Math.min(languages.size(), someLanguages.languages.size()));
+            for (final String lang : languages) {
+                if (someLanguages.languages.contains(lang)) {
+                    set.add(lang);
+                }
+            }
+            return from(set);
         }
 
         @Override
         public LanguageSet merge(final LanguageSet other) {
             if (other == NO_LANGUAGES) {
                 return this;
-            } else if (other == ANY_LANGUAGE) {
-                return other;
-            } else {
-                final SomeLanguages someLanguages = (SomeLanguages) other;
-                final Set<String> set = new HashSet<>(languages);
-                set.addAll(someLanguages.languages);
-                return from(set);
             }
+            if (other == ANY_LANGUAGE) {
+                return other;
+            }
+            final SomeLanguages someLanguages = (SomeLanguages) other;
+            final Set<String> set = new HashSet<>(languages);
+            set.addAll(someLanguages.languages);
+            return from(set);
         }
 
         @Override

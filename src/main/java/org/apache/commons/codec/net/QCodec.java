@@ -285,13 +285,13 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     public Object encode(final Object obj) throws EncoderException {
         if (obj == null) {
             return null;
-        } else if (obj instanceof String) {
-            return encode((String) obj);
-        } else {
-            throw new EncoderException("Objects of type " +
-                  obj.getClass().getName() +
-                  " cannot be encoded using Q codec");
         }
+        if (obj instanceof String) {
+            return encode((String) obj);
+        }
+        throw new EncoderException("Objects of type " +
+              obj.getClass().getName() +
+              " cannot be encoded using Q codec");
     }
 
     /**
@@ -309,13 +309,13 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     public Object decode(final Object obj) throws DecoderException {
         if (obj == null) {
             return null;
-        } else if (obj instanceof String) {
-            return decode((String) obj);
-        } else {
-            throw new DecoderException("Objects of type " +
-                  obj.getClass().getName() +
-                  " cannot be decoded using Q codec");
         }
+        if (obj instanceof String) {
+            return decode((String) obj);
+        }
+        throw new DecoderException("Objects of type " +
+              obj.getClass().getName() +
+              " cannot be decoded using Q codec");
     }
 
     /**

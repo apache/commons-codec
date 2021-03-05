@@ -451,16 +451,17 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
     public Object decode(final Object object) throws DecoderException {
         if (object instanceof String) {
             return decode(((String) object).toCharArray());
-        } else if (object instanceof byte[]) {
+        }
+        if (object instanceof byte[]) {
             return decode((byte[]) object);
-        } else if (object instanceof ByteBuffer) {
+        }
+        if (object instanceof ByteBuffer) {
             return decode((ByteBuffer) object);
-        } else {
-            try {
-                return decodeHex((char[]) object);
-            } catch (final ClassCastException e) {
-                throw new DecoderException(e.getMessage(), e);
-            }
+        }
+        try {
+            return decodeHex((char[]) object);
+        } catch (final ClassCastException e) {
+            throw new DecoderException(e.getMessage(), e);
         }
     }
 

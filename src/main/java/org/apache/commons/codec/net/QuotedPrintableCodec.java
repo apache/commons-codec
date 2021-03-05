@@ -507,15 +507,16 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
     public Object encode(final Object obj) throws EncoderException {
         if (obj == null) {
             return null;
-        } else if (obj instanceof byte[]) {
-            return encode((byte[]) obj);
-        } else if (obj instanceof String) {
-            return encode((String) obj);
-        } else {
-            throw new EncoderException("Objects of type " +
-                  obj.getClass().getName() +
-                  " cannot be quoted-printable encoded");
         }
+        if (obj instanceof byte[]) {
+            return encode((byte[]) obj);
+        }
+        if (obj instanceof String) {
+            return encode((String) obj);
+        }
+        throw new EncoderException("Objects of type " +
+              obj.getClass().getName() +
+              " cannot be quoted-printable encoded");
     }
 
     /**
@@ -533,15 +534,16 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
     public Object decode(final Object obj) throws DecoderException {
         if (obj == null) {
             return null;
-        } else if (obj instanceof byte[]) {
-            return decode((byte[]) obj);
-        } else if (obj instanceof String) {
-            return decode((String) obj);
-        } else {
-            throw new DecoderException("Objects of type " +
-                  obj.getClass().getName() +
-                  " cannot be quoted-printable decoded");
         }
+        if (obj instanceof byte[]) {
+            return decode((byte[]) obj);
+        }
+        if (obj instanceof String) {
+            return decode((String) obj);
+        }
+        throw new DecoderException("Objects of type " +
+              obj.getClass().getName() +
+              " cannot be quoted-printable decoded");
     }
 
     /**

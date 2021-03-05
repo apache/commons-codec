@@ -204,7 +204,8 @@ public class RefinedSoundex implements StringEncoder {
             current = getMappingCode(str.charAt(i));
             if (current == last) {
                 continue;
-            } else if (current != 0) {
+            }
+            if (current != 0) {
                 sBuf.append(current);
             }
 

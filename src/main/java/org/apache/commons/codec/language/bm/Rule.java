@@ -515,10 +515,12 @@ public class Rule {
                         return input.equals(content);
                     }
                 };
-            } else if ((startsWith || endsWith) && content.isEmpty()) {
+            }
+            if ((startsWith || endsWith) && content.isEmpty()) {
                 // matches every string
                 return ALL_STRINGS_RMATCHER;
-            } else if (startsWith) {
+            }
+            if (startsWith) {
                 // matches from start
                 return new RPattern() {
                     @Override
@@ -526,7 +528,8 @@ public class Rule {
                         return startsWith(input, content);
                     }
                 };
-            } else if (endsWith) {
+            }
+            if (endsWith) {
                 // matches from start
                 return new RPattern() {
                     @Override
@@ -558,7 +561,8 @@ public class Rule {
                                 return input.length() == 1 && contains(bContent, input.charAt(0)) == shouldMatch;
                             }
                         };
-                    } else if (startsWith) {
+                    }
+                    if (startsWith) {
                         // first char
                         return new RPattern() {
                             @Override
@@ -566,7 +570,8 @@ public class Rule {
                                 return input.length() > 0 && contains(bContent, input.charAt(0)) == shouldMatch;
                             }
                         };
-                    } else if (endsWith) {
+                    }
+                    if (endsWith) {
                         // last char
                         return new RPattern() {
                             @Override
@@ -706,7 +711,8 @@ public class Rule {
         // fail early if any of the evaluations is not successful
         if (!input.subSequence(i, ipl).equals(this.pattern)) {
             return false;
-        } else if (!this.rContext.isMatch(input.subSequence(ipl, input.length()))) {
+        }
+        if (!this.rContext.isMatch(input.subSequence(ipl, input.length()))) {
             return false;
         }
         return this.lContext.isMatch(input.subSequence(0, i));

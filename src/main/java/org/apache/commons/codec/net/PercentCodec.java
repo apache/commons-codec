@@ -236,11 +236,11 @@ public class PercentCodec implements BinaryEncoder, BinaryDecoder {
     public Object encode(final Object obj) throws EncoderException {
         if (obj == null) {
             return null;
-        } else if (obj instanceof byte[]) {
-            return encode((byte[]) obj);
-        } else {
-            throw new EncoderException("Objects of type " + obj.getClass().getName() + " cannot be Percent encoded");
         }
+        if (obj instanceof byte[]) {
+            return encode((byte[]) obj);
+        }
+        throw new EncoderException("Objects of type " + obj.getClass().getName() + " cannot be Percent encoded");
     }
 
     /**
@@ -254,10 +254,10 @@ public class PercentCodec implements BinaryEncoder, BinaryDecoder {
     public Object decode(final Object obj) throws DecoderException {
         if (obj == null) {
             return null;
-        } else if (obj instanceof byte[]) {
-            return decode((byte[]) obj);
-        } else {
-            throw new DecoderException("Objects of type " + obj.getClass().getName() + " cannot be Percent decoded");
         }
+        if (obj instanceof byte[]) {
+            return decode((byte[]) obj);
+        }
+        throw new DecoderException("Objects of type " + obj.getClass().getName() + " cannot be Percent decoded");
     }
 }

@@ -212,11 +212,14 @@ public class MatchRatingApproachEncoder implements StringEncoder {
         // Bulletproof for trivial input - NINO
         if (name1 == null || EMPTY.equalsIgnoreCase(name1) || SPACE.equalsIgnoreCase(name1)) {
             return false;
-        } else if (name2 == null || EMPTY.equalsIgnoreCase(name2) || SPACE.equalsIgnoreCase(name2)) {
+        }
+        if (name2 == null || EMPTY.equalsIgnoreCase(name2) || SPACE.equalsIgnoreCase(name2)) {
             return false;
-        } else if (name1.length() == 1 || name2.length() == 1) {
+        }
+        if (name1.length() == 1 || name2.length() == 1) {
             return false;
-        } else if (name1.equalsIgnoreCase(name2)) {
+        }
+        if (name1.equalsIgnoreCase(name2)) {
             return true;
         }
 
