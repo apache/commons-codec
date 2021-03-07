@@ -117,6 +117,12 @@ limitations under the License.
       <id>chtompki</id>
       <email>chtompki@apache.org</email>
     </developer>
+    <developer>
+      <name>Matt Sicker</name>
+      <id>mattsicker</id>
+      <email>mattsicker@apache.org</email>
+      <url>https://musigma.blog/</url>
+    </developer>
   </developers>
   <contributors>
     <contributor>
