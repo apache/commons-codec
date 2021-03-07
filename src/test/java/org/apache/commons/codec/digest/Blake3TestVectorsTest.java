@@ -36,7 +36,8 @@ import static org.junit.Assert.assertArrayEquals;
 @RunWith(Parameterized.class)
 public class Blake3TestVectorsTest {
     private static final byte[] KEY = "whats the Elvish word for friend".getBytes(StandardCharsets.UTF_8);
-    private static final byte[] CTX = "BLAKE3 2019-12-27 16:29:52 test vectors context".getBytes(StandardCharsets.UTF_8);
+    private static final byte[] CTX =
+            "BLAKE3 2019-12-27 16:29:52 test vectors context".getBytes(StandardCharsets.UTF_8);
 
     @Parameterized.Parameters
     public static Object[][] testCases() {
@@ -263,7 +264,8 @@ public class Blake3TestVectorsTest {
     private final byte[] keyedHash;
     private final byte[] deriveKey;
 
-    public Blake3TestVectorsTest(int inputLength, String hash, String keyedHash, String deriveKey) throws DecoderException {
+    public Blake3TestVectorsTest(int inputLength, String hash, String keyedHash, String deriveKey)
+            throws DecoderException {
         input = new byte[inputLength];
         for (int i = 0; i < input.length; i++) {
             input[i] = (byte) (i % 251);

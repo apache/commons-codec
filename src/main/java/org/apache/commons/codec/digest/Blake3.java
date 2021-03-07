@@ -29,8 +29,8 @@ import java.util.Objects;
  * implementation by Jack O'Connor.
  * </p>
  *
- * @since 1.16
  * @see <a href="https://github.com/BLAKE3-team/BLAKE3">BLAKE3 hash function</a>
+ * @since 1.16
  */
 public final class Blake3 {
     // TODO: migrate to Integer.BYTES after upgrading to Java 8
@@ -208,7 +208,8 @@ public final class Blake3 {
     }
 
     // The mixing function, G, which mixes either a column or a diagonal.
-    private static void g(final int[] state, final int a, final int b, final int c, final int d, final int mx, final int my) {
+    private static void g(
+            final int[] state, final int a, final int b, final int c, final int d, final int mx, final int my) {
         state[a] += state[b] + mx;
         state[d] = Integer.rotateRight(state[d] ^ state[a], 16);
         state[c] += state[d];
@@ -245,7 +246,8 @@ public final class Blake3 {
     };
 
     private static int[] compress(
-            final int[] chainingValue, final int[] blockWords, final int blockLength, final long counter, final int flags) {
+            final int[] chainingValue, final int[] blockWords, final int blockLength, final long counter,
+            final int flags) {
         final int[] state = Arrays.copyOf(chainingValue, 16);
         System.arraycopy(IV, 0, state, 8, 4);
         state[12] = (int) counter;
@@ -263,7 +265,8 @@ public final class Blake3 {
         return state;
     }
 
-    private static Output parentOutput(final int[] leftChildCV, final int[] rightChildCV, final int[] key, final int flags) {
+    private static Output parentOutput(
+            final int[] leftChildCV, final int[] rightChildCV, final int[] key, final int flags) {
         final int[] blockWords = Arrays.copyOf(leftChildCV, 16);
         System.arraycopy(rightChildCV, 0, blockWords, 8, 8);
         return new Output(key.clone(), blockWords, 0, BLOCK_LEN, flags | PARENT);
@@ -304,7 +307,8 @@ public final class Blake3 {
             while (length > 0) {
                 int chunkLength = Math.min(OUT_LEN * 2, length);
                 length -= chunkLength;
-                final int[] words = compress(inputChainingValue, blockWords, blockLength, outputBlockCounter++, flags | ROOT);
+                final int[] words =
+                        compress(inputChainingValue, blockWords, blockLength, outputBlockCounter++, flags | ROOT);
                 int wordCounter = 0;
                 while (chunkLength > 0) {
                     final int wordLength = Math.min(INT_BYTES, chunkLength);
