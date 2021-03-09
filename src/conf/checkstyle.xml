@@ -25,7 +25,7 @@ limitations under the License.
   <property name="localeLanguage" value="en" />
 
   <module name="SuppressionFilter">
-    <property name="file" value="checkstyle-suppressions.xml"/>
+    <property name="file" value="src/conf/checkstyle-suppressions.xml"/>
   </module>
 
   <!-- Checks whether files end with a new line. -->

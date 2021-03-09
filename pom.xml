@@ -242,7 +242,8 @@ limitations under the License.
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <commons.encoding>UTF-8</commons.encoding>
-    <checkstyle.header.file>${basedir}/LICENSE-header.txt</checkstyle.header.file>
+    <checkstyle.header.file>${basedir}/src/conf/checkstyle-header.txt</checkstyle.header.file>
+    <checkstyle.config.file>${basedir}/src/conf/checkstyle.xml</checkstyle.config.file>
     <checkstyle.version>2.17</checkstyle.version>
     <commons.japicmp.version>0.15.2</commons.japicmp.version>
     <commons.jacoco.version>0.8.6</commons.jacoco.version>
@@ -326,9 +327,9 @@ limitations under the License.
         <artifactId>maven-checkstyle-plugin</artifactId>
         <version>${checkstyle.version}</version>
         <configuration>
-          <configLocation>${basedir}/checkstyle.xml</configLocation>
+          <configLocation>${checkstyle.config.file}</configLocation>
           <enableRulesSummary>false</enableRulesSummary>
-          <headerFile>${basedir}/LICENSE-header.txt</headerFile>
+          <headerFile>${checkstyle.header.file}</headerFile>
           <includeTestSourceDirectory>true</includeTestSourceDirectory>
           <resourceExcludes>NOTICE.txt,LICENSE.txt,**/pom.properties,**/sha512.properties</resourceExcludes>
         </configuration>
@@ -362,9 +363,9 @@ limitations under the License.
         <artifactId>maven-checkstyle-plugin</artifactId>
         <version>${checkstyle.version}</version>
         <configuration>
-          <configLocation>${basedir}/checkstyle.xml</configLocation>
+          <configLocation>${checkstyle.config.file}</configLocation>
           <enableRulesSummary>false</enableRulesSummary>
-          <headerFile>${basedir}/LICENSE-header.txt</headerFile>
+          <headerFile>${checkstyle.header.file}</headerFile>
           <includeTestSourceDirectory>true</includeTestSourceDirectory>
         </configuration>
         <!-- We need to specify reportSets because 2.9.1 creates two reports -->
