@@ -27,12 +27,15 @@ import java.util.Arrays;
 
 import static org.junit.Assert.assertArrayEquals;
 
-// Each test is an input length and three outputs, one for each of the hash, keyed_hash, and derive_key modes.
-// The input in each case is filled with a repeating sequence of 251 bytes: 0, 1, 2, ..., 249, 250, 0, 1, ..., and so on.
-// The key used with keyed_hash is the 32-byte ASCII string "whats the Elvish word for friend", also given in the `key` field
-// below. The context string used with derive_key is the ASCII string "BLAKE3 2019-12-27 16:29:52 test vectors context", also
-// given in the `context_string` field below. Outputs are encoded as hexadecimal. Each case is an extended output, and
-// implementations should also check that the first 32 bytes match their default-length output.
+/**
+ * Tests the standard test vectors provided by the reference Blake3 implementation. Each test uses as input data the
+ * cyclic byte sequence 0, 1, 2, ..., 249, 250, 0, 1, ..., up to a specified length. For each test, the hash of this
+ * message up to a specific length is calculated. Then the same hash is calculated in keyed mode using the UTF-8
+ * encoding of the string "whats the Elvish word for friend". Finally, the same hash is calculated in key derivation
+ * mode using the KDF context string with the UTF-8 encoding of "BLAKE3 2019-12-27 16:29:52 test vectors context".
+ * For each of these hashes, both the extended hash output and the truncated 32-byte hash outputs are validated against
+ * these known answer tests (KATs).
+ */
 @RunWith(Parameterized.class)
 public class Blake3TestVectorsTest {
     private static final byte[] KEY = "whats the Elvish word for friend".getBytes(StandardCharsets.UTF_8);
@@ -277,8 +280,8 @@ public class Blake3TestVectorsTest {
 
     @Test
     public void hashArbitraryOutputLength() {
-        hasher.absorb(input);
-        byte[] actual = hasher.squeeze(hash.length);
+        hasher.update(input);
+        byte[] actual = hasher.doFinalize(hash.length);
         assertArrayEquals(hash, actual);
     }
 
@@ -290,8 +293,8 @@ public class Blake3TestVectorsTest {
 
     @Test
     public void keyedHashArbitraryOutputLength() {
-        keyedHasher.absorb(input);
-        byte[] actual = keyedHasher.squeeze(keyedHash.length);
+        keyedHasher.update(input);
+        byte[] actual = keyedHasher.doFinalize(keyedHash.length);
         assertArrayEquals(keyedHash, actual);
     }
 
@@ -303,12 +306,12 @@ public class Blake3TestVectorsTest {
 
     @Test
     public void keyDerivation() {
-        kdfHasher.absorb(input);
-        byte[] actual = kdfHasher.squeeze(deriveKey.length);
+        kdfHasher.update(input);
+        byte[] actual = kdfHasher.doFinalize(deriveKey.length);
         assertArrayEquals(deriveKey, actual);
         kdfHasher.reset();
-        kdfHasher.absorb(input);
-        byte[] truncated = kdfHasher.squeeze(32);
+        kdfHasher.update(input);
+        byte[] truncated = kdfHasher.doFinalize(32);
         assertArrayEquals(Arrays.copyOf(deriveKey, 32), truncated);
     }
 }

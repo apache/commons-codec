@@ -24,6 +24,47 @@ import java.util.Objects;
  * {@linkplain #initKeyedHash(byte[]) keyed hash function} (MAC, PRF), and a
  * {@linkplain #initKeyDerivationFunction(byte[]) key derivation function} (KDF). Blake3 has a 128-bit security level
  * and a default output length of 256 bits (32 bytes) which can extended up to 2<sup>64</sup> bytes.
+ * <h2>Hashing</h2>
+ * <p>Hash mode calculates the same output hash given the same input bytes and can be used as both a message digest and
+ * and extensible output function.</p>
+ * <pre>{@code
+ *      Blake3 hasher = Blake3.initHash();
+ *      hasher.update("Hello, world!".getBytes(StandardCharsets.UTF_8));
+ *      byte[] hash = new byte[32];
+ *      hasher.doFinalize(hash);
+ * }</pre>
+ * <h2>Keyed Hashing</h2>
+ * <p>Keyed hashes take a 32-byte secret key and calculates a message authentication code on some input bytes. These
+ * also work as pseduo-random functions (PRFs) with extensible output similar to the extensible hash output. Note that
+ * Blake3 keyed hashes have the same performance as plain hashes; the key is used in initialization in place of a
+ * standard initialization vector used for plain hashing.</p>
+ * <pre>{@code
+ *      SecureRandom random = new SecureRandom(); // or SecureRandom.getInstanceStrong() in Java 8+
+ *      byte[] key = new byte[32];
+ *      random.nextBytes(key);
+ *      Blake3 hasher = Blake3.initKeyedHash(key);
+ *      hasher.update("Hello, Alice!".getBytes(StandardCharsets.UTF_8));
+ *      byte[] mac = new byte[32];
+ *      hasher.doFinalize(mac);
+ * }</pre>
+ * <h2>Key Derivation</h2>
+ * <p>A specific hash mode for deriving session keys and other derived keys in a unique key derivation context
+ * identified by some sequence of bytes. These context strings should be unique but do not need to be kept secret.
+ * Additional input data is hashed for key material which can be finalized to derive subkeys.</p>
+ * <pre>{@code
+ *      String context = "org.apache.commons.codec.digest.Blake3Example";
+ *      byte[] sharedSecret = ...;
+ *      byte[] senderId = ...;
+ *      byte[] recipientId = ...;
+ *      Blake3 kdf = Blake3.initKeyDerivationFunction(context.getBytes(StandardCharsets.UTF_8));
+ *      kdf.update(sharedSecret);
+ *      kdf.update(senderId);
+ *      kdf.update(recipientId);
+ *      byte[] txKey = new byte[32];
+ *      byte[] rxKey = new byte[32];
+ *      kdf.doFinalize(txKey);
+ *      kdf.doFinalize(rxKey);
+ * }</pre>
  * <p>
  * Adapted from the ISC-licensed O(1) Cryptography library by Matt Sicker and ported from the reference public domain
  * implementation by Jack O'Connor.
@@ -37,10 +78,14 @@ public final class Blake3 {
     private static final int INT_BYTES = Integer.SIZE / Byte.SIZE;
 
     private static final int BLOCK_LEN = 64;
+    private static final int BLOCK_INTS = BLOCK_LEN / INT_BYTES;
     private static final int KEY_LEN = 32;
+    private static final int KEY_INTS = KEY_LEN / INT_BYTES;
     private static final int OUT_LEN = 32;
     private static final int CHUNK_LEN = 1024;
+    private static final int CHAINING_VALUE_INTS = 8;
 
+    // standard hash key used for plain hashes; same initialization vector as Blake2s
     private static final int[] IV =
             { 0x6A09E667, 0xBB67AE85, 0x3C6EF372, 0xA54FF53A, 0x510E527F, 0x9B05688C, 0x1F83D9AB, 0x5BE0CD19 };
 
@@ -67,46 +112,46 @@ public final class Blake3 {
     }
 
     /**
-     * Absorbs the provided bytes into this instance's state.
+     * Updates this hash state using the provided bytes.
      *
-     * @param in source array to absorb data from
+     * @param in source array to update data from
      */
-    public void absorb(final byte[] in) {
+    public void update(final byte[] in) {
         Objects.requireNonNull(in);
-        absorb(in, 0, in.length);
+        update(in, 0, in.length);
     }
 
     /**
-     * Absorbs the provided bytes at an offset into this instance's state.
+     * Updates this hash state using the provided bytes at an offset.
      *
-     * @param in     source array to absorb data from
-     * @param offset where in the array to begin absorbing bytes
-     * @param length number of bytes to absorb in
+     * @param in     source array to update data from
+     * @param offset where in the array to begin reading bytes
+     * @param length number of bytes to update
      */
-    public void absorb(final byte[] in, final int offset, final int length) {
+    public void update(final byte[] in, final int offset, final int length) {
         Objects.requireNonNull(in);
         engineState.inputData(in, offset, length);
     }
 
     /**
-     * Squeezes hash output data that depends on the sequence of absorbed bytes preceding this invocation and any previously
-     * squeezed bytes.
+     * Finalizes hash output data that depends on the sequence of updated bytes preceding this invocation and any
+     * previously finalized bytes. Note that this can finalize up to 2<sup>64</sup> bytes per instance.
      *
-     * @param out destination array to squeeze bytes into
+     * @param out destination array to finalize bytes into
      */
-    public void squeeze(final byte[] out) {
-        squeeze(out, 0, out.length);
+    public void doFinalize(final byte[] out) {
+        doFinalize(out, 0, out.length);
     }
 
     /**
-     * Squeezes an arbitrary number of bytes into the provided output array that depends on the sequence of previously
-     * absorbed and squeezed bytes.
+     * Finalizes an arbitrary number of bytes into the provided output array that depends on the sequence of previously
+     * updated and finalized bytes. Note that this can finalize up to 2<sup>64</sup> bytes per instance.
      *
-     * @param out    destination array to squeeze bytes into
+     * @param out    destination array to finalize bytes into
      * @param offset where in the array to begin writing bytes to
-     * @param length number of bytes to squeeze out
+     * @param length number of bytes to finalize
      */
-    public void squeeze(final byte[] out, final int offset, final int length) {
+    public void doFinalize(final byte[] out, final int offset, final int length) {
         Objects.requireNonNull(out);
         engineState.outputHash(out, offset, length);
     }
@@ -114,12 +159,12 @@ public final class Blake3 {
     /**
      * Squeezes and returns an arbitrary number of bytes dependent on the sequence of previously absorbed and squeezed bytes.
      *
-     * @param nrBytes number of bytes to squeeze
-     * @return requested number of squeezed bytes
+     * @param nrBytes number of bytes to finalize
+     * @return requested number of finalized bytes
      */
-    public byte[] squeeze(final int nrBytes) {
+    public byte[] doFinalize(final int nrBytes) {
         final byte[] hash = new byte[nrBytes];
-        squeeze(hash);
+        doFinalize(hash);
         return hash;
     }
 
@@ -144,7 +189,7 @@ public final class Blake3 {
         if (key.length != KEY_LEN) {
             throw new IllegalArgumentException("Blake3 keys must be 32 bytes");
         }
-        return new Blake3(unpackInts(key, 8), KEYED_HASH);
+        return new Blake3(unpackInts(key, KEY_INTS), KEYED_HASH);
     }
 
     /**
@@ -161,7 +206,7 @@ public final class Blake3 {
         kdf.inputData(kdfContext, 0, kdfContext.length);
         final byte[] key = new byte[KEY_LEN];
         kdf.outputHash(key, 0, key.length);
-        return new Blake3(unpackInts(key, 8), DERIVE_KEY_MATERIAL);
+        return new Blake3(unpackInts(key, KEY_INTS), DERIVE_KEY_MATERIAL);
     }
 
     /**
@@ -172,8 +217,8 @@ public final class Blake3 {
      */
     public static byte[] hash(final byte[] data) {
         final Blake3 blake3 = Blake3.initHash();
-        blake3.absorb(data);
-        return blake3.squeeze(OUT_LEN);
+        blake3.update(data);
+        return blake3.doFinalize(OUT_LEN);
     }
 
     /**
@@ -185,8 +230,8 @@ public final class Blake3 {
      */
     public static byte[] keyedHash(final byte[] key, final byte[] data) {
         final Blake3 blake3 = Blake3.initKeyedHash(key);
-        blake3.absorb(data);
-        return blake3.squeeze(OUT_LEN);
+        blake3.update(data);
+        return blake3.doFinalize(OUT_LEN);
     }
 
     private static void packInt(final int value, final byte[] dst, final int off, final int len) {
@@ -248,7 +293,7 @@ public final class Blake3 {
     private static int[] compress(
             final int[] chainingValue, final int[] blockWords, final int blockLength, final long counter,
             final int flags) {
-        final int[] state = Arrays.copyOf(chainingValue, 16);
+        final int[] state = Arrays.copyOf(chainingValue, BLOCK_INTS);
         System.arraycopy(IV, 0, state, 8, 4);
         state[12] = (int) counter;
         state[13] = (int) (counter >> Integer.SIZE);
@@ -258,7 +303,7 @@ public final class Blake3 {
             final byte[] schedule = MSG_SCHEDULE[i];
             round(state, blockWords, schedule);
         }
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < state.length / 2; i++) {
             state[i] ^= state[i + 8];
             state[i + 8] ^= chainingValue[i];
         }
@@ -267,8 +312,8 @@ public final class Blake3 {
 
     private static Output parentOutput(
             final int[] leftChildCV, final int[] rightChildCV, final int[] key, final int flags) {
-        final int[] blockWords = Arrays.copyOf(leftChildCV, 16);
-        System.arraycopy(rightChildCV, 0, blockWords, 8, 8);
+        final int[] blockWords = Arrays.copyOf(leftChildCV, BLOCK_INTS);
+        System.arraycopy(rightChildCV, 0, blockWords, 8, CHAINING_VALUE_INTS);
         return new Output(key.clone(), blockWords, 0, BLOCK_LEN, flags | PARENT);
     }
 
@@ -278,8 +323,8 @@ public final class Blake3 {
     }
 
     /**
-     * Represents the state just prior to either producing an eight word chaining value or any number of output bytes when the
-     * ROOT flag is set.
+     * Represents the state just prior to either producing an eight word chaining value or any number of output bytes
+     * when the ROOT flag is set.
      */
     private static class Output {
         private final int[] inputChainingValue;
@@ -299,7 +344,8 @@ public final class Blake3 {
         }
 
         int[] chainingValue() {
-            return Arrays.copyOf(compress(inputChainingValue, blockWords, blockLength, counter, flags), 8);
+            return Arrays
+                    .copyOf(compress(inputChainingValue, blockWords, blockLength, counter, flags), CHAINING_VALUE_INTS);
         }
 
         void rootOutputBytes(final byte[] out, int offset, int length) {
@@ -348,9 +394,10 @@ public final class Blake3 {
                 if (blockLength == BLOCK_LEN) {
                     // If the block buffer is full, compress it and clear it. More
                     // input is coming, so this compression is not CHUNK_END.
-                    final int[] blockWords = unpackInts(block, 16);
+                    final int[] blockWords = unpackInts(block, BLOCK_INTS);
                     chainingValue = Arrays.copyOf(
-                            compress(chainingValue, blockWords, BLOCK_LEN, chunkCounter, flags | startFlag()), 8);
+                            compress(chainingValue, blockWords, BLOCK_LEN, chunkCounter, flags | startFlag()),
+                            CHAINING_VALUE_INTS);
                     blocksCompressed++;
                     blockLength = 0;
                     Arrays.fill(block, (byte) 0);
@@ -366,7 +413,7 @@ public final class Blake3 {
         }
 
         Output output() {
-            final int[] blockWords = unpackInts(block, 16);
+            final int[] blockWords = unpackInts(block, BLOCK_INTS);
             final int outputFlags = flags | startFlag() | CHUNK_END;
             return new Output(chainingValue, blockWords, chunkCounter, blockLength, outputFlags);
         }
@@ -376,6 +423,9 @@ public final class Blake3 {
         private final int[] key;
         private final int flags;
         // Space for 54 subtree chaining values: 2^54 * CHUNK_LEN = 2^64
+        // No more than 54 entries can ever be added to this stack (after updating 2^64 bytes and not finalizing any)
+        // so we preallocate the stack here. This can be smaller in environments where the data limit is expected to
+        // be much lower.
         private final int[][] cvStack = new int[54][];
         private int stackLen;
         private ChunkState state;
