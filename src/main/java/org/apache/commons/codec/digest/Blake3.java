@@ -115,6 +115,7 @@ public final class Blake3 {
      * Updates this hash state using the provided bytes.
      *
      * @param in source array to update data from
+     * @throws NullPointerException if in is null
      */
     public void update(final byte[] in) {
         Objects.requireNonNull(in);
@@ -127,9 +128,12 @@ public final class Blake3 {
      * @param in     source array to update data from
      * @param offset where in the array to begin reading bytes
      * @param length number of bytes to update
+     * @throws NullPointerException      if in is null
+     * @throws IndexOutOfBoundsException if offset or length are negative or if offset + length is greater than the
+     *                                   length of the provided array
      */
     public void update(final byte[] in, final int offset, final int length) {
-        Objects.requireNonNull(in);
+        checkBufferArgs(in, offset, length);
         engineState.inputData(in, offset, length);
     }
 
@@ -138,8 +142,10 @@ public final class Blake3 {
      * previously finalized bytes. Note that this can finalize up to 2<sup>64</sup> bytes per instance.
      *
      * @param out destination array to finalize bytes into
+     * @throws NullPointerException if out is null
      */
     public void doFinalize(final byte[] out) {
+        Objects.requireNonNull(out);
         doFinalize(out, 0, out.length);
     }
 
@@ -150,9 +156,12 @@ public final class Blake3 {
      * @param out    destination array to finalize bytes into
      * @param offset where in the array to begin writing bytes to
      * @param length number of bytes to finalize
+     * @throws NullPointerException      if out is null
+     * @throws IndexOutOfBoundsException if offset or length are negative or if offset + length is greater than the
+     *                                   length of the provided array
      */
     public void doFinalize(final byte[] out, final int offset, final int length) {
-        Objects.requireNonNull(out);
+        checkBufferArgs(out, offset, length);
         engineState.outputHash(out, offset, length);
     }
 
@@ -161,8 +170,12 @@ public final class Blake3 {
      *
      * @param nrBytes number of bytes to finalize
      * @return requested number of finalized bytes
+     * @throws IllegalArgumentException if nrBytes is negative
      */
     public byte[] doFinalize(final int nrBytes) {
+        if (nrBytes < 0) {
+            throw new IllegalArgumentException("Requested bytes must be non-negative");
+        }
         final byte[] hash = new byte[nrBytes];
         doFinalize(hash);
         return hash;
@@ -183,6 +196,8 @@ public final class Blake3 {
      *
      * @param key 32-byte secret key
      * @return fresh Blake3 instance in keyed mode using the provided key
+     * @throws NullPointerException     if key is null
+     * @throws IllegalArgumentException if key is not 32 bytes
      */
     public static Blake3 initKeyedHash(final byte[] key) {
         Objects.requireNonNull(key);
@@ -199,6 +214,7 @@ public final class Blake3 {
      *
      * @param kdfContext a globally unique key-derivation context byte string to separate key derivation contexts from each other
      * @return fresh Blake3 instance in key derivation mode
+     * @throws NullPointerException if kdfContext is null
      */
     public static Blake3 initKeyDerivationFunction(final byte[] kdfContext) {
         Objects.requireNonNull(kdfContext);
@@ -214,6 +230,7 @@ public final class Blake3 {
      *
      * @param data source array to absorb data from
      * @return 32-byte hash squeezed from the provided data
+     * @throws NullPointerException if data is null
      */
     public static byte[] hash(final byte[] data) {
         final Blake3 blake3 = Blake3.initHash();
@@ -227,11 +244,26 @@ public final class Blake3 {
      * @param key  32-byte secret key
      * @param data source array to absorb data from
      * @return 32-byte mac squeezed from the provided data
+     * @throws NullPointerException if key or data are null
      */
     public static byte[] keyedHash(final byte[] key, final byte[] data) {
         final Blake3 blake3 = Blake3.initKeyedHash(key);
         blake3.update(data);
         return blake3.doFinalize(OUT_LEN);
+    }
+
+    private static void checkBufferArgs(byte[] buffer, int offset, int length) {
+        Objects.requireNonNull(buffer);
+        if (offset < 0) {
+            throw new IndexOutOfBoundsException("Offset must be non-negative");
+        }
+        if (length < 0) {
+            throw new IndexOutOfBoundsException("Length must be non-negative");
+        }
+        if (offset > buffer.length - length) {
+            throw new IndexOutOfBoundsException(
+                    "Offset " + offset + " and length " + length + " out of bounds with buffer length " + buffer.length);
+        }
     }
 
     private static void packInt(final int value, final byte[] dst, final int off, final int len) {
