@@ -260,9 +260,10 @@ public final class Blake3 {
         if (length < 0) {
             throw new IndexOutOfBoundsException("Length must be non-negative");
         }
-        if (offset > buffer.length - length) {
+        int bufferLength = buffer.length;
+        if (offset > bufferLength - length) {
             throw new IndexOutOfBoundsException(
-                    "Offset " + offset + " and length " + length + " out of bounds with buffer length " + buffer.length);
+                    "Offset " + offset + " and length " + length + " out of bounds with buffer length " + bufferLength);
         }
     }
 
