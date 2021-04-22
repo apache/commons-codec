@@ -45,8 +45,8 @@ limitations under the License.
     <url>https://issues.apache.org/jira/browse/CODEC</url>
   </issueManagement>
   <scm>
-    <connection>scm:git:https://gitbox.apache.org/repos/asf?p=commons-codec.git</connection>
-    <developerConnection>scm:git:https://gitbox.apache.org/repos/asf?p=commons-codec.git</developerConnection>
+    <connection>scm:git:https://gitbox.apache.org/repos/asf/commons-codec</connection>
+    <developerConnection>scm:git:https://gitbox.apache.org/repos/asf/commons-codec</developerConnection>
     <url>https://github.com/apache/commons-codec</url>
   </scm>
   <distributionManagement>
