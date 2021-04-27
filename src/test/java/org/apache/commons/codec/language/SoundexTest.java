@@ -331,7 +331,7 @@ public class SoundexTest extends StringEncoderAbstractTest<Soundex> {
 
     @Test
     public void testSoundexUtilsNullBehaviour() {
-        Assert.assertEquals(null, SoundexUtils.clean(null));
+        Assert.assertNull(SoundexUtils.clean(null));
         Assert.assertEquals("", SoundexUtils.clean(""));
         Assert.assertEquals(0, SoundexUtils.differenceEncoded(null, ""));
         Assert.assertEquals(0, SoundexUtils.differenceEncoded("", null));

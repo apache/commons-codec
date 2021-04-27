@@ -118,7 +118,7 @@ public class QCodecTest {
         final QCodec qcodec = new QCodec();
         final String test = null;
         final String result = qcodec.encode( test, "charset" );
-        assertEquals("Result should be null", null, result);
+        assertNull("Result should be null", result);
     }
 
     @Test
@@ -126,7 +126,7 @@ public class QCodecTest {
         final QCodec qcodec = new QCodec();
         final String test = null;
         final String result = qcodec.decode( test );
-        assertEquals("Result should be null", null, result);
+        assertNull("Result should be null", result);
     }
 
 
@@ -139,7 +139,7 @@ public class QCodecTest {
             "=?UTF-8?Q?1+1 =3D 2?=", encoded);
 
         final Object result = qcodec.encode((Object) null);
-        assertEquals( "Encoding a null Object should return null", null, result);
+        assertNull("Encoding a null Object should return null", result);
 
         try {
             final Object dObj = Double.valueOf(3.0d);
@@ -165,7 +165,7 @@ public class QCodecTest {
             "1+1 = 2", plain);
 
         final Object result = qcodec.decode((Object) null);
-        assertEquals( "Decoding a null Object should return null", null, result);
+        assertNull("Decoding a null Object should return null", result);
 
         try {
             final Object dObj = Double.valueOf(3.0d);
