@@ -174,7 +174,7 @@ public class HexTest {
      */
     private void testCustomCharset(final String name, final String parent) throws UnsupportedEncodingException,
             DecoderException {
-        if (charsetSanityCheck(name) == false) {
+        if (!charsetSanityCheck(name)) {
             return;
         }
         log(parent + "=" + name);

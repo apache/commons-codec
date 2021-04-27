@@ -806,10 +806,7 @@ public class DoubleMetaphone implements StringEncoder {
                    !contains(value, index + 1, 3, "HOR", "HYM", "HIA", "HEM")) {
             return false;
         }
-        if (contains(value, 0, 5, "CHORE")) {
-            return false;
-        }
-        return true;
+        return !contains(value, 0, 5, "CHORE");
     }
 
     /**
@@ -831,12 +828,9 @@ public class DoubleMetaphone implements StringEncoder {
             contains(value, index - 1, 4, "ILLO", "ILLA", "ALLE")) {
             return true;
         }
-        if ((contains(value, value.length() - 2, 2, "AS", "OS") ||
-                    contains(value, value.length() - 1, 1, "A", "O")) &&
-                   contains(value, index - 1, 4, "ALLE")) {
-            return true;
-        }
-        return false;
+        return (contains(value, value.length() - 2, 2, "AS", "OS") ||
+                contains(value, value.length() - 1, 1, "A", "O")) &&
+                contains(value, index - 1, 4, "ALLE");
     }
 
     /**

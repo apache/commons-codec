@@ -182,7 +182,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
             }
 
             final int nextIndex = getPatternLength();
-            final boolean nextCharIsVowel = nextIndex < context.length() ? isVowel(context.charAt(nextIndex)) : false;
+            final boolean nextCharIsVowel = nextIndex < context.length() && isVowel(context.charAt(nextIndex));
             if (nextCharIsVowel) {
                 return replacementBeforeVowel;
             }
