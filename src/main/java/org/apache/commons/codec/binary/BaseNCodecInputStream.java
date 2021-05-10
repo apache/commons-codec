@@ -39,12 +39,15 @@ public class BaseNCodecInputStream extends FilterInputStream {
 
     private final byte[] singleByte = new byte[1];
 
+    private final byte[] buf;
+
     private final Context context = new Context();
 
     protected BaseNCodecInputStream(final InputStream input, final BaseNCodec baseNCodec, final boolean doEncode) {
         super(input);
         this.doEncode = doEncode;
         this.baseNCodec = baseNCodec;
+        this.buf = new byte[doEncode ? 4096 : 8192];
     }
 
     /**
@@ -169,9 +172,11 @@ public class BaseNCodecInputStream extends FilterInputStream {
          -----
          This is a fix for CODEC-101
         */
-        while (readLen == 0) {
+        // Attempt to read the request length
+        while (readLen < len) {
             if (!baseNCodec.hasData(context)) {
-                final byte[] buf = new byte[doEncode ? 4096 : 8192];
+                // Obtain more data.
+                // buf is reused across calls to read to avoid repeated allocations
                 final int c = in.read(buf);
                 if (doEncode) {
                     baseNCodec.encode(buf, 0, c, context);
@@ -179,7 +184,12 @@ public class BaseNCodecInputStream extends FilterInputStream {
                     baseNCodec.decode(buf, 0, c, context);
                 }
             }
-            readLen = baseNCodec.readResults(array, offset, len, context);
+            final int read = baseNCodec.readResults(array, offset + readLen, len - readLen, context);
+            if (read < 0) {
+                // Return the amount read or EOF
+                return readLen != 0 ? readLen : -1;
+            }
+            readLen += read;
         }
         return readLen;
     }
