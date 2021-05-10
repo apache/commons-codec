@@ -409,6 +409,30 @@ public class Base64InputStreamTest {
     }
 
     /**
+     * Tests read using different buffer sizes
+     *
+     * @throws Exception
+     *             for some failure scenarios.
+     */
+    @Test
+    public void testReadMultipleBufferSizes() throws Exception {
+        final byte[][] randomData = BaseNTestData.randomData(new Base64(0, null, false), 1024 * 64);
+        byte[] encoded = randomData[1];
+        byte[] decoded = randomData[0];
+        final ByteArrayInputStream bin = new ByteArrayInputStream(encoded);
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        try (final Base64InputStream in = new Base64InputStream(bin)) {
+            for (int i : new int[] { 4 * 1024, 4 * 1024, 8 * 1024, 8 * 1024, 16 * 1024, 16 * 1024, 8 * 1024 }) {
+                final byte[] buf = new byte[i];
+                int bytesRead = in.read(buf);
+                assertEquals(i, bytesRead);
+                out.write(buf, 0, bytesRead);
+            }
+        }
+        assertArrayEquals(decoded, out.toByteArray());
+    }
+
+    /**
      * Tests read returning 0
      *
      * @throws Exception
