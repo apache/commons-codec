@@ -36,12 +36,6 @@ public class MatchRatingApproachEncoder implements StringEncoder {
     private static final String EMPTY = "";
 
     /**
-     * Constants used mainly for the min rating value.
-     */
-    private static final int ONE = 1, TWO = 2, THREE = 3, FOUR = 4, FIVE = 5, SIX = 6, SEVEN = 7,
-                             ELEVEN = 11, TWELVE = 12;
-
-    /**
      * The plain letter equivalent of the accented letters.
      */
     private static final String PLAIN_ASCII = "AaEeIiOoUu" + // grave
@@ -159,9 +153,9 @@ public class MatchRatingApproachEncoder implements StringEncoder {
     String getFirst3Last3(final String name) {
         final int nameLength = name.length();
 
-        if (nameLength > SIX) {
-            final String firstThree = name.substring(0, THREE);
-            final String lastThree = name.substring(nameLength - THREE, nameLength);
+        if (nameLength > 6) {
+            final String firstThree = name.substring(0, 3);
+            final String lastThree = name.substring(nameLength - 3, nameLength);
             return firstThree + lastThree;
         }
         return name;
@@ -183,16 +177,16 @@ public class MatchRatingApproachEncoder implements StringEncoder {
     int getMinRating(final int sumLength) {
         int minRating = 0;
 
-        if (sumLength <= FOUR) {
-            minRating = FIVE;
-        } else if (sumLength <= SEVEN) { // aready know it is at least 5
-            minRating = FOUR;
-        } else if (sumLength <= ELEVEN) { // aready know it is at least 8
-            minRating = THREE;
-        } else if (sumLength == TWELVE) {
-            minRating = TWO;
+        if (sumLength <= 4) {
+            minRating = 5;
+        } else if (sumLength <= 7) { // aready know it is at least 5
+            minRating = 4;
+        } else if (sumLength <= 11) { // aready know it is at least 8
+            minRating = 3;
+        } else if (sumLength == 12) {
+            minRating = 2;
         } else {
-            minRating = ONE; // docs said little here.
+            minRating = 1; // docs said little here.
         }
 
         return minRating;
@@ -243,7 +237,7 @@ public class MatchRatingApproachEncoder implements StringEncoder {
 
         // 4. Check for length difference - if 3 or greater then no similarity
         // comparison is done
-        if (Math.abs(name1.length() - name2.length()) >= THREE) {
+        if (Math.abs(name1.length() - name2.length()) >= 3) {
             return false;
         }
 
@@ -335,9 +329,9 @@ public class MatchRatingApproachEncoder implements StringEncoder {
 
         // Final bit - subtract longest string from 6 and return this int value
         if (strA.length() > strB.length()) {
-            return Math.abs(SIX - strA.length());
+            return Math.abs(6 - strA.length());
         }
-        return Math.abs(SIX - strB.length());
+        return Math.abs(6 - strB.length());
     }
 
     /**
