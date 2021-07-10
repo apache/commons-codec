@@ -252,7 +252,7 @@ public final class Blake3 {
         return blake3.doFinalize(OUT_LEN);
     }
 
-    private static void checkBufferArgs(byte[] buffer, int offset, int length) {
+    private static void checkBufferArgs(final byte[] buffer, final int offset, final int length) {
         Objects.requireNonNull(buffer);
         if (offset < 0) {
             throw new IndexOutOfBoundsException("Offset must be non-negative");
@@ -260,7 +260,7 @@ public final class Blake3 {
         if (length < 0) {
             throw new IndexOutOfBoundsException("Length must be non-negative");
         }
-        int bufferLength = buffer.length;
+        final int bufferLength = buffer.length;
         if (offset > bufferLength - length) {
             throw new IndexOutOfBoundsException(
                     "Offset " + offset + " and length " + length + " out of bounds with buffer length " + bufferLength);

@@ -267,7 +267,7 @@ public class Blake3TestVectorsTest {
     private final byte[] keyedHash;
     private final byte[] deriveKey;
 
-    public Blake3TestVectorsTest(int inputLength, String hash, String keyedHash, String deriveKey)
+    public Blake3TestVectorsTest(final int inputLength, final String hash, final String keyedHash, final String deriveKey)
             throws DecoderException {
         input = new byte[inputLength];
         for (int i = 0; i < input.length; i++) {
@@ -281,37 +281,37 @@ public class Blake3TestVectorsTest {
     @Test
     public void hashArbitraryOutputLength() {
         hasher.update(input);
-        byte[] actual = hasher.doFinalize(hash.length);
+        final byte[] actual = hasher.doFinalize(hash.length);
         assertArrayEquals(hash, actual);
     }
 
     @Test
     public void hashTruncatedOutput() {
-        byte[] actual = Blake3.hash(input);
+        final byte[] actual = Blake3.hash(input);
         assertArrayEquals(Arrays.copyOf(this.hash, 32), actual);
     }
 
     @Test
     public void keyedHashArbitraryOutputLength() {
         keyedHasher.update(input);
-        byte[] actual = keyedHasher.doFinalize(keyedHash.length);
+        final byte[] actual = keyedHasher.doFinalize(keyedHash.length);
         assertArrayEquals(keyedHash, actual);
     }
 
     @Test
     public void keyedHashTruncatedOutput() {
-        byte[] actual = Blake3.keyedHash(KEY, input);
+        final byte[] actual = Blake3.keyedHash(KEY, input);
         assertArrayEquals(Arrays.copyOf(keyedHash, 32), actual);
     }
 
     @Test
     public void keyDerivation() {
         kdfHasher.update(input);
-        byte[] actual = kdfHasher.doFinalize(deriveKey.length);
+        final byte[] actual = kdfHasher.doFinalize(deriveKey.length);
         assertArrayEquals(deriveKey, actual);
         kdfHasher.reset();
         kdfHasher.update(input);
-        byte[] truncated = kdfHasher.doFinalize(32);
+        final byte[] truncated = kdfHasher.doFinalize(32);
         assertArrayEquals(Arrays.copyOf(deriveKey, 32), truncated);
     }
 }

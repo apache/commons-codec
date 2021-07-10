@@ -1172,7 +1172,7 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest<DoubleMetapho
             final String name1 = FIXTURE[i][1];
             final boolean match1 = this.getStringEncoder().isDoubleMetaphoneEqual(name0, name1, false);
             final boolean match2 = this.getStringEncoder().isDoubleMetaphoneEqual(name0, name1, true);
-            if (match1 == false && match2 == false) {
+            if (!match1 && !match2) {
                 final String failMsg = "[" + i + "] " + name0 + " and " + name1 + cr;
                 failures.append(failMsg);
                 failCount++;
@@ -1199,7 +1199,7 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest<DoubleMetapho
             final String name1 = MATCHES[i][1];
             final boolean match1 = this.getStringEncoder().isDoubleMetaphoneEqual(name0, name1, false);
             final boolean match2 = this.getStringEncoder().isDoubleMetaphoneEqual(name0, name1, true);
-            if (match1 == false && match2 == false) {
+            if (!match1 && !match2) {
                 fail("Expected match [" + i + "] " + name0 + " and " + name1);
             }
         }

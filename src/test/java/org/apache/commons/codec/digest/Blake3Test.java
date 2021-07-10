@@ -30,11 +30,11 @@ public class Blake3Test {
         assertThrowsProperExceptionWithKeySize(33);
     }
 
-    private static void assertThrowsProperExceptionWithKeySize(int keySize) {
+    private static void assertThrowsProperExceptionWithKeySize(final int keySize) {
         try {
             Blake3.initKeyedHash(new byte[keySize]);
             fail("Should have thrown exception");
-        } catch (IllegalArgumentException expected) {
+        } catch (final IllegalArgumentException expected) {
             assertEquals("Blake3 keys must be 32 bytes", expected.getMessage());
         }
     }

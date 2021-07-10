@@ -81,7 +81,7 @@ public class HexTest {
             final byte[] bytes = source.getBytes(name);
             final String str = new String(bytes, name);
             final boolean equals = source.equals(str);
-            if (equals == false) {
+            if (!equals) {
                 // Here with:
                 //
                 // Java Sun 1.4.2_19 x86 32-bits on Windows XP
@@ -174,7 +174,7 @@ public class HexTest {
      */
     private void testCustomCharset(final String name, final String parent) throws UnsupportedEncodingException,
             DecoderException {
-        if (charsetSanityCheck(name) == false) {
+        if (!charsetSanityCheck(name)) {
             return;
         }
         log(parent + "=" + name);
