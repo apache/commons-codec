@@ -50,18 +50,16 @@ The <action> type attribute can be add,update,fix,remove.
       <!-- ADD -->
       <action issue="CODEC-296" dev="mattsicker" type="add" due-to="Matt Sicker">Add support for Blake3 family of hashes.</action>
       <!-- UDPATE -->
-      <action                   dev="ggregory" type="update" due-to="Dependabot">Update build actions/setup-java from v1.4.1 to v1.4.2 #60.</action>
-      <action                   dev="ggregory" type="update" due-to="Gary Gregory">Update commons.jacoco.version 0.8.5 to 0.8.6 (Fixes Java 15 builds).</action>
-      <action                   dev="ggregory" type="update" due-to="Dependabot, Gary Gregory">Bump actions/setup-java from v1.4.2 to v2 #62.</action>
+      <action                   dev="ggregory" type="update" due-to="Dependabot, Gary Gregory">Bump actions/setup-java from v1.4.1 to v2 #60, #62.</action>
       <action                   dev="ggregory" type="update" due-to="Dependabot">Bump actions/checkout from v2.3.2 to v2.3.4 #65.</action> 
-      <action                   dev="ggregory" type="update" due-to="Gary Gregory">Update commons.japicmp.version 0.14.3 -> 0.15.2.</action>
       <action                   dev="ggregory" type="update" due-to="Dependabot">Bump actions/cache from v2 to v2.1.4 #75.</action>
       <action                   dev="ggregory" type="update" due-to="Dependabot">Bump junit from 4.13.1 to 4.13.2 #76.</action>
       <action                   dev="ggregory" type="update" due-to="Gary Gregory">Bump Java 7 to 8.</action>
-      <action                   dev="ggregory" type="update" due-to="Gary Gregory">Bump japicmp-maven-plugin from 0.15.2 to 0.15.3.</action>
-      <action                   dev="ggregory" type="update" due-to="Gary Gregory">Bump jacoco-maven-plugin from 0.9.6 to 0.9.7.</action>
+      <action                   dev="ggregory" type="update" due-to="Gary Gregory">Bump japicmp-maven-plugin from 0.14.3 to 0.15.3.</action>
+      <action                   dev="ggregory" type="update" due-to="Gary Gregory">Bump jacoco-maven-plugin from 0.8.5 to 0.9.7 (Fixes Java 15 builds).</action>
       <action                   dev="ggregory" type="update" due-to="Gary Gregory">Bump maven-surefire-plugin from 2.22.2 to 3.0.0-M5.</action>
       <action                   dev="ggregory" type="update" due-to="Gary Gregory">Bump maven-javadoc-plugin from 3.2.0 to 3.3.0.</action>
+      <action                   dev="ggregory" type="update" due-to="Gary Gregory">Bump animal-sniffer-maven-plugin from 1.19 to 1.20.</action>
     </release>
 
     <release version="1.15" date="2020-09-01" description="Feature and fix release.">
