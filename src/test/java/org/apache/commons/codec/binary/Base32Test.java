@@ -295,7 +295,7 @@ public class Base32Test {
      */
     @Test
     public void testEmptyBase32() {
-        byte[] empty = new byte[0];
+        byte[] empty = {};
         byte[] result = new Base32().encode(empty);
         assertEquals("empty Base32 encode", 0, result.length);
         assertEquals("empty Base32 encode", null, new Base32().encode(null));

@@ -182,15 +182,15 @@ import org.apache.commons.codec.StringEncoder;
 public class ColognePhonetic implements StringEncoder {
 
     // Predefined char arrays for better performance and less GC load
-    private static final char[] AEIJOUY = new char[] { 'A', 'E', 'I', 'J', 'O', 'U', 'Y' };
-    private static final char[] CSZ = new char[] { 'C', 'S', 'Z' };
-    private static final char[] FPVW = new char[] { 'F', 'P', 'V', 'W' };
-    private static final char[] GKQ = new char[] { 'G', 'K', 'Q' };
-    private static final char[] CKQ = new char[] { 'C', 'K', 'Q' };
-    private static final char[] AHKLOQRUX = new char[] { 'A', 'H', 'K', 'L', 'O', 'Q', 'R', 'U', 'X' };
-    private static final char[] SZ = new char[] { 'S', 'Z' };
-    private static final char[] AHKOQUX = new char[] { 'A', 'H', 'K', 'O', 'Q', 'U', 'X' };
-    private static final char[] DTX = new char[] { 'D', 'T', 'X' };
+    private static final char[] AEIJOUY = { 'A', 'E', 'I', 'J', 'O', 'U', 'Y' };
+    private static final char[] CSZ = { 'C', 'S', 'Z' };
+    private static final char[] FPVW = { 'F', 'P', 'V', 'W' };
+    private static final char[] GKQ = { 'G', 'K', 'Q' };
+    private static final char[] CKQ = { 'C', 'K', 'Q' };
+    private static final char[] AHKLOQRUX = { 'A', 'H', 'K', 'L', 'O', 'Q', 'R', 'U', 'X' };
+    private static final char[] SZ = { 'S', 'Z' };
+    private static final char[] AHKOQUX = { 'A', 'H', 'K', 'O', 'Q', 'U', 'X' };
+    private static final char[] DTX = { 'D', 'T', 'X' };
 
     private static final char CHAR_IGNORE = '-';    // is this character to be ignored?
 

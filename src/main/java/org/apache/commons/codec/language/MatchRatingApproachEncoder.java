@@ -58,8 +58,8 @@ public class MatchRatingApproachEncoder implements StringEncoder {
             "\u00C5\u00E5" + "\u00C7\u00E7" + "\u0150\u0151\u0170\u0171";
 
     private static final String[] DOUBLE_CONSONANT =
-            new String[] { "BB", "CC", "DD", "FF", "GG", "HH", "JJ", "KK", "LL", "MM", "NN", "PP", "QQ", "RR", "SS",
-                           "TT", "VV", "WW", "XX", "YY", "ZZ" };
+            { "BB", "CC", "DD", "FF", "GG", "HH", "JJ", "KK", "LL", "MM", "NN", "PP", "QQ", "RR", "SS",
+                   "TT", "VV", "WW", "XX", "YY", "ZZ" };
 
     /**
      * Cleans up a name: 1. Upper-cases everything 2. Removes some common punctuation 3. Removes accents 4. Removes any

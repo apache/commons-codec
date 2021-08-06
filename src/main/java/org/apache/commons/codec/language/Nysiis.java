@@ -68,15 +68,15 @@ import org.apache.commons.codec.StringEncoder;
  */
 public class Nysiis implements StringEncoder {
 
-    private static final char[] CHARS_A   = new char[] { 'A' };
-    private static final char[] CHARS_AF  = new char[] { 'A', 'F' };
-    private static final char[] CHARS_C   = new char[] { 'C' };
-    private static final char[] CHARS_FF  = new char[] { 'F', 'F' };
-    private static final char[] CHARS_G   = new char[] { 'G' };
-    private static final char[] CHARS_N   = new char[] { 'N' };
-    private static final char[] CHARS_NN  = new char[] { 'N', 'N' };
-    private static final char[] CHARS_S   = new char[] { 'S' };
-    private static final char[] CHARS_SSS = new char[] { 'S', 'S', 'S' };
+    private static final char[] CHARS_A   = { 'A' };
+    private static final char[] CHARS_AF  = { 'A', 'F' };
+    private static final char[] CHARS_C   = { 'C' };
+    private static final char[] CHARS_FF  = { 'F', 'F' };
+    private static final char[] CHARS_G   = { 'G' };
+    private static final char[] CHARS_N   = { 'N' };
+    private static final char[] CHARS_NN  = { 'N', 'N' };
+    private static final char[] CHARS_S   = { 'S' };
+    private static final char[] CHARS_SSS = { 'S', 'S', 'S' };
 
     private static final Pattern PAT_MAC    = Pattern.compile("^MAC");
     private static final Pattern PAT_KN     = Pattern.compile("^KN");

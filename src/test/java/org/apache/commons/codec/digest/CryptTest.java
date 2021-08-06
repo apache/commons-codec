@@ -38,7 +38,7 @@ public class CryptTest {
 
     @Test
     public void testCryptWithBytes() {
-        final byte[] keyBytes = new byte[] { 'b', 'y', 't', 'e' };
+        final byte[] keyBytes = { 'b', 'y', 't', 'e' };
         final String hash = Crypt.crypt(keyBytes);
         assertEquals(hash, Crypt.crypt("byte", hash));
     }

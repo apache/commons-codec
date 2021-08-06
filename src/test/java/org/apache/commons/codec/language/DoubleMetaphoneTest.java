@@ -1120,7 +1120,7 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest<DoubleMetapho
 
     @Test
     public void testIsDoubleMetaphoneEqualBasic() {
-        final String[][] testFixture = new String[][] { {
+        final String[][] testFixture = { {
                 "", "" }, {
                 "Case", "case" }, {
                 "CASE", "Case" }, {
@@ -1149,7 +1149,7 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest<DoubleMetapho
 
     @Test
     public void testIsDoubleMetaphoneEqualExtended2() {
-        final String[][] testFixture = new String[][] { { "Jablonski", "Yablonsky" }
+        final String[][] testFixture = { { "Jablonski", "Yablonsky" }
         };
         //doubleMetaphoneEqualTest(testFixture, false);
         doubleMetaphoneEqualTest(testFixture, true);

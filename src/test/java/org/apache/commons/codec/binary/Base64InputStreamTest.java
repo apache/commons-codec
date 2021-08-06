@@ -192,8 +192,8 @@ public class Base64InputStreamTest {
     }
 
     private void testBase64EmptyInputStream(final int chuckSize) throws Exception {
-        final byte[] emptyEncoded = new byte[0];
-        final byte[] emptyDecoded = new byte[0];
+        final byte[] emptyEncoded = {};
+        final byte[] emptyDecoded = {};
         testByteByByte(emptyEncoded, emptyDecoded, chuckSize, CRLF);
         testByChunk(emptyEncoded, emptyDecoded, chuckSize, CRLF);
     }

@@ -201,7 +201,7 @@ public class Base64Test {
      */
     @Test
     public void testCodec68() {
-        final byte[] x = new byte[] { 'n', 'A', '=', '=', (byte) 0x9c };
+        final byte[] x = { 'n', 'A', '=', '=', (byte) 0x9c };
         Base64.decodeBase64(x);
     }
 
@@ -398,7 +398,7 @@ public class Base64Test {
      */
     @Test
     public void testEmptyBase64() {
-        byte[] empty = new byte[0];
+        byte[] empty = {};
         byte[] result = Base64.encodeBase64(empty);
         assertEquals("empty base64 encode", 0, result.length);
         assertEquals("empty base64 encode", null, Base64.encodeBase64(null));
@@ -448,7 +448,7 @@ public class Base64Test {
 
     @Test
     public void testCodec112() { // size calculation assumes always chunked
-        final byte[] in = new byte[] { 0 };
+        final byte[] in = { 0 };
         final byte[] out = Base64.encodeBase64(in);
         Base64.encodeBase64(in, false, false, out.length);
     }
@@ -1257,7 +1257,7 @@ public class Base64Test {
     public void testByteToStringVariations() throws DecoderException {
         final Base64 base64 = new Base64(0);
         final byte[] b1 = StringUtils.getBytesUtf8("Hello World");
-        final byte[] b2 = new byte[0];
+        final byte[] b2 = {};
         final byte[] b3 = null;
         final byte[] b4 = Hex.decodeHex("2bf7cc2701fe4397b49ebeed5acc7090"); // for
                                                                                             // url-safe

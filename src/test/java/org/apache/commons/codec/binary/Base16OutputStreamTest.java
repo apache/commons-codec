@@ -40,8 +40,8 @@ public class Base16OutputStreamTest {
      */
     @Test
     public void testBase16EmptyOutputStream() throws IOException {
-        final byte[] emptyEncoded = new byte[0];
-        final byte[] emptyDecoded = new byte[0];
+        final byte[] emptyEncoded = {};
+        final byte[] emptyDecoded = {};
         testByteByByte(emptyEncoded, emptyDecoded);
         testByChunk(emptyEncoded, emptyDecoded);
     }

@@ -37,7 +37,7 @@ public class DoubleMetaphone2Test extends StringEncoderAbstractTest<DoubleMetaph
     private static final int PRIMARY_INDEX = 1;
 
     /** Test values and their expected primary & alternate Double Metaphone encodings */
-    private static final String[][] TEST_DATA = new String[][]{
+    private static final String[][] TEST_DATA = {
         {"ALLERTON", "ALRT", "ALRT"},
         {"Acton", "AKTN", "AKTN"},
         {"Adams", "ATMS", "ATMS"},

@@ -100,7 +100,7 @@ public class Base16Test {
      */
     @Test(expected=RuntimeException.class)
     public void testCodec68() {
-        final byte[] x = new byte[] { 'n', 'H', '=', '=', (byte) 0x9c };
+        final byte[] x = { 'n', 'H', '=', '=', (byte) 0x9c };
         final Base16 b16 = new Base16();
         b16.decode(x);
     }
@@ -137,7 +137,7 @@ public class Base16Test {
      */
     @Test
     public void testEmptyBase16() {
-        byte[] empty = new byte[0];
+        byte[] empty = {};
         byte[] result = new Base16().encode(empty);
         assertEquals("empty Base16 encode", 0, result.length);
         assertEquals("empty Base16 encode", null, new Base16().encode(null));
@@ -440,7 +440,7 @@ public class Base16Test {
     public void testByteToStringVariations() throws DecoderException {
         final Base16 base16 = new Base16();
         final byte[] b1 = StringUtils.getBytesUtf8("Hello World");
-        final byte[] b2 = new byte[0];
+        final byte[] b2 = {};
         final byte[] b3 = null;
 
         assertEquals("byteToString Hello World", "48656C6C6F20576F726C64", base16.encodeToString(b1));

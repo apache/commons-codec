@@ -38,10 +38,10 @@ public class BinaryCodec implements BinaryDecoder, BinaryEncoder {
      * it.
      */
     /** Empty char array. */
-    private static final char[] EMPTY_CHAR_ARRAY = new char[0];
+    private static final char[] EMPTY_CHAR_ARRAY = {};
 
     /** Empty byte array. */
-    private static final byte[] EMPTY_BYTE_ARRAY = new byte[0];
+    private static final byte[] EMPTY_BYTE_ARRAY = {};
 
     /** Mask for bit 0 of a byte. */
     private static final int BIT_0 = 1;

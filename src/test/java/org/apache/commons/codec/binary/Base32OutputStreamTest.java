@@ -83,8 +83,8 @@ public class Base32OutputStreamTest {
     }
 
     private void testBase32EmptyOutputStream(final int chunkSize) throws Exception {
-        final byte[] emptyEncoded = new byte[0];
-        final byte[] emptyDecoded = new byte[0];
+        final byte[] emptyEncoded = {};
+        final byte[] emptyDecoded = {};
         testByteByByte(emptyEncoded, emptyDecoded, chunkSize, CR_LF);
         testByChunk(emptyEncoded, emptyDecoded, chunkSize, CR_LF);
     }
