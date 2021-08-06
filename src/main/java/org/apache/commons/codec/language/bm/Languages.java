@@ -181,12 +181,10 @@ public class Languages {
                     if (line.endsWith(ResourceConstants.EXT_CMT_END)) {
                         inExtendedComment = false;
                     }
-                } else {
-                    if (line.startsWith(ResourceConstants.EXT_CMT_START)) {
-                        inExtendedComment = true;
-                    } else if (!line.isEmpty()) {
-                        ls.add(line);
-                    }
+                } else if (line.startsWith(ResourceConstants.EXT_CMT_START)) {
+                    inExtendedComment = true;
+                } else if (!line.isEmpty()) {
+                    ls.add(line);
                 }
             }
             return new Languages(Collections.unmodifiableSet(ls));

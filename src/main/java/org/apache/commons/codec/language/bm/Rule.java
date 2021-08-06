@@ -408,74 +408,72 @@ public class Rule {
                 if (line.endsWith(ResourceConstants.EXT_CMT_END)) {
                     inMultilineComment = false;
                 }
+            } else if (line.startsWith(ResourceConstants.EXT_CMT_START)) {
+                inMultilineComment = true;
             } else {
-                if (line.startsWith(ResourceConstants.EXT_CMT_START)) {
-                    inMultilineComment = true;
+                // discard comments
+                final int cmtI = line.indexOf(ResourceConstants.CMT);
+                if (cmtI >= 0) {
+                    line = line.substring(0, cmtI);
+                }
+
+                // trim leading-trailing whitespace
+                line = line.trim();
+
+                if (line.isEmpty()) {
+                    continue; // empty lines can be safely skipped
+                }
+
+                if (line.startsWith(HASH_INCLUDE)) {
+                    // include statement
+                    final String incl = line.substring(HASH_INCLUDE_LENGTH).trim();
+                    if (incl.contains(" ")) {
+                        throw new IllegalArgumentException("Malformed import statement '" + rawLine + "' in " +
+                                                           location);
+                    }
+                    try (final Scanner hashIncludeScanner = createScanner(incl)) {
+                        lines.putAll(parseRules(hashIncludeScanner, location + "->" + incl));
+                    }
                 } else {
-                    // discard comments
-                    final int cmtI = line.indexOf(ResourceConstants.CMT);
-                    if (cmtI >= 0) {
-                        line = line.substring(0, cmtI);
+                    // rule
+                    final String[] parts = line.split("\\s+");
+                    if (parts.length != 4) {
+                        throw new IllegalArgumentException("Malformed rule statement split into " + parts.length +
+                                                           " parts: " + rawLine + " in " + location);
                     }
+                    try {
+                        final String pat = stripQuotes(parts[0]);
+                        final String lCon = stripQuotes(parts[1]);
+                        final String rCon = stripQuotes(parts[2]);
+                        final PhonemeExpr ph = parsePhonemeExpr(stripQuotes(parts[3]));
+                        final int cLine = currentLine;
+                        final Rule r = new Rule(pat, lCon, rCon, ph) {
+                            private final int myLine = cLine;
+                            private final String loc = location;
 
-                    // trim leading-trailing whitespace
-                    line = line.trim();
-
-                    if (line.isEmpty()) {
-                        continue; // empty lines can be safely skipped
-                    }
-
-                    if (line.startsWith(HASH_INCLUDE)) {
-                        // include statement
-                        final String incl = line.substring(HASH_INCLUDE_LENGTH).trim();
-                        if (incl.contains(" ")) {
-                            throw new IllegalArgumentException("Malformed import statement '" + rawLine + "' in " +
-                                                               location);
-                        }
-                        try (final Scanner hashIncludeScanner = createScanner(incl)) {
-                            lines.putAll(parseRules(hashIncludeScanner, location + "->" + incl));
-                        }
-                    } else {
-                        // rule
-                        final String[] parts = line.split("\\s+");
-                        if (parts.length != 4) {
-                            throw new IllegalArgumentException("Malformed rule statement split into " + parts.length +
-                                                               " parts: " + rawLine + " in " + location);
-                        }
-                        try {
-                            final String pat = stripQuotes(parts[0]);
-                            final String lCon = stripQuotes(parts[1]);
-                            final String rCon = stripQuotes(parts[2]);
-                            final PhonemeExpr ph = parsePhonemeExpr(stripQuotes(parts[3]));
-                            final int cLine = currentLine;
-                            final Rule r = new Rule(pat, lCon, rCon, ph) {
-                                private final int myLine = cLine;
-                                private final String loc = location;
-
-                                @Override
-                                public String toString() {
-                                    final StringBuilder sb = new StringBuilder();
-                                    sb.append("Rule");
-                                    sb.append("{line=").append(myLine);
-                                    sb.append(", loc='").append(loc).append('\'');
-                                    sb.append(", pat='").append(pat).append('\'');
-                                    sb.append(", lcon='").append(lCon).append('\'');
-                                    sb.append(", rcon='").append(rCon).append('\'');
-                                    sb.append('}');
-                                    return sb.toString();
-                                }
-                            };
-                            final String patternKey = r.pattern.substring(0,1);
-                            List<Rule> rules = lines.get(patternKey);
-                            if (rules == null) {
-                                rules = new ArrayList<>();
-                                lines.put(patternKey, rules);
+                            @Override
+                            public String toString() {
+                                final StringBuilder sb = new StringBuilder();
+                                sb.append("Rule");
+                                sb.append("{line=").append(myLine);
+                                sb.append(", loc='").append(loc).append('\'');
+                                sb.append(", pat='").append(pat).append('\'');
+                                sb.append(", lcon='").append(lCon).append('\'');
+                                sb.append(", rcon='").append(rCon).append('\'');
+                                sb.append('}');
+                                return sb.toString();
                             }
-                            rules.add(r);
-                        } catch (final IllegalArgumentException e) {
-                            throw new IllegalStateException("Problem parsing line '" + currentLine + "' in " +
-                                                            location, e);
+                        };
+                        final String patternKey = r.pattern.substring(0,1);
+                        List<Rule> rules = lines.get(patternKey);
+                        if (rules == null) {
+                            rules = new ArrayList<>();
+                            lines.put(patternKey, rules);
                         }
+                        rules.add(r);
+                    } catch (final IllegalArgumentException e) {
+                        throw new IllegalStateException("Problem parsing line '" + currentLine + "' in " +
+                                                        location, e);
                     }
                 }
             }

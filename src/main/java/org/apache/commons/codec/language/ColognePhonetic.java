@@ -363,12 +363,10 @@ public class ColognePhonetic implements StringEncoder {
                     } else {
                         output.put('8');
                     }
+                } else if (arrayContains(SZ, lastChar) || !arrayContains(AHKOQUX, nextChar)) {
+                    output.put('8');
                 } else {
-                    if (arrayContains(SZ, lastChar) || !arrayContains(AHKOQUX, nextChar)) {
-                        output.put('8');
-                    } else {
-                        output.put('4');
-                    }
+                    output.put('4');
                 }
             } else if (arrayContains(DTX, chr)) {
                 output.put('8');

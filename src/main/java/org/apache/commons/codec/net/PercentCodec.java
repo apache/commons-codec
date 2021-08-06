@@ -143,12 +143,10 @@ public class PercentCodec implements BinaryEncoder, BinaryDecoder {
                 buffer.put(ESCAPE_CHAR);
                 buffer.put((byte) hex1);
                 buffer.put((byte) hex2);
+            } else if (plusForSpace && b == ' ') {
+                buffer.put((byte) '+');
             } else {
-                if (plusForSpace && b == ' ') {
-                    buffer.put((byte) '+');
-                } else {
-                    buffer.put(b);
-                }
+                buffer.put(b);
             }
         }
         return buffer.array();
@@ -204,12 +202,10 @@ public class PercentCodec implements BinaryEncoder, BinaryDecoder {
                 } catch (final ArrayIndexOutOfBoundsException e) {
                     throw new DecoderException("Invalid percent decoding: ", e);
                 }
+            } else if (plusForSpace && b == '+') {
+                buffer.put((byte) ' ');
             } else {
-                if (plusForSpace && b == '+') {
-                    buffer.put((byte) ' ');
-                } else {
-                    buffer.put(b);
-                }
+                buffer.put(b);
             }
         }
         return buffer.array();

@@ -139,37 +139,35 @@ public class Lang {
                     if (line.endsWith(ResourceConstants.EXT_CMT_END)) {
                         inExtendedComment = false;
                     }
+                } else if (line.startsWith(ResourceConstants.EXT_CMT_START)) {
+                    inExtendedComment = true;
                 } else {
-                    if (line.startsWith(ResourceConstants.EXT_CMT_START)) {
-                        inExtendedComment = true;
-                    } else {
-                        // discard comments
-                        final int cmtI = line.indexOf(ResourceConstants.CMT);
-                        if (cmtI >= 0) {
-                            line = line.substring(0, cmtI);
-                        }
-
-                        // trim leading-trailing whitespace
-                        line = line.trim();
-
-                        if (line.isEmpty()) {
-                            continue; // empty lines can be safely skipped
-                        }
-
-                        // split it up
-                        final String[] parts = line.split("\\s+");
-
-                        if (parts.length != 3) {
-                            throw new IllegalArgumentException("Malformed line '" + rawLine +
-                                    "' in language resource '" + languageRulesResourceName + "'");
-                        }
-
-                        final Pattern pattern = Pattern.compile(parts[0]);
-                        final String[] langs = parts[1].split("\\+");
-                        final boolean accept = parts[2].equals("true");
-
-                        rules.add(new LangRule(pattern, new HashSet<>(Arrays.asList(langs)), accept));
+                    // discard comments
+                    final int cmtI = line.indexOf(ResourceConstants.CMT);
+                    if (cmtI >= 0) {
+                        line = line.substring(0, cmtI);
                     }
+
+                    // trim leading-trailing whitespace
+                    line = line.trim();
+
+                    if (line.isEmpty()) {
+                        continue; // empty lines can be safely skipped
+                    }
+
+                    // split it up
+                    final String[] parts = line.split("\\s+");
+
+                    if (parts.length != 3) {
+                        throw new IllegalArgumentException("Malformed line '" + rawLine +
+                                "' in language resource '" + languageRulesResourceName + "'");
+                    }
+
+                    final Pattern pattern = Pattern.compile(parts[0]);
+                    final String[] langs = parts[1].split("\\+");
+                    final boolean accept = parts[2].equals("true");
+
+                    rules.add(new LangRule(pattern, new HashSet<>(Arrays.asList(langs)), accept));
                 }
             }
         }
