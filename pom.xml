@@ -240,14 +240,13 @@ limitations under the License.
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
-      <!-- 3.9+ needs Java8 -->
       <version>3.12.0</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
   <properties>
-    <maven.compiler.source>1.7</maven.compiler.source>
-    <maven.compiler.target>1.7</maven.compiler.target>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
     <commons.componentid>codec</commons.componentid>
     <commons.module.name>org.apache.commons.codec</commons.module.name>
     <commons.jira.id>CODEC</commons.jira.id>
@@ -259,8 +258,10 @@ limitations under the License.
     <checkstyle.header.file>${basedir}/src/conf/checkstyle-header.txt</checkstyle.header.file>
     <checkstyle.config.file>${basedir}/src/conf/checkstyle.xml</checkstyle.config.file>
     <checkstyle.version>2.17</checkstyle.version>
-    <commons.japicmp.version>0.15.2</commons.japicmp.version>
-    <commons.jacoco.version>0.8.6</commons.jacoco.version>
+    <commons.japicmp.version>0.15.3</commons.japicmp.version>
+    <commons.jacoco.version>0.8.7</commons.jacoco.version>
+    <commons.javadoc.version>3.3.0</commons.javadoc.version>
+    <commons.surefire-report.version>3.0.0-M5</commons.surefire-report.version>
     <japicmp.skip>false</japicmp.skip>
 
     <!-- Commons Release Plugin -->
@@ -428,18 +429,6 @@ limitations under the License.
     </plugins>
   </reporting>
   <profiles>
-    <!-- profile to allow the use of plugin versions that require Java 7 -->
-    <!-- TODO remove when CP updated to version 51 -->
-    <profile>
-      <id>jdk7-plugin-fix-version</id>
-      <activation>
-        <jdk>[1.7,1.8)</jdk>
-      </activation>
-      <properties>
-        <!-- Fix to build on JDK 7: version 1.18 requires Java 8. -->
-        <commons.animal-sniffer.version>1.17</commons.animal-sniffer.version>
-      </properties>
-    </profile>
     <profile>
       <id>java9+</id>
       <activation>
