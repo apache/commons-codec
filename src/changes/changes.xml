@@ -46,7 +46,8 @@ The <action> type attribute can be add,update,fix,remove.
       <!-- FIX -->
       <action issue="CODEC-295" dev="ggregory" type="update" due-to="Arturo Bernal">Minor improvements #67.</action> 
       <action                   dev="aherbert" type="fix" due-to="James Gan">Remove duplicated words from Javadocs.</action>
-      <action issue="CODEC-301" dev="aherbert" type="update" due-to="Alexander Pinske, Alex Herbert">BaseNCodecInputStream: Reduce byte[] allocations by reusing buffers.</action> 
+      <action issue="CODEC-301" dev="aherbert" type="update" due-to="Alexander Pinske, Alex Herbert">Simplify assertion #84.</action>
+      <action issue="CODEC-300" dev="ggregory" type="update" due-to="Arturo Bernal">Simplify assertion #84.</action> 
       <!-- ADD -->
       <action issue="CODEC-296" dev="mattsicker" type="add" due-to="Matt Sicker">Add support for Blake3 family of hashes.</action>
       <!-- UDPATE -->
