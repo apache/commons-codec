@@ -18,7 +18,6 @@
 package org.apache.commons.codec;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -39,9 +38,8 @@ public class StringEncoderComparatorTest {
         final StringEncoderComparator sCompare =
             new StringEncoderComparator( new Soundex() );
 
-        assertTrue( "O'Brien and O'Brian didn't come out with " +
-                    "the same Soundex, something must be wrong here",
-                    0 == sCompare.compare( "O'Brien", "O'Brian" ) );
+        assertEquals("O'Brien and O'Brian didn't come out with " +
+                "the same Soundex, something must be wrong here", 0, sCompare.compare("O'Brien", "O'Brian"));
     }
 
     @SuppressWarnings("unchecked") // cannot easily avoid this warning

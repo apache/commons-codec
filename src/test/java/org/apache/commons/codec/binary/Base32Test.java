@@ -21,6 +21,7 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -298,15 +299,15 @@ public class Base32Test {
         byte[] empty = {};
         byte[] result = new Base32().encode(empty);
         assertEquals("empty Base32 encode", 0, result.length);
-        assertEquals("empty Base32 encode", null, new Base32().encode(null));
+        assertNull("empty Base32 encode", new Base32().encode(null));
         result = new Base32().encode(empty, 0, 1);
         assertEquals("empty Base32 encode with offset", 0, result.length);
-        assertEquals("empty Base32 encode with offset", null, new Base32().encode(null));
+        assertNull("empty Base32 encode with offset", new Base32().encode(null));
 
         empty = new byte[0];
         result = new Base32().decode(empty);
         assertEquals("empty Base32 decode", 0, result.length);
-        assertEquals("empty Base32 encode", null, new Base32().decode((byte[]) null));
+        assertNull("empty Base32 encode", new Base32().decode((byte[]) null));
     }
 
     @Test

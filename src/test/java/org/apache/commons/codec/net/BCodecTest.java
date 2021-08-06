@@ -104,7 +104,7 @@ public class BCodecTest {
         final BCodec bcodec = new BCodec();
         final String test = null;
         final String result = bcodec.encode(test, "charset");
-        assertEquals("Result should be null", null, result);
+        assertNull("Result should be null", result);
     }
 
     @Test
@@ -112,7 +112,7 @@ public class BCodecTest {
         final BCodec bcodec = new BCodec();
         final String test = null;
         final String result = bcodec.decode(test);
-        assertEquals("Result should be null", null, result);
+        assertNull("Result should be null", result);
     }
 
     @Test
@@ -124,7 +124,7 @@ public class BCodecTest {
         assertEquals("Basic B encoding test", "=?UTF-8?B?d2hhdCBub3Q=?=", encoded);
 
         final Object result = bcodec.encode((Object) null);
-        assertEquals("Encoding a null Object should return null", null, result);
+        assertNull("Encoding a null Object should return null", result);
 
         try {
             final Object dObj = Double.valueOf(3.0d);
@@ -148,7 +148,7 @@ public class BCodecTest {
         assertEquals("Basic B decoding test", "what not", plain);
 
         final Object result = bcodec.decode((Object) null);
-        assertEquals("Decoding a null Object should return null", null, result);
+        assertNull("Decoding a null Object should return null", result);
 
         try {
             final Object dObj = Double.valueOf(3.0d);

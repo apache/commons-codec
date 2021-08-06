@@ -142,8 +142,7 @@ public class QuotedPrintableCodecTest {
         final QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
         final byte[] plain = null;
         final byte[] encoded = qpcodec.encode(plain);
-        assertEquals("Encoding a null string should return null",
-            null, encoded);
+        assertNull("Encoding a null string should return null", encoded);
     }
 
     @Test
@@ -163,7 +162,7 @@ public class QuotedPrintableCodecTest {
     public void testDecodeWithNullArray() throws Exception {
         final byte[] plain = null;
         final byte[] result = QuotedPrintableCodec.decodeQuotedPrintable( plain );
-        assertEquals("Result should be null", null, result);
+        assertNull("Result should be null", result);
     }
 
     @Test
@@ -171,7 +170,7 @@ public class QuotedPrintableCodecTest {
         final QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
         final String test = null;
         final String result = qpcodec.encode( test, "charset" );
-        assertEquals("Result should be null", null, result);
+        assertNull("Result should be null", result);
     }
 
     @Test
@@ -179,7 +178,7 @@ public class QuotedPrintableCodecTest {
         final QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
         final String test = null;
         final String result = qpcodec.decode( test, "charset" );
-        assertEquals("Result should be null", null, result);
+        assertNull("Result should be null", result);
     }
 
     @Test
@@ -197,7 +196,7 @@ public class QuotedPrintableCodecTest {
             "1+1 =3D 2", encoded);
 
         final Object result = qpcodec.encode((Object) null);
-        assertEquals( "Encoding a null Object should return null", null, result);
+        assertNull("Encoding a null Object should return null", result);
 
         try {
             final Object dObj = Double.valueOf(3.0d);
@@ -228,7 +227,7 @@ public class QuotedPrintableCodecTest {
             "1+1 = 2", decoded);
 
         final Object result = qpcodec.decode((Object) null);
-        assertEquals( "Decoding a null Object should return null", null, result);
+        assertNull("Decoding a null Object should return null", result);
 
         try {
             final Object dObj = Double.valueOf(3.0d);

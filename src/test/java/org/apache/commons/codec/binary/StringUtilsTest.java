@@ -20,7 +20,6 @@ package org.apache.commons.codec.binary;
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -56,13 +55,13 @@ public class StringUtilsTest {
         testGetBytesUnchecked(charsetName);
         final byte[] expected = STRING_FIXTURE.getBytes(charsetName);
         final byte[] actual = StringUtils.getBytesIso8859_1(STRING_FIXTURE);
-        Assert.assertTrue(Arrays.equals(expected, actual));
+        Assert.assertArrayEquals(expected, actual);
     }
 
     private void testGetBytesUnchecked(final String charsetName) throws UnsupportedEncodingException {
         final byte[] expected = STRING_FIXTURE.getBytes(charsetName);
         final byte[] actual = StringUtils.getBytesUnchecked(STRING_FIXTURE, charsetName);
-        Assert.assertTrue(Arrays.equals(expected, actual));
+        Assert.assertArrayEquals(expected, actual);
     }
 
     @Test
@@ -71,7 +70,7 @@ public class StringUtilsTest {
         testGetBytesUnchecked(charsetName);
         final byte[] expected = STRING_FIXTURE.getBytes(charsetName);
         final byte[] actual = StringUtils.getBytesUsAscii(STRING_FIXTURE);
-        Assert.assertTrue(Arrays.equals(expected, actual));
+        Assert.assertArrayEquals(expected, actual);
     }
 
     @Test
@@ -80,7 +79,7 @@ public class StringUtilsTest {
         testGetBytesUnchecked(charsetName);
         final byte[] expected = STRING_FIXTURE.getBytes(charsetName);
         final byte[] actual = StringUtils.getBytesUtf16(STRING_FIXTURE);
-        Assert.assertTrue(Arrays.equals(expected, actual));
+        Assert.assertArrayEquals(expected, actual);
     }
 
     @Test
@@ -89,7 +88,7 @@ public class StringUtilsTest {
         testGetBytesUnchecked(charsetName);
         final byte[] expected = STRING_FIXTURE.getBytes(charsetName);
         final byte[] actual = StringUtils.getBytesUtf16Be(STRING_FIXTURE);
-        Assert.assertTrue(Arrays.equals(expected, actual));
+        Assert.assertArrayEquals(expected, actual);
     }
 
     @Test
@@ -98,7 +97,7 @@ public class StringUtilsTest {
         testGetBytesUnchecked(charsetName);
         final byte[] expected = STRING_FIXTURE.getBytes(charsetName);
         final byte[] actual = StringUtils.getBytesUtf16Le(STRING_FIXTURE);
-        Assert.assertTrue(Arrays.equals(expected, actual));
+        Assert.assertArrayEquals(expected, actual);
     }
 
     @Test
@@ -107,7 +106,7 @@ public class StringUtilsTest {
         testGetBytesUnchecked(charsetName);
         final byte[] expected = STRING_FIXTURE.getBytes(charsetName);
         final byte[] actual = StringUtils.getBytesUtf8(STRING_FIXTURE);
-        Assert.assertTrue(Arrays.equals(expected, actual));
+        Assert.assertArrayEquals(expected, actual);
     }
 
     @Test

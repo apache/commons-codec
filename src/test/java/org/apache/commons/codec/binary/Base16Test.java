@@ -25,7 +25,6 @@ import org.junit.Test;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.Random;
 
 import static org.junit.Assert.assertArrayEquals;
@@ -140,15 +139,15 @@ public class Base16Test {
         byte[] empty = {};
         byte[] result = new Base16().encode(empty);
         assertEquals("empty Base16 encode", 0, result.length);
-        assertEquals("empty Base16 encode", null, new Base16().encode(null));
+        assertNull("empty Base16 encode", new Base16().encode(null));
         result = new Base16().encode(empty, 0, 1);
         assertEquals("empty Base16 encode with offset", 0, result.length);
-        assertEquals("empty Base16 encode with offset", null, new Base16().encode(null));
+        assertNull("empty Base16 encode with offset", new Base16().encode(null));
 
         empty = new byte[0];
         result = new Base16().decode(empty);
         assertEquals("empty Base16 decode", 0, result.length);
-        assertEquals("empty Base16 encode", null, new Base16().decode((byte[]) null));
+        assertNull("empty Base16 encode", new Base16().decode((byte[]) null));
     }
 
     // encode/decode a large random array
@@ -412,7 +411,7 @@ public class Base16Test {
         assertEquals("68", new String(new Base16().encode(new byte[] { (byte) 104 })));
         for (int i = -128; i <= 127; i++) {
             final byte test[] = { (byte) i };
-            assertTrue(Arrays.equals(test, new Base16().decode(new Base16().encode(test))));
+            assertArrayEquals(test, new Base16().decode(new Base16().encode(test)));
         }
     }
 
@@ -447,8 +446,8 @@ public class Base16Test {
         assertEquals("byteToString static Hello World", "48656C6C6F20576F726C64", StringUtils.newStringUtf8(new Base16().encode(b1)));
         assertEquals("byteToString \"\"", "", base16.encodeToString(b2));
         assertEquals("byteToString static \"\"", "", StringUtils.newStringUtf8(new Base16().encode(b2)));
-        assertEquals("byteToString null", null, base16.encodeToString(b3));
-        assertEquals("byteToString static null", null, StringUtils.newStringUtf8(new Base16().encode(b3)));
+        assertNull("byteToString null", base16.encodeToString(b3));
+        assertNull("byteToString static null", StringUtils.newStringUtf8(new Base16().encode(b3)));
     }
 
     @Test
@@ -465,8 +464,8 @@ public class Base16Test {
                 StringUtils.newStringUtf8(new Base16().decode(s1)));
         assertEquals("StringToByte \"\"", "", StringUtils.newStringUtf8(new Base16().decode(s2)));
         assertEquals("StringToByte static \"\"", "", StringUtils.newStringUtf8(new Base16().decode(s2)));
-        assertEquals("StringToByte null", null, StringUtils.newStringUtf8(new Base16().decode(s3)));
-        assertEquals("StringToByte static null", null, StringUtils.newStringUtf8(new Base16().decode(s3)));
+        assertNull("StringToByte null", StringUtils.newStringUtf8(new Base16().decode(s3)));
+        assertNull("StringToByte static null", StringUtils.newStringUtf8(new Base16().decode(s3)));
     }
 
     private String toString(final byte[] data) {

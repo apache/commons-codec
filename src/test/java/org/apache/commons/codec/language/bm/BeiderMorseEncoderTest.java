@@ -36,7 +36,7 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest<StringEnco
     private static final char[] TEST_CHARS = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'o', 'u' };
 
     private void assertNotEmpty(final BeiderMorseEncoder bmpm, final String value) throws EncoderException {
-        Assert.assertFalse(value, bmpm.encode(value).equals(""));
+        Assert.assertNotEquals(value, "", bmpm.encode(value));
     }
 
     private BeiderMorseEncoder createGenericApproxEncoder() {

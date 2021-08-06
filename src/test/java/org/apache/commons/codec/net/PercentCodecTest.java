@@ -17,7 +17,9 @@
 
 package org.apache.commons.codec.net;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.nio.charset.StandardCharsets;
@@ -82,7 +84,7 @@ public class PercentCodecTest {
     @Test
     public void testDecodeNullObject() throws Exception {
         final PercentCodec percentCodec = new PercentCodec();
-        assertEquals(percentCodec.decode((Object) null), null);
+        assertNull(percentCodec.decode((Object) null));
     }
 
     @Test(expected = DecoderException.class)
@@ -94,7 +96,7 @@ public class PercentCodecTest {
     @Test
     public void testEncodeNullObject() throws Exception {
         final PercentCodec percentCodec = new PercentCodec();
-        assertEquals(percentCodec.encode((Object) null), null);
+        assertNull(percentCodec.encode((Object) null));
     }
 
     @Test(expected = EncoderException.class)
@@ -106,11 +108,11 @@ public class PercentCodecTest {
     @Test
     public void testPercentEncoderDecoderWithNullOrEmptyInput() throws Exception {
         final PercentCodec percentCodec = new PercentCodec(null, true);
-        assertEquals("Null input value encoding test", percentCodec.encode(null), null);
-        assertEquals("Null input value decoding test", percentCodec.decode(null), null);
+        assertNull("Null input value encoding test", percentCodec.encode(null));
+        assertNull("Null input value decoding test", percentCodec.decode(null));
         final byte[] emptyInput = "".getBytes("UTF-8");
         assertEquals("Empty input value encoding test", percentCodec.encode(emptyInput), emptyInput);
-        assertTrue("Empty input value decoding test", Arrays.equals(percentCodec.decode(emptyInput), emptyInput));
+        assertArrayEquals("Empty input value decoding test", percentCodec.decode(emptyInput), emptyInput);
     }
 
     @Test

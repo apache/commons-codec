@@ -178,8 +178,7 @@ public class URLCodecTest {
         final URLCodec urlCodec = new URLCodec();
         final byte[] plain = null;
         final byte[] encoded = urlCodec.encode(plain);
-        assertEquals("Encoding a null string should return null",
-            null, encoded);
+        assertNull("Encoding a null string should return null", encoded);
         this.validateState(urlCodec);
     }
 
@@ -199,7 +198,7 @@ public class URLCodecTest {
     public void testDecodeWithNullArray() throws Exception {
         final byte[] plain = null;
         final byte[] result = URLCodec.decodeUrl( plain );
-        assertEquals("Result should be null", null, result);
+        assertNull("Result should be null", result);
     }
 
     @Test
@@ -207,7 +206,7 @@ public class URLCodecTest {
         final URLCodec urlCodec = new URLCodec();
         final String test = null;
         final String result = urlCodec.encode( test, "charset" );
-        assertEquals("Result should be null", null, result);
+        assertNull("Result should be null", result);
     }
 
     @Test
@@ -215,7 +214,7 @@ public class URLCodecTest {
         final URLCodec urlCodec = new URLCodec();
         final String test = null;
         final String result = urlCodec.decode( test, "charset" );
-        assertEquals("Result should be null", null, result);
+        assertNull("Result should be null", result);
     }
 
     @Test
@@ -233,7 +232,7 @@ public class URLCodecTest {
             "Hello+there%21", encoded);
 
         final Object result = urlCodec.encode((Object) null);
-        assertEquals( "Encoding a null Object should return null", null, result);
+        assertNull("Encoding a null Object should return null", result);
 
         try {
             final Object dObj = Double.valueOf(3.0d);
@@ -279,7 +278,7 @@ public class URLCodecTest {
             "Hello there!", decoded);
 
         final Object result = urlCodec.decode((Object) null);
-        assertEquals( "Decoding a null Object should return null", null, result);
+        assertNull("Decoding a null Object should return null", result);
 
         try {
             final Object dObj = Double.valueOf(3.0d);

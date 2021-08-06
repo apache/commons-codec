@@ -19,6 +19,7 @@ package org.apache.commons.codec.language;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -1112,10 +1113,10 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest<DoubleMetapho
 
     @Test
     public void testEmpty() {
-        assertEquals(null, this.getStringEncoder().doubleMetaphone(null));
-        assertEquals(null, this.getStringEncoder().doubleMetaphone(""));
-        assertEquals(null, this.getStringEncoder().doubleMetaphone(" "));
-        assertEquals(null, this.getStringEncoder().doubleMetaphone("\t\n\r "));
+        assertNull(this.getStringEncoder().doubleMetaphone(null));
+        assertNull(this.getStringEncoder().doubleMetaphone(""));
+        assertNull(this.getStringEncoder().doubleMetaphone(" "));
+        assertNull(this.getStringEncoder().doubleMetaphone("\t\n\r "));
     }
 
     @Test

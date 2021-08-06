@@ -19,6 +19,7 @@ package org.apache.commons.codec.language;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import org.apache.commons.codec.StringEncoderAbstractTest;
@@ -79,7 +80,7 @@ public class MatchRatingApproachEncoderTest extends StringEncoderAbstractTest<Ma
 
     @Test
     public final void testAccentRemoval_NullValue_ReturnNullSuccessfully() {
-        assertEquals(null, this.getStringEncoder().removeAccents(null));
+        assertNull(this.getStringEncoder().removeAccents(null));
     }
 
     @Test
