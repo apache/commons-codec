@@ -20,6 +20,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.lang.reflect.Constructor;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -51,7 +52,7 @@ public class PureJavaCrc32Test {
 
     checkOnBytes(new byte[] {40, 60, 97, -70}, false);
 
-    checkOnBytes("hello world!".getBytes("UTF-8"), false);
+    checkOnBytes("hello world!".getBytes(StandardCharsets.UTF_8), false);
 
     final Random random1 = new Random();
     final Random random2 = new Random();

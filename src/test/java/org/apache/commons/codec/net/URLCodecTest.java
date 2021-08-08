@@ -164,7 +164,7 @@ public class URLCodecTest {
     public void testDecodeInvalidContent() throws UnsupportedEncodingException, DecoderException {
         final String ch_msg = constructString(SWISS_GERMAN_STUFF_UNICODE);
         final URLCodec urlCodec = new URLCodec();
-        final byte[] input = ch_msg.getBytes("ISO-8859-1");
+        final byte[] input = ch_msg.getBytes(StandardCharsets.ISO_8859_1);
         final byte[] output = urlCodec.decode(input);
         assertEquals(input.length, output.length);
         for (int i = 0; i < input.length; i++) {
