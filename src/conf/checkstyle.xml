@@ -60,15 +60,15 @@ limitations under the License.
   </module>
 
   <module name="TreeWalker">
-    <property name="cacheFile" value="target/cachefile" />
     <module name="OperatorWrap">
       <property name="option" value="eol" />
     </module>
-    <module name="LineLength">
+  </module>
+
+  <module name="LineLength">
       <!-- Ignore lines that begin with " * ", such as within a Javadoc comment. -->
       <property name="ignorePattern" value="^ *\* *[^ ]"/>
       <property name="max" value="120"/>
-    </module>
   </module>
 
 </module>
