@@ -291,6 +291,18 @@ limitations under the License.
             </ignorePathsToDelete>
           </configuration>
         </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-checkstyle-plugin</artifactId>
+          <version>${checkstyle.version}</version>
+          <configuration>
+            <configLocation>${checkstyle.config.file}</configLocation>
+            <enableRulesSummary>false</enableRulesSummary>
+            <headerFile>${checkstyle.header.file}</headerFile>
+            <includeTestSourceDirectory>true</includeTestSourceDirectory>
+            <resourceExcludes>NOTICE.txt,LICENSE.txt,**/pom.properties,**/sha512.properties</resourceExcludes>
+          </configuration>
+        </plugin>        
       </plugins>
     </pluginManagement>
     <plugins>
@@ -345,14 +357,6 @@ limitations under the License.
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>${checkstyle.version}</version>
-        <configuration>
-          <configLocation>${checkstyle.config.file}</configLocation>
-          <enableRulesSummary>false</enableRulesSummary>
-          <headerFile>${checkstyle.header.file}</headerFile>
-          <includeTestSourceDirectory>true</includeTestSourceDirectory>
-          <resourceExcludes>NOTICE.txt,LICENSE.txt,**/pom.properties,**/sha512.properties</resourceExcludes>
-        </configuration>
       </plugin>
       <!-- Specify source for JDK 11+ javadoc tool to ignore the 'unamed' module.
            See: https://bugs.openjdk.java.net/browse/JDK-8212233.
@@ -381,13 +385,6 @@ limitations under the License.
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>${checkstyle.version}</version>
-        <configuration>
-          <configLocation>${checkstyle.config.file}</configLocation>
-          <enableRulesSummary>false</enableRulesSummary>
-          <headerFile>${checkstyle.header.file}</headerFile>
-          <includeTestSourceDirectory>true</includeTestSourceDirectory>
-        </configuration>
         <!-- We need to specify reportSets because 2.9.1 creates two reports -->
         <reportSets>
           <reportSet>
