@@ -495,9 +495,6 @@ public class DaitchMokotoffSoundex implements StringEncoder {
 
             for (final Rule rule : rules) {
                 if (rule.matches(inputContext)) {
-                    if (branching) {
-                        nextBranches.clear();
-                    }
                     final String[] replacements = rule.getReplacements(inputContext, lastChar == '\0');
                     final boolean branchingRequired = replacements.length > 1 && branching;
 

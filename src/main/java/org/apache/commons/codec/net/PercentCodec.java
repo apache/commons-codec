@@ -134,12 +134,8 @@ public class PercentCodec implements BinaryEncoder, BinaryDecoder {
         final ByteBuffer buffer = ByteBuffer.allocate(expectedLength);
         for (final byte b : bytes) {
             if (willEncode && canEncode(b)) {
-                byte bb = b;
-                if (bb < 0) {
-                    bb = (byte) (256 + bb);
-                }
-                final char hex1 = Utils.hexDigit(bb >> 4);
-                final char hex2 = Utils.hexDigit(bb);
+                final char hex1 = Utils.hexDigit(b >> 4);
+                final char hex2 = Utils.hexDigit(b);
                 buffer.put(ESCAPE_CHAR);
                 buffer.put((byte) hex1);
                 buffer.put((byte) hex2);
