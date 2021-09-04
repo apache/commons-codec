@@ -18,6 +18,7 @@
 package org.apache.commons.codec.language.bm;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumMap;
@@ -127,7 +128,7 @@ public class Lang {
      * @return a Lang encapsulating the loaded language-guessing rules.
      */
     public static Lang loadFromResource(final String languageRulesResourceName, final Languages languages) {
-        final List<LangRule> rules = new ArrayList<>();
+        final List<LangRule> rules = new LinkedList<>();
         try (final Scanner scanner = new Scanner(Resources.getInputStream(languageRulesResourceName),
                 ResourceConstants.ENCODING)) {
             boolean inExtendedComment = false;
