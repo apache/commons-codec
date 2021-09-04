@@ -18,6 +18,7 @@
 package org.apache.commons.codec.language.bm;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -295,7 +296,7 @@ public class Rule {
     public static List<Rule> getInstance(final NameType nameType, final RuleType rt,
                                          final Languages.LanguageSet langs) {
         final Map<String, List<Rule>> ruleMap = getInstanceMap(nameType, rt, langs);
-        final List<Rule> allRules = new ArrayList<>();
+        final List<Rule> allRules = new LinkedList<>();
         for (final List<Rule> rules : ruleMap.values()) {
             allRules.addAll(rules);
         }
