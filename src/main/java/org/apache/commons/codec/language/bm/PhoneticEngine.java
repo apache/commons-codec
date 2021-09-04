@@ -17,6 +17,7 @@
 
 package org.apache.commons.codec.language.bm;
 
+import java.util.LinkedList;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -420,7 +421,7 @@ public class PhoneticEngine {
         }
 
         final List<String> words = Arrays.asList(input.split("\\s+"));
-        final List<String> words2 = new ArrayList<>();
+        final List<String> words2 = new LinkedList<>();
 
         // special-case handling of word prefixes based upon the name type
         switch (this.nameType) {
