@@ -28,9 +28,19 @@ import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.mockito.Mockito.CALLS_REAL_METHODS;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.withSettings;
+
 public class BaseNCodecTest {
 
-    BaseNCodec codec;
+    public static BaseNCodec mockBaseNCodec1() {
+        BaseNCodec mockInstance = mock(BaseNCodec.class,
+                withSettings().useConstructor(0, 0, 0, 0).defaultAnswer(CALLS_REAL_METHODS));
+        return mockInstance;
+	}
+
+	BaseNCodec codec;
 
     @Before
     public void setUp() {
@@ -223,7 +233,8 @@ public class BaseNCodecTest {
 
     @Test
     public void testEnsureBufferSize() {
-        final BaseNCodec ncodec = new NoOpBaseNCodec();
+        // Construct mock object
+        final BaseNCodec ncodec = BaseNCodecTest.mockBaseNCodec1();
         final Context context = new Context();
         Assert.assertNull("Initial buffer should be null", context.buffer);
 
@@ -306,7 +317,8 @@ public class BaseNCodecTest {
             System.gc();
         }
 
-        final BaseNCodec ncodec = new NoOpBaseNCodec();
+        // Construct mock object
+        final BaseNCodec ncodec = BaseNCodecTest.mockBaseNCodec1();
         final Context context = new Context();
 
         // Allocate the initial buffer
@@ -358,7 +370,8 @@ public class BaseNCodecTest {
 
     @Test(expected = OutOfMemoryError.class)
     public void testEnsureBufferSizeThrowsOnOverflow() {
-        final BaseNCodec ncodec = new NoOpBaseNCodec();
+        // Construct mock object
+        final BaseNCodec ncodec = BaseNCodecTest.mockBaseNCodec1();
         final Context context = new Context();
 
         final int length = 10;
@@ -366,28 +379,5 @@ public class BaseNCodecTest {
         context.pos = length;
         final int extra = Integer.MAX_VALUE;
         ncodec.ensureBufferSize(extra, context);
-    }
-
-    /**
-     * Extend BaseNCodec without implementation (no operations = NoOp).
-     * Used for testing the memory allocation in {@link BaseNCodec#ensureBufferSize(int, Context)}.
-     */
-    private static class NoOpBaseNCodec extends BaseNCodec {
-        NoOpBaseNCodec() {
-            super(0, 0, 0, 0);
-        }
-
-        @Override
-        void encode(final byte[] pArray, final int i, final int length, final Context context) {
-        }
-
-        @Override
-        void decode(final byte[] pArray, final int i, final int length, final Context context) {
-        }
-
-        @Override
-        protected boolean isInAlphabet(final byte value) {
-            return false;
-        }
     }
 }
