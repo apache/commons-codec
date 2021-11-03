@@ -53,7 +53,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action issue="CODEC-296" dev="mattsicker" type="add" due-to="Matt Sicker">Add support for Blake3 family of hashes.</action>
       <!-- UPDATE -->
       <action                   dev="ggregory" type="update" due-to="Dependabot, Gary Gregory">Bump actions/setup-java from v1.4.1 to v2 #60, #62.</action>
-      <action                   dev="ggregory" type="update" due-to="Dependabot">Bump actions/checkout from v2.3.2 to v2.3.4 #65.</action> 
+      <action                   dev="ggregory" type="update" due-to="Dependabot">Bump actions/checkout from v2.3.2 to v2.4.0 #65, #98.</action>
       <action                   dev="ggregory" type="update" due-to="Dependabot">Bump actions/cache from v2 to v2.1.4 #75.</action>
       <action                   dev="ggregory" type="update" due-to="Dependabot">Bump junit from 4.13.1 to 4.13.2 #76.</action>
       <action                   dev="ggregory" type="update" due-to="Gary Gregory">Bump Java 7 to 8.</action>
