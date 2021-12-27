@@ -258,7 +258,7 @@ limitations under the License.
     <checkstyle.header.file>${basedir}/src/conf/checkstyle-header.txt</checkstyle.header.file>
     <checkstyle.config.file>${basedir}/src/conf/checkstyle.xml</checkstyle.config.file>
     <commons.checkstyle-plugin.version>3.1.2</commons.checkstyle-plugin.version>
-    <commons.checkstyle.version>9.2</commons.checkstyle.version>
+    <commons.checkstyle.version>9.2.1</commons.checkstyle.version>
     <commons.japicmp.version>0.15.3</commons.japicmp.version>
     <commons.jacoco.version>0.8.7</commons.jacoco.version>
     <commons.javadoc.version>3.3.0</commons.javadoc.version>
