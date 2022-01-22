@@ -19,8 +19,7 @@ limitations under the License.
  To produce reports, use the reporting profile, for example: mvn -Preporting clean site
  You may need to use the -U option to update your environment if you get an error.
  -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.apache.commons</groupId>
@@ -30,7 +29,7 @@ limitations under the License.
   <groupId>commons-codec</groupId>
   <artifactId>commons-codec</artifactId>
   <!-- Remember to update the version in default.properties as well -->
-  <version>1.16-SNAPSHOT</version>
+  <version>1.16</version>
   <name>Apache Commons Codec</name>
   <inceptionYear>2002</inceptionYear>
   <description>
@@ -48,6 +47,7 @@ limitations under the License.
     <connection>scm:git:https://gitbox.apache.org/repos/asf/commons-codec</connection>
     <developerConnection>scm:git:https://gitbox.apache.org/repos/asf/commons-codec</developerConnection>
     <url>https://github.com/apache/commons-codec</url>
+    <tag>commons-codec-1.16-rc1</tag>
   </scm>
   <distributionManagement>
     <site>
