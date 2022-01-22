@@ -100,6 +100,26 @@
               tasks and provides GNU libc crypt(3) compatible password hashing functions.
             </td>
           </tr>
+          <tr>
+            <td width="150">
+              <a href="apidocs/org/apache/commons/codec/digest/Blake3.html">Blake3</a>
+            </td>
+            <td>
+              Provides a pure Java implementation of the
+              <a href="https://github.com/BLAKE3-team/BLAKE3">Blake3 hash function</a> which can be used for computing
+              <a href="https://en.wikipedia.org/wiki/Cryptographic_hash_function">cryptographic hashes</a>
+              (message digests) which are extensible to arbitrary output lengths (known as an <i>extensible-output
+              function</i> or <i>XOF</i>), computing
+              <a href="https://en.wikipedia.org/wiki/Message_authentication_code">message authentication codes</a>
+              using a 32 byte (256-bit) secret key, computing subkeys from a primary key using a
+              <a href="https://en.wikipedia.org/wiki/Key_derivation_function">key derivation function</a>, and can be
+              used as the basis for a
+              <a href="https://en.wikipedia.org/wiki/Cryptographically-secure_pseudorandom_number_generator">
+              cryptographically-secure pseudorandom number generator</a>. <strong>WARNING:</strong> Blake3 is
+              <em>not</em> a password hashing algorithm! An algorithm such as
+              <a href="https://github.com/P-H-C/phc-winner-argon2">Argon2</a> is more appropriate for password hashing.
+            </td>
+          </tr>
         </table>
       </subsection>
       <subsection name="Language Encoders">
