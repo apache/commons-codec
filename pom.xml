@@ -275,8 +275,8 @@ limitations under the License.
     <commons.release-plugin.version>1.7</commons.release-plugin.version>
     <commons.release.isDistModule>true</commons.release.isDistModule>
     <commons.distSvnStagingUrl>scm:svn:https://dist.apache.org/repos/dist/dev/commons/${commons.componentid}</commons.distSvnStagingUrl>
-    <commons.releaseManagerName>Alex Herbert</commons.releaseManagerName>
-    <commons.releaseManagerKey>BC87A3FD0A54480F0BADBEBD21939FF0CA2A6567</commons.releaseManagerKey>
+    <commons.releaseManagerName>Matt Sicker</commons.releaseManagerName>
+    <commons.releaseManagerKey>748F15B2CF9BA8F024155E6ED7C92B70FA1C814D</commons.releaseManagerKey>
   </properties>
   <build>
     <defaultGoal>clean install apache-rat:check japicmp:cmp checkstyle:check javadoc:javadoc</defaultGoal>
