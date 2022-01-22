@@ -1,5 +1,4 @@
-              Apache Commons Codec 1.15 RELEASE NOTES
-              September 1 2020
+              Apache Apache Commons Codec 1.16 RELEASE NOTES
 
 The Apache Commons Codec package contains simple encoder and decoders for
 various formats such as Base64 and Hexadecimal.  In addition to these
@@ -11,277 +10,34 @@ Feature and fix release.
 Changes in this version include:
 
 New features:
-o CODEC-290:  Base16Codec and Base16Input/OutputStream. Thanks to Adam Retter.
-o CODEC-291:  Hex encode/decode with existing arrays. Thanks to Adam Retter.
+o CODEC-296:  Add support for Blake3 family of hashes. Thanks to Matt Sicker.
 
 Fixed Bugs:
-o CODEC-264:  MurmurHash3: Ensure hash128 maintains the sign extension bug.
-              Thanks to Andy Seaborne.
+o             Remove duplicated words from Javadocs. Thanks to James Gan.
 
 Changes:
-o CODEC-280:  Base32/Base64/BCodec: Added strict decoding property to control
-              handling of trailing bits. Default lenient mode discards them
-              without error. Strict mode raise an exception.
-o CODEC-289:  Base32/Base64 Input/OutputStream: Added strict decoding property
-              to control handling of trailing bits. Default lenient mode
-              discards them without error. Strict mode raise an exception.
-o             Update tests from JUnit 4.12 to 4.13. Thanks to Gary Gregory.
-o             Update actions/checkout from v1 to v2.3.2 #50, #56.
-              Thanks to Dependabot.
-o             Update actions/setup-java from v1.4.0 to v1.4.1 #57.
-              Thanks to Dependabot.
+o CODEC-295:  Minor improvements #67. Thanks to Arturo Bernal.
+o CODEC-301:  Simplify assertion #84. Thanks to Alexander Pinske, Alex Herbert.
+o CODEC-300:  Simplify assertion #84. Thanks to Arturo Bernal.
+o CODEC-298:  Use Standard Charset object #82 Thanks to Arturo Bernal.
+o             Bump actions/setup-java from v1.4.1 to v2 #60, #62. Thanks to Dependabot, Gary Gregory.
+o             Bump actions/checkout from v2.3.2 to v2.4.0 #65, #98. Thanks to Dependabot.
+o             Bump actions/cache from v2 to v2.1.7 #75, #99. Thanks to Dependabot.
+o             Bump junit from 4.13.1 to 4.13.2 #76. Thanks to Dependabot.
+o             Bump Java 7 to 8. Thanks to Gary Gregory.
+o             Bump japicmp-maven-plugin from 0.14.3 to 0.15.3. Thanks to Gary Gregory.
+o             Bump jacoco-maven-plugin from 0.8.5 to 0.9.7 (Fixes Java 15 builds). Thanks to Gary Gregory.
+o             Bump maven-surefire-plugin from 2.22.2 to 3.0.0-M5. Thanks to Gary Gregory.
+o             Bump maven-javadoc-plugin from 3.2.0 to 3.3.0. Thanks to Gary Gregory.
+o             Bump animal-sniffer-maven-plugin from 1.19 to 1.20. Thanks to Gary Gregory.
+o             Bump maven-pmd-plugin from 3.13.0 to 3.15.0. Thanks to Gary Gregory.
+o             Bump maven-checkstyle-plugin from 2.17 to 3.1.2. Thanks to Gary Gregory.
+o             Bump checkstyle from 8.45.1 to 9.2.1 #97, #100, #101. Thanks to Dependabot.
 
 
-For complete information on Apache Commons Codec, including instructions on how
-to submit bug reports, patches, or suggestions for improvement, see the
-Apache Commons Codec website:
+For complete information on Apache Commons Codec, including instructions on how to submit bug reports,
+patches, or suggestions for improvement, see the Apache Apache Commons Codec website:
 
 https://commons.apache.org/proper/commons-codec/
 
 Download page: https://commons.apache.org/proper/commons-codec/download_codec.cgi
-
--------------------------------------------------------------------------------
-
-              Apache Commons Codec 1.14 RELEASE NOTES
-              December 30 2019
-
-The Apache Commons Codec package contains simple encoder and decoders for
-various formats such as Base64 and Hexadecimal.  In addition to these
-widely used encoders and decoders, the codec package also maintains a
-collection of phonetic encoding utilities.
-
-Feature and fix release.
-
-Changes in this version include:
-
-New features:
-o CODEC-264:  Add MurmurHash3.hash128x64 methods to fix sign extension error during seeding in hash128 methods. Thanks to Claude Warren.
-o CODEC-267:  Add MurmurHash3.hash32x86 methods and IncrementalHash32x86 to fix sign extension error in hash32 methods. Thanks to Claude Warren.
-o CODEC-272:  Add RandomAccessFile digest methods #31. Thanks to Behrang, Alex Herbert, Gary Gregory.
-o CODEC-273:  Add Path APIs to org.apache.commons.codec.digest.DigestUtils similar to File APIs. Thanks to Gary Gregory.
-o CODEC-274:  Add SHA-512/224 and SHA-512/256 to DigestUtils for Java 9 and up. Thanks to Gary Gregory.
-o CODEC-275:  Add missing note in javadoc when sign extension error is present #34. Thanks to Claude Warren.
-
-Fixed Bugs:
-o CODEC-261:  Hex: Allow encoding read-only ByteBuffer.
-o CODEC-259:  Hex: Only use an available ByteBuffer backing array if the length equals the remaining byte count.
-o CODEC-265:  BaseNCodec to expand buffer using overflow conscious code.
-o CODEC-270:  Base32/64: Fixed decoding check that all the final trailing bits to discard are zero.
-o CODEC-269:  Allow repeat calls to MurmurHash3.IncrementalHash32.end() to generate the same value.
-o CODEC-276:  Reliance on default encoding in MurmurHash2 and MurmurHash3. Thanks to Gary Gregory.
-
-Changes:
-o CODEC-268:  MurmurHash3: Deprecate hash64 methods and hash methods accepting a String that use the default encoding.
-o CODEC-277:  Don't reload standard Charsets in org.apache.commons.codec.Charsets. Thanks to Gary Gregory.
-o CODEC-278:  Deprecate Charset constants in org.apache.commons.codec.Charsets in favor of java.nio.charset.StandardCharsets. Thanks to Gary Gregory.
-
-
-For complete information on Apache Commons Codec, including instructions on how to submit bug reports,
-patches, or suggestions for improvement, see the Apache Commons Codec website:
-
-https://commons.apache.org/proper/commons-codec/
-
-Download page: https://commons.apache.org/proper/commons-codec/download_codec.cgi
-
--------------------------------------------------------------------------------
-
-              Apache Commons Codec 1.13 RELEASE NOTES
-
-The Apache Commons Codec package contains simple encoder and decoders for
-various formats such as Base64 and Hexadecimal.  In addition to these
-widely used encoders and decoders, the codec package also maintains a
-collection of phonetic encoding utilities.
-
-Feature and fix release.
-
-Changes in this version include:
-
-New features:
-o CODEC-236:  MurmurHash2 for 32-bit or 64-bit value. Thanks to Viliam Holub.
-o CODEC-236:  MurmurHash3 for 32-bit or 128-bit value. Thanks to Austin Appleby.
-
-Fixed Bugs:
-o CODEC-255:  ColognePhonetic handles x incorrectly Thanks to Holger Grote.
-o CODEC-254:  ColognePhonetic does not treat the letter H correctly Thanks to Holger Grote.
-o CODEC-134:  Reject any decode request for a value that is impossible to encode to for Base32/Base64 rather than blindly decoding.
-
-Changes:
-o CODEC-236:  Broken direct java.nio.ByteBuffer support in org.apache.commons.codec.binary.Hex. Thanks to Tomas Shestakov, Gary Gregory.
-
-
-For complete information on Apache Commons Codec, including instructions on how to submit bug reports,
-patches, or suggestions for improvement, see the Apache Commons Codec website:
-
-Visit https://commons.apache.org/proper/commons-codec/
-Download from https://commons.apache.org/proper/commons-codec/download_codec.cgi
-
--------------------------------------------------------------------------------
-
-              Apache Commons Codec 1.12 RELEASE NOTES
-
-The Apache Commons Codec team is pleased to announce the commons-codec-1.12 release!
-
-The Apache Commons Codec package contains simple encoder and decoders for
-     various formats such as Base64 and Hexadecimal.  In addition to these
-     widely used encoders and decoders, the codec package also maintains a
-     collection of phonetic encoding utilities.
-
-Changes in this version include:
-
-New features:
-o Add Percent-Encoding Codec (described in RFC3986 and RFC7578)  Issue: CODEC-240. Thanks to Ioannis Sermetziadis.
-o Add SHA-3 methods in DigestUtils  Issue: CODEC-251. Thanks to Gary Gregory.
-
-Fixed Bugs:
-o B64 salt generator: Random -> ThreadLocalRandom  Issue: CODEC-252.
-o Wrong value calculated by Cologne Phonetic if a special character is placed between equal letters  Issue: CODEC-250. Thanks to Alex Volodko.
-o ColognePhoneticTest.testIsEncodeEquals missing assertions  Issue: CODEC-246. Thanks to Oscar Luis Vera Pérez.
-
-Changes:
-o Update from Java 7 to Java 8  Issue: CODEC-253.
-
-
-Have fun!
--Apache Commons Codec team
-
-
--------------------------------------------------------------------------------
-
-              Apache Commons Codec 1.11 RELEASE NOTES
-
-The Apache Commons Codec team is pleased to announce the commons-codec-1.11 release!
-
-The Apache Commons Codec package contains simple encoder and decoders for
-     various formats such as Base64 and Hexadecimal.  In addition to these
-     widely used encoders and decoders, the codec package also maintains a
-     collection of phonetic encoding utilities.
-
-Changes in this version include:
-
-New features:
-o Add support for XXHash32  Issue: CODEC-241. 
-o Fluent interface for DigestUtils  Issue: CODEC-220. 
-o Fluent interface for HmacUtils  Issue: CODEC-222. 
-o Add support for CRC32-C  Issue: CODEC-171. Thanks to Brett Okken. 
-o Add HmacAlgorithms.HMAC_SHA_224 (Java 8 only)  Issue: CODEC-217. Thanks to Gary Gregory. 
-o Support JEP 287: SHA-3 Hash Algorithms  Issue: CODEC-213. Thanks to Gary Gregory. 
-o Create a minimal Digest command line utility: org.apache.commons.codec.digest.Digest  Issue: CODEC-212. Thanks to Gary Gregory. 
-o Add DigestUtils.getDigest(String, MessageDigest)  Issue: CODEC-210. Thanks to Gary Gregory. 
-o Make some DigestUtils APIs public  Issue: CODEC-208. Thanks to Gary Gregory. 
-o Add java.io.File APIs to MessageDigestAlgorithm  Issue: CODEC-206. Thanks to Gary Gregory. 
-o BaseNCodecOutputStream only supports writing EOF on close()  Issue: CODEC-183. Thanks to Steven Wurster. 
-o Support SHA-224 in DigestUtils on Java 8  Issue: CODEC-195. Thanks to Gary Gregory. 
-o Support java.nio.ByteBuffer in org.apache.commons.codec.binary.Hex  Issue: CODEC-194. Thanks to Gary Gregory. 
-o Support java.nio.ByteBuffer in DigestUtils  Issue: CODEC-193. Thanks to Michael Donaghy. 
-o Add BaseNCodec.encode(byte[], int, int) input with offset and length parameters for Base64 and Base32.  Issue: CODEC-202. Thanks to Oleg Kalnichevski. 
-o Add convenience method decodeHex(String).  Issue: CODEC-203. Thanks to Gary Gregory. 
-o Add faster CRC32 implementation.  Issue: CODEC-205. Thanks to Gary Gregory. 
-o Add convenience API org.apache.commons.codec.binary.Hex.encodeHexString(byte[]|ByteBuffer, boolean).  Issue: CODEC-224. Thanks to Gary Gregory. 
-o Add Automatic-Module-Name manifest entry for Java 9.  Issue: CODEC-242. Thanks to Gary Gregory. 
-
-Fixed Bugs:
-o Base64.encodeBase64String could better use newStringUsAscii (ditto encodeBase64URLSafeString)  Issue: CODEC-145. Thanks to Jesse Glick. 
-o BaseNCodec: encodeToString and encodeAsString methods are identical  Issue: CODEC-144. 
-o URLCodec is neither immutable nor threadsafe  Issue: CODEC-232. 
-o StringUtils.equals(CharSequence cs1, CharSequence cs2) can fail with String Index OBE  Issue: CODEC-231. 
-o URLCodec.WWW_FORM_URL should be private  Issue: CODEC-230. 
-o StringUtils.newStringxxx(null) should return null, not NPE  Issue: CODEC-229. 
-o Fix minor resource leaks  Issue: CODEC-225. Thanks to Svetlin Zarev. 
-o Base32.HEX_DECODE_TABLE contains the wrong value 32  Issue: CODEC-200. Thanks to Luciano Vernaschi. 
-o Charsets Javadoc breaks build when using Java 8  Issue: CODEC-207. Thanks to Gary Gregory. 
-o Bug in HW rule in Soundex  Issue: CODEC-199. Thanks to Yossi Tamari. 
-o Javadoc for SHA-224 DigestUtils methods should mention Java 1.8.0 restriction instead of 1.4.0.  Issue: CODEC-209. Thanks to Gary Gregory. 
-o Don't deprecate Charsets Charset constants in favor of Java 7's java.nio.charset.StandardCharsets  Issue: CODEC-219. Thanks to Gary Gregory, Sebb. 
-
-Changes:
-o Base32.decode should support lowercase letters  Issue: CODEC-234. Thanks to Christopher Schultz, Sebb. 
-o Soundex should support more algorithm variants  Issue: CODEC-233. Thanks to Yossi Tamari. 
-o HmacUtils.updateHmac calls reset() unnecessarily  Issue: CODEC-221. 
-
-Removed:
-o Drop obsolete Ant build  Issue: CODEC-223. 
-
-Have fun!
--Apache Commons Codec team
-
-
--------------------------------------------------------------------------------
-
-              Apache Commons Codec 1.10 RELEASE NOTES
-
-The Apache Commons Codec team is pleased to announce the commons-codec-1.10 release!
-
-The Apache Commons Codec package contains simple encoder and decoders for
-     various formats such as Base64 and Hexadecimal.  In addition to these
-     widely used encoders and decoders, the codec package also maintains a
-     collection of phonetic encoding utilities.
-
-This feature and fix release requires a minimum of Java 1.6, same as 1.9.
-
-Changes in this version include:
-
-New features:
-
-o Add Daitch-Mokotoff Soundex  
-  Issue: CODEC-192. Thanks to Thomas Neidhart. 
-o QuotedPrintableCodec does not support soft line break per the 'quoted-printable' example on Wikipedia
-  Issue: CODEC-121. Thanks to Thomas Neidhart, Java John.
-o Make possible to provide padding byte to BaseNCodec in constructor  
-  Issue: CODEC-181. Thanks to Ivan Martinez-Ortiz. 
-
-Fixed Bugs:
-
-o Added clarification to Javadoc of Base64 concerning the use of the urlSafe parameter  
-  Issue: CODEC-185. Thanks to Sean Busbey. 
-o Added clarification to the Javadoc of Base[32|64]OutputStream that it is mandatory to call close()  
-  Issue: CODEC-191. Thanks to Igor Savin. 
-o Add support for HMAC Message Authentication Code (MAC) digests  
-  Issue: CODEC-188. Thanks to Hendrik Saly. 
-o Beider Morse Phonetic Matching producing incorrect tokens  
-  Issue: CODEC-187. Thanks to Michael Tobias, Thomas Neidhart. 
-o NullPointerException in DoubleMetaPhone.isDoubleMetaphoneEqual when using empty strings  
-  Issue: CODEC-184. Thanks to Cyrille Artho. 
-o Fix Javadoc 1.8.0 errors  
-  Issue: CODEC-180. Thanks to Ville Skyttä. 
-o Fix Java 8 build Javadoc errors  
-  Issue: CODEC-189. 
-
-Changes:
-
-o Deprecate Charsets Charset constants in favor of Java 7's java.nio.charset.StandardCharsets  
-  Issue: CODEC-178. 
-o Update from commons-parent 34 to 35  
-  Issue: CODEC-190. 
-
-
-Have fun!
--Apache Commons Codec team
-
-
--------------------------------------------------------------------------------
-
-              Apache Commons Codec 1.9 RELEASE NOTES
-
-The codec package contains simple encoder and decoders for
-various formats such as Base64 and Hexadecimal.  In addition to these
-widely used encoders and decoders, the codec package also maintains a
-collection of phonetic encoding utilities.
-
-This feature and fix release requires a minimum of Java 1.6, same as 1.8.
-
-Changes in this version include:
-
-Performance:
-o CODEC-174: Improve performance of Beider Morse encoder. Thanks to Thomas Champagne.
-
-Fixed Bugs:
-o CODEC-175: Beider Morse does not close Scanners used to read config files. 
-o CODEC-172: Base32 decode table has spurious value. Thanks to Matt Bishop. 
-o CODEC-170: Link broken in Metaphone Javadoc. Thanks to Ron Wheeler, Henri Yandell. 
-o CODEC-176: Spelling fixes in Javadoc and comments. Thanks to Ville Skyttä. 
-
-
-For complete information on Apache Commons Codec, including instructions on how to submit bug reports,
-patches, or suggestions for improvement, see the Apache Commons Codec website:
-
-https://commons.apache.org/proper/commons-codec/
