@@ -29,7 +29,6 @@ import org.junit.Test;
 
 /**
  * Test cases for the StingEncoderComparator.
- *
  */
 public class StringEncoderComparatorTest {
 
