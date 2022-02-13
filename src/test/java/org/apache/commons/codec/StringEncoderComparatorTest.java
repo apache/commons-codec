@@ -52,7 +52,7 @@ public class StringEncoderComparatorTest {
 
         final String[] controlArray = { "Jordan", "Prior", "Pryor", "Sosa" };
 
-        Collections.sort(testList, sCompare); // unchecked
+        testList.sort(sCompare); // unchecked
 
         final String[] resultArray = testList.toArray(new String[0]);
 
