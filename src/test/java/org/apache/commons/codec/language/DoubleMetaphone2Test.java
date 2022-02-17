@@ -17,10 +17,10 @@
 
 package org.apache.commons.codec.language;
 
-import static org.junit.Assert.assertEquals;
-
 import org.apache.commons.codec.StringEncoderAbstractTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Tests {@link DoubleMetaphone}.
@@ -1263,7 +1263,7 @@ public class DoubleMetaphone2Test extends StringEncoderAbstractTest<DoubleMetaph
     private void checkDoubleMetaphone(final int typeIndex, final boolean alternate) {
         for (int i = 0; i < TEST_DATA.length; i++) {
             final String value = TEST_DATA[i][0];
-            assertEquals("Test [" + i + "]=" + value, TEST_DATA[i][typeIndex], this.getStringEncoder().doubleMetaphone(value, alternate));
+            assertEquals(TEST_DATA[i][typeIndex], this.getStringEncoder().doubleMetaphone(value, alternate), "Test [" + i + "]=" + value);
         }
     }
 

@@ -19,8 +19,10 @@ package org.apache.commons.codec.language;
 
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoderAbstractTest;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests {@link Nysiis}
@@ -41,7 +43,7 @@ public class NysiisTest extends StringEncoderAbstractTest<Nysiis> {
      * @throws EncoderException for some failure scenarios     */
     private void assertEncodings(final String[]... testValues) throws EncoderException {
         for (final String[] arr : testValues) {
-            Assert.assertEquals("Problem with " + arr[0], arr[1], this.fullNysiis.encode(arr[0]));
+            assertEquals(arr[1], this.fullNysiis.encode(arr[0]), "Problem with " + arr[0]);
         }
     }
 
@@ -52,7 +54,7 @@ public class NysiisTest extends StringEncoderAbstractTest<Nysiis> {
 
     private void encodeAll(final String[] strings, final String expectedEncoding) {
         for (final String string : strings) {
-            Assert.assertEquals("Problem with " + string, expectedEncoding, getStringEncoder().encode(string));
+            assertEquals(expectedEncoding, getStringEncoder().encode(string), "Problem with " + string);
         }
     }
 
@@ -285,8 +287,8 @@ public class NysiisTest extends StringEncoderAbstractTest<Nysiis> {
         final Nysiis encoder = new Nysiis(true);
 
         final String encoded = encoder.encode("WESTERLUND");
-        Assert.assertTrue(encoded.length() <= 6);
-        Assert.assertEquals("WASTAR", encoded);
+        assertTrue(encoded.length() <= 6);
+        assertEquals("WASTAR", encoded);
     }
 
 }

@@ -17,25 +17,17 @@
 
 package org.apache.commons.codec.binary;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import org.apache.commons.codec.CodecPolicy;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.lang3.ArrayUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class Base32Test {
-
 
     private static final Charset CHARSET_UTF8 = StandardCharsets.UTF_8;
 
@@ -252,12 +244,13 @@ public class Base32Test {
         // even when line length is negative.
         base32 = new Base32(-1, new byte[] {'A'});
         base32 = new Base32(32, new byte[] {'$'}); // OK
-        assertThrows("null line separator", IllegalArgumentException.class, () -> new Base32(32, null));
-        assertThrows("'A' as a line separator", IllegalArgumentException.class, () -> new Base32(32, new byte[] {'A'}));
-        assertThrows("'=' as a line separator", IllegalArgumentException.class, () -> new Base32(32, new byte[] {'='}));
-        assertThrows("'A$' as a line separator", IllegalArgumentException.class, () -> new Base32(32, new byte[] {'A', '$'}));
-        assertThrows("'A' as padding", IllegalArgumentException.class, () -> new Base32(32, new byte[] {'\n'}, false, (byte) 'A'));
-        assertThrows("' ' as padding", IllegalArgumentException.class, () -> new Base32(32, new byte[] {'\n'}, false, (byte) ' '));
+        assertThrows(IllegalArgumentException.class, () -> new Base32(32, null), "null line separator");
+        assertThrows(IllegalArgumentException.class, () -> new Base32(32, new byte[] {'A'}), "'A' as a line separator");
+        assertThrows(IllegalArgumentException.class, () -> new Base32(32, new byte[] {'='}), "'=' as a line separator");
+        assertThrows(IllegalArgumentException.class, () -> new Base32(32, new byte[] {'A', '$'}), "'A$' as a line separator");
+        assertThrows(IllegalArgumentException.class, () -> new Base32(32, new byte[] {'\n'}, false, (byte) 'A'), "'A' as padding");
+        assertThrows(IllegalArgumentException.class, () -> new Base32(32, new byte[] {'\n'}, false, (byte) ' '), "' ' as padding");
+
         base32 = new Base32(32, new byte[] {' ', '$', '\n', '\r', '\t'}); // OK
         assertNotNull(base32);
     }
@@ -269,16 +262,16 @@ public class Base32Test {
     public void testEmptyBase32() {
         byte[] empty = {};
         byte[] result = new Base32().encode(empty);
-        assertEquals("empty Base32 encode", 0, result.length);
-        assertNull("empty Base32 encode", new Base32().encode(null));
+        assertEquals(0, result.length, "empty Base32 encode");
+        assertNull(new Base32().encode(null), "empty Base32 encode");
         result = new Base32().encode(empty, 0, 1);
-        assertEquals("empty Base32 encode with offset", 0, result.length);
-        assertNull("empty Base32 encode with offset", new Base32().encode(null));
+        assertEquals(0, result.length, "empty Base32 encode with offset");
+        assertNull(new Base32().encode(null), "empty Base32 encode with offset");
 
         empty = new byte[0];
         result = new Base32().decode(empty);
-        assertEquals("empty Base32 decode", 0, result.length);
-        assertNull("empty Base32 encode", new Base32().decode((byte[]) null));
+        assertEquals(0, result.length, "empty Base32 decode");
+        assertNull(new Base32().decode((byte[]) null), "empty Base32 encode");
     }
 
     @Test
@@ -334,7 +327,7 @@ public class Base32Test {
         for (int i = 0; i < 20; i++) {
             final Base32 codec = new Base32();
             final byte[][] b = BaseNTestData.randomData(codec, i);
-            assertEquals(""+i+" "+codec.lineLength,b[1].length,codec.getEncodedLength(b[0]));
+            assertEquals(b[1].length, codec.getEncodedLength(b[0]), i + " " + codec.lineLength);
             //assertEquals(b[0],codec.decode(b[1]));
         }
     }
@@ -344,7 +337,7 @@ public class Base32Test {
         for (int i = 0; i < 20; i++) {
             final Base32 codec = new Base32(10);
             final byte[][] b = BaseNTestData.randomData(codec, i);
-            assertEquals(""+i+" "+codec.lineLength,b[1].length,codec.getEncodedLength(b[0]));
+            assertEquals(b[1].length, codec.getEncodedLength(b[0]), i + " " + codec.lineLength);
             //assertEquals(b[0],codec.decode(b[1]));
         }
     }
@@ -354,7 +347,7 @@ public class Base32Test {
         for (int i = 0; i < 20; i++) {
             final Base32 codec = new Base32(true);
             final byte[][] b = BaseNTestData.randomData(codec, i);
-            assertEquals(""+i+" "+codec.lineLength,b[1].length,codec.getEncodedLength(b[0]));
+            assertEquals(b[1].length, codec.getEncodedLength(b[0]), i + " " + codec.lineLength);
             //assertEquals(b[0],codec.decode(b[1]));
         }
     }
@@ -475,7 +468,7 @@ public class Base32Test {
             // If the lower bits are set we expect an exception. This is not a valid
             // final character.
             if (invalid || (i & emptyBitsMask) != 0) {
-                assertThrows("Final base-32 digit should not be allowed", IllegalArgumentException.class, () -> codec.decode(encoded));
+                assertThrows(IllegalArgumentException.class, () -> codec.decode(encoded), "Final base-32 digit should not be allowed");
                 // The default lenient mode should decode this
                 final byte[] decoded = defaultCodec.decode(encoded);
                 // Re-encoding should not match the original array as it was invalid
@@ -485,7 +478,7 @@ public class Base32Test {
                 final byte[] decoded = codec.decode(encoded);
                 // Compute the bits that were encoded. This should match the final decoded byte.
                 final int bitsEncoded = i >> discard;
-                assertEquals("Invalid decoding of last character", bitsEncoded, decoded[decoded.length - 1]);
+                assertEquals(bitsEncoded, decoded[decoded.length - 1], "Invalid decoding of last character");
                 // Re-encoding should match the original array (requires the same padding character)
                 assertArrayEquals(encoded, codec.encode(decoded));
             }

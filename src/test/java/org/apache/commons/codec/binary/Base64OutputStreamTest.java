@@ -21,14 +21,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 
 import org.apache.commons.codec.CodecPolicy;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @since 1.4
@@ -59,7 +54,7 @@ public class Base64OutputStreamTest {
 
         final byte[] decodedBytes = data.toByteArray();
         final String decoded = StringUtils.newStringUtf8(decodedBytes);
-        assertEquals("codec-98 NPE Base64OutputStream", Base64TestData.CODEC_98_NPE_DECODED, decoded);
+        assertEquals(Base64TestData.CODEC_98_NPE_DECODED, decoded, "codec-98 NPE Base64OutputStream");
     }
 
 
@@ -196,7 +191,7 @@ public class Base64OutputStreamTest {
         out.write(decoded);
         out.close();
         byte[] output = byteOut.toByteArray();
-        assertArrayEquals("Streaming chunked base64 encode", encoded, output);
+        assertArrayEquals(encoded, output, "Streaming chunked base64 encode");
 
         // Now let's try decode.
         byteOut = new ByteArrayOutputStream();
@@ -204,7 +199,7 @@ public class Base64OutputStreamTest {
         out.write(encoded);
         out.close();
         output = byteOut.toByteArray();
-        assertArrayEquals("Streaming chunked base64 decode", decoded, output);
+        assertArrayEquals(decoded, output, "Streaming chunked base64 decode");
 
         // I always wanted to do this! (wrap encoder with decoder etc etc).
         byteOut = new ByteArrayOutputStream();
@@ -217,7 +212,7 @@ public class Base64OutputStreamTest {
         out.close();
         output = byteOut.toByteArray();
 
-        assertArrayEquals("Streaming chunked base64 wrap-wrap-wrap!", decoded, output);
+        assertArrayEquals(decoded, output, "Streaming chunked base64 wrap-wrap-wrap!");
     }
 
     /**
@@ -248,7 +243,7 @@ public class Base64OutputStreamTest {
         }
         out.close();
         byte[] output = byteOut.toByteArray();
-        assertArrayEquals("Streaming byte-by-byte base64 encode", encoded, output);
+        assertArrayEquals(encoded, output, "Streaming byte-by-byte base64 encode");
 
         // Now let's try decode.
         byteOut = new ByteArrayOutputStream();
@@ -258,7 +253,7 @@ public class Base64OutputStreamTest {
         }
         out.close();
         output = byteOut.toByteArray();
-        assertArrayEquals("Streaming byte-by-byte base64 decode", decoded, output);
+        assertArrayEquals(decoded, output, "Streaming byte-by-byte base64 decode");
 
         // Now let's try decode with tonnes of flushes.
         byteOut = new ByteArrayOutputStream();
@@ -269,7 +264,7 @@ public class Base64OutputStreamTest {
         }
         out.close();
         output = byteOut.toByteArray();
-        assertArrayEquals("Streaming byte-by-byte flush() base64 decode", decoded, output);
+        assertArrayEquals(decoded, output, "Streaming byte-by-byte flush() base64 decode");
 
         // I always wanted to do this! (wrap encoder with decoder etc etc).
         byteOut = new ByteArrayOutputStream();
@@ -284,7 +279,7 @@ public class Base64OutputStreamTest {
         out.close();
         output = byteOut.toByteArray();
 
-        assertArrayEquals("Streaming byte-by-byte base64 wrap-wrap-wrap!", decoded, output);
+        assertArrayEquals(decoded, output, "Streaming byte-by-byte base64 wrap-wrap-wrap!");
     }
 
     /**
@@ -298,10 +293,10 @@ public class Base64OutputStreamTest {
         final byte[] buf = new byte[1024];
         final ByteArrayOutputStream bout = new ByteArrayOutputStream();
         try (final Base64OutputStream out = new Base64OutputStream(bout)) {
-            assertThrows("Base64OutputStream.write(buf, -1, 1)", IndexOutOfBoundsException.class, () -> out.write(buf, -1, 1));
-            assertThrows("Base64OutputStream.write(buf, 1, -1)", IndexOutOfBoundsException.class, () -> out.write(buf, 1, -1));
-            assertThrows("Base64OutputStream.write(buf, buf.length + 1, 0)", IndexOutOfBoundsException.class, () -> out.write(buf, buf.length + 1, 0));
-            assertThrows("Base64OutputStream.write(buf, buf.length - 1, 2)", IndexOutOfBoundsException.class, () -> out.write(buf, buf.length - 1, 2));
+            assertThrows(IndexOutOfBoundsException.class, () -> out.write(buf, -1, 1), "Base64OutputStream.write(buf, -1, 1)");
+            assertThrows(IndexOutOfBoundsException.class, () -> out.write(buf, 1, -1), "Base64OutputStream.write(buf, 1, -1)");
+            assertThrows(IndexOutOfBoundsException.class, () -> out.write(buf, buf.length + 1, 0), "Base64OutputStream.write(buf, buf.length + 1, 0)");
+            assertThrows(IndexOutOfBoundsException.class, () -> out.write(buf, buf.length - 1, 2), "Base64OutputStream.write(buf, buf.length - 1, 2)");
         }
     }
 
@@ -340,16 +335,12 @@ public class Base64OutputStreamTest {
             // Strict decoding should throw
             bout = new ByteArrayOutputStream();
             Base64OutputStream out = new Base64OutputStream(bout, false, 0, null, CodecPolicy.STRICT);
-            assertTrue(out.isStrictDecoding());
-            try {
-                // May throw on write or on close depending on the position of the
-                // impossible last character in the output block size
+            // May throw on write or on close depending on the position of the
+            // impossible last character in the output block size
+            assertThrows(IllegalArgumentException.class, () -> {
                 out.write(impossibleEncoded);
                 out.close();
-                fail();
-            } catch (final IllegalArgumentException ex) {
-                // expected
-            }
+            });
         }
     }
 }

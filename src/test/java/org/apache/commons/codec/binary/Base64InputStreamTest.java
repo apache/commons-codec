@@ -25,14 +25,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import org.apache.commons.codec.CodecPolicy;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @since 1.4
@@ -96,10 +91,10 @@ public class Base64InputStreamTest {
         try (final Base64InputStream in = new Base64InputStream(bais)) {
             final byte[] result = new byte[8192];
             int c = in.read(result);
-            assertTrue("Codec101: First read successful [c=" + c + "]", c > 0);
+            assertTrue(c > 0, "Codec101: First read successful [c=" + c + "]");
 
             c = in.read(result);
-            assertTrue("Codec101: Second read should report end-of-stream [c=" + c + "]", c < 0);
+            assertTrue(c < 0, "Codec101: Second read should report end-of-stream [c=" + c + "]");
         }
     }
 
@@ -126,7 +121,7 @@ public class Base64InputStreamTest {
         final InputStreamReader isr = new InputStreamReader(in);
         try (final BufferedReader br = new BufferedReader(isr)) {
             final String line = br.readLine();
-            assertNotNull("Codec101:  InputStreamReader works!", line);
+            assertNotNull(line, "Codec101:  InputStreamReader works!");
         }
     }
 
@@ -146,7 +141,7 @@ public class Base64InputStreamTest {
         final byte[] decodedBytes = BaseNTestData.streamToBytes(stream, new byte[1024]);
 
         final String decoded = StringUtils.newStringUtf8(decodedBytes);
-        assertEquals("codec-98 NPE Base64InputStream", Base64TestData.CODEC_98_NPE_DECODED, decoded);
+        assertEquals(Base64TestData.CODEC_98_NPE_DECODED, decoded, "codec-98 NPE Base64InputStream");
     }
 
     /**
@@ -301,9 +296,9 @@ public class Base64InputStreamTest {
         in = new Base64InputStream(new ByteArrayInputStream(decoded), true, chunkSize, separator);
         byte[] output = BaseNTestData.streamToBytes(in);
 
-        assertEquals("EOF", -1, in.read());
-        assertEquals("Still EOF", -1, in.read());
-        assertArrayEquals("Streaming base64 encode", encoded, output);
+        assertEquals(-1, in.read(), "EOF");
+        assertEquals(-1, in.read(), "Still EOF");
+        assertArrayEquals(encoded, output, "Streaming base64 encode");
 
         in.close();
 
@@ -311,9 +306,9 @@ public class Base64InputStreamTest {
         in = new Base64InputStream(new ByteArrayInputStream(encoded));
         output = BaseNTestData.streamToBytes(in);
 
-        assertEquals("EOF", -1, in.read());
-        assertEquals("Still EOF", -1, in.read());
-        assertArrayEquals("Streaming base64 decode", decoded, output);
+        assertEquals(-1, in.read(), "EOF");
+        assertEquals(-1, in.read(), "Still EOF");
+        assertArrayEquals(decoded, output, "Streaming base64 decode");
 
         // I always wanted to do this! (wrap encoder with decoder etc etc).
         in = new ByteArrayInputStream(decoded);
@@ -323,9 +318,9 @@ public class Base64InputStreamTest {
         }
         output = BaseNTestData.streamToBytes(in);
 
-        assertEquals("EOF", -1, in.read());
-        assertEquals("Still EOF", -1, in.read());
-        assertArrayEquals("Streaming base64 wrap-wrap-wrap!", decoded, output);
+        assertEquals(-1, in.read(), "EOF");
+        assertEquals(-1, in.read(), "Still EOF");
+        assertArrayEquals(decoded, output, "Streaming base64 wrap-wrap-wrap!");
         in.close();
     }
 
@@ -357,9 +352,9 @@ public class Base64InputStreamTest {
             output[i] = (byte) in.read();
         }
 
-        assertEquals("EOF", -1, in.read());
-        assertEquals("Still EOF", -1, in.read());
-        assertArrayEquals("Streaming base64 encode", encoded, output);
+        assertEquals(-1, in.read(), "EOF");
+        assertEquals(-1, in.read(), "Still EOF");
+        assertArrayEquals(encoded, output, "Streaming base64 encode");
 
         in.close();
         // Now let's try decode.
@@ -369,9 +364,9 @@ public class Base64InputStreamTest {
             output[i] = (byte) in.read();
         }
 
-        assertEquals("EOF", -1, in.read());
-        assertEquals("Still EOF", -1, in.read());
-        assertArrayEquals("Streaming base64 decode", decoded, output);
+        assertEquals(-1, in.read(), "EOF");
+        assertEquals(-1, in.read(), "Still EOF");
+        assertArrayEquals(decoded, output, "Streaming base64 decode");
 
         in.close();
 
@@ -386,9 +381,9 @@ public class Base64InputStreamTest {
             output[i] = (byte) in.read();
         }
 
-        assertEquals("EOF", -1, in.read());
-        assertEquals("Still EOF", -1, in.read());
-        assertArrayEquals("Streaming base64 wrap-wrap-wrap!", decoded, output);
+        assertEquals(-1, in.read(), "EOF");
+        assertEquals(-1, in.read(), "Still EOF");
+        assertArrayEquals(decoded, output, "Streaming base64 wrap-wrap-wrap!");
         in.close();
     }
 
@@ -404,7 +399,7 @@ public class Base64InputStreamTest {
         final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
         try (final Base64InputStream in = new Base64InputStream(bin, true, 4, new byte[] { 0, 0, 0 })) {
             // Always returns false for now.
-            assertFalse("Base64InputStream.markSupported() is false", in.markSupported());
+            assertFalse(in.markSupported(), "Base64InputStream.markSupported() is false");
         }
     }
 
@@ -446,7 +441,7 @@ public class Base64InputStreamTest {
         final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
         try (final Base64InputStream in = new Base64InputStream(bin, true, 4, new byte[] { 0, 0, 0 })) {
             bytesRead = in.read(buf, 0, 0);
-            assertEquals("Base64InputStream.read(buf, 0, 0) returns 0", 0, bytesRead);
+            assertEquals(0, bytesRead, "Base64InputStream.read(buf, 0, 0) returns 0");
         }
     }
 
@@ -477,10 +472,10 @@ public class Base64InputStreamTest {
         final byte[] buf = new byte[1024];
         final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
         try (final Base64InputStream in = new Base64InputStream(bin, true, 4, new byte[] {0, 0, 0})) {
-            assertThrows("Base64InputStream.read(buf, -1, 0)", IndexOutOfBoundsException.class, () -> in.read(buf, -1, 0));
-            assertThrows("Base64InputStream.read(buf, 0, -1)", IndexOutOfBoundsException.class, () -> in.read(buf, 0, -1));
-            assertThrows("Base64InputStream.read(buf, buf.length + 1, 0)", IndexOutOfBoundsException.class, () -> in.read(buf, buf.length + 1, 0));
-            assertThrows("Base64InputStream.read(buf, buf.length - 1, 2)", IndexOutOfBoundsException.class, () -> in.read(buf, buf.length - 1, 2));
+            assertThrows(IndexOutOfBoundsException.class, () -> in.read(buf, -1, 0), "Base64InputStream.read(buf, -1, 0)");
+            assertThrows(IndexOutOfBoundsException.class, () -> in.read(buf, 0, -1), "Base64InputStream.read(buf, 0, -1)");
+            assertThrows(IndexOutOfBoundsException.class, () -> in.read(buf, buf.length + 1, 0), "Base64InputStream.read(buf, buf.length + 1, 0)");
+            assertThrows(IndexOutOfBoundsException.class, () -> in.read(buf, buf.length - 1, 2), "Base64InputStream.read(buf, buf.length - 1, 2)");
         }
     }
 

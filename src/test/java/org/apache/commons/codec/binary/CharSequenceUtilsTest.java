@@ -17,11 +17,9 @@
 
 package org.apache.commons.codec.binary;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.junit.jupiter.api.Test;
 
-import org.junit.Assert;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests {@link org.apache.commons.codec.binary.CharSequenceUtils}.
@@ -109,14 +107,14 @@ public class CharSequenceUtilsTest {
                 final String msg = id + " Expected " + data.throwable;
                 try {
                     invoke();
-                    Assert.fail(msg + " but nothing was thrown.");
+                    fail(msg + " but nothing was thrown.");
                 } catch (final Exception ex) {
-                    assertTrue(msg + " but was " + ex.getClass().getSimpleName(),
-                            data.throwable.isAssignableFrom(ex.getClass()));
+                    assertTrue(data.throwable.isAssignableFrom(ex.getClass()),
+                            msg + " but was " + ex.getClass().getSimpleName());
                 }
             } else {
                 final boolean stringCheck = invoke();
-                assertEquals(id + " Failed test " + data, data.expected, stringCheck);
+                assertEquals(data.expected, stringCheck, id + " Failed test " + data);
             }
         }
 

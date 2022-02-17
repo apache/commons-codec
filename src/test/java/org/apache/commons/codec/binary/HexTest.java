@@ -17,12 +17,6 @@
 
 package org.apache.commons.codec.binary;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
-
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
@@ -32,8 +26,9 @@ import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests {@link org.apache.commons.codec.binary.Hex}.
@@ -177,19 +172,18 @@ public class HexTest {
         assertArrayEquals(expectedHexStringBytes, actualEncodedBytes);
         // test 2
         String actualStringFromBytes = new String(actualEncodedBytes, name);
-        assertEquals(name + ", expectedHexString=" + expectedHexString + ", actualStringFromBytes=" +
-                actualStringFromBytes, expectedHexString, actualStringFromBytes);
+        assertEquals(expectedHexString, actualStringFromBytes, name);
         // second test:
         final Hex utf8Codec = new Hex();
         expectedHexString = "48656c6c6f20576f726c64";
         final byte[] decodedUtf8Bytes = (byte[]) utf8Codec.decode(expectedHexString);
         actualStringFromBytes = new String(decodedUtf8Bytes, utf8Codec.getCharset());
         // sanity check:
-        assertEquals(name, sourceString, actualStringFromBytes);
+        assertEquals(sourceString, actualStringFromBytes, name);
         // actual check:
         final byte[] decodedCustomBytes = customCodec.decode(actualEncodedBytes);
         actualStringFromBytes = new String(decodedCustomBytes, name);
-        assertEquals(name, sourceString, actualStringFromBytes);
+        assertEquals(sourceString, actualStringFromBytes, name);
     }
 
     @Test
@@ -224,7 +218,7 @@ public class HexTest {
 
     @Test
     public void testDecodeByteArrayOddCharacters() {
-        assertThrows("odd number of characters", DecoderException.class, () -> new Hex().decode(new byte[] { 65 }));
+        assertThrows(DecoderException.class, () -> new Hex().decode(new byte[] { 65 }), "odd number of characters");
     }
 
     @Test
@@ -275,7 +269,7 @@ public class HexTest {
 
     @Test
     public void testDecodeClassCastException() {
-        assertThrows("odd number of characters", DecoderException.class, () -> new Hex().decode(new int[] { 65 }));
+        assertThrows(DecoderException.class, () -> new Hex().decode(new int[] { 65 }), "odd number of characters");
     }
 
     @Test
@@ -308,11 +302,12 @@ public class HexTest {
     public void testDecodeHexCharArrayOutBufferUnderSizedByOffset() {
         final byte[] out = new byte[6];
         assertThrows(DecoderException.class, () -> Hex.decodeHex("aabbccddeeff".toCharArray(), out, 1));
+
     }
 
     @Test
     public void testDecodeHexStringOddCharacters() {
-        assertThrows("odd number of characters", DecoderException.class, () -> new Hex().decode("6"));
+        assertThrows(DecoderException.class, () -> new Hex().decode("6"), "odd number of characters");
 
     }
 
@@ -656,12 +651,12 @@ public class HexTest {
 
     @Test
     public void testGetCharset() {
-        Assert.assertEquals(StandardCharsets.UTF_8, new Hex(StandardCharsets.UTF_8).getCharset());
+        assertEquals(StandardCharsets.UTF_8, new Hex(StandardCharsets.UTF_8).getCharset());
     }
 
     @Test
     public void testGetCharsetName() {
-        Assert.assertEquals(StandardCharsets.UTF_8.name(), new Hex(StandardCharsets.UTF_8).getCharsetName());
+        assertEquals(StandardCharsets.UTF_8.name(), new Hex(StandardCharsets.UTF_8).getCharsetName());
     }
 
     @Test

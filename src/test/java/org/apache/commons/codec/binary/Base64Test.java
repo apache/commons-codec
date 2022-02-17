@@ -17,15 +17,6 @@
 
 package org.apache.commons.codec.binary;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import java.math.BigInteger;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -36,8 +27,10 @@ import org.apache.commons.codec.CodecPolicy;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.lang3.ArrayUtils;
-import org.junit.Assume;
-import org.junit.Test;
+import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Test cases for Base64 class.
@@ -91,11 +84,12 @@ public class Base64Test {
         final String validString = "abc===defg\n\r123456\r789\r\rABC\n\nDEF==GHI\r\nJKL==============";
         final String invalidString = validString + (char) 0; // append null character
 
-        assertThrows(NullPointerException.class, () -> Base64.isBase64(nullString));
+        assertThrows(NullPointerException.class, () -> Base64.isBase64(nullString),
+                "Base64.isStringBase64() should not be null-safe.");
 
-        assertTrue("Base64.isStringBase64(empty-string) is true", Base64.isBase64(emptyString));
-        assertTrue("Base64.isStringBase64(valid-string) is true", Base64.isBase64(validString));
-        assertFalse("Base64.isStringBase64(invalid-string) is false", Base64.isBase64(invalidString));
+        assertTrue(Base64.isBase64(emptyString), "Base64.isStringBase64(empty-string) is true");
+        assertTrue(Base64.isBase64(validString), "Base64.isStringBase64(valid-string) is true");
+        assertFalse(Base64.isBase64(invalidString), "Base64.isStringBase64(invalid-string) is false");
     }
 
     /**
@@ -107,7 +101,7 @@ public class Base64Test {
         String encodedContent;
         byte[] encodedBytes = Base64.encodeBase64(StringUtils.getBytesUtf8(content));
         encodedContent = StringUtils.newStringUtf8(encodedBytes);
-        assertEquals("encoding hello world", "SGVsbG8gV29ybGQ=", encodedContent);
+        assertEquals("SGVsbG8gV29ybGQ=", encodedContent, "encoding hello world");
 
         Base64 b64 = new Base64(BaseNCodec.MIME_CHUNK_SIZE, null); // null
                                                                     // lineSeparator
@@ -116,18 +110,18 @@ public class Base64Test {
                                                                     // no-chunking
         encodedBytes = b64.encode(StringUtils.getBytesUtf8(content));
         encodedContent = StringUtils.newStringUtf8(encodedBytes);
-        assertEquals("encoding hello world", "SGVsbG8gV29ybGQ=", encodedContent);
+        assertEquals("SGVsbG8gV29ybGQ=", encodedContent, "encoding hello world");
 
         b64 = new Base64(0, null); // null lineSeparator same as saying
                                     // no-chunking
         encodedBytes = b64.encode(StringUtils.getBytesUtf8(content));
         encodedContent = StringUtils.newStringUtf8(encodedBytes);
-        assertEquals("encoding hello world", "SGVsbG8gV29ybGQ=", encodedContent);
+        assertEquals("SGVsbG8gV29ybGQ=", encodedContent, "encoding hello world");
 
         // bogus characters to decode (to skip actually) {e-acute*6}
         final byte[] decode = b64.decode("SGVsbG{\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9}8gV29ybGQ=");
         final String decodeString = StringUtils.newStringUtf8(decode);
-        assertEquals("decode hello world", "Hello World", decodeString);
+        assertEquals("Hello World", decodeString, "decode hello world");
     }
 
     @Test
@@ -153,7 +147,7 @@ public class Base64Test {
         buffer = ArrayUtils.addAll(new byte[startPasSize], buffer);
         final byte[] encodedBytes = new Base64().encode(buffer, startPasSize, bytesUtf8.length);
         encodedContent = StringUtils.newStringUtf8(encodedBytes);
-        assertEquals("encoding hello world", "SGVsbG8gV29ybGQ=", encodedContent);
+        assertEquals("SGVsbG8gV29ybGQ=", encodedContent, "encoding hello world");
     }
 
     /**
@@ -174,7 +168,7 @@ public class Base64Test {
         final String content = "SGVsbG8gV29ybGQ=SGVsbG8gV29ybGQ=";
         final byte[] result = Base64.decodeBase64(content);
         final byte[] shouldBe = StringUtils.getBytesUtf8("Hello World");
-        assertArrayEquals("decode should halt at pad (=)", result, shouldBe);
+        assertArrayEquals(result, shouldBe, "decode should halt at pad (=)");
     }
 
     /**
@@ -188,7 +182,7 @@ public class Base64Test {
         // in Base64TestData.ENCODED_76_CHARS_PER_LINE:
         final String actualResult = Base64TestData.ENCODED_76_CHARS_PER_LINE.replace("\n", "\r\n");
         final byte[] actualEncode = StringUtils.getBytesUtf8(actualResult);
-        assertArrayEquals("chunkedEncodeMultipleOf76", expectedEncode, actualEncode);
+        assertArrayEquals(expectedEncode, actualEncode, "chunkedEncodeMultipleOf76");
     }
 
     /**
@@ -256,7 +250,8 @@ public class Base64Test {
 
     @Test
     public void testCodeIntegerNull() {
-        assertThrows(NullPointerException.class, () -> Base64.encodeInteger(null));
+        assertThrows(NullPointerException.class, () -> Base64.encodeInteger(null),
+                "Exception not thrown when passing in null to encodeInteger(BigInteger)");
     }
 
     @Test
@@ -268,12 +263,23 @@ public class Base64Test {
         base64 = new Base64(64, new byte[] {});
         base64 = new Base64(64, new byte[] {'$'}); // OK
 
-        assertThrows("'A' as a line separator", IllegalArgumentException.class, () -> new Base64(-1, new byte[] {'A'}));
-        assertThrows("'A' as a line separator", IllegalArgumentException.class, () -> new Base64(64, new byte[] {'A'}));
-        assertThrows("'=' as a line separator", IllegalArgumentException.class, () -> new Base64(64, new byte[] {'='}));
-        assertThrows("'A$' as a line separator", IllegalArgumentException.class, () -> new Base64(64, new byte[] {'A', '$'}));
+        assertThrows(IllegalArgumentException.class, () -> new Base64(-1, new byte[] { 'A' }),
+                "Should have rejected attempt to use 'A' as a line separator");
+        // TODO do we need to check sep if len = -1?
 
-        base64 = new Base64(64, new byte[] {' ', '$', '\n', '\r', '\t'}); // OK
+        assertThrows(IllegalArgumentException.class, () -> new Base64(64, new byte[] { 'A' }),
+                "Should have rejected attempt to use 'A' as a line separator");
+
+        assertThrows(IllegalArgumentException.class, () -> new Base64(64, new byte[] { '=' }),
+                "Should have rejected attempt to use '=' as a line separator");
+
+        base64 = new Base64(64, new byte[] { '$' }); // OK
+
+        assertThrows(IllegalArgumentException.class, () -> new Base64(64, new byte[] { 'A', '$' }),
+                "Should have rejected attempt to use 'A$' as a line separator");
+
+        base64 = new Base64(64, new byte[] { ' ', '$', '\n', '\r', '\t' }); // OK
+
         assertNotNull(base64);
     }
 
@@ -284,7 +290,7 @@ public class Base64Test {
         String expectedResult = Base64TestData.ENCODED_64_CHARS_PER_LINE;
         expectedResult = expectedResult.replace('\n', '\t');
         final String result = StringUtils.newStringUtf8(encoded);
-        assertEquals("new Base64(65, \\t, false)", expectedResult, result);
+        assertEquals(expectedResult, result, "new Base64(65, \\t, false)");
     }
 
     @Test
@@ -299,7 +305,7 @@ public class Base64Test {
         expectedResult = expectedResult.replace('+', '-');
         expectedResult = expectedResult.replace('/', '_');
         final String result = StringUtils.newStringUtf8(encoded);
-        assertEquals("new Base64(64, \\t, true)", result, expectedResult);
+        assertEquals(result, expectedResult, "new Base64(64, \\t, true)");
     }
 
     /**
@@ -359,7 +365,7 @@ public class Base64Test {
 
         final String dest = new String(decodedWithWS);
 
-        assertEquals("Dest string doesn't equal the original", orig, dest);
+        assertEquals(orig, dest, "Dest string doesn't equal the original");
     }
 
     /**
@@ -369,16 +375,16 @@ public class Base64Test {
     public void testEmptyBase64() {
         byte[] empty = {};
         byte[] result = Base64.encodeBase64(empty);
-        assertEquals("empty base64 encode", 0, result.length);
-        assertNull("empty base64 encode", Base64.encodeBase64(null));
+        assertEquals(0, result.length, "empty base64 encode");
+        assertNull(Base64.encodeBase64(null), "empty base64 encode");
         result = new Base64().encode(empty, 0, 1);
-        assertEquals("empty base64 encode", 0, result.length);
-        assertNull("empty base64 encode", new Base64().encode(null, 0, 1));
+        assertEquals(0, result.length, "empty base64 encode");
+        assertNull(new Base64().encode(null, 0, 1), "empty base64 encode");
 
         empty = new byte[0];
         result = Base64.decodeBase64(empty);
-        assertEquals("empty base64 decode", 0, result.length);
-        assertNull("empty base64 encode", Base64.decodeBase64((byte[]) null));
+        assertEquals(0, result.length, "empty base64 decode");
+        assertNull(Base64.decodeBase64((byte[]) null), "empty base64 encode");
     }
 
     // encode/decode a large random array
@@ -401,9 +407,9 @@ public class Base64Test {
             final byte[] data = new byte[i];
             this.getRandom().nextBytes(data);
             final byte[] enc = Base64.encodeBase64(data);
-            assertTrue("\"" + new String(enc) + "\" is Base64 data.", Base64.isBase64(enc));
+            assertTrue(Base64.isBase64(enc), "\"" + new String(enc) + "\" is Base64 data.");
             final byte[] data2 = Base64.decodeBase64(enc);
-            assertArrayEquals(toString(data) + " equals " + toString(data2), data, data2);
+            assertArrayEquals(data, data2, toString(data) + " equals " + toString(data2));
         }
     }
 
@@ -420,6 +426,7 @@ public class Base64Test {
         final byte[] in = { 0 };
         final byte[] out = Base64.encodeBase64(in);
         Base64.encodeBase64(in, false, false, out.length);
+        // TODO Assert??
     }
 
     private void testEncodeOverMaxSize(final int maxSize) {
@@ -442,10 +449,14 @@ public class Base64Test {
         assertFalse(Base64.isBase64(new byte[] { 0 }));
         assertFalse(Base64.isBase64(new byte[] { 64, Byte.MAX_VALUE }));
         assertFalse(Base64.isBase64(new byte[] { Byte.MAX_VALUE }));
+
         assertTrue(Base64.isBase64(new byte[] { 'A' }));
+
         assertFalse(Base64.isBase64(new byte[] { 'A', Byte.MIN_VALUE }));
+
         assertTrue(Base64.isBase64(new byte[] { 'A', 'Z', 'a' }));
         assertTrue(Base64.isBase64(new byte[] { '/', '=', '+' }));
+
         assertFalse(Base64.isBase64(new byte[] { '$' }));
     }
 
@@ -457,11 +468,11 @@ public class Base64Test {
         final Base64 base64Standard = new Base64(false);
         final Base64 base64URLSafe = new Base64(true);
 
-        assertFalse("Base64.isUrlSafe=false", base64Standard.isUrlSafe());
-        assertTrue("Base64.isUrlSafe=true", base64URLSafe.isUrlSafe());
+        assertFalse(base64Standard.isUrlSafe(), "Base64.isUrlSafe=false");
+        assertTrue(base64URLSafe.isUrlSafe(), "Base64.isUrlSafe=true");
 
         final byte[] whiteSpace = { ' ', '\n', '\r', '\t' };
-        assertTrue("Base64.isBase64(whiteSpace)=true", Base64.isBase64(whiteSpace));
+        assertTrue(Base64.isBase64(whiteSpace), "Base64.isBase64(whiteSpace)=true");
     }
 
     @Test
@@ -504,25 +515,26 @@ public class Base64Test {
 
         final byte[] bArray = { '%' };
 
-        assertFalse("Invalid Base64 array was incorrectly validated as " + "an array of Base64 encoded data",
-                Base64.isBase64(bArray));
+        assertFalse(Base64.isBase64(bArray),
+                "Invalid Base64 array was incorrectly validated as an array of Base64 encoded data");
 
         try {
             final Base64 b64 = new Base64();
-            final byte[] result = b64.decode(bArray);
+            byte[] result = b64.decode(bArray);
 
-            assertEquals("The result should be empty as the test encoded content did " +
-                "not contain any valid base 64 characters", 0, result.length);
+            assertEquals(0, result.length, "The result should be empty as the test encoded content did " +
+                    "not contain any valid base 64 characters");
         } catch (final Exception e) {
-            fail("Exception was thrown when trying to decode " +
+            fail("Exception '" + e.getClass().getName() + "' was thrown when trying to decode " +
                 "invalid base64 encoded data - RFC 2045 requires that all " +
-                "non base64 character be discarded, an exception should not" + " have been thrown");
+                "non base64 character be discarded, an exception should not have been thrown");
         }
     }
 
     @Test
     public void testObjectDecodeWithInvalidParameter() {
-        assertThrows(DecoderException.class, () -> new Base64().decode(Integer.valueOf(5)));
+        assertThrows(DecoderException.class, () -> new Base64().decode(Integer.valueOf(5)),
+            "decode(Object) didn't throw an exception when passed an Integer object");
     }
 
     @Test
@@ -536,12 +548,13 @@ public class Base64Test {
         final byte[] baDecoded = (byte[]) oDecoded;
         final String dest = new String(baDecoded);
 
-        assertEquals("dest string does not equal original", original, dest);
+        assertEquals(original, dest, "dest string does not equal original");
     }
 
     @Test
     public void testObjectEncodeWithInvalidParameter() {
-        assertThrows(EncoderException.class, () -> new Base64().encode("Yadayadayada"));
+        assertThrows(EncoderException.class, () -> new Base64().encode("Yadayadayada"),
+                "encode(Object) didn't throw an exception when passed a String object");
     }
 
     @Test
@@ -555,7 +568,7 @@ public class Base64Test {
         final byte[] bArray = Base64.decodeBase64((byte[]) oEncoded);
         final String dest = new String(bArray);
 
-        assertEquals("dest string does not equal original", original, dest);
+        assertEquals(original, dest, "dest string does not equal original");
     }
 
     @Test
@@ -1110,10 +1123,10 @@ public class Base64Test {
             final byte[] encoded = randomData[1];
             final byte[] decoded = randomData[0];
             final byte[] result = Base64.decodeBase64(encoded);
-            assertArrayEquals("url-safe i=" + i, decoded, result);
-            assertFalse("url-safe i=" + i + " no '='", BaseNTestData.bytesContain(encoded, (byte) '='));
-            assertFalse("url-safe i=" + i + " no '\\'", BaseNTestData.bytesContain(encoded, (byte) '\\'));
-            assertFalse("url-safe i=" + i + " no '+'", BaseNTestData.bytesContain(encoded, (byte) '+'));
+            assertArrayEquals(decoded, result, "url-safe i=" + i);
+            assertFalse(BaseNTestData.bytesContain(encoded, (byte) '='), "url-safe i=" + i + " no '='");
+            assertFalse(BaseNTestData.bytesContain(encoded, (byte) '\\'), "url-safe i=" + i + " no '\\'");
+            assertFalse(BaseNTestData.bytesContain(encoded, (byte) '+'), "url-safe i=" + i + " no '+'");
         }
 
     }
@@ -1194,12 +1207,12 @@ public class Base64Test {
 //                        + StringUtils.newStringUtf8(urlSafe3[i]) + "]");
 //            }
 
-            assertArrayEquals("standard encode uuid", encodedStandard, standard[i]);
-            assertArrayEquals("url-safe encode uuid", encodedUrlSafe, urlSafe3[i]);
-            assertArrayEquals("standard decode uuid", decodedStandard, ids[i]);
-            assertArrayEquals("url-safe1 decode uuid", decodedUrlSafe1, ids[i]);
-            assertArrayEquals("url-safe2 decode uuid", decodedUrlSafe2, ids[i]);
-            assertArrayEquals("url-safe3 decode uuid", decodedUrlSafe3, ids[i]);
+            assertArrayEquals(encodedStandard, standard[i], "standard encode uuid");
+            assertArrayEquals(encodedUrlSafe, urlSafe3[i], "url-safe encode uuid");
+            assertArrayEquals(decodedStandard, ids[i], "standard decode uuid");
+            assertArrayEquals(decodedUrlSafe1, ids[i], "url-safe1 decode uuid");
+            assertArrayEquals(decodedUrlSafe2, ids[i], "url-safe2 decode uuid");
+            assertArrayEquals(decodedUrlSafe3, ids[i], "url-safe3 decode uuid");
         }
     }
 
@@ -1213,16 +1226,24 @@ public class Base64Test {
                                                                                             // url-safe
                                                                                             // tests
 
-        assertEquals("byteToString Hello World", "SGVsbG8gV29ybGQ=", base64.encodeToString(b1));
-        assertEquals("byteToString static Hello World", "SGVsbG8gV29ybGQ=", Base64.encodeBase64String(b1));
-        assertEquals("byteToString \"\"", "", base64.encodeToString(b2));
-        assertEquals("byteToString static \"\"", "", Base64.encodeBase64String(b2));
-        assertNull("byteToString null", base64.encodeToString(b3));
-        assertNull("byteToString static null", Base64.encodeBase64String(b3));
-        assertEquals("byteToString UUID", "K/fMJwH+Q5e0nr7tWsxwkA==", base64.encodeToString(b4));
-        assertEquals("byteToString static UUID", "K/fMJwH+Q5e0nr7tWsxwkA==", Base64.encodeBase64String(b4));
-        assertEquals("byteToString static-url-safe UUID", "K_fMJwH-Q5e0nr7tWsxwkA",
-                Base64.encodeBase64URLSafeString(b4));
+        assertEquals("SGVsbG8gV29ybGQ=", base64.encodeToString(b1),
+                "byteToString Hello World");
+        assertEquals( "SGVsbG8gV29ybGQ=", Base64.encodeBase64String(b1),
+                "byteToString static Hello World");
+        assertEquals("", base64.encodeToString(b2),
+                "byteToString \"\"");
+        assertEquals("", Base64.encodeBase64String(b2),
+                "byteToString static \"\"");
+        assertNull(base64.encodeToString(b3),
+                "byteToString null");
+        assertNull(Base64.encodeBase64String(b3),
+                "byteToString static null");
+        assertEquals("K/fMJwH+Q5e0nr7tWsxwkA==", base64.encodeToString(b4),
+                "byteToString UUID");
+        assertEquals("K/fMJwH+Q5e0nr7tWsxwkA==", Base64.encodeBase64String(b4),
+                "byteToString static UUID");
+        assertEquals("K_fMJwH-Q5e0nr7tWsxwkA", Base64.encodeBase64URLSafeString(b4),
+                "byteToString static-url-safe UUID");
     }
 
     @Test
@@ -1237,18 +1258,16 @@ public class Base64Test {
                                                                                             // url-safe
                                                                                             // tests
 
-        assertEquals("StringToByte Hello World", "Hello World", StringUtils.newStringUtf8(base64.decode(s1)));
-        assertEquals("StringToByte Hello World", "Hello World",
-                StringUtils.newStringUtf8((byte[]) base64.decode((Object) s1)));
-        assertEquals("StringToByte static Hello World", "Hello World",
-                StringUtils.newStringUtf8(Base64.decodeBase64(s1)));
-        assertEquals("StringToByte \"\"", "", StringUtils.newStringUtf8(base64.decode(s2)));
-        assertEquals("StringToByte static \"\"", "", StringUtils.newStringUtf8(Base64.decodeBase64(s2)));
-        assertNull("StringToByte null", StringUtils.newStringUtf8(base64.decode(s3)));
-        assertNull("StringToByte static null", StringUtils.newStringUtf8(Base64.decodeBase64(s3)));
-        assertArrayEquals("StringToByte UUID", b4, base64.decode(s4b));
-        assertArrayEquals("StringToByte static UUID", b4, Base64.decodeBase64(s4a));
-        assertArrayEquals("StringToByte static-url-safe UUID", b4, Base64.decodeBase64(s4b));
+        assertEquals("Hello World", StringUtils.newStringUtf8(base64.decode(s1)), "StringToByte Hello World");
+        assertEquals("Hello World", StringUtils.newStringUtf8((byte[]) base64.decode((Object) s1)), "StringToByte Hello World");
+        assertEquals("Hello World", StringUtils.newStringUtf8(Base64.decodeBase64(s1)), "StringToByte static Hello World");
+        assertEquals("", StringUtils.newStringUtf8(base64.decode(s2)), "StringToByte \"\"");
+        assertEquals("", StringUtils.newStringUtf8(Base64.decodeBase64(s2)), "StringToByte static \"\"");
+        assertNull(StringUtils.newStringUtf8(base64.decode(s3)), "StringToByte null");
+        assertNull(StringUtils.newStringUtf8(Base64.decodeBase64(s3)), "StringToByte static null");
+        assertArrayEquals(b4, base64.decode(s4b), "StringToByte UUID");
+        assertArrayEquals(b4, Base64.decodeBase64(s4a), "StringToByte static UUID");
+        assertArrayEquals(b4, Base64.decodeBase64(s4b), "StringToByte static-url-safe UUID");
     }
 
     private String toString(final byte[] data) {
@@ -1275,7 +1294,7 @@ public class Base64Test {
         final Base64 b64 = new Base64(Base64_BYTES_PER_ENCODED_BLOCK, baLineSeparator);
         final String strOriginal = "Hello World";
         final String strDecoded = new String(b64.decode(b64.encode(StringUtils.getBytesUtf8(strOriginal))));
-        assertEquals("testDEFAULT_BUFFER_SIZE", strOriginal, strDecoded);
+        assertEquals(strOriginal, strDecoded, "testDEFAULT_BUFFER_SIZE");
     }
 
     @Test
@@ -1337,7 +1356,8 @@ public class Base64Test {
             // If the lower bits are set we expect an exception. This is not a valid
             // final character.
             if (invalid || (i & emptyBitsMask) != 0) {
-                assertThrows(IllegalArgumentException.class, () -> codec.decode(encoded));
+                assertThrows(IllegalArgumentException.class, () -> codec.decode(encoded),
+                        "Final base-64 digit should not be allowed");
                 // The default lenient mode should decode this
                 final byte[] decoded = defaultCodec.decode(encoded);
                 // Re-encoding should not match the original array as it was invalid
@@ -1347,7 +1367,7 @@ public class Base64Test {
                 final byte[] decoded = codec.decode(encoded);
                 // Compute the bits that were encoded. This should match the final decoded byte.
                 final int bitsEncoded = i >> discard;
-                assertEquals("Invalid decoding of last character", bitsEncoded, decoded[decoded.length - 1]);
+                assertEquals(bitsEncoded, decoded[decoded.length - 1], "Invalid decoding of last character");
                 // Re-encoding should match the original array (requires the same padding character)
                 assertArrayEquals(encoded, codec.encode(decoded));
             }
@@ -1381,7 +1401,8 @@ public class Base64Test {
         // ~1.33GiB: Expected output size (since the working buffer is copied at the end)
         // 32KiB: Some head room
         final long estimatedMemory = (long) size1GiB * 4 + expectedLength + 32 * 1024;
-        Assume.assumeTrue("Not enough free memory for the test", presumableFreeMemory > estimatedMemory);
+        Assumptions.assumeTrue(presumableFreeMemory > estimatedMemory,
+                "Not enough free memory for the test");
 
         final byte[] bytes = new byte[size1GiB];
         final byte[] encoded = Base64.encodeBase64(bytes);

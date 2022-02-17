@@ -16,6 +16,10 @@
  */
 package org.apache.commons.codec.digest;
 
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -25,22 +29,16 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URI;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.stream.Stream;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
-import org.junit.runner.RunWith;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@RunWith(Parameterized.class)
 public class XXHash32Test {
 
-    private final File file;
-    private final String expectedChecksum;
+    private File file;
+    private String expectedChecksum;
 
-    public XXHash32Test(final String path, final String c) throws IOException {
+    public void initData(final String path, final String c) throws IOException {
         final URL url = XXHash32Test.class.getClassLoader().getResource(path);
         if (url == null) {
             throw new FileNotFoundException("couldn't find " + path);
@@ -55,29 +53,32 @@ public class XXHash32Test {
         expectedChecksum = c;
     }
 
-    @Parameters
-    public static Collection<Object[]> factory() {
-        return Arrays.asList(new Object[][] {
+   public static Stream<Arguments> data() {
+        return Stream.of(
             // reference checksums created with xxh32sum
             // http://cyan4973.github.io/xxHash/
-            { "org/apache/commons/codec/bla.tar", "fbb5c8d1" },
-            { "org/apache/commons/codec/bla.tar.xz", "4106a208" },
-            { "org/apache/commons/codec/small.bin", "f66c26f8" },
-        });
+            Arguments.of( "org/apache/commons/codec/bla.tar", "fbb5c8d1" ),
+            Arguments.of( "org/apache/commons/codec/bla.tar.xz", "4106a208" ),
+            Arguments.of( "org/apache/commons/codec/small.bin", "f66c26f8" )
+        );
     }
 
-    @Test
-    public void verifyChecksum() throws IOException {
+    @ParameterizedTest
+    @MethodSource("data")
+    public void verifyChecksum(String path, String c) throws IOException {
+        initData(path, c);
         final XXHash32 h = new XXHash32();
         try (final FileInputStream s = new FileInputStream(file)) {
             final byte[] b = toByteArray(s);
             h.update(b, 0, b.length);
         }
-        Assert.assertEquals("checksum for " + file.getName(), expectedChecksum, Long.toHexString(h.getValue()));
+        assertEquals(expectedChecksum, Long.toHexString(h.getValue()), "checksum for " + file.getName());
     }
 
-    @Test
-    public void verifyIncrementalChecksum() throws IOException {
+    @ParameterizedTest
+    @MethodSource("data")
+    public void verifyIncrementalChecksum(String path, String c) throws IOException {
+        initData(path, c);
         final XXHash32 h = new XXHash32();
         try (final FileInputStream s = new FileInputStream(file)) {
             final byte[] b = toByteArray(s);
@@ -91,7 +92,7 @@ public class XXHash32Test {
             // Check the hash ignores negative length
             h.update(b, 0, -1);
         }
-        Assert.assertEquals("checksum for " + file.getName(), expectedChecksum, Long.toHexString(h.getValue()));
+        assertEquals(expectedChecksum, Long.toHexString(h.getValue()), "checksum for " + file.getName());
     }
 
     private static byte[] toByteArray(final InputStream input) throws IOException {

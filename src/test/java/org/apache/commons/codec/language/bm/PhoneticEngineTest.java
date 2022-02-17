@@ -17,84 +17,56 @@
 
 package org.apache.commons.codec.language.bm;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.stream.Stream;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests PhoneticEngine.
  *
  * @since 1.6
  */
-@RunWith(Parameterized.class)
 public class PhoneticEngineTest {
 
     private static final Integer TEN = Integer.valueOf(10);
 
-    @Parameterized.Parameters(name = "{0}-{1}-{2}-{3}")
-    public static List<Object[]> data() {
-        return Arrays
-                .asList(new Object[] { "Renault", "rinD|rinDlt|rina|rinalt|rino|rinolt|rinu|rinult", NameType.GENERIC, RuleType.APPROX, Boolean.TRUE, TEN },
-                        new Object[] { "Renault", "rYnDlt|rYnalt|rYnult|rinDlt|rinalt|rinolt|rinult", NameType.ASHKENAZI, RuleType.APPROX, Boolean.TRUE, TEN },
-                        new Object[] { "Renault", "rinDlt", NameType.ASHKENAZI, RuleType.APPROX, Boolean.TRUE, Integer.valueOf(1) },
-                        new Object[] { "Renault", "rinDlt", NameType.SEPHARDIC, RuleType.APPROX, Boolean.TRUE, TEN },
-                        new Object[] { "SntJohn-Smith", "sntjonsmit", NameType.GENERIC, RuleType.EXACT, Boolean.TRUE, TEN },
-                        new Object[] { "d'ortley", "(ortlaj|ortlej)-(dortlaj|dortlej)", NameType.GENERIC, RuleType.EXACT, Boolean.TRUE, TEN },
-                        new Object[] {
-                                "van helsing",
-                                "(elSink|elsink|helSink|helsink|helzink|xelsink)-(banhelsink|fanhelsink|fanhelzink|vanhelsink|vanhelzink|vanjelsink)",
-                                NameType.GENERIC,
-                                RuleType.EXACT,
-                                Boolean.FALSE, TEN },
-                        new Object[] {
-                                "Judenburg",
-                                "iudnbYrk|iudnbirk|iudnburk|xudnbirk|xudnburk|zudnbirk|zudnburk",
-                                NameType.GENERIC,
-                                RuleType.APPROX,
-                                Boolean.TRUE, TEN });
+    public static Stream<Arguments> data() {
+        return Stream.of(
+                        Arguments.of("Renault", "rinD|rinDlt|rina|rinalt|rino|rinolt|rinu|rinult", NameType.GENERIC, RuleType.APPROX, Boolean.TRUE, TEN),
+                        Arguments.of("Renault", "rYnDlt|rYnalt|rYnult|rinDlt|rinalt|rinolt|rinult", NameType.ASHKENAZI, RuleType.APPROX, Boolean.TRUE, TEN),
+                        Arguments.of("Renault", "rinDlt", NameType.ASHKENAZI, RuleType.APPROX, Boolean.TRUE, Integer.valueOf(1)),
+                        Arguments.of("Renault", "rinDlt", NameType.SEPHARDIC, RuleType.APPROX, Boolean.TRUE, TEN),
+                        Arguments.of("SntJohn-Smith", "sntjonsmit", NameType.GENERIC, RuleType.EXACT, Boolean.TRUE, TEN),
+                        Arguments.of("d'ortley", "(ortlaj|ortlej)-(dortlaj|dortlej)", NameType.GENERIC, RuleType.EXACT, Boolean.TRUE, TEN),
+                        Arguments.of("van helsing", "(elSink|elsink|helSink|helsink|helzink|xelsink)-(banhelsink|fanhelsink|fanhelzink|vanhelsink|vanhelzink|vanjelsink)", NameType.GENERIC, RuleType.EXACT, Boolean.FALSE, TEN),
+                        Arguments.of("Judenburg", "iudnbYrk|iudnbirk|iudnburk|xudnbirk|xudnburk|zudnbirk|zudnburk", NameType.GENERIC, RuleType.APPROX, Boolean.TRUE, TEN)
+                );
     }
 
-    private final boolean concat;
-    private final String name;
-    private final NameType nameType;
-    private final String phoneticExpected;
-    private final RuleType ruleType;
-    private final int maxPhonemes;
+    // TODO Identify if there is a need to an assertTimeout(Duration.ofMillis(10000L) in some point, since this method was marked as @Test(timeout = 10000L)
+    @ParameterizedTest
+    @MethodSource("data")
+    public void testEncode(final String name, final String phoneticExpected, final NameType nameType,
+                           final RuleType ruleType, final boolean concat, final int maxPhonemes) {
+        final PhoneticEngine engine = new PhoneticEngine(nameType, ruleType, concat, maxPhonemes);
 
-    public PhoneticEngineTest(final String name, final String phoneticExpected, final NameType nameType,
-                              final RuleType ruleType, final boolean concat, final int maxPhonemes) {
-        this.name = name;
-        this.phoneticExpected = phoneticExpected;
-        this.nameType = nameType;
-        this.ruleType = ruleType;
-        this.concat = concat;
-        this.maxPhonemes = maxPhonemes;
-    }
+        final String phoneticActual = engine.encode(name);
 
-    @Test(timeout = 10000L)
-    public void testEncode() {
-        final PhoneticEngine engine = new PhoneticEngine(this.nameType, this.ruleType, this.concat, this.maxPhonemes);
+        assertEquals(phoneticExpected, phoneticActual, "phoneme incorrect");
 
-        final String phoneticActual = engine.encode(this.name);
-
-        //System.err.println("expecting: " + this.phoneticExpected);
-        //System.err.println("actual:    " + phoneticActual);
-        assertEquals("phoneme incorrect", this.phoneticExpected, phoneticActual);
-
-        if (this.concat) {
+        if (concat) {
             final String[] split = phoneticActual.split("\\|");
-            assertTrue(split.length <= this.maxPhonemes);
+            assertTrue(split.length <= maxPhonemes);
         } else {
             final String[] words = phoneticActual.split("-");
             for (final String word : words) {
                 final String[] split = word.split("\\|");
-                assertTrue(split.length <= this.maxPhonemes);
+                assertTrue(split.length <= maxPhonemes);
             }
         }
     }

@@ -17,10 +17,7 @@
 
 package org.apache.commons.codec.binary;
 
-import static org.junit.Assert.assertTrue;
-
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 
 import org.apache.commons.codec.BinaryDecoder;
 import org.apache.commons.codec.BinaryEncoder;
@@ -28,7 +25,9 @@ import org.apache.commons.codec.Decoder;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.Encoder;
 import org.apache.commons.codec.EncoderException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 /**
  * Tests to make sure future versions of commons-codec.jar have identical Base64
@@ -368,8 +367,7 @@ public class Base64Codec13Test {
             if (STRINGS[i] != null) {
                 final byte[] base64 = utf8(STRINGS[i]);
                 final byte[] binary = BYTES[i];
-                final boolean b = Arrays.equals(base64, (byte[]) enc.encode(binary));
-                assertTrue("Encoder test-" + i, b);
+                assertArrayEquals(base64, (byte[]) enc.encode(binary), "Encoder test-" + i);
             }
         }
     }
@@ -387,8 +385,7 @@ public class Base64Codec13Test {
             if (STRINGS[i] != null) {
                 final byte[] base64 = utf8(STRINGS[i]);
                 final byte[] binary = BYTES[i];
-                final boolean b = Arrays.equals(binary, (byte[]) dec.decode(base64));
-                assertTrue("Decoder test-" + i, b);
+                assertArrayEquals(binary, (byte[]) dec.decode(base64), "Decoder test-" + i);
             }
         }
     }
@@ -406,8 +403,7 @@ public class Base64Codec13Test {
             if (STRINGS[i] != null) {
                 final byte[] base64 = utf8(STRINGS[i]);
                 final byte[] binary = BYTES[i];
-                final boolean b = Arrays.equals(base64, enc.encode(binary));
-                assertTrue("BinaryEncoder test-" + i, b);
+                assertArrayEquals(base64, enc.encode(binary), "BinaryEncoder test-" + i);
             }
         }
     }
@@ -425,8 +421,7 @@ public class Base64Codec13Test {
             if (STRINGS[i] != null) {
                 final byte[] base64 = utf8(STRINGS[i]);
                 final byte[] binary = BYTES[i];
-                final boolean b = Arrays.equals(binary, dec.decode(base64));
-                assertTrue("BinaryDecoder test-" + i, b);
+                assertArrayEquals(binary, dec.decode(base64), "BinaryDecoder test-" + i);
             }
         }
     }
@@ -443,8 +438,8 @@ public class Base64Codec13Test {
             if (STRINGS[i] != null) {
                 final byte[] base64 = utf8(STRINGS[i]);
                 final byte[] binary = BYTES[i];
-                final boolean b = Arrays.equals(base64, Base64.encodeBase64(binary));
-                assertTrue("static Base64.encodeBase64() test-" + i, b);
+                assertArrayEquals(base64, Base64.encodeBase64(binary),
+                        "static Base64.encodeBase64() test-" + i);
             }
         }
     }
@@ -461,8 +456,8 @@ public class Base64Codec13Test {
             if (STRINGS[i] != null) {
                 final byte[] base64 = utf8(STRINGS[i]);
                 final byte[] binary = BYTES[i];
-                final boolean b = Arrays.equals(binary, Base64.decodeBase64(base64));
-                assertTrue("static Base64.decodeBase64() test-" + i, b);
+                assertArrayEquals(binary, Base64.decodeBase64(base64),
+                        "static Base64.decodeBase64() test-" + i);
             }
         }
     }
@@ -479,8 +474,8 @@ public class Base64Codec13Test {
             if (STRINGS[i] != null) {
                 final byte[] base64Chunked = utf8(CHUNKED_STRINGS[i]);
                 final byte[] binary = BYTES[i];
-                final boolean b = Arrays.equals(base64Chunked, Base64.encodeBase64Chunked(binary));
-                assertTrue("static Base64.encodeBase64Chunked() test-" + i, b);
+                assertArrayEquals(base64Chunked, Base64.encodeBase64Chunked(binary),
+                        "static Base64.encodeBase64Chunked() test-" + i);
             }
         }
     }
@@ -498,8 +493,8 @@ public class Base64Codec13Test {
             if (STRINGS[i] != null) {
                 final byte[] base64Chunked = utf8(CHUNKED_STRINGS[i]);
                 final byte[] binary = BYTES[i];
-                final boolean b = Arrays.equals(binary, Base64.decodeBase64(base64Chunked));
-                assertTrue("static Base64.decodeBase64Chunked() test-" + i, b);
+                assertArrayEquals(binary, Base64.decodeBase64(base64Chunked),
+                        "static Base64.decodeBase64Chunked() test-" + i);
             }
         }
     }

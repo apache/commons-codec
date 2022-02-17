@@ -19,12 +19,11 @@
 
 package org.apache.commons.codec.language;
 
-import static org.junit.Assert.assertThrows;
-
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoderAbstractTest;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests {@link Soundex}.
@@ -86,42 +85,42 @@ public class SoundexTest extends StringEncoderAbstractTest<Soundex> {
 
     @Test
     public void testBadCharacters() {
-        Assert.assertEquals("H452", this.getStringEncoder().encode("HOL>MES"));
+        assertEquals("H452", this.getStringEncoder().encode("HOL>MES"));
 
     }
 
     @Test
     public void testDifference() throws EncoderException {
         // Edge cases
-        Assert.assertEquals(0, this.getStringEncoder().difference(null, null));
-        Assert.assertEquals(0, this.getStringEncoder().difference("", ""));
-        Assert.assertEquals(0, this.getStringEncoder().difference(" ", " "));
+        assertEquals(0, this.getStringEncoder().difference(null, null));
+        assertEquals(0, this.getStringEncoder().difference("", ""));
+        assertEquals(0, this.getStringEncoder().difference(" ", " "));
         // Normal cases
-        Assert.assertEquals(4, this.getStringEncoder().difference("Smith", "Smythe"));
-        Assert.assertEquals(2, this.getStringEncoder().difference("Ann", "Andrew"));
-        Assert.assertEquals(1, this.getStringEncoder().difference("Margaret", "Andrew"));
-        Assert.assertEquals(0, this.getStringEncoder().difference("Janet", "Margaret"));
+        assertEquals(4, this.getStringEncoder().difference("Smith", "Smythe"));
+        assertEquals(2, this.getStringEncoder().difference("Ann", "Andrew"));
+        assertEquals(1, this.getStringEncoder().difference("Margaret", "Andrew"));
+        assertEquals(0, this.getStringEncoder().difference("Janet", "Margaret"));
         // Examples from http://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_de-dz_8co5.asp
-        Assert.assertEquals(4, this.getStringEncoder().difference("Green", "Greene"));
-        Assert.assertEquals(0, this.getStringEncoder().difference("Blotchet-Halls", "Greene"));
+        assertEquals(4, this.getStringEncoder().difference("Green", "Greene"));
+        assertEquals(0, this.getStringEncoder().difference("Blotchet-Halls", "Greene"));
         // Examples from http://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_setu-sus_3o6w.asp
-        Assert.assertEquals(4, this.getStringEncoder().difference("Smith", "Smythe"));
-        Assert.assertEquals(4, this.getStringEncoder().difference("Smithers", "Smythers"));
-        Assert.assertEquals(2, this.getStringEncoder().difference("Anothers", "Brothers"));
+        assertEquals(4, this.getStringEncoder().difference("Smith", "Smythe"));
+        assertEquals(4, this.getStringEncoder().difference("Smithers", "Smythers"));
+        assertEquals(2, this.getStringEncoder().difference("Anothers", "Brothers"));
     }
 
     @Test
     public void testEncodeBasic() {
-        Assert.assertEquals("T235", this.getStringEncoder().encode("testing"));
-        Assert.assertEquals("T000", this.getStringEncoder().encode("The"));
-        Assert.assertEquals("Q200", this.getStringEncoder().encode("quick"));
-        Assert.assertEquals("B650", this.getStringEncoder().encode("brown"));
-        Assert.assertEquals("F200", this.getStringEncoder().encode("fox"));
-        Assert.assertEquals("J513", this.getStringEncoder().encode("jumped"));
-        Assert.assertEquals("O160", this.getStringEncoder().encode("over"));
-        Assert.assertEquals("T000", this.getStringEncoder().encode("the"));
-        Assert.assertEquals("L200", this.getStringEncoder().encode("lazy"));
-        Assert.assertEquals("D200", this.getStringEncoder().encode("dogs"));
+        assertEquals("T235", this.getStringEncoder().encode("testing"));
+        assertEquals("T000", this.getStringEncoder().encode("The"));
+        assertEquals("Q200", this.getStringEncoder().encode("quick"));
+        assertEquals("B650", this.getStringEncoder().encode("brown"));
+        assertEquals("F200", this.getStringEncoder().encode("fox"));
+        assertEquals("J513", this.getStringEncoder().encode("jumped"));
+        assertEquals("O160", this.getStringEncoder().encode("over"));
+        assertEquals("T000", this.getStringEncoder().encode("the"));
+        assertEquals("L200", this.getStringEncoder().encode("lazy"));
+        assertEquals("D200", this.getStringEncoder().encode("dogs"));
     }
 
     /**
@@ -129,22 +128,22 @@ public class SoundexTest extends StringEncoderAbstractTest<Soundex> {
      */
     @Test
     public void testEncodeBatch2() {
-        Assert.assertEquals("A462", this.getStringEncoder().encode("Allricht"));
-        Assert.assertEquals("E166", this.getStringEncoder().encode("Eberhard"));
-        Assert.assertEquals("E521", this.getStringEncoder().encode("Engebrethson"));
-        Assert.assertEquals("H512", this.getStringEncoder().encode("Heimbach"));
-        Assert.assertEquals("H524", this.getStringEncoder().encode("Hanselmann"));
-        Assert.assertEquals("H431", this.getStringEncoder().encode("Hildebrand"));
-        Assert.assertEquals("K152", this.getStringEncoder().encode("Kavanagh"));
-        Assert.assertEquals("L530", this.getStringEncoder().encode("Lind"));
-        Assert.assertEquals("L222", this.getStringEncoder().encode("Lukaschowsky"));
-        Assert.assertEquals("M235", this.getStringEncoder().encode("McDonnell"));
-        Assert.assertEquals("M200", this.getStringEncoder().encode("McGee"));
-        Assert.assertEquals("O155", this.getStringEncoder().encode("Opnian"));
-        Assert.assertEquals("O155", this.getStringEncoder().encode("Oppenheimer"));
-        Assert.assertEquals("R355", this.getStringEncoder().encode("Riedemanas"));
-        Assert.assertEquals("Z300", this.getStringEncoder().encode("Zita"));
-        Assert.assertEquals("Z325", this.getStringEncoder().encode("Zitzmeinn"));
+        assertEquals("A462", this.getStringEncoder().encode("Allricht"));
+        assertEquals("E166", this.getStringEncoder().encode("Eberhard"));
+        assertEquals("E521", this.getStringEncoder().encode("Engebrethson"));
+        assertEquals("H512", this.getStringEncoder().encode("Heimbach"));
+        assertEquals("H524", this.getStringEncoder().encode("Hanselmann"));
+        assertEquals("H431", this.getStringEncoder().encode("Hildebrand"));
+        assertEquals("K152", this.getStringEncoder().encode("Kavanagh"));
+        assertEquals("L530", this.getStringEncoder().encode("Lind"));
+        assertEquals("L222", this.getStringEncoder().encode("Lukaschowsky"));
+        assertEquals("M235", this.getStringEncoder().encode("McDonnell"));
+        assertEquals("M200", this.getStringEncoder().encode("McGee"));
+        assertEquals("O155", this.getStringEncoder().encode("Opnian"));
+        assertEquals("O155", this.getStringEncoder().encode("Oppenheimer"));
+        assertEquals("R355", this.getStringEncoder().encode("Riedemanas"));
+        assertEquals("Z300", this.getStringEncoder().encode("Zita"));
+        assertEquals("Z325", this.getStringEncoder().encode("Zitzmeinn"));
     }
 
     /**
@@ -152,15 +151,15 @@ public class SoundexTest extends StringEncoderAbstractTest<Soundex> {
      */
     @Test
     public void testEncodeBatch3() {
-        Assert.assertEquals("W252", this.getStringEncoder().encode("Washington"));
-        Assert.assertEquals("L000", this.getStringEncoder().encode("Lee"));
-        Assert.assertEquals("G362", this.getStringEncoder().encode("Gutierrez"));
-        Assert.assertEquals("P236", this.getStringEncoder().encode("Pfister"));
-        Assert.assertEquals("J250", this.getStringEncoder().encode("Jackson"));
-        Assert.assertEquals("T522", this.getStringEncoder().encode("Tymczak"));
+        assertEquals("W252", this.getStringEncoder().encode("Washington"));
+        assertEquals("L000", this.getStringEncoder().encode("Lee"));
+        assertEquals("G362", this.getStringEncoder().encode("Gutierrez"));
+        assertEquals("P236", this.getStringEncoder().encode("Pfister"));
+        assertEquals("J250", this.getStringEncoder().encode("Jackson"));
+        assertEquals("T522", this.getStringEncoder().encode("Tymczak"));
         // For VanDeusen: D-250 (D, 2 for the S, 5 for the N, 0 added) is also
         // possible.
-        Assert.assertEquals("V532", this.getStringEncoder().encode("VanDeusen"));
+        assertEquals("V532", this.getStringEncoder().encode("VanDeusen"));
     }
 
     /**
@@ -168,14 +167,14 @@ public class SoundexTest extends StringEncoderAbstractTest<Soundex> {
      */
     @Test
     public void testEncodeBatch4() {
-        Assert.assertEquals("H452", this.getStringEncoder().encode("HOLMES"));
-        Assert.assertEquals("A355", this.getStringEncoder().encode("ADOMOMI"));
-        Assert.assertEquals("V536", this.getStringEncoder().encode("VONDERLEHR"));
-        Assert.assertEquals("B400", this.getStringEncoder().encode("BALL"));
-        Assert.assertEquals("S000", this.getStringEncoder().encode("SHAW"));
-        Assert.assertEquals("J250", this.getStringEncoder().encode("JACKSON"));
-        Assert.assertEquals("S545", this.getStringEncoder().encode("SCANLON"));
-        Assert.assertEquals("S532", this.getStringEncoder().encode("SAINTJOHN"));
+        assertEquals("H452", this.getStringEncoder().encode("HOLMES"));
+        assertEquals("A355", this.getStringEncoder().encode("ADOMOMI"));
+        assertEquals("V536", this.getStringEncoder().encode("VONDERLEHR"));
+        assertEquals("B400", this.getStringEncoder().encode("BALL"));
+        assertEquals("S000", this.getStringEncoder().encode("SHAW"));
+        assertEquals("J250", this.getStringEncoder().encode("JACKSON"));
+        assertEquals("S545", this.getStringEncoder().encode("SCANLON"));
+        assertEquals("S532", this.getStringEncoder().encode("SAINTJOHN"));
 
     }
 
@@ -214,7 +213,7 @@ public class SoundexTest extends StringEncoderAbstractTest<Soundex> {
 
     @Test
     public void testEncodeIgnoreTrimmable() {
-        Assert.assertEquals("W252", this.getStringEncoder().encode(" \t\n\r Washington \t\n\r "));
+        assertEquals("W252", this.getStringEncoder().encode(" \t\n\r Washington \t\n\r "));
     }
 
     /**
@@ -226,10 +225,10 @@ public class SoundexTest extends StringEncoderAbstractTest<Soundex> {
         // http://www.archives.gov/research_room/genealogy/census/soundex.html:
         // Ashcraft is coded A-261 (A, 2 for the S, C ignored, 6 for the R, 1
         // for the F). It is not coded A-226.
-        Assert.assertEquals("A261", this.getStringEncoder().encode("Ashcraft"));
-        Assert.assertEquals("A261", this.getStringEncoder().encode("Ashcroft"));
-        Assert.assertEquals("Y330", this.getStringEncoder().encode("yehudit"));
-        Assert.assertEquals("Y330", this.getStringEncoder().encode("yhwdyt"));
+        assertEquals("A261", this.getStringEncoder().encode("Ashcraft"));
+        assertEquals("A261", this.getStringEncoder().encode("Ashcroft"));
+        assertEquals("Y330", this.getStringEncoder().encode("yehudit"));
+        assertEquals("Y330", this.getStringEncoder().encode("yhwdyt"));
     }
 
     /**
@@ -239,8 +238,8 @@ public class SoundexTest extends StringEncoderAbstractTest<Soundex> {
      */
     @Test
     public void testHWRuleEx2() {
-        Assert.assertEquals("B312", this.getStringEncoder().encode("BOOTHDAVIS"));
-        Assert.assertEquals("B312", this.getStringEncoder().encode("BOOTH-DAVIS"));
+        assertEquals("B312", this.getStringEncoder().encode("BOOTHDAVIS"));
+        assertEquals("B312", this.getStringEncoder().encode("BOOTH-DAVIS"));
     }
 
     /**
@@ -249,8 +248,8 @@ public class SoundexTest extends StringEncoderAbstractTest<Soundex> {
      * @throws EncoderException for some failure scenarios     */
     @Test
     public void testHWRuleEx3() throws EncoderException {
-        Assert.assertEquals("S460", this.getStringEncoder().encode("Sgler"));
-        Assert.assertEquals("S460", this.getStringEncoder().encode("Swhgler"));
+        assertEquals("S460", this.getStringEncoder().encode("Sgler"));
+        assertEquals("S460", this.getStringEncoder().encode("Swhgler"));
         // Also S460:
         this.checkEncodingVariations("S460", new String[]{
             "SAILOR",
@@ -277,8 +276,8 @@ public class SoundexTest extends StringEncoderAbstractTest<Soundex> {
      */
     @Test
     public void testMsSqlServer1() {
-        Assert.assertEquals("S530", this.getStringEncoder().encode("Smith"));
-        Assert.assertEquals("S530", this.getStringEncoder().encode("Smythe"));
+        assertEquals("S530", this.getStringEncoder().encode("Smith"));
+        assertEquals("S530", this.getStringEncoder().encode("Smythe"));
     }
 
     /**
@@ -297,15 +296,15 @@ public class SoundexTest extends StringEncoderAbstractTest<Soundex> {
      */
     @Test
     public void testMsSqlServer3() {
-        Assert.assertEquals("A500", this.getStringEncoder().encode("Ann"));
-        Assert.assertEquals("A536", this.getStringEncoder().encode("Andrew"));
-        Assert.assertEquals("J530", this.getStringEncoder().encode("Janet"));
-        Assert.assertEquals("M626", this.getStringEncoder().encode("Margaret"));
-        Assert.assertEquals("S315", this.getStringEncoder().encode("Steven"));
-        Assert.assertEquals("M240", this.getStringEncoder().encode("Michael"));
-        Assert.assertEquals("R163", this.getStringEncoder().encode("Robert"));
-        Assert.assertEquals("L600", this.getStringEncoder().encode("Laura"));
-        Assert.assertEquals("A500", this.getStringEncoder().encode("Anne"));
+        assertEquals("A500", this.getStringEncoder().encode("Ann"));
+        assertEquals("A536", this.getStringEncoder().encode("Andrew"));
+        assertEquals("J530", this.getStringEncoder().encode("Janet"));
+        assertEquals("M626", this.getStringEncoder().encode("Margaret"));
+        assertEquals("S315", this.getStringEncoder().encode("Steven"));
+        assertEquals("M240", this.getStringEncoder().encode("Michael"));
+        assertEquals("R163", this.getStringEncoder().encode("Robert"));
+        assertEquals("L600", this.getStringEncoder().encode("Laura"));
+        assertEquals("A500", this.getStringEncoder().encode("Anne"));
     }
 
     /**
@@ -313,17 +312,17 @@ public class SoundexTest extends StringEncoderAbstractTest<Soundex> {
      */
     @Test
     public void testNewInstance() {
-        Assert.assertEquals("W452", new Soundex().soundex("Williams"));
+        assertEquals("W452", new Soundex().soundex("Williams"));
     }
 
     @Test
     public void testNewInstance2() {
-        Assert.assertEquals("W452", new Soundex(Soundex.US_ENGLISH_MAPPING_STRING.toCharArray()).soundex("Williams"));
+        assertEquals("W452", new Soundex(Soundex.US_ENGLISH_MAPPING_STRING.toCharArray()).soundex("Williams"));
     }
 
     @Test
     public void testNewInstance3() {
-        Assert.assertEquals("W452", new Soundex(Soundex.US_ENGLISH_MAPPING_STRING).soundex("Williams"));
+        assertEquals("W452", new Soundex(Soundex.US_ENGLISH_MAPPING_STRING).soundex("Williams"));
     }
 
     @Test
@@ -333,10 +332,10 @@ public class SoundexTest extends StringEncoderAbstractTest<Soundex> {
 
     @Test
     public void testSoundexUtilsNullBehaviour() {
-        Assert.assertNull(SoundexUtils.clean(null));
-        Assert.assertEquals("", SoundexUtils.clean(""));
-        Assert.assertEquals(0, SoundexUtils.differenceEncoded(null, ""));
-        Assert.assertEquals(0, SoundexUtils.differenceEncoded("", null));
+        assertNull(SoundexUtils.clean(null));
+        assertEquals("", SoundexUtils.clean(""));
+        assertEquals(0, SoundexUtils.differenceEncoded(null, ""));
+        assertEquals(0, SoundexUtils.differenceEncoded("", null));
     }
 
     /**
@@ -344,7 +343,7 @@ public class SoundexTest extends StringEncoderAbstractTest<Soundex> {
      */
     @Test
     public void testUsEnglishStatic() {
-        Assert.assertEquals("W452", Soundex.US_ENGLISH.soundex("Williams"));
+        assertEquals("W452", Soundex.US_ENGLISH.soundex("Williams"));
     }
 
     /**
@@ -354,12 +353,12 @@ public class SoundexTest extends StringEncoderAbstractTest<Soundex> {
      */
     @Test
     public void testUsMappingEWithAcute() {
-        Assert.assertEquals("E000", this.getStringEncoder().encode("e"));
+        assertEquals("E000", this.getStringEncoder().encode("e"));
         if (Character.isLetter('\u00e9')) { // e-acute
             //         uppercase E-acute
             assertThrows(IllegalArgumentException.class, () -> getStringEncoder().encode("\u00e9"));
         } else {
-            Assert.assertEquals("", this.getStringEncoder().encode("\u00e9"));
+            assertEquals("", this.getStringEncoder().encode("\u00e9"));
         }
     }
 
@@ -370,12 +369,12 @@ public class SoundexTest extends StringEncoderAbstractTest<Soundex> {
      */
     @Test
     public void testUsMappingOWithDiaeresis() {
-        Assert.assertEquals("O000", this.getStringEncoder().encode("o"));
+        assertEquals("O000", this.getStringEncoder().encode("o"));
         if (Character.isLetter('\u00f6')) { // o-umlaut
             //         uppercase O-umlaut
             assertThrows(IllegalArgumentException.class, () -> getStringEncoder().encode("\u00f6"));
         } else {
-            Assert.assertEquals("", this.getStringEncoder().encode("\u00f6"));
+            assertEquals("", this.getStringEncoder().encode("\u00f6"));
         }
     }
 
@@ -384,40 +383,40 @@ public class SoundexTest extends StringEncoderAbstractTest<Soundex> {
      */
     @Test
     public void testWikipediaAmericanSoundex() {
-        Assert.assertEquals("R163", this.getStringEncoder().encode("Robert"));
-        Assert.assertEquals("R163", this.getStringEncoder().encode("Rupert"));
-        Assert.assertEquals("A261", this.getStringEncoder().encode("Ashcraft"));
-        Assert.assertEquals("A261", this.getStringEncoder().encode("Ashcroft"));
-        Assert.assertEquals("T522", this.getStringEncoder().encode("Tymczak"));
-        Assert.assertEquals("P236", this.getStringEncoder().encode("Pfister"));
+        assertEquals("R163", this.getStringEncoder().encode("Robert"));
+        assertEquals("R163", this.getStringEncoder().encode("Rupert"));
+        assertEquals("A261", this.getStringEncoder().encode("Ashcraft"));
+        assertEquals("A261", this.getStringEncoder().encode("Ashcroft"));
+        assertEquals("T522", this.getStringEncoder().encode("Tymczak"));
+        assertEquals("P236", this.getStringEncoder().encode("Pfister"));
     }
 
     @Test
 // examples and algorithm rules from:  http://www.genealogy.com/articles/research/00000060.html
     public void testGenealogy() { // treat vowels and HW as silent
         final Soundex s = Soundex.US_ENGLISH_GENEALOGY;
-        Assert.assertEquals("H251", s.encode("Heggenburger"));
-        Assert.assertEquals("B425", s.encode("Blackman"));
-        Assert.assertEquals("S530", s.encode("Schmidt"));
-        Assert.assertEquals("L150", s.encode("Lippmann"));
+        assertEquals("H251", s.encode("Heggenburger"));
+        assertEquals("B425", s.encode("Blackman"));
+        assertEquals("S530", s.encode("Schmidt"));
+        assertEquals("L150", s.encode("Lippmann"));
         // Additional local example
-        Assert.assertEquals("D200", s.encode("Dodds")); // 'o' is not a separator here - it is silent
-        Assert.assertEquals("D200", s.encode("Dhdds")); // 'h' is silent
-        Assert.assertEquals("D200", s.encode("Dwdds")); // 'w' is silent
+        assertEquals("D200", s.encode("Dodds")); // 'o' is not a separator here - it is silent
+        assertEquals("D200", s.encode("Dhdds")); // 'h' is silent
+        assertEquals("D200", s.encode("Dwdds")); // 'w' is silent
     }
 
     @Test
 // examples and algorithm rules from:  http://west-penwith.org.uk/misc/soundex.htm
     public void testSimplifiedSoundex() { // treat vowels and HW as separators
         final Soundex s = Soundex.US_ENGLISH_SIMPLIFIED;
-        Assert.assertEquals("W452", s.encode("WILLIAMS"));
-        Assert.assertEquals("B625", s.encode("BARAGWANATH"));
-        Assert.assertEquals("D540", s.encode("DONNELL"));
-        Assert.assertEquals("L300", s.encode("LLOYD"));
-        Assert.assertEquals("W422", s.encode("WOOLCOCK"));
+        assertEquals("W452", s.encode("WILLIAMS"));
+        assertEquals("B625", s.encode("BARAGWANATH"));
+        assertEquals("D540", s.encode("DONNELL"));
+        assertEquals("L300", s.encode("LLOYD"));
+        assertEquals("W422", s.encode("WOOLCOCK"));
         // Additional local examples
-        Assert.assertEquals("D320", s.encode("Dodds"));
-        Assert.assertEquals("D320", s.encode("Dwdds")); // w is a separator
-        Assert.assertEquals("D320", s.encode("Dhdds")); // h is a separator
+        assertEquals("D320", s.encode("Dodds"));
+        assertEquals("D320", s.encode("Dwdds")); // w is a separator
+        assertEquals("D320", s.encode("Dhdds")); // h is a separator
     }
 }

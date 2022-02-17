@@ -18,12 +18,8 @@
 package org.apache.commons.codec.digest;
 
 import static org.apache.commons.codec.binary.StringUtils.getBytesUtf8;
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -43,10 +39,10 @@ import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.binary.StringUtils;
 import org.apache.commons.lang3.JavaVersion;
 import org.apache.commons.lang3.SystemUtils;
-import org.junit.After;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 
 /**
  * Tests DigestUtils methods.
@@ -65,11 +61,11 @@ public class DigestUtilsTest {
     private RandomAccessFile testRandomAccessFileWrapper;
 
     private void assumeJava8() {
-        Assume.assumeTrue(SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_1_8));
+        assumeTrue(SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_1_8));
     }
 
     private void assumeJava9() {
-        Assume.assumeTrue(SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_9));
+        assumeTrue(SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_9));
     }
 
     byte[] getTestData() {
@@ -88,7 +84,7 @@ public class DigestUtilsTest {
         return testRandomAccessFileWrapper;
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         new Random().nextBytes(testData);
         testFile = File.createTempFile(DigestUtilsTest.class.getName(), ".dat");
@@ -103,7 +99,7 @@ public class DigestUtilsTest {
         testRandomAccessFileWrapper = new RandomAccessFile(testRandomAccessFile, "rw");
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         if (!testFile.delete()) {
             testFile.deleteOnExit();

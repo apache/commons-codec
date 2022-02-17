@@ -16,9 +16,9 @@
  */
 package org.apache.commons.codec.digest;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class Blake3Test {
     @Test
@@ -30,6 +30,6 @@ public class Blake3Test {
     }
 
     private static void assertThrowsProperExceptionWithKeySize(final int keySize) {
-        assertThrows("Blake3 keys must be 32 bytes", IllegalArgumentException.class, () -> Blake3.initKeyedHash(new byte[keySize]));
+        assertThrows(IllegalArgumentException.class, () -> Blake3.initKeyedHash(new byte[keySize]), "Blake3 keys must be 32 bytes");
     }
 }

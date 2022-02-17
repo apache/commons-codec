@@ -17,14 +17,14 @@
 
 package org.apache.commons.codec.language.bm;
 
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Tests PhoneticEngine and Languages.LanguageSet in ways very similar to code found in solr-3.6.0.
@@ -40,42 +40,58 @@ public class PhoneticEngineRegressionTest {
         // concat is true, ruleType is EXACT
         args = new TreeMap<>();
         args.put("nameType", "GENERIC");
-        assertEquals(encode(args, true, "Angelo"), "YngYlo|Yngilo|agilo|angYlo|angilo|aniilo|anilo|anxilo|anzilo|ogilo|ongYlo|ongilo|oniilo|onilo|onxilo|onzilo");
+        assertEquals("YngYlo|Yngilo|agilo|angYlo|angilo|aniilo|anilo|anxilo|anzilo|ogilo|ongYlo|ongilo|oniilo|onilo|onxilo|onzilo",
+            encode(args, true, "Angelo"));
         args.put("ruleType", "EXACT");
-        assertEquals(encode(args, true, "Angelo"), "anZelo|andZelo|angelo|anhelo|anjelo|anxelo");
-        assertEquals(encode(args, true, "D'Angelo"), "(anZelo|andZelo|angelo|anhelo|anjelo|anxelo)-(danZelo|dandZelo|dangelo|danhelo|danjelo|danxelo)");
+        assertEquals("anZelo|andZelo|angelo|anhelo|anjelo|anxelo",
+            encode(args, true, "Angelo"));
+        assertEquals("(anZelo|andZelo|angelo|anhelo|anjelo|anxelo)-(danZelo|dandZelo|dangelo|danhelo|danjelo|danxelo)",
+            encode(args, true, "D'Angelo"));
         args.put("languageSet", "italian,greek,spanish");
-        assertEquals(encode(args, true, "Angelo"), "andZelo|angelo|anxelo");
+        assertEquals("andZelo|angelo|anxelo",
+            encode(args, true, "Angelo"));
         assertEquals(encode(args, true, "1234"), "");
 
         // concat is false, ruleType is EXACT
         args = new TreeMap<>();
-        assertEquals(encode(args, false, "Angelo"), "YngYlo|Yngilo|agilo|angYlo|angilo|aniilo|anilo|anxilo|anzilo|ogilo|ongYlo|ongilo|oniilo|onilo|onxilo|onzilo");
+        assertEquals("YngYlo|Yngilo|agilo|angYlo|angilo|aniilo|anilo|anxilo|anzilo|ogilo|ongYlo|ongilo|oniilo|onilo|onxilo|onzilo",
+            encode(args, false, "Angelo"));
         args.put("ruleType", "EXACT");
-        assertEquals(encode(args, false, "Angelo"), "anZelo|andZelo|angelo|anhelo|anjelo|anxelo");
-        assertEquals(encode(args, false, "D'Angelo"), "(anZelo|andZelo|angelo|anhelo|anjelo|anxelo)-(danZelo|dandZelo|dangelo|danhelo|danjelo|danxelo)");
+        assertEquals("anZelo|andZelo|angelo|anhelo|anjelo|anxelo",
+            encode(args, false, "Angelo"));
+        assertEquals("(anZelo|andZelo|angelo|anhelo|anjelo|anxelo)-(danZelo|dandZelo|dangelo|danhelo|danjelo|danxelo)",
+            encode(args, false, "D'Angelo"));
         args.put("languageSet", "italian,greek,spanish");
-        assertEquals(encode(args, false, "Angelo"), "andZelo|angelo|anxelo");
+        assertEquals("andZelo|angelo|anxelo",
+            encode(args, false, "Angelo"));
         assertEquals(encode(args, false, "1234"), "");
 
         // concat is true, ruleType is APPROX
         args = new TreeMap<>();
-        assertEquals(encode(args, true, "Angelo"), "YngYlo|Yngilo|agilo|angYlo|angilo|aniilo|anilo|anxilo|anzilo|ogilo|ongYlo|ongilo|oniilo|onilo|onxilo|onzilo");
+        assertEquals("YngYlo|Yngilo|agilo|angYlo|angilo|aniilo|anilo|anxilo|anzilo|ogilo|ongYlo|ongilo|oniilo|onilo|onxilo|onzilo",
+            encode(args, true, "Angelo"));
         args.put("ruleType", "APPROX");
-        assertEquals(encode(args, true, "Angelo"), "YngYlo|Yngilo|agilo|angYlo|angilo|aniilo|anilo|anxilo|anzilo|ogilo|ongYlo|ongilo|oniilo|onilo|onxilo|onzilo");
-        assertEquals(encode(args, true, "D'Angelo"), "(YngYlo|Yngilo|agilo|angYlo|angilo|aniilo|anilo|anxilo|anzilo|ogilo|ongYlo|ongilo|oniilo|onilo|onxilo|onzilo)-(dYngYlo|dYngilo|dagilo|dangYlo|dangilo|daniilo|danilo|danxilo|danzilo|dogilo|dongYlo|dongilo|doniilo|donilo|donxilo|donzilo)");
+        assertEquals("YngYlo|Yngilo|agilo|angYlo|angilo|aniilo|anilo|anxilo|anzilo|ogilo|ongYlo|ongilo|oniilo|onilo|onxilo|onzilo",
+            encode(args, true, "Angelo"));
+        assertEquals("(YngYlo|Yngilo|agilo|angYlo|angilo|aniilo|anilo|anxilo|anzilo|ogilo|ongYlo|ongilo|oniilo|onilo|onxilo|onzilo)-(dYngYlo|dYngilo|dagilo|dangYlo|dangilo|daniilo|danilo|danxilo|danzilo|dogilo|dongYlo|dongilo|doniilo|donilo|donxilo|donzilo)",
+            encode(args, true, "D'Angelo"));
         args.put("languageSet", "italian,greek,spanish");
-        assertEquals(encode(args, true, "Angelo"), "angilo|anxilo|anzilo|ongilo|onxilo|onzilo");
+        assertEquals("angilo|anxilo|anzilo|ongilo|onxilo|onzilo",
+            encode(args, true, "Angelo"));
         assertEquals(encode(args, true, "1234"), "");
 
         // concat is false, ruleType is APPROX
         args = new TreeMap<>();
-        assertEquals(encode(args, false, "Angelo"), "YngYlo|Yngilo|agilo|angYlo|angilo|aniilo|anilo|anxilo|anzilo|ogilo|ongYlo|ongilo|oniilo|onilo|onxilo|onzilo");
+        assertEquals("YngYlo|Yngilo|agilo|angYlo|angilo|aniilo|anilo|anxilo|anzilo|ogilo|ongYlo|ongilo|oniilo|onilo|onxilo|onzilo",
+            encode(args, false, "Angelo"));
         args.put("ruleType", "APPROX");
-        assertEquals(encode(args, false, "Angelo"), "YngYlo|Yngilo|agilo|angYlo|angilo|aniilo|anilo|anxilo|anzilo|ogilo|ongYlo|ongilo|oniilo|onilo|onxilo|onzilo");
-        assertEquals(encode(args, false, "D'Angelo"), "(YngYlo|Yngilo|agilo|angYlo|angilo|aniilo|anilo|anxilo|anzilo|ogilo|ongYlo|ongilo|oniilo|onilo|onxilo|onzilo)-(dYngYlo|dYngilo|dagilo|dangYlo|dangilo|daniilo|danilo|danxilo|danzilo|dogilo|dongYlo|dongilo|doniilo|donilo|donxilo|donzilo)");
+        assertEquals("YngYlo|Yngilo|agilo|angYlo|angilo|aniilo|anilo|anxilo|anzilo|ogilo|ongYlo|ongilo|oniilo|onilo|onxilo|onzilo",
+            encode(args, false, "Angelo"));
+        assertEquals("(YngYlo|Yngilo|agilo|angYlo|angilo|aniilo|anilo|anxilo|anzilo|ogilo|ongYlo|ongilo|oniilo|onilo|onxilo|onzilo)-(dYngYlo|dYngilo|dagilo|dangYlo|dangilo|daniilo|danilo|danxilo|danzilo|dogilo|dongYlo|dongilo|doniilo|donilo|donxilo|donzilo)",
+            encode(args, false, "D'Angelo"));
         args.put("languageSet", "italian,greek,spanish");
-        assertEquals(encode(args, false, "Angelo"), "angilo|anxilo|anzilo|ongilo|onxilo|onzilo");
+        assertEquals("angilo|anxilo|anzilo|ongilo|onxilo|onzilo",
+            encode(args, false, "Angelo"));
         assertEquals(encode(args, false, "1234"), "");
     }
 
@@ -86,45 +102,61 @@ public class PhoneticEngineRegressionTest {
         // concat is true, ruleType is EXACT
         args = new TreeMap<>();
         args.put("nameType", "ASHKENAZI");
-        assertEquals(encode(args, true, "Angelo"), "YngYlo|Yngilo|angYlo|angilo|anilo|anxilo|anzilo|ongYlo|ongilo|onilo|onxilo|onzilo");
+        assertEquals("YngYlo|Yngilo|angYlo|angilo|anilo|anxilo|anzilo|ongYlo|ongilo|onilo|onxilo|onzilo",
+            encode(args, true, "Angelo"));
         args.put("ruleType", "EXACT");
-        assertEquals(encode(args, true, "Angelo"), "andZelo|angelo|anhelo|anxelo");
-        assertEquals(encode(args, true, "D'Angelo"), "dandZelo|dangelo|danhelo|danxelo");
+        assertEquals("andZelo|angelo|anhelo|anxelo",
+            encode(args, true, "Angelo"));
+        assertEquals("dandZelo|dangelo|danhelo|danxelo",
+            encode(args, true, "D'Angelo"));
         args.put("languageSet", "italian,greek,spanish");
-        assertEquals(encode(args, true, "Angelo"), "angelo|anxelo");
+        assertEquals("angelo|anxelo",
+            encode(args, true, "Angelo"));
         assertEquals(encode(args, true, "1234"), "");
 
         // concat is false, ruleType is EXACT
         args = new TreeMap<>();
         args.put("nameType", "ASHKENAZI");
-        assertEquals(encode(args, false, "Angelo"), "YngYlo|Yngilo|angYlo|angilo|anilo|anxilo|anzilo|ongYlo|ongilo|onilo|onxilo|onzilo");
+        assertEquals("YngYlo|Yngilo|angYlo|angilo|anilo|anxilo|anzilo|ongYlo|ongilo|onilo|onxilo|onzilo",
+            encode(args, false, "Angelo"));
         args.put("ruleType", "EXACT");
-        assertEquals(encode(args, false, "Angelo"), "andZelo|angelo|anhelo|anxelo");
-        assertEquals(encode(args, false, "D'Angelo"), "dandZelo|dangelo|danhelo|danxelo");
+        assertEquals("andZelo|angelo|anhelo|anxelo",
+            encode(args, false, "Angelo"));
+        assertEquals("dandZelo|dangelo|danhelo|danxelo",
+            encode(args, false, "D'Angelo"));
         args.put("languageSet", "italian,greek,spanish");
-        assertEquals(encode(args, false, "Angelo"), "angelo|anxelo");
+        assertEquals("angelo|anxelo",
+            encode(args, false, "Angelo"));
         assertEquals(encode(args, false, "1234"), "");
 
         // concat is true, ruleType is APPROX
         args = new TreeMap<>();
         args.put("nameType", "ASHKENAZI");
-        assertEquals(encode(args, true, "Angelo"), "YngYlo|Yngilo|angYlo|angilo|anilo|anxilo|anzilo|ongYlo|ongilo|onilo|onxilo|onzilo");
+        assertEquals("YngYlo|Yngilo|angYlo|angilo|anilo|anxilo|anzilo|ongYlo|ongilo|onilo|onxilo|onzilo",
+            encode(args, true, "Angelo"));
         args.put("ruleType", "APPROX");
-        assertEquals(encode(args, true, "Angelo"), "YngYlo|Yngilo|angYlo|angilo|anilo|anxilo|anzilo|ongYlo|ongilo|onilo|onxilo|onzilo");
-        assertEquals(encode(args, true, "D'Angelo"), "dYngYlo|dYngilo|dangYlo|dangilo|danilo|danxilo|danzilo|dongYlo|dongilo|donilo|donxilo|donzilo");
+        assertEquals("YngYlo|Yngilo|angYlo|angilo|anilo|anxilo|anzilo|ongYlo|ongilo|onilo|onxilo|onzilo",
+            encode(args, true, "Angelo"));
+        assertEquals("dYngYlo|dYngilo|dangYlo|dangilo|danilo|danxilo|danzilo|dongYlo|dongilo|donilo|donxilo|donzilo",
+            encode(args, true, "D'Angelo"));
         args.put("languageSet", "italian,greek,spanish");
-        assertEquals(encode(args, true, "Angelo"), "angilo|anxilo|ongilo|onxilo");
+        assertEquals("angilo|anxilo|ongilo|onxilo",
+            encode(args, true, "Angelo"));
         assertEquals(encode(args, true, "1234"), "");
 
         // concat is false, ruleType is APPROX
         args = new TreeMap<>();
         args.put("nameType", "ASHKENAZI");
-        assertEquals(encode(args, false, "Angelo"), "YngYlo|Yngilo|angYlo|angilo|anilo|anxilo|anzilo|ongYlo|ongilo|onilo|onxilo|onzilo");
+        assertEquals("YngYlo|Yngilo|angYlo|angilo|anilo|anxilo|anzilo|ongYlo|ongilo|onilo|onxilo|onzilo",
+            encode(args, false, "Angelo"));
         args.put("ruleType", "APPROX");
-        assertEquals(encode(args, false, "Angelo"), "YngYlo|Yngilo|angYlo|angilo|anilo|anxilo|anzilo|ongYlo|ongilo|onilo|onxilo|onzilo");
-        assertEquals(encode(args, false, "D'Angelo"), "dYngYlo|dYngilo|dangYlo|dangilo|danilo|danxilo|danzilo|dongYlo|dongilo|donilo|donxilo|donzilo");
+        assertEquals("YngYlo|Yngilo|angYlo|angilo|anilo|anxilo|anzilo|ongYlo|ongilo|onilo|onxilo|onzilo",
+            encode(args, false, "Angelo"));
+        assertEquals("dYngYlo|dYngilo|dangYlo|dangilo|danilo|danxilo|danzilo|dongYlo|dongilo|donilo|donxilo|donzilo",
+            encode(args, false, "D'Angelo"));
         args.put("languageSet", "italian,greek,spanish");
-        assertEquals(encode(args, false, "Angelo"), "angilo|anxilo|ongilo|onxilo");
+        assertEquals("angilo|anxilo|ongilo|onxilo",
+            encode(args, false, "Angelo"));
         assertEquals(encode(args, false, "1234"), "");
     }
 
@@ -135,45 +167,61 @@ public class PhoneticEngineRegressionTest {
         // concat is true, ruleType is EXACT
         args = new TreeMap<>();
         args.put("nameType", "SEPHARDIC");
-        assertEquals(encode(args, true, "Angelo"), "anhila|anhilu|anzila|anzilu|nhila|nhilu|nzila|nzilu");
+        assertEquals("anhila|anhilu|anzila|anzilu|nhila|nhilu|nzila|nzilu",
+            encode(args, true, "Angelo"));
         args.put("ruleType", "EXACT");
-        assertEquals(encode(args, true, "Angelo"), "anZelo|andZelo|anxelo");
-        assertEquals(encode(args, true, "D'Angelo"), "anZelo|andZelo|anxelo");
+        assertEquals("anZelo|andZelo|anxelo",
+            encode(args, true, "Angelo"));
+        assertEquals("anZelo|andZelo|anxelo",
+            encode(args, true, "D'Angelo"));
         args.put("languageSet", "italian,greek,spanish");
-        assertEquals(encode(args, true, "Angelo"), "andZelo|anxelo");
+        assertEquals("andZelo|anxelo",
+            encode(args, true, "Angelo"));
         assertEquals(encode(args, true, "1234"), "");
 
         // concat is false, ruleType is EXACT
         args = new TreeMap<>();
         args.put("nameType", "SEPHARDIC");
-        assertEquals(encode(args, false, "Angelo"), "anhila|anhilu|anzila|anzilu|nhila|nhilu|nzila|nzilu");
+        assertEquals("anhila|anhilu|anzila|anzilu|nhila|nhilu|nzila|nzilu",
+            encode(args, false, "Angelo"));
         args.put("ruleType", "EXACT");
-        assertEquals(encode(args, false, "Angelo"), "anZelo|andZelo|anxelo");
-        assertEquals(encode(args, false, "D'Angelo"), "danZelo|dandZelo|danxelo");
+        assertEquals("anZelo|andZelo|anxelo",
+            encode(args, false, "Angelo"));
+        assertEquals("danZelo|dandZelo|danxelo",
+            encode(args, false, "D'Angelo"));
         args.put("languageSet", "italian,greek,spanish");
-        assertEquals(encode(args, false, "Angelo"), "andZelo|anxelo");
+        assertEquals("andZelo|anxelo",
+            encode(args, false, "Angelo"));
         assertEquals(encode(args, false, "1234"), "");
 
         // concat is true, ruleType is APPROX
         args = new TreeMap<>();
         args.put("nameType", "SEPHARDIC");
-        assertEquals(encode(args, true, "Angelo"), "anhila|anhilu|anzila|anzilu|nhila|nhilu|nzila|nzilu");
+        assertEquals("anhila|anhilu|anzila|anzilu|nhila|nhilu|nzila|nzilu",
+            encode(args, true, "Angelo"));
         args.put("ruleType", "APPROX");
-        assertEquals(encode(args, true, "Angelo"), "anhila|anhilu|anzila|anzilu|nhila|nhilu|nzila|nzilu");
-        assertEquals(encode(args, true, "D'Angelo"), "anhila|anhilu|anzila|anzilu|nhila|nhilu|nzila|nzilu");
+        assertEquals("anhila|anhilu|anzila|anzilu|nhila|nhilu|nzila|nzilu",
+            encode(args, true, "Angelo"));
+        assertEquals("anhila|anhilu|anzila|anzilu|nhila|nhilu|nzila|nzilu",
+            encode(args, true, "D'Angelo"));
         args.put("languageSet", "italian,greek,spanish");
-        assertEquals(encode(args, true, "Angelo"), "anhila|anhilu|anzila|anzilu|nhila|nhilu|nzila|nzilu");
+        assertEquals("anhila|anhilu|anzila|anzilu|nhila|nhilu|nzila|nzilu",
+            encode(args, true, "Angelo"));
         assertEquals(encode(args, true, "1234"), "");
 
         // concat is false, ruleType is APPROX
         args = new TreeMap<>();
         args.put("nameType", "SEPHARDIC");
-        assertEquals(encode(args, false, "Angelo"), "anhila|anhilu|anzila|anzilu|nhila|nhilu|nzila|nzilu");
+        assertEquals("anhila|anhilu|anzila|anzilu|nhila|nhilu|nzila|nzilu",
+            encode(args, false, "Angelo"));
         args.put("ruleType", "APPROX");
-        assertEquals(encode(args, false, "Angelo"), "anhila|anhilu|anzila|anzilu|nhila|nhilu|nzila|nzilu");
-        assertEquals(encode(args, false, "D'Angelo"), "danhila|danhilu|danzila|danzilu|nhila|nhilu|nzila|nzilu");
+        assertEquals("anhila|anhilu|anzila|anzilu|nhila|nhilu|nzila|nzilu",
+            encode(args, false, "Angelo"));
+        assertEquals("danhila|danhilu|danzila|danzilu|nhila|nhilu|nzila|nzilu",
+            encode(args, false, "D'Angelo"));
         args.put("languageSet", "italian,greek,spanish");
-        assertEquals(encode(args, false, "Angelo"), "anhila|anhilu|anzila|anzilu|nhila|nhilu|nzila|nzilu");
+        assertEquals("anhila|anhilu|anzila|anzilu|nhila|nhilu|nzila|nzilu",
+            encode(args, false, "Angelo"));
         assertEquals(encode(args, false, "1234"), "");
     }
 
@@ -186,14 +234,18 @@ public class PhoneticEngineRegressionTest {
         args.put("nameType", "GENERIC");
         args.put("ruleType", "APPROX");
 
-        assertEquals(encode(args, true, "abram"), "Ybram|Ybrom|abram|abran|abrom|abron|avram|avrom|obram|obran|obrom|obron|ovram|ovrom");
-        assertEquals(encode(args, true, "Bendzin"), "bndzn|bntsn|bnzn|vndzn|vntsn");
+        assertEquals("Ybram|Ybrom|abram|abran|abrom|abron|avram|avrom|obram|obran|obrom|obron|ovram|ovrom",
+            encode(args, true, "abram"));
+        assertEquals("bndzn|bntsn|bnzn|vndzn|vntsn",
+            encode(args, true, "Bendzin"));
 
         args.put("nameType", "ASHKENAZI");
         args.put("ruleType", "APPROX");
 
-        assertEquals(encode(args, true, "abram"), "Ybram|Ybrom|abram|abrom|avram|avrom|imbram|imbrom|obram|obrom|ombram|ombrom|ovram|ovrom");
-        assertEquals(encode(args, true, "Halpern"), "YlpYrn|Ylpirn|alpYrn|alpirn|olpYrn|olpirn|xalpirn|xolpirn");
+        assertEquals("Ybram|Ybrom|abram|abrom|avram|avrom|imbram|imbrom|obram|obrom|ombram|ombrom|ovram|ovrom",
+            encode(args, true, "abram"));
+        assertEquals("YlpYrn|Ylpirn|alpYrn|alpirn|olpYrn|olpirn|xalpirn|xolpirn",
+            encode(args, true, "Halpern"));
 
     }
 

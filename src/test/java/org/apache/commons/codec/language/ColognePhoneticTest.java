@@ -23,9 +23,11 @@ import java.util.Set;
 
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoderAbstractTest;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Test;
+import org.opentest4j.AssertionFailedError;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -72,7 +74,7 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest<ColognePhonet
             ".*[CKQ]X.*",            // X after C,K,Q
     };
 
-    @AfterClass
+    @AfterAll
     // Check that all possible input sequence conditions are represented
     public static void finishTests() {
         int errors = 0;
@@ -82,7 +84,7 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest<ColognePhonet
                 errors++;
             }
         }
-        Assert.assertEquals("Not expecting any missing test cases", 0, errors);
+        assertEquals(0, errors, "Not expecting any missing test cases");
     }
 
     @Override
@@ -101,7 +103,7 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest<ColognePhonet
     @Test
     // Ensure that override still allows tests to work
     public void testCanFail() {
-        assertThrows(org.junit.ComparisonFailure.class, () -> this.checkEncoding("/", "Fehler"));
+        assertThrows(AssertionFailedError.class, () -> this.checkEncoding("/", "Fehler"));
     }
 
     @Test
@@ -222,7 +224,7 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest<ColognePhonet
         //@formatter:on
         for (final String[] element : data) {
             final boolean encodeEqual = this.getStringEncoder().isEncodeEqual(element[1], element[0]);
-            Assert.assertTrue(element[1] + " != " + element[0], encodeEqual);
+            assertTrue(encodeEqual, element[1] + " != " + element[0]);
         }
     }
 

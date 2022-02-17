@@ -17,11 +17,12 @@
 
 package org.apache.commons.codec;
 
+import org.junit.jupiter.api.Test;
+
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
-import org.junit.Assert;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Sanity checks for {@link Charsets}.
@@ -31,46 +32,46 @@ public class CharsetsTest {
 
     @Test
     public void testToCharset() {
-        Assert.assertEquals(Charset.defaultCharset(), Charsets.toCharset((String) null));
-        Assert.assertEquals(Charset.defaultCharset(), Charsets.toCharset((Charset) null));
-        Assert.assertEquals(Charset.defaultCharset(), Charsets.toCharset(Charset.defaultCharset()));
-        Assert.assertEquals(StandardCharsets.UTF_8, Charsets.toCharset(StandardCharsets.UTF_8));
+        assertEquals(Charset.defaultCharset(), Charsets.toCharset((String) null));
+        assertEquals(Charset.defaultCharset(), Charsets.toCharset((Charset) null));
+        assertEquals(Charset.defaultCharset(), Charsets.toCharset(Charset.defaultCharset()));
+        assertEquals(StandardCharsets.UTF_8, Charsets.toCharset(StandardCharsets.UTF_8));
     }
 
     @SuppressWarnings("deprecation")
     @Test
     public void testIso8859_1() {
-        Assert.assertEquals("ISO-8859-1", Charsets.ISO_8859_1.name());
+        assertEquals("ISO-8859-1", Charsets.ISO_8859_1.name());
     }
 
     @SuppressWarnings("deprecation")
     @Test
     public void testUsAscii() {
-        Assert.assertEquals("US-ASCII", Charsets.US_ASCII.name());
+        assertEquals("US-ASCII", Charsets.US_ASCII.name());
     }
 
     @SuppressWarnings("deprecation")
     @Test
     public void testUtf16() {
-        Assert.assertEquals("UTF-16", Charsets.UTF_16.name());
+        assertEquals("UTF-16", Charsets.UTF_16.name());
     }
 
     @SuppressWarnings("deprecation")
     @Test
     public void testUtf16Be() {
-        Assert.assertEquals("UTF-16BE", Charsets.UTF_16BE.name());
+        assertEquals("UTF-16BE", Charsets.UTF_16BE.name());
     }
 
     @SuppressWarnings("deprecation")
     @Test
     public void testUtf16Le() {
-        Assert.assertEquals("UTF-16LE", Charsets.UTF_16LE.name());
+        assertEquals("UTF-16LE", Charsets.UTF_16LE.name());
     }
 
     @SuppressWarnings("deprecation")
     @Test
     public void testUtf8() {
-        Assert.assertEquals("UTF-8", Charsets.UTF_8.name());
+        assertEquals("UTF-8", Charsets.UTF_8.name());
     }
 
 }

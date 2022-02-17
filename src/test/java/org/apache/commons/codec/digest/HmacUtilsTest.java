@@ -16,9 +16,6 @@
  */
 package org.apache.commons.codec.digest;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
@@ -27,8 +24,9 @@ import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.binary.StringUtils;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests HmacUtils methods.
@@ -45,15 +43,15 @@ public class HmacUtilsTest {
     @SuppressWarnings("deprecation") // most of the static methods are deprecated
     @Test
     public void testGetHMac() {
-        Assert.assertArrayEquals(HmacAlgorithmsTest.STANDARD_MD5_RESULT_BYTES,
-                HmacUtils.getHmacMd5(HmacAlgorithmsTest.STANDARD_KEY_BYTES).doFinal(HmacAlgorithmsTest.STANDARD_PHRASE_BYTES));
-        Assert.assertArrayEquals(HmacAlgorithmsTest.STANDARD_SHA1_RESULT_BYTES,
-                HmacUtils.getHmacSha1(HmacAlgorithmsTest.STANDARD_KEY_BYTES).doFinal(HmacAlgorithmsTest.STANDARD_PHRASE_BYTES));
-        Assert.assertArrayEquals(HmacAlgorithmsTest.STANDARD_SHA256_RESULT_BYTES,
-                HmacUtils.getHmacSha256(HmacAlgorithmsTest.STANDARD_KEY_BYTES).doFinal(HmacAlgorithmsTest.STANDARD_PHRASE_BYTES));
-        Assert.assertArrayEquals(HmacAlgorithmsTest.STANDARD_SHA384_RESULT_BYTES,
-                HmacUtils.getHmacSha384(HmacAlgorithmsTest.STANDARD_KEY_BYTES).doFinal(HmacAlgorithmsTest.STANDARD_PHRASE_BYTES));
-        Assert.assertArrayEquals(HmacAlgorithmsTest.STANDARD_SHA512_RESULT_BYTES,
+        assertArrayEquals(HmacAlgorithmsTest.STANDARD_MD5_RESULT_BYTES,
+         HmacUtils.getHmacMd5(HmacAlgorithmsTest.STANDARD_KEY_BYTES).doFinal(HmacAlgorithmsTest.STANDARD_PHRASE_BYTES));
+        assertArrayEquals(HmacAlgorithmsTest.STANDARD_SHA1_RESULT_BYTES,
+         HmacUtils.getHmacSha1(HmacAlgorithmsTest.STANDARD_KEY_BYTES).doFinal(HmacAlgorithmsTest.STANDARD_PHRASE_BYTES));
+        assertArrayEquals(HmacAlgorithmsTest.STANDARD_SHA256_RESULT_BYTES,
+         HmacUtils.getHmacSha256(HmacAlgorithmsTest.STANDARD_KEY_BYTES).doFinal(HmacAlgorithmsTest.STANDARD_PHRASE_BYTES));
+        assertArrayEquals(HmacAlgorithmsTest.STANDARD_SHA384_RESULT_BYTES,
+         HmacUtils.getHmacSha384(HmacAlgorithmsTest.STANDARD_KEY_BYTES).doFinal(HmacAlgorithmsTest.STANDARD_PHRASE_BYTES));
+        assertArrayEquals(HmacAlgorithmsTest.STANDARD_SHA512_RESULT_BYTES,
                 HmacUtils.getHmacSha512(HmacAlgorithmsTest.STANDARD_KEY_BYTES).doFinal(HmacAlgorithmsTest.STANDARD_PHRASE_BYTES));
     }
 
@@ -116,9 +114,9 @@ public class HmacUtilsTest {
     public void testInitializedMac() {
         final Mac md5Mac = HmacUtils.getInitializedMac(HmacAlgorithms.HMAC_MD5, HmacAlgorithmsTest.STANDARD_KEY_BYTES);
         final Mac md5Mac2 = HmacUtils.getInitializedMac("HmacMD5", HmacAlgorithmsTest.STANDARD_KEY_BYTES);
-        Assert.assertArrayEquals(HmacAlgorithmsTest.STANDARD_MD5_RESULT_BYTES, HmacUtils.updateHmac(md5Mac, HmacAlgorithmsTest.STANDARD_PHRASE_STRING)
+        assertArrayEquals(HmacAlgorithmsTest.STANDARD_MD5_RESULT_BYTES, HmacUtils.updateHmac(md5Mac, HmacAlgorithmsTest.STANDARD_PHRASE_STRING)
                 .doFinal());
-        Assert.assertArrayEquals(HmacAlgorithmsTest.STANDARD_MD5_RESULT_BYTES, HmacUtils.updateHmac(md5Mac2, HmacAlgorithmsTest.STANDARD_PHRASE_STRING)
+        assertArrayEquals(HmacAlgorithmsTest.STANDARD_MD5_RESULT_BYTES, HmacUtils.updateHmac(md5Mac2, HmacAlgorithmsTest.STANDARD_PHRASE_STRING)
                 .doFinal());
     }
 
@@ -140,16 +138,16 @@ public class HmacUtilsTest {
     @SuppressWarnings("deprecation") // most of the static methods are deprecated
     @Test
     public void testMd5HMac() throws IOException {
-        Assert.assertArrayEquals(HmacAlgorithmsTest.STANDARD_MD5_RESULT_BYTES,
+        assertArrayEquals(HmacAlgorithmsTest.STANDARD_MD5_RESULT_BYTES,
                 HmacUtils.hmacMd5(HmacAlgorithmsTest.STANDARD_KEY_BYTES, HmacAlgorithmsTest.STANDARD_PHRASE_BYTES));
-        Assert.assertArrayEquals(HmacAlgorithmsTest.STANDARD_MD5_RESULT_BYTES,
+        assertArrayEquals(HmacAlgorithmsTest.STANDARD_MD5_RESULT_BYTES,
                 HmacUtils.hmacMd5(HmacAlgorithmsTest.STANDARD_KEY_BYTES, new ByteArrayInputStream(HmacAlgorithmsTest.STANDARD_PHRASE_BYTES)));
-        Assert.assertArrayEquals(HmacAlgorithmsTest.STANDARD_MD5_RESULT_BYTES,
+        assertArrayEquals(HmacAlgorithmsTest.STANDARD_MD5_RESULT_BYTES,
                 HmacUtils.hmacMd5(HmacAlgorithmsTest.STANDARD_KEY_STRING, HmacAlgorithmsTest.STANDARD_PHRASE_STRING));
-        Assert.assertEquals(HmacAlgorithmsTest.STANDARD_MD5_RESULT_STRING, HmacUtils.hmacMd5Hex(HmacAlgorithmsTest.STANDARD_KEY_BYTES, HmacAlgorithmsTest.STANDARD_PHRASE_BYTES));
-        Assert.assertEquals(HmacAlgorithmsTest.STANDARD_MD5_RESULT_STRING,
+        assertEquals(HmacAlgorithmsTest.STANDARD_MD5_RESULT_STRING, HmacUtils.hmacMd5Hex(HmacAlgorithmsTest.STANDARD_KEY_BYTES, HmacAlgorithmsTest.STANDARD_PHRASE_BYTES));
+        assertEquals(HmacAlgorithmsTest.STANDARD_MD5_RESULT_STRING,
                 HmacUtils.hmacMd5Hex(HmacAlgorithmsTest.STANDARD_KEY_BYTES, new ByteArrayInputStream(HmacAlgorithmsTest.STANDARD_PHRASE_BYTES)));
-        Assert.assertEquals(HmacAlgorithmsTest.STANDARD_MD5_RESULT_STRING,
+        assertEquals(HmacAlgorithmsTest.STANDARD_MD5_RESULT_STRING,
                 HmacUtils.hmacMd5Hex(HmacAlgorithmsTest.STANDARD_KEY_STRING, HmacAlgorithmsTest.STANDARD_PHRASE_STRING));
     }
 
@@ -173,17 +171,17 @@ public class HmacUtilsTest {
     @SuppressWarnings("deprecation") // most of the static methods are deprecated
     @Test
     public void testSha1HMac() throws IOException {
-        Assert.assertArrayEquals(HmacAlgorithmsTest.STANDARD_SHA1_RESULT_BYTES,
+        assertArrayEquals(HmacAlgorithmsTest.STANDARD_SHA1_RESULT_BYTES,
                 HmacUtils.hmacSha1(HmacAlgorithmsTest.STANDARD_KEY_BYTES, HmacAlgorithmsTest.STANDARD_PHRASE_BYTES));
-        Assert.assertArrayEquals(HmacAlgorithmsTest.STANDARD_SHA1_RESULT_BYTES,
+        assertArrayEquals(HmacAlgorithmsTest.STANDARD_SHA1_RESULT_BYTES,
                 HmacUtils.hmacSha1(HmacAlgorithmsTest.STANDARD_KEY_BYTES, new ByteArrayInputStream(HmacAlgorithmsTest.STANDARD_PHRASE_BYTES)));
-        Assert.assertArrayEquals(HmacAlgorithmsTest.STANDARD_SHA1_RESULT_BYTES,
+        assertArrayEquals(HmacAlgorithmsTest.STANDARD_SHA1_RESULT_BYTES,
                 HmacUtils.hmacSha1(HmacAlgorithmsTest.STANDARD_KEY_STRING, HmacAlgorithmsTest.STANDARD_PHRASE_STRING));
-        Assert.assertEquals(HmacAlgorithmsTest.STANDARD_SHA1_RESULT_STRING,
+        assertEquals(HmacAlgorithmsTest.STANDARD_SHA1_RESULT_STRING,
                 HmacUtils.hmacSha1Hex(HmacAlgorithmsTest.STANDARD_KEY_BYTES, HmacAlgorithmsTest.STANDARD_PHRASE_BYTES));
-        Assert.assertEquals(HmacAlgorithmsTest.STANDARD_SHA1_RESULT_STRING,
+        assertEquals(HmacAlgorithmsTest.STANDARD_SHA1_RESULT_STRING,
                 HmacUtils.hmacSha1Hex(HmacAlgorithmsTest.STANDARD_KEY_BYTES, new ByteArrayInputStream(HmacAlgorithmsTest.STANDARD_PHRASE_BYTES)));
-        Assert.assertEquals(HmacAlgorithmsTest.STANDARD_SHA1_RESULT_STRING,
+        assertEquals(HmacAlgorithmsTest.STANDARD_SHA1_RESULT_STRING,
                 HmacUtils.hmacSha1Hex(HmacAlgorithmsTest.STANDARD_KEY_STRING, HmacAlgorithmsTest.STANDARD_PHRASE_STRING));
     }
 
@@ -196,17 +194,17 @@ public class HmacUtilsTest {
     @SuppressWarnings("deprecation") // most of the static methods are deprecated
     @Test
     public void testSha256HMac() throws IOException {
-        Assert.assertArrayEquals(HmacAlgorithmsTest.STANDARD_SHA256_RESULT_BYTES,
+        assertArrayEquals(HmacAlgorithmsTest.STANDARD_SHA256_RESULT_BYTES,
                 HmacUtils.hmacSha256(HmacAlgorithmsTest.STANDARD_KEY_BYTES, HmacAlgorithmsTest.STANDARD_PHRASE_BYTES));
-        Assert.assertArrayEquals(HmacAlgorithmsTest.STANDARD_SHA256_RESULT_BYTES,
+        assertArrayEquals(HmacAlgorithmsTest.STANDARD_SHA256_RESULT_BYTES,
                 HmacUtils.hmacSha256(HmacAlgorithmsTest.STANDARD_KEY_BYTES, new ByteArrayInputStream(HmacAlgorithmsTest.STANDARD_PHRASE_BYTES)));
-        Assert.assertArrayEquals(HmacAlgorithmsTest.STANDARD_SHA256_RESULT_BYTES,
+        assertArrayEquals(HmacAlgorithmsTest.STANDARD_SHA256_RESULT_BYTES,
                 HmacUtils.hmacSha256(HmacAlgorithmsTest.STANDARD_KEY_STRING, HmacAlgorithmsTest.STANDARD_PHRASE_STRING));
-        Assert.assertEquals(HmacAlgorithmsTest.STANDARD_SHA256_RESULT_STRING,
+        assertEquals(HmacAlgorithmsTest.STANDARD_SHA256_RESULT_STRING,
                 HmacUtils.hmacSha256Hex(HmacAlgorithmsTest.STANDARD_KEY_BYTES, HmacAlgorithmsTest.STANDARD_PHRASE_BYTES));
-        Assert.assertEquals(HmacAlgorithmsTest.STANDARD_SHA256_RESULT_STRING,
+        assertEquals(HmacAlgorithmsTest.STANDARD_SHA256_RESULT_STRING,
                 HmacUtils.hmacSha256Hex(HmacAlgorithmsTest.STANDARD_KEY_BYTES, new ByteArrayInputStream(HmacAlgorithmsTest.STANDARD_PHRASE_BYTES)));
-        Assert.assertEquals(HmacAlgorithmsTest.STANDARD_SHA256_RESULT_STRING,
+        assertEquals(HmacAlgorithmsTest.STANDARD_SHA256_RESULT_STRING,
                 HmacUtils.hmacSha256Hex(HmacAlgorithmsTest.STANDARD_KEY_STRING, HmacAlgorithmsTest.STANDARD_PHRASE_STRING));
     }
 
@@ -219,17 +217,17 @@ public class HmacUtilsTest {
     @SuppressWarnings("deprecation") // most of the static methods are deprecated
     @Test
     public void testSha384HMac() throws IOException {
-        Assert.assertArrayEquals(HmacAlgorithmsTest.STANDARD_SHA384_RESULT_BYTES,
+        assertArrayEquals(HmacAlgorithmsTest.STANDARD_SHA384_RESULT_BYTES,
                 HmacUtils.hmacSha384(HmacAlgorithmsTest.STANDARD_KEY_BYTES, HmacAlgorithmsTest.STANDARD_PHRASE_BYTES));
-        Assert.assertArrayEquals(HmacAlgorithmsTest.STANDARD_SHA384_RESULT_BYTES,
+        assertArrayEquals(HmacAlgorithmsTest.STANDARD_SHA384_RESULT_BYTES,
                 HmacUtils.hmacSha384(HmacAlgorithmsTest.STANDARD_KEY_BYTES, new ByteArrayInputStream(HmacAlgorithmsTest.STANDARD_PHRASE_BYTES)));
-        Assert.assertArrayEquals(HmacAlgorithmsTest.STANDARD_SHA384_RESULT_BYTES,
+        assertArrayEquals(HmacAlgorithmsTest.STANDARD_SHA384_RESULT_BYTES,
                 HmacUtils.hmacSha384(HmacAlgorithmsTest.STANDARD_KEY_STRING, HmacAlgorithmsTest.STANDARD_PHRASE_STRING));
-        Assert.assertEquals(HmacAlgorithmsTest.STANDARD_SHA384_RESULT_STRING,
+        assertEquals(HmacAlgorithmsTest.STANDARD_SHA384_RESULT_STRING,
                 HmacUtils.hmacSha384Hex(HmacAlgorithmsTest.STANDARD_KEY_BYTES, HmacAlgorithmsTest.STANDARD_PHRASE_BYTES));
-        Assert.assertEquals(HmacAlgorithmsTest.STANDARD_SHA384_RESULT_STRING,
+        assertEquals(HmacAlgorithmsTest.STANDARD_SHA384_RESULT_STRING,
                 HmacUtils.hmacSha384Hex(HmacAlgorithmsTest.STANDARD_KEY_BYTES, new ByteArrayInputStream(HmacAlgorithmsTest.STANDARD_PHRASE_BYTES)));
-        Assert.assertEquals(HmacAlgorithmsTest.STANDARD_SHA384_RESULT_STRING,
+        assertEquals(HmacAlgorithmsTest.STANDARD_SHA384_RESULT_STRING,
                 HmacUtils.hmacSha384Hex(HmacAlgorithmsTest.STANDARD_KEY_STRING, HmacAlgorithmsTest.STANDARD_PHRASE_STRING));
     }
 
@@ -242,17 +240,17 @@ public class HmacUtilsTest {
     @SuppressWarnings("deprecation") // most of the static methods are deprecated
     @Test
     public void testSha512HMac() throws IOException {
-        Assert.assertArrayEquals(HmacAlgorithmsTest.STANDARD_SHA512_RESULT_BYTES,
+        assertArrayEquals(HmacAlgorithmsTest.STANDARD_SHA512_RESULT_BYTES,
                 HmacUtils.hmacSha512(HmacAlgorithmsTest.STANDARD_KEY_BYTES, HmacAlgorithmsTest.STANDARD_PHRASE_BYTES));
-        Assert.assertArrayEquals(HmacAlgorithmsTest.STANDARD_SHA512_RESULT_BYTES,
+        assertArrayEquals(HmacAlgorithmsTest.STANDARD_SHA512_RESULT_BYTES,
                 HmacUtils.hmacSha512(HmacAlgorithmsTest.STANDARD_KEY_BYTES, new ByteArrayInputStream(HmacAlgorithmsTest.STANDARD_PHRASE_BYTES)));
-        Assert.assertArrayEquals(HmacAlgorithmsTest.STANDARD_SHA512_RESULT_BYTES,
+        assertArrayEquals(HmacAlgorithmsTest.STANDARD_SHA512_RESULT_BYTES,
                 HmacUtils.hmacSha512(HmacAlgorithmsTest.STANDARD_KEY_STRING, HmacAlgorithmsTest.STANDARD_PHRASE_STRING));
-        Assert.assertEquals(HmacAlgorithmsTest.STANDARD_SHA512_RESULT_STRING,
+        assertEquals(HmacAlgorithmsTest.STANDARD_SHA512_RESULT_STRING,
                 HmacUtils.hmacSha512Hex(HmacAlgorithmsTest.STANDARD_KEY_BYTES, HmacAlgorithmsTest.STANDARD_PHRASE_BYTES));
-        Assert.assertEquals(HmacAlgorithmsTest.STANDARD_SHA512_RESULT_STRING,
+        assertEquals(HmacAlgorithmsTest.STANDARD_SHA512_RESULT_STRING,
                 HmacUtils.hmacSha512Hex(HmacAlgorithmsTest.STANDARD_KEY_BYTES, new ByteArrayInputStream(HmacAlgorithmsTest.STANDARD_PHRASE_BYTES)));
-        Assert.assertEquals(HmacAlgorithmsTest.STANDARD_SHA512_RESULT_STRING,
+        assertEquals(HmacAlgorithmsTest.STANDARD_SHA512_RESULT_STRING,
                 HmacUtils.hmacSha512Hex(HmacAlgorithmsTest.STANDARD_KEY_STRING, HmacAlgorithmsTest.STANDARD_PHRASE_STRING));
     }
 

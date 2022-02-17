@@ -17,7 +17,8 @@
 
 package org.apache.commons.codec.net;
 
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests Utils.

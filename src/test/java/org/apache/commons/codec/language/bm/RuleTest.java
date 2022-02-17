@@ -17,12 +17,10 @@
 
 package org.apache.commons.codec.language.bm;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
+import org.junit.jupiter.api.Test;
 
-import org.hamcrest.BaseMatcher;
-import org.hamcrest.Description;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests Rule.
@@ -30,18 +28,6 @@ import org.junit.Test;
  * @since 1.6
  */
 public class RuleTest {
-    private static class NegativeIntegerBaseMatcher extends BaseMatcher<Integer> {
-        @Override
-        public void describeTo(final Description description) {
-            description.appendText("value should be negative");
-        }
-
-        @Override
-        public boolean matches(final Object item) {
-            return ((Integer) item).intValue() < 0;
-        }
-    }
-
     private Rule.Phoneme[][] makePhonemes() {
         final String[][] words = {
                 { "rinD", "rinDlt", "rina", "rinalt", "rino", "rinolt", "rinu", "rinult" },
@@ -66,8 +52,8 @@ public class RuleTest {
                 for (int j = i + 1; j < phs.length; j++) {
                     final int c = Rule.Phoneme.COMPARATOR.compare(phs[i], phs[j]);
 
-                    assertThat("Comparing " + phs[i].getPhonemeText() + " to " + phs[j].getPhonemeText() + " should be negative", Integer.valueOf(c),
-                            new NegativeIntegerBaseMatcher());
+                    assertTrue(Integer.valueOf(c).intValue() < 0,
+                            "Comparing " + phs[i].getPhonemeText() + " to " + phs[j].getPhonemeText() + " should be negative");
                 }
             }
         }
@@ -77,8 +63,8 @@ public class RuleTest {
     public void testPhonemeComparedToSelfIsZero() {
         for (final Rule.Phoneme[] phs : makePhonemes()) {
             for (final Rule.Phoneme ph : phs) {
-                assertEquals("Phoneme compared to itself should be zero: " + ph.getPhonemeText(), 0,
-                        Rule.Phoneme.COMPARATOR.compare(ph, ph));
+                assertEquals(0, Rule.Phoneme.COMPARATOR.compare(ph, ph),
+                        "Phoneme compared to itself should be zero: " + ph.getPhonemeText());
             }
         }
     }

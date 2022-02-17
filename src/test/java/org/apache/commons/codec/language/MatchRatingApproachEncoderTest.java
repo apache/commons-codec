@@ -17,13 +17,10 @@
 
 package org.apache.commons.codec.language;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
 import org.apache.commons.codec.StringEncoderAbstractTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Series of tests for the Match Rating Approach algorithm.

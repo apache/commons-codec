@@ -17,9 +17,9 @@
 
 package org.apache.commons.codec;
 
-import static org.junit.Assert.assertThrows;
+import org.junit.jupiter.api.Test;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  */

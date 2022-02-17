@@ -17,14 +17,14 @@
 
 package org.apache.commons.codec.binary;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * @since 1.15
@@ -134,7 +134,7 @@ public class Base16OutputStreamTest {
                 final OutputStream out = new Base16OutputStream(byteOut, true, lowerCase)) {
             out.write(decoded);
             final byte[] output = byteOut.toByteArray();
-            assertArrayEquals("Streaming chunked base16 encode", encoded, output);
+            assertArrayEquals(encoded, output, "Streaming chunked base16 encode");
         }
 
         // Now let's try decode.
@@ -142,7 +142,7 @@ public class Base16OutputStreamTest {
                 final OutputStream out = new Base16OutputStream(byteOut, false, lowerCase)) {
             out.write(encoded);
             final byte[] output = byteOut.toByteArray();
-            assertArrayEquals("Streaming chunked base16 decode", decoded, output);
+            assertArrayEquals(decoded, output, "Streaming chunked base16 decode");
         }
 
         // wrap encoder with decoder
@@ -153,7 +153,7 @@ public class Base16OutputStreamTest {
             encoderOut.write(decoded);
             final byte[] output = byteOut.toByteArray();
 
-            assertArrayEquals("Streaming chunked base16 wrap-wrap!", decoded, output);
+            assertArrayEquals(decoded, output, "Streaming chunked base16 wrap-wrap!");
         }
     }
 
@@ -192,7 +192,7 @@ public class Base16OutputStreamTest {
                 out.write(element);
             }
             final byte[] output = byteOut.toByteArray();
-            assertArrayEquals("Streaming byte-by-byte base16 encode", encoded, output);
+            assertArrayEquals(encoded, output, "Streaming byte-by-byte base16 encode");
         }
 
         // Now let's try decode.
@@ -202,7 +202,7 @@ public class Base16OutputStreamTest {
                 out.write(element);
             }
             final byte[] output = byteOut.toByteArray();
-            assertArrayEquals("Streaming byte-by-byte base16 decode", decoded, output);
+            assertArrayEquals(decoded, output, "Streaming byte-by-byte base16 decode");
         }
 
         // Now let's try decode with tonnes of flushes.
@@ -213,7 +213,7 @@ public class Base16OutputStreamTest {
                 out.flush();
             }
             final byte[] output = byteOut.toByteArray();
-            assertArrayEquals("Streaming byte-by-byte flush() base16 decode", decoded, output);
+            assertArrayEquals(decoded, output, "Streaming byte-by-byte flush() base16 decode");
         }
 
         // wrap encoder with decoder
@@ -224,7 +224,7 @@ public class Base16OutputStreamTest {
                 encoderOut.write(element);
             }
             final byte[] output = byteOut.toByteArray();
-            assertArrayEquals("Streaming byte-by-byte base16 wrap-wrap!", decoded, output);
+            assertArrayEquals(decoded, output, "Streaming byte-by-byte base16 wrap-wrap!");
         }
     }
 
@@ -238,10 +238,10 @@ public class Base16OutputStreamTest {
         final byte[] buf = new byte[1024];
         final ByteArrayOutputStream bout = new ByteArrayOutputStream();
         try (final Base16OutputStream out = new Base16OutputStream(bout)) {
-            assertThrows("Base16InputStream.write(buf, -1, 0)", IndexOutOfBoundsException.class, () -> out.write(buf, -1, 1));
-            assertThrows("Base16InputStream.write(buf, 1, -1)", IndexOutOfBoundsException.class, () -> out.write(buf, 1, -1));
-            assertThrows("Base16InputStream.write(buf, buf.length + 1, 0)", IndexOutOfBoundsException.class, () -> out.write(buf, buf.length + 1, 0));
-            assertThrows("Base16InputStream.write(buf, buf.length - 1, 2)", IndexOutOfBoundsException.class, () -> out.write(buf, buf.length - 1, 2));
+            assertThrows(IndexOutOfBoundsException.class, () -> out.write(buf, -1, 1), "Base16InputStream.write(buf, -1, 0)");
+            assertThrows(IndexOutOfBoundsException.class, () -> out.write(buf, 1, -1), "Base16InputStream.write(buf, 1, -1)");
+            assertThrows(IndexOutOfBoundsException.class, () -> out.write(buf, buf.length + 1, 0), "Base16InputStream.write(buf, buf.length + 1, 0)");
+            assertThrows(IndexOutOfBoundsException.class, () -> out.write(buf, buf.length - 1, 2), "Base16InputStream.write(buf, buf.length - 1, 2)");
         }
     }
 

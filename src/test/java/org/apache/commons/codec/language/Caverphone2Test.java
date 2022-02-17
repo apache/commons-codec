@@ -19,8 +19,10 @@ package org.apache.commons.codec.language;
 
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoderAbstractTest;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests Caverphone2.
@@ -337,8 +339,8 @@ public class Caverphone2Test extends StringEncoderAbstractTest<Caverphone2> {
     @Test
     public void testIsCaverphoneEquals() throws EncoderException {
         final Caverphone2 caverphone = new Caverphone2();
-        Assert.assertFalse("Caverphone encodings should not be equal", caverphone.isEncodeEqual("Peter", "Stevenson"));
-        Assert.assertTrue("Caverphone encodings should be equal", caverphone.isEncodeEqual("Peter", "Peady"));
+        assertFalse(caverphone.isEncodeEqual("Peter", "Stevenson"), "Caverphone encodings should not be equal");
+        assertTrue(caverphone.isEncodeEqual("Peter", "Peady"), "Caverphone encodings should be equal");
     }
 
     @Test

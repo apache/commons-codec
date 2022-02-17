@@ -17,23 +17,18 @@
 
 package org.apache.commons.codec.binary;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import org.apache.commons.codec.binary.BaseNCodec.Context;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 public class BaseNCodecTest {
 
     BaseNCodec codec;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         codec = new BaseNCodec(0, 0, 0, 0) {
             @Override
@@ -68,14 +63,14 @@ public class BaseNCodecTest {
         context.pos = 42;
         context.readPos = 981;
         final String text = context.toString();
-        Assert.assertTrue(text.contains("[0, 0, 0]"));
-        Assert.assertTrue(text.contains("13"));
-        Assert.assertTrue(text.contains("true"));
-        Assert.assertTrue(text.contains("777"));
-        Assert.assertTrue(text.contains("999"));
-        Assert.assertTrue(text.contains("5"));
-        Assert.assertTrue(text.contains("42"));
-        Assert.assertTrue(text.contains("981"));
+        assertTrue(text.contains("[0, 0, 0]"));
+        assertTrue(text.contains("13"));
+        assertTrue(text.contains("true"));
+        assertTrue(text.contains("777"));
+        assertTrue(text.contains("999"));
+        assertTrue(text.contains("5"));
+        assertTrue(text.contains("42"));
+        assertTrue(text.contains("981"));
     }
 
     @Test
@@ -226,27 +221,27 @@ public class BaseNCodecTest {
     public void testEnsureBufferSize() {
         final BaseNCodec ncodec = new NoOpBaseNCodec();
         final Context context = new Context();
-        Assert.assertNull("Initial buffer should be null", context.buffer);
+        assertNull(context.buffer, "Initial buffer should be null");
 
         // Test initialization
         context.pos = 76979;
         context.readPos = 273;
         ncodec.ensureBufferSize(0, context);
-        Assert.assertNotNull("buffer should be initialized", context.buffer);
-        Assert.assertEquals("buffer should be initialized to default size", ncodec.getDefaultBufferSize(), context.buffer.length);
-        Assert.assertEquals("context position", 0, context.pos);
-        Assert.assertEquals("context read position", 0, context.readPos);
+        assertNotNull(context.buffer, "buffer should be initialized");
+        assertEquals(ncodec.getDefaultBufferSize(), context.buffer.length, "buffer should be initialized to default size");
+        assertEquals(0, context.pos, "context position");
+        assertEquals(0, context.readPos, "context read position");
 
         // Test when no expansion is required
         ncodec.ensureBufferSize(1, context);
-        Assert.assertEquals("buffer should not expand unless required", ncodec.getDefaultBufferSize(), context.buffer.length);
+        assertEquals(ncodec.getDefaultBufferSize(), context.buffer.length, "buffer should not expand unless required");
 
         // Test expansion
         int length = context.buffer.length;
         context.pos = length;
         int extra = 1;
         ncodec.ensureBufferSize(extra, context);
-        Assert.assertTrue("buffer should expand", context.buffer.length >= length + extra);
+        assertTrue(context.buffer.length >= length + extra, "buffer should expand");
 
         // Test expansion beyond double the buffer size.
         // Hits the edge case where the required capacity is more than the default expansion.
@@ -254,7 +249,7 @@ public class BaseNCodecTest {
         context.pos = length;
         extra = length * 10;
         ncodec.ensureBufferSize(extra, context);
-        Assert.assertTrue("buffer should expand beyond double capacity", context.buffer.length >= length + extra);
+        assertTrue(context.buffer.length >= length + extra, "buffer should expand beyond double capacity");
     }
 
     /**
@@ -294,7 +289,7 @@ public class BaseNCodecTest {
         // 32KiB: Some head room
         // length: Existing buffer
         final long estimatedMemory = (1L << 31) + 32 * 1024 + length;
-        Assume.assumeTrue("Not enough free memory for the test", presumableFreeMemory > estimatedMemory);
+        assumeTrue(presumableFreeMemory > estimatedMemory, "Not enough free memory for the test");
 
         final int max = Integer.MAX_VALUE - 8;
 
@@ -319,7 +314,7 @@ public class BaseNCodecTest {
             extra++;
         }
         ncodec.ensureBufferSize(extra, context);
-        Assert.assertTrue(context.buffer.length >= length + extra);
+        assertTrue(context.buffer.length >= length + extra);
     }
 
     /**
@@ -332,7 +327,7 @@ public class BaseNCodecTest {
         } catch (final OutOfMemoryError ignore) {
             // ignore
         }
-        Assume.assumeTrue("Cannot allocate array of size: " + size, bytes != null);
+        assumeTrue(bytes != null, "Cannot allocate array of size: " + size);
     }
 
     /**
