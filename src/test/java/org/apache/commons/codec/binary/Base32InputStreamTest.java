@@ -30,6 +30,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class Base32InputStreamTest {
 
@@ -438,10 +439,12 @@ public class Base32InputStreamTest {
         final byte[] buf = new byte[1024];
         final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
         try (final Base32InputStream in = new Base32InputStream(bin, true, 4, new byte[] { 0, 0, 0 })) {
-            assertThrows("Base32InputStream.read(buf, -1, 0)", IndexOutOfBoundsException.class, () -> in.read(buf, -1, 0));
-            assertThrows("Base32InputStream.read(buf, 0, -1)", IndexOutOfBoundsException.class, () -> in.read(buf, 0, -1));
-            assertThrows("Base32InputStream.read(buf, buf.length + 1, 0)", IndexOutOfBoundsException.class, () -> in.read(buf, buf.length + 1, 0));
-            assertThrows("Base32InputStream.read(buf, buf.length - 1, 2)", IndexOutOfBoundsException.class, () -> in.read(buf, buf.length - 1, 2));
+            assertAll(
+                    () -> assertThrows("Base32InputStream.read(buf, -1, 0)", IndexOutOfBoundsException.class, () -> in.read(buf, -1, 0)),
+                    () -> assertThrows("Base32InputStream.read(buf, 0, -1)", IndexOutOfBoundsException.class, () -> in.read(buf, 0, -1)),
+                    () -> assertThrows("Base32InputStream.read(buf, buf.length + 1, 0)", IndexOutOfBoundsException.class, () -> in.read(buf, buf.length + 1, 0)),
+                    () -> assertThrows("Base32InputStream.read(buf, buf.length - 1, 2)", IndexOutOfBoundsException.class, () -> in.read(buf, buf.length - 1, 2))
+            );
         }
     }
 

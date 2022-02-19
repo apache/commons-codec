@@ -18,6 +18,7 @@
 package org.apache.commons.codec.net;
 
 import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.charset.UnsupportedCharsetException;
@@ -117,9 +118,11 @@ public class QuotedPrintableCodecTest {
     @Test
     public void testDecodeInvalid() throws Exception {
         final QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
-        assertThrows(DecoderException.class, () -> qpcodec.decode("="));
-        assertThrows(DecoderException.class, () -> qpcodec.decode("=A"));
-        assertThrows(DecoderException.class, () -> qpcodec.decode("=WW"));
+        assertAll(
+                () -> assertThrows(DecoderException.class, () -> qpcodec.decode("=")),
+                () -> assertThrows(DecoderException.class, () -> qpcodec.decode("=A")),
+                () -> assertThrows(DecoderException.class, () -> qpcodec.decode("=WW"))
+        );
     }
 
     @Test

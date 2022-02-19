@@ -20,6 +20,7 @@ package org.apache.commons.codec.net;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
@@ -129,14 +130,19 @@ public class URLCodecTest {
 
 
     @Test
-    public void testDecodeInvalid() throws Exception {
+    public void testDecodeInvalid() {
         final URLCodec urlCodec = new URLCodec();
-        assertThrows(DecoderException.class, () -> urlCodec.decode("%"));
-        assertThrows(DecoderException.class, () -> urlCodec.decode("%A"));
-        // Bad 1st char after %
-        assertThrows(DecoderException.class, () -> urlCodec.decode("%A"));
-        // Bad 2nd char after %
-        assertThrows(DecoderException.class, () -> urlCodec.decode("%0W"));
+
+        assertAll(
+                () -> assertThrows(DecoderException.class, () -> urlCodec.decode("%")),
+
+                // Bad 1st char after %
+                () -> assertThrows(DecoderException.class, () -> urlCodec.decode("%A")),
+
+                // Bad 2nd char after %
+                () -> assertThrows(DecoderException.class, () -> urlCodec.decode("%0W"))
+        );
+
         this.validateState(urlCodec);
     }
 
@@ -221,8 +227,10 @@ public class URLCodecTest {
     public void testInvalidEncoding() {
         final URLCodec urlCodec = new URLCodec("NONSENSE");
         final String plain = "Hello there!";
-        assertThrows("We set the encoding to a bogus NONSENSE value", EncoderException.class, () -> urlCodec.encode(plain));
-        assertThrows("We set the encoding to a bogus NONSENSE value", DecoderException.class, () -> urlCodec.decode(plain));
+        assertAll(
+                () -> assertThrows("We set the encoding to a bogus NONSENSE value", EncoderException.class, () -> urlCodec.encode(plain)),
+                () -> assertThrows("We set the encoding to a bogus NONSENSE value", DecoderException.class, () -> urlCodec.decode(plain))
+        );
         this.validateState(urlCodec);
     }
 

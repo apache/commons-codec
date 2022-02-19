@@ -25,6 +25,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.math.BigInteger;
 import java.nio.charset.Charset;
@@ -91,11 +92,13 @@ public class Base64Test {
         final String validString = "abc===defg\n\r123456\r789\r\rABC\n\nDEF==GHI\r\nJKL==============";
         final String invalidString = validString + (char) 0; // append null character
 
-        assertThrows(NullPointerException.class, () -> Base64.isBase64(nullString));
+        assertAll(
+                () -> assertThrows(NullPointerException.class, () -> Base64.isBase64(nullString)),
 
-        assertTrue("Base64.isStringBase64(empty-string) is true", Base64.isBase64(emptyString));
-        assertTrue("Base64.isStringBase64(valid-string) is true", Base64.isBase64(validString));
-        assertFalse("Base64.isStringBase64(invalid-string) is false", Base64.isBase64(invalidString));
+                () -> assertTrue("Base64.isStringBase64(empty-string) is true", Base64.isBase64(emptyString)),
+                () -> assertTrue("Base64.isStringBase64(valid-string) is true", Base64.isBase64(validString)),
+                () -> assertFalse("Base64.isStringBase64(invalid-string) is false", Base64.isBase64(invalidString))
+        );
     }
 
     /**
@@ -268,13 +271,17 @@ public class Base64Test {
         base64 = new Base64(64, new byte[] {});
         base64 = new Base64(64, new byte[] {'$'}); // OK
 
-        assertThrows("'A' as a line separator", IllegalArgumentException.class, () -> new Base64(-1, new byte[] {'A'}));
-        assertThrows("'A' as a line separator", IllegalArgumentException.class, () -> new Base64(64, new byte[] {'A'}));
-        assertThrows("'=' as a line separator", IllegalArgumentException.class, () -> new Base64(64, new byte[] {'='}));
-        assertThrows("'A$' as a line separator", IllegalArgumentException.class, () -> new Base64(64, new byte[] {'A', '$'}));
+        assertAll(
+                () -> assertThrows("'A' as a line separator", IllegalArgumentException.class, () -> new Base64(-1, new byte[] {'A'})),
+                () -> assertThrows("'A' as a line separator", IllegalArgumentException.class, () -> new Base64(64, new byte[] {'A'})),
+                () -> assertThrows("'=' as a line separator", IllegalArgumentException.class, () -> new Base64(64, new byte[] {'='})),
+                () -> assertThrows("'A$' as a line separator", IllegalArgumentException.class, () -> new Base64(64, new byte[] {'A', '$'})),
 
-        base64 = new Base64(64, new byte[] {' ', '$', '\n', '\r', '\t'}); // OK
-        assertNotNull(base64);
+                () -> {
+                    Base64 base64_0 = new Base64(64, new byte[] {' ', '$', '\n', '\r', '\t'}); // OK
+                    assertNotNull(base64_0);
+                }
+        );
     }
 
     @Test

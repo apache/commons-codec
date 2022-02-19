@@ -25,6 +25,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -252,14 +253,18 @@ public class Base32Test {
         // even when line length is negative.
         base32 = new Base32(-1, new byte[] {'A'});
         base32 = new Base32(32, new byte[] {'$'}); // OK
-        assertThrows("null line separator", IllegalArgumentException.class, () -> new Base32(32, null));
-        assertThrows("'A' as a line separator", IllegalArgumentException.class, () -> new Base32(32, new byte[] {'A'}));
-        assertThrows("'=' as a line separator", IllegalArgumentException.class, () -> new Base32(32, new byte[] {'='}));
-        assertThrows("'A$' as a line separator", IllegalArgumentException.class, () -> new Base32(32, new byte[] {'A', '$'}));
-        assertThrows("'A' as padding", IllegalArgumentException.class, () -> new Base32(32, new byte[] {'\n'}, false, (byte) 'A'));
-        assertThrows("' ' as padding", IllegalArgumentException.class, () -> new Base32(32, new byte[] {'\n'}, false, (byte) ' '));
-        base32 = new Base32(32, new byte[] {' ', '$', '\n', '\r', '\t'}); // OK
-        assertNotNull(base32);
+        assertAll(
+                () -> assertThrows("null line separator", IllegalArgumentException.class, () -> new Base32(32, null)),
+                () -> assertThrows("'A' as a line separator", IllegalArgumentException.class, () -> new Base32(32, new byte[]{'A'})),
+                () -> assertThrows("'=' as a line separator", IllegalArgumentException.class, () -> new Base32(32, new byte[]{'='})),
+                () -> assertThrows("'A$' as a line separator", IllegalArgumentException.class, () -> new Base32(32, new byte[]{'A', '$'})),
+                () -> assertThrows("'A' as padding", IllegalArgumentException.class, () -> new Base32(32, new byte[]{'\n'}, false, (byte) 'A')),
+                () -> assertThrows("' ' as padding", IllegalArgumentException.class, () -> new Base32(32, new byte[]{'\n'}, false, (byte) ' ')),
+                () -> {
+                    Base32 base32_0 = new Base32(32, new byte[]{' ', '$', '\n', '\r', '\t'}); // OK
+                    assertNotNull(base32_0);
+                }
+        );
     }
 
     /**

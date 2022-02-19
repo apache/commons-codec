@@ -25,6 +25,7 @@ import java.io.OutputStream;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 /**
  * @since 1.15
@@ -238,10 +239,12 @@ public class Base16OutputStreamTest {
         final byte[] buf = new byte[1024];
         final ByteArrayOutputStream bout = new ByteArrayOutputStream();
         try (final Base16OutputStream out = new Base16OutputStream(bout)) {
-            assertThrows("Base16InputStream.write(buf, -1, 0)", IndexOutOfBoundsException.class, () -> out.write(buf, -1, 1));
-            assertThrows("Base16InputStream.write(buf, 1, -1)", IndexOutOfBoundsException.class, () -> out.write(buf, 1, -1));
-            assertThrows("Base16InputStream.write(buf, buf.length + 1, 0)", IndexOutOfBoundsException.class, () -> out.write(buf, buf.length + 1, 0));
-            assertThrows("Base16InputStream.write(buf, buf.length - 1, 2)", IndexOutOfBoundsException.class, () -> out.write(buf, buf.length - 1, 2));
+            assertAll(
+                    () -> assertThrows("Base16InputStream.write(buf, -1, 0)", IndexOutOfBoundsException.class, () -> out.write(buf, -1, 1)),
+                    () -> assertThrows("Base16InputStream.write(buf, 1, -1)", IndexOutOfBoundsException.class, () -> out.write(buf, 1, -1)),
+                    () -> assertThrows("Base16InputStream.write(buf, buf.length + 1, 0)", IndexOutOfBoundsException.class, () -> out.write(buf, buf.length + 1, 0)),
+                    () -> assertThrows("Base16InputStream.write(buf, buf.length - 1, 2)", IndexOutOfBoundsException.class, () -> out.write(buf, buf.length - 1, 2))
+            );
         }
     }
 
