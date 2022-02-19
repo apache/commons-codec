@@ -23,7 +23,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.commons.codec.CodecPolicy;
-import org.apache.commons.codec.EncoderException;
 import org.junit.Test;
 
 import static org.junit.Assert.assertArrayEquals;
@@ -31,7 +30,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 public class Base32InputStreamTest {
 

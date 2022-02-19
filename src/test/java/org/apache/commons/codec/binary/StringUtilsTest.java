@@ -23,7 +23,6 @@ import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 
-import org.apache.commons.codec.EncoderException;
 import org.junit.Assert;
 import org.junit.Test;
 
