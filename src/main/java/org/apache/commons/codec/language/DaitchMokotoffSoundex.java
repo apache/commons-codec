@@ -232,12 +232,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
         // sort RULES by pattern length in descending order
         for (final Map.Entry<Character, List<Rule>> rule : RULES.entrySet()) {
             final List<Rule> ruleList = rule.getValue();
-            ruleList.sort(new Comparator<Rule>() {
-                @Override
-                public int compare(final Rule rule1, final Rule rule2) {
-                    return rule2.getPatternLength() - rule1.getPatternLength();
-                }
-            });
+            ruleList.sort((rule1, rule2) -> rule2.getPatternLength() - rule1.getPatternLength());
         }
     }
 
@@ -305,11 +300,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
 
                         final Rule r = new Rule(pattern, replacement1, replacement2, replacement3);
                         final char patternKey = r.pattern.charAt(0);
-                        List<Rule> rules = ruleMapping.get(patternKey);
-                        if (rules == null) {
-                            rules = new ArrayList<>();
-                            ruleMapping.put(patternKey, rules);
-                        }
+                        final List<Rule> rules = ruleMapping.computeIfAbsent(patternKey, k -> new ArrayList<>());
                         rules.add(r);
                     } catch (final IllegalArgumentException e) {
                         throw new IllegalStateException(
@@ -500,7 +491,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
             }
 
             // use an EMPTY_LIST to avoid false positive warnings wrt potential null pointer access
-            final List<Branch> nextBranches = branching ? new ArrayList<Branch>() : Collections.<Branch>emptyList();
+            final List<Branch> nextBranches = branching ? new ArrayList<>() : Collections.emptyList();
 
             for (final Rule rule : rules) {
                 if (rule.matches(inputContext)) {

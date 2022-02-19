@@ -81,27 +81,24 @@ import org.apache.commons.codec.language.bm.Languages.LanguageSet;
 public class Rule {
 
     public static final class Phoneme implements PhonemeExpr {
-        public static final Comparator<Phoneme> COMPARATOR = new Comparator<Phoneme>() {
-            @Override
-            public int compare(final Phoneme o1, final Phoneme o2) {
-                final int o1Length = o1.phonemeText.length();
-                final int o2Length = o2.phonemeText.length();
-                for (int i = 0; i < o1Length; i++) {
-                    if (i >= o2Length) {
-                        return +1;
-                    }
-                    final int c = o1.phonemeText.charAt(i) - o2.phonemeText.charAt(i);
-                    if (c != 0) {
-                        return c;
-                    }
+        public static final Comparator<Phoneme> COMPARATOR = (o1, o2) -> {
+            final int o1Length = o1.phonemeText.length();
+            final int o2Length = o2.phonemeText.length();
+            for (int i = 0; i < o1Length; i++) {
+                if (i >= o2Length) {
+                    return +1;
                 }
-
-                if (o1Length < o2Length) {
-                    return -1;
+                final int c = o1.phonemeText.charAt(i) - o2.phonemeText.charAt(i);
+                if (c != 0) {
+                    return c;
                 }
-
-                return 0;
             }
+
+            if (o1Length < o2Length) {
+                return -1;
+            }
+
+            return 0;
         };
 
         private final StringBuilder phonemeText;
@@ -194,12 +191,7 @@ public class Rule {
         boolean isMatch(CharSequence input);
     }
 
-    public static final RPattern ALL_STRINGS_RMATCHER = new RPattern() {
-        @Override
-        public boolean isMatch(final CharSequence input) {
-            return true;
-        }
-    };
+    public static final RPattern ALL_STRINGS_RMATCHER = input -> true;
 
     public static final String ALL = "ALL";
 
@@ -465,11 +457,7 @@ public class Rule {
                             }
                         };
                         final String patternKey = r.pattern.substring(0,1);
-                        List<Rule> rules = lines.get(patternKey);
-                        if (rules == null) {
-                            rules = new ArrayList<>();
-                            lines.put(patternKey, rules);
-                        }
+                        final List<Rule> rules = lines.computeIfAbsent(patternKey, k -> new ArrayList<>());
                         rules.add(r);
                     } catch (final IllegalArgumentException e) {
                         throw new IllegalStateException("Problem parsing line '" + currentLine + "' in " +
@@ -500,19 +488,9 @@ public class Rule {
                 // exact match
                 if (content.isEmpty()) {
                     // empty
-                    return new RPattern() {
-                        @Override
-                        public boolean isMatch(final CharSequence input) {
-                            return input.length() == 0;
-                        }
-                    };
+                    return input -> input.length() == 0;
                 }
-                return new RPattern() {
-                    @Override
-                    public boolean isMatch(final CharSequence input) {
-                        return input.equals(content);
-                    }
-                };
+                return input -> input.equals(content);
             }
             if ((startsWith || endsWith) && content.isEmpty()) {
                 // matches every string
@@ -520,21 +498,11 @@ public class Rule {
             }
             if (startsWith) {
                 // matches from start
-                return new RPattern() {
-                    @Override
-                    public boolean isMatch(final CharSequence input) {
-                        return startsWith(input, content);
-                    }
-                };
+                return input -> startsWith(input, content);
             }
             if (endsWith) {
                 // matches from start
-                return new RPattern() {
-                    @Override
-                    public boolean isMatch(final CharSequence input) {
-                        return endsWith(input, content);
-                    }
-                };
+                return input -> endsWith(input, content);
             }
         } else {
             final boolean startsWithBox = content.startsWith("[");
@@ -553,31 +521,16 @@ public class Rule {
 
                     if (startsWith && endsWith) {
                         // exact match
-                        return new RPattern() {
-                            @Override
-                            public boolean isMatch(final CharSequence input) {
-                                return input.length() == 1 && contains(bContent, input.charAt(0)) == shouldMatch;
-                            }
-                        };
+                        return input -> input.length() == 1 && contains(bContent, input.charAt(0)) == shouldMatch;
                     }
                     if (startsWith) {
                         // first char
-                        return new RPattern() {
-                            @Override
-                            public boolean isMatch(final CharSequence input) {
-                                return input.length() > 0 && contains(bContent, input.charAt(0)) == shouldMatch;
-                            }
-                        };
+                        return input -> input.length() > 0 && contains(bContent, input.charAt(0)) == shouldMatch;
                     }
                     if (endsWith) {
                         // last char
-                        return new RPattern() {
-                            @Override
-                            public boolean isMatch(final CharSequence input) {
-                                return input.length() > 0 &&
-                                       contains(bContent, input.charAt(input.length() - 1)) == shouldMatch;
-                            }
-                        };
+                        return input -> input.length() > 0 &&
+                               contains(bContent, input.charAt(input.length() - 1)) == shouldMatch;
                     }
                 }
             }
