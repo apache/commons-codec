@@ -129,9 +129,9 @@ public class BCodecTest {
         assertThrows(EncoderException.class, () -> bcodec.encode(Double.valueOf(3.0d)));
     }
 
-    @Test(expected=UnsupportedCharsetException.class)
+    @Test
     public void testInvalidEncoding() {
-        new BCodec("NONSENSE");
+        assertThrows(UnsupportedCharsetException.class, () -> new BCodec("NONSENSE"));
     }
 
     @Test

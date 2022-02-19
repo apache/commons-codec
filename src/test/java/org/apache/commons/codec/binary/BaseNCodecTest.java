@@ -21,6 +21,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.apache.commons.codec.binary.BaseNCodec.Context;
 import org.junit.Assert;
@@ -356,7 +357,7 @@ public class BaseNCodecTest {
         return Runtime.getRuntime().maxMemory() - allocatedMemory;
     }
 
-    @Test(expected = OutOfMemoryError.class)
+    @Test
     public void testEnsureBufferSizeThrowsOnOverflow() {
         final BaseNCodec ncodec = new NoOpBaseNCodec();
         final Context context = new Context();
@@ -365,7 +366,7 @@ public class BaseNCodecTest {
         context.buffer = new byte[length];
         context.pos = length;
         final int extra = Integer.MAX_VALUE;
-        ncodec.ensureBufferSize(extra, context);
+        assertThrows(OutOfMemoryError.class, () -> ncodec.ensureBufferSize(extra, context));
     }
 
     /**

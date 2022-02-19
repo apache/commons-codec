@@ -19,6 +19,7 @@ package org.apache.commons.codec.digest;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.Test;
 
@@ -50,9 +51,9 @@ public class CryptTest {
      * as NULL. Our implementation should throw an Exception as any resulting
      * hash would not be verifyable with other implementations of crypt().
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testCryptWithEmptySalt() {
-        Crypt.crypt("secret", "");
+        assertThrows(IllegalArgumentException.class, () -> Crypt.crypt("secret", ""));
     }
 
 }

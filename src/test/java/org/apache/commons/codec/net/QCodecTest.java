@@ -144,9 +144,9 @@ public class QCodecTest {
     }
 
 
-    @Test(expected=UnsupportedCharsetException.class)
+    @Test
     public void testInvalidEncoding() {
-        new QCodec("NONSENSE");
+        assertThrows(UnsupportedCharsetException.class, () -> new QCodec("NONSENSE"));
     }
 
     @Test

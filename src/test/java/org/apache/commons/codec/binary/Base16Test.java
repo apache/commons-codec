@@ -97,11 +97,11 @@ public class Base16Test {
      * isBase16 throws RuntimeException on some
      * non-Base16 bytes
      */
-    @Test(expected=RuntimeException.class)
+    @Test
     public void testCodec68() {
         final byte[] x = { 'n', 'H', '=', '=', (byte) 0x9c };
         final Base16 b16 = new Base16();
-        b16.decode(x);
+        assertThrows(RuntimeException.class, () -> b16.decode(x));
     }
 
     @Test
@@ -460,10 +460,10 @@ public class Base16Test {
         return buf.toString();
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void checkEncodeLengthBounds() {
         final Base16 base16 = new Base16();
-        base16.encode(new byte[10], 0, 1 << 30);
+        assertThrows(IllegalArgumentException.class, () -> base16.encode(new byte[10], 0, 1 << 30));
     }
 
     @Test
@@ -565,13 +565,13 @@ public class Base16Test {
         assertEquals((byte)0xEF, context.buffer[0]);
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void testStrictDecoding() {
         final String encoded = "aabbccdde";  // Note the trailing `e` which does not make up a hex-pair and so is only 1/2 byte
 
         final Base16 b16 = new Base16(true, CodecPolicy.STRICT);
         assertEquals(CodecPolicy.STRICT, b16.getCodecPolicy());
-        b16.decode(StringUtils.getBytesUtf8(encoded));
+        assertThrows(IllegalArgumentException.class, () -> b16.decode(StringUtils.getBytesUtf8(encoded)));
     }
 
     @Test

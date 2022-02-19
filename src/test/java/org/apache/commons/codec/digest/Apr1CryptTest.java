@@ -19,6 +19,7 @@ package org.apache.commons.codec.digest;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.Test;
 
@@ -87,14 +88,14 @@ public class Apr1CryptTest {
         assertEquals("$apr1$12345678$0lqb/6VUFP8JY/s/jTrIk0", Md5Crypt.apr1Crypt("secret", "12345678901234567890"));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testApr1CryptNullData() {
-        Md5Crypt.apr1Crypt((byte[]) null);
+        assertThrows(NullPointerException.class, () -> Md5Crypt.apr1Crypt((byte[]) null));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testApr1CryptWithEmptySalt() {
-        Md5Crypt.apr1Crypt("secret".getBytes(), "");
+        assertThrows(IllegalArgumentException.class, () -> Md5Crypt.apr1Crypt("secret".getBytes(), ""));
     }
 
     @Test
@@ -106,8 +107,8 @@ public class Apr1CryptTest {
         assertNotSame(hash, hash2);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testApr1CryptWithInvalidSalt() {
-        Md5Crypt.apr1Crypt(new byte[0], "!");
+        assertThrows(IllegalArgumentException.class, () -> Md5Crypt.apr1Crypt(new byte[0], "!"));
     }
 }

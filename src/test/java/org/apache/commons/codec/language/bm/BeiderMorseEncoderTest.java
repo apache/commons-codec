@@ -20,6 +20,7 @@ package org.apache.commons.codec.language.bm;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
@@ -108,19 +109,19 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest<StringEnco
         bmpm.encode("gna");
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testInvalidLangIllegalArgumentException() {
-        Rule.getInstance(NameType.GENERIC, RuleType.APPROX, "noSuchLanguage");
+        assertThrows(IllegalArgumentException.class, () -> Rule.getInstance(NameType.GENERIC, RuleType.APPROX, "noSuchLanguage"));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testInvalidLangIllegalStateException() {
-        Lang.loadFromResource("thisIsAMadeUpResourceName", Languages.getInstance(NameType.GENERIC));
+        assertThrows(IllegalArgumentException.class, () -> Lang.loadFromResource("thisIsAMadeUpResourceName", Languages.getInstance(NameType.GENERIC)));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testInvalidLanguageIllegalArgumentException() {
-        Languages.getInstance("thereIsNoSuchLanguage");
+        assertThrows(IllegalArgumentException.class, () -> Languages.getInstance("thereIsNoSuchLanguage"));
     }
 
     @Test(timeout = 10000L)
@@ -129,10 +130,10 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest<StringEnco
         bmpm.encode("MacGhilleseatheanaich");
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void testNegativeIndexForRuleMatchIndexOutOfBoundsException() {
         final Rule r = new Rule("a", "", "", new Rule.Phoneme("", Languages.ANY_LANGUAGE));
-        r.patternAndContextMatches("bob", -1);
+        assertThrows(IndexOutOfBoundsException.class, () -> r.patternAndContextMatches("bob", -1));
     }
 
     @Test
@@ -174,10 +175,10 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest<StringEnco
         assertEquals("Rule type should have been set to exact", RuleType.EXACT, bmpm.getRuleType());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testSetRuleTypeToRulesIllegalArgumentException() {
         final BeiderMorseEncoder bmpm = new BeiderMorseEncoder();
-        bmpm.setRuleType(RuleType.RULES);
+        assertThrows(IllegalArgumentException.class, () -> bmpm.setRuleType(RuleType.RULES));
     }
 
     /**

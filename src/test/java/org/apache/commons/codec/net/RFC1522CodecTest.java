@@ -56,7 +56,7 @@ public class RFC1522CodecTest {
         assertNull(testcodec.encodeText(null, CharEncoding.UTF_8));
     }
 
-    private void assertExpectedDecoderException(final String s) throws Exception {
+    private void assertExpectedDecoderException(final String s) {
         assertThrows(DecoderException.class, () -> new RFC1522TestCodec().decodeText(s));
     }
 

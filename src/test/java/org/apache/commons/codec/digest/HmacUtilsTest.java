@@ -17,6 +17,7 @@
 package org.apache.commons.codec.digest;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -36,9 +37,9 @@ import org.junit.Test;
 public class HmacUtilsTest {
 
     @SuppressWarnings("deprecation") // most of the static methods are deprecated
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testEmptyKey() {
-        HmacUtils.getHmacMd5(new byte[] {});
+        assertThrows(IllegalArgumentException.class, () -> HmacUtils.getHmacMd5(new byte[] {}));
     }
 
     @SuppressWarnings("deprecation") // most of the static methods are deprecated
@@ -121,19 +122,19 @@ public class HmacUtilsTest {
                 .doFinal());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testInitializedMacNullAlgo() {
-        HmacUtils.getInitializedMac((String) null, HmacAlgorithmsTest.STANDARD_KEY_BYTES);
+        assertThrows(IllegalArgumentException.class, () -> HmacUtils.getInitializedMac((String) null, HmacAlgorithmsTest.STANDARD_KEY_BYTES));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testInitializedMacNullKey() {
-        HmacUtils.getInitializedMac(HmacAlgorithms.HMAC_MD5, null);
+        assertThrows(IllegalArgumentException.class, () -> HmacUtils.getInitializedMac(HmacAlgorithms.HMAC_MD5, null));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testInternalNoSuchAlgorithmException() {
-        HmacUtils.getInitializedMac("Bogus Bogus", StringUtils.getBytesUtf8("akey"));
+        assertThrows(IllegalArgumentException.class, () -> HmacUtils.getInitializedMac("Bogus Bogus", StringUtils.getBytesUtf8("akey")));
     }
 
     @SuppressWarnings("deprecation") // most of the static methods are deprecated
@@ -153,20 +154,20 @@ public class HmacUtilsTest {
     }
 
     @SuppressWarnings("deprecation") // most of the static methods are deprecated
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testMd5HMacFail() {
-        HmacUtils.hmacMd5((byte[]) null, HmacAlgorithmsTest.STANDARD_PHRASE_BYTES);
+        assertThrows(IllegalArgumentException.class, () -> HmacUtils.hmacMd5((byte[]) null, HmacAlgorithmsTest.STANDARD_PHRASE_BYTES));
     }
 
     @SuppressWarnings("deprecation") // most of the static methods are deprecated
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testNullKey() {
-        HmacUtils.getHmacMd5(null);
+        assertThrows(IllegalArgumentException.class, () -> HmacUtils.getHmacMd5(null));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testSecretKeySpecAllowsEmtyKeys() {
-        new SecretKeySpec(new byte[] {}, "HmacMD5");
+        assertThrows(IllegalArgumentException.class, () -> new SecretKeySpec(new byte[] {}, "HmacMD5"));
     }
 
     @SuppressWarnings("deprecation") // most of the static methods are deprecated
@@ -187,9 +188,9 @@ public class HmacUtilsTest {
     }
 
     @SuppressWarnings("deprecation") // most of the static methods are deprecated
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testSha1HMacFail() {
-        HmacUtils.hmacSha1((byte[]) null, HmacAlgorithmsTest.STANDARD_PHRASE_BYTES);
+        assertThrows(IllegalArgumentException.class, () -> HmacUtils.hmacSha1((byte[]) null, HmacAlgorithmsTest.STANDARD_PHRASE_BYTES));
     }
 
     @SuppressWarnings("deprecation") // most of the static methods are deprecated
@@ -210,9 +211,9 @@ public class HmacUtilsTest {
     }
 
     @SuppressWarnings("deprecation") // most of the static methods are deprecated
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testSha256HMacFail() {
-        HmacUtils.hmacSha256((byte[]) null, HmacAlgorithmsTest.STANDARD_PHRASE_BYTES);
+        assertThrows(IllegalArgumentException.class, () -> HmacUtils.hmacSha256((byte[]) null, HmacAlgorithmsTest.STANDARD_PHRASE_BYTES));
     }
 
     @SuppressWarnings("deprecation") // most of the static methods are deprecated
@@ -233,9 +234,9 @@ public class HmacUtilsTest {
     }
 
     @SuppressWarnings("deprecation") // most of the static methods are deprecated
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testSha384HMacFail() {
-        HmacUtils.hmacSha384((byte[]) null, HmacAlgorithmsTest.STANDARD_PHRASE_BYTES);
+        assertThrows(IllegalArgumentException.class, () -> HmacUtils.hmacSha384((byte[]) null, HmacAlgorithmsTest.STANDARD_PHRASE_BYTES));
     }
 
     @SuppressWarnings("deprecation") // most of the static methods are deprecated
@@ -256,8 +257,8 @@ public class HmacUtilsTest {
     }
 
     @SuppressWarnings("deprecation") // most of the static methods are deprecated
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testSha512HMacFail() {
-        HmacUtils.hmacSha512((byte[]) null, HmacAlgorithmsTest.STANDARD_PHRASE_BYTES);
+        assertThrows(IllegalArgumentException.class, () -> HmacUtils.hmacSha512((byte[]) null, HmacAlgorithmsTest.STANDARD_PHRASE_BYTES));
     }
 }

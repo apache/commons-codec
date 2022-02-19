@@ -192,9 +192,9 @@ public class HexTest {
         assertEquals(name, sourceString, actualStringFromBytes);
     }
 
-    @Test(expected = UnsupportedCharsetException.class)
+    @Test
     public void testCustomCharsetBadName() {
-        new Hex(BAD_ENCODING_NAME);
+        assertThrows(UnsupportedCharsetException.class, () -> new Hex(BAD_ENCODING_NAME));
     }
 
     @Test
@@ -298,16 +298,16 @@ public class HexTest {
         checkDecodeHexCharArrayOddCharacters(new char[] { 'A', 'B', 'C', 'D', 'E' });
     }
 
-    @Test(expected = DecoderException.class)
-    public void testDecodeHexCharArrayOutBufferUnderSized() throws DecoderException {
+    @Test
+    public void testDecodeHexCharArrayOutBufferUnderSized() {
         final byte[] out = new byte[4];
-        Hex.decodeHex("aabbccddeeff".toCharArray(), out, 0);
+        assertThrows(DecoderException.class, () -> Hex.decodeHex("aabbccddeeff".toCharArray(), out, 0));
     }
 
-    @Test(expected = DecoderException.class)
-    public void testDecodeHexCharArrayOutBufferUnderSizedByOffset() throws DecoderException {
+    @Test
+    public void testDecodeHexCharArrayOutBufferUnderSizedByOffset() {
         final byte[] out = new byte[6];
-        Hex.decodeHex("aabbccddeeff".toCharArray(), out, 1);
+        assertThrows(DecoderException.class, () -> Hex.decodeHex("aabbccddeeff".toCharArray(), out, 1));
     }
 
     @Test
