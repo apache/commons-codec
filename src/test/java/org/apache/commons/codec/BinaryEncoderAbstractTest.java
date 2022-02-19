@@ -18,7 +18,6 @@
 package org.apache.commons.codec;
 
 import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.fail;
 
 import org.junit.Test;
 

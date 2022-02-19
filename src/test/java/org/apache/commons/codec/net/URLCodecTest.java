@@ -20,7 +20,6 @@ package org.apache.commons.codec.net;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.fail;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
@@ -28,7 +27,6 @@ import java.nio.charset.StandardCharsets;
 import org.apache.commons.codec.CharEncoding;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
-import org.apache.commons.codec.net.RFC1522CodecTest.RFC1522TestCodec;
 import org.junit.Test;
 
 /**

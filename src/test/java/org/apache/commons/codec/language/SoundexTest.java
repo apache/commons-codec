@@ -23,7 +23,6 @@ import static org.junit.Assert.assertThrows;
 
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoderAbstractTest;
-import org.apache.commons.codec.digest.Blake3;
 import org.junit.Assert;
 import org.junit.Test;
 
