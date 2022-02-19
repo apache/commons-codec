@@ -307,7 +307,7 @@ public class Soundex implements StringEncoder {
         if (str.isEmpty()) {
             return str;
         }
-        final char out[] = {'0', '0', '0', '0'};
+        final char[] out = {'0', '0', '0', '0'};
         int count = 0;
         final char first = str.charAt(0);
         out[count++] = first;

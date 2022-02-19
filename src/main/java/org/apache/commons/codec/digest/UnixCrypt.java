@@ -39,23 +39,23 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class UnixCrypt {
 
-    private static final int CON_SALT[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    private static final int[] CON_SALT = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 5, 6,
             7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33,
             34, 35, 36, 37, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53,
             54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 0, 0, 0, 0, 0 };
 
-    private static final int COV2CHAR[] = { 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 65, 66, 67, 68, 69, 70,
+    private static final int[] COV2CHAR = { 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 65, 66, 67, 68, 69, 70,
             71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 97, 98, 99, 100, 101, 102,
             103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122 };
 
-    private static final char SALT_CHARS[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789./"
+    private static final char[] SALT_CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789./"
             .toCharArray();
 
-    private static final boolean SHIFT2[] = { false, false, true, true, true, true, true, true, false, true, true,
+    private static final boolean[] SHIFT2 = { false, false, true, true, true, true, true, true, false, true, true,
             true, true, true, true, false };
 
-    private static final int SKB[][] = {
+    private static final int[][] SKB = {
             { 0, 16, 0x20000000, 0x20000010, 0x10000, 0x10010, 0x20010000, 0x20010010, 2048, 2064, 0x20000800,
                     0x20000810, 0x10800, 0x10810, 0x20010800, 0x20010810, 32, 48, 0x20000020, 0x20000030, 0x10020,
                     0x10030, 0x20010020, 0x20010030, 2080, 2096, 0x20000820, 0x20000830, 0x10820, 0x10830, 0x20010820,
@@ -114,7 +114,7 @@ public class UnixCrypt {
                     0x4000822, 0x40822, 0x4040822, 10272, 0x4002820, 0x42820, 0x4042820, 10274, 0x4002822, 0x42822,
                     0x4042822 } };
 
-    private static final int SPTRANS[][] = {
+    private static final int[][] SPTRANS = {
             { 0x820200, 0x20000, 0x80800000, 0x80820200, 0x800000, 0x80020200, 0x80020000, 0x80800000, 0x80020200,
                     0x820200, 0x820000, 0x80000200, 0x80800200, 0x800000, 0, 0x80020000, 0x20000, 0x80000000,
                     0x800200, 0x20200, 0x80820200, 0x820000, 0x80000200, 0x800200, 0x80000000, 512, 0x20200,
@@ -217,7 +217,7 @@ public class UnixCrypt {
         buffer.setCharAt(1, charOne);
         final int eSwap0 = CON_SALT[charZero];
         final int eSwap1 = CON_SALT[charOne] << 4;
-        final byte key[] = new byte[8];
+        final byte[] key = new byte[8];
         Arrays.fill(key, (byte) 0);
 
         final int originalLength = original.length;
@@ -226,9 +226,9 @@ public class UnixCrypt {
             key[i] = (byte) (iChar << 1);
         }
 
-        final int schedule[] = desSetKey(key);
-        final int out[] = body(schedule, eSwap0, eSwap1);
-        final byte b[] = new byte[9];
+        final int[] schedule = desSetKey(key);
+        final int[] out = body(schedule, eSwap0, eSwap1);
+        final byte[] b = new byte[9];
         intToFourBytes(out[0], b, 0);
         intToFourBytes(out[1], b, 4);
         b[8] = 0;
@@ -286,7 +286,7 @@ public class UnixCrypt {
         return crypt(original.getBytes(StandardCharsets.UTF_8), salt);
     }
 
-    private static int[] body(final int schedule[], final int eSwap0, final int eSwap1) {
+    private static int[] body(final int[] schedule, final int eSwap0, final int eSwap1) {
         int left = 0;
         int right = 0;
         int t = 0;
@@ -303,7 +303,7 @@ public class UnixCrypt {
         t = right;
         right = left >>> 1 | left << 31;
         left = t >>> 1 | t << 31;
-        final int results[] = new int[2];
+        final int[] results = new int[2];
         permOp(right, left, 1, 0x55555555, results);
         right = results[0];
         left = results[1];
@@ -319,7 +319,7 @@ public class UnixCrypt {
         permOp(right, left, 4, 0xf0f0f0f, results);
         right = results[0];
         left = results[1];
-        final int out[] = new int[2];
+        final int[] out = new int[2];
         out[0] = left;
         out[1] = right;
         return out;
@@ -330,7 +330,7 @@ public class UnixCrypt {
         return value < 0 ? value + 256 : value;
     }
 
-    private static int dEncrypt(int el, final int r, final int s, final int e0, final int e1, final int sArr[]) {
+    private static int dEncrypt(int el, final int r, final int s, final int e0, final int e1, final int[] sArr) {
         int v = r ^ r >>> 16;
         int u = v & e0;
         v &= e1;
@@ -343,11 +343,11 @@ public class UnixCrypt {
         return el;
     }
 
-    private static int[] desSetKey(final byte key[]) {
-        final int schedule[] = new int[32];
+    private static int[] desSetKey(final byte[] key) {
+        final int[] schedule = new int[32];
         int c = fourBytesToInt(key, 0);
         int d = fourBytesToInt(key, 4);
-        final int results[] = new int[2];
+        final int[] results = new int[2];
         permOp(d, c, 4, 0xf0f0f0f, results);
         d = results[0];
         c = results[1];
@@ -389,7 +389,7 @@ public class UnixCrypt {
         return schedule;
     }
 
-    private static int fourBytesToInt(final byte b[], int offset) {
+    private static int fourBytesToInt(final byte[] b, int offset) {
         int value = byteToUnsigned(b[offset++]);
         value |= byteToUnsigned(b[offset++]) << 8;
         value |= byteToUnsigned(b[offset++]) << 16;
@@ -403,14 +403,14 @@ public class UnixCrypt {
         return a;
     }
 
-    private static void intToFourBytes(final int iValue, final byte b[], int offset) {
+    private static void intToFourBytes(final int iValue, final byte[] b, int offset) {
         b[offset++] = (byte) (iValue & 0xff);
         b[offset++] = (byte) (iValue >>> 8 & 0xff);
         b[offset++] = (byte) (iValue >>> 16 & 0xff);
         b[offset++] = (byte) (iValue >>> 24 & 0xff);
     }
 
-    private static void permOp(int a, int b, final int n, final int m, final int results[]) {
+    private static void permOp(int a, int b, final int n, final int m, final int[] results) {
         final int t = (a >>> n ^ b) & m;
         a ^= t << n;
         b ^= t;

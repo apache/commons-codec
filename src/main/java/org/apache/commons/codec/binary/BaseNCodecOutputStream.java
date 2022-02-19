@@ -162,7 +162,7 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
      *             if offset, len or buffer size are invalid
      */
     @Override
-    public void write(final byte array[], final int offset, final int len) throws IOException {
+    public void write(final byte[] array, final int offset, final int len) throws IOException {
         Objects.requireNonNull(array, "array");
         if (offset < 0 || len < 0) {
             throw new IndexOutOfBoundsException();
