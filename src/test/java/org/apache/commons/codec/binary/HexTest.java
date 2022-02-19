@@ -555,20 +555,18 @@ public class HexTest {
         assertArrayEquals("64".toCharArray(), hex);
     }
 
-    @Test(expected=ArrayIndexOutOfBoundsException.class)
+    @Test
     public void testEncodeHexPartialInputUnderbounds() {
         final byte data[] = "hello world".getBytes(StandardCharsets.UTF_8);
 
-        final char[] hex = Hex.encodeHex(data, -2, 10, true);
-        assertArrayEquals("64".toCharArray(), hex);
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> Hex.encodeHex(data, -2, 10, true));
     }
 
-    @Test(expected=ArrayIndexOutOfBoundsException.class)
+    @Test
     public void testEncodeHexPartialInputOverbounds() {
         final byte data[] = "hello world".getBytes(StandardCharsets.UTF_8);
 
-        final char[] hex = Hex.encodeHex(data, 9, 10, true);
-        assertArrayEquals("64".toCharArray(), hex);
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> Hex.encodeHex(data, 9, 10, true));
     }
 
     @Test
