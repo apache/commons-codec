@@ -26,6 +26,7 @@ import java.io.IOException;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.fail;
 
 /**
@@ -308,10 +309,7 @@ public class Base16InputStreamTest {
         final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
         final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
         try (final Base16InputStream in = new Base16InputStream(bin, true)) {
-            in.read(null, 0, 0);
-            fail("Base16InputStream.read(null, 0, 0) to throw a NullPointerException");
-        } catch (final NullPointerException e) {
-            // Expected
+            assertThrows(NullPointerException.class, () -> in.read(null, 0, 0));
         }
     }
 
@@ -326,34 +324,10 @@ public class Base16InputStreamTest {
         final byte[] buf = new byte[1024];
         final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
         try (final Base16InputStream in = new Base16InputStream(bin, true)) {
-
-            try {
-                in.read(buf, -1, 0);
-                fail("Expected Base16InputStream.read(buf, -1, 0) to throw IndexOutOfBoundsException");
-            } catch (final IndexOutOfBoundsException e) {
-                // Expected
-            }
-
-            try {
-                in.read(buf, 0, -1);
-                fail("Expected Base16InputStream.read(buf, 0, -1) to throw IndexOutOfBoundsException");
-            } catch (final IndexOutOfBoundsException e) {
-                // Expected
-            }
-
-            try {
-                in.read(buf, buf.length + 1, 0);
-                fail("Base16InputStream.read(buf, buf.length + 1, 0) throws IndexOutOfBoundsException");
-            } catch (final IndexOutOfBoundsException e) {
-                // Expected
-            }
-
-            try {
-                in.read(buf, buf.length - 1, 2);
-                fail("Base16InputStream.read(buf, buf.length - 1, 2) throws IndexOutOfBoundsException");
-            } catch (final IndexOutOfBoundsException e) {
-                // Expected
-            }
+            assertThrows("Base16InputStream.read(buf, -1, 0)", IndexOutOfBoundsException.class, () -> in.read(buf, -1, 0));
+            assertThrows("Base16InputStream.read(buf, 0, -1)", IndexOutOfBoundsException.class, () -> in.read(buf, 0, -1));
+            assertThrows("Base16InputStream.read(buf, buf.length + 1, 0)", IndexOutOfBoundsException.class, () -> in.read(buf, buf.length + 1, 0));
+            assertThrows("Base16InputStream.read(buf, buf.length - 1, 2)", IndexOutOfBoundsException.class, () -> in.read(buf, buf.length - 1, 2));
         }
     }
 

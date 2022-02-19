@@ -20,6 +20,7 @@ package org.apache.commons.codec.binary;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -119,30 +120,15 @@ public class HexTest {
     }
 
     private void checkDecodeHexCharArrayOddCharacters(final char[] data) {
-        try {
-            Hex.decodeHex(data);
-            fail("An exception wasn't thrown when trying to decode an odd number of characters");
-        } catch (final DecoderException e) {
-            // Expected exception
-        }
+        assertThrows(DecoderException.class, () -> Hex.decodeHex(data));
     }
 
     private void checkDecodeHexByteBufferOddCharacters(final ByteBuffer data) {
-        try {
-            new Hex().decode(data);
-            fail("An exception wasn't thrown when trying to decode an odd number of characters");
-        } catch (final DecoderException e) {
-            // Expected exception
-        }
+        assertThrows(DecoderException.class, () -> new Hex().decode(data));
     }
 
     private void checkDecodeHexCharArrayOddCharacters(final String data) {
-        try {
-            Hex.decodeHex(data);
-            fail("An exception wasn't thrown when trying to decode an odd number of characters");
-        } catch (final DecoderException e) {
-            // Expected exception
-        }
+        assertThrows(DecoderException.class, () -> Hex.decodeHex(data));
     }
 
     private void log(final String s) {
@@ -219,22 +205,12 @@ public class HexTest {
 
     @Test
     public void testDecodeBadCharacterPos0() {
-        try {
-            new Hex().decode("q0");
-            fail("An exception wasn't thrown when trying to decode an illegal character");
-        } catch (final DecoderException e) {
-            // Expected exception
-        }
+        assertThrows(DecoderException.class, () -> new Hex().decode("q0"));
     }
 
     @Test
     public void testDecodeBadCharacterPos1() {
-        try {
-            new Hex().decode("0q");
-            fail("An exception wasn't thrown when trying to decode an illegal character");
-        } catch (final DecoderException e) {
-            // Expected exception
-        }
+        assertThrows(DecoderException.class, () -> new Hex().decode("0q"));
     }
 
     @Test
@@ -249,12 +225,7 @@ public class HexTest {
 
     @Test
     public void testDecodeByteArrayOddCharacters() {
-        try {
-            new Hex().decode(new byte[] { 65 });
-            fail("An exception wasn't thrown when trying to decode an odd number of characters");
-        } catch (final DecoderException e) {
-            // Expected exception
-        }
+        assertThrows("odd number of characters", DecoderException.class, () -> new Hex().decode(new byte[] { 65 }));
     }
 
     @Test
@@ -305,12 +276,7 @@ public class HexTest {
 
     @Test
     public void testDecodeClassCastException() {
-        try {
-            new Hex().decode(new int[] { 65 });
-            fail("An exception wasn't thrown when trying to decode.");
-        } catch (final DecoderException e) {
-            // Expected exception
-        }
+        assertThrows("odd number of characters", DecoderException.class, () -> new Hex().decode(new int[] { 65 }));
     }
 
     @Test
@@ -347,12 +313,8 @@ public class HexTest {
 
     @Test
     public void testDecodeHexStringOddCharacters() {
-        try {
-            new Hex().decode("6");
-            fail("An exception wasn't thrown when trying to decode an odd number of characters");
-        } catch (final DecoderException e) {
-            // Expected exception
-        }
+        assertThrows("odd number of characters", DecoderException.class, () -> new Hex().decode("6"));
+
     }
 
     @Test
@@ -404,12 +366,7 @@ public class HexTest {
 
     @Test
     public void testEncodeClassCastException() {
-        try {
-            new Hex().encode(new int[] { 65 });
-            fail("An exception wasn't thrown when trying to encode.");
-        } catch (final EncoderException e) {
-            // Expected exception
-        }
+        assertThrows(EncoderException.class, () -> new Hex().encode(new int[] { 65 }));
     }
 
     @Test

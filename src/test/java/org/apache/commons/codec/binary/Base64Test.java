@@ -22,6 +22,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -88,15 +89,9 @@ public class Base64Test {
         final String nullString = null;
         final String emptyString = "";
         final String validString = "abc===defg\n\r123456\r789\r\rABC\n\nDEF==GHI\r\nJKL==============";
-        final String invalidString = validString + (char) 0; // append null
-                                                                // character
+        final String invalidString = validString + (char) 0; // append null character
 
-        try {
-            Base64.isBase64(nullString);
-            fail("Base64.isStringBase64() should not be null-safe.");
-        } catch (final NullPointerException npe) {
-            assertNotNull("Base64.isStringBase64() should not be null-safe.", npe);
-        }
+        assertThrows(NullPointerException.class, () -> Base64.isBase64(nullString));
 
         assertTrue("Base64.isStringBase64(empty-string) is true", Base64.isBase64(emptyString));
         assertTrue("Base64.isStringBase64(valid-string) is true", Base64.isBase64(validString));
@@ -261,14 +256,7 @@ public class Base64Test {
 
     @Test
     public void testCodeIntegerNull() {
-        try {
-            Base64.encodeInteger(null);
-            fail("Exception not thrown when passing in null to encodeInteger(BigInteger)");
-        } catch (final NullPointerException npe) {
-            // expected
-        } catch (final Exception e) {
-            fail("Incorrect Exception caught when passing in null to encodeInteger(BigInteger)");
-        }
+        assertThrows(NullPointerException.class, () -> Base64.encodeInteger(null));
     }
 
     @Test
@@ -278,34 +266,14 @@ public class Base64Test {
         base64 = new Base64(-1);
         base64 = new Base64(-1, new byte[] {});
         base64 = new Base64(64, new byte[] {});
-        try {
-            base64 = new Base64(-1, new byte[] { 'A' }); // TODO do we need to
-                                                            // check sep if len
-                                                            // = -1?
-            fail("Should have rejected attempt to use 'A' as a line separator");
-        } catch (final IllegalArgumentException ignored) {
-            // Expected
-        }
-        try {
-            base64 = new Base64(64, new byte[] { 'A' });
-            fail("Should have rejected attempt to use 'A' as a line separator");
-        } catch (final IllegalArgumentException ignored) {
-            // Expected
-        }
-        try {
-            base64 = new Base64(64, new byte[] { '=' });
-            fail("Should have rejected attempt to use '=' as a line separator");
-        } catch (final IllegalArgumentException ignored) {
-            // Expected
-        }
-        base64 = new Base64(64, new byte[] { '$' }); // OK
-        try {
-            base64 = new Base64(64, new byte[] { 'A', '$' });
-            fail("Should have rejected attempt to use 'A$' as a line separator");
-        } catch (final IllegalArgumentException ignored) {
-            // Expected
-        }
-        base64 = new Base64(64, new byte[] { ' ', '$', '\n', '\r', '\t' }); // OK
+        base64 = new Base64(64, new byte[] {'$'}); // OK
+
+        assertThrows("'A' as a line separator", IllegalArgumentException.class, () -> new Base64(-1, new byte[] {'A'}));
+        assertThrows("'A' as a line separator", IllegalArgumentException.class, () -> new Base64(64, new byte[] {'A'}));
+        assertThrows("'=' as a line separator", IllegalArgumentException.class, () -> new Base64(64, new byte[] {'='}));
+        assertThrows("'A$' as a line separator", IllegalArgumentException.class, () -> new Base64(64, new byte[] {'A', '$'}));
+
+        base64 = new Base64(64, new byte[] {' ', '$', '\n', '\r', '\t'}); // OK
         assertNotNull(base64);
     }
 
@@ -455,12 +423,7 @@ public class Base64Test {
     }
 
     private void testEncodeOverMaxSize(final int maxSize) throws Exception {
-        try {
-            Base64.encodeBase64(BaseNTestData.DECODED, true, false, maxSize);
-            fail("Expected " + IllegalArgumentException.class.getName());
-        } catch (final IllegalArgumentException e) {
-            // Expected
-        }
+        assertThrows(IllegalArgumentException.class, () -> Base64.encodeBase64(BaseNTestData.DECODED, true, false, maxSize));
     }
 
     @Test
@@ -559,15 +522,7 @@ public class Base64Test {
 
     @Test
     public void testObjectDecodeWithInvalidParameter() throws Exception {
-        final Base64 b64 = new Base64();
-
-        try {
-            b64.decode(Integer.valueOf(5));
-            fail("decode(Object) didn't throw an exception when passed an Integer object");
-        } catch (final DecoderException e) {
-            // ignored
-        }
-
+        assertThrows(DecoderException.class, () -> new Base64().decode(Integer.valueOf(5)));
     }
 
     @Test
@@ -586,13 +541,7 @@ public class Base64Test {
 
     @Test
     public void testObjectEncodeWithInvalidParameter() throws Exception {
-        final Base64 b64 = new Base64();
-        try {
-            b64.encode("Yadayadayada");
-            fail("encode(Object) didn't throw an exception when passed a String object");
-        } catch (final EncoderException e) {
-            // Expected
-        }
+        assertThrows(EncoderException.class, () -> new Base64().encode("Yadayadayada"));
     }
 
     @Test
@@ -1333,12 +1282,7 @@ public class Base64Test {
     public void testBase64ImpossibleSamples() {
         final Base64 codec = new Base64(0, null, false, CodecPolicy.STRICT);
         for (final String s : BASE64_IMPOSSIBLE_CASES) {
-            try {
-                codec.decode(s);
-                fail();
-            } catch (final IllegalArgumentException ex) {
-                // expected
-            }
+            assertThrows(IllegalArgumentException.class, () -> codec.decode(s));
         }
     }
 
@@ -1393,12 +1337,7 @@ public class Base64Test {
             // If the lower bits are set we expect an exception. This is not a valid
             // final character.
             if (invalid || (i & emptyBitsMask) != 0) {
-                try {
-                    codec.decode(encoded);
-                    fail("Final base-64 digit should not be allowed");
-                } catch (final IllegalArgumentException ex) {
-                    // expected
-                }
+                assertThrows(IllegalArgumentException.class, () -> codec.decode(encoded));
                 // The default lenient mode should decode this
                 final byte[] decoded = defaultCodec.decode(encoded);
                 // Re-encoding should not match the original array as it was invalid

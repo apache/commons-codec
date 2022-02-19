@@ -22,6 +22,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -249,45 +250,15 @@ public class Base32Test {
         base32 = new Base32(32, new byte[] {}, false);
         // This is different behavior than Base64 which validates the separator
         // even when line length is negative.
-        base32 = new Base32(-1, new byte[] { 'A' });
-        try {
-            base32 = new Base32(32, null);
-            fail("Should have rejected null line separator");
-        } catch (final IllegalArgumentException ignored) {
-            // Expected
-        }
-        try {
-            base32 = new Base32(32, new byte[] { 'A' });
-            fail("Should have rejected attempt to use 'A' as a line separator");
-        } catch (final IllegalArgumentException ignored) {
-            // Expected
-        }
-        try {
-            base32 = new Base32(32, new byte[] { '=' });
-            fail("Should have rejected attempt to use '=' as a line separator");
-        } catch (final IllegalArgumentException ignored) {
-            // Expected
-        }
-        base32 = new Base32(32, new byte[] { '$' }); // OK
-        try {
-            base32 = new Base32(32, new byte[] { 'A', '$' });
-            fail("Should have rejected attempt to use 'A$' as a line separator");
-        } catch (final IllegalArgumentException ignored) {
-            // Expected
-        }
-        try {
-            base32 = new Base32(32, new byte[] { '\n'}, false, (byte) 'A');
-            fail("Should have rejected attempt to use 'A' as padding");
-        } catch (final IllegalArgumentException ignored) {
-            // Expected
-        }
-        try {
-            base32 = new Base32(32, new byte[] { '\n'}, false, (byte) ' ');
-            fail("Should have rejected attempt to use ' ' as padding");
-        } catch (final IllegalArgumentException ignored) {
-            // Expected
-        }
-        base32 = new Base32(32, new byte[] { ' ', '$', '\n', '\r', '\t' }); // OK
+        base32 = new Base32(-1, new byte[] {'A'});
+        base32 = new Base32(32, new byte[] {'$'}); // OK
+        assertThrows("null line separator", IllegalArgumentException.class, () -> new Base32(32, null));
+        assertThrows("'A' as a line separator", IllegalArgumentException.class, () -> new Base32(32, new byte[] {'A'}));
+        assertThrows("'=' as a line separator", IllegalArgumentException.class, () -> new Base32(32, new byte[] {'='}));
+        assertThrows("'A$' as a line separator", IllegalArgumentException.class, () -> new Base32(32, new byte[] {'A', '$'}));
+        assertThrows("'A' as padding", IllegalArgumentException.class, () -> new Base32(32, new byte[] {'\n'}, false, (byte) 'A'));
+        assertThrows("' ' as padding", IllegalArgumentException.class, () -> new Base32(32, new byte[] {'\n'}, false, (byte) ' '));
+        base32 = new Base32(32, new byte[] {' ', '$', '\n', '\r', '\t'}); // OK
         assertNotNull(base32);
     }
 
@@ -429,12 +400,7 @@ public class Base32Test {
 
     private void testImpossibleCases(final Base32 codec, final String[] impossible_cases) {
         for (final String impossible : impossible_cases) {
-            try {
-                codec.decode(impossible);
-                fail();
-            } catch (final IllegalArgumentException ex) {
-                // expected
-            }
+            assertThrows(IllegalArgumentException.class, () -> codec.decode(impossible));
         }
     }
 
@@ -509,12 +475,7 @@ public class Base32Test {
             // If the lower bits are set we expect an exception. This is not a valid
             // final character.
             if (invalid || (i & emptyBitsMask) != 0) {
-                try {
-                    codec.decode(encoded);
-                    fail("Final base-32 digit should not be allowed");
-                } catch (final IllegalArgumentException ex) {
-                    // expected
-                }
+                assertThrows("Final base-32 digit should not be allowed", IllegalArgumentException.class, () -> codec.decode(encoded));
                 // The default lenient mode should decode this
                 final byte[] decoded = defaultCodec.decode(encoded);
                 // Re-encoding should not match the original array as it was invalid

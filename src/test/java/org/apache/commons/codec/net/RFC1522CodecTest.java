@@ -18,6 +18,7 @@
 package org.apache.commons.codec.net;
 
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.fail;
 
 import org.apache.commons.codec.CharEncoding;
@@ -57,13 +58,7 @@ public class RFC1522CodecTest {
     }
 
     private void assertExpectedDecoderException(final String s) throws Exception {
-        final RFC1522TestCodec testcodec = new RFC1522TestCodec();
-        try {
-            testcodec.decodeText(s);
-            fail("DecoderException should have been thrown");
-        } catch (final DecoderException e) {
-            // Expected.
-        }
+        assertThrows(DecoderException.class, () -> new RFC1522TestCodec().decodeText(s));
     }
 
     @Test

@@ -17,6 +17,7 @@
 
 package org.apache.commons.codec;
 
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.fail;
 
 import org.junit.Test;
@@ -35,12 +36,6 @@ public abstract class BinaryEncoderAbstractTest {
 
     @Test
     public void testEncodeNull() throws Exception {
-        final BinaryEncoder encoder = makeEncoder();
-        try {
-            encoder.encode(null);
-            fail("EncoderException exptected");
-        } catch (final EncoderException ee) {
-            // An exception should be thrown
-        }
+        assertThrows(EncoderException.class, () -> makeEncoder().encode(null));
     }
 }

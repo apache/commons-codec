@@ -117,24 +117,9 @@ public class QuotedPrintableCodecTest {
     @Test
     public void testDecodeInvalid() throws Exception {
         final QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
-        try {
-            qpcodec.decode("=");
-            fail("DecoderException should have been thrown");
-        } catch (final DecoderException e) {
-            // Expected. Move on
-        }
-        try {
-            qpcodec.decode("=A");
-            fail("DecoderException should have been thrown");
-        } catch (final DecoderException e) {
-            // Expected. Move on
-        }
-        try {
-            qpcodec.decode("=WW");
-            fail("DecoderException should have been thrown");
-        } catch (final DecoderException e) {
-            // Expected. Move on
-        }
+        assertThrows(DecoderException.class, () -> qpcodec.decode("="));
+        assertThrows(DecoderException.class, () -> qpcodec.decode("=A"));
+        assertThrows(DecoderException.class, () -> qpcodec.decode("=WW"));
     }
 
     @Test
@@ -186,25 +171,17 @@ public class QuotedPrintableCodecTest {
         final QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
         final String plain = "1+1 = 2";
         String encoded = (String) qpcodec.encode((Object) plain);
-        assertEquals("Basic quoted-printable encoding test",
-            "1+1 =3D 2", encoded);
+        assertEquals("Basic quoted-printable encoding test", "1+1 =3D 2", encoded);
 
         final byte[] plainBA = plain.getBytes(StandardCharsets.UTF_8);
         final byte[] encodedBA = (byte[]) qpcodec.encode((Object) plainBA);
         encoded = new String(encodedBA);
-        assertEquals("Basic quoted-printable encoding test",
-            "1+1 =3D 2", encoded);
+        assertEquals("Basic quoted-printable encoding test", "1+1 =3D 2", encoded);
 
         final Object result = qpcodec.encode((Object) null);
         assertNull("Encoding a null Object should return null", result);
 
-        try {
-            final Object dObj = Double.valueOf(3.0d);
-            qpcodec.encode( dObj );
-            fail( "Trying to url encode a Double object should cause an exception.");
-        } catch (final EncoderException ee) {
-            // Exception expected, test segment passes.
-        }
+        assertThrows(EncoderException.class, () -> qpcodec.encode(Double.valueOf(3.0d)));
     }
 
     @Test(expected=UnsupportedCharsetException.class)
@@ -229,13 +206,7 @@ public class QuotedPrintableCodecTest {
         final Object result = qpcodec.decode((Object) null);
         assertNull("Decoding a null Object should return null", result);
 
-        try {
-            final Object dObj = Double.valueOf(3.0d);
-            qpcodec.decode( dObj );
-            fail( "Trying to url encode a Double object should cause an exception.");
-        } catch (final DecoderException ee) {
-            // Exception expected, test segment passes.
-        }
+        assertThrows(DecoderException.class, () -> qpcodec.decode(Double.valueOf(3.0d)));
     }
 
     @Test

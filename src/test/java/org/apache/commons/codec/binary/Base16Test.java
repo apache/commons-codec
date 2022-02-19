@@ -31,6 +31,7 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -211,27 +212,14 @@ public class Base16Test {
 
         final byte[] encoded = new byte[1];
         for (final byte invalidEncodedChar : invalidEncodedChars) {
-            try {
-                encoded[0] = invalidEncodedChar;
-                new Base16().decode(encoded);
-                fail("IllegalArgumentException should have been thrown when trying to decode invalid Base16 char: " + (char)invalidEncodedChar);
-            } catch (final Exception e) {
-                assertTrue(e instanceof IllegalArgumentException);
-            }
+            encoded[0] = invalidEncodedChar;
+            assertThrows("Invalid Base16 char: " + (char) invalidEncodedChar, IllegalArgumentException.class, () -> new Base16().decode(encoded));
         }
     }
 
     @Test
     public void testObjectDecodeWithInvalidParameter() {
-        final Base16 b16 = new Base16();
-
-        try {
-            b16.decode(Integer.valueOf(5));
-            fail("decode(Object) didn't throw an exception when passed an Integer object");
-        } catch (final DecoderException e) {
-            // ignored
-        }
-
+        assertThrows(DecoderException.class, () -> new Base16().decode(Integer.valueOf(5)));
     }
 
     @Test
@@ -249,13 +237,7 @@ public class Base16Test {
 
     @Test
     public void testObjectEncodeWithInvalidParameter() {
-        final Base16 b16 = new Base16();
-        try {
-            b16.encode("Yadayadayada");
-            fail("encode(Object) didn't throw an exception when passed a String object");
-        } catch (final EncoderException e) {
-            // Expected
-        }
+        assertThrows(EncoderException.class, () -> new Base16().encode("Yadayadayada"));
     }
 
     @Test

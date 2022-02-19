@@ -19,8 +19,11 @@
 
 package org.apache.commons.codec.language;
 
+import static org.junit.Assert.assertThrows;
+
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoderAbstractTest;
+import org.apache.commons.codec.digest.Blake3;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -354,13 +357,8 @@ public class SoundexTest extends StringEncoderAbstractTest<Soundex> {
     public void testUsMappingEWithAcute() {
         Assert.assertEquals("E000", this.getStringEncoder().encode("e"));
         if (Character.isLetter('\u00e9')) { // e-acute
-            try {
-                //         uppercase E-acute
-                Assert.assertEquals("\u00c9000", this.getStringEncoder().encode("\u00e9"));
-                Assert.fail("Expected IllegalArgumentException not thrown");
-            } catch (final IllegalArgumentException e) {
-                // expected
-            }
+            //         uppercase E-acute
+            assertThrows(IllegalArgumentException.class, () -> getStringEncoder().encode("\u00e9"));
         } else {
             Assert.assertEquals("", this.getStringEncoder().encode("\u00e9"));
         }
@@ -375,13 +373,8 @@ public class SoundexTest extends StringEncoderAbstractTest<Soundex> {
     public void testUsMappingOWithDiaeresis() {
         Assert.assertEquals("O000", this.getStringEncoder().encode("o"));
         if (Character.isLetter('\u00f6')) { // o-umlaut
-            try {
-                //         uppercase O-umlaut
-                Assert.assertEquals("\u00d6000", this.getStringEncoder().encode("\u00f6"));
-                Assert.fail("Expected IllegalArgumentException not thrown");
-            } catch (final IllegalArgumentException e) {
-                // expected
-            }
+            //         uppercase O-umlaut
+            assertThrows(IllegalArgumentException.class, () -> getStringEncoder().encode("\u00f6"));
         } else {
             Assert.assertEquals("", this.getStringEncoder().encode("\u00f6"));
         }

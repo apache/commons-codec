@@ -19,7 +19,10 @@ package org.apache.commons.codec.digest;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.fail;
+
+import org.apache.commons.codec.binary.StringUtils;
 
 public class Blake3Test {
     @Test
@@ -31,11 +34,6 @@ public class Blake3Test {
     }
 
     private static void assertThrowsProperExceptionWithKeySize(final int keySize) {
-        try {
-            Blake3.initKeyedHash(new byte[keySize]);
-            fail("Should have thrown exception");
-        } catch (final IllegalArgumentException expected) {
-            assertEquals("Blake3 keys must be 32 bytes", expected.getMessage());
-        }
+        assertThrows("Blake3 keys must be 32 bytes", IllegalArgumentException.class, () -> Blake3.initKeyedHash(new byte[keySize]));
     }
 }

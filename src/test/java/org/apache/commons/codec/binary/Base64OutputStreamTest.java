@@ -26,6 +26,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -297,34 +298,10 @@ public class Base64OutputStreamTest {
         final byte[] buf = new byte[1024];
         final ByteArrayOutputStream bout = new ByteArrayOutputStream();
         try (final Base64OutputStream out = new Base64OutputStream(bout)) {
-
-            try {
-                out.write(buf, -1, 1);
-                fail("Expected Base64OutputStream.write(buf, -1, 1) to throw a IndexOutOfBoundsException");
-            } catch (final IndexOutOfBoundsException ioobe) {
-                // Expected
-            }
-
-            try {
-                out.write(buf, 1, -1);
-                fail("Expected Base64OutputStream.write(buf, 1, -1) to throw a IndexOutOfBoundsException");
-            } catch (final IndexOutOfBoundsException ioobe) {
-                // Expected
-            }
-
-            try {
-                out.write(buf, buf.length + 1, 0);
-                fail("Expected Base64OutputStream.write(buf, buf.length + 1, 0) to throw a IndexOutOfBoundsException");
-            } catch (final IndexOutOfBoundsException ioobe) {
-                // Expected
-            }
-
-            try {
-                out.write(buf, buf.length - 1, 2);
-                fail("Expected Base64OutputStream.write(buf, buf.length - 1, 2) to throw a IndexOutOfBoundsException");
-            } catch (final IndexOutOfBoundsException ioobe) {
-                // Expected
-            }
+            assertThrows("Base64OutputStream.write(buf, -1, 1)", IndexOutOfBoundsException.class, () -> out.write(buf, -1, 1));
+            assertThrows("Base64OutputStream.write(buf, 1, -1)", IndexOutOfBoundsException.class, () -> out.write(buf, 1, -1));
+            assertThrows("Base64OutputStream.write(buf, buf.length + 1, 0)", IndexOutOfBoundsException.class, () -> out.write(buf, buf.length + 1, 0));
+            assertThrows("Base64OutputStream.write(buf, buf.length - 1, 2)", IndexOutOfBoundsException.class, () -> out.write(buf, buf.length - 1, 2));
         }
     }
 
@@ -338,10 +315,7 @@ public class Base64OutputStreamTest {
     public void testWriteToNullCoverage() throws Exception {
         final ByteArrayOutputStream bout = new ByteArrayOutputStream();
         try (final Base64OutputStream out = new Base64OutputStream(bout)) {
-            out.write(null, 0, 0);
-            fail("Expcted Base64OutputStream.write(null) to throw a NullPointerException");
-        } catch (final NullPointerException e) {
-            // Expected
+            assertThrows(NullPointerException.class, () -> out.write(null, 0, 0));
         }
     }
 
@@ -353,26 +327,27 @@ public class Base64OutputStreamTest {
      */
     @Test
     public void testStrictDecoding() throws Exception {
-        for (final String s : Base64Test.BASE64_IMPOSSIBLE_CASES) {
-            final byte[] encoded = StringUtils.getBytesUtf8(s);
+        for (final String impossibleStr : Base64Test.BASE64_IMPOSSIBLE_CASES) {
+            final byte[] impossibleEncoded = StringUtils.getBytesUtf8(impossibleStr);
             ByteArrayOutputStream bout = new ByteArrayOutputStream();
-            Base64OutputStream out = new Base64OutputStream(bout, false);
-            // Default is lenient decoding; it should not throw
-            assertFalse(out.isStrictDecoding());
-            out.write(encoded);
-            out.close();
+            try (Base64OutputStream out = new Base64OutputStream(bout, false)) {
+                // Default is lenient decoding; it should not throw
+                assertFalse(out.isStrictDecoding());
+                out.write(impossibleEncoded);
+            }
             assertTrue(bout.size() > 0);
 
             // Strict decoding should throw
             bout = new ByteArrayOutputStream();
-            out = new Base64OutputStream(bout, false, 0, null, CodecPolicy.STRICT);
+            Base64OutputStream out = new Base64OutputStream(bout, false, 0, null, CodecPolicy.STRICT);
             assertTrue(out.isStrictDecoding());
             try {
-                out.write(encoded);
+                out.write(impossibleEncoded);
                 out.close();
                 fail();
             } catch (final IllegalArgumentException ex) {
                 // expected
+                ex.printStackTrace();
             }
         }
     }

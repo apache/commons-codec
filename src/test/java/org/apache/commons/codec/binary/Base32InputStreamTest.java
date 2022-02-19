@@ -23,11 +23,13 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.commons.codec.CodecPolicy;
+import org.apache.commons.codec.EncoderException;
 import org.junit.Test;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -421,11 +423,8 @@ public class Base32InputStreamTest {
     public void testReadNull() throws Exception {
         final byte[] decoded = StringUtils.getBytesUtf8(Base32TestData.STRING_FIXTURE);
         final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
-        try (final Base32InputStream in = new Base32InputStream(bin, true, 4, new byte[] { 0, 0, 0 })) {
-            in.read(null, 0, 0);
-            fail("Base32InputStream.read(null, 0, 0) to throw a NullPointerException");
-        } catch (final NullPointerException e) {
-            // Expected
+        try (final Base32InputStream in = new Base32InputStream(bin, true, 4, new byte[] {0, 0, 0})) {
+            assertThrows(NullPointerException.class, () -> in.read(null, 0, 0));
         }
     }
 
@@ -441,34 +440,10 @@ public class Base32InputStreamTest {
         final byte[] buf = new byte[1024];
         final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
         try (final Base32InputStream in = new Base32InputStream(bin, true, 4, new byte[] { 0, 0, 0 })) {
-
-            try {
-                in.read(buf, -1, 0);
-                fail("Expected Base32InputStream.read(buf, -1, 0) to throw IndexOutOfBoundsException");
-            } catch (final IndexOutOfBoundsException e) {
-                // Expected
-            }
-
-            try {
-                in.read(buf, 0, -1);
-                fail("Expected Base32InputStream.read(buf, 0, -1) to throw IndexOutOfBoundsException");
-            } catch (final IndexOutOfBoundsException e) {
-                // Expected
-            }
-
-            try {
-                in.read(buf, buf.length + 1, 0);
-                fail("Base32InputStream.read(buf, buf.length + 1, 0) throws IndexOutOfBoundsException");
-            } catch (final IndexOutOfBoundsException e) {
-                // Expected
-            }
-
-            try {
-                in.read(buf, buf.length - 1, 2);
-                fail("Base32InputStream.read(buf, buf.length - 1, 2) throws IndexOutOfBoundsException");
-            } catch (final IndexOutOfBoundsException e) {
-                // Expected
-            }
+            assertThrows("Base32InputStream.read(buf, -1, 0)", IndexOutOfBoundsException.class, () -> in.read(buf, -1, 0));
+            assertThrows("Base32InputStream.read(buf, 0, -1)", IndexOutOfBoundsException.class, () -> in.read(buf, 0, -1));
+            assertThrows("Base32InputStream.read(buf, buf.length + 1, 0)", IndexOutOfBoundsException.class, () -> in.read(buf, buf.length + 1, 0));
+            assertThrows("Base32InputStream.read(buf, buf.length - 1, 2)", IndexOutOfBoundsException.class, () -> in.read(buf, buf.length - 1, 2));
         }
     }
 
@@ -574,14 +549,9 @@ public class Base32InputStreamTest {
             BaseNTestData.streamToBytes(in);
 
             // Strict decoding should throw
-            in = new Base32InputStream(new ByteArrayInputStream(encoded), false, 0, null, CodecPolicy.STRICT);
-            assertTrue(in.isStrictDecoding());
-            try {
-                BaseNTestData.streamToBytes(in);
-                fail();
-            } catch (final IllegalArgumentException ex) {
-                // expected
-            }
+            Base32InputStream in2 = new Base32InputStream(new ByteArrayInputStream(encoded), false, 0, null, CodecPolicy.STRICT);
+            assertTrue(in2.isStrictDecoding());
+            assertThrows(IllegalArgumentException.class, () -> BaseNTestData.streamToBytes(in2));
         }
     }
 }

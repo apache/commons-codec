@@ -17,10 +17,13 @@
 
 package org.apache.commons.codec.binary;
 
+import static org.junit.Assert.assertThrows;
+
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 
+import org.apache.commons.codec.EncoderException;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -111,12 +114,7 @@ public class StringUtilsTest {
 
     @Test
     public void testGetBytesUncheckedBadName() {
-        try {
-            StringUtils.getBytesUnchecked(STRING_FIXTURE, "UNKNOWN");
-            Assert.fail("Expected " + IllegalStateException.class.getName());
-        } catch (final IllegalStateException e) {
-            // Expected
-        }
+        assertThrows(IllegalStateException.class, () -> StringUtils.getBytesUnchecked(STRING_FIXTURE, "UNKNOWN"));
     }
 
     @Test
@@ -132,12 +130,7 @@ public class StringUtilsTest {
 
     @Test
     public void testNewStringBadEnc() {
-        try {
-            StringUtils.newString(BYTES_FIXTURE, "UNKNOWN");
-            Assert.fail("Expected " + IllegalStateException.class.getName());
-        } catch (final IllegalStateException e) {
-            // Expected
-        }
+        assertThrows(IllegalStateException.class, () -> StringUtils.newString(BYTES_FIXTURE, "UNKNOWN"));
     }
 
     @Test

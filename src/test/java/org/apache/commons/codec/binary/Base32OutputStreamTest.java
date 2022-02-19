@@ -25,6 +25,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -287,34 +288,10 @@ public class Base32OutputStreamTest {
         final byte[] buf = new byte[1024];
         final ByteArrayOutputStream bout = new ByteArrayOutputStream();
         try (final Base32OutputStream out = new Base32OutputStream(bout)) {
-
-            try {
-                out.write(buf, -1, 1);
-                fail("Expected Base32OutputStream.write(buf, -1, 1) to throw a IndexOutOfBoundsException");
-            } catch (final IndexOutOfBoundsException ioobe) {
-                // Expected
-            }
-
-            try {
-                out.write(buf, 1, -1);
-                fail("Expected Base32OutputStream.write(buf, 1, -1) to throw a IndexOutOfBoundsException");
-            } catch (final IndexOutOfBoundsException ioobe) {
-                // Expected
-            }
-
-            try {
-                out.write(buf, buf.length + 1, 0);
-                fail("Expected Base32OutputStream.write(buf, buf.length + 1, 0) to throw a IndexOutOfBoundsException");
-            } catch (final IndexOutOfBoundsException ioobe) {
-                // Expected
-            }
-
-            try {
-                out.write(buf, buf.length - 1, 2);
-                fail("Expected Base32OutputStream.write(buf, buf.length - 1, 2) to throw a IndexOutOfBoundsException");
-            } catch (final IndexOutOfBoundsException ioobe) {
-                // Expected
-            }
+            assertThrows("Base32OutputStream.write(buf, -1, 1)", IndexOutOfBoundsException.class, () -> out.write(buf, -1, 1));
+            assertThrows("Base32OutputStream.write(buf, 1, -1)", IndexOutOfBoundsException.class, () -> out.write(buf, 1, -1));
+            assertThrows("Base32OutputStream.write(buf, buf, buf.length + 1, 0)", IndexOutOfBoundsException.class, () -> out.write(buf, buf.length + 1, 0));
+            assertThrows("Base32OutputStream.write(buf, buf, buf.length - 1, 2)", IndexOutOfBoundsException.class, () -> out.write(buf, buf.length - 1, 2));
         }
     }
 
@@ -328,10 +305,7 @@ public class Base32OutputStreamTest {
     public void testWriteToNullCoverage() throws Exception {
         final ByteArrayOutputStream bout = new ByteArrayOutputStream();
         try (final Base32OutputStream out = new Base32OutputStream(bout)) {
-            out.write(null, 0, 0);
-            fail("Expcted Base32OutputStream.write(null) to throw a NullPointerException");
-        } catch (final NullPointerException e) {
-            // Expected
+            assertThrows(NullPointerException.class, () -> out.write(null, 0, 0));
         }
     }
 
@@ -355,15 +329,10 @@ public class Base32OutputStreamTest {
 
             // Strict decoding should throw
             bout = new ByteArrayOutputStream();
-            out = new Base32OutputStream(bout, false, 0, null, CodecPolicy.STRICT);
-            assertTrue(out.isStrictDecoding());
-            try {
-                out.write(encoded);
-                out.close();
-                fail();
-            } catch (final IllegalArgumentException ex) {
-                // expected
-            }
+            final Base32OutputStream out2 = new Base32OutputStream(bout, false, 0, null, CodecPolicy.STRICT);
+            assertTrue(out2.isStrictDecoding());
+            assertThrows(IllegalArgumentException.class, () -> out2.write(encoded));
+            out2.close();
         }
     }
 }

@@ -19,6 +19,7 @@ package org.apache.commons.codec.net;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.fail;
 
 import java.nio.charset.StandardCharsets;
@@ -126,13 +127,7 @@ public class BCodecTest {
         final Object result = bcodec.encode((Object) null);
         assertNull("Encoding a null Object should return null", result);
 
-        try {
-            final Object dObj = Double.valueOf(3.0d);
-            bcodec.encode(dObj);
-            fail("Trying to url encode a Double object should cause an exception.");
-        } catch (final EncoderException ee) {
-            // Exception expected, test segment passes.
-        }
+        assertThrows(EncoderException.class, () -> bcodec.encode(Double.valueOf(3.0d)));
     }
 
     @Test(expected=UnsupportedCharsetException.class)
@@ -150,13 +145,7 @@ public class BCodecTest {
         final Object result = bcodec.decode((Object) null);
         assertNull("Decoding a null Object should return null", result);
 
-        try {
-            final Object dObj = Double.valueOf(3.0d);
-            bcodec.decode(dObj);
-            fail("Trying to url encode a Double object should cause an exception.");
-        } catch (final DecoderException ee) {
-            // Exception expected, test segment passes.
-        }
+        assertThrows(DecoderException.class, () -> bcodec.decode(Double.valueOf(3.0d)));
     }
 
     @Test
@@ -184,12 +173,7 @@ public class BCodecTest {
         final BCodec codec = new BCodec(StandardCharsets.UTF_8, CodecPolicy.STRICT);
         Assert.assertTrue(codec.isStrictDecoding());
         for (final String s : BASE64_IMPOSSIBLE_CASES) {
-            try {
-                codec.decode(s);
-                fail("Expected an exception for impossible case");
-            } catch (final DecoderException ex) {
-                // expected
-            }
+            assertThrows(DecoderException.class, () -> codec.decode(s));
         }
     }
 

@@ -31,6 +31,7 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -461,10 +462,7 @@ public class Base64InputStreamTest {
         final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
         final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
         try (final Base64InputStream in = new Base64InputStream(bin, true, 4, new byte[] { 0, 0, 0 })) {
-            in.read(null, 0, 0);
-            fail("Base64InputStream.read(null, 0, 0) to throw a NullPointerException");
-        } catch (final NullPointerException e) {
-            // Expected
+            assertThrows(NullPointerException.class, () -> in.read(null, 0, 0));
         }
     }
 
@@ -479,35 +477,11 @@ public class Base64InputStreamTest {
         final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
         final byte[] buf = new byte[1024];
         final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
-        try (final Base64InputStream in = new Base64InputStream(bin, true, 4, new byte[] { 0, 0, 0 })) {
-
-            try {
-                in.read(buf, -1, 0);
-                fail("Expected Base64InputStream.read(buf, -1, 0) to throw IndexOutOfBoundsException");
-            } catch (final IndexOutOfBoundsException e) {
-                // Expected
-            }
-
-            try {
-                in.read(buf, 0, -1);
-                fail("Expected Base64InputStream.read(buf, 0, -1) to throw IndexOutOfBoundsException");
-            } catch (final IndexOutOfBoundsException e) {
-                // Expected
-            }
-
-            try {
-                in.read(buf, buf.length + 1, 0);
-                fail("Base64InputStream.read(buf, buf.length + 1, 0) throws IndexOutOfBoundsException");
-            } catch (final IndexOutOfBoundsException e) {
-                // Expected
-            }
-
-            try {
-                in.read(buf, buf.length - 1, 2);
-                fail("Base64InputStream.read(buf, buf.length - 1, 2) throws IndexOutOfBoundsException");
-            } catch (final IndexOutOfBoundsException e) {
-                // Expected
-            }
+        try (final Base64InputStream in = new Base64InputStream(bin, true, 4, new byte[] {0, 0, 0})) {
+            assertThrows("Base64InputStream.read(buf, -1, 0)", IndexOutOfBoundsException.class, () -> in.read(buf, -1, 0));
+            assertThrows("Base64InputStream.read(buf, 0, -1)", IndexOutOfBoundsException.class, () -> in.read(buf, 0, -1));
+            assertThrows("Base64InputStream.read(buf, buf.length + 1, 0)", IndexOutOfBoundsException.class, () -> in.read(buf, buf.length + 1, 0));
+            assertThrows("Base64InputStream.read(buf, buf.length - 1, 2)", IndexOutOfBoundsException.class, () -> in.read(buf, buf.length - 1, 2));
         }
     }
 
@@ -613,14 +587,9 @@ public class Base64InputStreamTest {
             BaseNTestData.streamToBytes(in);
 
             // Strict decoding should throw
-            in = new Base64InputStream(new ByteArrayInputStream(encoded), false, 0, null, CodecPolicy.STRICT);
-            assertTrue(in.isStrictDecoding());
-            try {
-                BaseNTestData.streamToBytes(in);
-                fail();
-            } catch (final IllegalArgumentException ex) {
-                // expected
-            }
+            Base64InputStream in2 = new Base64InputStream(new ByteArrayInputStream(encoded), false, 0, null, CodecPolicy.STRICT);
+            assertTrue(in2.isStrictDecoding());
+            assertThrows(IllegalArgumentException.class, () -> BaseNTestData.streamToBytes(in2));
         }
     }
 }

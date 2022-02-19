@@ -21,6 +21,7 @@ package org.apache.commons.codec.net;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -135,19 +136,12 @@ public class QCodecTest {
         final QCodec qcodec = new QCodec();
         final String plain = "1+1 = 2";
         final String encoded = (String) qcodec.encode((Object) plain);
-        assertEquals("Basic Q encoding test",
-            "=?UTF-8?Q?1+1 =3D 2?=", encoded);
+        assertEquals("Basic Q encoding test", "=?UTF-8?Q?1+1 =3D 2?=", encoded);
 
         final Object result = qcodec.encode((Object) null);
         assertNull("Encoding a null Object should return null", result);
 
-        try {
-            final Object dObj = Double.valueOf(3.0d);
-            qcodec.encode( dObj );
-            fail( "Trying to url encode a Double object should cause an exception.");
-        } catch (final EncoderException ee) {
-            // Exception expected, test segment passes.
-        }
+        assertThrows(EncoderException.class, () -> qcodec.encode(Double.valueOf(3.0d)));
     }
 
 
@@ -161,19 +155,12 @@ public class QCodecTest {
         final QCodec qcodec = new QCodec();
         final String decoded = "=?UTF-8?Q?1+1 =3D 2?=";
         final String plain = (String) qcodec.decode((Object) decoded);
-        assertEquals("Basic Q decoding test",
-            "1+1 = 2", plain);
+        assertEquals("Basic Q decoding test", "1+1 = 2", plain);
 
         final Object result = qcodec.decode((Object) null);
         assertNull("Decoding a null Object should return null", result);
 
-        try {
-            final Object dObj = Double.valueOf(3.0d);
-            qcodec.decode( dObj );
-            fail( "Trying to url encode a Double object should cause an exception.");
-        } catch (final DecoderException ee) {
-            // Exception expected, test segment passes.
-        }
+        assertThrows(DecoderException.class, () -> qcodec.decode(Double.valueOf(3.0d)));
     }
 
 

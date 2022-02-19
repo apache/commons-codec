@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.fail;
 
 /**
@@ -238,34 +239,10 @@ public class Base16OutputStreamTest {
         final byte[] buf = new byte[1024];
         final ByteArrayOutputStream bout = new ByteArrayOutputStream();
         try (final Base16OutputStream out = new Base16OutputStream(bout)) {
-
-            try {
-                out.write(buf, -1, 1);
-                fail("Expected Base16OutputStream.write(buf, -1, 1) to throw a IndexOutOfBoundsException");
-            } catch (final IndexOutOfBoundsException ioobe) {
-                // Expected
-            }
-
-            try {
-                out.write(buf, 1, -1);
-                fail("Expected Base16OutputStream.write(buf, 1, -1) to throw a IndexOutOfBoundsException");
-            } catch (final IndexOutOfBoundsException ioobe) {
-                // Expected
-            }
-
-            try {
-                out.write(buf, buf.length + 1, 0);
-                fail("Expected Base16OutputStream.write(buf, buf.length + 1, 0) to throw a IndexOutOfBoundsException");
-            } catch (final IndexOutOfBoundsException ioobe) {
-                // Expected
-            }
-
-            try {
-                out.write(buf, buf.length - 1, 2);
-                fail("Expected Base16OutputStream.write(buf, buf.length - 1, 2) to throw a IndexOutOfBoundsException");
-            } catch (final IndexOutOfBoundsException ioobe) {
-                // Expected
-            }
+            assertThrows("Base16InputStream.write(buf, -1, 0)", IndexOutOfBoundsException.class, () -> out.write(buf, -1, 1));
+            assertThrows("Base16InputStream.write(buf, 1, -1)", IndexOutOfBoundsException.class, () -> out.write(buf, 1, -1));
+            assertThrows("Base16InputStream.write(buf, buf.length + 1, 0)", IndexOutOfBoundsException.class, () -> out.write(buf, buf.length + 1, 0));
+            assertThrows("Base16InputStream.write(buf, buf.length - 1, 2)", IndexOutOfBoundsException.class, () -> out.write(buf, buf.length - 1, 2));
         }
     }
 
@@ -278,10 +255,7 @@ public class Base16OutputStreamTest {
     public void testWriteToNullCoverage() throws IOException {
         final ByteArrayOutputStream bout = new ByteArrayOutputStream();
         try (final Base16OutputStream out = new Base16OutputStream(bout)) {
-            out.write(null, 0, 0);
-            fail("Expcted Base16OutputStream.write(null) to throw a NullPointerException");
-        } catch (final NullPointerException e) {
-            // Expected
+            assertThrows(NullPointerException.class, () -> out.write(null, 0, 0));
         }
     }
 }
