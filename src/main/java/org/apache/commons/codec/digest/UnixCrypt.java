@@ -326,8 +326,7 @@ public class UnixCrypt {
     }
 
     private static int byteToUnsigned(final byte b) {
-        final int value = b;
-        return value < 0 ? value + 256 : value;
+        return b & 0xff;
     }
 
     private static int dEncrypt(int el, final int r, final int s, final int e0, final int e1, final int[] sArr) {
