@@ -21,6 +21,7 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
@@ -87,10 +88,10 @@ public class PercentCodecTest {
         assertNull(percentCodec.decode((Object) null));
     }
 
-    @Test(expected = DecoderException.class)
-    public void testDecodeUnsupportedObject() throws Exception {
+    @Test
+    public void testDecodeUnsupportedObject() {
         final PercentCodec percentCodec = new PercentCodec();
-        percentCodec.decode("test");
+        assertThrows(DecoderException.class, () -> percentCodec.decode("test"));
     }
 
     @Test
@@ -99,10 +100,10 @@ public class PercentCodecTest {
         assertNull(percentCodec.encode((Object) null));
     }
 
-    @Test(expected = EncoderException.class)
-    public void testEncodeUnsupportedObject() throws Exception {
+    @Test
+    public void testEncodeUnsupportedObject() {
         final PercentCodec percentCodec = new PercentCodec();
-        percentCodec.encode("test");
+        assertThrows(EncoderException.class, () -> percentCodec.encode("test"));
     }
 
     @Test

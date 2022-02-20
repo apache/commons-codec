@@ -403,11 +403,11 @@ public class Base16InputStreamTest {
      *
      * @throws IOException for some failure scenarios.
      */
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void testSkipWrongArgument() throws IOException {
         final InputStream ins = new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B16));
         try (final Base16InputStream b16Stream = new Base16InputStream(ins)) {
-            b16Stream.skip(-10);
+            assertThrows(IllegalArgumentException.class, () -> b16Stream.skip(-10));
         }
     }
 }

@@ -18,6 +18,7 @@ package org.apache.commons.codec.digest;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
@@ -73,14 +74,14 @@ public class Sha256CryptTest {
         assertTrue(Sha2Crypt.sha256Crypt("secret".getBytes(), null).matches("^\\$5\\$[a-zA-Z0-9./]{0,16}\\$.{1,}$"));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testSha256CryptNullData() {
-        Sha2Crypt.sha256Crypt((byte[]) null);
+        assertThrows(NullPointerException.class, () -> Sha2Crypt.sha256Crypt((byte[]) null));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testSha256CryptWithEmptySalt() {
-        Sha2Crypt.sha256Crypt("secret".getBytes(), "");
+        assertThrows(IllegalArgumentException.class, () -> Sha2Crypt.sha256Crypt("secret".getBytes(), ""));
     }
 
     @Test

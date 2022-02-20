@@ -21,6 +21,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Tests {@link Digest}.
@@ -31,20 +32,16 @@ public class DigestTest {
 
     /**
      * Tests if empty arguments are handled correctly.
-     *
-     * @throws IllegalArgumentException for some failure scenarios.
      */
-    @Test(expected = IllegalArgumentException.class)
-    public void testEmptyArguments() throws IOException {
-        Digest.main(new String[0]);
+    @Test
+    public void testEmptyArguments() {
+        assertThrows(IllegalArgumentException.class, () -> Digest.main(new String[0]));
     }
     /**
      * Tests if null arguments are handled correctly.
-     *
-     * @throws IllegalArgumentException for some failure scenarios.
      */
-    @Test(expected = IllegalArgumentException.class)
-    public void testNullArguments() throws IOException {
-        Digest.main(null);
+    @Test
+    public void testNullArguments() {
+        assertThrows(IllegalArgumentException.class, () -> Digest.main(null));
     }
 }

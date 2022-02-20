@@ -37,6 +37,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 /**
  * Tests {@link HmacAlgorithms}.
  *
@@ -143,44 +145,44 @@ public class HmacAlgorithmsTest {
         Mac.getInstance(algorithm);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testGetHmacEmptyKey() {
-        HmacUtils.getInitializedMac(hmacAlgorithm, EMPTY_BYTE_ARRAY);
+        assertThrows(IllegalArgumentException.class, () -> HmacUtils.getInitializedMac(hmacAlgorithm, EMPTY_BYTE_ARRAY));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testGetHmacNullKey() {
-        HmacUtils.getInitializedMac(hmacAlgorithm, null);
+        assertThrows(IllegalArgumentException.class, () -> HmacUtils.getInitializedMac(hmacAlgorithm, null));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testHmacFailByteArray() {
-        new HmacUtils(hmacAlgorithm, (byte[]) null).hmac(STANDARD_PHRASE_BYTES);
+        assertThrows(IllegalArgumentException.class, () -> new HmacUtils(hmacAlgorithm, (byte[]) null).hmac(STANDARD_PHRASE_BYTES));
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testHmacFailInputStream() throws IOException {
-        new HmacUtils(hmacAlgorithm, (byte[]) null).hmac(new ByteArrayInputStream(STANDARD_PHRASE_BYTES));
+    @Test
+    public void testHmacFailInputStream() {
+        assertThrows(IllegalArgumentException.class, () -> new HmacUtils(hmacAlgorithm, (byte[]) null).hmac(new ByteArrayInputStream(STANDARD_PHRASE_BYTES)));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testHmacFailString() {
-        new HmacUtils(hmacAlgorithm, (String) null).hmac(STANDARD_PHRASE_STRING);
+        assertThrows(IllegalArgumentException.class, () -> new HmacUtils(hmacAlgorithm, (String) null).hmac(STANDARD_PHRASE_STRING));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testHmacHexFailByteArray() {
-        new HmacUtils(hmacAlgorithm, (byte[]) null).hmac(STANDARD_PHRASE_BYTES);
+        assertThrows(IllegalArgumentException.class, () -> new HmacUtils(hmacAlgorithm, (byte[]) null).hmac(STANDARD_PHRASE_BYTES));
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testHmacHexFailInputStream() throws IOException {
-        new HmacUtils(hmacAlgorithm, (byte[]) null).hmac(new ByteArrayInputStream(STANDARD_PHRASE_BYTES));
+    @Test
+    public void testHmacHexFailInputStream() {
+        assertThrows(IllegalArgumentException.class, () -> new HmacUtils(hmacAlgorithm, (byte[]) null).hmac(new ByteArrayInputStream(STANDARD_PHRASE_BYTES)));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testHmacHexFailString() {
-        new HmacUtils(hmacAlgorithm, (String) null).hmac(STANDARD_PHRASE_STRING);
+        assertThrows(IllegalArgumentException.class, () -> new HmacUtils(hmacAlgorithm, (String) null).hmac(STANDARD_PHRASE_STRING));
     }
 
     @Test

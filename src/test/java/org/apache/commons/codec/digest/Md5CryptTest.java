@@ -19,6 +19,7 @@ package org.apache.commons.codec.digest;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.Test;
 
@@ -73,13 +74,13 @@ public class Md5CryptTest {
         assertEquals("$1$1234$MoxekaNNUgfPRVqoeYjCD/", Crypt.crypt("12345678901234567890", "$1$1234"));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testMd5CryptNullData() {
-        Md5Crypt.md5Crypt((byte[]) null);
+        assertThrows(NullPointerException.class, () -> Md5Crypt.md5Crypt((byte[]) null));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testMd5CryptWithEmptySalt() {
-        Md5Crypt.md5Crypt("secret".getBytes(), "");
+        assertThrows(IllegalArgumentException.class, () -> Md5Crypt.md5Crypt("secret".getBytes(), ""));
     }
 }

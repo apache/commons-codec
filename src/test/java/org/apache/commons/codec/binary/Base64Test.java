@@ -422,7 +422,7 @@ public class Base64Test {
         Base64.encodeBase64(in, false, false, out.length);
     }
 
-    private void testEncodeOverMaxSize(final int maxSize) throws Exception {
+    private void testEncodeOverMaxSize(final int maxSize) {
         assertThrows(IllegalArgumentException.class, () -> Base64.encodeBase64(BaseNTestData.DECODED, true, false, maxSize));
     }
 
@@ -521,7 +521,7 @@ public class Base64Test {
     }
 
     @Test
-    public void testObjectDecodeWithInvalidParameter() throws Exception {
+    public void testObjectDecodeWithInvalidParameter() {
         assertThrows(DecoderException.class, () -> new Base64().decode(Integer.valueOf(5)));
     }
 
@@ -540,7 +540,7 @@ public class Base64Test {
     }
 
     @Test
-    public void testObjectEncodeWithInvalidParameter() throws Exception {
+    public void testObjectEncodeWithInvalidParameter() {
         assertThrows(EncoderException.class, () -> new Base64().encode("Yadayadayada"));
     }
 

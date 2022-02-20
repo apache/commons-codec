@@ -27,6 +27,8 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Test;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 /**
  * Tests the {@code ColognePhonetic} class.
  *
@@ -96,10 +98,10 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest<ColognePhonet
         return new ColognePhonetic();
     }
 
-    @Test(expected=org.junit.ComparisonFailure.class)
+    @Test
     // Ensure that override still allows tests to work
-    public void testCanFail() throws EncoderException {
-        this.checkEncoding("/", "Fehler");
+    public void testCanFail() {
+        assertThrows(org.junit.ComparisonFailure.class, () -> this.checkEncoding("/", "Fehler"));
     }
 
     @Test

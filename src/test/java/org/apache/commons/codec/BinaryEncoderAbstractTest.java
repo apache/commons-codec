@@ -34,7 +34,7 @@ public abstract class BinaryEncoderAbstractTest {
     }
 
     @Test
-    public void testEncodeNull() throws Exception {
+    public void testEncodeNull() {
         assertThrows(EncoderException.class, () -> makeEncoder().encode(null));
     }
 }

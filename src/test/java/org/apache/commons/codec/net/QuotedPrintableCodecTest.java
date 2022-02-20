@@ -184,9 +184,9 @@ public class QuotedPrintableCodecTest {
         assertThrows(EncoderException.class, () -> qpcodec.encode(Double.valueOf(3.0d)));
     }
 
-    @Test(expected=UnsupportedCharsetException.class)
+    @Test
     public void testInvalidEncoding() {
-        new QuotedPrintableCodec("NONSENSE");
+        assertThrows(UnsupportedCharsetException.class, () -> new QuotedPrintableCodec("NONSENSE"));
     }
 
     @Test

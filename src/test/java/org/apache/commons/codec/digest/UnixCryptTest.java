@@ -20,6 +20,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.nio.charset.StandardCharsets;
 
@@ -70,27 +71,27 @@ public class UnixCryptTest {
      * E.g. with glibc 2.13, crypt("secret", "x") = "xxZREZpkHZpkI" but
      * crypt("secret", "xx") = "xxWAum7tHdIUw" which makes it unverifyable.
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testUnixCryptWithHalfSalt() {
-        UnixCrypt.crypt("secret", "x");
+        assertThrows(IllegalArgumentException.class, () -> UnixCrypt.crypt("secret", "x"));
     }
 
     /**
      * Unimplemented "$foo$" salt prefixes would be threated as UnixCrypt salt.
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testUnicCryptInvalidSalt() {
-        UnixCrypt.crypt("secret", "$a");
+        assertThrows(IllegalArgumentException.class, () -> UnixCrypt.crypt("secret", "$a"));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testUnixCryptNullData() {
-        UnixCrypt.crypt((byte[]) null);
+        assertThrows(NullPointerException.class, () -> UnixCrypt.crypt((byte[]) null));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testUnixCryptWithEmptySalt() {
-        UnixCrypt.crypt("secret", "");
+        assertThrows(IllegalArgumentException.class, () -> UnixCrypt.crypt("secret", ""));
     }
 
     @Test

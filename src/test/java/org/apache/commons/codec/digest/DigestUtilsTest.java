@@ -23,6 +23,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -134,9 +135,9 @@ public class DigestUtilsTest {
         assertEquals(MessageDigestAlgorithms.MD5, digestUtils.getMessageDigest().getAlgorithm());
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void testInternalNoSuchAlgorithmException() {
-        DigestUtils.getDigest("Bogus Bogus");
+        assertThrows(IllegalArgumentException.class, () -> DigestUtils.getDigest("Bogus Bogus"));
     }
 
     @Test

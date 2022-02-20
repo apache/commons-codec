@@ -562,11 +562,11 @@ public class Base64InputStreamTest {
      * @throws Throwable
      *             for some failure scenarios.
      */
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void testSkipWrongArgument() throws Throwable {
         final InputStream ins = new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));
         try (final Base64InputStream b64stream = new Base64InputStream(ins)) {
-            b64stream.skip(-10);
+            assertThrows(IllegalArgumentException.class, () -> b64stream.skip(-10));
         }
     }
 

@@ -523,11 +523,11 @@ public class Base32InputStreamTest {
      * @throws Throwable
      *             for some failure scenarios.
      */
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void testSkipWrongArgument() throws Throwable {
         final InputStream ins = new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_FOO));
         try (final Base32InputStream b32stream = new Base32InputStream(ins)) {
-            b32stream.skip(-10);
+            assertThrows(IllegalArgumentException.class, () -> b32stream.skip(-10));
         }
     }
 

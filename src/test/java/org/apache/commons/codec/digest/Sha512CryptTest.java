@@ -18,6 +18,7 @@ package org.apache.commons.codec.digest;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
@@ -63,9 +64,9 @@ public class Sha512CryptTest {
         assertTrue(Sha2Crypt.sha512Crypt("secret".getBytes(), null, threadLocalRandom).matches("^\\$6\\$[a-zA-Z0-9./]{0,16}\\$.{1,}$"));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testSha512CryptNullData() {
-        Sha2Crypt.sha512Crypt((byte[]) null);
+        assertThrows(NullPointerException.class, () -> Sha2Crypt.sha512Crypt((byte[]) null));
     }
 
     @Ignore
@@ -82,14 +83,14 @@ public class Sha512CryptTest {
         assertEquals("$5$rounds=9999$abcd$Rh/8ngVh9oyuS6lL3.fsq.9xbvXJsfyKWxSjO2mPIa7", Sha2Crypt.sha256Crypt("secret".getBytes(StandardCharsets.UTF_8), "$5$rounds=9999$abcd"));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testSha2CryptWrongSalt() {
-        Sha2Crypt.sha512Crypt("secret".getBytes(StandardCharsets.UTF_8), "xx");
+        assertThrows(IllegalArgumentException.class, () -> Sha2Crypt.sha512Crypt("secret".getBytes(StandardCharsets.UTF_8), "xx"));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testSha512CryptWithEmptySalt() {
-        Sha2Crypt.sha512Crypt("secret".getBytes(), "");
+        assertThrows(IllegalArgumentException.class, () -> Sha2Crypt.sha512Crypt("secret".getBytes(), ""));
     }
 
     @Test
