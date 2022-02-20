@@ -342,12 +342,13 @@ public class Base64OutputStreamTest {
             Base64OutputStream out = new Base64OutputStream(bout, false, 0, null, CodecPolicy.STRICT);
             assertTrue(out.isStrictDecoding());
             try {
+                // May throw on write or on close depending on the position of the
+                // impossible last character in the output block size
                 out.write(impossibleEncoded);
                 out.close();
                 fail();
             } catch (final IllegalArgumentException ex) {
                 // expected
-                ex.printStackTrace();
             }
         }
     }
