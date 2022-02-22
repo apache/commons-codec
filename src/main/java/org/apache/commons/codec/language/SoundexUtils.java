@@ -19,6 +19,7 @@ package org.apache.commons.codec.language;
 
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
+import org.apache.commons.codec.binary.StringUtils;
 
 /**
  * Utility methods for {@link Soundex} and {@link RefinedSoundex} classes.
@@ -38,7 +39,7 @@ final class SoundexUtils {
      * @return A clean String.
      */
     static String clean(final String str) {
-        if (str == null || str.isEmpty()) {
+        if (isEmpty(str)) {
             return str;
         }
         final int len = str.length();
@@ -118,6 +119,25 @@ final class SoundexUtils {
             }
         }
         return diff;
+    }
+
+    /**
+     * <p>Checks if a CharSequence is empty ("") or null.</p>
+     *
+     * <pre>
+     * StringUtils.isEmpty(null)      = true
+     * StringUtils.isEmpty("")        = true
+     * StringUtils.isEmpty(" ")       = false
+     * StringUtils.isEmpty("bob")     = false
+     * StringUtils.isEmpty("  bob  ") = false
+     * </pre>
+     *
+     * @param cs  the CharSequence to check, may be null
+     * @return {@code true} if the CharSequence is empty or null
+     * @since 1.16
+     */
+    static boolean isEmpty(final CharSequence cs) {
+        return cs == null || cs.length() == 0;
     }
 
 }
