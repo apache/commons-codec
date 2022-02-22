@@ -17,15 +17,15 @@
 
 package org.apache.commons.codec.net;
 
-import static org.junit.Assert.*;
-
 import java.nio.charset.StandardCharsets;
 import java.nio.charset.UnsupportedCharsetException;
 
 import org.apache.commons.codec.CharEncoding;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Quoted-printable codec test cases
@@ -75,10 +75,8 @@ public class QuotedPrintableCodecTest {
         final QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
         final String plain = "= Hello there =\r\n";
         final String encoded = qpcodec.encode(plain);
-        assertEquals("Basic quoted-printable encoding test",
-            "=3D Hello there =3D=0D=0A", encoded);
-        assertEquals("Basic quoted-printable decoding test",
-            plain, qpcodec.decode(encoded));
+        assertEquals("=3D Hello there =3D=0D=0A", encoded, "Basic quoted-printable encoding test");
+        assertEquals(plain, qpcodec.decode(encoded), "Basic quoted-printable decoding test");
     }
 
     @Test
@@ -86,10 +84,8 @@ public class QuotedPrintableCodecTest {
         final QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
         final String plain = "abc123_-.*~!@#$%^&()+{}\"\\;:`,/[]";
         final String encoded = qpcodec.encode(plain);
-        assertEquals("Safe chars quoted-printable encoding test",
-            plain, encoded);
-        assertEquals("Safe chars quoted-printable decoding test",
-            plain, qpcodec.decode(encoded));
+        assertEquals(plain, encoded, "Safe chars quoted-printable encoding test");
+        assertEquals(plain, qpcodec.decode(encoded), "Safe chars quoted-printable decoding test");
     }
 
 
@@ -98,24 +94,20 @@ public class QuotedPrintableCodecTest {
         final QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
         final String plain = "=\r\n";
         final String encoded = qpcodec.encode(plain);
-        assertEquals("Unsafe chars quoted-printable encoding test",
-            "=3D=0D=0A", encoded);
-        assertEquals("Unsafe chars quoted-printable decoding test",
-            plain, qpcodec.decode(encoded));
+        assertEquals("=3D=0D=0A", encoded, "Unsafe chars quoted-printable encoding test");
+        assertEquals(plain, qpcodec.decode(encoded), "Unsafe chars quoted-printable decoding test");
     }
 
     @Test
     public void testEncodeDecodeNull() throws Exception {
         final QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
-        assertNull("Null string quoted-printable encoding test",
-            qpcodec.encode((String)null));
-        assertNull("Null string quoted-printable decoding test",
-            qpcodec.decode((String)null));
+        assertNull(qpcodec.encode((String)null), "Null string quoted-printable encoding test");
+        assertNull(qpcodec.decode((String)null), "Null string quoted-printable decoding test");
     }
 
 
     @Test
-    public void testDecodeInvalid() throws Exception {
+    public void testDecodeInvalid() {
         final QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
         assertThrows(DecoderException.class, () -> qpcodec.decode("="));
         assertThrows(DecoderException.class, () -> qpcodec.decode("=A"));
@@ -127,7 +119,7 @@ public class QuotedPrintableCodecTest {
         final QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
         final byte[] plain = null;
         final byte[] encoded = qpcodec.encode(plain);
-        assertNull("Encoding a null string should return null", encoded);
+        assertNull(encoded, "Encoding a null string should return null");
     }
 
     @Test
@@ -136,18 +128,15 @@ public class QuotedPrintableCodecTest {
         final String plain = "1+1 = 2";
         final String encoded = new String(QuotedPrintableCodec.
             encodeQuotedPrintable(null, plain.getBytes(StandardCharsets.UTF_8)));
-        assertEquals("Basic quoted-printable encoding test",
-            "1+1 =3D 2", encoded);
-        assertEquals("Basic quoted-printable decoding test",
-            plain, qpcodec.decode(encoded));
-
+        assertEquals("1+1 =3D 2", encoded, "Basic quoted-printable encoding test");
+        assertEquals(plain, qpcodec.decode(encoded), "Basic quoted-printable decoding test");
     }
 
     @Test
     public void testDecodeWithNullArray() throws Exception {
         final byte[] plain = null;
         final byte[] result = QuotedPrintableCodec.decodeQuotedPrintable( plain );
-        assertNull("Result should be null", result);
+        assertNull(result, "Result should be null");
     }
 
     @Test
@@ -155,7 +144,7 @@ public class QuotedPrintableCodecTest {
         final QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
         final String test = null;
         final String result = qpcodec.encode( test, "charset" );
-        assertNull("Result should be null", result);
+        assertNull(result, "Result should be null");
     }
 
     @Test
@@ -163,7 +152,7 @@ public class QuotedPrintableCodecTest {
         final QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
         final String test = null;
         final String result = qpcodec.decode( test, "charset" );
-        assertNull("Result should be null", result);
+        assertNull(result, "Result should be null");
     }
 
     @Test
@@ -171,17 +160,18 @@ public class QuotedPrintableCodecTest {
         final QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
         final String plain = "1+1 = 2";
         String encoded = (String) qpcodec.encode((Object) plain);
-        assertEquals("Basic quoted-printable encoding test", "1+1 =3D 2", encoded);
 
+        assertEquals("1+1 =3D 2", encoded, "Basic quoted-printable encoding test");
         final byte[] plainBA = plain.getBytes(StandardCharsets.UTF_8);
         final byte[] encodedBA = (byte[]) qpcodec.encode((Object) plainBA);
         encoded = new String(encodedBA);
-        assertEquals("Basic quoted-printable encoding test", "1+1 =3D 2", encoded);
+        assertEquals("1+1 =3D 2", encoded, "Basic quoted-printable encoding test");
 
         final Object result = qpcodec.encode((Object) null);
-        assertNull("Encoding a null Object should return null", result);
+        assertNull(result, "Encoding a null Object should return null");
 
-        assertThrows(EncoderException.class, () -> qpcodec.encode(Double.valueOf(3.0d)));
+        assertThrows(EncoderException.class, () -> qpcodec.encode(Double.valueOf(3.0d)),
+            "Trying to url encode a Double object should cause an exception.");
     }
 
     @Test
@@ -194,19 +184,18 @@ public class QuotedPrintableCodecTest {
         final QuotedPrintableCodec qpcodec = new QuotedPrintableCodec();
         final String plain = "1+1 =3D 2";
         String decoded = (String) qpcodec.decode((Object) plain);
-        assertEquals("Basic quoted-printable decoding test",
-            "1+1 = 2", decoded);
+        assertEquals("1+1 = 2", decoded, "Basic quoted-printable decoding test");
 
         final byte[] plainBA = plain.getBytes(StandardCharsets.UTF_8);
         final byte[] decodedBA = (byte[]) qpcodec.decode((Object) plainBA);
         decoded = new String(decodedBA);
-        assertEquals("Basic quoted-printable decoding test",
-            "1+1 = 2", decoded);
+        assertEquals("1+1 = 2", decoded, "Basic quoted-printable decoding test");
 
         final Object result = qpcodec.decode((Object) null);
-        assertNull("Decoding a null Object should return null", result);
+        assertNull(result, "Decoding a null Object should return null");
 
-        assertThrows(DecoderException.class, () -> qpcodec.decode(Double.valueOf(3.0d)));
+        assertThrows(DecoderException.class, () -> qpcodec.decode(Double.valueOf(3.0d)),
+            "Trying to url encode a Double object should cause an exception.");
     }
 
     @Test

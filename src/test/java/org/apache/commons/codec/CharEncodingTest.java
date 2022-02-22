@@ -17,8 +17,9 @@
 
 package org.apache.commons.codec;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Sanity checks for {@link CharEncoding}.
@@ -36,32 +37,32 @@ public class CharEncodingTest {
 
     @Test
     public void testIso8859_1() {
-        Assert.assertEquals("ISO-8859-1", CharEncoding.ISO_8859_1);
+        assertEquals("ISO-8859-1", CharEncoding.ISO_8859_1);
     }
 
     @Test
     public void testUsAscii() {
-        Assert.assertEquals("US-ASCII", CharEncoding.US_ASCII);
+        assertEquals("US-ASCII", CharEncoding.US_ASCII);
     }
 
     @Test
     public void testUtf16() {
-        Assert.assertEquals("UTF-16", CharEncoding.UTF_16);
+        assertEquals("UTF-16", CharEncoding.UTF_16);
     }
 
     @Test
     public void testUtf16Be() {
-        Assert.assertEquals("UTF-16BE", CharEncoding.UTF_16BE);
+        assertEquals("UTF-16BE", CharEncoding.UTF_16BE);
     }
 
     @Test
     public void testUtf16Le() {
-        Assert.assertEquals("UTF-16LE", CharEncoding.UTF_16LE);
+        assertEquals("UTF-16LE", CharEncoding.UTF_16LE);
     }
 
     @Test
     public void testUtf8() {
-        Assert.assertEquals("UTF-8", CharEncoding.UTF_8);
+        assertEquals("UTF-8", CharEncoding.UTF_8);
     }
 
 }

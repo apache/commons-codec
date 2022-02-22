@@ -16,10 +16,11 @@
  */
 package org.apache.commons.codec.digest;
 
+import org.junit.jupiter.api.Test;
+
 import java.util.Arrays;
 
-import org.junit.Assert;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Test class for PureJavaCrc32C.
@@ -65,7 +66,7 @@ public class PureJavaCrc32CTest {
         crc.reset();
         crc.update(data, 0, data.length);
         final int actual = (int) crc.getValue();
-        Assert.assertEquals(Integer.toHexString(expected), Integer.toHexString(actual));
+        assertEquals(Integer.toHexString(expected), Integer.toHexString(actual));
     }
 
 }

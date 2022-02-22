@@ -17,16 +17,13 @@
 
 package org.apache.commons.codec.binary;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.IOException;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @since 1.15
@@ -170,18 +167,18 @@ public class Base16InputStreamTest {
         try (final InputStream in = new Base16InputStream(new ByteArrayInputStream(decoded), true, lowerCase)) {
             final byte[] output = BaseNTestData.streamToBytes(in);
 
-            assertEquals("EOF", -1, in.read());
-            assertEquals("Still EOF", -1, in.read());
-            assertArrayEquals("Streaming Base16 encode", encoded, output);
+            assertEquals(-1, in.read(), "EOF");
+            assertEquals(-1, in.read(), "Still EOF");
+            assertArrayEquals(encoded, output, "Streaming Base16 encode");
         }
 
         // Now let's try decode.
         try (final InputStream in = new Base16InputStream(new ByteArrayInputStream(encoded), false, lowerCase)) {
             final byte[] output = BaseNTestData.streamToBytes(in);
 
-            assertEquals("EOF", -1, in.read());
-            assertEquals("Still EOF", -1, in.read());
-            assertArrayEquals("Streaming Base16 decode", decoded, output);
+            assertEquals(-1, in.read(), "EOF");
+            assertEquals(-1, in.read(), "Still EOF");
+            assertArrayEquals(decoded, output, "Streaming Base16 decode");
         }
 
         // wrap encoder with decoder
@@ -191,9 +188,9 @@ public class Base16InputStreamTest {
 
             final byte[] output = BaseNTestData.streamToBytes(inDecode);
 
-            assertEquals("EOF", -1, inDecode.read());
-            assertEquals("Still EOF", -1, inDecode.read());
-            assertArrayEquals("Streaming Base16 wrap-wrap!", decoded, output);
+            assertEquals(-1, inDecode.read(), "EOF");
+            assertEquals(-1, inDecode.read(), "Still EOF");
+            assertArrayEquals(decoded, output, "Streaming Base16 wrap-wrap!");
         }
     }
 
@@ -233,9 +230,9 @@ public class Base16InputStreamTest {
                 output[i] = (byte) in.read();
             }
 
-            assertEquals("EOF", -1, in.read());
-            assertEquals("Still EOF", -1, in.read());
-            assertArrayEquals("Streaming Base16 encode", encoded, output);
+            assertEquals(-1, in.read(), "EOF");
+            assertEquals(-1, in.read(), "Still EOF");
+            assertArrayEquals(encoded, output, "Streaming Base16 encode");
         }
 
         // Now let's try decode.
@@ -245,9 +242,9 @@ public class Base16InputStreamTest {
                 output[i] = (byte) in.read();
             }
 
-            assertEquals("EOF", -1, in.read());
-            assertEquals("Still EOF", -1, in.read());
-            assertArrayEquals("Streaming Base16 decode", decoded, output);
+            assertEquals(-1, in.read(), "EOF");
+            assertEquals(-1, in.read(), "Still EOF");
+            assertArrayEquals(decoded, output, "Streaming Base16 decode");
         }
 
         // wrap encoder with decoder
@@ -260,9 +257,9 @@ public class Base16InputStreamTest {
                 output[i] = (byte) inDecode.read();
             }
 
-            assertEquals("EOF", -1, inDecode.read());
-            assertEquals("Still EOF", -1, inDecode.read());
-            assertArrayEquals("Streaming Base16 wrap-wrap!", decoded, output);
+            assertEquals(-1, inDecode.read(), "EOF");
+            assertEquals(-1, inDecode.read(), "Still EOF");
+            assertArrayEquals(decoded, output, "Streaming Base16 wrap-wrap!");
         }
     }
 
@@ -277,7 +274,7 @@ public class Base16InputStreamTest {
         final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
         try (final Base16InputStream in = new Base16InputStream(bin, true)) {
             // Always returns false for now.
-            assertFalse("Base16InputStream.markSupported() is false", in.markSupported());
+            assertFalse(in.markSupported(), "Base16InputStream.markSupported() is false");
         }
     }
 
@@ -294,7 +291,7 @@ public class Base16InputStreamTest {
         final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
         try (final Base16InputStream in = new Base16InputStream(bin, true)) {
             bytesRead = in.read(buf, 0, 0);
-            assertEquals("Base16InputStream.read(buf, 0, 0) returns 0", 0, bytesRead);
+            assertEquals(0, bytesRead, "Base16InputStream.read(buf, 0, 0) returns 0");
         }
     }
 
@@ -308,7 +305,8 @@ public class Base16InputStreamTest {
         final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
         final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
         try (final Base16InputStream in = new Base16InputStream(bin, true)) {
-            assertThrows(NullPointerException.class, () -> in.read(null, 0, 0));
+            assertThrows(NullPointerException.class, () -> in.read(null, 0, 0),
+                "Base16InputStream.read(null, 0, 0)");
         }
     }
 
@@ -323,10 +321,10 @@ public class Base16InputStreamTest {
         final byte[] buf = new byte[1024];
         final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
         try (final Base16InputStream in = new Base16InputStream(bin, true)) {
-            assertThrows("Base16InputStream.read(buf, -1, 0)", IndexOutOfBoundsException.class, () -> in.read(buf, -1, 0));
-            assertThrows("Base16InputStream.read(buf, 0, -1)", IndexOutOfBoundsException.class, () -> in.read(buf, 0, -1));
-            assertThrows("Base16InputStream.read(buf, buf.length + 1, 0)", IndexOutOfBoundsException.class, () -> in.read(buf, buf.length + 1, 0));
-            assertThrows("Base16InputStream.read(buf, buf.length - 1, 2)", IndexOutOfBoundsException.class, () -> in.read(buf, buf.length - 1, 2));
+            assertThrows(IndexOutOfBoundsException.class, () -> in.read(buf, -1, 0), "Base16InputStream.read(buf, -1, 0)");
+            assertThrows(IndexOutOfBoundsException.class, () -> in.read(buf, 0, -1), "Base16InputStream.read(buf, 0, -1)");
+            assertThrows(IndexOutOfBoundsException.class, () -> in.read(buf, buf.length + 1, 0), "Base16InputStream.read(buf, buf.length + 1, 0)");
+            assertThrows(IndexOutOfBoundsException.class, () -> in.read(buf, buf.length - 1, 2), "Base16InputStream.read(buf, buf.length - 1, 2)");
         }
     }
 

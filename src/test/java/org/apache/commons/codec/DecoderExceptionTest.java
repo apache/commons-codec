@@ -17,10 +17,10 @@
 
 package org.apache.commons.codec;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import org.junit.jupiter.api.Test;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
  * Tests {@link DecoderException}.

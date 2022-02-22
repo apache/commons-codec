@@ -17,11 +17,11 @@
 
 package org.apache.commons.codec.language;
 
-import static org.junit.Assert.assertEquals;
-
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoderAbstractTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Tests RefinedSoundex.
@@ -77,7 +77,7 @@ public class RefinedSoundexTest extends StringEncoderAbstractTest<RefinedSoundex
     @Test
     public void testGetMappingCodeNonLetter() {
         final char code = this.getStringEncoder().getMappingCode('#');
-        assertEquals("Code does not equals zero", 0, code);
+        assertEquals(0, code, "Code does not equals zero");
     }
 
     @Test

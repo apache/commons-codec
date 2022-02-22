@@ -17,16 +17,14 @@
 
 package org.apache.commons.codec.language.bm;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.StringEncoderAbstractTest;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import java.time.Duration;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests BeiderMorseEncoder.
@@ -37,7 +35,7 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest<StringEnco
     private static final char[] TEST_CHARS = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'o', 'u' };
 
     private void assertNotEmpty(final BeiderMorseEncoder bmpm, final String value) throws EncoderException {
-        Assert.assertNotEquals(value, "", bmpm.encode(value));
+        assertNotEquals("", bmpm.encode(value), value);
     }
 
     private BeiderMorseEncoder createGenericApproxEncoder() {
@@ -124,10 +122,10 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest<StringEnco
         assertThrows(IllegalArgumentException.class, () -> Languages.getInstance("thereIsNoSuchLanguage"));
     }
 
-    @Test(timeout = 10000L)
+    @Test
     public void testLongestEnglishSurname() throws EncoderException {
         final BeiderMorseEncoder bmpm = createGenericApproxEncoder();
-        bmpm.encode("MacGhilleseatheanaich");
+        assertTimeout(Duration.ofMillis(10000L), () -> bmpm.encode("MacGhilleseatheanaich"));
     }
 
     @Test
@@ -158,21 +156,21 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest<StringEnco
     public void testSetConcat() {
         final BeiderMorseEncoder bmpm = new BeiderMorseEncoder();
         bmpm.setConcat(false);
-        assertFalse("Should be able to set concat to false", bmpm.isConcat());
+        assertFalse(bmpm.isConcat(), "Should be able to set concat to false");
     }
 
     @Test
     public void testSetNameTypeAsh() {
         final BeiderMorseEncoder bmpm = new BeiderMorseEncoder();
         bmpm.setNameType(NameType.ASHKENAZI);
-        assertEquals("Name type should have been set to ash", NameType.ASHKENAZI, bmpm.getNameType());
+        assertEquals(NameType.ASHKENAZI, bmpm.getNameType(), "Name type should have been set to ash");
     }
 
     @Test
     public void testSetRuleTypeExact() {
         final BeiderMorseEncoder bmpm = new BeiderMorseEncoder();
         bmpm.setRuleType(RuleType.EXACT);
-        assertEquals("Rule type should have been set to exact", RuleType.EXACT, bmpm.getRuleType());
+        assertEquals(RuleType.EXACT, bmpm.getRuleType(), "Rule type should have been set to exact");
     }
 
     @Test
@@ -186,7 +184,7 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest<StringEnco
      *
      * @throws EncoderException for some failure scenarios
      */
-    @Test(/* timeout = 20000L */)
+    @Test /* timeout = 20000L */
     public void testSpeedCheck() throws EncoderException {
         final BeiderMorseEncoder bmpm = this.createGenericApproxEncoder();
         final StringBuilder stringBuffer = new StringBuilder();

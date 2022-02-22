@@ -16,7 +16,8 @@
  */
 package org.apache.commons.codec.language.bm;
 
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests performance for {@link PhoneticEngine}.

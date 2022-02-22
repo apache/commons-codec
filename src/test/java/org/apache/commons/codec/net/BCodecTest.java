@@ -17,10 +17,6 @@
 
 package org.apache.commons.codec.net;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThrows;
-
 import java.nio.charset.StandardCharsets;
 import java.nio.charset.UnsupportedCharsetException;
 
@@ -28,8 +24,9 @@ import org.apache.commons.codec.CharEncoding;
 import org.apache.commons.codec.CodecPolicy;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Quoted-printable codec test cases
@@ -88,15 +85,15 @@ public class BCodecTest {
         final BCodec bcodec = new BCodec();
         final String plain = "Hello there";
         final String encoded = bcodec.encode(plain);
-        assertEquals("Basic B encoding test", "=?UTF-8?B?SGVsbG8gdGhlcmU=?=", encoded);
-        assertEquals("Basic B decoding test", plain, bcodec.decode(encoded));
+        assertEquals("=?UTF-8?B?SGVsbG8gdGhlcmU=?=", encoded, "Basic B encoding test");
+        assertEquals(plain, bcodec.decode(encoded), "Basic B decoding test");
     }
 
     @Test
     public void testEncodeDecodeNull() throws Exception {
         final BCodec bcodec = new BCodec();
-        assertNull("Null string B encoding test", bcodec.encode((String) null));
-        assertNull("Null string B decoding test", bcodec.decode((String) null));
+        assertNull(bcodec.encode((String) null), "Null string B encoding test");
+        assertNull(bcodec.decode((String) null), "Null string B decoding test");
     }
 
     @Test
@@ -104,7 +101,7 @@ public class BCodecTest {
         final BCodec bcodec = new BCodec();
         final String test = null;
         final String result = bcodec.encode(test, "charset");
-        assertNull("Result should be null", result);
+        assertNull(result, "Result should be null");
     }
 
     @Test
@@ -112,7 +109,7 @@ public class BCodecTest {
         final BCodec bcodec = new BCodec();
         final String test = null;
         final String result = bcodec.decode(test);
-        assertNull("Result should be null", result);
+        assertNull(result, "Result should be null");
     }
 
     @Test
@@ -121,12 +118,13 @@ public class BCodecTest {
         final String plain = "what not";
         final String encoded = (String) bcodec.encode((Object) plain);
 
-        assertEquals("Basic B encoding test", "=?UTF-8?B?d2hhdCBub3Q=?=", encoded);
-
+        assertEquals("=?UTF-8?B?d2hhdCBub3Q=?=", encoded, "Basic B encoding test");
         final Object result = bcodec.encode((Object) null);
-        assertNull("Encoding a null Object should return null", result);
 
-        assertThrows(EncoderException.class, () -> bcodec.encode(Double.valueOf(3.0d)));
+        assertNull(result, "Encoding a null Object should return null");
+
+        assertThrows(EncoderException.class, () -> bcodec.encode(Double.valueOf(3.0d)),
+            "Trying to url encode a Double object should cause an exception.");
     }
 
     @Test
@@ -139,10 +137,9 @@ public class BCodecTest {
         final BCodec bcodec = new BCodec();
         final String decoded = "=?UTF-8?B?d2hhdCBub3Q=?=";
         final String plain = (String) bcodec.decode((Object) decoded);
-        assertEquals("Basic B decoding test", "what not", plain);
-
+        assertEquals("what not", plain, "Basic B decoding test");
         final Object result = bcodec.decode((Object) null);
-        assertNull("Decoding a null Object should return null", result);
+        assertNull(result, "Decoding a null Object should return null");
 
         assertThrows(DecoderException.class, () -> bcodec.decode(Double.valueOf(3.0d)));
     }
@@ -151,7 +148,7 @@ public class BCodecTest {
     public void testBase64ImpossibleSamplesDefault() throws DecoderException {
         final BCodec codec = new BCodec();
         // Default encoding is lenient
-        Assert.assertFalse(codec.isStrictDecoding());
+        assertFalse(codec.isStrictDecoding());
         for (final String s : BASE64_IMPOSSIBLE_CASES) {
             codec.decode(s);
         }
@@ -161,7 +158,7 @@ public class BCodecTest {
     public void testBase64ImpossibleSamplesLenient() throws DecoderException {
         final BCodec codec = new BCodec(StandardCharsets.UTF_8, CodecPolicy.LENIENT);
         // Default encoding is lenient
-        Assert.assertFalse(codec.isStrictDecoding());
+        assertFalse(codec.isStrictDecoding());
         for (final String s : BASE64_IMPOSSIBLE_CASES) {
             codec.decode(s);
         }
@@ -170,7 +167,7 @@ public class BCodecTest {
     @Test
     public void testBase64ImpossibleSamplesStrict() throws DecoderException {
         final BCodec codec = new BCodec(StandardCharsets.UTF_8, CodecPolicy.STRICT);
-        Assert.assertTrue(codec.isStrictDecoding());
+        assertTrue(codec.isStrictDecoding());
         for (final String s : BASE64_IMPOSSIBLE_CASES) {
             assertThrows(DecoderException.class, () -> codec.decode(s));
         }

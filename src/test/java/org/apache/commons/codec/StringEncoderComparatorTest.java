@@ -17,14 +17,14 @@
 
 package org.apache.commons.codec;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.codec.language.DoubleMetaphone;
 import org.apache.commons.codec.language.Soundex;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Test cases for the StingEncoderComparator.
@@ -36,8 +36,8 @@ public class StringEncoderComparatorTest {
         final StringEncoderComparator sCompare =
             new StringEncoderComparator( new Soundex() );
 
-        assertEquals("O'Brien and O'Brian didn't come out with " +
-                "the same Soundex, something must be wrong here", 0, sCompare.compare("O'Brien", "O'Brian"));
+        assertEquals(0, sCompare.compare("O'Brien", "O'Brian"),
+                "O'Brien and O'Brian didn't come out with the same Soundex, something must be wrong here");
     }
 
     @SuppressWarnings("unchecked") // cannot easily avoid this warning
@@ -55,7 +55,8 @@ public class StringEncoderComparatorTest {
         final String[] resultArray = testList.toArray(new String[0]);
 
         for (int i = 0; i < resultArray.length; i++) {
-            assertEquals("Result Array not Equal to Control Array at index: " + i, controlArray[i], resultArray[i]);
+            assertEquals(controlArray[i], resultArray[i],
+                    "Result Array not Equal to Control Array at index: " + i);
         }
     }
 
@@ -65,7 +66,8 @@ public class StringEncoderComparatorTest {
             new StringEncoderComparator( new DoubleMetaphone() );
 
         final int compare = sCompare.compare(Double.valueOf(3.0d), Long.valueOf(3));
-        assertEquals( "Trying to compare objects that make no sense to the underlying encoder should return a zero compare code",
-                                0, compare);
+        assertEquals(0, compare,
+                "Trying to compare objects that make no sense to the underlying encoder" +
+                        " should return a zero compare code");
     }
 }

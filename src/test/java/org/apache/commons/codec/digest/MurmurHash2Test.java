@@ -17,8 +17,11 @@
 
 package org.apache.commons.codec.digest;
 
-import org.junit.Assert;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class MurmurHash2Test {
 
@@ -83,7 +86,7 @@ public class MurmurHash2Test {
         for (int i = 0; i < input.length; i++) {
             final int hash = MurmurHash2.hash32(input[i], input[i].length, 0x71b4954d);
             if (hash != results32_seed[i]) {
-                Assert.fail(String.format("Unexpected hash32 result for example %d: 0x%08x instead of 0x%08x", i, hash,
+                fail(String.format("Unexpected hash32 result for example %d: 0x%08x instead of 0x%08x", i, hash,
                             results32_seed[i]));
             }
         }
@@ -94,7 +97,7 @@ public class MurmurHash2Test {
         for (int i = 0; i < input.length; i++) {
             final int hash = MurmurHash2.hash32(input[i], input[i].length);
             if (hash != results32_standard[i]) {
-                Assert.fail(String.format("Unexpected hash32 result for example %d: 0x%08x instead of 0x%08x", i, hash,
+                fail(String.format("Unexpected hash32 result for example %d: 0x%08x instead of 0x%08x", i, hash,
                             results32_standard[i]));
             }
         }
@@ -103,13 +106,13 @@ public class MurmurHash2Test {
     @Test
     public void testHash32String() {
         final int hash = MurmurHash2.hash32(text);
-        Assert.assertEquals(0xb3bf597e, hash);
+        assertEquals(0xb3bf597e, hash);
     }
 
     @Test
     public void testHash32StringIntInt() {
         final int hash = MurmurHash2.hash32(text, 2, text.length() - 4);
-        Assert.assertEquals(0x4d666d90, hash);
+        assertEquals(0x4d666d90, hash);
     }
 
     @Test
@@ -117,7 +120,7 @@ public class MurmurHash2Test {
         for (int i = 0; i < input.length; i++) {
             final long hash = MurmurHash2.hash64(input[i], input[i].length, 0x344d1f5c);
             if (hash != results64_seed[i]) {
-                Assert.fail(String.format("Unexpected hash64 result for example %d: 0x%016x instead of 0x%016x", i, hash,
+                fail(String.format("Unexpected hash64 result for example %d: 0x%016x instead of 0x%016x", i, hash,
                             results64_seed[i]));
             }
         }
@@ -128,7 +131,7 @@ public class MurmurHash2Test {
         for (int i = 0; i < input.length; i++) {
             final long hash = MurmurHash2.hash64(input[i], input[i].length);
             if (hash != results64_standard[i]) {
-                Assert.fail(String.format("Unexpected hash64 result for example %d: 0x%016x instead of 0x%016x", i, hash,
+                fail(String.format("Unexpected hash64 result for example %d: 0x%016x instead of 0x%016x", i, hash,
                     results64_standard[i]));
             }
         }
@@ -137,12 +140,12 @@ public class MurmurHash2Test {
     @Test
     public void testHash64String() {
         final long hash = MurmurHash2.hash64(text);
-        Assert.assertEquals(0x0920e0c1b7eeb261L, hash);
+        assertEquals(0x0920e0c1b7eeb261L, hash);
     }
 
     @Test
     public void testHash64StringIntInt() {
         final long hash = MurmurHash2.hash64(text, 2, text.length() - 4);
-        Assert.assertEquals(0xa8b33145194985a2L, hash);
+        assertEquals(0xa8b33145194985a2L, hash);
     }
 }

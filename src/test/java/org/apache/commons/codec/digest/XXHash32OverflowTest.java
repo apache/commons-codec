@@ -16,9 +16,11 @@
  */
 package org.apache.commons.codec.digest;
 
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 public class XXHash32OverflowTest {
 
@@ -36,7 +38,7 @@ public class XXHash32OverflowTest {
         final int bufferSize = 16;
         final int unprocessedSize = bufferSize - 1;
         final int hugeLength = Integer.MAX_VALUE - (unprocessedSize - 1);
-        Assert.assertTrue("This should overflow to negative", unprocessedSize + hugeLength < bufferSize);
+        assertTrue(unprocessedSize + hugeLength < bufferSize, "This should overflow to negative");
 
         // Check the test can be run
         byte[] bytes = null;
@@ -46,7 +48,7 @@ public class XXHash32OverflowTest {
             // Some VMs cannot allocate an array this large.
             // Some test environments may not have enough available memory for this.
         }
-        Assume.assumeTrue("Cannot allocate array of length " + hugeLength, bytes != null);
+        assumeTrue(bytes != null, "Cannot allocate array of length " + hugeLength);
 
         final XXHash32 inc = new XXHash32();
         // Add bytes that should be unprocessed

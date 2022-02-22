@@ -17,10 +17,11 @@
 
 package org.apache.commons.codec;
 
+import org.junit.jupiter.api.Test;
+
 import java.util.Locale;
 
-import org.junit.Assert;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  */
@@ -29,7 +30,7 @@ public abstract class StringEncoderAbstractTest<T extends StringEncoder> {
     protected T stringEncoder = this.createStringEncoder();
 
     public void checkEncoding(final String expected, final String source) throws EncoderException {
-        Assert.assertEquals("Source: " + source, expected, this.getStringEncoder().encode(source));
+        assertEquals(expected, this.getStringEncoder().encode(source), "Source: " + source);
     }
 
     protected void checkEncodings(final String[][] data) throws EncoderException {
@@ -66,16 +67,10 @@ public abstract class StringEncoderAbstractTest<T extends StringEncoder> {
 
     @Test
     public void testEncodeWithInvalidObject() throws Exception {
-        boolean exceptionThrown = false;
-        try {
-            final StringEncoder encoder = this.getStringEncoder();
-            encoder.encode(Float.valueOf(3.4f));
-        } catch (final Exception e) {
-            exceptionThrown = true;
-        }
-        Assert.assertTrue("An exception was not thrown when we tried to encode " + "a Float object", exceptionThrown);
+        final StringEncoder encoder = this.getStringEncoder();
+        assertThrows(EncoderException.class, () -> encoder.encode(Float.valueOf(3.4f)),
+                "An exception was not thrown when we tried to encode a Float object");
     }
-
     @Test
     public void testLocaleIndependence() throws Exception {
         final StringEncoder encoder = this.getStringEncoder();
@@ -97,9 +92,9 @@ public abstract class StringEncoderAbstractTest<T extends StringEncoder> {
                         try {
                             cur = encoder.encode(element);
                         } catch (final Exception e) {
-                            Assert.fail(Locale.getDefault().toString() + ": " + e.getMessage());
+                            fail(Locale.getDefault().toString() + ": " + e.getMessage());
                         }
-                        Assert.assertEquals(Locale.getDefault().toString() + ": ", ref, cur);
+                        assertEquals(ref, cur, Locale.getDefault().toString() + ": ");
                     }
                 }
             }

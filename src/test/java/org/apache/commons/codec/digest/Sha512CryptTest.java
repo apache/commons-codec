@@ -16,16 +16,14 @@
  */
 package org.apache.commons.codec.digest;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class Sha512CryptTest {
 
@@ -69,7 +67,7 @@ public class Sha512CryptTest {
         assertThrows(NullPointerException.class, () -> Sha2Crypt.sha512Crypt((byte[]) null));
     }
 
-    @Ignore
+    @Disabled
     public void testSha512CryptNullSalt() {
         // cannot be tested as sha512Crypt() with all params is private and
         // all public methods check for salt==null.

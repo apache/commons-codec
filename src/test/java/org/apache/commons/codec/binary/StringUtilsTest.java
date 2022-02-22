@@ -17,14 +17,13 @@
 
 package org.apache.commons.codec.binary;
 
-import static org.junit.Assert.assertThrows;
+import org.junit.jupiter.api.Test;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 
-import org.junit.Assert;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests {@link StringUtils}
@@ -57,13 +56,13 @@ public class StringUtilsTest {
         testGetBytesUnchecked(charsetName);
         final byte[] expected = STRING_FIXTURE.getBytes(charsetName);
         final byte[] actual = StringUtils.getBytesIso8859_1(STRING_FIXTURE);
-        Assert.assertArrayEquals(expected, actual);
+        assertArrayEquals(expected, actual);
     }
 
     private void testGetBytesUnchecked(final String charsetName) throws UnsupportedEncodingException {
         final byte[] expected = STRING_FIXTURE.getBytes(charsetName);
         final byte[] actual = StringUtils.getBytesUnchecked(STRING_FIXTURE, charsetName);
-        Assert.assertArrayEquals(expected, actual);
+        assertArrayEquals(expected, actual);
     }
 
     @Test
@@ -72,7 +71,7 @@ public class StringUtilsTest {
         testGetBytesUnchecked(charsetName);
         final byte[] expected = STRING_FIXTURE.getBytes(charsetName);
         final byte[] actual = StringUtils.getBytesUsAscii(STRING_FIXTURE);
-        Assert.assertArrayEquals(expected, actual);
+        assertArrayEquals(expected, actual);
     }
 
     @Test
@@ -81,7 +80,7 @@ public class StringUtilsTest {
         testGetBytesUnchecked(charsetName);
         final byte[] expected = STRING_FIXTURE.getBytes(charsetName);
         final byte[] actual = StringUtils.getBytesUtf16(STRING_FIXTURE);
-        Assert.assertArrayEquals(expected, actual);
+        assertArrayEquals(expected, actual);
     }
 
     @Test
@@ -90,7 +89,7 @@ public class StringUtilsTest {
         testGetBytesUnchecked(charsetName);
         final byte[] expected = STRING_FIXTURE.getBytes(charsetName);
         final byte[] actual = StringUtils.getBytesUtf16Be(STRING_FIXTURE);
-        Assert.assertArrayEquals(expected, actual);
+        assertArrayEquals(expected, actual);
     }
 
     @Test
@@ -99,7 +98,7 @@ public class StringUtilsTest {
         testGetBytesUnchecked(charsetName);
         final byte[] expected = STRING_FIXTURE.getBytes(charsetName);
         final byte[] actual = StringUtils.getBytesUtf16Le(STRING_FIXTURE);
-        Assert.assertArrayEquals(expected, actual);
+        assertArrayEquals(expected, actual);
     }
 
     @Test
@@ -108,7 +107,7 @@ public class StringUtilsTest {
         testGetBytesUnchecked(charsetName);
         final byte[] expected = STRING_FIXTURE.getBytes(charsetName);
         final byte[] actual = StringUtils.getBytesUtf8(STRING_FIXTURE);
-        Assert.assertArrayEquals(expected, actual);
+        assertArrayEquals(expected, actual);
     }
 
     @Test
@@ -118,13 +117,13 @@ public class StringUtilsTest {
 
     @Test
     public void testGetBytesUncheckedNullInput() {
-        Assert.assertNull(StringUtils.getBytesUnchecked(null, "UNKNOWN"));
+        assertNull(StringUtils.getBytesUnchecked(null, "UNKNOWN"));
     }
 
     private void testNewString(final String charsetName) throws UnsupportedEncodingException {
         final String expected = new String(BYTES_FIXTURE, charsetName);
         final String actual = StringUtils.newString(BYTES_FIXTURE, charsetName);
-        Assert.assertEquals(expected, actual);
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -134,17 +133,17 @@ public class StringUtilsTest {
 
     @Test
     public void testNewStringNullInput() {
-        Assert.assertNull(StringUtils.newString(null, "UNKNOWN"));
+        assertNull(StringUtils.newString(null, "UNKNOWN"));
     }
 
     @Test
     public void testNewStringNullInput_CODEC229() {
-        Assert.assertNull(StringUtils.newStringUtf8(null));
-        Assert.assertNull(StringUtils.newStringIso8859_1(null));
-        Assert.assertNull(StringUtils.newStringUsAscii(null));
-        Assert.assertNull(StringUtils.newStringUtf16(null));
-        Assert.assertNull(StringUtils.newStringUtf16Be(null));
-        Assert.assertNull(StringUtils.newStringUtf16Le(null));
+        assertNull(StringUtils.newStringUtf8(null));
+        assertNull(StringUtils.newStringIso8859_1(null));
+        assertNull(StringUtils.newStringUsAscii(null));
+        assertNull(StringUtils.newStringUtf16(null));
+        assertNull(StringUtils.newStringUtf16Be(null));
+        assertNull(StringUtils.newStringUtf16Le(null));
     }
 
     @Test
@@ -153,7 +152,7 @@ public class StringUtilsTest {
         testNewString(charsetName);
         final String expected = new String(BYTES_FIXTURE, charsetName);
         final String actual = StringUtils.newStringIso8859_1(BYTES_FIXTURE);
-        Assert.assertEquals(expected, actual);
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -162,7 +161,7 @@ public class StringUtilsTest {
         testNewString(charsetName);
         final String expected = new String(BYTES_FIXTURE, charsetName);
         final String actual = StringUtils.newStringUsAscii(BYTES_FIXTURE);
-        Assert.assertEquals(expected, actual);
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -171,7 +170,7 @@ public class StringUtilsTest {
         testNewString(charsetName);
         final String expected = new String(BYTES_FIXTURE, charsetName);
         final String actual = StringUtils.newStringUtf16(BYTES_FIXTURE);
-        Assert.assertEquals(expected, actual);
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -180,7 +179,7 @@ public class StringUtilsTest {
         testNewString(charsetName);
         final String expected = new String(BYTES_FIXTURE_16BE, charsetName);
         final String actual = StringUtils.newStringUtf16Be(BYTES_FIXTURE_16BE);
-        Assert.assertEquals(expected, actual);
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -189,7 +188,7 @@ public class StringUtilsTest {
         testNewString(charsetName);
         final String expected = new String(BYTES_FIXTURE_16LE, charsetName);
         final String actual = StringUtils.newStringUtf16Le(BYTES_FIXTURE_16LE);
-        Assert.assertEquals(expected, actual);
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -198,43 +197,43 @@ public class StringUtilsTest {
         testNewString(charsetName);
         final String expected = new String(BYTES_FIXTURE, charsetName);
         final String actual = StringUtils.newStringUtf8(BYTES_FIXTURE);
-        Assert.assertEquals(expected, actual);
+        assertEquals(expected, actual);
     }
 
     @Test
     public void testEqualsString() {
-        Assert.assertTrue(StringUtils.equals(null, null));
-        Assert.assertFalse(StringUtils.equals("abc", null));
-        Assert.assertFalse(StringUtils.equals(null, "abc"));
-        Assert.assertTrue(StringUtils.equals("abc", "abc"));
-        Assert.assertFalse(StringUtils.equals("abc", "abcd"));
-        Assert.assertFalse(StringUtils.equals("abcd", "abc"));
-        Assert.assertFalse(StringUtils.equals("abc", "ABC"));
+        assertTrue(StringUtils.equals(null, null));
+        assertFalse(StringUtils.equals("abc", null));
+        assertFalse(StringUtils.equals(null, "abc"));
+        assertTrue(StringUtils.equals("abc", "abc"));
+        assertFalse(StringUtils.equals("abc", "abcd"));
+        assertFalse(StringUtils.equals("abcd", "abc"));
+        assertFalse(StringUtils.equals("abc", "ABC"));
     }
 
     @Test
     public void testEqualsCS1() {
-        Assert.assertFalse(StringUtils.equals(new StringBuilder("abc"), null));
-        Assert.assertFalse(StringUtils.equals(null, new StringBuilder("abc")));
-        Assert.assertTrue(StringUtils.equals(new StringBuilder("abc"), new StringBuilder("abc")));
-        Assert.assertFalse(StringUtils.equals(new StringBuilder("abc"), new StringBuilder("abcd")));
-        Assert.assertFalse(StringUtils.equals(new StringBuilder("abcd"), new StringBuilder("abc")));
-        Assert.assertFalse(StringUtils.equals(new StringBuilder("abc"), new StringBuilder("ABC")));
+        assertFalse(StringUtils.equals(new StringBuilder("abc"), null));
+        assertFalse(StringUtils.equals(null, new StringBuilder("abc")));
+        assertTrue(StringUtils.equals(new StringBuilder("abc"), new StringBuilder("abc")));
+        assertFalse(StringUtils.equals(new StringBuilder("abc"), new StringBuilder("abcd")));
+        assertFalse(StringUtils.equals(new StringBuilder("abcd"), new StringBuilder("abc")));
+        assertFalse(StringUtils.equals(new StringBuilder("abc"), new StringBuilder("ABC")));
     }
 
     @Test
     public void testEqualsCS2() {
-        Assert.assertTrue(StringUtils.equals("abc", new StringBuilder("abc")));
-        Assert.assertFalse(StringUtils.equals(new StringBuilder("abc"), "abcd"));
-        Assert.assertFalse(StringUtils.equals("abcd", new StringBuilder("abc")));
-        Assert.assertFalse(StringUtils.equals(new StringBuilder("abc"), "ABC"));
+        assertTrue(StringUtils.equals("abc", new StringBuilder("abc")));
+        assertFalse(StringUtils.equals(new StringBuilder("abc"), "abcd"));
+        assertFalse(StringUtils.equals("abcd", new StringBuilder("abc")));
+        assertFalse(StringUtils.equals(new StringBuilder("abc"), "ABC"));
     }
 
     @Test
     public void testByteBufferUtf8() {
-        Assert.assertNull("Should be null safe", StringUtils.getByteBufferUtf8(null));
+        assertNull(StringUtils.getByteBufferUtf8(null), "Should be null safe");
         final String text = "asdhjfhsadiogasdjhagsdygfjasfgsdaksjdhfk";
         final ByteBuffer bb = StringUtils.getByteBufferUtf8(text);
-        Assert.assertArrayEquals(text.getBytes(StandardCharsets.UTF_8), bb.array());
+        assertArrayEquals(text.getBytes(StandardCharsets.UTF_8), bb.array());
     }
 }

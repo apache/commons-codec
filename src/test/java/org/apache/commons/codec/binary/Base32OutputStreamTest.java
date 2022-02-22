@@ -21,12 +21,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 
 import org.apache.commons.codec.CodecPolicy;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class Base32OutputStreamTest {
 
@@ -185,7 +182,7 @@ public class Base32OutputStreamTest {
         out.write(decoded);
         out.close();
         byte[] output = byteOut.toByteArray();
-        assertArrayEquals("Streaming chunked Base32 encode", encoded, output);
+        assertArrayEquals(encoded, output, "Streaming chunked Base32 encode");
 
         // Now let's try decode.
         byteOut = new ByteArrayOutputStream();
@@ -193,7 +190,7 @@ public class Base32OutputStreamTest {
         out.write(encoded);
         out.close();
         output = byteOut.toByteArray();
-        assertArrayEquals("Streaming chunked Base32 decode", decoded, output);
+        assertArrayEquals(decoded, output, "Streaming chunked Base32 decode");
 
         // I always wanted to do this! (wrap encoder with decoder etc etc).
         byteOut = new ByteArrayOutputStream();
@@ -206,7 +203,7 @@ public class Base32OutputStreamTest {
         out.close();
         output = byteOut.toByteArray();
 
-        assertArrayEquals("Streaming chunked Base32 wrap-wrap-wrap!", decoded, output);
+        assertArrayEquals(decoded, output, "Streaming chunked Base32 wrap-wrap-wrap!");
     }
 
     /**
@@ -237,7 +234,7 @@ public class Base32OutputStreamTest {
         }
         out.close();
         byte[] output = byteOut.toByteArray();
-        assertArrayEquals("Streaming byte-by-byte Base32 encode", encoded, output);
+        assertArrayEquals(encoded, output, "Streaming byte-by-byte Base32 encode");
 
         // Now let's try decode.
         byteOut = new ByteArrayOutputStream();
@@ -247,7 +244,7 @@ public class Base32OutputStreamTest {
         }
         out.close();
         output = byteOut.toByteArray();
-        assertArrayEquals("Streaming byte-by-byte Base32 decode", decoded, output);
+        assertArrayEquals(decoded, output, "Streaming byte-by-byte Base32 decode");
 
         // Now let's try decode with tonnes of flushes.
         byteOut = new ByteArrayOutputStream();
@@ -258,7 +255,7 @@ public class Base32OutputStreamTest {
         }
         out.close();
         output = byteOut.toByteArray();
-        assertArrayEquals("Streaming byte-by-byte flush() Base32 decode", decoded, output);
+        assertArrayEquals(decoded, output, "Streaming byte-by-byte flush() Base32 decode");
 
         // I always wanted to do this! (wrap encoder with decoder etc etc).
         byteOut = new ByteArrayOutputStream();
@@ -273,7 +270,7 @@ public class Base32OutputStreamTest {
         out.close();
         output = byteOut.toByteArray();
 
-        assertArrayEquals("Streaming byte-by-byte Base32 wrap-wrap-wrap!", decoded, output);
+        assertArrayEquals(decoded, output, "Streaming byte-by-byte Base32 wrap-wrap-wrap!");
     }
 
     /**
@@ -287,10 +284,10 @@ public class Base32OutputStreamTest {
         final byte[] buf = new byte[1024];
         final ByteArrayOutputStream bout = new ByteArrayOutputStream();
         try (final Base32OutputStream out = new Base32OutputStream(bout)) {
-            assertThrows("Base32OutputStream.write(buf, -1, 1)", IndexOutOfBoundsException.class, () -> out.write(buf, -1, 1));
-            assertThrows("Base32OutputStream.write(buf, 1, -1)", IndexOutOfBoundsException.class, () -> out.write(buf, 1, -1));
-            assertThrows("Base32OutputStream.write(buf, buf, buf.length + 1, 0)", IndexOutOfBoundsException.class, () -> out.write(buf, buf.length + 1, 0));
-            assertThrows("Base32OutputStream.write(buf, buf, buf.length - 1, 2)", IndexOutOfBoundsException.class, () -> out.write(buf, buf.length - 1, 2));
+            assertThrows(IndexOutOfBoundsException.class, () -> out.write(buf, -1, 1), "Base32OutputStream.write(buf, -1, 1)");
+            assertThrows(IndexOutOfBoundsException.class, () -> out.write(buf, 1, -1), "Base32OutputStream.write(buf, 1, -1)");
+            assertThrows(IndexOutOfBoundsException.class, () -> out.write(buf, buf.length + 1, 0), "Base32OutputStream.write(buf, buf, buf.length + 1, 0)");
+            assertThrows(IndexOutOfBoundsException.class, () -> out.write(buf, buf.length - 1, 2), "Base32OutputStream.write(buf, buf, buf.length - 1, 2)");
         }
     }
 

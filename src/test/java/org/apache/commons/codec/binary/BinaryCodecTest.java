@@ -17,17 +17,17 @@
 
 package org.apache.commons.codec.binary;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * TestCase for BinaryCodec class.
@@ -64,12 +64,12 @@ public class BinaryCodecTest {
     /** An instance of the binary codec. */
     BinaryCodec instance = null;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         this.instance = new BinaryCodec();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         this.instance = null;
     }

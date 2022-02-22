@@ -17,12 +17,10 @@
 
 package org.apache.commons.codec.language;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import org.apache.commons.codec.StringEncoderAbstractTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  */
@@ -31,8 +29,8 @@ public class MetaphoneTest extends StringEncoderAbstractTest<Metaphone> {
     public void assertIsMetaphoneEqual(final String source, final String[] matches) {
         // match source to all matches
         for (final String matche : matches) {
-            assertTrue("Source: " + source + ", should have same Metaphone as: " + matche,
-                       this.getStringEncoder().isMetaphoneEqual(source, matche));
+            assertTrue(this.getStringEncoder().isMetaphoneEqual(source, matche),
+                    "Source: " + source + ", should have same Metaphone as: " + matche);
         }
         // match to each other
         for (final String matche : matches) {
@@ -48,8 +46,8 @@ public class MetaphoneTest extends StringEncoderAbstractTest<Metaphone> {
             final String name0 = pair[0];
             final String name1 = pair[1];
             final String failMsg = "Expected match between " + name0 + " and " + name1;
-            assertTrue(failMsg, this.getStringEncoder().isMetaphoneEqual(name0, name1));
-            assertTrue(failMsg, this.getStringEncoder().isMetaphoneEqual(name1, name0));
+            assertTrue(this.getStringEncoder().isMetaphoneEqual(name0, name1), failMsg);
+            assertTrue(this.getStringEncoder().isMetaphoneEqual(name1, name0), failMsg);
         }
     }
 
