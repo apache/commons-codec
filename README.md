@@ -74,7 +74,7 @@ Alternatively you can pull it from the central Maven repositories:
 <dependency>
   <groupId>commons-codec</groupId>
   <artifactId>commons-codec</artifactId>
-  <version>1.16</version>
+  <version>1.15</version>
 </dependency>
 ```
 
