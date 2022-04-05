@@ -26,7 +26,7 @@ import java.util.zip.Checksum;
  *
  * <p>
  * Copied from Commons Compress 1.14 <a href=
- * "https://git-wip-us.apache.org/repos/asf?p=commons-compress.git;a=blob;f=src/main/java/org/apache/commons/compress/compressors/lz4/XXHash32.java;h=a406ffc197449be594d46f0d2712b2d4786a1e68;hb=HEAD">https://git-wip-us.apache.org/repos/asf?p=commons-compress.git;a=blob;f=src/main/java/org/apache/commons/compress/compressors/lz4/XXHash32.java;h=a406ffc197449be594d46f0d2712b2d4786a1e68;hb=HEAD</a>
+ * "https://gitbox.apache.org/repos/asf?p=commons-compress.git;a=blob;f=src/main/java/org/apache/commons/compress/compressors/lz4/XXHash32.java;h=a406ffc197449be594d46f0d2712b2d4786a1e68;hb=HEAD">https://gitbox.apache.org/repos/asf?p=commons-compress.git;a=blob;f=src/main/java/org/apache/commons/compress/compressors/lz4/XXHash32.java;h=a406ffc197449be594d46f0d2712b2d4786a1e68;hb=HEAD</a>
  * </p>
  * <p>
  * NotThreadSafe
@@ -49,7 +49,7 @@ public class XXHash32 implements Checksum {
     private final byte[] oneByte = new byte[1];
     private final int[] state = new int[4];
     // Note: the code used to use ByteBuffer but the manual method is 50% faster
-    // See: http://git-wip-us.apache.org/repos/asf/commons-compress/diff/2f56fb5c
+    // See: http://gitbox.apache.org/repos/asf/commons-compress/diff/2f56fb5c
     private final byte[] buffer = new byte[BUF_SIZE];
     private final int seed;
 

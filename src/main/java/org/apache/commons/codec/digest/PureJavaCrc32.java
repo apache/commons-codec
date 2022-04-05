@@ -30,7 +30,7 @@ import java.util.zip.Checksum;
  *
  * Copied from Hadoop 2.6.3.
  * The code agrees with the following file in the 2.6.3 tag:
- * https://git-wip-us.apache.org/repos/asf?p=hadoop.git;a=blob_plain;
+ * https://gitbox.apache.org/repos/asf?p=hadoop.git;a=blob_plain;
  * f=hadoop-common-project/hadoop-common/src/main/java/org/apache/hadoop/util/PureJavaCrc32.java;
  * hb=2120de588b92b9f22b1cc4188761d6a8c61aa778
  * <p>
