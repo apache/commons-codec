@@ -972,7 +972,7 @@ public class DoubleMetaphone implements StringEncoder {
             if (value.length() <= addChars) {
                 this.primary.append(value);
             } else {
-                this.primary.append(value.substring(0, addChars));
+                this.primary.append(value, 0, addChars);
             }
         }
 
@@ -981,7 +981,7 @@ public class DoubleMetaphone implements StringEncoder {
             if (value.length() <= addChars) {
                 this.alternate.append(value);
             } else {
-                this.alternate.append(value.substring(0, addChars));
+                this.alternate.append(value, 0, addChars);
             }
         }
 
