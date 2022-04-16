@@ -17,8 +17,6 @@
 
 package org.apache.commons.codec.language;
 
-import org.apache.commons.codec.binary.StringUtils;
-
 /**
  * Encodes a string into a Caverphone 2.0 value.
  *

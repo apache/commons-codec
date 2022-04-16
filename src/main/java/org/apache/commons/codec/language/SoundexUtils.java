@@ -19,7 +19,6 @@ package org.apache.commons.codec.language;
 
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
-import org.apache.commons.codec.binary.StringUtils;
 
 /**
  * Utility methods for {@link Soundex} and {@link RefinedSoundex} classes.
