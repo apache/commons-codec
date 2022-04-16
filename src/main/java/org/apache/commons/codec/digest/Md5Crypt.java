@@ -323,7 +323,7 @@ public class Md5Crypt {
         byte[] finalb = ctx1.digest();
         int ii = keyLen;
         while (ii > 0) {
-            ctx.update(finalb, 0, ii > 16 ? 16 : ii);
+            ctx.update(finalb, 0, Math.min(ii, 16));
             ii -= 16;
         }
 
