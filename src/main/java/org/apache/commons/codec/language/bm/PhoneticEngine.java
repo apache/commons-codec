@@ -403,7 +403,7 @@ public class PhoneticEngine {
         input = input.toLowerCase(Locale.ENGLISH).replace('-', ' ').trim();
 
         if (this.nameType == NameType.GENERIC) {
-            if (input.length() >= 2 && input.startsWith("d'")) { // check for d'
+            if (input.startsWith("d'")) { // check for d'
                 final String remainder = input.substring(2);
                 final String combined = "d" + remainder;
                 return "(" + encode(remainder) + ")-(" + encode(combined) + ")";
