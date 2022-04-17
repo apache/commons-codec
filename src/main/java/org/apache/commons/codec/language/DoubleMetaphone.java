@@ -848,7 +848,7 @@ public class DoubleMetaphone implements StringEncoder {
      */
     private boolean isSlavoGermanic(final String value) {
         return value.indexOf('W') > -1 || value.indexOf('K') > -1 ||
-            value.indexOf("CZ") > -1 || value.indexOf("WITZ") > -1;
+                value.contains("CZ") || value.contains("WITZ");
     }
 
     /**
