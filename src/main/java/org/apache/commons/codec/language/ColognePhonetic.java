@@ -199,7 +199,7 @@ public class ColognePhonetic implements StringEncoder {
      * However, it is not shared between threads, as it is constructed on demand
      * by the method {@link ColognePhonetic#colognePhonetic(String)}
      */
-    abstract class CologneBuffer {
+    abstract static class CologneBuffer {
 
         protected final char[] data;
 
