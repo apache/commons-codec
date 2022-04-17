@@ -47,9 +47,10 @@ The <action> type attribute can be add,update,fix,remove.
       <action issue="CODEC-295" dev="ggregory" type="fix" due-to="Arturo Bernal">Minor improvements #67.</action> 
       <action                   dev="aherbert" type="fix" due-to="James Gan">Remove duplicated words from Javadocs.</action>
       <action issue="CODEC-301" dev="aherbert" type="fix" due-to="Alexander Pinske, Alex Herbert">Simplify assertion #84.</action>
-      <action issue="CODEC-300" dev="ggregory" type="fix" due-to="Arturo Bernal">Simplify assertion #84.</action> 
-      <action issue="CODEC-298" dev="ggregory" type="fix" due-to="Arturo Bernal">Use Standard Charset object #82</action> 
-      <action issue="CODEC-298" dev="ggregory" type="fix" due-to="Arturo Bernal">Use String.contains() functions. #125</action> 
+      <action issue="CODEC-300" dev="ggregory" type="fix" due-to="Arturo Bernal">Simplify assertion #84.</action>
+      <action issue="CODEC-298" dev="ggregory" type="fix" due-to="Arturo Bernal">Use Standard Charset object #82.</action>
+      <action                   dev="ggregory" type="fix" due-to="Arturo Bernal">Use String.contains() functions #125.</action>
+      <action                   dev="ggregory" type="fix" due-to="Arturo Bernal">Avoid use toString() or substring() in favor of a simplified expression #126.</action>
       <!-- ADD -->
       <action issue="CODEC-296" dev="mattsicker" type="add" due-to="Matt Sicker">Add support for Blake3 family of hashes.</action>
       <!-- UPDATE -->
