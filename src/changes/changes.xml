@@ -53,6 +53,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action                   dev="ggregory" type="fix" due-to="Arturo Bernal">Avoid use toString() or substring() in favor of a simplified expression #126.</action>
       <!-- ADD -->
       <action issue="CODEC-296" dev="mattsicker" type="add" due-to="Matt Sicker">Add support for Blake3 family of hashes.</action>
+      <action issue="CODEC-296" type="add">Add github/codeql-action.</action>
       <!-- UPDATE -->
       <action                   dev="ggregory" type="update" due-to="Dependabot, Gary Gregory">Bump actions/setup-java from v1.4.1 to 3 #60, #62, #121.</action>
       <action                   dev="ggregory" type="update" due-to="Dependabot">Bump actions/checkout from 2.3.2 to 3 #65, #98, #114.</action>
