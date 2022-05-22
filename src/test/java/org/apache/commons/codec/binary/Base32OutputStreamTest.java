@@ -203,7 +203,7 @@ public class Base32OutputStreamTest {
         out.close();
         output = byteOut.toByteArray();
 
-        assertArrayEquals(decoded, output, "Streaming chunked Base32 wrap-wrap-wrap!");
+        assertArrayEquals(decoded, byteOut.toByteArray(), "Streaming chunked Base32 wrap-wrap-wrap!");
     }
 
     /**
@@ -316,19 +316,20 @@ public class Base32OutputStreamTest {
         for (final String s : Base32Test.BASE32_IMPOSSIBLE_CASES) {
             final byte[] encoded = StringUtils.getBytesUtf8(s);
             ByteArrayOutputStream bout = new ByteArrayOutputStream();
-            Base32OutputStream out = new Base32OutputStream(bout, false);
-            // Default is lenient decoding; it should not throw
-            assertFalse(out.isStrictDecoding());
-            out.write(encoded);
-            out.close();
-            assertTrue(bout.size() > 0);
+            try (Base32OutputStream out = new Base32OutputStream(bout, false)) {
+                // Default is lenient decoding; it should not throw
+                assertFalse(out.isStrictDecoding());
+                out.write(encoded);
+                out.close();
+                assertTrue(bout.size() > 0);
 
-            // Strict decoding should throw
-            bout = new ByteArrayOutputStream();
-            final Base32OutputStream out2 = new Base32OutputStream(bout, false, 0, null, CodecPolicy.STRICT);
-            assertTrue(out2.isStrictDecoding());
-            assertThrows(IllegalArgumentException.class, () -> out2.write(encoded));
-            out2.close();
+                // Strict decoding should throw
+                bout = new ByteArrayOutputStream();
+                try (final Base32OutputStream out2 = new Base32OutputStream(bout, false, 0, null, CodecPolicy.STRICT)) {
+                    assertTrue(out2.isStrictDecoding());
+                    assertThrows(IllegalArgumentException.class, () -> out2.write(encoded));
+                }
+            }
         }
     }
 }

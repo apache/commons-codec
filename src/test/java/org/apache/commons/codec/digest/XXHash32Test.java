@@ -65,7 +65,7 @@ public class XXHash32Test {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void verifyChecksum(String path, String c) throws IOException {
+    public void verifyChecksum(final String path, final String c) throws IOException {
         initData(path, c);
         final XXHash32 h = new XXHash32();
         try (final FileInputStream s = new FileInputStream(file)) {
@@ -77,7 +77,7 @@ public class XXHash32Test {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void verifyIncrementalChecksum(String path, String c) throws IOException {
+    public void verifyIncrementalChecksum(final String path, final String c) throws IOException {
         initData(path, c);
         final XXHash32 h = new XXHash32();
         try (final FileInputStream s = new FileInputStream(file)) {

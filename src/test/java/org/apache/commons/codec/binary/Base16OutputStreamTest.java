@@ -52,7 +52,7 @@ public class Base16OutputStreamTest {
      * @throws IOException for some failure scenarios.
      */
     @Test
-    public void testBase16OutputStreamByChunk() throws Exception {
+    public void testBase16OutputStreamByChunk() throws IOException {
         // Hello World test.
         byte[] encoded = StringUtils.getBytesUtf8("48656C6C6F20576F726C64");
         byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
@@ -146,9 +146,9 @@ public class Base16OutputStreamTest {
         }
 
         // wrap encoder with decoder
-        try (final ByteArrayOutputStream byteOut = new ByteArrayOutputStream()) {
-            final OutputStream decoderOut = new Base16OutputStream(byteOut, false, lowerCase);
-            final OutputStream encoderOut = new Base16OutputStream(decoderOut, true, lowerCase);
+        try (final ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
+             final OutputStream decoderOut = new Base16OutputStream(byteOut, false, lowerCase);
+             final OutputStream encoderOut = new Base16OutputStream(decoderOut, true, lowerCase)) {
 
             encoderOut.write(decoded);
             final byte[] output = byteOut.toByteArray();

@@ -520,7 +520,7 @@ public class Base64Test {
 
         try {
             final Base64 b64 = new Base64();
-            byte[] result = b64.decode(bArray);
+            final byte[] result = b64.decode(bArray);
 
             assertEquals(0, result.length, "The result should be empty as the test encoded content did " +
                     "not contain any valid base 64 characters");

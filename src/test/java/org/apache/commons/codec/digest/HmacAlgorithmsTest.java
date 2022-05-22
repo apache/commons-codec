@@ -124,7 +124,7 @@ public class HmacAlgorithmsTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testAlgorithm(HmacAlgorithms hmacAlgorithm, byte[] standardResultBytes, String standardResultString) throws NoSuchAlgorithmException {
+    public void testAlgorithm(final HmacAlgorithms hmacAlgorithm, final byte[] standardResultBytes, final String standardResultString) throws NoSuchAlgorithmException {
         assumeTrue(HmacUtils.isAvailable(hmacAlgorithm));
         final String algorithm = hmacAlgorithm.getName();
         assertNotNull(algorithm);
@@ -135,63 +135,63 @@ public class HmacAlgorithmsTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testGetHmacEmptyKey(HmacAlgorithms hmacAlgorithm, byte[] standardResultBytes, String standardResultString) {
+    public void testGetHmacEmptyKey(final HmacAlgorithms hmacAlgorithm, final byte[] standardResultBytes, final String standardResultString) {
         assumeTrue(HmacUtils.isAvailable(hmacAlgorithm));
         assertThrows(IllegalArgumentException.class, () -> HmacUtils.getInitializedMac(hmacAlgorithm, EMPTY_BYTE_ARRAY));
     }
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testGetHmacNullKey(HmacAlgorithms hmacAlgorithm, byte[] standardResultBytes, String standardResultString) {
+    public void testGetHmacNullKey(final HmacAlgorithms hmacAlgorithm, final byte[] standardResultBytes, final String standardResultString) {
         assumeTrue(HmacUtils.isAvailable(hmacAlgorithm));
         assertThrows(IllegalArgumentException.class, () -> HmacUtils.getInitializedMac(hmacAlgorithm, null));
     }
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testHmacFailByteArray(HmacAlgorithms hmacAlgorithm, byte[] standardResultBytes, String standardResultString) {
+    public void testHmacFailByteArray(final HmacAlgorithms hmacAlgorithm, final byte[] standardResultBytes, final String standardResultString) {
         assumeTrue(HmacUtils.isAvailable(hmacAlgorithm));
         assertThrows(IllegalArgumentException.class, () -> new HmacUtils(hmacAlgorithm, (byte[]) null).hmac(STANDARD_PHRASE_BYTES));
     }
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testHmacFailInputStream(HmacAlgorithms hmacAlgorithm, byte[] standardResultBytes, String standardResultString) {
+    public void testHmacFailInputStream(final HmacAlgorithms hmacAlgorithm, final byte[] standardResultBytes, final String standardResultString) {
         assumeTrue(HmacUtils.isAvailable(hmacAlgorithm));
         assertThrows(IllegalArgumentException.class, () -> new HmacUtils(hmacAlgorithm, (byte[]) null).hmac(new ByteArrayInputStream(STANDARD_PHRASE_BYTES)));
     }
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testHmacFailString(HmacAlgorithms hmacAlgorithm, byte[] standardResultBytes, String standardResultString) {
+    public void testHmacFailString(final HmacAlgorithms hmacAlgorithm, final byte[] standardResultBytes, final String standardResultString) {
         assumeTrue(HmacUtils.isAvailable(hmacAlgorithm));
         assertThrows(IllegalArgumentException.class, () -> new HmacUtils(hmacAlgorithm, (String) null).hmac(STANDARD_PHRASE_STRING));
     }
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testHmacHexFailByteArray(HmacAlgorithms hmacAlgorithm, byte[] standardResultBytes, String standardResultString) {
+    public void testHmacHexFailByteArray(final HmacAlgorithms hmacAlgorithm, final byte[] standardResultBytes, final String standardResultString) {
         assumeTrue(HmacUtils.isAvailable(hmacAlgorithm));
         assertThrows(IllegalArgumentException.class, () -> new HmacUtils(hmacAlgorithm, (byte[]) null).hmac(STANDARD_PHRASE_BYTES));
     }
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testHmacHexFailInputStream(HmacAlgorithms hmacAlgorithm, byte[] standardResultBytes, String standardResultString) {
+    public void testHmacHexFailInputStream(final HmacAlgorithms hmacAlgorithm, final byte[] standardResultBytes, final String standardResultString) {
         assumeTrue(HmacUtils.isAvailable(hmacAlgorithm));
         assertThrows(IllegalArgumentException.class, () -> new HmacUtils(hmacAlgorithm, (byte[]) null).hmac(new ByteArrayInputStream(STANDARD_PHRASE_BYTES)));
     }
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testHmacHexFailString(HmacAlgorithms hmacAlgorithm, byte[] standardResultBytes, String standardResultString) {
+    public void testHmacHexFailString(final HmacAlgorithms hmacAlgorithm, final byte[] standardResultBytes, final String standardResultString) {
         assumeTrue(HmacUtils.isAvailable(hmacAlgorithm));
         assertThrows(IllegalArgumentException.class, () -> new HmacUtils(hmacAlgorithm, (String) null).hmac(STANDARD_PHRASE_STRING));
     }
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testInitializedMac(HmacAlgorithms hmacAlgorithm, byte[] standardResultBytes, String standardResultString) {
+    public void testInitializedMac(final HmacAlgorithms hmacAlgorithm, final byte[] standardResultBytes, final String standardResultString) {
         assumeTrue(HmacUtils.isAvailable(hmacAlgorithm));
         final Mac mac = HmacUtils.getInitializedMac(hmacAlgorithm, STANDARD_KEY_BYTES);
         final Mac mac2 = HmacUtils.getInitializedMac(hmacAlgorithm.getName(), STANDARD_KEY_BYTES);
@@ -201,21 +201,21 @@ public class HmacAlgorithmsTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testMacByteArary(HmacAlgorithms hmacAlgorithm, byte[] standardResultBytes, String standardResultString) {
+    public void testMacByteArary(final HmacAlgorithms hmacAlgorithm, final byte[] standardResultBytes, final String standardResultString) {
         assumeTrue(HmacUtils.isAvailable(hmacAlgorithm));
         assertArrayEquals(standardResultBytes, new HmacUtils(hmacAlgorithm, STANDARD_KEY_BYTES).hmac(STANDARD_PHRASE_BYTES));
     }
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testMacHexByteArray(HmacAlgorithms hmacAlgorithm, byte[] standardResultBytes, String standardResultString) {
+    public void testMacHexByteArray(final HmacAlgorithms hmacAlgorithm, final byte[] standardResultBytes, final String standardResultString) {
         assumeTrue(HmacUtils.isAvailable(hmacAlgorithm));
         assertEquals(standardResultString, new HmacUtils(hmacAlgorithm, STANDARD_KEY_BYTES).hmacHex(STANDARD_PHRASE_BYTES));
     }
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testMacHexInputStream(HmacAlgorithms hmacAlgorithm, byte[] standardResultBytes, String standardResultString) throws IOException {
+    public void testMacHexInputStream(final HmacAlgorithms hmacAlgorithm, final byte[] standardResultBytes, final String standardResultString) throws IOException {
         assumeTrue(HmacUtils.isAvailable(hmacAlgorithm));
         assertEquals(standardResultString,
                 new HmacUtils(hmacAlgorithm, STANDARD_KEY_BYTES).hmacHex(new ByteArrayInputStream(STANDARD_PHRASE_BYTES)));
@@ -223,14 +223,14 @@ public class HmacAlgorithmsTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testMacHexString(HmacAlgorithms hmacAlgorithm, byte[] standardResultBytes, String standardResultString) {
+    public void testMacHexString(final HmacAlgorithms hmacAlgorithm, final byte[] standardResultBytes, final String standardResultString) {
         assumeTrue(HmacUtils.isAvailable(hmacAlgorithm));
         assertEquals(standardResultString, new HmacUtils(hmacAlgorithm, STANDARD_KEY_BYTES).hmacHex(STANDARD_PHRASE_STRING));
     }
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testMacInputStream(HmacAlgorithms hmacAlgorithm, byte[] standardResultBytes, String standardResultString) throws IOException {
+    public void testMacInputStream(final HmacAlgorithms hmacAlgorithm, final byte[] standardResultBytes, final String standardResultString) throws IOException {
         assumeTrue(HmacUtils.isAvailable(hmacAlgorithm));
         assertArrayEquals(standardResultBytes,
                 new HmacUtils(hmacAlgorithm, STANDARD_KEY_BYTES).hmac(new ByteArrayInputStream(STANDARD_PHRASE_BYTES)));
@@ -238,7 +238,7 @@ public class HmacAlgorithmsTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testMacString(HmacAlgorithms hmacAlgorithm, byte[] standardResultBytes, String standardResultString) {
+    public void testMacString(final HmacAlgorithms hmacAlgorithm, final byte[] standardResultBytes, final String standardResultString) {
         assumeTrue(HmacUtils.isAvailable(hmacAlgorithm));
         assertArrayEquals(standardResultBytes, new HmacUtils(hmacAlgorithm, STANDARD_KEY_BYTES).hmac(STANDARD_PHRASE_STRING));
     }

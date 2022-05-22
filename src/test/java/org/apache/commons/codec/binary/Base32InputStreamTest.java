@@ -537,13 +537,13 @@ public class Base32InputStreamTest {
     public void testStrictDecoding() throws Exception {
         for (final String s : Base32Test.BASE32_IMPOSSIBLE_CASES) {
             final byte[] encoded = StringUtils.getBytesUtf8(s);
-            Base32InputStream in = new Base32InputStream(new ByteArrayInputStream(encoded), false);
+            final Base32InputStream in = new Base32InputStream(new ByteArrayInputStream(encoded), false);
             // Default is lenient decoding; it should not throw
             assertFalse(in.isStrictDecoding());
             BaseNTestData.streamToBytes(in);
 
             // Strict decoding should throw
-            Base32InputStream in2 = new Base32InputStream(new ByteArrayInputStream(encoded), false, 0, null, CodecPolicy.STRICT);
+            final Base32InputStream in2 = new Base32InputStream(new ByteArrayInputStream(encoded), false, 0, null, CodecPolicy.STRICT);
             assertTrue(in2.isStrictDecoding());
             assertThrows(IllegalArgumentException.class, () -> BaseNTestData.streamToBytes(in2));
         }

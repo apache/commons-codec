@@ -334,7 +334,7 @@ public class Base64OutputStreamTest {
 
             // Strict decoding should throw
             bout = new ByteArrayOutputStream();
-            Base64OutputStream out = new Base64OutputStream(bout, false, 0, null, CodecPolicy.STRICT);
+            final Base64OutputStream out = new Base64OutputStream(bout, false, 0, null, CodecPolicy.STRICT);
             // May throw on write or on close depending on the position of the
             // impossible last character in the output block size
             assertThrows(IllegalArgumentException.class, () -> {

@@ -89,7 +89,7 @@ public class MessageDigestAlgorithmsTest {
 
     private DigestUtilsTest digestUtilsTest;
 
-    private byte[] digestTestData(String messageDigestAlgorithm) {
+    private byte[] digestTestData(final String messageDigestAlgorithm) {
         return DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm),getTestData());
     }
 
@@ -123,7 +123,7 @@ public class MessageDigestAlgorithmsTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testAlgorithm(String messageDigestAlgorithm) throws NoSuchAlgorithmException {
+    public void testAlgorithm(final String messageDigestAlgorithm) throws NoSuchAlgorithmException {
         final String algorithm = messageDigestAlgorithm;
         assertNotNull(algorithm);
         assertFalse(algorithm.isEmpty());
@@ -133,7 +133,7 @@ public class MessageDigestAlgorithmsTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testDigestByteArray(String messageDigestAlgorithm) {
+    public void testDigestByteArray(final String messageDigestAlgorithm) {
         assumeTrue(DigestUtils.isAvailable(messageDigestAlgorithm));
         assertArrayEquals(digestTestData(messageDigestAlgorithm),
                 DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm), getTestData()));
@@ -142,7 +142,7 @@ public class MessageDigestAlgorithmsTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testDigestByteBuffer(String messageDigestAlgorithm) {
+    public void testDigestByteBuffer(final String messageDigestAlgorithm) {
         assumeTrue(DigestUtils.isAvailable(messageDigestAlgorithm));
         assertArrayEquals(digestTestData(messageDigestAlgorithm),
                 DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm), ByteBuffer.wrap(getTestData())));
@@ -151,7 +151,7 @@ public class MessageDigestAlgorithmsTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testDigestFile(String messageDigestAlgorithm) throws IOException {
+    public void testDigestFile(final String messageDigestAlgorithm) throws IOException {
         assumeTrue(DigestUtils.isAvailable(messageDigestAlgorithm));
         assertArrayEquals(digestTestData(messageDigestAlgorithm),
             DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm), getTestFile()));
@@ -161,7 +161,7 @@ public class MessageDigestAlgorithmsTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testDigestInputStream(String messageDigestAlgorithm) throws IOException {
+    public void testDigestInputStream(final String messageDigestAlgorithm) throws IOException {
         assumeTrue(DigestUtils.isAvailable(messageDigestAlgorithm));
         assertArrayEquals(digestTestData(messageDigestAlgorithm),
                 DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm), new ByteArrayInputStream(getTestData())));
@@ -170,7 +170,7 @@ public class MessageDigestAlgorithmsTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    private void testDigestPath(String messageDigestAlgorithm, final OpenOption... options) throws IOException {
+    private void testDigestPath(final String messageDigestAlgorithm, final OpenOption... options) throws IOException {
         assumeTrue(DigestUtils.isAvailable(messageDigestAlgorithm));
         assertArrayEquals(digestTestData(messageDigestAlgorithm),
             DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm), getTestPath(), options));
@@ -180,19 +180,19 @@ public class MessageDigestAlgorithmsTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testDigestPathOpenOptionsEmpty(String messageDigestAlgorithm) throws IOException {
+    public void testDigestPathOpenOptionsEmpty(final String messageDigestAlgorithm) throws IOException {
         testDigestPath(messageDigestAlgorithm);
     }
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testDigestPathStandardOpenOptionRead(String messageDigestAlgorithm) throws IOException {
+    public void testDigestPathStandardOpenOptionRead(final String messageDigestAlgorithm) throws IOException {
         testDigestPath(messageDigestAlgorithm, StandardOpenOption.READ);
     }
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testGetMessageDigest(String messageDigestAlgorithm) {
+    public void testGetMessageDigest(final String messageDigestAlgorithm) {
         assumeTrue(DigestUtils.isAvailable(messageDigestAlgorithm));
         final MessageDigest messageDigest = DigestUtils.getDigest(messageDigestAlgorithm);
         assertEquals(messageDigestAlgorithm, messageDigest.getAlgorithm());
@@ -200,7 +200,7 @@ public class MessageDigestAlgorithmsTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testNonBlockingDigestRandomAccessFile(String messageDigestAlgorithm) throws IOException {
+    public void testNonBlockingDigestRandomAccessFile(final String messageDigestAlgorithm) throws IOException {
         assumeTrue(DigestUtils.isAvailable(messageDigestAlgorithm));
 
         final byte[] expected = digestTestData(messageDigestAlgorithm);

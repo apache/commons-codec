@@ -575,13 +575,13 @@ public class Base64InputStreamTest {
     public void testStrictDecoding() throws Exception {
         for (final String s : Base64Test.BASE64_IMPOSSIBLE_CASES) {
             final byte[] encoded = StringUtils.getBytesUtf8(s);
-            Base64InputStream in = new Base64InputStream(new ByteArrayInputStream(encoded), false);
+            final Base64InputStream in = new Base64InputStream(new ByteArrayInputStream(encoded), false);
             // Default is lenient decoding; it should not throw
             assertFalse(in.isStrictDecoding());
             BaseNTestData.streamToBytes(in);
 
             // Strict decoding should throw
-            Base64InputStream in2 = new Base64InputStream(new ByteArrayInputStream(encoded), false, 0, null, CodecPolicy.STRICT);
+            final Base64InputStream in2 = new Base64InputStream(new ByteArrayInputStream(encoded), false, 0, null, CodecPolicy.STRICT);
             assertTrue(in2.isStrictDecoding());
             assertThrows(IllegalArgumentException.class, () -> BaseNTestData.streamToBytes(in2));
         }
