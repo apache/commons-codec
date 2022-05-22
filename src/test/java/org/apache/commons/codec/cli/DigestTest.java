@@ -19,8 +19,6 @@ package org.apache.commons.codec.cli;
 
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
-
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
