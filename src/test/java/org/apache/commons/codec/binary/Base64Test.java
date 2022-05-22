@@ -591,7 +591,7 @@ public class Base64Test {
      */
     @Test
     public void testRfc2045Section2Dot1CrLfDefinition() {
-        assertArrayEquals(new byte[]{13, 10}, Base64.CHUNK_SEPARATOR);
+        assertArrayEquals(new byte[]{13, 10}, BaseNCodec.CHUNK_SEPARATOR);
     }
 
     /**
@@ -653,7 +653,7 @@ public class Base64Test {
      */
     @Test
     public void testRfc4648Section10DecodeWithCrLf() {
-        final String CRLF = StringUtils.newStringUsAscii(Base64.CHUNK_SEPARATOR);
+        final String CRLF = StringUtils.newStringUsAscii(BaseNCodec.CHUNK_SEPARATOR);
         assertEquals("", StringUtils.newStringUsAscii(Base64.decodeBase64("" + CRLF)));
         assertEquals("f", StringUtils.newStringUsAscii(Base64.decodeBase64("Zg==" + CRLF)));
         assertEquals("fo", StringUtils.newStringUsAscii(Base64.decodeBase64("Zm8=" + CRLF)));
