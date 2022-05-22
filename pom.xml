@@ -289,7 +289,7 @@ limitations under the License.
     <commons.jacoco.version>0.8.8</commons.jacoco.version>
     <commons.javadoc.version>3.4.0</commons.javadoc.version>
     <commons.surefire-report.version>3.0.0-M6</commons.surefire-report.version>
-    <commons.animal-sniffer.version>1.20</commons.animal-sniffer.version>
+    <commons.animal-sniffer.version>1.21</commons.animal-sniffer.version>
     <commons.pmd.version>3.16.0</commons.pmd.version>
     <japicmp.skip>false</japicmp.skip>
     <jacoco.skip>false</jacoco.skip>
