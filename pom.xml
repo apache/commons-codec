@@ -287,7 +287,7 @@ limitations under the License.
     <commons.checkstyle-plugin.version>3.1.2</commons.checkstyle-plugin.version>
     <commons.checkstyle.version>9.3</commons.checkstyle.version>
     <commons.japicmp.version>0.15.3</commons.japicmp.version>
-    <commons.jacoco.version>0.8.7</commons.jacoco.version>
+    <commons.jacoco.version>0.8.8</commons.jacoco.version>
     <commons.javadoc.version>3.3.0</commons.javadoc.version>
     <commons.surefire-report.version>3.0.0-M6</commons.surefire-report.version>
     <commons.animal-sniffer.version>1.20</commons.animal-sniffer.version>
