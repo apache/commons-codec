@@ -396,7 +396,7 @@ public class HexTest {
     }
 
     @Test
-    public void testEncodeDecodeHexCharArrayRandomToOutput() throws DecoderException, EncoderException {
+    public void testEncodeDecodeHexCharArrayRandomToOutput() throws DecoderException {
         for (int i = 5; i > 0; i--) {
             final byte[] data = new byte[ThreadLocalRandom.current().nextInt(10000) + 1];
             ThreadLocalRandom.current().nextBytes(data);

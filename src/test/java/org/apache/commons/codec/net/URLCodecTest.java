@@ -17,15 +17,16 @@
 
 package org.apache.commons.codec.net;
 
-import java.io.UnsupportedEncodingException;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.codec.CharEncoding;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * URL codec test cases
@@ -131,7 +132,7 @@ public class URLCodecTest {
     }
 
     @Test
-    public void testDecodeInvalidContent() throws UnsupportedEncodingException, DecoderException {
+    public void testDecodeInvalidContent() throws DecoderException {
         final String ch_msg = constructString(SWISS_GERMAN_STUFF_UNICODE);
         final URLCodec urlCodec = new URLCodec();
         final byte[] input = ch_msg.getBytes(StandardCharsets.ISO_8859_1);

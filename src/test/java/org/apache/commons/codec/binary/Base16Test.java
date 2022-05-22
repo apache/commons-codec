@@ -412,7 +412,7 @@ public class Base16Test {
     }
 
     @Test
-    public void testByteToStringVariations() throws DecoderException {
+    public void testByteToStringVariations() {
         final Base16 base16 = new Base16();
         final byte[] b1 = StringUtils.getBytesUtf8("Hello World");
         final byte[] b2 = {};

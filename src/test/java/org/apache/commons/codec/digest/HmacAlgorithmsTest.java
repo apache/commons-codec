@@ -156,7 +156,7 @@ public class HmacAlgorithmsTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testHmacFailInputStream(HmacAlgorithms hmacAlgorithm, byte[] standardResultBytes, String standardResultString) throws IOException {
+    public void testHmacFailInputStream(HmacAlgorithms hmacAlgorithm, byte[] standardResultBytes, String standardResultString) {
         assumeTrue(HmacUtils.isAvailable(hmacAlgorithm));
         assertThrows(IllegalArgumentException.class, () -> new HmacUtils(hmacAlgorithm, (byte[]) null).hmac(new ByteArrayInputStream(STANDARD_PHRASE_BYTES)));
     }
@@ -177,7 +177,7 @@ public class HmacAlgorithmsTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testHmacHexFailInputStream(HmacAlgorithms hmacAlgorithm, byte[] standardResultBytes, String standardResultString) throws IOException {
+    public void testHmacHexFailInputStream(HmacAlgorithms hmacAlgorithm, byte[] standardResultBytes, String standardResultString) {
         assumeTrue(HmacUtils.isAvailable(hmacAlgorithm));
         assertThrows(IllegalArgumentException.class, () -> new HmacUtils(hmacAlgorithm, (byte[]) null).hmac(new ByteArrayInputStream(STANDARD_PHRASE_BYTES)));
     }

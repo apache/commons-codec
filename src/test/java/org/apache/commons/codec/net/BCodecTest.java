@@ -165,7 +165,7 @@ public class BCodecTest {
     }
 
     @Test
-    public void testBase64ImpossibleSamplesStrict() throws DecoderException {
+    public void testBase64ImpossibleSamplesStrict() {
         final BCodec codec = new BCodec(StandardCharsets.UTF_8, CodecPolicy.STRICT);
         assertTrue(codec.isStrictDecoding());
         for (final String s : BASE64_IMPOSSIBLE_CASES) {

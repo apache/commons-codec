@@ -123,7 +123,7 @@ public class BeiderMorseEncoderTest extends StringEncoderAbstractTest<StringEnco
     }
 
     @Test
-    public void testLongestEnglishSurname() throws EncoderException {
+    public void testLongestEnglishSurname() {
         final BeiderMorseEncoder bmpm = createGenericApproxEncoder();
         assertTimeout(Duration.ofMillis(10000L), () -> bmpm.encode("MacGhilleseatheanaich"));
     }
