@@ -297,7 +297,7 @@ limitations under the License.
     <clirr.skip>true</clirr.skip>
 
     <!-- Commons Release Plugin -->
-    <commons.bc.version>1.16</commons.bc.version>
+    <commons.bc.version>1.15</commons.bc.version>
     <commons.rc.version>RC1</commons.rc.version>
     <commons.release-plugin.version>1.7</commons.release-plugin.version>
     <commons.release.isDistModule>true</commons.release.isDistModule>
