@@ -43,6 +43,13 @@ public class BaseNCodecInputStream extends FilterInputStream {
 
     private final Context context = new Context();
 
+    /**
+     * Create an instance.
+     *
+     * @param input the input stream
+     * @param baseNCodec the codec
+     * @param doEncode set to true to perform encoding, else decoding
+     */
     protected BaseNCodecInputStream(final InputStream input, final BaseNCodec baseNCodec, final boolean doEncode) {
         super(input);
         this.doEncode = doEncode;
