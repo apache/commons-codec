@@ -82,7 +82,7 @@ public class Soundex implements StringEncoder {
      * Such letters aren't encoded (after the first), but they do
      * act as separators when dropping duplicate codes.
      * The mapping is otherwise the same as for {@link #US_ENGLISH}
-     * <p>
+     *
      * @since 1.11
      */
     public static final Soundex US_ENGLISH_SIMPLIFIED = new Soundex(US_ENGLISH_MAPPING_STRING, false);
