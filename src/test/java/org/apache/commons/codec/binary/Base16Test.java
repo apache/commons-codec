@@ -577,4 +577,25 @@ public class Base16Test {
         final byte[] decoded = b16.decode(StringUtils.getBytesUtf8(encoded));
         assertArrayEquals(new byte[] {(byte)0xaa, (byte)0xbb, (byte)0xcc, (byte)0xdd}, decoded);
     }
+
+    @Test
+    public void testOddEvenDecoding() {
+        final String encoded = "4142434445";
+
+        final BaseNCodec.Context context = new BaseNCodec.Context();
+        final Base16 base16 = new Base16();
+
+        final byte[] encodedBytes = StringUtils.getBytesUtf8(encoded);
+
+        // pass odd, then even, then odd amount of data
+        base16.decode(encodedBytes, 0, 3, context);
+        base16.decode(encodedBytes, 3, 4, context);
+        base16.decode(encodedBytes, 7, 3, context);
+
+        final byte[] decodedBytes = new byte[context.pos];
+        System.arraycopy(context.buffer, context.readPos, decodedBytes, 0, decodedBytes.length);
+        final String decoded = StringUtils.newStringUtf8(decodedBytes);
+
+        assertEquals("ABCDE", decoded);
+    }
 }

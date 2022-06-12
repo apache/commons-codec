@@ -169,16 +169,15 @@ public class Base16 extends BaseNCodec {
 
         // we must have an even number of chars to decode
         final int charsToProcess = availableChars % BYTES_PER_ENCODED_BLOCK == 0 ? availableChars : availableChars - 1;
+        final int end = offset + dataLen;
 
         final byte[] buffer = ensureBufferSize(charsToProcess / BYTES_PER_ENCODED_BLOCK, context);
 
         int result;
-        int i = 0;
         if (dataLen < availableChars) {
             // we have 1/2 byte from previous invocation to decode
             result = (context.ibitWorkArea - 1) << BITS_PER_ENCODED_BYTE;
             result |= decodeOctet(data[offset++]);
-            i = 2;
 
             buffer[context.pos++] = (byte)result;
 
@@ -186,17 +185,17 @@ public class Base16 extends BaseNCodec {
             context.ibitWorkArea = 0;
         }
 
-        while (i < charsToProcess) {
+        final int loopEnd = end - 1;
+        while (offset < loopEnd) {
             result = decodeOctet(data[offset++]) << BITS_PER_ENCODED_BYTE;
             result |= decodeOctet(data[offset++]);
-            i += 2;
             buffer[context.pos++] = (byte)result;
         }
 
         // we have one char of a hex-pair left over
-        if (i < dataLen) {
+        if (offset < end) {
             // store 1/2 byte for next invocation of decode, we offset by +1 as empty-value is 0
-            context.ibitWorkArea = decodeOctet(data[i]) + 1;
+            context.ibitWorkArea = decodeOctet(data[offset]) + 1;
         }
     }
 
