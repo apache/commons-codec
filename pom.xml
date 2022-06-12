@@ -401,6 +401,16 @@ limitations under the License.
           <source>${maven.compiler.source}</source>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>animal-sniffer-maven-plugin</artifactId>
+        <configuration>
+          <ignores>
+            <!-- JDK9 breaks compatibility by returning ByteBuffer not Buffer -->
+            <ignore>java.nio.ByteBuffer</ignore>
+          </ignores>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
   <reporting>
