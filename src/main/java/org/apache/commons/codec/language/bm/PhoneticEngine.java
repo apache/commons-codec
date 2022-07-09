@@ -22,7 +22,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
@@ -30,6 +29,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 import org.apache.commons.codec.language.bm.Languages.LanguageSet;
 import org.apache.commons.codec.language.bm.Rule.Phoneme;
@@ -252,17 +252,8 @@ public class PhoneticEngine {
      * @param sep       String to separate them with
      * @return a single String consisting of each element of {@code strings} interleaved by {@code sep}
      */
-    private static String join(final Iterable<String> strings, final String sep) {
-        final StringBuilder sb = new StringBuilder();
-        final Iterator<String> si = strings.iterator();
-        if (si.hasNext()) {
-            sb.append(si.next());
-        }
-        while (si.hasNext()) {
-            sb.append(sep).append(si.next());
-        }
-
-        return sb.toString();
+    private static String join(final List<String> strings, final String sep) {
+        return strings.stream().collect(Collectors.joining(sep));
     }
 
     private static final int DEFAULT_MAX_PHONEMES = 20;
