@@ -92,7 +92,7 @@ public class HmacUtilsTest {
 
     @SuppressWarnings("deprecation") // most of the static methods are deprecated
     @Test
-    public void testHmacSha1UpdateWithInpustream() throws IOException {
+    public void testHmacSha1UpdateWithInputStream() throws IOException {
         final Mac mac = HmacUtils.getHmacSha1(HmacAlgorithmsTest.STANDARD_KEY_BYTES);
         HmacUtils.updateHmac(mac, new ByteArrayInputStream(HmacAlgorithmsTest.STANDARD_PHRASE_BYTES));
         assertEquals(HmacAlgorithmsTest.STANDARD_SHA1_RESULT_STRING, Hex.encodeHexString(mac.doFinal()));
@@ -164,7 +164,7 @@ public class HmacUtilsTest {
     }
 
     @Test
-    public void testSecretKeySpecAllowsEmtyKeys() {
+    public void testSecretKeySpecAllowsEmptyKeys() {
         assertThrows(IllegalArgumentException.class, () -> new SecretKeySpec(new byte[] {}, "HmacMD5"));
     }
 

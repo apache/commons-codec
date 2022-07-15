@@ -333,7 +333,7 @@ The <action> type attribute can be add,update,fix,remove.
     </release>
     <release version="1.4" date="9 August 2009" description="Feature and fix release. Requires a minimum of Java 1.4.">
       <action dev="ggregory" type="fix" issue="CODEC-80" due-to="Julius Davies">
-        Regression: Base64.encode(chunk=true) has bug when input length is multiple of 76.
+        Regression: Base64.encode(chunk=true) has a bug when input length is multiple of 76.
       </action>
       <action dev="ggregory" type="fix" issue="CODEC-77" due-to="Julius Davies">
         Base64 bug with empty input (new byte[0]).
@@ -411,7 +411,7 @@ The <action> type attribute can be add,update,fix,remove.
         Double Metaphone bugs in alternative encoding.
       </action>
       <action dev="ggregory" type="fix" issue="CODEC-73" due-to="Benjamin Bentmann">
-        Make string2byte conversions indepedent of platform default encoding.
+        Make string2byte conversions independent of platform default encoding.
       </action>
     </release>
     <release version="1.3" date="10 July 2004" description="Feature and fix release.">
@@ -439,7 +439,7 @@ The <action> type attribute can be add,update,fix,remove.
         RefinedSoundex: Implemented the DIFFERENCE algorithm.
       </action>
       <action dev="ggregory" type="update">
-        This version is relesed under the
+        This version is released under the
         &lt;a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0&lt;/a>
         , please see LICENSE.txt. Previous versions were released under the
         &lt;a href="http://www.apache.org/licenses/LICENSE-1.1">Apache License 1.1&lt;/a>

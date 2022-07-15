@@ -46,7 +46,7 @@ public class CryptTest {
      *
      * The C and Perl implementations return an empty string, PHP threads it
      * as NULL. Our implementation should throw an Exception as any resulting
-     * hash would not be verifyable with other implementations of crypt().
+     * hash would not be verifiable with other implementations of crypt().
      */
     @Test
     public void testCryptWithEmptySalt() {

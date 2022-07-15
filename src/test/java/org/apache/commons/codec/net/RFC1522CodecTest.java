@@ -51,9 +51,9 @@ public class RFC1522CodecTest {
 
     @Test
     public void testNullInput() throws Exception {
-        final RFC1522TestCodec testcodec = new RFC1522TestCodec();
-        assertNull(testcodec.decodeText(null));
-        assertNull(testcodec.encodeText(null, CharEncoding.UTF_8));
+        final RFC1522TestCodec testCodec = new RFC1522TestCodec();
+        assertNull(testCodec.decodeText(null));
+        assertNull(testCodec.encodeText(null, CharEncoding.UTF_8));
     }
 
     private void assertExpectedDecoderException(final String s) {

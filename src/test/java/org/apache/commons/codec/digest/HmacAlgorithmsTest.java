@@ -201,7 +201,7 @@ public class HmacAlgorithmsTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testMacByteArary(final HmacAlgorithms hmacAlgorithm, final byte[] standardResultBytes, final String standardResultString) {
+    public void testMacByteArray(final HmacAlgorithms hmacAlgorithm, final byte[] standardResultBytes, final String standardResultString) {
         assumeTrue(HmacUtils.isAvailable(hmacAlgorithm));
         assertArrayEquals(standardResultBytes, new HmacUtils(hmacAlgorithm, STANDARD_KEY_BYTES).hmac(STANDARD_PHRASE_BYTES));
     }

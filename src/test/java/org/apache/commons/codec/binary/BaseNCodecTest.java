@@ -286,7 +286,7 @@ public class BaseNCodecTest {
         final long presumableFreeMemory = getPresumableFreeMemory();
         // 2GiB + 32 KiB + length
         // 2GiB: Buffer to allocate
-        // 32KiB: Some head room
+        // 32KiB: Some headroom
         // length: Existing buffer
         final long estimatedMemory = (1L << 31) + 32 * 1024 + length;
         assumeTrue(presumableFreeMemory > estimatedMemory, "Not enough free memory for the test");

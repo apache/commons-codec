@@ -1116,7 +1116,7 @@ public class Base64Test {
      */
     @Test
     public void testUrlSafe() {
-        // test random data of sizes 0 thru 150
+        // test random data of sizes 0 through 150
         final BaseNCodec codec = new Base64(true);
         for (int i = 0; i <= 150; i++) {
             final byte[][] randomData = BaseNTestData.randomData(codec, i);
@@ -1399,7 +1399,7 @@ public class Base64Test {
         // 1GiB: Existing working buffer (due to doubling of default buffer size of 8192)
         // ~2GiB: New working buffer to allocate (due to doubling)
         // ~1.33GiB: Expected output size (since the working buffer is copied at the end)
-        // 32KiB: Some head room
+        // 32KiB: Some headroom
         final long estimatedMemory = (long) size1GiB * 4 + expectedLength + 32 * 1024;
         Assumptions.assumeTrue(presumableFreeMemory > estimatedMemory,
                 "Not enough free memory for the test");

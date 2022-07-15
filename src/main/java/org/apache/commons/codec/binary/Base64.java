@@ -340,7 +340,7 @@ public class Base64 extends BaseNCodec {
      *
      * @param octet
      *            The value to test
-     * @return {@code true} if the value is defined in the the base 64 alphabet, {@code false} otherwise.
+     * @return {@code true} if the value is defined in the base 64 alphabet, {@code false} otherwise.
      * @since 1.4
      */
     public static boolean isBase64(final byte octet) {
@@ -485,7 +485,7 @@ public class Base64 extends BaseNCodec {
      * </p>
      *
      * @param lineLength
-     *            Each line of encoded data will be at most of the given length (rounded down to nearest multiple of
+     *            Each line of encoded data will be at most of the given length (rounded down to the nearest multiple of
      *            4). If lineLength &lt;= 0, then the output will not be divided into lines (chunks). Ignored when
      *            decoding.
      * @since 1.4
@@ -508,7 +508,7 @@ public class Base64 extends BaseNCodec {
      * </p>
      *
      * @param lineLength
-     *            Each line of encoded data will be at most of the given length (rounded down to nearest multiple of
+     *            Each line of encoded data will be at most of the given length (rounded down to the nearest multiple of
      *            4). If lineLength &lt;= 0, then the output will not be divided into lines (chunks). Ignored when
      *            decoding.
      * @param lineSeparator
@@ -535,7 +535,7 @@ public class Base64 extends BaseNCodec {
      * </p>
      *
      * @param lineLength
-     *            Each line of encoded data will be at most of the given length (rounded down to nearest multiple of
+     *            Each line of encoded data will be at most of the given length (rounded down to the nearest multiple of
      *            4). If lineLength &lt;= 0, then the output will not be divided into lines (chunks). Ignored when
      *            decoding.
      * @param lineSeparator
@@ -566,7 +566,7 @@ public class Base64 extends BaseNCodec {
      * </p>
      *
      * @param lineLength
-     *            Each line of encoded data will be at most of the given length (rounded down to nearest multiple of
+     *            Each line of encoded data will be at most of the given length (rounded down to the nearest multiple of
      *            4). If lineLength &lt;= 0, then the output will not be divided into lines (chunks). Ignored when
      *            decoding.
      * @param lineSeparator
@@ -794,7 +794,7 @@ public class Base64 extends BaseNCodec {
      *
      * @param octet
      *            The value to test
-     * @return {@code true} if the value is defined in the the Base64 alphabet {@code false} otherwise.
+     * @return {@code true} if the value is defined in the Base64 alphabet {@code false} otherwise.
      */
     @Override
     protected boolean isInAlphabet(final byte octet) {

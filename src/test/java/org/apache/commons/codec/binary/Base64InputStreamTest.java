@@ -222,7 +222,7 @@ public class Base64InputStreamTest {
         decoded = BaseNTestData.DECODED;
         testByChunk(encoded, decoded, 0, LF);
 
-        // test random data of sizes 0 thru 150
+        // test random data of sizes 0 through 150
         final BaseNCodec codec = new Base64(0, null, false);
         for (int i = 0; i <= 150; i++) {
             final byte[][] randomData = BaseNTestData.randomData(codec, i);
@@ -261,7 +261,7 @@ public class Base64InputStreamTest {
         decoded = BaseNTestData.DECODED;
         testByteByByte(encoded, decoded, 0, LF);
 
-        // test random data of sizes 0 thru 150
+        // test random data of sizes 0 through 150
         final BaseNCodec codec = new Base64(0, null, false);
         for (int i = 0; i <= 150; i++) {
             final byte[][] randomData = BaseNTestData.randomData(codec, i);
@@ -302,7 +302,7 @@ public class Base64InputStreamTest {
 
         in.close();
 
-        // Now let's try decode.
+        // Now let's try to decode.
         in = new Base64InputStream(new ByteArrayInputStream(encoded));
         output = BaseNTestData.streamToBytes(in);
 
@@ -310,7 +310,7 @@ public class Base64InputStreamTest {
         assertEquals(-1, in.read(), "Still EOF");
         assertArrayEquals(decoded, output, "Streaming base64 decode");
 
-        // I always wanted to do this! (wrap encoder with decoder etc etc).
+        // I always wanted to do this! (wrap encoder with decoder etc.).
         in = new ByteArrayInputStream(decoded);
         for (int i = 0; i < 10; i++) {
             in = new Base64InputStream(in, true, chunkSize, separator);
@@ -357,7 +357,7 @@ public class Base64InputStreamTest {
         assertArrayEquals(encoded, output, "Streaming base64 encode");
 
         in.close();
-        // Now let's try decode.
+        // Now let's try to decode.
         in = new Base64InputStream(new ByteArrayInputStream(encoded));
         output = new byte[decoded.length];
         for (int i = 0; i < output.length; i++) {
@@ -370,7 +370,7 @@ public class Base64InputStreamTest {
 
         in.close();
 
-        // I always wanted to do this! (wrap encoder with decoder etc etc).
+        // I always wanted to do this! (wrap encoder with decoder etc.).
         in = new ByteArrayInputStream(decoded);
         for (int i = 0; i < 10; i++) {
             in = new Base64InputStream(in, true, chunkSize, separator);

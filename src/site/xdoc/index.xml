@@ -55,7 +55,7 @@ RFC 2045</a>.
 <p>
 Out of that confusing duplication of effort sprang this simple
 attempt to encourage code reuse among various projects.  While
-this package contains a abstract framework for the creation of
+this package contains an abstract framework for the creation of
 encoders and decoders, Codec itself is primarily focused on
 providing functional utilities for working with common encodings.
 </p>

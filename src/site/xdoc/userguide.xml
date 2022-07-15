@@ -17,7 +17,7 @@
   <body>
     <!-- ================================================== -->
     <section name="User guide">
-      <p> Codec is comprised of a set of utilities and a simple
+      <p> Codec consists of a set of utilities and a simple
         framework for encoding and decoding text and binary data.
       </p>
       <subsection name="Binary Encoders">

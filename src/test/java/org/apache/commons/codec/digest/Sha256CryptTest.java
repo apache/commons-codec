@@ -83,7 +83,7 @@ public class Sha256CryptTest {
     }
 
     @Test
-    public void testSha256LargetThanBlocksize() {
+    public void testSha256LargestThanBlocksize() {
         final byte[] buffer = new byte[200];
         Arrays.fill(buffer, 0, 200, (byte)'A');
         assertEquals("$5$abc$HbF3RRc15OwNKB/RZZ5F.1I6zsLcKXHQoSdB9Owx/Q8", Sha2Crypt.sha256Crypt(buffer, "$5$abc"));

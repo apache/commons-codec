@@ -265,7 +265,7 @@ public class Sha2Crypt {
 
         // 11. For each bit of the binary representation of the length of the
         // password string up to and including the highest 1-digit, starting
-        // from to lowest bit position (numeric value 1):
+        // from to the lowest bit position (numeric value 1):
         //
         // a) for a 1-digit add digest B to digest A
         //
@@ -340,7 +340,7 @@ public class Sha2Crypt {
          */
         altCtx = DigestUtils.getDigest(algorithm);
 
-        // 18. repeast the following 16+A[0] times, where A[0] represents the first
+        // 18. repeat the following 16+A[0] times, where A[0] represents the first
         // byte in digest A interpreted as an 8-bit unsigned value
         //
         // add the salt to digest DS
@@ -394,7 +394,7 @@ public class Sha2Crypt {
              */
             ctx = DigestUtils.getDigest(algorithm);
 
-            // b) for odd round numbers add the byte sequense P to digest C
+            // b) for odd round numbers add the byte sequence P to digest C
             // c) for even round numbers add digest A/C
             /*
              * Add key or last result.

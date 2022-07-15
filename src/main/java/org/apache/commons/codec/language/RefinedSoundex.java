@@ -114,7 +114,7 @@ public class RefinedSoundex implements StringEncoder {
      * @param s2
      *                  A String that will be encoded and compared.
      * @return The number of characters in the two encoded Strings that are the
-     *             same from 0 to to the length of the shortest encoded String.
+     *             same from 0 to the length of the shortest encoded String.
      *
      * @see SoundexUtils#difference(StringEncoder,String,String)
      * @see <a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_de-dz_8co5.asp">

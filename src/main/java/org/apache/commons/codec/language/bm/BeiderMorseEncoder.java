@@ -53,7 +53,7 @@ import org.apache.commons.codec.StringEncoder;
  * <p>
  * Individual phonetic spellings of an input word are represented in upper- and lower-case roman characters. Where there
  * are multiple possible phonetic representations, these are joined with a pipe ({@code |}) character. If multiple
- * hyphenated words where found, or if the word may contain a name prefix, each encoded word is placed in elipses and
+ * hyphenated words where found, or if the word may contain a name prefix, each encoded word is placed in ellipses and
  * these blocks are then joined with hyphens. For example, "{@code d'ortley}" has a possible prefix. The form
  * without prefix encodes to "{@code ortlaj|ortlej}", while the form with prefix encodes to "
  * {@code dortlaj|dortlej}". Thus, the full, combined encoding is "{@code (ortlaj|ortlej)-(dortlaj|dortlej)}".

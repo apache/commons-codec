@@ -36,7 +36,7 @@ o             Bump checkstyle from 8.45.1 to 9.2.1 #97, #100, #101. Thanks to De
 
 
 For complete information on Apache Commons Codec, including instructions on how to submit bug reports,
-patches, or suggestions for improvement, see the Apache Apache Commons Codec website:
+patches, or suggestions for improvement, see the Apache Commons Codec website:
 
 https://commons.apache.org/proper/commons-codec/
 
