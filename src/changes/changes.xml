@@ -52,6 +52,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action                   dev="ggregory" type="fix" due-to="Arturo Bernal">Use String.contains() functions #125.</action>
       <action                   dev="ggregory" type="fix" due-to="Arturo Bernal">Avoid use toString() or substring() in favor of a simplified expression #126.</action>
       <action issue="CODEC-305" dev="aherbert" type="fix" due-to="Florian">Fix byte-skipping in Base16 decoding #135.</action>
+      <action                   dev="kinow" type="fix" due-to="Marc Wrobel">Fix several typos, improve writing in some javadocs #139.</action>
       <!-- ADD -->
       <action issue="CODEC-296" dev="mattsicker" type="add" due-to="Matt Sicker">Add support for Blake3 family of hashes.</action>
       <action                   dev="ggregory" type="add">Add github/codeql-action.</action>
