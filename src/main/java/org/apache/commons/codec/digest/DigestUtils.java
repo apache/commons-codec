@@ -43,7 +43,7 @@ import org.apache.commons.codec.binary.StringUtils;
  * digest algorithms that can be used with the {@link #getDigest(String)} method
  * and other methods that require the Digest algorithm name.
  * <p>
- * Note: the class has short-hand methods for all the algorithms present as standard in Java 6.
+ * Note: the class has shorthand methods for all the algorithms present as standard in Java 6.
  * This approach requires lots of methods for each algorithm, and quickly becomes unwieldy.
  * The following code works with all algorithms:
  * <pre>
@@ -258,7 +258,7 @@ public class DigestUtils {
      * @return An SHA3-224 digest instance.
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught, which should not happen on
-     *             Oracle Java 9 andgreater.
+     *             Oracle Java 9 and greater.
      * @see MessageDigestAlgorithms#SHA3_224
      * @since 1.12
      */

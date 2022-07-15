@@ -40,7 +40,7 @@ public class MurmurHash3Test {
 
     /**
      * 256 integers in the range [0,255] arranged in random order.
-     * This ensure all bytes are covered in a full hash of the bytes.
+     * This ensures all bytes are covered in a full hash of the bytes.
      *
      * <p>To create test data using the python library mmh3 (which invokes the c++ code):</p>
      *
@@ -69,7 +69,7 @@ public class MurmurHash3Test {
 
     /**
      * 256 bytes in the range [0,255] arranged in random order.
-     * This ensure all bytes are covered in a full hash of the bytes.
+     * This ensures all bytes are covered in a full hash of the bytes.
      */
     private static final byte[] RANDOM_BYTES;
 

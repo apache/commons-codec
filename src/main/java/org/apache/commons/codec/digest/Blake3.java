@@ -35,7 +35,7 @@ import java.util.Objects;
  * }</pre>
  * <h2>Keyed Hashing</h2>
  * <p>Keyed hashes take a 32-byte secret key and calculates a message authentication code on some input bytes. These
- * also work as pseduo-random functions (PRFs) with extensible output similar to the extensible hash output. Note that
+ * also work as pseudo-random functions (PRFs) with extensible output similar to the extensible hash output. Note that
  * Blake3 keyed hashes have the same performance as plain hashes; the key is used in initialization in place of a
  * standard initialization vector used for plain hashing.</p>
  * <pre>{@code

@@ -101,8 +101,8 @@ public class XXHash32Test {
         return output.toByteArray();
     }
 
-    private static long copy(final InputStream input, final OutputStream output, final int buffersize) throws IOException {
-        final byte[] buffer = new byte[buffersize];
+    private static long copy(final InputStream input, final OutputStream output, final int bufferSize) throws IOException {
+        final byte[] buffer = new byte[bufferSize];
         int n = 0;
         long count=0;
         while (-1 != (n = input.read(buffer))) {

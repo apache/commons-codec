@@ -22,7 +22,7 @@ import static java.lang.Integer.rotateLeft;
 import java.util.zip.Checksum;
 
 /**
- * Implementation of the xxhash32 hash algorithm.
+ * Implementation of the xxHash32 hash algorithm.
  *
  * <p>
  * Copied from Commons Compress 1.14 <a href=

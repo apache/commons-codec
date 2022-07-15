@@ -125,11 +125,6 @@ public class Base32 extends BaseNCodec {
     // some state be preserved between calls of encode() and decode().
 
     /**
-     * Place holder for the bytes we're dealing with for our based logic.
-     * Bitwise operations store and extract the encoding or decoding from this variable.
-     */
-
-    /**
      * Convenience variable to help us determine when our buffer is going to run out of room and needs resizing.
      * {@code decodeSize = {@link #BYTES_PER_ENCODED_BLOCK} - 1 + lineSeparator.length;}
      */
@@ -161,7 +156,6 @@ public class Base32 extends BaseNCodec {
      * <p>
      * When encoding the line length is 0 (no chunking).
      * </p>
-     *
      */
     public Base32() {
         this(false);
@@ -208,7 +202,7 @@ public class Base32 extends BaseNCodec {
      * </p>
      *
      * @param lineLength
-     *            Each line of encoded data will be at most of the given length (rounded down to nearest multiple of
+     *            Each line of encoded data will be at most of the given length (rounded down to the nearest multiple of
      *            8). If lineLength &lt;= 0, then the output will not be divided into lines (chunks). Ignored when
      *            decoding.
      */
@@ -226,7 +220,7 @@ public class Base32 extends BaseNCodec {
      * </p>
      *
      * @param lineLength
-     *            Each line of encoded data will be at most of the given length (rounded down to nearest multiple of
+     *            Each line of encoded data will be at most of the given length (rounded down to the nearest multiple of
      *            8). If lineLength &lt;= 0, then the output will not be divided into lines (chunks). Ignored when
      *            decoding.
      * @param lineSeparator
@@ -248,7 +242,7 @@ public class Base32 extends BaseNCodec {
      * </p>
      *
      * @param lineLength
-     *            Each line of encoded data will be at most of the given length (rounded down to nearest multiple of
+     *            Each line of encoded data will be at most of the given length (rounded down to the nearest multiple of
      *            8). If lineLength &lt;= 0, then the output will not be divided into lines (chunks). Ignored when
      *            decoding.
      * @param lineSeparator
@@ -273,7 +267,7 @@ public class Base32 extends BaseNCodec {
      * </p>
      *
      * @param lineLength
-     *            Each line of encoded data will be at most of the given length (rounded down to nearest multiple of
+     *            Each line of encoded data will be at most of the given length (rounded down to the nearest multiple of
      *            8). If lineLength &lt;= 0, then the output will not be divided into lines (chunks). Ignored when
      *            decoding.
      * @param lineSeparator
@@ -299,7 +293,7 @@ public class Base32 extends BaseNCodec {
      * </p>
      *
      * @param lineLength
-     *            Each line of encoded data will be at most of the given length (rounded down to nearest multiple of
+     *            Each line of encoded data will be at most of the given length (rounded down to the nearest multiple of
      *            8). If lineLength &lt;= 0, then the output will not be divided into lines (chunks). Ignored when
      *            decoding.
      * @param lineSeparator
@@ -580,7 +574,7 @@ public class Base32 extends BaseNCodec {
      *
      * @param octet
      *            The value to test
-     * @return {@code true} if the value is defined in the the Base32 alphabet {@code false} otherwise.
+     * @return {@code true} if the value is defined in the Base32 alphabet {@code false} otherwise.
      */
     @Override
     public boolean isInAlphabet(final byte octet) {

@@ -65,7 +65,7 @@ public class UnixCryptTest {
     /**
      * Single character salts are illegal!
      * E.g. with glibc 2.13, crypt("secret", "x") = "xxZREZpkHZpkI" but
-     * crypt("secret", "xx") = "xxWAum7tHdIUw" which makes it unverifyable.
+     * crypt("secret", "xx") = "xxWAum7tHdIUw" which makes it unverifiable.
      */
     @Test
     public void testUnixCryptWithHalfSalt() {
@@ -73,10 +73,10 @@ public class UnixCryptTest {
     }
 
     /**
-     * Unimplemented "$foo$" salt prefixes would be threated as UnixCrypt salt.
+     * Unimplemented "$foo$" salt prefixes would be treated as UnixCrypt salt.
      */
     @Test
-    public void testUnicCryptInvalidSalt() {
+    public void testUnixCryptInvalidSalt() {
         assertThrows(IllegalArgumentException.class, () -> UnixCrypt.crypt("secret", "$a"));
     }
 

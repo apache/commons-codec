@@ -49,7 +49,7 @@ import org.apache.commons.codec.StringEncoder;
  *   4e. KN  -&gt;   N   else K -&gt; C
  *   4f. SCH -&gt;   SSS
  *   4g. PH  -&gt;   FF
- *   4h. H   -&gt;   If previous or next is nonvowel, previous
+ *   4h. H   -&gt;   If previous or next is non-vowel, previous
  *   4i. W   -&gt;   If previous is vowel, previous
  *   4j. Add current to key if current != last key character
  * 5. If last character is S, remove it

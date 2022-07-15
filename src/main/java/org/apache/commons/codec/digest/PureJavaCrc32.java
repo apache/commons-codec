@@ -22,7 +22,7 @@ import java.util.zip.Checksum;
  * A pure-java implementation of the CRC32 checksum that uses
  * the same polynomial as the built-in native CRC32.
  *
- * This is to avoid the JNI overhead for certain uses of Checksumming
+ * This is to avoid the JNI overhead for certain uses of checksumming
  * where many small pieces of data are checksummed in succession.
  *
  * The current version is ~10x to 1.8x as fast as Sun's native

@@ -91,8 +91,8 @@ public class Base64InputStream extends BaseNCodecInputStream {
      *            true if we should encode all data read from us, false if we should decode.
      * @param lineLength
      *            If doEncode is true, each line of encoded data will contain lineLength characters (rounded down to
-     *            nearest multiple of 4). If lineLength &lt;= 0, the encoded data is not divided into lines. If doEncode
-     *            is false, lineLength is ignored.
+     *            the nearest multiple of 4). If lineLength &lt;= 0, the encoded data is not divided into lines. If
+     *            doEncode is false, lineLength is ignored.
      * @param lineSeparator
      *            If doEncode is true, each line of encoded data will be terminated with this byte sequence (e.g. \r\n).
      *            If lineLength &lt;= 0, the lineSeparator is not used. If doEncode is false lineSeparator is ignored.
@@ -112,8 +112,8 @@ public class Base64InputStream extends BaseNCodecInputStream {
      *            true if we should encode all data read from us, false if we should decode.
      * @param lineLength
      *            If doEncode is true, each line of encoded data will contain lineLength characters (rounded down to
-     *            nearest multiple of 4). If lineLength &lt;= 0, the encoded data is not divided into lines. If doEncode
-     *            is false, lineLength is ignored.
+     *            the nearest multiple of 4). If lineLength &lt;= 0, the encoded data is not divided into lines. If
+     *            doEncode is false, lineLength is ignored.
      * @param lineSeparator
      *            If doEncode is true, each line of encoded data will be terminated with this byte sequence (e.g. \r\n).
      *            If lineLength &lt;= 0, the lineSeparator is not used. If doEncode is false lineSeparator is ignored.

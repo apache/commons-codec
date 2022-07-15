@@ -891,7 +891,7 @@ public class DoubleMetaphone implements StringEncoder {
     /*
      * Gets the character at index {@code index} if available, otherwise
      * it returns {@code Character.MIN_VALUE} so that there is some sort
-     * of a default.
+     * of default.
      */
     protected char charAt(final String value, final int index) {
         if (index < 0 || index >= value.length()) {

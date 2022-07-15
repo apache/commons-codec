@@ -353,8 +353,8 @@ public class Md5Crypt {
         finalb = ctx.digest();
 
         /*
-         * and now, just to make sure things don't run too fast On a 60 Mhz Pentium this takes 34 msec, so you would
-         * need 30 seconds to build a 1000 entry dictionary...
+         * and now, just to make sure things don't run too fast On a 60 Mhz Pentium this takes 34 milliseconds, so you
+         * would need 30 seconds to build a 1000 entry dictionary...
          */
         for (int i = 0; i < ROUNDS; i++) {
             ctx1 = DigestUtils.getMd5Digest();

@@ -92,7 +92,7 @@ public class Base16InputStreamTest {
         decoded = BaseNTestData.DECODED;
         testByChunk(encoded, decoded);
 
-        // test random data of sizes 0 thru 150
+        // test random data of sizes 0 through 150
         final BaseNCodec codec = new Base16(true);
         for (int i = 0; i <= 150; i++) {
             final byte[][] randomData = BaseNTestData.randomData(codec, i);
@@ -124,7 +124,7 @@ public class Base16InputStreamTest {
         decoded = BaseNTestData.DECODED;
         testByteByByte(encoded, decoded);
 
-        // test random data of sizes 0 thru 150
+        // test random data of sizes 0 through 150
         final BaseNCodec codec = new Base16(true);
         for (int i = 0; i <= 150; i++) {
             final byte[][] randomData = BaseNTestData.randomData(codec, i);
@@ -172,7 +172,7 @@ public class Base16InputStreamTest {
             assertArrayEquals(encoded, output, "Streaming Base16 encode");
         }
 
-        // Now let's try decode.
+        // Now let's try to decode.
         try (final InputStream in = new Base16InputStream(new ByteArrayInputStream(encoded), false, lowerCase)) {
             final byte[] output = BaseNTestData.streamToBytes(in);
 
@@ -235,7 +235,7 @@ public class Base16InputStreamTest {
             assertArrayEquals(encoded, output, "Streaming Base16 encode");
         }
 
-        // Now let's try decode.
+        // Now let's try to decode.
         try (final InputStream in = new Base16InputStream(new ByteArrayInputStream(encoded), false, lowerCase)) {
             final byte[] output = new byte[decoded.length];
             for (int i = 0; i < output.length; i++) {

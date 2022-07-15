@@ -245,7 +245,7 @@ public class Base16 extends BaseNCodec {
      *
      * @param octet The value to test.
      *
-     * @return {@code true} if the value is defined in the the Base16 alphabet {@code false} otherwise.
+     * @return {@code true} if the value is defined in the Base16 alphabet {@code false} otherwise.
      */
     @Override
     public boolean isInAlphabet(final byte octet) {

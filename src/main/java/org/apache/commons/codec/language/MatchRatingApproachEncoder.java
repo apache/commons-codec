@@ -179,9 +179,9 @@ public class MatchRatingApproachEncoder implements StringEncoder {
 
         if (sumLength <= 4) {
             minRating = 5;
-        } else if (sumLength <= 7) { // aready know it is at least 5
+        } else if (sumLength <= 7) { // already know it is at least 5
             minRating = 4;
-        } else if (sumLength <= 11) { // aready know it is at least 8
+        } else if (sumLength <= 11) { // already know it is at least 8
             minRating = 3;
         } else if (sumLength == 12) {
             minRating = 2;
@@ -235,7 +235,7 @@ public class MatchRatingApproachEncoder implements StringEncoder {
         name1 = getFirst3Last3(name1);
         name2 = getFirst3Last3(name2);
 
-        // 4. Check for length difference - if 3 or greater then no similarity
+        // 4. Check for length difference - if 3 or greater, then no similarity
         // comparison is done
         if (Math.abs(name1.length() - name2.length()) >= 3) {
             return false;
@@ -265,7 +265,7 @@ public class MatchRatingApproachEncoder implements StringEncoder {
      * </p>
      *
      * @param letter
-     *            The letter under investiagtion
+     *            The letter under investigation
      * @return True if a vowel, else false
      */
     boolean isVowel(final String letter) {
@@ -327,7 +327,7 @@ public class MatchRatingApproachEncoder implements StringEncoder {
         final String strA = new String(name1Char).replaceAll("\\s+", EMPTY);
         final String strB = new String(name2Char).replaceAll("\\s+", EMPTY);
 
-        // Final bit - subtract longest string from 6 and return this int value
+        // Final bit - subtract the longest string from 6 and return this int value
         if (strA.length() > strB.length()) {
             return Math.abs(6 - strA.length());
         }

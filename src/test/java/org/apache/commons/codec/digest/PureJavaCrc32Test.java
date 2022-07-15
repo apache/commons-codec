@@ -146,12 +146,12 @@ public class PureJavaCrc32Test {
       }
     }
 
-    String[] toStrings(final String nameformat) {
+    String[] toStrings(final String nameFormat) {
       final String[] s = new String[tables.length];
       for (int j = 0; j < tables.length; j++) {
         final int[] t = tables[j];
         final StringBuilder b = new StringBuilder();
-        b.append(String.format("    /* "+ nameformat +" */", j));
+        b.append(String.format("    /* "+ nameFormat +" */", j));
         for (int i = 0; i < t.length;) {
           b.append("\n    ");
           for(int k = 0; k < 4; k++) {

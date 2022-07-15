@@ -36,7 +36,7 @@ public class LanguageGuessingTest {
         return Stream.of(
             Arguments.of("Renault", "french"),
             Arguments.of("Mickiewicz", "polish"),
-            Arguments.of("Thompson", "english"), // this also hits german and greeklatin
+            Arguments.of("Thompson", "english"), // this also hits german and greek latin
             Arguments.of("Nu\u00f1ez", "spanish"), // Nuñez
             Arguments.of("Carvalho", "portuguese"),
             Arguments.of("\u010capek", "czech"), // Čapek

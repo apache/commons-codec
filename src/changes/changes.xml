@@ -52,6 +52,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action                   dev="ggregory" type="fix" due-to="Arturo Bernal">Use String.contains() functions #125.</action>
       <action                   dev="ggregory" type="fix" due-to="Arturo Bernal">Avoid use toString() or substring() in favor of a simplified expression #126.</action>
       <action issue="CODEC-305" dev="aherbert" type="fix" due-to="Florian">Fix byte-skipping in Base16 decoding #135.</action>
+      <action                   dev="kinow" type="fix" due-to="Marc Wrobel">Fix several typos, improve writing in some javadocs #139.</action>
       <!-- ADD -->
       <action issue="CODEC-296" dev="mattsicker" type="add" due-to="Matt Sicker">Add support for Blake3 family of hashes.</action>
       <action                   dev="ggregory" type="add">Add github/codeql-action.</action>
@@ -333,7 +334,7 @@ The <action> type attribute can be add,update,fix,remove.
     </release>
     <release version="1.4" date="9 August 2009" description="Feature and fix release. Requires a minimum of Java 1.4.">
       <action dev="ggregory" type="fix" issue="CODEC-80" due-to="Julius Davies">
-        Regression: Base64.encode(chunk=true) has bug when input length is multiple of 76.
+        Regression: Base64.encode(chunk=true) has a bug when input length is multiple of 76.
       </action>
       <action dev="ggregory" type="fix" issue="CODEC-77" due-to="Julius Davies">
         Base64 bug with empty input (new byte[0]).
@@ -411,7 +412,7 @@ The <action> type attribute can be add,update,fix,remove.
         Double Metaphone bugs in alternative encoding.
       </action>
       <action dev="ggregory" type="fix" issue="CODEC-73" due-to="Benjamin Bentmann">
-        Make string2byte conversions indepedent of platform default encoding.
+        Make string2byte conversions independent of platform default encoding.
       </action>
     </release>
     <release version="1.3" date="10 July 2004" description="Feature and fix release.">
@@ -439,7 +440,7 @@ The <action> type attribute can be add,update,fix,remove.
         RefinedSoundex: Implemented the DIFFERENCE algorithm.
       </action>
       <action dev="ggregory" type="update">
-        This version is relesed under the
+        This version is released under the
         &lt;a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0&lt;/a>
         , please see LICENSE.txt. Previous versions were released under the
         &lt;a href="http://www.apache.org/licenses/LICENSE-1.1">Apache License 1.1&lt;/a>

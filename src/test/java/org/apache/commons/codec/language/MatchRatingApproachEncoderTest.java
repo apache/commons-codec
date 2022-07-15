@@ -45,12 +45,12 @@ public class MatchRatingApproachEncoderTest extends StringEncoderAbstractTest<Ma
     }
 
     @Test
-    public final void testAccentRemoval_UpperandLower_SuccessfullyRemovedAndCaseInvariant() {
+    public final void testAccentRemoval_UpperAndLower_SuccessfullyRemovedAndCaseInvariant() {
         assertEquals("AeiOuu", this.getStringEncoder().removeAccents("ÁeíÓuu"));
     }
 
     @Test
-    public final void testAccentRemoval_MixedWithUnusualChars_SuccessfullyRemovedAndUnusualcharactersInvariant() {
+    public final void testAccentRemoval_MixedWithUnusualChars_SuccessfullyRemovedAndUnusualCharactersInvariant() {
         assertEquals("A-e'i.,o&u", this.getStringEncoder().removeAccents("Á-e'í.,ó&ú"));
     }
 
@@ -131,12 +131,12 @@ public class MatchRatingApproachEncoderTest extends StringEncoderAbstractTest<Ma
     }
 
     @Test
-    public final void testleftTorightThenRightToLeft_ALEXANDER_ALEXANDRA_Returns4() {
+    public final void testLeftToRightThenRightToLeft_ALEXANDER_ALEXANDRA_Returns4() {
         assertEquals(4, this.getStringEncoder().leftToRightThenRightToLeftProcessing("ALEXANDER", "ALEXANDRA"));
     }
 
     @Test
-    public final void testleftTorightThenRightToLeft_EINSTEIN_MICHAELA_Returns0() {
+    public final void testLeftToRightThenRightToLeft_EINSTEIN_MICHAELA_Returns0() {
         assertEquals(0, this.getStringEncoder().leftToRightThenRightToLeftProcessing("EINSTEIN", "MICHAELA"));
     }
 
@@ -196,52 +196,52 @@ public class MatchRatingApproachEncoderTest extends StringEncoderAbstractTest<Ma
     }
 
     @Test
-    public final void testcleanName_SuccessfullyClean() {
+    public final void testCleanName_SuccessfullyClean() {
         assertEquals("THISISATEST", this.getStringEncoder().cleanName("This-ís   a t.,es &t"));
     }
 
     @Test
-    public final void testisVowel_SingleVowel_ReturnsTrue() {
+    public final void testIsVowel_SingleVowel_ReturnsTrue() {
         assertTrue(this.getStringEncoder().isVowel(("I")));
     }
 
     @Test
-    public final void testisEncodeEquals_CornerCase_SecondNameNothing_ReturnsFalse() {
+    public final void testIsEncodeEquals_CornerCase_SecondNameNothing_ReturnsFalse() {
         assertFalse(this.getStringEncoder().isEncodeEquals("test", ""));
     }
 
     @Test
-    public final void testisEncodeEquals_CornerCase_FirstNameNothing_ReturnsFalse() {
+    public final void testIsEncodeEquals_CornerCase_FirstNameNothing_ReturnsFalse() {
         assertFalse(this.getStringEncoder().isEncodeEquals("", "test"));
     }
 
     @Test
-    public final void testisEncodeEquals_CornerCase_SecondNameJustSpace_ReturnsFalse() {
+    public final void testIsEncodeEquals_CornerCase_SecondNameJustSpace_ReturnsFalse() {
         assertFalse(this.getStringEncoder().isEncodeEquals("test", " "));
     }
 
     @Test
-    public final void testisEncodeEquals_CornerCase_FirstNameJustSpace_ReturnsFalse() {
+    public final void testIsEncodeEquals_CornerCase_FirstNameJustSpace_ReturnsFalse() {
         assertFalse(this.getStringEncoder().isEncodeEquals(" ", "test"));
     }
 
     @Test
-    public final void testisEncodeEquals_CornerCase_SecondNameNull_ReturnsFalse() {
+    public final void testIsEncodeEquals_CornerCase_SecondNameNull_ReturnsFalse() {
         assertFalse(this.getStringEncoder().isEncodeEquals("test", null));
     }
 
     @Test
-    public final void testisEncodeEquals_CornerCase_FirstNameNull_ReturnsFalse() {
+    public final void testIsEncodeEquals_CornerCase_FirstNameNull_ReturnsFalse() {
         assertFalse(this.getStringEncoder().isEncodeEquals(null, "test"));
     }
 
     @Test
-    public final void testisEncodeEquals_CornerCase_FirstNameJust1Letter_ReturnsFalse() {
+    public final void testIsEncodeEquals_CornerCase_FirstNameJust1Letter_ReturnsFalse() {
         assertFalse(this.getStringEncoder().isEncodeEquals("t", "test"));
     }
 
     @Test
-    public final void testisEncodeEqualsSecondNameJust1Letter_ReturnsFalse() {
+    public final void testIsEncodeEqualsSecondNameJust1Letter_ReturnsFalse() {
         assertFalse(this.getStringEncoder().isEncodeEquals("test", "t"));
     }
 

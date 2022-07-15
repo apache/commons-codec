@@ -353,7 +353,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
      * </p>
      *
      * @param input
-     *            the input string to cleanup
+     *            the input string to clean up
      * @return a cleaned up string
      */
     private String cleanup(final String input) {

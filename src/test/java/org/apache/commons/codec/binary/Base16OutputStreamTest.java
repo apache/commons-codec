@@ -63,7 +63,7 @@ public class Base16OutputStreamTest {
         decoded = new byte[]{(byte) 0x41};
         testByChunk(encoded, decoded);
 
-        // test random data of sizes 0 thru 150
+        // test random data of sizes 0 through 150
         final BaseNCodec codec = new Base16(true);
         for (int i = 0; i <= 150; i++) {
             final byte[][] randomData = BaseNTestData.randomData(codec, i);
@@ -90,7 +90,7 @@ public class Base16OutputStreamTest {
         decoded = new byte[]{(byte) 0x41};
         testByteByByte(encoded, decoded);
 
-        // test random data of sizes 0 thru 150
+        // test random data of sizes 0 through 150
         final BaseNCodec codec = new Base16(true);
         for (int i = 0; i <= 150; i++) {
             final byte[][] randomData = BaseNTestData.randomData(codec, i);
@@ -137,7 +137,7 @@ public class Base16OutputStreamTest {
             assertArrayEquals(encoded, output, "Streaming chunked base16 encode");
         }
 
-        // Now let's try decode.
+        // Now let's try to decode.
         try (final ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
                 final OutputStream out = new Base16OutputStream(byteOut, false, lowerCase)) {
             out.write(encoded);
@@ -195,7 +195,7 @@ public class Base16OutputStreamTest {
             assertArrayEquals(encoded, output, "Streaming byte-by-byte base16 encode");
         }
 
-        // Now let's try decode.
+        // Now let's try to decode.
         try (final ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
                 final OutputStream out = new Base16OutputStream(byteOut, false, lowerCase)) {
             for (final byte element : encoded) {
@@ -205,7 +205,7 @@ public class Base16OutputStreamTest {
             assertArrayEquals(decoded, output, "Streaming byte-by-byte base16 decode");
         }
 
-        // Now let's try decode with tonnes of flushes.
+        // Now let's try to decode with tonnes of flushes.
         try (final ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
                 final OutputStream out = new Base16OutputStream(byteOut, false, lowerCase)) {
             for (final byte element : encoded) {

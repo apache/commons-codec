@@ -38,7 +38,7 @@ public class CharSequenceUtils {
      * @param cs
      *            the {@code CharSequence} to be processed
      * @param ignoreCase
-     *            whether or not to be case insensitive
+     *            whether or not to be case-insensitive
      * @param thisStart
      *            the index to start on the {@code cs} CharSequence
      * @param substring

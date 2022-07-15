@@ -455,7 +455,7 @@ public class MetaphoneTest extends StringEncoderAbstractTest<Metaphone> {
 
     @Test
     public void testExceedLength() {
-        // should be AKSKS, but istruncated by Max Code Length
+        // should be AKSKS, but is truncated by Max Code Length
         assertEquals( "AKSK", this.getStringEncoder().metaphone("AXEAXE") );
     }
 

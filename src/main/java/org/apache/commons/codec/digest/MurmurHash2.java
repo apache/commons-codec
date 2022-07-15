@@ -29,7 +29,7 @@ import org.apache.commons.codec.binary.StringUtils;
  * making it unsuitable for cryptographic purposes.</p>
  *
  * <p>This contains a Java port of the 32-bit hash function {@code MurmurHash2}
- * and the 64-bit hash function {@code MurmurHash64A} from Austin Applyby's
+ * and the 64-bit hash function {@code MurmurHash64A} from Austin Appleby's
  * original {@code c++} code in SMHasher.</p>
  *
  * <p>This is a re-implementation of the original C code plus some additional
@@ -275,7 +275,7 @@ public final class MurmurHash2 {
      * int hash = MurmurHash2.hash64(bytes, bytes.length, seed);
      * </pre>
      *
-     * @param text The The input string
+     * @param text The input string
      * @param from The starting index
      * @param length The length of the substring
      * @return The 64-bit hash
