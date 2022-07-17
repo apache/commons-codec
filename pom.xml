@@ -283,6 +283,7 @@ limitations under the License.
     <commons.encoding>UTF-8</commons.encoding>
     <checkstyle.header.file>${basedir}/src/conf/checkstyle-header.txt</checkstyle.header.file>
     <checkstyle.config.file>${basedir}/src/conf/checkstyle.xml</checkstyle.config.file>
+    <commons.rat.version>0.14</commons.rat.version>
     <commons.checkstyle-plugin.version>3.1.2</commons.checkstyle-plugin.version>
     <commons.checkstyle.version>9.3</commons.checkstyle.version>
     <commons.japicmp.version>0.15.7</commons.japicmp.version>
@@ -291,6 +292,7 @@ limitations under the License.
     <commons.surefire-report.version>3.0.0-M7</commons.surefire-report.version>
     <commons.animal-sniffer.version>1.21</commons.animal-sniffer.version>
     <commons.pmd.version>3.17.0</commons.pmd.version>
+    <commons.pmd-impl.version>6.47.0</commons.pmd-impl.version>
     <japicmp.skip>false</japicmp.skip>
     <jacoco.skip>false</jacoco.skip>
     <clirr.skip>true</clirr.skip>
@@ -346,6 +348,7 @@ limitations under the License.
         <artifactId>apache-rat-plugin</artifactId>
         <configuration>
           <excludes>
+            <exclude>src/test/resources/org/apache/commons/codec/bla.tar</exclude>
             <exclude>src/test/resources/org/apache/commons/codec/bla.tar.xz</exclude>
             <exclude>src/test/resources/org/apache/commons/codec/empty.bin</exclude>
             <exclude>src/test/resources/org/apache/commons/codec/small.bin</exclude>
@@ -420,6 +423,7 @@ limitations under the License.
         <artifactId>apache-rat-plugin</artifactId>
         <configuration>
           <excludes>
+            <exclude>src/test/resources/org/apache/commons/codec/bla.tar</exclude>
             <exclude>src/test/resources/org/apache/commons/codec/bla.tar.xz</exclude>
             <exclude>src/test/resources/org/apache/commons/codec/empty.bin</exclude>
             <exclude>src/test/resources/org/apache/commons/codec/small.bin</exclude>
@@ -446,7 +450,7 @@ limitations under the License.
           <targetJdk>${maven.compiler.target}</targetJdk>
           <linkXref>true</linkXref>
           <rulesets>
-            <ruleset>${basedir}/pmd.xml</ruleset>
+            <ruleset>${basedir}/src/conf/pmd.xml</ruleset>
           </rulesets>
         </configuration>
       </plugin>
