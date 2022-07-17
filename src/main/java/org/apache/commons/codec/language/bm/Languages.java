@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.apache.commons.codec.Resources;
 
@@ -125,13 +126,7 @@ public class Languages {
                 return this;
             }
             final SomeLanguages someLanguages = (SomeLanguages) other;
-            final Set<String> set = new HashSet<>(Math.min(languages.size(), someLanguages.languages.size()));
-            for (final String lang : languages) {
-                if (someLanguages.languages.contains(lang)) {
-                    set.add(lang);
-                }
-            }
-            return from(set);
+            return from(languages.stream().filter(lang -> someLanguages.languages.contains(lang)).collect(Collectors.toSet()));
         }
 
         @Override

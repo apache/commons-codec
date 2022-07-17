@@ -89,9 +89,7 @@ public class PhoneticEngine {
          * @param str   the characters to append to the phonemes
          */
         public void append(final CharSequence str) {
-            for (final Rule.Phoneme ph : this.phonemes) {
-                ph.append(str);
-            }
+            phonemes.forEach(ph -> ph.append(str));
         }
 
         /**

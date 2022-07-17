@@ -205,7 +205,7 @@ public class Lang {
         final String text = input.toLowerCase(Locale.ENGLISH);
 
         final Set<String> langs = new HashSet<>(this.languages.getLanguages());
-        for (final LangRule rule : this.rules) {
+        this.rules.forEach(rule -> {
             if (rule.matches(text)) {
                 if (rule.acceptOnMatch) {
                     langs.retainAll(rule.languages);
@@ -213,7 +213,7 @@ public class Lang {
                     langs.removeAll(rule.languages);
                 }
             }
-        }
+        });
 
         final Languages.LanguageSet ls = Languages.LanguageSet.from(langs);
         return ls.equals(Languages.NO_LANGUAGES) ? Languages.ANY_LANGUAGE : ls;
