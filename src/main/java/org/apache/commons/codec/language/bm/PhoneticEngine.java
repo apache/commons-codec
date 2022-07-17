@@ -140,16 +140,7 @@ public class PhoneticEngine {
          * @return  the stringified phoneme set
          */
         public String makeString() {
-            final StringBuilder sb = new StringBuilder();
-
-            for (final Rule.Phoneme ph : this.phonemes) {
-                if (sb.length() > 0) {
-                    sb.append("|");
-                }
-                sb.append(ph.getPhonemeText());
-            }
-
-            return sb.toString();
+            return phonemes.stream().map(Rule.Phoneme::getPhonemeText).collect(Collectors.joining("|"));
         }
     }
 
@@ -314,22 +305,20 @@ public class PhoneticEngine {
      * @return the resulting phonemes
      */
     private PhonemeBuilder applyFinalRules(final PhonemeBuilder phonemeBuilder,
-                                           final Map<String, List<Rule>> finalRules) {
+            final Map<String, List<Rule>> finalRules) {
         Objects.requireNonNull(finalRules, "finalRules");
         if (finalRules.isEmpty()) {
             return phonemeBuilder;
         }
 
-        final Map<Rule.Phoneme, Rule.Phoneme> phonemes =
-            new TreeMap<>(Rule.Phoneme.COMPARATOR);
+        final Map<Rule.Phoneme, Rule.Phoneme> phonemes = new TreeMap<>(Rule.Phoneme.COMPARATOR);
 
-        for (final Rule.Phoneme phoneme : phonemeBuilder.getPhonemes()) {
+        phonemeBuilder.getPhonemes().forEach(phoneme -> {
             PhonemeBuilder subBuilder = PhonemeBuilder.empty(phoneme.getLanguages());
             final String phonemeText = phoneme.getPhonemeText().toString();
 
             for (int i = 0; i < phonemeText.length();) {
-                final RulesApplication rulesApplication =
-                        new RulesApplication(finalRules, phonemeText, subBuilder, i, maxPhonemes).invoke();
+                final RulesApplication rulesApplication = new RulesApplication(finalRules, phonemeText, subBuilder, i, maxPhonemes).invoke();
                 final boolean found = rulesApplication.isFound();
                 subBuilder = rulesApplication.getPhonemeBuilder();
 
@@ -344,7 +333,7 @@ public class PhoneticEngine {
             // the phonemes map orders the phonemes only based on their text, but ignores the language set
             // when adding new phonemes, check for equal phonemes and merge their language set, otherwise
             // phonemes with the same text but different language set get lost
-            for (final Rule.Phoneme newPhoneme : subBuilder.getPhonemes()) {
+            subBuilder.getPhonemes().forEach(newPhoneme -> {
                 if (phonemes.containsKey(newPhoneme)) {
                     final Rule.Phoneme oldPhoneme = phonemes.remove(newPhoneme);
                     final Rule.Phoneme mergedPhoneme = oldPhoneme.mergeWithLanguage(newPhoneme.getLanguages());
@@ -352,8 +341,8 @@ public class PhoneticEngine {
                 } else {
                     phonemes.put(newPhoneme, newPhoneme);
                 }
-            }
-        }
+            });
+        });
 
         return new PhonemeBuilder(phonemes.keySet());
     }
@@ -414,11 +403,10 @@ public class PhoneticEngine {
         // special-case handling of word prefixes based upon the name type
         switch (this.nameType) {
         case SEPHARDIC:
-            for (final String aWord : words) {
+            words.forEach(aWord -> {
                 final String[] parts = aWord.split("'");
-                final String lastPart = parts[parts.length - 1];
-                words2.add(lastPart);
-            }
+                words2.add(parts[parts.length - 1]);
+            });
             words2.removeAll(NAME_PREFIXES.get(this.nameType));
             break;
         case ASHKENAZI:
@@ -441,9 +429,7 @@ public class PhoneticEngine {
         } else {
             // encode each word in a multi-word name separately (normally used for approx matches)
             final StringBuilder result = new StringBuilder();
-            for (final String word : words2) {
-                result.append("-").append(encode(word));
-            }
+            words2.forEach(word -> result.append("-").append(encode(word)));
             // return the result without the leading "-"
             return result.substring(1);
         }

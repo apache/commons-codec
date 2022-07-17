@@ -229,10 +229,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
         }
 
         // sort RULES by pattern length in descending order
-        for (final Map.Entry<Character, List<Rule>> rule : RULES.entrySet()) {
-            final List<Rule> ruleList = rule.getValue();
-            ruleList.sort((rule1, rule2) -> rule2.getPatternLength() - rule1.getPatternLength());
-        }
+        RULES.forEach((k, v) -> v.sort((rule1, rule2) -> rule2.getPatternLength() - rule1.getPatternLength()));
     }
 
     private static void parseRules(final Scanner scanner, final String location,

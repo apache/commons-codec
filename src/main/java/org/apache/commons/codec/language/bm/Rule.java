@@ -214,13 +214,13 @@ public class Rule {
                 final Map<String, Map<String, List<Rule>>> rs = new HashMap<>();
 
                 final Languages ls = Languages.getInstance(s);
-                for (final String l : ls.getLanguages()) {
+                ls.getLanguages().forEach(l -> {
                     try (final Scanner scanner = createScanner(s, rt, l)) {
                         rs.put(l, parseRules(scanner, createResourceName(s, rt, l)));
                     } catch (final IllegalStateException e) {
                         throw new IllegalStateException("Problem processing " + createResourceName(s, rt, l), e);
                     }
-                }
+                });
                 if (!rt.equals(RuleType.RULES)) {
                     try (final Scanner scanner = createScanner(s, rt, "common")) {
                         rs.put("common", parseRules(scanner, createResourceName(s, rt, "common")));
@@ -288,9 +288,7 @@ public class Rule {
                                          final Languages.LanguageSet langs) {
         final Map<String, List<Rule>> ruleMap = getInstanceMap(nameType, rt, langs);
         final List<Rule> allRules = new ArrayList<>();
-        for (final List<Rule> rules : ruleMap.values()) {
-            allRules.addAll(rules);
-        }
+        ruleMap.values().forEach(rules -> allRules.addAll(rules));
         return allRules;
     }
 
