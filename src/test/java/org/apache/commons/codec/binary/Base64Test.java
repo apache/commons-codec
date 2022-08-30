@@ -1112,7 +1112,7 @@ public class Base64Test {
     }
 
     /**
-     * Tests url-safe Base64 against random data, sizes 0 to 150.
+     * Tests URL-safe Base64 against random data, sizes 0 to 150.
      */
     @Test
     public void testUrlSafe() {
