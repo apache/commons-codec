@@ -45,7 +45,7 @@ public class Sha2Crypt {
     private static final int ROUNDS_DEFAULT = 5000;
 
     /** Maximum number of rounds. */
-    private static final int ROUNDS_MAX = 999999999;
+    private static final int ROUNDS_MAX = 999_999_999;
 
     /** Minimum number of rounds. */
     private static final int ROUNDS_MIN = 1000;

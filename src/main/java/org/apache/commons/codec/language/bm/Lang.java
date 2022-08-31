@@ -93,13 +93,13 @@ public class Lang {
         }
     }
 
-    private static final Map<NameType, Lang> Langs = new EnumMap<>(NameType.class);
+    private static final Map<NameType, Lang> LANGS = new EnumMap<>(NameType.class);
 
     private static final String LANGUAGE_RULES_RN = "org/apache/commons/codec/language/bm/%s_lang.txt";
 
     static {
         for (final NameType s : NameType.values()) {
-            Langs.put(s, loadFromResource(String.format(LANGUAGE_RULES_RN, s.getName()), Languages.getInstance(s)));
+            LANGS.put(s, loadFromResource(String.format(LANGUAGE_RULES_RN, s.getName()), Languages.getInstance(s)));
         }
     }
 
@@ -111,7 +111,7 @@ public class Lang {
      * @return a Lang encapsulating the language guessing rules for that name type
      */
     public static Lang instance(final NameType nameType) {
-        return Langs.get(nameType);
+        return LANGS.get(nameType);
     }
 
     /**

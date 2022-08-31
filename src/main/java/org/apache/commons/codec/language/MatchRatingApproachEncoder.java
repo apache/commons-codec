@@ -335,7 +335,7 @@ public class MatchRatingApproachEncoder implements StringEncoder {
     }
 
     /**
-     * Removes accented letters and replaces with non-accented ascii equivalent Case is preserved.
+     * Removes accented letters and replaces with non-accented ASCII equivalent Case is preserved.
      * http://www.codecodex.com/wiki/Remove_accent_from_letters_%28ex_.%C3%A9_to_e%29
      *
      * @param accentedWord

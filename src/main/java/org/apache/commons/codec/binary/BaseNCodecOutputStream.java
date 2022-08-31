@@ -50,12 +50,12 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
     /**
      * TODO should this be protected?
      *
-     * @param output the underlying output or null.
+     * @param outputStream the underlying output or null.
      * @param basedCodec a BaseNCodec.
      * @param doEncode true to encode, false to decode, TODO should be an enum?
      */
-    public BaseNCodecOutputStream(final OutputStream output, final BaseNCodec basedCodec, final boolean doEncode) {
-        super(output);
+    public BaseNCodecOutputStream(final OutputStream outputStream, final BaseNCodec basedCodec, final boolean doEncode) {
+        super(outputStream);
         this.baseNCodec = basedCodec;
         this.doEncode = doEncode;
     }

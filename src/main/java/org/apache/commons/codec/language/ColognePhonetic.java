@@ -215,7 +215,7 @@ public class ColognePhonetic implements StringEncoder {
             this.length = 0;
         }
 
-        protected abstract char[] copyData(int start, final int length);
+        protected abstract char[] copyData(int start, int length);
 
         public int length() {
             return length;

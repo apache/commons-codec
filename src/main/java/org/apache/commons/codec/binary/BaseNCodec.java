@@ -104,9 +104,6 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
          */
         int modulus;
 
-        Context() {
-        }
-
         /**
          * Returns a String useful for debugging (especially within a debugger.)
          *

@@ -65,31 +65,31 @@ public class Base64OutputStream extends BaseNCodecOutputStream {
     /**
      * Creates a Base64OutputStream such that all data written is Base64-encoded to the original provided OutputStream.
      *
-     * @param out
+     * @param outputStream
      *            OutputStream to wrap.
      */
-    public Base64OutputStream(final OutputStream out) {
-        this(out, true);
+    public Base64OutputStream(final OutputStream outputStream) {
+        this(outputStream, true);
     }
 
     /**
      * Creates a Base64OutputStream such that all data written is either Base64-encoded or Base64-decoded to the
      * original provided OutputStream.
      *
-     * @param out
+     * @param outputStream
      *            OutputStream to wrap.
      * @param doEncode
      *            true if we should encode all data written to us, false if we should decode.
      */
-    public Base64OutputStream(final OutputStream out, final boolean doEncode) {
-        super(out,new Base64(false), doEncode);
+    public Base64OutputStream(final OutputStream outputStream, final boolean doEncode) {
+        super(outputStream,new Base64(false), doEncode);
     }
 
     /**
      * Creates a Base64OutputStream such that all data written is either Base64-encoded or Base64-decoded to the
      * original provided OutputStream.
      *
-     * @param out
+     * @param outputStream
      *            OutputStream to wrap.
      * @param doEncode
      *            true if we should encode all data written to us, false if we should decode.
@@ -101,16 +101,15 @@ public class Base64OutputStream extends BaseNCodecOutputStream {
      *            If doEncode is true, each line of encoded data will be terminated with this byte sequence (e.g. \r\n).
      *            If lineLength &lt;= 0, the lineSeparator is not used. If doEncode is false lineSeparator is ignored.
      */
-    public Base64OutputStream(final OutputStream out, final boolean doEncode,
-                              final int lineLength, final byte[] lineSeparator) {
-        super(out, new Base64(lineLength, lineSeparator), doEncode);
+    public Base64OutputStream(final OutputStream outputStream, final boolean doEncode, final int lineLength, final byte[] lineSeparator) {
+        super(outputStream, new Base64(lineLength, lineSeparator), doEncode);
     }
 
     /**
      * Creates a Base64OutputStream such that all data written is either Base64-encoded or Base64-decoded to the
      * original provided OutputStream.
      *
-     * @param out
+     * @param outputStream
      *            OutputStream to wrap.
      * @param doEncode
      *            true if we should encode all data written to us, false if we should decode.
@@ -124,8 +123,8 @@ public class Base64OutputStream extends BaseNCodecOutputStream {
      * @param decodingPolicy The decoding policy.
      * @since 1.15
      */
-    public Base64OutputStream(final OutputStream out, final boolean doEncode,
-                              final int lineLength, final byte[] lineSeparator, final CodecPolicy decodingPolicy) {
-        super(out, new Base64(lineLength, lineSeparator, false, decodingPolicy), doEncode);
+    public Base64OutputStream(final OutputStream outputStream, final boolean doEncode, final int lineLength, final byte[] lineSeparator,
+        final CodecPolicy decodingPolicy) {
+        super(outputStream, new Base64(lineLength, lineSeparator, false, decodingPolicy), doEncode);
     }
 }

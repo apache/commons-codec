@@ -35,47 +35,47 @@ public class Base16InputStream extends BaseNCodecInputStream {
     /**
      * Creates a Base16InputStream such that all data read is Base16-decoded from the original provided InputStream.
      *
-     * @param in InputStream to wrap.
+     * @param inputStream InputStream to wrap.
      */
-    public Base16InputStream(final InputStream in) {
-        this(in, false);
+    public Base16InputStream(final InputStream inputStream) {
+        this(inputStream, false);
     }
 
     /**
      * Creates a Base16InputStream such that all data read is either Base16-encoded or Base16-decoded from the original
      * provided InputStream.
      *
-     * @param in InputStream to wrap.
+     * @param inputStream InputStream to wrap.
      * @param doEncode true if we should encode all data read from us, false if we should decode.
      */
-    public Base16InputStream(final InputStream in, final boolean doEncode) {
-        this(in, doEncode, false);
+    public Base16InputStream(final InputStream inputStream, final boolean doEncode) {
+        this(inputStream, doEncode, false);
     }
 
     /**
      * Creates a Base16InputStream such that all data read is either Base16-encoded or Base16-decoded from the original
      * provided InputStream.
      *
-     * @param in InputStream to wrap.
+     * @param inputStream InputStream to wrap.
      * @param doEncode true if we should encode all data read from us, false if we should decode.
      * @param lowerCase if {@code true} then use a lower-case Base16 alphabet.
      */
-    public Base16InputStream(final InputStream in, final boolean doEncode,
+    public Base16InputStream(final InputStream inputStream, final boolean doEncode,
             final boolean lowerCase) {
-        this(in, doEncode, lowerCase, CodecPolicy.LENIENT);
+        this(inputStream, doEncode, lowerCase, CodecPolicy.LENIENT);
     }
 
     /**
      * Creates a Base16InputStream such that all data read is either Base16-encoded or Base16-decoded from the original
      * provided InputStream.
      *
-     * @param in InputStream to wrap.
+     * @param inputStream InputStream to wrap.
      * @param doEncode true if we should encode all data read from us, false if we should decode.
      * @param lowerCase if {@code true} then use a lower-case Base16 alphabet.
      * @param decodingPolicy Decoding policy.
      */
-    public Base16InputStream(final InputStream in, final boolean doEncode,
+    public Base16InputStream(final InputStream inputStream, final boolean doEncode,
             final boolean lowerCase, final CodecPolicy decodingPolicy) {
-        super(in, new Base16(lowerCase, decodingPolicy), doEncode);
+        super(inputStream, new Base16(lowerCase, decodingPolicy), doEncode);
     }
 }

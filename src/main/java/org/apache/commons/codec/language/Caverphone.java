@@ -40,12 +40,6 @@ public class Caverphone implements StringEncoder {
     final private Caverphone2 encoder = new Caverphone2();
 
     /**
-     * Creates an instance of the Caverphone encoder
-     */
-    public Caverphone() {
-    }
-
-    /**
      * Encodes the given String into a Caverphone value.
      *
      * @param source

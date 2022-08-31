@@ -356,7 +356,7 @@ public class Base32 extends BaseNCodec {
      * octets, using {@link org.apache.commons.codec.binary.BaseNCodec.Context#pos Context#pos} as the buffer position
      * </p>
      *
-     * @param input byte[] array of ascii data to Base32 decode.
+     * @param input byte[] array of ASCII data to Base32 decode.
      * @param inPos Position to start reading data from.
      * @param inAvail Amount of bytes available from input for decoding.
      * @param context the context to be used

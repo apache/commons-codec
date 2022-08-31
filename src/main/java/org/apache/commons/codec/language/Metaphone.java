@@ -72,12 +72,6 @@ public class Metaphone implements StringEncoder {
     private int maxCodeLen = 4;
 
     /**
-     * Creates an instance of the Metaphone encoder
-     */
-    public Metaphone() {
-    }
-
-    /**
      * Find the metaphone value of a String. This is similar to the
      * soundex algorithm, but better at finding similar sounding words.
      * All input is converted to upper case.

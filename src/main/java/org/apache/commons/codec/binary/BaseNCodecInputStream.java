@@ -46,12 +46,12 @@ public class BaseNCodecInputStream extends FilterInputStream {
     /**
      * Create an instance.
      *
-     * @param input the input stream
+     * @param inputStream the input stream
      * @param baseNCodec the codec
      * @param doEncode set to true to perform encoding, else decoding
      */
-    protected BaseNCodecInputStream(final InputStream input, final BaseNCodec baseNCodec, final boolean doEncode) {
-        super(input);
+    protected BaseNCodecInputStream(final InputStream inputStream, final BaseNCodec baseNCodec, final boolean doEncode) {
+        super(inputStream);
         this.doEncode = doEncode;
         this.baseNCodec = baseNCodec;
         this.buf = new byte[doEncode ? 4096 : 8192];

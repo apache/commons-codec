@@ -627,8 +627,8 @@ public class Base64 extends BaseNCodec {
      * http://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/
      * </p>
      *
-     * @param in
-     *            byte[] array of ascii data to base64 decode.
+     * @param input
+     *            byte[] array of ASCII data to base64 decode.
      * @param inPos
      *            Position to start reading data from.
      * @param inAvail
@@ -637,7 +637,7 @@ public class Base64 extends BaseNCodec {
      *            the context to be used
      */
     @Override
-    void decode(final byte[] in, int inPos, final int inAvail, final Context context) {
+    void decode(final byte[] input, int inPos, final int inAvail, final Context context) {
         if (context.eof) {
             return;
         }
@@ -646,7 +646,7 @@ public class Base64 extends BaseNCodec {
         }
         for (int i = 0; i < inAvail; i++) {
             final byte[] buffer = ensureBufferSize(decodeSize, context);
-            final byte b = in[inPos++];
+            final byte b = input[inPos++];
             if (b == pad) {
                 // We're done.
                 context.eof = true;

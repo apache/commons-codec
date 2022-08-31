@@ -59,12 +59,6 @@ public class DoubleMetaphone implements StringEncoder {
     private int maxCodeLen = 4;
 
     /**
-     * Creates an instance of this DoubleMetaphone encoder
-     */
-    public DoubleMetaphone() {
-    }
-
-    /**
      * Encode a value with Double Metaphone.
      *
      * @param value String to encode

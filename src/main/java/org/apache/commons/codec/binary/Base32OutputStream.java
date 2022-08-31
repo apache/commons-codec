@@ -61,31 +61,31 @@ public class Base32OutputStream extends BaseNCodecOutputStream {
     /**
      * Creates a Base32OutputStream such that all data written is Base32-encoded to the original provided OutputStream.
      *
-     * @param out
+     * @param outputStream
      *            OutputStream to wrap.
      */
-    public Base32OutputStream(final OutputStream out) {
-        this(out, true);
+    public Base32OutputStream(final OutputStream outputStream) {
+        this(outputStream, true);
     }
 
     /**
      * Creates a Base32OutputStream such that all data written is either Base32-encoded or Base32-decoded to the
      * original provided OutputStream.
      *
-     * @param out
+     * @param outputStream
      *            OutputStream to wrap.
      * @param doEncode
      *            true if we should encode all data written to us, false if we should decode.
      */
-    public Base32OutputStream(final OutputStream out, final boolean doEncode) {
-        super(out, new Base32(false), doEncode);
+    public Base32OutputStream(final OutputStream outputStream, final boolean doEncode) {
+        super(outputStream, new Base32(false), doEncode);
     }
 
     /**
      * Creates a Base32OutputStream such that all data written is either Base32-encoded or Base32-decoded to the
      * original provided OutputStream.
      *
-     * @param output
+     * @param outputStream
      *            OutputStream to wrap.
      * @param doEncode
      *            true if we should encode all data written to us, false if we should decode.
@@ -97,16 +97,15 @@ public class Base32OutputStream extends BaseNCodecOutputStream {
      *            If doEncode is true, each line of encoded data will be terminated with this byte sequence (e.g. \r\n).
      *            If lineLength &lt;= 0, the lineSeparator is not used. If doEncode is false lineSeparator is ignored.
      */
-    public Base32OutputStream(final OutputStream output, final boolean doEncode,
-                              final int lineLength, final byte[] lineSeparator) {
-        super(output, new Base32(lineLength, lineSeparator), doEncode);
+    public Base32OutputStream(final OutputStream outputStream, final boolean doEncode, final int lineLength, final byte[] lineSeparator) {
+        super(outputStream, new Base32(lineLength, lineSeparator), doEncode);
     }
 
     /**
      * Creates a Base32OutputStream such that all data written is either Base32-encoded or Base32-decoded to the
      * original provided OutputStream.
      *
-     * @param output
+     * @param outputStream
      *            OutputStream to wrap.
      * @param doEncode
      *            true if we should encode all data written to us, false if we should decode.
@@ -120,9 +119,9 @@ public class Base32OutputStream extends BaseNCodecOutputStream {
      * @param decodingPolicy The decoding policy.
      * @since 1.15
      */
-    public Base32OutputStream(final OutputStream output, final boolean doEncode,
-                              final int lineLength, final byte[] lineSeparator, final CodecPolicy decodingPolicy) {
-        super(output, new Base32(lineLength, lineSeparator, false, BaseNCodec.PAD_DEFAULT, decodingPolicy), doEncode);
+    public Base32OutputStream(final OutputStream outputStream, final boolean doEncode, final int lineLength, final byte[] lineSeparator,
+        final CodecPolicy decodingPolicy) {
+        super(outputStream, new Base32(lineLength, lineSeparator, false, BaseNCodec.PAD_DEFAULT, decodingPolicy), doEncode);
     }
 
 }

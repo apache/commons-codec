@@ -57,31 +57,31 @@ public class Base32InputStream extends BaseNCodecInputStream {
     /**
      * Creates a Base32InputStream such that all data read is Base32-decoded from the original provided InputStream.
      *
-     * @param in
+     * @param inputStream
      *            InputStream to wrap.
      */
-    public Base32InputStream(final InputStream in) {
-        this(in, false);
+    public Base32InputStream(final InputStream inputStream) {
+        this(inputStream, false);
     }
 
     /**
      * Creates a Base32InputStream such that all data read is either Base32-encoded or Base32-decoded from the original
      * provided InputStream.
      *
-     * @param in
+     * @param inputStream
      *            InputStream to wrap.
      * @param doEncode
      *            true if we should encode all data read from us, false if we should decode.
      */
-    public Base32InputStream(final InputStream in, final boolean doEncode) {
-        super(in, new Base32(false), doEncode);
+    public Base32InputStream(final InputStream inputStream, final boolean doEncode) {
+        super(inputStream, new Base32(false), doEncode);
     }
 
     /**
      * Creates a Base32InputStream such that all data read is either Base32-encoded or Base32-decoded from the original
      * provided InputStream.
      *
-     * @param input
+     * @param inputStream
      *            InputStream to wrap.
      * @param doEncode
      *            true if we should encode all data read from us, false if we should decode.
@@ -93,16 +93,15 @@ public class Base32InputStream extends BaseNCodecInputStream {
      *            If doEncode is true, each line of encoded data will be terminated with this byte sequence (e.g. \r\n).
      *            If lineLength &lt;= 0, the lineSeparator is not used. If doEncode is false lineSeparator is ignored.
      */
-    public Base32InputStream(final InputStream input, final boolean doEncode,
-                             final int lineLength, final byte[] lineSeparator) {
-        super(input, new Base32(lineLength, lineSeparator), doEncode);
+    public Base32InputStream(final InputStream inputStream, final boolean doEncode, final int lineLength, final byte[] lineSeparator) {
+        super(inputStream, new Base32(lineLength, lineSeparator), doEncode);
     }
 
     /**
      * Creates a Base32InputStream such that all data read is either Base32-encoded or Base32-decoded from the original
      * provided InputStream.
      *
-     * @param input
+     * @param inputStream
      *            InputStream to wrap.
      * @param doEncode
      *            true if we should encode all data read from us, false if we should decode.
@@ -117,9 +116,9 @@ public class Base32InputStream extends BaseNCodecInputStream {
      *            The decoding policy.
      * @since 1.15
      */
-    public Base32InputStream(final InputStream input, final boolean doEncode,
-                             final int lineLength, final byte[] lineSeparator, final CodecPolicy decodingPolicy) {
-        super(input, new Base32(lineLength, lineSeparator, false, BaseNCodec.PAD_DEFAULT, decodingPolicy), doEncode);
+    public Base32InputStream(final InputStream inputStream, final boolean doEncode, final int lineLength, final byte[] lineSeparator,
+        final CodecPolicy decodingPolicy) {
+        super(inputStream, new Base32(lineLength, lineSeparator, false, BaseNCodec.PAD_DEFAULT, decodingPolicy), doEncode);
     }
 
 }

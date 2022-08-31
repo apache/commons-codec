@@ -82,19 +82,19 @@ public class BinaryCodec implements BinaryDecoder, BinaryEncoder {
         }
         final int asciiLength = ascii.length;
         // get length/8 times bytes with 3 bit shifts to the right of the length
-        final byte[] l_raw = new byte[asciiLength >> 3];
+        final byte[] raw = new byte[asciiLength >> 3];
         /*
          * We decr index jj by 8 as we go along to not recompute indices using multiplication every time inside the
          * loop.
          */
-        for (int ii = 0, jj = asciiLength - 1; ii < l_raw.length; ii++, jj -= 8) {
+        for (int ii = 0, jj = asciiLength - 1; ii < raw.length; ii++, jj -= 8) {
             for (int bits = 0; bits < BITS.length; ++bits) {
                 if (ascii[jj - bits] == '1') {
-                    l_raw[ii] |= BITS[bits];
+                    raw[ii] |= BITS[bits];
                 }
             }
         }
-        return l_raw;
+        return raw;
     }
 
     // ------------------------------------------------------------------------
@@ -115,19 +115,19 @@ public class BinaryCodec implements BinaryDecoder, BinaryEncoder {
         }
         final int asciiLength = ascii.length;
         // get length/8 times bytes with 3 bit shifts to the right of the length
-        final byte[] l_raw = new byte[asciiLength >> 3];
+        final byte[] raw = new byte[asciiLength >> 3];
         /*
          * We decr index jj by 8 as we go along to not recompute indices using multiplication every time inside the
          * loop.
          */
-        for (int ii = 0, jj = asciiLength - 1; ii < l_raw.length; ii++, jj -= 8) {
+        for (int ii = 0, jj = asciiLength - 1; ii < raw.length; ii++, jj -= 8) {
             for (int bits = 0; bits < BITS.length; ++bits) {
                 if (ascii[jj - bits] == '1') {
-                    l_raw[ii] |= BITS[bits];
+                    raw[ii] |= BITS[bits];
                 }
             }
         }
-        return l_raw;
+        return raw;
     }
 
     /**

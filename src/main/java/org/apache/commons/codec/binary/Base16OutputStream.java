@@ -35,47 +35,45 @@ public class Base16OutputStream extends BaseNCodecOutputStream {
     /**
      * Creates a Base16OutputStream such that all data written is Hex-encoded to the original provided OutputStream.
      *
-     * @param out OutputStream to wrap.
+     * @param outputStream OutputStream to wrap.
      */
-    public Base16OutputStream(final OutputStream out) {
-        this(out, true);
+    public Base16OutputStream(final OutputStream outputStream) {
+        this(outputStream, true);
     }
 
     /**
      * Creates a Base16OutputStream such that all data written is either Hex-encoded or Hex-decoded to the
      * original provided OutputStream.
      *
-     * @param out OutputStream to wrap.
+     * @param outputStream OutputStream to wrap.
      * @param doEncode true if we should encode all data written to us, false if we should decode.
      */
-    public Base16OutputStream(final OutputStream out, final boolean doEncode) {
-        this(out, doEncode, false);
+    public Base16OutputStream(final OutputStream outputStream, final boolean doEncode) {
+        this(outputStream, doEncode, false);
     }
 
     /**
      * Creates a Base16OutputStream such that all data written is either Hex-encoded or Hex-decoded to the
      * original provided OutputStream.
      *
-     * @param out OutputStream to wrap.
+     * @param outputStream OutputStream to wrap.
      * @param doEncode true if we should encode all data written to us, false if we should decode.
      * @param lowerCase if {@code true} then use a lower-case Base16 alphabet.
      */
-    public Base16OutputStream(final OutputStream out, final boolean doEncode,
-            final boolean lowerCase) {
-        this(out, doEncode, lowerCase, CodecPolicy.LENIENT);
+    public Base16OutputStream(final OutputStream outputStream, final boolean doEncode, final boolean lowerCase) {
+        this(outputStream, doEncode, lowerCase, CodecPolicy.LENIENT);
     }
 
     /**
      * Creates a Base16OutputStream such that all data written is either Hex-encoded or Hex-decoded to the
      * original provided OutputStream.
      *
-     * @param out OutputStream to wrap.
+     * @param outputStream OutputStream to wrap.
      * @param doEncode true if we should encode all data written to us, false if we should decode.
      * @param lowerCase if {@code true} then use a lower-case Base16 alphabet.
      * @param decodingPolicy Decoding policy.
      */
-    public Base16OutputStream(final OutputStream out, final boolean doEncode,
-            final boolean lowerCase, final CodecPolicy decodingPolicy) {
-        super(out, new Base16(lowerCase, decodingPolicy), doEncode);
+    public Base16OutputStream(final OutputStream outputStream, final boolean doEncode, final boolean lowerCase, final CodecPolicy decodingPolicy) {
+        super(outputStream, new Base16(lowerCase, decodingPolicy), doEncode);
     }
 }
