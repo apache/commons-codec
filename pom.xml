@@ -291,7 +291,7 @@ limitations under the License.
     <commons.javadoc.version>3.4.1</commons.javadoc.version>
     <commons.surefire-report.version>3.0.0-M7</commons.surefire-report.version>
     <commons.animal-sniffer.version>1.22</commons.animal-sniffer.version>
-    <commons.pmd.version>3.18.0</commons.pmd.version>
+    <commons.pmd.version>3.19.0</commons.pmd.version>
     <commons.pmd-impl.version>6.47.0</commons.pmd-impl.version>
     <japicmp.skip>false</japicmp.skip>
     <jacoco.skip>false</jacoco.skip>
