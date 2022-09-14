@@ -51,8 +51,7 @@ Apache Commons Codec
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/commons-codec/commons-codec/badge.svg?gav=true)](https://maven-badges.herokuapp.com/maven-central/commons-codec/commons-codec/?gav=true)
 [![Javadocs](https://javadoc.io/badge/commons-codec/commons-codec/1.15.svg)](https://javadoc.io/doc/commons-codec/commons-codec/1.15)
 [![CodeQL](https://github.com/apache/commons-codec/workflows/CodeQL/badge.svg)](https://github.com/apache/commons-codec/actions/workflows/codeql-analysis.yml?query=workflow%3ACodeQL)
-[![OpenSSF
-Scorecard](https://api.securityscorecards.dev/projects/github.com/apache/commons-codec/badge)](https://api.securityscorecards.dev/projects/github.com/apache/commons-codec)
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/apache/commons-codec/badge)](https://api.securityscorecards.dev/projects/github.com/apache/commons-codec)
 
 The Apache Commons Codec package contains simple encoder and decoders for
      various formats such as Base64 and Hexadecimal.  In addition to these
