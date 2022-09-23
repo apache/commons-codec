@@ -295,7 +295,6 @@ limitations under the License.
     <commons.pmd-impl.version>6.47.0</commons.pmd-impl.version>
     <japicmp.skip>false</japicmp.skip>
     <jacoco.skip>false</jacoco.skip>
-    <clirr.skip>true</clirr.skip>
 
     <!-- Commons Release Plugin -->
     <commons.bc.version>1.15</commons.bc.version>
