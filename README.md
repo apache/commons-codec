@@ -46,7 +46,7 @@
 Apache Commons Codec
 ===================
 
-[![Build Status](https://travis-ci.org/apache/commons-codec.svg)](https://travis-ci.org/apache/commons-codec)
+[![GitHub Actions Status](https://github.com/apache/commons-codec/workflows/Java%20CI/badge.svg)](https://github.com/apache/commons-codec/actions)
 [![Coverage Status](https://codecov.io/gh/apache/commons-codec/branch/master/graph/badge.svg)](https://app.codecov.io/gh/apache/commons-codec/branch/master)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/commons-codec/commons-codec/badge.svg?gav=true)](https://maven-badges.herokuapp.com/maven-central/commons-codec/commons-codec/?gav=true)
 [![Javadocs](https://javadoc.io/badge/commons-codec/commons-codec/1.15.svg)](https://javadoc.io/doc/commons-codec/commons-codec/1.15)
