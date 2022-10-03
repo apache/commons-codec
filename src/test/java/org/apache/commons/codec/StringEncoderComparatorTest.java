@@ -22,6 +22,7 @@ import java.util.List;
 
 import org.apache.commons.codec.language.DoubleMetaphone;
 import org.apache.commons.codec.language.Soundex;
+import org.apache.commons.lang3.ArrayUtils;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -52,7 +53,7 @@ public class StringEncoderComparatorTest {
 
         testList.sort(sCompare); // unchecked
 
-        final String[] resultArray = testList.toArray(new String[0]);
+        final String[] resultArray = testList.toArray(ArrayUtils.EMPTY_STRING_ARRAY);
 
         for (int i = 0; i < resultArray.length; i++) {
             assertEquals(controlArray[i], resultArray[i],
