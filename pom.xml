@@ -273,7 +273,7 @@ limitations under the License.
     <commons.surefire-report.version>3.0.0-M7</commons.surefire-report.version>
     <commons.animal-sniffer.version>1.22</commons.animal-sniffer.version>
     <commons.pmd.version>3.19.0</commons.pmd.version>
-    <commons.pmd-impl.version>6.47.0</commons.pmd-impl.version>
+    <commons.pmd-impl.version>6.51.0</commons.pmd-impl.version>
     <japicmp.skip>false</japicmp.skip>
     <jacoco.skip>false</jacoco.skip>
 
