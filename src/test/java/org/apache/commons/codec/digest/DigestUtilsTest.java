@@ -87,12 +87,12 @@ public class DigestUtilsTest {
     @BeforeEach
     public void setUp() throws Exception {
         new Random().nextBytes(testData);
-        testFile = File.createTempFile(DigestUtilsTest.class.getName(), ".dat");
+        testFile = Files.createTempFile(DigestUtilsTest.class.getName(), ".dat").toFile();
         try (final FileOutputStream fos = new FileOutputStream(testFile)) {
             fos.write(testData);
         }
 
-        testRandomAccessFile = File.createTempFile(DigestUtilsTest.class.getName(), ".dat");
+        testRandomAccessFile = Files.createTempFile(DigestUtilsTest.class.getName(), ".dat").toFile();
         try (final FileOutputStream fos = new FileOutputStream(testRandomAccessFile)) {
             fos.write(testData);
         }
