@@ -13,5 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Keeps on creating FUD PRs in test code
+# Does not follow Apache disclosure policies
 User-agent: JLLeitschuh/security-research
 Disallow: *
