@@ -361,8 +361,9 @@ public class DaitchMokotoffSoundex implements StringEncoder {
             }
 
             ch = Character.toLowerCase(ch);
-            if (folding && FOLDINGS.containsKey(ch)) {
-                ch = FOLDINGS.get(ch);
+            final Character character = FOLDINGS.get(ch);
+            if (folding && character != null) {
+                ch = character;
             }
             sb.append(ch);
         }
