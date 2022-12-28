@@ -71,8 +71,7 @@ public class Digest {
         if (argsLength <= 1) {
             inputs = null;
         } else {
-            inputs = new String[argsLength - 1];
-            System.arraycopy(args, 1, inputs, 0, inputs.length);
+            inputs = Arrays.copyOfRange(args, 1, argsLength);
         }
     }
 

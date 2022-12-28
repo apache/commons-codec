@@ -17,6 +17,7 @@
 
 package org.apache.commons.codec.language;
 
+import java.util.Arrays;
 import java.util.Locale;
 
 import org.apache.commons.codec.EncoderException;
@@ -258,9 +259,7 @@ public class ColognePhonetic implements StringEncoder {
 
         @Override
         protected char[] copyData(final int start, final int length) {
-            final char[] newData = new char[length];
-            System.arraycopy(data, start, newData, 0, length);
-            return newData;
+            return Arrays.copyOfRange(data, start, length);
         }
     }
 

@@ -280,8 +280,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
             newCapacity = createPositiveCapacity(minCapacity);
         }
 
-        final byte[] b = new byte[newCapacity];
-        System.arraycopy(context.buffer, 0, b, 0, context.buffer.length);
+        final byte[] b = Arrays.copyOf(context.buffer, newCapacity);
         context.buffer = b;
         return b;
     }
