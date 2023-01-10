@@ -265,7 +265,6 @@ limitations under the License.
     <commons.encoding>UTF-8</commons.encoding>
     <checkstyle.header.file>${basedir}/src/conf/checkstyle-header.txt</checkstyle.header.file>
     <checkstyle.config.file>${basedir}/src/conf/checkstyle.xml</checkstyle.config.file>
-    <commons.checkstyle-plugin.version>3.2.0</commons.checkstyle-plugin.version>
     <commons.checkstyle.version>9.3</commons.checkstyle.version>
     <commons.japicmp.version>0.16.0</commons.japicmp.version>
     <commons.animal-sniffer.version>1.22</commons.animal-sniffer.version>
