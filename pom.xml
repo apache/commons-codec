@@ -266,7 +266,6 @@ limitations under the License.
     <checkstyle.header.file>${basedir}/src/conf/checkstyle-header.txt</checkstyle.header.file>
     <checkstyle.config.file>${basedir}/src/conf/checkstyle.xml</checkstyle.config.file>
     <commons.animal-sniffer.version>1.22</commons.animal-sniffer.version>
-    <commons.pmd-impl.version>6.52.0</commons.pmd-impl.version>
     <japicmp.skip>false</japicmp.skip>
     <jacoco.skip>false</jacoco.skip>
 
