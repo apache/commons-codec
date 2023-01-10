@@ -267,7 +267,6 @@ limitations under the License.
     <checkstyle.config.file>${basedir}/src/conf/checkstyle.xml</checkstyle.config.file>
     <commons.japicmp.version>0.16.0</commons.japicmp.version>
     <commons.animal-sniffer.version>1.22</commons.animal-sniffer.version>
-    <commons.pmd.version>3.19.0</commons.pmd.version>
     <commons.pmd-impl.version>6.52.0</commons.pmd-impl.version>
     <japicmp.skip>false</japicmp.skip>
     <jacoco.skip>false</jacoco.skip>
