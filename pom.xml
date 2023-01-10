@@ -268,7 +268,6 @@ limitations under the License.
     <commons.checkstyle-plugin.version>3.2.0</commons.checkstyle-plugin.version>
     <commons.checkstyle.version>9.3</commons.checkstyle.version>
     <commons.japicmp.version>0.16.0</commons.japicmp.version>
-    <commons.surefire-report.version>3.0.0-M7</commons.surefire-report.version>
     <commons.animal-sniffer.version>1.22</commons.animal-sniffer.version>
     <commons.pmd.version>3.19.0</commons.pmd.version>
     <commons.pmd-impl.version>6.52.0</commons.pmd-impl.version>
