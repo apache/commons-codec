@@ -343,7 +343,6 @@ limitations under the License.
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>${commons.surefire-report.version}</version>
         <configuration>
           <excludes>
             <exclude>**/*AbstractTest.java</exclude>
