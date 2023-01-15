@@ -1,4 +1,4 @@
-              Apache Apache Commons Codec 1.16 RELEASE NOTES
+              Apache Commons Codec 1.16 RELEASE NOTES
 
 The Apache Commons Codec package contains simple encoder and decoders for
 various formats such as Base64 and Hexadecimal.  In addition to these
