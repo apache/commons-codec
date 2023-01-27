@@ -18,14 +18,19 @@
 package org.apache.commons.codec.digest;
 
 import static org.apache.commons.codec.binary.StringUtils.getBytesUtf8;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.file.Files;
@@ -43,7 +48,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-
 /**
  * Tests DigestUtils methods.
  *
@@ -54,9 +58,9 @@ public class DigestUtilsTest {
 
     private final byte[] testData = new byte[1024 * 1024];
 
-    private File testFile;
+    private Path testFile;
 
-    private File testRandomAccessFile;
+    private Path testRandomAccessFile;
 
     private RandomAccessFile testRandomAccessFileWrapper;
 
@@ -72,12 +76,8 @@ public class DigestUtilsTest {
         return testData;
     }
 
-    File getTestFile() {
-        return testFile;
-    }
-
     Path getTestPath() {
-        return testFile.toPath();
+        return testFile;
     }
 
     RandomAccessFile getTestRandomAccessFile() {
@@ -87,27 +87,25 @@ public class DigestUtilsTest {
     @BeforeEach
     public void setUp() throws Exception {
         new Random().nextBytes(testData);
-        testFile = File.createTempFile(DigestUtilsTest.class.getName(), ".dat");
-        try (final FileOutputStream fos = new FileOutputStream(testFile)) {
+        testFile = Files.createTempFile(DigestUtilsTest.class.getName(), ".dat");
+        try (final OutputStream fos = Files.newOutputStream(testFile)) {
             fos.write(testData);
         }
 
-        testRandomAccessFile = File.createTempFile(DigestUtilsTest.class.getName(), ".dat");
-        try (final FileOutputStream fos = new FileOutputStream(testRandomAccessFile)) {
+        testRandomAccessFile = Files.createTempFile(DigestUtilsTest.class.getName(), ".dat");
+        try (final OutputStream fos = Files.newOutputStream(testRandomAccessFile)) {
             fos.write(testData);
         }
-        testRandomAccessFileWrapper = new RandomAccessFile(testRandomAccessFile, "rw");
+        testRandomAccessFileWrapper = new RandomAccessFile(testRandomAccessFile.toFile(), "rw");
     }
 
     @AfterEach
-    public void tearDown() {
-        if (!testFile.delete()) {
-            testFile.deleteOnExit();
+    public void tearDown() throws IOException {
+        if (testRandomAccessFileWrapper != null) {
+            testRandomAccessFileWrapper.close();
         }
-
-        if (!testRandomAccessFile.delete()) {
-            testRandomAccessFile.deleteOnExit();
-        }
+        Files.deleteIfExists(testFile);
+        Files.deleteIfExists(testRandomAccessFile);
     }
 
     @Test

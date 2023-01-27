@@ -98,7 +98,7 @@ public class MessageDigestAlgorithmsTest {
     }
 
     private File getTestFile() {
-        return digestUtilsTest.getTestFile();
+        return digestUtilsTest.getTestPath().toFile();
     }
 
     private Path getTestPath() {
