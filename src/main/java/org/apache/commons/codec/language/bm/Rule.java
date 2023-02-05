@@ -248,11 +248,13 @@ public class Rule {
                              nameType.getName(), rt.getName(), lang);
     }
 
+    @SuppressWarnings("resource") // Closing the Scanner closes the resource
     private static Scanner createScanner(final NameType nameType, final RuleType rt, final String lang) {
         final String resName = createResourceName(nameType, rt, lang);
         return new Scanner(Resources.getInputStream(resName), ResourceConstants.ENCODING);
     }
 
+    @SuppressWarnings("resource") // Closing the Scanner closes the resource
     private static Scanner createScanner(final String lang) {
         final String resName = String.format("org/apache/commons/codec/language/bm/%s.txt", lang);
         return new Scanner(Resources.getInputStream(resName), ResourceConstants.ENCODING);
