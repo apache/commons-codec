@@ -235,12 +235,7 @@ public class Rule {
     }
 
     private static boolean contains(final CharSequence chars, final char input) {
-        for (int i = 0; i < chars.length(); i++) {
-            if (chars.charAt(i) == input) {
-                return true;
-            }
-        }
-        return false;
+        return chars.chars().anyMatch(c -> c == input);
     }
 
     private static String createResourceName(final NameType nameType, final RuleType rt, final String lang) {
