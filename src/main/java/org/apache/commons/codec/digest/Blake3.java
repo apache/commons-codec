@@ -74,13 +74,10 @@ import java.util.Objects;
  * @since 1.16
  */
 public final class Blake3 {
-    // TODO: migrate to Integer.BYTES after upgrading to Java 8
-    private static final int INT_BYTES = Integer.SIZE / Byte.SIZE;
-
     private static final int BLOCK_LEN = 64;
-    private static final int BLOCK_INTS = BLOCK_LEN / INT_BYTES;
+    private static final int BLOCK_INTS = BLOCK_LEN / Integer.BYTES;
     private static final int KEY_LEN = 32;
-    private static final int KEY_INTS = KEY_LEN / INT_BYTES;
+    private static final int KEY_INTS = KEY_LEN / Integer.BYTES;
     private static final int OUT_LEN = 32;
     private static final int CHUNK_LEN = 1024;
     private static final int CHAINING_VALUE_INTS = 8;
@@ -277,7 +274,7 @@ public final class Blake3 {
 
     private static int[] unpackInts(final byte[] buf, final int nrInts) {
         final int[] values = new int[nrInts];
-        for (int i = 0, off = 0; i < nrInts; i++, off += INT_BYTES) {
+        for (int i = 0, off = 0; i < nrInts; i++, off += Integer.BYTES) {
             values[i] = unpackInt(buf, off);
         }
         return values;
@@ -388,7 +385,7 @@ public final class Blake3 {
                         compress(inputChainingValue, blockWords, blockLength, outputBlockCounter++, flags | ROOT);
                 int wordCounter = 0;
                 while (chunkLength > 0) {
-                    final int wordLength = Math.min(INT_BYTES, chunkLength);
+                    final int wordLength = Math.min(Integer.BYTES, chunkLength);
                     packInt(words[wordCounter++], out, offset, wordLength);
                     offset += wordLength;
                     chunkLength -= wordLength;
