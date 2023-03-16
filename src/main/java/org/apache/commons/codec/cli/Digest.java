@@ -28,7 +28,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.codec.digest.MessageDigestAlgorithms;
 
 /**
- * A minimal command line to run digest over files, directories or a string
+ * A minimal command line to run digest over files, directories or a string.
  *
  * @see #main(String[])
  * @since 1.11
