@@ -99,14 +99,14 @@ public class MurmurHash3Test {
         final int offset = 0;
         final int seed = 104729;
 
-        final int length = MurmurHash3.LONG_BYTES * 2;
+        final int length = Long.BYTES * 2;
         final ByteBuffer buffer = ByteBuffer.allocate(length);
         final byte[] bytes = buffer.array();
         final long[] data = createLongTestData();
         for (final long i : data) {
             for (final long j : data) {
                 buffer.putLong(0, i);
-                buffer.putLong(MurmurHash3.LONG_BYTES, j);
+                buffer.putLong(Long.BYTES, j);
                 assertEquals(MurmurHash3.hash32x86(bytes, offset, length, seed), MurmurHash3.hash32(i, j));
             }
         }
@@ -121,14 +121,14 @@ public class MurmurHash3Test {
         final int offset = 0;
         final int seed = 104729;
 
-        final int length = MurmurHash3.LONG_BYTES * 2;
+        final int length = Long.BYTES * 2;
         final ByteBuffer buffer = ByteBuffer.allocate(length);
         final byte[] bytes = buffer.array();
         final long[] data = createLongTestData();
         for (final long i : data) {
             for (final long j : data) {
                 buffer.putLong(0, i);
-                buffer.putLong(MurmurHash3.LONG_BYTES, j);
+                buffer.putLong(Long.BYTES, j);
                 assertEquals(MurmurHash3.hash32x86(bytes, offset, length, seed), MurmurHash3.hash32(i, j, seed));
             }
         }
@@ -143,7 +143,7 @@ public class MurmurHash3Test {
         final int offset = 0;
         final int seed = 104729;
 
-        final int length = MurmurHash3.LONG_BYTES;
+        final int length = Long.BYTES;
         final ByteBuffer buffer = ByteBuffer.allocate(length);
         final byte[] bytes = buffer.array();
         final long[] data = createLongTestData();
@@ -162,7 +162,7 @@ public class MurmurHash3Test {
         final int offset = 0;
         final int seed = 104729;
 
-        final int length = MurmurHash3.LONG_BYTES;
+        final int length = Long.BYTES;
         final ByteBuffer buffer = ByteBuffer.allocate(length);
         final byte[] bytes = buffer.array();
         final long[] data = createLongTestData();
@@ -488,9 +488,9 @@ public class MurmurHash3Test {
         final int seed = 104729;
 
         final int iters = 1000;
-        final ByteBuffer shortBuffer = ByteBuffer.allocate(MurmurHash3.SHORT_BYTES);
-        final ByteBuffer intBuffer = ByteBuffer.allocate(MurmurHash3.INTEGER_BYTES);
-        final ByteBuffer longBuffer = ByteBuffer.allocate(MurmurHash3.LONG_BYTES);
+        final ByteBuffer shortBuffer = ByteBuffer.allocate(Short.BYTES);
+        final ByteBuffer intBuffer = ByteBuffer.allocate(Integer.BYTES);
+        final ByteBuffer longBuffer = ByteBuffer.allocate(Long.BYTES);
         final byte[] shortBytes = shortBuffer.array();
         final byte[] intBytes = intBuffer.array();
         final byte[] longBytes = longBuffer.array();

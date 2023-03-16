@@ -71,15 +71,6 @@ public final class MurmurHash3 {
      */
     public static final int DEFAULT_SEED = 104729;
 
-    /** TODO Replace on Java 8 with Long.BYTES. */
-    static final int LONG_BYTES = Long.SIZE / Byte.SIZE;
-
-    /** TODO Replace on Java 8 with Integer.BYTES. */
-    static final int INTEGER_BYTES = Integer.SIZE / Byte.SIZE;
-
-    /** TODO Replace on Java 8 with Short.BYTES. */
-    static final int SHORT_BYTES = Short.SIZE / Byte.SIZE;
-
     // Constants for 32-bit variant
     private static final int C1_32 = 0xcc9e2d51;
     private static final int C2_32 = 0x1b873593;
@@ -152,7 +143,7 @@ public final class MurmurHash3 {
         hash = mix32((int) (r1), hash);
         hash = mix32((int) (r1 >>> 32), hash);
 
-        hash ^= LONG_BYTES * 2;
+        hash ^= Long.BYTES * 2;
         return fmix32(hash);
     }
 
@@ -199,7 +190,7 @@ public final class MurmurHash3 {
         hash = mix32((int) r0, hash);
         hash = mix32((int) (r0 >>> 32), hash);
 
-        hash ^= LONG_BYTES;
+        hash ^= Long.BYTES;
         return fmix32(hash);
     }
 
@@ -467,7 +458,7 @@ public final class MurmurHash3 {
         hash ^= k;
         hash = Long.rotateLeft(hash, R2) * M + N1;
         // finalization
-        hash ^= LONG_BYTES;
+        hash ^= Long.BYTES;
         hash = fmix64(hash);
         return hash;
     }
@@ -510,7 +501,7 @@ public final class MurmurHash3 {
         k1 *= C2;
         hash ^= k1;
         // finalization
-        hash ^= INTEGER_BYTES;
+        hash ^= Integer.BYTES;
         hash = fmix64(hash);
         return hash;
     }
@@ -556,7 +547,7 @@ public final class MurmurHash3 {
         hash ^= k1;
 
         // finalization
-        hash ^= SHORT_BYTES;
+        hash ^= Short.BYTES;
         hash = fmix64(hash);
         return hash;
     }
