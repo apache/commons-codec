@@ -118,7 +118,6 @@ public final class Blake3 {
      * @throws NullPointerException if in is null
      */
     public void update(final byte[] in) {
-        Objects.requireNonNull(in);
         update(in, 0, in.length);
     }
 
@@ -145,7 +144,6 @@ public final class Blake3 {
      * @throws NullPointerException if out is null
      */
     public void doFinalize(final byte[] out) {
-        Objects.requireNonNull(out);
         doFinalize(out, 0, out.length);
     }
 
