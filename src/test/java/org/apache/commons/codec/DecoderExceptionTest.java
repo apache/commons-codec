@@ -24,7 +24,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
  * Tests {@link DecoderException}.
- *
  */
 public class DecoderExceptionTest {
 

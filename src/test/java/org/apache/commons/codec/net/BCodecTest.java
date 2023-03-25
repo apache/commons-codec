@@ -30,7 +30,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Quoted-printable codec test cases
- *
  */
 public class BCodecTest {
     private static final String[] BASE64_IMPOSSIBLE_CASES = {

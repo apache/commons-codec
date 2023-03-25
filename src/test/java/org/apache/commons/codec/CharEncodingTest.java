@@ -23,7 +23,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Sanity checks for {@link CharEncoding}.
- *
  */
 public class CharEncodingTest {
 

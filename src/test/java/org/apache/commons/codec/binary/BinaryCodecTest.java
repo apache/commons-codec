@@ -31,7 +31,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * TestCase for BinaryCodec class.
- *
  */
 public class BinaryCodecTest {
 

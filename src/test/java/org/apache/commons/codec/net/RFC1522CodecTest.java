@@ -26,7 +26,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * RFC 1522 compliant codec test cases
- *
  */
 public class RFC1522CodecTest {
 

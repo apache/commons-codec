@@ -29,7 +29,6 @@ import static org.junit.jupiter.api.Assertions.*;
  * Tests {@link Soundex}.
  *
  * <p>Keep this file in UTF-8 encoding for proper Javadoc processing.</p>
- *
  */
 public class SoundexTest extends StringEncoderAbstractTest<Soundex> {
 

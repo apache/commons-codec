@@ -47,7 +47,6 @@ import org.apache.commons.codec.StringEncoder;
  * If an instance of the class is shared between threads, the caller needs to ensure that suitable synchronization
  * is used to ensure safe publication of the value between threads, and must not invoke {@link #setMaxCodeLen(int)}
  * after initial setup.
- *
  */
 public class Metaphone implements StringEncoder {
 

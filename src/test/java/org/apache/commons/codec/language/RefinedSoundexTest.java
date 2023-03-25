@@ -25,7 +25,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Tests RefinedSoundex.
- *
  */
 public class RefinedSoundexTest extends StringEncoderAbstractTest<RefinedSoundex> {
 

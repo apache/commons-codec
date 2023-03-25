@@ -35,7 +35,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * Tests the {@code ColognePhonetic} class.
  *
  * <p>Keep this file in UTF-8 encoding for proper Javadoc processing.</p>
- *
  */
 public class ColognePhoneticTest extends StringEncoderAbstractTest<ColognePhonetic> {
 

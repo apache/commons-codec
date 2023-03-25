@@ -29,7 +29,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Quoted-printable codec test cases
- *
  */
 public class QuotedPrintableCodecTest {
 

@@ -26,7 +26,6 @@ import org.apache.commons.codec.StringEncoder;
  * <CITE>Margaret Odell</CITE> and <CITE>Robert Russell</CITE>.
  *
  * <p>This class is immutable and thread-safe.</p>
- *
  */
 public class RefinedSoundex implements StringEncoder {
 

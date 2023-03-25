@@ -24,7 +24,6 @@ package org.apache.commons.codec;
  * Allows a user to pass a generic Object to any Decoder implementation in the codec package.
  * <p>
  * One of the two interfaces at the center of the codec package.
- *
  */
 public interface Decoder {
 

@@ -26,7 +26,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Sanity checks for {@link Charsets}.
- *
  */
 public class CharsetsTest {
 

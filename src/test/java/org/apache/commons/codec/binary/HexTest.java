@@ -32,7 +32,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests {@link org.apache.commons.codec.binary.Hex}.
- *
  */
 public class HexTest {
 

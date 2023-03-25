@@ -19,7 +19,6 @@ package org.apache.commons.codec;
 
 /**
  * Defines common decoding methods for byte array decoders.
- *
  */
 public interface BinaryDecoder extends Decoder {
 

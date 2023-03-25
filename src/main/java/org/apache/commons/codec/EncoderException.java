@@ -21,7 +21,6 @@ package org.apache.commons.codec;
  * Thrown when there is a failure condition during the encoding process. This exception is thrown when an
  * {@link Encoder} encounters an encoding specific exception such as invalid data, inability to calculate a checksum,
  * characters outside of the expected range.
- *
  */
 public class EncoderException extends Exception {
 

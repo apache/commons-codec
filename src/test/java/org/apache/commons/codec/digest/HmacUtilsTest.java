@@ -30,7 +30,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests HmacUtils methods.
- *
  */
 public class HmacUtilsTest {
 

@@ -30,7 +30,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * URL codec test cases
- *
  */
 public class URLCodecTest {
 

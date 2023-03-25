@@ -32,7 +32,6 @@ import org.apache.commons.codec.binary.StringUtils;
  *
  * @see <a href="http://drdobbs.com/184401251?pgno=2">Original Article</a>
  * @see <a href="http://en.wikipedia.org/wiki/Metaphone">http://en.wikipedia.org/wiki/Metaphone</a>
- *
  */
 public class DoubleMetaphone implements StringEncoder {
 

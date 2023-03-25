@@ -27,7 +27,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests {@link StringUtils}
- *
  */
 public class StringUtilsTest {
 

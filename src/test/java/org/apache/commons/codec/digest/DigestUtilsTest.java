@@ -50,7 +50,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests DigestUtils methods.
- *
  */
 public class DigestUtilsTest {
 

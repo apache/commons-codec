@@ -25,7 +25,6 @@ import java.util.Comparator;
  * as Soundex.
  *
  * <p>This class is immutable and thread-safe.</p>
- *
  */
 @SuppressWarnings("rawtypes")
 // TODO ought to implement Comparator<String> but that's not possible whilst maintaining binary compatibility.
