@@ -400,11 +400,13 @@ public class MetaphoneTest extends StringEncoderAbstractTest<Metaphone> {
 
     @Test
     public void testTranslateOfSCHAndCH() {
-        assertEquals( "SKTL", this.getStringEncoder().metaphone("SCHEDULE") );
-        assertEquals( "SKMT", this.getStringEncoder().metaphone("SCHEMATIC") );
-
-        assertEquals( "KRKT", this.getStringEncoder().metaphone("CHARACTER") );
+        assertEquals( "SXTL", this.getStringEncoder().metaphone("SCHEDULE") );
+        assertEquals( "SXMT", this.getStringEncoder().metaphone("SCHEMATIC") );
+        assertEquals( "XRKT", this.getStringEncoder().metaphone("CHARACTER") );
         assertEquals( "TX", this.getStringEncoder().metaphone("TEACH") );
+        assertEquals("XR", this.getStringEncoder().metaphone("CHERI"));
+        assertEquals("ALBR", this.getStringEncoder().metaphone("Albrecht"));
+
     }
 
     @Test

@@ -81,7 +81,7 @@ public class Metaphone implements StringEncoder {
      * @return A metaphone code corresponding to the String supplied
      */
     public String metaphone(final String txt) {
-        boolean hard = false;
+        boolean hard;
         final int txtLength;
         if (txt == null || (txtLength = txt.length()) == 0) {
             return "";
@@ -176,21 +176,22 @@ public class Metaphone implements StringEncoder {
                         code.append('S');
                         break; // CI,CE,CY -> S
                     }
-                    if (isPreviousChar(local, n, 'S') &&
-                        isNextChar(local, n, 'H') ) { // SCH->sk
-                        code.append('K');
-                        break;
-                    }
                     if (isNextChar(local, n, 'H')) { // detect CH
                         if (n == 0 &&
-                            wdsz >= 3 &&
+                            wdsz == 3 &&
                             isVowel(local,2) ) { // CH consonant -> K consonant
                             code.append('K');
                         } else {
                             code.append('X'); // CHvowel -> X
+                            break;
                         }
                     } else {
                         code.append('K');
+                    }
+                    if (isPreviousChar(local, n, 'S') &&
+                        isNextChar(local, n, 'H') ) { // SCH->sk
+                        code.append('K');
+                        break;
                     }
                     break;
                 case 'D':
