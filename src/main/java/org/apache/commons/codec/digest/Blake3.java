@@ -364,7 +364,7 @@ public final class Blake3 {
         private final int blockLength;
         private final int flags;
 
-        Output(
+        private Output(
                 final int[] inputChainingValue, final int[] blockWords, final long counter, final int blockLength,
                 final int flags) {
             this.inputChainingValue = inputChainingValue;
@@ -374,12 +374,12 @@ public final class Blake3 {
             this.flags = flags;
         }
 
-        int[] chainingValue() {
+        private int[] chainingValue() {
             return Arrays
                     .copyOf(compress(inputChainingValue, blockWords, blockLength, counter, flags), CHAINING_VALUE_INTS);
         }
 
-        void rootOutputBytes(final byte[] out, int offset, int length) {
+        private void rootOutputBytes(final byte[] out, int offset, int length) {
             int outputBlockCounter = 0;
             while (length > 0) {
                 int chunkLength = Math.min(OUT_LEN * 2, length);
@@ -406,21 +406,21 @@ public final class Blake3 {
         private int blockLength;
         private int blocksCompressed;
 
-        ChunkState(final int[] key, final long chunkCounter, final int flags) {
+        private ChunkState(final int[] key, final long chunkCounter, final int flags) {
             chainingValue = key;
             this.chunkCounter = chunkCounter;
             this.flags = flags;
         }
 
-        int length() {
+        private int length() {
             return BLOCK_LEN * blocksCompressed + blockLength;
         }
 
-        int startFlag() {
+        private int startFlag() {
             return blocksCompressed == 0 ? CHUNK_START : 0;
         }
 
-        void update(final byte[] input, int offset, int length) {
+        private void update(final byte[] input, int offset, int length) {
             while (length > 0) {
                 if (blockLength == BLOCK_LEN) {
                     // If the block buffer is full, compress it and clear it. More
@@ -443,7 +443,7 @@ public final class Blake3 {
             }
         }
 
-        Output output() {
+        private Output output() {
             final int[] blockWords = unpackInts(block, BLOCK_INTS);
             final int outputFlags = flags | startFlag() | CHUNK_END;
             return new Output(chainingValue, blockWords, chunkCounter, blockLength, outputFlags);
@@ -461,13 +461,13 @@ public final class Blake3 {
         private int stackLen;
         private ChunkState state;
 
-        EngineState(final int[] key, final int flags) {
+        private EngineState(final int[] key, final int flags) {
             this.key = key;
             this.flags = flags;
             state = new ChunkState(key, 0, flags);
         }
 
-        void inputData(final byte[] in, int offset, int length) {
+        private void inputData(final byte[] in, int offset, int length) {
             while (length > 0) {
                 // If the current chunk is complete, finalize it and reset the
                 // chunk state. More input is coming, so this chunk is not ROOT.
@@ -487,7 +487,7 @@ public final class Blake3 {
             }
         }
 
-        void outputHash(final byte[] out, final int offset, final int length) {
+        private void outputHash(final byte[] out, final int offset, final int length) {
             // Starting with the Output from the current chunk, compute all the
             // parent chaining values along the right edge of the tree, until we
             // have the root Output.
@@ -500,7 +500,7 @@ public final class Blake3 {
             output.rootOutputBytes(out, offset, length);
         }
 
-        void reset() {
+        private void reset() {
             stackLen = 0;
             Arrays.fill(cvStack, null);
             state = new ChunkState(key, 0, flags);
