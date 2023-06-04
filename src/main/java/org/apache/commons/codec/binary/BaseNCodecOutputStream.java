@@ -82,11 +82,9 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
     /**
      * Writes EOF.
      *
-     * @throws IOException
-     *             if an I/O error occurs.
      * @since 1.11
      */
-    public void eof() throws IOException {
+    public void eof() {
         // Notify encoder of EOF (-1).
         if (doEncode) {
             baseNCodec.encode(singleByte, 0, EOF, context);
