@@ -307,7 +307,9 @@ public final class Blake3 {
         g(state, 3, 4, 9, 14, msg[schedule[14]], msg[schedule[15]]);
     }
 
-    // pre-permuted for all 7 rounds; the second row (2,6,3,...) indicates the base permutation
+    /**
+     * Pre-permuted for all 7 rounds; the second row (2,6,3,...) indicates the base permutation.
+     */
     private static final byte[][] MSG_SCHEDULE = {
             { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 },
             { 2, 6, 3, 10, 7, 0, 4, 13, 1, 11, 12, 5, 9, 14, 15, 8 },

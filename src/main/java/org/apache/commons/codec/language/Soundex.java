@@ -36,8 +36,11 @@ public class Soundex implements StringEncoder {
      * Note: the {@link #US_ENGLISH_MAPPING_STRING} does not use this mechanism
      * because changing it might break existing code. Mappings that don't contain
      * a silent marker code are treated as though H and W are silent.
+     * </p>
      * <p>
      * To override this, use the {@link #Soundex(String, boolean)} constructor.
+     * </p>
+     *
      * @since 1.11
      */
     public static final char SILENT_MARKER = '-';
@@ -48,12 +51,13 @@ public class Soundex implements StringEncoder {
      * <p>
      * (This constant is provided as both an implementation convenience and to allow Javadoc to pick
      * up the value for the constant values page.)
+     * </p>
      * <p>
      * <b>Note that letters H and W are treated specially.</b>
      * They are ignored (after the first letter) and don't act as separators
      * between consonants with the same code.
+     * </p>
      */
-    //                                                      ABCDEFGHIJKLMNOPQRSTUVWXYZ
     public static final String US_ENGLISH_MAPPING_STRING = "01230120022455012623010202";
 
     /**
@@ -82,6 +86,7 @@ public class Soundex implements StringEncoder {
      * Such letters aren't encoded (after the first), but they do
      * act as separators when dropping duplicate codes.
      * The mapping is otherwise the same as for {@link #US_ENGLISH}
+     * </p>
      *
      * @since 1.11
      */
@@ -94,9 +99,11 @@ public class Soundex implements StringEncoder {
      * This treats vowels (AEIOUY), H and W as silent letters.
      * Such letters are ignored (after the first) and do not
      * act as separators when dropping duplicate codes.
+     * </p>
      * <p>
      * The codes for consonants are otherwise the same as for
      * {@link #US_ENGLISH_MAPPING_STRING} and {@link #US_ENGLISH_SIMPLIFIED}
+     * </p>
      *
      * @since 1.11
      */
@@ -123,6 +130,7 @@ public class Soundex implements StringEncoder {
      * In versions of the code prior to 1.11,
      * the code always treated H and W as silent (ignored) letters.
      * If this field is false, H and W are no longer special-cased.
+     * </p>
      */
     private final boolean specialCaseHW;
 
@@ -140,11 +148,13 @@ public class Soundex implements StringEncoder {
     /**
      * Creates a soundex instance using the given mapping. This constructor can be used to provide an internationalized
      * mapping for a non-Western character set.
-     *
+     * <p>
      * Every letter of the alphabet is "mapped" to a numerical value. This char array holds the values to which each
      * letter is mapped. This implementation contains a default map for US_ENGLISH
+     * </p>
      * <p>
      * If the mapping contains an instance of {@link #SILENT_MARKER} then H and W are not given special treatment
+     * </p>
      *
      * @param mapping
      *                  Mapping array to use when finding the corresponding code for a given character
@@ -168,6 +178,7 @@ public class Soundex implements StringEncoder {
      * and/or possibly provide an internationalized mapping for a non-Western character set.
      * <p>
      * If the mapping contains an instance of {@link #SILENT_MARKER} then H and W are not given special treatment
+     * </p>
      *
      * @param mapping
      *            Mapping string to use when finding the corresponding code for a given character
@@ -205,7 +216,7 @@ public class Soundex implements StringEncoder {
      *
      * @see SoundexUtils#difference(StringEncoder,String,String)
      * @see <a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_de-dz_8co5.asp"> MS
-     *          T-SQL DIFFERENCE </a>
+     *          T-SQL DIFFERENCE</a>
      *
      * @throws EncoderException
      *                  if an error occurs encoding one of the strings

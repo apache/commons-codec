@@ -29,6 +29,7 @@ import org.apache.commons.codec.binary.StringUtils;
  * {@link #setMaxCodeLen(int)} but is not volatile, and accesses are not synchronized. If an instance of the class is
  * shared between threads, the caller needs to ensure that suitable synchronization is used to ensure safe publication
  * of the value between threads, and must not invoke {@link #setMaxCodeLen(int)} after initial setup.
+ * </p>
  *
  * @see <a href="http://drdobbs.com/184401251?pgno=2">Original Article</a>
  * @see <a href="http://en.wikipedia.org/wiki/Metaphone">http://en.wikipedia.org/wiki/Metaphone</a>

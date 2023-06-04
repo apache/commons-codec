@@ -27,8 +27,10 @@ import org.apache.commons.codec.StringEncoder;
  * general purpose scheme to find word with similar phonemes.
  * <p>
  * NYSIIS features an accuracy increase of 2.7% over the traditional Soundex algorithm.
+ * </p>
  * <p>
  * Algorithm description:
+ * </p>
  * <pre>
  * 1. Transcode first characters of name
  *   1a. MAC -&gt;   MCC
@@ -60,6 +62,7 @@ import org.apache.commons.codec.StringEncoder;
  * </pre>
  * <p>
  * This class is immutable and thread-safe.
+ * </p>
  *
  * @see <a href="http://en.wikipedia.org/wiki/NYSIIS">NYSIIS on Wikipedia</a>
  * @see <a href="http://www.dropby.com/NYSIIS.html">NYSIIS on dropby.com</a>

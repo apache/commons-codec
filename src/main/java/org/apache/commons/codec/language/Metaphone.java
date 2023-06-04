@@ -25,9 +25,11 @@ import org.apache.commons.codec.StringEncoder;
  * <p>
  * Initial Java implementation by <CITE>William B. Brogden. December, 1997</CITE>.
  * Permission given by <CITE>wbrogden</CITE> for code to be used anywhere.
+ * </p>
  * <p>
  * <CITE>Hanging on the Metaphone</CITE> by <CITE>Lawrence Philips</CITE> in <CITE>Computer Language of Dec. 1990,
  * p 39.</CITE>
+ * </p>
  * <p>
  * Note, that this does not match the algorithm that ships with PHP, or the algorithm found in the Perl implementations:
  * </p>
@@ -40,6 +42,7 @@ import org.apache.commons.codec.StringEncoder;
  * <p>
  * They have had undocumented changes from the originally published algorithm.
  * For more information, see <a href="https://issues.apache.org/jira/browse/CODEC-57">CODEC-57</a>.
+ * </p>
  * <p>
  * This class is conditionally thread-safe.
  * The instance field for maximum code length is mutable {@link #setMaxCodeLen(int)}
@@ -47,6 +50,7 @@ import org.apache.commons.codec.StringEncoder;
  * If an instance of the class is shared between threads, the caller needs to ensure that suitable synchronization
  * is used to ensure safe publication of the value between threads, and must not invoke {@link #setMaxCodeLen(int)}
  * after initial setup.
+ * </p>
  */
 public class Metaphone implements StringEncoder {
 
@@ -346,10 +350,9 @@ public class Metaphone implements StringEncoder {
 
     private boolean regionMatch(final StringBuilder string, final int index, final String test) {
         boolean matches = false;
-        if( index >= 0 &&
-            index + test.length() - 1 < string.length() ) {
-            final String substring = string.substring( index, index + test.length());
-            matches = substring.equals( test );
+        if (index >= 0 && index + test.length() - 1 < string.length()) {
+            final String substring = string.substring(index, index + test.length());
+            matches = substring.equals(test);
         }
         return matches;
     }
@@ -357,7 +360,6 @@ public class Metaphone implements StringEncoder {
     private boolean isLastChar(final int wdsz, final int n) {
         return n + 1 == wdsz;
     }
-
 
     /**
      * Encodes an Object using the metaphone algorithm.  This method
