@@ -98,8 +98,7 @@ abstract class RFC1522Codec {
      *             thrown if there is an error condition during the Encoding process.
      * @throws UnsupportedEncodingException
      *             if charset is not available
-     *
-     * @see <a href="http://download.oracle.com/javase/7/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
+     * @see Charset
      */
     protected String encodeText(final String text, final String charsetName)
             throws EncoderException, UnsupportedEncodingException {
