@@ -22,8 +22,7 @@ import java.nio.charset.Charset;
 /**
  * Character encoding names required of every implementation of the Java platform.
  *
- * From the Java documentation <a
- * href="http://download.oracle.com/javase/7/docs/api/java/nio/charset/Charset.html">Standard charsets</a>:
+ * From the Java documentation for {@link Charset}:
  * <p>
  * <cite>Every implementation of the Java platform is required to support the following character encodings. Consult the
  * release documentation for your implementation to see if any other encodings are supported. Consult the release
