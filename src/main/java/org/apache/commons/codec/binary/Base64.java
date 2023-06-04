@@ -67,9 +67,10 @@ public class Base64 extends BaseNCodec {
     /**
      * This array is a lookup table that translates 6-bit positive integer index values into their "Base64 Alphabet"
      * equivalents as specified in Table 1 of RFC 2045.
-     *
+     * <p>
      * Thanks to "commons" project in ws.apache.org for this code.
      * http://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/
+     * </p>
      */
     private static final byte[] STANDARD_ENCODE_TABLE = {
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
@@ -96,12 +97,14 @@ public class Base64 extends BaseNCodec {
      * This array is a lookup table that translates Unicode characters drawn from the "Base64 Alphabet" (as specified
      * in Table 1 of RFC 2045) into their 6-bit positive integer equivalents. Characters that are not in the Base64
      * alphabet but fall within the bounds of the array are translated to -1.
-     *
+     * <p>
      * Note: '+' and '-' both decode to 62. '/' and '_' both decode to 63. This means decoder seamlessly handles both
      * URL_SAFE and STANDARD base64. (The encoder, on the other hand, needs to know ahead of time what to emit).
-     *
+     * </p>
+     * <p>
      * Thanks to "commons" project in ws.apache.org for this code.
      * http://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/
+     * </p>
      */
     private static final byte[] DECODE_TABLE = {
         //   0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
@@ -814,9 +817,10 @@ public class Base64 extends BaseNCodec {
     /**
      * Validates whether decoding the final trailing character is possible in the context
      * of the set of possible base 64 values.
-     *
-     * <p>The character is valid if the lower bits within the provided mask are zero. This
+     * <p>
+     * The character is valid if the lower bits within the provided mask are zero. This
      * is used to test the final trailing base-64 digit is zero in the bits that will be discarded.
+     * </p>
      *
      * @param emptyBitsMask The mask of the lower bits that should be empty
      * @param context the context to be used

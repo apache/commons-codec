@@ -78,8 +78,10 @@ public class BaseNCodecInputStream extends FilterInputStream {
      * Returns true if decoding behavior is strict. Decoding will raise an
      * {@link IllegalArgumentException} if trailing bits are not part of a valid encoding.
      *
-     * <p>The default is false for lenient encoding. Decoding will compose trailing bits
+     * <p>
+     * The default is false for lenient encoding. Decoding will compose trailing bits
      * into 8-bit bytes and discard the remainder.
+     * </p>
      *
      * @return true if using strict decoding
      * @since 1.15
@@ -90,7 +92,9 @@ public class BaseNCodecInputStream extends FilterInputStream {
 
     /**
      * Marks the current position in this input stream.
-     * <p>The {@link #mark} method of {@link BaseNCodecInputStream} does nothing.</p>
+     * <p>
+     * The {@link #mark} method of {@link BaseNCodecInputStream} does nothing.
+     * </p>
      *
      * @param readLimit the maximum limit of bytes that can be read before the mark position becomes invalid.
      * @see #markSupported()

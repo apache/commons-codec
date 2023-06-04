@@ -584,9 +584,10 @@ public class Base32 extends BaseNCodec {
     /**
      * Validates whether decoding the final trailing character is possible in the context
      * of the set of possible base 32 values.
-     *
-     * <p>The character is valid if the lower bits within the provided mask are zero. This
+     * <p>
+     * The character is valid if the lower bits within the provided mask are zero. This
      * is used to test the final trailing base-32 digit is zero in the bits that will be discarded.
+     * </p>
      *
      * @param emptyBitsMask The mask of the lower bits that should be empty
      * @param context the context to be used

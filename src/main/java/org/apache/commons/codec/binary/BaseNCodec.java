@@ -32,10 +32,11 @@ import org.apache.commons.codec.EncoderException;
  * <p>
  * This class is thread-safe.
  * </p>
- *
+ * <p>
  * You can set the decoding behavior when the input bytes contain leftover trailing bits that cannot be created by a
  * valid encoding. These can be bits that are unused from the final character or entire characters. The default mode is
  * lenient decoding.
+ * </p>
  * <ul>
  * <li>Lenient: Any trailing bits are composed into 8-bit bytes where possible. The remainder are discarded.
  * <li>Strict: The decoding will raise an {@link IllegalArgumentException} if trailing bits are not part of a valid
@@ -307,17 +308,19 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      *     are not part of a valid encoding. Any unused bits from the final character must
      *     be zero. Impossible counts of entire final characters are not allowed.
      * </ul>
-     *
-     * <p>When strict decoding is enabled it is expected that the decoded bytes will be re-encoded
+     * <p>
+     * When strict decoding is enabled it is expected that the decoded bytes will be re-encoded
      * to a byte array that matches the original, i.e. no changes occur on the final
      * character. This requires that the input bytes use the same padding and alphabet
      * as the encoder.
+     * </p>
      */
     private final CodecPolicy decodingPolicy;
 
     /**
      * Note {@code lineLength} is rounded down to the nearest multiple of the encoded block size.
      * If {@code chunkSeparatorLength} is zero, then chunking is disabled.
+     *
      * @param unencodedBlockSize the size of an unencoded block (e.g. Base64 = 3)
      * @param encodedBlockSize the size of an encoded block (e.g. Base64 = 4)
      * @param lineLength if &gt; 0, use chunking with a length {@code lineLength}
@@ -331,6 +334,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     /**
      * Note {@code lineLength} is rounded down to the nearest multiple of the encoded block size.
      * If {@code chunkSeparatorLength} is zero, then chunking is disabled.
+     *
      * @param unencodedBlockSize the size of an unencoded block (e.g. Base64 = 3)
      * @param encodedBlockSize the size of an encoded block (e.g. Base64 = 4)
      * @param lineLength if &gt; 0, use chunking with a length {@code lineLength}
@@ -345,6 +349,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     /**
      * Note {@code lineLength} is rounded down to the nearest multiple of the encoded block size.
      * If {@code chunkSeparatorLength} is zero, then chunking is disabled.
+     *
      * @param unencodedBlockSize the size of an unencoded block (e.g. Base64 = 3)
      * @param encodedBlockSize the size of an encoded block (e.g. Base64 = 4)
      * @param lineLength if &gt; 0, use chunking with a length {@code lineLength}
@@ -676,7 +681,8 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * Extracts buffered data into the provided byte[] array, starting at position bPos, up to a maximum of bAvail
      * bytes. Returns how many bytes were actually extracted.
      * <p>
-     * Package protected for access from I/O streams.
+     * Package private for access from I/O streams.
+     * </p>
      *
      * @param b
      *            byte[] array to extract the buffered data into.

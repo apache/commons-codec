@@ -55,6 +55,7 @@ public class DecoderException extends Exception {
      * <p>
      * Note that the detail message associated with {@code cause} is not automatically incorporated into this
      * exception's detail message.
+     * </p>
      *
      * @param message
      *            The detail message which is saved for later retrieval by the {@link #getMessage()} method.
