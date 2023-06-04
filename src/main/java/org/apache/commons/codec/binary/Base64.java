@@ -118,6 +118,10 @@ public class Base64 extends BaseNCodec {
             41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51                      // 70-7a p-z
     };
 
+    // The static final fields above are used for the original static byte[] methods on Base64.
+    // The private member fields below are used with the new streaming approach, which requires
+    // some state be preserved between calls of encode() and decode().
+
     /**
      * Base64 uses 6-bit fields.
      */
@@ -128,9 +132,32 @@ public class Base64 extends BaseNCodec {
     /** Mask used to extract 2 bits, used when decoding final trailing character. */
     private static final int MASK_2BITS = 0x3;
 
-    // The static final fields above are used for the original static byte[] methods on Base64.
-    // The private member fields below are used with the new streaming approach, which requires
-    // some state be preserved between calls of encode() and decode().
+    /**
+     * Encode table to use: either STANDARD or URL_SAFE. Note: the DECODE_TABLE above remains static because it is able
+     * to decode both STANDARD and URL_SAFE streams, but the encodeTable must be a member variable so we can switch
+     * between the two modes.
+     */
+    private final byte[] encodeTable;
+
+    /** Only one decode table currently; keep for consistency with Base32 code. */
+    private final byte[] decodeTable = DECODE_TABLE;
+
+    /**
+     * Line separator for encoding. Not used when decoding. Only used if lineLength &gt; 0.
+     */
+    private final byte[] lineSeparator;
+
+    /**
+     * Convenience variable to help us determine when our buffer is going to run out of room and needs resizing.
+     * {@code decodeSize = 3 + lineSeparator.length;}
+     */
+    private final int decodeSize;
+
+    /**
+     * Convenience variable to help us determine when our buffer is going to run out of room and needs resizing.
+     * {@code encodeSize = 4 + lineSeparator.length;}
+     */
+    private final int encodeSize;
 
     /**
      * Decodes Base64 data into octets.
@@ -413,33 +440,6 @@ public class Base64 extends BaseNCodec {
         System.arraycopy(bigBytes, startSrc, resizedBytes, startDst, len);
         return resizedBytes;
     }
-
-    /**
-     * Encode table to use: either STANDARD or URL_SAFE. Note: the DECODE_TABLE above remains static because it is able
-     * to decode both STANDARD and URL_SAFE streams, but the encodeTable must be a member variable so we can switch
-     * between the two modes.
-     */
-    private final byte[] encodeTable;
-
-    // Only one decode table currently; keep for consistency with Base32 code
-    private final byte[] decodeTable = DECODE_TABLE;
-
-    /**
-     * Line separator for encoding. Not used when decoding. Only used if lineLength &gt; 0.
-     */
-    private final byte[] lineSeparator;
-
-    /**
-     * Convenience variable to help us determine when our buffer is going to run out of room and needs resizing.
-     * {@code decodeSize = 3 + lineSeparator.length;}
-     */
-    private final int decodeSize;
-
-    /**
-     * Convenience variable to help us determine when our buffer is going to run out of room and needs resizing.
-     * {@code encodeSize = 4 + lineSeparator.length;}
-     */
-    private final int encodeSize;
 
     /**
      * Creates a Base64 codec used for decoding (all modes) and encoding in URL-unsafe mode.
