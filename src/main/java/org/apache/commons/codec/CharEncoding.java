@@ -51,7 +51,7 @@ package org.apache.commons.codec;
  * This class is immutable and thread-safe.
  * </p>
  *
- * @see <a href="http://download.oracle.com/javase/7/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
+ * @see Charset
  * @since 1.4
  */
 public class CharEncoding {
@@ -62,7 +62,7 @@ public class CharEncoding {
      * Every implementation of the Java platform is required to support this character encoding.
      * </p>
      *
-     * @see <a href="http://download.oracle.com/javase/7/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
+     * @see Charset
      */
     public static final String ISO_8859_1 = "ISO-8859-1";
 
@@ -72,7 +72,7 @@ public class CharEncoding {
      * Every implementation of the Java platform is required to support this character encoding.
      * </p>
      *
-     * @see <a href="http://download.oracle.com/javase/7/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
+     * @see Charset
      */
     public static final String US_ASCII = "US-ASCII";
 
@@ -83,7 +83,7 @@ public class CharEncoding {
      * Every implementation of the Java platform is required to support this character encoding.
      * </p>
      *
-     * @see <a href="http://download.oracle.com/javase/7/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
+     * @see Charset
      */
     public static final String UTF_16 = "UTF-16";
 
@@ -93,7 +93,7 @@ public class CharEncoding {
      * Every implementation of the Java platform is required to support this character encoding.
      * </p>
      *
-     * @see <a href="http://download.oracle.com/javase/7/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
+     * @see Charset
      */
     public static final String UTF_16BE = "UTF-16BE";
 
@@ -103,7 +103,7 @@ public class CharEncoding {
      * Every implementation of the Java platform is required to support this character encoding.
      * </p>
      *
-     * @see <a href="http://download.oracle.com/javase/7/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
+     * @see Charset
      */
     public static final String UTF_16LE = "UTF-16LE";
 
@@ -113,7 +113,7 @@ public class CharEncoding {
      * Every implementation of the Java platform is required to support this character encoding.
      * </p>
      *
-     * @see <a href="http://download.oracle.com/javase/7/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
+     * @see Charset
      */
     public static final String UTF_8 = "UTF-8";
 }

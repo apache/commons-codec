@@ -123,7 +123,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * @param charset
      *            the default string Charset to use.
      *
-     * @see <a href="http://download.oracle.com/javase/7/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
+     * @see Charset
      * @since 1.7
      */
     public QCodec(final Charset charset) {
@@ -138,7 +138,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * @throws java.nio.charset.UnsupportedCharsetException
      *             If the named Charset is unavailable
      * @since 1.7 throws UnsupportedCharsetException if the named Charset is unavailable
-     * @see <a href="http://download.oracle.com/javase/7/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
+     * @see Charset
      */
     public QCodec(final String charsetName) {
         this(Charset.forName(charsetName));
