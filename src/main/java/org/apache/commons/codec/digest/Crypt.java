@@ -24,8 +24,10 @@ import java.util.concurrent.ThreadLocalRandom;
  * GNU libc crypt(3) compatible hash method.
  * <p>
  * See {@link #crypt(String, String)} for further details.
+ * </p>
  * <p>
  * This class is immutable and thread-safe.
+ * </p>
  *
  * @since 1.7
  */
@@ -57,6 +59,7 @@ public class Crypt {
      * <p>
      * If no salt is provided, a random salt and the default algorithm (currently SHA-512) will be used. See
      * {@link #crypt(String, String)} for details.
+     * </p>
      *
      * @param keyBytes
      *            plaintext password
@@ -112,6 +115,7 @@ public class Crypt {
      * Encrypts a password in a crypt(3) compatible way.
      * <p>
      * The exact algorithm depends on the format of the salt string:
+     * </p>
      * <ul>
      * <li>SHA-512 salts start with {@code $6$} and are up to 16 chars long.
      * <li>SHA-256 salts start with {@code $5$} and are up to 16 chars long
@@ -119,13 +123,15 @@ public class Crypt {
      * <li>DES, the traditional UnixCrypt algorithm is used with only 2 chars
      * <li>Only the first 8 chars of the passwords are used in the DES algorithm!
      * </ul>
+     * <p>
      * The magic strings {@code "$apr1$"} and {@code "$2a$"} are not recognized by this method as its output should be
      * identical with that of the libc implementation.
+     * </p>
      * <p>
      * The rest of the salt string is drawn from the set {@code [a-zA-Z0-9./]} and is cut at the maximum length of if a
      * {@code "$"} sign is encountered. It is therefore valid to enter a complete hash value as salt to e.g. verify a
      * password with:
-     *
+     * </p>
      * <pre>
      * storedPwd.equals(crypt(enteredPwd, storedPwd))
      * </pre>
@@ -135,6 +141,7 @@ public class Crypt {
      * This is followed by the actual hash value.
      * For DES the string only contains the salt and actual hash.
      * The total length is dependent on the algorithm used:
+     * </p>
      * <ul>
      * <li>SHA-512: 106 chars
      * <li>SHA-256: 63 chars
@@ -143,7 +150,7 @@ public class Crypt {
      * </ul>
      * <p>
      * Example:
-     *
+     * </p>
      * <pre>
      *      crypt("secret", "$1$xxxx") =&gt; "$1$xxxx$aMkevjfEIpa35Bh3G4bAc."
      *      crypt("secret", "xx") =&gt; "xxWAum7tHdIUw"
@@ -151,6 +158,7 @@ public class Crypt {
      * <p>
      * This method comes in a variation that accepts a byte[] array to support input strings that are not encoded in
      * UTF-8 but e.g. in ISO-8859-1 where equal characters result in different byte values.
+     * </p>
      *
      * @see "The man page of the libc crypt (3) function."
      * @param key

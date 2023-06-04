@@ -31,11 +31,14 @@ import java.util.regex.Pattern;
  * <p>
  * Based on the C implementation released into the Public Domain by Ulrich Drepper &lt;drepper@redhat.com&gt;
  * http://www.akkadia.org/drepper/SHA-crypt.txt
+ * </p>
  * <p>
  * Conversion to Kotlin and from there to Java in 2012 by Christian Hammers &lt;ch@lathspell.de&gt; and likewise put
  * into the Public Domain.
+ * </p>
  * <p>
  * This class is immutable and thread-safe.
+ * </p>
  *
  * @since 1.7
  */
@@ -144,8 +147,10 @@ public class Sha2Crypt {
      * <p>
      * This is a nearly line by line conversion of the original C function. The numbered comments are from the algorithm
      * description, the short C-style ones from the original C code and the ones with "Remark" from me.
+     * </p>
      * <p>
      * See {@link Crypt#crypt(String, String)} for details.
+     * </p>
      *
      * @param keyBytes
      *            plaintext to hash

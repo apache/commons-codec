@@ -26,14 +26,18 @@ import java.util.concurrent.ThreadLocalRandom;
  * <p>
  * This class only implements the traditional 56 bit DES based algorithm. Please use DigestUtils.crypt() for a method
  * that distinguishes between all the algorithms supported in the current glibc's crypt().
+ * </p>
  * <p>
  * The Java implementation was taken from the JetSpeed Portal project (see
  * org.apache.jetspeed.services.security.ldap.UnixCrypt).
+ * </p>
  * <p>
  * This class is slightly incompatible if the given salt contains characters that are not part of the allowed range
  * [a-zA-Z0-9./].
+ * </p>
  * <p>
  * This class is immutable and thread-safe.
+ * </p>
  *
  * @since 1.7
  */

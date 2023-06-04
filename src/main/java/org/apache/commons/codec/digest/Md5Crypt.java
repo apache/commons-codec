@@ -147,6 +147,7 @@ public class Md5Crypt {
      * <p>
      * The algorithm is identical to the crypt(3) "$1$" one but produces different outputs due to the different salt
      * prefix.
+     * </p>
      *
      * @param keyBytes
      *            plaintext string to hash.
@@ -168,7 +169,7 @@ public class Md5Crypt {
      * Generates a libc6 crypt() compatible "$1$" hash value.
      * <p>
      * See {@link #md5Crypt(byte[], String)} for details.
-     *</p>
+     * </p>
      * <p>
      * A salt is generated for you using {@link ThreadLocalRandom}; for more secure salts consider using
      * {@link SecureRandom} to generate your own salts and calling {@link #md5Crypt(byte[], String)}.
@@ -188,7 +189,7 @@ public class Md5Crypt {
      * Generates a libc6 crypt() compatible "$1$" hash value.
      * <p>
      * See {@link #md5Crypt(byte[], String)} for details.
-     *</p>
+     * </p>
      * <p>
      * A salt is generated for you using the instance of {@link Random} you supply.
      * </p>

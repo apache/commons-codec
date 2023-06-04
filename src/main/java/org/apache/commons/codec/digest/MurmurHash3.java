@@ -647,9 +647,9 @@ public final class MurmurHash3 {
      */
     @Deprecated
     public static long hash64(final byte[] data, final int offset, final int length, final int seed) {
-        // ************
+        //
         // Note: This fails to apply masking using 0xffffffffL to the seed.
-        // ************
+        //
         long hash = seed;
         final int nblocks = length >> 3;
 
@@ -743,7 +743,9 @@ public final class MurmurHash3 {
      * Before 1.14 the string was converted using default encoding.
      * Since 1.14 the string is converted to bytes using UTF-8 encoding.
      * </p>
+     * <p>
      * This is a helper method that will produce the same result as:
+     * </p>
      *
      * <pre>
      * int offset = 0;
@@ -1112,7 +1114,7 @@ public final class MurmurHash3 {
         }
 
         /**
-         * Generate the 32-bit hash value. Repeat calls to this method with no additional data
+         * Generates the 32-bit hash value. Repeat calls to this method with no additional data
          * will generate the same hash value.
          *
          * @return The 32-bit hash
@@ -1123,7 +1125,7 @@ public final class MurmurHash3 {
         }
 
         /**
-         * Finalize the running hash to the output 32-bit hash by processing remaining bytes
+         * Finalizes the running hash to the output 32-bit hash by processing remaining bytes
          * and performing final mixing.
          *
          * @param hash The running hash

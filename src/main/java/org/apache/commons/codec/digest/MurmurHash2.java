@@ -247,7 +247,9 @@ public final class MurmurHash2 {
      * Before 1.14 the string was converted using default encoding.
      * Since 1.14 the string is converted to bytes using UTF-8 encoding.
      * </p>
+     * <p>
      * This is a helper method that will produce the same result as:
+     * </p>
      *
      * <pre>
      * int seed = 0xe17a1465;

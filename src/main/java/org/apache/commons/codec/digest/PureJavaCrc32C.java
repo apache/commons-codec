@@ -25,19 +25,23 @@ import java.util.zip.Checksum;
 /**
  * A pure-java implementation of the CRC32 checksum that uses
  * the CRC32-C polynomial, the same polynomial used by iSCSI
- * and implemented on many Intel chipsets supporting SSE4.2.
+ * and implemented on many Intel chipsets supporting SSE 4.2.
  *
- * Copied from Hadoop 2.3.6:
+ * <p>
+ * Copied from Apache Hadoop 2.3.6:
  * https://gitbox.apache.org/repos/asf?p=hadoop.git;a=blob_plain;
  * f=hadoop-common-project/hadoop-common/src/main/java/org/apache/hadoop/util/PureJavaCrc32C.java;
  * hb=2120de588b92b9f22b1cc4188761d6a8c61aa778
+ * </p>
  * <p>
  * This class is Not ThreadSafe
+ * </p>
+ *
  * @since 1.11
  */
 public class PureJavaCrc32C implements Checksum {
 
-  /** the current CRC value, bit-flipped */
+  /** The current CRC value, bit-flipped */
   private int crc;
 
   /** Create a new PureJavaCrc32 object. */

@@ -39,8 +39,10 @@ import org.apache.commons.codec.binary.StringUtils;
  * <p>
  * <strong>Note: Not all JCE implementations support all algorithms. If not supported, an IllegalArgumentException is
  * thrown.</strong>
+ * </p>
  * <p>
  * Sample usage:
+ * </p>
  * <pre>
  * import static HmacAlgorithms.*;
  * byte[] key = {1,2,3,4}; // don't use this actual key!
@@ -58,12 +60,12 @@ public final class HmacUtils {
     private static final int STREAM_BUFFER_LENGTH = 1024;
 
     /**
-    * Returns whether this algorithm is available
-    *
-    *@param name the name to check
-    * @return whether this algorithm is available
-    * @since 1.11
-    */
+     * Returns whether this algorithm is available
+     *
+     * @param name the name to check
+     * @return whether this algorithm is available
+     * @since 1.11
+     */
     public static boolean isAvailable(final String name) {
         try {
             Mac.getInstance(name);
@@ -74,12 +76,12 @@ public final class HmacUtils {
     }
 
     /**
-    * Returns whether this algorithm is available
-    *
-    *@param name the name to check
-    * @return whether this algorithm is available
-    * @since 1.11
-    */
+     * Returns whether this algorithm is available
+     *
+     * @param name the name to check
+     * @return whether this algorithm is available
+     * @since 1.11
+     */
     public static boolean isAvailable(final HmacAlgorithms name) {
         try {
             Mac.getInstance(name.getName());
@@ -240,8 +242,6 @@ public final class HmacUtils {
             throw new IllegalArgumentException(e);
         }
     }
-
-    // hmacMd5
 
     /**
      * Returns a HmacMD5 Message Authentication Code (MAC) for the given key and value.
@@ -468,8 +468,6 @@ public final class HmacUtils {
     public static String hmacSha1Hex(final String key, final String valueToDigest) {
         return new HmacUtils(HmacAlgorithms.HMAC_SHA_1, key).hmacHex(valueToDigest);
     }
-
-    // hmacSha256
 
     /**
      * Returns a HmacSHA256 Message Authentication Code (MAC) for the given key and value.
@@ -810,8 +808,6 @@ public final class HmacUtils {
     public static String hmacSha512Hex(final String key, final String valueToDigest) {
         return new HmacUtils(HmacAlgorithms.HMAC_SHA_512, key).hmacHex(valueToDigest);
     }
-
-    // update
 
     /**
      * Resets and then updates the given {@link Mac} with the value.

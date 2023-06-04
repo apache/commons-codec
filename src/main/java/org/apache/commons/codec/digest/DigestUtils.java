@@ -42,10 +42,12 @@ import org.apache.commons.codec.binary.StringUtils;
  * The {@link MessageDigestAlgorithms} class provides constants for standard
  * digest algorithms that can be used with the {@link #getDigest(String)} method
  * and other methods that require the Digest algorithm name.
+ * </p>
  * <p>
  * Note: the class has shorthand methods for all the algorithms present as standard in Java 6.
  * This approach requires lots of methods for each algorithm, and quickly becomes unwieldy.
  * The following code works with all algorithms:
+ * </p>
  * <pre>
  * import static org.apache.commons.codec.digest.MessageDigestAlgorithms.SHA_224;
  * ...
