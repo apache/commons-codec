@@ -39,7 +39,7 @@ import java.util.Objects;
  * Blake3 keyed hashes have the same performance as plain hashes; the key is used in initialization in place of a
  * standard initialization vector used for plain hashing.</p>
  * <pre>{@code
- *      SecureRandom random = new SecureRandom(); // or SecureRandom.getInstanceStrong() in Java 8+
+ *      SecureRandom random = SecureRandom.getInstanceStrong();
  *      byte[] key = new byte[32];
  *      random.nextBytes(key);
  *      Blake3 hasher = Blake3.initKeyedHash(key);
