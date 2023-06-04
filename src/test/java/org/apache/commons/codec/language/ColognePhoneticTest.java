@@ -17,6 +17,10 @@
 
 package org.apache.commons.codec.language;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
@@ -26,10 +30,6 @@ import org.apache.commons.codec.StringEncoderAbstractTest;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.opentest4j.AssertionFailedError;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Tests the {@code ColognePhonetic} class.

@@ -17,6 +17,12 @@
 
 package org.apache.commons.codec.digest;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
+
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
@@ -25,9 +31,6 @@ import org.apache.commons.codec.binary.StringUtils;
 import org.apache.commons.codec.digest.MurmurHash3.IncrementalHash32;
 import org.apache.commons.codec.digest.MurmurHash3.IncrementalHash32x86;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 /**
  * Test for {@link MurmurHash3}.

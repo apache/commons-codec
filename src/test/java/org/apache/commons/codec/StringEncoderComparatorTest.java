@@ -17,6 +17,8 @@
 
 package org.apache.commons.codec;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -24,8 +26,6 @@ import org.apache.commons.codec.language.DoubleMetaphone;
 import org.apache.commons.codec.language.Soundex;
 import org.apache.commons.lang3.ArrayUtils;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Test cases for the StingEncoderComparator.

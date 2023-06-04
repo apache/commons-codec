@@ -17,9 +17,9 @@
 
 package org.apache.commons.codec.binary;
 
-import org.apache.commons.codec.CodecPolicy;
-
 import java.io.OutputStream;
+
+import org.apache.commons.codec.CodecPolicy;
 
 /**
  * Provides Hex encoding and decoding in a streaming fashion (unlimited size).

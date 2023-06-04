@@ -17,6 +17,8 @@
 
 package org.apache.commons.codec;
 
+import java.nio.charset.Charset;
+
 /**
  * Character encoding names required of every implementation of the Java platform.
  *

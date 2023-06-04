@@ -17,9 +17,9 @@
 
 package org.apache.commons.codec;
 
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * Sanity checks for {@link CharEncoding}.

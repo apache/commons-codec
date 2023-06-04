@@ -17,6 +17,8 @@
 
 package org.apache.commons.codec.binary;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+
 import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.codec.BinaryDecoder;
@@ -26,8 +28,6 @@ import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.Encoder;
 import org.apache.commons.codec.EncoderException;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 /**
  * Tests to make sure future versions of commons-codec.jar have identical Base64
