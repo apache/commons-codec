@@ -36,18 +36,23 @@ import org.apache.commons.codec.Resources;
  * <p>
  * This class encapsulates rules used to guess the possible languages that a word originates from. This is
  * done by reference to a whole series of rules distributed in resource files.
+ * </p>
  * <p>
  * Instances of this class are typically managed through the static factory method instance().
  * Unless you are developing your own language guessing rules, you will not need to interact with this class directly.
+ * </p>
  * <p>
  * This class is intended to be immutable and thread-safe.
- * <p>
- * <b>Lang resources</b>
+ * </p>
+ * <h2>Lang resources</h2>
  * <p>
  * Language guessing rules are typically loaded from resource files. These are UTF-8 encoded text files.
  * They are systematically named following the pattern:
+ * </p>
  * <blockquote>org/apache/commons/codec/language/bm/lang.txt</blockquote>
+ * <p>
  * The format of these resources is the following:
+ * </p>
  * <ul>
  * <li><b>Rules:</b> whitespace separated strings.
  * There should be 3 columns to each row, and these will be interpreted as:
@@ -65,6 +70,7 @@ import org.apache.commons.codec.Resources;
  * </ul>
  * <p>
  * Port of lang.php
+ * </p>
  *
  * @since 1.6
  */
@@ -119,6 +125,7 @@ public class Lang {
      * <p>
      * In normal use, you will obtain instances of Lang through the {@link #instance(NameType)} method.
      * You will only need to call this yourself if you are developing custom language mapping rules.
+     * </p>
      *
      * @param languageRulesResourceName
      *            the fully-qualified resource name to load

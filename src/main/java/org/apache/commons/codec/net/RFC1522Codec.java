@@ -56,6 +56,7 @@ abstract class RFC1522Codec {
      * <p>
      * This method constructs the "encoded-word" header common to all the RFC 1522 codecs and then invokes
      * {@link #doEncoding(byte[])}  method of a concrete class to perform the specific encoding.
+     * </p>
      *
      * @param text
      *            a string to encode
@@ -86,6 +87,7 @@ abstract class RFC1522Codec {
      * <p>
      * This method constructs the "encoded-word" header common to all the RFC 1522 codecs and then invokes
      * {@link #doEncoding(byte[])}  method of a concrete class to perform the specific encoding.
+     * </p>
      *
      * @param text
      *            a string to encode
@@ -112,6 +114,7 @@ abstract class RFC1522Codec {
      * <p>
      * This method processes the "encoded-word" header common to all the RFC 1522 codecs and then invokes
      * {@link #doDecoding(byte[])}  method of a concrete class to perform the specific decoding.
+     * </p>
      *
      * @param text
      *            a string to decode

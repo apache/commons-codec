@@ -26,13 +26,19 @@ package org.apache.commons.codec.language.bm;
  */
 public enum NameType {
 
-    /** Ashkenazi family names */
+    /**
+     * Ashkenazi family names.
+     */
     ASHKENAZI("ash"),
 
-    /** Generic names and words */
+    /**
+     * Generic names and words.
+     */
     GENERIC("gen"),
 
-    /** Sephardic family names */
+    /**
+     * Sephardic family names.
+     */
     SEPHARDIC("sep");
 
     private final String name;

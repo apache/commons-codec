@@ -41,12 +41,15 @@ import org.apache.commons.codec.language.bm.Rule.Phoneme;
  * into account the likely source language. Next, this phonetic representation is converted into a
  * pan-European 'average' representation, allowing comparison between different versions of essentially
  * the same word from different languages.
+ * </p>
  * <p>
  * This class is intentionally immutable and thread-safe.
  * If you wish to alter the settings for a PhoneticEngine, you
  * must make a new one with the updated settings.
+ * </p>
  * <p>
  * Ported from phoneticengine.php
+ * </p>
  *
  * @since 1.6
  */
@@ -97,6 +100,7 @@ public class PhoneticEngine {
          * <p>
          * This will lengthen phonemes that have compatible language sets to the expression, and drop those that are
          * incompatible.
+         * </p>
          *
          * @param phonemeExpr   the expression to apply
          * @param maxPhonemes   the maximum number of phonemes to build up
@@ -237,6 +241,7 @@ public class PhoneticEngine {
 
     /**
      * Joins some strings with an internal separator.
+     *
      * @param strings   Strings to join
      * @param sep       String to separate them with
      * @return a single String consisting of each element of {@code strings} interleaved by {@code sep}

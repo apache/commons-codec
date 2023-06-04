@@ -247,6 +247,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * <p>
      * This function implements a subset of quoted-printable encoding specification (rule #1 and rule #2) as defined in
      * RFC 1521 and is suitable for encoding binary data and unformatted text.
+     * </p>
      *
      * @param printable
      *            bitset of characters deemed quoted-printable
@@ -264,6 +265,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * Depending on the selection of the {@code strict} parameter, this function either implements the full ruleset
      * or only a subset of quoted-printable encoding specification (rule #1 and rule #2) as defined in
      * RFC 1521 and is suitable for encoding binary data and unformatted text.
+     * </p>
      *
      * @param printable
      *            bitset of characters deemed quoted-printable
@@ -347,6 +349,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * <p>
      * This function fully implements the quoted-printable encoding specification (rule #1 through rule #5) as
      * defined in RFC 1521.
+     * </p>
      *
      * @param bytes
      *            array of quoted-printable characters
@@ -387,6 +390,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * Depending on the selection of the {@code strict} parameter, this function either implements the full ruleset
      * or only a subset of quoted-printable encoding specification (rule #1 and rule #2) as defined in
      * RFC 1521 and is suitable for encoding binary data and unformatted text.
+     * </p>
      *
      * @param bytes
      *            array of bytes to be encoded
@@ -403,6 +407,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * <p>
      * This function fully implements the quoted-printable encoding specification (rule #1 through rule #5) as
      * defined in RFC 1521.
+     * </p>
      *
      * @param bytes
      *            array of quoted-printable characters
@@ -421,6 +426,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * Depending on the selection of the {@code strict} parameter, this function either implements the full ruleset
      * or only a subset of quoted-printable encoding specification (rule #1 and rule #2) as defined in
      * RFC 1521 and is suitable for encoding binary data and unformatted text.
+     * </p>
      *
      * @param sourceStr
      *            string to convert to quoted-printable form
@@ -571,6 +577,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * Depending on the selection of the {@code strict} parameter, this function either implements the full ruleset
      * or only a subset of quoted-printable encoding specification (rule #1 and rule #2) as defined in
      * RFC 1521 and is suitable for encoding binary data and unformatted text.
+     * </p>
      *
      * @param sourceStr
      *            string to convert to quoted-printable form
@@ -592,6 +599,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * Depending on the selection of the {@code strict} parameter, this function either implements the full ruleset
      * or only a subset of quoted-printable encoding specification (rule #1 and rule #2) as defined in
      * RFC 1521 and is suitable for encoding binary data and unformatted text.
+     * </p>
      *
      * @param sourceStr
      *            string to convert to quoted-printable form
