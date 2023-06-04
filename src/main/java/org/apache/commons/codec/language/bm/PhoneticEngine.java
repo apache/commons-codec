@@ -55,6 +55,34 @@ import org.apache.commons.codec.language.bm.Rule.Phoneme;
  */
 public class PhoneticEngine {
 
+    private static final int DEFAULT_MAX_PHONEMES = 20;
+
+    private static final Map<NameType, Set<String>> NAME_PREFIXES = new EnumMap<>(NameType.class);
+
+    private final Lang lang;
+
+    private final NameType nameType;
+
+    private final RuleType ruleType;
+
+    private final boolean concat;
+
+    private final int maxPhonemes;
+
+    static {
+        NAME_PREFIXES.put(NameType.ASHKENAZI,
+                Collections.unmodifiableSet(
+                        new HashSet<>(Arrays.asList("bar", "ben", "da", "de", "van", "von"))));
+        NAME_PREFIXES.put(NameType.SEPHARDIC,
+                Collections.unmodifiableSet(
+                        new HashSet<>(Arrays.asList("al", "el", "da", "dal", "de", "del", "dela", "de la",
+                                                          "della", "des", "di", "do", "dos", "du", "van", "von"))));
+        NAME_PREFIXES.put(NameType.GENERIC,
+                Collections.unmodifiableSet(
+                        new HashSet<>(Arrays.asList("da", "dal", "de", "del", "dela", "de la", "della",
+                                                          "des", "di", "do", "dos", "du", "van", "von"))));
+    }
+
     /**
      * Utility for manipulating a set of phonemes as they are being built up. Not intended for use outside
      * this package, and probably not outside the {@link PhoneticEngine} class.
@@ -62,6 +90,8 @@ public class PhoneticEngine {
      * @since 1.6
      */
     static final class PhonemeBuilder {
+
+        private final Set<Rule.Phoneme> phonemes;
 
         /**
          * An empty builder where all phonemes must come from some set of languages. This will contain a single
@@ -74,8 +104,6 @@ public class PhoneticEngine {
         public static PhonemeBuilder empty(final Languages.LanguageSet languages) {
             return new PhonemeBuilder(new Rule.Phoneme("", languages));
         }
-
-        private final Set<Rule.Phoneme> phonemes;
 
         private PhonemeBuilder(final Rule.Phoneme phoneme) {
             this.phonemes = new LinkedHashSet<>();
@@ -223,22 +251,6 @@ public class PhoneticEngine {
         }
     }
 
-    private static final Map<NameType, Set<String>> NAME_PREFIXES = new EnumMap<>(NameType.class);
-
-    static {
-        NAME_PREFIXES.put(NameType.ASHKENAZI,
-                Collections.unmodifiableSet(
-                        new HashSet<>(Arrays.asList("bar", "ben", "da", "de", "van", "von"))));
-        NAME_PREFIXES.put(NameType.SEPHARDIC,
-                Collections.unmodifiableSet(
-                        new HashSet<>(Arrays.asList("al", "el", "da", "dal", "de", "del", "dela", "de la",
-                                                          "della", "des", "di", "do", "dos", "du", "van", "von"))));
-        NAME_PREFIXES.put(NameType.GENERIC,
-                Collections.unmodifiableSet(
-                        new HashSet<>(Arrays.asList("da", "dal", "de", "del", "dela", "de la", "della",
-                                                          "des", "di", "do", "dos", "du", "van", "von"))));
-    }
-
     /**
      * Joins some strings with an internal separator.
      *
@@ -249,18 +261,6 @@ public class PhoneticEngine {
     private static String join(final List<String> strings, final String sep) {
         return strings.stream().collect(Collectors.joining(sep));
     }
-
-    private static final int DEFAULT_MAX_PHONEMES = 20;
-
-    private final Lang lang;
-
-    private final NameType nameType;
-
-    private final RuleType ruleType;
-
-    private final boolean concat;
-
-    private final int maxPhonemes;
 
     /**
      * Generates a new, fully-configured phonetic engine.

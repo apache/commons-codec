@@ -60,6 +60,8 @@ public class DigestUtils {
 
     private static final int STREAM_BUFFER_LENGTH = 1024;
 
+    private final MessageDigest messageDigest;
+
     /**
      * Reads through a byte array and returns the digest for the data. Provided for symmetry with other methods.
      *
@@ -1524,8 +1526,6 @@ public class DigestUtils {
         messageDigest.update(StringUtils.getBytesUtf8(valueToDigest));
         return messageDigest;
     }
-
-    private final MessageDigest messageDigest;
 
    /**
     * Preserves binary compatibility only.

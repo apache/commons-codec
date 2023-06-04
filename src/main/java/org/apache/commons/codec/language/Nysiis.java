@@ -92,6 +92,9 @@ public class Nysiis implements StringEncoder {
     private static final char SPACE = ' ';
     private static final int TRUE_LENGTH = 6;
 
+    /** Indicates the strict mode. */
+    private final boolean strict;
+
     /**
      * Tests if the given character is a vowel.
      *
@@ -170,9 +173,6 @@ public class Nysiis implements StringEncoder {
 
         return new char[] { curr };
     }
-
-    /** Indicates the strict mode. */
-    private final boolean strict;
 
     /**
      * Creates an instance of the {@link Nysiis} encoder with strict mode (original form),

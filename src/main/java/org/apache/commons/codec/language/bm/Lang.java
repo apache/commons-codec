@@ -83,6 +83,14 @@ public class Lang {
     // guessing rules, perhaps by marking it protected and allowing sub-classing. However, the vast majority of users
     // should be strongly encouraged to use the static factory {@code instance} method to get their Lang instances.
 
+    private static final Map<NameType, Lang> LANGS = new EnumMap<>(NameType.class);
+
+    private static final String LANGUAGE_RULES_RN = "org/apache/commons/codec/language/bm/%s_lang.txt";
+
+    private final Languages languages;
+
+    private final List<LangRule> rules;
+
     private static final class LangRule {
         private final boolean acceptOnMatch;
         private final Set<String> languages;
@@ -98,10 +106,6 @@ public class Lang {
             return this.pattern.matcher(txt).find();
         }
     }
-
-    private static final Map<NameType, Lang> LANGS = new EnumMap<>(NameType.class);
-
-    private static final String LANGUAGE_RULES_RN = "org/apache/commons/codec/language/bm/%s_lang.txt";
 
     static {
         for (final NameType s : NameType.values()) {
@@ -180,9 +184,6 @@ public class Lang {
         }
         return new Lang(rules, languages);
     }
-
-    private final Languages languages;
-    private final List<LangRule> rules;
 
     private Lang(final List<LangRule> rules, final Languages languages) {
         this.rules = Collections.unmodifiableList(rules);

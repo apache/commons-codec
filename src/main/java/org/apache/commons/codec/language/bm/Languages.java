@@ -65,6 +65,92 @@ public class Languages {
     // languages, and a second part that provides instance methods for accessing
     // this set for supported languages.
 
+    public static final String ANY = "any";
+
+    private static final Map<NameType, Languages> LANGUAGES = new EnumMap<>(NameType.class);
+
+    /**
+     * No languages at all.
+     */
+    public static final LanguageSet NO_LANGUAGES = new LanguageSet() {
+        @Override
+        public boolean contains(final String language) {
+            return false;
+        }
+
+        @Override
+        public String getAny() {
+            throw new NoSuchElementException("Can't fetch any language from the empty language set.");
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return true;
+        }
+
+        @Override
+        public boolean isSingleton() {
+            return false;
+        }
+
+        @Override
+        public LanguageSet restrictTo(final LanguageSet other) {
+            return this;
+        }
+
+        @Override
+        public LanguageSet merge(final LanguageSet other) {
+            return other;
+        }
+
+        @Override
+        public String toString() {
+            return "NO_LANGUAGES";
+        }
+    };
+
+    /**
+     * Any/all languages.
+     */
+    public static final LanguageSet ANY_LANGUAGE = new LanguageSet() {
+        @Override
+        public boolean contains(final String language) {
+            return true;
+        }
+
+        @Override
+        public String getAny() {
+            throw new NoSuchElementException("Can't fetch any language from the any language set.");
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return false;
+        }
+
+        @Override
+        public boolean isSingleton() {
+            return false;
+        }
+
+        @Override
+        public LanguageSet restrictTo(final LanguageSet other) {
+            return other;
+        }
+
+        @Override
+        public LanguageSet merge(final LanguageSet other) {
+            return other;
+        }
+
+        @Override
+        public String toString() {
+            return "ANY_LANGUAGE";
+        }
+    };
+
+    private final Set<String> languages;
+
     /**
      * A set of languages.
      */
@@ -154,10 +240,6 @@ public class Languages {
 
     }
 
-    public static final String ANY = "any";
-
-    private static final Map<NameType, Languages> LANGUAGES = new EnumMap<>(NameType.class);
-
     static {
         for (final NameType s : NameType.values()) {
             LANGUAGES.put(s, getInstance(langResourceName(s)));
@@ -193,88 +275,6 @@ public class Languages {
     private static String langResourceName(final NameType nameType) {
         return String.format("org/apache/commons/codec/language/bm/%s_languages.txt", nameType.getName());
     }
-
-    private final Set<String> languages;
-
-    /**
-     * No languages at all.
-     */
-    public static final LanguageSet NO_LANGUAGES = new LanguageSet() {
-        @Override
-        public boolean contains(final String language) {
-            return false;
-        }
-
-        @Override
-        public String getAny() {
-            throw new NoSuchElementException("Can't fetch any language from the empty language set.");
-        }
-
-        @Override
-        public boolean isEmpty() {
-            return true;
-        }
-
-        @Override
-        public boolean isSingleton() {
-            return false;
-        }
-
-        @Override
-        public LanguageSet restrictTo(final LanguageSet other) {
-            return this;
-        }
-
-        @Override
-        public LanguageSet merge(final LanguageSet other) {
-            return other;
-        }
-
-        @Override
-        public String toString() {
-            return "NO_LANGUAGES";
-        }
-    };
-
-    /**
-     * Any/all languages.
-     */
-    public static final LanguageSet ANY_LANGUAGE = new LanguageSet() {
-        @Override
-        public boolean contains(final String language) {
-            return true;
-        }
-
-        @Override
-        public String getAny() {
-            throw new NoSuchElementException("Can't fetch any language from the any language set.");
-        }
-
-        @Override
-        public boolean isEmpty() {
-            return false;
-        }
-
-        @Override
-        public boolean isSingleton() {
-            return false;
-        }
-
-        @Override
-        public LanguageSet restrictTo(final LanguageSet other) {
-            return other;
-        }
-
-        @Override
-        public LanguageSet merge(final LanguageSet other) {
-            return other;
-        }
-
-        @Override
-        public String toString() {
-            return "ANY_LANGUAGE";
-        }
-    };
 
     private Languages(final Set<String> languages) {
         this.languages = languages;

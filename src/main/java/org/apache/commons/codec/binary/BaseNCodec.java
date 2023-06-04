@@ -52,74 +52,6 @@ import org.apache.commons.codec.EncoderException;
 public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
 
     /**
-     * Holds thread context so classes can be thread-safe.
-     *
-     * This class is not itself thread-safe; each thread must allocate its own copy.
-     *
-     * @since 1.7
-     */
-    static class Context {
-
-        /**
-         * Placeholder for the bytes we're dealing with for our based logic.
-         * Bitwise operations store and extract the encoding or decoding from this variable.
-         */
-        int ibitWorkArea;
-
-        /**
-         * Placeholder for the bytes we're dealing with for our based logic.
-         * Bitwise operations store and extract the encoding or decoding from this variable.
-         */
-        long lbitWorkArea;
-
-        /**
-         * Buffer for streaming.
-         */
-        byte[] buffer;
-
-        /**
-         * Position where next character should be written in the buffer.
-         */
-        int pos;
-
-        /**
-         * Position where next character should be read from the buffer.
-         */
-        int readPos;
-
-        /**
-         * Boolean flag to indicate the EOF has been reached. Once EOF has been reached, this object becomes useless,
-         * and must be thrown away.
-         */
-        boolean eof;
-
-        /**
-         * Variable tracks how many characters have been written to the current line. Only used when encoding. We use
-         * it to make sure each encoded line never goes beyond lineLength (if lineLength &gt; 0).
-         */
-        int currentLinePos;
-
-        /**
-         * Writes to the buffer only occur after every 3/5 reads when encoding, and every 4/8 reads when decoding. This
-         * variable helps track that.
-         */
-        int modulus;
-
-        /**
-         * Returns a String useful for debugging (especially within a debugger.)
-         *
-         * @return a String useful for debugging.
-         */
-        @SuppressWarnings("boxing") // OK to ignore boxing here
-        @Override
-        public String toString() {
-            return String.format("%s[buffer=%s, currentLinePos=%s, eof=%s, ibitWorkArea=%s, lbitWorkArea=%s, " +
-                    "modulus=%s, pos=%s, readPos=%s]", this.getClass().getSimpleName(), Arrays.toString(buffer),
-                    currentLinePos, eof, ibitWorkArea, lbitWorkArea, modulus, pos, readPos);
-        }
-    }
-
-    /**
      * EOF
      *
      * @since 1.7
@@ -190,6 +122,122 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045 section 2.1</a>
      */
     static final byte[] CHUNK_SEPARATOR = {'\r', '\n'};
+
+    /**
+     * @deprecated Use {@link #pad}. Will be removed in 2.0.
+     */
+    @Deprecated
+    protected final byte PAD = PAD_DEFAULT; // instance variable just in case it needs to vary later
+
+    /** Pad byte. Instance variable just in case it needs to vary later. */
+    protected final byte pad;
+
+    /** Number of bytes in each full block of unencoded data, e.g. 4 for Base64 and 5 for Base32 */
+    private final int unencodedBlockSize;
+
+    /** Number of bytes in each full block of encoded data, e.g. 3 for Base64 and 8 for Base32 */
+    private final int encodedBlockSize;
+
+    /**
+     * Chunksize for encoding. Not used when decoding.
+     * A value of zero or less implies no chunking of the encoded data.
+     * Rounded down to the nearest multiple of encodedBlockSize.
+     */
+    protected final int lineLength;
+
+    /**
+     * Size of chunk separator. Not used unless {@link #lineLength} &gt; 0.
+     */
+    private final int chunkSeparatorLength;
+
+    /**
+     * Defines the decoding behavior when the input bytes contain leftover trailing bits that
+     * cannot be created by a valid encoding. These can be bits that are unused from the final
+     * character or entire characters. The default mode is lenient decoding. Set this to
+     * {@code true} to enable strict decoding.
+     * <ul>
+     * <li>Lenient: Any trailing bits are composed into 8-bit bytes where possible.
+     *     The remainder are discarded.
+     * <li>Strict: The decoding will raise an {@link IllegalArgumentException} if trailing bits
+     *     are not part of a valid encoding. Any unused bits from the final character must
+     *     be zero. Impossible counts of entire final characters are not allowed.
+     * </ul>
+     * <p>
+     * When strict decoding is enabled it is expected that the decoded bytes will be re-encoded
+     * to a byte array that matches the original, i.e. no changes occur on the final
+     * character. This requires that the input bytes use the same padding and alphabet
+     * as the encoder.
+     * </p>
+     */
+    private final CodecPolicy decodingPolicy;
+
+    /**
+     * Holds thread context so classes can be thread-safe.
+     *
+     * This class is not itself thread-safe; each thread must allocate its own copy.
+     *
+     * @since 1.7
+     */
+    static class Context {
+
+        /**
+         * Placeholder for the bytes we're dealing with for our based logic.
+         * Bitwise operations store and extract the encoding or decoding from this variable.
+         */
+        int ibitWorkArea;
+
+        /**
+         * Placeholder for the bytes we're dealing with for our based logic.
+         * Bitwise operations store and extract the encoding or decoding from this variable.
+         */
+        long lbitWorkArea;
+
+        /**
+         * Buffer for streaming.
+         */
+        byte[] buffer;
+
+        /**
+         * Position where next character should be written in the buffer.
+         */
+        int pos;
+
+        /**
+         * Position where next character should be read from the buffer.
+         */
+        int readPos;
+
+        /**
+         * Boolean flag to indicate the EOF has been reached. Once EOF has been reached, this object becomes useless,
+         * and must be thrown away.
+         */
+        boolean eof;
+
+        /**
+         * Variable tracks how many characters have been written to the current line. Only used when encoding. We use
+         * it to make sure each encoded line never goes beyond lineLength (if lineLength &gt; 0).
+         */
+        int currentLinePos;
+
+        /**
+         * Writes to the buffer only occur after every 3/5 reads when encoding, and every 4/8 reads when decoding. This
+         * variable helps track that.
+         */
+        int modulus;
+
+        /**
+         * Returns a String useful for debugging (especially within a debugger.)
+         *
+         * @return a String useful for debugging.
+         */
+        @SuppressWarnings("boxing") // OK to ignore boxing here
+        @Override
+        public String toString() {
+            return String.format("%s[buffer=%s, currentLinePos=%s, eof=%s, ibitWorkArea=%s, lbitWorkArea=%s, " +
+                    "modulus=%s, pos=%s, readPos=%s]", this.getClass().getSimpleName(), Arrays.toString(buffer),
+                    currentLinePos, eof, ibitWorkArea, lbitWorkArea, modulus, pos, readPos);
+        }
+    }
 
     /**
      * Create a positive capacity at least as large the minimum required capacity.
@@ -268,54 +316,6 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         context.buffer = b;
         return b;
     }
-
-    /**
-     * @deprecated Use {@link #pad}. Will be removed in 2.0.
-     */
-    @Deprecated
-    protected final byte PAD = PAD_DEFAULT; // instance variable just in case it needs to vary later
-
-    /** Pad byte. Instance variable just in case it needs to vary later. */
-    protected final byte pad;
-
-    /** Number of bytes in each full block of unencoded data, e.g. 4 for Base64 and 5 for Base32 */
-    private final int unencodedBlockSize;
-
-    /** Number of bytes in each full block of encoded data, e.g. 3 for Base64 and 8 for Base32 */
-    private final int encodedBlockSize;
-
-    /**
-     * Chunksize for encoding. Not used when decoding.
-     * A value of zero or less implies no chunking of the encoded data.
-     * Rounded down to the nearest multiple of encodedBlockSize.
-     */
-    protected final int lineLength;
-
-    /**
-     * Size of chunk separator. Not used unless {@link #lineLength} &gt; 0.
-     */
-    private final int chunkSeparatorLength;
-
-    /**
-     * Defines the decoding behavior when the input bytes contain leftover trailing bits that
-     * cannot be created by a valid encoding. These can be bits that are unused from the final
-     * character or entire characters. The default mode is lenient decoding. Set this to
-     * {@code true} to enable strict decoding.
-     * <ul>
-     * <li>Lenient: Any trailing bits are composed into 8-bit bytes where possible.
-     *     The remainder are discarded.
-     * <li>Strict: The decoding will raise an {@link IllegalArgumentException} if trailing bits
-     *     are not part of a valid encoding. Any unused bits from the final character must
-     *     be zero. Impossible counts of entire final characters are not allowed.
-     * </ul>
-     * <p>
-     * When strict decoding is enabled it is expected that the decoded bytes will be re-encoded
-     * to a byte array that matches the original, i.e. no changes occur on the final
-     * character. This requires that the input bytes use the same padding and alphabet
-     * as the encoder.
-     * </p>
-     */
-    private final CodecPolicy decodingPolicy;
 
     /**
      * Note {@code lineLength} is rounded down to the nearest multiple of the encoded block size.

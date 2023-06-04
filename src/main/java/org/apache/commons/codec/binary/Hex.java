@@ -63,6 +63,8 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
     private static final char[] DIGITS_UPPER = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D',
             'E', 'F' };
 
+    private final Charset charset;
+
     /**
      * Converts an array of characters representing hexadecimal values into an array of bytes of those same values. The
      * returned array will be half the length of the passed array, as it takes two characters to represent any given
@@ -370,8 +372,6 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
         }
         return digit;
     }
-
-    private final Charset charset;
 
     /**
      * Creates a new codec with the default charset name {@link #DEFAULT_CHARSET}

@@ -59,6 +59,8 @@ public final class HmacUtils {
 
     private static final int STREAM_BUFFER_LENGTH = 1024;
 
+    private final Mac mac;
+
     /**
      * Returns whether this algorithm is available
      *
@@ -881,8 +883,6 @@ public final class HmacUtils {
     public HmacUtils() {
         this(null);
     }
-
-    private final Mac mac;
 
     private HmacUtils(final Mac mac) {
         this.mac = mac;
