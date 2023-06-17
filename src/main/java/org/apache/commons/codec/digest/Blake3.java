@@ -83,7 +83,9 @@ public final class Blake3 {
     private static final int CHUNK_LEN = 1024;
     private static final int CHAINING_VALUE_INTS = 8;
 
-    // standard hash key used for plain hashes; same initialization vector as Blake2s
+    /**
+     * Standard hash key used for plain hashes; same initialization vector as Blake2s.
+     */
     private static final int[] IV =
             { 0x6A09E667, 0xBB67AE85, 0x3C6EF372, 0xA54FF53A, 0x510E527F, 0x9B05688C, 0x1F83D9AB, 0x5BE0CD19 };
 
@@ -294,7 +296,9 @@ public final class Blake3 {
         return values;
     }
 
-    // The mixing function, G, which mixes either a column or a diagonal.
+    /**
+     * The mixing function, G, which mixes either a column or a diagonal.
+     */
     private static void g(
             final int[] state, final int a, final int b, final int c, final int d, final int mx, final int my) {
         state[a] += state[b] + mx;
