@@ -27,17 +27,8 @@
             <item name="Overview"        href="/index.html"/>
             <item name="Download"        href="https://commons.apache.org/codec/download_codec.cgi"/>
             <item name="Users guide"     href="/userguide.html"/>
-            <item name="Javadoc current" href="/apidocs/index.html"/>
-            <item name="Javadoc 1.16"    href="/archives/1.16/apidocs/index.html"/>
-            <item name="Javadoc 1.15"    href="/archives/1.15/apidocs/index.html"/>
-            <item name="Javadoc 1.14"    href="/archives/1.14/apidocs/index.html"/>
-            <item name="Javadoc 1.13"    href="/archives/1.13/apidocs/index.html"/>
-            <item name="Javadoc 1.12"    href="/archives/1.12/apidocs/index.html"/>
-            <item name="Javadoc 1.11"    href="/archives/1.11/apidocs/index.html"/>
-            <item name="Javadoc 1.10"    href="/archives/1.10/apidocs/index.html"/>
-            <item name="Javadoc 1.9"     href="/archives/1.9/apidocs/index.html"/>
-            <item name="Javadoc 1.8"     href="/archives/1.8/apidocs/index.html"/>
-            <item name="Javadoc 1.7"     href="/archives/1.7/apidocs/index.html"/>
+            <item name="Javadoc Current" href="/apidocs/index.html"/>
+            <item name="Javadoc Archive" href="https://javadoc.io/doc/commons-codec/commons-codec"/>
         </menu>
 
         <menu name="Development">
