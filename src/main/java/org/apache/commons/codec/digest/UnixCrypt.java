@@ -304,7 +304,6 @@ public class UnixCrypt {
             right = t;
         }
 
-        t = right;
         right = left >>> 1 | left << 31;
         left = t >>> 1 | t << 31;
         final int[] results = new int[2];

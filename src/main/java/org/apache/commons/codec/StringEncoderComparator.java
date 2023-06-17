@@ -72,7 +72,7 @@ public class StringEncoderComparator implements Comparator {
     @Override
     public int compare(final Object o1, final Object o2) {
 
-        int compareCode = 0;
+        int compareCode;
 
         try {
             @SuppressWarnings("unchecked") // May fail with CCE if encode returns something that is not Comparable
