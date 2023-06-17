@@ -119,19 +119,22 @@ public final class Blake3 {
 
     /**
      * Resets this instance back to its initial state when it was first constructed.
+     * @return this
      */
-    public void reset() {
+    public Blake3 reset() {
         engineState.reset();
+        return this;
     }
 
     /**
      * Updates this hash state using the provided bytes.
      *
      * @param in source array to update data from
+     * @return this
      * @throws NullPointerException if in is null
      */
-    public void update(final byte[] in) {
-        update(in, 0, in.length);
+    public Blake3 update(final byte[] in) {
+        return update(in, 0, in.length);
     }
 
     /**
@@ -140,13 +143,15 @@ public final class Blake3 {
      * @param in     source array to update data from
      * @param offset where in the array to begin reading bytes
      * @param length number of bytes to update
+     * @return this
      * @throws NullPointerException      if in is null
      * @throws IndexOutOfBoundsException if offset or length are negative or if offset + length is greater than the
      *                                   length of the provided array
      */
-    public void update(final byte[] in, final int offset, final int length) {
+    public Blake3 update(final byte[] in, final int offset, final int length) {
         checkBufferArgs(in, offset, length);
         engineState.inputData(in, offset, length);
+        return this;
     }
 
     /**
@@ -154,10 +159,11 @@ public final class Blake3 {
      * previously finalized bytes. Note that this can finalize up to 2<sup>64</sup> bytes per instance.
      *
      * @param out destination array to finalize bytes into
+     * @return this
      * @throws NullPointerException if out is null
      */
-    public void doFinalize(final byte[] out) {
-        doFinalize(out, 0, out.length);
+    public Blake3 doFinalize(final byte[] out) {
+        return doFinalize(out, 0, out.length);
     }
 
     /**
@@ -167,13 +173,15 @@ public final class Blake3 {
      * @param out    destination array to finalize bytes into
      * @param offset where in the array to begin writing bytes to
      * @param length number of bytes to finalize
+     * @return this
      * @throws NullPointerException      if out is null
      * @throws IndexOutOfBoundsException if offset or length are negative or if offset + length is greater than the
      *                                   length of the provided array
      */
-    public void doFinalize(final byte[] out, final int offset, final int length) {
+    public Blake3 doFinalize(final byte[] out, final int offset, final int length) {
         checkBufferArgs(out, offset, length);
         engineState.outputHash(out, offset, length);
+        return this;
     }
 
     /**
@@ -244,9 +252,7 @@ public final class Blake3 {
      * @throws NullPointerException if data is null
      */
     public static byte[] hash(final byte[] data) {
-        final Blake3 blake3 = Blake3.initHash();
-        blake3.update(data);
-        return blake3.doFinalize(OUT_LEN);
+        return Blake3.initHash().update(data).doFinalize(OUT_LEN);
     }
 
     /**
@@ -258,9 +264,7 @@ public final class Blake3 {
      * @throws NullPointerException if key or data are null
      */
     public static byte[] keyedHash(final byte[] key, final byte[] data) {
-        final Blake3 blake3 = Blake3.initKeyedHash(key);
-        blake3.update(data);
-        return blake3.doFinalize(OUT_LEN);
+        return Blake3.initKeyedHash(key).update(data).doFinalize(OUT_LEN);
     }
 
     private static void checkBufferArgs(final byte[] buffer, final int offset, final int length) {

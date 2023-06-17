@@ -281,8 +281,7 @@ public class Blake3TestVectorsTest {
     @MethodSource("data")
     public void hashArbitraryOutputLength(final int inputLength, final String hash, final String keyedHash, final String deriveKey) throws DecoderException {
         initData(inputLength, hash, keyedHash, deriveKey);
-        hasher.update(inputByteArray);
-        final byte[] actual = hasher.doFinalize(hashByteArray.length);
+        final byte[] actual = hasher.update(inputByteArray).doFinalize(hashByteArray.length);
         assertArrayEquals(hashByteArray, actual);
     }
 
@@ -298,8 +297,7 @@ public class Blake3TestVectorsTest {
     @MethodSource("data")
     public void keyedHashArbitraryOutputLength(final int inputLength, final String hash, final String keyedHash, final String deriveKey) throws DecoderException {
         initData(inputLength, hash, keyedHash, deriveKey);
-        keyedHasher.update(inputByteArray);
-        final byte[] actual = keyedHasher.doFinalize(keyedHashByteArray.length);
+        final byte[] actual = keyedHasher.update(inputByteArray).doFinalize(keyedHashByteArray.length);
         assertArrayEquals(keyedHashByteArray, actual);
     }
 
@@ -315,11 +313,9 @@ public class Blake3TestVectorsTest {
     @MethodSource("data")
     public void keyDerivation(final int inputLength, final String hash, final String keyedHash, final String deriveKey) throws DecoderException {
         initData(inputLength, hash, keyedHash, deriveKey);
-        kdfHasher.update(inputByteArray);
-        final byte[] actual = kdfHasher.doFinalize(deriveKeyByteArray.length);
+        final byte[] actual = kdfHasher.update(inputByteArray).doFinalize(deriveKeyByteArray.length);
         assertArrayEquals(deriveKeyByteArray, actual);
-        kdfHasher.reset();
-        kdfHasher.update(inputByteArray);
+        kdfHasher.reset().update(inputByteArray);
         final byte[] truncated = kdfHasher.doFinalize(32);
         assertArrayEquals(Arrays.copyOf(deriveKeyByteArray, 32), truncated);
     }
