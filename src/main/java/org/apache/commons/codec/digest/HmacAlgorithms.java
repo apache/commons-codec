@@ -33,7 +33,7 @@ package org.apache.commons.codec.digest;
  * @see <a href=
  *      "https://docs.oracle.com/en/java/javase/17/security/oracle-providers.html#GUID-A47B1249-593C-4C38-A0D0-68FA7681E0A7">
  *      Java 17 Cryptography Architecture Sun Providers Documentation</a>
- *      
+ *
  * @since 1.10
  */
 public enum HmacAlgorithms {
