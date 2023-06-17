@@ -25,10 +25,6 @@ package org.apache.commons.codec.digest;
  * <strong>Note: Not all JCE implementations support all the algorithms in this enum.</strong>
  * </p>
  *
- * @see <a href="http://docs.oracle.com/javase/6/docs/technotes/guides/security/SunProviders.html#SunJCEProvider"> Java
- *      6 Cryptography Architecture Sun Providers Documentation</a>
- * @see <a href="http://docs.oracle.com/javase/7/docs/technotes/guides/security/SunProviders.html#SunJCEProvider"> Java
- *      7 Cryptography Architecture Sun Providers Documentation</a>
  * @see <a href="http://docs.oracle.com/javase/8/docs/technotes/guides/security/SunProviders.html#SunJCEProvider"> Java
  *      8 Cryptography Architecture Sun Providers Documentation</a>
  * @see <a href=
