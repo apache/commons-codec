@@ -57,7 +57,7 @@ import java.security.MessageDigest;
  * @see <a href="https://docs.oracle.com/en/java/javase/19/docs/specs/security/standard-names.html#messagedigest-algorithms">
  *      Java 19 Cryptography Architecture Standard Algorithm Name Documentation</a>
  * @see <a href="https://docs.oracle.com/en/java/javase/20/docs/specs/security/standard-names.html#messagedigest-algorithms">
- *      Java  Cryptography Architecture Standard Algorithm Name Documentation</a>
+ *      Java 20 Cryptography Architecture Standard Algorithm Name Documentation</a>
  *
  * @see <a href="http://dx.doi.org/10.6028/NIST.FIPS.180-4">FIPS PUB 180-4</a>
  * @see <a href="http://dx.doi.org/10.6028/NIST.FIPS.202">FIPS PUB 202</a>
