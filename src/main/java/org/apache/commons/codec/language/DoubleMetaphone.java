@@ -665,10 +665,7 @@ public class DoubleMetaphone implements StringEncoder {
      * Handles 'T' cases.
      */
     private int handleT(final String value, final DoubleMetaphoneResult result, int index) {
-        if (contains(value, index, 4, "TION")) {
-            result.append('X');
-            index += 3;
-        } else if (contains(value, index, 3, "TIA", "TCH")) {
+        if (contains(value, index, 4, "TION") || contains(value, index, 3, "TIA", "TCH")) {
             result.append('X');
             index += 3;
         } else if (contains(value, index, 2, "TH") || contains(value, index, 3, "TTH")) {
