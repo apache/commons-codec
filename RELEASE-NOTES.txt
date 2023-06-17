@@ -1,4 +1,4 @@
-              Apache Commons Codec 1.16 RELEASE NOTES
+              Apache Commons Codec 1.16.0
 
 The Apache Commons Codec package contains simple encoder and decoders for
 various formats such as Base64 and Hexadecimal.  In addition to these
@@ -11,28 +11,40 @@ Changes in this version include:
 
 New features:
 o CODEC-296:  Add support for Blake3 family of hashes. Thanks to Matt Sicker.
+o             Add github/codeql-action.
 
 Fixed Bugs:
-o             Remove duplicated words from Javadocs. Thanks to James Gan.
-
-Changes:
 o CODEC-295:  Minor improvements #67. Thanks to Arturo Bernal.
+o             Remove duplicated words from Javadocs. Thanks to James Gan.
 o CODEC-301:  Simplify assertion #84. Thanks to Alexander Pinske, Alex Herbert.
 o CODEC-300:  Simplify assertion #84. Thanks to Arturo Bernal.
-o CODEC-298:  Use Standard Charset object #82 Thanks to Arturo Bernal.
-o             Bump actions/setup-java from v1.4.1 to v2 #60, #62. Thanks to Dependabot, Gary Gregory.
-o             Bump actions/checkout from v2.3.2 to v2.4.0 #65, #98. Thanks to Dependabot.
-o             Bump actions/cache from v2 to v2.1.7 #75, #99. Thanks to Dependabot.
-o             Bump junit from 4.13.1 to 4.13.2 #76. Thanks to Dependabot.
+o CODEC-298:  Use Standard Charset object #82. Thanks to Arturo Bernal.
+o             Use String.contains() functions #125. Thanks to Arturo Bernal.
+o             Avoid use toString() or substring() in favor of a simplified expression #126. Thanks to Arturo Bernal.
+o CODEC-305:  Fix byte-skipping in Base16 decoding #135. Thanks to Florian.
+o             Fix several typos, improve writing in some javadocs #139. Thanks to Marc Wrobel.
+o             BaseNCodecOutputStream.eof() should not throw IOException. Thanks to Gary Gregory.
+o             Javadoc improvements and cleanups. Thanks to Gary Gregory.
+o             Deprecate BaseNCodec.isWhiteSpace(byte) and use Character.isWhitespace(int). Thanks to Gary Gregory.
+
+Changes:
+o             Bump actions/cache from v2 to v3.0.10 #75, #99, #119, #138, #149, #152. Thanks to Dependabot, Gary Gregory.
+o             Bump actions/setup-java from v1.4.1 to 3.5.1 #60, #62, #121. Thanks to Dependabot, Gary Gregory.
+o             Bump actions/checkout from 2.3.2 to 3.1.0 #65, #98, #114, #153. Thanks to Dependabot, Gary Gregory.
+o             Bump commons-parent from 52 to 58, #147, #165, #170. Thanks to Dependabot, Gary Gregory.
+o CODEC-285:  Bump junit from 4.13.1 to 5.9.1 #76, #39, #140, #148. Thanks to Dependabot, John Patrick.
 o             Bump Java 7 to 8. Thanks to Gary Gregory.
-o             Bump japicmp-maven-plugin from 0.14.3 to 0.15.3. Thanks to Gary Gregory.
-o             Bump jacoco-maven-plugin from 0.8.5 to 0.9.7 (Fixes Java 15 builds). Thanks to Gary Gregory.
-o             Bump maven-surefire-plugin from 2.22.2 to 3.0.0-M5. Thanks to Gary Gregory.
-o             Bump maven-javadoc-plugin from 3.2.0 to 3.3.0. Thanks to Gary Gregory.
-o             Bump animal-sniffer-maven-plugin from 1.19 to 1.20. Thanks to Gary Gregory.
-o             Bump maven-pmd-plugin from 3.13.0 to 3.15.0. Thanks to Gary Gregory.
-o             Bump maven-checkstyle-plugin from 2.17 to 3.1.2. Thanks to Gary Gregory.
-o             Bump checkstyle from 8.45.1 to 9.2.1 #97, #100, #101. Thanks to Dependabot.
+o             Bump japicmp-maven-plugin from 0.14.3 to 0.17.1. Thanks to Gary Gregory.
+o             Bump jacoco-maven-plugin from 0.8.5 to 0.8.8 (Fixes Java 15 builds). Thanks to Gary Gregory.
+o             Bump maven-surefire-plugin from 2.22.2 to 3.0.0-M7 #122, #134. Thanks to Gary Gregory.
+o             Bump maven-javadoc-plugin from 3.2.0 to 3.4.1. Thanks to Gary Gregory.
+o             Bump animal-sniffer-maven-plugin from 1.19 to 1.22. Thanks to Gary Gregory.
+o             Bump maven-pmd-plugin from 3.13.0 to 3.19.0, #133, #142, #145. Thanks to Gary Gregory, Dependabot.
+o             Bump pmd from 6.47.0 to 6.52.0. Thanks to Gary Gregory.
+o             Bump maven-checkstyle-plugin from 2.17 to 3.2.0 #143. Thanks to Gary Gregory.
+o             Bump checkstyle from 8.45.1 to 9.3 #97, #100, #101, #103. Thanks to Dependabot.
+o             Bump taglist-maven-plugin from 2.4 to 3.0.0 #102. Thanks to Dependabot.
+o             Bump jacoco-maven-plugin from 0.8.7 to 0.8.8. Thanks to Gary Gregory.
 
 
 For complete information on Apache Commons Codec, including instructions on how to submit bug reports,
