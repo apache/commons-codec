@@ -28,7 +28,7 @@ limitations under the License.
   </parent>
   <groupId>commons-codec</groupId>
   <artifactId>commons-codec</artifactId>
-  <version>1.16-SNAPSHOT</version>
+  <version>1.16.0-SNAPSHOT</version>
   <name>Apache Commons Codec</name>
   <inceptionYear>2002</inceptionYear>
   <description>
@@ -267,15 +267,15 @@ limitations under the License.
     <checkstyle.config.file>${basedir}/src/conf/checkstyle.xml</checkstyle.config.file>
     <japicmp.skip>false</japicmp.skip>
     <jacoco.skip>false</jacoco.skip>
-
     <!-- Commons Release Plugin -->
+    <commons.release.version>1.16.0</commons.release.version>
     <commons.bc.version>1.15</commons.bc.version>
     <commons.rc.version>RC1</commons.rc.version>
     <commons.release-plugin.version>1.7</commons.release-plugin.version>
     <commons.release.isDistModule>true</commons.release.isDistModule>
     <commons.distSvnStagingUrl>scm:svn:https://dist.apache.org/repos/dist/dev/commons/${commons.componentid}</commons.distSvnStagingUrl>
-    <commons.releaseManagerName>Matt Sicker</commons.releaseManagerName>
-    <commons.releaseManagerKey>748F15B2CF9BA8F024155E6ED7C92B70FA1C814D</commons.releaseManagerKey>
+    <commons.releaseManagerName>Gary Gregory</commons.releaseManagerName>    
+    <commons.releaseManagerKey>86fdc7e2a11262cb</commons.releaseManagerKey>
   </properties>
   <build>
     <defaultGoal>clean install apache-rat:check japicmp:cmp checkstyle:check javadoc:javadoc</defaultGoal>
