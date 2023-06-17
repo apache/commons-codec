@@ -277,21 +277,15 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
 
     /**
      * Checks if a byte value is whitespace or not.
-     * Whitespace is taken to mean: space, tab, CR, LF
      * @param byteToCheck
      *            the byte to check
      * @return true if byte is whitespace, false otherwise
+     * @see Character#isWhitespace(int)
+     * @deprecated Use {@link Character#isWhitespace(int)}.
      */
+    @Deprecated
     protected static boolean isWhiteSpace(final byte byteToCheck) {
-        switch (byteToCheck) {
-            case ' ' :
-            case '\n' :
-            case '\r' :
-            case '\t' :
-                return true;
-            default :
-                return false;
-        }
+        return Character.isWhitespace(byteToCheck);
     }
 
     /**
@@ -641,7 +635,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     public boolean isInAlphabet(final byte[] arrayOctet, final boolean allowWSPad) {
         for (final byte octet : arrayOctet) {
             if (!isInAlphabet(octet) &&
-                    (!allowWSPad || (octet != pad) && !isWhiteSpace(octet))) {
+                    (!allowWSPad || (octet != pad) && !Character.isWhitespace(octet))) {
                 return false;
             }
         }

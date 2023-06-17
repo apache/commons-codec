@@ -389,7 +389,7 @@ public class Base64 extends BaseNCodec {
      */
     public static boolean isBase64(final byte[] arrayOctet) {
         for (final byte element : arrayOctet) {
-            if (!isBase64(element) && !isWhiteSpace(element)) {
+            if (!isBase64(element) && !Character.isWhitespace(element)) {
                 return false;
             }
         }

@@ -57,6 +57,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action                   dev="kinow" type="fix" due-to="Marc Wrobel">Fix several typos, improve writing in some javadocs #139.</action>
       <action                   dev="ggregory" type="fix" due-to="Gary Gregory">BaseNCodecOutputStream.eof() should not throw IOException.</action>
       <action                   dev="ggregory" type="fix" due-to="Gary Gregory">Javadoc improvements and cleanups.</action>
+      <action                   dev="ggregory" type="fix" due-to="Gary Gregory">Deprecate BaseNCodec.isWhiteSpace(byte) and use Character.isWhitespace(int).</action>
       <!-- ADD -->
       <action issue="CODEC-296" dev="mattsicker" type="add" due-to="Matt Sicker">Add support for Blake3 family of hashes.</action>
       <action                   dev="ggregory" type="add">Add github/codeql-action.</action>

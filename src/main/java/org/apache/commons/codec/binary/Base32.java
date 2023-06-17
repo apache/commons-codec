@@ -335,7 +335,7 @@ public class Base32 extends BaseNCodec {
         }
         this.decodeSize = this.encodeSize - 1;
 
-        if (isInAlphabet(padding) || isWhiteSpace(padding)) {
+        if (isInAlphabet(padding) || Character.isWhitespace(padding)) {
             throw new IllegalArgumentException("pad must not be in alphabet or whitespace");
         }
     }

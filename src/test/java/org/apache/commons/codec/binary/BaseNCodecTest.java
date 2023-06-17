@@ -105,10 +105,16 @@ public class BaseNCodecTest {
 //
     @Test
     public void testIsWhiteSpace() {
-        assertTrue(BaseNCodec.isWhiteSpace((byte) ' '));
-        assertTrue(BaseNCodec.isWhiteSpace((byte) '\n'));
-        assertTrue(BaseNCodec.isWhiteSpace((byte) '\r'));
-        assertTrue(BaseNCodec.isWhiteSpace((byte) '\t'));
+        assertTrue(Character.isWhitespace((byte) ' '));
+        assertTrue(Character.isWhitespace((byte) '\n'));
+        assertTrue(Character.isWhitespace((byte) '\r'));
+        assertTrue(Character.isWhitespace((byte) '\t'));
+        assertTrue(Character.isWhitespace((byte) '\f'));
+        assertTrue(Character.isWhitespace((byte) '\u000B'));
+        for (byte b = Byte.MIN_VALUE; b < Byte.MAX_VALUE; b++) {
+            final byte byteToCheck = b;
+            assertEquals(Character.isWhitespace(b), Character.isWhitespace(byteToCheck));
+        }
     }
 //
 //    @Test
