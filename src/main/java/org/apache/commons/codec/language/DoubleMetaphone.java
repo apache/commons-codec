@@ -324,7 +324,7 @@ public class DoubleMetaphone implements StringEncoder {
         if (contains(value, index + 2, 1, "I", "E", "H") &&
             !contains(value, index + 2, 2, "HU")) {
             //-- "bellocchio" but not "bacchus" --//
-            if ((index == 1 && charAt(value, index - 1) == 'A') ||
+            if ((index == 1 && charAt(value, 0) == 'A') ||
                 contains(value, index - 1, 5, "UCCEE", "UCCES")) {
                 //-- "accident", "accede", "succeed" --//
                 result.append("KS");
