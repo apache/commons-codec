@@ -43,7 +43,11 @@ The <action> type attribute can be add,update,fix,remove.
     <author>Apache Commons Developers</author>
   </properties>
   <body>
-
+    <release version="1.16.1" date="20YY-MM-DD" description="Feature and fix release.">
+      <!-- ADD -->
+      <!-- FIX -->
+      <!-- UPDATE -->    
+    </release>
     <release version="1.16.0" date="2023-06-17" description="Feature and fix release.">
       <!-- FIX -->
       <action issue="CODEC-295" dev="ggregory" type="fix" due-to="Arturo Bernal">Minor improvements #67.</action> 
