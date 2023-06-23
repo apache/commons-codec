@@ -17,6 +17,7 @@
 package org.apache.commons.codec.digest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -294,12 +295,11 @@ public class PureJavaCrc32Test {
           //check result
           if(c == zip) {
             expected = result;
-          } else if (expected == null) {
-            throw new RuntimeException("The first class is " +
-                c.getName() + " but not " + zip.getName());
-          } else if (result.value != expected.value) {
-            throw new RuntimeException(c + " has bugs!");
-          }
+        } else if (expected == null) {
+            fail("The first class is " + c.getName() + " but not " + zip.getName());
+        } else if (result.value != expected.value) {
+            fail(c + " has bugs!");
+        }
 
           //compare result with previous
           for(final BenchResult p : previous) {
