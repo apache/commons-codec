@@ -316,7 +316,7 @@ public class Nysiis implements StringEncoder {
                 key.deleteCharAt(key.length() - 1);
             }
 
-            if(key.length()==0){
+            if (key.length() == 0) {
                 // We've removed the first character of the string. Likely because it was an S or A
                 // We should return at least the first character
                 key.append(firstChar);
