@@ -56,7 +56,7 @@ import org.apache.commons.codec.CodecPolicy;
 public class Base64 extends BaseNCodec {
 
     /**
-     * BASE32 characters are 6 bits in length.
+     * BASE64 characters are 6 bits in length.
      * They are formed by taking a block of 3 octets to form a 24-bit string,
      * which is converted into 4 BASE64 characters.
      */
