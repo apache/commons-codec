@@ -275,7 +275,8 @@ public class Nysiis implements StringEncoder {
 
         // First character of key = first character of name.
         final StringBuilder key = new StringBuilder(str.length());
-        key.append(str.charAt(0));
+        final char firstChar = str.charAt(0);
+        key.append(firstChar);
 
         // Transcode remaining characters, incrementing by one character each time
         final char[] chars = str.toCharArray();
@@ -313,6 +314,12 @@ public class Nysiis implements StringEncoder {
             // If last character is A, remove it.
             if (lastChar == 'A') {
                 key.deleteCharAt(key.length() - 1);
+            }
+
+            if(key.length()==0){
+                // We've removed the first character of the string. Likely because it was an S or A
+                // We should return at least the first character
+                key.append(firstChar);
             }
         }
 
