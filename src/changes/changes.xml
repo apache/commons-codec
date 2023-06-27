@@ -48,6 +48,7 @@ The <action> type attribute can be add,update,fix,remove.
       <!-- FIX -->
       <action issue="CODEC-295" dev="ggregory" type="fix" due-to="Gary Gregory">Test clean ups.</action>
       <action                   dev="ggregory" type="fix" due-to="step-security-bot, Gary Gregory">[StepSecurity] ci: Harden GitHub Actions #187.</action>
+      <action issue="CODEC-295" dev="ggregory" type="fix" due-to="Evan Saulpaugh">Correct error in Base64 Javadoc #188.</action>
       <!-- UPDATE -->    
     </release>
     <release version="1.16.0" date="2023-06-17" description="Feature and fix release.">
