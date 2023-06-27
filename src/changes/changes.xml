@@ -51,7 +51,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action issue="CODEC-295" dev="ggregory" type="fix" due-to="Evan Saulpaugh">Correct error in Base64 Javadoc #188.</action>
       <!-- UPDATE -->    
     </release>
-    <release version="1.16.0" date="2023-06-17" description="Feature and fix release.">
+    <release version="1.16.0" date="2023-06-17" description="Feature and fix release. Requires a minimum of Java 8.">
       <!-- FIX -->
       <action issue="CODEC-295" dev="ggregory" type="fix" due-to="Arturo Bernal">Minor improvements #67.</action> 
       <action                   dev="aherbert" type="fix" due-to="James Gan">Remove duplicated words from Javadocs.</action>
@@ -126,7 +126,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action issue="CODEC-236" dev="ggregory" due-to=" Tomas Shestakov, Gary Gregory" type="update">Broken direct java.nio.ByteBuffer support in org.apache.commons.codec.binary.Hex.</action>
     </release>
 
-    <release version="1.12" date="2019-02-04" description="Feature and fix release.">
+    <release version="1.12" date="2019-02-04" description="Feature and fix release. Requires a minimum of Java 7.">
       <!-- The first attribute below should be the issue id; makes it easier to navigate in the IDE outline -->
       <action issue="CODEC-252" dev="chtompki" type="fix">B64 salt generator: Random -> ThreadLocalRandom</action>
       <action issue="CODEC-250" dev="sebb" type="fix" due-to="Alex Volodko">Wrong value calculated by Cologne Phonetic if a special character is placed between equal letters</action>
@@ -194,14 +194,14 @@ The <action> type attribute can be add,update,fix,remove.
       <action dev="ggregory" type="fix" issue="CODEC-170" due-to="Ron Wheeler, Henri Yandell">Link broken in Metaphone Javadoc</action>
       <action dev="ggregory" type="fix" issue="CODEC-176" due-to="Ville Skyttä">Spelling fixes in Javadoc and comments</action>
     </release>
-    <release version="1.8" date="19 April 2013" description="Feature and fix release. Requires a minimum of Java 1.6.">
+    <release version="1.8" date="19 April 2013" description="Feature and fix release. Requires a minimum of Java 6.">
       <action dev="ggregory" type="add" issue="CODEC-168" due-to="Daniel Cassidy">Add DigestUtils.updateDigest(MessageDigest, InputStream).</action>
       <action dev="julius" type="add" issue="CODEC-167">Add JUnit to test our decode with pad character in the middle.</action>
       <action dev="ggregory" type="add" issue="CODEC-161" due-to="crice">Add Match Rating Approach (MRA) phonetic algorithm encoder.</action>
       <action dev="ggregory" type="fix" issue="CODEC-163" due-to="leo141">ColognePhonetic encoder unnecessarily creates many char arrays on every loop run.</action>
       <action dev="sebb" type="fix" issue="CODEC-160">Base64.encodeBase64URLSafeString doesn't add padding characters at the end.</action>
     </release>
-    <release version="1.7" date="11 September 2012" description="Feature and fix release. Requires a minimum of Java 1.6.">
+    <release version="1.7" date="11 September 2012" description="Feature and fix release. Requires a minimum of Java 6.">
       <action issue="CODEC-157" dev="ggregory" type="add" due-to="ggregory">
         DigestUtils: Add MD2 APIs.
       </action>
@@ -266,7 +266,7 @@ The <action> type attribute can be add,update,fix,remove.
         Implement NYSIIS phonetic encoder.
       </action>
     </release>
-    <release version="1.6" date="20 November 2011" description="Feature and fix release. Requires a minimum of Java 1.5.">
+    <release version="1.6" date="20 November 2011" description="Feature and fix release. Requires a minimum of Java 5.">
       <action dev="ggregory" type="fix" issue="CODEC-129" due-to="ggregory">
         Use standard Maven directory layout.
       </action>
