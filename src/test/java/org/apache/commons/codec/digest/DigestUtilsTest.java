@@ -42,6 +42,7 @@ import java.util.Random;
 
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.binary.StringUtils;
+import org.apache.commons.io.RandomAccessFileMode;
 import org.apache.commons.lang3.JavaVersion;
 import org.apache.commons.lang3.SystemUtils;
 import org.junit.jupiter.api.AfterEach;
@@ -95,7 +96,7 @@ public class DigestUtilsTest {
         try (final OutputStream fos = Files.newOutputStream(testRandomAccessFile)) {
             fos.write(testData);
         }
-        testRandomAccessFileWrapper = new RandomAccessFile(testRandomAccessFile.toFile(), "rw");
+        testRandomAccessFileWrapper = RandomAccessFileMode.READ_WRITE.create(testRandomAccessFile);
     }
 
     @AfterEach
