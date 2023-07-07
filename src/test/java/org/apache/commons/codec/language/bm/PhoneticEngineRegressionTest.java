@@ -263,10 +263,10 @@ public class PhoneticEngineRegressionTest {
         // PhoneticEngine = NameType + RuleType + concat
         // we use common-codec's defaults: GENERIC + APPROX + true
         final String nameTypeArg = args.get("nameType");
-        final NameType nameType = (nameTypeArg == null) ? NameType.GENERIC : NameType.valueOf(nameTypeArg);
+        final NameType nameType = nameTypeArg == null ? NameType.GENERIC : NameType.valueOf(nameTypeArg);
 
         final String ruleTypeArg = args.get("ruleType");
-        final RuleType ruleType = (ruleTypeArg == null) ? RuleType.APPROX : RuleType.valueOf(ruleTypeArg);
+        final RuleType ruleType = ruleTypeArg == null ? RuleType.APPROX : RuleType.valueOf(ruleTypeArg);
 
         engine = new PhoneticEngine(nameType, ruleType, concat);
 
