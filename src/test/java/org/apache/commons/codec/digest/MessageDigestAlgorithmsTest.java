@@ -94,7 +94,7 @@ public class MessageDigestAlgorithmsTest {
     private DigestUtilsTest digestUtilsTest;
 
     private byte[] digestTestData(final String messageDigestAlgorithm) {
-        return DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm),getTestData());
+        return DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm), getTestData());
     }
 
     private byte[] getTestData() {
@@ -139,9 +139,8 @@ public class MessageDigestAlgorithmsTest {
     @MethodSource("data")
     public void testDigestByteArray(final String messageDigestAlgorithm) {
         assumeTrue(DigestUtils.isAvailable(messageDigestAlgorithm));
-        assertArrayEquals(digestTestData(messageDigestAlgorithm),
-                DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm), getTestData()));
-        assertArrayEquals(digestTestData(messageDigestAlgorithm), DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm),getTestData()));
+        assertArrayEquals(digestTestData(messageDigestAlgorithm), DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm), getTestData()));
+        assertArrayEquals(digestTestData(messageDigestAlgorithm), DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm), getTestData()));
     }
 
     @ParameterizedTest
@@ -169,7 +168,8 @@ public class MessageDigestAlgorithmsTest {
         assumeTrue(DigestUtils.isAvailable(messageDigestAlgorithm));
         assertArrayEquals(digestTestData(messageDigestAlgorithm),
                 DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm), new ByteArrayInputStream(getTestData())));
-        assertArrayEquals(digestTestData(messageDigestAlgorithm), DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm),new ByteArrayInputStream(getTestData())));
+        assertArrayEquals(digestTestData(messageDigestAlgorithm),
+                DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm), new ByteArrayInputStream(getTestData())));
     }
 
     @ParameterizedTest

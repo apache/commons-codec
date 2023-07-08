@@ -336,7 +336,7 @@ public class Base32Test {
             final Base32 codec = new Base32();
             final byte[][] b = BaseNTestData.randomData(codec, i);
             assertEquals(b[1].length, codec.getEncodedLength(b[0]), i + " " + codec.lineLength);
-            //assertEquals(b[0],codec.decode(b[1]));
+            //assertEquals(b[0], codec.decode(b[1]));
         }
     }
 
@@ -346,7 +346,7 @@ public class Base32Test {
             final Base32 codec = new Base32(10);
             final byte[][] b = BaseNTestData.randomData(codec, i);
             assertEquals(b[1].length, codec.getEncodedLength(b[0]), i + " " + codec.lineLength);
-            //assertEquals(b[0],codec.decode(b[1]));
+            //assertEquals(b[0], codec.decode(b[1]));
         }
     }
 
@@ -356,7 +356,7 @@ public class Base32Test {
             final Base32 codec = new Base32(true);
             final byte[][] b = BaseNTestData.randomData(codec, i);
             assertEquals(b[1].length, codec.getEncodedLength(b[0]), i + " " + codec.lineLength);
-            //assertEquals(b[0],codec.decode(b[1]));
+            //assertEquals(b[0], codec.decode(b[1]));
         }
     }
 

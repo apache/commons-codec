@@ -82,7 +82,7 @@ public class Base64OutputStream extends BaseNCodecOutputStream {
      *            true if we should encode all data written to us, false if we should decode.
      */
     public Base64OutputStream(final OutputStream outputStream, final boolean doEncode) {
-        super(outputStream,new Base64(false), doEncode);
+        super(outputStream, new Base64(false), doEncode);
     }
 
     /**
