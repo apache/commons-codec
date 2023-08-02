@@ -397,7 +397,7 @@ public class Md5Crypt {
         // Is there a better way to do this with the JVM?
         ctx.reset();
         ctx1.reset();
-        Arrays.fill(keyBytes, (byte) 0);
+
         Arrays.fill(saltBytes, (byte) 0);
         Arrays.fill(finalb, (byte) 0);
 
