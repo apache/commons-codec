@@ -105,7 +105,7 @@ public class Md5Crypt {
      * </p>
      *
      * @param keyBytes
-     *            plaintext string to hash.
+     *            plaintext string to hash. Each array element is set to {@code 0} before returning.
      * @param salt
      *            An APR1 salt. The salt may be null, in which case a salt is generated for you using
      *            {@link ThreadLocalRandom}; for more secure salts consider using {@link SecureRandom} to generate your
@@ -216,7 +216,7 @@ public class Md5Crypt {
      * </p>
      *
      * @param keyBytes
-     *            plaintext string to hash.
+     *            plaintext string to hash. Each array element is set to {@code 0} before returning.
      * @param salt
      *            salt string including the prefix and optionally garbage at the end. The salt may be null, in which
      *            case a salt is generated for you using {@link ThreadLocalRandom}; for more secure salts consider using
@@ -239,7 +239,7 @@ public class Md5Crypt {
      * </p>
      *
      * @param keyBytes
-     *            plaintext string to hash.
+     *            plaintext string to hash. Each array element is set to {@code 0} before returning.
      * @param salt
      *            real salt value without prefix or "rounds=". The salt may be null, in which case a salt
      *            is generated for you using {@link ThreadLocalRandom}; for more secure salts consider
@@ -263,7 +263,7 @@ public class Md5Crypt {
      * </p>
      *
      * @param keyBytes
-     *            plaintext string to hash.
+     *            plaintext string to hash. Each array element is set to {@code 0} before returning.
      * @param salt
      *            real salt value without prefix or "rounds=". The salt may be null, in which case a salt
      *            is generated for you using {@link ThreadLocalRandom}; for more secure salts consider

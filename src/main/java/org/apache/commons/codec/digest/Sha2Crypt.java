@@ -83,7 +83,7 @@ public class Sha2Crypt {
      * </p>
      *
      * @param keyBytes
-     *            plaintext to hash
+     *            plaintext to hash. Each array element is set to {@code 0} before returning.
      * @return complete hash value
      * @throws IllegalArgumentException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
@@ -98,7 +98,7 @@ public class Sha2Crypt {
      * See {@link Crypt#crypt(String, String)} for details.
      * </p>
      * @param keyBytes
-     *            plaintext to hash
+     *            plaintext to hash. Each array element is set to {@code 0} before returning.
      * @param salt
      *            real salt value without prefix or "rounds=". The salt may be null, in which case a salt
      *            is generated for you using {@link SecureRandom}. If one does not want to use {@link SecureRandom},
@@ -122,7 +122,7 @@ public class Sha2Crypt {
      * See {@link Crypt#crypt(String, String)} for details.
      * </p>
      * @param keyBytes
-     *            plaintext to hash
+     *            plaintext to hash. Each array element is set to {@code 0} before returning.
      * @param salt
      *            real salt value without prefix or "rounds=".
      * @param random
@@ -153,7 +153,7 @@ public class Sha2Crypt {
      * </p>
      *
      * @param keyBytes
-     *            plaintext to hash
+     *            plaintext to hash. Each array element is set to {@code 0} before returning.
      * @param salt
      *            real salt value without prefix or "rounds="; may not be null
      * @param saltPrefix
@@ -556,7 +556,7 @@ public class Sha2Crypt {
      * </p>
      *
      * @param keyBytes
-     *            plaintext to hash
+     *            plaintext to hash. Each array element is set to {@code 0} before returning.
      * @return complete hash value
      * @throws IllegalArgumentException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
@@ -571,7 +571,7 @@ public class Sha2Crypt {
      * See {@link Crypt#crypt(String, String)} for details.
      * </p>
      * @param keyBytes
-     *            plaintext to hash
+     *            plaintext to hash. Each array element is set to {@code 0} before returning.
      * @param salt
      *            real salt value without prefix or "rounds=". The salt may be null, in which case a salt is generated
      *            for you using {@link SecureRandom}; if you want to use a {@link Random} object other than
@@ -598,7 +598,7 @@ public class Sha2Crypt {
      * See {@link Crypt#crypt(String, String)} for details.
      * </p>
      * @param keyBytes
-     *            plaintext to hash
+     *            plaintext to hash. Each array element is set to {@code 0} before returning.
      * @param salt
      *            real salt value without prefix or "rounds=". The salt may be null, in which case a salt
      *            is generated for you using {@link ThreadLocalRandom}; for more secure salts consider using
