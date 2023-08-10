@@ -71,7 +71,7 @@ public class Md5Crypt {
      * {@link #apr1Crypt(byte[], Random)}.
      * </p>
      *
-     * @param keyBytes plaintext string to hash.
+     * @param keyBytes plaintext string to hash. Each array element is set to {@code 0} before returning.
      * @return the hash value
      * @throws IllegalArgumentException when a {@link java.security.NoSuchAlgorithmException} is caught. *
      * @see #apr1Crypt(byte[], String)
@@ -86,7 +86,7 @@ public class Md5Crypt {
      * A salt is generated for you using the user provided {@link Random}.
      * </p>
      *
-     * @param keyBytes plaintext string to hash.
+     * @param keyBytes plaintext string to hash. Each array element is set to {@code 0} before returning.
      * @param random the instance of {@link Random} to use for generating the salt. Consider using {@link SecureRandom}
      *            or {@link ThreadLocalRandom}.
      * @return the hash value
@@ -132,7 +132,7 @@ public class Md5Crypt {
      * </p>
      *
      * @param keyBytes
-     *            plaintext string to hash.
+     *            plaintext string to hash. Each array element is set to {@code 0} before returning.
      * @return the hash value
      * @throws IllegalArgumentException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
@@ -150,7 +150,7 @@ public class Md5Crypt {
      * </p>
      *
      * @param keyBytes
-     *            plaintext string to hash.
+     *            plaintext string to hash. Each array element is set to {@code 0} before returning.
      * @param salt
      *            salt string including the prefix and optionally garbage at the end. The salt may be null, in which
      *            case a salt is generated for you using {@link ThreadLocalRandom}; for more secure salts consider using
@@ -175,7 +175,7 @@ public class Md5Crypt {
      * {@link SecureRandom} to generate your own salts and calling {@link #md5Crypt(byte[], String)}.
      * </p>
      * @param keyBytes
-     *            plaintext string to hash.
+     *            plaintext string to hash. Each array element is set to {@code 0} before returning.
      * @return the hash value
      * @throws IllegalArgumentException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
@@ -194,7 +194,7 @@ public class Md5Crypt {
      * A salt is generated for you using the instance of {@link Random} you supply.
      * </p>
      * @param keyBytes
-     *            plaintext string to hash.
+     *            plaintext string to hash. Each array element is set to {@code 0} before returning.
      * @param random
      *            the instance of {@link Random} to use for generating the salt. Consider using {@link SecureRandom}
      *            or {@link ThreadLocalRandom}.
