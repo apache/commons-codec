@@ -48,9 +48,9 @@ public class UnixCryptTest {
     public void testUnixCryptBytes() {
         // An empty Bytearray equals an empty String
         assertEquals("12UFlHxel6uMM", Crypt.crypt(new byte[0], "12"));
-        // UTF-8 stores \u00e4 "a with diaeresis" as two bytes 0xc3 0xa4.
+        // UTF-8 stores \u00e4 "a with dieresis" as two bytes 0xc3 0xa4.
         assertEquals("./287bds2PjVw", Crypt.crypt("t\u00e4st", "./"));
-        // ISO-8859-1 stores "a with diaeresis" as single byte 0xe4.
+        // ISO-8859-1 stores "a with dieresis" as single byte 0xe4.
         assertEquals("./bLIFNqo9XKQ", Crypt.crypt("t\u00e4st".getBytes(StandardCharsets.ISO_8859_1), "./"));
         assertEquals("./bLIFNqo9XKQ", Crypt.crypt(new byte[]{(byte) 0x74, (byte) 0xe4, (byte) 0x73, (byte) 0x74}, "./"));
     }

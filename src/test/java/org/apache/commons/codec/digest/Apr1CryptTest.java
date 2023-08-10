@@ -52,9 +52,9 @@ public class Apr1CryptTest {
 
         // An empty Bytearray equals an empty String
         assertEquals("$apr1$foo$P27KyD1htb4EllIPEYhqi0", Md5Crypt.apr1Crypt(new byte[0], "$apr1$foo"));
-        // UTF-8 stores \u00e4 "a with diaeresis" as two bytes 0xc3 0xa4.
+        // UTF-8 stores \u00e4 "a with dieresis" as two bytes 0xc3 0xa4.
         assertEquals("$apr1$./$EeFrYzWWbmTyGdf4xULYc.", Md5Crypt.apr1Crypt("t\u00e4st", "$apr1$./$"));
-        // ISO-8859-1 stores "a with diaeresis" as single byte 0xe4.
+        // ISO-8859-1 stores "a with dieresis" as single byte 0xe4.
         assertEquals("$apr1$./$kCwT1pY9qXAJElYG9q1QE1", Md5Crypt.apr1Crypt("t\u00e4st".getBytes(StandardCharsets.ISO_8859_1), "$apr1$./$"));
     }
 
@@ -68,9 +68,9 @@ public class Apr1CryptTest {
 
         // An empty Bytearray equals an empty String
         assertEquals("$apr1$foo$P27KyD1htb4EllIPEYhqi0", Md5Crypt.apr1Crypt(new byte[0], "$apr1$foo"));
-        // UTF-8 stores \u00e4 "a with diaeresis" as two bytes 0xc3 0xa4.
+        // UTF-8 stores \u00e4 "a with dieresis" as two bytes 0xc3 0xa4.
         assertEquals("$apr1$./$EeFrYzWWbmTyGdf4xULYc.", Md5Crypt.apr1Crypt("t\u00e4st", "$apr1$./$"));
-        // ISO-8859-1 stores "a with diaeresis" as single byte 0xe4.
+        // ISO-8859-1 stores "a with dieresis" as single byte 0xe4.
         assertEquals("$apr1$./$kCwT1pY9qXAJElYG9q1QE1", Md5Crypt.apr1Crypt("t\u00e4st".getBytes(StandardCharsets.ISO_8859_1), "$apr1$./$"));
     }
 

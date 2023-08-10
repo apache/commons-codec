@@ -46,9 +46,9 @@ public class Sha512CryptTest {
     public void testSha512CryptBytes() {
         // An empty Bytearray equals an empty String
         assertEquals("$6$foo$Nywkte7LPWjaJhWjNeGJN.dFdY3pN1wYlGifyRLYOVlGS9EMSiZaDDe/BGSOYQ327q9.32I4UqQ5odsqvsBLX/", Crypt.crypt(new byte[0], "$6$foo"));
-        // UTF-8 stores \u00e4 "a with diaeresis" as two bytes 0xc3 0xa4.
+        // UTF-8 stores \u00e4 "a with dieresis" as two bytes 0xc3 0xa4.
         assertEquals("$6$./$fKtWqslQkwI8ZxjdWoeS.jHHrte97bZxiwB5gwCRHX6LG62fUhT6Bb5MRrjWvieh0C/gxh8ItFuTsVy80VrED1", Crypt.crypt("t\u00e4st", "$6$./$"));
-        // ISO-8859-1 stores "a with diaeresis" as single byte 0xe4.
+        // ISO-8859-1 stores "a with dieresis" as single byte 0xe4.
         assertEquals("$6$./$L49DSK.d2df/LxGLJQMyS5A/Um.TdHqgc46j5FpScEPlqQHP5dEazltaDNDZ6UEs2mmNI6kPwtH/rsP9g5zBI.", Crypt.crypt("t\u00e4st".getBytes(StandardCharsets.ISO_8859_1), "$6$./$"));
     }
 
