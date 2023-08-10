@@ -16,6 +16,7 @@
  */
 package org.apache.commons.codec.digest;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -89,5 +90,7 @@ public class Sha256CryptTest {
         final byte[] buffer = new byte[200];
         Arrays.fill(buffer, 0, 200, (byte)'A');
         assertEquals("$5$abc$HbF3RRc15OwNKB/RZZ5F.1I6zsLcKXHQoSdB9Owx/Q8", Sha2Crypt.sha256Crypt(buffer, "$5$abc"));
+        // input password is 0-filled on return
+        assertArrayEquals(new byte[buffer.length], buffer);
     }
 }
