@@ -85,7 +85,7 @@ public class Md5CryptTest {
     public void testMd5CryptWithEmptySalt() {
         assertThrows(IllegalArgumentException.class, () -> Md5Crypt.md5Crypt("secret".getBytes(), ""));
     }
-    
+
     @Test
     public void testZeroOutInput() {
         final byte[] buffer = new byte[200];
