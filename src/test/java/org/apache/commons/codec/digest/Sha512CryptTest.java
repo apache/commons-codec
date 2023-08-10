@@ -102,4 +102,14 @@ public class Sha512CryptTest {
         // input password is 0-filled on return
         assertArrayEquals(new byte[buffer.length], buffer);
     }
+
+    @Test
+    public void testZeroOutInput() {
+        final byte[] buffer = new byte[200];
+        Arrays.fill(buffer, (byte) 'A');
+        Sha2Crypt.sha512Crypt(buffer);
+        // input password is 0-filled on return
+        assertArrayEquals(new byte[buffer.length], buffer);
+    }
+
 }
