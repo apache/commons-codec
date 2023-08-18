@@ -20,13 +20,13 @@ package org.apache.commons.codec.language;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.apache.commons.codec.EncoderException;
-import org.apache.commons.codec.StringEncoderAbstractTest;
+import org.apache.commons.codec.AbstractStringEncoderTest;
 import org.junit.jupiter.api.Test;
 
 /**
  * Tests RefinedSoundex.
  */
-public class RefinedSoundexTest extends StringEncoderAbstractTest<RefinedSoundex> {
+public class RefinedSoundexTest extends AbstractStringEncoderTest<RefinedSoundex> {
 
     @Override
     protected RefinedSoundex createStringEncoder() {

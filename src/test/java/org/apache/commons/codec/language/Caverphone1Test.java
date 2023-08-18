@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.apache.commons.codec.EncoderException;
-import org.apache.commons.codec.StringEncoderAbstractTest;
+import org.apache.commons.codec.AbstractStringEncoderTest;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Test;
  *
  * @since 1.5
  */
-public class Caverphone1Test extends StringEncoderAbstractTest<Caverphone1> {
+public class Caverphone1Test extends AbstractStringEncoderTest<Caverphone1> {
 
     @Override
     protected Caverphone1 createStringEncoder() {

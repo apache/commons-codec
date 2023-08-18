@@ -21,12 +21,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import org.apache.commons.codec.StringEncoderAbstractTest;
+import org.apache.commons.codec.AbstractStringEncoderTest;
 import org.junit.jupiter.api.Test;
 
 /**
  */
-public class MetaphoneTest extends StringEncoderAbstractTest<Metaphone> {
+public class MetaphoneTest extends AbstractStringEncoderTest<Metaphone> {
 
     public void assertIsMetaphoneEqual(final String source, final String[] matches) {
         // match source to all matches

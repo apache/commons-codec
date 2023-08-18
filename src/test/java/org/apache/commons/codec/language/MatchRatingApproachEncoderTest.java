@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.apache.commons.codec.StringEncoderAbstractTest;
+import org.apache.commons.codec.AbstractStringEncoderTest;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -33,7 +33,7 @@ import org.junit.jupiter.api.Test;
  *
  * An unusual value is indicated by the term "corner case"
  */
-public class MatchRatingApproachEncoderTest extends StringEncoderAbstractTest<MatchRatingApproachEncoder> {
+public class MatchRatingApproachEncoderTest extends AbstractStringEncoderTest<MatchRatingApproachEncoder> {
 
     // ********** BEGIN REGION - TEST SUPPORT METHODS
 

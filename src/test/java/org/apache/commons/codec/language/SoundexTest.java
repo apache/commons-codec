@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.apache.commons.codec.EncoderException;
-import org.apache.commons.codec.StringEncoderAbstractTest;
+import org.apache.commons.codec.AbstractStringEncoderTest;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -32,7 +32,7 @@ import org.junit.jupiter.api.Test;
  *
  * <p>Keep this file in UTF-8 encoding for proper Javadoc processing.</p>
  */
-public class SoundexTest extends StringEncoderAbstractTest<Soundex> {
+public class SoundexTest extends AbstractStringEncoderTest<Soundex> {
 
     @Override
     protected Soundex createStringEncoder() {

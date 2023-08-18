@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  */
-public abstract class StringEncoderAbstractTest<T extends StringEncoder> {
+public abstract class AbstractStringEncoderTest<T extends StringEncoder> {
 
     protected T stringEncoder = this.createStringEncoder();
 

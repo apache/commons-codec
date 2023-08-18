@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import org.apache.commons.codec.EncoderException;
-import org.apache.commons.codec.StringEncoderAbstractTest;
+import org.apache.commons.codec.AbstractStringEncoderTest;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Test;
  *
  * @see "http://www.cuj.com/documents/s=8038/cuj0006philips/"
  */
-public class DoubleMetaphoneTest extends StringEncoderAbstractTest<DoubleMetaphone> {
+public class DoubleMetaphoneTest extends AbstractStringEncoderTest<DoubleMetaphone> {
 
     /**
      * Test data from http://aspell.net/test/orig/batch0.tab.

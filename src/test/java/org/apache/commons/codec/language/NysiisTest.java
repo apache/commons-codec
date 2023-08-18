@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.apache.commons.codec.EncoderException;
-import org.apache.commons.codec.StringEncoderAbstractTest;
+import org.apache.commons.codec.AbstractStringEncoderTest;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Test;
  *
  * @since 1.7
  */
-public class NysiisTest extends StringEncoderAbstractTest<Nysiis> {
+public class NysiisTest extends AbstractStringEncoderTest<Nysiis> {
 
     private final Nysiis fullNysiis = new Nysiis(false);
 

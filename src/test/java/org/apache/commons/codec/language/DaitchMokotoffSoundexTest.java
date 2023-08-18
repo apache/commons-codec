@@ -19,7 +19,7 @@ package org.apache.commons.codec.language;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.apache.commons.codec.EncoderException;
-import org.apache.commons.codec.StringEncoderAbstractTest;
+import org.apache.commons.codec.AbstractStringEncoderTest;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
  *
  * @since 1.10
  */
-public class DaitchMokotoffSoundexTest extends StringEncoderAbstractTest<DaitchMokotoffSoundex> {
+public class DaitchMokotoffSoundexTest extends AbstractStringEncoderTest<DaitchMokotoffSoundex> {
 
     @Override
     protected DaitchMokotoffSoundex createStringEncoder() {

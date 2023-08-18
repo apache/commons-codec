@@ -26,7 +26,7 @@ import java.util.Locale;
 import java.util.Set;
 
 import org.apache.commons.codec.EncoderException;
-import org.apache.commons.codec.StringEncoderAbstractTest;
+import org.apache.commons.codec.AbstractStringEncoderTest;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.opentest4j.AssertionFailedError;
@@ -36,7 +36,7 @@ import org.opentest4j.AssertionFailedError;
  *
  * <p>Keep this file in UTF-8 encoding for proper Javadoc processing.</p>
  */
-public class ColognePhoneticTest extends StringEncoderAbstractTest<ColognePhonetic> {
+public class ColognePhoneticTest extends AbstractStringEncoderTest<ColognePhonetic> {
 
     private static final Set<String> TESTSET = new HashSet<>();
 

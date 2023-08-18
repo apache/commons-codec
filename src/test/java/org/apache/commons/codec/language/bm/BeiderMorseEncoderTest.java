@@ -28,7 +28,7 @@ import java.time.Duration;
 
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
-import org.apache.commons.codec.StringEncoderAbstractTest;
+import org.apache.commons.codec.AbstractStringEncoderTest;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -36,7 +36,7 @@ import org.junit.jupiter.api.Test;
  *
  * @since 1.6
  */
-public class BeiderMorseEncoderTest extends StringEncoderAbstractTest<StringEncoder> {
+public class BeiderMorseEncoderTest extends AbstractStringEncoderTest<StringEncoder> {
     private static final char[] TEST_CHARS = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'o', 'u' };
 
     private void assertNotEmpty(final BeiderMorseEncoder bmpm, final String value) throws EncoderException {

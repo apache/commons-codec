@@ -19,7 +19,7 @@ package org.apache.commons.codec.language;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.apache.commons.codec.StringEncoderAbstractTest;
+import org.apache.commons.codec.AbstractStringEncoderTest;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
  *
  * @see <a href="http://swoodbridge.com/DoubleMetaPhone/surnames.txt">PHP test program</a>
  */
-public class DoubleMetaphone2Test extends StringEncoderAbstractTest<DoubleMetaphone> {
+public class DoubleMetaphone2Test extends AbstractStringEncoderTest<DoubleMetaphone> {
 
     private static final int ALTERNATE_INDEX = 2;
 
