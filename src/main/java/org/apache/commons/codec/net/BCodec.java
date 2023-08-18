@@ -46,7 +46,7 @@ import org.apache.commons.codec.binary.BaseNCodec;
  *
  * @since 1.3
  */
-public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder {
+public class BCodec extends AbstractRFC1522Codec implements StringEncoder, StringDecoder {
 
     /**
      * The default decoding policy.

@@ -50,7 +50,7 @@ import org.apache.commons.codec.StringEncoder;
  *
  * @since 1.3
  */
-public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder {
+public class QCodec extends AbstractRFC1522Codec implements StringEncoder, StringDecoder {
     /**
      * The default Charset used for string decoding and encoding.
      */
