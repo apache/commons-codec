@@ -24,7 +24,7 @@ import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 
 /**
- * Tests overriding the package private AbstractRFC1522Codec.
+ * Tests overriding the package private RFC1522Codec.
  */
 public class CustomRFC1522Codec extends RFC1522Codec {
 
