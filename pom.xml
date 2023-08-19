@@ -271,12 +271,11 @@ limitations under the License.
     <commons.encoding>UTF-8</commons.encoding>
     <checkstyle.header.file>${basedir}/src/conf/checkstyle-header.txt</checkstyle.header.file>
     <checkstyle.config.file>${basedir}/src/conf/checkstyle.xml</checkstyle.config.file>
-    <japicmp.skip>false</japicmp.skip>
     <jacoco.skip>false</jacoco.skip>
     <!-- Commons Release Plugin -->
     <commons.release.version>1.16.0</commons.release.version>
-    <commons.bc.version>1.15</commons.bc.version>
-    <commons.rc.version>RC2</commons.rc.version>
+    <commons.bc.version>1.16.0</commons.bc.version>
+    <commons.rc.version>R1</commons.rc.version>
     <commons.release-plugin.version>1.7</commons.release-plugin.version>
     <commons.release.isDistModule>true</commons.release.isDistModule>
     <commons.distSvnStagingUrl>scm:svn:https://dist.apache.org/repos/dist/dev/commons/${commons.componentid}</commons.distSvnStagingUrl>
