@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Test;
  */
 public class RFC1522CodecTest {
 
-    static class RFC1522TestCodec extends AbstractRFC1522Codec {
+    static class RFC1522TestCodec extends RFC1522Codec {
 
         @Override
         protected byte[] doDecoding(final byte[] bytes) {

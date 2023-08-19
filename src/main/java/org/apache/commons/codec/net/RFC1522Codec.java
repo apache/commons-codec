@@ -40,7 +40,7 @@ import org.apache.commons.codec.binary.StringUtils;
  *
  * @since 1.3
  */
-abstract class AbstractRFC1522Codec {
+abstract class RFC1522Codec {
 
     /** Separator. */
     protected static final char SEP = '?';
