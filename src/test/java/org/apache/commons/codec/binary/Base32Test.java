@@ -208,7 +208,7 @@ public class Base32Test {
         final Base32 codec = new Base32();
         for (final Object[] element : BASE32_BINARY_TEST_CASES) {
             final String expected;
-            if(element.length > 2) {
+            if (element.length > 2) {
                 expected = (String)element[2];
             } else {
                 expected = (String)element[1];

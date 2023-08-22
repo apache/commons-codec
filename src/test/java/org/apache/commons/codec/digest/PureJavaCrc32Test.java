@@ -293,7 +293,7 @@ public class PureJavaCrc32Test {
               c.getSimpleName().length()+1, out);
 
           //check result
-          if(c == zip) {
+          if (c == zip) {
             expected = result;
         } else if (expected == null) {
             fail("The first class is " + c.getName() + " but not " + zip.getName());
