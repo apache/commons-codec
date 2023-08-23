@@ -427,11 +427,9 @@ public class Base64Codec13Test {
     /**
      * Tests to make sure Base64's implementation of Base64.encodeBase64()
      * static method is behaving identical to commons-codec-1.3.jar.
-     *
-     * @throws EncoderException problem
      */
     @Test
-    public void testStaticEncode() throws EncoderException {
+    public void testStaticEncode() {
         for (int i = 0; i < STRINGS.length; i++) {
             if (STRINGS[i] != null) {
                 final byte[] base64 = utf8(STRINGS[i]);
@@ -445,11 +443,9 @@ public class Base64Codec13Test {
     /**
      * Tests to make sure Base64's implementation of Base64.decodeBase64()
      * static method is behaving identical to commons-codec-1.3.jar.
-     *
-     * @throws DecoderException problem
      */
     @Test
-    public void testStaticDecode() throws DecoderException {
+    public void testStaticDecode() {
         for (int i = 0; i < STRINGS.length; i++) {
             if (STRINGS[i] != null) {
                 final byte[] base64 = utf8(STRINGS[i]);
@@ -463,11 +459,9 @@ public class Base64Codec13Test {
     /**
      * Tests to make sure Base64's implementation of Base64.encodeBase64Chunked()
      * static method is behaving identical to commons-codec-1.3.jar.
-     *
-     * @throws EncoderException problem
      */
     @Test
-    public void testStaticEncodeChunked() throws EncoderException {
+    public void testStaticEncodeChunked() {
         for (int i = 0; i < STRINGS.length; i++) {
             if (STRINGS[i] != null) {
                 final byte[] base64Chunked = utf8(CHUNKED_STRINGS[i]);
@@ -482,11 +476,9 @@ public class Base64Codec13Test {
      * Tests to make sure Base64's implementation of Base64.decodeBase64()
      * static method is behaving identical to commons-codec-1.3.jar when
      * supplied with chunked input.
-     *
-     * @throws DecoderException problem
      */
     @Test
-    public void testStaticDecodeChunked() throws DecoderException {
+    public void testStaticDecodeChunked() {
         for (int i = 0; i < STRINGS.length; i++) {
             if (STRINGS[i] != null) {
                 final byte[] base64Chunked = utf8(CHUNKED_STRINGS[i]);

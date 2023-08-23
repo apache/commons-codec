@@ -40,8 +40,8 @@ public class NysiisTest extends AbstractStringEncoderTest<Nysiis> {
      * @param testValues
      *            an array of String pairs where each pair's first element is the input and the second element the
      *            expected encoding.
-     * @throws EncoderException for some failure scenarios     */
-    private void assertEncodings(final String[]... testValues) throws EncoderException {
+     */
+    private void assertEncodings(final String[]... testValues) {
         for (final String[] arr : testValues) {
             assertEquals(arr[1], this.fullNysiis.encode(arr[0]), "Problem with " + arr[0]);
         }
