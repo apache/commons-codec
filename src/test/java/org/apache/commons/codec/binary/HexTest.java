@@ -530,7 +530,7 @@ public class HexTest {
 
     @Test
     public void testEncodeHexPartialInput() {
-        final byte data[] = "hello world".getBytes(StandardCharsets.UTF_8);
+        final byte[] data = "hello world".getBytes(StandardCharsets.UTF_8);
 
         char[] hex = Hex.encodeHex(data, 0, 0, true);
         assertArrayEquals(new char[0], hex);
@@ -556,14 +556,14 @@ public class HexTest {
 
     @Test
     public void testEncodeHexPartialInputUnderbounds() {
-        final byte data[] = "hello world".getBytes(StandardCharsets.UTF_8);
+        final byte[] data = "hello world".getBytes(StandardCharsets.UTF_8);
 
         assertThrows(ArrayIndexOutOfBoundsException.class, () -> Hex.encodeHex(data, -2, 10, true));
     }
 
     @Test
     public void testEncodeHexPartialInputOverbounds() {
-        final byte data[] = "hello world".getBytes(StandardCharsets.UTF_8);
+        final byte[] data = "hello world".getBytes(StandardCharsets.UTF_8);
 
         assertThrows(ArrayIndexOutOfBoundsException.class, () -> Hex.encodeHex(data, 9, 10, true));
     }

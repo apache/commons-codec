@@ -278,7 +278,7 @@ public class Base16Test {
         assertEquals("0010", new String(new Base16().encode(new byte[] { (byte) 0, (byte) 16 })));
         assertEquals("0011", new String(new Base16().encode(new byte[] { (byte) 0, (byte) 17 })));
         for (int i = -128; i <= 127; i++) {
-            final byte test[] = { (byte) i, (byte) i };
+            final byte[] test = { (byte) i, (byte) i };
             assertArrayEquals(test, new Base16().decode(new Base16().encode(test)));
         }
     }
@@ -391,7 +391,7 @@ public class Base16Test {
         assertEquals("67", new String(new Base16().encode(new byte[] { (byte) 103 })));
         assertEquals("68", new String(new Base16().encode(new byte[] { (byte) 104 })));
         for (int i = -128; i <= 127; i++) {
-            final byte test[] = { (byte) i };
+            final byte[] test = { (byte) i };
             assertArrayEquals(test, new Base16().decode(new Base16().encode(test)));
         }
     }

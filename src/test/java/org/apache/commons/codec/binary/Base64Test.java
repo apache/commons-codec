@@ -588,7 +588,7 @@ public class Base64Test {
     public void testPairs() {
         assertEquals("AAA=", new String(Base64.encodeBase64(new byte[] { 0, 0 })));
         for (int i = -128; i <= 127; i++) {
-            final byte test[] = { (byte) i, (byte) i };
+            final byte[] test = { (byte) i, (byte) i };
             assertArrayEquals(test, Base64.decodeBase64(Base64.encodeBase64(test)));
         }
     }
@@ -868,7 +868,7 @@ public class Base64Test {
         assertEquals("Zw==", new String(Base64.encodeBase64(new byte[] { (byte) 103 })));
         assertEquals("aA==", new String(Base64.encodeBase64(new byte[] { (byte) 104 })));
         for (int i = -128; i <= 127; i++) {
-            final byte test[] = { (byte) i };
+            final byte[] test = { (byte) i };
             assertArrayEquals(test, Base64.decodeBase64(Base64.encodeBase64(test)));
         }
     }

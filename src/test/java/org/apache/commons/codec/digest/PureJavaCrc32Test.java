@@ -60,7 +60,7 @@ public class PureJavaCrc32Test {
     final Random random1 = new Random();
     final Random random2 = new Random();
     for (int i = 0; i < 10000; i++) {
-      final byte randomBytes[] = new byte[random1.nextInt(2048)];
+      final byte[] randomBytes = new byte[random1.nextInt(2048)];
       random2.nextBytes(randomBytes);
       checkOnBytes(randomBytes, false);
     }

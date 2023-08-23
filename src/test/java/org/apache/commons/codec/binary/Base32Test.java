@@ -365,14 +365,14 @@ public class Base32Test {
         for (int i = 0; i < 20; i++) {
             Base32 codec = new Base32();
             final BaseNCodec.Context context = new BaseNCodec.Context();
-            final byte unencoded[] = new byte[i];
-            final byte allInOne[] = codec.encode(unencoded);
+            final byte[] unencoded = new byte[i];
+            final byte[] allInOne = codec.encode(unencoded);
             codec = new Base32();
             for (int j=0; j< unencoded.length; j++) {
                 codec.encode(unencoded, j, 1, context);
             }
             codec.encode(unencoded, 0, -1, context);
-            final byte singly[] = new byte[allInOne.length];
+            final byte[] singly = new byte[allInOne.length];
             codec.readResults(singly, 0, 100, context);
             if (!Arrays.equals(allInOne, singly)){
                 fail();

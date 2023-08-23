@@ -50,7 +50,7 @@ public class ColognePhoneticTest extends AbstractStringEncoderTest<ColognePhonet
     }
 
     // Character sequences to be tested by the code
-    private static final String MATCHES[] = {
+    private static final String[] MATCHES = {
             ".*[AEIOUJY].*",         // A, E, I, J, O, U, Y
             ".*H.*",                 // H
             ".*B.*",                 // B
@@ -229,19 +229,19 @@ public class ColognePhoneticTest extends AbstractStringEncoderTest<ColognePhonet
 
     @Test
     public void testVariationsMella() throws EncoderException {
-        final String data[] = {"mella", "milah", "moulla", "mellah", "muehle", "mule"};
+        final String[] data = {"mella", "milah", "moulla", "mellah", "muehle", "mule"};
         this.checkEncodingVariations("65", data);
     }
 
     @Test
     public void testVariationsMeyer() throws EncoderException {
-        final String data[] = {"Meier", "Maier", "Mair", "Meyer", "Meyr", "Mejer", "Major"};
+        final String[] data = {"Meier", "Maier", "Mair", "Meyer", "Meyr", "Mejer", "Major"};
         this.checkEncodingVariations("67", data);
     }
 
     @Test
     public void testSpecialCharsBetweenSameLetters() throws EncoderException {
-        final String data[] = {"Test test", "Testtest", "Test-test", "TesT#Test", "TesT?test"};
+        final String[] data = {"Test test", "Testtest", "Test-test", "TesT#Test", "TesT?test"};
         this.checkEncodingVariations("28282", data);
     }
 
