@@ -191,23 +191,23 @@ public class Base64OutputStreamTest {
 
         // Start with encode.
         ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
-        OutputStream out = new Base64OutputStream(byteOut, true, chunkSize, separator);
-        out.write(decoded);
-        out.close();
+        try (OutputStream out = new Base64OutputStream(byteOut, true, chunkSize, separator)) {
+            out.write(decoded);
+        }
         byte[] output = byteOut.toByteArray();
         assertArrayEquals(encoded, output, "Streaming chunked base64 encode");
 
         // Now let's try to decode.
         byteOut = new ByteArrayOutputStream();
-        out = new Base64OutputStream(byteOut, false);
-        out.write(encoded);
-        out.close();
+        try (OutputStream out = new Base64OutputStream(byteOut, false)) {
+            out.write(encoded);
+        }
         output = byteOut.toByteArray();
         assertArrayEquals(decoded, output, "Streaming chunked base64 decode");
 
         // I always wanted to do this! (wrap encoder with decoder etc.).
         byteOut = new ByteArrayOutputStream();
-        out = byteOut;
+        OutputStream out = byteOut;
         for (int i = 0; i < 10; i++) {
             out = new Base64OutputStream(out, false);
             out = new Base64OutputStream(out, true, chunkSize, separator);
@@ -241,38 +241,38 @@ public class Base64OutputStreamTest {
 
         // Start with encode.
         ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
-        OutputStream out = new Base64OutputStream(byteOut, true, chunkSize, separator);
-        for (final byte element : decoded) {
-            out.write(element);
+        try (OutputStream out = new Base64OutputStream(byteOut, true, chunkSize, separator)) {
+            for (final byte element : decoded) {
+                out.write(element);
+            }
         }
-        out.close();
         byte[] output = byteOut.toByteArray();
         assertArrayEquals(encoded, output, "Streaming byte-by-byte base64 encode");
 
         // Now let's try to decode.
         byteOut = new ByteArrayOutputStream();
-        out = new Base64OutputStream(byteOut, false);
-        for (final byte element : encoded) {
-            out.write(element);
+        try (OutputStream out = new Base64OutputStream(byteOut, false)) {
+            for (final byte element : encoded) {
+                out.write(element);
+            }
         }
-        out.close();
         output = byteOut.toByteArray();
         assertArrayEquals(decoded, output, "Streaming byte-by-byte base64 decode");
 
         // Now let's try to decode with tonnes of flushes.
         byteOut = new ByteArrayOutputStream();
-        out = new Base64OutputStream(byteOut, false);
-        for (final byte element : encoded) {
-            out.write(element);
-            out.flush();
+        try (OutputStream out = new Base64OutputStream(byteOut, false)) {
+            for (final byte element : encoded) {
+                out.write(element);
+                out.flush();
+            }
         }
-        out.close();
         output = byteOut.toByteArray();
         assertArrayEquals(decoded, output, "Streaming byte-by-byte flush() base64 decode");
 
         // I always wanted to do this! (wrap encoder with decoder etc.).
         byteOut = new ByteArrayOutputStream();
-        out = byteOut;
+        OutputStream out = byteOut;
         for (int i = 0; i < 10; i++) {
             out = new Base64OutputStream(out, false);
             out = new Base64OutputStream(out, true, chunkSize, separator);
