@@ -209,17 +209,11 @@ public class MessageDigestAlgorithmsTest {
 
         final byte[] expected = digestTestData(messageDigestAlgorithm);
 
-        assertArrayEquals(expected,
-                DigestUtils.digest(
-                        DigestUtils.getDigest(messageDigestAlgorithm), getTestRandomAccessFile()
-                )
-        );
-        getTestRandomAccessFile().seek(0);
-        assertArrayEquals(expected,
-                DigestUtils.digest(
-                        DigestUtils.getDigest(messageDigestAlgorithm), getTestRandomAccessFile()
-                )
-        );
+        @SuppressWarnings("resource") // test manages RAF
+        final RandomAccessFile randomAccessFile = getTestRandomAccessFile();
+        assertArrayEquals(expected, DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm), randomAccessFile));
+        randomAccessFile.seek(0);
+        assertArrayEquals(expected, DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm), randomAccessFile));
     }
 
 }

@@ -295,21 +295,17 @@ public class Base64InputStreamTest {
      *             Usually signifies a bug in the Base64 commons-codec implementation.
      */
     private void testByChunk(final byte[] encoded, final byte[] decoded, final int chunkSize, final byte[] separator) throws Exception {
-
         // Start with encode.
-        InputStream in;
-        in = new Base64InputStream(new ByteArrayInputStream(decoded), true, chunkSize, separator);
-        byte[] output = BaseNTestData.streamToBytes(in);
-
-        assertEquals(-1, in.read(), "EOF");
-        assertEquals(-1, in.read(), "Still EOF");
-        assertArrayEquals(encoded, output, "Streaming base64 encode");
-
-        in.close();
+        try (InputStream in = new Base64InputStream(new ByteArrayInputStream(decoded), true, chunkSize, separator)) {
+            byte[] output = BaseNTestData.streamToBytes(in);
+            assertEquals(-1, in.read(), "EOF");
+            assertEquals(-1, in.read(), "Still EOF");
+            assertArrayEquals(encoded, output, "Streaming base64 encode");
+        }
 
         // Now let's try to decode.
-        in = new Base64InputStream(new ByteArrayInputStream(encoded));
-        output = BaseNTestData.streamToBytes(in);
+        InputStream in = new Base64InputStream(new ByteArrayInputStream(encoded));
+        byte[] output = BaseNTestData.streamToBytes(in);
 
         assertEquals(-1, in.read(), "EOF");
         assertEquals(-1, in.read(), "Still EOF");
