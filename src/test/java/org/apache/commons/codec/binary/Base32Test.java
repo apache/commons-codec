@@ -105,7 +105,7 @@ public class Base32Test {
                                    "OOOOIIII" }
             };
         } catch (final DecoderException de) {
-            throw new Error(":(", de);
+            throw new AssertionError(":(", de);
         }
     }
     private static final String [][] BASE32HEX_TEST_CASES = { // RFC 4648
