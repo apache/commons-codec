@@ -79,7 +79,7 @@ public final class MurmurHash2 {
 
         // body
         for (int i = 0; i < nblocks; i++) {
-            final int index = (i << 2);
+            final int index = i << 2;
             int k = getLittleEndianInt(data, index);
             k *= M32;
             k ^= k >>> R32;
@@ -89,14 +89,14 @@ public final class MurmurHash2 {
         }
 
         // Handle the last few bytes of the input array
-        final int index = (nblocks << 2);
+        final int index = nblocks << 2;
         switch (length - index) {
         case 3:
             h ^= (data[index + 2] & 0xff) << 16;
         case 2:
             h ^= (data[index + 1] & 0xff) << 8;
         case 1:
-            h ^= (data[index] & 0xff);
+            h ^= data[index] & 0xff;
             h *= M32;
         }
 
@@ -180,13 +180,13 @@ public final class MurmurHash2 {
      * @return The 64-bit hash of the given array
      */
     public static long hash64(final byte[] data, final int length, final int seed) {
-        long h = (seed & 0xffffffffL) ^ (length * M64);
+        long h = seed & 0xffffffffL ^ length * M64;
 
         final int nblocks = length >> 3;
 
         // body
         for (int i = 0; i < nblocks; i++) {
-            final int index = (i << 3);
+            final int index = i << 3;
             long k = getLittleEndianLong(data, index);
 
             k *= M64;
@@ -197,7 +197,7 @@ public final class MurmurHash2 {
             h *= M64;
         }
 
-        final int index = (nblocks << 3);
+        final int index = nblocks << 3;
         switch (length - index) {
         case 7:
             h ^= ((long) data[index + 6] & 0xff) << 48;
@@ -212,7 +212,7 @@ public final class MurmurHash2 {
         case 2:
             h ^= ((long) data[index + 1] & 0xff) << 8;
         case 1:
-            h ^= ((long) data[index] & 0xff);
+            h ^= (long) data[index] & 0xff;
             h *= M64;
         }
 
@@ -295,10 +295,10 @@ public final class MurmurHash2 {
      * @return The little-endian int
      */
     private static int getLittleEndianInt(final byte[] data, final int index) {
-        return ((data[index    ] & 0xff)      ) |
-               ((data[index + 1] & 0xff) <<  8) |
-               ((data[index + 2] & 0xff) << 16) |
-               ((data[index + 3] & 0xff) << 24);
+        return data[index    ] & 0xff |
+               (data[index + 1] & 0xff) <<  8 |
+               (data[index + 2] & 0xff) << 16 |
+               (data[index + 3] & 0xff) << 24;
     }
 
     /**
@@ -309,13 +309,13 @@ public final class MurmurHash2 {
      * @return The little-endian long
      */
     private static long getLittleEndianLong(final byte[] data, final int index) {
-        return (((long) data[index    ] & 0xff)      ) |
-               (((long) data[index + 1] & 0xff) <<  8) |
-               (((long) data[index + 2] & 0xff) << 16) |
-               (((long) data[index + 3] & 0xff) << 24) |
-               (((long) data[index + 4] & 0xff) << 32) |
-               (((long) data[index + 5] & 0xff) << 40) |
-               (((long) data[index + 6] & 0xff) << 48) |
-               (((long) data[index + 7] & 0xff) << 56);
+        return (long) data[index    ] & 0xff |
+               ((long) data[index + 1] & 0xff) <<  8 |
+               ((long) data[index + 2] & 0xff) << 16 |
+               ((long) data[index + 3] & 0xff) << 24 |
+               ((long) data[index + 4] & 0xff) << 32 |
+               ((long) data[index + 5] & 0xff) << 40 |
+               ((long) data[index + 6] & 0xff) << 48 |
+               ((long) data[index + 7] & 0xff) << 56;
     }
 }

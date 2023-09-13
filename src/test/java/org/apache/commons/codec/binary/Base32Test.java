@@ -306,8 +306,8 @@ public class Base32Test {
         for (char c = 'a'; c <= 'z'; c++) {
             assertTrue(b32.isInAlphabet((byte) c));
         }
-        assertFalse(b32.isInAlphabet((byte) ('1')));
-        assertFalse(b32.isInAlphabet((byte) ('8')));
+        assertFalse(b32.isInAlphabet((byte) '1'));
+        assertFalse(b32.isInAlphabet((byte) '8'));
         assertFalse(b32.isInAlphabet((byte) ('A' - 1)));
         assertFalse(b32.isInAlphabet((byte) ('Z' + 1)));
 

@@ -140,7 +140,7 @@ public final class MurmurHash3 {
 
         hash = mix32((int) r0, hash);
         hash = mix32((int) (r0 >>> 32), hash);
-        hash = mix32((int) (r1), hash);
+        hash = mix32((int) r1, hash);
         hash = mix32((int) (r1 >>> 32), hash);
 
         hash ^= Long.BYTES * 2;
@@ -405,7 +405,7 @@ public final class MurmurHash3 {
         case 2:
             k1 ^= (data[index + 1] & 0xff) << 8;
         case 1:
-            k1 ^= (data[index] & 0xff);
+            k1 ^= data[index] & 0xff;
 
             // mix functions
             k1 *= C1_32;
@@ -494,7 +494,7 @@ public final class MurmurHash3 {
      */
     @Deprecated
     public static long hash64(final int data) {
-        long k1 = Integer.reverseBytes(data) & (-1L >>> 32);
+        long k1 = Integer.reverseBytes(data) & -1L >>> 32;
         long hash = DEFAULT_SEED;
         k1 *= C1;
         k1 = Long.rotateLeft(k1, R1);
@@ -540,7 +540,7 @@ public final class MurmurHash3 {
         long hash = DEFAULT_SEED;
         long k1 = 0;
         k1 ^= ((long) data & 0xff) << 8;
-        k1 ^= ((long) ((data & 0xFF00) >> 8) & 0xff);
+        k1 ^= (long) ((data & 0xFF00) >> 8) & 0xff;
         k1 *= C1;
         k1 = Long.rotateLeft(k1, R1);
         k1 *= C2;
@@ -683,7 +683,7 @@ public final class MurmurHash3 {
         case 2:
             k1 ^= ((long) data[index + 1] & 0xff) << 8;
         case 1:
-            k1 ^= ((long) data[index] & 0xff);
+            k1 ^= (long) data[index] & 0xff;
             k1 *= C1;
             k1 = Long.rotateLeft(k1, R1);
             k1 *= C2;
@@ -926,14 +926,14 @@ public final class MurmurHash3 {
      * @return The little-endian long
      */
     private static long getLittleEndianLong(final byte[] data, final int index) {
-        return (((long) data[index    ] & 0xff)      ) |
-               (((long) data[index + 1] & 0xff) <<  8) |
-               (((long) data[index + 2] & 0xff) << 16) |
-               (((long) data[index + 3] & 0xff) << 24) |
-               (((long) data[index + 4] & 0xff) << 32) |
-               (((long) data[index + 5] & 0xff) << 40) |
-               (((long) data[index + 6] & 0xff) << 48) |
-               (((long) data[index + 7] & 0xff) << 56);
+        return (long) data[index    ] & 0xff |
+               ((long) data[index + 1] & 0xff) <<  8 |
+               ((long) data[index + 2] & 0xff) << 16 |
+               ((long) data[index + 3] & 0xff) << 24 |
+               ((long) data[index + 4] & 0xff) << 32 |
+               ((long) data[index + 5] & 0xff) << 40 |
+               ((long) data[index + 6] & 0xff) << 48 |
+               ((long) data[index + 7] & 0xff) << 56;
     }
 
     /**
@@ -944,10 +944,10 @@ public final class MurmurHash3 {
      * @return The little-endian int
      */
     private static int getLittleEndianInt(final byte[] data, final int index) {
-        return ((data[index    ] & 0xff)      ) |
-               ((data[index + 1] & 0xff) <<  8) |
-               ((data[index + 2] & 0xff) << 16) |
-               ((data[index + 3] & 0xff) << 24);
+        return data[index    ] & 0xff |
+               (data[index + 1] & 0xff) <<  8 |
+               (data[index + 2] & 0xff) << 16 |
+               (data[index + 3] & 0xff) << 24;
     }
 
     /**
@@ -972,11 +972,11 @@ public final class MurmurHash3 {
      * @return The final hash
      */
     private static int fmix32(int hash) {
-        hash ^= (hash >>> 16);
+        hash ^= hash >>> 16;
         hash *= 0x85ebca6b;
-        hash ^= (hash >>> 13);
+        hash ^= hash >>> 13;
         hash *= 0xc2b2ae35;
-        hash ^= (hash >>> 16);
+        hash ^= hash >>> 16;
         return hash;
     }
 
@@ -987,11 +987,11 @@ public final class MurmurHash3 {
      * @return The final hash
      */
     private static long fmix64(long hash) {
-        hash ^= (hash >>> 33);
+        hash ^= hash >>> 33;
         hash *= 0xff51afd7ed558ccdL;
-        hash ^= (hash >>> 33);
+        hash ^= hash >>> 33;
         hash *= 0xc4ceb9fe1a85ec53L;
-        hash ^= (hash >>> 33);
+        hash ^= hash >>> 33;
         return hash;
     }
 
@@ -1106,7 +1106,7 @@ public final class MurmurHash3 {
             }
 
             // Save left-over unprocessed bytes
-            final int consumed = (nblocks << 2);
+            final int consumed = nblocks << 2;
             unprocessedLength = newLength - consumed;
             if (unprocessedLength != 0) {
                 System.arraycopy(data, newOffset + consumed, unprocessed, 0, unprocessedLength);
@@ -1143,7 +1143,7 @@ public final class MurmurHash3 {
             case 2:
                 k1 ^= (unprocessed[1] & 0xff) << 8;
             case 1:
-                k1 ^= (unprocessed[0] & 0xff);
+                k1 ^= unprocessed[0] & 0xff;
 
                 // mix functions
                 k1 *= C1_32;
@@ -1169,7 +1169,7 @@ public final class MurmurHash3 {
          * @return The 32-bit integer
          */
         private static int orBytes(final byte b1, final byte b2, final byte b3, final byte b4) {
-            return (b1 & 0xff) | ((b2 & 0xff) << 8) | ((b3 & 0xff) << 16) | ((b4 & 0xff) << 24);
+            return b1 & 0xff | (b2 & 0xff) << 8 | (b3 & 0xff) << 16 | (b4 & 0xff) << 24;
         }
     }
 

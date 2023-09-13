@@ -171,10 +171,10 @@ public class XXHash32 implements Checksum {
      * @return The little-endian int
      */
     private static int getInt(final byte[] buffer, final int idx) {
-        return ((buffer[idx    ] & 0xff)      ) |
-               ((buffer[idx + 1] & 0xff) <<  8) |
-               ((buffer[idx + 2] & 0xff) << 16) |
-               ((buffer[idx + 3] & 0xff) << 24);
+        return buffer[idx    ] & 0xff |
+               (buffer[idx + 1] & 0xff) <<  8 |
+               (buffer[idx + 2] & 0xff) << 16 |
+               (buffer[idx + 3] & 0xff) << 24;
     }
 
     private void initializeState() {

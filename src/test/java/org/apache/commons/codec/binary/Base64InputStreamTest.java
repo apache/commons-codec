@@ -297,7 +297,7 @@ public class Base64InputStreamTest {
     private void testByChunk(final byte[] encoded, final byte[] decoded, final int chunkSize, final byte[] separator) throws Exception {
         // Start with encode.
         try (InputStream in = new Base64InputStream(new ByteArrayInputStream(decoded), true, chunkSize, separator)) {
-            byte[] output = BaseNTestData.streamToBytes(in);
+            final byte[] output = BaseNTestData.streamToBytes(in);
             assertEquals(-1, in.read(), "EOF");
             assertEquals(-1, in.read(), "Still EOF");
             assertArrayEquals(encoded, output, "Streaming base64 encode");

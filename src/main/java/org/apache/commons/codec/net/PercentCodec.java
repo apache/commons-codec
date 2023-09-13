@@ -125,7 +125,7 @@ public class PercentCodec implements BinaryEncoder, BinaryDecoder {
 
         final int expectedEncodingBytes = expectedEncodingBytes(bytes);
         final boolean willEncode = expectedEncodingBytes != bytes.length;
-        if (willEncode || (plusForSpace && containsSpace(bytes))) {
+        if (willEncode || plusForSpace && containsSpace(bytes)) {
             return doEncode(bytes, expectedEncodingBytes, willEncode);
         }
         return bytes;
@@ -171,7 +171,7 @@ public class PercentCodec implements BinaryEncoder, BinaryDecoder {
     }
 
     private boolean canEncode(final byte c) {
-        return !isAsciiChar(c) || (inAlwaysEncodeCharsRange(c) && alwaysEncodeChars.get(c));
+        return !isAsciiChar(c) || inAlwaysEncodeCharsRange(c) && alwaysEncodeChars.get(c);
     }
 
     private boolean inAlwaysEncodeCharsRange(final byte c) {

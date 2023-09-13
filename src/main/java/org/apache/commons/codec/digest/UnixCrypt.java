@@ -383,7 +383,7 @@ public class UnixCrypt {
                     SKB[3][c >>> 20 & 0x1 | c >>> 21 & 0x6 | c >>> 22 & 0x38];
             final int t = SKB[4][d & 0x3f] | SKB[5][d >>> 7 & 0x3 | d >>> 8 & 0x3c] | SKB[6][d >>> 15 & 0x3f] |
                     SKB[7][d >>> 21 & 0xf | d >>> 22 & 0x30];
-            schedule[j++] = (t << 16 | s & 0xffff);
+            schedule[j++] = t << 16 | s & 0xffff;
             s = s >>> 16 | t & 0xffff0000;
             s = s << 4 | s >>> 28;
             schedule[j++] = s;

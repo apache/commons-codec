@@ -310,7 +310,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
             // rule #3: whitespace at the end of a line *must* be encoded
             // if we would do a soft break line after this octet, encode whitespace
             int b = getUnsignedOctet(bytesLength - 3, bytes);
-            boolean encode = !printable.get(b) || (isWhitespace(b) && pos > SAFE_LENGTH - 5);
+            boolean encode = !printable.get(b) || isWhitespace(b) && pos > SAFE_LENGTH - 5;
             pos += encodeByte(b, encode, buffer);
 
             // note #3: '=' *must not* be the ultimate or penultimate character
@@ -324,7 +324,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
             for (int i = bytesLength - 2; i < bytesLength; i++) {
                 b = getUnsignedOctet(i, bytes);
                 // rule #3: trailing whitespace shall be encoded
-                encode = !printable.get(b) || (i > bytesLength - 2 && isWhitespace(b));
+                encode = !printable.get(b) || i > bytesLength - 2 && isWhitespace(b);
                 encodeByte(b, encode, buffer);
             }
         } else {

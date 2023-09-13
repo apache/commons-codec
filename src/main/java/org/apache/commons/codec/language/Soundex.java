@@ -325,7 +325,7 @@ public class Soundex implements StringEncoder {
         char lastDigit = map(first); // previous digit
         for(int i = 1; i < str.length() && count < out.length ; i++) {
             final char ch = str.charAt(i);
-            if ((this.specialCaseHW) && (ch == 'H' || ch == 'W')) { // these are ignored completely
+            if (this.specialCaseHW && (ch == 'H' || ch == 'W')) { // these are ignored completely
                 continue;
             }
             final char digit = map(ch);

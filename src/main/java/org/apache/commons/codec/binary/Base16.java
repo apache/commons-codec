@@ -176,7 +176,7 @@ public class Base16 extends BaseNCodec {
         int result;
         if (dataLen < availableChars) {
             // we have 1/2 byte from previous invocation to decode
-            result = (context.ibitWorkArea - 1) << BITS_PER_ENCODED_BYTE;
+            result = context.ibitWorkArea - 1 << BITS_PER_ENCODED_BYTE;
             result |= decodeOctet(data[offset++]);
 
             buffer[context.pos++] = (byte)result;
@@ -233,7 +233,7 @@ public class Base16 extends BaseNCodec {
         final int end = offset + length;
         for (int i = offset; i < end; i++) {
             final int value = data[i];
-            final int high = (value >> BITS_PER_ENCODED_BYTE) & MASK_4BITS;
+            final int high = value >> BITS_PER_ENCODED_BYTE & MASK_4BITS;
             final int low = value & MASK_4BITS;
             buffer[context.pos++] = encodeTable[high];
             buffer[context.pos++] = encodeTable[low];

@@ -342,7 +342,7 @@ public class ColognePhonetic implements StringEncoder {
 
             if (arrayContains(AEIJOUY, chr)) {
                 output.put('0');
-            } else if (chr == 'B' || (chr == 'P' && nextChar != 'H')) {
+            } else if (chr == 'B' || chr == 'P' && nextChar != 'H') {
                 output.put('1');
             } else if ((chr == 'D' || chr == 'T') && !arrayContains(CSZ, nextChar)) {
                 output.put('2');

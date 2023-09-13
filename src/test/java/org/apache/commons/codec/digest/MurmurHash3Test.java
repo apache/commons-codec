@@ -217,7 +217,7 @@ public class MurmurHash3Test {
             final byte[] bytes = Arrays.copyOf(RANDOM_BYTES, i);
             // Known bug: Incorrect result for non modulus of 4 byte arrays if there are
             // negative bytes
-            if (i % 4 == 0 || !negativeBytes(bytes, (i / 4) * 4, i % 4)) {
+            if (i % 4 == 0 || !negativeBytes(bytes, i / 4 * 4, i % 4)) {
                 assertEquals(answers[i], MurmurHash3.hash32(bytes));
             } else {
                 assertNotEquals(answers[i], MurmurHash3.hash32(bytes));
@@ -248,7 +248,7 @@ public class MurmurHash3Test {
         for (int i = 0; i < answers.length; i++) {
             // Known bug: Incorrect result for non modulus of 4 byte arrays if there are
             // negative bytes
-            if (i % 4 == 0 || !negativeBytes(RANDOM_BYTES, (i / 4) * 4, i % 4)) {
+            if (i % 4 == 0 || !negativeBytes(RANDOM_BYTES, i / 4 * 4, i % 4)) {
                 assertEquals(answers[i], MurmurHash3.hash32(RANDOM_BYTES, i));
             } else {
                 assertNotEquals(answers[i], MurmurHash3.hash32(RANDOM_BYTES, i));
@@ -280,7 +280,7 @@ public class MurmurHash3Test {
         for (int i = 0; i < answers.length; i++) {
             // Known bug: Incorrect result for non modulus of 4 byte arrays if there are
             // negative bytes
-            if (i % 4 == 0 || !negativeBytes(RANDOM_BYTES, (i / 4) * 4, i % 4)) {
+            if (i % 4 == 0 || !negativeBytes(RANDOM_BYTES, i / 4 * 4, i % 4)) {
                 assertEquals(answers[i], MurmurHash3.hash32(RANDOM_BYTES, i, seed));
             } else {
                 assertNotEquals(answers[i], MurmurHash3.hash32(RANDOM_BYTES, i, seed));
@@ -311,7 +311,7 @@ public class MurmurHash3Test {
         for (int i = 0; i < answers.length; i++) {
             // Known bug: Incorrect result for non modulus of 4 byte arrays if there are
             // negative bytes
-            if (i % 4 == 0 || !negativeBytes(RANDOM_BYTES, offset + (i / 4) * 4, i % 4)) {
+            if (i % 4 == 0 || !negativeBytes(RANDOM_BYTES, offset + i / 4 * 4, i % 4)) {
                 assertEquals(answers[i], MurmurHash3.hash32(RANDOM_BYTES, offset, i, seed));
             } else {
                 assertNotEquals(answers[i], MurmurHash3.hash32(RANDOM_BYTES, offset, i, seed));

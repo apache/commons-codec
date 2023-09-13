@@ -205,7 +205,7 @@ public class MatchRatingApproachEncoderTest extends AbstractStringEncoderTest<Ma
 
     @Test
     public final void testIsVowel_SingleVowel_ReturnsTrue() {
-        assertTrue(this.getStringEncoder().isVowel(("I")));
+        assertTrue(this.getStringEncoder().isVowel("I"));
     }
 
     @Test

@@ -374,7 +374,7 @@ public class Base64 extends BaseNCodec {
      * @since 1.4
      */
     public static boolean isBase64(final byte octet) {
-        return octet == PAD_DEFAULT || (octet >= 0 && octet < DECODE_TABLE.length && DECODE_TABLE[octet] != -1);
+        return octet == PAD_DEFAULT || octet >= 0 && octet < DECODE_TABLE.length && DECODE_TABLE[octet] != -1;
     }
 
     /**
@@ -420,10 +420,10 @@ public class Base64 extends BaseNCodec {
     static byte[] toIntegerBytes(final BigInteger bigInt) {
         int bitlen = bigInt.bitLength();
         // round bitlen
-        bitlen = ((bitlen + 7) >> 3) << 3;
+        bitlen = bitlen + 7 >> 3 << 3;
         final byte[] bigBytes = bigInt.toByteArray();
 
-        if (((bigInt.bitLength() % 8) != 0) && (((bigInt.bitLength() / 8) + 1) == (bitlen / 8))) {
+        if (bigInt.bitLength() % 8 != 0 && bigInt.bitLength() / 8 + 1 == bitlen / 8) {
             return bigBytes;
         }
         // set up params for copying everything but sign bit
@@ -431,7 +431,7 @@ public class Base64 extends BaseNCodec {
         int len = bigBytes.length;
 
         // if bigInt is exactly byte-aligned, just skip signbit in copy
-        if ((bigInt.bitLength() % 8) == 0) {
+        if (bigInt.bitLength() % 8 == 0) {
             startSrc = 1;
             len--;
         }
@@ -661,8 +661,8 @@ public class Base64 extends BaseNCodec {
                     context.modulus = (context.modulus+1) % BYTES_PER_ENCODED_BLOCK;
                     context.ibitWorkArea = (context.ibitWorkArea << BITS_PER_ENCODED_BYTE) + result;
                     if (context.modulus == 0) {
-                        buffer[context.pos++] = (byte) ((context.ibitWorkArea >> 16) & MASK_8BITS);
-                        buffer[context.pos++] = (byte) ((context.ibitWorkArea >> 8) & MASK_8BITS);
+                        buffer[context.pos++] = (byte) (context.ibitWorkArea >> 16 & MASK_8BITS);
+                        buffer[context.pos++] = (byte) (context.ibitWorkArea >> 8 & MASK_8BITS);
                         buffer[context.pos++] = (byte) (context.ibitWorkArea & MASK_8BITS);
                     }
                 }
@@ -685,13 +685,13 @@ public class Base64 extends BaseNCodec {
                 case 2 : // 12 bits = 8 + 4
                     validateCharacter(MASK_4BITS, context);
                     context.ibitWorkArea = context.ibitWorkArea >> 4; // dump the extra 4 bits
-                    buffer[context.pos++] = (byte) ((context.ibitWorkArea) & MASK_8BITS);
+                    buffer[context.pos++] = (byte) (context.ibitWorkArea & MASK_8BITS);
                     break;
                 case 3 : // 18 bits = 8 + 8 + 2
                     validateCharacter(MASK_2BITS, context);
                     context.ibitWorkArea = context.ibitWorkArea >> 2; // dump 2 bits
-                    buffer[context.pos++] = (byte) ((context.ibitWorkArea >> 8) & MASK_8BITS);
-                    buffer[context.pos++] = (byte) ((context.ibitWorkArea) & MASK_8BITS);
+                    buffer[context.pos++] = (byte) (context.ibitWorkArea >> 8 & MASK_8BITS);
+                    buffer[context.pos++] = (byte) (context.ibitWorkArea & MASK_8BITS);
                     break;
                 default:
                     throw new IllegalStateException("Impossible modulus " + context.modulus);
@@ -739,9 +739,9 @@ public class Base64 extends BaseNCodec {
                     break;
                 case 1 : // 8 bits = 6 + 2
                     // top 6 bits:
-                    buffer[context.pos++] = encodeTable[(context.ibitWorkArea >> 2) & MASK_6BITS];
+                    buffer[context.pos++] = encodeTable[context.ibitWorkArea >> 2 & MASK_6BITS];
                     // remaining 2:
-                    buffer[context.pos++] = encodeTable[(context.ibitWorkArea << 4) & MASK_6BITS];
+                    buffer[context.pos++] = encodeTable[context.ibitWorkArea << 4 & MASK_6BITS];
                     // URL-SAFE skips the padding to further reduce size.
                     if (encodeTable == STANDARD_ENCODE_TABLE) {
                         buffer[context.pos++] = pad;
@@ -750,9 +750,9 @@ public class Base64 extends BaseNCodec {
                     break;
 
                 case 2 : // 16 bits = 6 + 6 + 4
-                    buffer[context.pos++] = encodeTable[(context.ibitWorkArea >> 10) & MASK_6BITS];
-                    buffer[context.pos++] = encodeTable[(context.ibitWorkArea >> 4) & MASK_6BITS];
-                    buffer[context.pos++] = encodeTable[(context.ibitWorkArea << 2) & MASK_6BITS];
+                    buffer[context.pos++] = encodeTable[context.ibitWorkArea >> 10 & MASK_6BITS];
+                    buffer[context.pos++] = encodeTable[context.ibitWorkArea >> 4 & MASK_6BITS];
+                    buffer[context.pos++] = encodeTable[context.ibitWorkArea << 2 & MASK_6BITS];
                     // URL-SAFE skips the padding to further reduce size.
                     if (encodeTable == STANDARD_ENCODE_TABLE) {
                         buffer[context.pos++] = pad;
@@ -777,9 +777,9 @@ public class Base64 extends BaseNCodec {
                 }
                 context.ibitWorkArea = (context.ibitWorkArea << 8) + b; //  BITS_PER_BYTE
                 if (0 == context.modulus) { // 3 bytes = 24 bits = 4 * 6 bits to extract
-                    buffer[context.pos++] = encodeTable[(context.ibitWorkArea >> 18) & MASK_6BITS];
-                    buffer[context.pos++] = encodeTable[(context.ibitWorkArea >> 12) & MASK_6BITS];
-                    buffer[context.pos++] = encodeTable[(context.ibitWorkArea >> 6) & MASK_6BITS];
+                    buffer[context.pos++] = encodeTable[context.ibitWorkArea >> 18 & MASK_6BITS];
+                    buffer[context.pos++] = encodeTable[context.ibitWorkArea >> 12 & MASK_6BITS];
+                    buffer[context.pos++] = encodeTable[context.ibitWorkArea >> 6 & MASK_6BITS];
                     buffer[context.pos++] = encodeTable[context.ibitWorkArea & MASK_6BITS];
                     context.currentLinePos += BYTES_PER_ENCODED_BLOCK;
                     if (lineLength > 0 && lineLength <= context.currentLinePos) {

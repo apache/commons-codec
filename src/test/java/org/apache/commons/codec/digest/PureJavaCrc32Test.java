@@ -142,7 +142,7 @@ public class PureJavaCrc32Test {
         final int[] previous = tables[j-1];
         final int[] current = tables[j];
         for (int i = 0; i < current.length; i++) {
-          current[i] = (previous[i] >>> nBits) ^ first[previous[i] & mask];
+          current[i] = previous[i] >>> nBits ^ first[previous[i] & mask];
         }
       }
     }

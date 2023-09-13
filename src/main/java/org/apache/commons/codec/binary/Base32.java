@@ -386,10 +386,10 @@ public class Base32 extends BaseNCodec {
                     // collect decoded bytes
                     context.lbitWorkArea = (context.lbitWorkArea << BITS_PER_ENCODED_BYTE) + result;
                     if (context.modulus == 0) { // we can output the 5 bytes
-                        buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 32) & MASK_8BITS);
-                        buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 24) & MASK_8BITS);
-                        buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 16) & MASK_8BITS);
-                        buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 8) & MASK_8BITS);
+                        buffer[context.pos++] = (byte) (context.lbitWorkArea >> 32 & MASK_8BITS);
+                        buffer[context.pos++] = (byte) (context.lbitWorkArea >> 24 & MASK_8BITS);
+                        buffer[context.pos++] = (byte) (context.lbitWorkArea >> 16 & MASK_8BITS);
+                        buffer[context.pos++] = (byte) (context.lbitWorkArea >> 8 & MASK_8BITS);
                         buffer[context.pos++] = (byte) (context.lbitWorkArea & MASK_8BITS);
                     }
                 }
@@ -414,41 +414,41 @@ public class Base32 extends BaseNCodec {
                     validateTrailingCharacters();
                 case 2 : // 10 bits, drop 2 and output one byte
                     validateCharacter(MASK_2BITS, context);
-                    buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 2) & MASK_8BITS);
+                    buffer[context.pos++] = (byte) (context.lbitWorkArea >> 2 & MASK_8BITS);
                     break;
                 case 3 : // 15 bits, drop 7 and output 1 byte, or raise an exception
                     validateTrailingCharacters();
                     // Not possible from a valid encoding but decode anyway
-                    buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 7) & MASK_8BITS);
+                    buffer[context.pos++] = (byte) (context.lbitWorkArea >> 7 & MASK_8BITS);
                     break;
                 case 4 : // 20 bits = 2*8 + 4
                     validateCharacter(MASK_4BITS, context);
                     context.lbitWorkArea = context.lbitWorkArea >> 4; // drop 4 bits
-                    buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 8) & MASK_8BITS);
-                    buffer[context.pos++] = (byte) ((context.lbitWorkArea) & MASK_8BITS);
+                    buffer[context.pos++] = (byte) (context.lbitWorkArea >> 8 & MASK_8BITS);
+                    buffer[context.pos++] = (byte) (context.lbitWorkArea & MASK_8BITS);
                     break;
                 case 5 : // 25 bits = 3*8 + 1
                     validateCharacter(MASK_1BITS, context);
                     context.lbitWorkArea = context.lbitWorkArea >> 1;
-                    buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 16) & MASK_8BITS);
-                    buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 8) & MASK_8BITS);
-                    buffer[context.pos++] = (byte) ((context.lbitWorkArea) & MASK_8BITS);
+                    buffer[context.pos++] = (byte) (context.lbitWorkArea >> 16 & MASK_8BITS);
+                    buffer[context.pos++] = (byte) (context.lbitWorkArea >> 8 & MASK_8BITS);
+                    buffer[context.pos++] = (byte) (context.lbitWorkArea & MASK_8BITS);
                     break;
                 case 6 : // 30 bits = 3*8 + 6, or raise an exception
                     validateTrailingCharacters();
                     // Not possible from a valid encoding but decode anyway
                     context.lbitWorkArea = context.lbitWorkArea >> 6;
-                    buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 16) & MASK_8BITS);
-                    buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 8) & MASK_8BITS);
-                    buffer[context.pos++] = (byte) ((context.lbitWorkArea) & MASK_8BITS);
+                    buffer[context.pos++] = (byte) (context.lbitWorkArea >> 16 & MASK_8BITS);
+                    buffer[context.pos++] = (byte) (context.lbitWorkArea >> 8 & MASK_8BITS);
+                    buffer[context.pos++] = (byte) (context.lbitWorkArea & MASK_8BITS);
                     break;
                 case 7 : // 35 bits = 4*8 +3
                     validateCharacter(MASK_3BITS, context);
                     context.lbitWorkArea = context.lbitWorkArea >> 3;
-                    buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 24) & MASK_8BITS);
-                    buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 16) & MASK_8BITS);
-                    buffer[context.pos++] = (byte) ((context.lbitWorkArea >> 8) & MASK_8BITS);
-                    buffer[context.pos++] = (byte) ((context.lbitWorkArea) & MASK_8BITS);
+                    buffer[context.pos++] = (byte) (context.lbitWorkArea >> 24 & MASK_8BITS);
+                    buffer[context.pos++] = (byte) (context.lbitWorkArea >> 16 & MASK_8BITS);
+                    buffer[context.pos++] = (byte) (context.lbitWorkArea >> 8 & MASK_8BITS);
+                    buffer[context.pos++] = (byte) (context.lbitWorkArea & MASK_8BITS);
                     break;
                 default:
                     // modulus can be 0-7, and we excluded 0,1 already

@@ -358,7 +358,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         this.unencodedBlockSize = unencodedBlockSize;
         this.encodedBlockSize = encodedBlockSize;
         final boolean useChunking = lineLength > 0 && chunkSeparatorLength > 0;
-        this.lineLength = useChunking ? (lineLength / encodedBlockSize) * encodedBlockSize : 0;
+        this.lineLength = useChunking ? lineLength / encodedBlockSize * encodedBlockSize : 0;
         this.chunkSeparatorLength = chunkSeparatorLength;
         this.pad = pad;
         this.decodingPolicy = Objects.requireNonNull(decodingPolicy, "codecPolicy");
@@ -594,10 +594,10 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     public long getEncodedLength(final byte[] pArray) {
         // Calculate non-chunked size - rounded up to allow for padding
         // cast to long is needed to avoid possibility of overflow
-        long len = ((pArray.length + unencodedBlockSize-1)  / unencodedBlockSize) * (long) encodedBlockSize;
+        long len = (pArray.length + unencodedBlockSize-1)  / unencodedBlockSize * (long) encodedBlockSize;
         if (lineLength > 0) { // We're using chunking
             // Round up to nearest multiple
-            len += ((len + lineLength-1) / lineLength) * chunkSeparatorLength;
+            len += (len + lineLength-1) / lineLength * chunkSeparatorLength;
         }
         return len;
     }
@@ -635,7 +635,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     public boolean isInAlphabet(final byte[] arrayOctet, final boolean allowWSPad) {
         for (final byte octet : arrayOctet) {
             if (!isInAlphabet(octet) &&
-                    (!allowWSPad || (octet != pad) && !Character.isWhitespace(octet))) {
+                    (!allowWSPad || octet != pad && !Character.isWhitespace(octet))) {
                 return false;
             }
         }

@@ -505,7 +505,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
                             final Branch nextBranch = branchingRequired ? branch.createBranch() : branch;
 
                             // special rule: occurrences of mn or nm are treated differently
-                            final boolean force = (lastChar == 'm' && ch == 'n') || (lastChar == 'n' && ch == 'm');
+                            final boolean force = lastChar == 'm' && ch == 'n' || lastChar == 'n' && ch == 'm';
 
                             nextBranch.processNextReplacement(nextReplacement, force);
 

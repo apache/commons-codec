@@ -34,27 +34,27 @@ public class CustomRFC1522Codec extends RFC1522Codec {
     }
 
     @Override
-    protected byte[] doEncoding(byte[] bytes) throws EncoderException {
+    protected byte[] doEncoding(final byte[] bytes) throws EncoderException {
         return null;
     }
 
     @Override
-    protected byte[] doDecoding(byte[] bytes) throws DecoderException {
+    protected byte[] doDecoding(final byte[] bytes) throws DecoderException {
         return null;
     }
 
     @Override
-    protected String encodeText(String text, Charset charset) throws EncoderException {
+    protected String encodeText(final String text, final Charset charset) throws EncoderException {
         return super.encodeText(text, charset);
     }
 
     @Override
-    protected String encodeText(String text, String charsetName) throws EncoderException, UnsupportedEncodingException {
+    protected String encodeText(final String text, final String charsetName) throws EncoderException, UnsupportedEncodingException {
         return super.encodeText(text, charsetName);
     }
 
     @Override
-    protected String decodeText(String text) throws DecoderException, UnsupportedEncodingException {
+    protected String decodeText(final String text) throws DecoderException, UnsupportedEncodingException {
         return super.decodeText(text);
     }
 
