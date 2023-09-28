@@ -18,7 +18,6 @@ package org.apache.commons.codec.digest;
 
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * GNU libc crypt(3) compatible hash method.
@@ -40,8 +39,7 @@ public class Crypt {
      * details.
      * </p>
      * <p>
-     * A salt is generated for you using {@link ThreadLocalRandom}; for more secure salts consider using
-     * {@link SecureRandom} to generate your own salts and calling {@link #crypt(byte[], String)}.
+     * A salt is generated for you using {@link SecureRandom}.
      * </p>
      *
      * @param keyBytes
@@ -65,9 +63,7 @@ public class Crypt {
      *            plaintext password
      * @param salt
      *            real salt value without prefix or "rounds=". The salt may be null,
-     *            in which case a salt is generated for you using {@link ThreadLocalRandom};
-     *            for more secure salts consider using {@link SecureRandom} to
-     *            generate your own salts.
+     *            in which case a salt is generated for you using {@link SecureRandom}.
      * @return hash value
      * @throws IllegalArgumentException
      *             if the salt does not match the allowed pattern
@@ -96,8 +92,7 @@ public class Crypt {
      * A random salt and the default algorithm (currently SHA-512) are used.
      * </p>
      * <p>
-     * A salt is generated for you using {@link ThreadLocalRandom}; for more secure salts consider using
-     * {@link SecureRandom} to generate your own salts and calling {@link #crypt(String, String)}.
+     * A salt is generated for you using {@link SecureRandom}.
      * </p>
      *
      * @see #crypt(String, String)
@@ -165,8 +160,7 @@ public class Crypt {
      *            plaintext password as entered by the used
      * @param salt
      *            real salt value without prefix or "rounds=". The salt may be null, in which case a
-     *            salt is generated for you using {@link ThreadLocalRandom}; for more secure salts
-     *            consider using {@link SecureRandom} to generate your own salts.
+     *            salt is generated for you using {@link SecureRandom}
      * @return hash value, i.e. encrypted password including the salt string
      * @throws IllegalArgumentException
      *             if the salt does not match the allowed pattern

@@ -32,7 +32,7 @@
             </td>
             <td>
               Provides Base32 encoding and decoding as defined by
-              <a href="http://www.ietf.org/rfc/rfc4648.txt">RFC 4648</a>
+              <a href="https://www.ietf.org/rfc/rfc4648.txt">RFC 4648</a>
             </td>
           </tr>
           <tr>
@@ -52,7 +52,7 @@
             </td>
             <td>
               Provides Base64 encoding and decoding as defined by
-              <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>
+              <a href="https://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>
             </td>
           </tr>
           <tr>
@@ -86,20 +86,11 @@
         </table>
       </subsection>
       <subsection name="Digest Encoders">
+        <p>
+          <strong>WARNING:</strong> Some of the functions in this package might not be suitable for cryptography,
+          or are no longer cryptographically-secure.
+        </p>
         <table>
-          <tr>
-            <td width="150">
-              <a
-                href="apidocs/org/apache/commons/codec/digest/DigestUtils.html">DigestUtils
-              </a>
-            </td>
-            <td>
-              Simplifies common
-              <a
-                href="http://download.oracle.com/javase/6/docs/api/java/security/MessageDigest.html">MessageDigest</a>
-              tasks and provides GNU libc crypt(3) compatible password hashing functions.
-            </td>
-          </tr>
           <tr>
             <td width="150">
               <a href="apidocs/org/apache/commons/codec/digest/Blake3.html">Blake3</a>
@@ -115,9 +106,108 @@
               <a href="https://en.wikipedia.org/wiki/Key_derivation_function">key derivation function</a>, and can be
               used as the basis for a
               <a href="https://en.wikipedia.org/wiki/Cryptographically-secure_pseudorandom_number_generator">
-              cryptographically-secure pseudorandom number generator</a>. <strong>WARNING:</strong> Blake3 is
+                cryptographically-secure pseudorandom number generator</a>.
+              <br/>
+              <strong>WARNING:</strong> Blake3 is
               <em>not</em> a password hashing algorithm! An algorithm such as
               <a href="https://github.com/P-H-C/phc-winner-argon2">Argon2</a> is more appropriate for password hashing.
+            </td>
+          </tr>
+          <tr>
+            <td width="150">
+              <a href="apidocs/org/apache/commons/codec/digest/Crypt.html">Crypt</a>
+            </td>
+            <td>
+              GNU libc crypt(3) compatible hash method.
+            </td>
+          </tr>
+          <tr>
+            <td width="150">
+              <a href="apidocs/org/apache/commons/codec/digest/DigestUtils.html">DigestUtils</a>
+            </td>
+            <td>
+              Simplifies common
+              <a
+                href="https://docs.oracle.com/javase/6/docs/api/java/security/MessageDigest.html">MessageDigest</a>
+              tasks and provides GNU libc crypt(3) compatible password hashing functions.
+            </td>
+          </tr>
+          <tr>
+            <td width="150">
+              <a href="apidocs/org/apache/commons/codec/digest/HmacUtils.html">HmacUtils</a>
+            </td>
+            <td>
+              Simplifies common <a href="https://docs.oracle.com/javase/6/docs/api/javax/crypto/Mac.html">Mac</a> tasks.
+              <br/>
+              <strong>Note:</strong> Not all JCE implementations support all algorithms.
+              If not supported, an IllegalArgumentException is thrown.
+            </td>
+          </tr>
+          <tr>
+            <td width="150">
+              <a href="apidocs/org/apache/commons/codec/digest/Md5Crypt.html">Md5Crypt</a>
+            </td>
+            <td>
+              The libc crypt() "$1$" and Apache "$apr1$" MD5-based hash algorithm.
+            </td>
+          </tr>
+          <tr>
+            <td width="150">
+              <a href="apidocs/org/apache/commons/codec/digest/MurmurHash2.html">MurmurHash2</a>
+            </td>
+            <td>
+              Implementation of the MurmurHash2 32-bit and 64-bit hash functions.
+            </td>
+          </tr>
+          <tr>
+            <td width="150">
+              <a href="apidocs/org/apache/commons/codec/digest/MurmurHash3.html">MurmurHash3</a>
+            </td>
+            <td>
+              Implementation of the MurmurHash3 32-bit and 128-bit hash functions.
+            </td>
+          </tr>
+          <tr>
+            <td width="150">
+              <a href="apidocs/org/apache/commons/codec/digest/PureJavaCrc32.html">PureJavaCrc32</a>
+            </td>
+            <td>
+              A pure-java implementation of the CRC32 checksum that uses the same polynomial
+              as the built-in native CRC32.
+            </td>
+          </tr>
+          <tr>
+            <td width="150">
+              <a href="apidocs/org/apache/commons/codec/digest/PureJavaCrc32C.html">PureJavaCrc32C</a>
+            </td>
+            <td>
+              A pure-java implementation of the CRC32 checksum that uses the CRC32-C polynomial,
+              the same polynomial used by iSCSI and implemented on many Intel chipsets supporting SSE 4.2.
+            </td>
+          </tr>
+          <tr>
+            <td width="150">
+              <a href="apidocs/org/apache/commons/codec/digest/Sha2Crypt.html">Sha2Crypt</a>
+            </td>
+            <td>
+              SHA2-based Unix crypt implementation.
+            </td>
+          </tr>
+          <tr>
+            <td width="150">
+              <a href="apidocs/org/apache/commons/codec/digest/UnixCrypt.html">UnixCrypt</a>
+            </td>
+            <td>
+              Unix crypt(3) algorithm implementation.
+              This class only implements the traditional 56 bit DES based algorithm.
+            </td>
+          </tr>
+          <tr>
+            <td width="150">
+              <a href="apidocs/org/apache/commons/codec/digest/XXHash32.html">XXHash32</a>
+            </td>
+            <td>
+              Implementation of the xxHash32 hash algorithm.
             </td>
           </tr>
         </table>
@@ -198,8 +288,17 @@
             </td>
             <td>
               Identical to the Base64 encoding defined by
-              <a href="http://www.ietf.org/rfc/rfc1521.txt">RFC 1521</a>
+              <a href="https://www.ietf.org/rfc/rfc1521.txt">RFC 1521</a>
               and allows a character set to be specified.
+            </td>
+          </tr>
+          <tr>
+            <td width="150">
+              <a href="apidocs/org/apache/commons/codec/net/PercentCodec.html"> PercentCodec
+              </a>
+            </td>
+            <td>
+              Implements the Percent-Encoding scheme, as described in HTTP 1.1 specification.
             </td>
           </tr>
           <tr>
@@ -210,7 +309,7 @@
             <td>
               Similar to the Quoted-Printable content-transfer-encoding
               defined in
-              <a href="http://www.ietf.org/rfc/rfc1521.txt">RFC 1521</a>
+              <a href="https://www.ietf.org/rfc/rfc1521.txt">RFC 1521</a>
               and designed to allow text containing mostly ASCII
               characters to be decipherable on an ASCII terminal without
               decoding.
@@ -224,7 +323,7 @@
             </td>
             <td>
               Codec for the Quoted-Printable section of
-              <a href="http://www.ietf.org/rfc/rfc1521.txt">RFC 1521</a>
+              <a href="https://www.ietf.org/rfc/rfc1521.txt">RFC 1521</a>
               .
             </td>
           </tr>
