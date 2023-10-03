@@ -279,8 +279,6 @@ limitations under the License.
     <commons.release-plugin.version>1.7</commons.release-plugin.version>
     <commons.release.isDistModule>true</commons.release.isDistModule>
     <commons.distSvnStagingUrl>scm:svn:https://dist.apache.org/repos/dist/dev/commons/${commons.componentid}</commons.distSvnStagingUrl>
-    <commons.releaseManagerName>Gary Gregory</commons.releaseManagerName>    
-    <commons.releaseManagerKey>86fdc7e2a11262cb</commons.releaseManagerKey>
   </properties>
   <build>
     <defaultGoal>clean install apache-rat:check japicmp:cmp checkstyle:check javadoc:javadoc</defaultGoal>
