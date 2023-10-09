@@ -26,9 +26,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.Duration;
 
+import org.apache.commons.codec.AbstractStringEncoderTest;
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
-import org.apache.commons.codec.AbstractStringEncoderTest;
 import org.junit.jupiter.api.Test;
 
 /**

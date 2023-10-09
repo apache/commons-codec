@@ -25,8 +25,8 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
-import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.AbstractStringEncoderTest;
+import org.apache.commons.codec.EncoderException;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.opentest4j.AssertionFailedError;
