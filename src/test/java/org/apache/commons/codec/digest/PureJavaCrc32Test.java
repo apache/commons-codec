@@ -362,7 +362,7 @@ public class PureJavaCrc32Test {
       return new BenchResult(expected, sum/results.length);
     }
 
-    private static class BenchResult {
+    private static final class BenchResult {
       /** CRC value */
       final long value;
       /** Speed (MB per second) */

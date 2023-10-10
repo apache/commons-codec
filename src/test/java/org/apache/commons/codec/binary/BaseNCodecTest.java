@@ -379,7 +379,7 @@ public class BaseNCodecTest {
      * Extend BaseNCodec without implementation (no operations = NoOp).
      * Used for testing the memory allocation in {@link BaseNCodec#ensureBufferSize(int, Context)}.
      */
-    private static class NoOpBaseNCodec extends BaseNCodec {
+    private static final class NoOpBaseNCodec extends BaseNCodec {
         NoOpBaseNCodec() {
             super(0, 0, 0, 0);
         }

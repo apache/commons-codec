@@ -365,7 +365,7 @@ public final class Blake3 {
      * Represents the state just prior to either producing an eight word chaining value or any number of output bytes
      * when the ROOT flag is set.
      */
-    private static class Output {
+    private static final class Output {
         private final int[] inputChainingValue;
         private final int[] blockWords;
         private final long counter;
@@ -405,7 +405,7 @@ public final class Blake3 {
         }
     }
 
-    private static class ChunkState {
+    private static final class ChunkState {
         private int[] chainingValue;
         private final long chunkCounter;
         private final int flags;
@@ -458,7 +458,7 @@ public final class Blake3 {
         }
     }
 
-    private static class EngineState {
+    private static final class EngineState {
         private final int[] key;
         private final int flags;
         // Space for 54 subtree chaining values: 2^54 * CHUNK_LEN = 2^64
