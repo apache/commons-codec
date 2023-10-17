@@ -155,7 +155,7 @@ public class DigestUtils {
     }
 
     /**
-     * Returns a {@code MessageDigest} for the given {@code algorithm}.
+     * Gets a {@code MessageDigest} for the given {@code algorithm}.
      *
      * @param algorithm
      *            the name of the algorithm requested. See <a
@@ -176,7 +176,7 @@ public class DigestUtils {
     }
 
     /**
-     * Returns a {@code MessageDigest} for the given {@code algorithm} or a default if there is a problem
+     * Gets a {@code MessageDigest} for the given {@code algorithm} or a default if there is a problem
      * getting the algorithm.
      *
      * @param algorithm
@@ -201,7 +201,7 @@ public class DigestUtils {
     }
 
     /**
-     * Returns an MD2 MessageDigest.
+     * Gets an MD2 MessageDigest.
      *
      * @return An MD2 digest instance.
      * @throws IllegalArgumentException
@@ -215,7 +215,7 @@ public class DigestUtils {
     }
 
     /**
-     * Returns an MD5 MessageDigest.
+     * Gets an MD5 MessageDigest.
      *
      * @return An MD5 digest instance.
      * @throws IllegalArgumentException
@@ -228,7 +228,7 @@ public class DigestUtils {
     }
 
     /**
-     * Returns a {@code MessageDigest} for the given {@code algorithm}.
+     * Gets a {@code MessageDigest} for the given {@code algorithm}.
      *
      * @param algorithm the name of the algorithm requested. See
      *                  <a href="http://docs.oracle.com/javase/6/docs/technotes/guides/security/crypto/CryptoSpec.html#AppA" > Appendix A in the Java
@@ -242,7 +242,7 @@ public class DigestUtils {
     }
 
     /**
-     * Returns an SHA-1 digest.
+     * Gets an SHA-1 digest.
      *
      * @return An SHA-1 digest instance.
      * @throws IllegalArgumentException
@@ -256,7 +256,7 @@ public class DigestUtils {
     }
 
     /**
-     * Returns an SHA-256 digest.
+     * Gets an SHA-256 digest.
      *
      * @return An SHA-256 digest instance.
      * @throws IllegalArgumentException
@@ -269,7 +269,7 @@ public class DigestUtils {
     }
 
     /**
-     * Returns an SHA3-224 digest.
+     * Gets an SHA3-224 digest.
      *
      * @return An SHA3-224 digest instance.
      * @throws IllegalArgumentException
@@ -297,7 +297,7 @@ public class DigestUtils {
     }
 
     /**
-     * Returns an SHA3-384 digest.
+     * Gets an SHA3-384 digest.
      *
      * @return An SHA3-384 digest instance.
      * @throws IllegalArgumentException
@@ -311,7 +311,7 @@ public class DigestUtils {
     }
 
     /**
-     * Returns an SHA3-512 digest.
+     * Gets an SHA3-512 digest.
      *
      * @return An SHA3-512 digest instance.
      * @throws IllegalArgumentException
@@ -325,7 +325,7 @@ public class DigestUtils {
     }
 
     /**
-     * Returns an SHA-384 digest.
+     * Gets an SHA-384 digest.
      *
      * @return An SHA-384 digest instance.
      * @throws IllegalArgumentException
@@ -338,7 +338,7 @@ public class DigestUtils {
     }
 
     /**
-     * Returns an SHA-512/224 digest.
+     * Gets an SHA-512/224 digest.
      *
      * @return An SHA-512/224 digest instance.
      * @throws IllegalArgumentException
@@ -350,7 +350,7 @@ public class DigestUtils {
     }
 
     /**
-     * Returns an SHA-512/256 digest.
+     * Gets an SHA-512/256 digest.
      *
      * @return An SHA-512/256 digest instance.
      * @throws IllegalArgumentException
@@ -362,7 +362,7 @@ public class DigestUtils {
     }
 
     /**
-     * Returns an SHA-512 digest.
+     * Gets an SHA-512 digest.
      *
      * @return An SHA-512 digest instance.
      * @throws IllegalArgumentException
@@ -375,7 +375,7 @@ public class DigestUtils {
     }
 
     /**
-     * Returns an SHA-1 digest.
+     * Gets an SHA-1 digest.
      *
      * @return An SHA-1 digest instance.
      * @throws IllegalArgumentException
