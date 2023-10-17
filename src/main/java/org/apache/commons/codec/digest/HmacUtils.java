@@ -302,13 +302,13 @@ public final class HmacUtils {
     }
 
     /**
-     * Returns a HmacMD5 Message Authentication Code (MAC) as a hex string (lowercase) for the given key and value.
+     * Returns a HmacMD5 Message Authentication Code (MAC) as a hexadecimal string (lowercase) for the given key and value.
      *
      * @param key
      *            The key for the keyed digest (must not be null)
      * @param valueToDigest
      *            The value (data) which should to digest (maybe empty or null)
-     * @return HmacMD5 MAC for the given key and value as a hex string (lowercase)
+     * @return HmacMD5 MAC for the given key and value as a hexadecimal string (lowercase)
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      * @deprecated (1.11) Use {@code new HmacUtils(HmacAlgorithms.HMAC_MD5, byte[]).hmacHex(byte[])}
@@ -319,7 +319,7 @@ public final class HmacUtils {
     }
 
     /**
-     * Returns a HmacMD5 Message Authentication Code (MAC) as a hex string (lowercase) for the given key and value.
+     * Returns a HmacMD5 Message Authentication Code (MAC) as a hexadecimal string (lowercase) for the given key and value.
      *
      * @param key
      *            The key for the keyed digest (must not be null)
@@ -328,7 +328,7 @@ public final class HmacUtils {
      *            <p>
      *            The InputStream must not be null and will not be closed
      *            </p>
-     * @return HmacMD5 MAC for the given key and value as a hex string (lowercase)
+     * @return HmacMD5 MAC for the given key and value as a hexadecimal string (lowercase)
      * @throws IOException
      *             If an I/O error occurs.
      * @throws IllegalArgumentException
@@ -341,13 +341,13 @@ public final class HmacUtils {
     }
 
     /**
-     * Returns a HmacMD5 Message Authentication Code (MAC) as a hex string (lowercase) for the given key and value.
+     * Returns a HmacMD5 Message Authentication Code (MAC) as a hexadecimal string (lowercase) for the given key and value.
      *
      * @param key
      *            The key for the keyed digest (must not be null)
      * @param valueToDigest
      *            The value (data) which should to digest (maybe empty or null)
-     * @return HmacMD5 MAC for the given key and value as a hex string (lowercase)
+     * @return HmacMD5 MAC for the given key and value as a hexadecimal string (lowercase)
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      * @deprecated (1.11) Use {@code new HmacUtils(HmacAlgorithms.HMAC_MD5, String).hmacHex(String)}
@@ -416,13 +416,13 @@ public final class HmacUtils {
     }
 
     /**
-     * Returns a HmacSHA1 Message Authentication Code (MAC) as hex string (lowercase) for the given key and value.
+     * Returns a HmacSHA1 Message Authentication Code (MAC) as hexadecimal string (lowercase) for the given key and value.
      *
      * @param key
      *            The key for the keyed digest (must not be null)
      * @param valueToDigest
      *            The value (data) which should to digest (maybe empty or null)
-     * @return HmacSHA1 MAC for the given key and value as hex string (lowercase)
+     * @return HmacSHA1 MAC for the given key and value as hexadecimal string (lowercase)
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      * @deprecated (1.11) Use {@code new HmacUtils(HmacAlgorithms.HMAC_SHA_1, byte[]).hmacHex(byte[])}
@@ -433,7 +433,7 @@ public final class HmacUtils {
     }
 
     /**
-     * Returns a HmacSHA1 Message Authentication Code (MAC) as hex string (lowercase) for the given key and value.
+     * Returns a HmacSHA1 Message Authentication Code (MAC) as hexadecimal string (lowercase) for the given key and value.
      *
      * @param key
      *            The key for the keyed digest (must not be null)
@@ -442,7 +442,7 @@ public final class HmacUtils {
      *            <p>
      *            The InputStream must not be null and will not be closed
      *            </p>
-     * @return HmacSHA1 MAC for the given key and value as hex string (lowercase)
+     * @return HmacSHA1 MAC for the given key and value as hexadecimal string (lowercase)
      * @throws IOException
      *             If an I/O error occurs.
      * @throws IllegalArgumentException
@@ -455,13 +455,13 @@ public final class HmacUtils {
     }
 
     /**
-     * Returns a HmacSHA1 Message Authentication Code (MAC) as hex string (lowercase) for the given key and value.
+     * Returns a HmacSHA1 Message Authentication Code (MAC) as hexadecimal string (lowercase) for the given key and value.
      *
      * @param key
      *            The key for the keyed digest (must not be null)
      * @param valueToDigest
      *            The value (data) which should to digest (maybe empty or null)
-     * @return HmacSHA1 MAC for the given key and value as hex string (lowercase)
+     * @return HmacSHA1 MAC for the given key and value as hexadecimal string (lowercase)
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      * @deprecated (1.11) Use {@code new HmacUtils(HmacAlgorithms.HMAC_SHA_1, String).hmacHex(String)}
@@ -528,13 +528,13 @@ public final class HmacUtils {
     }
 
     /**
-     * Returns a HmacSHA256 Message Authentication Code (MAC) as hex string (lowercase) for the given key and value.
+     * Returns a HmacSHA256 Message Authentication Code (MAC) as hexadecimal string (lowercase) for the given key and value.
      *
      * @param key
      *            The key for the keyed digest (must not be null)
      * @param valueToDigest
      *            The value (data) which should to digest (maybe empty or null)
-     * @return HmacSHA256 MAC for the given key and value as hex string (lowercase)
+     * @return HmacSHA256 MAC for the given key and value as hexadecimal string (lowercase)
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      * @deprecated (1.11) Use {@code new HmacUtils(HmacAlgorithms.HMAC_SHA_256, byte[]).hmacHex(byte[])}
@@ -545,7 +545,7 @@ public final class HmacUtils {
     }
 
     /**
-     * Returns a HmacSHA256 Message Authentication Code (MAC) as hex string (lowercase) for the given key and value.
+     * Returns a HmacSHA256 Message Authentication Code (MAC) as hexadecimal string (lowercase) for the given key and value.
      *
      * @param key
      *            The key for the keyed digest (must not be null)
@@ -554,7 +554,7 @@ public final class HmacUtils {
      *            <p>
      *            The InputStream must not be null and will not be closed
      *            </p>
-     * @return HmacSHA256 MAC for the given key and value as hex string (lowercase)
+     * @return HmacSHA256 MAC for the given key and value as hexadecimal string (lowercase)
      * @throws IOException
      *             If an I/O error occurs.
      * @throws IllegalArgumentException
@@ -567,13 +567,13 @@ public final class HmacUtils {
     }
 
     /**
-     * Returns a HmacSHA256 Message Authentication Code (MAC) as hex string (lowercase) for the given key and value.
+     * Returns a HmacSHA256 Message Authentication Code (MAC) as hexadecimal string (lowercase) for the given key and value.
      *
      * @param key
      *            The key for the keyed digest (must not be null)
      * @param valueToDigest
      *            The value (data) which should to digest (maybe empty or null)
-     * @return HmacSHA256 MAC for the given key and value as hex string (lowercase)
+     * @return HmacSHA256 MAC for the given key and value as hexadecimal string (lowercase)
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      * @deprecated (1.11) Use {@code new HmacUtils(HmacAlgorithms.HMAC_SHA_256, String).hmacHex(String)}
@@ -642,13 +642,13 @@ public final class HmacUtils {
     }
 
     /**
-     * Returns a HmacSHA384 Message Authentication Code (MAC) as hex string (lowercase) for the given key and value.
+     * Returns a HmacSHA384 Message Authentication Code (MAC) as hexadecimal string (lowercase) for the given key and value.
      *
      * @param key
      *            The key for the keyed digest (must not be null)
      * @param valueToDigest
      *            The value (data) which should to digest (maybe empty or null)
-     * @return HmacSHA384 MAC for the given key and value as hex string (lowercase)
+     * @return HmacSHA384 MAC for the given key and value as hexadecimal string (lowercase)
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      * @deprecated (1.11) Use {@code new HmacUtils(HmacAlgorithms.HMAC_SHA_384, byte[]).hmacHex(byte[])}
@@ -659,7 +659,7 @@ public final class HmacUtils {
     }
 
     /**
-     * Returns a HmacSHA384 Message Authentication Code (MAC) as hex string (lowercase) for the given key and value.
+     * Returns a HmacSHA384 Message Authentication Code (MAC) as hexadecimal string (lowercase) for the given key and value.
      *
      * @param key
      *            The key for the keyed digest (must not be null)
@@ -668,7 +668,7 @@ public final class HmacUtils {
      *            <p>
      *            The InputStream must not be null and will not be closed
      *            </p>
-     * @return HmacSHA384 MAC for the given key and value as hex string (lowercase)
+     * @return HmacSHA384 MAC for the given key and value as hexadecimal string (lowercase)
      * @throws IOException
      *             If an I/O error occurs.
      * @throws IllegalArgumentException
@@ -681,13 +681,13 @@ public final class HmacUtils {
     }
 
     /**
-     * Returns a HmacSHA384 Message Authentication Code (MAC) as hex string (lowercase) for the given key and value.
+     * Returns a HmacSHA384 Message Authentication Code (MAC) as hexadecimal string (lowercase) for the given key and value.
      *
      * @param key
      *            The key for the keyed digest (must not be null)
      * @param valueToDigest
      *            The value (data) which should to digest (maybe empty or null)
-     * @return HmacSHA384 MAC for the given key and value as hex string (lowercase)
+     * @return HmacSHA384 MAC for the given key and value as hexadecimal string (lowercase)
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      * @deprecated (1.11) Use {@code new HmacUtils(HmacAlgorithms.HMAC_SHA_384, String).hmacHex(String)}
@@ -756,13 +756,13 @@ public final class HmacUtils {
     }
 
     /**
-     * Returns a HmacSHA512 Message Authentication Code (MAC) as hex string (lowercase) for the given key and value.
+     * Returns a HmacSHA512 Message Authentication Code (MAC) as hexadecimal string (lowercase) for the given key and value.
      *
      * @param key
      *            The key for the keyed digest (must not be null)
      * @param valueToDigest
      *            The value (data) which should to digest (maybe empty or null)
-     * @return HmacSHA512 MAC for the given key and value as hex string (lowercase)
+     * @return HmacSHA512 MAC for the given key and value as hexadecimal string (lowercase)
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      * @deprecated (1.11) Use {@code new HmacUtils(HmacAlgorithms.HMAC_SHA_512, byte[]).hmacHex(byte[])}
@@ -773,7 +773,7 @@ public final class HmacUtils {
     }
 
     /**
-     * Returns a HmacSHA512 Message Authentication Code (MAC) as hex string (lowercase) for the given key and value.
+     * Returns a HmacSHA512 Message Authentication Code (MAC) as hexadecimal string (lowercase) for the given key and value.
      *
      * @param key
      *            The key for the keyed digest (must not be null)
@@ -782,7 +782,7 @@ public final class HmacUtils {
      *            <p>
      *            The InputStream must not be null and will not be closed
      *            </p>
-     * @return HmacSHA512 MAC for the given key and value as hex string (lowercase)
+     * @return HmacSHA512 MAC for the given key and value as hexadecimal string (lowercase)
      * @throws IOException
      *             If an I/O error occurs.
      * @throws IllegalArgumentException
@@ -795,13 +795,13 @@ public final class HmacUtils {
     }
 
     /**
-     * Returns a HmacSHA512 Message Authentication Code (MAC) as hex string (lowercase) for the given key and value.
+     * Returns a HmacSHA512 Message Authentication Code (MAC) as hexadecimal string (lowercase) for the given key and value.
      *
      * @param key
      *            The key for the keyed digest (must not be null)
      * @param valueToDigest
      *            The value (data) which should to digest (maybe empty or null)
-     * @return HmacSHA512 MAC for the given key and value as hex string (lowercase)
+     * @return HmacSHA512 MAC for the given key and value as hexadecimal string (lowercase)
      * @throws IllegalArgumentException
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      * @deprecated (1.11) Use {@code new HmacUtils(HmacAlgorithms.HMAC_SHA_512, String).hmacHex(String)}
@@ -955,7 +955,7 @@ public final class HmacUtils {
      * Returns the digest for the input data.
      *
      * @param valueToDigest the input to use
-     * @return the digest as a hex String
+     * @return the digest as a hexadecimal String
      * @since 1.11
      */
     public String hmacHex(final byte[] valueToDigest) {
@@ -977,7 +977,7 @@ public final class HmacUtils {
      * Returns the digest for the input data.
      *
      * @param valueToDigest the input to use, treated as UTF-8
-     * @return the digest as a hex String
+     * @return the digest as a hexadecimal String
      * @since 1.11
      */
     public String hmacHex(final String valueToDigest) {
@@ -1000,7 +1000,7 @@ public final class HmacUtils {
      * Returns the digest for the input data.
      *
      * @param valueToDigest the input to use
-     * @return the digest as a hex String
+     * @return the digest as a hexadecimal String
      * @since 1.11
      */
     public String hmacHex(final ByteBuffer valueToDigest) {
@@ -1038,7 +1038,7 @@ public final class HmacUtils {
      *            <p>
      *            The InputStream must not be null and will not be closed
      *            </p>
-     * @return the digest as a hex String
+     * @return the digest as a hexadecimal String
      * @throws IOException
      *             If an I/O error occurs.
      * @since 1.11
@@ -1066,7 +1066,7 @@ public final class HmacUtils {
      * Returns the digest for the file.
      *
      * @param valueToDigest the file to use
-     * @return the digest as a hex String
+     * @return the digest as a hexadecimal String
      * @throws IOException
      *             If an I/O error occurs.
      * @since 1.11

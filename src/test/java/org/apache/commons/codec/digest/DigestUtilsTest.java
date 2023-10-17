@@ -167,7 +167,7 @@ public class DigestUtilsTest {
 }
 
     /**
-     * An MD2 hash converted to hex should always be 32 characters.
+     * An MD2 hash converted to hexadecimal should always be 32 characters.
      */
     @Test
     public void testMd2HexLength() {
@@ -220,7 +220,7 @@ public class DigestUtilsTest {
     }
 
     /**
-     * An MD5 hash converted to hex should always be 32 characters.
+     * An MD5 hash converted to hexadecimal should always be 32 characters.
      */
     @Test
     public void testMd5HexLengthForBytes() {

@@ -45,14 +45,14 @@ import org.apache.commons.codec.binary.StringUtils;
  * Note: the class has shorthand methods for all the algorithms present as standard in Java 6. This approach requires lots of methods for each algorithm, and
  * quickly becomes unwieldy. The following code works with all algorithms:
  * </p>
- * 
+ *
  * <pre>
  * import static org.apache.commons.codec.digest.MessageDigestAlgorithms.SHA_224;
  * ...
  * byte [] digest = new DigestUtils(SHA_224).digest(dataToDigest);
  * String hdigest = new DigestUtils(SHA_224).digestAsHex(new File("pom.xml"));
  * </pre>
- * 
+ *
  * @see MessageDigestAlgorithms
  */
 public class DigestUtils {
@@ -342,7 +342,7 @@ public class DigestUtils {
 
     /**
      * Test whether the algorithm is supported.
-     * 
+     *
      * @param messageDigestAlgorithm the algorithm name
      * @return {@code true} if the algorithm can be found
      * @since 1.11
@@ -386,10 +386,10 @@ public class DigestUtils {
     }
 
     /**
-     * Calculates the MD2 digest and returns the value as a 32 character hex string.
+     * Calculates the MD2 digest and returns the value as a 32 character hexadecimal string.
      *
      * @param data Data to digest
-     * @return MD2 digest as a hex string
+     * @return MD2 digest as a hexadecimal string
      * @since 1.7
      */
     public static String md2Hex(final byte[] data) {
@@ -397,10 +397,10 @@ public class DigestUtils {
     }
 
     /**
-     * Calculates the MD2 digest and returns the value as a 32 character hex string.
+     * Calculates the MD2 digest and returns the value as a 32 character hexadecimal string.
      *
      * @param data Data to digest
-     * @return MD2 digest as a hex string
+     * @return MD2 digest as a hexadecimal string
      * @throws IOException On error reading from the stream
      * @since 1.7
      */
@@ -409,10 +409,10 @@ public class DigestUtils {
     }
 
     /**
-     * Calculates the MD2 digest and returns the value as a 32 character hex string.
+     * Calculates the MD2 digest and returns the value as a 32 character hexadecimal string.
      *
      * @param data Data to digest
-     * @return MD2 digest as a hex string
+     * @return MD2 digest as a hexadecimal string
      * @since 1.7
      */
     public static String md2Hex(final String data) {
@@ -452,20 +452,20 @@ public class DigestUtils {
     }
 
     /**
-     * Calculates the MD5 digest and returns the value as a 32 character hex string.
+     * Calculates the MD5 digest and returns the value as a 32 character hexadecimal string.
      *
      * @param data Data to digest
-     * @return MD5 digest as a hex string
+     * @return MD5 digest as a hexadecimal string
      */
     public static String md5Hex(final byte[] data) {
         return Hex.encodeHexString(md5(data));
     }
 
     /**
-     * Calculates the MD5 digest and returns the value as a 32 character hex string.
+     * Calculates the MD5 digest and returns the value as a 32 character hexadecimal string.
      *
      * @param data Data to digest
-     * @return MD5 digest as a hex string
+     * @return MD5 digest as a hexadecimal string
      * @throws IOException On error reading from the stream
      * @since 1.4
      */
@@ -474,10 +474,10 @@ public class DigestUtils {
     }
 
     /**
-     * Calculates the MD5 digest and returns the value as a 32 character hex string.
+     * Calculates the MD5 digest and returns the value as a 32 character hexadecimal string.
      *
      * @param data Data to digest
-     * @return MD5 digest as a hex string
+     * @return MD5 digest as a hexadecimal string
      */
     public static String md5Hex(final String data) {
         return Hex.encodeHexString(md5(data));
@@ -555,10 +555,10 @@ public class DigestUtils {
     }
 
     /**
-     * Calculates the SHA-1 digest and returns the value as a hex string.
+     * Calculates the SHA-1 digest and returns the value as a hexadecimal string.
      *
      * @param data Data to digest
-     * @return SHA-1 digest as a hex string
+     * @return SHA-1 digest as a hexadecimal string
      * @since 1.7
      */
     public static String sha1Hex(final byte[] data) {
@@ -566,10 +566,10 @@ public class DigestUtils {
     }
 
     /**
-     * Calculates the SHA-1 digest and returns the value as a hex string.
+     * Calculates the SHA-1 digest and returns the value as a hexadecimal string.
      *
      * @param data Data to digest
-     * @return SHA-1 digest as a hex string
+     * @return SHA-1 digest as a hexadecimal string
      * @throws IOException On error reading from the stream
      * @since 1.7
      */
@@ -578,10 +578,10 @@ public class DigestUtils {
     }
 
     /**
-     * Calculates the SHA-1 digest and returns the value as a hex string.
+     * Calculates the SHA-1 digest and returns the value as a hexadecimal string.
      *
      * @param data Data to digest
-     * @return SHA-1 digest as a hex string
+     * @return SHA-1 digest as a hexadecimal string
      * @since 1.7
      */
     public static String sha1Hex(final String data) {
@@ -623,10 +623,10 @@ public class DigestUtils {
     }
 
     /**
-     * Calculates the SHA-256 digest and returns the value as a hex string.
+     * Calculates the SHA-256 digest and returns the value as a hexadecimal string.
      *
      * @param data Data to digest
-     * @return SHA-256 digest as a hex string
+     * @return SHA-256 digest as a hexadecimal string
      * @since 1.4
      */
     public static String sha256Hex(final byte[] data) {
@@ -634,10 +634,10 @@ public class DigestUtils {
     }
 
     /**
-     * Calculates the SHA-256 digest and returns the value as a hex string.
+     * Calculates the SHA-256 digest and returns the value as a hexadecimal string.
      *
      * @param data Data to digest
-     * @return SHA-256 digest as a hex string
+     * @return SHA-256 digest as a hexadecimal string
      * @throws IOException On error reading from the stream
      * @since 1.4
      */
@@ -646,10 +646,10 @@ public class DigestUtils {
     }
 
     /**
-     * Calculates the SHA-256 digest and returns the value as a hex string.
+     * Calculates the SHA-256 digest and returns the value as a hexadecimal string.
      *
      * @param data Data to digest
-     * @return SHA-256 digest as a hex string
+     * @return SHA-256 digest as a hexadecimal string
      * @since 1.4
      */
     public static String sha256Hex(final String data) {
@@ -691,10 +691,10 @@ public class DigestUtils {
     }
 
     /**
-     * Calculates the SHA3-224 digest and returns the value as a hex string.
+     * Calculates the SHA3-224 digest and returns the value as a hexadecimal string.
      *
      * @param data Data to digest
-     * @return SHA3-224 digest as a hex string
+     * @return SHA3-224 digest as a hexadecimal string
      * @since 1.12
      */
     public static String sha3_224Hex(final byte[] data) {
@@ -702,10 +702,10 @@ public class DigestUtils {
     }
 
     /**
-     * Calculates the SHA3-224 digest and returns the value as a hex string.
+     * Calculates the SHA3-224 digest and returns the value as a hexadecimal string.
      *
      * @param data Data to digest
-     * @return SHA3-224 digest as a hex string
+     * @return SHA3-224 digest as a hexadecimal string
      * @throws IOException On error reading from the stream
      * @since 1.12
      */
@@ -714,10 +714,10 @@ public class DigestUtils {
     }
 
     /**
-     * Calculates the SHA3-224 digest and returns the value as a hex string.
+     * Calculates the SHA3-224 digest and returns the value as a hexadecimal string.
      *
      * @param data Data to digest
-     * @return SHA3-224 digest as a hex string
+     * @return SHA3-224 digest as a hexadecimal string
      * @since 1.12
      */
     public static String sha3_224Hex(final String data) {
@@ -759,10 +759,10 @@ public class DigestUtils {
     }
 
     /**
-     * Calculates the SHA3-256 digest and returns the value as a hex string.
+     * Calculates the SHA3-256 digest and returns the value as a hexadecimal string.
      *
      * @param data Data to digest
-     * @return SHA3-256 digest as a hex string
+     * @return SHA3-256 digest as a hexadecimal string
      * @since 1.12
      */
     public static String sha3_256Hex(final byte[] data) {
@@ -770,10 +770,10 @@ public class DigestUtils {
     }
 
     /**
-     * Calculates the SHA3-256 digest and returns the value as a hex string.
+     * Calculates the SHA3-256 digest and returns the value as a hexadecimal string.
      *
      * @param data Data to digest
-     * @return SHA3-256 digest as a hex string
+     * @return SHA3-256 digest as a hexadecimal string
      * @throws IOException On error reading from the stream
      * @since 1.12
      */
@@ -782,10 +782,10 @@ public class DigestUtils {
     }
 
     /**
-     * Calculates the SHA3-256 digest and returns the value as a hex string.
+     * Calculates the SHA3-256 digest and returns the value as a hexadecimal string.
      *
      * @param data Data to digest
-     * @return SHA3-256 digest as a hex string
+     * @return SHA3-256 digest as a hexadecimal string
      * @since 1.12
      */
     public static String sha3_256Hex(final String data) {
@@ -827,10 +827,10 @@ public class DigestUtils {
     }
 
     /**
-     * Calculates the SHA3-384 digest and returns the value as a hex string.
+     * Calculates the SHA3-384 digest and returns the value as a hexadecimal string.
      *
      * @param data Data to digest
-     * @return SHA3-384 digest as a hex string
+     * @return SHA3-384 digest as a hexadecimal string
      * @since 1.12
      */
     public static String sha3_384Hex(final byte[] data) {
@@ -838,10 +838,10 @@ public class DigestUtils {
     }
 
     /**
-     * Calculates the SHA3-384 digest and returns the value as a hex string.
+     * Calculates the SHA3-384 digest and returns the value as a hexadecimal string.
      *
      * @param data Data to digest
-     * @return SHA3-384 digest as a hex string
+     * @return SHA3-384 digest as a hexadecimal string
      * @throws IOException On error reading from the stream
      * @since 1.12
      */
@@ -850,10 +850,10 @@ public class DigestUtils {
     }
 
     /**
-     * Calculates the SHA3-384 digest and returns the value as a hex string.
+     * Calculates the SHA3-384 digest and returns the value as a hexadecimal string.
      *
      * @param data Data to digest
-     * @return SHA3-384 digest as a hex string
+     * @return SHA3-384 digest as a hexadecimal string
      * @since 1.12
      */
     public static String sha3_384Hex(final String data) {
@@ -895,10 +895,10 @@ public class DigestUtils {
     }
 
     /**
-     * Calculates the SHA3-512 digest and returns the value as a hex string.
+     * Calculates the SHA3-512 digest and returns the value as a hexadecimal string.
      *
      * @param data Data to digest
-     * @return SHA3-512 digest as a hex string
+     * @return SHA3-512 digest as a hexadecimal string
      * @since 1.12
      */
     public static String sha3_512Hex(final byte[] data) {
@@ -906,10 +906,10 @@ public class DigestUtils {
     }
 
     /**
-     * Calculates the SHA3-512 digest and returns the value as a hex string.
+     * Calculates the SHA3-512 digest and returns the value as a hexadecimal string.
      *
      * @param data Data to digest
-     * @return SHA3-512 digest as a hex string
+     * @return SHA3-512 digest as a hexadecimal string
      * @throws IOException On error reading from the stream
      * @since 1.12
      */
@@ -918,10 +918,10 @@ public class DigestUtils {
     }
 
     /**
-     * Calculates the SHA3-512 digest and returns the value as a hex string.
+     * Calculates the SHA3-512 digest and returns the value as a hexadecimal string.
      *
      * @param data Data to digest
-     * @return SHA3-512 digest as a hex string
+     * @return SHA3-512 digest as a hexadecimal string
      * @since 1.12
      */
     public static String sha3_512Hex(final String data) {
@@ -963,10 +963,10 @@ public class DigestUtils {
     }
 
     /**
-     * Calculates the SHA-384 digest and returns the value as a hex string.
+     * Calculates the SHA-384 digest and returns the value as a hexadecimal string.
      *
      * @param data Data to digest
-     * @return SHA-384 digest as a hex string
+     * @return SHA-384 digest as a hexadecimal string
      * @since 1.4
      */
     public static String sha384Hex(final byte[] data) {
@@ -974,10 +974,10 @@ public class DigestUtils {
     }
 
     /**
-     * Calculates the SHA-384 digest and returns the value as a hex string.
+     * Calculates the SHA-384 digest and returns the value as a hexadecimal string.
      *
      * @param data Data to digest
-     * @return SHA-384 digest as a hex string
+     * @return SHA-384 digest as a hexadecimal string
      * @throws IOException On error reading from the stream
      * @since 1.4
      */
@@ -986,10 +986,10 @@ public class DigestUtils {
     }
 
     /**
-     * Calculates the SHA-384 digest and returns the value as a hex string.
+     * Calculates the SHA-384 digest and returns the value as a hexadecimal string.
      *
      * @param data Data to digest
-     * @return SHA-384 digest as a hex string
+     * @return SHA-384 digest as a hexadecimal string
      * @since 1.4
      */
     public static String sha384Hex(final String data) {
@@ -1065,10 +1065,10 @@ public class DigestUtils {
     }
 
     /**
-     * Calculates the SHA-512/224 digest and returns the value as a hex string.
+     * Calculates the SHA-512/224 digest and returns the value as a hexadecimal string.
      *
      * @param data Data to digest
-     * @return SHA-512/224 digest as a hex string
+     * @return SHA-512/224 digest as a hexadecimal string
      * @since 1.14
      */
     public static String sha512_224Hex(final byte[] data) {
@@ -1076,10 +1076,10 @@ public class DigestUtils {
     }
 
     /**
-     * Calculates the SHA-512/224 digest and returns the value as a hex string.
+     * Calculates the SHA-512/224 digest and returns the value as a hexadecimal string.
      *
      * @param data Data to digest
-     * @return SHA-512/224 digest as a hex string
+     * @return SHA-512/224 digest as a hexadecimal string
      * @throws IOException On error reading from the stream
      * @since 1.14
      */
@@ -1088,10 +1088,10 @@ public class DigestUtils {
     }
 
     /**
-     * Calculates the SHA-512/224 digest and returns the value as a hex string.
+     * Calculates the SHA-512/224 digest and returns the value as a hexadecimal string.
      *
      * @param data Data to digest
-     * @return SHA-512/224 digest as a hex string
+     * @return SHA-512/224 digest as a hexadecimal string
      * @since 1.14
      */
     public static String sha512_224Hex(final String data) {
@@ -1133,10 +1133,10 @@ public class DigestUtils {
     }
 
     /**
-     * Calculates the SHA-512/256 digest and returns the value as a hex string.
+     * Calculates the SHA-512/256 digest and returns the value as a hexadecimal string.
      *
      * @param data Data to digest
-     * @return SHA-512/256 digest as a hex string
+     * @return SHA-512/256 digest as a hexadecimal string
      * @since 1.14
      */
     public static String sha512_256Hex(final byte[] data) {
@@ -1144,10 +1144,10 @@ public class DigestUtils {
     }
 
     /**
-     * Calculates the SHA-512/256 digest and returns the value as a hex string.
+     * Calculates the SHA-512/256 digest and returns the value as a hexadecimal string.
      *
      * @param data Data to digest
-     * @return SHA-512/256 digest as a hex string
+     * @return SHA-512/256 digest as a hexadecimal string
      * @throws IOException On error reading from the stream
      * @since 1.14
      */
@@ -1156,10 +1156,10 @@ public class DigestUtils {
     }
 
     /**
-     * Calculates the SHA-512/256 digest and returns the value as a hex string.
+     * Calculates the SHA-512/256 digest and returns the value as a hexadecimal string.
      *
      * @param data Data to digest
-     * @return SHA-512/256 digest as a hex string
+     * @return SHA-512/256 digest as a hexadecimal string
      * @since 1.14
      */
     public static String sha512_256Hex(final String data) {
@@ -1167,10 +1167,10 @@ public class DigestUtils {
     }
 
     /**
-     * Calculates the SHA-512 digest and returns the value as a hex string.
+     * Calculates the SHA-512 digest and returns the value as a hexadecimal string.
      *
      * @param data Data to digest
-     * @return SHA-512 digest as a hex string
+     * @return SHA-512 digest as a hexadecimal string
      * @since 1.4
      */
     public static String sha512Hex(final byte[] data) {
@@ -1178,10 +1178,10 @@ public class DigestUtils {
     }
 
     /**
-     * Calculates the SHA-512 digest and returns the value as a hex string.
+     * Calculates the SHA-512 digest and returns the value as a hexadecimal string.
      *
      * @param data Data to digest
-     * @return SHA-512 digest as a hex string
+     * @return SHA-512 digest as a hexadecimal string
      * @throws IOException On error reading from the stream
      * @since 1.4
      */
@@ -1190,10 +1190,10 @@ public class DigestUtils {
     }
 
     /**
-     * Calculates the SHA-512 digest and returns the value as a hex string.
+     * Calculates the SHA-512 digest and returns the value as a hexadecimal string.
      *
      * @param data Data to digest
-     * @return SHA-512 digest as a hex string
+     * @return SHA-512 digest as a hexadecimal string
      * @since 1.4
      */
     public static String sha512Hex(final String data) {
@@ -1201,10 +1201,10 @@ public class DigestUtils {
     }
 
     /**
-     * Calculates the SHA-1 digest and returns the value as a hex string.
+     * Calculates the SHA-1 digest and returns the value as a hexadecimal string.
      *
      * @param data Data to digest
-     * @return SHA-1 digest as a hex string
+     * @return SHA-1 digest as a hexadecimal string
      * @deprecated (1.11) Use {@link #sha1Hex(byte[])}
      */
     @Deprecated
@@ -1213,10 +1213,10 @@ public class DigestUtils {
     }
 
     /**
-     * Calculates the SHA-1 digest and returns the value as a hex string.
+     * Calculates the SHA-1 digest and returns the value as a hexadecimal string.
      *
      * @param data Data to digest
-     * @return SHA-1 digest as a hex string
+     * @return SHA-1 digest as a hexadecimal string
      * @throws IOException On error reading from the stream
      * @since 1.4
      * @deprecated (1.11) Use {@link #sha1Hex(InputStream)}
@@ -1227,10 +1227,10 @@ public class DigestUtils {
     }
 
     /**
-     * Calculates the SHA-1 digest and returns the value as a hex string.
+     * Calculates the SHA-1 digest and returns the value as a hexadecimal string.
      *
      * @param data Data to digest
-     * @return SHA-1 digest as a hex string
+     * @return SHA-1 digest as a hexadecimal string
      * @deprecated (1.11) Use {@link #sha1Hex(String)}
      */
     @Deprecated
@@ -1371,7 +1371,7 @@ public class DigestUtils {
 
     /**
      * Preserves binary compatibility only. As for previous versions does not provide useful behavior
-     * 
+     *
      * @deprecated since 1.11; only useful to preserve binary compatibility
      */
     @Deprecated
@@ -1480,7 +1480,7 @@ public class DigestUtils {
      * Reads through a byte array and returns the digest for the data.
      *
      * @param data Data to digest
-     * @return the digest as a hex string
+     * @return the digest as a hexadecimal string
      * @since 1.11
      */
     public String digestAsHex(final byte[] data) {
@@ -1491,7 +1491,7 @@ public class DigestUtils {
      * Reads through a ByteBuffer and returns the digest for the data
      *
      * @param data Data to digest
-     * @return the digest as a hex string
+     * @return the digest as a hexadecimal string
      *
      * @since 1.11
      */
@@ -1503,7 +1503,7 @@ public class DigestUtils {
      * Reads through a File and returns the digest for the data
      *
      * @param data Data to digest
-     * @return the digest as a hex string
+     * @return the digest as a hexadecimal string
      * @throws IOException On error reading from the stream
      * @since 1.11
      */
@@ -1515,7 +1515,7 @@ public class DigestUtils {
      * Reads through an InputStream and returns the digest for the data
      *
      * @param data Data to digest
-     * @return the digest as a hex string
+     * @return the digest as a hexadecimal string
      * @throws IOException On error reading from the stream
      * @since 1.11
      */
@@ -1528,7 +1528,7 @@ public class DigestUtils {
      *
      * @param data    Data to digest
      * @param options options How to open the file
-     * @return the digest as a hex string
+     * @return the digest as a hexadecimal string
      * @throws IOException On error reading from the stream
      * @since 1.11
      */
@@ -1540,7 +1540,7 @@ public class DigestUtils {
      * Reads through a byte array and returns the digest for the data.
      *
      * @param data Data to digest treated as UTF-8 string
-     * @return the digest as a hex string
+     * @return the digest as a hexadecimal string
      * @since 1.11
      */
     public String digestAsHex(final String data) {
@@ -1549,7 +1549,7 @@ public class DigestUtils {
 
     /**
      * Returns the message digest instance.
-     * 
+     *
      * @return the message digest instance
      * @since 1.11
      */
