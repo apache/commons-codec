@@ -172,7 +172,7 @@ public class MessageDigestAlgorithms {
      * @since 1.11
      */
     public static String[] values() {
-        // N.B. do not use a constant array here as that can be changed externally by accident or design
+        // Do not use a constant array here as that can be changed externally by accident or design
         return new String[] {
             MD2, MD5, SHA_1, SHA_224, SHA_256, SHA_384,
             SHA_512, SHA_512_224, SHA_512_256, SHA3_224, SHA3_256, SHA3_384, SHA3_512
