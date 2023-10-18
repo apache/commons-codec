@@ -30,34 +30,14 @@ import java.security.MessageDigest;
  * <li>Java 9 and up: SHA3-224, SHA3-256, SHA3-384, SHA3-512.</li>
  * </ul>
  *
- * @see <a href="http://docs.oracle.com/javase/7/docs/technotes/guides/security/StandardNames.html#MessageDigest">
- *      Java 7 Cryptography Architecture Standard Algorithm Name Documentation</a>
  * @see <a href="http://docs.oracle.com/javase/8/docs/technotes/guides/security/StandardNames.html#MessageDigest">
  *      Java 8 Cryptography Architecture Standard Algorithm Name Documentation</a>
- * @see <a href="https://docs.oracle.com/javase/9/docs/specs/security/standard-names.html#messagedigest-algorithms">
- *      Java 9 Cryptography Architecture Standard Algorithm Name Documentation</a>
- * @see <a href="https://docs.oracle.com/javase/10/docs/specs/security/standard-names.html#messagedigest-algorithms">
- *      Java 10 Cryptography Architecture Standard Algorithm Name Documentation</a>
  * @see <a href="https://docs.oracle.com/en/java/javase/11/docs/specs/security/standard-names.html#messagedigest-algorithms">
  *      Java 11 Cryptography Architecture Standard Algorithm Name Documentation</a>
- * @see <a href="https://docs.oracle.com/en/java/javase/12/docs/specs/security/standard-names.html#messagedigest-algorithms">
- *      Java 12 Cryptography Architecture Standard Algorithm Name Documentation</a>
- * @see <a href="https://docs.oracle.com/en/java/javase/13/docs/specs/security/standard-names.html#messagedigest-algorithms">
- *      Java 13 Cryptography Architecture Standard Algorithm Name Documentation</a>
- * @see <a href="https://docs.oracle.com/en/java/javase/14/docs/specs/security/standard-names.html#messagedigest-algorithms">
- *      Java 14 Cryptography Architecture Standard Algorithm Name Documentation</a>
- * @see <a href="https://docs.oracle.com/en/java/javase/15/docs/specs/security/standard-names.html#messagedigest-algorithms">
- *      Java 15 Cryptography Architecture Standard Algorithm Name Documentation</a>
- * @see <a href="https://docs.oracle.com/en/java/javase/16/docs/specs/security/standard-names.html#messagedigest-algorithms">
- *      Java 16 Cryptography Architecture Standard Algorithm Name Documentation</a>
  * @see <a href="https://docs.oracle.com/en/java/javase/17/docs/specs/security/standard-names.html#messagedigest-algorithms">
  *      Java 17 Cryptography Architecture Standard Algorithm Name Documentation</a>
- * @see <a href="https://docs.oracle.com/en/java/javase/18/docs/specs/security/standard-names.html#messagedigest-algorithms">
- *      Java 18 Cryptography Architecture Standard Algorithm Name Documentation</a>
- * @see <a href="https://docs.oracle.com/en/java/javase/19/docs/specs/security/standard-names.html#messagedigest-algorithms">
- *      Java 19 Cryptography Architecture Standard Algorithm Name Documentation</a>
- * @see <a href="https://docs.oracle.com/en/java/javase/20/docs/specs/security/standard-names.html#messagedigest-algorithms">
- *      Java 20 Cryptography Architecture Standard Algorithm Name Documentation</a>
+ * @see <a href="https://docs.oracle.com/en/java/javase/21/docs/specs/security/standard-names.html#messagedigest-algorithms">
+ *      Java 21 Cryptography Architecture Standard Algorithm Name Documentation</a>
  *
  * @see <a href="http://dx.doi.org/10.6028/NIST.FIPS.180-4">FIPS PUB 180-4</a>
  * @see <a href="http://dx.doi.org/10.6028/NIST.FIPS.202">FIPS PUB 202</a>
