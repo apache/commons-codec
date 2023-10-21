@@ -43,11 +43,11 @@
 Apache Commons Codec
 ===================
 
-[![GitHub Actions Status](https://github.com/apache/commons-codec/workflows/Java%20CI/badge.svg)](https://github.com/apache/commons-codec/actions)
+[![Java CI](https://github.com/apache/commons-codec/actions/workflows/maven.yml/badge.svg)](https://github.com/apache/commons-codec/actions/workflows/maven.yml)
 [![Coverage Status](https://codecov.io/gh/apache/commons-codec/branch/master/graph/badge.svg)](https://app.codecov.io/gh/apache/commons-codec)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/commons-codec/commons-codec/badge.svg?gav=true)](https://maven-badges.herokuapp.com/maven-central/commons-codec/commons-codec/?gav=true)
 [![Javadocs](https://javadoc.io/badge/commons-codec/commons-codec/1.16.0.svg)](https://javadoc.io/doc/commons-codec/commons-codec/1.16.0)
-[![CodeQL](https://github.com/apache/commons-codec/workflows/CodeQL/badge.svg)](https://github.com/apache/commons-codec/actions/workflows/codeql-analysis.yml?query=workflow%3ACodeQL)
+[![CodeQL](https://github.com/apache/commons-codec/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/apache/commons-codec/actions/workflows/codeql-analysis.yml)
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/apache/commons-codec/badge)](https://api.securityscorecards.dev/projects/github.com/apache/commons-codec)
 
 The Apache Commons Codec package contains simple encoder and decoders for
