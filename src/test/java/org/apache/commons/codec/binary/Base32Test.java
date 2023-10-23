@@ -138,9 +138,57 @@ public class Base32Test {
         {"foobar" ,"MZXW6YTBOI%%%%%%"},
     };
 
-    @Test
-    public void testBase32AtBufferStart() {
-        testBase32InBuffer(0, 100);
+    /**
+     * Test base 32 decoding of the final trailing bits. Trailing encoded bytes
+     * cannot fit exactly into 5-bit characters so the last character has a limited
+     * alphabet where the final bits are zero. This asserts that illegal final
+     * characters throw an exception when decoding.
+     *
+     * @param nbits the number of trailing bits (must be a factor of 5 and {@code <40})
+     */
+    private static void assertBase32DecodingOfTrailingBits(final int nbits) {
+        // Requires strict decoding
+        final Base32 codec = new Base32(0, null, false, BaseNCodec.PAD_DEFAULT, CodecPolicy.STRICT);
+        assertTrue(codec.isStrictDecoding());
+        assertEquals(CodecPolicy.STRICT, codec.getCodecPolicy());
+        // A lenient decoder should not re-encode to the same bytes
+        final Base32 defaultCodec = new Base32();
+        assertFalse(defaultCodec.isStrictDecoding());
+        assertEquals(CodecPolicy.LENIENT, defaultCodec.getCodecPolicy());
+
+        // Create the encoded bytes. The first characters must be valid so fill with 'zero'
+        // then pad to the block size.
+        final int length = nbits / 5;
+        final byte[] encoded = new byte[8];
+        Arrays.fill(encoded, 0, length, ENCODE_TABLE[0]);
+        Arrays.fill(encoded, length, encoded.length, (byte) '=');
+        // Compute how many bits would be discarded from 8-bit bytes
+        final int discard = nbits % 8;
+        final int emptyBitsMask = (1 << discard) - 1;
+        // Special case when an impossible number of trailing characters
+        final boolean invalid = length == 1 || length == 3 || length == 6;
+        // Enumerate all 32 possible final characters in the last position
+        final int last = length - 1;
+        for (int i = 0; i < 32; i++) {
+            encoded[last] = ENCODE_TABLE[i];
+            // If the lower bits are set we expect an exception. This is not a valid
+            // final character.
+            if (invalid || (i & emptyBitsMask) != 0) {
+                assertThrows(IllegalArgumentException.class, () -> codec.decode(encoded), "Final base-32 digit should not be allowed");
+                // The default lenient mode should decode this
+                final byte[] decoded = defaultCodec.decode(encoded);
+                // Re-encoding should not match the original array as it was invalid
+                assertFalse(Arrays.equals(encoded, defaultCodec.encode(decoded)));
+            } else {
+                // Otherwise this should decode
+                final byte[] decoded = codec.decode(encoded);
+                // Compute the bits that were encoded. This should match the final decoded byte.
+                final int bitsEncoded = i >> discard;
+                assertEquals(bitsEncoded, decoded[decoded.length - 1], "Invalid decoding of last character");
+                // Re-encoding should match the original array (requires the same padding character)
+                assertArrayEquals(encoded, codec.encode(decoded));
+            }
+        }
     }
 
     @Test
@@ -153,13 +201,30 @@ public class Base32Test {
         testBase32InBuffer(100, 100);
     }
 
-    private void testBase32InBuffer(final int startPasSize, final int endPadSize) {
+    @Test
+    public void testBase32AtBufferStart() {
+        testBase32InBuffer(0, 100);
+    }
+
+    @Test
+    public void testBase32BinarySamples() throws Exception {
         final Base32 codec = new Base32();
-        for (final String[] element : BASE32_TEST_CASES) {
-            final byte[] bytes = element[0].getBytes(CHARSET_UTF8);
-            byte[] buffer = ArrayUtils.addAll(bytes, new byte[endPadSize]);
-            buffer = ArrayUtils.addAll(new byte[startPasSize], buffer);
-            assertEquals(element[1], StringUtils.newStringUtf8(codec.encode(buffer, startPasSize, bytes.length)));
+        for (final Object[] element : BASE32_BINARY_TEST_CASES) {
+            final String expected;
+            if (element.length > 2) {
+                expected = (String)element[2];
+            } else {
+                expected = (String)element[1];
+            }
+                assertEquals(expected.toUpperCase(), codec.encodeAsString((byte[])element[0]));
+        }
+    }
+
+    @Test
+    public void testBase32BinarySamplesReverse() throws Exception {
+        final Base32 codec = new Base32();
+        for (final Object[] element : BASE32_BINARY_TEST_CASES) {
+            assertArrayEquals((byte[])element[0], codec.decode((String)element[1]));
         }
     }
 
@@ -169,6 +234,47 @@ public class Base32Test {
         for (final String[] element : BASE32_TEST_CASES_CHUNKED) {
                 assertEquals(element[1], codec.encodeAsString(element[0].getBytes(CHARSET_UTF8)));
         }
+    }
+
+    @Test
+    public void testBase32DecodingOfTrailing10Bits() {
+        assertBase32DecodingOfTrailingBits(10);
+    }
+
+    @Test
+    public void testBase32DecodingOfTrailing15Bits() {
+        assertBase32DecodingOfTrailingBits(15);
+    }
+
+    @Test
+    public void testBase32DecodingOfTrailing20Bits() {
+        assertBase32DecodingOfTrailingBits(20);
+    }
+
+    @Test
+    public void testBase32DecodingOfTrailing25Bits() {
+        assertBase32DecodingOfTrailingBits(25);
+    }
+
+    @Test
+    public void testBase32DecodingOfTrailing30Bits() {
+        assertBase32DecodingOfTrailingBits(30);
+    }
+
+    @Test
+    public void testBase32DecodingOfTrailing35Bits() {
+        assertBase32DecodingOfTrailingBits(35);
+    }
+
+    @Test
+    public void testBase32DecodingOfTrailing5Bits() {
+        assertBase32DecodingOfTrailingBits(5);
+    }
+
+    @Test
+    public void testBase32HexImpossibleSamples() {
+        testImpossibleCases(new Base32(0, null, true, BaseNCodec.PAD_DEFAULT, CodecPolicy.STRICT),
+            BASE32HEX_IMPOSSIBLE_CASES);
     }
 
     @Test
@@ -196,32 +302,33 @@ public class Base32Test {
     }
 
     @Test
+    public void testBase32ImpossibleChunked() {
+        testImpossibleCases(
+            new Base32(20, BaseNCodec.CHUNK_SEPARATOR, false, BaseNCodec.PAD_DEFAULT, CodecPolicy.STRICT),
+            BASE32_IMPOSSIBLE_CASES_CHUNKED);
+    }
+
+    @Test
+    public void testBase32ImpossibleSamples() {
+        testImpossibleCases(new Base32(0, null, false, BaseNCodec.PAD_DEFAULT, CodecPolicy.STRICT),
+            BASE32_IMPOSSIBLE_CASES);
+    }
+
+    private void testBase32InBuffer(final int startPasSize, final int endPadSize) {
+        final Base32 codec = new Base32();
+        for (final String[] element : BASE32_TEST_CASES) {
+            final byte[] bytes = element[0].getBytes(CHARSET_UTF8);
+            byte[] buffer = ArrayUtils.addAll(bytes, new byte[endPadSize]);
+            buffer = ArrayUtils.addAll(new byte[startPasSize], buffer);
+            assertEquals(element[1], StringUtils.newStringUtf8(codec.encode(buffer, startPasSize, bytes.length)));
+        }
+    }
+
+    @Test
     public void testBase32Samples() throws Exception {
         final Base32 codec = new Base32();
         for (final String[] element : BASE32_TEST_CASES) {
                 assertEquals(element[1], codec.encodeAsString(element[0].getBytes(CHARSET_UTF8)));
-        }
-    }
-
-    @Test
-    public void testBase32BinarySamples() throws Exception {
-        final Base32 codec = new Base32();
-        for (final Object[] element : BASE32_BINARY_TEST_CASES) {
-            final String expected;
-            if (element.length > 2) {
-                expected = (String)element[2];
-            } else {
-                expected = (String)element[1];
-            }
-                assertEquals(expected.toUpperCase(), codec.encodeAsString((byte[])element[0]));
-        }
-    }
-
-    @Test
-    public void testBase32BinarySamplesReverse() throws Exception {
-        final Base32 codec = new Base32();
-        for (final Object[] element : BASE32_BINARY_TEST_CASES) {
-            assertArrayEquals((byte[])element[0], codec.decode((String)element[1]));
         }
     }
 
@@ -280,6 +387,12 @@ public class Base32Test {
         result = new Base32().decode(empty);
         assertEquals(0, result.length, "empty Base32 decode");
         assertNull(new Base32().decode((byte[]) null), "empty Base32 encode");
+    }
+
+    private void testImpossibleCases(final Base32 codec, final String[] impossible_cases) {
+        for (final String impossible : impossible_cases) {
+            assertThrows(IllegalArgumentException.class, () -> codec.decode(impossible));
+        }
     }
 
     @Test
@@ -376,119 +489,6 @@ public class Base32Test {
             codec.readResults(singly, 0, 100, context);
             if (!Arrays.equals(allInOne, singly)){
                 fail();
-            }
-        }
-    }
-
-    @Test
-    public void testBase32ImpossibleSamples() {
-        testImpossibleCases(new Base32(0, null, false, BaseNCodec.PAD_DEFAULT, CodecPolicy.STRICT),
-            BASE32_IMPOSSIBLE_CASES);
-    }
-
-    @Test
-    public void testBase32ImpossibleChunked() {
-        testImpossibleCases(
-            new Base32(20, BaseNCodec.CHUNK_SEPARATOR, false, BaseNCodec.PAD_DEFAULT, CodecPolicy.STRICT),
-            BASE32_IMPOSSIBLE_CASES_CHUNKED);
-    }
-
-    @Test
-    public void testBase32HexImpossibleSamples() {
-        testImpossibleCases(new Base32(0, null, true, BaseNCodec.PAD_DEFAULT, CodecPolicy.STRICT),
-            BASE32HEX_IMPOSSIBLE_CASES);
-    }
-
-    private void testImpossibleCases(final Base32 codec, final String[] impossible_cases) {
-        for (final String impossible : impossible_cases) {
-            assertThrows(IllegalArgumentException.class, () -> codec.decode(impossible));
-        }
-    }
-
-    @Test
-    public void testBase32DecodingOfTrailing5Bits() {
-        assertBase32DecodingOfTrailingBits(5);
-    }
-
-    @Test
-    public void testBase32DecodingOfTrailing10Bits() {
-        assertBase32DecodingOfTrailingBits(10);
-    }
-
-    @Test
-    public void testBase32DecodingOfTrailing15Bits() {
-        assertBase32DecodingOfTrailingBits(15);
-    }
-
-    @Test
-    public void testBase32DecodingOfTrailing20Bits() {
-        assertBase32DecodingOfTrailingBits(20);
-    }
-
-    @Test
-    public void testBase32DecodingOfTrailing25Bits() {
-        assertBase32DecodingOfTrailingBits(25);
-    }
-
-    @Test
-    public void testBase32DecodingOfTrailing30Bits() {
-        assertBase32DecodingOfTrailingBits(30);
-    }
-
-    @Test
-    public void testBase32DecodingOfTrailing35Bits() {
-        assertBase32DecodingOfTrailingBits(35);
-    }
-
-    /**
-     * Test base 32 decoding of the final trailing bits. Trailing encoded bytes
-     * cannot fit exactly into 5-bit characters so the last character has a limited
-     * alphabet where the final bits are zero. This asserts that illegal final
-     * characters throw an exception when decoding.
-     *
-     * @param nbits the number of trailing bits (must be a factor of 5 and {@code <40})
-     */
-    private static void assertBase32DecodingOfTrailingBits(final int nbits) {
-        // Requires strict decoding
-        final Base32 codec = new Base32(0, null, false, BaseNCodec.PAD_DEFAULT, CodecPolicy.STRICT);
-        assertTrue(codec.isStrictDecoding());
-        assertEquals(CodecPolicy.STRICT, codec.getCodecPolicy());
-        // A lenient decoder should not re-encode to the same bytes
-        final Base32 defaultCodec = new Base32();
-        assertFalse(defaultCodec.isStrictDecoding());
-        assertEquals(CodecPolicy.LENIENT, defaultCodec.getCodecPolicy());
-
-        // Create the encoded bytes. The first characters must be valid so fill with 'zero'
-        // then pad to the block size.
-        final int length = nbits / 5;
-        final byte[] encoded = new byte[8];
-        Arrays.fill(encoded, 0, length, ENCODE_TABLE[0]);
-        Arrays.fill(encoded, length, encoded.length, (byte) '=');
-        // Compute how many bits would be discarded from 8-bit bytes
-        final int discard = nbits % 8;
-        final int emptyBitsMask = (1 << discard) - 1;
-        // Special case when an impossible number of trailing characters
-        final boolean invalid = length == 1 || length == 3 || length == 6;
-        // Enumerate all 32 possible final characters in the last position
-        final int last = length - 1;
-        for (int i = 0; i < 32; i++) {
-            encoded[last] = ENCODE_TABLE[i];
-            // If the lower bits are set we expect an exception. This is not a valid
-            // final character.
-            if (invalid || (i & emptyBitsMask) != 0) {
-                assertThrows(IllegalArgumentException.class, () -> codec.decode(encoded), "Final base-32 digit should not be allowed");
-                // The default lenient mode should decode this
-                final byte[] decoded = defaultCodec.decode(encoded);
-                // Re-encoding should not match the original array as it was invalid
-                assertFalse(Arrays.equals(encoded, defaultCodec.encode(decoded)));
-            } else {
-                // Otherwise this should decode
-                final byte[] decoded = codec.decode(encoded);
-                // Compute the bits that were encoded. This should match the final decoded byte.
-                final int bitsEncoded = i >> discard;
-                assertEquals(bitsEncoded, decoded[decoded.length - 1], "Invalid decoding of last character");
-                // Re-encoding should match the original array (requires the same padding character)
-                assertArrayEquals(encoded, codec.encode(decoded));
             }
         }
     }

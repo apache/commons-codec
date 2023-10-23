@@ -172,6 +172,49 @@ public class UnixCrypt {
                     0x8000020, 0x208000, 32800, 0x8008020, 0x8200000, 32, 0x8208000, 0x208020, 0, 0x8000000,
                     0x8200020, 32768, 0x208020 } };
 
+    private static int[] body(final int[] schedule, final int eSwap0, final int eSwap1) {
+        int left = 0;
+        int right = 0;
+        int t = 0;
+        for (int j = 0; j < 25; j++) {
+            for (int i = 0; i < 32; i += 4) {
+                left = dEncrypt(left, right, i, eSwap0, eSwap1, schedule);
+                right = dEncrypt(right, left, i + 2, eSwap0, eSwap1, schedule);
+            }
+            t = left;
+            left = right;
+            right = t;
+        }
+
+        t = right;
+        right = left >>> 1 | left << 31;
+        left = t >>> 1 | t << 31;
+        final int[] results = new int[2];
+        permOp(right, left, 1, 0x55555555, results);
+        right = results[0];
+        left = results[1];
+        permOp(left, right, 8, 0xff00ff, results);
+        left = results[0];
+        right = results[1];
+        permOp(right, left, 2, 0x33333333, results);
+        right = results[0];
+        left = results[1];
+        permOp(left, right, 16, 65535, results);
+        left = results[0];
+        right = results[1];
+        permOp(right, left, 4, 0xf0f0f0f, results);
+        right = results[0];
+        left = results[1];
+        final int[] out = new int[2];
+        out[0] = left;
+        out[1] = right;
+        return out;
+    }
+
+    private static int byteToUnsigned(final byte b) {
+        return b & 0xff;
+    }
+
     /**
      * Generates a crypt(3) compatible hash using the DES algorithm.
      * <p>
@@ -283,49 +326,6 @@ public class UnixCrypt {
      */
     public static String crypt(final String original, final String salt) {
         return crypt(original.getBytes(StandardCharsets.UTF_8), salt);
-    }
-
-    private static int[] body(final int[] schedule, final int eSwap0, final int eSwap1) {
-        int left = 0;
-        int right = 0;
-        int t = 0;
-        for (int j = 0; j < 25; j++) {
-            for (int i = 0; i < 32; i += 4) {
-                left = dEncrypt(left, right, i, eSwap0, eSwap1, schedule);
-                right = dEncrypt(right, left, i + 2, eSwap0, eSwap1, schedule);
-            }
-            t = left;
-            left = right;
-            right = t;
-        }
-
-        t = right;
-        right = left >>> 1 | left << 31;
-        left = t >>> 1 | t << 31;
-        final int[] results = new int[2];
-        permOp(right, left, 1, 0x55555555, results);
-        right = results[0];
-        left = results[1];
-        permOp(left, right, 8, 0xff00ff, results);
-        left = results[0];
-        right = results[1];
-        permOp(right, left, 2, 0x33333333, results);
-        right = results[0];
-        left = results[1];
-        permOp(left, right, 16, 65535, results);
-        left = results[0];
-        right = results[1];
-        permOp(right, left, 4, 0xf0f0f0f, results);
-        right = results[0];
-        left = results[1];
-        final int[] out = new int[2];
-        out[0] = left;
-        out[1] = right;
-        return out;
-    }
-
-    private static int byteToUnsigned(final byte b) {
-        return b & 0xff;
     }
 
     private static int dEncrypt(int el, final int r, final int s, final int e0, final int e1, final int[] sArr) {

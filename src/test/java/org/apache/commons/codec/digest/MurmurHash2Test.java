@@ -82,23 +82,23 @@ public class MurmurHash2Test {
     static final String text = "Lorem ipsum dolor sit amet, consectetur adipisicing elit";
 
     @Test
-    public void testHash32ByteArrayIntInt() {
-        for (int i = 0; i < input.length; i++) {
-            final int hash = MurmurHash2.hash32(input[i], input[i].length, 0x71b4954d);
-            if (hash != results32_seed[i]) {
-                fail(String.format("Unexpected hash32 result for example %d: 0x%08x instead of 0x%08x", i, hash,
-                            results32_seed[i]));
-            }
-        }
-    }
-
-    @Test
     public void testHash32ByteArrayInt() {
         for (int i = 0; i < input.length; i++) {
             final int hash = MurmurHash2.hash32(input[i], input[i].length);
             if (hash != results32_standard[i]) {
                 fail(String.format("Unexpected hash32 result for example %d: 0x%08x instead of 0x%08x", i, hash,
                             results32_standard[i]));
+            }
+        }
+    }
+
+    @Test
+    public void testHash32ByteArrayIntInt() {
+        for (int i = 0; i < input.length; i++) {
+            final int hash = MurmurHash2.hash32(input[i], input[i].length, 0x71b4954d);
+            if (hash != results32_seed[i]) {
+                fail(String.format("Unexpected hash32 result for example %d: 0x%08x instead of 0x%08x", i, hash,
+                            results32_seed[i]));
             }
         }
     }
@@ -116,23 +116,23 @@ public class MurmurHash2Test {
     }
 
     @Test
-    public void testHash64ByteArrayIntInt() {
-        for (int i = 0; i < input.length; i++) {
-            final long hash = MurmurHash2.hash64(input[i], input[i].length, 0x344d1f5c);
-            if (hash != results64_seed[i]) {
-                fail(String.format("Unexpected hash64 result for example %d: 0x%016x instead of 0x%016x", i, hash,
-                            results64_seed[i]));
-            }
-        }
-    }
-
-    @Test
     public void testHash64ByteArrayInt() {
         for (int i = 0; i < input.length; i++) {
             final long hash = MurmurHash2.hash64(input[i], input[i].length);
             if (hash != results64_standard[i]) {
                 fail(String.format("Unexpected hash64 result for example %d: 0x%016x instead of 0x%016x", i, hash,
                     results64_standard[i]));
+            }
+        }
+    }
+
+    @Test
+    public void testHash64ByteArrayIntInt() {
+        for (int i = 0; i < input.length; i++) {
+            final long hash = MurmurHash2.hash64(input[i], input[i].length, 0x344d1f5c);
+            if (hash != results64_seed[i]) {
+                fail(String.format("Unexpected hash64 result for example %d: 0x%016x instead of 0x%016x", i, hash,
+                            results64_seed[i]));
             }
         }
     }

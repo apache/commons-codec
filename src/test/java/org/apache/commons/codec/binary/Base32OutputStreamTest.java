@@ -60,6 +60,13 @@ public class Base32OutputStreamTest {
 //    }
 
 
+    private void testBase32EmptyOutputStream(final int chunkSize) throws Exception {
+        final byte[] emptyEncoded = {};
+        final byte[] emptyDecoded = {};
+        testByteByByte(emptyEncoded, emptyDecoded, chunkSize, CR_LF);
+        testByChunk(emptyEncoded, emptyDecoded, chunkSize, CR_LF);
+    }
+
     /**
      * Test the Base32OutputStream implementation against empty input.
      *
@@ -80,13 +87,6 @@ public class Base32OutputStreamTest {
     @Test
     public void testBase32EmptyOutputStreamPemChunkSize() throws Exception {
         testBase32EmptyOutputStream(BaseNCodec.PEM_CHUNK_SIZE);
-    }
-
-    private void testBase32EmptyOutputStream(final int chunkSize) throws Exception {
-        final byte[] emptyEncoded = {};
-        final byte[] emptyDecoded = {};
-        testByteByByte(emptyEncoded, emptyDecoded, chunkSize, CR_LF);
-        testByChunk(emptyEncoded, emptyDecoded, chunkSize, CR_LF);
     }
 
     /**
@@ -277,6 +277,34 @@ public class Base32OutputStreamTest {
     }
 
     /**
+     * Test strict decoding.
+     *
+     * @throws Exception
+     *             for some failure scenarios.
+     */
+    @Test
+    public void testStrictDecoding() throws Exception {
+        for (final String s : Base32Test.BASE32_IMPOSSIBLE_CASES) {
+            final byte[] encoded = StringUtils.getBytesUtf8(s);
+            ByteArrayOutputStream bout = new ByteArrayOutputStream();
+            try (Base32OutputStream out = new Base32OutputStream(bout, false)) {
+                // Default is lenient decoding; it should not throw
+                assertFalse(out.isStrictDecoding());
+                out.write(encoded);
+                out.close();
+                assertTrue(bout.size() > 0);
+
+                // Strict decoding should throw
+                bout = new ByteArrayOutputStream();
+                try (final Base32OutputStream out2 = new Base32OutputStream(bout, false, 0, null, CodecPolicy.STRICT)) {
+                    assertTrue(out2.isStrictDecoding());
+                    assertThrows(IllegalArgumentException.class, () -> out2.write(encoded));
+                }
+            }
+        }
+    }
+
+    /**
      * Tests Base32OutputStream.write for expected IndexOutOfBoundsException conditions.
      *
      * @throws Exception
@@ -305,34 +333,6 @@ public class Base32OutputStreamTest {
         final ByteArrayOutputStream bout = new ByteArrayOutputStream();
         try (final Base32OutputStream out = new Base32OutputStream(bout)) {
             assertThrows(NullPointerException.class, () -> out.write(null, 0, 0));
-        }
-    }
-
-    /**
-     * Test strict decoding.
-     *
-     * @throws Exception
-     *             for some failure scenarios.
-     */
-    @Test
-    public void testStrictDecoding() throws Exception {
-        for (final String s : Base32Test.BASE32_IMPOSSIBLE_CASES) {
-            final byte[] encoded = StringUtils.getBytesUtf8(s);
-            ByteArrayOutputStream bout = new ByteArrayOutputStream();
-            try (Base32OutputStream out = new Base32OutputStream(bout, false)) {
-                // Default is lenient decoding; it should not throw
-                assertFalse(out.isStrictDecoding());
-                out.write(encoded);
-                out.close();
-                assertTrue(bout.size() > 0);
-
-                // Strict decoding should throw
-                bout = new ByteArrayOutputStream();
-                try (final Base32OutputStream out2 = new Base32OutputStream(bout, false, 0, null, CodecPolicy.STRICT)) {
-                    assertTrue(out2.isStrictDecoding());
-                    assertThrows(IllegalArgumentException.class, () -> out2.write(encoded));
-                }
-            }
         }
     }
 }

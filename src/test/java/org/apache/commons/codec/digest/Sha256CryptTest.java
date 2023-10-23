@@ -30,6 +30,27 @@ import org.junit.jupiter.api.Test;
 public class Sha256CryptTest {
 
     @Test
+    public void testSha256CryptBytes() {
+        // An empty Bytearray equals an empty String
+        assertEquals("$5$foo$Fq9CX624QIfnCAmlGiPKLlAasdacKCRxZztPoeo7o0B", Crypt.crypt(new byte[0], "$5$foo"));
+        // UTF-8 stores \u00e4 "a with dieresis" as two bytes 0xc3 0xa4.
+        assertEquals("$5$./$iH66LwY5sTDTdHeOxq5nvNDVAxuoCcyH/y6Ptte82P8", Crypt.crypt("t\u00e4st", "$5$./$"));
+        // ISO-8859-1 stores "a with dieresis" as single byte 0xe4.
+        assertEquals("$5$./$qx5gFfCzjuWUOvsDDy.5Nor3UULPIqLVBZhgGNS0c14", Crypt.crypt("t\u00e4st".getBytes(StandardCharsets.ISO_8859_1), "$5$./$"));
+    }
+
+    @Test
+    public void testSha256CryptExplicitCall() {
+        assertTrue(Sha2Crypt.sha256Crypt("secret".getBytes()).matches("^\\$5\\$[a-zA-Z0-9./]{0,16}\\$.{1,}$"));
+        assertTrue(Sha2Crypt.sha256Crypt("secret".getBytes(), null).matches("^\\$5\\$[a-zA-Z0-9./]{0,16}\\$.{1,}$"));
+    }
+
+    @Test
+    public void testSha256CryptNullData() {
+        assertThrows(NullPointerException.class, () -> Sha2Crypt.sha256Crypt((byte[]) null));
+    }
+
+    @Test
     public void testSha256CryptStrings() {
         // empty data
         assertEquals("$5$foo$Fq9CX624QIfnCAmlGiPKLlAasdacKCRxZztPoeo7o0B", Crypt.crypt("", "$5$foo"));
@@ -43,13 +64,17 @@ public class Sha256CryptTest {
     }
 
     @Test
-    public void testSha256CryptBytes() {
-        // An empty Bytearray equals an empty String
-        assertEquals("$5$foo$Fq9CX624QIfnCAmlGiPKLlAasdacKCRxZztPoeo7o0B", Crypt.crypt(new byte[0], "$5$foo"));
-        // UTF-8 stores \u00e4 "a with dieresis" as two bytes 0xc3 0xa4.
-        assertEquals("$5$./$iH66LwY5sTDTdHeOxq5nvNDVAxuoCcyH/y6Ptte82P8", Crypt.crypt("t\u00e4st", "$5$./$"));
-        // ISO-8859-1 stores "a with dieresis" as single byte 0xe4.
-        assertEquals("$5$./$qx5gFfCzjuWUOvsDDy.5Nor3UULPIqLVBZhgGNS0c14", Crypt.crypt("t\u00e4st".getBytes(StandardCharsets.ISO_8859_1), "$5$./$"));
+    public void testSha256CryptWithEmptySalt() {
+        assertThrows(IllegalArgumentException.class, () -> Sha2Crypt.sha256Crypt("secret".getBytes(), ""));
+    }
+
+    @Test
+    public void testSha256LargestThanBlocksize() {
+        final byte[] buffer = new byte[200];
+        Arrays.fill(buffer, 0, 200, (byte)'A');
+        assertEquals("$5$abc$HbF3RRc15OwNKB/RZZ5F.1I6zsLcKXHQoSdB9Owx/Q8", Sha2Crypt.sha256Crypt(buffer, "$5$abc"));
+        // input password is 0-filled on return
+        assertArrayEquals(new byte[buffer.length], buffer);
     }
 
     @Test
@@ -67,31 +92,6 @@ public class Sha256CryptTest {
         assertEquals("$5$rounds=1000$abcd$b8MCU4GEeZIekOy5ahQ8EWfT330hvYGVeDYkBxXBva.", Sha2Crypt.sha256Crypt("secret".getBytes(StandardCharsets.UTF_8), "$5$rounds=50$abcd$", random));
         assertEquals("$5$rounds=1001$abcd$SQsJZs7KXKdd2DtklI3TY3tkD7UYA99RD0FBLm4Sk48", Sha2Crypt.sha256Crypt("secret".getBytes(StandardCharsets.UTF_8), "$5$rounds=1001$abcd$", random));
         assertEquals("$5$rounds=9999$abcd$Rh/8ngVh9oyuS6lL3.fsq.9xbvXJsfyKWxSjO2mPIa7", Sha2Crypt.sha256Crypt("secret".getBytes(StandardCharsets.UTF_8), "$5$rounds=9999$abcd", random));
-    }
-
-    @Test
-    public void testSha256CryptExplicitCall() {
-        assertTrue(Sha2Crypt.sha256Crypt("secret".getBytes()).matches("^\\$5\\$[a-zA-Z0-9./]{0,16}\\$.{1,}$"));
-        assertTrue(Sha2Crypt.sha256Crypt("secret".getBytes(), null).matches("^\\$5\\$[a-zA-Z0-9./]{0,16}\\$.{1,}$"));
-    }
-
-    @Test
-    public void testSha256CryptNullData() {
-        assertThrows(NullPointerException.class, () -> Sha2Crypt.sha256Crypt((byte[]) null));
-    }
-
-    @Test
-    public void testSha256CryptWithEmptySalt() {
-        assertThrows(IllegalArgumentException.class, () -> Sha2Crypt.sha256Crypt("secret".getBytes(), ""));
-    }
-
-    @Test
-    public void testSha256LargestThanBlocksize() {
-        final byte[] buffer = new byte[200];
-        Arrays.fill(buffer, 0, 200, (byte)'A');
-        assertEquals("$5$abc$HbF3RRc15OwNKB/RZZ5F.1I6zsLcKXHQoSdB9Owx/Q8", Sha2Crypt.sha256Crypt(buffer, "$5$abc"));
-        // input password is 0-filled on return
-        assertArrayEquals(new byte[buffer.length], buffer);
     }
 
     @Test

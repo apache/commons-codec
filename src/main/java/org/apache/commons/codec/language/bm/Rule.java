@@ -84,31 +84,7 @@ import org.apache.commons.codec.language.bm.Languages.LanguageSet;
  */
 public class Rule {
 
-    public static final RPattern ALL_STRINGS_RMATCHER = input -> true;
-
-    public static final String ALL = "ALL";
-
-    private static final String DOUBLE_QUOTE = "\"";
-
-    private static final String HASH_INCLUDE = "#include";
-
-    private static final int HASH_INCLUDE_LENGTH = HASH_INCLUDE.length();
-
-    private static final Map<NameType, Map<RuleType, Map<String, Map<String, List<Rule>>>>> RULES =
-            new EnumMap<>(NameType.class);
-
-    private final RPattern lContext;
-
-    private final String pattern;
-
-    private final PhonemeExpr phoneme;
-
-    private final RPattern rContext;
-
     public static final class Phoneme implements PhonemeExpr {
-
-        private final StringBuilder phonemeText;
-        private final Languages.LanguageSet languages;
 
         public static final Comparator<Phoneme> COMPARATOR = (o1, o2) -> {
             final int o1Length = o1.phonemeText.length();
@@ -129,6 +105,9 @@ public class Rule {
 
             return 0;
         };
+        private final StringBuilder phonemeText;
+
+        private final Languages.LanguageSet languages;
 
         public Phoneme(final CharSequence phonemeText, final Languages.LanguageSet languages) {
             this.phonemeText = new StringBuilder(phonemeText);
@@ -217,6 +196,19 @@ public class Rule {
     public interface RPattern {
         boolean isMatch(CharSequence input);
     }
+
+    public static final RPattern ALL_STRINGS_RMATCHER = input -> true;
+
+    public static final String ALL = "ALL";
+
+    private static final String DOUBLE_QUOTE = "\"";
+
+    private static final String HASH_INCLUDE = "#include";
+
+    private static final int HASH_INCLUDE_LENGTH = HASH_INCLUDE.length();
+
+    private static final Map<NameType, Map<RuleType, Map<String, Map<String, List<Rule>>>>> RULES =
+            new EnumMap<>(NameType.class);
 
     static {
         for (final NameType s : NameType.values()) {
@@ -578,6 +570,14 @@ public class Rule {
 
         return str;
     }
+
+    private final RPattern lContext;
+
+    private final String pattern;
+
+    private final PhonemeExpr phoneme;
+
+    private final RPattern rContext;
 
     /**
      * Creates a new rule.

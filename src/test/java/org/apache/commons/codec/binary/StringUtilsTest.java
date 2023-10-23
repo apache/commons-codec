@@ -45,6 +45,14 @@ public class StringUtilsTest {
 
     private static final String STRING_FIXTURE = "ABC";
 
+    @Test
+    public void testByteBufferUtf8() {
+        assertNull(StringUtils.getByteBufferUtf8(null), "Should be null safe");
+        final String text = "asdhjfhsadiogasdjhagsdygfjasfgsdaksjdhfk";
+        final ByteBuffer bb = StringUtils.getByteBufferUtf8(text);
+        assertArrayEquals(text.getBytes(StandardCharsets.UTF_8), bb.array());
+    }
+
     /**
      * We could make the constructor private but there does not seem to be a point to jumping through extra code hoops
      * to restrict instantiation right now.
@@ -52,6 +60,35 @@ public class StringUtilsTest {
     @Test
     public void testConstructor() {
         new StringUtils();
+    }
+
+    @Test
+    public void testEqualsCS1() {
+        assertFalse(StringUtils.equals(new StringBuilder("abc"), null));
+        assertFalse(StringUtils.equals(null, new StringBuilder("abc")));
+        assertTrue(StringUtils.equals(new StringBuilder("abc"), new StringBuilder("abc")));
+        assertFalse(StringUtils.equals(new StringBuilder("abc"), new StringBuilder("abcd")));
+        assertFalse(StringUtils.equals(new StringBuilder("abcd"), new StringBuilder("abc")));
+        assertFalse(StringUtils.equals(new StringBuilder("abc"), new StringBuilder("ABC")));
+    }
+
+    @Test
+    public void testEqualsCS2() {
+        assertTrue(StringUtils.equals("abc", new StringBuilder("abc")));
+        assertFalse(StringUtils.equals(new StringBuilder("abc"), "abcd"));
+        assertFalse(StringUtils.equals("abcd", new StringBuilder("abc")));
+        assertFalse(StringUtils.equals(new StringBuilder("abc"), "ABC"));
+    }
+
+    @Test
+    public void testEqualsString() {
+        assertTrue(StringUtils.equals(null, null));
+        assertFalse(StringUtils.equals("abc", null));
+        assertFalse(StringUtils.equals(null, "abc"));
+        assertTrue(StringUtils.equals("abc", "abc"));
+        assertFalse(StringUtils.equals("abc", "abcd"));
+        assertFalse(StringUtils.equals("abcd", "abc"));
+        assertFalse(StringUtils.equals("abc", "ABC"));
     }
 
     @Test
@@ -67,6 +104,16 @@ public class StringUtilsTest {
         final byte[] expected = STRING_FIXTURE.getBytes(charsetName);
         final byte[] actual = StringUtils.getBytesUnchecked(STRING_FIXTURE, charsetName);
         assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void testGetBytesUncheckedBadName() {
+        assertThrows(IllegalStateException.class, () -> StringUtils.getBytesUnchecked(STRING_FIXTURE, "UNKNOWN"));
+    }
+
+    @Test
+    public void testGetBytesUncheckedNullInput() {
+        assertNull(StringUtils.getBytesUnchecked(null, "UNKNOWN"));
     }
 
     @Test
@@ -114,16 +161,6 @@ public class StringUtilsTest {
         assertArrayEquals(expected, actual);
     }
 
-    @Test
-    public void testGetBytesUncheckedBadName() {
-        assertThrows(IllegalStateException.class, () -> StringUtils.getBytesUnchecked(STRING_FIXTURE, "UNKNOWN"));
-    }
-
-    @Test
-    public void testGetBytesUncheckedNullInput() {
-        assertNull(StringUtils.getBytesUnchecked(null, "UNKNOWN"));
-    }
-
     private void testNewString(final String charsetName) throws UnsupportedEncodingException {
         final String expected = new String(BYTES_FIXTURE, charsetName);
         final String actual = StringUtils.newString(BYTES_FIXTURE, charsetName);
@@ -133,6 +170,15 @@ public class StringUtilsTest {
     @Test
     public void testNewStringBadEnc() {
         assertThrows(IllegalStateException.class, () -> StringUtils.newString(BYTES_FIXTURE, "UNKNOWN"));
+    }
+
+    @Test
+    public void testNewStringIso8859_1() throws UnsupportedEncodingException {
+        final String charsetName = "ISO-8859-1";
+        testNewString(charsetName);
+        final String expected = new String(BYTES_FIXTURE, charsetName);
+        final String actual = StringUtils.newStringIso8859_1(BYTES_FIXTURE);
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -148,15 +194,6 @@ public class StringUtilsTest {
         assertNull(StringUtils.newStringUtf16(null));
         assertNull(StringUtils.newStringUtf16Be(null));
         assertNull(StringUtils.newStringUtf16Le(null));
-    }
-
-    @Test
-    public void testNewStringIso8859_1() throws UnsupportedEncodingException {
-        final String charsetName = "ISO-8859-1";
-        testNewString(charsetName);
-        final String expected = new String(BYTES_FIXTURE, charsetName);
-        final String actual = StringUtils.newStringIso8859_1(BYTES_FIXTURE);
-        assertEquals(expected, actual);
     }
 
     @Test
@@ -202,42 +239,5 @@ public class StringUtilsTest {
         final String expected = new String(BYTES_FIXTURE, charsetName);
         final String actual = StringUtils.newStringUtf8(BYTES_FIXTURE);
         assertEquals(expected, actual);
-    }
-
-    @Test
-    public void testEqualsString() {
-        assertTrue(StringUtils.equals(null, null));
-        assertFalse(StringUtils.equals("abc", null));
-        assertFalse(StringUtils.equals(null, "abc"));
-        assertTrue(StringUtils.equals("abc", "abc"));
-        assertFalse(StringUtils.equals("abc", "abcd"));
-        assertFalse(StringUtils.equals("abcd", "abc"));
-        assertFalse(StringUtils.equals("abc", "ABC"));
-    }
-
-    @Test
-    public void testEqualsCS1() {
-        assertFalse(StringUtils.equals(new StringBuilder("abc"), null));
-        assertFalse(StringUtils.equals(null, new StringBuilder("abc")));
-        assertTrue(StringUtils.equals(new StringBuilder("abc"), new StringBuilder("abc")));
-        assertFalse(StringUtils.equals(new StringBuilder("abc"), new StringBuilder("abcd")));
-        assertFalse(StringUtils.equals(new StringBuilder("abcd"), new StringBuilder("abc")));
-        assertFalse(StringUtils.equals(new StringBuilder("abc"), new StringBuilder("ABC")));
-    }
-
-    @Test
-    public void testEqualsCS2() {
-        assertTrue(StringUtils.equals("abc", new StringBuilder("abc")));
-        assertFalse(StringUtils.equals(new StringBuilder("abc"), "abcd"));
-        assertFalse(StringUtils.equals("abcd", new StringBuilder("abc")));
-        assertFalse(StringUtils.equals(new StringBuilder("abc"), "ABC"));
-    }
-
-    @Test
-    public void testByteBufferUtf8() {
-        assertNull(StringUtils.getByteBufferUtf8(null), "Should be null safe");
-        final String text = "asdhjfhsadiogasdjhagsdygfjasfgsdaksjdhfk";
-        final ByteBuffer bb = StringUtils.getByteBufferUtf8(text);
-        assertArrayEquals(text.getBytes(StandardCharsets.UTF_8), bb.array());
     }
 }

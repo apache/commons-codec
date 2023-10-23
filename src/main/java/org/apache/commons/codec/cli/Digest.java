@@ -35,10 +35,6 @@ import org.apache.commons.codec.digest.MessageDigestAlgorithms;
  */
 public class Digest {
 
-    private final String algorithm;
-    private final String[] args;
-    private final String[] inputs;
-
     /**
      * Runs the digest algorithm in {@code args[0]} on the file in {@code args[1]}. If there is no {@code args[1]}, use
      * standard input.
@@ -56,6 +52,10 @@ public class Digest {
     public static void main(final String[] args) throws IOException {
         new Digest(args).run();
     }
+    private final String algorithm;
+    private final String[] args;
+
+    private final String[] inputs;
 
     private Digest(final String[] args) {
         if (args == null) {
@@ -101,14 +101,6 @@ public class Digest {
         }
     }
 
-    private void run(final String[] digestAlgorithms) throws IOException {
-        for (final String messageDigestAlgorithm : digestAlgorithms) {
-            if (DigestUtils.isAvailable(messageDigestAlgorithm)) {
-                run(messageDigestAlgorithm + " ", messageDigestAlgorithm);
-            }
-        }
-    }
-
     private void run(final String prefix, final MessageDigest messageDigest) throws IOException {
         if (inputs == null) {
             println(prefix, DigestUtils.digest(messageDigest, System.in));
@@ -141,6 +133,14 @@ public class Digest {
 
     private void run(final String prefix, final String messageDigestAlgorithm) throws IOException {
         run(prefix, DigestUtils.getDigest(messageDigestAlgorithm));
+    }
+
+    private void run(final String[] digestAlgorithms) throws IOException {
+        for (final String messageDigestAlgorithm : digestAlgorithms) {
+            if (DigestUtils.isAvailable(messageDigestAlgorithm)) {
+                run(messageDigestAlgorithm + " ", messageDigestAlgorithm);
+            }
+        }
     }
 
     @Override

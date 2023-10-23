@@ -29,18 +29,18 @@ import org.junit.jupiter.api.Test;
  */
 public class CharsetsTest {
 
+    @SuppressWarnings("deprecation")
+    @Test
+    public void testIso8859_1() {
+        assertEquals("ISO-8859-1", Charsets.ISO_8859_1.name());
+    }
+
     @Test
     public void testToCharset() {
         assertEquals(Charset.defaultCharset(), Charsets.toCharset((String) null));
         assertEquals(Charset.defaultCharset(), Charsets.toCharset((Charset) null));
         assertEquals(Charset.defaultCharset(), Charsets.toCharset(Charset.defaultCharset()));
         assertEquals(StandardCharsets.UTF_8, Charsets.toCharset(StandardCharsets.UTF_8));
-    }
-
-    @SuppressWarnings("deprecation")
-    @Test
-    public void testIso8859_1() {
-        assertEquals("ISO-8859-1", Charsets.ISO_8859_1.name());
     }
 
     @SuppressWarnings("deprecation")

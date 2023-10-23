@@ -37,10 +37,86 @@ import org.apache.commons.codec.binary.StringUtils;
 public class DoubleMetaphone implements StringEncoder {
 
     /**
+     * Inner class for storing results, since there is the optional alternate encoding.
+     */
+    public class DoubleMetaphoneResult {
+
+        private final StringBuilder primary = new StringBuilder(getMaxCodeLen());
+        private final StringBuilder alternate = new StringBuilder(getMaxCodeLen());
+        private final int maxLength;
+
+        public DoubleMetaphoneResult(final int maxLength) {
+            this.maxLength = maxLength;
+        }
+
+        public void append(final char value) {
+            appendPrimary(value);
+            appendAlternate(value);
+        }
+
+        public void append(final char primary, final char alternate) {
+            appendPrimary(primary);
+            appendAlternate(alternate);
+        }
+
+        public void append(final String value) {
+            appendPrimary(value);
+            appendAlternate(value);
+        }
+
+        public void append(final String primary, final String alternate) {
+            appendPrimary(primary);
+            appendAlternate(alternate);
+        }
+
+        public void appendAlternate(final char value) {
+            if (this.alternate.length() < this.maxLength) {
+                this.alternate.append(value);
+            }
+        }
+
+        public void appendAlternate(final String value) {
+            final int addChars = this.maxLength - this.alternate.length();
+            if (value.length() <= addChars) {
+                this.alternate.append(value);
+            } else {
+                this.alternate.append(value, 0, addChars);
+            }
+        }
+
+        public void appendPrimary(final char value) {
+            if (this.primary.length() < this.maxLength) {
+                this.primary.append(value);
+            }
+        }
+
+        public void appendPrimary(final String value) {
+            final int addChars = this.maxLength - this.primary.length();
+            if (value.length() <= addChars) {
+                this.primary.append(value);
+            } else {
+                this.primary.append(value, 0, addChars);
+            }
+        }
+
+        public String getAlternate() {
+            return this.alternate.toString();
+        }
+
+        public String getPrimary() {
+            return this.primary.toString();
+        }
+
+        public boolean isComplete() {
+            return this.primary.length() >= this.maxLength &&
+                   this.alternate.length() >= this.maxLength;
+        }
+    }
+
+    /**
      * "Vowels" to test for
      */
     private static final String VOWELS = "AEIOUY";
-
     /**
      * Prefixes when present which are not pronounced
      */
@@ -50,13 +126,132 @@ public class DoubleMetaphone implements StringEncoder {
         { "L", "R", "N", "M", "B", "H", "F", "V", "W", " " };
     private static final String[] ES_EP_EB_EL_EY_IB_IL_IN_IE_EI_ER =
         { "ES", "EP", "EB", "EL", "EY", "IB", "IL", "IN", "IE", "EI", "ER" };
+
     private static final String[] L_T_K_S_N_M_B_Z =
         { "L", "T", "K", "S", "N", "M", "B", "Z" };
+
+    /*
+     * Determines whether {@code value} contains any of the criteria starting at index {@code start} and
+     * matching up to length {@code length}.
+     */
+    protected static boolean contains(final String value, final int start, final int length,
+                                      final String... criteria) {
+        boolean result = false;
+        if (start >= 0 && start + length <= value.length()) {
+            final String target = value.substring(start, start + length);
+
+            for (final String element : criteria) {
+                if (target.equals(element)) {
+                    result = true;
+                    break;
+                }
+            }
+        }
+        return result;
+    }
 
     /**
      * Maximum length of an encoding, default is 4
      */
     private int maxCodeLen = 4;
+
+    /*
+     * Gets the character at index {@code index} if available, otherwise
+     * it returns {@code Character.MIN_VALUE} so that there is some sort
+     * of default.
+     */
+    protected char charAt(final String value, final int index) {
+        if (index < 0 || index >= value.length()) {
+            return Character.MIN_VALUE;
+        }
+        return value.charAt(index);
+    }
+
+    /**
+     * Cleans the input.
+     */
+    private String cleanInput(String input) {
+        if (input == null) {
+            return null;
+        }
+        input = input.trim();
+        if (input.isEmpty()) {
+            return null;
+        }
+        return input.toUpperCase(java.util.Locale.ENGLISH);
+    }
+
+    /**
+     * Complex condition 0 for 'C'.
+     */
+    private boolean conditionC0(final String value, final int index) {
+        if (contains(value, index, 4, "CHIA")) {
+            return true;
+        }
+        if (index <= 1) {
+            return false;
+        }
+        if (isVowel(charAt(value, index - 2))) {
+            return false;
+        }
+        if (!contains(value, index - 1, 3, "ACH")) {
+            return false;
+        }
+        final char c = charAt(value, index + 2);
+        return c != 'I' && c != 'E' ||
+                contains(value, index - 2, 6, "BACHER", "MACHER");
+    }
+
+    /**
+     * Complex condition 0 for 'CH'.
+     */
+    private boolean conditionCH0(final String value, final int index) {
+        if (index != 0) {
+            return false;
+        }
+        if (!contains(value, index + 1, 5, "HARAC", "HARIS") &&
+                   !contains(value, index + 1, 3, "HOR", "HYM", "HIA", "HEM")) {
+            return false;
+        }
+        return !contains(value, 0, 5, "CHORE");
+    }
+
+    /**
+     * Complex condition 1 for 'CH'.
+     */
+    private boolean conditionCH1(final String value, final int index) {
+        return contains(value, 0, 4, "VAN ", "VON ") || contains(value, 0, 3, "SCH") ||
+                contains(value, index - 2, 6, "ORCHES", "ARCHIT", "ORCHID") ||
+                contains(value, index + 2, 1, "T", "S") ||
+                (contains(value, index - 1, 1, "A", "O", "U", "E") || index == 0) &&
+                 (contains(value, index + 2, 1, L_R_N_M_B_H_F_V_W_SPACE) || index + 1 == value.length() - 1);
+    }
+
+    /**
+     * Complex condition 0 for 'L'.
+     */
+    private boolean conditionL0(final String value, final int index) {
+        if (index == value.length() - 3 &&
+            contains(value, index - 1, 4, "ILLO", "ILLA", "ALLE")) {
+            return true;
+        }
+        return (contains(value, value.length() - 2, 2, "AS", "OS") ||
+                contains(value, value.length() - 1, 1, "A", "O")) &&
+                contains(value, index - 1, 4, "ALLE");
+    }
+
+    //-- BEGIN HANDLERS --//
+
+    /**
+     * Complex condition 0 for 'M'.
+     */
+    private boolean conditionM0(final String value, final int index) {
+        if (charAt(value, index + 1) == 'M') {
+            return true;
+        }
+        return contains(value, index - 1, 3, "UMB") &&
+               (index + 1 == value.length() - 1 || contains(value, index + 2, 2, "ER"));
+    }
 
     /**
      * Encode a value with Double Metaphone.
@@ -210,50 +405,12 @@ public class DoubleMetaphone implements StringEncoder {
     }
 
     /**
-     * Check if the Double Metaphone values of two {@code String} values
-     * are equal.
-     *
-     * @param value1 The left-hand side of the encoded {@link String#equals(Object)}.
-     * @param value2 The right-hand side of the encoded {@link String#equals(Object)}.
-     * @return {@code true} if the encoded {@code String}s are equal;
-     *          {@code false} otherwise.
-     * @see #isDoubleMetaphoneEqual(String,String,boolean)
-     */
-    public boolean isDoubleMetaphoneEqual(final String value1, final String value2) {
-        return isDoubleMetaphoneEqual(value1, value2, false);
-    }
-
-    /**
-     * Check if the Double Metaphone values of two {@code String} values
-     * are equal, optionally using the alternate value.
-     *
-     * @param value1 The left-hand side of the encoded {@link String#equals(Object)}.
-     * @param value2 The right-hand side of the encoded {@link String#equals(Object)}.
-     * @param alternate use the alternate value if {@code true}.
-     * @return {@code true} if the encoded {@code String}s are equal;
-     *          {@code false} otherwise.
-     */
-    public boolean isDoubleMetaphoneEqual(final String value1, final String value2, final boolean alternate) {
-        return StringUtils.equals(doubleMetaphone(value1, alternate), doubleMetaphone(value2, alternate));
-    }
-
-    /**
      * Returns the maxCodeLen.
      * @return int
      */
     public int getMaxCodeLen() {
         return this.maxCodeLen;
     }
-
-    /**
-     * Sets the maxCodeLen.
-     * @param maxCodeLen The maxCodeLen to set
-     */
-    public void setMaxCodeLen(final int maxCodeLen) {
-        this.maxCodeLen = maxCodeLen;
-    }
-
-    //-- BEGIN HANDLERS --//
 
     /**
      * Handles 'A', 'E', 'I', 'O', 'U', and 'Y' cases.
@@ -584,6 +741,8 @@ public class DoubleMetaphone implements StringEncoder {
         return charAt(value, index + 1) == 'R' ? index + 2 : index + 1;
     }
 
+    //-- BEGIN CONDITIONS --//
+
     /**
      * Handles 'S' cases.
      */
@@ -738,6 +897,8 @@ public class DoubleMetaphone implements StringEncoder {
         return index;
     }
 
+    //-- BEGIN HELPER FUNCTIONS --//
+
     /**
      * Handles 'Z' cases.
      */
@@ -759,94 +920,32 @@ public class DoubleMetaphone implements StringEncoder {
         return index;
     }
 
-    //-- BEGIN CONDITIONS --//
-
     /**
-     * Complex condition 0 for 'C'.
+     * Check if the Double Metaphone values of two {@code String} values
+     * are equal.
+     *
+     * @param value1 The left-hand side of the encoded {@link String#equals(Object)}.
+     * @param value2 The right-hand side of the encoded {@link String#equals(Object)}.
+     * @return {@code true} if the encoded {@code String}s are equal;
+     *          {@code false} otherwise.
+     * @see #isDoubleMetaphoneEqual(String,String,boolean)
      */
-    private boolean conditionC0(final String value, final int index) {
-        if (contains(value, index, 4, "CHIA")) {
-            return true;
-        }
-        if (index <= 1) {
-            return false;
-        }
-        if (isVowel(charAt(value, index - 2))) {
-            return false;
-        }
-        if (!contains(value, index - 1, 3, "ACH")) {
-            return false;
-        }
-        final char c = charAt(value, index + 2);
-        return c != 'I' && c != 'E' ||
-                contains(value, index - 2, 6, "BACHER", "MACHER");
+    public boolean isDoubleMetaphoneEqual(final String value1, final String value2) {
+        return isDoubleMetaphoneEqual(value1, value2, false);
     }
 
     /**
-     * Complex condition 0 for 'CH'.
+     * Check if the Double Metaphone values of two {@code String} values
+     * are equal, optionally using the alternate value.
+     *
+     * @param value1 The left-hand side of the encoded {@link String#equals(Object)}.
+     * @param value2 The right-hand side of the encoded {@link String#equals(Object)}.
+     * @param alternate use the alternate value if {@code true}.
+     * @return {@code true} if the encoded {@code String}s are equal;
+     *          {@code false} otherwise.
      */
-    private boolean conditionCH0(final String value, final int index) {
-        if (index != 0) {
-            return false;
-        }
-        if (!contains(value, index + 1, 5, "HARAC", "HARIS") &&
-                   !contains(value, index + 1, 3, "HOR", "HYM", "HIA", "HEM")) {
-            return false;
-        }
-        return !contains(value, 0, 5, "CHORE");
-    }
-
-    /**
-     * Complex condition 1 for 'CH'.
-     */
-    private boolean conditionCH1(final String value, final int index) {
-        return contains(value, 0, 4, "VAN ", "VON ") || contains(value, 0, 3, "SCH") ||
-                contains(value, index - 2, 6, "ORCHES", "ARCHIT", "ORCHID") ||
-                contains(value, index + 2, 1, "T", "S") ||
-                (contains(value, index - 1, 1, "A", "O", "U", "E") || index == 0) &&
-                 (contains(value, index + 2, 1, L_R_N_M_B_H_F_V_W_SPACE) || index + 1 == value.length() - 1);
-    }
-
-    /**
-     * Complex condition 0 for 'L'.
-     */
-    private boolean conditionL0(final String value, final int index) {
-        if (index == value.length() - 3 &&
-            contains(value, index - 1, 4, "ILLO", "ILLA", "ALLE")) {
-            return true;
-        }
-        return (contains(value, value.length() - 2, 2, "AS", "OS") ||
-                contains(value, value.length() - 1, 1, "A", "O")) &&
-                contains(value, index - 1, 4, "ALLE");
-    }
-
-    /**
-     * Complex condition 0 for 'M'.
-     */
-    private boolean conditionM0(final String value, final int index) {
-        if (charAt(value, index + 1) == 'M') {
-            return true;
-        }
-        return contains(value, index - 1, 3, "UMB") &&
-               (index + 1 == value.length() - 1 || contains(value, index + 2, 2, "ER"));
-    }
-
-    //-- BEGIN HELPER FUNCTIONS --//
-
-    /**
-     * Determines whether or not a value is of slavo-germanic origin. A value is
-     * of slavo-germanic origin if it contians any of 'W', 'K', 'CZ', or 'WITZ'.
-     */
-    private boolean isSlavoGermanic(final String value) {
-        return value.indexOf('W') > -1 || value.indexOf('K') > -1 ||
-                value.contains("CZ") || value.contains("WITZ");
-    }
-
-    /**
-     * Determines whether or not a character is a vowel or not
-     */
-    private boolean isVowel(final char ch) {
-        return VOWELS.indexOf(ch) != -1;
+    public boolean isDoubleMetaphoneEqual(final String value1, final String value2, final boolean alternate) {
+        return StringUtils.equals(doubleMetaphone(value1, alternate), doubleMetaphone(value2, alternate));
     }
 
     /**
@@ -866,127 +965,28 @@ public class DoubleMetaphone implements StringEncoder {
     }
 
     /**
-     * Cleans the input.
+     * Determines whether or not a value is of slavo-germanic origin. A value is
+     * of slavo-germanic origin if it contians any of 'W', 'K', 'CZ', or 'WITZ'.
      */
-    private String cleanInput(String input) {
-        if (input == null) {
-            return null;
-        }
-        input = input.trim();
-        if (input.isEmpty()) {
-            return null;
-        }
-        return input.toUpperCase(java.util.Locale.ENGLISH);
+    private boolean isSlavoGermanic(final String value) {
+        return value.indexOf('W') > -1 || value.indexOf('K') > -1 ||
+                value.contains("CZ") || value.contains("WITZ");
     }
 
-    /*
-     * Gets the character at index {@code index} if available, otherwise
-     * it returns {@code Character.MIN_VALUE} so that there is some sort
-     * of default.
+    /**
+     * Determines whether or not a character is a vowel or not
      */
-    protected char charAt(final String value, final int index) {
-        if (index < 0 || index >= value.length()) {
-            return Character.MIN_VALUE;
-        }
-        return value.charAt(index);
-    }
-
-    /*
-     * Determines whether {@code value} contains any of the criteria starting at index {@code start} and
-     * matching up to length {@code length}.
-     */
-    protected static boolean contains(final String value, final int start, final int length,
-                                      final String... criteria) {
-        boolean result = false;
-        if (start >= 0 && start + length <= value.length()) {
-            final String target = value.substring(start, start + length);
-
-            for (final String element : criteria) {
-                if (target.equals(element)) {
-                    result = true;
-                    break;
-                }
-            }
-        }
-        return result;
+    private boolean isVowel(final char ch) {
+        return VOWELS.indexOf(ch) != -1;
     }
 
     //-- BEGIN INNER CLASSES --//
 
     /**
-     * Inner class for storing results, since there is the optional alternate encoding.
+     * Sets the maxCodeLen.
+     * @param maxCodeLen The maxCodeLen to set
      */
-    public class DoubleMetaphoneResult {
-
-        private final StringBuilder primary = new StringBuilder(getMaxCodeLen());
-        private final StringBuilder alternate = new StringBuilder(getMaxCodeLen());
-        private final int maxLength;
-
-        public DoubleMetaphoneResult(final int maxLength) {
-            this.maxLength = maxLength;
-        }
-
-        public void append(final char value) {
-            appendPrimary(value);
-            appendAlternate(value);
-        }
-
-        public void append(final char primary, final char alternate) {
-            appendPrimary(primary);
-            appendAlternate(alternate);
-        }
-
-        public void appendPrimary(final char value) {
-            if (this.primary.length() < this.maxLength) {
-                this.primary.append(value);
-            }
-        }
-
-        public void appendAlternate(final char value) {
-            if (this.alternate.length() < this.maxLength) {
-                this.alternate.append(value);
-            }
-        }
-
-        public void append(final String value) {
-            appendPrimary(value);
-            appendAlternate(value);
-        }
-
-        public void append(final String primary, final String alternate) {
-            appendPrimary(primary);
-            appendAlternate(alternate);
-        }
-
-        public void appendPrimary(final String value) {
-            final int addChars = this.maxLength - this.primary.length();
-            if (value.length() <= addChars) {
-                this.primary.append(value);
-            } else {
-                this.primary.append(value, 0, addChars);
-            }
-        }
-
-        public void appendAlternate(final String value) {
-            final int addChars = this.maxLength - this.alternate.length();
-            if (value.length() <= addChars) {
-                this.alternate.append(value);
-            } else {
-                this.alternate.append(value, 0, addChars);
-            }
-        }
-
-        public String getPrimary() {
-            return this.primary.toString();
-        }
-
-        public String getAlternate() {
-            return this.alternate.toString();
-        }
-
-        public boolean isComplete() {
-            return this.primary.length() >= this.maxLength &&
-                   this.alternate.length() >= this.maxLength;
-        }
+    public void setMaxCodeLen(final int maxCodeLen) {
+        this.maxCodeLen = maxCodeLen;
     }
 }

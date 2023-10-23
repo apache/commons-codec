@@ -40,15 +40,6 @@ public class ColognePhoneticTest extends AbstractStringEncoderTest<ColognePhonet
 
     private static final Set<String> TESTSET = new HashSet<>();
 
-    private static boolean hasTestCase(final String re) {
-        for(final String s : TESTSET) {
-            if (s.matches(re)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     // Character sequences to be tested by the code
     private static final String[] MATCHES = {
             ".*[AEIOUJY].*",         // A, E, I, J, O, U, Y
@@ -86,6 +77,24 @@ public class ColognePhoneticTest extends AbstractStringEncoderTest<ColognePhonet
         assertEquals(0, errors, "Not expecting any missing test cases");
     }
 
+    private static boolean hasTestCase(final String re) {
+        for(final String s : TESTSET) {
+            if (s.matches(re)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Allow command-line testing
+    public static void main(final String args[]) {
+        final ColognePhonetic coder = new ColognePhonetic();
+        for(final String arg : args) {
+            final String code = coder.encode(arg);
+            System.out.println("'" + arg + "' = '" + code + "'");
+        }
+    }
+
     @Override
     // Capture test strings for later checking
     public void checkEncoding(final String expected, final String source) throws EncoderException {
@@ -97,12 +106,6 @@ public class ColognePhoneticTest extends AbstractStringEncoderTest<ColognePhonet
     @Override
     protected ColognePhonetic createStringEncoder() {
         return new ColognePhonetic();
-    }
-
-    @Test
-    // Ensure that override still allows tests to work
-    public void testCanFail() {
-        assertThrows(AssertionFailedError.class, () -> this.checkEncoding("/", "Fehler"));
     }
 
     @Test
@@ -122,6 +125,12 @@ public class ColognePhoneticTest extends AbstractStringEncoderTest<ColognePhonet
     @Test
     public void testAychlmajrForCodec122() throws EncoderException {
         this.checkEncoding("04567", "Aychlmajr");
+    }
+
+    @Test
+    // Ensure that override still allows tests to work
+    public void testCanFail() {
+        assertThrows(AssertionFailedError.class, () -> this.checkEncoding("/", "Fehler"));
     }
 
     @Test
@@ -228,6 +237,12 @@ public class ColognePhoneticTest extends AbstractStringEncoderTest<ColognePhonet
     }
 
     @Test
+    public void testSpecialCharsBetweenSameLetters() throws EncoderException {
+        final String[] data = {"Test test", "Testtest", "Test-test", "TesT#Test", "TesT?test"};
+        this.checkEncodingVariations("28282", data);
+    }
+
+    @Test
     public void testVariationsMella() throws EncoderException {
         final String[] data = {"mella", "milah", "moulla", "mellah", "muehle", "mule"};
         this.checkEncodingVariations("65", data);
@@ -237,20 +252,5 @@ public class ColognePhoneticTest extends AbstractStringEncoderTest<ColognePhonet
     public void testVariationsMeyer() throws EncoderException {
         final String[] data = {"Meier", "Maier", "Mair", "Meyer", "Meyr", "Mejer", "Major"};
         this.checkEncodingVariations("67", data);
-    }
-
-    @Test
-    public void testSpecialCharsBetweenSameLetters() throws EncoderException {
-        final String[] data = {"Test test", "Testtest", "Test-test", "TesT#Test", "TesT?test"};
-        this.checkEncodingVariations("28282", data);
-    }
-
-    // Allow command-line testing
-    public static void main(final String args[]) {
-        final ColognePhonetic coder = new ColognePhonetic();
-        for(final String arg : args) {
-            final String code = coder.encode(arg);
-            System.out.println("'" + arg + "' = '" + code + "'");
-        }
     }
 }

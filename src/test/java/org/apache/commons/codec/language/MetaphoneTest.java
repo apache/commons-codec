@@ -59,6 +59,34 @@ public class MetaphoneTest extends AbstractStringEncoderTest<Metaphone> {
     }
 
     @Test
+    public void testDiscardOfSCEOrSCIOrSCY() {
+        assertEquals( "SNS", this.getStringEncoder().metaphone("SCIENCE") );
+        assertEquals( "SN", this.getStringEncoder().metaphone("SCENE") );
+        assertEquals( "S", this.getStringEncoder().metaphone("SCY") );
+    }
+
+    @Test
+    public void testDiscardOfSilentGN() {
+        // NOTE: This does not test for silent GN, but for starting with GN
+        assertEquals( "N", this.getStringEncoder().metaphone("GNU") );
+
+        // NOTE: Trying to test for GNED, but expected code does not appear to execute
+        assertEquals( "SNT", this.getStringEncoder().metaphone("SIGNED") );
+    }
+
+    @Test
+    public void testDiscardOfSilentHAfterG() {
+        assertEquals( "KNT", this.getStringEncoder().metaphone("GHENT") );
+        assertEquals( "B", this.getStringEncoder().metaphone("BAUGH") );
+    }
+
+    @Test
+    public void testExceedLength() {
+        // should be AKSKS, but is truncated by Max Code Length
+        assertEquals( "AKSK", this.getStringEncoder().metaphone("AXEAXE") );
+    }
+
+    @Test
     public void testIsMetaphoneEqual1() {
         this.assertMetaphoneEqual(new String[][] { { "Case", "case" }, {
                 "CASE", "Case" }, {
@@ -87,18 +115,6 @@ public class MetaphoneTest extends AbstractStringEncoderTest<Metaphone> {
     }
 
     /**
-     * Initial WH case.
-     *
-     * Match data computed from http://www.lanw.com/java/phonetic/default.htm
-     */
-    @Test
-    public void testIsMetaphoneEqualWhite() {
-        this.assertIsMetaphoneEqual(
-            "White",
-            new String[] { "Wade", "Wait", "Waite", "Wat", "Whit", "Wiatt", "Wit", "Wittie", "Witty", "Wood", "Woodie", "Woody" });
-    }
-
-    /**
      * Initial A, not followed by an E case.
      *
      * Match data computed from http://www.lanw.com/java/phonetic/default.htm
@@ -107,7 +123,6 @@ public class MetaphoneTest extends AbstractStringEncoderTest<Metaphone> {
     public void testIsMetaphoneEqualAlbert() {
         this.assertIsMetaphoneEqual("Albert", new String[] { "Ailbert", "Alberik", "Albert", "Alberto", "Albrecht" });
     }
-
     /**
      * Match data computed from http://www.lanw.com/java/phonetic/default.htm
      */
@@ -258,6 +273,7 @@ public class MetaphoneTest extends AbstractStringEncoderTest<Metaphone> {
                 "Nita",
                 "Nydia" });
     }
+
     /**
      * Match data computed from http://www.lanw.com/java/phonetic/default.htm
      */
@@ -338,6 +354,18 @@ public class MetaphoneTest extends AbstractStringEncoderTest<Metaphone> {
     }
 
     /**
+     * Initial WH case.
+     *
+     * Match data computed from http://www.lanw.com/java/phonetic/default.htm
+     */
+    @Test
+    public void testIsMetaphoneEqualWhite() {
+        this.assertIsMetaphoneEqual(
+            "White",
+            new String[] { "Wade", "Wait", "Waite", "Wat", "Whit", "Wiatt", "Wit", "Wittie", "Witty", "Wood", "Woodie", "Woody" });
+    }
+
+    /**
      * Initial WR case.
      *
      * Match data computed from http://www.lanw.com/java/phonetic/default.htm
@@ -373,31 +401,34 @@ public class MetaphoneTest extends AbstractStringEncoderTest<Metaphone> {
     }
 
     @Test
-    public void testWordEndingInMB() {
-        assertEquals( "KM", this.getStringEncoder().metaphone("COMB") );
-        assertEquals( "TM", this.getStringEncoder().metaphone("TOMB") );
-        assertEquals( "WM", this.getStringEncoder().metaphone("WOMB") );
+    public void testPHTOF() {
+        assertEquals( "FX", this.getStringEncoder().metaphone("PHISH") );
     }
 
     @Test
-    public void testDiscardOfSCEOrSCIOrSCY() {
-        assertEquals( "SNS", this.getStringEncoder().metaphone("SCIENCE") );
-        assertEquals( "SN", this.getStringEncoder().metaphone("SCENE") );
-        assertEquals( "S", this.getStringEncoder().metaphone("SCY") );
-    }
-
-    /**
-     * Tests (CODEC-57) Metaphone.metaphone(String) returns an empty string when passed the word "why"
-     */
-    @Test
-    public void testWhy() {
-        // PHP returns "H". The original metaphone returns an empty string.
-        assertEquals("", this.getStringEncoder().metaphone("WHY"));
+    public void testSetMaxLengthWithTruncation() {
+        // should be AKSKS, but istruncated by Max Code Length
+        this.getStringEncoder().setMaxCodeLen( 6 );
+        assertEquals( "AKSKSK", this.getStringEncoder().metaphone("AXEAXEAXE") );
     }
 
     @Test
-    public void testWordsWithCIA() {
-        assertEquals( "XP", this.getStringEncoder().metaphone("CIAPO") );
+    public void testSHAndSIOAndSIAToX() {
+        assertEquals( "XT", this.getStringEncoder().metaphone("SHOT") );
+        assertEquals( "OTXN", this.getStringEncoder().metaphone("ODSIAN") );
+        assertEquals( "PLXN", this.getStringEncoder().metaphone("PULSION") );
+    }
+
+    @Test
+    public void testTCH() {
+        assertEquals( "RX", this.getStringEncoder().metaphone("RETCH") );
+        assertEquals( "WX", this.getStringEncoder().metaphone("WATCH") );
+    }
+
+    @Test
+    public void testTIOAndTIAToX() {
+        assertEquals( "OX", this.getStringEncoder().metaphone("OTIA") );
+        assertEquals( "PRXN", this.getStringEncoder().metaphone("PORTION") );
     }
 
     @Test
@@ -416,56 +447,25 @@ public class MetaphoneTest extends AbstractStringEncoderTest<Metaphone> {
         assertEquals( "AJMT", this.getStringEncoder().metaphone("ADGIEMTI") );
     }
 
+    /**
+     * Tests (CODEC-57) Metaphone.metaphone(String) returns an empty string when passed the word "why"
+     */
     @Test
-    public void testDiscardOfSilentHAfterG() {
-        assertEquals( "KNT", this.getStringEncoder().metaphone("GHENT") );
-        assertEquals( "B", this.getStringEncoder().metaphone("BAUGH") );
+    public void testWhy() {
+        // PHP returns "H". The original metaphone returns an empty string.
+        assertEquals("", this.getStringEncoder().metaphone("WHY"));
     }
 
     @Test
-    public void testDiscardOfSilentGN() {
-        // NOTE: This does not test for silent GN, but for starting with GN
-        assertEquals( "N", this.getStringEncoder().metaphone("GNU") );
-
-        // NOTE: Trying to test for GNED, but expected code does not appear to execute
-        assertEquals( "SNT", this.getStringEncoder().metaphone("SIGNED") );
+    public void testWordEndingInMB() {
+        assertEquals( "KM", this.getStringEncoder().metaphone("COMB") );
+        assertEquals( "TM", this.getStringEncoder().metaphone("TOMB") );
+        assertEquals( "WM", this.getStringEncoder().metaphone("WOMB") );
     }
 
     @Test
-    public void testPHTOF() {
-        assertEquals( "FX", this.getStringEncoder().metaphone("PHISH") );
-    }
-
-    @Test
-    public void testSHAndSIOAndSIAToX() {
-        assertEquals( "XT", this.getStringEncoder().metaphone("SHOT") );
-        assertEquals( "OTXN", this.getStringEncoder().metaphone("ODSIAN") );
-        assertEquals( "PLXN", this.getStringEncoder().metaphone("PULSION") );
-    }
-
-    @Test
-    public void testTIOAndTIAToX() {
-        assertEquals( "OX", this.getStringEncoder().metaphone("OTIA") );
-        assertEquals( "PRXN", this.getStringEncoder().metaphone("PORTION") );
-    }
-
-    @Test
-    public void testTCH() {
-        assertEquals( "RX", this.getStringEncoder().metaphone("RETCH") );
-        assertEquals( "WX", this.getStringEncoder().metaphone("WATCH") );
-    }
-
-    @Test
-    public void testExceedLength() {
-        // should be AKSKS, but is truncated by Max Code Length
-        assertEquals( "AKSK", this.getStringEncoder().metaphone("AXEAXE") );
-    }
-
-    @Test
-    public void testSetMaxLengthWithTruncation() {
-        // should be AKSKS, but istruncated by Max Code Length
-        this.getStringEncoder().setMaxCodeLen( 6 );
-        assertEquals( "AKSKSK", this.getStringEncoder().metaphone("AXEAXEAXE") );
+    public void testWordsWithCIA() {
+        assertEquals( "XP", this.getStringEncoder().metaphone("CIAPO") );
     }
 
     public void validateFixture(final String[][] pairs) {

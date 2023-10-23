@@ -58,8 +58,54 @@ public final class MurmurHash2 {
     private static final long M64 = 0xc6a4a7935bd1e995L;
     private static final int R64 = 47;
 
-    /** No instance methods. */
-    private MurmurHash2() {
+    /**
+     * Gets the little-endian int from 4 bytes starting at the specified index.
+     *
+     * @param data The data
+     * @param index The index
+     * @return The little-endian int
+     */
+    private static int getLittleEndianInt(final byte[] data, final int index) {
+        return data[index    ] & 0xff |
+               (data[index + 1] & 0xff) <<  8 |
+               (data[index + 2] & 0xff) << 16 |
+               (data[index + 3] & 0xff) << 24;
+    }
+
+    /**
+     * Gets the little-endian long from 8 bytes starting at the specified index.
+     *
+     * @param data The data
+     * @param index The index
+     * @return The little-endian long
+     */
+    private static long getLittleEndianLong(final byte[] data, final int index) {
+        return (long) data[index    ] & 0xff |
+               ((long) data[index + 1] & 0xff) <<  8 |
+               ((long) data[index + 2] & 0xff) << 16 |
+               ((long) data[index + 3] & 0xff) << 24 |
+               ((long) data[index + 4] & 0xff) << 32 |
+               ((long) data[index + 5] & 0xff) << 40 |
+               ((long) data[index + 6] & 0xff) << 48 |
+               ((long) data[index + 7] & 0xff) << 56;
+    }
+
+    /**
+     * Generates a 32-bit hash from byte array with the given length and a default seed value.
+     * This is a helper method that will produce the same result as:
+     *
+     * <pre>
+     * int seed = 0x9747b28c;
+     * int hash = MurmurHash2.hash32(data, length, seed);
+     * </pre>
+     *
+     * @param data The input byte array
+     * @param length The length of the array
+     * @return The 32-bit hash
+     * @see #hash32(byte[], int, int)
+     */
+    public static int hash32(final byte[] data, final int length) {
+        return hash32(data, length, 0x9747b28c);
     }
 
     /**
@@ -110,24 +156,6 @@ public final class MurmurHash2 {
     }
 
     /**
-     * Generates a 32-bit hash from byte array with the given length and a default seed value.
-     * This is a helper method that will produce the same result as:
-     *
-     * <pre>
-     * int seed = 0x9747b28c;
-     * int hash = MurmurHash2.hash32(data, length, seed);
-     * </pre>
-     *
-     * @param data The input byte array
-     * @param length The length of the array
-     * @return The 32-bit hash
-     * @see #hash32(byte[], int, int)
-     */
-    public static int hash32(final byte[] data, final int length) {
-        return hash32(data, length, 0x9747b28c);
-    }
-
-    /**
      * Generates a 32-bit hash from a string with a default seed.
      * <p>
      * Before 1.14 the string was converted using default encoding.
@@ -169,6 +197,24 @@ public final class MurmurHash2 {
      */
     public static int hash32(final String text, final int from, final int length) {
         return hash32(text.substring(from, from + length));
+    }
+
+    /**
+     * Generates a 64-bit hash from byte array with given length and a default seed value.
+     * This is a helper method that will produce the same result as:
+     *
+     * <pre>
+     * int seed = 0xe17a1465;
+     * int hash = MurmurHash2.hash64(data, length, seed);
+     * </pre>
+     *
+     * @param data The input byte array
+     * @param length The length of the array
+     * @return The 64-bit hash
+     * @see #hash64(byte[], int, int)
+     */
+    public static long hash64(final byte[] data, final int length) {
+        return hash64(data, length, 0xe17a1465);
     }
 
     /**
@@ -224,24 +270,6 @@ public final class MurmurHash2 {
     }
 
     /**
-     * Generates a 64-bit hash from byte array with given length and a default seed value.
-     * This is a helper method that will produce the same result as:
-     *
-     * <pre>
-     * int seed = 0xe17a1465;
-     * int hash = MurmurHash2.hash64(data, length, seed);
-     * </pre>
-     *
-     * @param data The input byte array
-     * @param length The length of the array
-     * @return The 64-bit hash
-     * @see #hash64(byte[], int, int)
-     */
-    public static long hash64(final byte[] data, final int length) {
-        return hash64(data, length, 0xe17a1465);
-    }
-
-    /**
      * Generates a 64-bit hash from a string with a default seed.
      * <p>
      * Before 1.14 the string was converted using default encoding.
@@ -287,35 +315,7 @@ public final class MurmurHash2 {
         return hash64(text.substring(from, from + length));
     }
 
-    /**
-     * Gets the little-endian int from 4 bytes starting at the specified index.
-     *
-     * @param data The data
-     * @param index The index
-     * @return The little-endian int
-     */
-    private static int getLittleEndianInt(final byte[] data, final int index) {
-        return data[index    ] & 0xff |
-               (data[index + 1] & 0xff) <<  8 |
-               (data[index + 2] & 0xff) << 16 |
-               (data[index + 3] & 0xff) << 24;
-    }
-
-    /**
-     * Gets the little-endian long from 8 bytes starting at the specified index.
-     *
-     * @param data The data
-     * @param index The index
-     * @return The little-endian long
-     */
-    private static long getLittleEndianLong(final byte[] data, final int index) {
-        return (long) data[index    ] & 0xff |
-               ((long) data[index + 1] & 0xff) <<  8 |
-               ((long) data[index + 2] & 0xff) << 16 |
-               ((long) data[index + 3] & 0xff) << 24 |
-               ((long) data[index + 4] & 0xff) << 32 |
-               ((long) data[index + 5] & 0xff) << 40 |
-               ((long) data[index + 6] & 0xff) << 48 |
-               ((long) data[index + 7] & 0xff) << 56;
+    /** No instance methods. */
+    private MurmurHash2() {
     }
 }

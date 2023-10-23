@@ -37,12 +37,12 @@ public class DaitchMokotoffSoundexTest extends AbstractStringEncoderTest<DaitchM
         return new DaitchMokotoffSoundex();
     }
 
-    private String soundex(final String source) {
-        return getStringEncoder().soundex(source);
-    }
-
     private String encode(final String source) {
         return getStringEncoder().encode(source);
+    }
+
+    private String soundex(final String source) {
+        return getStringEncoder().soundex(source);
     }
 
     @Test

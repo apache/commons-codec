@@ -21,15 +21,15 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 
 public class Blake3Test {
+    private static void assertThrowsProperExceptionWithKeySize(final int keySize) {
+        assertThrows(IllegalArgumentException.class, () -> Blake3.initKeyedHash(new byte[keySize]), "Blake3 keys must be 32 bytes");
+    }
+
     @Test
     public void shouldThrowIllegalArgumentExceptionWhenIncorrectKeySize() {
         for (int i = 0; i < 32; i++) {
             assertThrowsProperExceptionWithKeySize(i);
         }
         assertThrowsProperExceptionWithKeySize(33);
-    }
-
-    private static void assertThrowsProperExceptionWithKeySize(final int keySize) {
-        assertThrows(IllegalArgumentException.class, () -> Blake3.initKeyedHash(new byte[keySize]), "Blake3 keys must be 32 bytes");
     }
 }

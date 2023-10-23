@@ -21,35 +21,6 @@ import org.junit.jupiter.api.Test;
 
 public class CacheSubSequencePerformanceTest {
 
-    @Test
-    public void test() {
-        final int times = 10000000;
-        System.out.print("Test with String : ");
-        test("Angelo", times);
-        System.out.print("Test with StringBuilder : ");
-        test(new StringBuilder("Angelo"), times);
-        System.out.print("Test with cached String : ");
-        test(cacheSubSequence("Angelo"), times);
-        System.out.print("Test with cached StringBuilder : ");
-        test(cacheSubSequence(new StringBuilder("Angelo")), times);
-    }
-
-    private void test(final CharSequence input, final int times) {
-        final long beginTimeMillis = System.currentTimeMillis();
-        for (int i = 0; i < times; i++) {
-            test(input);
-        }
-        System.out.println(System.currentTimeMillis() - beginTimeMillis + " millis");
-    }
-
-    private void test(final CharSequence input) {
-        for (int i = 0; i < input.length(); i++) {
-            for (int j = i; j <= input.length(); j++) {
-                input.subSequence(i, j);
-            }
-        }
-    }
-
     private CharSequence cacheSubSequence(final CharSequence cached) {
         final CharSequence[][] cache = new CharSequence[cached.length()][cached.length()];
         return new CharSequence() {
@@ -76,5 +47,34 @@ public class CacheSubSequencePerformanceTest {
                 return res;
             }
         };
+    }
+
+    @Test
+    public void test() {
+        final int times = 10000000;
+        System.out.print("Test with String : ");
+        test("Angelo", times);
+        System.out.print("Test with StringBuilder : ");
+        test(new StringBuilder("Angelo"), times);
+        System.out.print("Test with cached String : ");
+        test(cacheSubSequence("Angelo"), times);
+        System.out.print("Test with cached StringBuilder : ");
+        test(cacheSubSequence(new StringBuilder("Angelo")), times);
+    }
+
+    private void test(final CharSequence input) {
+        for (int i = 0; i < input.length(); i++) {
+            for (int j = i; j <= input.length(); j++) {
+                input.subSequence(i, j);
+            }
+        }
+    }
+
+    private void test(final CharSequence input, final int times) {
+        final long beginTimeMillis = System.currentTimeMillis();
+        for (int i = 0; i < times; i++) {
+            test(input);
+        }
+        System.out.println(System.currentTimeMillis() - beginTimeMillis + " millis");
     }
 }

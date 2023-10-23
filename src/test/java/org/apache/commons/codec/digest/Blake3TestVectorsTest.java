@@ -266,17 +266,6 @@ public class Blake3TestVectorsTest {
     private byte[] keyedHashByteArray;
     private byte[] deriveKeyByteArray;
 
-    private void initData(final int inputLength, final String hash, final String keyedHash, final String deriveKey)
-            throws DecoderException {
-        this.inputByteArray = new byte[inputLength];
-        for (int i = 0; i < inputByteArray.length; i++) {
-            inputByteArray[i] = (byte) (i % 251);
-        }
-        this.hashByteArray = Hex.decodeHex(hash);
-        this.keyedHashByteArray = Hex.decodeHex(keyedHash);
-        this.deriveKeyByteArray = Hex.decodeHex(deriveKey);
-    }
-
     @ParameterizedTest
     @MethodSource("data")
     public void hashArbitraryOutputLength(final int inputLength, final String hash, final String keyedHash, final String deriveKey) throws DecoderException {
@@ -293,6 +282,28 @@ public class Blake3TestVectorsTest {
         assertArrayEquals(Arrays.copyOf(this.hashByteArray, 32), actual);
     }
 
+    private void initData(final int inputLength, final String hash, final String keyedHash, final String deriveKey)
+            throws DecoderException {
+        this.inputByteArray = new byte[inputLength];
+        for (int i = 0; i < inputByteArray.length; i++) {
+            inputByteArray[i] = (byte) (i % 251);
+        }
+        this.hashByteArray = Hex.decodeHex(hash);
+        this.keyedHashByteArray = Hex.decodeHex(keyedHash);
+        this.deriveKeyByteArray = Hex.decodeHex(deriveKey);
+    }
+
+    @ParameterizedTest
+    @MethodSource("data")
+    public void keyDerivation(final int inputLength, final String hash, final String keyedHash, final String deriveKey) throws DecoderException {
+        initData(inputLength, hash, keyedHash, deriveKey);
+        final byte[] actual = kdfHasher.update(inputByteArray).doFinalize(deriveKeyByteArray.length);
+        assertArrayEquals(deriveKeyByteArray, actual);
+        kdfHasher.reset().update(inputByteArray);
+        final byte[] truncated = kdfHasher.doFinalize(32);
+        assertArrayEquals(Arrays.copyOf(deriveKeyByteArray, 32), truncated);
+    }
+
     @ParameterizedTest
     @MethodSource("data")
     public void keyedHashArbitraryOutputLength(final int inputLength, final String hash, final String keyedHash, final String deriveKey) throws DecoderException {
@@ -307,16 +318,5 @@ public class Blake3TestVectorsTest {
         initData(inputLength, hash, keyedHash, deriveKey);
         final byte[] actual = Blake3.keyedHash(KEY, inputByteArray);
         assertArrayEquals(Arrays.copyOf(keyedHashByteArray, 32), actual);
-    }
-
-    @ParameterizedTest
-    @MethodSource("data")
-    public void keyDerivation(final int inputLength, final String hash, final String keyedHash, final String deriveKey) throws DecoderException {
-        initData(inputLength, hash, keyedHash, deriveKey);
-        final byte[] actual = kdfHasher.update(inputByteArray).doFinalize(deriveKeyByteArray.length);
-        assertArrayEquals(deriveKeyByteArray, actual);
-        kdfHasher.reset().update(inputByteArray);
-        final byte[] truncated = kdfHasher.doFinalize(32);
-        assertArrayEquals(Arrays.copyOf(deriveKeyByteArray, 32), truncated);
     }
 }

@@ -75,6 +75,81 @@ public class Metaphone implements StringEncoder {
     private int maxCodeLen = 4;
 
     /**
+     * Encodes an Object using the metaphone algorithm.  This method
+     * is provided in order to satisfy the requirements of the
+     * Encoder interface, and will throw an EncoderException if the
+     * supplied object is not of type java.lang.String.
+     *
+     * @param obj Object to encode
+     * @return An object (or type java.lang.String) containing the
+     *         metaphone code which corresponds to the String supplied.
+     * @throws EncoderException if the parameter supplied is not
+     *                          of type java.lang.String
+     */
+    @Override
+    public Object encode(final Object obj) throws EncoderException {
+        if (!(obj instanceof String)) {
+            throw new EncoderException("Parameter supplied to Metaphone encode is not of type java.lang.String");
+        }
+        return metaphone((String) obj);
+    }
+
+    /**
+     * Encodes a String using the Metaphone algorithm.
+     *
+     * @param str String object to encode
+     * @return The metaphone code corresponding to the String supplied
+     */
+    @Override
+    public String encode(final String str) {
+        return metaphone(str);
+    }
+
+    /**
+     * Returns the maxCodeLen.
+     * @return int
+     */
+    public int getMaxCodeLen() { return this.maxCodeLen; }
+
+    private boolean isLastChar(final int wdsz, final int n) {
+        return n + 1 == wdsz;
+    }
+
+    /**
+     * Tests is the metaphones of two strings are identical.
+     *
+     * @param str1 First of two strings to compare
+     * @param str2 Second of two strings to compare
+     * @return {@code true} if the metaphones of these strings are identical,
+     *        {@code false} otherwise.
+     */
+    public boolean isMetaphoneEqual(final String str1, final String str2) {
+        return metaphone(str1).equals(metaphone(str2));
+    }
+
+    private boolean isNextChar(final StringBuilder string, final int index, final char c) {
+        boolean matches = false;
+        if (index >= 0 &&
+            index < string.length() - 1 ) {
+            matches = string.charAt(index + 1) == c;
+        }
+        return matches;
+    }
+
+    private boolean isPreviousChar(final StringBuilder string, final int index, final char c) {
+        boolean matches = false;
+        if (index > 0 &&
+            index < string.length() ) {
+            matches = string.charAt(index - 1) == c;
+        }
+        return matches;
+    }
+
+    private boolean isVowel(final StringBuilder string, final int index) {
+        return VOWELS.indexOf(string.charAt(index)) >= 0;
+    }
+
+    /**
      * Find the metaphone value of a String. This is similar to the
      * soundex algorithm, but better at finding similar sounding words.
      * All input is converted to upper case.
@@ -306,28 +381,6 @@ public class Metaphone implements StringEncoder {
         return code.toString();
     }
 
-    private boolean isVowel(final StringBuilder string, final int index) {
-        return VOWELS.indexOf(string.charAt(index)) >= 0;
-    }
-
-    private boolean isPreviousChar(final StringBuilder string, final int index, final char c) {
-        boolean matches = false;
-        if (index > 0 &&
-            index < string.length() ) {
-            matches = string.charAt(index - 1) == c;
-        }
-        return matches;
-    }
-
-    private boolean isNextChar(final StringBuilder string, final int index, final char c) {
-        boolean matches = false;
-        if (index >= 0 &&
-            index < string.length() - 1 ) {
-            matches = string.charAt(index + 1) == c;
-        }
-        return matches;
-    }
-
     private boolean regionMatch(final StringBuilder string, final int index, final String test) {
         boolean matches = false;
         if (index >= 0 && index + test.length() - 1 < string.length()) {
@@ -336,59 +389,6 @@ public class Metaphone implements StringEncoder {
         }
         return matches;
     }
-
-    private boolean isLastChar(final int wdsz, final int n) {
-        return n + 1 == wdsz;
-    }
-
-    /**
-     * Encodes an Object using the metaphone algorithm.  This method
-     * is provided in order to satisfy the requirements of the
-     * Encoder interface, and will throw an EncoderException if the
-     * supplied object is not of type java.lang.String.
-     *
-     * @param obj Object to encode
-     * @return An object (or type java.lang.String) containing the
-     *         metaphone code which corresponds to the String supplied.
-     * @throws EncoderException if the parameter supplied is not
-     *                          of type java.lang.String
-     */
-    @Override
-    public Object encode(final Object obj) throws EncoderException {
-        if (!(obj instanceof String)) {
-            throw new EncoderException("Parameter supplied to Metaphone encode is not of type java.lang.String");
-        }
-        return metaphone((String) obj);
-    }
-
-    /**
-     * Encodes a String using the Metaphone algorithm.
-     *
-     * @param str String object to encode
-     * @return The metaphone code corresponding to the String supplied
-     */
-    @Override
-    public String encode(final String str) {
-        return metaphone(str);
-    }
-
-    /**
-     * Tests is the metaphones of two strings are identical.
-     *
-     * @param str1 First of two strings to compare
-     * @param str2 Second of two strings to compare
-     * @return {@code true} if the metaphones of these strings are identical,
-     *        {@code false} otherwise.
-     */
-    public boolean isMetaphoneEqual(final String str1, final String str2) {
-        return metaphone(str1).equals(metaphone(str2));
-    }
-
-    /**
-     * Returns the maxCodeLen.
-     * @return int
-     */
-    public int getMaxCodeLen() { return this.maxCodeLen; }
 
     /**
      * Sets the maxCodeLen.

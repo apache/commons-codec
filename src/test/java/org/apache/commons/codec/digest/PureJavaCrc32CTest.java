@@ -33,16 +33,20 @@ public class PureJavaCrc32CTest {
 
     private final byte[] data = new byte[32];
 
-    @Test
-    public void testZeros() {
-        Arrays.fill(data, (byte) 0);
-        check(0x8a9136aa); // aa 36 91 8a
+    // Using int because only want 32 bits
+    private void check(final int expected) {
+        crc.reset();
+        crc.update(data, 0, data.length);
+        final int actual = (int) crc.getValue();
+        assertEquals(Integer.toHexString(expected), Integer.toHexString(actual));
     }
 
     @Test
-    public void testOnes() {
-        Arrays.fill(data, (byte) 0xFF);
-        check(0x62a8ab43); // 43 ab a8 62
+    public void testDecreasing() {
+        for(int i = 0; i < data.length; i ++) {
+            data[i]= (byte) (31-i);
+        }
+        check(0x113fdb5c); // 5c db 3f 11
     }
 
     @Test
@@ -54,19 +58,15 @@ public class PureJavaCrc32CTest {
     }
 
     @Test
-    public void testDecreasing() {
-        for(int i = 0; i < data.length; i ++) {
-            data[i]= (byte) (31-i);
-        }
-        check(0x113fdb5c); // 5c db 3f 11
+    public void testOnes() {
+        Arrays.fill(data, (byte) 0xFF);
+        check(0x62a8ab43); // 43 ab a8 62
     }
 
-    // Using int because only want 32 bits
-    private void check(final int expected) {
-        crc.reset();
-        crc.update(data, 0, data.length);
-        final int actual = (int) crc.getValue();
-        assertEquals(Integer.toHexString(expected), Integer.toHexString(actual));
+    @Test
+    public void testZeros() {
+        Arrays.fill(data, (byte) 0);
+        check(0x8a9136aa); // aa 36 91 8a
     }
 
 }

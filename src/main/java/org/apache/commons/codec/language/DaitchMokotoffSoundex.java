@@ -69,29 +69,6 @@ import org.apache.commons.codec.StringEncoder;
  */
 public class DaitchMokotoffSoundex implements StringEncoder {
 
-    private static final String COMMENT = "//";
-
-    private static final String DOUBLE_QUOTE = "\"";
-
-    private static final String MULTILINE_COMMENT_END = "*/";
-
-    private static final String MULTILINE_COMMENT_START = "/*";
-
-    /** The resource file containing the replacement and folding rules */
-    private static final String RESOURCE_FILE = "org/apache/commons/codec/language/dmrules.txt";
-
-    /** The code length of a DM soundex value. */
-    private static final int MAX_LENGTH = 6;
-
-    /** Transformation rules indexed by the first character of their pattern. */
-    private static final Map<Character, List<Rule>> RULES = new HashMap<>();
-
-    /** Folding rules. */
-    private static final Map<Character, Character> FOLDINGS = new HashMap<>();
-
-    /** Whether to use ASCII folding prior to encoding. */
-    private final boolean folding;
-
     /**
      * Inner class representing a branch during DM soundex encoding.
      */
@@ -227,6 +204,26 @@ public class DaitchMokotoffSoundex implements StringEncoder {
         }
     }
 
+    private static final String COMMENT = "//";
+
+    private static final String DOUBLE_QUOTE = "\"";
+
+    private static final String MULTILINE_COMMENT_END = "*/";
+
+    private static final String MULTILINE_COMMENT_START = "/*";
+
+    /** The resource file containing the replacement and folding rules */
+    private static final String RESOURCE_FILE = "org/apache/commons/codec/language/dmrules.txt";
+
+    /** The code length of a DM soundex value. */
+    private static final int MAX_LENGTH = 6;
+
+    /** Transformation rules indexed by the first character of their pattern. */
+    private static final Map<Character, List<Rule>> RULES = new HashMap<>();
+
+    /** Folding rules. */
+    private static final Map<Character, Character> FOLDINGS = new HashMap<>();
+
     static {
         try (final Scanner scanner = new Scanner(Resources.getInputStream(RESOURCE_FILE), CharEncoding.UTF_8)) {
             parseRules(scanner, RESOURCE_FILE, RULES, FOLDINGS);
@@ -322,6 +319,9 @@ public class DaitchMokotoffSoundex implements StringEncoder {
 
         return str;
     }
+
+    /** Whether to use ASCII folding prior to encoding. */
+    private final boolean folding;
 
     /**
      * Creates a new instance with ASCII-folding enabled.

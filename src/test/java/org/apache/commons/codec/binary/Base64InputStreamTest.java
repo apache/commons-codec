@@ -51,105 +51,6 @@ public class Base64InputStreamTest {
     private static final String STRING_FIXTURE = "Hello World";
 
     /**
-     * Tests the problem reported in CODEC-130. Missing / wrong implementation of skip.
-     */
-    @Test
-    public void testCodec130() throws IOException {
-        final ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        try (final Base64OutputStream base64os = new Base64OutputStream(bos)) {
-            base64os.write(StringUtils.getBytesUtf8(STRING_FIXTURE));
-        }
-
-        final ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
-        final Base64InputStream ins = new Base64InputStream(bis);
-
-        // we skip the first character read from the reader
-        ins.skip(1);
-        final byte[] decodedBytes = BaseNTestData.streamToBytes(ins, new byte[64]);
-        final String str = StringUtils.newStringUtf8(decodedBytes);
-
-        assertEquals(STRING_FIXTURE.substring(1), str);
-    }
-
-    /**
-     * Tests the bug reported in CODEC-105. Bad interactions with InputStream when reading one byte at a time.
-     */
-    @Test
-    public void testCodec105() throws IOException {
-        try (final Base64InputStream in = new Base64InputStream(new Codec105ErrorInputStream(), true, 0, null)) {
-            for (int i = 0; i < 5; i++) {
-                in.read();
-            }
-        }
-    }
-
-    /**
-     * Test for the CODEC-101 bug: InputStream.read(byte[]) should never return 0 because Java's builtin InputStreamReader hates that.
-     *
-     * @throws Exception
-     *             for some failure scenarios.
-     */
-    @Test
-    public void testCodec101() throws Exception {
-        final byte[] codec101 = StringUtils.getBytesUtf8(Base64TestData.CODEC_101_INPUT_LENGTH_IS_MULTIPLE_OF_3);
-        final ByteArrayInputStream bais = new ByteArrayInputStream(codec101);
-        try (final Base64InputStream in = new Base64InputStream(bais)) {
-            final byte[] result = new byte[8192];
-            int c = in.read(result);
-            assertTrue(c > 0, "Codec101: First read successful [c=" + c + "]");
-
-            c = in.read(result);
-            assertTrue(c < 0, "Codec101: Second read should report end-of-stream [c=" + c + "]");
-        }
-    }
-
-    /**
-     * Another test for the CODEC-101 bug: In commons-codec-1.4 this test shows InputStreamReader explicitly hating an
-     * InputStream.read(byte[]) return of 0:
-     *
-     * java.io.IOException: Underlying input stream returned zero bytes at sun.nio.cs.StreamDecoder.readBytes(StreamDecoder.java:268) at
-     * sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:306) at sun.nio.cs.StreamDecoder.read(StreamDecoder.java:158) at
-     * java.io.InputStreamReader.read(InputStreamReader.java:167) at java.io.BufferedReader.fill(BufferedReader.java:136) at
-     * java.io.BufferedReader.readLine(BufferedReader.java:299) at java.io.BufferedReader.readLine(BufferedReader.java:362) at
-     * org.apache.commons.codec.binary.Base64InputStreamTest.testInputStreamReader(Base64InputStreamTest.java:75)
-     *
-     * But in commons-codec-1.5 it's fixed. :-)
-     *
-     * @throws Exception
-     *             for some failure scenarios.
-     */
-    @Test
-    public void testInputStreamReader() throws Exception {
-        final byte[] codec101 = StringUtils.getBytesUtf8(Base64TestData.CODEC_101_INPUT_LENGTH_IS_MULTIPLE_OF_3);
-        final ByteArrayInputStream bais = new ByteArrayInputStream(codec101);
-        final Base64InputStream in = new Base64InputStream(bais);
-        final InputStreamReader isr = new InputStreamReader(in);
-        try (final BufferedReader br = new BufferedReader(isr)) {
-            final String line = br.readLine();
-            assertNotNull(line, "Codec101:  InputStreamReader works!");
-        }
-    }
-
-    /**
-     * Test the Base64InputStream implementation against the special NPE inducing input identified in the CODEC-98 bug.
-     *
-     * @throws Exception
-     *             for some failure scenarios.
-     */
-    @Test
-    public void testCodec98NPE() throws Exception {
-        final byte[] codec98 = StringUtils.getBytesUtf8(Base64TestData.CODEC_98_NPE);
-        final ByteArrayInputStream data = new ByteArrayInputStream(codec98);
-        final Base64InputStream stream = new Base64InputStream(data);
-
-        // This line causes an NPE in commons-codec-1.4.jar:
-        final byte[] decodedBytes = BaseNTestData.streamToBytes(stream, new byte[1024]);
-
-        final String decoded = StringUtils.newStringUtf8(decodedBytes);
-        assertEquals(Base64TestData.CODEC_98_NPE_DECODED, decoded, "codec-98 NPE Base64InputStream");
-    }
-
-    /**
      * Tests skipping past the end of a stream.
      *
      * @throws Throwable
@@ -167,6 +68,13 @@ public class Base64InputStreamTest {
             assertEquals(-1, b64stream.read());
             assertEquals(0, b64stream.available());
         }
+    }
+
+    private void testBase64EmptyInputStream(final int chuckSize) throws Exception {
+        final byte[] emptyEncoded = {};
+        final byte[] emptyDecoded = {};
+        testByteByByte(emptyEncoded, emptyDecoded, chuckSize, CRLF);
+        testByChunk(emptyEncoded, emptyDecoded, chuckSize, CRLF);
     }
 
     /**
@@ -189,13 +97,6 @@ public class Base64InputStreamTest {
     @Test
     public void testBase64EmptyInputStreamPemChuckSize() throws Exception {
         testBase64EmptyInputStream(BaseNCodec.PEM_CHUNK_SIZE);
-    }
-
-    private void testBase64EmptyInputStream(final int chuckSize) throws Exception {
-        final byte[] emptyEncoded = {};
-        final byte[] emptyDecoded = {};
-        testByteByByte(emptyEncoded, emptyDecoded, chuckSize, CRLF);
-        testByChunk(emptyEncoded, emptyDecoded, chuckSize, CRLF);
     }
 
     /**
@@ -389,6 +290,105 @@ public class Base64InputStreamTest {
     }
 
     /**
+     * Test for the CODEC-101 bug: InputStream.read(byte[]) should never return 0 because Java's builtin InputStreamReader hates that.
+     *
+     * @throws Exception
+     *             for some failure scenarios.
+     */
+    @Test
+    public void testCodec101() throws Exception {
+        final byte[] codec101 = StringUtils.getBytesUtf8(Base64TestData.CODEC_101_INPUT_LENGTH_IS_MULTIPLE_OF_3);
+        final ByteArrayInputStream bais = new ByteArrayInputStream(codec101);
+        try (final Base64InputStream in = new Base64InputStream(bais)) {
+            final byte[] result = new byte[8192];
+            int c = in.read(result);
+            assertTrue(c > 0, "Codec101: First read successful [c=" + c + "]");
+
+            c = in.read(result);
+            assertTrue(c < 0, "Codec101: Second read should report end-of-stream [c=" + c + "]");
+        }
+    }
+
+    /**
+     * Tests the bug reported in CODEC-105. Bad interactions with InputStream when reading one byte at a time.
+     */
+    @Test
+    public void testCodec105() throws IOException {
+        try (final Base64InputStream in = new Base64InputStream(new Codec105ErrorInputStream(), true, 0, null)) {
+            for (int i = 0; i < 5; i++) {
+                in.read();
+            }
+        }
+    }
+
+    /**
+     * Tests the problem reported in CODEC-130. Missing / wrong implementation of skip.
+     */
+    @Test
+    public void testCodec130() throws IOException {
+        final ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        try (final Base64OutputStream base64os = new Base64OutputStream(bos)) {
+            base64os.write(StringUtils.getBytesUtf8(STRING_FIXTURE));
+        }
+
+        final ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
+        final Base64InputStream ins = new Base64InputStream(bis);
+
+        // we skip the first character read from the reader
+        ins.skip(1);
+        final byte[] decodedBytes = BaseNTestData.streamToBytes(ins, new byte[64]);
+        final String str = StringUtils.newStringUtf8(decodedBytes);
+
+        assertEquals(STRING_FIXTURE.substring(1), str);
+    }
+
+    /**
+     * Test the Base64InputStream implementation against the special NPE inducing input identified in the CODEC-98 bug.
+     *
+     * @throws Exception
+     *             for some failure scenarios.
+     */
+    @Test
+    public void testCodec98NPE() throws Exception {
+        final byte[] codec98 = StringUtils.getBytesUtf8(Base64TestData.CODEC_98_NPE);
+        final ByteArrayInputStream data = new ByteArrayInputStream(codec98);
+        final Base64InputStream stream = new Base64InputStream(data);
+
+        // This line causes an NPE in commons-codec-1.4.jar:
+        final byte[] decodedBytes = BaseNTestData.streamToBytes(stream, new byte[1024]);
+
+        final String decoded = StringUtils.newStringUtf8(decodedBytes);
+        assertEquals(Base64TestData.CODEC_98_NPE_DECODED, decoded, "codec-98 NPE Base64InputStream");
+    }
+
+    /**
+     * Another test for the CODEC-101 bug: In commons-codec-1.4 this test shows InputStreamReader explicitly hating an
+     * InputStream.read(byte[]) return of 0:
+     *
+     * java.io.IOException: Underlying input stream returned zero bytes at sun.nio.cs.StreamDecoder.readBytes(StreamDecoder.java:268) at
+     * sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:306) at sun.nio.cs.StreamDecoder.read(StreamDecoder.java:158) at
+     * java.io.InputStreamReader.read(InputStreamReader.java:167) at java.io.BufferedReader.fill(BufferedReader.java:136) at
+     * java.io.BufferedReader.readLine(BufferedReader.java:299) at java.io.BufferedReader.readLine(BufferedReader.java:362) at
+     * org.apache.commons.codec.binary.Base64InputStreamTest.testInputStreamReader(Base64InputStreamTest.java:75)
+     *
+     * But in commons-codec-1.5 it's fixed. :-)
+     *
+     * @throws Exception
+     *             for some failure scenarios.
+     */
+    @Test
+    public void testInputStreamReader() throws Exception {
+        final byte[] codec101 = StringUtils.getBytesUtf8(Base64TestData.CODEC_101_INPUT_LENGTH_IS_MULTIPLE_OF_3);
+        final ByteArrayInputStream bais = new ByteArrayInputStream(codec101);
+        final Base64InputStream in = new Base64InputStream(bais);
+        final InputStreamReader isr = new InputStreamReader(in);
+        try (final BufferedReader br = new BufferedReader(isr)) {
+            final String line = br.readLine();
+            assertNotNull(line, "Codec101:  InputStreamReader works!");
+        }
+    }
+
+    /**
      * Tests markSupported.
      *
      * @throws Exception
@@ -401,6 +401,24 @@ public class Base64InputStreamTest {
         try (final Base64InputStream in = new Base64InputStream(bin, true, 4, new byte[] { 0, 0, 0 })) {
             // Always returns false for now.
             assertFalse(in.markSupported(), "Base64InputStream.markSupported() is false");
+        }
+    }
+
+    /**
+     * Tests read returning 0
+     *
+     * @throws Exception
+     *             for some failure scenarios.
+     */
+    @Test
+    public void testRead0() throws Exception {
+        final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
+        final byte[] buf = new byte[1024];
+        int bytesRead = 0;
+        final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
+        try (final Base64InputStream in = new Base64InputStream(bin, true, 4, new byte[] { 0, 0, 0 })) {
+            bytesRead = in.read(buf, 0, 0);
+            assertEquals(0, bytesRead, "Base64InputStream.read(buf, 0, 0) returns 0");
         }
     }
 
@@ -426,24 +444,6 @@ public class Base64InputStreamTest {
             }
         }
         assertArrayEquals(decoded, out.toByteArray());
-    }
-
-    /**
-     * Tests read returning 0
-     *
-     * @throws Exception
-     *             for some failure scenarios.
-     */
-    @Test
-    public void testRead0() throws Exception {
-        final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
-        final byte[] buf = new byte[1024];
-        int bytesRead = 0;
-        final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
-        try (final Base64InputStream in = new Base64InputStream(bin, true, 4, new byte[] { 0, 0, 0 })) {
-            bytesRead = in.read(buf, 0, 0);
-            assertEquals(0, bytesRead, "Base64InputStream.read(buf, 0, 0) returns 0");
-        }
     }
 
     /**

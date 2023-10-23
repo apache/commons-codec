@@ -31,255 +31,27 @@ import org.junit.jupiter.api.Test;
 
 public class BaseNCodecTest {
 
-    BaseNCodec codec;
-
-    @BeforeEach
-    public void setUp() {
-        codec = new BaseNCodec(0, 0, 0, 0) {
-            @Override
-            protected boolean isInAlphabet(final byte b) {
-                return b=='O' || b == 'K'; // allow OK
-            }
-
-            @Override
-            void encode(final byte[] pArray, final int i, final int length, final Context context) {
-            }
-
-            @Override
-            void decode(final byte[] pArray, final int i, final int length, final Context context) {
-            }
-        };
-    }
-
     /**
-     * Test the Context string representation has debugging info.
-     * This is not part of the API and the test should be changed if the string
-     * format is updated.
+     * Extend BaseNCodec without implementation (no operations = NoOp).
+     * Used for testing the memory allocation in {@link BaseNCodec#ensureBufferSize(int, Context)}.
      */
-    @Test
-    public void testContextToString() {
-        final Context context = new Context();
-        context.buffer = new byte[3];
-        context.currentLinePos = 13;
-        context.eof = true;
-        context.ibitWorkArea = 777;
-        context.lbitWorkArea = 999;
-        context.modulus = 5;
-        context.pos = 42;
-        context.readPos = 981;
-        final String text = context.toString();
-        assertTrue(text.contains("[0, 0, 0]"));
-        assertTrue(text.contains("13"));
-        assertTrue(text.contains("true"));
-        assertTrue(text.contains("777"));
-        assertTrue(text.contains("999"));
-        assertTrue(text.contains("5"));
-        assertTrue(text.contains("42"));
-        assertTrue(text.contains("981"));
-    }
-
-    @Test
-    public void testBaseNCodec() {
-        assertNotNull(codec);
-    }
-
-//    @Test
-//    public void testHasData() {
-//        fail("Not yet implemented");
-//    }
-//
-//    @Test
-//    public void testAvail() {
-//        fail("Not yet implemented");
-//    }
-//
-//    @Test
-//    public void testEnsureBufferSize() {
-//        fail("Not yet implemented");
-//    }
-//
-//    @Test
-//    public void testReadResults() {
-//        fail("Not yet implemented");
-//    }
-//
-    @Test
-    public void testIsWhiteSpace() {
-        assertTrue(Character.isWhitespace((byte) ' '));
-        assertTrue(Character.isWhitespace((byte) '\n'));
-        assertTrue(Character.isWhitespace((byte) '\r'));
-        assertTrue(Character.isWhitespace((byte) '\t'));
-        assertTrue(Character.isWhitespace((byte) '\f'));
-        assertTrue(Character.isWhitespace((byte) '\u000B'));
-        for (byte b = Byte.MIN_VALUE; b < Byte.MAX_VALUE; b++) {
-            final byte byteToCheck = b;
-            assertEquals(Character.isWhitespace(b), Character.isWhitespace(byteToCheck));
+    private static final class NoOpBaseNCodec extends BaseNCodec {
+        NoOpBaseNCodec() {
+            super(0, 0, 0, 0);
         }
-    }
-//
-//    @Test
-//    public void testEncodeObject() {
-//        fail("Not yet implemented");
-//    }
-//
-//    @Test
-//    public void testEncodeToString() {
-//        fail("Not yet implemented");
-//    }
-//
-//    @Test
-//    public void testDecodeObject() {
-//        fail("Not yet implemented");
-//    }
-//
-//    @Test
-//    public void testDecodeString() {
-//        fail("Not yet implemented");
-//    }
-//
-//    @Test
-//    public void testDecodeByteArray() {
-//        fail("Not yet implemented");
-//    }
-//
-//    @Test
-//    public void testEncodeByteArray() {
-//        fail("Not yet implemented");
-//    }
-//
-//    @Test
-//    public void testEncodeAsString() {
-//        fail("Not yet implemented");
-//    }
-//
-//    @Test
-//    public void testEncodeByteArrayIntInt() {
-//        fail("Not yet implemented");
-//    }
-//
-//    @Test
-//    public void testDecodeByteArrayIntInt() {
-//        fail("Not yet implemented");
-//    }
-//
-    @Test
-    public void testIsInAlphabetByte() {
-        assertFalse(codec.isInAlphabet((byte) 0));
-        assertFalse(codec.isInAlphabet((byte) 'a'));
-        assertTrue(codec.isInAlphabet((byte) 'O'));
-        assertTrue(codec.isInAlphabet((byte) 'K'));
-    }
 
-    @Test
-    public void testIsInAlphabetByteArrayBoolean() {
-        assertTrue(codec.isInAlphabet(new byte[]{}, false));
-        assertTrue(codec.isInAlphabet(new byte[]{'O'}, false));
-        assertFalse(codec.isInAlphabet(new byte[]{'O',' '}, false));
-        assertFalse(codec.isInAlphabet(new byte[]{' '}, false));
-        assertTrue(codec.isInAlphabet(new byte[]{}, true));
-        assertTrue(codec.isInAlphabet(new byte[]{'O'}, true));
-        assertTrue(codec.isInAlphabet(new byte[]{'O',' '}, true));
-        assertTrue(codec.isInAlphabet(new byte[]{' '}, true));
-    }
+        @Override
+        void decode(final byte[] pArray, final int i, final int length, final Context context) {
+        }
 
-    @Test
-    public void testIsInAlphabetString() {
-        assertTrue(codec.isInAlphabet("OK"));
-        assertTrue(codec.isInAlphabet("O=K= \t\n\r"));
-    }
+        @Override
+        void encode(final byte[] pArray, final int i, final int length, final Context context) {
+        }
 
-    @Test
-    public void testContainsAlphabetOrPad() {
-        assertFalse(codec.containsAlphabetOrPad(null));
-        assertFalse(codec.containsAlphabetOrPad(new byte[]{}));
-        assertTrue(codec.containsAlphabetOrPad("OK".getBytes()));
-        assertTrue(codec.containsAlphabetOrPad("OK ".getBytes()));
-        assertFalse(codec.containsAlphabetOrPad("ok ".getBytes()));
-        assertTrue(codec.containsAlphabetOrPad(new byte[]{codec.pad}));
-    }
-
-//    @Test
-//    public void testGetEncodedLength() {
-//        fail("Not yet implemented");
-//    }
-
-    @Test
-    public void testProvidePaddingByte() {
-        // Given
-        codec = new BaseNCodec(0, 0, 0, 0, (byte)0x25) {
-            @Override
-            protected boolean isInAlphabet(final byte b) {
-                return b=='O' || b == 'K'; // allow OK
-            }
-
-            @Override
-            void encode(final byte[] pArray, final int i, final int length, final Context context) {
-            }
-
-            @Override
-            void decode(final byte[] pArray, final int i, final int length, final Context context) {
-            }
-        };
-
-        // When
-        final byte actualPaddingByte = codec.pad;
-
-        // Then
-        assertEquals(0x25, actualPaddingByte);
-    }
-
-    @Test
-    public void testEnsureBufferSize() {
-        final BaseNCodec ncodec = new NoOpBaseNCodec();
-        final Context context = new Context();
-        assertNull(context.buffer, "Initial buffer should be null");
-
-        // Test initialization
-        context.pos = 76979;
-        context.readPos = 273;
-        ncodec.ensureBufferSize(0, context);
-        assertNotNull(context.buffer, "buffer should be initialized");
-        assertEquals(ncodec.getDefaultBufferSize(), context.buffer.length, "buffer should be initialized to default size");
-        assertEquals(0, context.pos, "context position");
-        assertEquals(0, context.readPos, "context read position");
-
-        // Test when no expansion is required
-        ncodec.ensureBufferSize(1, context);
-        assertEquals(ncodec.getDefaultBufferSize(), context.buffer.length, "buffer should not expand unless required");
-
-        // Test expansion
-        int length = context.buffer.length;
-        context.pos = length;
-        int extra = 1;
-        ncodec.ensureBufferSize(extra, context);
-        assertTrue(context.buffer.length >= length + extra, "buffer should expand");
-
-        // Test expansion beyond double the buffer size.
-        // Hits the edge case where the required capacity is more than the default expansion.
-        length = context.buffer.length;
-        context.pos = length;
-        extra = length * 10;
-        ncodec.ensureBufferSize(extra, context);
-        assertTrue(context.buffer.length >= length + extra, "buffer should expand beyond double capacity");
-    }
-
-    /**
-     * Test to expand to the max buffer size.
-     */
-    @Test
-    public void testEnsureBufferSizeExpandsToMaxBufferSize() {
-        assertEnsureBufferSizeExpandsToMaxBufferSize(false);
-    }
-
-    /**
-     * Test to expand to beyond the max buffer size.
-     *
-     * <p>Note: If the buffer is required to expand to above the max buffer size it may not work
-     * on all VMs and may have to be annotated with @Ignore.</p>
-     */
-    @Test
-    public void testEnsureBufferSizeExpandsToBeyondMaxBufferSize() {
-        assertEnsureBufferSizeExpandsToMaxBufferSize(true);
+        @Override
+        protected boolean isInAlphabet(final byte value) {
+            return false;
+        }
     }
 
     private static void assertEnsureBufferSizeExpandsToMaxBufferSize(final boolean exceedMaxBufferSize) {
@@ -363,6 +135,126 @@ public class BaseNCodecTest {
         return Runtime.getRuntime().maxMemory() - allocatedMemory;
     }
 
+BaseNCodec codec;
+@BeforeEach
+    public void setUp() {
+        codec = new BaseNCodec(0, 0, 0, 0) {
+            @Override
+            void decode(final byte[] pArray, final int i, final int length, final Context context) {
+            }
+
+            @Override
+            void encode(final byte[] pArray, final int i, final int length, final Context context) {
+            }
+
+            @Override
+            protected boolean isInAlphabet(final byte b) {
+                return b=='O' || b == 'K'; // allow OK
+            }
+        };
+    }
+
+    @Test
+    public void testBaseNCodec() {
+        assertNotNull(codec);
+    }
+
+    @Test
+    public void testContainsAlphabetOrPad() {
+        assertFalse(codec.containsAlphabetOrPad(null));
+        assertFalse(codec.containsAlphabetOrPad(new byte[]{}));
+        assertTrue(codec.containsAlphabetOrPad("OK".getBytes()));
+        assertTrue(codec.containsAlphabetOrPad("OK ".getBytes()));
+        assertFalse(codec.containsAlphabetOrPad("ok ".getBytes()));
+        assertTrue(codec.containsAlphabetOrPad(new byte[]{codec.pad}));
+    }
+
+    /**
+     * Test the Context string representation has debugging info.
+     * This is not part of the API and the test should be changed if the string
+     * format is updated.
+     */
+    @Test
+    public void testContextToString() {
+        final Context context = new Context();
+        context.buffer = new byte[3];
+        context.currentLinePos = 13;
+        context.eof = true;
+        context.ibitWorkArea = 777;
+        context.lbitWorkArea = 999;
+        context.modulus = 5;
+        context.pos = 42;
+        context.readPos = 981;
+        final String text = context.toString();
+        assertTrue(text.contains("[0, 0, 0]"));
+        assertTrue(text.contains("13"));
+        assertTrue(text.contains("true"));
+        assertTrue(text.contains("777"));
+        assertTrue(text.contains("999"));
+        assertTrue(text.contains("5"));
+        assertTrue(text.contains("42"));
+        assertTrue(text.contains("981"));
+    }
+
+//    @Test
+//    public void testGetEncodedLength() {
+//        fail("Not yet implemented");
+//    }
+
+    @Test
+    public void testEnsureBufferSize() {
+        final BaseNCodec ncodec = new NoOpBaseNCodec();
+        final Context context = new Context();
+        assertNull(context.buffer, "Initial buffer should be null");
+
+        // Test initialization
+        context.pos = 76979;
+        context.readPos = 273;
+        ncodec.ensureBufferSize(0, context);
+        assertNotNull(context.buffer, "buffer should be initialized");
+        assertEquals(ncodec.getDefaultBufferSize(), context.buffer.length, "buffer should be initialized to default size");
+        assertEquals(0, context.pos, "context position");
+        assertEquals(0, context.readPos, "context read position");
+
+        // Test when no expansion is required
+        ncodec.ensureBufferSize(1, context);
+        assertEquals(ncodec.getDefaultBufferSize(), context.buffer.length, "buffer should not expand unless required");
+
+        // Test expansion
+        int length = context.buffer.length;
+        context.pos = length;
+        int extra = 1;
+        ncodec.ensureBufferSize(extra, context);
+        assertTrue(context.buffer.length >= length + extra, "buffer should expand");
+
+        // Test expansion beyond double the buffer size.
+        // Hits the edge case where the required capacity is more than the default expansion.
+        length = context.buffer.length;
+        context.pos = length;
+        extra = length * 10;
+        ncodec.ensureBufferSize(extra, context);
+        assertTrue(context.buffer.length >= length + extra, "buffer should expand beyond double capacity");
+    }
+
+    /**
+     * Test to expand to beyond the max buffer size.
+     *
+     * <p>Note: If the buffer is required to expand to above the max buffer size it may not work
+     * on all VMs and may have to be annotated with @Ignore.</p>
+     */
+    @Test
+    public void testEnsureBufferSizeExpandsToBeyondMaxBufferSize() {
+        assertEnsureBufferSizeExpandsToMaxBufferSize(true);
+    }
+
+    /**
+     * Test to expand to the max buffer size.
+     */
+    @Test
+    public void testEnsureBufferSizeExpandsToMaxBufferSize() {
+        assertEnsureBufferSizeExpandsToMaxBufferSize(false);
+    }
+
     @Test
     public void testEnsureBufferSizeThrowsOnOverflow() {
         final BaseNCodec ncodec = new NoOpBaseNCodec();
@@ -375,26 +267,134 @@ public class BaseNCodecTest {
         assertThrows(OutOfMemoryError.class, () -> ncodec.ensureBufferSize(extra, context));
     }
 
-    /**
-     * Extend BaseNCodec without implementation (no operations = NoOp).
-     * Used for testing the memory allocation in {@link BaseNCodec#ensureBufferSize(int, Context)}.
-     */
-    private static final class NoOpBaseNCodec extends BaseNCodec {
-        NoOpBaseNCodec() {
-            super(0, 0, 0, 0);
-        }
+    //
+//    @Test
+//    public void testEncodeObject() {
+//        fail("Not yet implemented");
+//    }
+//
+//    @Test
+//    public void testEncodeToString() {
+//        fail("Not yet implemented");
+//    }
+//
+//    @Test
+//    public void testDecodeObject() {
+//        fail("Not yet implemented");
+//    }
+//
+//    @Test
+//    public void testDecodeString() {
+//        fail("Not yet implemented");
+//    }
+//
+//    @Test
+//    public void testDecodeByteArray() {
+//        fail("Not yet implemented");
+//    }
+//
+//    @Test
+//    public void testEncodeByteArray() {
+//        fail("Not yet implemented");
+//    }
+//
+//    @Test
+//    public void testEncodeAsString() {
+//        fail("Not yet implemented");
+//    }
+//
+//    @Test
+//    public void testEncodeByteArrayIntInt() {
+//        fail("Not yet implemented");
+//    }
+//
+//    @Test
+//    public void testDecodeByteArrayIntInt() {
+//        fail("Not yet implemented");
+//    }
+//
+    @Test
+    public void testIsInAlphabetByte() {
+        assertFalse(codec.isInAlphabet((byte) 0));
+        assertFalse(codec.isInAlphabet((byte) 'a'));
+        assertTrue(codec.isInAlphabet((byte) 'O'));
+        assertTrue(codec.isInAlphabet((byte) 'K'));
+    }
 
-        @Override
-        void encode(final byte[] pArray, final int i, final int length, final Context context) {
-        }
+    @Test
+    public void testIsInAlphabetByteArrayBoolean() {
+        assertTrue(codec.isInAlphabet(new byte[]{}, false));
+        assertTrue(codec.isInAlphabet(new byte[]{'O'}, false));
+        assertFalse(codec.isInAlphabet(new byte[]{'O',' '}, false));
+        assertFalse(codec.isInAlphabet(new byte[]{' '}, false));
+        assertTrue(codec.isInAlphabet(new byte[]{}, true));
+        assertTrue(codec.isInAlphabet(new byte[]{'O'}, true));
+        assertTrue(codec.isInAlphabet(new byte[]{'O',' '}, true));
+        assertTrue(codec.isInAlphabet(new byte[]{' '}, true));
+    }
 
-        @Override
-        void decode(final byte[] pArray, final int i, final int length, final Context context) {
-        }
+    @Test
+    public void testIsInAlphabetString() {
+        assertTrue(codec.isInAlphabet("OK"));
+        assertTrue(codec.isInAlphabet("O=K= \t\n\r"));
+    }
 
-        @Override
-        protected boolean isInAlphabet(final byte value) {
-            return false;
+    //    @Test
+//    public void testHasData() {
+//        fail("Not yet implemented");
+//    }
+//
+//    @Test
+//    public void testAvail() {
+//        fail("Not yet implemented");
+//    }
+//
+//    @Test
+//    public void testEnsureBufferSize() {
+//        fail("Not yet implemented");
+//    }
+//
+//    @Test
+//    public void testReadResults() {
+//        fail("Not yet implemented");
+//    }
+//
+    @Test
+    public void testIsWhiteSpace() {
+        assertTrue(Character.isWhitespace((byte) ' '));
+        assertTrue(Character.isWhitespace((byte) '\n'));
+        assertTrue(Character.isWhitespace((byte) '\r'));
+        assertTrue(Character.isWhitespace((byte) '\t'));
+        assertTrue(Character.isWhitespace((byte) '\f'));
+        assertTrue(Character.isWhitespace((byte) '\u000B'));
+        for (byte b = Byte.MIN_VALUE; b < Byte.MAX_VALUE; b++) {
+            final byte byteToCheck = b;
+            assertEquals(Character.isWhitespace(b), Character.isWhitespace(byteToCheck));
         }
+    }
+
+    @Test
+    public void testProvidePaddingByte() {
+        // Given
+        codec = new BaseNCodec(0, 0, 0, 0, (byte)0x25) {
+            @Override
+            void decode(final byte[] pArray, final int i, final int length, final Context context) {
+            }
+
+            @Override
+            void encode(final byte[] pArray, final int i, final int length, final Context context) {
+            }
+
+            @Override
+            protected boolean isInAlphabet(final byte b) {
+                return b=='O' || b == 'K'; // allow OK
+            }
+        };
+
+        // When
+        final byte actualPaddingByte = codec.pad;
+
+        // Then
+        assertEquals(0x25, actualPaddingByte);
     }
 }

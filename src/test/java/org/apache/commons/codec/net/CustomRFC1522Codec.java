@@ -29,17 +29,17 @@ import org.apache.commons.codec.EncoderException;
 public class CustomRFC1522Codec extends RFC1522Codec {
 
     @Override
-    protected String getEncoding() {
+    protected String decodeText(final String text) throws DecoderException, UnsupportedEncodingException {
+        return super.decodeText(text);
+    }
+
+    @Override
+    protected byte[] doDecoding(final byte[] bytes) throws DecoderException {
         return null;
     }
 
     @Override
     protected byte[] doEncoding(final byte[] bytes) throws EncoderException {
-        return null;
-    }
-
-    @Override
-    protected byte[] doDecoding(final byte[] bytes) throws DecoderException {
         return null;
     }
 
@@ -54,8 +54,8 @@ public class CustomRFC1522Codec extends RFC1522Codec {
     }
 
     @Override
-    protected String decodeText(final String text) throws DecoderException, UnsupportedEncodingException {
-        return super.decodeText(text);
+    protected String getEncoding() {
+        return null;
     }
 
 }

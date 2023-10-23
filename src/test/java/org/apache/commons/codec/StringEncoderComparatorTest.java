@@ -32,15 +32,6 @@ import org.junit.jupiter.api.Test;
  */
 public class StringEncoderComparatorTest {
 
-    @Test
-    public void testComparatorWithSoundex() throws Exception {
-        final StringEncoderComparator sCompare =
-            new StringEncoderComparator( new Soundex() );
-
-        assertEquals(0, sCompare.compare("O'Brien", "O'Brian"),
-                "O'Brien and O'Brian didn't come out with the same Soundex, something must be wrong here");
-    }
-
     @SuppressWarnings("unchecked") // cannot easily avoid this warning
     @Test
     public void testComparatorWithDoubleMetaphone() throws Exception {
@@ -70,5 +61,14 @@ public class StringEncoderComparatorTest {
         assertEquals(0, compare,
                 "Trying to compare objects that make no sense to the underlying encoder" +
                         " should return a zero compare code");
+    }
+
+    @Test
+    public void testComparatorWithSoundex() throws Exception {
+        final StringEncoderComparator sCompare =
+            new StringEncoderComparator( new Soundex() );
+
+        assertEquals(0, sCompare.compare("O'Brien", "O'Brian"),
+                "O'Brien and O'Brian didn't come out with the same Soundex, something must be wrong here");
     }
 }

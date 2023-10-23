@@ -59,40 +59,6 @@ public final class HmacUtils {
 
     private static final int STREAM_BUFFER_LENGTH = 1024;
 
-    private final Mac mac;
-
-    /**
-     * Returns whether this algorithm is available
-     *
-     * @param name the name to check
-     * @return whether this algorithm is available
-     * @since 1.11
-     */
-    public static boolean isAvailable(final String name) {
-        try {
-            Mac.getInstance(name);
-            return true;
-        } catch (final NoSuchAlgorithmException e) {
-            return false;
-        }
-    }
-
-    /**
-     * Returns whether this algorithm is available
-     *
-     * @param name the name to check
-     * @return whether this algorithm is available
-     * @since 1.11
-     */
-    public static boolean isAvailable(final HmacAlgorithms name) {
-        try {
-            Mac.getInstance(name.getName());
-            return true;
-        } catch (final NoSuchAlgorithmException e) {
-            return false;
-        }
-    }
-
     /**
      * Returns an initialized {@code Mac} for the HmacMD5 algorithm.
      * <p>
@@ -357,8 +323,6 @@ public final class HmacUtils {
         return new HmacUtils(HmacAlgorithms.HMAC_MD5, key).hmacHex(valueToDigest);
     }
 
-    // hmacSha1
-
     /**
      * Returns a HmacSHA1 Message Authentication Code (MAC) for the given key and value.
      *
@@ -414,6 +378,8 @@ public final class HmacUtils {
     public static byte[] hmacSha1(final String key, final String valueToDigest) {
         return new HmacUtils(HmacAlgorithms.HMAC_SHA_1, key).hmac(valueToDigest);
     }
+
+    // hmacSha1
 
     /**
      * Returns a HmacSHA1 Message Authentication Code (MAC) as hexadecimal string (lowercase) for the given key and value.
@@ -583,8 +549,6 @@ public final class HmacUtils {
         return new HmacUtils(HmacAlgorithms.HMAC_SHA_256, key).hmacHex(valueToDigest);
     }
 
-    // hmacSha384
-
     /**
      * Returns a HmacSHA384 Message Authentication Code (MAC) for the given key and value.
      *
@@ -640,6 +604,8 @@ public final class HmacUtils {
     public static byte[] hmacSha384(final String key, final String valueToDigest) {
         return new HmacUtils(HmacAlgorithms.HMAC_SHA_384, key).hmac(valueToDigest);
     }
+
+    // hmacSha384
 
     /**
      * Returns a HmacSHA384 Message Authentication Code (MAC) as hexadecimal string (lowercase) for the given key and value.
@@ -697,8 +663,6 @@ public final class HmacUtils {
         return new HmacUtils(HmacAlgorithms.HMAC_SHA_384, key).hmacHex(valueToDigest);
     }
 
-    // hmacSha512
-
     /**
      * Returns a HmacSHA512 Message Authentication Code (MAC) for the given key and value.
      *
@@ -755,6 +719,8 @@ public final class HmacUtils {
         return new HmacUtils(HmacAlgorithms.HMAC_SHA_512, key).hmac(valueToDigest);
     }
 
+    // hmacSha512
+
     /**
      * Returns a HmacSHA512 Message Authentication Code (MAC) as hexadecimal string (lowercase) for the given key and value.
      *
@@ -809,6 +775,38 @@ public final class HmacUtils {
     @Deprecated
     public static String hmacSha512Hex(final String key, final String valueToDigest) {
         return new HmacUtils(HmacAlgorithms.HMAC_SHA_512, key).hmacHex(valueToDigest);
+    }
+
+    /**
+     * Returns whether this algorithm is available
+     *
+     * @param name the name to check
+     * @return whether this algorithm is available
+     * @since 1.11
+     */
+    public static boolean isAvailable(final HmacAlgorithms name) {
+        try {
+            Mac.getInstance(name.getName());
+            return true;
+        } catch (final NoSuchAlgorithmException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Returns whether this algorithm is available
+     *
+     * @param name the name to check
+     * @return whether this algorithm is available
+     * @since 1.11
+     */
+    public static boolean isAvailable(final String name) {
+        try {
+            Mac.getInstance(name);
+            return true;
+        } catch (final NoSuchAlgorithmException e) {
+            return false;
+        }
     }
 
     /**
@@ -874,6 +872,8 @@ public final class HmacUtils {
         return mac;
     }
 
+    private final Mac mac;
+
     /**
      * Preserves binary compatibility only.
      * As for previous versions does not provide useful behavior
@@ -882,6 +882,32 @@ public final class HmacUtils {
     @Deprecated
     public HmacUtils() {
         this(null);
+    }
+
+    /**
+     * Creates an instance using the provided algorithm type.
+     *
+     * @param algorithm to use.
+     * @param key the key to use
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
+     * @since 1.11
+     */
+    public HmacUtils(final HmacAlgorithms algorithm, final byte[] key) {
+        this(algorithm.getName(), key);
+    }
+
+    /**
+     * Creates an instance using the provided algorithm type.
+     *
+     * @param algorithm to use
+     * @param  key the key to use
+     * @throws IllegalArgumentException
+     *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
+     * @since 1.11
+     */
+    public HmacUtils(final HmacAlgorithms algorithm, final String key) {
+        this(algorithm.getName(), StringUtils.getBytesUtf8(key));
     }
 
     private HmacUtils(final Mac mac) {
@@ -915,32 +941,6 @@ public final class HmacUtils {
     }
 
     /**
-     * Creates an instance using the provided algorithm type.
-     *
-     * @param algorithm to use
-     * @param  key the key to use
-     * @throws IllegalArgumentException
-     *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
-     * @since 1.11
-     */
-    public HmacUtils(final HmacAlgorithms algorithm, final String key) {
-        this(algorithm.getName(), StringUtils.getBytesUtf8(key));
-    }
-
-    /**
-     * Creates an instance using the provided algorithm type.
-     *
-     * @param algorithm to use.
-     * @param key the key to use
-     * @throws IllegalArgumentException
-     *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
-     * @since 1.11
-     */
-    public HmacUtils(final HmacAlgorithms algorithm, final byte[] key) {
-        this(algorithm.getName(), key);
-    }
-
-    /**
      * Returns the digest for the input data.
      *
      * @param valueToDigest the input to use
@@ -949,39 +949,6 @@ public final class HmacUtils {
      */
     public byte[] hmac(final byte[] valueToDigest) {
         return mac.doFinal(valueToDigest);
-    }
-
-    /**
-     * Returns the digest for the input data.
-     *
-     * @param valueToDigest the input to use
-     * @return the digest as a hexadecimal String
-     * @since 1.11
-     */
-    public String hmacHex(final byte[] valueToDigest) {
-        return Hex.encodeHexString(hmac(valueToDigest));
-    }
-
-    /**
-     * Returns the digest for the input data.
-     *
-     * @param valueToDigest the input to use, treated as UTF-8
-     * @return the digest as a byte[]
-     * @since 1.11
-     */
-    public byte[] hmac(final String valueToDigest) {
-        return mac.doFinal(StringUtils.getBytesUtf8(valueToDigest));
-    }
-
-    /**
-     * Returns the digest for the input data.
-     *
-     * @param valueToDigest the input to use, treated as UTF-8
-     * @return the digest as a hexadecimal String
-     * @since 1.11
-     */
-    public String hmacHex(final String valueToDigest) {
-        return Hex.encodeHexString(hmac(valueToDigest));
     }
 
     /**
@@ -997,14 +964,18 @@ public final class HmacUtils {
     }
 
     /**
-     * Returns the digest for the input data.
+     * Returns the digest for the file.
      *
-     * @param valueToDigest the input to use
-     * @return the digest as a hexadecimal String
+     * @param valueToDigest the file to use
+     * @return the digest
+     * @throws IOException
+     *             If an I/O error occurs.
      * @since 1.11
      */
-    public String hmacHex(final ByteBuffer valueToDigest) {
-        return Hex.encodeHexString(hmac(valueToDigest));
+    public byte[] hmac(final File valueToDigest) throws IOException {
+        try (final BufferedInputStream stream = new BufferedInputStream(new FileInputStream(valueToDigest))) {
+            return hmac(stream);
+        }
     }
 
     /**
@@ -1031,6 +1002,52 @@ public final class HmacUtils {
     }
 
     /**
+     * Returns the digest for the input data.
+     *
+     * @param valueToDigest the input to use, treated as UTF-8
+     * @return the digest as a byte[]
+     * @since 1.11
+     */
+    public byte[] hmac(final String valueToDigest) {
+        return mac.doFinal(StringUtils.getBytesUtf8(valueToDigest));
+    }
+
+    /**
+     * Returns the digest for the input data.
+     *
+     * @param valueToDigest the input to use
+     * @return the digest as a hexadecimal String
+     * @since 1.11
+     */
+    public String hmacHex(final byte[] valueToDigest) {
+        return Hex.encodeHexString(hmac(valueToDigest));
+    }
+
+    /**
+     * Returns the digest for the input data.
+     *
+     * @param valueToDigest the input to use
+     * @return the digest as a hexadecimal String
+     * @since 1.11
+     */
+    public String hmacHex(final ByteBuffer valueToDigest) {
+        return Hex.encodeHexString(hmac(valueToDigest));
+    }
+
+    /**
+     * Returns the digest for the file.
+     *
+     * @param valueToDigest the file to use
+     * @return the digest as a hexadecimal String
+     * @throws IOException
+     *             If an I/O error occurs.
+     * @since 1.11
+     */
+    public String hmacHex(final File valueToDigest) throws IOException {
+        return Hex.encodeHexString(hmac(valueToDigest));
+    }
+
+    /**
      * Returns the digest for the stream.
      *
      * @param valueToDigest
@@ -1048,30 +1065,13 @@ public final class HmacUtils {
     }
 
     /**
-     * Returns the digest for the file.
+     * Returns the digest for the input data.
      *
-     * @param valueToDigest the file to use
-     * @return the digest
-     * @throws IOException
-     *             If an I/O error occurs.
-     * @since 1.11
-     */
-    public byte[] hmac(final File valueToDigest) throws IOException {
-        try (final BufferedInputStream stream = new BufferedInputStream(new FileInputStream(valueToDigest))) {
-            return hmac(stream);
-        }
-    }
-
-    /**
-     * Returns the digest for the file.
-     *
-     * @param valueToDigest the file to use
+     * @param valueToDigest the input to use, treated as UTF-8
      * @return the digest as a hexadecimal String
-     * @throws IOException
-     *             If an I/O error occurs.
      * @since 1.11
      */
-    public String hmacHex(final File valueToDigest) throws IOException {
+    public String hmacHex(final String valueToDigest) {
         return Hex.encodeHexString(hmac(valueToDigest));
     }
 

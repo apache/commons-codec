@@ -164,15 +164,6 @@ public class Soundex implements StringEncoder {
         this.specialCaseHW = !hasMarker(this.soundexMapping);
     }
 
-    private boolean hasMarker(final char[] mapping) {
-        for(final char ch : mapping) {
-            if (ch == SILENT_MARKER) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     /**
      * Creates a refined soundex instance using a custom mapping. This constructor can be used to customize the mapping,
      * and/or possibly provide an internationalized mapping for a non-Western character set.
@@ -270,6 +261,15 @@ public class Soundex implements StringEncoder {
     @Deprecated
     public int getMaxLength() {
         return this.maxLength;
+    }
+
+    private boolean hasMarker(final char[] mapping) {
+        for(final char ch : mapping) {
+            if (ch == SILENT_MARKER) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

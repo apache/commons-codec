@@ -52,6 +52,77 @@ abstract class RFC1522Codec {
     protected static final String PREFIX = "=?";
 
     /**
+     * Applies an RFC 1522 compliant decoding scheme to the given string of text.
+     * <p>
+     * This method processes the "encoded-word" header common to all the RFC 1522 codecs and then invokes
+     * {@link #doDecoding(byte[])}  method of a concrete class to perform the specific decoding.
+     * </p>
+     *
+     * @param text
+     *            a string to decode
+     * @return A new decoded String or {@code null} if the input is {@code null}.
+     * @throws DecoderException
+     *             thrown if there is an error condition during the decoding process.
+     * @throws UnsupportedEncodingException
+     *             thrown if charset specified in the "encoded-word" header is not supported
+     */
+    protected String decodeText(final String text)
+            throws DecoderException, UnsupportedEncodingException {
+        if (text == null) {
+            return null;
+        }
+        if (!text.startsWith(PREFIX) || !text.endsWith(POSTFIX)) {
+            throw new DecoderException("RFC 1522 violation: malformed encoded content");
+        }
+        final int terminator = text.length() - 2;
+        int from = 2;
+        int to = text.indexOf(SEP, from);
+        if (to == terminator) {
+            throw new DecoderException("RFC 1522 violation: charset token not found");
+        }
+        final String charset = text.substring(from, to);
+        if (charset.equals("")) {
+            throw new DecoderException("RFC 1522 violation: charset not specified");
+        }
+        from = to + 1;
+        to = text.indexOf(SEP, from);
+        if (to == terminator) {
+            throw new DecoderException("RFC 1522 violation: encoding token not found");
+        }
+        final String encoding = text.substring(from, to);
+        if (!getEncoding().equalsIgnoreCase(encoding)) {
+            throw new DecoderException("This codec cannot decode " + encoding + " encoded content");
+        }
+        from = to + 1;
+        to = text.indexOf(SEP, from);
+        byte[] data = StringUtils.getBytesUsAscii(text.substring(from, to));
+        data = doDecoding(data);
+        return new String(data, charset);
+    }
+
+    /**
+     * Decodes an array of bytes using the defined encoding scheme.
+     *
+     * @param bytes
+     *            Data to be decoded
+     * @return a byte array that contains decoded data
+     * @throws DecoderException
+     *             A decoder exception is thrown if a Decoder encounters a failure condition during the decode process.
+     */
+    protected abstract byte[] doDecoding(byte[] bytes) throws DecoderException;
+
+    /**
+     * Encodes an array of bytes using the defined encoding scheme.
+     *
+     * @param bytes
+     *            Data to be encoded
+     * @return A byte array containing the encoded data
+     * @throws EncoderException
+     *             thrown if the Encoder encounters a failure condition during the encoding process.
+     */
+    protected abstract byte[] doEncoding(byte[] bytes) throws EncoderException;
+
+    /**
      * Applies an RFC 1522 compliant encoding scheme to the given string of text with the given charset.
      * <p>
      * This method constructs the "encoded-word" header common to all the RFC 1522 codecs and then invokes
@@ -109,80 +180,9 @@ abstract class RFC1522Codec {
     }
 
     /**
-     * Applies an RFC 1522 compliant decoding scheme to the given string of text.
-     * <p>
-     * This method processes the "encoded-word" header common to all the RFC 1522 codecs and then invokes
-     * {@link #doDecoding(byte[])}  method of a concrete class to perform the specific decoding.
-     * </p>
-     *
-     * @param text
-     *            a string to decode
-     * @return A new decoded String or {@code null} if the input is {@code null}.
-     * @throws DecoderException
-     *             thrown if there is an error condition during the decoding process.
-     * @throws UnsupportedEncodingException
-     *             thrown if charset specified in the "encoded-word" header is not supported
-     */
-    protected String decodeText(final String text)
-            throws DecoderException, UnsupportedEncodingException {
-        if (text == null) {
-            return null;
-        }
-        if (!text.startsWith(PREFIX) || !text.endsWith(POSTFIX)) {
-            throw new DecoderException("RFC 1522 violation: malformed encoded content");
-        }
-        final int terminator = text.length() - 2;
-        int from = 2;
-        int to = text.indexOf(SEP, from);
-        if (to == terminator) {
-            throw new DecoderException("RFC 1522 violation: charset token not found");
-        }
-        final String charset = text.substring(from, to);
-        if (charset.equals("")) {
-            throw new DecoderException("RFC 1522 violation: charset not specified");
-        }
-        from = to + 1;
-        to = text.indexOf(SEP, from);
-        if (to == terminator) {
-            throw new DecoderException("RFC 1522 violation: encoding token not found");
-        }
-        final String encoding = text.substring(from, to);
-        if (!getEncoding().equalsIgnoreCase(encoding)) {
-            throw new DecoderException("This codec cannot decode " + encoding + " encoded content");
-        }
-        from = to + 1;
-        to = text.indexOf(SEP, from);
-        byte[] data = StringUtils.getBytesUsAscii(text.substring(from, to));
-        data = doDecoding(data);
-        return new String(data, charset);
-    }
-
-    /**
      * Returns the codec name (referred to as encoding in the RFC 1522).
      *
      * @return name of the codec
      */
     protected abstract String getEncoding();
-
-    /**
-     * Encodes an array of bytes using the defined encoding scheme.
-     *
-     * @param bytes
-     *            Data to be encoded
-     * @return A byte array containing the encoded data
-     * @throws EncoderException
-     *             thrown if the Encoder encounters a failure condition during the encoding process.
-     */
-    protected abstract byte[] doEncoding(byte[] bytes) throws EncoderException;
-
-    /**
-     * Decodes an array of bytes using the defined encoding scheme.
-     *
-     * @param bytes
-     *            Data to be decoded
-     * @return a byte array that contains decoded data
-     * @throws DecoderException
-     *             A decoder exception is thrown if a Decoder encounters a failure condition during the decode process.
-     */
-    protected abstract byte[] doDecoding(byte[] bytes) throws DecoderException;
 }

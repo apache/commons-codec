@@ -33,6 +33,31 @@ import org.junit.jupiter.api.Test;
  */
 public class CharSequenceUtilsTest {
 
+    private abstract static class RunTest {
+
+        abstract boolean invoke();
+
+        void run(final TestData data, final String id) {
+            if (data.throwable != null) {
+                final String msg = id + " Expected " + data.throwable;
+                try {
+                    invoke();
+                    fail(msg + " but nothing was thrown.");
+                } catch (final Exception ex) {
+                    assertTrue(data.throwable.isAssignableFrom(ex.getClass()),
+                            msg + " but was " + ex.getClass().getSimpleName());
+                }
+            } else {
+                final boolean stringCheck = invoke();
+                assertEquals(data.expected, stringCheck, id + " Failed test " + data);
+            }
+        }
+
+    }
+
+    // Note: The commented out tests fail due to the CharSequenceUtils method
+    // being based on Lang 3.3.2 and the tests are from 3.11.
+
     static class TestData{
         final String source;
         final boolean ignoreCase;
@@ -80,9 +105,6 @@ public class CharSequenceUtilsTest {
         }
     }
 
-    // Note: The commented out tests fail due to the CharSequenceUtils method
-    // being based on Lang 3.3.2 and the tests are from 3.11.
-
     private static final TestData[] TEST_DATA = {
             //          Source  IgnoreCase Offset Other  Offset Length Result
             //new TestData("",    true,      -1,    "",    -1,    -1,    false),
@@ -100,26 +122,14 @@ public class CharSequenceUtilsTest {
             new TestData("Abcd", false,     1,     "abcD", 1,     2,     true),
     };
 
-    private abstract static class RunTest {
-
-        abstract boolean invoke();
-
-        void run(final TestData data, final String id) {
-            if (data.throwable != null) {
-                final String msg = id + " Expected " + data.throwable;
-                try {
-                    invoke();
-                    fail(msg + " but nothing was thrown.");
-                } catch (final Exception ex) {
-                    assertTrue(data.throwable.isAssignableFrom(ex.getClass()),
-                            msg + " but was " + ex.getClass().getSimpleName());
-                }
-            } else {
-                final boolean stringCheck = invoke();
-                assertEquals(data.expected, stringCheck, id + " Failed test " + data);
-            }
-        }
-
+    /**
+     * Test the constructor exists. This is here for code coverage. The class ideally should
+     * be package private, marked as final and have a private constructor to prevent instances.
+     */
+    @SuppressWarnings("unused")
+    @Test
+    public void testConstructor() {
+        new CharSequenceUtils();
     }
 
     @Test
@@ -144,15 +154,5 @@ public class CharSequenceUtilsTest {
                 }
             }.run(data, "CSNonString");
         }
-    }
-
-    /**
-     * Test the constructor exists. This is here for code coverage. The class ideally should
-     * be package private, marked as final and have a private constructor to prevent instances.
-     */
-    @SuppressWarnings("unused")
-    @Test
-    public void testConstructor() {
-        new CharSequenceUtils();
     }
 }

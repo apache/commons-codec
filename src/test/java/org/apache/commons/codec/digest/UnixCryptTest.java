@@ -34,17 +34,6 @@ public class UnixCryptTest {
     }
 
     @Test
-    public void testUnixCryptStrings() {
-        // trivial test
-        assertEquals("xxWAum7tHdIUw", Crypt.crypt("secret", "xx"));
-        // empty data
-        assertEquals("12UFlHxel6uMM", Crypt.crypt("", "12"));
-        // salt gets cut at maximum length
-        assertEquals("12FJgqDtVOg7Q", Crypt.crypt("secret", "12"));
-        assertEquals("12FJgqDtVOg7Q", Crypt.crypt("secret", "12345678"));
-    }
-
-    @Test
     public void testUnixCryptBytes() {
         // An empty Bytearray equals an empty String
         assertEquals("12UFlHxel6uMM", Crypt.crypt(new byte[0], "12"));
@@ -67,16 +56,6 @@ public class UnixCryptTest {
     }
 
     /**
-     * Single character salts are illegal!
-     * E.g. with glibc 2.13, crypt("secret", "x") = "xxZREZpkHZpkI" but
-     * crypt("secret", "xx") = "xxWAum7tHdIUw" which makes it unverifiable.
-     */
-    @Test
-    public void testUnixCryptWithHalfSalt() {
-        assertThrows(IllegalArgumentException.class, () -> UnixCrypt.crypt("secret", "x"));
-    }
-
-    /**
      * Unimplemented "$foo$" salt prefixes would be treated as UnixCrypt salt.
      */
     @Test
@@ -90,8 +69,29 @@ public class UnixCryptTest {
     }
 
     @Test
+    public void testUnixCryptStrings() {
+        // trivial test
+        assertEquals("xxWAum7tHdIUw", Crypt.crypt("secret", "xx"));
+        // empty data
+        assertEquals("12UFlHxel6uMM", Crypt.crypt("", "12"));
+        // salt gets cut at maximum length
+        assertEquals("12FJgqDtVOg7Q", Crypt.crypt("secret", "12"));
+        assertEquals("12FJgqDtVOg7Q", Crypt.crypt("secret", "12345678"));
+    }
+
+    @Test
     public void testUnixCryptWithEmptySalt() {
         assertThrows(IllegalArgumentException.class, () -> UnixCrypt.crypt("secret", ""));
+    }
+
+    /**
+     * Single character salts are illegal!
+     * E.g. with glibc 2.13, crypt("secret", "x") = "xxZREZpkHZpkI" but
+     * crypt("secret", "xx") = "xxWAum7tHdIUw" which makes it unverifiable.
+     */
+    @Test
+    public void testUnixCryptWithHalfSalt() {
+        assertThrows(IllegalArgumentException.class, () -> UnixCrypt.crypt("secret", "x"));
     }
 
     @Test

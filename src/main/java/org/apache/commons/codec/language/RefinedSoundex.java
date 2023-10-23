@@ -56,17 +56,17 @@ public class RefinedSoundex implements StringEncoder {
     private static final char[] US_ENGLISH_MAPPING = US_ENGLISH_MAPPING_STRING.toCharArray();
 
     /**
+     * This static variable contains an instance of the RefinedSoundex using
+     * the US_ENGLISH mapping.
+     */
+    public static final RefinedSoundex US_ENGLISH = new RefinedSoundex();
+
+    /**
      * Every letter of the alphabet is "mapped" to a numerical value. This char
      * array holds the values to which each letter is mapped. This
      * implementation contains a default map for US_ENGLISH
      */
     private final char[] soundexMapping;
-
-    /**
-     * This static variable contains an instance of the RefinedSoundex using
-     * the US_ENGLISH mapping.
-     */
-    public static final RefinedSoundex US_ENGLISH = new RefinedSoundex();
 
      /**
      * Creates an instance of the RefinedSoundex object using the default US

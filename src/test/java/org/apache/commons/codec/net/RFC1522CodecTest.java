@@ -48,13 +48,6 @@ public class RFC1522CodecTest {
 
     }
 
-    @Test
-    public void testNullInput() throws Exception {
-        final RFC1522TestCodec testCodec = new RFC1522TestCodec();
-        assertNull(testCodec.decodeText(null));
-        assertNull(testCodec.encodeText(null, CharEncoding.UTF_8));
-    }
-
     private void assertExpectedDecoderException(final String s) {
         assertThrows(DecoderException.class, () -> new RFC1522TestCodec().decodeText(s));
     }
@@ -73,6 +66,13 @@ public class RFC1522CodecTest {
         assertExpectedDecoderException("=??T?stuff?=");
         assertExpectedDecoderException("=?UTF-8??stuff?=");
         assertExpectedDecoderException("=?UTF-8?W?stuff?=");
+    }
+
+    @Test
+    public void testNullInput() throws Exception {
+        final RFC1522TestCodec testCodec = new RFC1522TestCodec();
+        assertNull(testCodec.decodeText(null));
+        assertNull(testCodec.encodeText(null, CharEncoding.UTF_8));
     }
 
 }

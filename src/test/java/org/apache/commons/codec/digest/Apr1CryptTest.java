@@ -29,21 +29,6 @@ import org.junit.jupiter.api.Test;
 public class Apr1CryptTest {
 
     @Test
-    public void testApr1CryptStrings() {
-        // A random example using htpasswd
-        assertEquals("$apr1$TqI9WECO$LHZB2DqRlk9nObiB6vJG9.", Md5Crypt.apr1Crypt("secret", "$apr1$TqI9WECO"));
-        // empty data
-        assertEquals("$apr1$foo$P27KyD1htb4EllIPEYhqi0", Md5Crypt.apr1Crypt("", "$apr1$foo"));
-        // salt gets cut at dollar sign
-        assertEquals("$apr1$1234$mAlH7FRST6FiRZ.kcYL.j1", Md5Crypt.apr1Crypt("secret", "$apr1$1234"));
-        assertEquals("$apr1$1234$mAlH7FRST6FiRZ.kcYL.j1", Md5Crypt.apr1Crypt("secret", "$apr1$1234$567"));
-        assertEquals("$apr1$1234$mAlH7FRST6FiRZ.kcYL.j1", Md5Crypt.apr1Crypt("secret", "$apr1$1234$567$890"));
-        // salt gets cut at maximum length
-        assertEquals("$apr1$12345678$0lqb/6VUFP8JY/s/jTrIk0", Md5Crypt.apr1Crypt("secret", "$apr1$1234567890123456"));
-        assertEquals("$apr1$12345678$0lqb/6VUFP8JY/s/jTrIk0", Md5Crypt.apr1Crypt("secret", "$apr1$123456789012345678"));
-    }
-
-    @Test
     public void testApr1CryptBytes() {
         // random salt
         final byte[] keyBytes = { '!', 'b', 'c', '.' };
@@ -84,18 +69,33 @@ public class Apr1CryptTest {
     }
 
     @Test
-    public void testApr1LongSalt() {
-        assertEquals("$apr1$12345678$0lqb/6VUFP8JY/s/jTrIk0", Md5Crypt.apr1Crypt("secret", "12345678901234567890"));
-    }
-
-    @Test
     public void testApr1CryptNullData() {
         assertThrows(NullPointerException.class, () -> Md5Crypt.apr1Crypt((byte[]) null));
     }
 
     @Test
+    public void testApr1CryptStrings() {
+        // A random example using htpasswd
+        assertEquals("$apr1$TqI9WECO$LHZB2DqRlk9nObiB6vJG9.", Md5Crypt.apr1Crypt("secret", "$apr1$TqI9WECO"));
+        // empty data
+        assertEquals("$apr1$foo$P27KyD1htb4EllIPEYhqi0", Md5Crypt.apr1Crypt("", "$apr1$foo"));
+        // salt gets cut at dollar sign
+        assertEquals("$apr1$1234$mAlH7FRST6FiRZ.kcYL.j1", Md5Crypt.apr1Crypt("secret", "$apr1$1234"));
+        assertEquals("$apr1$1234$mAlH7FRST6FiRZ.kcYL.j1", Md5Crypt.apr1Crypt("secret", "$apr1$1234$567"));
+        assertEquals("$apr1$1234$mAlH7FRST6FiRZ.kcYL.j1", Md5Crypt.apr1Crypt("secret", "$apr1$1234$567$890"));
+        // salt gets cut at maximum length
+        assertEquals("$apr1$12345678$0lqb/6VUFP8JY/s/jTrIk0", Md5Crypt.apr1Crypt("secret", "$apr1$1234567890123456"));
+        assertEquals("$apr1$12345678$0lqb/6VUFP8JY/s/jTrIk0", Md5Crypt.apr1Crypt("secret", "$apr1$123456789012345678"));
+    }
+
+    @Test
     public void testApr1CryptWithEmptySalt() {
         assertThrows(IllegalArgumentException.class, () -> Md5Crypt.apr1Crypt("secret".getBytes(), ""));
+    }
+
+    @Test
+    public void testApr1CryptWithInvalidSalt() {
+        assertThrows(IllegalArgumentException.class, () -> Md5Crypt.apr1Crypt(new byte[0], "!"));
     }
 
     @Test
@@ -108,7 +108,7 @@ public class Apr1CryptTest {
     }
 
     @Test
-    public void testApr1CryptWithInvalidSalt() {
-        assertThrows(IllegalArgumentException.class, () -> Md5Crypt.apr1Crypt(new byte[0], "!"));
+    public void testApr1LongSalt() {
+        assertEquals("$apr1$12345678$0lqb/6VUFP8JY/s/jTrIk0", Md5Crypt.apr1Crypt("secret", "12345678901234567890"));
     }
 }

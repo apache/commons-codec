@@ -114,22 +114,57 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     }
 
     /**
-     * Returns true if decoding behavior is strict. Decoding will raise a
-     * {@link DecoderException} if trailing bits are not part of a valid Base64 encoding.
+     * Decodes a Base64 object into its original form. Escaped characters are converted back to their original
+     * representation.
      *
-     * <p>The default is false for lenient encoding. Decoding will compose trailing bits
-     * into 8-bit bytes and discard the remainder.
-     *
-     * @return true if using strict decoding
-     * @since 1.15
+     * @param value
+     *            Base64 object to convert into its original form
+     * @return original object
+     * @throws DecoderException
+     *             Thrown if the argument is not a {@code String}. Thrown if a failure condition is encountered
+     *             during the decode process.
      */
-    public boolean isStrictDecoding() {
-        return decodingPolicy == CodecPolicy.STRICT;
+    @Override
+    public Object decode(final Object value) throws DecoderException {
+        if (value == null) {
+            return null;
+        }
+        if (value instanceof String) {
+            return decode((String) value);
+        }
+        throw new DecoderException("Objects of type " +
+              value.getClass().getName() +
+              " cannot be decoded using BCodec");
+    }
+
+    /**
+     * Decodes a Base64 string into its original form. Escaped characters are converted back to their original
+     * representation.
+     *
+     * @param value
+     *            Base64 string to convert into its original form
+     * @return original string
+     * @throws DecoderException
+     *             A decoder exception is thrown if a failure condition is encountered during the decode process.
+     */
+    @Override
+    public String decode(final String value) throws DecoderException {
+        if (value == null) {
+            return null;
+        }
+        try {
+            return this.decodeText(value);
+        } catch (final UnsupportedEncodingException | IllegalArgumentException e) {
+            throw new DecoderException(e.getMessage(), e);
+        }
     }
 
     @Override
-    protected String getEncoding() {
-        return "B";
+    protected byte[] doDecoding(final byte[] bytes) {
+        if (bytes == null) {
+            return null;
+        }
+        return new Base64(0, BaseNCodec.getChunkSeparator(), false, decodingPolicy).decode(bytes);
     }
 
     @Override
@@ -140,12 +175,43 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
         return Base64.encodeBase64(bytes);
     }
 
+    /**
+     * Encodes an object into its Base64 form using the default Charset. Unsafe characters are escaped.
+     *
+     * @param value
+     *            object to convert to Base64 form
+     * @return Base64 object
+     * @throws EncoderException
+     *             thrown if a failure condition is encountered during the encoding process.
+     */
     @Override
-    protected byte[] doDecoding(final byte[] bytes) {
-        if (bytes == null) {
+    public Object encode(final Object value) throws EncoderException {
+        if (value == null) {
             return null;
         }
-        return new Base64(0, BaseNCodec.getChunkSeparator(), false, decodingPolicy).decode(bytes);
+        if (value instanceof String) {
+            return encode((String) value);
+        }
+        throw new EncoderException("Objects of type " +
+              value.getClass().getName() +
+              " cannot be encoded using BCodec");
+    }
+
+    /**
+     * Encodes a string into its Base64 form using the default Charset. Unsafe characters are escaped.
+     *
+     * @param strSource
+     *            string to convert to Base64 form
+     * @return Base64 string
+     * @throws EncoderException
+     *             thrown if a failure condition is encountered during the encoding process.
+     */
+    @Override
+    public String encode(final String strSource) throws EncoderException {
+        if (strSource == null) {
+            return null;
+        }
+        return encode(strSource, this.getCharset());
     }
 
     /**
@@ -190,91 +256,6 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     }
 
     /**
-     * Encodes a string into its Base64 form using the default Charset. Unsafe characters are escaped.
-     *
-     * @param strSource
-     *            string to convert to Base64 form
-     * @return Base64 string
-     * @throws EncoderException
-     *             thrown if a failure condition is encountered during the encoding process.
-     */
-    @Override
-    public String encode(final String strSource) throws EncoderException {
-        if (strSource == null) {
-            return null;
-        }
-        return encode(strSource, this.getCharset());
-    }
-
-    /**
-     * Decodes a Base64 string into its original form. Escaped characters are converted back to their original
-     * representation.
-     *
-     * @param value
-     *            Base64 string to convert into its original form
-     * @return original string
-     * @throws DecoderException
-     *             A decoder exception is thrown if a failure condition is encountered during the decode process.
-     */
-    @Override
-    public String decode(final String value) throws DecoderException {
-        if (value == null) {
-            return null;
-        }
-        try {
-            return this.decodeText(value);
-        } catch (final UnsupportedEncodingException | IllegalArgumentException e) {
-            throw new DecoderException(e.getMessage(), e);
-        }
-    }
-
-    /**
-     * Encodes an object into its Base64 form using the default Charset. Unsafe characters are escaped.
-     *
-     * @param value
-     *            object to convert to Base64 form
-     * @return Base64 object
-     * @throws EncoderException
-     *             thrown if a failure condition is encountered during the encoding process.
-     */
-    @Override
-    public Object encode(final Object value) throws EncoderException {
-        if (value == null) {
-            return null;
-        }
-        if (value instanceof String) {
-            return encode((String) value);
-        }
-        throw new EncoderException("Objects of type " +
-              value.getClass().getName() +
-              " cannot be encoded using BCodec");
-    }
-
-    /**
-     * Decodes a Base64 object into its original form. Escaped characters are converted back to their original
-     * representation.
-     *
-     * @param value
-     *            Base64 object to convert into its original form
-     * @return original object
-     * @throws DecoderException
-     *             Thrown if the argument is not a {@code String}. Thrown if a failure condition is encountered
-     *             during the decode process.
-     */
-    @Override
-    public Object decode(final Object value) throws DecoderException {
-        if (value == null) {
-            return null;
-        }
-        if (value instanceof String) {
-            return decode((String) value);
-        }
-        throw new DecoderException("Objects of type " +
-              value.getClass().getName() +
-              " cannot be decoded using BCodec");
-    }
-
-    /**
      * Gets the default Charset name used for string decoding and encoding.
      *
      * @return the default Charset name
@@ -291,5 +272,24 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      */
     public String getDefaultCharset() {
         return this.charset.name();
+    }
+
+    @Override
+    protected String getEncoding() {
+        return "B";
+    }
+
+    /**
+     * Returns true if decoding behavior is strict. Decoding will raise a
+     * {@link DecoderException} if trailing bits are not part of a valid Base64 encoding.
+     *
+     * <p>The default is false for lenient encoding. Decoding will compose trailing bits
+     * into 8-bit bytes and discard the remainder.
+     *
+     * @return true if using strict decoding
+     * @since 1.15
+     */
+    public boolean isStrictDecoding() {
+        return decodingPolicy == CodecPolicy.STRICT;
     }
 }

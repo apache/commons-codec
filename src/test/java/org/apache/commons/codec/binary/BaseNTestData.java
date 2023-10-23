@@ -77,6 +77,60 @@ public class BaseNTestData {
             -22, 1, 127, -81, -4, -6, -119, 96, 35, -91, 114, 81, 91, 90, -86, -36, 34, -39, 93, -42, 69, 103, -11,
             107, -87, 119, -107, -114, -45, -128, -69, 96};
 
+    private final static int SIZE_KEY = 0;
+
+    private final static int LAST_READ_KEY = 1;
+    /**
+     * Tests the supplied byte[] array to see if it contains the specified byte c.
+     *
+     * @param bytes byte[] array to test
+     * @param c byte to look for
+     * @return true if bytes contains c, false otherwise
+     */
+    static boolean bytesContain(final byte[] bytes, final byte c) {
+        for (final byte b : bytes) {
+            if (b == c) { return true; }
+        }
+        return false;
+    }
+
+    private static int[] fill(final byte[] buf, final int offset, final InputStream in)
+            throws IOException {
+        int read = in.read(buf, offset, buf.length - offset);
+        int lastRead = read;
+        if (read == -1) {
+            read = 0;
+        }
+        while (lastRead != -1 && read + offset < buf.length) {
+            lastRead = in.read(buf, offset + read, buf.length - read - offset);
+            if (lastRead != -1) {
+                read += lastRead;
+            }
+        }
+        return new int[]{offset + read, lastRead};
+    }
+
+    /**
+     * Returns an encoded and decoded copy of the same random data.
+     *
+     * @param codec the codec to use
+     * @param size amount of random data to generate and encode
+     * @return two byte[] arrays:  [0] = decoded, [1] = encoded
+     */
+    static byte[][] randomData(final BaseNCodec codec, final int size) {
+        final Random r = new Random();
+        final byte[] decoded = new byte[size];
+        r.nextBytes(decoded);
+        final byte[] encoded = codec.encode(decoded);
+        return new byte[][] {decoded, encoded};
+    }
+
+    private static byte[] resizeArray(final byte[] bytes) {
+        final byte[] biggerBytes = new byte[bytes.length * 2];
+        System.arraycopy(bytes, 0, biggerBytes, 0, bytes.length);
+        return biggerBytes;
+    }
+
     /**
      * Read all bytes from an InputStream into a byte array.
      *
@@ -94,9 +148,6 @@ public class BaseNTestData {
         }
         return os.toByteArray();
     }
-
-    private final static int SIZE_KEY = 0;
-    private final static int LAST_READ_KEY = 1;
 
     /**
      * Read all bytes from an InputStream into a byte array
@@ -130,56 +181,5 @@ public class BaseNTestData {
             in.close();
         }
         return buf;
-    }
-
-    private static int[] fill(final byte[] buf, final int offset, final InputStream in)
-            throws IOException {
-        int read = in.read(buf, offset, buf.length - offset);
-        int lastRead = read;
-        if (read == -1) {
-            read = 0;
-        }
-        while (lastRead != -1 && read + offset < buf.length) {
-            lastRead = in.read(buf, offset + read, buf.length - read - offset);
-            if (lastRead != -1) {
-                read += lastRead;
-            }
-        }
-        return new int[]{offset + read, lastRead};
-    }
-
-    private static byte[] resizeArray(final byte[] bytes) {
-        final byte[] biggerBytes = new byte[bytes.length * 2];
-        System.arraycopy(bytes, 0, biggerBytes, 0, bytes.length);
-        return biggerBytes;
-    }
-
-    /**
-     * Returns an encoded and decoded copy of the same random data.
-     *
-     * @param codec the codec to use
-     * @param size amount of random data to generate and encode
-     * @return two byte[] arrays:  [0] = decoded, [1] = encoded
-     */
-    static byte[][] randomData(final BaseNCodec codec, final int size) {
-        final Random r = new Random();
-        final byte[] decoded = new byte[size];
-        r.nextBytes(decoded);
-        final byte[] encoded = codec.encode(decoded);
-        return new byte[][] {decoded, encoded};
-    }
-
-    /**
-     * Tests the supplied byte[] array to see if it contains the specified byte c.
-     *
-     * @param bytes byte[] array to test
-     * @param c byte to look for
-     * @return true if bytes contains c, false otherwise
-     */
-    static boolean bytesContain(final byte[] bytes, final byte c) {
-        for (final byte b : bytes) {
-            if (b == c) { return true; }
-        }
-        return false;
     }
 }

@@ -182,19 +182,6 @@ import org.apache.commons.codec.StringEncoder;
  */
 public class ColognePhonetic implements StringEncoder {
 
-    // Predefined char arrays for better performance and less GC load
-    private static final char[] AEIJOUY = { 'A', 'E', 'I', 'J', 'O', 'U', 'Y' };
-    private static final char[] CSZ = { 'C', 'S', 'Z' };
-    private static final char[] FPVW = { 'F', 'P', 'V', 'W' };
-    private static final char[] GKQ = { 'G', 'K', 'Q' };
-    private static final char[] CKQ = { 'C', 'K', 'Q' };
-    private static final char[] AHKLOQRUX = { 'A', 'H', 'K', 'L', 'O', 'Q', 'R', 'U', 'X' };
-    private static final char[] SZ = { 'S', 'Z' };
-    private static final char[] AHKOQUX = { 'A', 'H', 'K', 'O', 'Q', 'U', 'X' };
-    private static final char[] DTX = { 'D', 'T', 'X' };
-
-    private static final char CHAR_IGNORE = '-';    // is this character to be ignored?
-
     /**
      * This class is not thread-safe; the field {@link #length} is mutable.
      * However, it is not shared between threads, as it is constructed on demand
@@ -218,6 +205,10 @@ public class ColognePhonetic implements StringEncoder {
 
         protected abstract char[] copyData(int start, int length);
 
+        public boolean isEmpty() {
+            return length() == 0;
+        }
+
         public int length() {
             return length;
         }
@@ -226,43 +217,7 @@ public class ColognePhonetic implements StringEncoder {
         public String toString() {
             return new String(copyData(0, length));
         }
-
-        public boolean isEmpty() {
-            return length() == 0;
-        }
     }
-
-    private class CologneOutputBuffer extends CologneBuffer {
-
-        private char lastCode;
-
-        public CologneOutputBuffer(final int buffSize) {
-            super(buffSize);
-            lastCode = '/'; // impossible value
-        }
-
-        /**
-         * Stores the next code in the output buffer, keeping track of the previous code.
-         * '0' is only stored if it is the first entry.
-         * Ignored chars are never stored.
-         * If the code is the same as the last code (whether stored or not) it is not stored.
-         *
-         * @param code the code to store.
-         */
-        public void put(final char code) {
-            if (code != CHAR_IGNORE && lastCode != code && (code != '0' || length == 0)) {
-                data[length] = code;
-                length++;
-            }
-            lastCode = code;
-        }
-
-        @Override
-        protected char[] copyData(final int start, final int length) {
-            return Arrays.copyOfRange(data, start, length);
-        }
-    }
-
     private class CologneInputBuffer extends CologneBuffer {
 
         public CologneInputBuffer(final char[] data) {
@@ -290,6 +245,51 @@ public class ColognePhonetic implements StringEncoder {
             return ch;
         }
     }
+    private class CologneOutputBuffer extends CologneBuffer {
+
+        private char lastCode;
+
+        public CologneOutputBuffer(final int buffSize) {
+            super(buffSize);
+            lastCode = '/'; // impossible value
+        }
+
+        @Override
+        protected char[] copyData(final int start, final int length) {
+            return Arrays.copyOfRange(data, start, length);
+        }
+
+        /**
+         * Stores the next code in the output buffer, keeping track of the previous code.
+         * '0' is only stored if it is the first entry.
+         * Ignored chars are never stored.
+         * If the code is the same as the last code (whether stored or not) it is not stored.
+         *
+         * @param code the code to store.
+         */
+        public void put(final char code) {
+            if (code != CHAR_IGNORE && lastCode != code && (code != '0' || length == 0)) {
+                data[length] = code;
+                length++;
+            }
+            lastCode = code;
+        }
+    }
+    // Predefined char arrays for better performance and less GC load
+    private static final char[] AEIJOUY = { 'A', 'E', 'I', 'J', 'O', 'U', 'Y' };
+    private static final char[] CSZ = { 'C', 'S', 'Z' };
+    private static final char[] FPVW = { 'F', 'P', 'V', 'W' };
+    private static final char[] GKQ = { 'G', 'K', 'Q' };
+    private static final char[] CKQ = { 'C', 'K', 'Q' };
+    private static final char[] AHKLOQRUX = { 'A', 'H', 'K', 'L', 'O', 'Q', 'R', 'U', 'X' };
+
+    private static final char[] SZ = { 'S', 'Z' };
+
+    private static final char[] AHKOQUX = { 'A', 'H', 'K', 'O', 'Q', 'U', 'X' };
+
+    private static final char[] DTX = { 'D', 'T', 'X' };
+
+    private static final char CHAR_IGNORE = '-';    // is this character to be ignored?
 
     /*
      * Returns whether the array contains the key, or not.

@@ -144,6 +144,20 @@ public class BeiderMorseEncoder implements StringEncoder {
     }
 
     /**
+     * Sets the number of maximum of phonemes that shall be considered by the engine.
+     *
+     * @param maxPhonemes
+     *            the maximum number of phonemes returned by the engine
+     * @since 1.7
+     */
+    public void setMaxPhonemes(final int maxPhonemes) {
+        this.engine = new PhoneticEngine(this.engine.getNameType(),
+                                         this.engine.getRuleType(),
+                                         this.engine.isConcat(),
+                                         maxPhonemes);
+    }
+
+    /**
      * Sets the type of name. Use {@link NameType#GENERIC} unless you specifically want phonetic encodings
      * optimized for Ashkenazi or Sephardic Jewish family names.
      *
@@ -168,20 +182,6 @@ public class BeiderMorseEncoder implements StringEncoder {
                                          ruleType,
                                          this.engine.isConcat(),
                                          this.engine.getMaxPhonemes());
-    }
-
-    /**
-     * Sets the number of maximum of phonemes that shall be considered by the engine.
-     *
-     * @param maxPhonemes
-     *            the maximum number of phonemes returned by the engine
-     * @since 1.7
-     */
-    public void setMaxPhonemes(final int maxPhonemes) {
-        this.engine = new PhoneticEngine(this.engine.getNameType(),
-                                         this.engine.getRuleType(),
-                                         this.engine.isConcat(),
-                                         maxPhonemes);
     }
 
 }
