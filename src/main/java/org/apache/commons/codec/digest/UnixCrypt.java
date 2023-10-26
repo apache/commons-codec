@@ -19,6 +19,7 @@ package org.apache.commons.codec.digest;
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.util.Arrays;
+import java.util.regex.Pattern;
 
 /**
  * Unix crypt(3) algorithm implementation.
@@ -41,6 +42,9 @@ import java.util.Arrays;
  * @since 1.7
  */
 public class UnixCrypt {
+
+    private static final String CRYPT_SALT_REGEX = "^[" + B64.B64T_STRING + "]{2,}$";
+    private static final Pattern CRYPT_SALT_PATTERN = Pattern.compile(CRYPT_SALT_REGEX);
 
     private static final int[] CON_SALT = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 5, 6,
@@ -250,7 +254,7 @@ public class UnixCrypt {
             final int numSaltChars = SALT_CHARS.length;
             salt = "" + SALT_CHARS[randomGenerator.nextInt(numSaltChars)] +
                     SALT_CHARS[randomGenerator.nextInt(numSaltChars)];
-        } else if (!salt.matches("^[" + B64.B64T_STRING + "]{2,}$")) {
+        } else if (!CRYPT_SALT_PATTERN.matcher(salt).matches()) {
             throw new IllegalArgumentException("Invalid salt value: " + salt);
         }
 
