@@ -60,6 +60,7 @@ limitations under the License.
   </module>
 
   <module name="TreeWalker">
+    <module name="ExplicitInitializationCheck" />
     <module name="OperatorWrap">
       <property name="option" value="eol" />
     </module>
