@@ -191,7 +191,7 @@ public class ColognePhonetic implements StringEncoder {
 
         protected final char[] data;
 
-        protected int length = 0;
+        protected int length;
 
         public CologneBuffer(final char[] data) {
             this.data = data;

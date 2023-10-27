@@ -108,7 +108,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      */
     private final Charset charset;
 
-    private boolean encodeBlanks = false;
+    private boolean encodeBlanks;
 
     /**
      * Default constructor.
