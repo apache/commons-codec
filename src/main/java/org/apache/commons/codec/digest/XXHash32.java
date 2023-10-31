@@ -70,7 +70,7 @@ public class XXHash32 implements Checksum {
 
     private int pos;
 
-    /** Set to true when the state array has been updated since the last reset. */
+    /** Sets to true when the state array has been updated since the last reset. */
     private boolean stateUpdated;
 
     /**
