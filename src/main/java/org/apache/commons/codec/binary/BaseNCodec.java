@@ -575,7 +575,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
-     * Get the default buffer size. Can be overridden.
+     * Gets the default buffer size. Can be overridden.
      *
      * @return the default buffer size.
      */
