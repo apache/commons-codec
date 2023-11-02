@@ -82,7 +82,7 @@ The <a href="scm.html">subversion repository</a> can be
 <!-- ================================================== -->
 <section name="Releases">
 <ul>
-  <li><a href="https://commons.apache.org/codec/download_codec.cgi">Download latest version (mirrors)</a> requires Java 8</li>
+  <li><a href="https://commons.apache.org/codec/download_codec.cgi">Download latest version (mirrors)</a>; requires Java 8 or above</li>
   <li><a href="https://archive.apache.org/dist/commons/codec/">Download archive</a></li>
 </ul>
 <p>
