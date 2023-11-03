@@ -46,7 +46,7 @@ public class Base16Test {
     private final Random random = new Random();
 
     @Test
-    public void checkEncodeLengthBounds() {
+    public void testCheckEncodeLengthBounds() {
         final Base16 base16 = new Base16();
         assertThrows(IllegalArgumentException.class, () -> base16.encode(new byte[10], 0, 1 << 30));
     }

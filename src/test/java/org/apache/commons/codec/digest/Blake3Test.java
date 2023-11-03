@@ -26,7 +26,7 @@ public class Blake3Test {
     }
 
     @Test
-    public void shouldThrowIllegalArgumentExceptionWhenIncorrectKeySize() {
+    public void testShouldThrowIllegalArgumentExceptionWhenIncorrectKeySize() {
         for (int i = 0; i < 32; i++) {
             assertThrowsProperExceptionWithKeySize(i);
         }
