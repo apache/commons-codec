@@ -45,12 +45,6 @@ public class Base16Test {
 
     private final Random random = new Random();
 
-    @Test
-    public void testCheckEncodeLengthBounds() {
-        final Base16 base16 = new Base16();
-        assertThrows(IllegalArgumentException.class, () -> base16.encode(new byte[10], 0, 1 << 30));
-    }
-
     /**
      * @return Returns the random.
      */
@@ -112,6 +106,12 @@ public class Base16Test {
         assertEquals("", StringUtils.newStringUtf8(new Base16().encode(b2)), "byteToString static \"\"");
         assertNull(base16.encodeToString(b3), "byteToString null");
         assertNull(StringUtils.newStringUtf8(new Base16().encode(b3)), "byteToString static null");
+    }
+
+    @Test
+    public void testCheckEncodeLengthBounds() {
+        final Base16 base16 = new Base16();
+        assertThrows(IllegalArgumentException.class, () -> base16.encode(new byte[10], 0, 1 << 30));
     }
 
     /**
