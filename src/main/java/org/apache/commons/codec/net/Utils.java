@@ -26,7 +26,7 @@ import org.apache.commons.codec.DecoderException;
  *
  * @since 1.4
  */
-class Utils {
+final class Utils {
 
     /**
      * Radix used in encoding and decoding.

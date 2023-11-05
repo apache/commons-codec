@@ -26,7 +26,7 @@ import org.apache.commons.codec.CharEncoding;
  *
  * @since 1.6
  */
-class ResourceConstants {
+final class ResourceConstants {
 
     static final String CMT = "//";
     static final String ENCODING = CharEncoding.UTF_8;

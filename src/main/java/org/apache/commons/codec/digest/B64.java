@@ -28,7 +28,7 @@ import java.util.Random;
  * This class is immutable and thread-safe.
  * </p>
  */
-class B64 {
+final class B64 {
 
     /**
      * Table with characters for Base64 transformation.
