@@ -218,7 +218,7 @@ public class ColognePhonetic implements StringEncoder {
             return new String(copyData(0, length));
         }
     }
-    private class CologneInputBuffer extends CologneBuffer {
+    private final class CologneInputBuffer extends CologneBuffer {
 
         public CologneInputBuffer(final char[] data) {
             super(data);
@@ -245,7 +245,7 @@ public class ColognePhonetic implements StringEncoder {
             return ch;
         }
     }
-    private class CologneOutputBuffer extends CologneBuffer {
+    private final class CologneOutputBuffer extends CologneBuffer {
 
         private char lastCode;
 
