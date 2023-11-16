@@ -54,6 +54,7 @@ public class PureJavaCrc32C implements Checksum {
     private static final int T8_6_START = 6 * 256;
     private static final int T8_7_START = 7 * 256;
 
+    // @formatter:off
     private static final int[] T = {
       /* T8_0 */
       0x00000000, 0xF26B8303, 0xE13B70F7, 0x1350F3F4,
@@ -576,6 +577,7 @@ public class PureJavaCrc32C implements Checksum {
       0xE54C35A1, 0xAC704886, 0x7734CFEF, 0x3E08B2C8,
       0xC451B7CC, 0x8D6DCAEB, 0x56294D82, 0x1F1530A5
     };
+    // @formatter:on
 
   /** The current CRC value, bit-flipped */
   private int crc;
