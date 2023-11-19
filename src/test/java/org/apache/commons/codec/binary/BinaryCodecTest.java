@@ -63,11 +63,6 @@ public class BinaryCodecTest {
     /** An instance of the binary codec. */
     BinaryCodec instance;
 
-    // ------------------------------------------------------------------------
-    //
-    // Test decode(byte[])
-    //
-    // ------------------------------------------------------------------------
     /**
      * Utility used to assert the encoded and decoded values.
      *
@@ -264,11 +259,6 @@ public class BinaryCodecTest {
         assertDecodeObject(new byte[0], null);
     }
 
-    // ------------------------------------------------------------------------
-    //
-    // Test decode(Object)
-    //
-    // ------------------------------------------------------------------------
     /**
      * Tests for Object decode(Object)
      */
@@ -283,11 +273,6 @@ public class BinaryCodecTest {
         fail("Expected DecoderException");
     }
 
-    // ------------------------------------------------------------------------
-    //
-    // Test encode(byte[])
-    //
-    // ------------------------------------------------------------------------
     /*
      * Tests for byte[] encode(byte[])
      */
@@ -543,11 +528,6 @@ public class BinaryCodecTest {
         fail("Expected EncoderException");
     }
 
-    // ------------------------------------------------------------------------
-    //
-    // Test encode(Object)
-    //
-    // ------------------------------------------------------------------------
     /*
      * Tests for Object encode(Object)
      */
@@ -557,11 +537,6 @@ public class BinaryCodecTest {
         assertEquals(0, ((char[]) instance.encode(obj)).length);
     }
 
-    // ------------------------------------------------------------------------
-    //
-    // Test fromAscii(byte[])
-    //
-    // ------------------------------------------------------------------------
     /*
      * Tests for byte[] fromAscii(byte[])
      */
@@ -653,11 +628,6 @@ public class BinaryCodecTest {
         assertEquals(0, BinaryCodec.fromAscii((byte[]) null).length);
     }
 
-    // ------------------------------------------------------------------------
-    //
-    // Test fromAscii(char[])
-    //
-    // ------------------------------------------------------------------------
     /*
      * Tests for byte[] fromAscii(char[])
      */
@@ -749,11 +719,6 @@ public class BinaryCodecTest {
         assertEquals(0, BinaryCodec.fromAscii((char[]) null).length);
     }
 
-    // ------------------------------------------------------------------------
-    //
-    // Test toAsciiBytes
-    //
-    // ------------------------------------------------------------------------
     @Test
     public void testToAsciiBytes() {
         // With a single raw binary
@@ -872,11 +837,6 @@ public class BinaryCodecTest {
         assertEquals(0, BinaryCodec.toAsciiBytes((byte[]) null).length);
     }
 
-    // ------------------------------------------------------------------------
-    //
-    // Test toAsciiChars
-    //
-    // ------------------------------------------------------------------------
     @Test
     public void testToAsciiChars() {
         // With a single raw binary
@@ -995,11 +955,6 @@ public class BinaryCodecTest {
         assertEquals(0, BinaryCodec.toAsciiChars((byte[]) null).length);
     }
 
-    // ------------------------------------------------------------------------
-    //
-    // Test toAsciiString
-    //
-    // ------------------------------------------------------------------------
     /**
      * Tests the toAsciiString(byte[]) method
      */
@@ -1120,12 +1075,7 @@ public class BinaryCodecTest {
         assertEquals("1111111111111111", l_encoded);
     }
 
-    // ------------------------------------------------------------------------
-    //
-    // Test toByteArray(String)
-    //
-    // ------------------------------------------------------------------------
-    /*
+    /**
      * Tests for byte[] toByteArray(String)
      */
     @Test

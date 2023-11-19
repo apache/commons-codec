@@ -97,11 +97,6 @@ public class BinaryCodec implements BinaryDecoder, BinaryEncoder {
         return raw;
     }
 
-    // ------------------------------------------------------------------------
-    //
-    // static codec operations
-    //
-    // ------------------------------------------------------------------------
     /**
      * Decodes a char array where each char represents an ASCII '0' or '1'.
      *
