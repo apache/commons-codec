@@ -77,10 +77,15 @@ public class PercentCodec implements BinaryEncoder, BinaryDecoder {
      *
      * @param alwaysEncodeChars the unsafe characters that should always be encoded
      * @param plusForSpace      the flag defining if the space character should be encoded as '+'
+     * @throws EncoderException if the alwaysEncodeChars byte array contains invalid bytes
      */
-    public PercentCodec(final byte[] alwaysEncodeChars, final boolean plusForSpace) {
+    public PercentCodec(final byte[] alwaysEncodeChars, final boolean plusForSpace) throws EncoderException {
         this.plusForSpace = plusForSpace;
-        insertAlwaysEncodeChars(alwaysEncodeChars);
+        try {
+            insertAlwaysEncodeChars(alwaysEncodeChars);
+        } catch (IndexOutOfBoundsException e) {
+            throw new EncoderException(e);
+        }
     }
 
     private boolean canEncode(final byte c) {
