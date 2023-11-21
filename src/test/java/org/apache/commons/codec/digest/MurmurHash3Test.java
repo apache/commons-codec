@@ -505,7 +505,7 @@ public class MurmurHash3Test {
      */
     @Test
     public void testHash32Long() {
-        // As described in the javadoc
+        // As described in the Javadoc
         final int offset = 0;
         final int seed = 104729;
 
@@ -524,7 +524,7 @@ public class MurmurHash3Test {
      */
     @Test
     public void testHash32LongLong() {
-        // As described in the javadoc
+        // As described in the Javadoc
         final int offset = 0;
         final int seed = 104729;
 
@@ -546,7 +546,7 @@ public class MurmurHash3Test {
      */
     @Test
     public void testHash32LongLongSeed() {
-        // As described in the javadoc
+        // As described in the Javadoc
         final int offset = 0;
         final int seed = 104729;
 
@@ -568,7 +568,7 @@ public class MurmurHash3Test {
      */
     @Test
     public void testHash32LongSeed() {
-        // As described in the javadoc
+        // As described in the Javadoc
         final int offset = 0;
         final int seed = 104729;
 
@@ -844,7 +844,7 @@ public class MurmurHash3Test {
      */
     @Test
     public void testHash64WithPrimitives() {
-        // As described in the javadoc
+        // As described in the Javadoc
         final int offset = 0;
         final int seed = 104729;
 
