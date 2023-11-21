@@ -208,6 +208,11 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
         final int bytesLength = bytes.length;
 
         if (strict) {
+            // Ensure bytes have at least 3 bytes
+            if (bytesLength < 3) {
+                return null;
+            }
+
             int pos = 1;
             // encode up to buffer.length - 3, the last three octets will be treated
             // separately for simplification of note #3
