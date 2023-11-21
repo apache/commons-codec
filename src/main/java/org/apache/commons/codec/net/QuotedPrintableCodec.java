@@ -85,6 +85,11 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
     private static final byte LF = 10;
 
     /**
+     * Minimum length required for the byte arrays used by encodeQuotedPrintable method
+     */
+    private static final int MIN_BYTES = 3;
+
+    /**
      * Safe line length for quoted printable encoded text.
      */
     private static final int SAFE_LENGTH = 73;
@@ -208,6 +213,10 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
         final int bytesLength = bytes.length;
 
         if (strict) {
+            if (bytesLength < MIN_BYTES) {
+                return null;
+            }
+
             int pos = 1;
             // encode up to buffer.length - 3, the last three octets will be treated
             // separately for simplification of note #3
