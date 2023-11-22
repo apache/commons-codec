@@ -106,6 +106,13 @@ public class PercentCodecTest {
     }
 
     @Test
+    public void testInvalidByte() throws Exception {
+        final byte[] invalid = {(byte)-1, (byte)'A'};
+
+        assertThrows(EncoderException.class, () -> new PercentCodec(invalid, true));
+    }
+
+    @Test
     public void testPercentEncoderDecoderWithNullOrEmptyInput() throws Exception {
         final PercentCodec percentCodec = new PercentCodec(null, true);
         assertNull(percentCodec.encode(null), "Null input value encoding test");
