@@ -228,6 +228,12 @@ public class QuotedPrintableCodecTest {
     }
 
     @Test
+    public void testTooShortByteArray() throws Exception{
+        final QuotedPrintableCodec qpcodec = new QuotedPrintableCodec(true);
+        assertNull(qpcodec.encode("AA"), "Result should be null.");
+    }
+
+    @Test
     public void testTrailingSpecial() throws Exception {
         final QuotedPrintableCodec qpcodec = new QuotedPrintableCodec(true);
 
