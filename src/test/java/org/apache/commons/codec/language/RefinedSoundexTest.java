@@ -80,6 +80,16 @@ public class RefinedSoundexTest extends AbstractStringEncoderTest<RefinedSoundex
     }
 
     @Test
+    public void testInvalidSoundexCharacter() {
+        final char[] invalid = new char[256];
+        for (int i = 0; i < invalid.length; i++) {
+            invalid[i] = (char)i;
+        }
+
+        assertEquals(new RefinedSoundex().encode(new String(invalid)), "A0136024043780159360205050136024043780159360205053");
+    }
+
+    @Test
     public void testNewInstance() {
         assertEquals("D6043", new RefinedSoundex().soundex("dogs"));
     }
