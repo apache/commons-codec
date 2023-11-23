@@ -48,6 +48,15 @@ public class PhoneticEngineTest {
                 );
     }
 
+    public static Stream<Arguments> invalidData() {
+        return Stream.of(
+                        Arguments.of("bar", "bar|bor|var|vor", NameType.ASHKENAZI, RuleType.APPROX, Boolean.FALSE, TEN),
+                        Arguments.of("al", "|al", NameType.SEPHARDIC, RuleType.APPROX, Boolean.FALSE, TEN),
+                        Arguments.of("da", "da|di", NameType.GENERIC, RuleType.EXACT, Boolean.FALSE, TEN),
+                        Arguments.of("'''", "", NameType.SEPHARDIC, RuleType.APPROX, Boolean.FALSE, TEN)
+                );
+    }
+
     // TODO Identify if there is a need to an assertTimeout(Duration.ofMillis(10000L) in some point, since this method was marked as @Test(timeout = 10000L)
     @ParameterizedTest
     @MethodSource("data")
@@ -69,5 +78,14 @@ public class PhoneticEngineTest {
                 assertTrue(split.length <= maxPhonemes);
             }
         }
+    }
+
+    @ParameterizedTest
+    @MethodSource("invalidData")
+    public void testInvalidEncode(final String input, final String phoneticExpected, final NameType nameType,
+                                  final RuleType ruleType, final boolean concat, final int maxPhonemes) {
+        final PhoneticEngine engine = new PhoneticEngine(nameType, ruleType, concat, maxPhonemes);
+
+        assertEquals(engine.encode(input), phoneticExpected);
     }
 }

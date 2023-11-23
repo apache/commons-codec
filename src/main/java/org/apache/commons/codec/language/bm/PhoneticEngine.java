@@ -409,7 +409,7 @@ public class PhoneticEngine {
         switch (this.nameType) {
         case SEPHARDIC:
             words.forEach(aWord -> {
-                final String[] parts = aWord.split("'");
+                final String[] parts = aWord.split("'", -1);
                 words2.add(parts[parts.length - 1]);
             });
             words2.removeAll(NAME_PREFIXES.get(this.nameType));
@@ -431,7 +431,7 @@ public class PhoneticEngine {
         } else if (words2.size() == 1) {
             // not a multi-word name
             input = words.iterator().next();
-        } else {
+        } else if (!words2.isEmpty()) {
             // encode each word in a multi-word name separately (normally used for approx matches)
             final StringBuilder result = new StringBuilder();
             words2.forEach(word -> result.append("-").append(encode(word)));
