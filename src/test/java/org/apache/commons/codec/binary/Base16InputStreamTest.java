@@ -75,8 +75,7 @@ public class Base16InputStreamTest {
     /**
      * Tests the Base16InputStream implementation.
      *
-     * @throws IOException
-     *             for some failure scenarios.
+     * @throws IOException for some failure scenarios.
      */
     @Test
     public void testBase16InputStreamByChunk() throws IOException {
@@ -141,8 +140,7 @@ public class Base16InputStreamTest {
      * Tests method does three tests on the supplied data: 1. encoded ---[DECODE]--> decoded 2. decoded ---[ENCODE]--> encoded 3. decoded
      * ---[WRAP-WRAP-WRAP-etc...] --> decoded
      * <p/>
-     * By "[WRAP-WRAP-WRAP-etc...]" we mean situation where the Base16InputStream wraps itself in encode and decode mode over and over
-     * again.
+     * By "[WRAP-WRAP-WRAP-etc...]" we mean situation where the Base16InputStream wraps itself in encode and decode mode over and over again.
      *
      * @param encoded Base16 encoded data
      * @param decoded the data from above, but decoded
@@ -156,11 +154,10 @@ public class Base16InputStreamTest {
      * Tests method does three tests on the supplied data: 1. encoded ---[DECODE]--> decoded 2. decoded ---[ENCODE]--> encoded 3. decoded
      * ---[WRAP-WRAP-WRAP-etc...] --> decoded
      * <p/>
-     * By "[WRAP-WRAP-WRAP-etc...]" we mean situation where the Base16InputStream wraps itself in encode and decode mode over and over
-     * again.
+     * By "[WRAP-WRAP-WRAP-etc...]" we mean situation where the Base16InputStream wraps itself in encode and decode mode over and over again.
      *
-     * @param encoded Base16 encoded data
-     * @param decoded the data from above, but decoded
+     * @param encoded   Base16 encoded data
+     * @param decoded   the data from above, but decoded
      * @param lowerCase if {@code true} then use a lower-case Base16 alphabet
      * @throws IOException Usually signifies a bug in the Base16 commons-codec implementation.
      */
@@ -201,8 +198,7 @@ public class Base16InputStreamTest {
      * Tests method does three tests on the supplied data: 1. encoded ---[DECODE]--> decoded 2. decoded ---[ENCODE]--> encoded 3. decoded
      * ---[WRAP-WRAP-WRAP-etc...] --> decoded
      * <p/>
-     * By "[WRAP-WRAP-WRAP-etc...]" we mean situation where the Base16InputStream wraps itself in encode and decode mode over and over
-     * again.
+     * By "[WRAP-WRAP-WRAP-etc...]" we mean situation where the Base16InputStream wraps itself in encode and decode mode over and over again.
      *
      * @param encoded Base16 encoded data
      * @param decoded the data from above, but decoded
@@ -216,11 +212,10 @@ public class Base16InputStreamTest {
      * Tests method does three tests on the supplied data: 1. encoded ---[DECODE]--> decoded 2. decoded ---[ENCODE]--> encoded 3. decoded
      * ---[WRAP-WRAP-WRAP-etc...] --> decoded
      * <p/>
-     * By "[WRAP-WRAP-WRAP-etc...]" we mean situation where the Base16InputStream wraps itself in encode and decode mode over and over
-     * again.
+     * By "[WRAP-WRAP-WRAP-etc...]" we mean situation where the Base16InputStream wraps itself in encode and decode mode over and over again.
      *
-     * @param encoded Base16 encoded data
-     * @param decoded the data from above, but decoded
+     * @param encoded   Base16 encoded data
+     * @param decoded   the data from above, but decoded
      * @param lowerCase if {@code true} then use a lower-case Base16 alphabet
      * @throws IOException Usually signifies a bug in the Base16 commons-codec implementation.
      */
@@ -308,8 +303,7 @@ public class Base16InputStreamTest {
         final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
         final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
         try (final Base16InputStream in = new Base16InputStream(bin, true)) {
-            assertThrows(NullPointerException.class, () -> in.read(null, 0, 0),
-                "Base16InputStream.read(null, 0, 0)");
+            assertThrows(NullPointerException.class, () -> in.read(null, 0, 0), "Base16InputStream.read(null, 0, 0)");
         }
     }
 
@@ -359,7 +353,7 @@ public class Base16InputStreamTest {
             final byte[] actualBytes = new byte[6];
             assertEquals(0, b16Stream.skip(0));
             b16Stream.read(actualBytes, 0, actualBytes.length);
-            assertArrayEquals(actualBytes, new byte[] {(byte)202, (byte)254, (byte)186, (byte)190, (byte)255, (byte)255});
+            assertArrayEquals(actualBytes, new byte[] { (byte) 202, (byte) 254, (byte) 186, (byte) 190, (byte) 255, (byte) 255 });
             // End of stream reached
             assertEquals(-1, b16Stream.read());
         }

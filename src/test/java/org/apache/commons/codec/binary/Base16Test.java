@@ -115,8 +115,7 @@ public class Base16Test {
     }
 
     /**
-     * isBase16 throws RuntimeException on some
-     * non-Base16 bytes
+     * isBase16 throws RuntimeException on some non-Base16 bytes
      */
     @Test
     public void testCodec68() {
@@ -163,17 +162,17 @@ public class Base16Test {
 
         // decode byte-by-byte
         b16.decode(encocdedBytes, 0, 1, context);
-        b16.decode(encocdedBytes, 1, 1, context);    // yields "U"
+        b16.decode(encocdedBytes, 1, 1, context); // yields "U"
         b16.decode(encocdedBytes, 2, 1, context);
-        b16.decode(encocdedBytes, 3, 1, context);    // yields "n"
+        b16.decode(encocdedBytes, 3, 1, context); // yields "n"
 
         // decode split hex-pairs
-        b16.decode(encocdedBytes, 4, 3, context);    // yields "t"
-        b16.decode(encocdedBytes, 7, 3, context);    // yields "il"
-        b16.decode(encocdedBytes, 10, 3, context);   // yields " "
+        b16.decode(encocdedBytes, 4, 3, context); // yields "t"
+        b16.decode(encocdedBytes, 7, 3, context); // yields "il"
+        b16.decode(encocdedBytes, 10, 3, context); // yields " "
 
         // decode remaining
-        b16.decode(encocdedBytes, 13, 19, context);  // yields "next time!"
+        b16.decode(encocdedBytes, 13, 19, context); // yields "next time!"
 
         final byte[] decodedBytes = new byte[context.pos];
         System.arraycopy(context.buffer, context.readPos, decodedBytes, 0, decodedBytes.length);
@@ -201,7 +200,7 @@ public class Base16Test {
         b16.decode(data, 0, 1, context);
         assertEquals(0, context.ibitWorkArea);
 
-        assertEquals((byte)0xEF, context.buffer[0]);
+        assertEquals((byte) 0xEF, context.buffer[0]);
     }
 
     /**
@@ -252,13 +251,13 @@ public class Base16Test {
     public void testIsInAlphabet() {
         // invalid bounds
         Base16 b16 = new Base16(true);
-        assertFalse(b16.isInAlphabet((byte)0));
-        assertFalse(b16.isInAlphabet((byte)1));
-        assertFalse(b16.isInAlphabet((byte)-1));
-        assertFalse(b16.isInAlphabet((byte)-15));
-        assertFalse(b16.isInAlphabet((byte)-16));
-        assertFalse(b16.isInAlphabet((byte)128));
-        assertFalse(b16.isInAlphabet((byte)255));
+        assertFalse(b16.isInAlphabet((byte) 0));
+        assertFalse(b16.isInAlphabet((byte) 1));
+        assertFalse(b16.isInAlphabet((byte) -1));
+        assertFalse(b16.isInAlphabet((byte) -15));
+        assertFalse(b16.isInAlphabet((byte) -16));
+        assertFalse(b16.isInAlphabet((byte) 128));
+        assertFalse(b16.isInAlphabet((byte) 255));
 
         // lower-case
         b16 = new Base16(true);
@@ -297,14 +296,14 @@ public class Base16Test {
 
     @Test
     public void testKnownDecodings() {
-        assertEquals("The quick brown fox jumped over the lazy dogs.", new String(new Base16(true).decode(
-                "54686520717569636b2062726f776e20666f78206a756d706564206f76657220746865206c617a7920646f67732e".getBytes(CHARSET_UTF8))));
-        assertEquals("It was the best of times, it was the worst of times.", new String(new Base16(true).decode(
-                "497420776173207468652062657374206f662074696d65732c206974207761732074686520776f727374206f662074696d65732e".getBytes(CHARSET_UTF8))));
-        assertEquals("http://jakarta.apache.org/commmons", new String(
-                new Base16(true).decode("687474703a2f2f6a616b617274612e6170616368652e6f72672f636f6d6d6d6f6e73".getBytes(CHARSET_UTF8))));
-        assertEquals("AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz", new String(new Base16(true).decode(
-                "4161426243634464456546664767486849694a6a4b6b4c6c4d6d4e6e4f6f50705171527253735474557556765777587859795a7a".getBytes(CHARSET_UTF8))));
+        assertEquals("The quick brown fox jumped over the lazy dogs.", new String(new Base16(true)
+                .decode("54686520717569636b2062726f776e20666f78206a756d706564206f76657220746865206c617a7920646f67732e".getBytes(CHARSET_UTF8))));
+        assertEquals("It was the best of times, it was the worst of times.", new String(new Base16(true)
+                .decode("497420776173207468652062657374206f662074696d65732c206974207761732074686520776f727374206f662074696d65732e".getBytes(CHARSET_UTF8))));
+        assertEquals("http://jakarta.apache.org/commmons",
+                new String(new Base16(true).decode("687474703a2f2f6a616b617274612e6170616368652e6f72672f636f6d6d6d6f6e73".getBytes(CHARSET_UTF8))));
+        assertEquals("AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz", new String(new Base16(true)
+                .decode("4161426243634464456546664767486849694a6a4b6b4c6c4d6d4e6e4f6f50705171527253735474557556765777587859795a7a".getBytes(CHARSET_UTF8))));
         assertEquals("{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }",
                 new String(new Base16(true).decode("7b20302c20312c20322c20332c20342c20352c20362c20372c20382c2039207d".getBytes(CHARSET_UTF8))));
         assertEquals("xyzzy!", new String(new Base16(true).decode("78797a7a7921".getBytes(CHARSET_UTF8))));
@@ -312,14 +311,14 @@ public class Base16Test {
 
     @Test
     public void testKnownEncodings() {
-        assertEquals("54686520717569636b2062726f776e20666f78206a756d706564206f76657220746865206c617a7920646f67732e", new String(
-                new Base16(true).encode("The quick brown fox jumped over the lazy dogs.".getBytes(CHARSET_UTF8))));
-        assertEquals("497420776173207468652062657374206f662074696d65732c206974207761732074686520776f727374206f662074696d65732e", new String(
-                new Base16(true).encode("It was the best of times, it was the worst of times.".getBytes(CHARSET_UTF8))));
+        assertEquals("54686520717569636b2062726f776e20666f78206a756d706564206f76657220746865206c617a7920646f67732e",
+                new String(new Base16(true).encode("The quick brown fox jumped over the lazy dogs.".getBytes(CHARSET_UTF8))));
+        assertEquals("497420776173207468652062657374206f662074696d65732c206974207761732074686520776f727374206f662074696d65732e",
+                new String(new Base16(true).encode("It was the best of times, it was the worst of times.".getBytes(CHARSET_UTF8))));
         assertEquals("687474703a2f2f6a616b617274612e6170616368652e6f72672f636f6d6d6d6f6e73",
                 new String(new Base16(true).encode("http://jakarta.apache.org/commmons".getBytes(CHARSET_UTF8))));
-        assertEquals("4161426243634464456546664767486849694a6a4b6b4c6c4d6d4e6e4f6f50705171527253735474557556765777587859795a7a", new String(
-                new Base16(true).encode("AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz".getBytes(CHARSET_UTF8))));
+        assertEquals("4161426243634464456546664767486849694a6a4b6b4c6c4d6d4e6e4f6f50705171527253735474557556765777587859795a7a",
+                new String(new Base16(true).encode("AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz".getBytes(CHARSET_UTF8))));
         assertEquals("7b20302c20312c20322c20332c20342c20352c20362c20372c20382c2039207d",
                 new String(new Base16(true).encode("{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }".getBytes(CHARSET_UTF8))));
         assertEquals("78797a7a7921", new String(new Base16(true).encode("xyzzy!".getBytes(CHARSET_UTF8))));
@@ -327,13 +326,13 @@ public class Base16Test {
 
     @Test
     public void testLenientDecoding() {
-        final String encoded = "aabbccdde";  // Note the trailing `e` which does not make up a hex-pair and so is only 1/2 byte
+        final String encoded = "aabbccdde"; // Note the trailing `e` which does not make up a hex-pair and so is only 1/2 byte
 
         final Base16 b16 = new Base16(true, CodecPolicy.LENIENT);
         assertEquals(CodecPolicy.LENIENT, b16.getCodecPolicy());
 
         final byte[] decoded = b16.decode(StringUtils.getBytesUtf8(encoded));
-        assertArrayEquals(new byte[] {(byte)0xaa, (byte)0xbb, (byte)0xcc, (byte)0xdd}, decoded);
+        assertArrayEquals(new byte[] { (byte) 0xaa, (byte) 0xbb, (byte) 0xcc, (byte) 0xdd }, decoded);
     }
 
     @Test
@@ -550,7 +549,7 @@ public class Base16Test {
 
     @Test
     public void testStrictDecoding() {
-        final String encoded = "aabbccdde";  // Note the trailing `e` which does not make up a hex-pair and so is only 1/2 byte
+        final String encoded = "aabbccdde"; // Note the trailing `e` which does not make up a hex-pair and so is only 1/2 byte
 
         final Base16 b16 = new Base16(true, CodecPolicy.STRICT);
         assertEquals(CodecPolicy.STRICT, b16.getCodecPolicy());

@@ -456,7 +456,7 @@ public class Rule {
                                 return sb.toString();
                             }
                         };
-                        final String patternKey = r.pattern.substring(0,1);
+                        final String patternKey = r.pattern.substring(0, 1);
                         final List<Rule> rules = lines.computeIfAbsent(patternKey, k -> new ArrayList<>());
                         rules.add(r);
                     } catch (final IllegalArgumentException e) {

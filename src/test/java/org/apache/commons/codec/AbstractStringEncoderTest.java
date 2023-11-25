@@ -77,10 +77,10 @@ public abstract class AbstractStringEncoderTest<T extends StringEncoder> {
     public void testLocaleIndependence() throws Exception {
         final StringEncoder encoder = this.getStringEncoder();
 
-        final String[] data = {"I", "i",};
+        final String[] data = { "I", "i" };
 
         final Locale orig = Locale.getDefault();
-        final Locale[] locales = {Locale.ENGLISH, new Locale("tr"), Locale.getDefault()};
+        final Locale[] locales = { Locale.ENGLISH, new Locale("tr"), Locale.getDefault() };
 
         try {
             for (final String element : data) {

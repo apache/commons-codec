@@ -264,7 +264,7 @@ public class Soundex implements StringEncoder {
     }
 
     private boolean hasMarker(final char[] mapping) {
-        for(final char ch : mapping) {
+        for (final char ch : mapping) {
             if (ch == SILENT_MARKER) {
                 return true;
             }
@@ -318,12 +318,12 @@ public class Soundex implements StringEncoder {
         if (str.isEmpty()) {
             return str;
         }
-        final char[] out = {'0', '0', '0', '0'};
+        final char[] out = { '0', '0', '0', '0' };
         int count = 0;
         final char first = str.charAt(0);
         out[count++] = first;
         char lastDigit = map(first); // previous digit
-        for(int i = 1; i < str.length() && count < out.length ; i++) {
+        for (int i = 1; i < str.length() && count < out.length; i++) {
             final char ch = str.charAt(i);
             if (this.specialCaseHW && (ch == 'H' || ch == 'W')) { // these are ignored completely
                 continue;

@@ -35,13 +35,13 @@ import org.junit.jupiter.api.Test;
  */
 public class StringUtilsTest {
 
-    private static final byte[] BYTES_FIXTURE = {'a','b','c'};
+    private static final byte[] BYTES_FIXTURE = { 'a', 'b', 'c' };
 
     // This is valid input for UTF-16BE
-    private static final byte[] BYTES_FIXTURE_16BE = {0, 'a', 0, 'b', 0, 'c'};
+    private static final byte[] BYTES_FIXTURE_16BE = { 0, 'a', 0, 'b', 0, 'c' };
 
     // This is valid for UTF-16LE
-    private static final byte[] BYTES_FIXTURE_16LE = {'a', 0, 'b', 0, 'c', 0};
+    private static final byte[] BYTES_FIXTURE_16LE = { 'a', 0, 'b', 0, 'c', 0 };
 
     private static final String STRING_FIXTURE = "ABC";
 

@@ -589,7 +589,7 @@ public class DoubleMetaphone implements StringEncoder {
         } else if (contains(value, index + 1, 1, "E", "I", "Y") ||
                    contains(value, index - 1, 4, "AGGI", "OGGI")) {
             //-- Italian "biaggi" --//
-            if (contains(value, 0 ,4, "VAN ", "VON ") ||
+            if (contains(value, 0, 4, "VAN ", "VON ") ||
                 contains(value, 0, 3, "SCH") ||
                 contains(value, index + 1, 2, "ET")) {
                 //-- obvious germanic --//

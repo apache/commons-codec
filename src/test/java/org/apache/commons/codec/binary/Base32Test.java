@@ -39,20 +39,24 @@ public class Base32Test {
 
     private static final Charset CHARSET_UTF8 = StandardCharsets.UTF_8;
 
-    private static final String [][] BASE32_TEST_CASES = { // RFC 4648
-        {""       ,""},
-        {"f"      ,"MY======"},
-        {"fo"     ,"MZXQ===="},
-        {"foo"    ,"MZXW6==="},
-        {"foob"   ,"MZXW6YQ="},
-        {"fooba"  ,"MZXW6YTB"},
-        {"foobar" ,"MZXW6YTBOI======"},
+    /** RFC 4648. */
+    // @formatter:off
+    private static final String [][] BASE32_TEST_CASES = {
+        { ""       , "" },
+        { "f"      , "MY======" },
+        { "fo"     , "MZXQ====" },
+        { "foo"    , "MZXW6===" },
+        { "foob"   , "MZXW6YQ=" },
+        { "fooba"  , "MZXW6YTB" },
+        { "foobar" , "MZXW6YTBOI======" }
     };
+    // @formatter:on
 
     /**
      * Example test cases with valid characters but impossible combinations of
      * trailing characters (i.e. cannot be created during encoding).
      */
+    // @formatter:off
     static final String[] BASE32_IMPOSSIBLE_CASES = {
         "MC======",
         "MZXE====",
@@ -61,7 +65,9 @@ public class Base32Test {
         "MZXW6YTBOC======",
         "AB======"
         };
+    // @formatter:on
 
+    // @formatter:off
     private static final String[] BASE32_IMPOSSIBLE_CASES_CHUNKED = {
         "M2======\r\n",
         "MZX0====\r\n",
@@ -69,7 +75,9 @@ public class Base32Test {
         "MZXW6Y2=\r\n",
         "MZXW6YTBO2======\r\n"
     };
+    // @formatter:on
 
+    // @formatter:off
     private static final String[] BASE32HEX_IMPOSSIBLE_CASES = {
         "C2======",
         "CPN4====",
@@ -77,20 +85,23 @@ public class Base32Test {
         "CPNMUO1=",
         "CPNMUOJ1E2======"
     };
+    // @formatter:on
 
     /**
      * Copy of the standard base-32 encoding table. Used to test decoding the final
      * character of encoded bytes.
      */
+    // @formatter:off
     private static final byte[] ENCODE_TABLE = {
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
             'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-            '2', '3', '4', '5', '6', '7',
+            '2', '3', '4', '5', '6', '7'
     };
+    // @formatter:on
 
     private static final Object[][] BASE32_BINARY_TEST_CASES;
 
-    //            { null, "O0o0O0o0" }
+//            { null, "O0o0O0o0" }
 //            BASE32_BINARY_TEST_CASES[2][0] = new Hex().decode("739ce739ce");
 
     static {
@@ -108,35 +119,42 @@ public class Base32Test {
             throw new AssertionError(":(", de);
         }
     }
+
+    // @formatter:off
     private static final String [][] BASE32HEX_TEST_CASES = { // RFC 4648
-        {""       ,""},
-        {"f"      ,"CO======"},
-        {"fo"     ,"CPNG===="},
-        {"foo"    ,"CPNMU==="},
-        {"foob"   ,"CPNMUOG="},
-        {"fooba"  ,"CPNMUOJ1"},
-        {"foobar" ,"CPNMUOJ1E8======"},
+        { ""       , "" },
+        { "f"      , "CO======" },
+        { "fo"     , "CPNG====" },
+        { "foo"    , "CPNMU===" },
+        { "foob"   , "CPNMUOG=" },
+        { "fooba"  , "CPNMUOJ1" },
+        { "foobar" , "CPNMUOJ1E8======" }
     };
+    // @formatter:on
 
+    // @formatter:off
     private static final String [][] BASE32_TEST_CASES_CHUNKED = { //Chunked
-        {""       ,""},
-        {"f"      ,"MY======\r\n"},
-        {"fo"     ,"MZXQ====\r\n"},
-        {"foo"    ,"MZXW6===\r\n"},
-        {"foob"   ,"MZXW6YQ=\r\n"},
-        {"fooba"  ,"MZXW6YTB\r\n"},
-        {"foobar" ,"MZXW6YTBOI======\r\n"},
+        { ""       , "" },
+        { "f"      , "MY======\r\n" },
+        { "fo"     , "MZXQ====\r\n" },
+        { "foo"    , "MZXW6===\r\n" },
+        { "foob"   , "MZXW6YQ=\r\n" },
+        { "fooba"  , "MZXW6YTB\r\n" },
+        { "foobar" , "MZXW6YTBOI======\r\n" }
     };
+    // @formatter:on
 
+    // @formatter:off
     private static final String [][] BASE32_PAD_TEST_CASES = { // RFC 4648
-        {""       ,""},
-        {"f"      ,"MY%%%%%%"},
-        {"fo"     ,"MZXQ%%%%"},
-        {"foo"    ,"MZXW6%%%"},
-        {"foob"   ,"MZXW6YQ%"},
-        {"fooba"  ,"MZXW6YTB"},
-        {"foobar" ,"MZXW6YTBOI%%%%%%"},
+        { ""       , "" },
+        { "f"      , "MY%%%%%%" },
+        { "fo"     , "MZXQ%%%%" },
+        { "foo"    , "MZXW6%%%" },
+        { "foob"   , "MZXW6YQ%" },
+        { "fooba"  , "MZXW6YTB" },
+        { "foobar" , "MZXW6YTBOI%%%%%%" }
     };
+    // @formatter:on
 
     /**
      * Test base 32 decoding of the final trailing bits. Trailing encoded bytes
@@ -212,11 +230,11 @@ public class Base32Test {
         for (final Object[] element : BASE32_BINARY_TEST_CASES) {
             final String expected;
             if (element.length > 2) {
-                expected = (String)element[2];
+                expected = (String) element[2];
             } else {
-                expected = (String)element[1];
+                expected = (String) element[1];
             }
-                assertEquals(expected.toUpperCase(), codec.encodeAsString((byte[])element[0]));
+            assertEquals(expected.toUpperCase(), codec.encodeAsString((byte[]) element[0]));
         }
     }
 
@@ -224,15 +242,15 @@ public class Base32Test {
     public void testBase32BinarySamplesReverse() throws Exception {
         final Base32 codec = new Base32();
         for (final Object[] element : BASE32_BINARY_TEST_CASES) {
-            assertArrayEquals((byte[])element[0], codec.decode((String)element[1]));
+            assertArrayEquals((byte[]) element[0], codec.decode((String) element[1]));
         }
     }
 
     @Test
-    public void testBase32Chunked () throws Exception {
+    public void testBase32Chunked() throws Exception {
         final Base32 codec = new Base32(20);
         for (final String[] element : BASE32_TEST_CASES_CHUNKED) {
-                assertEquals(element[1], codec.encodeAsString(element[0].getBytes(CHARSET_UTF8)));
+            assertEquals(element[1], codec.encodeAsString(element[0].getBytes(CHARSET_UTF8)));
         }
     }
 
@@ -273,15 +291,14 @@ public class Base32Test {
 
     @Test
     public void testBase32HexImpossibleSamples() {
-        testImpossibleCases(new Base32(0, null, true, BaseNCodec.PAD_DEFAULT, CodecPolicy.STRICT),
-            BASE32HEX_IMPOSSIBLE_CASES);
+        testImpossibleCases(new Base32(0, null, true, BaseNCodec.PAD_DEFAULT, CodecPolicy.STRICT), BASE32HEX_IMPOSSIBLE_CASES);
     }
 
     @Test
     public void testBase32HexSamples() throws Exception {
         final Base32 codec = new Base32(true);
         for (final String[] element : BASE32HEX_TEST_CASES) {
-                assertEquals(element[1], codec.encodeAsString(element[0].getBytes(CHARSET_UTF8)));
+            assertEquals(element[1], codec.encodeAsString(element[0].getBytes(CHARSET_UTF8)));
         }
     }
 
@@ -303,15 +320,12 @@ public class Base32Test {
 
     @Test
     public void testBase32ImpossibleChunked() {
-        testImpossibleCases(
-            new Base32(20, BaseNCodec.CHUNK_SEPARATOR, false, BaseNCodec.PAD_DEFAULT, CodecPolicy.STRICT),
-            BASE32_IMPOSSIBLE_CASES_CHUNKED);
+        testImpossibleCases(new Base32(20, BaseNCodec.CHUNK_SEPARATOR, false, BaseNCodec.PAD_DEFAULT, CodecPolicy.STRICT), BASE32_IMPOSSIBLE_CASES_CHUNKED);
     }
 
     @Test
     public void testBase32ImpossibleSamples() {
-        testImpossibleCases(new Base32(0, null, false, BaseNCodec.PAD_DEFAULT, CodecPolicy.STRICT),
-            BASE32_IMPOSSIBLE_CASES);
+        testImpossibleCases(new Base32(0, null, false, BaseNCodec.PAD_DEFAULT, CodecPolicy.STRICT), BASE32_IMPOSSIBLE_CASES);
     }
 
     private void testBase32InBuffer(final int startPasSize, final int endPadSize) {
@@ -328,22 +342,22 @@ public class Base32Test {
     public void testBase32Samples() throws Exception {
         final Base32 codec = new Base32();
         for (final String[] element : BASE32_TEST_CASES) {
-                assertEquals(element[1], codec.encodeAsString(element[0].getBytes(CHARSET_UTF8)));
+            assertEquals(element[1], codec.encodeAsString(element[0].getBytes(CHARSET_UTF8)));
         }
     }
 
     @Test
     public void testBase32SamplesNonDefaultPadding() throws Exception {
-        final Base32 codec = new Base32((byte)0x25); // '%' <=> 0x25
+        final Base32 codec = new Base32((byte) 0x25); // '%' <=> 0x25
 
         for (final String[] element : BASE32_PAD_TEST_CASES) {
-                assertEquals(element[1], codec.encodeAsString(element[0].getBytes(CHARSET_UTF8)));
+            assertEquals(element[1], codec.encodeAsString(element[0].getBytes(CHARSET_UTF8)));
         }
     }
 
     @Test
     public void testCodec200() {
-        final Base32 codec = new Base32(true, (byte)'W'); // should be allowed
+        final Base32 codec = new Base32(true, (byte) 'W'); // should be allowed
         assertNotNull(codec);
     }
 
@@ -357,16 +371,16 @@ public class Base32Test {
         base32 = new Base32(32, new byte[] {}, false);
         // This is different behavior than Base64 which validates the separator
         // even when line length is negative.
-        base32 = new Base32(-1, new byte[] {'A'});
-        base32 = new Base32(32, new byte[] {'$'}); // OK
+        base32 = new Base32(-1, new byte[] { 'A' });
+        base32 = new Base32(32, new byte[] { '$' }); // OK
         assertThrows(IllegalArgumentException.class, () -> new Base32(32, null), "null line separator");
-        assertThrows(IllegalArgumentException.class, () -> new Base32(32, new byte[] {'A'}), "'A' as a line separator");
-        assertThrows(IllegalArgumentException.class, () -> new Base32(32, new byte[] {'='}), "'=' as a line separator");
-        assertThrows(IllegalArgumentException.class, () -> new Base32(32, new byte[] {'A', '$'}), "'A$' as a line separator");
-        assertThrows(IllegalArgumentException.class, () -> new Base32(32, new byte[] {'\n'}, false, (byte) 'A'), "'A' as padding");
-        assertThrows(IllegalArgumentException.class, () -> new Base32(32, new byte[] {'\n'}, false, (byte) ' '), "' ' as padding");
+        assertThrows(IllegalArgumentException.class, () -> new Base32(32, new byte[] { 'A' }), "'A' as a line separator");
+        assertThrows(IllegalArgumentException.class, () -> new Base32(32, new byte[] { '=' }), "'=' as a line separator");
+        assertThrows(IllegalArgumentException.class, () -> new Base32(32, new byte[] { 'A', '$' }), "'A$' as a line separator");
+        assertThrows(IllegalArgumentException.class, () -> new Base32(32, new byte[] { '\n' }, false, (byte) 'A'), "'A' as padding");
+        assertThrows(IllegalArgumentException.class, () -> new Base32(32, new byte[] { '\n' }, false, (byte) ' '), "' ' as padding");
 
-        base32 = new Base32(32, new byte[] {' ', '$', '\n', '\r', '\t'}); // OK
+        base32 = new Base32(32, new byte[] { ' ', '$', '\n', '\r', '\t' }); // OK
         assertNotNull(base32);
     }
 
@@ -399,14 +413,14 @@ public class Base32Test {
     public void testIsInAlphabet() {
         // invalid bounds
         Base32 b32 = new Base32(true);
-        assertFalse(b32.isInAlphabet((byte)0));
-        assertFalse(b32.isInAlphabet((byte)1));
-        assertFalse(b32.isInAlphabet((byte)-1));
-        assertFalse(b32.isInAlphabet((byte)-15));
-        assertFalse(b32.isInAlphabet((byte)-32));
-        assertFalse(b32.isInAlphabet((byte)127));
-        assertFalse(b32.isInAlphabet((byte)128));
-        assertFalse(b32.isInAlphabet((byte)255));
+        assertFalse(b32.isInAlphabet((byte) 0));
+        assertFalse(b32.isInAlphabet((byte) 1));
+        assertFalse(b32.isInAlphabet((byte) -1));
+        assertFalse(b32.isInAlphabet((byte) -15));
+        assertFalse(b32.isInAlphabet((byte) -32));
+        assertFalse(b32.isInAlphabet((byte) 127));
+        assertFalse(b32.isInAlphabet((byte) 128));
+        assertFalse(b32.isInAlphabet((byte) 255));
 
         // default table
         b32 = new Base32(false);
@@ -449,7 +463,7 @@ public class Base32Test {
             final Base32 codec = new Base32();
             final byte[][] b = BaseNTestData.randomData(codec, i);
             assertEquals(b[1].length, codec.getEncodedLength(b[0]), i + " " + codec.lineLength);
-            //assertEquals(b[0], codec.decode(b[1]));
+            // assertEquals(b[0], codec.decode(b[1]));
         }
     }
 
@@ -459,7 +473,7 @@ public class Base32Test {
             final Base32 codec = new Base32(10);
             final byte[][] b = BaseNTestData.randomData(codec, i);
             assertEquals(b[1].length, codec.getEncodedLength(b[0]), i + " " + codec.lineLength);
-            //assertEquals(b[0], codec.decode(b[1]));
+            // assertEquals(b[0], codec.decode(b[1]));
         }
     }
 
@@ -469,7 +483,7 @@ public class Base32Test {
             final Base32 codec = new Base32(true);
             final byte[][] b = BaseNTestData.randomData(codec, i);
             assertEquals(b[1].length, codec.getEncodedLength(b[0]), i + " " + codec.lineLength);
-            //assertEquals(b[0], codec.decode(b[1]));
+            // assertEquals(b[0], codec.decode(b[1]));
         }
     }
 
@@ -481,13 +495,13 @@ public class Base32Test {
             final byte[] unencoded = new byte[i];
             final byte[] allInOne = codec.encode(unencoded);
             codec = new Base32();
-            for (int j=0; j< unencoded.length; j++) {
+            for (int j = 0; j < unencoded.length; j++) {
                 codec.encode(unencoded, j, 1, context);
             }
             codec.encode(unencoded, 0, -1, context);
             final byte[] singly = new byte[allInOne.length];
             codec.readResults(singly, 0, 100, context);
-            if (!Arrays.equals(allInOne, singly)){
+            if (!Arrays.equals(allInOne, singly)) {
                 fail();
             }
         }

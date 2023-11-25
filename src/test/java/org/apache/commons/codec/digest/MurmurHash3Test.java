@@ -66,9 +66,15 @@ public class MurmurHash3Test {
      * mmh3.hash(bytes[13:15])
      * </pre>
      */
-    private static final int[] RANDOM_INTS = {
-        46,246,249,184,247,84,99,144,62,77,195,220,92,20,150,159,38,40,124,252,185,28,63,13,213,172,85,198,118,74,109,157,132,216,76,177,173,23,140,86,146,95,54,176,114,179,234,174,183,141,122,12,60,116,200,142,6,167,59,240,33,29,165,111,243,30,219,110,255,53,32,35,64,225,96,152,70,41,133,80,244,127,57,199,5,164,151,49,26,180,203,83,108,39,126,208,42,206,178,19,69,223,71,231,250,125,211,232,189,55,44,82,48,221,43,192,241,103,155,27,51,163,21,169,91,94,217,191,78,72,93,102,104,105,8,113,100,143,89,245,227,120,160,251,153,145,45,218,168,233,229,253,67,22,182,98,137,128,135,11,214,66,73,171,188,170,131,207,79,106,24,75,237,194,7,129,215,81,248,242,16,25,136,147,156,97,52,10,181,17,205,58,101,68,230,1,37,0,222,88,130,148,224,47,50,197,34,212,196,209,14,36,139,228,154,31,175,202,236,161,3,162,190,254,134,119,4,61,65,117,186,107,204,9,187,201,90,149,226,56,239,238,235,112,87,18,121,115,138,123,210,2,193,166,158,15
-    };
+    private static final int[] RANDOM_INTS = { 46, 246, 249, 184, 247, 84, 99, 144, 62, 77, 195, 220, 92, 20, 150, 159, 38, 40, 124, 252, 185, 28, 63, 13, 213,
+            172, 85, 198, 118, 74, 109, 157, 132, 216, 76, 177, 173, 23, 140, 86, 146, 95, 54, 176, 114, 179, 234, 174, 183, 141, 122, 12, 60, 116, 200, 142, 6,
+            167, 59, 240, 33, 29, 165, 111, 243, 30, 219, 110, 255, 53, 32, 35, 64, 225, 96, 152, 70, 41, 133, 80, 244, 127, 57, 199, 5, 164, 151, 49, 26, 180,
+            203, 83, 108, 39, 126, 208, 42, 206, 178, 19, 69, 223, 71, 231, 250, 125, 211, 232, 189, 55, 44, 82, 48, 221, 43, 192, 241, 103, 155, 27, 51, 163,
+            21, 169, 91, 94, 217, 191, 78, 72, 93, 102, 104, 105, 8, 113, 100, 143, 89, 245, 227, 120, 160, 251, 153, 145, 45, 218, 168, 233, 229, 253, 67, 22,
+            182, 98, 137, 128, 135, 11, 214, 66, 73, 171, 188, 170, 131, 207, 79, 106, 24, 75, 237, 194, 7, 129, 215, 81, 248, 242, 16, 25, 136, 147, 156, 97,
+            52, 10, 181, 17, 205, 58, 101, 68, 230, 1, 37, 0, 222, 88, 130, 148, 224, 47, 50, 197, 34, 212, 196, 209, 14, 36, 139, 228, 154, 31, 175, 202, 236,
+            161, 3, 162, 190, 254, 134, 119, 4, 61, 65, 117, 186, 107, 204, 9, 187, 201, 90, 149, 226, 56, 239, 238, 235, 112, 87, 18, 121, 115, 138, 123, 210,
+            2, 193, 166, 158, 15 };
 
     /**
      * 256 bytes in the range [0,255] arranged in random order.
@@ -78,8 +84,8 @@ public class MurmurHash3Test {
 
     static {
         RANDOM_BYTES = new byte[RANDOM_INTS.length];
-        for (int i=0; i<RANDOM_BYTES.length; i++) {
-            RANDOM_BYTES[i] = (byte)RANDOM_INTS[i];
+        for (int i = 0; i < RANDOM_BYTES.length; i++) {
+            RANDOM_BYTES[i] = (byte) RANDOM_INTS[i];
         }
     }
 
@@ -232,7 +238,8 @@ public class MurmurHash3Test {
             {1237530251176898868L, 6144786892208594932L}, {2347717913548230384L, -7461066668225718223L},
             {-7963311463560798404L, 8435801462986138227L}, {-7493166089060196513L, 8163503673197886404L},
             {6807249306539951962L, -1438886581269648819L}, {6752656991043418179L, 6334147827922066123L},
-            {-4534351735605790331L, -4530801663887858236L}, {-7886946241830957955L, -6261339648449285315L},};
+            {-4534351735605790331L, -4530801663887858236L}, {-7886946241830957955L, -6261339648449285315L}
+        };
         for (int i = 0; i < answers.length; i++) {
             final byte[] bytes = Arrays.copyOf(RANDOM_BYTES, i);
             assertArrayEquals(answers[i], MurmurHash3.hash128(bytes));
@@ -285,7 +292,8 @@ public class MurmurHash3Test {
 
         // Test with all sizes up to 31 bytes. This ensures a full round of 16-bytes plus up to
         // 15 bytes remaining.
-        final long[][] answers = {{5954234972212089025L, 3342108296337967352L},
+        final long[][] answers = {
+                {5954234972212089025L, 3342108296337967352L},
                 {8501094764898402923L, 7873951092908129427L}, {-3334322685492296196L, -2842715922956549478L},
                 {-2177918982459519644L, -1612349961980368636L}, {4172870320608886992L, -4177375712254136503L},
                 {7546965006884307324L, -5222114032564054641L}, {-2885083166621537267L, -2069868899915344482L},
@@ -301,7 +309,8 @@ public class MurmurHash3Test {
                 {-7772046549951435453L, 5263206145535830491L}, {7458715941971015543L, 5470582752171544854L},
                 {-7753394773760064468L, -2330157750295630617L}, {-5899278942232791979L, 6235686401271389982L},
                 {4881732293467626532L, 2617335658565007304L}, {-5722863941703478257L, -5424475653939430258L},
-                {-3703319768293496315L, -2124426428486426443L},};
+                {-3703319768293496315L, -2124426428486426443L}
+        };
         for (int i = 0; i < answers.length; i++) {
             assertArrayEquals(answers[i], MurmurHash3.hash128(RANDOM_BYTES, offset, i, seed), "Length: " + i);
         }
@@ -324,7 +333,8 @@ public class MurmurHash3Test {
         // 15 bytes remaining.
         // for x in range(0, 32):
         //   print(mmh3.hash64(bytes[13:x+13], 42), ',')
-        final long[][] answers = {{-1140915396076141277L, -3386313222241793095L},
+        final long[][] answers = {
+            {-1140915396076141277L, -3386313222241793095L},
             {2745805417334040752L, -3045882272665292331L}, {6807939080212835946L, -1975749467247671127L},
             {-7924884987449335214L, -4468571497642087939L}, {3005389733967167773L, -5809440073240597398L},
             {8032745196600164727L, 4545709434702374224L}, {2095398623732573832L, 1778447136435513908L},
@@ -340,7 +350,8 @@ public class MurmurHash3Test {
             {1131205296221907191L, -6256656049039287019L}, {8583339267101027117L, 8934225022848628726L},
             {-6379552869905441749L, 8973517768420051734L}, {5076646564516328801L, 8561479196844000567L},
             {-4610341636137642517L, -6694266039505142069L}, {-758896383254029789L, 4050360662271552727L},
-            {-6123628195475753507L, 4283875822581966645L},};
+            {-6123628195475753507L, 4283875822581966645L}
+        };
         for (int i = 0; i < answers.length; i++) {
             assertArrayEquals(answers[i], MurmurHash3.hash128(RANDOM_BYTES, offset, i, seed), "Length: " + i);
         }
@@ -365,7 +376,8 @@ public class MurmurHash3Test {
         // 15 bytes remaining.
         // for x in range(0, 32):
         //   print(mmh3.hash64(bytes[:x], 0), ',')
-        final long[][] answers = {{0L, 0L}, {-2808653841080383123L, -2531784594030660343L},
+        final long[][] answers = {
+            {0L, 0L}, {-2808653841080383123L, -2531784594030660343L},
             {-1284575471001240306L, -8226941173794461820L}, {1645529003294647142L, 4109127559758330427L},
             {-4117979116203940765L, -8362902660322042742L}, {2559943399590596158L, 4738005461125350075L},
             {-1651760031591552651L, -5386079254924224461L}, {-6208043960690815609L, 7862371518025305074L},
@@ -380,7 +392,8 @@ public class MurmurHash3Test {
             {-8644950936809596954L, -5144522919639618331L}, {-5628571865255520773L, -839021001655132087L},
             {-5226774667293212446L, -505255961194269502L}, {1337107025517938142L, 3260952073019398505L},
             {9149852874328582511L, 1880188360994521535L}, {-4035957988359881846L, -7709057850766490780L},
-            {-3842593823306330815L, 3805147088291453755L}, {4030161393619149616L, -2813603781312455238L},};
+            {-3842593823306330815L, 3805147088291453755L}, {4030161393619149616L, -2813603781312455238L}
+        };
         for (int i = 0; i < answers.length; i++) {
             final byte[] bytes = Arrays.copyOf(RANDOM_BYTES, i);
             assertArrayEquals(answers[i], MurmurHash3.hash128x64(bytes));
@@ -407,7 +420,8 @@ public class MurmurHash3Test {
         // 15 bytes remaining.
         // for x in range(0, 32):
         //   print(mmh3.hash64(bytes[13:x+13], -42), ',')
-        final long[][] answers = {{7182599573337898253L, -6490979146667806054L},
+        final long[][] answers = {
+            {7182599573337898253L, -6490979146667806054L},
             {-461284136738605467L, 7073284964362976233L}, {-3090354666589400212L, 2978755180788824810L},
             {5052807367580803906L, -4497188744879598335L}, {5003711854877353474L, -6616808651483337088L},
             {2043501804923817748L, -760668448196918637L}, {6813003268375229932L, -1818545210475363684L},
@@ -423,7 +437,8 @@ public class MurmurHash3Test {
             {8357110718969014985L, -4737117827581590306L}, {2208857857926305405L, -8360240839768465042L},
             {858120048221036376L, -5822288789703639119L}, {-1988334009458340679L, 1262479472434068698L},
             {-8580307083590783934L, 3634449965473715778L}, {6705664584730187559L, 5192304951463791556L},
-            {-6426410954037604142L, -1579122709247558101L},};
+            {-6426410954037604142L, -1579122709247558101L}
+        };
         for (int i = 0; i < answers.length; i++) {
             assertArrayEquals(answers[i], MurmurHash3.hash128x64(RANDOM_BYTES, offset, i, seed), "Length: " + i);
         }
@@ -446,7 +461,8 @@ public class MurmurHash3Test {
         // 15 bytes remaining.
         // for x in range(0, 32):
         //   print(mmh3.hash64(bytes[13:x+13], 42), ',')
-        final long[][] answers = {{-1140915396076141277L, -3386313222241793095L},
+        final long[][] answers = {
+            {-1140915396076141277L, -3386313222241793095L},
             {2745805417334040752L, -3045882272665292331L}, {6807939080212835946L, -1975749467247671127L},
             {-7924884987449335214L, -4468571497642087939L}, {3005389733967167773L, -5809440073240597398L},
             {8032745196600164727L, 4545709434702374224L}, {2095398623732573832L, 1778447136435513908L},
@@ -462,7 +478,8 @@ public class MurmurHash3Test {
             {1131205296221907191L, -6256656049039287019L}, {8583339267101027117L, 8934225022848628726L},
             {-6379552869905441749L, 8973517768420051734L}, {5076646564516328801L, 8561479196844000567L},
             {-4610341636137642517L, -6694266039505142069L}, {-758896383254029789L, 4050360662271552727L},
-            {-6123628195475753507L, 4283875822581966645L},};
+            {-6123628195475753507L, 4283875822581966645L}
+        };
         for (int i = 0; i < answers.length; i++) {
             assertArrayEquals(answers[i], MurmurHash3.hash128x64(RANDOM_BYTES, offset, i, seed), "Length: " + i);
         }
@@ -471,7 +488,9 @@ public class MurmurHash3Test {
     /**
      * Test the {@link MurmurHash3#hash32(byte[])} algorithm.
      *
-     * <p>Reference data is taken from the Python library {@code mmh3}.</p>
+     * <p>
+     * Reference data is taken from the Python library {@code mmh3}.
+     * </p>
      *
      * @see <a href="https://pypi.org/project/mmh3/">mmh3</a>
      */
@@ -483,11 +502,10 @@ public class MurmurHash3Test {
         // Test with all sizes up to 31 bytes. This ensures a full round of 16-bytes plus up to
         // 15 bytes remaining.
         // for x in range(0, 32):
-        //   print(mmh3.hash(bytes[:x], 104729), ',')
-        final int[] answers = {-965378730, 418246248, 1175981702, -616767012, -12304673, 1697005142, -1212417875,
-            -420043393, -826068069, -1721451528, -544986914, 892942691, 27535194, 974863697, 1835661694, -894915836,
-            1826914566, -677571679, 1218764493, -375719050, -1320048170, -503583763, 1321750696, -175065786, -496878386,
-            -12065683, 512351473, 716560510, -1944803590, 10253199, 1105638211, 525704533,};
+        // print(mmh3.hash(bytes[:x], 104729), ',')
+        final int[] answers = { -965378730, 418246248, 1175981702, -616767012, -12304673, 1697005142, -1212417875, -420043393, -826068069, -1721451528,
+                -544986914, 892942691, 27535194, 974863697, 1835661694, -894915836, 1826914566, -677571679, 1218764493, -375719050, -1320048170, -503583763,
+                1321750696, -175065786, -496878386, -12065683, 512351473, 716560510, -1944803590, 10253199, 1105638211, 525704533, };
         for (int i = 0; i < answers.length; i++) {
             final byte[] bytes = Arrays.copyOf(RANDOM_BYTES, i);
             // Known bug: Incorrect result for non modulus of 4 byte arrays if there are
@@ -583,11 +601,12 @@ public class MurmurHash3Test {
     }
 
     /**
-     * Test the {@link MurmurHash3#hash32(String)} algorithm. This only tests it can return
-     * the same value as {@link MurmurHash3#hash32(byte[], int, int, int)} if the string
-     * is converted to bytes using the method {@link String#getBytes()}.
+     * Test the {@link MurmurHash3#hash32(String)} algorithm. This only tests it can return the same value as {@link MurmurHash3#hash32(byte[], int, int, int)}
+     * if the string is converted to bytes using the method {@link String#getBytes()}.
      *
-     * <p>The test uses random strings created with random unicode code points.</p>
+     * <p>
+     * The test uses random strings created with random unicode code points.
+     * </p>
      */
     @Test
     public void testHash32String() {
@@ -616,7 +635,9 @@ public class MurmurHash3Test {
     /**
      * Test the {@link MurmurHash3#hash32(byte[], int)} algorithm.
      *
-     * <p>Reference data is taken from the Python library {@code mmh3}.</p>
+     * <p>
+     * Reference data is taken from the Python library {@code mmh3}.
+     * </p>
      *
      * @see <a href="https://pypi.org/project/mmh3/">mmh3</a>
      */
@@ -628,11 +649,10 @@ public class MurmurHash3Test {
         // Test with all sizes up to 31 bytes. This ensures a full round of 16-bytes plus up to
         // 15 bytes remaining.
         // for x in range(0, 32):
-        //   print(mmh3.hash(bytes[:x], 104729), ',')
-        final int[] answers = {-965378730, 418246248, 1175981702, -616767012, -12304673, 1697005142, -1212417875,
-            -420043393, -826068069, -1721451528, -544986914, 892942691, 27535194, 974863697, 1835661694, -894915836,
-            1826914566, -677571679, 1218764493, -375719050, -1320048170, -503583763, 1321750696, -175065786, -496878386,
-            -12065683, 512351473, 716560510, -1944803590, 10253199, 1105638211, 525704533,};
+        // print(mmh3.hash(bytes[:x], 104729), ',')
+        final int[] answers = { -965378730, 418246248, 1175981702, -616767012, -12304673, 1697005142, -1212417875, -420043393, -826068069, -1721451528,
+                -544986914, 892942691, 27535194, 974863697, 1835661694, -894915836, 1826914566, -677571679, 1218764493, -375719050, -1320048170, -503583763,
+                1321750696, -175065786, -496878386, -12065683, 512351473, 716560510, -1944803590, 10253199, 1105638211, 525704533, };
         for (int i = 0; i < answers.length; i++) {
             // Known bug: Incorrect result for non modulus of 4 byte arrays if there are
             // negative bytes
@@ -647,7 +667,9 @@ public class MurmurHash3Test {
     /**
      * Test the {@link MurmurHash3#hash32(byte[], int, int)} algorithm.
      *
-     * <p>Reference data is taken from the Python library {@code mmh3}.</p>
+     * <p>
+     * Reference data is taken from the Python library {@code mmh3}.
+     * </p>
      *
      * @see <a href="https://pypi.org/project/mmh3/">mmh3</a>
      */
@@ -660,11 +682,10 @@ public class MurmurHash3Test {
         // Test with all sizes up to 31 bytes. This ensures a full round of 16-bytes plus up to
         // 15 bytes remaining.
         // for x in range(0, 32):
-        //   print(mmh3.hash(bytes[:x], -42), ',')
-        final int[] answers = {192929823, 7537536, -99368911, -1261039957, -1719251056, -399594848, 372285930,
-            -80756529, 1770924588, -1071759082, 1832217706, 1921413466, 1701676113, 675584253, 1620634486, 427719405,
-            -973727623, 533209078, 136016960, 1947798330, 428635832, -1125743884, 793211715, -2068889169, -136818786,
-            -720841364, -891446378, 1990860976, -710528065, -1602505694, -1493714677, 1911121524,};
+        // print(mmh3.hash(bytes[:x], -42), ',')
+        final int[] answers = { 192929823, 7537536, -99368911, -1261039957, -1719251056, -399594848, 372285930, -80756529, 1770924588, -1071759082, 1832217706,
+                1921413466, 1701676113, 675584253, 1620634486, 427719405, -973727623, 533209078, 136016960, 1947798330, 428635832, -1125743884, 793211715,
+                -2068889169, -136818786, -720841364, -891446378, 1990860976, -710528065, -1602505694, -1493714677, 1911121524, };
         for (int i = 0; i < answers.length; i++) {
             // Known bug: Incorrect result for non modulus of 4 byte arrays if there are
             // negative bytes
@@ -679,7 +700,9 @@ public class MurmurHash3Test {
     /**
      * Test the {@link MurmurHash3#hash32(byte[], int, int, int)} algorithm.
      *
-     * <p>Reference data is taken from the Python library {@code mmh3}.</p>
+     * <p>
+     * Reference data is taken from the Python library {@code mmh3}.
+     * </p>
      *
      * @see <a href="https://pypi.org/project/mmh3/">mmh3</a>
      */
@@ -691,11 +714,10 @@ public class MurmurHash3Test {
         // Test with all sizes up to 31 bytes. This ensures a full round of 16-bytes plus up to
         // 15 bytes remaining.
         // for x in range(0, 32):
-        //   print(mmh3.hash(bytes[13:x+13], -42), ',')
-        final int[] answers = {192929823, -27171978, -1282326280, -816314453, -1176217753, -1904531247, 1962794233,
-            -1302316624, -1151850323, -1464386748, -369299427, 972232488, 1747314487, 2137398916, 690986564,
-            -1985866226, -678669121, -2123325690, -253319081, 46181235, 656058278, 1401175653, 1750113912, -1567219725,
-            2032742772, -2024269989, -305340794, 1161737942, -661265418, 172838872, -650122718, -1934812417,};
+        // print(mmh3.hash(bytes[13:x+13], -42), ',')
+        final int[] answers = { 192929823, -27171978, -1282326280, -816314453, -1176217753, -1904531247, 1962794233, -1302316624, -1151850323, -1464386748,
+                -369299427, 972232488, 1747314487, 2137398916, 690986564, -1985866226, -678669121, -2123325690, -253319081, 46181235, 656058278, 1401175653,
+                1750113912, -1567219725, 2032742772, -2024269989, -305340794, 1161737942, -661265418, 172838872, -650122718, -1934812417, };
         for (int i = 0; i < answers.length; i++) {
             // Known bug: Incorrect result for non modulus of 4 byte arrays if there are
             // negative bytes
@@ -708,8 +730,7 @@ public class MurmurHash3Test {
     }
 
     /**
-     * Test to demonstrate the errors in {@link MurmurHash3#hash32(byte[], int, int, int)}
-     * if the final 1, 2, or 3 bytes are negative.
+     * Test to demonstrate the errors in {@link MurmurHash3#hash32(byte[], int, int, int)} if the final 1, 2, or 3 bytes are negative.
      */
     @Test
     public void testHash32WithTrailingNegativeSignedBytesIsInvalid() {
@@ -721,18 +742,20 @@ public class MurmurHash3Test {
         // mmh3.hash(np.uint8([-1, 0]))
         // mmh3.hash(np.uint8([-1, 0, 0]))
         // mmh3.hash(np.uint8([0, -1, 0]))
-        assertNotEquals(-43192051, MurmurHash3.hash32(new byte[] {-1}, 0, 1, 0));
-        assertNotEquals(-582037868, MurmurHash3.hash32(new byte[] {0, -1}, 0, 2, 0));
-        assertNotEquals(922088087, MurmurHash3.hash32(new byte[] {0, 0, -1}, 0, 3, 0));
-        assertNotEquals(-1309567588, MurmurHash3.hash32(new byte[] {-1, 0}, 0, 2, 0));
-        assertNotEquals(-363779670, MurmurHash3.hash32(new byte[] {-1, 0, 0}, 0, 3, 0));
-        assertNotEquals(-225068062, MurmurHash3.hash32(new byte[] {0, -1, 0}, 0, 3, 0));
+        assertNotEquals(-43192051, MurmurHash3.hash32(new byte[] { -1 }, 0, 1, 0));
+        assertNotEquals(-582037868, MurmurHash3.hash32(new byte[] { 0, -1 }, 0, 2, 0));
+        assertNotEquals(922088087, MurmurHash3.hash32(new byte[] { 0, 0, -1 }, 0, 3, 0));
+        assertNotEquals(-1309567588, MurmurHash3.hash32(new byte[] { -1, 0 }, 0, 2, 0));
+        assertNotEquals(-363779670, MurmurHash3.hash32(new byte[] { -1, 0, 0 }, 0, 3, 0));
+        assertNotEquals(-225068062, MurmurHash3.hash32(new byte[] { 0, -1, 0 }, 0, 3, 0));
     }
 
     /**
      * Test the {@link MurmurHash3#hash32x86(byte[])} algorithm.
      *
-     * <p>Reference data is taken from the Python library {@code mmh3}.</p>
+     * <p>
+     * Reference data is taken from the Python library {@code mmh3}.
+     * </p>
      *
      * @see <a href="https://pypi.org/project/mmh3/">mmh3</a>
      */
@@ -746,11 +769,10 @@ public class MurmurHash3Test {
         // Test with all sizes up to 31 bytes. This ensures a full round of 16-bytes plus up to
         // 15 bytes remaining.
         // for x in range(0, 32):
-        //   print(mmh3.hash(bytes[:x], 0), ',')
-        final int[] answers = {0, -1353253853, 915381745, -734983419, 1271125654, -1042265893, -1204521619, 735845843,
-            138310876, -1918938664, 1399647898, -1126342309, 2067593280, 1220975287, 1941281084, -1289513180, 942412060,
-            -618173583, -269546647, -1645631262, 1162379906, -1960125577, -1856773195, 1980513522, 1174612855,
-            905810751, 1044578220, -1758486689, -491393913, 839836946, -435014415, 2044851178,};
+        // print(mmh3.hash(bytes[:x], 0), ',')
+        final int[] answers = { 0, -1353253853, 915381745, -734983419, 1271125654, -1042265893, -1204521619, 735845843, 138310876, -1918938664, 1399647898,
+                -1126342309, 2067593280, 1220975287, 1941281084, -1289513180, 942412060, -618173583, -269546647, -1645631262, 1162379906, -1960125577,
+                -1856773195, 1980513522, 1174612855, 905810751, 1044578220, -1758486689, -491393913, 839836946, -435014415, 2044851178 };
         for (int i = 0; i < answers.length; i++) {
             final byte[] bytes = Arrays.copyOf(RANDOM_BYTES, i);
             assertEquals(answers[i], MurmurHash3.hash32x86(bytes));
@@ -760,7 +782,9 @@ public class MurmurHash3Test {
     /**
      * Test the {@link MurmurHash3#hash32x86(byte[], int, int, int)} algorithm.
      *
-     * <p>Reference data is taken from the Python library {@code mmh3}.</p>
+     * <p>
+     * Reference data is taken from the Python library {@code mmh3}.
+     * </p>
      *
      * @see <a href="https://pypi.org/project/mmh3/">mmh3</a>
      */
@@ -769,34 +793,31 @@ public class MurmurHash3Test {
         // Data as above for testing MurmurHash3.hash32(byte[], int, int, int).
         final int seed = -42;
         final int offset = 13;
-        final int[] answers = {192929823, -27171978, -1282326280, -816314453, -1176217753, -1904531247, 1962794233,
-            -1302316624, -1151850323, -1464386748, -369299427, 972232488, 1747314487, 2137398916, 690986564,
-            -1985866226, -678669121, -2123325690, -253319081, 46181235, 656058278, 1401175653, 1750113912, -1567219725,
-            2032742772, -2024269989, -305340794, 1161737942, -661265418, 172838872, -650122718, -1934812417,};
+        final int[] answers = { 192929823, -27171978, -1282326280, -816314453, -1176217753, -1904531247, 1962794233, -1302316624, -1151850323, -1464386748,
+                -369299427, 972232488, 1747314487, 2137398916, 690986564, -1985866226, -678669121, -2123325690, -253319081, 46181235, 656058278, 1401175653,
+                1750113912, -1567219725, 2032742772, -2024269989, -305340794, 1161737942, -661265418, 172838872, -650122718, -1934812417 };
         for (int i = 0; i < answers.length; i++) {
             assertEquals(answers[i], MurmurHash3.hash32x86(RANDOM_BYTES, offset, i, seed));
         }
     }
 
     /**
-     * Test to demonstrate {@link MurmurHash3#hash32x86(byte[], int, int, int)} is OK
-     * if the final 1, 2, or 3 bytes are negative.
+     * Test to demonstrate {@link MurmurHash3#hash32x86(byte[], int, int, int)} is OK if the final 1, 2, or 3 bytes are negative.
      */
     @Test
     public void testHash32x86WithTrailingNegativeSignedBytes() {
         // Data as above for testing MurmurHash3.hash32(byte[], int, int, int).
         // This test uses assertEquals().
-        assertEquals(-43192051, MurmurHash3.hash32x86(new byte[] {-1}, 0, 1, 0));
-        assertEquals(-582037868, MurmurHash3.hash32x86(new byte[] {0, -1}, 0, 2, 0));
-        assertEquals(922088087, MurmurHash3.hash32x86(new byte[] {0, 0, -1}, 0, 3, 0));
-        assertEquals(-1309567588, MurmurHash3.hash32x86(new byte[] {-1, 0}, 0, 2, 0));
-        assertEquals(-363779670, MurmurHash3.hash32x86(new byte[] {-1, 0, 0}, 0, 3, 0));
-        assertEquals(-225068062, MurmurHash3.hash32x86(new byte[] {0, -1, 0}, 0, 3, 0));
+        assertEquals(-43192051, MurmurHash3.hash32x86(new byte[] { -1 }, 0, 1, 0));
+        assertEquals(-582037868, MurmurHash3.hash32x86(new byte[] { 0, -1 }, 0, 2, 0));
+        assertEquals(922088087, MurmurHash3.hash32x86(new byte[] { 0, 0, -1 }, 0, 3, 0));
+        assertEquals(-1309567588, MurmurHash3.hash32x86(new byte[] { -1, 0 }, 0, 2, 0));
+        assertEquals(-363779670, MurmurHash3.hash32x86(new byte[] { -1, 0, 0 }, 0, 3, 0));
+        assertEquals(-225068062, MurmurHash3.hash32x86(new byte[] { 0, -1, 0 }, 0, 3, 0));
     }
 
     /**
-     * Test the {@link MurmurHash3#hash64(byte[])} algorithm.
-     * Unknown origin of test data. It may be from the Apache Hive project.
+     * Test the {@link MurmurHash3#hash64(byte[])} algorithm. Unknown origin of test data. It may be from the Apache Hive project.
      */
     @Test
     public void testHash64() {
@@ -806,11 +827,11 @@ public class MurmurHash3Test {
     }
 
     /**
-     * Test the {@link MurmurHash3#hash64(byte[])} method is Murmur3-like but does not match
-     * the bits returned from {@link MurmurHash3#hash128(byte[])}.
+     * Test the {@link MurmurHash3#hash64(byte[])} method is Murmur3-like but does not match the bits returned from {@link MurmurHash3#hash128(byte[])}.
      *
-     * <p>The hash64 method is not in the MurmurHash3 reference code and has been inherited
-     * from the port from Apache Hive.<p>
+     * <p>
+     * The hash64 method is not in the MurmurHash3 reference code and has been inherited from the port from Apache Hive.
+     * <p>
      */
     @Test
     public void testHash64InNotEqualToHash128() {
@@ -824,8 +845,7 @@ public class MurmurHash3Test {
     }
 
     /**
-     * Test the {@link MurmurHash3#hash64(byte[], int, int)} algorithm.
-     * Unknown origin of test data. It may be from the Apache Hive project.
+     * Test the {@link MurmurHash3#hash64(byte[], int, int)} algorithm. Unknown origin of test data. It may be from the Apache Hive project.
      */
     @Test
     public void testHash64WithOffsetAndLength() {
@@ -838,9 +858,8 @@ public class MurmurHash3Test {
     }
 
     /**
-     * Test the hash64() helper methods that work directly on primitives work as documented.
-     * This test the methods return the same value as {@link MurmurHash3#hash64(byte[])}
-     * with the byte[] created from the same primitive data via a {@link ByteBuffer}.
+     * Test the hash64() helper methods that work directly on primitives work as documented. This test the methods return the same value as
+     * {@link MurmurHash3#hash64(byte[])} with the byte[] created from the same primitive data via a {@link ByteBuffer}.
      */
     @Test
     public void testHash64WithPrimitives() {
@@ -870,15 +889,14 @@ public class MurmurHash3Test {
     }
 
     /**
-     * Test {@link IncrementalHash32} returns the same values as
-     * {@link MurmurHash3#hash32(byte[], int, int, int)}.
+     * Test {@link IncrementalHash32} returns the same values as {@link MurmurHash3#hash32(byte[], int, int, int)}.
      */
     @Test
     public void testIncrementalHash32() {
         final byte[] bytes = new byte[1023];
         ThreadLocalRandom.current().nextBytes(bytes);
         // The seed does not matter
-        for (final int seed : new int[] {-567, 0, 6787990}) {
+        for (final int seed : new int[] { -567, 0, 6787990 }) {
             // Cases are constructed to hit all edge cases of processing:
             // Nothing added
             assertIncrementalHash32(bytes, seed, 0, 0);
@@ -902,15 +920,14 @@ public class MurmurHash3Test {
     }
 
     /**
-     * Test {@link IncrementalHash32x86} returns the same values as
-     * {@link MurmurHash3#hash32x86(byte[], int, int, int)}.
+     * Test {@link IncrementalHash32x86} returns the same values as {@link MurmurHash3#hash32x86(byte[], int, int, int)}.
      */
     @Test
     public void testIncrementalHash32x86() {
         final byte[] bytes = new byte[1023];
         ThreadLocalRandom.current().nextBytes(bytes);
         // The seed does not matter
-        for (final int seed : new int[] {-567, 0, 6787990}) {
+        for (final int seed : new int[] { -567, 0, 6787990 }) {
             // Cases are constructed to hit all edge cases of processing:
             // Nothing added
             assertIncrementalHash32x86(bytes, seed, 0, 0);
@@ -934,10 +951,9 @@ public class MurmurHash3Test {
     }
 
     /**
-     * This test hits an edge case where a very large number of bytes is added to the incremental
-     * hash. The data is constructed so that an integer counter of unprocessed bytes will
-     * overflow. If this is not handled correctly then the code throws an exception when it
-     * copies more data into the unprocessed bytes array.
+     * This test hits an edge case where a very large number of bytes is added to the incremental hash. The data is constructed so that an integer counter of
+     * unprocessed bytes will overflow. If this is not handled correctly then the code throws an exception when it copies more data into the unprocessed bytes
+     * array.
      */
     @Test
     public void testIncrementalHashWithUnprocessedBytesAndHugeLengthArray() {

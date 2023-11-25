@@ -42,10 +42,12 @@ public class BaseNCodecTest {
 
         @Override
         void decode(final byte[] pArray, final int i, final int length, final Context context) {
+            // no-op
         }
 
         @Override
         void encode(final byte[] pArray, final int i, final int length, final Context context) {
+            // no-op
         }
 
         @Override
@@ -323,14 +325,14 @@ BaseNCodec codec;
 
     @Test
     public void testIsInAlphabetByteArrayBoolean() {
-        assertTrue(codec.isInAlphabet(new byte[]{}, false));
-        assertTrue(codec.isInAlphabet(new byte[]{'O'}, false));
-        assertFalse(codec.isInAlphabet(new byte[]{'O',' '}, false));
-        assertFalse(codec.isInAlphabet(new byte[]{' '}, false));
-        assertTrue(codec.isInAlphabet(new byte[]{}, true));
-        assertTrue(codec.isInAlphabet(new byte[]{'O'}, true));
-        assertTrue(codec.isInAlphabet(new byte[]{'O',' '}, true));
-        assertTrue(codec.isInAlphabet(new byte[]{' '}, true));
+        assertTrue(codec.isInAlphabet(new byte[] {}, false));
+        assertTrue(codec.isInAlphabet(new byte[] { 'O' }, false));
+        assertFalse(codec.isInAlphabet(new byte[] { 'O', ' ' }, false));
+        assertFalse(codec.isInAlphabet(new byte[] { ' ' }, false));
+        assertTrue(codec.isInAlphabet(new byte[] {}, true));
+        assertTrue(codec.isInAlphabet(new byte[] { 'O' }, true));
+        assertTrue(codec.isInAlphabet(new byte[] { 'O', ' ' }, true));
+        assertTrue(codec.isInAlphabet(new byte[] { ' ' }, true));
     }
 
     @Test
@@ -376,18 +378,20 @@ BaseNCodec codec;
     @Test
     public void testProvidePaddingByte() {
         // Given
-        codec = new BaseNCodec(0, 0, 0, 0, (byte)0x25) {
+        codec = new BaseNCodec(0, 0, 0, 0, (byte) 0x25) {
             @Override
             void decode(final byte[] pArray, final int i, final int length, final Context context) {
+                // no-op
             }
 
             @Override
             void encode(final byte[] pArray, final int i, final int length, final Context context) {
+                // no-op
             }
 
             @Override
             protected boolean isInAlphabet(final byte b) {
-                return b=='O' || b == 'K'; // allow OK
+                return b == 'O' || b == 'K'; // allow OK
             }
         };
 

@@ -33,7 +33,7 @@ public class Sha512CryptTest {
     @Test
     public void testSha256LargetThanBlocksize() {
         final byte[] buffer = new byte[200];
-        Arrays.fill(buffer, 0, 200, (byte)'A');
+        Arrays.fill(buffer, 0, 200, (byte) 'A');
         assertEquals("$6$abc$oP/h8PRhCKIA66KSTjGwNsQMSLLZnuFOTjOhrqNrDkKgjTlpePSqibB0qtmDapMbP/zN1cUEYSeHFrpgqZ.GG1", Sha2Crypt.sha512Crypt(buffer, "$6$abc"));
         // input password is 0-filled on return
         assertArrayEquals(new byte[buffer.length], buffer);

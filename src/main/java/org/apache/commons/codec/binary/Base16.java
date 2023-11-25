@@ -26,15 +26,12 @@ import org.apache.commons.codec.CodecPolicy;
  * This class is thread-safe.
  * </p>
  * <p>
- * This implementation strictly follows RFC 4648, and as such unlike
- * the {@link Base32} and {@link Base64} implementations,
- * it does not ignore invalid alphabet characters or whitespace,
- * neither does it offer chunking or padding characters.
+ * This implementation strictly follows RFC 4648, and as such unlike the {@link Base32} and {@link Base64} implementations, it does not ignore invalid alphabet
+ * characters or whitespace, neither does it offer chunking or padding characters.
  * </p>
  * <p>
- * The only additional feature above those specified in RFC 4648
- * is support for working with a lower-case alphabet in addition
- * to the default upper-case alphabet.
+ * The only additional feature above those specified in RFC 4648 is support for working with a lower-case alphabet in addition to the default upper-case
+ * alphabet.
  * </p>
  *
  * @see <a href="https://tools.ietf.org/html/rfc4648#section-8">RFC 4648 - 8. Base 16 Encoding</a>
@@ -44,19 +41,17 @@ import org.apache.commons.codec.CodecPolicy;
 public class Base16 extends BaseNCodec {
 
     /**
-     * BASE16 characters are 4 bits in length.
-     * They are formed by taking an 8-bit group,
-     * which is converted into two BASE16 characters.
+     * BASE16 characters are 4 bits in length. They are formed by taking an 8-bit group, which is converted into two BASE16 characters.
      */
     private static final int BITS_PER_ENCODED_BYTE = 4;
     private static final int BYTES_PER_ENCODED_BLOCK = 2;
     private static final int BYTES_PER_UNENCODED_BLOCK = 1;
 
     /**
-     * This array is a lookup table that translates Unicode characters drawn from the "Base16 Alphabet" (as specified
-     * in Table 5 of RFC 4648) into their 4-bit positive integer equivalents. Characters that are not in the Base16
-     * alphabet but fall within the bounds of the array are translated to -1.
+     * This array is a lookup table that translates Unicode characters drawn from the "Base16 Alphabet" (as specified in Table 5 of RFC 4648) into their 4-bit
+     * positive integer equivalents. Characters that are not in the Base16 alphabet but fall within the bounds of the array are translated to -1.
      */
+    // @formatter:off
     private static final byte[] UPPER_CASE_DECODE_TABLE = {
             //  0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
             -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 00-0f
@@ -65,21 +60,24 @@ public class Base16 extends BaseNCodec {
              0,  1,  2,  3,  4,  5,  6,  7,  8,  9, -1, -1, -1, -1, -1, -1, // 30-3f 0-9
             -1, 10, 11, 12, 13, 14, 15                                      // 40-46 A-F
     };
+    // @formatter:on
 
     /**
-     * This array is a lookup table that translates 4-bit positive integer index values into their "Base16 Alphabet"
-     * equivalents as specified in Table 5 of RFC 4648.
+     * This array is a lookup table that translates 4-bit positive integer index values into their "Base16 Alphabet" equivalents as specified in Table 5 of RFC
+     * 4648.
      */
+    // @formatter:off
     private static final byte[] UPPER_CASE_ENCODE_TABLE = {
             '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
             'A', 'B', 'C', 'D', 'E', 'F'
     };
+    // @formatter:on
 
     /**
-     * This array is a lookup table that translates Unicode characters drawn from the a lower-case "Base16 Alphabet"
-     * into their 4-bit positive integer equivalents. Characters that are not in the Base16
-     * alphabet but fall within the bounds of the array are translated to -1.
+     * This array is a lookup table that translates Unicode characters drawn from the a lower-case "Base16 Alphabet" into their 4-bit positive integer
+     * equivalents. Characters that are not in the Base16 alphabet but fall within the bounds of the array are translated to -1.
      */
+    // @formatter:off
     private static final byte[] LOWER_CASE_DECODE_TABLE = {
             //  0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
             -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 00-0f
@@ -90,15 +88,17 @@ public class Base16 extends BaseNCodec {
             -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 50-5f
             -1, 10, 11, 12, 13, 14, 15                                      // 60-66 a-f
     };
+    // @formatter:on
 
     /**
-     * This array is a lookup table that translates 4-bit positive integer index values into their "Base16 Alphabet"
-     * lower-case equivalents.
+     * This array is a lookup table that translates 4-bit positive integer index values into their "Base16 Alphabet" lower-case equivalents.
      */
+    // @formatter:off
     private static final byte[] LOWER_CASE_ENCODE_TABLE = {
             '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
             'a', 'b', 'c', 'd', 'e', 'f'
     };
+    // @formatter:on
 
     /** Mask used to extract 4 bits, used when decoding character. */
     private static final int MASK_4BITS = 0x0f;
@@ -132,12 +132,11 @@ public class Base16 extends BaseNCodec {
     /**
      * Creates a Base16 codec used for decoding and encoding.
      *
-     * @param lowerCase if {@code true} then use a lower-case Base16 alphabet.
+     * @param lowerCase      if {@code true} then use a lower-case Base16 alphabet.
      * @param decodingPolicy Decoding policy.
      */
     public Base16(final boolean lowerCase, final CodecPolicy decodingPolicy) {
-        super(BYTES_PER_UNENCODED_BLOCK, BYTES_PER_ENCODED_BLOCK, 0, 0,
-                PAD_DEFAULT, decodingPolicy);
+        super(BYTES_PER_UNENCODED_BLOCK, BYTES_PER_ENCODED_BLOCK, 0, 0, PAD_DEFAULT, decodingPolicy);
         if (lowerCase) {
             this.encodeTable = LOWER_CASE_ENCODE_TABLE;
             this.decodeTable = LOWER_CASE_DECODE_TABLE;
@@ -179,7 +178,7 @@ public class Base16 extends BaseNCodec {
             result = context.ibitWorkArea - 1 << BITS_PER_ENCODED_BYTE;
             result |= decodeOctet(data[offset++]);
 
-            buffer[context.pos++] = (byte)result;
+            buffer[context.pos++] = (byte) result;
 
             // reset to empty-value for next invocation!
             context.ibitWorkArea = 0;
@@ -189,7 +188,7 @@ public class Base16 extends BaseNCodec {
         while (offset < loopEnd) {
             result = decodeOctet(data[offset++]) << BITS_PER_ENCODED_BYTE;
             result |= decodeOctet(data[offset++]);
-            buffer[context.pos++] = (byte)result;
+            buffer[context.pos++] = (byte) result;
         }
 
         // we have one char of a hex-pair left over
@@ -206,7 +205,7 @@ public class Base16 extends BaseNCodec {
         }
 
         if (decoded == -1) {
-            throw new IllegalArgumentException("Invalid octet in encoded value: " + (int)octet);
+            throw new IllegalArgumentException("Invalid octet in encoded value: " + (int) octet);
         }
 
         return decoded;
@@ -253,15 +252,13 @@ public class Base16 extends BaseNCodec {
     }
 
     /**
-     * Validates whether decoding allows an entire final trailing character that cannot be
-     * used for a complete byte.
+     * Validates whether decoding allows an entire final trailing character that cannot be used for a complete byte.
      *
      * @throws IllegalArgumentException if strict decoding is enabled
      */
     private void validateTrailingCharacter() {
         if (isStrictDecoding()) {
-            throw new IllegalArgumentException("Strict decoding: Last encoded character is a valid base 16 alphabet" +
-                    "character but not a possible encoding. " +
+            throw new IllegalArgumentException("Strict decoding: Last encoded character is a valid base 16 alphabet character but not a possible encoding. " +
                     "Decoding requires at least two characters to create one byte.");
         }
     }

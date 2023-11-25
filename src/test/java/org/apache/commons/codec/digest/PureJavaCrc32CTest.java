@@ -23,9 +23,7 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test class for PureJavaCrc32C.
- * Test data was derived from
- * https://tools.ietf.org/html/rfc3720#appendix-B.4
+ * Test class for PureJavaCrc32C. Test data was derived from https://tools.ietf.org/html/rfc3720#appendix-B.4
  */
 public class PureJavaCrc32CTest {
 
@@ -43,16 +41,16 @@ public class PureJavaCrc32CTest {
 
     @Test
     public void testDecreasing() {
-        for(int i = 0; i < data.length; i ++) {
-            data[i]= (byte) (31-i);
+        for (int i = 0; i < data.length; i++) {
+            data[i] = (byte) (31 - i);
         }
         check(0x113fdb5c); // 5c db 3f 11
     }
 
     @Test
     public void testIncreasing() {
-        for(int i = 0; i < data.length; i ++) {
-            data[i]= (byte) i;
+        for (int i = 0; i < data.length; i++) {
+            data[i] = (byte) i;
         }
         check(0x46dd794e); // 4e 79 dd 46
     }

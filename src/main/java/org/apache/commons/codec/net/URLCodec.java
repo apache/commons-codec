@@ -301,10 +301,10 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
             return null;
         }
         if (obj instanceof byte[]) {
-            return encode((byte[])obj);
+            return encode((byte[]) obj);
         }
         if (obj instanceof String) {
-            return encode((String)obj);
+            return encode((String) obj);
         }
         throw new EncoderException("Objects of type " + obj.getClass().getName() + " cannot be URL encoded");
     }
