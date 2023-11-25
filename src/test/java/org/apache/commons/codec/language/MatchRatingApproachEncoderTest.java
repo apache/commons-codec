@@ -35,8 +35,6 @@ import org.junit.jupiter.api.Test;
  */
 public class MatchRatingApproachEncoderTest extends AbstractStringEncoderTest<MatchRatingApproachEncoder> {
 
-    // ********** BEGIN REGION - TEST SUPPORT METHODS
-
     @Override
     protected MatchRatingApproachEncoder createStringEncoder() {
         return new MatchRatingApproachEncoder();
@@ -248,10 +246,6 @@ public class MatchRatingApproachEncoderTest extends AbstractStringEncoderTest<Ma
         assertTrue(this.getStringEncoder().isEncodeEquals("O'Sullivan", "Ó ' Súilleabháin"));
     }
 
-    // ***** END REGION - TEST SUPPORT METHODS
-
-    // ***** BEGIN REGION - TEST GET MRA ENCODING
-
     @Test
     public final void testCompare_Surname_PRZEMYSL_PSHEMESHIL_SuccessfullyMatched() {
         assertTrue(this.getStringEncoder().isEncodeEquals(" P rz e m y s l", " P sh e m e sh i l"));
@@ -296,10 +290,6 @@ public class MatchRatingApproachEncoderTest extends AbstractStringEncoderTest<Ma
     public final void testCompare_ZACH_ZAKARIA_SuccessfullyMatched() {
         assertTrue(this.getStringEncoder().isEncodeEquals("Zach", "Zacharia"));
     }
-
-    // ***** END REGION - TEST GET MRA ENCODING
-
-    // ***** BEGIN REGION - TEST GET MRA COMPARISONS
 
     @Test
     public final void testCompareNameNullSpace_ReturnsFalseSuccessfully() {
@@ -433,8 +423,6 @@ public class MatchRatingApproachEncoderTest extends AbstractStringEncoderTest<Ma
         assertFalse(this.getStringEncoder().isEncodeEquals("", "test"));
     }
 
-    // **** BEGIN YIDDISH/SLAVIC SECTION ****
-
     @Test
     public final void testIsEncodeEquals_CornerCase_FirstNameNull_ReturnsFalse() {
         assertFalse(this.getStringEncoder().isEncodeEquals(null, "test"));
@@ -469,8 +457,6 @@ public class MatchRatingApproachEncoderTest extends AbstractStringEncoderTest<Ma
     public final void testIsVowel_SingleVowel_ReturnsTrue() {
         assertTrue(this.getStringEncoder().isVowel("I"));
     }
-
-    // **** END YIDDISH/SLAVIC SECTION ****
 
     @Test
     public final void testIsVowel_SmallD_ReturnsFalse() {
@@ -519,4 +505,18 @@ public class MatchRatingApproachEncoderTest extends AbstractStringEncoderTest<Ma
 
     // ***** END REGION - TEST GET MRA COMPARISONS
 
+    @Test
+    public final void testPunctuationOnly() {
+        assertEquals(this.getStringEncoder().encode(".,-"), "");
+    }
+
+    @Test
+    public final void testVowelOnly() {
+        assertEquals(this.getStringEncoder().encode("aeiouAEIOU"), "A");
+    }
+
+    @Test
+    public final void testVowelAndPunctuationOnly() {
+        assertEquals(this.getStringEncoder().encode("uoiea.,-AEIOU"), "U");
+    }
 }
