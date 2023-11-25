@@ -52,6 +52,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action issue="CODEC-295" dev="ggregory" type="fix" due-to="Olivier Jaquemet, Gary Gregory">Add minimum Java version in changes.xml #186.</action>
       <action issue="CODEC-310" dev="ggregory" type="fix" due-to="Yakov Shafranovich">Documentation update for the org.apache.commons.codec.digest.* package #208.</action>
       <action                   dev="ggregory" type="fix" due-to="Gary Gregory">Precompile regular expression in UnixCrypt.crypt(byte[], String).</action>
+      <action issue="CODEC-315" dev="ggregory" type="fix" due-to="Arthur Chan, Gary Gregory">Fix possible IndexOutOfBoundException thrown by PhoneticEngine.encode method #223.</action>
       <!-- UPDATE -->    
       <action                   dev="ggregory" type="update" due-to="Dependabot, Gary Gregory">Bump commons-parent from 58 to 64.</action>
       <action                   dev="ggregory" type="update" due-to="Gary Gregory">Bump commons-lang3 from 3.12.0 to 3.14.0.</action>      
