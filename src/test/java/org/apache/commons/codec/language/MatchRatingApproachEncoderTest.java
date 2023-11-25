@@ -474,6 +474,11 @@ public class MatchRatingApproachEncoderTest extends AbstractStringEncoderTest<Ma
     }
 
     @Test
+    public final void testPunctuationOnly() {
+        assertEquals(this.getStringEncoder().encode(".,-"), "");
+    }
+
+    @Test
     public final void testRemoveDoubleConsonants_MISSISSIPPI_RemovedSuccessfully() {
         assertEquals("MISISIPI", this.getStringEncoder().removeDoubleConsonants("MISSISSIPPI"));
     }
@@ -498,25 +503,20 @@ public class MatchRatingApproachEncoderTest extends AbstractStringEncoderTest<Ma
         assertEquals("DCLN", this.getStringEncoder().removeVowels("DECLAN"));
     }
 
+    // ***** END REGION - TEST GET MRA COMPARISONS
+
     @Test
     public final void testRemoveVowel_ALESSANDRA_Returns_ALSSNDR() {
         assertEquals("ALSSNDR", this.getStringEncoder().removeVowels("ALESSANDRA"));
     }
 
-    // ***** END REGION - TEST GET MRA COMPARISONS
-
     @Test
-    public final void testPunctuationOnly() {
-        assertEquals(this.getStringEncoder().encode(".,-"), "");
+    public final void testVowelAndPunctuationOnly() {
+        assertEquals(this.getStringEncoder().encode("uoiea.,-AEIOU"), "U");
     }
 
     @Test
     public final void testVowelOnly() {
         assertEquals(this.getStringEncoder().encode("aeiouAEIOU"), "A");
-    }
-
-    @Test
-    public final void testVowelAndPunctuationOnly() {
-        assertEquals(this.getStringEncoder().encode("uoiea.,-AEIOU"), "U");
     }
 }
