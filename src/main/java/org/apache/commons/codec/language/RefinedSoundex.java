@@ -173,7 +173,7 @@ public class RefinedSoundex implements StringEncoder {
         if (!Character.isLetter(c)) {
             return 0;
         }
-        int index = Character.toUpperCase(c) - 'A';
+        final int index = Character.toUpperCase(c) - 'A';
         if (index < 0 || index >= this.soundexMapping.length) {
             return 0;
         }
