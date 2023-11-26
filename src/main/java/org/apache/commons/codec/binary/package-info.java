@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-
 /**
  * Base64, Base32, Binary, and Hexadecimal String encoding and decoding.
  */

@@ -123,7 +123,6 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
         return buffer.toByteArray();
     }
 
-
     /**
      * Encodes an array of bytes into an array of URL safe 7-bit characters. Unsafe characters are escaped.
      *
@@ -202,7 +201,6 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
         return decodeUrl(bytes);
     }
 
-
     /**
      * Decodes a URL safe object into its original form. Escaped characters are converted back to their original
      * representation.
@@ -272,7 +270,6 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
         }
         return new String(decode(StringUtils.getBytesUsAscii(str)), charsetName);
     }
-
 
     /**
      * Encodes an array of bytes into an array of URL safe 7-bit characters. Unsafe characters are escaped.

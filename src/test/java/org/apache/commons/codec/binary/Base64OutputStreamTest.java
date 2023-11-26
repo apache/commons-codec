@@ -47,7 +47,6 @@ public class Base64OutputStreamTest {
         testByChunk(emptyEncoded, emptyDecoded, chunkSize, CR_LF);
     }
 
-
     /**
      * Test the Base64OutputStream implementation against empty input.
      *

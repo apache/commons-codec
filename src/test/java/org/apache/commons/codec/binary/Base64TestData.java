@@ -38,7 +38,6 @@ public class Base64TestData {
     public static final String CODEC_98_NPE_DECODED =
         "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123";
 
-
     // OpenSSL doesn't include the final \n, but it would be annoying beyond belief
     // to further parameterize commons-codec to support this pointless variation.
     final static String ENCODED_64_CHARS_PER_LINE =

@@ -145,7 +145,6 @@ public class StringUtils {
         return getBytes(string, StandardCharsets.ISO_8859_1);
     }
 
-
     /**
      * Encodes the given string into a sequence of bytes using the named charset, storing the result into a new byte
      * array.

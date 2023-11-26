@@ -16,7 +16,6 @@
  */
 package org.apache.commons.codec.language.bm;
 
-
 import org.junit.jupiter.api.Test;
 
 /**

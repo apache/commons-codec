@@ -482,7 +482,6 @@ public class Base64Codec13Test {
         }
     }
 
-
     /**
      * Tests to make sure Base64's implementation of Base64.encodeBase64Chunked()
      * static method is behaving identical to commons-codec-1.3.jar.

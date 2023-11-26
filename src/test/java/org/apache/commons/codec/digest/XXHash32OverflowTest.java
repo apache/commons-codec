@@ -16,7 +16,6 @@
  */
 package org.apache.commons.codec.digest;
 
-
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 

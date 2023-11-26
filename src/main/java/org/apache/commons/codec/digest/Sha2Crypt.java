@@ -587,8 +587,6 @@ public class Sha2Crypt {
         return sha2Crypt(keyBytes, salt, SHA512_PREFIX, SHA512_BLOCKSIZE, MessageDigestAlgorithms.SHA_512);
     }
 
-
-
     /**
      * Generates a libc6 crypt() compatible "$6$" hash value.
      * <p>

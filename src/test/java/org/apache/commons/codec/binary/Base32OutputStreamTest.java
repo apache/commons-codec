@@ -34,8 +34,6 @@ public class Base32OutputStreamTest {
 
     private final static byte[] LF = {(byte) '\n'};
 
-
-
 //    /**
 //     * Test the Base32OutputStream implementation against the special NPE inducing input
 //     * identified in the CODEC-98 bug.
@@ -58,7 +56,6 @@ public class Base32OutputStreamTest {
 //            "codec-98 NPE Base32OutputStream", Base32TestData.CODEC_98_NPE_DECODED, decoded
 //        );
 //    }
-
 
     private void testBase32EmptyOutputStream(final int chunkSize) throws Exception {
         final byte[] emptyEncoded = {};
@@ -107,7 +104,6 @@ public class Base32OutputStreamTest {
 //        decoded = new byte[]{(byte) 0};
 //        testByChunk(encoded, decoded, Base32.MIME_CHUNK_SIZE, CRLF);
 
-
 //        // Single Line test.
 //        String singleLine = Base32TestData.ENCODED_64_CHARS_PER_LINE.replaceAll("\n", "");
 //        encoded = StringUtils.getBytesUtf8(singleLine);
@@ -141,7 +137,6 @@ public class Base32OutputStreamTest {
 //        encoded = StringUtils.getBytesUtf8("AA==\r\n");
 //        decoded = new byte[]{(byte) 0};
 //        testByteByByte(encoded, decoded, 76, CRLF);
-
 
 //        // Single Line test.
 //        String singleLine = Base32TestData.ENCODED_64_CHARS_PER_LINE.replaceAll("\n", "");
