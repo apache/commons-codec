@@ -23,7 +23,7 @@ import org.apache.commons.codec.StringEncoder;
 /**
  * Encodes strings into their Beider-Morse phonetic encoding.
  * <p>
- * Beider-Morse phonetic encodings are optimised for family names. However, they may be useful for a wide range of
+ * Beider-Morse phonetic encodings are optimized for family names. However, they may be useful for a wide range of
  * words.
  * </p>
  * <p>
