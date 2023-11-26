@@ -23,7 +23,7 @@ package org.apache.commons.codec.digest;
 import java.util.zip.Checksum;
 
 /**
- * A pure-java implementation of the CRC32 checksum that uses the CRC32-C polynomial, the same polynomial used by iSCSI and implemented on many Intel chipsets
+ * A pure-Java implementation of the CRC32 checksum that uses the CRC32-C polynomial, the same polynomial used by iSCSI and implemented on many Intel chipsets
  * supporting SSE 4.2.
  *
  * <p>

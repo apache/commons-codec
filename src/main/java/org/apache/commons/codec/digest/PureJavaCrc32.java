@@ -19,7 +19,7 @@ package org.apache.commons.codec.digest;
 import java.util.zip.Checksum;
 
 /**
- * A pure-java implementation of the CRC32 checksum that uses
+ * A pure-Java implementation of the CRC32 checksum that uses
  * the same polynomial as the built-in native CRC32.
  * <p>
  * This is to avoid the JNI overhead for certain uses of checksumming
