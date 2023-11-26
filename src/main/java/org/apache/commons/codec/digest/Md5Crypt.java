@@ -321,7 +321,7 @@ public class Md5Crypt {
         }
 
         /*
-         * Don't leave anything around in vm they could use.
+         * Don't leave anything around in JVM they could use.
          */
         Arrays.fill(finalb, (byte) 0);
 
@@ -384,7 +384,7 @@ public class Md5Crypt {
         B64.b64from24bit((byte) 0, (byte) 0, finalb[11], 2, passwd);
 
         /*
-         * Don't leave anything around in vm they could use.
+         * Don't leave anything around in JVM they could use.
          */
         // Is there a better way to do this with the JVM?
         ctx.reset();
