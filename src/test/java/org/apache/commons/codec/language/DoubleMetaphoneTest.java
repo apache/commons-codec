@@ -1228,13 +1228,13 @@ public class DoubleMetaphoneTest extends AbstractStringEncoderTest<DoubleMetapho
 
         // Sanity check of default settings
         assertEquals(4, doubleMetaphone.getMaxCodeLen(), "Default Max Code Length");
-        assertEquals(  "JMPT", doubleMetaphone.doubleMetaphone(value, false), "Default Primary");
+        assertEquals("JMPT", doubleMetaphone.doubleMetaphone(value, false), "Default Primary");
         assertEquals("AMPT", doubleMetaphone.doubleMetaphone(value, true), "Default Alternate");
 
         // Check setting Max Code Length
         doubleMetaphone.setMaxCodeLen(3);
         assertEquals(3, doubleMetaphone.getMaxCodeLen(), "Set Max Code Length");
-        assertEquals(  "JMP", doubleMetaphone.doubleMetaphone(value, false), "Max=3 Primary");
+        assertEquals("JMP", doubleMetaphone.doubleMetaphone(value, false), "Max=3 Primary");
         assertEquals("AMP", doubleMetaphone.doubleMetaphone(value, true), "Max=3 Alternate");
     }
 

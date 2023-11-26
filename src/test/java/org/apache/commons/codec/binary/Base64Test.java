@@ -222,28 +222,17 @@ public class Base64Test {
         final byte[] b1 = StringUtils.getBytesUtf8("Hello World");
         final byte[] b2 = {};
         final byte[] b3 = null;
-        final byte[] b4 = Hex.decodeHex("2bf7cc2701fe4397b49ebeed5acc7090"); // for
-                                                                                            // url-safe
-                                                                                            // tests
+        final byte[] b4 = Hex.decodeHex("2bf7cc2701fe4397b49ebeed5acc7090"); // for url-safe tests
 
-        assertEquals("SGVsbG8gV29ybGQ=", base64.encodeToString(b1),
-                "byteToString Hello World");
-        assertEquals( "SGVsbG8gV29ybGQ=", Base64.encodeBase64String(b1),
-                "byteToString static Hello World");
-        assertEquals("", base64.encodeToString(b2),
-                "byteToString \"\"");
-        assertEquals("", Base64.encodeBase64String(b2),
-                "byteToString static \"\"");
-        assertNull(base64.encodeToString(b3),
-                "byteToString null");
-        assertNull(Base64.encodeBase64String(b3),
-                "byteToString static null");
-        assertEquals("K/fMJwH+Q5e0nr7tWsxwkA==", base64.encodeToString(b4),
-                "byteToString UUID");
-        assertEquals("K/fMJwH+Q5e0nr7tWsxwkA==", Base64.encodeBase64String(b4),
-                "byteToString static UUID");
-        assertEquals("K_fMJwH-Q5e0nr7tWsxwkA", Base64.encodeBase64URLSafeString(b4),
-                "byteToString static-url-safe UUID");
+        assertEquals("SGVsbG8gV29ybGQ=", base64.encodeToString(b1), "byteToString Hello World");
+        assertEquals("SGVsbG8gV29ybGQ=", Base64.encodeBase64String(b1), "byteToString static Hello World");
+        assertEquals("", base64.encodeToString(b2), "byteToString \"\"");
+        assertEquals("", Base64.encodeBase64String(b2), "byteToString static \"\"");
+        assertNull(base64.encodeToString(b3), "byteToString null");
+        assertNull(Base64.encodeBase64String(b3), "byteToString static null");
+        assertEquals("K/fMJwH+Q5e0nr7tWsxwkA==", base64.encodeToString(b4), "byteToString UUID");
+        assertEquals("K/fMJwH+Q5e0nr7tWsxwkA==", Base64.encodeBase64String(b4), "byteToString static UUID");
+        assertEquals("K_fMJwH-Q5e0nr7tWsxwkA", Base64.encodeBase64URLSafeString(b4), "byteToString static-url-safe UUID");
     }
 
     /**

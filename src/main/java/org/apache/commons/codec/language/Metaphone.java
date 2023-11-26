@@ -129,8 +129,7 @@ public class Metaphone implements StringEncoder {
 
     private boolean isNextChar(final StringBuilder string, final int index, final char c) {
         boolean matches = false;
-        if (index >= 0 &&
-            index < string.length() - 1 ) {
+        if (index >= 0 && index < string.length() - 1) {
             matches = string.charAt(index + 1) == c;
         }
         return matches;
@@ -138,8 +137,7 @@ public class Metaphone implements StringEncoder {
 
     private boolean isPreviousChar(final StringBuilder string, final int index, final char c) {
         boolean matches = false;
-        if (index > 0 &&
-            index < string.length() ) {
+        if (index > 0 && index < string.length()) {
             matches = string.charAt(index - 1) == c;
         }
         return matches;

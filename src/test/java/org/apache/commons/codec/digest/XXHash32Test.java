@@ -38,22 +38,25 @@ public class XXHash32Test {
     private static long copy(final InputStream input, final OutputStream output, final int bufferSize) throws IOException {
         final byte[] buffer = new byte[bufferSize];
         int n = 0;
-        long count=0;
+        long count = 0;
         while (-1 != (n = input.read(buffer))) {
             output.write(buffer, 0, n);
             count += n;
         }
         return count;
     }
+
     public static Stream<Arguments> data() {
-            return Stream.of(
-                // reference checksums created with xxh32sum
-                // http://cyan4973.github.io/xxHash/
-                Arguments.of( "org/apache/commons/codec/bla.tar", "fbb5c8d1" ),
-                Arguments.of( "org/apache/commons/codec/bla.tar.xz", "4106a208" ),
-                Arguments.of( "org/apache/commons/codec/small.bin", "f66c26f8" )
-            );
-        }
+        // @formatter:off
+        return Stream.of(
+            // reference checksums created with xxh32sum
+            // http://cyan4973.github.io/xxHash/
+            Arguments.of("org/apache/commons/codec/bla.tar", "fbb5c8d1"),
+            Arguments.of("org/apache/commons/codec/bla.tar.xz", "4106a208"),
+            Arguments.of("org/apache/commons/codec/small.bin", "f66c26f8")
+        );
+        // @formatter:on
+    }
 
     private static byte[] toByteArray(final InputStream input) throws IOException {
         final ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -61,7 +64,7 @@ public class XXHash32Test {
         return output.toByteArray();
     }
 
-   private File file;
+    private File file;
 
     private String expectedChecksum;
 

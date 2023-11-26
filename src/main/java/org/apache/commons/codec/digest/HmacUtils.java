@@ -995,7 +995,7 @@ public final class HmacUtils {
         final byte[] buffer = new byte[STREAM_BUFFER_LENGTH];
         int read;
 
-        while ((read = valueToDigest.read(buffer, 0, STREAM_BUFFER_LENGTH) ) > -1) {
+        while ((read = valueToDigest.read(buffer, 0, STREAM_BUFFER_LENGTH)) > -1) {
             mac.update(buffer, 0, read);
         }
         return mac.doFinal();

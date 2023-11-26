@@ -47,28 +47,22 @@ public class StringEncoderComparatorTest {
         final String[] resultArray = testList.toArray(ArrayUtils.EMPTY_STRING_ARRAY);
 
         for (int i = 0; i < resultArray.length; i++) {
-            assertEquals(controlArray[i], resultArray[i],
-                    "Result Array not Equal to Control Array at index: " + i);
+            assertEquals(controlArray[i], resultArray[i], "Result Array not Equal to Control Array at index: " + i);
         }
     }
 
     @Test
     public void testComparatorWithDoubleMetaphoneAndInvalidInput() throws Exception {
-        final StringEncoderComparator sCompare =
-            new StringEncoderComparator( new DoubleMetaphone() );
+        final StringEncoderComparator sCompare = new StringEncoderComparator(new DoubleMetaphone());
 
         final int compare = sCompare.compare(Double.valueOf(3.0d), Long.valueOf(3));
-        assertEquals(0, compare,
-                "Trying to compare objects that make no sense to the underlying encoder" +
-                        " should return a zero compare code");
+        assertEquals(0, compare, "Trying to compare objects that make no sense to the underlying encoder" + " should return a zero compare code");
     }
 
     @Test
     public void testComparatorWithSoundex() throws Exception {
-        final StringEncoderComparator sCompare =
-            new StringEncoderComparator( new Soundex() );
+        final StringEncoderComparator sCompare = new StringEncoderComparator(new Soundex());
 
-        assertEquals(0, sCompare.compare("O'Brien", "O'Brian"),
-                "O'Brien and O'Brian didn't come out with the same Soundex, something must be wrong here");
+        assertEquals(0, sCompare.compare("O'Brien", "O'Brian"), "O'Brien and O'Brian didn't come out with the same Soundex, something must be wrong here");
     }
 }
