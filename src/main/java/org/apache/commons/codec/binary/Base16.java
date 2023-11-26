@@ -159,7 +159,7 @@ public class Base16 extends BaseNCodec {
         final int dataLen = Math.min(data.length - offset, length);
         final int availableChars = (context.ibitWorkArea != 0 ? 1 : 0) + dataLen;
 
-        // small optimisation to short-cut the rest of this method when it is fed byte-by-byte
+        // small optimization to short-cut the rest of this method when it is fed byte-by-byte
         if (availableChars == 1 && availableChars == dataLen) {
             // store 1/2 byte for next invocation of decode, we offset by +1 as empty-value is 0
             context.ibitWorkArea = decodeOctet(data[offset]) + 1;
