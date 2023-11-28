@@ -81,7 +81,7 @@ abstract class RFC1522Codec {
             throw new DecoderException("RFC 1522 violation: charset token not found");
         }
         final String charset = text.substring(from, to);
-        if (charset.equals("")) {
+        if (charset.isEmpty()) {
             throw new DecoderException("RFC 1522 violation: charset not specified");
         }
         from = to + 1;
