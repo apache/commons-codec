@@ -231,6 +231,9 @@ public class PercentCodec implements BinaryEncoder, BinaryDecoder {
      * @param b the byte that is candidate for min and max limit
      */
     private void insertAlwaysEncodeChar(final byte b) {
+        if (b < 0) {
+            throw new IllegalArgumentException("byte must be >= 0");
+        }
         this.alwaysEncodeChars.set(b);
         if (b < alwaysEncodeCharsMin) {
             alwaysEncodeCharsMin = b;
