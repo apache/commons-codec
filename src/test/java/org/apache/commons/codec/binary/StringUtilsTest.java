@@ -154,7 +154,7 @@ public class StringUtilsTest {
 
     @Test
     public void testGetBytesUtf8() throws UnsupportedEncodingException {
-        final String charsetName = "UTF-8";
+        final String charsetName = StandardCharsets.UTF_8.name();
         testGetBytesUnchecked(charsetName);
         final byte[] expected = STRING_FIXTURE.getBytes(charsetName);
         final byte[] actual = StringUtils.getBytesUtf8(STRING_FIXTURE);
@@ -234,7 +234,7 @@ public class StringUtilsTest {
 
     @Test
     public void testNewStringUtf8() throws UnsupportedEncodingException {
-        final String charsetName = "UTF-8";
+        final String charsetName = StandardCharsets.UTF_8.name();
         testNewString(charsetName);
         final String expected = new String(BYTES_FIXTURE, charsetName);
         final String actual = StringUtils.newStringUtf8(BYTES_FIXTURE);

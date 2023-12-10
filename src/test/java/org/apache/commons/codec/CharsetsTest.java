@@ -21,13 +21,27 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.Collection;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
+import org.apache.commons.io.Charsets;
 import org.junit.jupiter.api.Test;
 
 /**
  * Sanity checks for {@link Charsets}.
  */
 public class CharsetsTest {
+
+    private static final TreeSet<String> AVAILABLE_CHARSET_NAMES = new TreeSet<>(Charset.availableCharsets().keySet());
+
+    public static SortedSet<String> getAvailableCharsetNames() {
+        return AVAILABLE_CHARSET_NAMES;
+    }
+
+    public static Collection<Charset> getRequiredCharsets() {
+        return Charsets.requiredCharsets().values();
+    }
 
     @SuppressWarnings("deprecation")
     @Test

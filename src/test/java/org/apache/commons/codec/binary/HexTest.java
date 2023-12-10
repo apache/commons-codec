@@ -34,6 +34,8 @@ import java.util.concurrent.ThreadLocalRandom;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  * Tests {@link org.apache.commons.codec.binary.Hex}.
@@ -143,20 +145,13 @@ public class HexTest {
         }
     }
 
-    @Test
-    public void testCustomCharset() throws UnsupportedEncodingException, DecoderException {
-        for (final String name : Charset.availableCharsets().keySet()) {
-            testCustomCharset(name, "testCustomCharset");
-        }
-    }
-
     /**
      * @param name
      * @param parent
      * @throws UnsupportedEncodingException
      * @throws DecoderException
      */
-    private void testCustomCharset(final String name, final String parent) throws UnsupportedEncodingException,
+    private void testCharset(final String name, final String parent) throws UnsupportedEncodingException,
             DecoderException {
         if (!charsetSanityCheck(name)) {
             return;
@@ -188,6 +183,12 @@ public class HexTest {
         final byte[] decodedCustomBytes = customCodec.decode(actualEncodedBytes);
         actualStringFromBytes = new String(decodedCustomBytes, name);
         assertEquals(sourceString, actualStringFromBytes, name);
+    }
+
+    @ParameterizedTest
+    @MethodSource("org.apache.commons.codec.CharsetsTest#getAvailableCharsetNames()")
+    public void testCustomCharset(final String name) throws UnsupportedEncodingException, DecoderException {
+        testCharset(name, "testCustomCharset");
     }
 
     @Test
@@ -663,13 +664,9 @@ public class HexTest {
         assertEquals(StandardCharsets.UTF_8.name(), new Hex(StandardCharsets.UTF_8).getCharsetName());
     }
 
-    @Test
-    public void testRequiredCharset() throws UnsupportedEncodingException, DecoderException {
-        testCustomCharset("UTF-8", "testRequiredCharset");
-        testCustomCharset("UTF-16", "testRequiredCharset");
-        testCustomCharset("UTF-16BE", "testRequiredCharset");
-        testCustomCharset("UTF-16LE", "testRequiredCharset");
-        testCustomCharset("US-ASCII", "testRequiredCharset");
-        testCustomCharset("ISO8859_1", "testRequiredCharset");
+    @ParameterizedTest
+    @MethodSource("org.apache.commons.codec.CharsetsTest#getRequiredCharsets()")
+    public void testRequiredCharset(final Charset charset) throws UnsupportedEncodingException, DecoderException {
+        testCharset(charset.name(), "testRequiredCharset");
     }
 }
