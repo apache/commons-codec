@@ -572,7 +572,7 @@ public class PureJavaCrc32 implements Checksum {
       0xA8C40105, 0x646E019B, 0xEAE10678, 0x264B06E6
     };
 
-  /** the current CRC value, bit-flipped */
+  /** The current CRC value, bit-flipped */
   private int crc;
 
   /** Create a new PureJavaCrc32 object. */
