@@ -19,6 +19,8 @@ package org.apache.commons.codec;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.nio.charset.StandardCharsets;
+
 import org.junit.jupiter.api.Test;
 
 /**
@@ -36,32 +38,32 @@ public class CharEncodingTest {
 
     @Test
     public void testIso8859_1() {
-        assertEquals("ISO-8859-1", CharEncoding.ISO_8859_1);
+        assertEquals(StandardCharsets.ISO_8859_1.name(), CharEncoding.ISO_8859_1);
     }
 
     @Test
     public void testUsAscii() {
-        assertEquals("US-ASCII", CharEncoding.US_ASCII);
+        assertEquals(StandardCharsets.US_ASCII.name(), CharEncoding.US_ASCII);
     }
 
     @Test
     public void testUtf16() {
-        assertEquals("UTF-16", CharEncoding.UTF_16);
+        assertEquals(StandardCharsets.UTF_16.name(), CharEncoding.UTF_16);
     }
 
     @Test
     public void testUtf16Be() {
-        assertEquals("UTF-16BE", CharEncoding.UTF_16BE);
+        assertEquals(StandardCharsets.UTF_16BE.name(), CharEncoding.UTF_16BE);
     }
 
     @Test
     public void testUtf16Le() {
-        assertEquals("UTF-16LE", CharEncoding.UTF_16LE);
+        assertEquals(StandardCharsets.UTF_16LE.name(), CharEncoding.UTF_16LE);
     }
 
     @Test
     public void testUtf8() {
-        assertEquals("UTF-8", CharEncoding.UTF_8);
+        assertEquals(StandardCharsets.UTF_8.name(), CharEncoding.UTF_8);
     }
 
 }

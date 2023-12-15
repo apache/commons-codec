@@ -198,7 +198,7 @@ public class StringUtilsTest {
 
     @Test
     public void testNewStringUsAscii() throws UnsupportedEncodingException {
-        final String charsetName = "US-ASCII";
+        final String charsetName = StandardCharsets.US_ASCII.name();
         testNewString(charsetName);
         final String expected = new String(BYTES_FIXTURE, charsetName);
         final String actual = StringUtils.newStringUsAscii(BYTES_FIXTURE);
@@ -207,7 +207,7 @@ public class StringUtilsTest {
 
     @Test
     public void testNewStringUtf16() throws UnsupportedEncodingException {
-        final String charsetName = "UTF-16";
+        final String charsetName = StandardCharsets.UTF_16.name();
         testNewString(charsetName);
         final String expected = new String(BYTES_FIXTURE, charsetName);
         final String actual = StringUtils.newStringUtf16(BYTES_FIXTURE);
@@ -216,7 +216,7 @@ public class StringUtilsTest {
 
     @Test
     public void testNewStringUtf16Be() throws UnsupportedEncodingException {
-        final String charsetName = "UTF-16BE";
+        final String charsetName = StandardCharsets.UTF_16BE.name();
         testNewString(charsetName);
         final String expected = new String(BYTES_FIXTURE_16BE, charsetName);
         final String actual = StringUtils.newStringUtf16Be(BYTES_FIXTURE_16BE);
@@ -225,7 +225,7 @@ public class StringUtilsTest {
 
     @Test
     public void testNewStringUtf16Le() throws UnsupportedEncodingException {
-        final String charsetName = "UTF-16LE";
+        final String charsetName = StandardCharsets.UTF_16LE.name();
         testNewString(charsetName);
         final String expected = new String(BYTES_FIXTURE_16LE, charsetName);
         final String actual = StringUtils.newStringUtf16Le(BYTES_FIXTURE_16LE);
