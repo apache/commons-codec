@@ -127,7 +127,7 @@ public class StringUtilsTest {
 
     @Test
     public void testGetBytesUtf16() throws UnsupportedEncodingException {
-        final String charsetName = "UTF-16";
+        final String charsetName = StandardCharsets.UTF_16.name();
         testGetBytesUnchecked(charsetName);
         final byte[] expected = STRING_FIXTURE.getBytes(charsetName);
         final byte[] actual = StringUtils.getBytesUtf16(STRING_FIXTURE);
@@ -136,7 +136,7 @@ public class StringUtilsTest {
 
     @Test
     public void testGetBytesUtf16Be() throws UnsupportedEncodingException {
-        final String charsetName = "UTF-16BE";
+        final String charsetName = StandardCharsets.UTF_16BE.name();
         testGetBytesUnchecked(charsetName);
         final byte[] expected = STRING_FIXTURE.getBytes(charsetName);
         final byte[] actual = StringUtils.getBytesUtf16Be(STRING_FIXTURE);
@@ -145,7 +145,7 @@ public class StringUtilsTest {
 
     @Test
     public void testGetBytesUtf16Le() throws UnsupportedEncodingException {
-        final String charsetName = "UTF-16LE";
+        final String charsetName = StandardCharsets.UTF_16LE.name();
         testGetBytesUnchecked(charsetName);
         final byte[] expected = STRING_FIXTURE.getBytes(charsetName);
         final byte[] actual = StringUtils.getBytesUtf16Le(STRING_FIXTURE);
