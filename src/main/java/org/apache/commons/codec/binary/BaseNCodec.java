@@ -161,7 +161,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     /**
      * The maximum size buffer to allocate.
      *
-     * <p>This is set to the same size used in the JDK {@code java.util.ArrayList}:</p>
+     * <p>This is set to the same size used in the JDK {@link java.util.ArrayList}:</p>
      * <blockquote>
      * Some VMs reserve some header words in an array.
      * Attempts to allocate larger arrays may result in
