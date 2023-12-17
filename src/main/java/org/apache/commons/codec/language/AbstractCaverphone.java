@@ -35,14 +35,14 @@ public abstract class AbstractCaverphone implements StringEncoder {
 
     /**
      * Encodes an Object using the caverphone algorithm. This method is provided in order to satisfy the requirements of
-     * the Encoder interface, and will throw an EncoderException if the supplied object is not of type java.lang.String.
+     * the Encoder interface, and will throw an EncoderException if the supplied object is not of type {@link String}.
      *
      * @param source
      *            Object to encode
-     * @return An object (or type java.lang.String) containing the caverphone code which corresponds to the String
+     * @return An object (or type {@link String}) containing the caverphone code which corresponds to the String
      *         supplied.
      * @throws EncoderException
-     *             if the parameter supplied is not of type java.lang.String
+     *             if the parameter supplied is not of type {@link String}.
      */
     @Override
     public Object encode(final Object source) throws EncoderException {

@@ -78,13 +78,13 @@ public class Metaphone implements StringEncoder {
      * Encodes an Object using the metaphone algorithm.  This method
      * is provided in order to satisfy the requirements of the
      * Encoder interface, and will throw an EncoderException if the
-     * supplied object is not of type java.lang.String.
+     * supplied object is not of type {@link String}.
      *
      * @param obj Object to encode
-     * @return An object (or type java.lang.String) containing the
+     * @return An object (or type {@link String}) containing the
      *         metaphone code which corresponds to the String supplied.
      * @throws EncoderException if the parameter supplied is not
-     *                          of type java.lang.String
+     *                          of type {@link String}
      */
     @Override
     public Object encode(final Object obj) throws EncoderException {

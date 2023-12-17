@@ -91,14 +91,14 @@ public class MatchRatingApproachEncoder implements StringEncoder {
 
     /**
      * Encodes an Object using the Match Rating Approach algorithm. Method is here to satisfy the requirements of the
-     * Encoder interface Throws an EncoderException if input object is not of type java.lang.String.
+     * Encoder interface Throws an EncoderException if input object is not of type {@link String}.
      *
      * @param pObject
      *            Object to encode
-     * @return An object (or type java.lang.String) containing the Match Rating Approach code which corresponds to the
+     * @return An object (or type {@link String}) containing the Match Rating Approach code which corresponds to the
      *         String supplied.
      * @throws EncoderException
-     *             if the parameter supplied is not of type java.lang.String
+     *             if the parameter supplied is not of type {@link String}
      */
     @Override
     public final Object encode(final Object pObject) throws EncoderException {
