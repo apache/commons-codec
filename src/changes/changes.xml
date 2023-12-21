@@ -43,7 +43,7 @@ The <action> type attribute can be add,update,fix,remove.
     <author>Apache Commons Developers</author>
   </properties>
   <body>
-    <release version="1.16.1" date="20YY-MM-DD" description="Feature and fix release.">
+    <release version="1.16.1" date="20YY-MM-DD" description="Feature and fix release. Requires a minimum of Java 8.">
       <!-- ADD -->
       <!-- FIX -->
       <action issue="CODEC-295" dev="ggregory" type="fix" due-to="Gary Gregory">Test clean ups.</action>
@@ -52,11 +52,11 @@ The <action> type attribute can be add,update,fix,remove.
       <action issue="CODEC-295" dev="ggregory" type="fix" due-to="Olivier Jaquemet, Gary Gregory">Add minimum Java version in changes.xml #186.</action>
       <action issue="CODEC-310" dev="ggregory" type="fix" due-to="Yakov Shafranovich">Documentation update for the org.apache.commons.codec.digest.* package #208.</action>
       <action                   dev="ggregory" type="fix" due-to="Gary Gregory">Precompile regular expression in UnixCrypt.crypt(byte[], String).</action>
-      <action issue="CODEC-315" dev="ggregory" type="fix" due-to="Arthur Chan, Gary Gregory">Fix possible IndexOutOfBoundException thrown by PhoneticEngine.encode method #223.</action>
-      <action issue="CODEC-313" dev="ggregory" type="fix" due-to="Arthur Chan, Gary Gregory">Fix possible ArrayIndexOutOfBoundsException thrown by QuotedPrintableCodec.encodeQuotedPrintable() method #221.</action>
-      <action issue="CODEC-312" dev="ggregory" type="fix" due-to="Arthur Chan, Gary Gregory">Fix possible StringIndexOutOfBoundException thrown by MatchRatingApproachEncoder.encode() method #220.</action>
-      <action issue="CODEC-311" dev="ggregory" type="fix" due-to="Arthur Chan, Gary Gregory">Fix possible ArrayIndexOutOfBoundException thrown by RefinedSoundex.getMappingCode() #219.</action>
-      <action issue="CODEC-314" dev="ggregory" type="fix" due-to="Arthur Chan, Gary Gregory">Fix possible IndexOutOfBoundsException thrown by PercentCodec.insertAlwaysEncodeChars() method #222.</action>
+      <action issue="CODEC-315" dev="ggregory" type="fix" due-to="Arthur Chan, Gary Gregory">Fix possible IndexOutOfBoundException in PhoneticEngine.encode method #223.</action>
+      <action issue="CODEC-313" dev="ggregory" type="fix" due-to="Arthur Chan, Gary Gregory">Fix possible ArrayIndexOutOfBoundsException in QuotedPrintableCodec.encodeQuotedPrintable() method #221.</action>
+      <action issue="CODEC-312" dev="ggregory" type="fix" due-to="Arthur Chan, Gary Gregory">Fix possible StringIndexOutOfBoundException in MatchRatingApproachEncoder.encode() method #220.</action>
+      <action issue="CODEC-311" dev="ggregory" type="fix" due-to="Arthur Chan, Gary Gregory">Fix possible ArrayIndexOutOfBoundException in RefinedSoundex.getMappingCode() #219.</action>
+      <action issue="CODEC-314" dev="ggregory" type="fix" due-to="Arthur Chan, Gary Gregory">Fix possible IndexOutOfBoundsException in PercentCodec.insertAlwaysEncodeChars() method #222.</action>
       <!-- UPDATE -->
       <action                   dev="ggregory" type="update" due-to="Dependabot, Gary Gregory">Bump commons-parent from 58 to 65.</action>
       <action                   dev="ggregory" type="update" due-to="Gary Gregory">Bump commons-lang3 from 3.12.0 to 3.14.0.</action>      
