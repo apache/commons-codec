@@ -118,7 +118,7 @@ public class StringUtilsTest {
 
     @Test
     public void testGetBytesUsAscii() throws UnsupportedEncodingException {
-        final String charsetName = "US-ASCII";
+        final String charsetName = StandardCharsets.US_ASCII.name();
         testGetBytesUnchecked(charsetName);
         final byte[] expected = STRING_FIXTURE.getBytes(charsetName);
         final byte[] actual = StringUtils.getBytesUsAscii(STRING_FIXTURE);
