@@ -93,7 +93,7 @@ public class StringUtilsTest {
 
     @Test
     public void testGetBytesIso8859_1() throws UnsupportedEncodingException {
-        final String charsetName = "ISO-8859-1";
+        final String charsetName = StandardCharsets.ISO_8859_1.name();
         testGetBytesUnchecked(charsetName);
         final byte[] expected = STRING_FIXTURE.getBytes(charsetName);
         final byte[] actual = StringUtils.getBytesIso8859_1(STRING_FIXTURE);
@@ -174,7 +174,7 @@ public class StringUtilsTest {
 
     @Test
     public void testNewStringIso8859_1() throws UnsupportedEncodingException {
-        final String charsetName = "ISO-8859-1";
+        final String charsetName = StandardCharsets.ISO_8859_1.name();
         testNewString(charsetName);
         final String expected = new String(BYTES_FIXTURE, charsetName);
         final String actual = StringUtils.newStringIso8859_1(BYTES_FIXTURE);
