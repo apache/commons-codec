@@ -21,7 +21,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.apache.commons.codec.AbstractStringEncoderTest;
-import org.apache.commons.codec.EncoderException;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -83,10 +82,9 @@ public class NysiisTest extends AbstractStringEncoderTest<Nysiis> {
     /**
      * Tests data gathered from around the internet.
      *
-     * @see <a href="http://www.dropby.com/NYSIISTextStrings.html">http://www.dropby.com/NYSIISTextStrings.html</a>
-     * @throws EncoderException for some failure scenarios     */
+     * @see <a href="http://www.dropby.com/NYSIISTextStrings.html">http://www.dropby.com/NYSIISTextStrings.html</a>*/
     @Test
-    public void testDropBy() throws EncoderException {
+    public void testDropBy() {
         // Explanation of differences between this implementation and the one at dropby.com is
         // prepended to the test string. The referenced rules refer to the outlined steps the
         // class description for Nysiis.
@@ -149,11 +147,9 @@ public class NysiisTest extends AbstractStringEncoderTest<Nysiis> {
     }
 
     /**
-     * Tests data gathered from around the internets.
-     *
-     * @throws EncoderException for some failure scenarios     */
+     * Tests data gathered from around the internets.*/
     @Test
-    public void testOthers() throws EncoderException {
+    public void testOthers() {
         this.assertEncodings(
                 new String[] { "O'Daniel", "ODANAL" },
                 new String[] { "O'Donnel", "ODANAL" },
@@ -165,11 +161,9 @@ public class NysiisTest extends AbstractStringEncoderTest<Nysiis> {
     }
 
     /**
-     * Tests rule 1: Translate first characters of name: MAC → MCC, KN → N, K → C, PH, PF → FF, SCH → SSS
-     *
-     * @throws EncoderException for some failure scenarios     */
+     * Tests rule 1: Translate first characters of name: MAC → MCC, KN → N, K → C, PH, PF → FF, SCH → SSS*/
     @Test
-    public void testRule1() throws EncoderException {
+    public void testRule1() {
         this.assertEncodings(
                 new String[] { "MACX", "MCX" },
                 new String[] { "KNX", "NX" },
@@ -180,11 +174,9 @@ public class NysiisTest extends AbstractStringEncoderTest<Nysiis> {
     }
 
     /**
-     * Tests rule 2: Translate last characters of name: EE → Y, IE → Y, DT, RT, RD, NT, ND → D
-     *
-     * @throws EncoderException for some failure scenarios     */
+     * Tests rule 2: Translate last characters of name: EE → Y, IE → Y, DT, RT, RD, NT, ND → D*/
     @Test
-    public void testRule2() throws EncoderException {
+    public void testRule2() {
         this.assertEncodings(
                 new String[] { "XEE", "XY" },
                 new String[] { "XIE", "XY" },
@@ -196,11 +188,9 @@ public class NysiisTest extends AbstractStringEncoderTest<Nysiis> {
     }
 
     /**
-     * Tests rule 4.1: EV → AF else A, E, I, O, U → A
-     *
-     * @throws EncoderException for some failure scenarios     */
+     * Tests rule 4.1: EV → AF else A, E, I, O, U → A*/
     @Test
-    public void testRule4Dot1() throws EncoderException {
+    public void testRule4Dot1() {
         this.assertEncodings(
                 new String[] { "XEV", "XAF" },
                 new String[] { "XAX", "XAX" },
@@ -211,11 +201,9 @@ public class NysiisTest extends AbstractStringEncoderTest<Nysiis> {
     }
 
     /**
-     * Tests rule 4.2: Q → G, Z → S, M → N
-     *
-     * @throws EncoderException for some failure scenarios     */
+     * Tests rule 4.2: Q → G, Z → S, M → N*/
     @Test
-    public void testRule4Dot2() throws EncoderException {
+    public void testRule4Dot2() {
         this.assertEncodings(
                 new String[] { "XQ", "XG" },
                 new String[] { "XZ", "X" },
@@ -223,33 +211,27 @@ public class NysiisTest extends AbstractStringEncoderTest<Nysiis> {
     }
 
     /**
-     * Tests rule 5: If last character is S, remove it.
-     *
-     * @throws EncoderException for some failure scenarios     */
+     * Tests rule 5: If last character is S, remove it.*/
     @Test
-    public void testRule5() throws EncoderException {
+    public void testRule5() {
         this.assertEncodings(
                 new String[] { "XS", "X" },
                 new String[] { "XSS", "X" });
     }
 
     /**
-     * Tests rule 6: If last characters are AY, replace with Y.
-     *
-     * @throws EncoderException for some failure scenarios     */
+     * Tests rule 6: If last characters are AY, replace with Y.*/
     @Test
-    public void testRule6() throws EncoderException {
+    public void testRule6() {
         this.assertEncodings(
                 new String[] { "XAY", "XY" },
                 new String[] { "XAYS", "XY" }); // Rules 5, 6
     }
 
     /**
-     * Tests rule 7: If last character is A, remove it.
-     *
-     * @throws EncoderException for some failure scenarios     */
+     * Tests rule 7: If last character is A, remove it.*/
     @Test
-    public void testRule7() throws EncoderException {
+    public void testRule7() {
         this.assertEncodings(
                 new String[] { "XA", "X" },
                 new String[] { "XAS", "X" }); // Rules 5, 7
