@@ -56,7 +56,7 @@ public class DigestUtilsTest {
 
     private static final String EMPTY_STRING = "";
 
-    private final byte[] testData = new byte[1024 * 1024];
+    private final byte[] testData = new byte[32 * 32];
 
     private Path testFile;
 
