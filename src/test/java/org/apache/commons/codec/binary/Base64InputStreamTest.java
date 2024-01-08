@@ -245,35 +245,32 @@ public class Base64InputStreamTest {
      *             Usually signifies a bug in the Base64 commons-codec implementation.
      */
     private void testByteByByte(final byte[] encoded, final byte[] decoded, final int chunkSize, final byte[] separator) throws Exception {
-
-        // Start with encode.
-        InputStream in;
-        in = new Base64InputStream(new ByteArrayInputStream(decoded), true, chunkSize, separator);
         byte[] output = new byte[encoded.length];
-        for (int i = 0; i < output.length; i++) {
-            output[i] = (byte) in.read();
+        // Start with encode.
+        try (InputStream in = new Base64InputStream(new ByteArrayInputStream(decoded), true, chunkSize, separator)) {
+            for (int i = 0; i < output.length; i++) {
+                output[i] = (byte) in.read();
+            }
+
+            assertEquals(-1, in.read(), "EOF");
+            assertEquals(-1, in.read(), "Still EOF");
+            assertArrayEquals(encoded, output, "Streaming base64 encode");
+
         }
-
-        assertEquals(-1, in.read(), "EOF");
-        assertEquals(-1, in.read(), "Still EOF");
-        assertArrayEquals(encoded, output, "Streaming base64 encode");
-
-        in.close();
         // Now let's try to decode.
-        in = new Base64InputStream(new ByteArrayInputStream(encoded));
-        output = new byte[decoded.length];
-        for (int i = 0; i < output.length; i++) {
-            output[i] = (byte) in.read();
+        try (InputStream in = new Base64InputStream(new ByteArrayInputStream(encoded))) {
+            output = new byte[decoded.length];
+            for (int i = 0; i < output.length; i++) {
+                output[i] = (byte) in.read();
+            }
+
+            assertEquals(-1, in.read(), "EOF");
+            assertEquals(-1, in.read(), "Still EOF");
+            assertArrayEquals(decoded, output, "Streaming base64 decode");
         }
-
-        assertEquals(-1, in.read(), "EOF");
-        assertEquals(-1, in.read(), "Still EOF");
-        assertArrayEquals(decoded, output, "Streaming base64 decode");
-
-        in.close();
 
         // I always wanted to do this! (wrap encoder with decoder etc.).
-        in = new ByteArrayInputStream(decoded);
+        InputStream in = new ByteArrayInputStream(decoded);
         for (int i = 0; i < 10; i++) {
             in = new Base64InputStream(in, true, chunkSize, separator);
             in = new Base64InputStream(in, false);
@@ -286,7 +283,6 @@ public class Base64InputStreamTest {
         assertEquals(-1, in.read(), "EOF");
         assertEquals(-1, in.read(), "Still EOF");
         assertArrayEquals(decoded, output, "Streaming base64 wrap-wrap-wrap!");
-        in.close();
     }
 
     /**
