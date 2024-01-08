@@ -57,7 +57,7 @@ import org.apache.commons.codec.binary.StringUtils;
  */
 public class DigestUtils {
 
-    private static final int STREAM_BUFFER_LENGTH = 1024;
+    private static final int BUFFER_SIZE = 1024;
 
     /**
      * Reads through a byte array and returns the digest for the data. Provided for symmetry with other methods.
@@ -1291,7 +1291,7 @@ public class DigestUtils {
      * @since 1.14
      */
     private static MessageDigest updateDigest(final MessageDigest digest, final FileChannel data) throws IOException {
-        final ByteBuffer buffer = ByteBuffer.allocate(STREAM_BUFFER_LENGTH);
+        final ByteBuffer buffer = ByteBuffer.allocate(BUFFER_SIZE);
         while (data.read(buffer) > 0) {
             buffer.flip();
             digest.update(buffer);
@@ -1310,12 +1310,12 @@ public class DigestUtils {
      * @since 1.8
      */
     public static MessageDigest updateDigest(final MessageDigest digest, final InputStream inputStream) throws IOException {
-        final byte[] buffer = new byte[STREAM_BUFFER_LENGTH];
-        int read = inputStream.read(buffer, 0, STREAM_BUFFER_LENGTH);
+        final byte[] buffer = new byte[BUFFER_SIZE];
+        int read = inputStream.read(buffer, 0, BUFFER_SIZE);
 
         while (read > -1) {
             digest.update(buffer, 0, read);
-            read = inputStream.read(buffer, 0, STREAM_BUFFER_LENGTH);
+            read = inputStream.read(buffer, 0, BUFFER_SIZE);
         }
 
         return digest;
