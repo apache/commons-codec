@@ -57,7 +57,10 @@ import org.apache.commons.codec.binary.StringUtils;
  */
 public class DigestUtils {
 
-    private static final int BUFFER_SIZE = 1024;
+    /**
+     * Package-private for tests.
+     */
+    static final int BUFFER_SIZE = 1024;
 
     /**
      * Reads through a byte array and returns the digest for the data. Provided for symmetry with other methods.
