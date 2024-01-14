@@ -144,7 +144,7 @@ public class DaitchMokotoffSoundexTest extends AbstractStringEncoderTest<DaitchM
     }
 
     /**
-     * Examples from http://en.wikipedia.org/wiki/Daitch%E2%80%93Mokotoff_Soundex
+     * Examples from https://en.wikipedia.org/wiki/Daitch%E2%80%93Mokotoff_Soundex
      */
     @Test
     public void testSoundexBasic3() {

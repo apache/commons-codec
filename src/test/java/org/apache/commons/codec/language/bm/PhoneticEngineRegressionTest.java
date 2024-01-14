@@ -80,7 +80,7 @@ public class PhoneticEngineRegressionTest {
     @Test
     public void testCompatibilityWithOriginalVersion() {
         // see CODEC-187
-        // comparison: http://stevemorse.org/census/soundex.html
+        // comparison: https://stevemorse.org/census/soundex.html
 
         final Map<String, String> args = new TreeMap<>();
         args.put("nameType", "GENERIC");

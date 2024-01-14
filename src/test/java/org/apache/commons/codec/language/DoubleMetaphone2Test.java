@@ -26,9 +26,9 @@ import org.junit.jupiter.api.Test;
  * Tests {@link DoubleMetaphone}.
  * <p>
  * The test data was extracted from Stephen Woodbridge's <a
- * href="http://swoodbridge.com/DoubleMetaPhone/surnames.txt">PHP test program</a>.
+ * href="https://swoodbridge.com/DoubleMetaPhone/surnames.txt">PHP test program</a>.
  *
- * @see <a href="http://swoodbridge.com/DoubleMetaPhone/surnames.txt">PHP test program</a>
+ * @see <a href="https://swoodbridge.com/DoubleMetaPhone/surnames.txt">PHP test program</a>
  */
 public class DoubleMetaphone2Test extends AbstractStringEncoderTest<DoubleMetaphone> {
 

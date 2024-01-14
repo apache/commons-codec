@@ -45,11 +45,11 @@ public class RefinedSoundexTest extends AbstractStringEncoderTest<RefinedSoundex
         assertEquals(1, this.getStringEncoder().difference("Margaret", "Andrew"));
         assertEquals(1, this.getStringEncoder().difference("Janet", "Margaret"));
         // Examples from
-        // http://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_de-dz_8co5.asp
+        // https://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_de-dz_8co5.asp
         assertEquals(5, this.getStringEncoder().difference("Green", "Greene"));
         assertEquals(1, this.getStringEncoder().difference("Blotchet-Halls", "Greene"));
         // Examples from
-        // http://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_setu-sus_3o6w.asp
+        // https://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_setu-sus_3o6w.asp
         assertEquals(6, this.getStringEncoder().difference("Smith", "Smythe"));
         assertEquals(8, this.getStringEncoder().difference("Smithers", "Smythers"));
         assertEquals(5, this.getStringEncoder().difference("Anothers", "Brothers"));

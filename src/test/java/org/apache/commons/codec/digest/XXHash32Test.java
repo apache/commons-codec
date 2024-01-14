@@ -50,7 +50,7 @@ public class XXHash32Test {
         // @formatter:off
         return Stream.of(
             // reference checksums created with xxh32sum
-            // http://cyan4973.github.io/xxHash/
+            // https://cyan4973.github.io/xxHash/
             Arguments.of("org/apache/commons/codec/bla.tar", "fbb5c8d1"),
             Arguments.of("org/apache/commons/codec/bla.tar.xz", "4106a208"),
             Arguments.of("org/apache/commons/codec/small.bin", "f66c26f8")

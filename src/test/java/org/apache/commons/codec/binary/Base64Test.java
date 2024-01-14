@@ -788,7 +788,7 @@ public class Base64Test {
      * <li>BASE64("foobar") = "Zm9vYmFy"</li>
      * </ul>
      *
-     * @see <a href="http://tools.ietf.org/html/rfc4648">http://tools.ietf.org/
+     * @see <a href="https://tools.ietf.org/html/rfc4648">https://tools.ietf.org/
      *      html/rfc4648</a>
      */
     @Test
@@ -814,7 +814,7 @@ public class Base64Test {
      * <li>BASE64("foobar") = "Zm9vYmFy"</li>
      * </ul>
      *
-     * @see <a href="http://tools.ietf.org/html/rfc4648">http://tools.ietf.org/
+     * @see <a href="https://tools.ietf.org/html/rfc4648">https://tools.ietf.org/
      *      html/rfc4648</a>
      */
     @Test
@@ -840,7 +840,7 @@ public class Base64Test {
      * <li>BASE64("foobar") = "Zm9vYmFy"</li>
      * </ul>
      *
-     * @see <a href="http://tools.ietf.org/html/rfc4648">http://tools.ietf.org/
+     * @see <a href="https://tools.ietf.org/html/rfc4648">https://tools.ietf.org/
      *      html/rfc4648</a>
      */
     @Test
@@ -867,7 +867,7 @@ public class Base64Test {
      * <li>BASE64("foobar") = "Zm9vYmFy"</li>
      * </ul>
      *
-     * @see <a href="http://tools.ietf.org/html/rfc4648">http://tools.ietf.org/
+     * @see <a href="https://tools.ietf.org/html/rfc4648">https://tools.ietf.org/
      *      html/rfc4648</a>
      */
     @Test
@@ -893,7 +893,7 @@ public class Base64Test {
      * <li>BASE64("foobar") = "Zm9vYmFy"</li>
      * </ul>
      *
-     * @see <a href="http://tools.ietf.org/html/rfc4648">http://tools.ietf.org/
+     * @see <a href="https://tools.ietf.org/html/rfc4648">https://tools.ietf.org/
      *      html/rfc4648</a>
      */
     @Test

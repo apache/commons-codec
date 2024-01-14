@@ -37,7 +37,7 @@ public class Caverphone1Test extends AbstractStringEncoderTest<Caverphone1> {
     }
 
     /**
-     * Tests example adapted from version 2.0  http://caversham.otago.ac.nz/files/working/ctp150804.pdf
+     * Tests example adapted from version 2.0  https://caversham.otago.ac.nz/files/working/ctp150804.pdf
      *
      * AT1111 words: add, aid, at, art, eat, earth, head, hit, hot, hold, hard, heart, it, out, old
      *
@@ -70,7 +70,7 @@ public class Caverphone1Test extends AbstractStringEncoderTest<Caverphone1> {
     }
 
     /**
-     * Tests some examples from version 2.0 http://caversham.otago.ac.nz/files/working/ctp150804.pdf
+     * Tests some examples from version 2.0 https://caversham.otago.ac.nz/files/working/ctp150804.pdf
      *
      * @throws EncoderException for some failure scenarios.
      */
@@ -82,7 +82,7 @@ public class Caverphone1Test extends AbstractStringEncoderTest<Caverphone1> {
     }
 
     /**
-     * Tests example from http://caversham.otago.ac.nz/files/working/ctp060902.pdf
+     * Tests example from https://caversham.otago.ac.nz/files/working/ctp060902.pdf
      *
      * @throws EncoderException for some failure scenarios.
      */
@@ -93,7 +93,7 @@ public class Caverphone1Test extends AbstractStringEncoderTest<Caverphone1> {
     }
 
     /**
-     * Tests examples from http://en.wikipedia.org/wiki/Caverphone
+     * Tests examples from https://en.wikipedia.org/wiki/Caverphone
      *
      * @throws EncoderException for some failure scenarios.
      */

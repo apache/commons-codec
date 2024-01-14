@@ -101,10 +101,10 @@ public class SoundexTest extends AbstractStringEncoderTest<Soundex> {
         assertEquals(2, this.getStringEncoder().difference("Ann", "Andrew"));
         assertEquals(1, this.getStringEncoder().difference("Margaret", "Andrew"));
         assertEquals(0, this.getStringEncoder().difference("Janet", "Margaret"));
-        // Examples from http://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_de-dz_8co5.asp
+        // Examples from https://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_de-dz_8co5.asp
         assertEquals(4, this.getStringEncoder().difference("Green", "Greene"));
         assertEquals(0, this.getStringEncoder().difference("Blotchet-Halls", "Greene"));
-        // Examples from http://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_setu-sus_3o6w.asp
+        // Examples from https://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_setu-sus_3o6w.asp
         assertEquals(4, this.getStringEncoder().difference("Smith", "Smythe"));
         assertEquals(4, this.getStringEncoder().difference("Smithers", "Smythers"));
         assertEquals(2, this.getStringEncoder().difference("Anothers", "Brothers"));
@@ -287,7 +287,7 @@ public class SoundexTest extends AbstractStringEncoderTest<Soundex> {
 
     /**
      * Examples for MS SQLServer from
-     * http://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_setu-sus_3o6w.asp
+     * https://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_setu-sus_3o6w.asp
      */
     @Test
     public void testMsSqlServer1() {
@@ -297,7 +297,7 @@ public class SoundexTest extends AbstractStringEncoderTest<Soundex> {
 
     /**
      * Examples for MS SQLServer from
-     * http://support.microsoft.com/default.aspx?scid=http://support.microsoft.com:80/support
+     * https://support.microsoft.com/default.aspx?scid=https://support.microsoft.com:80/support
      * /kb/articles/Q100/3/65.asp&NoWebContent=1
      *
      * @throws EncoderException for some failure scenarios     */
@@ -307,7 +307,7 @@ public class SoundexTest extends AbstractStringEncoderTest<Soundex> {
     }
 
     /**
-     * Examples for MS SQLServer from http://databases.about.com/library/weekly/aa042901a.htm
+     * Examples for MS SQLServer from https://databases.about.com/library/weekly/aa042901a.htm
      */
     @Test
     public void testMsSqlServer3() {
@@ -409,7 +409,7 @@ public class SoundexTest extends AbstractStringEncoderTest<Soundex> {
     }
 
     /**
-     * Tests example from http://en.wikipedia.org/wiki/Soundex#American_Soundex as of 2015-03-22.
+     * Tests example from https://en.wikipedia.org/wiki/Soundex#American_Soundex as of 2015-03-22.
      */
     @Test
     public void testWikipediaAmericanSoundex() {

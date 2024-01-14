@@ -37,7 +37,7 @@ public class Caverphone2Test extends AbstractStringEncoderTest<Caverphone2> {
     }
 
     /**
-     * See http://caversham.otago.ac.nz/files/working/ctp150804.pdf
+     * See https://caversham.otago.ac.nz/files/working/ctp150804.pdf
      *
      * AT11111111 words: add, aid, at, art, eat, earth, head, hit, hot, hold, hard, heart, it, out, old
      *
@@ -63,7 +63,7 @@ public class Caverphone2Test extends AbstractStringEncoderTest<Caverphone2> {
     }
 
     /**
-     * See http://caversham.otago.ac.nz/files/working/ctp150804.pdf
+     * See https://caversham.otago.ac.nz/files/working/ctp150804.pdf
      *
      * @throws EncoderException for some failure scenarios     */
     @Test
@@ -73,7 +73,7 @@ public class Caverphone2Test extends AbstractStringEncoderTest<Caverphone2> {
     }
 
     /**
-     * See http://caversham.otago.ac.nz/files/working/ctp150804.pdf
+     * See https://caversham.otago.ac.nz/files/working/ctp150804.pdf
      *
      * @throws EncoderException for some failure scenarios     */
     @Test
@@ -164,7 +164,7 @@ public class Caverphone2Test extends AbstractStringEncoderTest<Caverphone2> {
     }
 
     /**
-     * See http://caversham.otago.ac.nz/files/working/ctp150804.pdf
+     * See https://caversham.otago.ac.nz/files/working/ctp150804.pdf
      *
      * @throws EncoderException for some failure scenarios     */
     @Test
@@ -242,7 +242,7 @@ public class Caverphone2Test extends AbstractStringEncoderTest<Caverphone2> {
     }
 
     /**
-     * See http://caversham.otago.ac.nz/files/working/ctp150804.pdf
+     * See https://caversham.otago.ac.nz/files/working/ctp150804.pdf
      *
      * @throws EncoderException for some failure scenarios     */
     @Test
@@ -319,7 +319,7 @@ public class Caverphone2Test extends AbstractStringEncoderTest<Caverphone2> {
     }
 
     /**
-     * See http://caversham.otago.ac.nz/files/working/ctp150804.pdf
+     * See https://caversham.otago.ac.nz/files/working/ctp150804.pdf
      *
      * @throws EncoderException for some failure scenarios     */
     @Test
