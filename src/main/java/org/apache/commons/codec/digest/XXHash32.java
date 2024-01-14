@@ -32,7 +32,7 @@ import java.util.zip.Checksum;
  * NotThreadSafe
  * </p>
  *
- * @see <a href="http://cyan4973.github.io/xxHash/">xxHash</a>
+ * @see <a href="https://cyan4973.github.io/xxHash/">xxHash</a>
  * @since 1.11
  */
 public class XXHash32 implements Checksum {
@@ -62,7 +62,7 @@ public class XXHash32 implements Checksum {
     private final byte[] oneByte = new byte[1];
     private final int[] state = new int[4];
     // Note: the code used to use ByteBuffer but the manual method is 50% faster
-    // See: http://gitbox.apache.org/repos/asf/commons-compress/diff/2f56fb5c
+    // See: https://gitbox.apache.org/repos/asf/commons-compress/diff/2f56fb5c
     private final byte[] buffer = new byte[BUF_SIZE];
 
     private final int seed;

@@ -26,7 +26,7 @@ import org.apache.commons.codec.StringEncoder;
 /**
  * Encodes a string into a Cologne Phonetic value.
  * <p>
- * Implements the <a href="http://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik">K&ouml;lner Phonetik</a> (Cologne
+ * Implements the <a href="https://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik">K&ouml;lner Phonetik</a> (Cologne
  * Phonetic) algorithm issued by Hans Joachim Postel in 1969.
  * </p>
  * <p>
@@ -41,11 +41,11 @@ import org.apache.commons.codec.StringEncoder;
  * <li>
  * <h3>Step 1:</h3>
  * After preprocessing (conversion to upper case, transcription of <a
- * href="http://en.wikipedia.org/wiki/Germanic_umlaut">germanic umlauts</a>, removal of non alphabetical characters) the
+ * href="https://en.wikipedia.org/wiki/Germanic_umlaut">germanic umlauts</a>, removal of non alphabetical characters) the
  * letters of the supplied text are replaced by their phonetic code according to the following table.
  * <table border="1">
  * <caption style="caption-side: bottom"><small><i>(Source: <a
- * href="http://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik#Buchstabencodes">Wikipedia (de): K&ouml;lner Phonetik --
+ * href="https://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik#Buchstabencodes">Wikipedia (de): K&ouml;lner Phonetik --
  * Buchstabencodes</a>)</i></small></caption> <tbody>
  * <tr>
  * <th>Letter</th>
@@ -177,7 +177,7 @@ import org.apache.commons.codec.StringEncoder;
  * This class is thread-safe.
  * </p>
  *
- * @see <a href="http://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik">Wikipedia (de): K&ouml;lner Phonetik (in German)</a>
+ * @see <a href="https://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik">Wikipedia (de): K&ouml;lner Phonetik (in German)</a>
  * @since 1.5
  */
 public class ColognePhonetic implements StringEncoder {

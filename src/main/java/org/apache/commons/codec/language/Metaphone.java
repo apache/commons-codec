@@ -34,7 +34,7 @@ import org.apache.commons.codec.StringEncoder;
  * Note, that this does not match the algorithm that ships with PHP, or the algorithm found in the Perl implementations:
  * </p>
  * <ul>
- * <li><a href="http://search.cpan.org/~mschwern/Text-Metaphone-1.96/Metaphone.pm">Text:Metaphone-1.96</a>
+ * <li><a href="https://search.cpan.org/~mschwern/Text-Metaphone-1.96/Metaphone.pm">Text:Metaphone-1.96</a>
  *  (broken link 4/30/2013) </li>
  * <li><a href="https://metacpan.org/source/MSCHWERN/Text-Metaphone-1.96//Metaphone.pm">Text:Metaphone-1.96</a>
  *  (link checked 4/30/2013) </li>

@@ -164,7 +164,7 @@ public final class HmacUtils {
      *
      * @param algorithm
      *            the name of the algorithm requested. See
-     *            <a href= "http://docs.oracle.com/javase/6/docs/technotes/guides/security/crypto/CryptoSpec.html#AppA"
+     *            <a href= "https://docs.oracle.com/javase/6/docs/technotes/guides/security/crypto/CryptoSpec.html#AppA"
      *            >Appendix A in the Java Cryptography Architecture Reference Guide</a> for information about standard
      *            algorithm names.
      * @param key
@@ -184,7 +184,7 @@ public final class HmacUtils {
      *
      * @param algorithm
      *            the name of the algorithm requested. See
-     *            <a href= "http://docs.oracle.com/javase/6/docs/technotes/guides/security/crypto/CryptoSpec.html#AppA"
+     *            <a href= "https://docs.oracle.com/javase/6/docs/technotes/guides/security/crypto/CryptoSpec.html#AppA"
      *            >Appendix A in the Java Cryptography Architecture Reference Guide</a> for information about standard
      *            algorithm names.
      * @param key

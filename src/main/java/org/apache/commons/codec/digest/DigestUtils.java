@@ -145,7 +145,7 @@ public class DigestUtils {
      * Gets a {@code MessageDigest} for the given {@code algorithm}.
      *
      * @param algorithm the name of the algorithm requested. See
-     *                  <a href="http://docs.oracle.com/javase/6/docs/technotes/guides/security/crypto/CryptoSpec.html#AppA" >Appendix A in the Java
+     *                  <a href="https://docs.oracle.com/javase/6/docs/technotes/guides/security/crypto/CryptoSpec.html#AppA" >Appendix A in the Java
      *                  Cryptography Architecture Reference Guide</a> for information about standard algorithm names.
      * @return A digest instance.
      * @see MessageDigest#getInstance(String)
@@ -163,7 +163,7 @@ public class DigestUtils {
      * Gets a {@code MessageDigest} for the given {@code algorithm} or a default if there is a problem getting the algorithm.
      *
      * @param algorithm            the name of the algorithm requested. See
-     *                             <a href="http://docs.oracle.com/javase/6/docs/technotes/guides/security/crypto/CryptoSpec.html#AppA" > Appendix A in the Java
+     *                             <a href="https://docs.oracle.com/javase/6/docs/technotes/guides/security/crypto/CryptoSpec.html#AppA" > Appendix A in the Java
      *                             Cryptography Architecture Reference Guide</a> for information about standard algorithm names.
      * @param defaultMessageDigest The default MessageDigest.
      * @return A digest instance.
@@ -206,7 +206,7 @@ public class DigestUtils {
      * Gets a {@code MessageDigest} for the given {@code algorithm}.
      *
      * @param algorithm the name of the algorithm requested. See
-     *                  <a href="http://docs.oracle.com/javase/6/docs/technotes/guides/security/crypto/CryptoSpec.html#AppA" > Appendix A in the Java
+     *                  <a href="https://docs.oracle.com/javase/6/docs/technotes/guides/security/crypto/CryptoSpec.html#AppA" > Appendix A in the Java
      *                  Cryptography Architecture Reference Guide</a> for information about standard algorithm names.
      * @return A digest instance.
      * @see MessageDigest#getInstance(String)

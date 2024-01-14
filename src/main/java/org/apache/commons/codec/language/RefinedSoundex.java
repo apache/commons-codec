@@ -116,7 +116,7 @@ public class RefinedSoundex implements StringEncoder {
      *             same from 0 to the length of the shortest encoded String.
      *
      * @see SoundexUtils#difference(StringEncoder,String,String)
-     * @see <a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_de-dz_8co5.asp">
+     * @see <a href="https://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_de-dz_8co5.asp">
      *          MS T-SQL DIFFERENCE</a>
      *
      * @throws EncoderException

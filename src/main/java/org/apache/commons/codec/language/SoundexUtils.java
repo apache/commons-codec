@@ -75,7 +75,7 @@ final class SoundexUtils {
      *             are the same.
      *
      * @see #differenceEncoded(String,String)
-     * @see <a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_de-dz_8co5.asp">
+     * @see <a href="https://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_de-dz_8co5.asp">
      *          MS T-SQL DIFFERENCE</a>
      *
      * @throws EncoderException
@@ -102,7 +102,7 @@ final class SoundexUtils {
      * @return The number of characters in the two Soundex encoded Strings that
      *             are the same.
      *
-     * @see <a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_de-dz_8co5.asp">
+     * @see <a href="https://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_de-dz_8co5.asp">
      *          MS T-SQL DIFFERENCE</a>
      */
     static int differenceEncoded(final String es1, final String es2) {

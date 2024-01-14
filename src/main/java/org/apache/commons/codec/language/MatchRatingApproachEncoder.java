@@ -27,7 +27,7 @@ import org.apache.commons.codec.StringEncoder;
  * This class is immutable and thread-safe.
  * </p>
  *
- * @see <a href="http://en.wikipedia.org/wiki/Match_rating_approach">Wikipedia - Match Rating Approach</a>
+ * @see <a href="https://en.wikipedia.org/wiki/Match_rating_approach">Wikipedia - Match Rating Approach</a>
  * @since 1.8
  */
 public class MatchRatingApproachEncoder implements StringEncoder {

@@ -23,8 +23,8 @@ package org.apache.commons.codec.language;
  * This is an algorithm created by the Caversham Project at the University of Otago. It implements the Caverphone 1.0
  * algorithm:
  *
- * @see <a href="http://en.wikipedia.org/wiki/Caverphone">Wikipedia - Caverphone</a>
- * @see <a href="http://caversham.otago.ac.nz/files/working/ctp060902.pdf">Caverphone 1.0 specification</a>
+ * @see <a href="https://en.wikipedia.org/wiki/Caverphone">Wikipedia - Caverphone</a>
+ * @see <a href="https://caversham.otago.ac.nz/files/working/ctp060902.pdf">Caverphone 1.0 specification</a>
  * @since 1.5
  *
  * <p>This class is immutable and thread-safe.</p>

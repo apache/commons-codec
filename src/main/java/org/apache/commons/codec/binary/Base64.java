@@ -69,7 +69,7 @@ public class Base64 extends BaseNCodec {
      * equivalents as specified in Table 1 of RFC 2045.
      * <p>
      * Thanks to "commons" project in ws.apache.org for this code.
-     * http://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/
+     * https://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/
      * </p>
      */
     private static final byte[] STANDARD_ENCODE_TABLE = {
@@ -103,7 +103,7 @@ public class Base64 extends BaseNCodec {
      * </p>
      * <p>
      * Thanks to "commons" project in ws.apache.org for this code.
-     * http://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/
+     * https://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/
      * </p>
      */
     private static final byte[] DECODE_TABLE = {
@@ -627,7 +627,7 @@ public class Base64 extends BaseNCodec {
      * </p>
      * <p>
      * Thanks to "commons" project in ws.apache.org for the bitwise operations, and general approach.
-     * http://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/
+     * https://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/
      * </p>
      *
      * @param input
@@ -708,7 +708,7 @@ public class Base64 extends BaseNCodec {
      * <p><b>Note: no padding is added when encoding using the URL-safe alphabet.</b></p>
      * <p>
      * Thanks to "commons" project in ws.apache.org for the bitwise operations, and general approach.
-     * http://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/
+     * https://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/
      * </p>
      *
      * @param in

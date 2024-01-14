@@ -146,7 +146,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * equal signs.
      * </p>
      *
-     * @see <a href="http://tools.ietf.org/html/rfc1421">RFC 1421 section 4.3.2.4</a>
+     * @see <a href="https://tools.ietf.org/html/rfc1421">RFC 1421 section 4.3.2.4</a>
      */
     public static final int PEM_CHUNK_SIZE = 64;
 

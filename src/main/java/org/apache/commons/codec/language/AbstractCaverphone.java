@@ -28,7 +28,7 @@ import org.apache.commons.codec.StringEncoder;
  *
  * <p>This class is immutable and thread-safe.</p>
  *
- * @see <a href="http://en.wikipedia.org/wiki/Caverphone">Wikipedia - Caverphone</a>
+ * @see <a href="https://en.wikipedia.org/wiki/Caverphone">Wikipedia - Caverphone</a>
  * @since 1.5
  */
 public abstract class AbstractCaverphone implements StringEncoder {
