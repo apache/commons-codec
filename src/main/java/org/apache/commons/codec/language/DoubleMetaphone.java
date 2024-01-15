@@ -568,7 +568,7 @@ public class DoubleMetaphone implements StringEncoder {
             } else {
                 result.append("KN");
             }
-            index = index + 2;
+            index += 2;
         } else if (contains(value, index + 1, 2, "LI") && !slavoGermanic) {
             result.append("KL", "L");
             index += 2;

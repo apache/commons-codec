@@ -117,7 +117,7 @@ public class Caverphone1 extends AbstractCaverphone {
         txt = txt.replace("3", "");
 
         // 6. put six 1s on the end
-        txt = txt + SIX_1;
+        txt += SIX_1;
 
         // 7. take the first six characters as the code
         return txt.substring(0, SIX_1.length());

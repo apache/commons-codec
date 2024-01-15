@@ -121,7 +121,7 @@ public class Caverphone2 extends AbstractCaverphone {
         txt = txt.replace("3", "");
 
         // 6. put ten 1s on the end
-        txt = txt + TEN_1;
+        txt += TEN_1;
 
         // 7. take the first ten characters as the code
         return txt.substring(0, TEN_1.length());
