@@ -292,7 +292,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
     }
 
     /**
-     * Return the byte at position {@code index} of the byte array and
+     * Gets the byte at position {@code index} of the byte array and
      * make sure it is unsigned.
      *
      * @param index
