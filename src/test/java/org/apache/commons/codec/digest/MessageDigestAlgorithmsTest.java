@@ -45,7 +45,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 /**
  * Tests {@link MessageDigestAlgorithms}.
  *
- * @since 1.11
  */
 public class MessageDigestAlgorithmsTest {
 

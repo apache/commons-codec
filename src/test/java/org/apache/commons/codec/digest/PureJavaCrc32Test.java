@@ -38,7 +38,6 @@ import org.junit.jupiter.api.Test;
  *
  * Copied from Hadoop 2.6.3 (Renamed TestPureJavaCrc32 to PureJavaCrc32Test).
  *
- * @since 1.11
  */
 public class PureJavaCrc32Test {
 

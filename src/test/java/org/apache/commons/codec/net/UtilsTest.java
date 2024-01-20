@@ -25,7 +25,6 @@ import org.junit.jupiter.api.Test;
  * Methods currently get 100%/100% line/branch code coverage from other tests classes.
  * </p>
  *
- * @since 1.4
  */
 public class UtilsTest {
 

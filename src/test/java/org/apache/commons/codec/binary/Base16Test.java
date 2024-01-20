@@ -37,7 +37,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Test cases for Base16 class.
  *
- * @since 1.15
  */
 public class Base16Test {
 

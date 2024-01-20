@@ -25,7 +25,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests Rule.
  *
- * @since 1.6
  */
 public class RuleTest {
     private Rule.Phoneme[][] makePhonemes() {

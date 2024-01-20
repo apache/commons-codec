@@ -29,7 +29,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests PhoneticEngine and Languages.LanguageSet in ways very similar to code found in solr-3.6.0.
  *
- * @since 1.7
  */
 public class PhoneticEngineRegressionTest {
 

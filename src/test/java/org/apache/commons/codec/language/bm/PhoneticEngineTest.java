@@ -29,7 +29,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 /**
  * Tests PhoneticEngine.
  *
- * @since 1.6
  */
 public class PhoneticEngineTest {
 

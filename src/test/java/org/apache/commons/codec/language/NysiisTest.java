@@ -26,7 +26,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link Nysiis}
  *
- * @since 1.7
  */
 public class NysiisTest extends AbstractStringEncoderTest<Nysiis> {
 

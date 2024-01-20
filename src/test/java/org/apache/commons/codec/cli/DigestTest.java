@@ -24,7 +24,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link Digest}.
  *
- * @since 1.17
  */
 public class DigestTest {
 

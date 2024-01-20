@@ -25,7 +25,6 @@ import java.util.Random;
 /**
  * Data and functions common to BaseN tests.
  *
- * @since 1.15
  */
 public class BaseNTestData {
 

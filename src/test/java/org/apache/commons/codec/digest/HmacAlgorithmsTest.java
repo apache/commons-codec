@@ -44,7 +44,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 /**
  * Tests {@link HmacAlgorithms}.
  *
- * @since 1.11
  */
 public class HmacAlgorithmsTest {
 
