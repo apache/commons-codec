@@ -26,7 +26,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests Caverphone2.
- *
  */
 public class Caverphone2Test extends AbstractStringEncoderTest<Caverphone2> {
 

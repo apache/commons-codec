@@ -23,7 +23,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests {@link Digest}.
- *
  */
 public class DigestTest {
 

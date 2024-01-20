@@ -37,7 +37,6 @@ import org.junit.jupiter.api.Test;
  * Unit test to verify that the pure-Java CRC32 algorithm gives the same results as the built-in implementation.
  *
  * Copied from Hadoop 2.6.3 (Renamed TestPureJavaCrc32 to PureJavaCrc32Test).
- *
  */
 public class PureJavaCrc32Test {
 
