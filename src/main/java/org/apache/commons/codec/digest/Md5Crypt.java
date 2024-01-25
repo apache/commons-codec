@@ -395,4 +395,14 @@ public class Md5Crypt {
 
         return passwd.toString();
     }
+
+    /**
+     * TODO Make private in 2.0.
+     *
+     * @deprecated TODO Make private in 2.0.
+     */
+    @Deprecated
+    public Md5Crypt() {
+        // empty
+    }
 }
