@@ -57,6 +57,13 @@ The <action> type attribute can be add,update,fix,remove.
       <action issue="CODEC-312" dev="ggregory" type="fix" due-to="Arthur Chan, Gary Gregory">Fix possible StringIndexOutOfBoundException in MatchRatingApproachEncoder.encode() method #220.</action>
       <action issue="CODEC-311" dev="ggregory" type="fix" due-to="Arthur Chan, Gary Gregory">Fix possible ArrayIndexOutOfBoundException in RefinedSoundex.getMappingCode() #219.</action>
       <action issue="CODEC-314" dev="ggregory" type="fix" due-to="Arthur Chan, Gary Gregory">Fix possible IndexOutOfBoundsException in PercentCodec.insertAlwaysEncodeChars() method #222.</action>
+      <action                   dev="ggregory" type="fix" due-to="Gary Gregory">Deprecate UnixCrypt 0-argument constructor.</action>
+      <action                   dev="ggregory" type="fix" due-to="Gary Gregory">Deprecate Md5Crypt 0-argument constructor.</action>
+      <action                   dev="ggregory" type="fix" due-to="Gary Gregory">Deprecate Crypt 0-argument constructor.</action>
+      <action                   dev="ggregory" type="fix" due-to="Gary Gregory">Deprecate StringUtils 0-argument constructor.</action>
+      <action                   dev="ggregory" type="fix" due-to="Gary Gregory">Deprecate Resources 0-argument constructor.</action>
+      <action                   dev="ggregory" type="fix" due-to="Gary Gregory">Deprecate Charsets 0-argument constructor.</action>
+      <action                   dev="ggregory" type="fix" due-to="Gary Gregory">Deprecate CharEncoding 0-argument constructor.</action>
       <!-- UPDATE -->
       <action                   dev="ggregory" type="update" due-to="Dependabot, Gary Gregory">Bump commons-parent from 58 to 65.</action>
       <action                   dev="ggregory" type="update" due-to="Gary Gregory">Bump commons-lang3 from 3.12.0 to 3.14.0.</action>      
