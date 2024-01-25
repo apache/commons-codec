@@ -118,4 +118,15 @@ public class CharEncoding {
      * @see Charset
      */
     public static final String UTF_8 = StandardCharsets.UTF_8.name();
+
+    /**
+     * TODO Make private in 2.0.
+     *
+     * @deprecated TODO Make private in 2.0.
+     */
+    @Deprecated
+    public CharEncoding() {
+        // empty
+    }
+
 }
