@@ -259,9 +259,9 @@ public final class MurmurHash2 {
             h ^= ((long) data[index + 1] & 0xff) << 8;
         case 1:
             h ^= (long) data[index] & 0xff;
-            h *= M64;
+            h *= M64; break;
         default:
-
+            break;
         }
 
         h ^= h >>> R64;
