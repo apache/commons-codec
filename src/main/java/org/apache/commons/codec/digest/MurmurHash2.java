@@ -143,7 +143,9 @@ public final class MurmurHash2 {
             h ^= (data[index + 1] & 0xff) << 8;
         case 1:
             h ^= data[index] & 0xff;
-            h *= M32;
+            h *= M32; break;
+            default:
+                break;
         }
 
         // Do a few final mixes of the hash to ensure the last few
