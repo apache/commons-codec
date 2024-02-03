@@ -547,6 +547,7 @@ public final class MurmurHash3 {
         long k2 = 0;
         final int index = offset + (nblocks << 4);
         switch (offset + length - index) {
+            default: break;
         case 15:
             k2 ^= ((long) data[index + 14] & 0xff) << 48;
         case 14:
