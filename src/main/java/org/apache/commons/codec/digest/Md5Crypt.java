@@ -375,7 +375,7 @@ public class Md5Crypt {
 
         // The following was nearly identical to the Sha2Crypt code.
         // Again, the buflen is not really needed.
-        // int buflen = MD5_PREFIX.length() - 1 + salt_string.length() + 1 + BLOCKSIZE + 1;
+
         B64.b64from24bit(finalb[0], finalb[6], finalb[12], 4, passwd);
         B64.b64from24bit(finalb[1], finalb[7], finalb[13], 4, passwd);
         B64.b64from24bit(finalb[2], finalb[8], finalb[14], 4, passwd);
