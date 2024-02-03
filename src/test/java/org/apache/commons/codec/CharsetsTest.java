@@ -83,7 +83,7 @@ public class CharsetsTest {
 
     @SuppressWarnings("deprecation")
     @Test
-     void testUtf8() {
+    public void testUtf8() {
         assertEquals(StandardCharsets.UTF_8.name(), Charsets.UTF_8.name());
     }
 
