@@ -259,7 +259,6 @@ public final class MurmurHash3 {
             int result = hash;
             int k1 = 0;
             switch (unprocessedLength) {
-                default: break;
             case 3:
                 k1 ^= (unprocessed[2] & 0xff) << 16;
             case 2:
@@ -272,6 +271,7 @@ public final class MurmurHash3 {
                 k1 = Integer.rotateLeft(k1, R1_32);
                 k1 *= C2_32;
                 result ^= k1;
+                default: break;
             }
 
             // finalization
@@ -549,7 +549,7 @@ public final class MurmurHash3 {
         long k2 = 0;
         final int index = offset + (nblocks << 4);
         switch (offset + length - index) {
-            default: break;
+
         case 15:
             k2 ^= ((long) data[index + 14] & 0xff) << 48;
         case 14:
@@ -589,6 +589,7 @@ public final class MurmurHash3 {
             k1 = Long.rotateLeft(k1, R1);
             k1 *= C2;
             h1 ^= k1;
+            default: break;
         }
 
         // finalization
