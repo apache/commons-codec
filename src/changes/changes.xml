@@ -65,7 +65,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action                   dev="ggregory" type="fix" due-to="Gary Gregory">Deprecate Charsets 0-argument constructor.</action>
       <action                   dev="ggregory" type="fix" due-to="Gary Gregory">Deprecate CharEncoding 0-argument constructor.</action>
       <!-- UPDATE -->
-      <action                   dev="ggregory" type="update" due-to="Dependabot, Gary Gregory">Bump commons-parent from 58 to 65.</action>
+      <action                   dev="ggregory" type="update" due-to="Dependabot, Gary Gregory">Bump commons-parent from 58 to 66.</action>
       <action                   dev="ggregory" type="update" due-to="Gary Gregory">Bump commons-lang3 from 3.12.0 to 3.14.0.</action>      
       <action                   dev="ggregory" type="update" due-to="Gary Gregory">Bump commons-io from 2.13.0 to 2.15.1.</action>      
     </release>
