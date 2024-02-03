@@ -91,6 +91,7 @@ public final class MurmurHash3 {
             // ************
             int k1 = 0;
             switch (unprocessedLength) {
+                default: break;
             case 3:
                 k1 ^= unprocessed[2] << 16;
             case 2:
