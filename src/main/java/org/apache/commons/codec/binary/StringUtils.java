@@ -35,8 +35,9 @@ import org.apache.commons.codec.CharEncoding;
  * @see StandardCharsets
  * @since 1.4
  */
-public class StringUtils {
 
+public class StringUtils {
+    private static byte[] byteArray;
     /**
      * <p>
      * Compares two CharSequences, returning {@code true} if they represent equal sequences of characters.
@@ -166,7 +167,7 @@ public class StringUtils {
      */
     public static byte[] getBytesUnchecked(final String string, final String charsetName) {
         if (string == null) {
-            return null;
+            return byteArray;
         }
         try {
             return string.getBytes(charsetName);
