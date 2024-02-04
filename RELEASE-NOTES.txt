@@ -1,4 +1,4 @@
-Apache Commons Codec 1.16.1-SNAPSHOT
+Apache Commons Codec 1.16.1
 RELEASE NOTES
 
 The Apache Commons Codec component contains encoder and decoders for
