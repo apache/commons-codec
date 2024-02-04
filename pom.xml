@@ -275,10 +275,11 @@ limitations under the License.
     <!-- Commons Release Plugin -->
     <commons.release.version>1.16.1</commons.release.version>
     <commons.bc.version>1.16.0</commons.bc.version>
+    <commons.bc.next>1.16.2</commons.bc.next>
     <commons.rc.version>RC1</commons.rc.version>
     <commons.release.isDistModule>true</commons.release.isDistModule>
     <commons.distSvnStagingUrl>scm:svn:https://dist.apache.org/repos/dist/dev/commons/${commons.componentid}</commons.distSvnStagingUrl>
-    <project.build.outputTimestamp>2024-01-01T00:00:00Z</project.build.outputTimestamp>
+    <project.build.outputTimestamp>2024-02-04T00:00:00Z</project.build.outputTimestamp>
   </properties>
   <build>
     <defaultGoal>clean verify apache-rat:check japicmp:cmp checkstyle:check javadoc:javadoc</defaultGoal>
@@ -371,6 +372,7 @@ limitations under the License.
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>animal-sniffer-maven-plugin</artifactId>
+        <version>1.23</version>
         <configuration>
           <ignores>
             <!-- JDK9 breaks compatibility by returning ByteBuffer not Buffer -->

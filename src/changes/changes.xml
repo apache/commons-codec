@@ -43,7 +43,7 @@ The <action> type attribute can be add,update,fix,remove.
     <author>Apache Commons Developers</author>
   </properties>
   <body>
-    <release version="1.16.1" date="20YY-MM-DD" description="Feature and fix release. Requires a minimum of Java 8.">
+    <release version="1.16.1" date="2024-02-04" description="Feature and fix release. Requires a minimum of Java 8.">
       <!-- ADD -->
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add Maven property project.build.outputTimestamp for build reproducibility.</action>
       <!-- FIX -->
@@ -65,6 +65,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action                   dev="ggregory" type="fix" due-to="Gary Gregory">Deprecate Resources 0-argument constructor.</action>
       <action                   dev="ggregory" type="fix" due-to="Gary Gregory">Deprecate Charsets 0-argument constructor.</action>
       <action                   dev="ggregory" type="fix" due-to="Gary Gregory">Deprecate CharEncoding 0-argument constructor.</action>
+      <action                   dev="ggregory" type="fix" due-to="Gary Gregory">Add missing version for animal-sniffer-maven-plugin.</action>
       <!-- UPDATE -->
       <action                   dev="ggregory" type="update" due-to="Dependabot, Gary Gregory">Bump commons-parent from 58 to 66.</action>
       <action                   dev="ggregory" type="update" due-to="Gary Gregory">Bump commons-lang3 from 3.12.0 to 3.14.0.</action>      
