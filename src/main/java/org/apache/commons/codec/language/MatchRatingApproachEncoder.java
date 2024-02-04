@@ -84,9 +84,7 @@ public class MatchRatingApproachEncoder implements StringEncoder {
         }
 
         upperName = removeAccents(upperName);
-        upperName = upperName.replaceAll("\\s+", EMPTY);
-
-        return upperName;
+        return upperName.replaceAll("\\s+", EMPTY);
     }
 
     /**
@@ -143,10 +141,7 @@ public class MatchRatingApproachEncoder implements StringEncoder {
         // 2. Remove second consonant from any double consonant
         name = removeDoubleConsonants(name);
 
-        // 3. Reduce codex to 6 letters by joining the first 3 and last 3 letters
-        name = getFirst3Last3(name);
-
-        return name;
+        return getFirst3Last3(name);
     }
 
     /**

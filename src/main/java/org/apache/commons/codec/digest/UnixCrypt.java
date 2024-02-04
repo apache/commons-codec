@@ -399,10 +399,9 @@ public class UnixCrypt {
         return value;
     }
 
-    private static int hPermOp(int a, final int n, final int m) {
+    private static int hPermOp(final int a, final int n, final int m) {
         final int t = (a << 16 - n ^ a) & m;
-        a = a ^ t ^ t >>> 16 - n;
-        return a;
+        return a ^ t ^ t >>> 16 - n;
     }
 
     private static void intToFourBytes(final int iValue, final byte[] b, int offset) {

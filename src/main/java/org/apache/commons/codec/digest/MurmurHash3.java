@@ -1069,9 +1069,7 @@ public final class MurmurHash3 {
 
         // finalization
         hash ^= length;
-        hash = fmix64(hash);
-
-        return hash;
+        return fmix64(hash);
     }
 
     /**
@@ -1113,8 +1111,7 @@ public final class MurmurHash3 {
         hash ^= k1;
         // finalization
         hash ^= Integer.BYTES;
-        hash = fmix64(hash);
-        return hash;
+        return fmix64(hash);
     }
 
     /**
@@ -1158,8 +1155,7 @@ public final class MurmurHash3 {
         hash = Long.rotateLeft(hash, R2) * M + N1;
         // finalization
         hash ^= Long.BYTES;
-        hash = fmix64(hash);
-        return hash;
+        return fmix64(hash);
     }
 
     /**
@@ -1204,8 +1200,7 @@ public final class MurmurHash3 {
 
         // finalization
         hash ^= Short.BYTES;
-        hash = fmix64(hash);
-        return hash;
+        return fmix64(hash);
     }
 
     /**
