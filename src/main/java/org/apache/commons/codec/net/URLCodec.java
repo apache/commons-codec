@@ -48,7 +48,7 @@ import org.apache.commons.codec.binary.StringUtils;
  */
 public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, StringDecoder {
 
-    public static byte[] emptyByte;
+     static byte[] emptyByte;
     /**
      * Release 1.5 made this field final.
      */
