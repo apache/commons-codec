@@ -270,7 +270,7 @@ public final class MurmurHash3 {
                 k1 *= C1_32;
                 k1 = Integer.rotateLeft(k1, R1_32);
                 k1 *= C2_32;
-                result ^= k1;
+                result ^= k1; break;
                 default: break;
             }
 
@@ -588,7 +588,7 @@ public final class MurmurHash3 {
             k1 *= C1;
             k1 = Long.rotateLeft(k1, R1);
             k1 *= C2;
-            h1 ^= k1;
+            h1 ^= k1; break;
             default: break;
         }
 
@@ -729,7 +729,8 @@ public final class MurmurHash3 {
             k1 *= C1_32;
             k1 = Integer.rotateLeft(k1, R1_32);
             k1 *= C2_32;
-            hash ^= k1;
+            hash ^= k1; break;
+            default: break;
         }
 
         hash ^= length;
@@ -926,7 +927,8 @@ public final class MurmurHash3 {
             k1 *= C1_32;
             k1 = Integer.rotateLeft(k1, R1_32);
             k1 *= C2_32;
-            hash ^= k1;
+            hash ^= k1; break;
+            default: break;
         }
 
         hash ^= length;
@@ -1068,7 +1070,8 @@ public final class MurmurHash3 {
             k1 *= C1;
             k1 = Long.rotateLeft(k1, R1);
             k1 *= C2;
-            hash ^= k1;
+            hash ^= k1; break;
+            default: break;
         }
 
         // finalization
