@@ -488,7 +488,6 @@ public class Sha2Crypt {
         // characters as output for SHA-512 and SHA-512 respectively.
 
         // This was just a safeguard in the C implementation:
-        // int buflen = salt_prefix.length() - 1 + ROUNDS_PREFIX.length() + 9 + 1 + salt_string.length() + 1 + 86 + 1;
 
         if (blocksize == 32) {
             B64.b64from24bit(altResult[0], altResult[10], altResult[20], 4, buffer);

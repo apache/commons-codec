@@ -68,7 +68,7 @@ import org.apache.commons.codec.StringEncoder;
  * @since 1.10
  */
 public class DaitchMokotoffSoundex implements StringEncoder {
-
+    static String[] stringArray;
     /**
      * Inner class representing a branch during DM soundex encoding.
      */
@@ -465,7 +465,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
      */
     private String[] soundex(final String source, final boolean branching) {
         if (source == null) {
-            return null;
+            return stringArray;
         }
 
         final String input = cleanup(source);
