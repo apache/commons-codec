@@ -1055,16 +1055,22 @@ public final class MurmurHash3 {
         switch (offset + length - index) {
         case 7:
             k1 ^= ((long) data[index + 6] & 0xff) << 48;
+            // fall through
         case 6:
             k1 ^= ((long) data[index + 5] & 0xff) << 40;
+            // fall through
         case 5:
             k1 ^= ((long) data[index + 4] & 0xff) << 32;
+            // fall through
         case 4:
             k1 ^= ((long) data[index + 3] & 0xff) << 24;
+            // fall through
         case 3:
             k1 ^= ((long) data[index + 2] & 0xff) << 16;
+            // fall through
         case 2:
             k1 ^= ((long) data[index + 1] & 0xff) << 8;
+            // fall through
         case 1:
             k1 ^= (long) data[index] & 0xff;
             k1 *= C1;
