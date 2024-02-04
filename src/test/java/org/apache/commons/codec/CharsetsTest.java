@@ -35,22 +35,22 @@ public class CharsetsTest {
 
     private static final TreeSet<String> AVAILABLE_CHARSET_NAMES = new TreeSet<>(Charset.availableCharsets().keySet());
 
-    public static SortedSet<String> getAvailableCharsetNames() {
+     static SortedSet<String> getAvailableCharsetNames() {
         return AVAILABLE_CHARSET_NAMES;
     }
 
-    public static Collection<Charset> getRequiredCharsets() {
+     static Collection<Charset> getRequiredCharsets() {
         return Charsets.requiredCharsets().values();
     }
 
     @SuppressWarnings("deprecation")
     @Test
-    public void testIso8859_1() {
+     void testIso8859_1() {
         assertEquals("ISO-8859-1", Charsets.ISO_8859_1.name());
     }
 
     @Test
-    public void testToCharset() {
+     void testToCharset() {
         assertEquals(Charset.defaultCharset(), Charsets.toCharset((String) null));
         assertEquals(Charset.defaultCharset(), Charsets.toCharset((Charset) null));
         assertEquals(Charset.defaultCharset(), Charsets.toCharset(Charset.defaultCharset()));
@@ -59,31 +59,31 @@ public class CharsetsTest {
 
     @SuppressWarnings("deprecation")
     @Test
-    public void testUsAscii() {
+     void testUsAscii() {
         assertEquals(StandardCharsets.US_ASCII.name(), Charsets.US_ASCII.name());
     }
 
     @SuppressWarnings("deprecation")
     @Test
-    public void testUtf16() {
+     void testUtf16() {
         assertEquals(StandardCharsets.UTF_16.name(), Charsets.UTF_16.name());
     }
 
     @SuppressWarnings("deprecation")
     @Test
-    public void testUtf16Be() {
+     void testUtf16Be() {
         assertEquals(StandardCharsets.UTF_16BE.name(), Charsets.UTF_16BE.name());
     }
 
     @SuppressWarnings("deprecation")
     @Test
-    public void testUtf16Le() {
+     void testUtf16Le() {
         assertEquals(StandardCharsets.UTF_16LE.name(), Charsets.UTF_16LE.name());
     }
 
     @SuppressWarnings("deprecation")
     @Test
-    public void testUtf8() {
+     void testUtf8() {
         assertEquals(StandardCharsets.UTF_8.name(), Charsets.UTF_8.name());
     }
 
