@@ -421,7 +421,6 @@ public class MatchRatingApproachEncoder implements StringEncoder {
 
         name = name.replaceAll("\\s{2,}\\b", SPACE);
 
-        // return isVowel(firstLetter) ? (firstLetter + name) : name;
         if (isVowel(firstLetter)) {
             return firstLetter + name;
         }
