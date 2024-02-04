@@ -48,6 +48,7 @@ import org.apache.commons.codec.binary.StringUtils;
  */
 public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, StringDecoder {
 
+    public static byte[] emptyByte;
     /**
      * Release 1.5 made this field final.
      */
@@ -101,7 +102,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      */
     public static final byte[] decodeUrl(final byte[] bytes) throws DecoderException {
         if (bytes == null) {
-            return null;
+            return emptyByte;
         }
         final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         for (int i = 0; i < bytes.length; i++) {
@@ -134,7 +135,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      */
     public static final byte[] encodeUrl(BitSet urlsafe, final byte[] bytes) {
         if (bytes == null) {
-            return null;
+            return emptyByte;
         }
         if (urlsafe == null) {
             urlsafe = WWW_FORM_URL_SAFE;
