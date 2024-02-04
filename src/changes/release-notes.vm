@@ -14,7 +14,8 @@
 ## KIND, either express or implied.  See the License for the
 ## specific language governing permissions and limitations
 ## under the License.
-              ${project.name} ${version} RELEASE NOTES
+${project.name} ${version}
+RELEASE NOTES
 
 $introduction.replaceAll("(?<!\015)\012", "
 ").replaceAll("(?m)^ +","")
@@ -103,3 +104,5 @@ patches, or suggestions for improvement, see the ${project.name} website:
 ${project.url}
 
 Download page: ${project.url}download_codec.cgi
+
+---------------------------------------------------------------------------------

@@ -1,3 +1,54 @@
+Apache Commons Codec 1.16.1-SNAPSHOT
+RELEASE NOTES
+
+The Apache Commons Codec component contains encoder and decoders for
+various formats such as Base16, Base32, Base64, digest, and Hexadecimal. In addition to these
+widely used encoders and decoders, the codec package also maintains a
+collection of phonetic encoding utilities.
+
+Feature and fix release. Requires a minimum of Java 8.
+
+Changes in this version include:
+
+New features:
+o             Add Maven property project.build.outputTimestamp for build reproducibility. Thanks to Gary Gregory.
+
+Fixed Bugs:
+o CODEC-295:  Test clean ups. Thanks to Gary Gregory.
+o             [StepSecurity] ci: Harden GitHub Actions #187. Thanks to step-security-bot, Gary Gregory.
+o CODEC-295:  Correct error in Base64 Javadoc #188. Thanks to Evan Saulpaugh.
+o CODEC-295:  Add minimum Java version in changes.xml #186. Thanks to Olivier Jaquemet, Gary Gregory.
+o CODEC-310:  Documentation update for the org.apache.commons.codec.digest.* package #208. Thanks to Yakov Shafranovich.
+o             Precompile regular expression in UnixCrypt.crypt(byte[], String). Thanks to Gary Gregory.
+o CODEC-315:  Fix possible IndexOutOfBoundException in PhoneticEngine.encode method #223. Thanks to Arthur Chan, Gary Gregory.
+o CODEC-313:  Fix possible ArrayIndexOutOfBoundsException in QuotedPrintableCodec.encodeQuotedPrintable() method #221. Thanks to Arthur Chan, Gary Gregory.
+o CODEC-312:  Fix possible StringIndexOutOfBoundException in MatchRatingApproachEncoder.encode() method #220. Thanks to Arthur Chan, Gary Gregory.
+o CODEC-311:  Fix possible ArrayIndexOutOfBoundException in RefinedSoundex.getMappingCode() #219. Thanks to Arthur Chan, Gary Gregory.
+o CODEC-314:  Fix possible IndexOutOfBoundsException in PercentCodec.insertAlwaysEncodeChars() method #222. Thanks to Arthur Chan, Gary Gregory.
+o             Deprecate UnixCrypt 0-argument constructor. Thanks to Gary Gregory.
+o             Deprecate Md5Crypt 0-argument constructor. Thanks to Gary Gregory.
+o             Deprecate Crypt 0-argument constructor. Thanks to Gary Gregory.
+o             Deprecate StringUtils 0-argument constructor. Thanks to Gary Gregory.
+o             Deprecate Resources 0-argument constructor. Thanks to Gary Gregory.
+o             Deprecate Charsets 0-argument constructor. Thanks to Gary Gregory.
+o             Deprecate CharEncoding 0-argument constructor. Thanks to Gary Gregory.
+o             Add missing version for animal-sniffer-maven-plugin. Thanks to Gary Gregory.
+
+Changes:
+o             Bump commons-parent from 58 to 66. Thanks to Dependabot, Gary Gregory.
+o             Bump commons-lang3 from 3.12.0 to 3.14.0. Thanks to Gary Gregory.
+o             Bump commons-io from 2.13.0 to 2.15.1. Thanks to Gary Gregory.
+
+
+For complete information on Apache Commons Codec, including instructions on how to submit bug reports,
+patches, or suggestions for improvement, see the Apache Commons Codec website:
+
+https://commons.apache.org/proper/commons-codec/
+
+Download page: https://commons.apache.org/proper/commons-codec/download_codec.cgi
+
+---------------------------------------------------------------------------------
+
               Apache Commons Codec 1.16.0
 
 The Apache Commons Codec package contains simple encoder and decoders for

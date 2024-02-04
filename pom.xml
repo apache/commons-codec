@@ -32,8 +32,8 @@ limitations under the License.
   <name>Apache Commons Codec</name>
   <inceptionYear>2002</inceptionYear>
   <description>
-     The Apache Commons Codec package contains simple encoder and decoders for
-     various formats such as Base64 and Hexadecimal.  In addition to these
+     The Apache Commons Codec component contains encoder and decoders for
+     various formats such as Base16, Base32, Base64, digest, and Hexadecimal. In addition to these
      widely used encoders and decoders, the codec package also maintains a
      collection of phonetic encoding utilities.
   </description>
