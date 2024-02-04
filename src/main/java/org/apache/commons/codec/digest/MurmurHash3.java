@@ -91,7 +91,6 @@ public final class MurmurHash3 {
             // ************
             int k1 = 0;
             switch (unprocessedLength) {
-                default: break;
             case 3:
                 k1 ^= unprocessed[2] << 16;
             case 2:
@@ -103,7 +102,8 @@ public final class MurmurHash3 {
                 k1 *= C1_32;
                 k1 = Integer.rotateLeft(k1, R1_32);
                 k1 *= C2_32;
-                result ^= k1;
+                result ^= k1; break;
+                default: break;
             }
 
             // finalization
