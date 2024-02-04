@@ -93,8 +93,10 @@ public final class MurmurHash3 {
             switch (unprocessedLength) {
             case 3:
                 k1 ^= unprocessed[2] << 16;
+                // fall through
             case 2:
                 k1 ^= unprocessed[1] << 8;
+                // fall through
             case 1:
                 k1 ^= unprocessed[0];
 
