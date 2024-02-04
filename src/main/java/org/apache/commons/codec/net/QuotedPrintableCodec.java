@@ -72,6 +72,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
     /**
      * BitSet of printable characters as defined in RFC 1521.
      */
+    static byte[] emptyByte;
     private static final BitSet PRINTABLE_CHARS = new BitSet(256);
 
     private static final byte ESCAPE_CHAR = '=';
@@ -204,7 +205,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      */
     public static final byte[] encodeQuotedPrintable(BitSet printable, final byte[] bytes, final boolean strict) {
         if (bytes == null) {
-            return null;
+            return emptyByte;
         }
         if (printable == null) {
             printable = PRINTABLE_CHARS;
@@ -214,7 +215,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
 
         if (strict) {
             if (bytesLength < MIN_BYTES) {
-                return null;
+                return emptyByte;
             }
 
             int pos = 1;

@@ -54,6 +54,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     /**
      * BitSet of printable characters as defined in RFC 1522.
      */
+    static byte[] emptyByte;
     private static final BitSet PRINTABLE_CHARS = new BitSet(256);
 
     // Static initializer for printable chars collection
@@ -193,7 +194,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     @Override
     protected byte[] doDecoding(final byte[] bytes) throws DecoderException {
         if (bytes == null) {
-            return null;
+            return emptyByte;
         }
         boolean hasUnderscores = false;
         for (final byte b : bytes) {
@@ -220,7 +221,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     @Override
     protected byte[] doEncoding(final byte[] bytes) {
         if (bytes == null) {
-            return null;
+            return emptyByte;
         }
         final byte[] data = QuotedPrintableCodec.encodeQuotedPrintable(PRINTABLE_CHARS, bytes);
         if (this.encodeBlanks) {
