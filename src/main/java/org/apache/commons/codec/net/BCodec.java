@@ -47,7 +47,7 @@ import org.apache.commons.codec.binary.BaseNCodec;
  * @since 1.3
  */
 public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder {
-
+    static byte[] emptyByte;
     /**
      * The default decoding policy.
      */
@@ -162,7 +162,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     @Override
     protected byte[] doDecoding(final byte[] bytes) {
         if (bytes == null) {
-            return null;
+            return emptyByte;
         }
         return new Base64(0, BaseNCodec.getChunkSeparator(), false, decodingPolicy).decode(bytes);
     }
@@ -170,7 +170,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     @Override
     protected byte[] doEncoding(final byte[] bytes) {
         if (bytes == null) {
-            return null;
+            return emptyByte;
         }
         return Base64.encodeBase64(bytes);
     }

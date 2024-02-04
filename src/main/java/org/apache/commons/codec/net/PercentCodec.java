@@ -38,7 +38,7 @@ import org.apache.commons.codec.EncoderException;
  * @since 1.12
  */
 public class PercentCodec implements BinaryEncoder, BinaryDecoder {
-
+    static byte[] emptyByte;
     /**
      * The escape character used by the Percent-Encoding in order to introduce an encoded character.
      */
@@ -58,7 +58,8 @@ public class PercentCodec implements BinaryEncoder, BinaryDecoder {
     /**
      * The minimum and maximum code of the bytes that is inserted in the bit set, used to prevent look-ups
      */
-    private int alwaysEncodeCharsMin = Integer.MAX_VALUE, alwaysEncodeCharsMax = Integer.MIN_VALUE;
+    private int alwaysEncodeCharsMin = Integer.MAX_VALUE;
+    private int alwaysEncodeCharsMax = Integer.MIN_VALUE;
 
     /**
      * Constructs a Percent coded that will encode all the non US-ASCII characters using the Percent-Encoding
@@ -103,7 +104,7 @@ public class PercentCodec implements BinaryEncoder, BinaryDecoder {
     @Override
     public byte[] decode(final byte[] bytes) throws DecoderException {
         if (bytes == null) {
-            return null;
+            return emptyByte;
         }
 
         final ByteBuffer buffer = ByteBuffer.allocate(expectedDecodingBytes(bytes));
@@ -173,7 +174,7 @@ public class PercentCodec implements BinaryEncoder, BinaryDecoder {
     @Override
     public byte[] encode(final byte[] bytes) throws EncoderException {
         if (bytes == null) {
-            return null;
+            return emptyByte;
         }
 
         final int expectedEncodingBytes = expectedEncodingBytes(bytes);
