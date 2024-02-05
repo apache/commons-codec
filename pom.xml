@@ -257,6 +257,36 @@ limitations under the License.
       <artifactId>junit-jupiter-params</artifactId>
       <scope>test</scope>
     </dependency>
+
+    <dependency>
+      <groupId>org.openjdk.jmh</groupId>
+      <artifactId>jmh-core</artifactId>
+      <version>1.36</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openjdk.jmh</groupId>
+      <artifactId>jmh-generator-annprocess</artifactId>
+      <version>1.36</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.codehaus.mojo</groupId>
+      <artifactId>animal-sniffer-maven-plugin</artifactId>
+      <version>1.23</version>
+      <type>maven-plugin</type>
+    </dependency>
+
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.vintage</groupId>
+      <artifactId>junit-vintage-engine</artifactId>
+      <scope>test</scope>
+    </dependency>
+
   </dependencies>
   <properties>
     <maven.compiler.source>1.8</maven.compiler.source>
@@ -386,20 +416,6 @@ limitations under the License.
           </execution>
         </executions>
       </plugin>
-
-      <plugin>
-        <groupId>org.pitest</groupId>
-        <artifactId>pitest-maven</artifactId>
-        <version>1.15.3</version>
-        <dependencies>
-          <dependency>
-            <groupId>org.pitest</groupId>
-            <artifactId>pitest-junit5-plugin </artifactId>
-            <version>1.2.1</version>
-          </dependency>
-        </dependencies>
-        </plugin>
-
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>animal-sniffer-maven-plugin</artifactId>
@@ -409,6 +425,38 @@ limitations under the License.
             <ignore>java.nio.ByteBuffer</ignore>
           </ignores>
         </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.pitest</groupId>
+        <artifactId>pitest-maven</artifactId>
+        <version>1.15.3</version>
+        <dependencies>
+          <dependency>
+            <groupId>org.pitest</groupId>
+            <artifactId>pitest-junit5-plugin</artifactId>
+            <version>1.2.1</version>
+          </dependency>
+        </dependencies>
+        <configuration>
+          <targetClasses>
+            <!-- Specify the classes/packages you want to mutate -->
+            <targetClass>org.apache.commons.codec.*</targetClass>
+          </targetClasses>
+          <targetTests>
+            <!-- Specify test classes/packages for mutation testing -->
+            <targetTest>org.apache.commons.codec.*Test</targetTest>
+          </targetTests>
+        </configuration>
+
+        <executions>
+          <execution>
+            <id>pitest</id>
+            <goals>
+              <goal>mutationCoverage</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
@@ -444,7 +492,6 @@ limitations under the License.
         <version>${commons.pmd.version}</version>
         <configuration>
           <targetJdk>${maven.compiler.target}</targetJdk>
-          <linkXref>true</linkXref>
           <rulesets>
             <ruleset>${basedir}/src/conf/pmd.xml</ruleset>
           </rulesets>
@@ -459,11 +506,6 @@ limitations under the License.
         <artifactId>taglist-maven-plugin</artifactId>
         <version>3.0.0</version>
         <configuration>
-          <tags>
-            <tag>TODO</tag>
-            <tag>NOPMD</tag>
-            <tag>NOTE</tag>
-          </tags>
         </configuration>
       </plugin>
       <plugin>
