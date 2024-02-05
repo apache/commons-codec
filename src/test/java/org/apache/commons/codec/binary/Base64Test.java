@@ -1311,6 +1311,7 @@ public class Base64Test {
 
     public void testCodec263(){
       Base64.decodeBase64("publishMessage");
+      assertTrue(Base64.isBase64("publishMessage"));
     }
 
     /**
