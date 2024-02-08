@@ -28,7 +28,7 @@ limitations under the License.
   </parent>
   <groupId>commons-codec</groupId>
   <artifactId>commons-codec</artifactId>
-  <version>1.16.1</version>
+  <version>1.16.2-SNAPSHOT</version>
   <name>Apache Commons Codec</name>
   <inceptionYear>2002</inceptionYear>
   <description>
@@ -279,7 +279,7 @@ limitations under the License.
     <commons.rc.version>RC1</commons.rc.version>
     <commons.release.isDistModule>true</commons.release.isDistModule>
     <commons.distSvnStagingUrl>scm:svn:https://dist.apache.org/repos/dist/dev/commons/${commons.componentid}</commons.distSvnStagingUrl>
-    <project.build.outputTimestamp>2024-02-04T15:10:25Z</project.build.outputTimestamp>
+    <project.build.outputTimestamp>2024-02-08T21:29:14Z</project.build.outputTimestamp>
   </properties>
   <build>
     <defaultGoal>clean verify apache-rat:check japicmp:cmp checkstyle:check javadoc:javadoc</defaultGoal>
