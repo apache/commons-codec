@@ -621,16 +621,22 @@ public class PureJavaCrc32C implements Checksum {
         switch (len) {
         case 7:
             localCrc = localCrc >>> 8 ^ T[T8_0_START + ((localCrc ^ b[off++]) & 0xff)];
+            // fall through
         case 6:
             localCrc = localCrc >>> 8 ^ T[T8_0_START + ((localCrc ^ b[off++]) & 0xff)];
+            // fall through
         case 5:
             localCrc = localCrc >>> 8 ^ T[T8_0_START + ((localCrc ^ b[off++]) & 0xff)];
+            // fall through
         case 4:
             localCrc = localCrc >>> 8 ^ T[T8_0_START + ((localCrc ^ b[off++]) & 0xff)];
+            // fall through
         case 3:
             localCrc = localCrc >>> 8 ^ T[T8_0_START + ((localCrc ^ b[off++]) & 0xff)];
+            // fall through
         case 2:
             localCrc = localCrc >>> 8 ^ T[T8_0_START + ((localCrc ^ b[off++]) & 0xff)];
+            // fall through
         case 1:
             localCrc = localCrc >>> 8 ^ T[T8_0_START + ((localCrc ^ b[off++]) & 0xff)]; break;
         default:

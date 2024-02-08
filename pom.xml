@@ -309,6 +309,7 @@ limitations under the License.
     <commons.release.isDistModule>true</commons.release.isDistModule>
     <commons.distSvnStagingUrl>scm:svn:https://dist.apache.org/repos/dist/dev/commons/${commons.componentid}</commons.distSvnStagingUrl>
   </properties>
+
   <build>
     <defaultGoal>clean verify apache-rat:check japicmp:cmp checkstyle:check javadoc:javadoc</defaultGoal>
     <pluginManagement>
