@@ -32,5 +32,6 @@ public interface BinaryDecoder extends Decoder {
      *             A decoder exception is thrown if a Decoder encounters a failure condition during the decode process.
      */
     byte[] decode(byte[] source) throws DecoderException;
+    /**FIrst Commit**/
 }
 
