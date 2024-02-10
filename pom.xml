@@ -363,6 +363,7 @@ limitations under the License.
           </archive>
         </configuration>
       </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -373,6 +374,7 @@ limitations under the License.
           </excludes>
         </configuration>
       </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
@@ -384,20 +386,24 @@ limitations under the License.
           <tarLongFileMode>gnu</tarLongFileMode>
         </configuration>
       </plugin>
+
       <!-- Allow use of mvn checkstyle:checkstyle. Must agree with reporting section below. -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
       </plugin>
+
       <!-- Specify source for JDK 11+ javadoc tool to ignore the 'unnamed' module.
            See: https://bugs.openjdk.java.net/browse/JDK-8212233.
            To be removed with parent 49. -->
+
       <plugin>
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
           <source>${maven.compiler.source}</source>
         </configuration>
       </plugin>
+
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
@@ -417,6 +423,7 @@ limitations under the License.
           </execution>
         </executions>
       </plugin>
+
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>animal-sniffer-maven-plugin</artifactId>
@@ -457,10 +464,29 @@ limitations under the License.
               <goal>mutationCoverage</goal>
             </goals>
           </execution>
+
+            <execution>
+              <id>benchmark</id>
+              <phase>verify</phase> <!-- Adjust the phase as needed-->
+              <configuration>
+                <executable>java</executable>
+                <arguments>
+                  <argument>-classpath</argument>
+                  <classpath>apache-commons-codec.jmh.CodecBenchmark</classpath>
+                  <argument>org.openjdk.jmh.Main</argument>
+                  <argument>-rf</argument>
+                  <argument>json</argument>
+                  <argument>-rff</argument>
+                  <argument>target/jmh-result.json</argument>
+                  <argument>org.apache.commons.codec.jmh.CodecBenchmark</argument>
+                </arguments>
+              </configuration>
+            </execution>
         </executions>
       </plugin>
     </plugins>
   </build>
+
   <reporting>
     <plugins>
       <plugin>
