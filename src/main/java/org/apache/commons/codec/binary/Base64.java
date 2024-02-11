@@ -422,7 +422,8 @@ public class Base64 extends BaseNCodec {
     private final byte[] encodeTable;
 
     /** Only one decode table currently; keep for consistency with Base32 code. */
-    private final byte[] decodeTable = DECODE_TABLE;
+    private static final byte[] decodeTable = DECODE_TABLE;
+
 
     /**
      * Line separator for encoding. Not used when decoding. Only used if lineLength &gt; 0.
