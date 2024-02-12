@@ -57,6 +57,8 @@ import java.nio.charset.Charset;
  */
 public class Charsets {
 
+    private Charsets(){
+    }
     //
     // This class should only contain Charset instances for required encodings. This guarantees that it will load
     // correctly and without delay on all Java platforms.
