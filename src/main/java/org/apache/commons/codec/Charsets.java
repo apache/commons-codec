@@ -17,11 +17,10 @@
 package org.apache.commons.codec;
 
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
+
 
 /**
  * Charsets required of every implementation of the Java platform.
- *
  * From the Java documentation <a href="https://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard
  * charsets</a>:
  * <p>
@@ -64,79 +63,6 @@ public class Charsets {
     //
 
     /**
-     * CharEncodingISO Latin Alphabet No. 1, a.k.a. ISO-LATIN-1.
-     * <p>
-     * Every implementation of the Java platform is required to support this character encoding.
-     * </p>
-     *
-     * @deprecated Use {@link java.nio.charset.StandardCharsets#ISO_8859_1} instead.
-     * @see <a href="https://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
-     */
-    @Deprecated
-    public static final Charset ISO_8859_1 = StandardCharsets.ISO_8859_1;
-
-    /**
-     * Seven-bit ASCII, also known as ISO646-US, also known as the Basic Latin block of the Unicode character set.
-     * <p>
-     * Every implementation of the Java platform is required to support this character encoding.
-     * </p>
-     *
-     * @deprecated Use {@link java.nio.charset.StandardCharsets#US_ASCII} instead.
-     * @see <a href="https://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
-     */
-    @Deprecated
-    public static final Charset US_ASCII = StandardCharsets.US_ASCII;
-
-    /**
-     * Sixteen-bit Unicode Transformation Format, The byte order specified by a mandatory initial byte-order mark
-     * (either order accepted on input, big-endian used on output)
-     * <p>
-     * Every implementation of the Java platform is required to support this character encoding.
-     * </p>
-     *
-     * @deprecated Use {@link java.nio.charset.StandardCharsets#UTF_16} instead.
-     * @see <a href="https://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
-     */
-    @Deprecated
-    public static final Charset UTF_16 = StandardCharsets.UTF_16;
-
-    /**
-     * Sixteen-bit Unicode Transformation Format, big-endian byte order.
-     * <p>
-     * Every implementation of the Java platform is required to support this character encoding.
-     * </p>
-     *
-     * @deprecated Use {@link java.nio.charset.StandardCharsets#UTF_16BE} instead.
-     * @see <a href="https://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
-     */
-    @Deprecated
-    public static final Charset UTF_16BE = StandardCharsets.UTF_16BE;
-
-    /**
-     * Sixteen-bit Unicode Transformation Format, little-endian byte order.
-     * <p>
-     * Every implementation of the Java platform is required to support this character encoding.
-     * </p>
-     *
-     * @deprecated Use {@link java.nio.charset.StandardCharsets#UTF_16LE} instead.
-     * @see <a href="https://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
-     */
-    @Deprecated
-    public static final Charset UTF_16LE = StandardCharsets.UTF_16LE;
-
-    /**
-     * Eight-bit Unicode Transformation Format.
-     * <p>
-     * Every implementation of the Java platform is required to support this character encoding.
-     * </p>
-     *
-     * @deprecated Use {@link java.nio.charset.StandardCharsets#UTF_8} instead.
-     * @see <a href="https://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
-     */
-    @Deprecated
-    public static final Charset UTF_8 = StandardCharsets.UTF_8;
-
-    /**
      * Returns the given Charset or the default Charset if the given Charset is null.
      *
      * @param charset
@@ -158,15 +84,5 @@ public class Charsets {
      */
     public static Charset toCharset(final String charset) {
         return charset == null ? Charset.defaultCharset() : Charset.forName(charset);
-    }
-
-    /**
-     * TODO Make private in 2.0.
-     *
-     * @deprecated TODO Make private in 2.0.
-     */
-    @Deprecated
-    public Charsets() {
-        // empty
     }
 }
