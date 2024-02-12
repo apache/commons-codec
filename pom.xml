@@ -228,6 +228,7 @@ limitations under the License.
       </roles>
     </contributor>
   </contributors>
+
   <dependencies>
     <dependency>
       <groupId>org.apache.commons</groupId>
@@ -286,6 +287,13 @@ limitations under the License.
       <artifactId>junit-vintage-engine</artifactId>
       <scope>test</scope>
     </dependency>
+
+    <dependency>
+      <groupId>com.github.spotbugs</groupId>
+      <artifactId>spotbugs</artifactId>
+      <version>4.8.1</version>
+    </dependency>
+
 
   </dependencies>
   <properties>
@@ -542,4 +550,46 @@ limitations under the License.
       </plugin>
     </plugins>
   </reporting>
+
+  <profiles>
+    <profile>
+    <id>benchmark</id>
+    <build>
+      <plugins>
+        <plugin>
+
+
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>exec-maven-plugin</artifactId>
+          <version>3.1.1</version>
+
+
+          <executions>
+            <execution>
+              <id>benchmark</id>
+              <phase>verify</phase> <!-- Adjust the phase as needed -->
+              <goals>
+                <goal>exec</goal>
+              </goals>
+              <configuration>
+                <executable>java</executable>
+                <arguments>
+                  <argument>-classpath</argument>
+                  <classpath/>
+                  <argument>org.openjdk.jmh.Main</argument>
+                  <argument>-rf</argument>
+                  <argument>json</argument>
+                  <argument>-rff</argument>
+                  <argument>target/jmh-result.json</argument>
+                  <argument>org.apache.commons.mail.jmh.EmailBenchmarkTest</argument>
+                </arguments>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </build>
+  </profile>
+  </profiles>
+
 </project>
