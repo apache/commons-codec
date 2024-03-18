@@ -106,9 +106,8 @@ public class PhoneticEngine {
          * @param maxPhonemes   the maximum number of phonemes to build up
          */
         public void apply(final Rule.PhonemeExpr phonemeExpr, final int maxPhonemes) {
-            final Set<Rule.Phoneme> newPhonemes = new LinkedHashSet<>(maxPhonemes);
-
-            EXPR: for (final Rule.Phoneme left : this.phonemes) {
+            final Set<Rule.Phoneme> newPhonemes = new LinkedHashSet<>(Math.min(phonemes.size() * phonemeExpr.size(), maxPhonemes));
+            EXPR: for (final Rule.Phoneme left : phonemes) {
                 for (final Rule.Phoneme right : phonemeExpr.getPhonemes()) {
                     final LanguageSet languages = left.getLanguages().restrictTo(right.getLanguages());
                     if (!languages.isEmpty()) {
@@ -122,9 +121,8 @@ public class PhoneticEngine {
                     }
                 }
             }
-
-            this.phonemes.clear();
-            this.phonemes.addAll(newPhonemes);
+            phonemes.clear();
+            phonemes.addAll(newPhonemes);
         }
 
         /**
@@ -133,7 +131,7 @@ public class PhoneticEngine {
          * @return  the phoneme set
          */
         public Set<Rule.Phoneme> getPhonemes() {
-            return this.phonemes;
+            return phonemes;
         }
 
         /**
@@ -155,22 +153,24 @@ public class PhoneticEngine {
      * processed already), and {@code found} indicates if a matching rule was found or not. In the case where a
      * matching rule was found, {@code phonemeBuilder} is replaced with a new builder containing the phonemes
      * updated by the matching rule.
-     *
+     * <p>
      * Although this class is not thread-safe (it has mutable unprotected fields), it is not shared between threads
      * as it is constructed as needed by the calling methods.
+     * </p>
+     *
      * @since 1.6
      */
     private static final class RulesApplication {
+
         private final Map<String, List<Rule>> finalRules;
         private final CharSequence input;
-
         private final PhonemeBuilder phonemeBuilder;
         private int i;
         private final int maxPhonemes;
         private boolean found;
 
-        public RulesApplication(final Map<String, List<Rule>> finalRules, final CharSequence input,
-                                final PhonemeBuilder phonemeBuilder, final int i, final int maxPhonemes) {
+        public RulesApplication(final Map<String, List<Rule>> finalRules, final CharSequence input, final PhonemeBuilder phonemeBuilder, final int i,
+                final int maxPhonemes) {
             Objects.requireNonNull(finalRules, "finalRules");
             this.finalRules = finalRules;
             this.phonemeBuilder = phonemeBuilder;
@@ -180,11 +180,11 @@ public class PhoneticEngine {
         }
 
         public int getI() {
-            return this.i;
+            return i;
         }
 
         public PhonemeBuilder getPhonemeBuilder() {
-            return this.phonemeBuilder;
+            return phonemeBuilder;
         }
 
         /**
@@ -195,31 +195,31 @@ public class PhoneticEngine {
          * @return {@code this}
          */
         public RulesApplication invoke() {
-            this.found = false;
+            found = false;
             int patternLength = 1;
-            final List<Rule> rules = this.finalRules.get(input.subSequence(i, i + patternLength));
+            final List<Rule> rules = finalRules.get(input.subSequence(i, i + patternLength));
             if (rules != null) {
                 for (final Rule rule : rules) {
                     final String pattern = rule.getPattern();
                     patternLength = pattern.length();
-                    if (rule.patternAndContextMatches(this.input, this.i)) {
-                        this.phonemeBuilder.apply(rule.getPhoneme(), maxPhonemes);
-                        this.found = true;
+                    if (rule.patternAndContextMatches(input, i)) {
+                        phonemeBuilder.apply(rule.getPhoneme(), maxPhonemes);
+                        found = true;
                         break;
                     }
                 }
             }
 
-            if (!this.found) {
+            if (!found) {
                 patternLength = 1;
             }
 
-            this.i += patternLength;
+            i += patternLength;
             return this;
         }
 
         public boolean isFound() {
-            return this.found;
+            return found;
         }
     }
 
@@ -269,11 +269,11 @@ public class PhoneticEngine {
      *            the type of names it will use
      * @param ruleType
      *            the type of rules it will apply
-     * @param concat
+     * @param concatenate
      *            if it will concatenate multiple encodings
      */
-    public PhoneticEngine(final NameType nameType, final RuleType ruleType, final boolean concat) {
-        this(nameType, ruleType, concat, DEFAULT_MAX_PHONEMES);
+    public PhoneticEngine(final NameType nameType, final RuleType ruleType, final boolean concatenate) {
+        this(nameType, ruleType, concatenate, DEFAULT_MAX_PHONEMES);
     }
 
     /**
@@ -283,20 +283,19 @@ public class PhoneticEngine {
      *            the type of names it will use
      * @param ruleType
      *            the type of rules it will apply
-     * @param concat
+     * @param concatenate
      *            if it will concatenate multiple encodings
      * @param maxPhonemes
      *            the maximum number of phonemes that will be handled
      * @since 1.7
      */
-    public PhoneticEngine(final NameType nameType, final RuleType ruleType, final boolean concat,
-                          final int maxPhonemes) {
+    public PhoneticEngine(final NameType nameType, final RuleType ruleType, final boolean concatenate, final int maxPhonemes) {
         if (ruleType == RuleType.RULES) {
             throw new IllegalArgumentException("ruleType must not be " + RuleType.RULES);
         }
         this.nameType = nameType;
         this.ruleType = ruleType;
-        this.concat = concat;
+        this.concat = concatenate;
         this.lang = Lang.instance(nameType);
         this.maxPhonemes = maxPhonemes;
     }

@@ -167,6 +167,11 @@ public class Rule {
         }
 
         @Override
+        public int size() {
+            return 1;
+        }
+
+        @Override
         public String toString() {
           return phonemeText.toString() + "[" + languages + "]";
         }
@@ -174,19 +179,35 @@ public class Rule {
 
     public interface PhonemeExpr {
         Iterable<Phoneme> getPhonemes();
+
+        /**
+         * Gets the expression size in phonemes.
+         *
+         * @return the expression size in phonemes.
+         * @since 1.17.0
+         */
+        default int size() {
+            // All implementations are int-bound.
+            return (int) Math.min(getPhonemes().spliterator().getExactSizeIfKnown(), Integer.MAX_VALUE);
+        }
     }
 
     public static final class PhonemeList implements PhonemeExpr {
 
-        private final List<Phoneme> phonemes;
+        private final List<Phoneme> phonemeList;
 
         public PhonemeList(final List<Phoneme> phonemes) {
-            this.phonemes = phonemes;
+            this.phonemeList = phonemes;
         }
 
         @Override
         public List<Phoneme> getPhonemes() {
-            return this.phonemes;
+            return phonemeList;
+        }
+
+        @Override
+        public int size() {
+            return phonemeList.size();
         }
     }
 
