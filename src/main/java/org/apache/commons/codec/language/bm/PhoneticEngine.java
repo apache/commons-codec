@@ -197,7 +197,7 @@ public class PhoneticEngine {
         public RulesApplication invoke() {
             this.found = false;
             int patternLength = 1;
-            final List<Rule> rules = this.finalRules.get(input.subSequence(i, i+patternLength));
+            final List<Rule> rules = this.finalRules.get(input.subSequence(i, i + patternLength));
             if (rules != null) {
                 for (final Rule rule : rules) {
                     final String pattern = rule.getPattern();
