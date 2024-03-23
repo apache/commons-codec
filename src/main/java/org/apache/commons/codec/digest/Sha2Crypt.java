@@ -26,7 +26,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * SHA2-based Unix crypt implementation.
+ * SHA2-based UNIX crypt implementation.
  * <p>
  * Based on the C implementation released into the Public Domain by Ulrich Drepper &lt;drepper@redhat.com&gt;
  * http://www.akkadia.org/drepper/SHA-crypt.txt
