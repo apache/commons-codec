@@ -67,4 +67,13 @@ public class PureJavaCrc32CTest {
         check(0x8a9136aa); // aa 36 91 8a
     }
 
+    @Test
+    public void testEmpty() {
+        byte[] data = new byte[0];
+        crc.reset();
+        crc.update(data, 0, data.length);
+        int actual = (int) crc.getValue();
+        int expected = 0;
+        assertEquals(expected, actual);
+    }
 }
