@@ -264,4 +264,11 @@ public class ColognePhoneticTest extends AbstractStringEncoderTest<ColognePhonet
         final String[] data = { "Meier", "Maier", "Mair", "Meyer", "Meyr", "Mejer", "Major" };
         this.checkEncodingVariations("67", data);
     }
+
+    @Test
+    public void testColognePhoneticWithDifferentLanguages() {
+        ColognePhonetic cp = new ColognePhonetic();
+        assertEquals("282764", cp.colognePhonetic("TestString1"));
+        assertEquals("282", cp.colognePhonetic("Test"));
+    }
 }
