@@ -1309,6 +1309,11 @@ public class Base64Test {
 
     }
 
+    public void testCodec263(){
+      Base64.decodeBase64("publishMessage");
+      assertTrue(Base64.isBase64("publishMessage"));
+    }
+
     /**
      * Base64 encoding of UUID's is a common use-case, especially in URL-SAFE
      * mode. This test case ends up being the "URL-SAFE" JUnit's.
