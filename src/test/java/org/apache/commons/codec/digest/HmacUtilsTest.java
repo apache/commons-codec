@@ -31,7 +31,7 @@ import org.apache.commons.codec.binary.StringUtils;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests HmacUtils methods.
+ * Tests {@link HmacUtils}.
  */
 public class HmacUtilsTest {
 
