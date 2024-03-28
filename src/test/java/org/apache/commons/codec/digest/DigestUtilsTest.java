@@ -50,7 +50,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests DigestUtils methods.
+ * Tests {@link DigestUtils}.
  */
 public class DigestUtilsTest {
 
