@@ -23,7 +23,7 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test class for PureJavaCrc32C. Test data was derived from https://tools.ietf.org/html/rfc3720#appendix-B.4
+ * Tests {@link PureJavaCrc32C}. Test data was derived from https://tools.ietf.org/html/rfc3720#appendix-B.4
  */
 public class PureJavaCrc32CTest {
 
