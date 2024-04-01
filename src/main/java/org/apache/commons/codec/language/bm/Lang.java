@@ -211,9 +211,8 @@ public class Lang {
      */
     public Languages.LanguageSet guessLanguages(final String input) {
         final String text = input.toLowerCase(Locale.ENGLISH);
-
         final Set<String> langs = new HashSet<>(this.languages.getLanguages());
-        this.rules.forEach(rule -> {
+        rules.forEach(rule -> {
             if (rule.matches(text)) {
                 if (rule.acceptOnMatch) {
                     langs.retainAll(rule.languages);
@@ -222,7 +221,6 @@ public class Lang {
                 }
             }
         });
-
         final Languages.LanguageSet ls = Languages.LanguageSet.from(langs);
         return ls.equals(Languages.NO_LANGUAGES) ? Languages.ANY_LANGUAGE : ls;
     }
