@@ -48,7 +48,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add org.apache.commons.codec.language.bm.Rule.PhonemeExpr.size().</action>
       <!-- FIX -->
       <!-- UPDATE -->
-      <action                   dev="ggregory" type="update" due-to="Dependabot, Gary Gregory">Bump org.apache.commons:commons-parent from 66 to 67 #250.</action>
+      <action                   dev="ggregory" type="update" due-to="Dependabot, Gary Gregory">Bump org.apache.commons:commons-parent from 66 to 69 #250, #261.</action>
       <action                   dev="ggregory" type="update" due-to="Dependabot, Gary Gregory">Bump commons-io:commons-io from 2.15.1 to 2.16.0 #258.</action>
     </release>
     <release version="1.16.1" date="2024-02-04" description="Feature and fix release. Requires a minimum of Java 8.">
