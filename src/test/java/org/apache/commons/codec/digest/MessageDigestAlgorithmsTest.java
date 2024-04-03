@@ -36,6 +36,7 @@ import java.nio.file.StandardOpenOption;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -74,6 +75,8 @@ public class MessageDigestAlgorithmsTest {
         if (psf != MessageDigestAlgorithms.values().length) {
             fail("One or more unexpected entries found in the MessageDigestAlgorithms.values() array");
         }
+	digestUtilsTest = new DigestUtilsTest();
+        digestUtilsTest.setUp();
     }
 
     private static boolean contains(final String key) {
@@ -89,7 +92,7 @@ public class MessageDigestAlgorithmsTest {
         return MessageDigestAlgorithms.values();
     }
 
-    private DigestUtilsTest digestUtilsTest;
+    private static DigestUtilsTest digestUtilsTest;
 
     private byte[] digestTestData(final String messageDigestAlgorithm) {
         return DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm), getTestData());
@@ -111,14 +114,13 @@ public class MessageDigestAlgorithmsTest {
         return digestUtilsTest.getTestRandomAccessFile();
     }
 
-    @BeforeEach
     public void setUp() throws Exception {
         digestUtilsTest = new DigestUtilsTest();
         digestUtilsTest.setUp();
     }
 
-    @AfterEach
-    public void tearDown() throws Exception {
+    @AfterAll
+    public static void tearDown() throws Exception {
         digestUtilsTest.tearDown();
         digestUtilsTest = null;
     }
@@ -199,7 +201,9 @@ public class MessageDigestAlgorithmsTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testNonBlockingDigestRandomAccessFile(final String messageDigestAlgorithm) throws IOException {
+    public void testNonBlockingDigestRandomAccessFile(final String messageDigestAlgorithm) throws IOException, Exception {
+        tearDown();
+        setUp();
         assumeTrue(DigestUtils.isAvailable(messageDigestAlgorithm));
 
         final byte[] expected = digestTestData(messageDigestAlgorithm);
