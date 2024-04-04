@@ -248,33 +248,28 @@ public class Base32InputStreamTest {
      *             Usually signifies a bug in the Base32 commons-codec implementation.
      */
     private void testByChunk(final byte[] encoded, final byte[] decoded, final int chunkSize, final byte[] separator) throws Exception {
-
         // Start with encode.
-        InputStream in;
-
-        in = new Base32InputStream(new ByteArrayInputStream(decoded), true, chunkSize, separator);
-        byte[] output = BaseNTestData.streamToBytes(in);
-
-        assertEquals(-1, in.read(), "EOF");
-        assertEquals(-1, in.read(), "Still EOF");
-        assertArrayEquals(encoded, output, "Streaming base32 encode");
-
+        try (InputStream in = new Base32InputStream(new ByteArrayInputStream(decoded), true, chunkSize, separator)) {
+            final byte[] output = BaseNTestData.streamToBytes(in);
+            assertEquals(-1, in.read(), "EOF");
+            assertEquals(-1, in.read(), "Still EOF");
+            assertArrayEquals(encoded, output, "Streaming base32 encode");
+        }
         // Now let's try to decode.
-        in = new Base32InputStream(new ByteArrayInputStream(encoded));
-        output = BaseNTestData.streamToBytes(in);
+        try (InputStream in = new Base32InputStream(new ByteArrayInputStream(encoded))) {
+            final byte[] output = BaseNTestData.streamToBytes(in);
 
-        assertEquals(-1, in.read(), "EOF");
-        assertEquals(-1, in.read(), "Still EOF");
-        assertArrayEquals(decoded, output, "Streaming base32 decode");
-
+            assertEquals(-1, in.read(), "EOF");
+            assertEquals(-1, in.read(), "Still EOF");
+            assertArrayEquals(decoded, output, "Streaming base32 decode");
+        }
         // I always wanted to do this! (wrap encoder with decoder etc.).
-        in = new ByteArrayInputStream(decoded);
+        InputStream in = new ByteArrayInputStream(decoded);
         for (int i = 0; i < 10; i++) {
             in = new Base32InputStream(in, true, chunkSize, separator);
             in = new Base32InputStream(in, false);
         }
-        output = BaseNTestData.streamToBytes(in);
-
+        final byte[] output = BaseNTestData.streamToBytes(in);
         assertEquals(-1, in.read(), "EOF");
         assertEquals(-1, in.read(), "Still EOF");
         assertArrayEquals(decoded, output, "Streaming base32 wrap-wrap-wrap!");
