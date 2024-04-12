@@ -61,6 +61,7 @@ limitations under the License.
 
   <module name="TreeWalker">
     <module name="WhitespaceAfter" />
+    <module name="WhitespaceAround" />
     <module name="ExplicitInitializationCheck" />
     <module name="OperatorWrap">
       <property name="option" value="eol" />

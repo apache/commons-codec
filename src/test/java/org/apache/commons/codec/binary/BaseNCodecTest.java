@@ -137,8 +137,9 @@ public class BaseNCodecTest {
         return Runtime.getRuntime().maxMemory() - allocatedMemory;
     }
 
-BaseNCodec codec;
-@BeforeEach
+    BaseNCodec codec;
+    @BeforeEach
+
     public void setUp() {
         codec = new BaseNCodec(0, 0, 0, 0) {
             @Override
@@ -151,7 +152,7 @@ BaseNCodec codec;
 
             @Override
             protected boolean isInAlphabet(final byte b) {
-                return b=='O' || b == 'K'; // allow OK
+                return b == 'O' || b == 'K'; // allow OK
             }
         };
     }

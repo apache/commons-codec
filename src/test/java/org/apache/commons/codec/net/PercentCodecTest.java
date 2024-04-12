@@ -74,10 +74,9 @@ public class PercentCodecTest {
         final PercentCodec percentCodec = new PercentCodec();
         final byte[] encoded = percentCodec.encode(inputS.getBytes(StandardCharsets.UTF_8));
         try {
-            percentCodec.decode(Arrays.copyOf(encoded, encoded.length-1)); //exclude one byte
+            percentCodec.decode(Arrays.copyOf(encoded, encoded.length - 1)); // exclude one byte
         } catch (final Exception e) {
-            assertTrue(DecoderException.class.isInstance(e) &&
-                ArrayIndexOutOfBoundsException.class.isInstance(e.getCause()));
+            assertTrue(DecoderException.class.isInstance(e) && ArrayIndexOutOfBoundsException.class.isInstance(e.getCause()));
         }
     }
 
