@@ -20,6 +20,8 @@ package org.apache.commons.codec.net;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.nio.charset.StandardCharsets;
+
 import org.apache.commons.codec.CharEncoding;
 import org.apache.commons.codec.DecoderException;
 import org.junit.jupiter.api.Test;
@@ -30,6 +32,10 @@ import org.junit.jupiter.api.Test;
 public class RFC1522CodecTest {
 
     static class RFC1522TestCodec extends RFC1522Codec {
+
+        RFC1522TestCodec() {
+            super(StandardCharsets.UTF_8);
+        }
 
         @Override
         protected byte[] doDecoding(final byte[] bytes) {

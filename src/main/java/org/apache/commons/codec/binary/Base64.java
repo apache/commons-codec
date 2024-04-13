@@ -241,7 +241,6 @@ public class Base64 extends BaseNCodec {
         if (BinaryCodec.isEmpty(binaryData)) {
             return binaryData;
         }
-
         // Create this so can use the super-class method
         // Also ensures that the same roundings are performed by the ctor and the code
         final Base64 b64 = isChunked ? new Base64(urlSafe) : new Base64(0, CHUNK_SEPARATOR, urlSafe);
@@ -252,7 +251,6 @@ public class Base64 extends BaseNCodec {
                 ") than the specified maximum size of " +
                 maxResultSize);
         }
-
         return b64.encode(binaryData);
     }
 

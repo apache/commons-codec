@@ -104,11 +104,6 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
 
     private static final byte UNDERSCORE = 95;
 
-    /**
-     * The default Charset used for string decoding and encoding.
-     */
-    private final Charset charset;
-
     private boolean encodeBlanks;
 
     /**
@@ -128,7 +123,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * @since 1.7
      */
     public QCodec(final Charset charset) {
-        this.charset = charset;
+        super(charset);
     }
 
     /**
@@ -246,9 +241,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
         if (obj instanceof String) {
             return encode((String) obj);
         }
-        throw new EncoderException("Objects of type " +
-              obj.getClass().getName() +
-              " cannot be encoded using Q codec");
+        throw new EncoderException("Objects of type " + obj.getClass().getName() + " cannot be encoded using Q codec");
     }
 
     /**
@@ -262,9 +255,6 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      */
     @Override
     public String encode(final String sourceStr) throws EncoderException {
-        if (sourceStr == null) {
-            return null;
-        }
         return encode(sourceStr, getCharset());
     }
 
@@ -281,9 +271,6 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * @since 1.7
      */
     public String encode(final String sourceStr, final Charset sourceCharset) throws EncoderException {
-        if (sourceStr == null) {
-            return null;
-        }
         return encodeText(sourceStr, sourceCharset);
     }
 
@@ -299,33 +286,11 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      *             thrown if a failure condition is encountered during the encoding process.
      */
     public String encode(final String sourceStr, final String sourceCharset) throws EncoderException {
-        if (sourceStr == null) {
-            return null;
-        }
         try {
             return encodeText(sourceStr, sourceCharset);
         } catch (final UnsupportedCharsetException e) {
             throw new EncoderException(e.getMessage(), e);
         }
-    }
-
-    /**
-     * Gets the default Charset name used for string decoding and encoding.
-     *
-     * @return the default Charset name
-     * @since 1.7
-     */
-    public Charset getCharset() {
-        return this.charset;
-    }
-
-    /**
-     * Gets the default Charset name used for string decoding and encoding.
-     *
-     * @return the default Charset name
-     */
-    public String getDefaultCharset() {
-        return this.charset.name();
     }
 
     @Override

@@ -20,6 +20,7 @@ package org.apache.commons.codec.net;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
+import java.util.Objects;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
@@ -50,6 +51,15 @@ abstract class RFC1522Codec {
 
     /** Postfix. */
     protected static final String PREFIX = "=?";
+
+    /**
+     * The default Charset used for string decoding and encoding.
+     */
+    protected final Charset charset;
+
+    RFC1522Codec(final Charset charset) {
+        this.charset = Objects.requireNonNull(charset, "charset");
+    }
 
     /**
      * Applies an RFC 1522 compliant decoding scheme to the given string of text.
@@ -171,7 +181,30 @@ abstract class RFC1522Codec {
      * @see Charset
      */
     protected String encodeText(final String text, final String charsetName) throws EncoderException {
+        if (text == null) {
+            // Don't attempt charsetName conversion.
+            return null;
+        }
         return encodeText(text, Charset.forName(charsetName));
+    }
+
+    /**
+     * Gets the default Charset name used for string decoding and encoding.
+     *
+     * @return the default Charset name
+     * @since 1.7
+     */
+    public Charset getCharset() {
+        return charset;
+    }
+
+    /**
+     * Gets the default Charset name used for string decoding and encoding.
+     *
+     * @return the default Charset name
+     */
+    public String getDefaultCharset() {
+        return charset.name();
     }
 
     /**

@@ -19,6 +19,7 @@ package org.apache.commons.codec.net;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
@@ -26,7 +27,11 @@ import org.apache.commons.codec.EncoderException;
 /**
  * Tests overriding the package private RFC1522Codec.
  */
-public class CustomRFC1522Codec extends RFC1522Codec {
+class RFC1522OverrideTestCodec extends RFC1522Codec {
+
+    RFC1522OverrideTestCodec() {
+        super(StandardCharsets.UTF_8);
+    }
 
     @Override
     protected String decodeText(final String text) throws DecoderException, UnsupportedEncodingException {
