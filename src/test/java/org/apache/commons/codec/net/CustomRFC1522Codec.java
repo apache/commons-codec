@@ -49,7 +49,7 @@ public class CustomRFC1522Codec extends RFC1522Codec {
     }
 
     @Override
-    protected String encodeText(final String text, final String charsetName) throws EncoderException, UnsupportedEncodingException {
+    protected String encodeText(final String text, final String charsetName) throws EncoderException {
         return super.encodeText(text, charsetName);
     }
 

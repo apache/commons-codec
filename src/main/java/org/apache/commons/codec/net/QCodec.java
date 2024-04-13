@@ -20,6 +20,7 @@ package org.apache.commons.codec.net;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.nio.charset.UnsupportedCharsetException;
 import java.util.BitSet;
 
 import org.apache.commons.codec.DecoderException;
@@ -163,9 +164,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
         if (obj instanceof String) {
             return decode((String) obj);
         }
-        throw new DecoderException("Objects of type " +
-              obj.getClass().getName() +
-              " cannot be decoded using Q codec");
+        throw new DecoderException("Objects of type " + obj.getClass().getName() + " cannot be decoded using Q codec");
     }
 
     /**
@@ -180,9 +179,6 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      */
     @Override
     public String decode(final String str) throws DecoderException {
-        if (str == null) {
-            return null;
-        }
         try {
             return decodeText(str);
         } catch (final UnsupportedEncodingException e) {
@@ -308,7 +304,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
         }
         try {
             return encodeText(sourceStr, sourceCharset);
-        } catch (final UnsupportedEncodingException e) {
+        } catch (final UnsupportedCharsetException e) {
             throw new EncoderException(e.getMessage(), e);
         }
     }

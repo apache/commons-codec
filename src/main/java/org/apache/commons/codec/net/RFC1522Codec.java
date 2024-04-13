@@ -19,6 +19,7 @@ package org.apache.commons.codec.net;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+import java.nio.charset.UnsupportedCharsetException;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
@@ -37,7 +38,6 @@ import org.apache.commons.codec.binary.StringUtils;
  *
  * @see <a href="http://www.ietf.org/rfc/rfc1522.txt">MIME (Multipurpose Internet Mail Extensions) Part Two:
  *          Message Header Extensions for Non-ASCII Text</a>
- *
  * @since 1.3
  */
 abstract class RFC1522Codec {
@@ -66,8 +66,7 @@ abstract class RFC1522Codec {
      * @throws UnsupportedEncodingException
      *             thrown if charset specified in the "encoded-word" header is not supported
      */
-    protected String decodeText(final String text)
-            throws DecoderException, UnsupportedEncodingException {
+    protected String decodeText(final String text) throws DecoderException, UnsupportedEncodingException {
         if (text == null) {
             return null;
         }
@@ -167,22 +166,18 @@ abstract class RFC1522Codec {
      * @return RFC 1522 compliant "encoded-word"
      * @throws EncoderException
      *             thrown if there is an error condition during the Encoding process.
-     * @throws UnsupportedEncodingException
+     * @throws UnsupportedCharsetException
      *             if charset is not available
      * @see Charset
      */
-    protected String encodeText(final String text, final String charsetName)
-            throws EncoderException, UnsupportedEncodingException {
-        if (text == null) {
-            return null;
-        }
-        return this.encodeText(text, Charset.forName(charsetName));
+    protected String encodeText(final String text, final String charsetName) throws EncoderException {
+        return encodeText(text, Charset.forName(charsetName));
     }
 
     /**
      * Returns the codec name (referred to as encoding in the RFC 1522).
      *
-     * @return name of the codec
+     * @return name of the codec.
      */
     protected abstract String getEncoding();
 }

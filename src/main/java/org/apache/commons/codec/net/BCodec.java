@@ -20,6 +20,7 @@ package org.apache.commons.codec.net;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.nio.charset.UnsupportedCharsetException;
 
 import org.apache.commons.codec.CodecPolicy;
 import org.apache.commons.codec.DecoderException;
@@ -149,11 +150,8 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      */
     @Override
     public String decode(final String value) throws DecoderException {
-        if (value == null) {
-            return null;
-        }
         try {
-            return this.decodeText(value);
+            return decodeText(value);
         } catch (final UnsupportedEncodingException | IllegalArgumentException e) {
             throw new DecoderException(e.getMessage(), e);
         }
@@ -250,7 +248,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
         }
         try {
             return this.encodeText(strSource, sourceCharset);
-        } catch (final UnsupportedEncodingException e) {
+        } catch (final UnsupportedCharsetException e) {
             throw new EncoderException(e.getMessage(), e);
         }
     }
