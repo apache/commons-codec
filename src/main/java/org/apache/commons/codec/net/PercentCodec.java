@@ -42,7 +42,6 @@ public class PercentCodec implements BinaryEncoder, BinaryDecoder {
     /**
      * The escape character used by the Percent-Encoding in order to introduce an encoded character.
      */
-
     private static final byte ESCAPE_CHAR = '%';
 
     /**
@@ -97,7 +96,7 @@ public class PercentCodec implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
-     * Decode bytes encoded with Percent-Encoding based on RFC 3986. The reverse process is performed in order to
+     * Decodes bytes encoded with Percent-Encoding based on RFC 3986. The reverse process is performed in order to
      * decode the encoded characters to Unicode.
      */
     @Override
@@ -105,7 +104,6 @@ public class PercentCodec implements BinaryEncoder, BinaryDecoder {
         if (bytes == null) {
             return null;
         }
-
         final ByteBuffer buffer = ByteBuffer.allocate(expectedDecodingBytes(bytes));
         for (int i = 0; i < bytes.length; i++) {
             final byte b = bytes[i];
@@ -175,7 +173,6 @@ public class PercentCodec implements BinaryEncoder, BinaryDecoder {
         if (bytes == null) {
             return null;
         }
-
         final int expectedEncodingBytes = expectedEncodingBytes(bytes);
         final boolean willEncode = expectedEncodingBytes != bytes.length;
         if (willEncode || plusForSpace && containsSpace(bytes)) {
@@ -244,7 +241,7 @@ public class PercentCodec implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
-     * Adds the byte array into a BitSet for faster lookup
+     * Inserts the byte array into a BitSet for faster lookup.
      *
      * @param alwaysEncodeCharsArray
      */
