@@ -14,8 +14,8 @@
 ## KIND, either express or implied.  See the License for the
 ## specific language governing permissions and limitations
 ## under the License.
-${project.name} ${version}
-RELEASE NOTES
+${project.name} ${version} RELEASE NOTES
+-----------------------------------------
 
 $introduction.replaceAll("(?<!\015)\012", "
 ").replaceAll("(?m)^ +","")
@@ -57,7 +57,7 @@ $release.description.replaceAll("  ", "
 #else
 #set($dueto="")
 #end
-o $issue ${action}$dueto
+* $issue ${action}$dueto
 #set($action="")
 #set($issue="")
 #set($dueto="")
@@ -66,31 +66,38 @@ o $issue ${action}$dueto
 #if ($release.getActions().size() == 0)
 No changes defined in this version.
 #else
-Changes in this version include:
 
 #if ($release.getActions('add').size() !=0)
-New features:
+New features
+------------
+
 #foreach($actionItem in $release.getActions('add'))
 #processaction()
 #end 
 #end
 
 #if ($release.getActions('fix').size() !=0)
-Fixed Bugs:
+Fixed Bugs
+----------
+
 #foreach($actionItem in $release.getActions('fix'))
 #processaction()
 #end
 #end
 
 #if ($release.getActions('update').size() !=0)
-Changes:
+Changes
+-------
+
 #foreach($actionItem in $release.getActions('update'))
 #processaction()
 #end
 #end
 
 #if ($release.getActions('remove').size() !=0)
-Removed:
+Removed
+-------
+
 #foreach($actionItem in $release.getActions('remove'))
 #processaction()
 #end

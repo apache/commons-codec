@@ -1,5 +1,5 @@
-Apache Commons Codec 1.16.1
-RELEASE NOTES
+Apache Commons Codec 1.16.1 RELEASE NOTES
+-----------------------------------------
 
 The Apache Commons Codec component contains encoder and decoders for
 various formats such as Base16, Base32, Base64, digest, and Hexadecimal. In addition to these
@@ -8,36 +8,40 @@ collection of phonetic encoding utilities.
 
 Feature and fix release. Requires a minimum of Java 8.
 
-Changes in this version include:
+New features
+------------
 
-New features:
-o             Add Maven property project.build.outputTimestamp for build reproducibility. Thanks to Gary Gregory.
+*             Add Maven property project.build.outputTimestamp for build reproducibility. Thanks to Gary Gregory.
 
-Fixed Bugs:
-o CODEC-295:  Test clean ups. Thanks to Gary Gregory.
-o             [StepSecurity] ci: Harden GitHub Actions #187. Thanks to step-security-bot, Gary Gregory.
-o CODEC-295:  Correct error in Base64 Javadoc #188. Thanks to Evan Saulpaugh.
-o CODEC-295:  Add minimum Java version in changes.xml #186. Thanks to Olivier Jaquemet, Gary Gregory.
-o CODEC-310:  Documentation update for the org.apache.commons.codec.digest.* package #208. Thanks to Yakov Shafranovich.
-o             Precompile regular expression in UnixCrypt.crypt(byte[], String). Thanks to Gary Gregory.
-o CODEC-315:  Fix possible IndexOutOfBoundException in PhoneticEngine.encode method #223. Thanks to Arthur Chan, Gary Gregory.
-o CODEC-313:  Fix possible ArrayIndexOutOfBoundsException in QuotedPrintableCodec.encodeQuotedPrintable() method #221. Thanks to Arthur Chan, Gary Gregory.
-o CODEC-312:  Fix possible StringIndexOutOfBoundException in MatchRatingApproachEncoder.encode() method #220. Thanks to Arthur Chan, Gary Gregory.
-o CODEC-311:  Fix possible ArrayIndexOutOfBoundException in RefinedSoundex.getMappingCode() #219. Thanks to Arthur Chan, Gary Gregory.
-o CODEC-314:  Fix possible IndexOutOfBoundsException in PercentCodec.insertAlwaysEncodeChars() method #222. Thanks to Arthur Chan, Gary Gregory.
-o             Deprecate UnixCrypt 0-argument constructor. Thanks to Gary Gregory.
-o             Deprecate Md5Crypt 0-argument constructor. Thanks to Gary Gregory.
-o             Deprecate Crypt 0-argument constructor. Thanks to Gary Gregory.
-o             Deprecate StringUtils 0-argument constructor. Thanks to Gary Gregory.
-o             Deprecate Resources 0-argument constructor. Thanks to Gary Gregory.
-o             Deprecate Charsets 0-argument constructor. Thanks to Gary Gregory.
-o             Deprecate CharEncoding 0-argument constructor. Thanks to Gary Gregory.
-o             Add missing version for animal-sniffer-maven-plugin. Thanks to Gary Gregory.
+Fixed Bugs
+----------
 
-Changes:
-o             Bump commons-parent from 58 to 66. Thanks to Dependabot, Gary Gregory.
-o             Bump commons-lang3 from 3.12.0 to 3.14.0. Thanks to Gary Gregory.
-o             Bump commons-io from 2.13.0 to 2.15.1. Thanks to Gary Gregory.
+* CODEC-295:  Test clean ups. Thanks to Gary Gregory.
+*             [StepSecurity] ci: Harden GitHub Actions #187. Thanks to step-security-bot, Gary Gregory.
+* CODEC-295:  Correct error in Base64 Javadoc #188. Thanks to Evan Saulpaugh.
+* CODEC-295:  Add minimum Java version in changes.xml #186. Thanks to Olivier Jaquemet, Gary Gregory.
+* CODEC-310:  Documentation update for the org.apache.commons.codec.digest.* package #208. Thanks to Yakov Shafranovich.
+*             Precompile regular expression in UnixCrypt.crypt(byte[], String). Thanks to Gary Gregory.
+* CODEC-315:  Fix possible IndexOutOfBoundException in PhoneticEngine.encode method #223. Thanks to Arthur Chan, Gary Gregory.
+* CODEC-313:  Fix possible ArrayIndexOutOfBoundsException in QuotedPrintableCodec.encodeQuotedPrintable() method #221. Thanks to Arthur Chan, Gary Gregory.
+* CODEC-312:  Fix possible StringIndexOutOfBoundException in MatchRatingApproachEncoder.encode() method #220. Thanks to Arthur Chan, Gary Gregory.
+* CODEC-311:  Fix possible ArrayIndexOutOfBoundException in RefinedSoundex.getMappingCode() #219. Thanks to Arthur Chan, Gary Gregory.
+* CODEC-314:  Fix possible IndexOutOfBoundsException in PercentCodec.insertAlwaysEncodeChars() method #222. Thanks to Arthur Chan, Gary Gregory.
+*             Deprecate UnixCrypt 0-argument constructor. Thanks to Gary Gregory.
+*             Deprecate Md5Crypt 0-argument constructor. Thanks to Gary Gregory.
+*             Deprecate Crypt 0-argument constructor. Thanks to Gary Gregory.
+*             Deprecate StringUtils 0-argument constructor. Thanks to Gary Gregory.
+*             Deprecate Resources 0-argument constructor. Thanks to Gary Gregory.
+*             Deprecate Charsets 0-argument constructor. Thanks to Gary Gregory.
+*             Deprecate CharEncoding 0-argument constructor. Thanks to Gary Gregory.
+*             Add missing version for animal-sniffer-maven-plugin. Thanks to Gary Gregory.
+
+Changes
+-------
+
+*             Bump commons-parent from 58 to 66. Thanks to Dependabot, Gary Gregory.
+*             Bump commons-lang3 from 3.12.0 to 3.14.0. Thanks to Gary Gregory.
+*             Bump commons-io from 2.13.0 to 2.15.1. Thanks to Gary Gregory.
 
 
 For complete information on Apache Commons Codec, including instructions on how to submit bug reports,
@@ -60,42 +64,48 @@ Feature and fix release.
 
 Changes in this version include:
 
-New features:
-o CODEC-296:  Add support for Blake3 family of hashes. Thanks to Matt Sicker.
-o             Add github/codeql-action.
+New features
+------------
 
-Fixed Bugs:
-o CODEC-295:  Minor improvements #67. Thanks to Arturo Bernal.
-o             Remove duplicated words from Javadocs. Thanks to James Gan.
-o CODEC-301:  Simplify assertion #84. Thanks to Alexander Pinske, Alex Herbert.
-o CODEC-300:  Simplify assertion #84. Thanks to Arturo Bernal.
-o CODEC-298:  Use Standard Charset object #82. Thanks to Arturo Bernal.
-o             Use String.contains() functions #125. Thanks to Arturo Bernal.
-o             Avoid use toString() or substring() in favor of a simplified expression #126. Thanks to Arturo Bernal.
-o CODEC-305:  Fix byte-skipping in Base16 decoding #135. Thanks to Florian.
-o             Fix several typos, improve writing in some javadocs #139. Thanks to Marc Wrobel.
-o             BaseNCodecOutputStream.eof() should not throw IOException. Thanks to Gary Gregory.
-o             Javadoc improvements and cleanups. Thanks to Gary Gregory.
-o             Deprecate BaseNCodec.isWhiteSpace(byte) and use Character.isWhitespace(int). Thanks to Gary Gregory.
+* CODEC-296:  Add support for Blake3 family of hashes. Thanks to Matt Sicker.
+*             Add github/codeql-action.
 
-Changes:
-o             Bump actions/cache from v2 to v3.0.10 #75, #99, #119, #138, #149, #152. Thanks to Dependabot, Gary Gregory.
-o             Bump actions/setup-java from v1.4.1 to 3.5.1 #60, #62, #121. Thanks to Dependabot, Gary Gregory.
-o             Bump actions/checkout from 2.3.2 to 3.1.0 #65, #98, #114, #153. Thanks to Dependabot, Gary Gregory.
-o             Bump commons-parent from 52 to 58, #147, #165, #170. Thanks to Dependabot, Gary Gregory.
-o CODEC-285:  Bump junit from 4.13.1 to 5.9.1 #76, #39, #140, #148. Thanks to Dependabot, John Patrick.
-o             Bump Java 7 to 8. Thanks to Gary Gregory.
-o             Bump japicmp-maven-plugin from 0.14.3 to 0.17.1. Thanks to Gary Gregory.
-o             Bump jacoco-maven-plugin from 0.8.5 to 0.8.8 (Fixes Java 15 builds). Thanks to Gary Gregory.
-o             Bump maven-surefire-plugin from 2.22.2 to 3.0.0-M7 #122, #134. Thanks to Gary Gregory.
-o             Bump maven-javadoc-plugin from 3.2.0 to 3.4.1. Thanks to Gary Gregory.
-o             Bump animal-sniffer-maven-plugin from 1.19 to 1.22. Thanks to Gary Gregory.
-o             Bump maven-pmd-plugin from 3.13.0 to 3.19.0, #133, #142, #145. Thanks to Gary Gregory, Dependabot.
-o             Bump pmd from 6.47.0 to 6.52.0. Thanks to Gary Gregory.
-o             Bump maven-checkstyle-plugin from 2.17 to 3.2.0 #143. Thanks to Gary Gregory.
-o             Bump checkstyle from 8.45.1 to 9.3 #97, #100, #101, #103. Thanks to Dependabot.
-o             Bump taglist-maven-plugin from 2.4 to 3.0.0 #102. Thanks to Dependabot.
-o             Bump jacoco-maven-plugin from 0.8.7 to 0.8.8. Thanks to Gary Gregory.
+Fixed Bugs
+----------
+
+* CODEC-295:  Minor improvements #67. Thanks to Arturo Bernal.
+*             Remove duplicated words from Javadocs. Thanks to James Gan.
+* CODEC-301:  Simplify assertion #84. Thanks to Alexander Pinske, Alex Herbert.
+* CODEC-300:  Simplify assertion #84. Thanks to Arturo Bernal.
+* CODEC-298:  Use Standard Charset object #82. Thanks to Arturo Bernal.
+*             Use String.contains() functions #125. Thanks to Arturo Bernal.
+*             Avoid use toString() or substring() in favor of a simplified expression #126. Thanks to Arturo Bernal.
+* CODEC-305:  Fix byte-skipping in Base16 decoding #135. Thanks to Florian.
+*             Fix several typos, improve writing in some javadocs #139. Thanks to Marc Wrobel.
+*             BaseNCodecOutputStream.eof() should not throw IOException. Thanks to Gary Gregory.
+*             Javadoc improvements and cleanups. Thanks to Gary Gregory.
+*             Deprecate BaseNCodec.isWhiteSpace(byte) and use Character.isWhitespace(int). Thanks to Gary Gregory.
+
+Changes
+-------
+
+*             Bump actions/cache from v2 to v3.0.10 #75, #99, #119, #138, #149, #152. Thanks to Dependabot, Gary Gregory.
+*             Bump actions/setup-java from v1.4.1 to 3.5.1 #60, #62, #121. Thanks to Dependabot, Gary Gregory.
+*             Bump actions/checkout from 2.3.2 to 3.1.0 #65, #98, #114, #153. Thanks to Dependabot, Gary Gregory.
+*             Bump commons-parent from 52 to 58, #147, #165, #170. Thanks to Dependabot, Gary Gregory.
+* CODEC-285:  Bump junit from 4.13.1 to 5.9.1 #76, #39, #140, #148. Thanks to Dependabot, John Patrick.
+*             Bump Java 7 to 8. Thanks to Gary Gregory.
+*             Bump japicmp-maven-plugin from 0.14.3 to 0.17.1. Thanks to Gary Gregory.
+*             Bump jacoco-maven-plugin from 0.8.5 to 0.8.8 (Fixes Java 15 builds). Thanks to Gary Gregory.
+*             Bump maven-surefire-plugin from 2.22.2 to 3.0.0-M7 #122, #134. Thanks to Gary Gregory.
+*             Bump maven-javadoc-plugin from 3.2.0 to 3.4.1. Thanks to Gary Gregory.
+*             Bump animal-sniffer-maven-plugin from 1.19 to 1.22. Thanks to Gary Gregory.
+*             Bump maven-pmd-plugin from 3.13.0 to 3.19.0, #133, #142, #145. Thanks to Gary Gregory, Dependabot.
+*             Bump pmd from 6.47.0 to 6.52.0. Thanks to Gary Gregory.
+*             Bump maven-checkstyle-plugin from 2.17 to 3.2.0 #143. Thanks to Gary Gregory.
+*             Bump checkstyle from 8.45.1 to 9.3 #97, #100, #101, #103. Thanks to Dependabot.
+*             Bump taglist-maven-plugin from 2.4 to 3.0.0 #102. Thanks to Dependabot.
+*             Bump jacoco-maven-plugin from 0.8.7 to 0.8.8. Thanks to Gary Gregory.
 
 
 For complete information on Apache Commons Codec, including instructions on how to submit bug reports,
@@ -104,3 +114,5 @@ patches, or suggestions for improvement, see the Apache Commons Codec website:
 https://commons.apache.org/proper/commons-codec/
 
 Download page: https://commons.apache.org/proper/commons-codec/download_codec.cgi
+
+---------------------------------------------------------------------------------
