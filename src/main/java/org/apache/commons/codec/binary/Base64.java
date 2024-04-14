@@ -597,8 +597,8 @@ public class Base64 extends BaseNCodec {
      * @since 1.15
      */
     public Base64(final int lineLength, final byte[] lineSeparator, boolean urlSafe,
-                  final CodecPolicy decodingPolicy){
-        this(lineLength, lineSeparator,urlSafe ? URL_SAFE_ENCODE_TABLE : STANDARD_ENCODE_TABLE, decodingPolicy);
+                  final CodecPolicy decodingPolicy) {
+        this(lineLength, lineSeparator, urlSafe ? URL_SAFE_ENCODE_TABLE : STANDARD_ENCODE_TABLE, decodingPolicy);
     }
 
     /**
@@ -865,10 +865,10 @@ public class Base64 extends BaseNCodec {
      */
     private byte[] calculateDecodeTable(byte[] encodeTable) {
         byte[] decodeTable = new byte[256];
-        for (int i=0; i < 256; i++) {
+        for (int i = 0; i < 256; i++) {
             decodeTable[i] = -1;
         }
-        for (int i=0; i < encodeTable.length; i++) {
+        for (int i = 0; i < encodeTable.length; i++) {
             decodeTable[encodeTable[i]] = (byte) i;
         }
         return decodeTable;
