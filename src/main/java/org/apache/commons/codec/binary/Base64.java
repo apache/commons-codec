@@ -242,7 +242,6 @@ public class Base64 extends BaseNCodec {
         if (BinaryCodec.isEmpty(binaryData)) {
             return binaryData;
         }
-
         // Create this so can use the super-class method
         // Also ensures that the same roundings are performed by the ctor and the code
         final Base64 b64 = isChunked ? new Base64(urlSafe) : new Base64(0, CHUNK_SEPARATOR, urlSafe);
@@ -253,7 +252,6 @@ public class Base64 extends BaseNCodec {
                 ") than the specified maximum size of " +
                 maxResultSize);
         }
-
         return b64.encode(binaryData);
     }
 
@@ -653,7 +651,7 @@ public class Base64 extends BaseNCodec {
                 final String sep = StringUtils.newStringUtf8(lineSeparator);
                 throw new IllegalArgumentException("lineSeparator must not contain base64 characters: [" + sep + "]");
             }
-            if (lineLength > 0){ // null line-sep forces no chunking rather than throwing IAE
+            if (lineLength > 0) { // null line-sep forces no chunking rather than throwing IAE
                 this.encodeSize = BYTES_PER_ENCODED_BLOCK + lineSeparator.length;
                 this.lineSeparator = lineSeparator.clone();
             } else {
@@ -713,7 +711,7 @@ public class Base64 extends BaseNCodec {
             if (b >= 0 && b < decodeTable.length) {
                 final int result = decodeTable[b];
                 if (result >= 0) {
-                    context.modulus = (context.modulus+1) % BYTES_PER_ENCODED_BLOCK;
+                    context.modulus = (context.modulus + 1) % BYTES_PER_ENCODED_BLOCK;
                     context.ibitWorkArea = (context.ibitWorkArea << BITS_PER_ENCODED_BYTE) + result;
                     if (context.modulus == 0) {
                         buffer[context.pos++] = (byte) (context.ibitWorkArea >> 16 & MASK_8BITS);
@@ -825,12 +823,12 @@ public class Base64 extends BaseNCodec {
         } else {
             for (int i = 0; i < inAvail; i++) {
                 final byte[] buffer = ensureBufferSize(encodeSize, context);
-                context.modulus = (context.modulus+1) % BYTES_PER_UNENCODED_BLOCK;
+                context.modulus = (context.modulus + 1) % BYTES_PER_UNENCODED_BLOCK;
                 int b = in[inPos++];
                 if (b < 0) {
                     b += 256;
                 }
-                context.ibitWorkArea = (context.ibitWorkArea << 8) + b; //  BITS_PER_BYTE
+                context.ibitWorkArea = (context.ibitWorkArea << 8) + b; // BITS_PER_BYTE
                 if (0 == context.modulus) { // 3 bytes = 24 bits = 4 * 6 bits to extract
                     buffer[context.pos++] = encodeTable[context.ibitWorkArea >> 18 & MASK_6BITS];
                     buffer[context.pos++] = encodeTable[context.ibitWorkArea >> 12 & MASK_6BITS];

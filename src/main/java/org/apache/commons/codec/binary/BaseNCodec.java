@@ -515,13 +515,15 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     /**
      * Encodes a byte[] containing binary data, into a String containing characters in the appropriate alphabet.
      * Uses UTF8 encoding.
+     * <p>
+     * This is a duplicate of {@link #encodeToString(byte[])}; it was merged during refactoring.
+     * </p>
      *
      * @param pArray a byte array containing binary data
      * @return String containing only character data in the appropriate alphabet.
      * @since 1.5
-     * This is a duplicate of {@link #encodeToString(byte[])}; it was merged during refactoring.
     */
-    public String encodeAsString(final byte[] pArray){
+    public String encodeAsString(final byte[] pArray) {
         return StringUtils.newStringUtf8(encode(pArray));
     }
 
@@ -544,14 +546,14 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * @param context the context to be used
      * @return the buffer
      */
-    protected byte[] ensureBufferSize(final int size, final Context context){
+    protected byte[] ensureBufferSize(final int size, final Context context) {
         if (context.buffer == null) {
             context.buffer = new byte[Math.max(size, getDefaultBufferSize())];
             context.pos = 0;
             context.readPos = 0;
 
             // Overflow-conscious:
-            // x + y > z  ==  x + y - z > 0
+            // x + y > z == x + y - z > 0
         } else if (context.pos + size - context.buffer.length > 0) {
             return resizeBuffer(context, context.pos + size);
         }
@@ -594,10 +596,10 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     public long getEncodedLength(final byte[] pArray) {
         // Calculate non-chunked size - rounded up to allow for padding
         // cast to long is needed to avoid possibility of overflow
-        long len = (pArray.length + unencodedBlockSize-1)  / unencodedBlockSize * (long) encodedBlockSize;
+        long len = (pArray.length + unencodedBlockSize - 1) / unencodedBlockSize * (long) encodedBlockSize;
         if (lineLength > 0) { // We're using chunking
             // Round up to nearest multiple
-            len += (len + lineLength-1) / lineLength * chunkSeparatorLength;
+            len += (len + lineLength - 1) / lineLength * chunkSeparatorLength;
         }
         return len;
     }
@@ -634,8 +636,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      */
     public boolean isInAlphabet(final byte[] arrayOctet, final boolean allowWSPad) {
         for (final byte octet : arrayOctet) {
-            if (!isInAlphabet(octet) &&
-                    (!allowWSPad || octet != pad && !Character.isWhitespace(octet))) {
+            if (!isInAlphabet(octet) && (!allowWSPad || octet != pad && !Character.isWhitespace(octet))) {
                 return false;
             }
         }

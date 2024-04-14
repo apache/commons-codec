@@ -20,6 +20,7 @@ package org.apache.commons.codec.net;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.nio.charset.UnsupportedCharsetException;
 
 import org.apache.commons.codec.CodecPolicy;
 import org.apache.commons.codec.DecoderException;
@@ -52,11 +53,6 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * The default decoding policy.
      */
     private static final CodecPolicy DECODING_POLICY_DEFAULT = CodecPolicy.LENIENT;
-
-    /**
-     * The default Charset used for string decoding and encoding.
-     */
-    private final Charset charset;
 
     /**
      * If true then decoding should throw an exception for impossible combinations of bits at the
@@ -95,7 +91,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * @since 1.15
      */
     public BCodec(final Charset charset, final CodecPolicy decodingPolicy) {
-        this.charset = charset;
+        super(charset);
         this.decodingPolicy = decodingPolicy;
     }
 
@@ -132,9 +128,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
         if (value instanceof String) {
             return decode((String) value);
         }
-        throw new DecoderException("Objects of type " +
-              value.getClass().getName() +
-              " cannot be decoded using BCodec");
+        throw new DecoderException("Objects of type " + value.getClass().getName() + " cannot be decoded using BCodec");
     }
 
     /**
@@ -149,11 +143,8 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      */
     @Override
     public String decode(final String value) throws DecoderException {
-        if (value == null) {
-            return null;
-        }
         try {
-            return this.decodeText(value);
+            return decodeText(value);
         } catch (final UnsupportedEncodingException | IllegalArgumentException e) {
             throw new DecoderException(e.getMessage(), e);
         }
@@ -192,9 +183,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
         if (value instanceof String) {
             return encode((String) value);
         }
-        throw new EncoderException("Objects of type " +
-              value.getClass().getName() +
-              " cannot be encoded using BCodec");
+        throw new EncoderException("Objects of type " + value.getClass().getName() + " cannot be encoded using BCodec");
     }
 
     /**
@@ -208,10 +197,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      */
     @Override
     public String encode(final String strSource) throws EncoderException {
-        if (strSource == null) {
-            return null;
-        }
-        return encode(strSource, this.getCharset());
+        return encode(strSource, getCharset());
     }
 
     /**
@@ -227,9 +213,6 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * @since 1.7
      */
     public String encode(final String strSource, final Charset sourceCharset) throws EncoderException {
-        if (strSource == null) {
-            return null;
-        }
         return encodeText(strSource, sourceCharset);
     }
 
@@ -245,33 +228,11 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      *             thrown if a failure condition is encountered during the encoding process.
      */
     public String encode(final String strSource, final String sourceCharset) throws EncoderException {
-        if (strSource == null) {
-            return null;
-        }
         try {
-            return this.encodeText(strSource, sourceCharset);
-        } catch (final UnsupportedEncodingException e) {
+            return encodeText(strSource, sourceCharset);
+        } catch (final UnsupportedCharsetException e) {
             throw new EncoderException(e.getMessage(), e);
         }
-    }
-
-    /**
-     * Gets the default Charset name used for string decoding and encoding.
-     *
-     * @return the default Charset name
-     * @since 1.7
-     */
-    public Charset getCharset() {
-        return this.charset;
-    }
-
-    /**
-     * Gets the default Charset name used for string decoding and encoding.
-     *
-     * @return the default Charset name
-     */
-    public String getDefaultCharset() {
-        return this.charset.name();
     }
 
     @Override

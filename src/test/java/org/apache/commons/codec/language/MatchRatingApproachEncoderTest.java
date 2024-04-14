@@ -47,8 +47,7 @@ public class MatchRatingApproachEncoderTest extends AbstractStringEncoderTest<Ma
 
     @Test
     public final void testAccentRemoval_ComprehensiveAccentMix_AllSuccessfullyRemoved() {
-        assertEquals("E,E,E,E,U,U,I,I,A,A,O,e,e,e,e,u,u,i,i,a,a,o,c",
-                this.getStringEncoder().removeAccents("È,É,Ê,Ë,Û,Ù,Ï,Î,À,Â,Ô,è,é,ê,ë,û,ù,ï,î,à,â,ô,ç"));
+        assertEquals("E,E,E,E,U,U,I,I,A,A,O,e,e,e,e,u,u,i,i,a,a,o,c", this.getStringEncoder().removeAccents("È,É,Ê,Ë,Û,Ù,Ï,Î,À,Â,Ô,è,é,ê,ë,û,ù,ï,î,à,â,ô,ç"));
     }
 
     @Test
@@ -357,12 +356,12 @@ public class MatchRatingApproachEncoderTest extends AbstractStringEncoderTest<Ma
     }
 
     @Test
-    public final void testgetMinRating_10_Returns3_Successfully(){
+    public final void testgetMinRating_10_Returns3_Successfully() {
         assertEquals(3, this.getStringEncoder().getMinRating(10));
     }
 
     @Test
-    public final void testgetMinRating_11_Returns_3_Successfully(){
+    public final void testgetMinRating_11_Returns_3_Successfully() {
         assertEquals(3, this.getStringEncoder().getMinRating(11));
     }
 
@@ -377,17 +376,17 @@ public class MatchRatingApproachEncoderTest extends AbstractStringEncoderTest<Ma
     }
 
     @Test
-    public final void testgetMinRating_5_Returns4_Successfully(){
+    public final void testgetMinRating_5_Returns4_Successfully() {
         assertEquals(4, this.getStringEncoder().getMinRating(5));
     }
 
     @Test
-    public final void testgetMinRating_5_Returns4_Successfully2(){
+    public final void testgetMinRating_5_Returns4_Successfully2() {
         assertEquals(4, this.getStringEncoder().getMinRating(5));
     }
 
     @Test
-    public final void testgetMinRating_6_Returns4_Successfully(){
+    public final void testgetMinRating_6_Returns4_Successfully() {
         assertEquals(4, this.getStringEncoder().getMinRating(6));
     }
 
@@ -399,12 +398,12 @@ public class MatchRatingApproachEncoderTest extends AbstractStringEncoderTest<Ma
     // ***** Begin Region - Test Get Encoding - Surnames
 
     @Test
-    public final void testgetMinRating_7_Returns4_Successfully(){
+    public final void testgetMinRating_7_Returns4_Successfully() {
         assertEquals(4, this.getStringEncoder().getMinRating(7));
     }
 
     @Test
-    public final void testgetMinRating_8_Returns3_Successfully(){
+    public final void testgetMinRating_8_Returns3_Successfully() {
         assertEquals(3, this.getStringEncoder().getMinRating(8));
     }
 

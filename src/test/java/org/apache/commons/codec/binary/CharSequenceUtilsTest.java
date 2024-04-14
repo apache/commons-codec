@@ -58,7 +58,8 @@ public class CharSequenceUtilsTest {
     // Note: The commented out tests fail due to the CharSequenceUtils method
     // being based on Lang 3.3.2 and the tests are from 3.11.
 
-    static class TestData{
+    static class TestData {
+
         final String source;
         final boolean ignoreCase;
         final int toffset;
@@ -67,8 +68,9 @@ public class CharSequenceUtilsTest {
         final int len;
         final boolean expected;
         final Class<? extends Throwable> throwable;
-        TestData(final String source, final boolean ignoreCase, final int toffset,
-                final String other, final int ooffset, final int len, final boolean expected) {
+
+        TestData(final String source, final boolean ignoreCase, final int toffset, final String other, final int ooffset, final int len,
+                final boolean expected) {
             this.source = source;
             this.ignoreCase = ignoreCase;
             this.toffset = toffset;
@@ -78,8 +80,9 @@ public class CharSequenceUtilsTest {
             this.expected = expected;
             this.throwable = null;
         }
-        TestData(final String source, final boolean ignoreCase, final int toffset,
-                final String other, final int ooffset, final int len, final Class<? extends Throwable> throwable) {
+
+        TestData(final String source, final boolean ignoreCase, final int toffset, final String other, final int ooffset, final int len,
+                final Class<? extends Throwable> throwable) {
             this.source = source;
             this.ignoreCase = ignoreCase;
             this.toffset = toffset;
@@ -89,11 +92,12 @@ public class CharSequenceUtilsTest {
             this.expected = false;
             this.throwable = throwable;
         }
+
         @Override
         public String toString() {
             final StringBuilder sb = new StringBuilder();
             sb.append(source).append("[").append(toffset).append("]");
-            sb.append(ignoreCase? " caseblind ":" samecase ");
+            sb.append(ignoreCase ? " caseblind " : " samecase ");
             sb.append(other).append("[").append(ooffset).append("]");
             sb.append(" ").append(len).append(" => ");
             if (throwable != null) {

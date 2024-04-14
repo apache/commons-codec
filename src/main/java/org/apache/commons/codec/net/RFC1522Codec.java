@@ -19,6 +19,8 @@ package org.apache.commons.codec.net;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+import java.nio.charset.UnsupportedCharsetException;
+import java.util.Objects;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
@@ -37,7 +39,6 @@ import org.apache.commons.codec.binary.StringUtils;
  *
  * @see <a href="http://www.ietf.org/rfc/rfc1522.txt">MIME (Multipurpose Internet Mail Extensions) Part Two:
  *          Message Header Extensions for Non-ASCII Text</a>
- *
  * @since 1.3
  */
 abstract class RFC1522Codec {
@@ -50,6 +51,15 @@ abstract class RFC1522Codec {
 
     /** Postfix. */
     protected static final String PREFIX = "=?";
+
+    /**
+     * The default Charset used for string decoding and encoding.
+     */
+    protected final Charset charset;
+
+    RFC1522Codec(final Charset charset) {
+        this.charset = Objects.requireNonNull(charset, "charset");
+    }
 
     /**
      * Applies an RFC 1522 compliant decoding scheme to the given string of text.
@@ -66,8 +76,7 @@ abstract class RFC1522Codec {
      * @throws UnsupportedEncodingException
      *             thrown if charset specified in the "encoded-word" header is not supported
      */
-    protected String decodeText(final String text)
-            throws DecoderException, UnsupportedEncodingException {
+    protected String decodeText(final String text) throws DecoderException, UnsupportedEncodingException {
         if (text == null) {
             return null;
         }
@@ -167,22 +176,41 @@ abstract class RFC1522Codec {
      * @return RFC 1522 compliant "encoded-word"
      * @throws EncoderException
      *             thrown if there is an error condition during the Encoding process.
-     * @throws UnsupportedEncodingException
+     * @throws UnsupportedCharsetException
      *             if charset is not available
      * @see Charset
      */
-    protected String encodeText(final String text, final String charsetName)
-            throws EncoderException, UnsupportedEncodingException {
+    protected String encodeText(final String text, final String charsetName) throws EncoderException {
         if (text == null) {
+            // Don't attempt charsetName conversion.
             return null;
         }
-        return this.encodeText(text, Charset.forName(charsetName));
+        return encodeText(text, Charset.forName(charsetName));
+    }
+
+    /**
+     * Gets the default Charset name used for string decoding and encoding.
+     *
+     * @return the default Charset name
+     * @since 1.7
+     */
+    public Charset getCharset() {
+        return charset;
+    }
+
+    /**
+     * Gets the default Charset name used for string decoding and encoding.
+     *
+     * @return the default Charset name
+     */
+    public String getDefaultCharset() {
+        return charset.name();
     }
 
     /**
      * Returns the codec name (referred to as encoding in the RFC 1522).
      *
-     * @return name of the codec
+     * @return name of the codec.
      */
     protected abstract String getEncoding();
 }
