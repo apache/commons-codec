@@ -18,6 +18,7 @@
 package org.apache.commons.codec.binary;
 
 import java.math.BigInteger;
+import java.util.Arrays;
 import java.util.Objects;
 
 import org.apache.commons.codec.CodecPolicy;
@@ -63,6 +64,8 @@ public class Base64 extends BaseNCodec {
     private static final int BITS_PER_ENCODED_BYTE = 6;
     private static final int BYTES_PER_UNENCODED_BLOCK = 3;
     private static final int BYTES_PER_ENCODED_BLOCK = 4;
+    private static final int ALPHABET_LENGTH = 64;
+    private static final int DECODING_TABLE_LENGTH = 256;
 
     /**
      * This array is a lookup table that translates 6-bit positive integer index values into their "Base64 Alphabet"
@@ -413,14 +416,17 @@ public class Base64 extends BaseNCodec {
     }
 
     /**
-     * Encode table to use: either STANDARD or URL_SAFE. Note: the DECODE_TABLE above remains static because it is able
+     * Encode table to use: either STANDARD or URL_SAFE or custom.
+     * Note: the DECODE_TABLE above remains static because it is able
      * to decode both STANDARD and URL_SAFE streams, but the encodeTable must be a member variable so we can switch
      * between the two modes.
      */
     private final byte[] encodeTable;
 
-    /** Only one decode table currently; keep for consistency with Base32 code. */
-    private final byte[] decodeTable = DECODE_TABLE;
+    /**
+     * Decode table to use.
+     */
+    private final byte[] decodeTable;
 
     /**
      * Line separator for encoding. Not used when decoding. Only used if lineLength &gt; 0.
@@ -550,7 +556,19 @@ public class Base64 extends BaseNCodec {
      * @since 1.4
      */
     public Base64(final int lineLength, final byte[] lineSeparator, final boolean urlSafe) {
-        this(lineLength, lineSeparator, urlSafe, DECODING_POLICY_DEFAULT);
+        this(lineLength, lineSeparator, urlSafe ? URL_SAFE_ENCODE_TABLE : STANDARD_ENCODE_TABLE, DECODING_POLICY_DEFAULT);
+    }
+
+
+    /**
+     * Creates a Base64 codec used for decoding and encoding with non-standard encodeTable-table
+     *
+     * @param encodeTable
+     *          The manual encodeTable - a byte array of 64 chars
+     * @since 1.17.0
+     */
+    public Base64(byte[] encodeTable) {
+        this(0, CHUNK_SEPARATOR, encodeTable, DECODING_POLICY_DEFAULT);
     }
 
     /**
@@ -581,13 +599,54 @@ public class Base64 extends BaseNCodec {
      *             Thrown when the {@code lineSeparator} contains Base64 characters.
      * @since 1.15
      */
-    public Base64(final int lineLength, final byte[] lineSeparator, final boolean urlSafe,
+    public Base64(final int lineLength, final byte[] lineSeparator, boolean urlSafe,
+                  final CodecPolicy decodingPolicy) {
+        this(lineLength, lineSeparator, urlSafe ? URL_SAFE_ENCODE_TABLE : STANDARD_ENCODE_TABLE, decodingPolicy);
+    }
+
+    /**
+     * Creates a Base64 codec used for decoding (all modes) and encoding in URL-unsafe mode.
+     * <p>
+     * When encoding the line length and line separator are given in the constructor, and the encoding table is
+     * STANDARD_ENCODE_TABLE.
+     * </p>
+     * <p>
+     * Line lengths that aren't multiples of 4 will still essentially end up being multiples of 4 in the encoded data.
+     * </p>
+     * <p>
+     * When decoding all variants are supported.
+     * </p>
+     *
+     * @param lineLength
+     *            Each line of encoded data will be at most of the given length (rounded down to the nearest multiple of
+     *            4). If lineLength &lt;= 0, then the output will not be divided into lines (chunks). Ignored when
+     *            decoding.
+     * @param lineSeparator
+     *            Each line of encoded data will end with this sequence of bytes.
+     * @param encodeTable
+     *            The manual encodeTable - a byte array of 64 chars.
+     * @param decodingPolicy The decoding policy.
+     * @throws IllegalArgumentException
+     *             Thrown when the {@code lineSeparator} contains Base64 characters.
+     * @since 1.17.0
+     */
+    public Base64(final int lineLength, final byte[] lineSeparator, final byte[] encodeTable,
                   final CodecPolicy decodingPolicy) {
         super(BYTES_PER_UNENCODED_BLOCK, BYTES_PER_ENCODED_BLOCK,
                 lineLength,
                 lineSeparator == null ? 0 : lineSeparator.length,
                 PAD_DEFAULT,
                 decodingPolicy);
+        this.encodeTable = encodeTable;
+
+        if (encodeTable == STANDARD_ENCODE_TABLE || encodeTable == URL_SAFE_ENCODE_TABLE) {
+            decodeTable = DECODE_TABLE;
+        } else {
+            if (encodeTable.length != ALPHABET_LENGTH) {
+                throw new IllegalArgumentException("encodeTable must be exactly 64 bytes long");
+            }
+            decodeTable = calculateDecodeTable(encodeTable);
+        }
         // TODO could be simplified if there is no requirement to reject invalid line sep when length <=0
         // @see test case Base64Test.testConstructors()
         if (lineSeparator != null) {
@@ -607,7 +666,6 @@ public class Base64 extends BaseNCodec {
             this.lineSeparator = null;
         }
         this.decodeSize = this.encodeSize - 1;
-        this.encodeTable = urlSafe ? URL_SAFE_ENCODE_TABLE : STANDARD_ENCODE_TABLE;
     }
 
     // Implementation of the Encoder Interface
@@ -653,8 +711,8 @@ public class Base64 extends BaseNCodec {
                 context.eof = true;
                 break;
             }
-            if (b >= 0 && b < DECODE_TABLE.length) {
-                final int result = DECODE_TABLE[b];
+            if (b >= 0 && b < decodeTable.length) {
+                final int result = decodeTable[b];
                 if (result >= 0) {
                     context.modulus = (context.modulus + 1) % BYTES_PER_ENCODED_BLOCK;
                     context.ibitWorkArea = (context.ibitWorkArea << BITS_PER_ENCODED_BYTE) + result;
@@ -800,6 +858,21 @@ public class Base64 extends BaseNCodec {
     @Override
     protected boolean isInAlphabet(final byte octet) {
         return octet >= 0 && octet < decodeTable.length && decodeTable[octet] != -1;
+    }
+
+    /**
+     * Calculates a decode table for a given encode table.
+     *
+     * @param encodeTable that is used to determine decode lookup table
+     * @return decodeTable
+     */
+    private byte[] calculateDecodeTable(byte[] encodeTable) {
+        byte[] decodeTable = new byte[DECODING_TABLE_LENGTH];
+        Arrays.fill(decodeTable, (byte) -1);
+        for (int i = 0; i < encodeTable.length; i++) {
+            decodeTable[encodeTable[i]] = (byte) i;
+        }
+        return decodeTable;
     }
 
     /**
