@@ -479,6 +479,17 @@ public class Base64 extends BaseNCodec {
     }
 
     /**
+     * Creates a Base64 codec used for decoding and encoding with non-standard encodeTable-table
+     *
+     * @param encodeTable
+     *          The manual encodeTable - a byte array of 64 chars
+     * @since 1.17.0
+     */
+    public Base64(byte[] encodeTable) {
+        this(0, CHUNK_SEPARATOR, encodeTable, DECODING_POLICY_DEFAULT);
+    }
+
+    /**
      * Creates a Base64 codec used for decoding (all modes) and encoding in URL-unsafe mode.
      * <p>
      * When encoding the line length is given in the constructor, the line separator is CRLF, and the encoding table is
@@ -528,6 +539,7 @@ public class Base64 extends BaseNCodec {
         this(lineLength, lineSeparator, false);
     }
 
+
     /**
      * Creates a Base64 codec used for decoding (all modes) and encoding in URL-unsafe mode.
      * <p>
@@ -557,18 +569,6 @@ public class Base64 extends BaseNCodec {
      */
     public Base64(final int lineLength, final byte[] lineSeparator, final boolean urlSafe) {
         this(lineLength, lineSeparator, urlSafe ? URL_SAFE_ENCODE_TABLE : STANDARD_ENCODE_TABLE, DECODING_POLICY_DEFAULT);
-    }
-
-
-    /**
-     * Creates a Base64 codec used for decoding and encoding with non-standard encodeTable-table
-     *
-     * @param encodeTable
-     *          The manual encodeTable - a byte array of 64 chars
-     * @since 1.17.0
-     */
-    public Base64(byte[] encodeTable) {
-        this(0, CHUNK_SEPARATOR, encodeTable, DECODING_POLICY_DEFAULT);
     }
 
     /**
@@ -669,6 +669,21 @@ public class Base64 extends BaseNCodec {
     }
 
     // Implementation of the Encoder Interface
+
+    /**
+     * Calculates a decode table for a given encode table.
+     *
+     * @param encodeTable that is used to determine decode lookup table
+     * @return decodeTable
+     */
+    private byte[] calculateDecodeTable(byte[] encodeTable) {
+        byte[] decodeTable = new byte[DECODING_TABLE_LENGTH];
+        Arrays.fill(decodeTable, (byte) -1);
+        for (int i = 0; i < encodeTable.length; i++) {
+            decodeTable[encodeTable[i]] = (byte) i;
+        }
+        return decodeTable;
+    }
 
     /**
      * <p>
@@ -858,21 +873,6 @@ public class Base64 extends BaseNCodec {
     @Override
     protected boolean isInAlphabet(final byte octet) {
         return octet >= 0 && octet < decodeTable.length && decodeTable[octet] != -1;
-    }
-
-    /**
-     * Calculates a decode table for a given encode table.
-     *
-     * @param encodeTable that is used to determine decode lookup table
-     * @return decodeTable
-     */
-    private byte[] calculateDecodeTable(byte[] encodeTable) {
-        byte[] decodeTable = new byte[DECODING_TABLE_LENGTH];
-        Arrays.fill(decodeTable, (byte) -1);
-        for (int i = 0; i < encodeTable.length; i++) {
-            decodeTable[encodeTable[i]] = (byte) i;
-        }
-        return decodeTable;
     }
 
     /**
