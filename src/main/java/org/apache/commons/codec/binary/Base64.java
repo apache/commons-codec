@@ -485,7 +485,7 @@ public class Base64 extends BaseNCodec {
      *          The manual encodeTable - a byte array of 64 chars
      * @since 1.17.0
      */
-    public Base64(byte[] encodeTable) {
+    public Base64(final byte[] encodeTable) {
         this(0, CHUNK_SEPARATOR, encodeTable, DECODING_POLICY_DEFAULT);
     }
 
@@ -599,7 +599,7 @@ public class Base64 extends BaseNCodec {
      *             Thrown when the {@code lineSeparator} contains Base64 characters.
      * @since 1.15
      */
-    public Base64(final int lineLength, final byte[] lineSeparator, boolean urlSafe,
+    public Base64(final int lineLength, final byte[] lineSeparator, final boolean urlSafe,
                   final CodecPolicy decodingPolicy) {
         this(lineLength, lineSeparator, urlSafe ? URL_SAFE_ENCODE_TABLE : STANDARD_ENCODE_TABLE, decodingPolicy);
     }
@@ -676,8 +676,8 @@ public class Base64 extends BaseNCodec {
      * @param encodeTable that is used to determine decode lookup table
      * @return decodeTable
      */
-    private byte[] calculateDecodeTable(byte[] encodeTable) {
-        byte[] decodeTable = new byte[DECODING_TABLE_LENGTH];
+    private byte[] calculateDecodeTable(final byte[] encodeTable) {
+        final byte[] decodeTable = new byte[DECODING_TABLE_LENGTH];
         Arrays.fill(decodeTable, (byte) -1);
         for (int i = 0; i < encodeTable.length; i++) {
             decodeTable[encodeTable[i]] = (byte) i;
