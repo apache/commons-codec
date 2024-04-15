@@ -133,12 +133,6 @@ public class Base32 extends BaseNCodec {
     // some state be preserved between calls of encode() and decode().
 
     /**
-     * Convenience variable to help us determine when our buffer is going to run out of room and needs resizing. {@code decodeSize = {@link
-     * #BYTES_PER_ENCODED_BLOCK} - 1 + lineSeparator.length;}
-     */
-    private final int decodeSize;
-
-    /**
      * Decode table to use.
      */
     private final byte[] decodeTable;
@@ -318,8 +312,6 @@ public class Base32 extends BaseNCodec {
             this.encodeSize = BYTES_PER_ENCODED_BLOCK;
             this.lineSeparator = null;
         }
-        this.decodeSize = this.encodeSize - 1;
-
         if (isInAlphabet(padding) || Character.isWhitespace(padding)) {
             throw new IllegalArgumentException("pad must not be in alphabet or whitespace");
         }
@@ -347,13 +339,13 @@ public class Base32 extends BaseNCodec {
     @Override
     void decode(final byte[] input, int inPos, final int inAvail, final Context context) {
         // package protected for access from I/O streams
-
         if (context.eof) {
             return;
         }
         if (inAvail < 0) {
             context.eof = true;
         }
+        final int decodeSize = this.encodeSize - 1;
         for (int i = 0; i < inAvail; i++) {
             final byte b = input[inPos++];
             if (b == pad) {
@@ -378,7 +370,6 @@ public class Base32 extends BaseNCodec {
                 }
             }
         }
-
         // Two forms of EOF as far as Base32 decoder is concerned: actual
         // EOF (-1) and first time '=' character is encountered in stream.
         // This approach makes the '=' padding characters completely optional.
