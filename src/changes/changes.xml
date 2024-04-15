@@ -46,6 +46,7 @@ The <action> type attribute can be add,update,fix,remove.
     <release version="1.17.0" date="YYYY-MM-DD" description="Feature and fix release. Requires a minimum of Java 8.">
       <!-- ADD -->
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add override org.apache.commons.codec.language.bm.Rule.PhonemeExpr.size().</action>
+      <action type="add" dev="ggregory" due-to="Chris Kocel, Gary Gregory">Allow custom alphabets for Base64 #266.</action> 
       <!-- FIX -->
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Optimize memory allocation in PhoneticEngine.</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">BCodec and QCodec encode() methods throw UnsupportedCharsetException instead of EncoderException.</action>
