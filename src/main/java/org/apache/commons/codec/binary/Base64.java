@@ -64,6 +64,8 @@ public class Base64 extends BaseNCodec {
     private static final int BITS_PER_ENCODED_BYTE = 6;
     private static final int BYTES_PER_UNENCODED_BLOCK = 3;
     private static final int BYTES_PER_ENCODED_BLOCK = 4;
+    private static final int ALPHABET_LENGTH = 64;
+    private static final int DECODING_TABLE_LENGTH = 256;
 
     /**
      * This array is a lookup table that translates 6-bit positive integer index values into their "Base64 Alphabet"
@@ -107,7 +109,7 @@ public class Base64 extends BaseNCodec {
      * https://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/
      * </p>
      */
-    private static final byte[] DEFAULT_DECODE_TABLE = {
+    private static final byte[] DECODE_TABLE = {
         //   0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
             -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 00-0f
             -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 10-1f
@@ -346,7 +348,7 @@ public class Base64 extends BaseNCodec {
      * @since 1.4
      */
     public static boolean isBase64(final byte octet) {
-        return octet == PAD_DEFAULT || octet >= 0 && octet < DEFAULT_DECODE_TABLE.length && DEFAULT_DECODE_TABLE[octet] != -1;
+        return octet == PAD_DEFAULT || octet >= 0 && octet < DECODE_TABLE.length && DECODE_TABLE[octet] != -1;
     }
 
     /**
@@ -422,7 +424,7 @@ public class Base64 extends BaseNCodec {
     private final byte[] encodeTable;
 
     /**
-     * Decode table to use
+     * Decode table to use.
      */
     private final byte[] decodeTable;
 
@@ -625,7 +627,7 @@ public class Base64 extends BaseNCodec {
      * @param decodingPolicy The decoding policy.
      * @throws IllegalArgumentException
      *             Thrown when the {@code lineSeparator} contains Base64 characters.
-     * @since 1.15
+     * @since 1.17.0
      */
     public Base64(final int lineLength, final byte[] lineSeparator, final byte[] encodeTable,
                   final CodecPolicy decodingPolicy) {
@@ -637,9 +639,9 @@ public class Base64 extends BaseNCodec {
         this.encodeTable = encodeTable;
 
         if (encodeTable == STANDARD_ENCODE_TABLE || encodeTable == URL_SAFE_ENCODE_TABLE) {
-            decodeTable = DEFAULT_DECODE_TABLE;
+            decodeTable = DECODE_TABLE;
         } else {
-            if (encodeTable.length != 64) {
+            if (encodeTable.length != ALPHABET_LENGTH) {
                 throw new IllegalArgumentException("encodeTable must be exactly 64 bytes long");
             }
             decodeTable = calculateDecodeTable(encodeTable);
@@ -858,16 +860,14 @@ public class Base64 extends BaseNCodec {
     }
 
     /**
-     * calculates a decode table for a given encode table
+     * Calculates a decode table for a given encode table.
      *
      * @param encodeTable that is used to determine decode lookup table
      * @return decodeTable
      */
     private byte[] calculateDecodeTable(byte[] encodeTable) {
-        byte[] decodeTable = new byte[256];
-        for (int i = 0; i < 256; i++) {
-            decodeTable[i] = -1;
-        }
+        byte[] decodeTable = new byte[DECODING_TABLE_LENGTH];
+        Arrays.fill(decodeTable, (byte) -1);
         for (int i = 0; i < encodeTable.length; i++) {
             decodeTable[encodeTable[i]] = (byte) i;
         }
