@@ -565,6 +565,7 @@ public class Base64 extends BaseNCodec {
      *
      * @param encodeTable
      *          The manual encodeTable - a byte array of 64 chars
+     * @since 1.17.0
      */
     public Base64(byte[] encodeTable) {
         this(0, CHUNK_SEPARATOR, encodeTable, DECODING_POLICY_DEFAULT);
