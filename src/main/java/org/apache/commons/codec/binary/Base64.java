@@ -435,12 +435,6 @@ public class Base64 extends BaseNCodec {
 
     /**
      * Convenience variable to help us determine when our buffer is going to run out of room and needs resizing.
-     * {@code decodeSize = 3 + lineSeparator.length;}
-     */
-    private final int decodeSize;
-
-    /**
-     * Convenience variable to help us determine when our buffer is going to run out of room and needs resizing.
      * {@code encodeSize = 4 + lineSeparator.length;}
      */
     private final int encodeSize;
@@ -665,7 +659,6 @@ public class Base64 extends BaseNCodec {
             this.encodeSize = BYTES_PER_ENCODED_BLOCK;
             this.lineSeparator = null;
         }
-        this.decodeSize = this.encodeSize - 1;
     }
 
     // Implementation of the Encoder Interface
@@ -718,6 +711,7 @@ public class Base64 extends BaseNCodec {
         if (inAvail < 0) {
             context.eof = true;
         }
+        final int decodeSize = this.encodeSize - 1;
         for (int i = 0; i < inAvail; i++) {
             final byte[] buffer = ensureBufferSize(decodeSize, context);
             final byte b = input[inPos++];
