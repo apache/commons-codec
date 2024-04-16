@@ -66,7 +66,8 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         private byte[] lineSeparator = CHUNK_SEPARATOR;
         private final byte[] defaultEncodeTable;
         private byte[] encodeTable;
-
+        /** Padding byte. */
+        private byte padding = PAD_DEFAULT;
 
         AbstractBuilder(final byte[] defaultEncodeTable) {
             this.defaultEncodeTable = defaultEncodeTable;
@@ -92,6 +93,10 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
 
         byte[] getLineSeparator() {
             return lineSeparator;
+        }
+
+        byte getPadding() {
+            return padding;
         }
 
         /**
@@ -135,6 +140,17 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
          */
         public B setLineSeparator(final byte... lineSeparator) {
             this.lineSeparator = lineSeparator != null ? lineSeparator : CHUNK_SEPARATOR;
+            return asThis();
+        }
+
+        /**
+         * Sets the padding byte.
+         *
+         * @param padding the padding byte.
+         * @return this.
+         */
+        public B setPadding(final byte padding) {
+            this.padding = padding;
             return asThis();
         }
 

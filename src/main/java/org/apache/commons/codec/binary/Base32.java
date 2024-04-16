@@ -49,9 +49,6 @@ public class Base32 extends BaseNCodec {
      */
     public static class Builder extends AbstractBuilder<Base32, Builder> {
 
-        /** Padding byte. */
-        private byte padding = PAD_DEFAULT;
-
         /**
          * Constructs a new instance.
          */
@@ -61,18 +58,7 @@ public class Base32 extends BaseNCodec {
 
         @Override
         public Base32 get() {
-            return new Base32(getLineLength(), getLineSeparator(), getEncodeTable(), padding, getDecodingPolicy());
-        }
-
-        /**
-         * Sets the padding byte.
-         *
-         * @param padding the padding byte.
-         * @return this.
-         */
-        public Builder setPadding(final byte padding) {
-            this.padding = padding;
-            return this;
+            return new Base32(getLineLength(), getLineSeparator(), getEncodeTable(), getPadding(), getDecodingPolicy());
         }
 
     }
