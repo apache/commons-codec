@@ -166,6 +166,7 @@ public class Base64 extends BaseNCodec {
     private static final int MASK_4BITS = 0xf;
     /** Mask used to extract 2 bits, used when decoding final trailing character. */
     private static final int MASK_2BITS = 0x3;
+
     /**
      * Creates a new Builder.
      *

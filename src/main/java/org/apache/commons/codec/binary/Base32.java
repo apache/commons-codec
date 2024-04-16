@@ -43,13 +43,48 @@ import org.apache.commons.codec.CodecPolicy;
 public class Base32 extends BaseNCodec {
 
     /**
+     * Builds {@link Base32} instances.
+     *
+     * @since 1.17.0
+     */
+    public static class Builder extends AbstractBuilder<Base32, Builder> {
+
+        /** Padding byte. */
+        private byte padding = PAD_DEFAULT;
+
+        /**
+         * Constructs a new instance.
+         */
+        public Builder() {
+            super(ENCODE_TABLE);
+        }
+
+        @Override
+        public Base32 get() {
+            return new Base32(getLineLength(), getLineSeparator(), getEncodeTable(), padding, getDecodingPolicy());
+        }
+
+        /**
+         * Sets the padding byte.
+         *
+         * @param padding the padding byte.
+         * @return this.
+         */
+        public Builder setPadding(final byte padding) {
+            this.padding = padding;
+            return this;
+        }
+
+    }
+
+    /**
      * BASE32 characters are 5 bits in length. They are formed by taking a block of five octets to form a 40-bit string, which is converted into eight BASE32
      * characters.
      */
     private static final int BITS_PER_ENCODED_BYTE = 5;
+
     private static final int BYTES_PER_ENCODED_BLOCK = 8;
     private static final int BYTES_PER_UNENCODED_BLOCK = 5;
-
     /**
      * This array is a lookup table that translates Unicode characters drawn from the "Base32 Alphabet" (as specified in Table 3 of RFC 4648) into their 5-bit
      * positive integer equivalents. Characters that are not in the Base32 alphabet but fall within the bounds of the array are translated to -1.
@@ -126,6 +161,16 @@ public class Base32 extends BaseNCodec {
 
     /** Mask used to extract 1 bits, used when decoding final trailing character. */
     private static final long MASK_1BITS = 0x01L;
+
+    /**
+     * Creates a new Builder.
+     *
+     * @return a new Builder.
+     * @since 1.17.0
+     */
+    public static Builder builder() {
+        return new Builder();
+    }
 
     // The static final fields above are used for the original static byte[] methods on Base32.
     // The private member fields below are used with the new streaming approach, which requires
@@ -262,7 +307,7 @@ public class Base32 extends BaseNCodec {
      *                      then the output will not be divided into lines (chunks). Ignored when decoding.
      * @param lineSeparator Each line of encoded data will end with this sequence of bytes.
      * @param useHex        if {@code true}, then use Base32 Hex alphabet, otherwise use Base32 alphabet
-     * @param padding       byte used as padding byte.
+     * @param padding       padding byte.
      * @throws IllegalArgumentException Thrown when the {@code lineSeparator} contains Base32 characters. Or the lineLength &gt; 0 and lineSeparator is null.
      */
     public Base32(final int lineLength, final byte[] lineSeparator, final boolean useHex, final byte padding) {
@@ -282,7 +327,7 @@ public class Base32 extends BaseNCodec {
      *                       then the output will not be divided into lines (chunks). Ignored when decoding.
      * @param lineSeparator  Each line of encoded data will end with this sequence of bytes.
      * @param useHex         if {@code true}, then use Base32 Hex alphabet, otherwise use Base32 alphabet
-     * @param padding        byte used as padding byte.
+     * @param padding        padding byte.
      * @param decodingPolicy The decoding policy.
      * @throws IllegalArgumentException Thrown when the {@code lineSeparator} contains Base32 characters. Or the lineLength &gt; 0 and lineSeparator is null.
      * @since 1.15
@@ -304,7 +349,7 @@ public class Base32 extends BaseNCodec {
      *                       then the output will not be divided into lines (chunks). Ignored when decoding.
      * @param lineSeparator  Each line of encoded data will end with this sequence of bytes.
      * @param encodeTable    A Base32 alphabet.
-     * @param padding        byte used as padding byte.
+     * @param padding        padding byte.
      * @param decodingPolicy The decoding policy.
      * @throws IllegalArgumentException Thrown when the {@code lineSeparator} contains Base32 characters. Or the lineLength &gt; 0 and lineSeparator is null.
      */
@@ -552,6 +597,15 @@ public class Base32 extends BaseNCodec {
                 }
             }
         }
+    }
+
+    /**
+     * Gets the line separator (for testing only).
+     *
+     * @return the line separator.
+     */
+    byte[] getLineSeparator() {
+        return lineSeparator;
     }
 
     /**

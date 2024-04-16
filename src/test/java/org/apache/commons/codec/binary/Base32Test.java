@@ -356,6 +356,41 @@ public class Base32Test {
     }
 
     @Test
+    public void testBuilderCodecPolicy() {
+        assertEquals(CodecPolicy.LENIENT, Base32.builder().get().getCodecPolicy());
+        assertEquals(CodecPolicy.LENIENT, Base32.builder().setDecodingPolicy(CodecPolicy.LENIENT).get().getCodecPolicy());
+        assertEquals(CodecPolicy.STRICT, Base32.builder().setDecodingPolicy(CodecPolicy.STRICT).get().getCodecPolicy());
+        assertEquals(CodecPolicy.LENIENT, Base32.builder().setDecodingPolicy(CodecPolicy.STRICT).setDecodingPolicy(null).get().getCodecPolicy());
+        assertEquals(CodecPolicy.LENIENT, Base32.builder().setDecodingPolicy(null).get().getCodecPolicy());
+    }
+
+    @Test
+    public void testBuilderLineAttributes() {
+        assertNull(Base32.builder().get().getLineSeparator());
+        assertNull(Base32.builder().setLineSeparator(BaseNCodec.CHUNK_SEPARATOR).get().getLineSeparator());
+        assertArrayEquals(BaseNCodec.CHUNK_SEPARATOR, Base32.builder().setLineLength(4).setLineSeparator(BaseNCodec.CHUNK_SEPARATOR).get().getLineSeparator());
+        assertArrayEquals(BaseNCodec.CHUNK_SEPARATOR, Base32.builder().setLineLength(4).setLineSeparator(null).get().getLineSeparator());
+        assertArrayEquals(BaseNCodec.CHUNK_SEPARATOR, Base32.builder().setLineLength(10).setLineSeparator(null).get().getLineSeparator());
+        assertNull(Base32.builder().setLineLength(-1).setLineSeparator(null).get().getLineSeparator());
+        assertNull(Base32.builder().setLineLength(0).setLineSeparator(null).get().getLineSeparator());
+        assertArrayEquals(new byte[] { 1 }, Base32.builder().setLineLength(4).setLineSeparator((byte) 1).get().getLineSeparator());
+        assertEquals("MZXXQ===", Base32.builder().setLineLength(4).get().encodeToString("fox".getBytes(CHARSET_UTF8)));
+    }
+
+    @Test
+    public void testBuilderPadingByte() {
+        assertNull(Base32.builder().get().getLineSeparator());
+        assertNull(Base32.builder().setLineSeparator(BaseNCodec.CHUNK_SEPARATOR).get().getLineSeparator());
+        assertArrayEquals(BaseNCodec.CHUNK_SEPARATOR, Base32.builder().setLineLength(4).setLineSeparator(BaseNCodec.CHUNK_SEPARATOR).get().getLineSeparator());
+        assertArrayEquals(BaseNCodec.CHUNK_SEPARATOR, Base32.builder().setLineLength(4).setLineSeparator(null).get().getLineSeparator());
+        assertArrayEquals(BaseNCodec.CHUNK_SEPARATOR, Base32.builder().setLineLength(10).setLineSeparator(null).get().getLineSeparator());
+        assertNull(Base32.builder().setLineLength(-1).setLineSeparator(null).get().getLineSeparator());
+        assertNull(Base32.builder().setLineLength(0).setLineSeparator(null).get().getLineSeparator());
+        assertArrayEquals(new byte[] { 1 }, Base32.builder().setLineLength(4).setLineSeparator((byte) 1).get().getLineSeparator());
+        assertEquals("MZXXQ___", Base32.builder().setLineLength(4).setPadding((byte) '_').get().encodeToString("fox".getBytes(CHARSET_UTF8)));
+    }
+
+    @Test
     public void testCodec200() {
         final Base32 codec = new Base32(true, (byte) 'W'); // should be allowed
         assertNotNull(codec);
