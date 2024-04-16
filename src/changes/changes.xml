@@ -51,6 +51,7 @@ The <action> type attribute can be add,update,fix,remove.
       <!-- FIX -->
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Optimize memory allocation in PhoneticEngine.</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">BCodec and QCodec encode() methods throw UnsupportedCharsetException instead of EncoderException.</action>
+      <action type="fix" dev="ggregory" due-to="Gary Gregory">Set Javadoc link to latest Java API LTS version.</action>
       <!-- UPDATE -->
       <action                   dev="ggregory" type="update" due-to="Dependabot, Gary Gregory">Bump org.apache.commons:commons-parent from 66 to 69 #250, #261.</action>
       <action                   dev="ggregory" type="update" due-to="Dependabot, Gary Gregory">Bump commons-io:commons-io from 2.15.1 to 2.16.1 #258, #265.</action>
