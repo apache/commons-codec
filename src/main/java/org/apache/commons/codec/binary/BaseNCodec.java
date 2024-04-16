@@ -312,8 +312,11 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     private final CodecPolicy decodingPolicy;
 
     /**
+     * Constructs a new instance.
+     * <p>
      * Note {@code lineLength} is rounded down to the nearest multiple of the encoded block size.
      * If {@code chunkSeparatorLength} is zero, then chunking is disabled.
+     * </p>
      *
      * @param unencodedBlockSize the size of an unencoded block (e.g. Base64 = 3)
      * @param encodedBlockSize the size of an encoded block (e.g. Base64 = 4)
@@ -326,8 +329,11 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
+     * Constructs a new instance.
+     * <p>
      * Note {@code lineLength} is rounded down to the nearest multiple of the encoded block size.
      * If {@code chunkSeparatorLength} is zero, then chunking is disabled.
+     * </p>
      *
      * @param unencodedBlockSize the size of an unencoded block (e.g. Base64 = 3)
      * @param encodedBlockSize the size of an encoded block (e.g. Base64 = 4)
@@ -341,8 +347,11 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
+     * Constructs a new instance.
+     * <p>
      * Note {@code lineLength} is rounded down to the nearest multiple of the encoded block size.
      * If {@code chunkSeparatorLength} is zero, then chunking is disabled.
+     * </p>
      *
      * @param unencodedBlockSize the size of an unencoded block (e.g. Base64 = 3)
      * @param encodedBlockSize the size of an encoded block (e.g. Base64 = 4)

@@ -33,7 +33,7 @@ import org.apache.commons.codec.CodecPolicy;
 public class Base16InputStream extends BaseNCodecInputStream {
 
     /**
-     * Creates a Base16InputStream such that all data read is Base16-decoded from the original provided InputStream.
+     * Constructs a Base16InputStream such that all data read is Base16-decoded from the original provided InputStream.
      *
      * @param inputStream InputStream to wrap.
      */
@@ -42,7 +42,7 @@ public class Base16InputStream extends BaseNCodecInputStream {
     }
 
     /**
-     * Creates a Base16InputStream such that all data read is either Base16-encoded or Base16-decoded from the original
+     * Constructs a Base16InputStream such that all data read is either Base16-encoded or Base16-decoded from the original
      * provided InputStream.
      *
      * @param inputStream InputStream to wrap.
@@ -53,7 +53,7 @@ public class Base16InputStream extends BaseNCodecInputStream {
     }
 
     /**
-     * Creates a Base16InputStream such that all data read is either Base16-encoded or Base16-decoded from the original
+     * Constructs a Base16InputStream such that all data read is either Base16-encoded or Base16-decoded from the original
      * provided InputStream.
      *
      * @param inputStream InputStream to wrap.
@@ -66,7 +66,7 @@ public class Base16InputStream extends BaseNCodecInputStream {
     }
 
     /**
-     * Creates a Base16InputStream such that all data read is either Base16-encoded or Base16-decoded from the original
+     * Constructs a Base16InputStream such that all data read is either Base16-encoded or Base16-decoded from the original
      * provided InputStream.
      *
      * @param inputStream InputStream to wrap.

@@ -154,7 +154,7 @@ public class Base32 extends BaseNCodec {
     private final byte[] lineSeparator;
 
     /**
-     * Creates a Base32 codec used for decoding and encoding.
+     * Constructs a Base32 codec used for decoding and encoding.
      * <p>
      * When encoding the line length is 0 (no chunking).
      * </p>
@@ -164,7 +164,7 @@ public class Base32 extends BaseNCodec {
     }
 
     /**
-     * Creates a Base32 codec used for decoding and encoding.
+     * Constructs a Base32 codec used for decoding and encoding.
      * <p>
      * When encoding the line length is 0 (no chunking).
      * </p>
@@ -176,7 +176,7 @@ public class Base32 extends BaseNCodec {
     }
 
     /**
-     * Creates a Base32 codec used for decoding and encoding.
+     * Constructs a Base32 codec used for decoding and encoding.
      * <p>
      * When encoding the line length is 0 (no chunking).
      * </p>
@@ -189,7 +189,7 @@ public class Base32 extends BaseNCodec {
     }
 
     /**
-     * Creates a Base32 codec used for decoding and encoding.
+     * Constructs a Base32 codec used for decoding and encoding.
      * <p>
      * When encoding the line length is 0 (no chunking).
      * </p>
@@ -201,7 +201,7 @@ public class Base32 extends BaseNCodec {
     }
 
     /**
-     * Creates a Base32 codec used for decoding and encoding.
+     * Constructs a Base32 codec used for decoding and encoding.
      * <p>
      * When encoding the line length is given in the constructor, the line separator is CRLF.
      * </p>
@@ -214,7 +214,7 @@ public class Base32 extends BaseNCodec {
     }
 
     /**
-     * Creates a Base32 codec used for decoding and encoding.
+     * Constructs a Base32 codec used for decoding and encoding.
      * <p>
      * When encoding the line length and line separator are given in the constructor.
      * </p>
@@ -232,7 +232,7 @@ public class Base32 extends BaseNCodec {
     }
 
     /**
-     * Creates a Base32 / Base32 Hex codec used for decoding and encoding.
+     * Constructs a Base32 / Base32 Hex codec used for decoding and encoding.
      * <p>
      * When encoding the line length and line separator are given in the constructor.
      * </p>
@@ -251,7 +251,7 @@ public class Base32 extends BaseNCodec {
     }
 
     /**
-     * Creates a Base32 / Base32 Hex codec used for decoding and encoding.
+     * Constructs a Base32 / Base32 Hex codec used for decoding and encoding.
      * <p>
      * When encoding the line length and line separator are given in the constructor.
      * </p>
@@ -271,7 +271,7 @@ public class Base32 extends BaseNCodec {
     }
 
     /**
-     * Creates a Base32 / Base32 Hex codec used for decoding and encoding.
+     * Constructs a Base32 / Base32 Hex codec used for decoding and encoding.
      * <p>
      * When encoding the line length and line separator are given in the constructor.
      * </p>

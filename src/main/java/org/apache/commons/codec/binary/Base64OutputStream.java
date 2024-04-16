@@ -63,7 +63,7 @@ import org.apache.commons.codec.CodecPolicy;
 public class Base64OutputStream extends BaseNCodecOutputStream {
 
     /**
-     * Creates a Base64OutputStream such that all data written is Base64-encoded to the original provided OutputStream.
+     * Constructs a Base64OutputStream such that all data written is Base64-encoded to the original provided OutputStream.
      *
      * @param outputStream
      *            OutputStream to wrap.
@@ -73,7 +73,7 @@ public class Base64OutputStream extends BaseNCodecOutputStream {
     }
 
     /**
-     * Creates a Base64OutputStream such that all data written is either Base64-encoded or Base64-decoded to the
+     * Constructs a Base64OutputStream such that all data written is either Base64-encoded or Base64-decoded to the
      * original provided OutputStream.
      *
      * @param outputStream
@@ -86,7 +86,7 @@ public class Base64OutputStream extends BaseNCodecOutputStream {
     }
 
     /**
-     * Creates a Base64OutputStream such that all data written is either Base64-encoded or Base64-decoded to the
+     * Constructs a Base64OutputStream such that all data written is either Base64-encoded or Base64-decoded to the
      * original provided OutputStream.
      *
      * @param outputStream
@@ -106,7 +106,7 @@ public class Base64OutputStream extends BaseNCodecOutputStream {
     }
 
     /**
-     * Creates a Base64OutputStream such that all data written is either Base64-encoded or Base64-decoded to the
+     * Constructs a Base64OutputStream such that all data written is either Base64-encoded or Base64-decoded to the
      * original provided OutputStream.
      *
      * @param outputStream

@@ -33,7 +33,7 @@ import org.apache.commons.codec.CodecPolicy;
 public class Base16OutputStream extends BaseNCodecOutputStream {
 
     /**
-     * Creates a Base16OutputStream such that all data written is Hex-encoded to the original provided OutputStream.
+     * Constructs a Base16OutputStream such that all data written is Hex-encoded to the original provided OutputStream.
      *
      * @param outputStream OutputStream to wrap.
      */
@@ -42,7 +42,7 @@ public class Base16OutputStream extends BaseNCodecOutputStream {
     }
 
     /**
-     * Creates a Base16OutputStream such that all data written is either Hex-encoded or Hex-decoded to the
+     * Constructs a Base16OutputStream such that all data written is either Hex-encoded or Hex-decoded to the
      * original provided OutputStream.
      *
      * @param outputStream OutputStream to wrap.
@@ -53,7 +53,7 @@ public class Base16OutputStream extends BaseNCodecOutputStream {
     }
 
     /**
-     * Creates a Base16OutputStream such that all data written is either Hex-encoded or Hex-decoded to the
+     * Constructs a Base16OutputStream such that all data written is either Hex-encoded or Hex-decoded to the
      * original provided OutputStream.
      *
      * @param outputStream OutputStream to wrap.
@@ -65,7 +65,7 @@ public class Base16OutputStream extends BaseNCodecOutputStream {
     }
 
     /**
-     * Creates a Base16OutputStream such that all data written is either Hex-encoded or Hex-decoded to the
+     * Constructs a Base16OutputStream such that all data written is either Hex-encoded or Hex-decoded to the
      * original provided OutputStream.
      *
      * @param outputStream OutputStream to wrap.

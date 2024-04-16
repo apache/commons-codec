@@ -59,7 +59,7 @@ import org.apache.commons.codec.CodecPolicy;
 public class Base64InputStream extends BaseNCodecInputStream {
 
     /**
-     * Creates a Base64InputStream such that all data read is Base64-decoded from the original provided InputStream.
+     * Constructs a Base64InputStream such that all data read is Base64-decoded from the original provided InputStream.
      *
      * @param inputStream
      *            InputStream to wrap.
@@ -69,7 +69,7 @@ public class Base64InputStream extends BaseNCodecInputStream {
     }
 
     /**
-     * Creates a Base64InputStream such that all data read is either Base64-encoded or Base64-decoded from the original
+     * Constructs a Base64InputStream such that all data read is either Base64-encoded or Base64-decoded from the original
      * provided InputStream.
      *
      * @param inputStream
@@ -82,7 +82,7 @@ public class Base64InputStream extends BaseNCodecInputStream {
     }
 
     /**
-     * Creates a Base64InputStream such that all data read is either Base64-encoded or Base64-decoded from the original
+     * Constructs a Base64InputStream such that all data read is either Base64-encoded or Base64-decoded from the original
      * provided InputStream.
      *
      * @param inputStream
@@ -102,7 +102,7 @@ public class Base64InputStream extends BaseNCodecInputStream {
     }
 
     /**
-     * Creates a Base64InputStream such that all data read is either Base64-encoded or Base64-decoded from the original
+     * Constructs a Base64InputStream such that all data read is either Base64-encoded or Base64-decoded from the original
      * provided InputStream.
      *
      * @param inputStream

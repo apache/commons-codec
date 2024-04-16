@@ -44,7 +44,7 @@ public class BaseNCodecInputStream extends FilterInputStream {
     private final Context context = new Context();
 
     /**
-     * Create an instance.
+     * Constructs a new instance.
      *
      * @param inputStream the input stream
      * @param baseNCodec the codec

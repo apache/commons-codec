@@ -48,6 +48,8 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
     private final Context context = new Context();
 
     /**
+     * Constructs a new instance.
+     *
      * TODO should this be protected?
      *
      * @param outputStream the underlying output or null.

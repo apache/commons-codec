@@ -529,7 +529,7 @@ public class Base64 extends BaseNCodec {
     private final int encodeSize;
 
     /**
-     * Creates a Base64 codec used for decoding (all modes) and encoding in URL-unsafe mode.
+     * Constructs a Base64 codec used for decoding (all modes) and encoding in URL-unsafe mode.
      * <p>
      * When encoding the line length is 0 (no chunking), and the encoding table is STANDARD_ENCODE_TABLE.
      * </p>
@@ -543,7 +543,7 @@ public class Base64 extends BaseNCodec {
     }
 
     /**
-     * Creates a Base64 codec used for decoding (all modes) and encoding in the given URL-safe mode.
+     * Constructs a Base64 codec used for decoding (all modes) and encoding in the given URL-safe mode.
      * <p>
      * When encoding the line length is 76, the line separator is CRLF, and the encoding table is STANDARD_ENCODE_TABLE.
      * </p>
@@ -562,7 +562,7 @@ public class Base64 extends BaseNCodec {
     }
 
     /**
-     * Creates a Base64 codec used for decoding (all modes) and encoding in URL-unsafe mode.
+     * Constructs a Base64 codec used for decoding (all modes) and encoding in URL-unsafe mode.
      * <p>
      * When encoding the line length is given in the constructor, the line separator is CRLF, and the encoding table is
      * STANDARD_ENCODE_TABLE.
@@ -586,7 +586,7 @@ public class Base64 extends BaseNCodec {
 
 
     /**
-     * Creates a Base64 codec used for decoding (all modes) and encoding in URL-unsafe mode.
+     * Constructs a Base64 codec used for decoding (all modes) and encoding in URL-unsafe mode.
      * <p>
      * When encoding the line length and line separator are given in the constructor, and the encoding table is
      * STANDARD_ENCODE_TABLE.
@@ -613,7 +613,7 @@ public class Base64 extends BaseNCodec {
     }
 
     /**
-     * Creates a Base64 codec used for decoding (all modes) and encoding in URL-unsafe mode.
+     * Constructs a Base64 codec used for decoding (all modes) and encoding in URL-unsafe mode.
      * <p>
      * When encoding the line length and line separator are given in the constructor, and the encoding table is
      * STANDARD_ENCODE_TABLE.
@@ -644,7 +644,7 @@ public class Base64 extends BaseNCodec {
     }
 
     /**
-     * Creates a Base64 codec used for decoding (all modes) and encoding in URL-unsafe mode.
+     * Constructs a Base64 codec used for decoding (all modes) and encoding in URL-unsafe mode.
      * <p>
      * When encoding the line length and line separator are given in the constructor, and the encoding table is
      * STANDARD_ENCODE_TABLE.
@@ -677,7 +677,7 @@ public class Base64 extends BaseNCodec {
     }
 
     /**
-     * Creates a Base64 codec used for decoding (all modes) and encoding in URL-unsafe mode.
+     * Constructs a Base64 codec used for decoding (all modes) and encoding in URL-unsafe mode.
      * <p>
      * When encoding the line length and line separator are given in the constructor, and the encoding table is
      * STANDARD_ENCODE_TABLE.

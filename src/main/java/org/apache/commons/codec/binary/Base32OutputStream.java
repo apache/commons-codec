@@ -59,7 +59,7 @@ import org.apache.commons.codec.CodecPolicy;
 public class Base32OutputStream extends BaseNCodecOutputStream {
 
     /**
-     * Creates a Base32OutputStream such that all data written is Base32-encoded to the original provided OutputStream.
+     * Constructs a Base32OutputStream such that all data written is Base32-encoded to the original provided OutputStream.
      *
      * @param outputStream
      *            OutputStream to wrap.
@@ -69,7 +69,7 @@ public class Base32OutputStream extends BaseNCodecOutputStream {
     }
 
     /**
-     * Creates a Base32OutputStream such that all data written is either Base32-encoded or Base32-decoded to the
+     * Constructs a Base32OutputStream such that all data written is either Base32-encoded or Base32-decoded to the
      * original provided OutputStream.
      *
      * @param outputStream
@@ -82,7 +82,7 @@ public class Base32OutputStream extends BaseNCodecOutputStream {
     }
 
     /**
-     * Creates a Base32OutputStream such that all data written is either Base32-encoded or Base32-decoded to the
+     * Constructs a Base32OutputStream such that all data written is either Base32-encoded or Base32-decoded to the
      * original provided OutputStream.
      *
      * @param outputStream
@@ -102,7 +102,7 @@ public class Base32OutputStream extends BaseNCodecOutputStream {
     }
 
     /**
-     * Creates a Base32OutputStream such that all data written is either Base32-encoded or Base32-decoded to the
+     * Constructs a Base32OutputStream such that all data written is either Base32-encoded or Base32-decoded to the
      * original provided OutputStream.
      *
      * @param outputStream

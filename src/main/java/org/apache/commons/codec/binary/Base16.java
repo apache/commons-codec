@@ -114,14 +114,14 @@ public class Base16 extends BaseNCodec {
     private final byte[] encodeTable;
 
     /**
-     * Creates a Base16 codec used for decoding and encoding.
+     * Constructs a Base16 codec used for decoding and encoding.
      */
     public Base16() {
         this(false);
     }
 
     /**
-     * Creates a Base16 codec used for decoding and encoding.
+     * Constructs a Base16 codec used for decoding and encoding.
      *
      * @param lowerCase if {@code true} then use a lower-case Base16 alphabet.
      */
@@ -130,7 +130,7 @@ public class Base16 extends BaseNCodec {
     }
 
     /**
-     * Creates a Base16 codec used for decoding and encoding.
+     * Constructs a Base16 codec used for decoding and encoding.
      *
      * @param lowerCase      if {@code true} then use a lower-case Base16 alphabet.
      * @param decodingPolicy Decoding policy.

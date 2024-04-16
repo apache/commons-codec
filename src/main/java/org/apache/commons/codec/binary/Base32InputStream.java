@@ -55,7 +55,7 @@ import org.apache.commons.codec.CodecPolicy;
 public class Base32InputStream extends BaseNCodecInputStream {
 
     /**
-     * Creates a Base32InputStream such that all data read is Base32-decoded from the original provided InputStream.
+     * Constructs a Base32InputStream such that all data read is Base32-decoded from the original provided InputStream.
      *
      * @param inputStream
      *            InputStream to wrap.
@@ -65,7 +65,7 @@ public class Base32InputStream extends BaseNCodecInputStream {
     }
 
     /**
-     * Creates a Base32InputStream such that all data read is either Base32-encoded or Base32-decoded from the original
+     * Constructs a Base32InputStream such that all data read is either Base32-encoded or Base32-decoded from the original
      * provided InputStream.
      *
      * @param inputStream
@@ -78,7 +78,7 @@ public class Base32InputStream extends BaseNCodecInputStream {
     }
 
     /**
-     * Creates a Base32InputStream such that all data read is either Base32-encoded or Base32-decoded from the original
+     * Constructs a Base32InputStream such that all data read is either Base32-encoded or Base32-decoded from the original
      * provided InputStream.
      *
      * @param inputStream
@@ -98,7 +98,7 @@ public class Base32InputStream extends BaseNCodecInputStream {
     }
 
     /**
-     * Creates a Base32InputStream such that all data read is either Base32-encoded or Base32-decoded from the original
+     * Constructs a Base32InputStream such that all data read is either Base32-encoded or Base32-decoded from the original
      * provided InputStream.
      *
      * @param inputStream
