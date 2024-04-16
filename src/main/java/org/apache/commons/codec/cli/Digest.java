@@ -52,9 +52,9 @@ public class Digest {
     public static void main(final String[] args) throws IOException {
         new Digest(args).run();
     }
+
     private final String algorithm;
     private final String[] args;
-
     private final String[] inputs;
 
     private Digest(final String[] args) {
@@ -67,11 +67,11 @@ public class Digest {
                     String.format("Usage: java %s [algorithm] [FILE|DIRECTORY|string] ...", Digest.class.getName()));
         }
         this.args = args;
-        algorithm = args[0];
+        this.algorithm = args[0];
         if (argsLength <= 1) {
-            inputs = null;
+            this.inputs = null;
         } else {
-            inputs = Arrays.copyOfRange(args, 1, argsLength);
+            this.inputs = Arrays.copyOfRange(args, 1, argsLength);
         }
     }
 
