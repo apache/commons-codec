@@ -48,7 +48,8 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add override org.apache.commons.codec.language.bm.Rule.PhonemeExpr.size().</action>
       <action type="add" dev="ggregory" due-to="Chris Kocel, Gary Gregory">Add support for Base64 custom alphabets #266.</action>
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add Base64.Builder (allows custom alphabets).</action> 
-      <action type="add" dev="ggregory" due-to="Gary Gregory">Add Base32.Builder (allows custom alphabets).</action> 
+      <action type="add" dev="ggregory" due-to="Gary Gregory">Add Base32.Builder (allows custom alphabets).</action>
+      <action type="add" dev="ggregory" due-to="Gary Gregory">Add Base64 support for a custom padding byte (like Base32).</action> 
       <!-- FIX -->
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Optimize memory allocation in PhoneticEngine.</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">BCodec and QCodec encode() methods throw UnsupportedCharsetException instead of EncoderException.</action>

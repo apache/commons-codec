@@ -72,7 +72,7 @@ public class Base64 extends BaseNCodec {
 
         @Override
         public Base64 get() {
-            return new Base64(getLineLength(), getLineSeparator(), getEncodeTable(), getDecodingPolicy());
+            return new Base64(getLineLength(), getLineSeparator(), getPadding(), getEncodeTable(), getDecodingPolicy());
         }
 
         /**
@@ -597,7 +597,7 @@ public class Base64 extends BaseNCodec {
      * @since 1.4
      */
     public Base64(final int lineLength, final byte[] lineSeparator, final boolean urlSafe) {
-        this(lineLength, lineSeparator, toUrlSafeEncodeTable(urlSafe), DECODING_POLICY_DEFAULT);
+        this(lineLength, lineSeparator, PAD_DEFAULT, toUrlSafeEncodeTable(urlSafe), DECODING_POLICY_DEFAULT);
     }
 
     /**
@@ -628,9 +628,8 @@ public class Base64 extends BaseNCodec {
      *             Thrown when the {@code lineSeparator} contains Base64 characters.
      * @since 1.15
      */
-    public Base64(final int lineLength, final byte[] lineSeparator, final boolean urlSafe,
-                  final CodecPolicy decodingPolicy) {
-        this(lineLength, lineSeparator, toUrlSafeEncodeTable(urlSafe), decodingPolicy);
+    public Base64(final int lineLength, final byte[] lineSeparator, final boolean urlSafe, final CodecPolicy decodingPolicy) {
+        this(lineLength, lineSeparator, PAD_DEFAULT, toUrlSafeEncodeTable(urlSafe), decodingPolicy);
     }
 
     /**
@@ -652,14 +651,15 @@ public class Base64 extends BaseNCodec {
      *            decoding.
      * @param lineSeparator
      *            Each line of encoded data will end with this sequence of bytes.
+     * @param padding padding byte.
      * @param encodeTable
      *            The manual encodeTable - a byte array of 64 chars.
      * @param decodingPolicy The decoding policy.
      * @throws IllegalArgumentException
      *             Thrown when the {@code lineSeparator} contains Base64 characters.
      */
-    private Base64(final int lineLength, final byte[] lineSeparator, final byte[] encodeTable, final CodecPolicy decodingPolicy) {
-        super(BYTES_PER_UNENCODED_BLOCK, BYTES_PER_ENCODED_BLOCK, lineLength, toLength(lineSeparator), PAD_DEFAULT, decodingPolicy);
+    private Base64(final int lineLength, final byte[] lineSeparator, final byte padding, final byte[] encodeTable, final CodecPolicy decodingPolicy) {
+        super(BYTES_PER_UNENCODED_BLOCK, BYTES_PER_ENCODED_BLOCK, lineLength, toLength(lineSeparator), padding, decodingPolicy);
         this.encodeTable = Objects.requireNonNull(encodeTable, "encodeTable");
         if (encodeTable == STANDARD_ENCODE_TABLE || encodeTable == URL_SAFE_ENCODE_TABLE) {
             decodeTable = DECODE_TABLE;

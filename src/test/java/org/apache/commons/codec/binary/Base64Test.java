@@ -243,6 +243,20 @@ public class Base64Test {
     }
 
     @Test
+    public void testBuilderPadingByte() {
+        assertNull(Base64.builder().get().getLineSeparator());
+        assertNull(Base64.builder().setLineSeparator(BaseNCodec.CHUNK_SEPARATOR).get().getLineSeparator());
+        assertArrayEquals(BaseNCodec.CHUNK_SEPARATOR, Base64.builder().setLineLength(4).setLineSeparator(BaseNCodec.CHUNK_SEPARATOR).get().getLineSeparator());
+        assertArrayEquals(BaseNCodec.CHUNK_SEPARATOR, Base64.builder().setLineLength(4).setLineSeparator(null).get().getLineSeparator());
+        assertArrayEquals(BaseNCodec.CHUNK_SEPARATOR, Base64.builder().setLineLength(10).setLineSeparator(null).get().getLineSeparator());
+        assertNull(Base64.builder().setLineLength(-1).setLineSeparator(null).get().getLineSeparator());
+        assertNull(Base64.builder().setLineLength(0).setLineSeparator(null).get().getLineSeparator());
+        assertArrayEquals(new byte[] { 1 }, Base64.builder().setLineLength(4).setLineSeparator((byte) 1).get().getLineSeparator());
+        assertEquals("VGhlIGJyb3duIGZveA==", Base64.builder().get().encodeToString("The brown fox".getBytes(CHARSET_UTF8)));
+        assertEquals("VGhlIGJyb3duIGZveA__", Base64.builder().setPadding((byte) '_').get().encodeToString("The brown fox".getBytes(CHARSET_UTF8)));
+    }
+
+    @Test
     public void testBuilderUrlSafe() {
         assertFalse(Base64.builder().get().isUrlSafe());
         assertFalse(Base64.builder().setUrlSafe(false).get().isUrlSafe());
