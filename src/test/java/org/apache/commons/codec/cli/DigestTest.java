@@ -38,6 +38,6 @@ public class DigestTest {
      */
     @Test
     public void testNullArguments() {
-        assertThrows(IllegalArgumentException.class, () -> Digest.main(null));
+        assertThrows(NullPointerException.class, () -> Digest.main(null));
     }
 }

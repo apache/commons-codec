@@ -22,6 +22,7 @@ import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.Objects;
 
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -58,9 +59,7 @@ public class Digest {
     private final String[] inputs;
 
     private Digest(final String[] args) {
-        if (args == null) {
-            throw new IllegalArgumentException("args");
-        }
+        Objects.requireNonNull(args);
         final int argsLength = args.length;
         if (argsLength == 0) {
             throw new IllegalArgumentException(
