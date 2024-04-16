@@ -19,6 +19,7 @@ package org.apache.commons.codec.binary;
 
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.function.Supplier;
 
 import org.apache.commons.codec.BinaryDecoder;
 import org.apache.commons.codec.BinaryEncoder;
@@ -52,11 +53,74 @@ import org.apache.commons.codec.EncoderException;
 public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
 
     /**
+     * Builds {@link Base64} instances.
+     *
+     * @param <T> the codec type to build.
+     * @param <B> the codec builder subtype.
+     * @since 1.17.0
+     */
+    public abstract static class AbstractBuilder<T, B extends AbstractBuilder<T, B>> implements Supplier<T> {
+
+        private CodecPolicy decodingPolicy = DECODING_POLICY_DEFAULT;
+        private int lineLength;
+        private byte[] lineSeparator = CHUNK_SEPARATOR;
+
+        @SuppressWarnings("unchecked")
+        B asThis() {
+            return (B) this;
+        }
+
+        CodecPolicy getDecodingPolicy() {
+            return decodingPolicy;
+        }
+
+        int getLineLength() {
+            return lineLength;
+        }
+
+        byte[] getLineSeparator() {
+            return lineSeparator;
+        }
+
+        /**
+         * Sets the decoding policy.
+         *
+         * @param decodingPolicy the decoding policy, null resets to the default.
+         * @return this.
+         */
+        public B setDecodingPolicy(final CodecPolicy decodingPolicy) {
+            this.decodingPolicy = decodingPolicy != null ? decodingPolicy : DECODING_POLICY_DEFAULT;
+            return asThis();
+        }
+
+        /**
+         * Sets the line length.
+         *
+         * @param lineLength the line length, less than 0 resets to the default.
+         * @return this.
+         */
+        public B setLineLength(final int lineLength) {
+            this.lineLength = Math.max(0, lineLength);
+            return asThis();
+        }
+
+        /**
+         * Sets the line separator.
+         *
+         * @param lineSeparator the line separator, null resets to the default.
+         * @return this.
+         */
+        public B setLineSeparator(final byte... lineSeparator) {
+            this.lineSeparator = lineSeparator != null ? lineSeparator : CHUNK_SEPARATOR;
+            return asThis();
+        }
+
+    }
+
+    /**
      * Holds thread context so classes can be thread-safe.
      *
      * This class is not itself thread-safe; each thread must allocate its own copy.
-     *
-     * @since 1.7
      */
     static class Context {
 
@@ -110,7 +174,6 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
          *
          * @return a String useful for debugging.
          */
-        @SuppressWarnings("boxing") // OK to ignore boxing here
         @Override
         public String toString() {
             return String.format("%s[buffer=%s, currentLinePos=%s, eof=%s, ibitWorkArea=%s, lbitWorkArea=%s, " +
@@ -261,6 +324,16 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         final byte[] b = Arrays.copyOf(context.buffer, newCapacity);
         context.buffer = b;
         return b;
+    }
+
+    /**
+     * Gets the array length or 0 if null.
+     *
+     * @param array the array or null.
+     * @return the array length or 0 if null.
+     */
+    static int toLength(final byte[] array) {
+        return array == null ? 0 : array.length;
     }
 
     /**

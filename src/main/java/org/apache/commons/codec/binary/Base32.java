@@ -288,14 +288,30 @@ public class Base32 extends BaseNCodec {
      * @since 1.15
      */
     public Base32(final int lineLength, final byte[] lineSeparator, final boolean useHex, final byte padding, final CodecPolicy decodingPolicy) {
-        super(BYTES_PER_UNENCODED_BLOCK, BYTES_PER_ENCODED_BLOCK, lineLength, lineSeparator == null ? 0 : lineSeparator.length, padding, decodingPolicy);
-        if (useHex) {
-            this.encodeTable = HEX_ENCODE_TABLE;
-            this.decodeTable = HEX_DECODE_TABLE;
-        } else {
-            this.encodeTable = ENCODE_TABLE;
-            this.decodeTable = DECODE_TABLE;
-        }
+        this(lineLength, lineSeparator, useHex ? HEX_ENCODE_TABLE : ENCODE_TABLE, padding, decodingPolicy);
+    }
+
+    /**
+     * Constructs a Base32 / Base32 Hex codec used for decoding and encoding.
+     * <p>
+     * When encoding the line length and line separator are given in the constructor.
+     * </p>
+     * <p>
+     * Line lengths that aren't multiples of 8 will still essentially end up being multiples of 8 in the encoded data.
+     * </p>
+     *
+     * @param lineLength     Each line of encoded data will be at most of the given length (rounded down to the nearest multiple of 8). If lineLength &lt;= 0,
+     *                       then the output will not be divided into lines (chunks). Ignored when decoding.
+     * @param lineSeparator  Each line of encoded data will end with this sequence of bytes.
+     * @param encodeTable    A Base32 alphabet.
+     * @param padding        byte used as padding byte.
+     * @param decodingPolicy The decoding policy.
+     * @throws IllegalArgumentException Thrown when the {@code lineSeparator} contains Base32 characters. Or the lineLength &gt; 0 and lineSeparator is null.
+     */
+    private Base32(final int lineLength, final byte[] lineSeparator, final byte[] encodeTable, final byte padding, final CodecPolicy decodingPolicy) {
+        super(BYTES_PER_UNENCODED_BLOCK, BYTES_PER_ENCODED_BLOCK, lineLength, toLength(lineSeparator), padding, decodingPolicy);
+        this.encodeTable = encodeTable;
+        this.decodeTable = encodeTable == HEX_ENCODE_TABLE ? HEX_DECODE_TABLE : DECODE_TABLE;
         if (lineLength > 0) {
             if (lineSeparator == null) {
                 throw new IllegalArgumentException("lineLength " + lineLength + " > 0, but lineSeparator is null");
