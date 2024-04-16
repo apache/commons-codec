@@ -20,6 +20,7 @@ package org.apache.commons.codec.binary;
 import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.function.Supplier;
 
 import org.apache.commons.codec.CodecPolicy;
 
@@ -55,6 +56,80 @@ import org.apache.commons.codec.CodecPolicy;
  * @since 1.0
  */
 public class Base64 extends BaseNCodec {
+
+    /**
+     * Builds {@link Base64} instances.
+     *
+     * @since 1.17.0
+     */
+    public static class Builder implements Supplier<Base64> {
+
+        private int lineLength;
+        private byte[] lineSeparator = CHUNK_SEPARATOR;
+        private byte[] encodeTable = STANDARD_ENCODE_TABLE;
+        private CodecPolicy decodingPolicy = DECODING_POLICY_DEFAULT;
+
+        @Override
+        public Base64 get() {
+            return new Base64(lineLength, lineSeparator, encodeTable, decodingPolicy);
+        }
+
+        /**
+         * Sets the decoding policy.
+         *
+         * @param decodingPolicy the decoding policy, null resets to the default.
+         * @return this.
+         */
+        public Builder setDecodingPolicy(final CodecPolicy decodingPolicy) {
+            this.decodingPolicy = decodingPolicy != null ? decodingPolicy : DECODING_POLICY_DEFAULT;
+            return this;
+        }
+
+        /**
+         * Sets the encode table.
+         *
+         * @param encodeTable the encode table, null resets to the default.
+         * @return this.
+         */
+        public Builder setEncodeTable(final byte... encodeTable) {
+            this.encodeTable = encodeTable != null ? encodeTable : STANDARD_ENCODE_TABLE;
+            return this;
+        }
+
+        /**
+         * Sets the line length.
+         *
+         * @param lineLength the line length, less than 0 resets to the default.
+         * @return this.
+         */
+        public Builder setLineLength(final int lineLength) {
+            this.lineLength = Math.max(0, lineLength);
+            return this;
+        }
+
+        /**
+         * Sets the line separator.
+         *
+         * @param lineSeparator the line separator, null resets to the default.
+         * @return this.
+         */
+        public Builder setLineSeparator(final byte... lineSeparator) {
+            this.lineSeparator = lineSeparator != null ? lineSeparator : CHUNK_SEPARATOR;
+            return this;
+        }
+
+        /**
+         * Sets the URL-safe encoding policy.
+         *
+         * @param urlSafe URL-safe encoding policy, null resets to the default.
+         * @return this.
+         */
+        public Builder setUrlSafe(final boolean urlSafe) {
+            this.encodeTable = toUrlSafeEncodeTable(urlSafe);
+            return this;
+        }
+
+    }
 
     /**
      * BASE64 characters are 6 bits in length.
@@ -121,19 +196,29 @@ public class Base64 extends BaseNCodec {
             41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51                      // 70-7a p-z
     };
 
-    // The static final fields above are used for the original static byte[] methods on Base64.
-    // The private member fields below are used with the new streaming approach, which requires
-    // some state be preserved between calls of encode() and decode().
-
     /**
      * Base64 uses 6-bit fields.
      */
     /** Mask used to extract 6 bits, used when encoding */
     private static final int MASK_6BITS = 0x3f;
+
+    // The static final fields above are used for the original static byte[] methods on Base64.
+    // The private member fields below are used with the new streaming approach, which requires
+    // some state be preserved between calls of encode() and decode().
+
     /** Mask used to extract 4 bits, used when decoding final trailing character. */
     private static final int MASK_4BITS = 0xf;
     /** Mask used to extract 2 bits, used when decoding final trailing character. */
     private static final int MASK_2BITS = 0x3;
+    /**
+     * Creates a new Builder.
+     *
+     * @return a new Builder.
+     * @since 1.17.0
+     */
+    public static Builder builder() {
+        return new Builder();
+    }
 
     /**
      * Decodes Base64 data into octets.
@@ -415,6 +500,10 @@ public class Base64 extends BaseNCodec {
         return resizedBytes;
     }
 
+    private static byte[] toUrlSafeEncodeTable(final boolean urlSafe) {
+        return urlSafe ? URL_SAFE_ENCODE_TABLE : STANDARD_ENCODE_TABLE;
+    }
+
     /**
      * Encode table to use: either STANDARD or URL_SAFE or custom.
      * Note: the DECODE_TABLE above remains static because it is able
@@ -473,17 +562,6 @@ public class Base64 extends BaseNCodec {
     }
 
     /**
-     * Creates a Base64 codec used for decoding and encoding with non-standard encodeTable-table
-     *
-     * @param encodeTable
-     *          The manual encodeTable - a byte array of 64 chars
-     * @since 1.17.0
-     */
-    public Base64(final byte[] encodeTable) {
-        this(0, CHUNK_SEPARATOR, encodeTable, DECODING_POLICY_DEFAULT);
-    }
-
-    /**
      * Creates a Base64 codec used for decoding (all modes) and encoding in URL-unsafe mode.
      * <p>
      * When encoding the line length is given in the constructor, the line separator is CRLF, and the encoding table is
@@ -505,6 +583,7 @@ public class Base64 extends BaseNCodec {
     public Base64(final int lineLength) {
         this(lineLength, CHUNK_SEPARATOR);
     }
+
 
     /**
      * Creates a Base64 codec used for decoding (all modes) and encoding in URL-unsafe mode.
@@ -532,7 +611,6 @@ public class Base64 extends BaseNCodec {
     public Base64(final int lineLength, final byte[] lineSeparator) {
         this(lineLength, lineSeparator, false);
     }
-
 
     /**
      * Creates a Base64 codec used for decoding (all modes) and encoding in URL-unsafe mode.
@@ -562,7 +640,7 @@ public class Base64 extends BaseNCodec {
      * @since 1.4
      */
     public Base64(final int lineLength, final byte[] lineSeparator, final boolean urlSafe) {
-        this(lineLength, lineSeparator, urlSafe ? URL_SAFE_ENCODE_TABLE : STANDARD_ENCODE_TABLE, DECODING_POLICY_DEFAULT);
+        this(lineLength, lineSeparator, toUrlSafeEncodeTable(urlSafe), DECODING_POLICY_DEFAULT);
     }
 
     /**
@@ -595,7 +673,7 @@ public class Base64 extends BaseNCodec {
      */
     public Base64(final int lineLength, final byte[] lineSeparator, final boolean urlSafe,
                   final CodecPolicy decodingPolicy) {
-        this(lineLength, lineSeparator, urlSafe ? URL_SAFE_ENCODE_TABLE : STANDARD_ENCODE_TABLE, decodingPolicy);
+        this(lineLength, lineSeparator, toUrlSafeEncodeTable(urlSafe), decodingPolicy);
     }
 
     /**
@@ -622,16 +700,10 @@ public class Base64 extends BaseNCodec {
      * @param decodingPolicy The decoding policy.
      * @throws IllegalArgumentException
      *             Thrown when the {@code lineSeparator} contains Base64 characters.
-     * @since 1.17.0
      */
-    public Base64(final int lineLength, final byte[] lineSeparator, final byte[] encodeTable,
-                  final CodecPolicy decodingPolicy) {
-        super(BYTES_PER_UNENCODED_BLOCK, BYTES_PER_ENCODED_BLOCK,
-                lineLength,
-                lineSeparator == null ? 0 : lineSeparator.length,
-                PAD_DEFAULT,
-                decodingPolicy);
-        this.encodeTable = encodeTable;
+    private Base64(final int lineLength, final byte[] lineSeparator, final byte[] encodeTable, final CodecPolicy decodingPolicy) {
+        super(BYTES_PER_UNENCODED_BLOCK, BYTES_PER_ENCODED_BLOCK, lineLength, lineSeparator == null ? 0 : lineSeparator.length, PAD_DEFAULT, decodingPolicy);
+        this.encodeTable = Objects.requireNonNull(encodeTable, "encodeTable");
 
         if (encodeTable == STANDARD_ENCODE_TABLE || encodeTable == URL_SAFE_ENCODE_TABLE) {
             decodeTable = DECODE_TABLE;
@@ -855,6 +927,15 @@ public class Base64 extends BaseNCodec {
                 }
             }
         }
+    }
+
+    /**
+     * Gets the line separator (for testing only).
+     *
+     * @return the line separator.
+     */
+    byte[] getLineSeparator() {
+        return lineSeparator;
     }
 
     /**

@@ -46,6 +46,10 @@ import org.junit.jupiter.api.Test;
  */
 public class Base64Test {
 
+    private static final String FOX_BASE64 = "VGhlIH@$#$@%F1aWN@#@#@@rIGJyb3duIGZve\n\r\t%#%#%#%CBqd##$#$W1wZWQgb3ZlciB0aGUgbGF6eSBkb2dzLg==";
+
+    private static final String FOX_TEXT = "The quick brown fox jumped over the lazy dogs.";
+
     private static final Charset CHARSET_UTF8 = StandardCharsets.UTF_8;
 
     /**
@@ -214,6 +218,36 @@ public class Base64Test {
         final byte[] encodedBytes = new Base64().encode(buffer, startPasSize, bytesUtf8.length);
         encodedContent = StringUtils.newStringUtf8(encodedBytes);
         assertEquals("SGVsbG8gV29ybGQ=", encodedContent, "encoding hello world");
+    }
+
+    @Test
+    public void testBuilderCodecPolicy() {
+        assertEquals(CodecPolicy.LENIENT, Base64.builder().get().getCodecPolicy());
+        assertEquals(CodecPolicy.LENIENT, Base64.builder().setDecodingPolicy(CodecPolicy.LENIENT).get().getCodecPolicy());
+        assertEquals(CodecPolicy.STRICT, Base64.builder().setDecodingPolicy(CodecPolicy.STRICT).get().getCodecPolicy());
+        assertEquals(CodecPolicy.LENIENT, Base64.builder().setDecodingPolicy(CodecPolicy.STRICT).setDecodingPolicy(null).get().getCodecPolicy());
+        assertEquals(CodecPolicy.LENIENT, Base64.builder().setDecodingPolicy(null).get().getCodecPolicy());
+    }
+
+    @Test
+    public void testBuilderLineAttributes() {
+        assertNull(Base64.builder().get().getLineSeparator());
+        assertNull(Base64.builder().setLineSeparator(BaseNCodec.CHUNK_SEPARATOR).get().getLineSeparator());
+        assertArrayEquals(BaseNCodec.CHUNK_SEPARATOR, Base64.builder().setLineLength(4).setLineSeparator(BaseNCodec.CHUNK_SEPARATOR).get().getLineSeparator());
+        assertArrayEquals(BaseNCodec.CHUNK_SEPARATOR, Base64.builder().setLineLength(4).setLineSeparator(null).get().getLineSeparator());
+        assertArrayEquals(BaseNCodec.CHUNK_SEPARATOR, Base64.builder().setLineLength(10).setLineSeparator(null).get().getLineSeparator());
+        assertNull(Base64.builder().setLineLength(-1).setLineSeparator(null).get().getLineSeparator());
+        assertNull(Base64.builder().setLineLength(0).setLineSeparator(null).get().getLineSeparator());
+        assertArrayEquals(new byte[] { 1 }, Base64.builder().setLineLength(4).setLineSeparator((byte) 1).get().getLineSeparator());
+        assertEquals("Zm94\r\n", Base64.builder().setLineLength(4).get().encodeToString("fox".getBytes(CHARSET_UTF8)));
+    }
+
+    @Test
+    public void testBuilderUrlSafe() {
+        assertFalse(Base64.builder().get().isUrlSafe());
+        assertFalse(Base64.builder().setUrlSafe(false).get().isUrlSafe());
+        assertFalse(Base64.builder().setUrlSafe(true).setUrlSafe(false).get().isUrlSafe());
+        assertTrue(Base64.builder().setUrlSafe(false).setUrlSafe(true).get().isUrlSafe());
     }
 
     @Test
@@ -432,7 +466,7 @@ public class Base64Test {
 
         // two instances: one with default table and one with adjusted encoding table
         final Base64 b64 = new Base64();
-        final Base64 b64customEncoding = new Base64(encodeTable);
+        final Base64 b64customEncoding = Base64.builder().setEncodeTable(encodeTable).get();
 
         final String content = "! Hello World - this §$%";
 
@@ -461,7 +495,7 @@ public class Base64Test {
         final byte[] encodeTable = {
                 '.', '-', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M'
         };
-        assertThrows(IllegalArgumentException.class, () -> new Base64(encodeTable));
+        assertThrows(IllegalArgumentException.class, () -> Base64.builder().setEncodeTable(encodeTable).get());
     }
 
     private void testDecodeEncode(final String encodedText) {
@@ -632,10 +666,7 @@ public class Base64Test {
 
     @Test
     public void testIgnoringNonBase64InDecode() throws Exception {
-        assertEquals("The quick brown fox jumped over the lazy dogs.",
-                new String(Base64.decodeBase64(
-                        "VGhlIH@$#$@%F1aWN@#@#@@rIGJyb3duIGZve\n\r\t%#%#%#%CBqd##$#$W1wZWQgb3ZlciB0aGUgbGF6eSBkb2dzLg=="
-                                .getBytes(CHARSET_UTF8))));
+        assertEquals(FOX_TEXT, new String(Base64.decodeBase64(FOX_BASE64.getBytes(CHARSET_UTF8))));
     }
 
     @Test
@@ -692,7 +723,7 @@ public class Base64Test {
 
     @Test
     public void testKnownDecodings() {
-        assertEquals("The quick brown fox jumped over the lazy dogs.", new String(Base64.decodeBase64(
+        assertEquals(FOX_TEXT, new String(Base64.decodeBase64(
                 "VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2dzLg==".getBytes(CHARSET_UTF8))));
         assertEquals("It was the best of times, it was the worst of times.", new String(Base64.decodeBase64(
                 "SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN0IG9mIHRpbWVzLg==".getBytes(CHARSET_UTF8))));
@@ -708,7 +739,7 @@ public class Base64Test {
     @Test
     public void testKnownEncodings() {
         assertEquals("VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2dzLg==", new String(
-                Base64.encodeBase64("The quick brown fox jumped over the lazy dogs.".getBytes(CHARSET_UTF8))));
+                Base64.encodeBase64(FOX_TEXT.getBytes(CHARSET_UTF8))));
         assertEquals(
                 "YmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJs\r\nYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFo\r\nIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBibGFoIGJsYWggYmxhaCBi\r\nbGFoIGJsYWg=\r\n",
                 new String(Base64.encodeBase64Chunked(
