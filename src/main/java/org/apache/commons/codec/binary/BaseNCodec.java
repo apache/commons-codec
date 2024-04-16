@@ -64,6 +64,14 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         private CodecPolicy decodingPolicy = DECODING_POLICY_DEFAULT;
         private int lineLength;
         private byte[] lineSeparator = CHUNK_SEPARATOR;
+        private final byte[] defaultEncodeTable;
+        private byte[] encodeTable;
+
+
+        AbstractBuilder(final byte[] defaultEncodeTable) {
+            this.defaultEncodeTable = defaultEncodeTable;
+            this.encodeTable = defaultEncodeTable;
+        }
 
         @SuppressWarnings("unchecked")
         B asThis() {
@@ -72,6 +80,10 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
 
         CodecPolicy getDecodingPolicy() {
             return decodingPolicy;
+        }
+
+        byte[] getEncodeTable() {
+            return encodeTable;
         }
 
         int getLineLength() {
@@ -90,6 +102,17 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
          */
         public B setDecodingPolicy(final CodecPolicy decodingPolicy) {
             this.decodingPolicy = decodingPolicy != null ? decodingPolicy : DECODING_POLICY_DEFAULT;
+            return asThis();
+        }
+
+        /**
+         * Sets the encode table.
+         *
+         * @param encodeTable the encode table, null resets to the default.
+         * @return this.
+         */
+        public B setEncodeTable(final byte... encodeTable) {
+            this.encodeTable = encodeTable != null ? encodeTable : defaultEncodeTable;
             return asThis();
         }
 

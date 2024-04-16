@@ -63,22 +63,16 @@ public class Base64 extends BaseNCodec {
      */
     public static class Builder extends AbstractBuilder<Base64, Builder> {
 
-        private byte[] encodeTable = STANDARD_ENCODE_TABLE;
+        /**
+         * Constructs a new instance.
+         */
+        public Builder() {
+            super(STANDARD_ENCODE_TABLE);
+        }
 
         @Override
         public Base64 get() {
-            return new Base64(getLineLength(), getLineSeparator(), encodeTable, getDecodingPolicy());
-        }
-
-        /**
-         * Sets the encode table.
-         *
-         * @param encodeTable the encode table, null resets to the default.
-         * @return this.
-         */
-        public Builder setEncodeTable(final byte... encodeTable) {
-            this.encodeTable = encodeTable != null ? encodeTable : STANDARD_ENCODE_TABLE;
-            return this;
+            return new Base64(getLineLength(), getLineSeparator(), getEncodeTable(), getDecodingPolicy());
         }
 
         /**
@@ -88,8 +82,7 @@ public class Base64 extends BaseNCodec {
          * @return this.
          */
         public Builder setUrlSafe(final boolean urlSafe) {
-            this.encodeTable = toUrlSafeEncodeTable(urlSafe);
-            return this;
+            return setEncodeTable(toUrlSafeEncodeTable(urlSafe));
         }
 
     }
