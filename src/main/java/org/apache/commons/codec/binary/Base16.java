@@ -133,17 +133,23 @@ public class Base16 extends BaseNCodec {
      * Constructs a Base16 codec used for decoding and encoding.
      *
      * @param lowerCase      if {@code true} then use a lower-case Base16 alphabet.
+     * @param encodeTable    the encode table.
+     * @param decodingPolicy Decoding policy.
+     */
+    private Base16(final boolean lowerCase, final byte[] encodeTable, final CodecPolicy decodingPolicy) {
+        super(BYTES_PER_UNENCODED_BLOCK, BYTES_PER_ENCODED_BLOCK, 0, 0, PAD_DEFAULT, decodingPolicy);
+        this.encodeTable = encodeTable;
+        this.decodeTable = encodeTable == LOWER_CASE_ENCODE_TABLE ? LOWER_CASE_DECODE_TABLE : UPPER_CASE_DECODE_TABLE;
+    }
+
+    /**
+     * Constructs a Base16 codec used for decoding and encoding.
+     *
+     * @param lowerCase      if {@code true} then use a lower-case Base16 alphabet.
      * @param decodingPolicy Decoding policy.
      */
     public Base16(final boolean lowerCase, final CodecPolicy decodingPolicy) {
-        super(BYTES_PER_UNENCODED_BLOCK, BYTES_PER_ENCODED_BLOCK, 0, 0, PAD_DEFAULT, decodingPolicy);
-        if (lowerCase) {
-            this.encodeTable = LOWER_CASE_ENCODE_TABLE;
-            this.decodeTable = LOWER_CASE_DECODE_TABLE;
-        } else {
-            this.encodeTable = UPPER_CASE_ENCODE_TABLE;
-            this.decodeTable = UPPER_CASE_DECODE_TABLE;
-        }
+        this(lowerCase, lowerCase ? LOWER_CASE_ENCODE_TABLE : UPPER_CASE_ENCODE_TABLE, decodingPolicy);
     }
 
     @Override
