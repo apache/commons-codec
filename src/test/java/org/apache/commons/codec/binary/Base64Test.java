@@ -1404,6 +1404,14 @@ public class Base64Test {
     }
 
     /**
+     * Tests <a href="https://issues.apache.org/jira/browse/CODEC-263">CODEC-263</a>.
+     */
+    public void testCodec263() {
+      Base64.decodeBase64("publishMessage");
+      assertTrue(Base64.isBase64("publishMessage"));
+    }
+
+    /**
      * Base64 encoding of UUID's is a common use-case, especially in URL-SAFE
      * mode. This test case ends up being the "URL-SAFE" JUnit's.
      *
