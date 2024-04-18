@@ -31,8 +31,8 @@ import org.apache.commons.codec.binary.StringUtils;
  * of the value between threads, and must not invoke {@link #setMaxCodeLen(int)} after initial setup.
  * </p>
  *
- * @see <a href="https://drdobbs.com/the-double-metaphone-search-algorithm/184401251?pgno=2">Original Article</a>
- * @see <a href="https://en.wikipedia.org/wiki/Metaphone">https://en.wikipedia.org/wiki/Metaphone</a>
+ * @see <a href="https://drdobbs.com/the-double-metaphone-search-algorithm/184401251?pgno=2">Dr. Dobbs Original Article</a>
+ * @see <a href="https://en.wikipedia.org/wiki/Metaphone">Wikipedia Metaphone</a>
  */
 public class DoubleMetaphone implements StringEncoder {
 
