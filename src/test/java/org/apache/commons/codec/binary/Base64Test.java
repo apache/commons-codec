@@ -306,6 +306,14 @@ public class Base64Test {
     }
 
     /**
+     * Tests <a href="https://issues.apache.org/jira/browse/CODEC-263">CODEC-263</a>.
+     */
+    public void testCodec263() {
+      Base64.decodeBase64("publishMessage");
+      assertTrue(Base64.isBase64("publishMessage"));
+    }
+
+    /**
      * Test for CODEC-265: Encode a 1GiB file.
      *
      * @see <a href="https://issues.apache.org/jira/projects/CODEC/issues/CODEC-265">CODEC-265</a>
@@ -1401,14 +1409,6 @@ public class Base64Test {
             assertFalse(BaseNTestData.bytesContain(encoded, (byte) '+'), "url-safe i=" + i + " no '+'");
         }
 
-    }
-
-    /**
-     * Tests <a href="https://issues.apache.org/jira/browse/CODEC-263">CODEC-263</a>.
-     */
-    public void testCodec263() {
-      Base64.decodeBase64("publishMessage");
-      assertTrue(Base64.isBase64("publishMessage"));
     }
 
     /**
