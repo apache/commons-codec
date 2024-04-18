@@ -1071,6 +1071,11 @@ public class DoubleMetaphoneTest extends AbstractStringEncoderTest<DoubleMetapho
     }
 
     @Test
+    public void testCodec320() {
+        assertTrue(new DoubleMetaphone().isDoubleMetaphoneEqual("ANGHELINA", "ANKL", false));
+    }
+
+    @Test
     public void testDoubleMetaphone() {
         assertDoubleMetaphone("TSTN", "testing");
         assertDoubleMetaphone("0", "The");

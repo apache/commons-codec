@@ -617,6 +617,7 @@ public class DoubleMetaphone implements StringEncoder {
     private int handleGH(final String value, final DoubleMetaphoneResult result, int index) {
         if (index > 0 && !isVowel(charAt(value, index - 1))) {
             result.append('K');
+            index += 2;
         } else if (index == 0) {
             if (charAt(value, index + 2) == 'I') {
                 result.append('J');
