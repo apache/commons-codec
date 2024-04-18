@@ -1061,14 +1061,14 @@ public class DoubleMetaphoneTest extends AbstractStringEncoderTest<DoubleMetapho
     }
 
     @Test
-    public void testCodec184() throws Throwable {
+    public void testCodec184() {
         assertTrue(new DoubleMetaphone().isDoubleMetaphoneEqual("", "", false));
         assertTrue(new DoubleMetaphone().isDoubleMetaphoneEqual("", "", true));
         assertFalse(new DoubleMetaphone().isDoubleMetaphoneEqual("aa", "", false));
         assertFalse(new DoubleMetaphone().isDoubleMetaphoneEqual("aa", "", true));
         assertFalse(new DoubleMetaphone().isDoubleMetaphoneEqual("", "aa", false));
         assertFalse(new DoubleMetaphone().isDoubleMetaphoneEqual("", "aa", true));
-      }
+    }
 
     @Test
     public void testDoubleMetaphone() {
