@@ -38,7 +38,7 @@ import org.apache.commons.codec.CodecPolicy;
  * </p>
  * <p>
  * You can configure instances with the {@link Builder}.
- * <p>
+ * </p>
  * <pre>
  * Base32 base32 = Base32.builder()
  *   .setDecodingPolicy(DecodingPolicy.LENIENT) // default is lenient

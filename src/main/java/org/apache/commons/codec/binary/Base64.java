@@ -52,7 +52,7 @@ import org.apache.commons.codec.CodecPolicy;
  * </p>
  * <p>
  * You can configure instances with the {@link Builder}.
- * <p>
+ * </p>
  * <pre>
  * Base64 base64 = Base64.builder()
  *   .setDecodingPolicy(DecodingPolicy.LENIENT) // default is lenient, null resets to default
