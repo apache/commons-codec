@@ -44,16 +44,16 @@ The <action> type attribute can be add,update,fix,remove.
   </properties>
   <body>
     <release version="1.17.0" date="YYYY-MM-DD" description="Feature and fix release. Requires a minimum of Java 8.">
+      <!-- FIX -->
+      <action type="fix" dev="ggregory" due-to="Gary Gregory">Optimize memory allocation in PhoneticEngine.</action>
+      <action type="fix" dev="ggregory" due-to="Gary Gregory">BCodec and QCodec encode() methods throw UnsupportedCharsetException instead of EncoderException.</action>
+      <action type="fix" dev="ggregory" due-to="Gary Gregory">Set Javadoc link to latest Java API LTS version.</action>
       <!-- ADD -->
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add override org.apache.commons.codec.language.bm.Rule.PhonemeExpr.size().</action>
       <action type="add" dev="ggregory" due-to="Chris Kocel, Gary Gregory">Add support for Base64 custom alphabets #266.</action>
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add Base64.Builder (allows custom alphabets).</action> 
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add Base32.Builder (allows custom alphabets).</action>
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add Base64 support for a custom padding byte (like Base32).</action> 
-      <!-- FIX -->
-      <action type="fix" dev="ggregory" due-to="Gary Gregory">Optimize memory allocation in PhoneticEngine.</action>
-      <action type="fix" dev="ggregory" due-to="Gary Gregory">BCodec and QCodec encode() methods throw UnsupportedCharsetException instead of EncoderException.</action>
-      <action type="fix" dev="ggregory" due-to="Gary Gregory">Set Javadoc link to latest Java API LTS version.</action>
       <!-- UPDATE -->
       <action                   dev="ggregory" type="update" due-to="Dependabot, Gary Gregory">Bump org.apache.commons:commons-parent from 66 to 69 #250, #261.</action>
       <action                   dev="ggregory" type="update" due-to="Dependabot, Gary Gregory">Bump commons-io:commons-io from 2.15.1 to 2.16.1 #258, #265.</action>
