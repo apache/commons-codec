@@ -50,6 +50,19 @@ import org.apache.commons.codec.CodecPolicy;
  * <p>
  * This class is thread-safe.
  * </p>
+ * <p>
+ * You can configure instances with the {@link Builder}.
+ * <p>
+ * <pre>
+ * Base64 base64 = Base64.builder()
+ *   .setDecodingPolicy(DecodingPolicy.LENIENT) // default is lenient, null resets to default
+ *   .setEncodeTable(customEncodeTable)         // default is built in, null resets to default
+ *   .setLineLength(0)                          // default is none
+ *   .setLineSeparator('\r', '\n')              // default is CR LF, null resets to default
+ *   .setPadding('=')                           // default is =
+ *   .setUrlSafe(false)                         // default is false
+ *   .get()
+ * </pre>
  *
  * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>
  * @since 1.0

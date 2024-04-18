@@ -36,6 +36,18 @@ import org.apache.commons.codec.CodecPolicy;
  * <p>
  * This class is thread-safe.
  * </p>
+ * <p>
+ * You can configure instances with the {@link Builder}.
+ * <p>
+ * <pre>
+ * Base32 base32 = Base32.builder()
+ *   .setDecodingPolicy(DecodingPolicy.LENIENT) // default is lenient
+ *   .setEncodeTable(customEncodeTable)
+ *   .setLineLength(0)                          // default is none
+ *   .setLineSeparator('\r', '\n')              // default is CR LF
+ *   .setPadding('=')                           // default is =
+ *   .get()
+ * </pre>
  *
  * @see <a href="http://www.ietf.org/rfc/rfc4648.txt">RFC 4648</a>
  * @since 1.5
