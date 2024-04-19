@@ -145,7 +145,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * @since 1.4
      */
     public static char[] encodeHex(final byte[] data, final boolean toLowerCase) {
-        return encodeHex(data, toLowerCase ? DIGITS_LOWER : DIGITS_UPPER);
+        return encodeHex(data, toAlphabet(toLowerCase));
     }
 
     /**
@@ -176,7 +176,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * @since 1.15
      */
     public static char[] encodeHex(final byte[] data, final int dataOffset, final int dataLen, final boolean toLowerCase) {
-        return encodeHex(data, dataOffset, dataLen, toLowerCase ? DIGITS_LOWER : DIGITS_UPPER, new char[dataLen << 1], 0);
+        return encodeHex(data, dataOffset, dataLen, toAlphabet(toLowerCase), new char[dataLen << 1], 0);
     }
 
     /**
@@ -191,7 +191,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * @since 1.15
      */
     public static void encodeHex(final byte[] data, final int dataOffset, final int dataLen, final boolean toLowerCase, final char[] out, final int outOffset) {
-        encodeHex(data, dataOffset, dataLen, toLowerCase ? DIGITS_LOWER : DIGITS_UPPER, out, outOffset);
+        encodeHex(data, dataOffset, dataLen, toAlphabet(toLowerCase), out, outOffset);
     }
 
     /**
@@ -244,7 +244,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * @since 1.11
      */
     public static char[] encodeHex(final ByteBuffer data, final boolean toLowerCase) {
-        return encodeHex(data, toLowerCase ? DIGITS_LOWER : DIGITS_UPPER);
+        return encodeHex(data, toAlphabet(toLowerCase));
     }
 
     /**
@@ -319,6 +319,16 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      */
     public static String encodeHexString(final ByteBuffer data, final boolean toLowerCase) {
         return new String(encodeHex(data, toLowerCase));
+    }
+
+    /**
+     * Converts a boolean to an alphabet.
+     *
+     * @param toLowerCase true for lowercase, false for uppercase.
+     * @return an alphabet.
+     */
+    private static char[] toAlphabet(final boolean toLowerCase) {
+        return toLowerCase ? DIGITS_LOWER : DIGITS_UPPER;
     }
 
     /**
