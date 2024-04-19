@@ -54,14 +54,12 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
     /**
      * Used to build output as hex.
      */
-    private static final char[] DIGITS_LOWER = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd',
-            'e', 'f' };
+    private static final char[] DIGITS_LOWER = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
 
     /**
      * Used to build output as hex.
      */
-    private static final char[] DIGITS_UPPER = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D',
-            'E', 'F' };
+    private static final char[] DIGITS_UPPER = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
 
     /**
      * Converts an array of characters representing hexadecimal values into an array of bytes of those same values. The
@@ -92,16 +90,13 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      */
     public static int decodeHex(final char[] data, final byte[] out, final int outOffset) throws DecoderException {
         final int len = data.length;
-
         if ((len & 0x01) != 0) {
             throw new DecoderException("Odd number of characters.");
         }
-
         final int outLen = len >> 1;
         if (out.length - outOffset < outLen) {
             throw new DecoderException("Output array is not large enough to accommodate decoded data.");
         }
-
         // two characters form the hex value.
         for (int i = outOffset, j = 0; j < len; i++) {
             int f = toDigit(data[j], j) << 4;
@@ -110,7 +105,6 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
             j++;
             out[i] = (byte) (f & 0xFF);
         }
-
         return outLen;
     }
 
