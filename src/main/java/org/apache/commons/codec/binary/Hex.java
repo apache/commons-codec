@@ -161,9 +161,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      */
     protected static char[] encodeHex(final byte[] data, final char[] toDigits) {
         final int dataLength = data.length;
-        final char[] out = new char[dataLength << 1];
-        encodeHex(data, 0, dataLength, toDigits, out, 0);
-        return out;
+        return encodeHex(data, 0, dataLength, toDigits, new char[dataLength << 1], 0);
     }
 
     /**
@@ -177,11 +175,8 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      *         upper- or lower-case hex.
      * @since 1.15
      */
-    public static char[] encodeHex(final byte[] data, final int dataOffset, final int dataLen,
-            final boolean toLowerCase) {
-        final char[] out = new char[dataLen << 1];
-        encodeHex(data, dataOffset, dataLen, toLowerCase ? DIGITS_LOWER : DIGITS_UPPER, out, 0);
-        return out;
+    public static char[] encodeHex(final byte[] data, final int dataOffset, final int dataLen, final boolean toLowerCase) {
+        return encodeHex(data, dataOffset, dataLen, toLowerCase ? DIGITS_LOWER : DIGITS_UPPER, new char[dataLen << 1], 0);
     }
 
     /**
@@ -195,8 +190,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * @param outOffset the position within {@code out} at which to start writing the encoded characters.
      * @since 1.15
      */
-    public static void encodeHex(final byte[] data, final int dataOffset, final int dataLen,
-            final boolean toLowerCase, final char[] out, final int outOffset) {
+    public static void encodeHex(final byte[] data, final int dataOffset, final int dataLen, final boolean toLowerCase, final char[] out, final int outOffset) {
         encodeHex(data, dataOffset, dataLen, toLowerCase ? DIGITS_LOWER : DIGITS_UPPER, out, outOffset);
     }
 
@@ -209,14 +203,15 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * @param toDigits the output alphabet (must contain at least 16 chars)
      * @param out a char[] which will hold the resultant appropriate characters from the alphabet.
      * @param outOffset the position within {@code out} at which to start writing the encoded characters.
+     * @return the given {@code out}.
      */
-    private static void encodeHex(final byte[] data, final int dataOffset, final int dataLen, final char[] toDigits,
-            final char[] out, final int outOffset) {
+    private static char[] encodeHex(final byte[] data, final int dataOffset, final int dataLen, final char[] toDigits, final char[] out, final int outOffset) {
         // two characters form the hex value.
         for (int i = dataOffset, j = outOffset; i < dataOffset + dataLen; i++) {
             out[j++] = toDigits[(0xF0 & data[i]) >>> 4];
             out[j++] = toDigits[0x0F & data[i]];
         }
+        return out;
     }
 
     /**
