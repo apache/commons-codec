@@ -76,6 +76,7 @@ import java.util.Objects;
 public final class Blake3 {
 
     private static final class ChunkState {
+
         private int[] chainingValue;
         private final long chunkCounter;
         private final int flags;
@@ -209,20 +210,20 @@ public final class Blake3 {
             state = new ChunkState(key, 0, flags);
         }
     }
+
     /**
      * Represents the state just prior to either producing an eight word chaining value or any number of output bytes
      * when the ROOT flag is set.
      */
     private static final class Output {
+
         private final int[] inputChainingValue;
         private final int[] blockWords;
         private final long counter;
         private final int blockLength;
         private final int flags;
 
-        private Output(
-                final int[] inputChainingValue, final int[] blockWords, final long counter, final int blockLength,
-                final int flags) {
+        private Output(final int[] inputChainingValue, final int[] blockWords, final long counter, final int blockLength, final int flags) {
             this.inputChainingValue = inputChainingValue;
             this.blockWords = blockWords;
             this.counter = counter;
@@ -231,8 +232,7 @@ public final class Blake3 {
         }
 
         private int[] chainingValue() {
-            return Arrays
-                    .copyOf(compress(inputChainingValue, blockWords, blockLength, counter, flags), CHAINING_VALUE_INTS);
+            return Arrays.copyOf(compress(inputChainingValue, blockWords, blockLength, counter, flags), CHAINING_VALUE_INTS);
         }
 
         private void rootOutputBytes(final byte[] out, int offset, int length) {
@@ -240,8 +240,7 @@ public final class Blake3 {
             while (length > 0) {
                 int chunkLength = Math.min(OUT_LEN * 2, length);
                 length -= chunkLength;
-                final int[] words =
-                        compress(inputChainingValue, blockWords, blockLength, outputBlockCounter++, flags | ROOT);
+                final int[] words = compress(inputChainingValue, blockWords, blockLength, outputBlockCounter++, flags | ROOT);
                 int wordCounter = 0;
                 while (chunkLength > 0) {
                     final int wordLength = Math.min(Integer.BYTES, chunkLength);
@@ -252,35 +251,33 @@ public final class Blake3 {
             }
         }
     }
+
     private static final int BLOCK_LEN = 64;
     private static final int BLOCK_INTS = BLOCK_LEN / Integer.BYTES;
     private static final int KEY_LEN = 32;
     private static final int KEY_INTS = KEY_LEN / Integer.BYTES;
-
     private static final int OUT_LEN = 32;
-
     private static final int CHUNK_LEN = 1024;
     private static final int CHAINING_VALUE_INTS = 8;
+
     /**
      * Standard hash key used for plain hashes; same initialization vector as Blake2s.
      */
-    private static final int[] IV =
-            { 0x6A09E667, 0xBB67AE85, 0x3C6EF372, 0xA54FF53A, 0x510E527F, 0x9B05688C, 0x1F83D9AB, 0x5BE0CD19 };
+    private static final int[] IV = { 0x6A09E667, 0xBB67AE85, 0x3C6EF372, 0xA54FF53A, 0x510E527F, 0x9B05688C, 0x1F83D9AB, 0x5BE0CD19 };
+
     // domain flags
     private static final int CHUNK_START = 1;
     private static final int CHUNK_END = 1 << 1;
     private static final int PARENT = 1 << 2;
     private static final int ROOT = 1 << 3;
-
     private static final int KEYED_HASH = 1 << 4;
-
     private static final int DERIVE_KEY_CONTEXT = 1 << 5;
-
     private static final int DERIVE_KEY_MATERIAL = 1 << 6;
 
     /**
      * Pre-permuted for all 7 rounds; the second row (2,6,3,...) indicates the base permutation.
      */
+    // @formatter:off
     private static final byte[][] MSG_SCHEDULE = {
             { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 },
             { 2, 6, 3, 10, 7, 0, 4, 13, 1, 11, 12, 5, 9, 14, 15, 8 },
@@ -290,6 +287,7 @@ public final class Blake3 {
             { 9, 14, 11, 5, 8, 12, 15, 1, 13, 3, 0, 10, 2, 6, 4, 7 },
             { 11, 15, 5, 0, 1, 9, 8, 6, 14, 10, 2, 12, 3, 4, 7, 13 }
     };
+    // @formatter:on
 
     private static void checkBufferArgs(final byte[] buffer, final int offset, final int length) {
         Objects.requireNonNull(buffer);
@@ -301,14 +299,11 @@ public final class Blake3 {
         }
         final int bufferLength = buffer.length;
         if (offset > bufferLength - length) {
-            throw new IndexOutOfBoundsException(
-                    "Offset " + offset + " and length " + length + " out of bounds with buffer length " + bufferLength);
+            throw new IndexOutOfBoundsException("Offset " + offset + " and length " + length + " out of bounds with buffer length " + bufferLength);
         }
     }
 
-    private static int[] compress(
-            final int[] chainingValue, final int[] blockWords, final int blockLength, final long counter,
-            final int flags) {
+    private static int[] compress(final int[] chainingValue, final int[] blockWords, final int blockLength, final long counter, final int flags) {
         final int[] state = Arrays.copyOf(chainingValue, BLOCK_INTS);
         System.arraycopy(IV, 0, state, 8, 4);
         state[12] = (int) counter;
@@ -329,8 +324,7 @@ public final class Blake3 {
     /**
      * The mixing function, G, which mixes either a column or a diagonal.
      */
-    private static void g(
-            final int[] state, final int a, final int b, final int c, final int d, final int mx, final int my) {
+    private static void g(final int[] state, final int a, final int b, final int c, final int d, final int mx, final int my) {
         state[a] += state[b] + mx;
         state[d] = Integer.rotateRight(state[d] ^ state[a], 16);
         state[c] += state[d];
@@ -414,13 +408,11 @@ public final class Blake3 {
         }
     }
 
-    private static int[] parentChainingValue(
-            final int[] leftChildCV, final int[] rightChildCV, final int[] key, final int flags) {
+    private static int[] parentChainingValue(final int[] leftChildCV, final int[] rightChildCV, final int[] key, final int flags) {
         return parentOutput(leftChildCV, rightChildCV, key, flags).chainingValue();
     }
 
-    private static Output parentOutput(
-            final int[] leftChildCV, final int[] rightChildCV, final int[] key, final int flags) {
+    private static Output parentOutput(final int[] leftChildCV, final int[] rightChildCV, final int[] key, final int flags) {
         final int[] blockWords = Arrays.copyOf(leftChildCV, BLOCK_INTS);
         System.arraycopy(rightChildCV, 0, blockWords, 8, CHAINING_VALUE_INTS);
         return new Output(key.clone(), blockWords, 0, BLOCK_LEN, flags | PARENT);

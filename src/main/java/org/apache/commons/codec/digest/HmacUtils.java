@@ -196,11 +196,9 @@ public final class HmacUtils {
      *             when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      */
     public static Mac getInitializedMac(final String algorithm, final byte[] key) {
-
         if (key == null) {
             throw new IllegalArgumentException("Null key");
         }
-
         try {
             final SecretKeySpec keySpec = new SecretKeySpec(key, algorithm);
             final Mac mac = Mac.getInstance(algorithm);
