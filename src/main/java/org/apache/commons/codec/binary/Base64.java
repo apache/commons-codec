@@ -503,7 +503,6 @@ public class Base64 extends BaseNCodec {
      * <p>
      * When encoding the line length is 0 (no chunking), and the encoding table is STANDARD_ENCODE_TABLE.
      * </p>
-     *
      * <p>
      * When decoding all variants are supported.
      * </p>
@@ -517,7 +516,6 @@ public class Base64 extends BaseNCodec {
      * <p>
      * When encoding the line length is 76, the line separator is CRLF, and the encoding table is STANDARD_ENCODE_TABLE.
      * </p>
-     *
      * <p>
      * When decoding all variants are supported.
      * </p>
