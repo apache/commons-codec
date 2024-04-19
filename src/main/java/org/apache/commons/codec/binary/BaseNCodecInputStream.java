@@ -70,7 +70,6 @@ public class BaseNCodecInputStream extends FilterInputStream {
         //       as long as we have not reached EOF, indicate that there is more
         //       data available. As we do not know for sure how much data is left,
         //       just return 1 as a safe guess.
-
         return context.eof ? 0 : 1;
     }
 
@@ -209,6 +208,7 @@ public class BaseNCodecInputStream extends FilterInputStream {
      * Repositions this stream to the position at the time the mark method was last called on this input stream.
      * <p>
      * The {@link #reset} method of {@link BaseNCodecInputStream} does nothing except throw an {@link IOException}.
+     * </p>
      *
      * @throws IOException if this method is invoked
      * @since 1.7
@@ -229,11 +229,9 @@ public class BaseNCodecInputStream extends FilterInputStream {
         if (n < 0) {
             throw new IllegalArgumentException("Negative skip length: " + n);
         }
-
         // skip in chunks of 512 bytes
         final byte[] b = new byte[512];
         long todo = n;
-
         while (todo > 0) {
             int len = (int) Math.min(b.length, todo);
             len = this.read(b, 0, len);
@@ -242,7 +240,6 @@ public class BaseNCodecInputStream extends FilterInputStream {
             }
             todo -= len;
         }
-
         return n - todo;
     }
 }
