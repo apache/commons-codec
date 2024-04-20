@@ -676,7 +676,7 @@ public class Base64 extends BaseNCodec {
             decodeTable = DECODE_TABLE;
         } else {
             if (encodeTable.length != ALPHABET_LENGTH) {
-                throw new IllegalArgumentException("encodeTable must be exactly 64 bytes long");
+                throw new IllegalArgumentException("encodeTable must have exactly 64 entries.");
             }
             decodeTable = calculateDecodeTable(encodeTable);
         }
