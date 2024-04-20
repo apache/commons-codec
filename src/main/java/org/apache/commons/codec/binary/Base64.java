@@ -498,6 +498,8 @@ public class Base64 extends BaseNCodec {
      */
     private final int encodeSize;
 
+    private final boolean isUrlSafe;
+
     /**
      * Constructs a Base64 codec used for decoding (all modes) and encoding in URL-unsafe mode.
      * <p>
@@ -646,8 +648,7 @@ public class Base64 extends BaseNCodec {
     /**
      * Constructs a Base64 codec used for decoding (all modes) and encoding in URL-unsafe mode.
      * <p>
-     * When encoding the line length and line separator are given in the constructor, and the encoding table is
-     * STANDARD_ENCODE_TABLE.
+     * When encoding the line length and line separator are given in the constructor, and the encoding table is STANDARD_ENCODE_TABLE.
      * </p>
      * <p>
      * Line lengths that aren't multiples of 4 will still essentially end up being multiples of 4 in the encoded data.
@@ -656,29 +657,28 @@ public class Base64 extends BaseNCodec {
      * When decoding all variants are supported.
      * </p>
      *
-     * @param lineLength
-     *            Each line of encoded data will be at most of the given length (rounded down to the nearest multiple of
-     *            4). If lineLength &lt;= 0, then the output will not be divided into lines (chunks). Ignored when
-     *            decoding.
-     * @param lineSeparator
-     *            Each line of encoded data will end with this sequence of bytes; the constructor makes a defensive copy.
-     * @param padding padding byte.
-     * @param encodeTable
-     *            The manual encodeTable - a byte array of 64 chars.
+     * @param lineLength     Each line of encoded data will be at most of the given length (rounded down to the nearest multiple of 4). If lineLength &lt;= 0,
+     *                       then the output will not be divided into lines (chunks). Ignored when decoding.
+     * @param lineSeparator  Each line of encoded data will end with this sequence of bytes; the constructor makes a defensive copy. May be null.
+     * @param padding        padding byte.
+     * @param encodeTable    The manual encodeTable - a byte array of 64 chars.
      * @param decodingPolicy The decoding policy.
-     * @throws IllegalArgumentException
-     *             Thrown when the {@code lineSeparator} contains Base64 characters.
+     * @throws IllegalArgumentException Thrown when the {@code lineSeparator} contains Base64 characters.
      */
     private Base64(final int lineLength, final byte[] lineSeparator, final byte padding, final byte[] encodeTable, final CodecPolicy decodingPolicy) {
         super(BYTES_PER_UNENCODED_BLOCK, BYTES_PER_ENCODED_BLOCK, lineLength, toLength(lineSeparator), padding, decodingPolicy);
-        this.encodeTable = Objects.requireNonNull(encodeTable, "encodeTable");
-        if (encodeTable == STANDARD_ENCODE_TABLE || encodeTable == URL_SAFE_ENCODE_TABLE) {
+        Objects.requireNonNull(encodeTable, "encodeTable");
+        if (encodeTable.length != ALPHABET_LENGTH) {
+            throw new IllegalArgumentException("encodeTable must have exactly 64 entries.");
+        }
+        this.isUrlSafe = encodeTable == URL_SAFE_ENCODE_TABLE;
+        if (encodeTable == STANDARD_ENCODE_TABLE || this.isUrlSafe) {
             decodeTable = DECODE_TABLE;
+            // No need of a defensive copy of an internal table.
+            this.encodeTable = encodeTable;
         } else {
-            if (encodeTable.length != ALPHABET_LENGTH) {
-                throw new IllegalArgumentException("encodeTable must have exactly 64 entries.");
-            }
-            decodeTable = calculateDecodeTable(encodeTable);
+            this.encodeTable = encodeTable.clone();
+            this.decodeTable = calculateDecodeTable(this.encodeTable);
         }
         // TODO could be simplified if there is no requirement to reject invalid line sep when length <=0
         // @see test case Base64Test.testConstructors()
@@ -919,13 +919,13 @@ public class Base64 extends BaseNCodec {
     }
 
     /**
-     * Returns our current encode mode. True if we're URL-SAFE, false otherwise.
+     * Returns our current encode mode. True if we're URL-safe, false otherwise.
      *
-     * @return true if we're in URL-SAFE mode, false otherwise.
+     * @return true if we're in URL-safe mode, false otherwise.
      * @since 1.4
      */
     public boolean isUrlSafe() {
-        return this.encodeTable == URL_SAFE_ENCODE_TABLE;
+        return isUrlSafe;
     }
 
     /**
