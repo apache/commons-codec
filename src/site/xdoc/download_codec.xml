@@ -113,32 +113,32 @@ limitations under the License.
       </p>
     </subsection>
     </section>
-    <section name="Apache Commons Codec 1.16.1 ">
+    <section name="Apache Commons Codec 1.17.0 ">
       <subsection name="Binaries">
         <table>
           <tr>
-              <td><a href="[preferred]/commons/codec/binaries/commons-codec-1.16.1-bin.tar.gz">commons-codec-1.16.1-bin.tar.gz</a></td>
-              <td><a href="https://downloads.apache.org/commons/codec/binaries/commons-codec-1.16.1-bin.tar.gz.sha512">sha512</a></td>
-              <td><a href="https://downloads.apache.org/commons/codec/binaries/commons-codec-1.16.1-bin.tar.gz.asc">pgp</a></td>
+              <td><a href="[preferred]/commons/codec/binaries/commons-codec-1.17.0-bin.tar.gz">commons-codec-1.17.0-bin.tar.gz</a></td>
+              <td><a href="https://downloads.apache.org/commons/codec/binaries/commons-codec-1.17.0-bin.tar.gz.sha512">sha512</a></td>
+              <td><a href="https://downloads.apache.org/commons/codec/binaries/commons-codec-1.17.0-bin.tar.gz.asc">pgp</a></td>
           </tr>
           <tr>
-              <td><a href="[preferred]/commons/codec/binaries/commons-codec-1.16.1-bin.zip">commons-codec-1.16.1-bin.zip</a></td>
-              <td><a href="https://downloads.apache.org/commons/codec/binaries/commons-codec-1.16.1-bin.zip.sha512">sha512</a></td>
-              <td><a href="https://downloads.apache.org/commons/codec/binaries/commons-codec-1.16.1-bin.zip.asc">pgp</a></td>
+              <td><a href="[preferred]/commons/codec/binaries/commons-codec-1.17.0-bin.zip">commons-codec-1.17.0-bin.zip</a></td>
+              <td><a href="https://downloads.apache.org/commons/codec/binaries/commons-codec-1.17.0-bin.zip.sha512">sha512</a></td>
+              <td><a href="https://downloads.apache.org/commons/codec/binaries/commons-codec-1.17.0-bin.zip.asc">pgp</a></td>
           </tr>
         </table>
       </subsection>
       <subsection name="Source">
         <table>
           <tr>
-              <td><a href="[preferred]/commons/codec/source/commons-codec-1.16.1-src.tar.gz">commons-codec-1.16.1-src.tar.gz</a></td>
-              <td><a href="https://downloads.apache.org/commons/codec/source/commons-codec-1.16.1-src.tar.gz.sha512">sha512</a></td>
-              <td><a href="https://downloads.apache.org/commons/codec/source/commons-codec-1.16.1-src.tar.gz.asc">pgp</a></td>
+              <td><a href="[preferred]/commons/codec/source/commons-codec-1.17.0-src.tar.gz">commons-codec-1.17.0-src.tar.gz</a></td>
+              <td><a href="https://downloads.apache.org/commons/codec/source/commons-codec-1.17.0-src.tar.gz.sha512">sha512</a></td>
+              <td><a href="https://downloads.apache.org/commons/codec/source/commons-codec-1.17.0-src.tar.gz.asc">pgp</a></td>
           </tr>
           <tr>
-              <td><a href="[preferred]/commons/codec/source/commons-codec-1.16.1-src.zip">commons-codec-1.16.1-src.zip</a></td>
-              <td><a href="https://downloads.apache.org/commons/codec/source/commons-codec-1.16.1-src.zip.sha512">sha512</a></td>
-              <td><a href="https://downloads.apache.org/commons/codec/source/commons-codec-1.16.1-src.zip.asc">pgp</a></td>
+              <td><a href="[preferred]/commons/codec/source/commons-codec-1.17.0-src.zip">commons-codec-1.17.0-src.zip</a></td>
+              <td><a href="https://downloads.apache.org/commons/codec/source/commons-codec-1.17.0-src.zip.sha512">sha512</a></td>
+              <td><a href="https://downloads.apache.org/commons/codec/source/commons-codec-1.17.0-src.zip.asc">pgp</a></td>
           </tr>
         </table>
       </subsection>

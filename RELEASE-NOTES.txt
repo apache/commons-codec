@@ -1,3 +1,51 @@
+Apache Commons Codec 1.17.0 RELEASE NOTES
+-----------------------------------------
+
+The Apache Commons Codec component contains encoder and decoders for
+various formats such as Base16, Base32, Base64, digest, and Hexadecimal. In addition to these
+widely used encoders and decoders, the codec package also maintains a
+collection of phonetic encoding utilities.
+
+Feature and fix release. Requires a minimum of Java 8.
+
+
+New features
+------------
+
+*             Add override org.apache.commons.codec.language.bm.Rule.PhonemeExpr.size(). Thanks to Gary Gregory.
+*             Add support for Base64 custom alphabets #266. Thanks to Chris Kocel, Gary Gregory.
+*             Add Base64.Builder (allows custom alphabets). Thanks to Gary Gregory.
+*             Add Base32.Builder (allows custom alphabets). Thanks to Gary Gregory.
+*             Add Base64 support for a custom padding byte (like Base32). Thanks to Gary Gregory.
+
+Fixed Bugs
+----------
+
+* CODEC-320:  Wrong output of DoubleMetaphone in 1.16.1. Thanks to Martin Frydl, Gary Gregory.
+*             Optimize memory allocation in PhoneticEngine. Thanks to Gary Gregory.
+*             BCodec and QCodec encode() methods throw UnsupportedCharsetException instead of EncoderException. Thanks to Gary Gregory.
+*             Set Javadoc link to latest Java API LTS version. Thanks to Gary Gregory.
+*             Base32 constructor fails-fast with a NullPointerException if the custom alphabet array is null. Thanks to Gary Gregory.
+*             Base32 constructor makes a defensive copy of the line separator array. Thanks to Gary Gregory.
+*             Base64 constructor makes a defensive copy of the line separator array. Thanks to Gary Gregory.
+*             Base64 constructor makes a defensive copy of a custom alphabet array. Thanks to Gary Gregory.
+
+Changes
+-------
+
+*             Bump org.apache.commons:commons-parent from 66 to 69 #250, #261. Thanks to Dependabot, Gary Gregory.
+*             Bump commons-io:commons-io from 2.15.1 to 2.16.1 #258, #265. Thanks to Dependabot, Gary Gregory.
+
+
+For complete information on Apache Commons Codec, including instructions on how to submit bug reports,
+patches, or suggestions for improvement, see the Apache Commons Codec website:
+
+https://commons.apache.org/proper/commons-codec/
+
+Download page: https://commons.apache.org/proper/commons-codec/download_codec.cgi
+
+---------------------------------------------------------------------------------
+
 Apache Commons Codec 1.16.1 RELEASE NOTES
 -----------------------------------------
 

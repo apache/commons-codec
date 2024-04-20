@@ -43,7 +43,7 @@ The <action> type attribute can be add,update,fix,remove.
     <author>Apache Commons Developers</author>
   </properties>
   <body>
-    <release version="1.17.0" date="YYYY-MM-DD" description="Feature and fix release. Requires a minimum of Java 8.">
+    <release version="1.17.0" date="2024-04-20" description="Feature and fix release. Requires a minimum of Java 8.">
       <!-- FIX -->
       <action type="fix" issue="CODEC-320" dev="ggregory" due-to="Martin Frydl, Gary Gregory">Wrong output of DoubleMetaphone in 1.16.1.</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Optimize memory allocation in PhoneticEngine.</action>

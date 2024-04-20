@@ -46,7 +46,7 @@ Apache Commons Codec
 [![Java CI](https://github.com/apache/commons-codec/actions/workflows/maven.yml/badge.svg)](https://github.com/apache/commons-codec/actions/workflows/maven.yml)
 [![Coverage Status](https://codecov.io/gh/apache/commons-codec/branch/master/graph/badge.svg)](https://app.codecov.io/gh/apache/commons-codec)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/commons-codec/commons-codec/badge.svg?gav=true)](https://maven-badges.herokuapp.com/maven-central/commons-codec/commons-codec/?gav=true)
-[![Javadocs](https://javadoc.io/badge/commons-codec/commons-codec/1.16.1.svg)](https://javadoc.io/doc/commons-codec/commons-codec/1.16.1)
+[![Javadocs](https://javadoc.io/badge/commons-codec/commons-codec/1.17.0.svg)](https://javadoc.io/doc/commons-codec/commons-codec/1.17.0)
 [![CodeQL](https://github.com/apache/commons-codec/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/apache/commons-codec/actions/workflows/codeql-analysis.yml)
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/apache/commons-codec/badge)](https://api.securityscorecards.dev/projects/github.com/apache/commons-codec)
 
@@ -72,7 +72,7 @@ Alternatively, you can pull it from  the central Maven repositories:
 <dependency>
   <groupId>commons-codec</groupId>
   <artifactId>commons-codec</artifactId>
-  <version>1.16.1</version>
+  <version>1.17.0</version>
 </dependency>
 ```
 
