@@ -661,7 +661,7 @@ public class Base64 extends BaseNCodec {
      *            4). If lineLength &lt;= 0, then the output will not be divided into lines (chunks). Ignored when
      *            decoding.
      * @param lineSeparator
-     *            Each line of encoded data will end with this sequence of bytes.
+     *            Each line of encoded data will end with this sequence of bytes; the constructor makes a defensive copy.
      * @param padding padding byte.
      * @param encodeTable
      *            The manual encodeTable - a byte array of 64 chars.
@@ -683,13 +683,14 @@ public class Base64 extends BaseNCodec {
         // TODO could be simplified if there is no requirement to reject invalid line sep when length <=0
         // @see test case Base64Test.testConstructors()
         if (lineSeparator != null) {
-            if (containsAlphabetOrPad(lineSeparator)) {
-                final String sep = StringUtils.newStringUtf8(lineSeparator);
+            final byte[] lineSeparatorCopy = lineSeparator.clone();
+            if (containsAlphabetOrPad(lineSeparatorCopy)) {
+                final String sep = StringUtils.newStringUtf8(lineSeparatorCopy);
                 throw new IllegalArgumentException("lineSeparator must not contain base64 characters: [" + sep + "]");
             }
             if (lineLength > 0) { // null line-sep forces no chunking rather than throwing IAE
-                this.encodeSize = BYTES_PER_ENCODED_BLOCK + lineSeparator.length;
-                this.lineSeparator = lineSeparator.clone();
+                this.encodeSize = BYTES_PER_ENCODED_BLOCK + lineSeparatorCopy.length;
+                this.lineSeparator = lineSeparatorCopy;
             } else {
                 this.encodeSize = BYTES_PER_ENCODED_BLOCK;
                 this.lineSeparator = null;
