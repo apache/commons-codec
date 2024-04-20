@@ -17,6 +17,8 @@
 
 package org.apache.commons.codec.binary;
 
+import java.util.Objects;
+
 import org.apache.commons.codec.CodecPolicy;
 
 /**
@@ -138,6 +140,7 @@ public class Base16 extends BaseNCodec {
      */
     private Base16(final boolean lowerCase, final byte[] encodeTable, final CodecPolicy decodingPolicy) {
         super(BYTES_PER_UNENCODED_BLOCK, BYTES_PER_ENCODED_BLOCK, 0, 0, PAD_DEFAULT, decodingPolicy);
+        Objects.requireNonNull(encodeTable, "encodeTable");
         this.encodeTable = encodeTable;
         this.decodeTable = encodeTable == LOWER_CASE_ENCODE_TABLE ? LOWER_CASE_DECODE_TABLE : UPPER_CASE_DECODE_TABLE;
     }
