@@ -701,8 +701,6 @@ public class Base64 extends BaseNCodec {
         }
     }
 
-    // Implementation of the Encoder Interface
-
     /**
      * Calculates a decode table for a given encode table.
      *
