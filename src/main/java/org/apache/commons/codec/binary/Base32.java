@@ -359,13 +359,14 @@ public class Base32 extends BaseNCodec {
             if (lineSeparator == null) {
                 throw new IllegalArgumentException("lineLength " + lineLength + " > 0, but lineSeparator is null");
             }
+            final byte[] lineSeparatorCopy = lineSeparator.clone();
             // Must be done after initializing the tables
-            if (containsAlphabetOrPad(lineSeparator)) {
-                final String sep = StringUtils.newStringUtf8(lineSeparator);
+            if (containsAlphabetOrPad(lineSeparatorCopy)) {
+                final String sep = StringUtils.newStringUtf8(lineSeparatorCopy);
                 throw new IllegalArgumentException("lineSeparator must not contain Base32 characters: [" + sep + "]");
             }
-            this.encodeSize = BYTES_PER_ENCODED_BLOCK + lineSeparator.length;
-            this.lineSeparator = lineSeparator.clone();
+            this.encodeSize = BYTES_PER_ENCODED_BLOCK + lineSeparatorCopy.length;
+            this.lineSeparator = lineSeparatorCopy;
         } else {
             this.encodeSize = BYTES_PER_ENCODED_BLOCK;
             this.lineSeparator = null;

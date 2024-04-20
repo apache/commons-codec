@@ -49,6 +49,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Optimize memory allocation in PhoneticEngine.</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">BCodec and QCodec encode() methods throw UnsupportedCharsetException instead of EncoderException.</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Set Javadoc link to latest Java API LTS version.</action>
+      <action type="fix" dev="ggregory" due-to="Gary Gregory">Base32 constructor makes a defensive copy of the line separator array.</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Base64 constructor makes a defensive copy of the line separator array.</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Base64 constructor makes a defensive copy of a custom alphabet array.</action>
       <!-- ADD -->
