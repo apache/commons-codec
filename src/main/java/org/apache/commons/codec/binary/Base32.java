@@ -17,6 +17,8 @@
 
 package org.apache.commons.codec.binary;
 
+import java.util.Objects;
+
 import org.apache.commons.codec.CodecPolicy;
 
 /**
@@ -353,6 +355,7 @@ public class Base32 extends BaseNCodec {
      */
     private Base32(final int lineLength, final byte[] lineSeparator, final byte[] encodeTable, final byte padding, final CodecPolicy decodingPolicy) {
         super(BYTES_PER_UNENCODED_BLOCK, BYTES_PER_ENCODED_BLOCK, lineLength, toLength(lineSeparator), padding, decodingPolicy);
+        Objects.requireNonNull(encodeTable, "encodeTable");
         this.encodeTable = encodeTable;
         this.decodeTable = encodeTable == HEX_ENCODE_TABLE ? HEX_DECODE_TABLE : DECODE_TABLE;
         if (lineLength > 0) {
