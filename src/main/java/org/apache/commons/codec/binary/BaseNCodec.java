@@ -359,7 +359,6 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         if (Integer.compareUnsigned(newCapacity, MAX_BUFFER_SIZE) > 0) {
             newCapacity = createPositiveCapacity(minCapacity);
         }
-
         final byte[] b = Arrays.copyOf(context.buffer, newCapacity);
         context.buffer = b;
         return b;
@@ -435,8 +434,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * @param lineLength if &gt; 0, use chunking with a length {@code lineLength}
      * @param chunkSeparatorLength the chunk separator length, if relevant
      */
-    protected BaseNCodec(final int unencodedBlockSize, final int encodedBlockSize,
-                         final int lineLength, final int chunkSeparatorLength) {
+    protected BaseNCodec(final int unencodedBlockSize, final int encodedBlockSize, final int lineLength, final int chunkSeparatorLength) {
         this(unencodedBlockSize, encodedBlockSize, lineLength, chunkSeparatorLength, PAD_DEFAULT);
     }
 
@@ -453,8 +451,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * @param chunkSeparatorLength the chunk separator length, if relevant
      * @param pad byte used as padding byte.
      */
-    protected BaseNCodec(final int unencodedBlockSize, final int encodedBlockSize,
-                         final int lineLength, final int chunkSeparatorLength, final byte pad) {
+    protected BaseNCodec(final int unencodedBlockSize, final int encodedBlockSize, final int lineLength, final int chunkSeparatorLength, final byte pad) {
         this(unencodedBlockSize, encodedBlockSize, lineLength, chunkSeparatorLength, pad, DECODING_POLICY_DEFAULT);
     }
 
@@ -473,9 +470,8 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * @param decodingPolicy Decoding policy.
      * @since 1.15
      */
-    protected BaseNCodec(final int unencodedBlockSize, final int encodedBlockSize,
-                         final int lineLength, final int chunkSeparatorLength, final byte pad,
-                         final CodecPolicy decodingPolicy) {
+    protected BaseNCodec(final int unencodedBlockSize, final int encodedBlockSize, final int lineLength, final int chunkSeparatorLength, final byte pad,
+            final CodecPolicy decodingPolicy) {
         this.unencodedBlockSize = unencodedBlockSize;
         this.encodedBlockSize = encodedBlockSize;
         final boolean useChunking = lineLength > 0 && chunkSeparatorLength > 0;
@@ -505,12 +501,11 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * @return {@code true} if any byte is a valid character in the alphabet or PAD; {@code false} otherwise
      */
     protected boolean containsAlphabetOrPad(final byte[] arrayOctet) {
-        if (arrayOctet == null) {
-            return false;
-        }
-        for (final byte element : arrayOctet) {
-            if (pad == element || isInAlphabet(element)) {
-                return true;
+        if (arrayOctet != null) {
+            for (final byte element : arrayOctet) {
+                if (pad == element || isInAlphabet(element)) {
+                    return true;
+                }
             }
         }
         return false;
@@ -672,7 +667,6 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
             context.buffer = new byte[Math.max(size, getDefaultBufferSize())];
             context.pos = 0;
             context.readPos = 0;
-
             // Overflow-conscious:
             // x + y > z == x + y - z > 0
         } else if (context.pos + size - context.buffer.length > 0) {

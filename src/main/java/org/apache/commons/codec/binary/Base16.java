@@ -68,12 +68,7 @@ public class Base16 extends BaseNCodec {
      * This array is a lookup table that translates 4-bit positive integer index values into their "Base16 Alphabet" equivalents as specified in Table 5 of RFC
      * 4648.
      */
-    // @formatter:off
-    private static final byte[] UPPER_CASE_ENCODE_TABLE = {
-            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-            'A', 'B', 'C', 'D', 'E', 'F'
-    };
-    // @formatter:on
+    private static final byte[] UPPER_CASE_ENCODE_TABLE = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
 
     /**
      * This array is a lookup table that translates Unicode characters drawn from the a lower-case "Base16 Alphabet" into their 4-bit positive integer
@@ -95,12 +90,7 @@ public class Base16 extends BaseNCodec {
     /**
      * This array is a lookup table that translates 4-bit positive integer index values into their "Base16 Alphabet" lower-case equivalents.
      */
-    // @formatter:off
-    private static final byte[] LOWER_CASE_ENCODE_TABLE = {
-            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-            'a', 'b', 'c', 'd', 'e', 'f'
-    };
-    // @formatter:on
+    private static final byte[] LOWER_CASE_ENCODE_TABLE = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
 
     /** Mask used to extract 4 bits, used when decoding character. */
     private static final int MASK_4BITS = 0x0f;
@@ -164,42 +154,33 @@ public class Base16 extends BaseNCodec {
             }
             return;
         }
-
         final int dataLen = Math.min(data.length - offset, length);
         final int availableChars = (context.ibitWorkArea != 0 ? 1 : 0) + dataLen;
-
         // small optimization to short-cut the rest of this method when it is fed byte-by-byte
         if (availableChars == 1 && availableChars == dataLen) {
             // store 1/2 byte for next invocation of decode, we offset by +1 as empty-value is 0
             context.ibitWorkArea = decodeOctet(data[offset]) + 1;
             return;
         }
-
         // we must have an even number of chars to decode
         final int charsToProcess = availableChars % BYTES_PER_ENCODED_BLOCK == 0 ? availableChars : availableChars - 1;
         final int end = offset + dataLen;
-
         final byte[] buffer = ensureBufferSize(charsToProcess / BYTES_PER_ENCODED_BLOCK, context);
-
         int result;
         if (dataLen < availableChars) {
             // we have 1/2 byte from previous invocation to decode
             result = context.ibitWorkArea - 1 << BITS_PER_ENCODED_BYTE;
             result |= decodeOctet(data[offset++]);
-
             buffer[context.pos++] = (byte) result;
-
             // reset to empty-value for next invocation!
             context.ibitWorkArea = 0;
         }
-
         final int loopEnd = end - 1;
         while (offset < loopEnd) {
             result = decodeOctet(data[offset++]) << BITS_PER_ENCODED_BYTE;
             result |= decodeOctet(data[offset++]);
             buffer[context.pos++] = (byte) result;
         }
-
         // we have one char of a hex-pair left over
         if (offset < end) {
             // store 1/2 byte for next invocation of decode, we offset by +1 as empty-value is 0
@@ -212,11 +193,9 @@ public class Base16 extends BaseNCodec {
         if ((octet & 0xff) < decodeTable.length) {
             decoded = decodeTable[octet];
         }
-
         if (decoded == -1) {
             throw new IllegalArgumentException("Invalid octet in encoded value: " + (int) octet);
         }
-
         return decoded;
     }
 
@@ -225,19 +204,15 @@ public class Base16 extends BaseNCodec {
         if (context.eof) {
             return;
         }
-
         if (length < 0) {
             context.eof = true;
             return;
         }
-
         final int size = length * BYTES_PER_ENCODED_BLOCK;
         if (size < 0) {
             throw new IllegalArgumentException("Input length exceeds maximum size for encoded data: " + length);
         }
-
         final byte[] buffer = ensureBufferSize(size, context);
-
         final int end = offset + length;
         for (int i = offset; i < end; i++) {
             final int value = data[i];

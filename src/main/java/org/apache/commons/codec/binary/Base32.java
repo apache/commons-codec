@@ -437,7 +437,6 @@ public class Base32 extends BaseNCodec {
         // This approach makes the '=' padding characters completely optional.
         if (context.eof && context.modulus > 0) { // if modulus == 0, nothing to do
             final byte[] buffer = ensureBufferSize(decodeSize, context);
-
             // We ignore partial bytes, i.e. only multiples of 8 count.
             // Any combination not part of a valid encoding is either partially decoded
             // or will raise an exception. Possible trailing characters are 2, 4, 5, 7.
@@ -507,7 +506,6 @@ public class Base32 extends BaseNCodec {
     @Override
     void encode(final byte[] input, int inPos, final int inAvail, final Context context) {
         // package protected for access from I/O streams
-
         if (context.eof) {
             return;
         }
