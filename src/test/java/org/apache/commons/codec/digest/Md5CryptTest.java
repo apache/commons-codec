@@ -36,6 +36,16 @@ public class Md5CryptTest {
     }
 
     @Test
+    public void testInvalidPrefix() {
+        assertThrows(IllegalArgumentException.class, () -> Md5Crypt.md5Crypt(new byte[] { 1, 2, 3, 4, 5 },
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa!", "(.*a){10000}"));
+        assertThrows(IllegalArgumentException.class, () -> Md5Crypt.md5Crypt(new byte[] { 1, 2, 3, 4, 5 },
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa!", "$(.*a){10000}$"));
+        assertThrows(IllegalArgumentException.class, () -> Md5Crypt.md5Crypt(new byte[] { 1, 2, 3, 4, 5 },
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "$(.*a){10000}$"));
+    }
+
+    @Test
     public void testMd5CryptBytes() {
         // An empty Bytearray equals an empty String
         assertEquals("$1$foo$9mS5ExwgIECGE5YKlD5o91", Crypt.crypt(new byte[0], "$1$foo"));

@@ -20,6 +20,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.SecureRandom;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -238,7 +239,7 @@ public class Md5Crypt {
      *            real salt value without prefix or "rounds=". The salt may be null, in which case a salt
      *            is generated for you using {@link SecureRandom}.
      * @param prefix
-     *            salt prefix
+     *            The salt prefix {@value #APR1_PREFIX}, {@value #MD5_PREFIX}.
      * @return the hash value
      * @throws IllegalArgumentException
      *             if the salt does not match the allowed pattern
@@ -261,13 +262,13 @@ public class Md5Crypt {
      *            real salt value without prefix or "rounds=". The salt may be null, in which case a salt
      *            is generated for you using {@link SecureRandom}.
      * @param prefix
-     *            salt prefix
+     *            The salt prefix {@value #APR1_PREFIX}, {@value #MD5_PREFIX}.
      * @param random
      *            the instance of {@link Random} to use for generating the salt.
      *            Consider using {@link SecureRandom} for more secure salts.
      * @return the hash value
      * @throws IllegalArgumentException
-     *             if the salt does not match the allowed pattern
+     *             if the salt or prefix does not match the allowed pattern
      * @throws IllegalArgumentException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      * @since 1.12
@@ -280,6 +281,13 @@ public class Md5Crypt {
         if (salt == null) {
             saltString = B64.getRandomSalt(8, random);
         } else {
+            Objects.requireNonNull(prefix, "prefix");
+            if (prefix.length() < 3) {
+                throw new IllegalArgumentException("Invalid prefix value: " + prefix);
+            }
+            if (prefix.charAt(0) != '$' && prefix.charAt(prefix.length() - 1) != '$') {
+                throw new IllegalArgumentException("Invalid prefix value: " + prefix);
+            }
             final Pattern p = Pattern.compile("^" + prefix.replace("$", "\\$") + "([\\.\\/a-zA-Z0-9]{1,8}).*");
             final Matcher m = p.matcher(salt);
             if (!m.find()) {
