@@ -32,7 +32,7 @@ public class Md5CryptTest {
 
     @Test
     public void testCtor() {
-        assertNotNull(new Md5Crypt()); // for code-coverage
+        assertNotNull(new Md5Crypt());
     }
 
     @Test
