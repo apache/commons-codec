@@ -20,7 +20,7 @@ package org.apache.commons.codec.digest;
 import org.apache.commons.codec.binary.StringUtils;
 
 /**
- * Implementation of the MurmurHash2 32-bit and 64-bit hash functions.
+ * Implements the MurmurHash2 32-bit and 64-bit hash functions.
  *
  * <p>MurmurHash is a non-cryptographic hash function suitable for general
  * hash-based lookup. The name comes from two basic operations, multiply (MU)
