@@ -103,7 +103,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
          * Sets the decoding policy.
          *
          * @param decodingPolicy the decoding policy, null resets to the default.
-         * @return this.
+         * @return {@code this} instance.
          */
         public B setDecodingPolicy(final CodecPolicy decodingPolicy) {
             this.decodingPolicy = decodingPolicy != null ? decodingPolicy : DECODING_POLICY_DEFAULT;
@@ -114,7 +114,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
          * Sets the encode table.
          *
          * @param encodeTable the encode table, null resets to the default.
-         * @return this.
+         * @return {@code this} instance.
          */
         public B setEncodeTable(final byte... encodeTable) {
             this.encodeTable = encodeTable != null ? encodeTable : defaultEncodeTable;
@@ -125,7 +125,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
          * Sets the line length.
          *
          * @param lineLength the line length, less than 0 resets to the default.
-         * @return this.
+         * @return {@code this} instance.
          */
         public B setLineLength(final int lineLength) {
             this.lineLength = Math.max(0, lineLength);
@@ -136,7 +136,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
          * Sets the line separator.
          *
          * @param lineSeparator the line separator, null resets to the default.
-         * @return this.
+         * @return {@code this} instance.
          */
         public B setLineSeparator(final byte... lineSeparator) {
             this.lineSeparator = lineSeparator != null ? lineSeparator : CHUNK_SEPARATOR;
@@ -147,7 +147,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
          * Sets the padding byte.
          *
          * @param padding the padding byte.
-         * @return this.
+         * @return {@code this} instance.
          */
         public B setPadding(final byte padding) {
             this.padding = padding;

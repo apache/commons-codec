@@ -92,7 +92,7 @@ public class Base64 extends BaseNCodec {
          * Sets the URL-safe encoding policy.
          *
          * @param urlSafe URL-safe encoding policy, null resets to the default.
-         * @return this.
+         * @return {@code this} instance.
          */
         public Builder setUrlSafe(final boolean urlSafe) {
             return setEncodeTable(toUrlSafeEncodeTable(urlSafe));
