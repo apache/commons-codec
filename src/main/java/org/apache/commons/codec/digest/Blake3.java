@@ -455,7 +455,7 @@ public final class Blake3 {
      * previously finalized bytes. Note that this can finalize up to 2<sup>64</sup> bytes per instance.
      *
      * @param out destination array to finalize bytes into
-     * @return this
+     * @return {@code this} instance.
      * @throws NullPointerException if out is null
      */
     public Blake3 doFinalize(final byte[] out) {
@@ -469,7 +469,7 @@ public final class Blake3 {
      * @param out    destination array to finalize bytes into
      * @param offset where in the array to begin writing bytes to
      * @param length number of bytes to finalize
-     * @return this
+     * @return {@code this} instance.
      * @throws NullPointerException      if out is null
      * @throws IndexOutOfBoundsException if offset or length are negative or if offset + length is greater than the
      *                                   length of the provided array
@@ -498,7 +498,7 @@ public final class Blake3 {
 
     /**
      * Resets this instance back to its initial state when it was first constructed.
-     * @return this
+     * @return {@code this} instance.
      */
     public Blake3 reset() {
         engineState.reset();
@@ -509,7 +509,7 @@ public final class Blake3 {
      * Updates this hash state using the provided bytes.
      *
      * @param in source array to update data from
-     * @return this
+     * @return {@code this} instance.
      * @throws NullPointerException if in is null
      */
     public Blake3 update(final byte[] in) {
@@ -522,7 +522,7 @@ public final class Blake3 {
      * @param in     source array to update data from
      * @param offset where in the array to begin reading bytes
      * @param length number of bytes to update
-     * @return this
+     * @return {@code this} instance.
      * @throws NullPointerException      if in is null
      * @throws IndexOutOfBoundsException if offset or length are negative or if offset + length is greater than the
      *                                   length of the provided array
