@@ -1,12 +1,12 @@
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
+ * contributor license agreements. See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
+ * the License. You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,45 +14,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.codec;
 
 import java.util.Comparator;
 
 /**
  * Compares Strings using a {@link StringEncoder}. This comparator is used to sort Strings by an encoding scheme such as
- * Soundex, Metaphone, etc. This class can come in handy if one need to sort Strings by an encoded form of a name such
- * as Soundex.
+ * Soundex, Metaphone, etc. This class can come in handy if one needs to sort Strings by an encoded form of a name such
+ as Soundex.
  *
  * <p>This class is immutable and thread-safe.</p>
  */
-@SuppressWarnings("rawtypes")
-// TODO ought to implement Comparator<String> but that's not possible whilst maintaining binary compatibility.
-public class StringEncoderComparator implements Comparator {
-
+public class StringEncoderComparator implements Comparator<String> {
     /**
      * Internal encoder instance.
      */
     private final StringEncoder stringEncoder;
 
     /**
-     * Constructs a new instance.
-     *
-     * @deprecated Creating an instance without a {@link StringEncoder} leads to a {@link NullPointerException}. Will be
-     *             removed in 2.0.
-     */
-    @Deprecated
-    public StringEncoderComparator() {
-        this.stringEncoder = null; // Trying to use this will cause things to break
-    }
-
-    /**
      * Constructs a new instance with the given algorithm.
      *
-     * @param stringEncoder
-     *            the StringEncoder used for comparisons.
+     * @param stringEncoder the StringEncoder used for comparisons.
      */
     public StringEncoderComparator(final StringEncoder stringEncoder) {
+        if (stringEncoder == null) {
+            throw new IllegalArgumentException("StringEncoder must not be null");
+        }
         this.stringEncoder = stringEncoder;
     }
 
@@ -62,28 +49,21 @@ public class StringEncoderComparator implements Comparator {
      *
      * If an {@link EncoderException} is encountered, return {@code 0}.
      *
-     * @param o1
-     *            the object to compare
-     * @param o2
-     *            the object to compare to
+     * @param s1 the first string to compare
+     * @param s2 the second string to compare to
      * @return the Comparable.compareTo() return code or 0 if an encoding error was caught.
      * @see Comparable
      */
     @Override
-    public int compare(final Object o1, final Object o2) {
-
-        int compareCode = 0;
-
+    public int compare(final String s1, final String s2) {
         try {
             @SuppressWarnings("unchecked") // May fail with CCE if encode returns something that is not Comparable
-            // However this was always the case.
-            final Comparable<Comparable<?>> s1 = (Comparable<Comparable<?>>) this.stringEncoder.encode(o1);
-            final Comparable<?> s2 = (Comparable<?>) this.stringEncoder.encode(o2);
-            compareCode = s1.compareTo(s2);
-        } catch (final EncoderException ee) {
-            compareCode = 0;
+            final Comparable<Comparable<?>> encoded1 = (Comparable<Comparable<?>>) stringEncoder.encode(s1);
+            final Comparable<?> encoded2 = (Comparable<?>) stringEncoder.encode(s2);
+            return encoded1.compareTo(encoded2);
+        } catch (final EncoderException e) {
+            return 0;
         }
-        return compareCode;
     }
-
 }
+
