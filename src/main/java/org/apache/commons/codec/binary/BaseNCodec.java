@@ -377,13 +377,11 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     /**
      * @deprecated Use {@link #pad}. Will be removed in 2.0.
      */
-    @Deprecated
-    protected final byte PAD = PAD_DEFAULT; // instance variable just in case it needs to vary later
+  @Deprecated
+protected final byte PAD = PAD_DEFAULT; // instance variable just in case it needs to vary later
+/** Pad byte. Instance variable just in case it needs to vary later. */
+protected final byte paddingByte;
 
-    /** Pad byte. Instance variable just in case it needs to vary later. */
-    protected final byte pad;
-
-    /** Number of bytes in each full block of unencoded data, e.g. 4 for Base64 and 5 for Base32 */
     private final int unencodedBlockSize;
 
     /** Number of bytes in each full block of encoded data, e.g. 3 for Base64 and 8 for Base32 */
