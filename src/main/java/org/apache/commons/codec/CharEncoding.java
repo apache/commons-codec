@@ -126,8 +126,7 @@ public class CharEncoding {
  * @deprecated This constructor is deprecated and should not be used.
  */
 @Deprecated
-private CharEncoding() {
-    // empty
-}
+// Constructor removed as planned for version 2.0
+
 
 }
