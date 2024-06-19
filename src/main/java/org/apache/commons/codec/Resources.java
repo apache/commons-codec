@@ -24,13 +24,14 @@ import java.io.InputStream;
  *
  * @since 1.12
  */
-public class Resources {
+class Resources {
 
     /**
      * Opens the given named resource from the given class.
      *
      * @param name The resource name.
      * @return An input stream.
+     * @throws IllegalArgumentException if the resource cannot be resolved.
      */
     public static InputStream getInputStream(final String name) {
         final InputStream inputStream = Resources.class.getClassLoader().getResourceAsStream(name);
@@ -41,12 +42,9 @@ public class Resources {
     }
 
     /**
-     * TODO Make private in 2.0.
-     *
-     * @deprecated TODO Make private in 2.0.
+     * Private constructor to prevent instantiation.
      */
-    @Deprecated
-    public Resources() {
+    private Resources() {
         // empty
     }
 }
