@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,7 +21,7 @@ import java.util.Comparator;
 /**
  * Compares Strings using a {@link StringEncoder}. This comparator is used to sort Strings by an encoding scheme such as
  * Soundex, Metaphone, etc. This class can come in handy if one needs to sort Strings by an encoded form of a name such
- as Soundex.
+ * as Soundex.
  *
  * <p>This class is immutable and thread-safe.</p>
  */
@@ -35,6 +35,7 @@ public class StringEncoderComparator implements Comparator<String> {
      * Constructs a new instance with the given algorithm.
      *
      * @param stringEncoder the StringEncoder used for comparisons.
+     * @throws IllegalArgumentException if the StringEncoder is null.
      */
     public StringEncoderComparator(final StringEncoder stringEncoder) {
         if (stringEncoder == null) {
@@ -66,4 +67,5 @@ public class StringEncoderComparator implements Comparator<String> {
         }
     }
 }
+
 
