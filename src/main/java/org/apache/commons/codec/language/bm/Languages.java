@@ -274,11 +274,12 @@ public class Languages {
         return String.format("org/apache/commons/codec/language/bm/%s_languages.txt", nameType.getName());
     }
 
-    private final Set<String> languages;
+   private final Set<String> supportedLanguages;
 
-    private Languages(final Set<String> languages) {
-        this.languages = languages;
-    }
+private Languages(final Set<String> supportedLanguages) {
+    this.supportedLanguages = supportedLanguages;
+}
+
 
     public Set<String> getLanguages() {
         return this.languages;
