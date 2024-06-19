@@ -398,57 +398,81 @@ public class Base32 extends BaseNCodec {
      * @param inAvail Amount of bytes available from input for decoding.
      * @param context the context to be used
      */
-    @Override
-    void decode(final byte[] input, int inPos, final int inAvail, final Context context) {
-        // package protected for access from I/O streams
-        if (context.eof) {
-            return;
+   @Override
+void decode(final byte[] input, int inPos, final int inAvail, final Context context) {
+    // package protected for access from I/O streams
+
+    if (context.eof) {
+        return;
+    }
+
+    handleInputAvailability(inAvail, context);
+
+    final int decodeSize = this.encodeSize - 1;
+    for (int i = 0; i < inAvail; i++) {
+        final byte b = input[inPos++];
+        if (processByte(b, decodeSize, context)) {
+            break;
         }
-        if (inAvail < 0) {
-            context.eof = true;
-        }
-        final int decodeSize = this.encodeSize - 1;
-        for (int i = 0; i < inAvail; i++) {
-            final byte b = input[inPos++];
-            if (b == pad) {
-                // We're done.
-                context.eof = true;
-                break;
+    }
+
+    handleEndOfFile(decodeSize, context);
+}
+
+private void handleInputAvailability(final int inAvail, final Context context) {
+    if (inAvail < 0) {
+        context.eof = true;
+    }
+}
+
+private boolean processByte(final byte b, final int decodeSize, final Context context) {
+    if (b == pad) {
+        // We're done.
+        context.eof = true;
+        return true;
+    }
+
+    final byte[] buffer = ensureBufferSize(decodeSize, context);
+
+    if (b >= 0 && b < this.decodeTable.length) {
+        final int result = this.decodeTable[b];
+        if (result >= 0) {
+            context.modulus = (context.modulus + 1) % BYTES_PER_ENCODED_BLOCK;
+            // collect decoded bytes
+            context.lbitWorkArea = (context.lbitWorkArea << BITS_PER_ENCODED_BYTE) + result;
+            if (context.modulus == 0) { // we can output the 5 bytes
+                outputDecodedBytes(buffer, context);
             }
-            final byte[] buffer = ensureBufferSize(decodeSize, context);
-            if (b >= 0 && b < this.decodeTable.length) {
-                final int result = this.decodeTable[b];
-                if (result >= 0) {
-                    context.modulus = (context.modulus + 1) % BYTES_PER_ENCODED_BLOCK;
-                    // collect decoded bytes
-                    context.lbitWorkArea = (context.lbitWorkArea << BITS_PER_ENCODED_BYTE) + result;
-                    if (context.modulus == 0) { // we can output the 5 bytes
-                        buffer[context.pos++] = (byte) (context.lbitWorkArea >> 32 & MASK_8BITS);
-                        buffer[context.pos++] = (byte) (context.lbitWorkArea >> 24 & MASK_8BITS);
-                        buffer[context.pos++] = (byte) (context.lbitWorkArea >> 16 & MASK_8BITS);
-                        buffer[context.pos++] = (byte) (context.lbitWorkArea >> 8 & MASK_8BITS);
-                        buffer[context.pos++] = (byte) (context.lbitWorkArea & MASK_8BITS);
-                    }
-                }
-            }
         }
-        // Two forms of EOF as far as Base32 decoder is concerned: actual
-        // EOF (-1) and first time '=' character is encountered in stream.
-        // This approach makes the '=' padding characters completely optional.
-        if (context.eof && context.modulus > 0) { // if modulus == 0, nothing to do
-            final byte[] buffer = ensureBufferSize(decodeSize, context);
-            // We ignore partial bytes, i.e. only multiples of 8 count.
-            // Any combination not part of a valid encoding is either partially decoded
-            // or will raise an exception. Possible trailing characters are 2, 4, 5, 7.
-            // It is not possible to encode with 1, 3, 6 trailing characters.
-            // For backwards compatibility 3 & 6 chars are decoded anyway rather than discarded.
-            // See the encode(byte[]) method EOF section.
-            switch (context.modulus) {
-//              case 0 : // impossible, as excluded above
+    }
+
+    return false;
+}
+
+private void outputDecodedBytes(final byte[] buffer, final Context context) {
+    buffer[context.pos++] = (byte) (context.lbitWorkArea >> 32 & MASK_8BITS);
+    buffer[context.pos++] = (byte) (context.lbitWorkArea >> 24 & MASK_8BITS);
+    buffer[context.pos++] = (byte) (context.lbitWorkArea >> 16 & MASK_8BITS);
+    buffer[context.pos++] = (byte) (context.lbitWorkArea >> 8 & MASK_8BITS);
+    buffer[context.pos++] = (byte) (context.lbitWorkArea & MASK_8BITS);
+}
+
+private void handleEndOfFile(final int decodeSize, final Context context) {
+    if (context.eof && context.modulus > 0) { // if modulus == 0, nothing to do
+        final byte[] buffer = ensureBufferSize(decodeSize, context);
+        switch (context.modulus) {
+            // case 0 : // impossible, as excluded above
             case 1: // 5 bits - either ignore entirely, or raise an exception
                 validateTrailingCharacters();
+                break;
             case 2: // 10 bits, drop 2 and output one byte
                 validateCharacter(MASK_2BITS, context);
+                break;
+            // Additional cases for other modulus values if needed
+        }
+    }
+}
+
                 buffer[context.pos++] = (byte) (context.lbitWorkArea >> 2 & MASK_8BITS);
                 break;
             case 3: // 15 bits, drop 7 and output 1 byte, or raise an exception
