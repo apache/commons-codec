@@ -58,8 +58,7 @@ public class StringEncoderComparator implements Comparator<String> {
     @Override
     public int compare(final String s1, final String s2) {
         try {
-            @SuppressWarnings("unchecked") // May fail with CCE if encode returns something that is not Comparable
-            final Comparable<Comparable<?>> encoded1 = (Comparable<Comparable<?>>) stringEncoder.encode(s1);
+            final Comparable<?> encoded1 = (Comparable<?>) stringEncoder.encode(s1);
             final Comparable<?> encoded2 = (Comparable<?>) stringEncoder.encode(s2);
             return encoded1.compareTo(encoded2);
         } catch (final EncoderException e) {
@@ -67,5 +66,6 @@ public class StringEncoderComparator implements Comparator<String> {
         }
     }
 }
+
 
 
