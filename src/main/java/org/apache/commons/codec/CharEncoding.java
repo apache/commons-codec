@@ -120,13 +120,14 @@ public class CharEncoding {
     public static final String UTF_8 = StandardCharsets.UTF_8.name();
 
     /**
-     * TODO Make private in 2.0.
-     *
-     * @deprecated TODO Make private in 2.0.
-     */
-    @Deprecated
-    public CharEncoding() {
-        // empty
-    }
+   /**
+ * Constructor made private as planned for version 2.0.
+ *
+ * @deprecated This constructor is deprecated and should not be used.
+ */
+@Deprecated
+private CharEncoding() {
+    // empty
+}
 
 }
