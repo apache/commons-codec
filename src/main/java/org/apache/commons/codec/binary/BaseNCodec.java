@@ -337,10 +337,18 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * @see Character#isWhitespace(int)
      * @deprecated Use {@link Character#isWhitespace(int)}.
      */
-    @Deprecated
-    protected static boolean isWhiteSpace(final byte byteToCheck) {
-        return Character.isWhitespace(byteToCheck);
-    }
+    /**
+ * Checks if the given byte represents white space.
+ *
+ * @param byteToCheck The byte to check.
+ * @return {@code true} if the byte represents white space, {@code false} otherwise.
+ * @deprecated Use {@link Character#isWhitespace(int)} instead.
+ */
+@Deprecated
+protected static boolean isWhiteSpace(final byte byteToCheck) {
+    return Character.isWhitespace(byteToCheck);
+}
+
 
     /**
      * Increases our buffer by the {@link #DEFAULT_BUFFER_RESIZE_FACTOR}.
