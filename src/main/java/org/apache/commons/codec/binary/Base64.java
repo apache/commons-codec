@@ -741,46 +741,77 @@ public class Base64 extends BaseNCodec {
      *            the context to be used
      */
     @Override
-    void decode(final byte[] input, int inPos, final int inAvail, final Context context) {
-        if (context.eof) {
-            return;
+void decode(final byte[] input, int inPos, final int inAvail, final Context context) {
+    // package protected for access from I/O streams
+
+    if (context.eof) {
+        return;
+    }
+
+    if (inAvail < 0) {
+        context.eof = true;
+    }
+
+    final int decodeSize = this.encodeSize - 1;
+    for (int i = 0; i < inAvail; i++) {
+        final byte[] buffer = ensureBufferSize(decodeSize, context);
+        final byte b = input[inPos++];
+        
+        if (processByte(b, buffer, context)) {
+            break;
         }
-        if (inAvail < 0) {
-            context.eof = true;
+    }
+
+    handleEndOfFile(decodeSize, context);
+}
+
+private boolean processByte(final byte b, final byte[] buffer, final Context context) {
+    if (b == pad) {
+        context.eof = true;
+        return true;
+    }
+
+    if (b >= 0 && b < decodeTable.length) {
+        final int result = decodeTable[b];
+        if (result >= 0) {
+            context.modulus = (context.modulus + 1) % BYTES_PER_ENCODED_BLOCK;
+            context.ibitWorkArea = (context.ibitWorkArea << BITS_PER_ENCODED_BYTE) + result;
+            if (context.modulus == 0) {
+                outputDecodedBytes(buffer, context);
+            }
         }
-        final int decodeSize = this.encodeSize - 1;
-        for (int i = 0; i < inAvail; i++) {
-            final byte[] buffer = ensureBufferSize(decodeSize, context);
-            final byte b = input[inPos++];
-            if (b == pad) {
-                // We're done.
-                context.eof = true;
+    }
+
+    return false;
+}
+
+private void outputDecodedBytes(final byte[] buffer, final Context context) {
+    buffer[context.pos++] = (byte) (context.ibitWorkArea >> 16 & MASK_8BITS);
+    buffer[context.pos++] = (byte) (context.ibitWorkArea >> 8 & MASK_8BITS);
+    buffer[context.pos++] = (byte) (context.ibitWorkArea & MASK_8BITS);
+}
+
+private void handleEndOfFile(final int decodeSize, final Context context) {
+    if (context.eof && context.modulus != 0) {
+        final byte[] buffer = ensureBufferSize(decodeSize, context);
+        switch (context.modulus) {
+            // case 0 : // impossible, as excluded above
+            case 1: // 8 bits
+                buffer[context.pos++] = (byte) (context.ibitWorkArea >> 2 & MASK_8BITS);
                 break;
-            }
-            if (b >= 0 && b < decodeTable.length) {
-                final int result = decodeTable[b];
-                if (result >= 0) {
-                    context.modulus = (context.modulus + 1) % BYTES_PER_ENCODED_BLOCK;
-                    context.ibitWorkArea = (context.ibitWorkArea << BITS_PER_ENCODED_BYTE) + result;
-                    if (context.modulus == 0) {
-                        buffer[context.pos++] = (byte) (context.ibitWorkArea >> 16 & MASK_8BITS);
-                        buffer[context.pos++] = (byte) (context.ibitWorkArea >> 8 & MASK_8BITS);
-                        buffer[context.pos++] = (byte) (context.ibitWorkArea & MASK_8BITS);
-                    }
-                }
-            }
+            case 2: // 16 bits
+                buffer[context.pos++] = (byte) (context.ibitWorkArea >> 10 & MASK_8BITS);
+                buffer[context.pos++] = (byte) (context.ibitWorkArea >> 2 & MASK_8BITS);
+                break;
+            case 3: // 24 bits
+                buffer[context.pos++] = (byte) (context.ibitWorkArea >> 18 & MASK_8BITS);
+                buffer[context.pos++] = (byte) (context.ibitWorkArea >> 10 & MASK_8BITS);
+                buffer[context.pos++] = (byte) (context.ibitWorkArea >> 2 & MASK_8BITS);
+                break;
         }
+    }
+}
 
-        // Two forms of EOF as far as base64 decoder is concerned: actual
-        // EOF (-1) and first time '=' character is encountered in stream.
-        // This approach makes the '=' padding characters completely optional.
-        if (context.eof && context.modulus != 0) {
-            final byte[] buffer = ensureBufferSize(decodeSize, context);
-
-            // We have some spare bits remaining
-            // Output all whole multiples of 8 bits and ignore the rest
-            switch (context.modulus) {
-//              case 0 : // impossible, as excluded above
                 case 1 : // 6 bits - either ignore entirely, or raise an exception
                     validateTrailingCharacter();
                     break;
