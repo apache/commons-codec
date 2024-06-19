@@ -55,17 +55,17 @@ public class StringEncoderComparator implements Comparator<String> {
      * @return the Comparable.compareTo() return code or 0 if an encoding error was caught.
      * @see Comparable
      */
-    @Override
-    public int compare(final String s1, final String s2) {
-        try {
-            final Comparable<?> encoded1 = (Comparable<?>) stringEncoder.encode(s1);
-            final Comparable<?> encoded2 = (Comparable<?>) stringEncoder.encode(s2);
-            return encoded1.compareTo(encoded2);
-        } catch (final EncoderException e) {
-            return 0;
-        }
+   @Override
+public int compare(final String s1, final String s2) {
+    try {
+        final Comparable<?> encoded1 = stringEncoder.encode(s1);
+        final Comparable<?> encoded2 = stringEncoder.encode(s2);
+        return encoded1.compareTo(encoded2);
+    } catch (final EncoderException e) {
+        return 0;
     }
 }
+
 
 
 
