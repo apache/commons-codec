@@ -154,53 +154,44 @@ public class BaseNCodecInputStream extends FilterInputStream {
      *             if offset, len or buffer size are invalid
      */
     @Override
-    public int read(final byte[] array, final int offset, final int len) throws IOException {
-        Objects.requireNonNull(array, "array");
-        if (offset < 0 || len < 0) {
-            throw new IndexOutOfBoundsException();
-        }
-        if (offset > array.length || offset + len > array.length) {
-            throw new IndexOutOfBoundsException();
-        }
-        if (len == 0) {
-            return 0;
-        }
-        int readLen = 0;
-        /*
-         Rationale for while-loop on (readLen == 0):
-         -----
-         Base32.readResults() usually returns > 0 or EOF (-1).  In the
-         rare case where it returns 0, we just keep trying.
+public int read(final byte[] array, final int offset, final int len) throws IOException {
+    validateInput(array, offset, len);
 
-         This is essentially an undocumented contract for InputStream
-         implementors that want their code to work properly with
-         java.io.InputStreamReader, since the latter hates it when
-         InputStream.read(byte[]) returns a zero.  Unfortunately our
-         readResults() call must return 0 if a large amount of the data
-         being decoded was non-base32, so this while-loop enables proper
-         interop with InputStreamReader for that scenario.
-         -----
-         This is a fix for CODEC-101
-        */
-        // Attempt to read the request length
-        while (readLen < len) {
-            if (!baseNCodec.hasData(context)) {
-                // Obtain more data.
-                // buf is reused across calls to read to avoid repeated allocations
-                final int c = in.read(buf);
-                if (doEncode) {
-                    baseNCodec.encode(buf, 0, c, context);
-                } else {
-                    baseNCodec.decode(buf, 0, c, context);
-                }
-            }
-            final int read = baseNCodec.readResults(array, offset + readLen, len - readLen, context);
-            if (read < 0) {
-                // Return the amount read or EOF
-                return readLen != 0 ? readLen : -1;
-            }
-            readLen += read;
+    if (len == 0) {
+        return 0;
+    }
+
+    int readLen = 0;
+    while (readLen < len) {
+        if (!baseNCodec.hasData(context)) {
+            fetchData();
         }
+        int read = baseNCodec.readResults(array, offset + readLen, len - readLen, context);
+        if (read < 0) {
+            return readLen != 0 ? readLen : -1;
+        }
+        readLen += read;
+    }
+    return readLen;
+}
+
+private void validateInput(final byte[] array, final int offset, final int len) {
+    Objects.requireNonNull(array, "array");
+
+    if (offset < 0 || len < 0 || offset > array.length || offset + len > array.length) {
+        throw new IndexOutOfBoundsException();
+    }
+}
+
+private void fetchData() throws IOException {
+    final int c = in.read(buf);
+    if (doEncode) {
+        baseNCodec.encode(buf, 0, c, context);
+    } else {
+        baseNCodec.decode(buf, 0, c, context);
+    }
+}
+
         return readLen;
     }
 
