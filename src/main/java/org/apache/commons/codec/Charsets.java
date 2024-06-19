@@ -72,8 +72,8 @@ public class Charsets {
      * @deprecated Use {@link java.nio.charset.StandardCharsets#ISO_8859_1} instead.
      * @see <a href="https://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      */
-    @Deprecated
-    public static final Charset ISO_8859_1 = StandardCharsets.ISO_8859_1;
+    // Removed the deprecated ISO_8859_1 field as planned
+
 
     /**
      * Seven-bit ASCII, also known as ISO646-US, also known as the Basic Latin block of the Unicode character set.
