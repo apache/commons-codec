@@ -268,118 +268,85 @@ public class Md5Crypt {
      *            Consider using {@link SecureRandom} for more secure salts.
      * @return the hash value
      * @throws IllegalArgumentException
-     *             if the salt or prefix does not match the allowed pattern
-     * @throws IllegalArgumentException
-     *             when a {@link java.security.NoSuchAlgorithmException} is caught.
-     * @since 1.12
-     */
-    public static String md5Crypt(final byte[] keyBytes, final String salt, final String prefix, final Random random) {
-        final int keyLen = keyBytes.length;
+     /**
+ * Generates an MD5-based crypt hash.
+ *
+ * @param keyBytes The key bytes to hash.
+ * @param salt The salt string for hashing.
+ * @param prefix The prefix for the hash.
+ * @param random The random generator for salt if not provided.
+ * @return The MD5-based crypt hash string.
+ * @throws IllegalArgumentException If the salt or prefix does not match the allowed pattern.
+ * @since 1.12
+ */
+public static String md5Crypt(final byte[] keyBytes, final String salt, final String prefix, final Random random) {
+    final int keyLen = keyBytes.length;
+    String saltString;
 
-        // Extract the real salt from the given string which can be a complete hash string.
-        final String saltString;
-        if (salt == null) {
-            saltString = B64.getRandomSalt(8, random);
+    // Determine the salt string
+    if (salt == null) {
+        saltString = B64.getRandomSalt(8, random);
+    } else {
+        Objects.requireNonNull(prefix, "prefix");
+
+        // Validate the prefix
+        if (prefix.length() < 3 || prefix.charAt(0) != '$' || prefix.charAt(prefix.length() - 1) != '$') {
+            throw new IllegalArgumentException("Invalid prefix value: " + prefix);
+        }
+
+        // Extract salt from the given string
+        final Pattern p = Pattern.compile("^" + prefix.replace("$", "\\$") + "([\\.\\/a-zA-Z0-9]{1,8}).*");
+        final Matcher m = p.matcher(salt);
+        if (!m.find()) {
+            throw new IllegalArgumentException("Invalid salt value: " + salt);
+        }
+        saltString = m.group(1);
+    }
+
+    final byte[] saltBytes = saltString.getBytes(StandardCharsets.UTF_8);
+
+    // MD5 context initialization
+    final MessageDigest ctx = DigestUtils.getMd5Digest();
+    final MessageDigest ctx1 = DigestUtils.getMd5Digest();
+
+    // Update context with key and salt
+    ctx1.update(keyBytes);
+    ctx1.update(saltBytes);
+    ctx1.update(keyBytes);
+    byte[] finalb = ctx1.digest();
+
+    // Additional processing with context
+    int ii = keyLen;
+    while (ii > 0) {
+        ctx.update(finalb, 0, Math.min(ii, 16));
+        ii -= 16;
+    }
+
+    // Clear sensitive data
+    Arrays.fill(finalb, (byte) 0);
+
+    // Another round of processing with context
+    ii = keyLen;
+    for (int j = 0; ii > 0; ii >>= 1, j++) {
+        if ((ii & 1) == 1) {
+            ctx.update(finalb[j]);
         } else {
-            Objects.requireNonNull(prefix, "prefix");
-            if (prefix.length() < 3) {
-                throw new IllegalArgumentException("Invalid prefix value: " + prefix);
-            }
-            if (prefix.charAt(0) != '$' && prefix.charAt(prefix.length() - 1) != '$') {
-                throw new IllegalArgumentException("Invalid prefix value: " + prefix);
-            }
-            final Pattern p = Pattern.compile("^" + prefix.replace("$", "\\$") + "([\\.\\/a-zA-Z0-9]{1,8}).*");
-            final Matcher m = p.matcher(salt);
-            if (!m.find()) {
-                throw new IllegalArgumentException("Invalid salt value: " + salt);
-            }
-            saltString = m.group(1);
+            ctx.update(keyBytes[j]);
         }
-        final byte[] saltBytes = saltString.getBytes(StandardCharsets.UTF_8);
+    }
 
-        final MessageDigest ctx = DigestUtils.getMd5Digest();
+    // Build the output string
+    final StringBuilder passwd = new StringBuilder(prefix + saltString + "$");
+    finalb = ctx.digest();
 
-        /*
-         * The password first, since that is what is most unknown
-         */
-        ctx.update(keyBytes);
+    // Further processing iterations
+    for (int i = 0; i < ROUNDS; i++) {
+        ctx1.update((i & 1) != 0 ? keyBytes : finalb, 0, (i % 3 != 0 ? BLOCKSIZE : 0) + (i % 7 != 0 ? saltBytes.length : 0));
+        finalb = ctx1.digest();
+    }
 
-        /*
-         * Then our magic string
-         */
-        ctx.update(prefix.getBytes(StandardCharsets.UTF_8));
-
-        /*
-         * Then the raw salt
-         */
-        ctx.update(saltBytes);
-
-        /*
-         * Then just as many characters of the MD5(pw,salt,pw)
-         */
-        MessageDigest ctx1 = DigestUtils.getMd5Digest();
-        ctx1.update(keyBytes);
-        ctx1.update(saltBytes);
-        ctx1.update(keyBytes);
-        byte[] finalb = ctx1.digest();
-        int ii = keyLen;
-        while (ii > 0) {
-            ctx.update(finalb, 0, Math.min(ii, 16));
-            ii -= 16;
-        }
-
-        /*
-         * Don't leave anything around in JVM they could use.
-         */
-        Arrays.fill(finalb, (byte) 0);
-
-        /*
-         * Then something really weird...
-         */
-        ii = keyLen;
-        final int j = 0;
-        while (ii > 0) {
-            if ((ii & 1) == 1) {
-                ctx.update(finalb[j]);
-            } else {
-                ctx.update(keyBytes[j]);
-            }
-            ii >>= 1;
-        }
-
-        /*
-         * Now make the output string
-         */
-        final StringBuilder passwd = new StringBuilder(prefix + saltString + "$");
-        finalb = ctx.digest();
-
-        /*
-         * and now, just to make sure things don't run too fast On a 60 Mhz Pentium this takes 34 milliseconds, so you
-         * would need 30 seconds to build a 1000 entry dictionary...
-         */
-        for (int i = 0; i < ROUNDS; i++) {
-            ctx1 = DigestUtils.getMd5Digest();
-            if ((i & 1) != 0) {
-                ctx1.update(keyBytes);
-            } else {
-                ctx1.update(finalb, 0, BLOCKSIZE);
-            }
-
-            if (i % 3 != 0) {
-                ctx1.update(saltBytes);
-            }
-
-            if (i % 7 != 0) {
-                ctx1.update(keyBytes);
-            }
-
-            if ((i & 1) != 0) {
-                ctx1.update(finalb, 0, BLOCKSIZE);
-            } else {
-                ctx1.update(keyBytes);
-            }
-            finalb = ctx1.digest();
-        }
+    return passwd.toString();
+}
 
         // The following was nearly identical to the Sha2Crypt code.
         // Again, the buflen is not really needed.
