@@ -333,9 +333,10 @@ public static byte[] getBytesIso88591(final String string) {
      *             since it is required by the Java platform specification.
      * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
      */
-    public static String newStringIso8859_1(final byte[] bytes) {
-        return newString(bytes, StandardCharsets.ISO_8859_1);
-    }
+   public static String newStringIso88591(final byte[] bytes) {
+    return newString(bytes, StandardCharsets.ISO_8859_1);
+}
+
 
     /**
      * Constructs a new {@code String} by decoding the specified array of bytes using the US-ASCII charset.
