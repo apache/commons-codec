@@ -402,10 +402,41 @@ public final class Blake3 {
         return Blake3.initKeyedHash(key).update(data).doFinalize(OUT_LEN);
     }
 
-    private static void packInt(final int value, final byte[] dst, final int off, final int len) {
+    // Output.java
+public class Output {
+
+    /**
+     * Packs an integer value into a byte array starting at the specified offset.
+     *
+     * @param value the integer value to pack
+     * @param dst   the destination byte array
+     * @param off   the starting offset in the byte array
+     * @param len   the number of bytes to pack (up to 4)
+     */
+    public static void packInt(final int value, final byte[] dst, final int off, final int len) {
         for (int i = 0; i < len; i++) {
-            dst[off + i] = (byte) (value >>> i * Byte.SIZE);
+            dst[off + i] = (byte) (value >>> (i * Byte.SIZE));
         }
+    }
+}
+
+// Main.java (example usage)
+public class Main {
+
+    public static void main(String[] args) {
+        byte[] byteArray = new byte[4]; // Example byte array
+        int integerValue = 12345; // Example integer value
+        Output.packInt(integerValue, byteArray, 0, 4); // Invoke from Output class
+
+        // Example of printing the packed bytes
+        System.out.print("Packed bytes: ");
+        for (byte b : byteArray) {
+            System.out.print(b + " ");
+        }
+        System.out.println();
+    }
+}
+
     }
 
     private static int[] parentChainingValue(final int[] leftChildCV, final int[] rightChildCV, final int[] key, final int flags) {
