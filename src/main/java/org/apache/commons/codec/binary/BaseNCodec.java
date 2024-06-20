@@ -378,6 +378,7 @@ protected static boolean isWhiteSpace(final byte byteToCheck) {
     return Character.isWhitespace(byteToCheck & 0xFF); // Masking to convert byte to int
 }
 
+
     /**
      * Increases our buffer by the {@link #DEFAULT_BUFFER_RESIZE_FACTOR}.
      * @param context the context to be used
