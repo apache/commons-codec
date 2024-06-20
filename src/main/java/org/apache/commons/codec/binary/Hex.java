@@ -206,12 +206,11 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      */
     private static char[] encodeHex(final byte[] data, final int dataOffset, final int dataLen, final char[] toDigits, final char[] out, final int outOffset) {
         // two characters form the hex value.
-      for (int i = dataOffset, j = outOffset; i < dataOffset + dataLen; i++) {
-    out[j] = toDigits[(0xF0 & data[i]) >>> 4];
-    j++;
-    out[j] = toDigits[0x0F & data[i]];
-    j++;
+    for (int i = dataOffset; i < dataOffset + dataLen; i++) {
+    out[outOffset++] = toDigits[(0xF0 & data[i]) >>> 4];
+    out[outOffset++] = toDigits[0x0F & data[i]];
 }
+
 
 
         return out;
