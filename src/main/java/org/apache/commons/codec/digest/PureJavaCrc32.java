@@ -615,24 +615,32 @@ public class PureJavaCrc32 implements Checksum {
       }
 
       /* loop unroll - duff's device style */
-      switch (remainder) {
-      case 7:
-          localCrc = localCrc >>> 8 ^ T[(localCrc ^ b[i++]) << 24 >>> 24];
-      case 6:
-          localCrc = localCrc >>> 8 ^ T[(localCrc ^ b[i++]) << 24 >>> 24];
-      case 5:
-          localCrc = localCrc >>> 8 ^ T[(localCrc ^ b[i++]) << 24 >>> 24];
-      case 4:
-          localCrc = localCrc >>> 8 ^ T[(localCrc ^ b[i++]) << 24 >>> 24];
-      case 3:
-          localCrc = localCrc >>> 8 ^ T[(localCrc ^ b[i++]) << 24 >>> 24];
-      case 2:
-          localCrc = localCrc >>> 8 ^ T[(localCrc ^ b[i++]) << 24 >>> 24];
-      case 1:
-          localCrc = localCrc >>> 8 ^ T[(localCrc ^ b[i++]) << 24 >>> 24];
-      default:
-          /* nothing */
-      }
+     switch (remainder) {
+    case 7:
+        localCrc = localCrc >>> 8 ^ T[(localCrc ^ b[i++]) << 24 >>> 24];
+        break;
+    case 6:
+        localCrc = localCrc >>> 8 ^ T[(localCrc ^ b[i++]) << 24 >>> 24];
+        break;
+    case 5:
+        localCrc = localCrc >>> 8 ^ T[(localCrc ^ b[i++]) << 24 >>> 24];
+        break;
+    case 4:
+        localCrc = localCrc >>> 8 ^ T[(localCrc ^ b[i++]) << 24 >>> 24];
+        break;
+    case 3:
+        localCrc = localCrc >>> 8 ^ T[(localCrc ^ b[i++]) << 24 >>> 24];
+        break;
+    case 2:
+        localCrc = localCrc >>> 8 ^ T[(localCrc ^ b[i++]) << 24 >>> 24];
+        break;
+    case 1:
+        localCrc = localCrc >>> 8 ^ T[(localCrc ^ b[i++]) << 24 >>> 24];
+        break;
+    default:
+        /* nothing */
+}
+
 
       // Publish crc out to object
       crc = localCrc;
