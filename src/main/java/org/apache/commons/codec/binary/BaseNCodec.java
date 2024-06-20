@@ -325,8 +325,15 @@ protected static boolean isWhiteSpace(final byte byteToCheck) {
  *
  * @deprecated This field is deprecated and should not be used.
  */
-@Deprecated
-protected final byte paddingByte;
+/**
+ * Checks if the given byte represents white space.
+ *
+ * @param byteToCheck The byte to check.
+ * @return {@code true} if the byte represents white space, {@code false} otherwise.
+ */
+protected static boolean isWhiteSpace(final byte byteToCheck) {
+    return Character.isWhitespace(byteToCheck);
+}
 
     private final int unencodedBlockSize;
 
