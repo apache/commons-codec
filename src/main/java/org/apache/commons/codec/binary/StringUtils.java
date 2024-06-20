@@ -141,9 +141,10 @@ public class StringUtils {
      * @see Charset
      * @see #getBytesUnchecked(String, String)
      */
-    public static byte[] getBytesIso8859_1(final String string) {
-        return getBytes(string, StandardCharsets.ISO_8859_1);
-    }
+   public static byte[] getBytesIso8859_1(final String string) {
+    return getBytes(string, StandardCharsets.ISO_8859_1);
+}
+
 
     /**
      * Encodes the given string into a sequence of bytes using the named charset, storing the result into a new byte
