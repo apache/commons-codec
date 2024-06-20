@@ -169,10 +169,17 @@ public static byte[] getBytesIso88591(final String string) {
      * @see CharEncoding
      * @see String#getBytes(String)
      */
-    public static byte[] getBytesUnchecked(final String string, final String charsetName) {
-        if (string == null) {
-            return null;
-        }
+   public static byte[] getBytesUnchecked(final String string, final String charsetName) {
+    if (string == null) {
+        return new byte[0]; // Return an empty array instead of null
+    }
+    try {
+        return string.getBytes(charsetName);
+    } catch (UnsupportedEncodingException e) {
+        throw new IllegalStateException(charsetName + ": " + e);
+    }
+}
+
         try {
             return string.getBytes(charsetName);
         } catch (final UnsupportedEncodingException e) {
