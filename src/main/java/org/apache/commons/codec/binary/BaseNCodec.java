@@ -445,8 +445,21 @@ protected static boolean isWhiteSpace(final byte byteToCheck) {
  * @deprecated This field is deprecated and should not be used.
  *             Use PAD_DEFAULT directly if needed.
  */
+/**
+ * Pad byte. Instance variable just in case it needs to vary later.
+ *
+ * @deprecated Use {@link PAD_DEFAULT} instead.
+ */
 @Deprecated
-protected static final byte pad = PAD_DEFAULT; // instance variable just in case it needs to vary later
+protected static final byte PAD_DEFAULT = 0x00; // Adjust the value as needed
+
+/**
+ * Deprecated constant with a name conforming to '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.
+ * Instance variable just in case it needs to vary later.
+ */
+@Deprecated
+protected static final byte PAD_DEFAULT_LEGACY = PAD_DEFAULT;
+
 
 protected final byte paddingByte;
 
