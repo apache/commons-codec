@@ -321,9 +321,10 @@ public class DigestUtils {
      * @throws IllegalArgumentException when a {@link NoSuchAlgorithmException} is caught.
      * @see MessageDigestAlgorithms#SHA_512_224
      */
-    public static MessageDigest getSha512_256Digest() {
-        return getDigest(MessageDigestAlgorithms.SHA_512_256);
-    }
+ public static MessageDigest getSha512256Digest() {
+    return getDigest(MessageDigestAlgorithms.SHA_512_256);
+}
+
 
     /**
      * Gets an SHA-512 digest.
