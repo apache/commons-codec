@@ -27,8 +27,135 @@ import org.apache.commons.codec.EncoderException;
  *
  * <p>This class is immutable and thread-safe.</p>
  *
- * TODO: may want to add more bit vector functions like and/or/xor/nand
- * TODO: also might be good to generate boolean[] from byte[] et cetera.
+/**
+ * Utility class for performing bitwise operations on boolean arrays and converting byte arrays to boolean arrays.
+ */
+public class BitVectorUtils {
+
+    /**
+     * Performs bitwise AND operation on two boolean arrays.
+     *
+     * @param a First boolean array.
+     * @param b Second boolean array.
+     * @return Result of bitwise AND operation.
+     * @throws IllegalArgumentException If arrays are not of equal length.
+     */
+    public static boolean[] and(boolean[] a, boolean[] b) {
+        if (a.length != b.length) {
+            throw new IllegalArgumentException("Arrays must be of equal length");
+        }
+        boolean[] result = new boolean[a.length];
+        for (int i = 0; i < a.length; i++) {
+            result[i] = a[i] && b[i];
+        }
+        return result;
+    }
+
+    /**
+     * Performs bitwise OR operation on two boolean arrays.
+     *
+     * @param a First boolean array.
+     * @param b Second boolean array.
+     * @return Result of bitwise OR operation.
+     * @throws IllegalArgumentException If arrays are not of equal length.
+     */
+    public static boolean[] or(boolean[] a, boolean[] b) {
+        if (a.length != b.length) {
+            throw new IllegalArgumentException("Arrays must be of equal length");
+        }
+        boolean[] result = new boolean[a.length];
+        for (int i = 0; i < a.length; i++) {
+            result[i] = a[i] || b[i];
+        }
+        return result;
+    }
+
+    /**
+     * Performs bitwise XOR operation on two boolean arrays.
+     *
+     * @param a First boolean array.
+     * @param b Second boolean array.
+     * @return Result of bitwise XOR operation.
+     * @throws IllegalArgumentException If arrays are not of equal length.
+     */
+    public static boolean[] xor(boolean[] a, boolean[] b) {
+        if (a.length != b.length) {
+            throw new IllegalArgumentException("Arrays must be of equal length");
+        }
+        boolean[] result = new boolean[a.length];
+        for (int i = 0; i < a.length; i++) {
+            result[i] = a[i] ^ b[i];
+        }
+        return result;
+    }
+
+    /**
+     * Performs bitwise NAND operation on two boolean arrays.
+     *
+     * @param a First boolean array.
+     * @param b Second boolean array.
+     * @return Result of bitwise NAND operation.
+     * @throws IllegalArgumentException If arrays are not of equal length.
+     */
+    public static boolean[] nand(boolean[] a, boolean[] b) {
+        if (a.length != b.length) {
+            throw new IllegalArgumentException("Arrays must be of equal length");
+        }
+        boolean[] result = new boolean[a.length];
+        for (int i = 0; i < a.length; i++) {
+            result[i] = !(a[i] && b[i]);
+        }
+        return result;
+    }
+
+    /**
+     * Converts a byte array into a boolean array.
+     *
+     * @param bytes Byte array to convert.
+     * @return Boolean array where each bit corresponds to a bit in the byte array.
+     */
+    public static boolean[] bytesToBooleans(byte[] bytes) {
+        boolean[] booleans = new boolean[bytes.length * 8]; // 8 bits per byte
+        for (int i = 0; i < bytes.length; i++) {
+            byte b = bytes[i];
+            for (int j = 0; j < 8; j++) {
+                booleans[i * 8 + j] = (b & (1 << (7 - j))) != 0;
+            }
+        }
+        return booleans;
+    }
+
+    /**
+     * Main method to test the functionality.
+     */
+    public static void main(String[] args) {
+        // Example usage
+        boolean[] array1 = {true, false, true, false};
+        boolean[] array2 = {false, true, false, true};
+
+        // Perform bitwise AND
+        boolean[] resultAnd = and(array1, array2);
+        System.out.println("AND result: " + Arrays.toString(resultAnd));
+
+        // Perform bitwise OR
+        boolean[] resultOr = or(array1, array2);
+        System.out.println("OR result: " + Arrays.toString(resultOr));
+
+        // Perform bitwise XOR
+        boolean[] resultXor = xor(array1, array2);
+        System.out.println("XOR result: " + Arrays.toString(resultXor));
+
+        // Perform bitwise NAND
+        boolean[] resultNand = nand(array1, array2);
+        System.out.println("NAND result: " + Arrays.toString(resultNand));
+
+        // Convert byte array to boolean array
+        byte[] byteArray = {0x0F, (byte) 0xF0}; // Example byte array
+        boolean[] boolArray = bytesToBooleans(byteArray);
+        System.out.println("Byte to Boolean: " + Arrays.toString(boolArray));
+    }
+}
+
  *
  * @since 1.3
  */
