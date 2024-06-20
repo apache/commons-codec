@@ -344,10 +344,9 @@ public class DigestUtils {
      * @throws IllegalArgumentException when a {@link NoSuchAlgorithmException} is caught
      * @deprecated (1.11) Use {@link #getSha1Digest()}
      */
-    @Deprecated
-    public static MessageDigest getShaDigest() {
-        return getSha1Digest();
-    }
+   public static MessageDigest getSha1Digest() {
+    return getDigest(MessageDigestAlgorithms.SHA_1);
+}
 
     /**
      * Test whether the algorithm is supported.
