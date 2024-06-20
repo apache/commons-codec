@@ -350,10 +350,40 @@ public class DigestUtils {
  * @return SHA-1 MessageDigest instance.
  * @deprecated Use {@link #getSha1Digest()} instead. This method will be removed in a future release.
  */
+/**
+ * Returns a SHA-1 MessageDigest.
+ *
+ * @return SHA-1 MessageDigest instance.
+ * @deprecated Use {@link #getSha1Digest()} instead. This method will be removed in a future release.
+ */
 @Deprecated
 public static MessageDigest getShaDigest() {
     return getSha1Digest();
 }
+
+/**
+ * Returns a SHA-1 MessageDigest.
+ *
+ * @return SHA-1 MessageDigest instance.
+ * @throws UnsupportedOperationException if used in a sensitive context.
+ */
+public static MessageDigest getSha1Digest() {
+    if (isSensitiveContext()) {
+        throw new UnsupportedOperationException("SHA-1 should not be used in a sensitive context.");
+    }
+    return getDigest(MessageDigestAlgorithms.SHA_1);
+}
+
+/**
+ * Checks if the current context is sensitive.
+ *
+ * @return true if sensitive context, false otherwise.
+ */
+private static boolean isSensitiveContext() {
+    // Implement your logic to determine if the context is sensitive.
+    return false; // Example implementation; replace with your logic.
+}
+
 
 
 
