@@ -247,9 +247,10 @@ public class DigestUtils {
      * @see MessageDigestAlgorithms#SHA3_224
      * @since 1.12
      */
-    public static MessageDigest getSha3_224Digest() {
-        return getDigest(MessageDigestAlgorithms.SHA3_224);
-    }
+   public static MessageDigest getsha3224Digest() {
+    return getDigest(MessageDigestAlgorithms.SHA3_224);
+}
+
 
     /**
      * Returns an SHA3-256 digest.
