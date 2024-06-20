@@ -344,13 +344,14 @@ public class DigestUtils {
      * @throws IllegalArgumentException when a {@link NoSuchAlgorithmException} is caught
      * @deprecated (1.11) Use {@link #getSha1Digest()}
      */
-  /**
+/**
  * @deprecated Use {@link #getSha1Digest()} instead. This method will be removed in a future release.
  */
 @Deprecated
 public static MessageDigest getShaDigest() {
     return getSha1Digest();
 }
+
 
 
     /**
