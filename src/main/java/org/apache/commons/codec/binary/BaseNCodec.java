@@ -315,7 +315,14 @@ protected static boolean isWhiteSpace(final byte byteToCheck) {
  */
 
 
+/**
+ * Instance variable just in case it needs to vary later.
+ *
+ * @deprecated This field is deprecated and should not be used.
+ */
+@Deprecated
 protected final byte paddingByte;
+
 
     private final int unencodedBlockSize;
 
