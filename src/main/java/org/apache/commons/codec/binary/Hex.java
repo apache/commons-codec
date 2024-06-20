@@ -98,12 +98,11 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
             throw new DecoderException("Output array is not large enough to accommodate decoded data.");
         }
         // two characters form the hex value.
-        for (int i = outOffset, j = 0; j < len; i++, j++) {
-    int f = toDigit(data[j], j) << 4;
-    j++;
-    f |= toDigit(data[j], j);
+       for (int i = outOffset, j = 0; j < len; i++, j++) {
+    int f = (toDigit(data[j], j) << 4) | toDigit(data[j + 1], j + 1);
     out[i] = (byte) (f & 0xFF);
 }
+
 
         return outLen;
     }
