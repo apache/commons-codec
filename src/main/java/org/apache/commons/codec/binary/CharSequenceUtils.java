@@ -24,46 +24,46 @@ public class CharSequenceUtils {
      * @param length     character length of the region
      * @return whether the region matched
      */
-    static boolean regionMatches(final CharSequence cs, final boolean ignoreCase, final int thisStart,
-                                 final CharSequence substring, final int start, final int length) {
-        if (cs == null || substring == null) {
+   static boolean regionMatches(final CharSequence cs, final boolean ignoreCase, final int thisStart,
+                             final CharSequence substring, final int start, final int length) {
+    if (cs == null || substring == null || thisStart < 0 || start < 0 || length < 0) {
+        return false;
+    }
+
+    if (cs.length() - thisStart < length || substring.length() - start < length) {
+        return false;
+    }
+
+    if (cs instanceof String && substring instanceof String) {
+        return ((String) cs).regionMatches(ignoreCase, thisStart, (String) substring, start, length);
+    }
+
+    int index1 = thisStart;
+    int index2 = start;
+    int endIndex = thisStart + length;
+
+    while (index1 < endIndex) {
+        char c1 = cs.charAt(index1++);
+        char c2 = substring.charAt(index2++);
+
+        if (c1 == c2) {
+            continue;
+        }
+
+        if (!ignoreCase) {
             return false;
         }
 
-        if (thisStart < 0 || start < 0 || length < 0) {
+        // Handle case insensitivity
+        if (Character.toLowerCase(c1) != Character.toLowerCase(c2) &&
+            Character.toUpperCase(c1) != Character.toUpperCase(c2)) {
             return false;
         }
+    }
 
-        if (cs.length() - thisStart < length || substring.length() - start < length) {
-            return false;
-        }
+    return true;
+}
 
-        if (cs instanceof String && substring instanceof String) {
-            return ((String) cs).regionMatches(ignoreCase, thisStart, (String) substring, start, length);
-        }
-
-        int index1 = thisStart;
-        int index2 = start;
-        int endIndex = thisStart + length;
-
-        while (index1 < endIndex) {
-            char c1 = cs.charAt(index1++);
-            char c2 = substring.charAt(index2++);
-
-            if (c1 == c2) {
-                continue;
-            }
-
-            if (!ignoreCase) {
-                return false;
-            }
-
-            // Handle case insensitivity
-            if (Character.toLowerCase(c1) != Character.toLowerCase(c2) &&
-                Character.toUpperCase(c1) != Character.toUpperCase(c2)) {
-                return false;
-            }
-        }
 
         return true;
     }
