@@ -431,7 +431,8 @@ public static byte[] getBytesIso88591(final String string) {
      * @deprecated TODO Make private in 2.0.
      */
     @Deprecated
-    public StringUtils() {
-        // empty
-    }
+private StringUtils() {
+    // empty
+}
+
 }
