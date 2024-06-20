@@ -345,13 +345,16 @@ public class DigestUtils {
      * @deprecated (1.11) Use {@link #getSha1Digest()}
      */
 /**
+ * Returns a SHA-1 MessageDigest.
+ *
+ * @return SHA-1 MessageDigest instance.
  * @deprecated Use {@link #getSha1Digest()} instead. This method will be removed in a future release.
- * For now, this method still returns a SHA-1 MessageDigest.
  */
 @Deprecated
 public static MessageDigest getShaDigest() {
     return getSha1Digest();
 }
+
 
 
 
