@@ -618,24 +618,39 @@ public class PureJavaCrc32C implements Checksum {
         }
 
         /* loop unroll - duff's device style */
-        switch (len) {
-        case 7:
-            localCrc = localCrc >>> 8 ^ T[T8_0_START + ((localCrc ^ b[off++]) & 0xff)];
-        case 6:
-            localCrc = localCrc >>> 8 ^ T[T8_0_START + ((localCrc ^ b[off++]) & 0xff)];
-        case 5:
-            localCrc = localCrc >>> 8 ^ T[T8_0_START + ((localCrc ^ b[off++]) & 0xff)];
-        case 4:
-            localCrc = localCrc >>> 8 ^ T[T8_0_START + ((localCrc ^ b[off++]) & 0xff)];
-        case 3:
-            localCrc = localCrc >>> 8 ^ T[T8_0_START + ((localCrc ^ b[off++]) & 0xff)];
-        case 2:
-            localCrc = localCrc >>> 8 ^ T[T8_0_START + ((localCrc ^ b[off++]) & 0xff)];
-        case 1:
-            localCrc = localCrc >>> 8 ^ T[T8_0_START + ((localCrc ^ b[off++]) & 0xff)];
-        default:
-            break; // satisfy Findbugs
-        }
+       switch (len) {
+    case 7:
+        localCrc = localCrc >>> 8 ^ T[T8_0_START + ((localCrc ^ b[off++]) & 0xff)];
+        // End of case 7
+        break;
+    case 6:
+        localCrc = localCrc >>> 8 ^ T[T8_0_START + ((localCrc ^ b[off++]) & 0xff)];
+        // End of case 6
+        break;
+    case 5:
+        localCrc = localCrc >>> 8 ^ T[T8_0_START + ((localCrc ^ b[off++]) & 0xff)];
+        // End of case 5
+        break;
+    case 4:
+        localCrc = localCrc >>> 8 ^ T[T8_0_START + ((localCrc ^ b[off++]) & 0xff)];
+        // End of case 4
+        break;
+    case 3:
+        localCrc = localCrc >>> 8 ^ T[T8_0_START + ((localCrc ^ b[off++]) & 0xff)];
+        // End of case 3
+        break;
+    case 2:
+        localCrc = localCrc >>> 8 ^ T[T8_0_START + ((localCrc ^ b[off++]) & 0xff)];
+        // End of case 2
+        break;
+    case 1:
+        localCrc = localCrc >>> 8 ^ T[T8_0_START + ((localCrc ^ b[off++]) & 0xff)];
+        // End of case 1
+        break;
+    default:
+        break; // Default case with a break
+}
+
 
         // Publish crc out to object
         crc = localCrc;
