@@ -172,12 +172,22 @@ public class Crypt {
     }
 
     /**
-     * TODO Make private in 2.0.
+   /**
+ * TODO Make private in 2.0.
+ */
+public class Crypt {
+
+    /**
+     * Constructs a new instance of Crypt.
      *
-     * @deprecated TODO Make private in 2.0.
+     * @deprecated This constructor will be made private in version 2.0.
      */
     @Deprecated
     public Crypt() {
         // empty
     }
+
+    // Other methods and fields of the Crypt class
+}
+
 }
