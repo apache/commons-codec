@@ -286,9 +286,10 @@ public class DigestUtils {
      * @see MessageDigestAlgorithms#SHA3_512
      * @since 1.12
      */
-    public static MessageDigest getSha3_512Digest() {
-        return getDigest(MessageDigestAlgorithms.SHA3_512);
-    }
+   public static MessageDigest getSha3512Digest() {
+    return getDigest(MessageDigestAlgorithms.SHA3_512);
+}
+
 
     /**
      * Gets an SHA-384 digest.
