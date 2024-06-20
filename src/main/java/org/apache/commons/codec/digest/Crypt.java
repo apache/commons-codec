@@ -173,7 +173,21 @@ public class Crypt {
 
     /**
    /**
+/**
  * TODO Make private in 2.0.
+ */
+public class Crypt {
+
+    /**
+     * Constructs a new instance of Crypt.
+     */
+    private Crypt() {
+        // empty
+    }
+
+    // Other methods and fields of the Crypt class
+}
+
  */
 public class Crypt {
 
