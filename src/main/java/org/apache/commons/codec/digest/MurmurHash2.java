@@ -250,24 +250,35 @@ switch (length - index) {
             h *= M64;
         }
 
-        final int index = nblocks << 3;
-        switch (length - index) {
-        case 7:
-            h ^= ((long) data[index + 6] & 0xff) << 48;
-        case 6:
-            h ^= ((long) data[index + 5] & 0xff) << 40;
-        case 5:
-            h ^= ((long) data[index + 4] & 0xff) << 32;
-        case 4:
-            h ^= ((long) data[index + 3] & 0xff) << 24;
-        case 3:
-            h ^= ((long) data[index + 2] & 0xff) << 16;
-        case 2:
-            h ^= ((long) data[index + 1] & 0xff) << 8;
-        case 1:
-            h ^= (long) data[index] & 0xff;
-            h *= M64;
-        }
+       final int index = nblocks << 3;
+switch (length - index) {
+    case 7:
+        h ^= ((long) data[index + 6] & 0xff) << 48;
+        // fall through
+    case 6:
+        h ^= ((long) data[index + 5] & 0xff) << 40;
+        // fall through
+    case 5:
+        h ^= ((long) data[index + 4] & 0xff) << 32;
+        // fall through
+    case 4:
+        h ^= ((long) data[index + 3] & 0xff) << 24;
+        // fall through
+    case 3:
+        h ^= ((long) data[index + 2] & 0xff) << 16;
+        // fall through
+    case 2:
+        h ^= ((long) data[index + 1] & 0xff) << 8;
+        // fall through
+    case 1:
+        h ^= (long) data[index] & 0xff;
+        h *= M64;
+        // fall through
+    default:
+        // No additional action needed
+        break;
+}
+
 
         h ^= h >>> R64;
         h *= M64;
