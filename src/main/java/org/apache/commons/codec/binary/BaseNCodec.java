@@ -313,8 +313,7 @@ protected static boolean isWhiteSpace(final byte byteToCheck) {
  * @deprecated This constant is deprecated and should not be used.
  *             Use {@link PAD_DEFAULT} directly if needed.
  */
-@Deprecated
-protected static final byte PAD_DEFAULT_LEGACY = PAD_DEFAULT;
+
 
 protected final byte paddingByte;
 
