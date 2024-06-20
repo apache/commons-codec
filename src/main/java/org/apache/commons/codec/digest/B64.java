@@ -27,7 +27,14 @@ import java.util.Base64;
  * This class is immutable and thread-safe.
  * </p>
  */
+import java.util.Base64;
+
 public class CustomBase64 {
+
+    // Private constructor to prevent instantiation
+    private CustomBase64() {
+        // This constructor is intentionally empty.
+    }
 
     /**
      * Encodes the input bytes into a Base64 encoded string.
@@ -38,6 +45,18 @@ public class CustomBase64 {
     public static String encode(byte[] bytes) {
         return Base64.getEncoder().encodeToString(bytes);
     }
+
+    /**
+     * Decodes the Base64 encoded string into bytes.
+     *
+     * @param base64 the Base64 encoded string
+     * @return the decoded bytes
+     */
+    public static byte[] decode(String base64) {
+        return Base64.getDecoder().decode(base64);
+    }
+}
+
 
     /**
      * Decodes the Base64 encoded string into bytes.
