@@ -134,17 +134,24 @@ public final class MurmurHash2 {
             h ^= k;
         }
 
-        // Handle the last few bytes of the input array
-        final int index = nblocks << 2;
-        switch (length - index) {
-        case 3:
-            h ^= (data[index + 2] & 0xff) << 16;
-        case 2:
-            h ^= (data[index + 1] & 0xff) << 8;
-        case 1:
-            h ^= data[index] & 0xff;
-            h *= M32;
-        }
+       // Handle the last few bytes of the input array
+final int index = nblocks << 2;
+switch (length - index) {
+    case 3:
+        h ^= (data[index + 2] & 0xff) << 16;
+        // fall through
+    case 2:
+        h ^= (data[index + 1] & 0xff) << 8;
+        // fall through
+    case 1:
+        h ^= data[index] & 0xff;
+        h *= M32;
+        // fall through
+    default:
+        // No additional action needed
+        break;
+}
+
 
         // Do a few final mixes of the hash to ensure the last few
         // bytes are well-incorporated.
