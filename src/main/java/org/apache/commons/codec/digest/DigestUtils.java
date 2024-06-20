@@ -350,8 +350,19 @@ public class DigestUtils {
  * @return SHA-1 MessageDigest instance.
  * @deprecated Use {@link #getSha1Digest()} instead. This method will be removed in a future release.
  */
+// Original deprecated method
 @Deprecated
 public static MessageDigest getShaDigest() {
+    // Method implementation
+    // ...
+    return someMessageDigestInstance;
+}
+
+// Alternative method (example)
+public static MessageDigest getSha256Digest() throws NoSuchAlgorithmException {
+    return MessageDigest.getInstance("SHA-256");
+}
+
     if (isSensitiveContext()) {
         throw new UnsupportedOperationException("SHA-1 should not be used in a sensitive context.");
     }
