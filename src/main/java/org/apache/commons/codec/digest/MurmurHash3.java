@@ -261,22 +261,28 @@ switch (unprocessedLength) {
          * @return The 32-bit hash
          */
         int finalise(final int hash, final int unprocessedLength, final byte[] unprocessed, final int totalLen) {
-            int result = hash;
-            int k1 = 0;
-            switch (unprocessedLength) {
-            case 3:
-                k1 ^= (unprocessed[2] & 0xff) << 16;
-            case 2:
-                k1 ^= (unprocessed[1] & 0xff) << 8;
-            case 1:
-                k1 ^= unprocessed[0] & 0xff;
+    int result = hash;
+    int k1 = 0;
+    switch (unprocessedLength) {
+        case 3:
+            k1 ^= (unprocessed[2] & 0xff) << 16;
+        case 2:
+            k1 ^= (unprocessed[1] & 0xff) << 8;
+        case 1:
+            k1 ^= unprocessed[0] & 0xff;
+            // mix functions
+            k1 *= C1_32;
+            k1 = Integer.rotateLeft(k1, R1_32);
+            k1 *= C2_32;
+            result ^= k1;
+            break; // Exit switch after processing valid cases
+        default:
+            // Handle unexpected cases or provide a fallback behavior
+            throw new IllegalArgumentException("Unexpected unprocessedLength: " + unprocessedLength);
+    }
+    return result;
+}
 
-                // mix functions
-                k1 *= C1_32;
-                k1 = Integer.rotateLeft(k1, R1_32);
-                k1 *= C2_32;
-                result ^= k1;
-            }
 
             // finalization
             result ^= totalLen;
