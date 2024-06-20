@@ -128,12 +128,20 @@ public class Base16 extends BaseNCodec {
      * @param encodeTable    the encode table.
      * @param decodingPolicy Decoding policy.
      */
-   private Base16(final byte[] encodeTable, final CodecPolicy decodingPolicy) {
-    super(BYTES_PER_UNENCODED_BLOCK, BYTES_PER_ENCODED_BLOCK, 0, 0, PAD_DEFAULT, decodingPolicy);
-    Objects.requireNonNull(encodeTable, "encodeTable");
-    this.encodeTable = encodeTable;
-    this.decodeTable = encodeTable == LOWER_CASE_ENCODE_TABLE ? LOWER_CASE_DECODE_TABLE : UPPER_CASE_DECODE_TABLE;
+  public class Base16 extends BaseNCodec {
+    private static final byte[] LOWER_CASE_ENCODE_TABLE = ...; // Define as needed
+    private static final byte[] UPPER_CASE_DECODE_TABLE = ...; // Define as needed
+    private static final byte[] LOWER_CASE_DECODE_TABLE = ...; // Define as needed
+    private static final int BYTES_PER_UNENCODED_BLOCK = ...;  // Define as needed
+    private static final int BYTES_PER_ENCODED_BLOCK = ...;    // Define as needed
+    private static final byte PAD_DEFAULT = ...;               // Define as needed
+
+    private final byte[] encodeTable;
+    private final byte[] decodeTable;
+
+    // Other methods and logic for the class
 }
+
 
 
     /**
