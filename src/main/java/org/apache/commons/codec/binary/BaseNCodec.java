@@ -422,9 +422,12 @@ protected static boolean isWhiteSpace(final byte byteToCheck) {
     /**
      * @deprecated Use {@link #pad}. Will be removed in 2.0.
      */
-  @Deprecated
-protected final byte PAD = PAD_DEFAULT; // instance variable just in case it needs to vary later
-/** Pad byte. Instance variable just in case it needs to vary later. */
+  /**
+ * Pad byte. Instance variable just in case it needs to vary later.
+ */
+@Deprecated
+protected final byte pad = PAD_DEFAULT; // instance variable just in case it needs to vary later
+
 protected final byte paddingByte;
 
     private final int unencodedBlockSize;
