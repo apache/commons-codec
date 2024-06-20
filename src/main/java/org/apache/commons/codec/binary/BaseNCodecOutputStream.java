@@ -56,9 +56,26 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
  */
 public YourClassName(OutputStream outputStream, BaseNCodec basedCodec, EncodeMode encodeMode) {
     // Initialize your instance variables here
-    // Example: this.outputStream = outputStream;
-    // Example: this.basedCodec = basedCodec;
-    // Example: this.encodeMode = encodeMode;
+   /**
+ * Constructs a new instance.
+ *
+ * @param outputStream the underlying output or null.
+ * @param basedCodec a BaseNCodec.
+ * @param encodeMode true to encode, false to decode.
+ */
+public YourClassName(OutputStream outputStream, BaseNCodec basedCodec, EncodeMode encodeMode) {
+    // Initialize your instance variables here
+    // this.outputStream = outputStream;
+    // this.basedCodec = basedCodec;
+    // this.encodeMode = encodeMode;
+}
+
+// Define an enum for encode mode
+public enum EncodeMode {
+    ENCODE,
+    DECODE
+}
+
 }
 
 // Define an enum for encode mode
