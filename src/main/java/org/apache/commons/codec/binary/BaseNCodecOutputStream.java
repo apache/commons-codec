@@ -48,14 +48,25 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
     private final Context context = new Context();
 
     /**
-     * Constructs a new instance.
-     *
-     * TODO should this be protected?
-     *
-     * @param outputStream the underlying output or null.
-     * @param basedCodec a BaseNCodec.
-     * @param doEncode true to encode, false to decode, TODO should be an enum?
-     */
+ * Constructs a new instance.
+ *
+ * @param outputStream the underlying output or null.
+ * @param basedCodec a BaseNCodec.
+ * @param doEncode true to encode, false to decode.
+ */
+public YourClassName(OutputStream outputStream, BaseNCodec basedCodec, EncodeMode encodeMode) {
+    // Initialize your instance variables here
+    // Example: this.outputStream = outputStream;
+    // Example: this.basedCodec = basedCodec;
+    // Example: this.encodeMode = encodeMode;
+}
+
+// Define an enum for encode mode
+public enum EncodeMode {
+    ENCODE,
+    DECODE
+}
+
     public BaseNCodecOutputStream(final OutputStream outputStream, final BaseNCodec basedCodec, final boolean doEncode) {
         super(outputStream);
         this.baseNCodec = basedCodec;
