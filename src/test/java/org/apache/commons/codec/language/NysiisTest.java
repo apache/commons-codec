@@ -62,19 +62,19 @@ public class NysiisTest extends AbstractStringEncoderTest<Nysiis> {
 
     @Test
     public void testCap() {
-        this.encodeAll(new String[] { "Capp", "Cope", "Copp", "Kipp" }, "CAP");
+        encodeAll(new String[] { "Capp", "Cope", "Copp", "Kipp" }, "CAP");
     }
 
     @Test
     public void testDad() {
         // Data Quality and Record Linkage Techniques P.121 claims this is DAN,
         // but it should be DAD, verified also with dropby.com
-        this.encodeAll(new String[] { "Dent" }, "DAD");
+        encodeAll(new String[] { "Dent" }, "DAD");
     }
 
     @Test
     public void testDan() {
-        this.encodeAll(new String[] { "Dane", "Dean", "Dionne" }, "DAN");
+        encodeAll(new String[] { "Dane", "Dean", "Dionne" }, "DAN");
     }
 
     /**
@@ -87,7 +87,7 @@ public class NysiisTest extends AbstractStringEncoderTest<Nysiis> {
         // prepended to the test string. The referenced rules refer to the outlined steps the
         // class description for Nysiis.
 
-        this.assertEncodings(
+        assertEncodings(
                 // 1. Transcode first characters of name
                 new String[] { "MACINTOSH", "MCANT" },
                 // violates 4j: the second N should not be added, as the first
@@ -141,14 +141,14 @@ public class NysiisTest extends AbstractStringEncoderTest<Nysiis> {
 
     @Test
     public void testFal() {
-        this.encodeAll(new String[] { "Phil" }, "FAL");
+        encodeAll(new String[] { "Phil" }, "FAL");
     }
 
     /**
      * Tests data gathered from around the internets.*/
     @Test
     public void testOthers() {
-        this.assertEncodings(
+        assertEncodings(
                 new String[] { "O'Daniel", "ODANAL" },
                 new String[] { "O'Donnel", "ODANAL" },
                 new String[] { "Cory", "CARY" },
@@ -162,7 +162,7 @@ public class NysiisTest extends AbstractStringEncoderTest<Nysiis> {
      * Tests rule 1: Translate first characters of name: MAC → MCC, KN → N, K → C, PH, PF → FF, SCH → SSS*/
     @Test
     public void testRule1() {
-        this.assertEncodings(
+        assertEncodings(
                 new String[] { "MACX", "MCX" },
                 new String[] { "KNX", "NX" },
                 new String[] { "KX", "CX" },
@@ -175,7 +175,7 @@ public class NysiisTest extends AbstractStringEncoderTest<Nysiis> {
      * Tests rule 2: Translate last characters of name: EE → Y, IE → Y, DT, RT, RD, NT, ND → D*/
     @Test
     public void testRule2() {
-        this.assertEncodings(
+        assertEncodings(
                 new String[] { "XEE", "XY" },
                 new String[] { "XIE", "XY" },
                 new String[] { "XDT", "XD" },
@@ -189,7 +189,7 @@ public class NysiisTest extends AbstractStringEncoderTest<Nysiis> {
      * Tests rule 4.1: EV → AF else A, E, I, O, U → A*/
     @Test
     public void testRule4Dot1() {
-        this.assertEncodings(
+        assertEncodings(
                 new String[] { "XEV", "XAF" },
                 new String[] { "XAX", "XAX" },
                 new String[] { "XEX", "XAX" },
@@ -202,7 +202,7 @@ public class NysiisTest extends AbstractStringEncoderTest<Nysiis> {
      * Tests rule 4.2: Q → G, Z → S, M → N*/
     @Test
     public void testRule4Dot2() {
-        this.assertEncodings(
+        assertEncodings(
                 new String[] { "XQ", "XG" },
                 new String[] { "XZ", "X" },
                 new String[] { "XM", "XN" });
@@ -212,7 +212,7 @@ public class NysiisTest extends AbstractStringEncoderTest<Nysiis> {
      * Tests rule 5: If last character is S, remove it.*/
     @Test
     public void testRule5() {
-        this.assertEncodings(
+        assertEncodings(
                 new String[] { "XS", "X" },
                 new String[] { "XSS", "X" });
     }
@@ -221,7 +221,7 @@ public class NysiisTest extends AbstractStringEncoderTest<Nysiis> {
      * Tests rule 6: If last characters are AY, replace with Y.*/
     @Test
     public void testRule6() {
-        this.assertEncodings(
+        assertEncodings(
                 new String[] { "XAY", "XY" },
                 new String[] { "XAYS", "XY" }); // Rules 5, 6
     }
@@ -230,7 +230,7 @@ public class NysiisTest extends AbstractStringEncoderTest<Nysiis> {
      * Tests rule 7: If last character is A, remove it.*/
     @Test
     public void testRule7() {
-        this.assertEncodings(
+        assertEncodings(
                 new String[] { "XA", "X" },
                 new String[] { "XAS", "X" }); // Rules 5, 7
     }
@@ -238,28 +238,28 @@ public class NysiisTest extends AbstractStringEncoderTest<Nysiis> {
     public void testSnad() {
         // Data Quality and Record Linkage Techniques P.121 claims this is SNAT,
         // but it should be SNAD
-        this.encodeAll(new String[] { "Schmidt" }, "SNAD");
+        encodeAll(new String[] { "Schmidt" }, "SNAD");
     }
 
     @Test
     public void testSnat() {
-        this.encodeAll(new String[] { "Smith", "Schmit" }, "SNAT");
+        encodeAll(new String[] { "Smith", "Schmit" }, "SNAT");
     }
 
     @Test
     public void testSpecialBranches() {
-        this.encodeAll(new String[] { "Kobwick" }, "CABWAC");
-        this.encodeAll(new String[] { "Kocher" }, "CACAR");
-        this.encodeAll(new String[] { "Fesca" }, "FASC");
-        this.encodeAll(new String[] { "Shom" }, "SAN");
-        this.encodeAll(new String[] { "Ohlo" }, "OL");
-        this.encodeAll(new String[] { "Uhu" }, "UH");
-        this.encodeAll(new String[] { "Um" }, "UN");
+        encodeAll(new String[] { "Kobwick" }, "CABWAC");
+        encodeAll(new String[] { "Kocher" }, "CACAR");
+        encodeAll(new String[] { "Fesca" }, "FASC");
+        encodeAll(new String[] { "Shom" }, "SAN");
+        encodeAll(new String[] { "Ohlo" }, "OL");
+        encodeAll(new String[] { "Uhu" }, "UH");
+        encodeAll(new String[] { "Um" }, "UN");
     }
 
     @Test
     public void testTranan() {
-        this.encodeAll(new String[] { "Trueman", "Truman" }, "TRANAN");
+        encodeAll(new String[] { "Trueman", "Truman" }, "TRANAN");
     }
 
     @Test
