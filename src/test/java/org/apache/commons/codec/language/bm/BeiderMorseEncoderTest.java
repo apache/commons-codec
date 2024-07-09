@@ -189,7 +189,7 @@ public class BeiderMorseEncoderTest extends AbstractStringEncoderTest<StringEnco
      */
     @Test /* timeout = 20000L */
     public void testSpeedCheck() throws EncoderException {
-        final BeiderMorseEncoder bmpm = this.createGenericApproxEncoder();
+        final BeiderMorseEncoder bmpm = createGenericApproxEncoder();
         final StringBuilder stringBuffer = new StringBuilder();
         stringBuffer.append(TEST_CHARS[0]);
         for (int i = 0, j = 1; i < 40; i++, j++) {
@@ -203,7 +203,7 @@ public class BeiderMorseEncoderTest extends AbstractStringEncoderTest<StringEnco
 
     @Test
     public void testSpeedCheck2() throws EncoderException {
-        final BeiderMorseEncoder bmpm = this.createGenericApproxEncoder();
+        final BeiderMorseEncoder bmpm = createGenericApproxEncoder();
         final String phrase = "ItstheendoftheworldasweknowitandIfeelfine";
 
         for (int i = 1; i <= phrase.length(); i++) {
@@ -213,7 +213,7 @@ public class BeiderMorseEncoderTest extends AbstractStringEncoderTest<StringEnco
 
     @Test
     public void testSpeedCheck3() throws EncoderException {
-        final BeiderMorseEncoder bmpm = this.createGenericApproxEncoder();
+        final BeiderMorseEncoder bmpm = createGenericApproxEncoder();
         final String phrase = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz";
 
         for (int i = 1; i <= phrase.length(); i++) {
