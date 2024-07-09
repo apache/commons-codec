@@ -43,7 +43,7 @@ public class Caverphone1Test extends AbstractStringEncoderTest<Caverphone1> {
      */
     @Test
     public void testCaverphoneRevisitedCommonCodeAT1111() throws EncoderException {
-        this.checkEncodingVariations("AT1111", new String[]{
+        checkEncodingVariations("AT1111", new String[]{
             "add",
             "aid",
             "at",
@@ -64,7 +64,7 @@ public class Caverphone1Test extends AbstractStringEncoderTest<Caverphone1> {
     @Test
     public void testEndMb() throws EncoderException {
         final String[][] data = {{"mb", "M11111"}, {"mbmb", "MPM111"}};
-        this.checkEncodings(data);
+        checkEncodings(data);
     }
 
     /**
@@ -87,7 +87,7 @@ public class Caverphone1Test extends AbstractStringEncoderTest<Caverphone1> {
     @Test
     public void testSpecificationV1Examples() throws EncoderException {
         final String[][] data = {{"David", "TFT111"}, {"Whittle", "WTL111"}};
-        this.checkEncodings(data);
+        checkEncodings(data);
     }
 
     /**
@@ -98,7 +98,7 @@ public class Caverphone1Test extends AbstractStringEncoderTest<Caverphone1> {
     @Test
     public void testWikipediaExamples() throws EncoderException {
         final String[][] data = {{"Lee", "L11111"}, {"Thompson", "TMPSN1"}};
-        this.checkEncodings(data);
+        checkEncodings(data);
     }
 
 }
