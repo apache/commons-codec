@@ -636,8 +636,8 @@ public class Base64Test {
     @Test
     public void testEncodeDecodeRandom() {
         for (int i = 1; i < 5; i++) {
-            final byte[] data = new byte[this.getRandom().nextInt(10000) + 1];
-            this.getRandom().nextBytes(data);
+            final byte[] data = new byte[getRandom().nextInt(10000) + 1];
+            getRandom().nextBytes(data);
             final byte[] enc = Base64.encodeBase64(data);
             assertTrue(Base64.isBase64(enc));
             final byte[] data2 = Base64.decodeBase64(enc);
@@ -650,7 +650,7 @@ public class Base64Test {
     public void testEncodeDecodeSmall() {
         for (int i = 0; i < 12; i++) {
             final byte[] data = new byte[i];
-            this.getRandom().nextBytes(data);
+            getRandom().nextBytes(data);
             final byte[] enc = Base64.encodeBase64(data);
             assertTrue(Base64.isBase64(enc), "\"" + new String(enc) + "\" is Base64 data.");
             final byte[] data2 = Base64.decodeBase64(enc);
