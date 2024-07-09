@@ -81,7 +81,7 @@ public class DaitchMokotoffSoundexTest extends AbstractStringEncoderTest<DaitchM
 
     @Test
     public void testEncodeIgnoreApostrophes() throws EncoderException {
-        this.checkEncodingVariations("079600", new String[] { "OBrien", "'OBrien", "O'Brien", "OB'rien", "OBr'ien",
+        checkEncodingVariations("079600", new String[] { "OBrien", "'OBrien", "O'Brien", "OB'rien", "OBr'ien",
                 "OBri'en", "OBrie'n", "OBrien'" });
     }
 
@@ -91,7 +91,7 @@ public class DaitchMokotoffSoundexTest extends AbstractStringEncoderTest<DaitchM
      * @throws EncoderException for some failure scenarios     */
     @Test
     public void testEncodeIgnoreHyphens() throws EncoderException {
-        this.checkEncodingVariations("565463", new String[] { "KINGSMITH", "-KINGSMITH", "K-INGSMITH", "KI-NGSMITH",
+        checkEncodingVariations("565463", new String[] { "KINGSMITH", "-KINGSMITH", "K-INGSMITH", "KI-NGSMITH",
                 "KIN-GSMITH", "KING-SMITH", "KINGS-MITH", "KINGSM-ITH", "KINGSMI-TH", "KINGSMIT-H", "KINGSMITH-" });
     }
 
