@@ -155,9 +155,9 @@ abstract class RFC1522Codec {
         buffer.append(PREFIX);
         buffer.append(charset);
         buffer.append(SEP);
-        buffer.append(this.getEncoding());
+        buffer.append(getEncoding());
         buffer.append(SEP);
-        buffer.append(StringUtils.newStringUsAscii(this.doEncoding(text.getBytes(charset))));
+        buffer.append(StringUtils.newStringUsAscii(doEncoding(text.getBytes(charset))));
         buffer.append(POSTFIX);
         return buffer.toString();
     }
