@@ -448,7 +448,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      */
     @Override
     public String decode(final String sourceStr) throws DecoderException {
-        return this.decode(sourceStr, this.getCharset());
+        return this.decode(sourceStr, getCharset());
     }
 
     /**
