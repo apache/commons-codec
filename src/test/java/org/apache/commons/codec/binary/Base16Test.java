@@ -224,9 +224,9 @@ public class Base16Test {
     @Test
     public void testEncodeDecodeRandom() {
         for (int i = 1; i < 5; i++) {
-            final int len = this.getRandom().nextInt(10000) + 1;
+            final int len = getRandom().nextInt(10000) + 1;
             final byte[] data = new byte[len];
-            this.getRandom().nextBytes(data);
+            getRandom().nextBytes(data);
             final byte[] enc = new Base16().encode(data);
             final byte[] data2 = new Base16().decode(enc);
             assertArrayEquals(data, data2);
@@ -238,7 +238,7 @@ public class Base16Test {
     public void testEncodeDecodeSmall() {
         for (int i = 0; i < 12; i++) {
             final byte[] data = new byte[i];
-            this.getRandom().nextBytes(data);
+            getRandom().nextBytes(data);
             final byte[] enc = new Base16().encode(data);
             final byte[] data2 = new Base16().decode(enc);
             assertArrayEquals(data, data2, toString(data) + " equals " + toString(data2));
