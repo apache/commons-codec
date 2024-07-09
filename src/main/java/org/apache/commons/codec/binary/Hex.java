@@ -480,7 +480,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      */
     @Override
     public byte[] encode(final byte[] array) {
-        return encodeHexString(array).getBytes(this.getCharset());
+        return encodeHexString(array).getBytes(getCharset());
     }
 
     /**
@@ -500,7 +500,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * @since 1.11
      */
     public byte[] encode(final ByteBuffer array) {
-        return encodeHexString(array).getBytes(this.getCharset());
+        return encodeHexString(array).getBytes(getCharset());
     }
 
     /**
@@ -521,7 +521,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
     public Object encode(final Object object) throws EncoderException {
         final byte[] byteArray;
         if (object instanceof String) {
-            byteArray = ((String) object).getBytes(this.getCharset());
+            byteArray = ((String) object).getBytes(getCharset());
         } else if (object instanceof ByteBuffer) {
             byteArray = toByteArray((ByteBuffer) object);
         } else {
