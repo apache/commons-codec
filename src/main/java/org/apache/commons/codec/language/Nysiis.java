@@ -214,7 +214,7 @@ public class Nysiis implements StringEncoder {
         if (!(obj instanceof String)) {
             throw new EncoderException("Parameter supplied to Nysiis encode is not of type java.lang.String");
         }
-        return this.nysiis((String) obj);
+        return nysiis((String) obj);
     }
 
     /**
@@ -228,7 +228,7 @@ public class Nysiis implements StringEncoder {
      */
     @Override
     public String encode(final String str) {
-        return this.nysiis(str);
+        return nysiis(str);
     }
 
     /**
@@ -316,7 +316,7 @@ public class Nysiis implements StringEncoder {
         }
 
         final String string = key.toString();
-        return this.isStrict() ? string.substring(0, Math.min(TRUE_LENGTH, string.length())) : string;
+        return isStrict() ? string.substring(0, Math.min(TRUE_LENGTH, string.length())) : string;
     }
 
 }
