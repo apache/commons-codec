@@ -213,11 +213,10 @@ public class Metaphone implements StringEncoder {
         final int wdsz = local.length();
         int n = 0;
 
-        while (code.length() < this.getMaxCodeLen() && n < wdsz) { // max code size of 4 works well
+        while (code.length() < getMaxCodeLen() && n < wdsz) { // max code size of 4 works well
             final char symb = local.charAt(n);
             // remove duplicate letters except C
             if (symb != 'C' && isPreviousChar(local, n, symb)) {
-                n++;
             } else { // not dup
                 switch (symb) {
                 case 'A':
@@ -252,14 +251,10 @@ public class Metaphone implements StringEncoder {
                         code.append('K');
                         break;
                     }
-                    if (isNextChar(local, n, 'H')) { // detect CH
-                        if (n == 0 && wdsz >= 3 && isVowel(local, 2)) { // CH consonant -> K consonant
-                            code.append('K');
-                        } else {
-                            code.append('X'); // CHvowel -> X
-                        }
-                    } else {
+                    if (!isNextChar(local, n, 'H') || (n == 0 && wdsz >= 3 && isVowel(local, 2))) { // CH consonant -> K consonant
                         code.append('K');
+                    } else {
+                        code.append('X'); // CHvowel -> X
                     }
                     break;
                 case 'D':
@@ -370,10 +365,10 @@ public class Metaphone implements StringEncoder {
                     // do nothing
                     break;
                 } // end switch
-                n++;
             } // end else from symb != 'C'
-            if (code.length() > this.getMaxCodeLen()) {
-                code.setLength(this.getMaxCodeLen());
+            n++;
+            if (code.length() > getMaxCodeLen()) {
+                code.setLength(getMaxCodeLen());
             }
         }
         return code.toString();
