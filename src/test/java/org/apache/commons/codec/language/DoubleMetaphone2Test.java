@@ -1263,7 +1263,7 @@ public class DoubleMetaphone2Test extends AbstractStringEncoderTest<DoubleMetaph
     private void checkDoubleMetaphone(final int typeIndex, final boolean alternate) {
         for (int i = 0; i < TEST_DATA.length; i++) {
             final String value = TEST_DATA[i][0];
-            assertEquals(TEST_DATA[i][typeIndex], this.getStringEncoder().doubleMetaphone(value, alternate), "Test [" + i + "]=" + value);
+            assertEquals(TEST_DATA[i][typeIndex], getStringEncoder().doubleMetaphone(value, alternate), "Test [" + i + "]=" + value);
         }
     }
 
@@ -1277,7 +1277,7 @@ public class DoubleMetaphone2Test extends AbstractStringEncoderTest<DoubleMetaph
      */
     @Test
     public void testDoubleMetaphoneAlternate() {
-        this.checkDoubleMetaphone(ALTERNATE_INDEX, true);
+        checkDoubleMetaphone(ALTERNATE_INDEX, true);
     }
 
     /**
@@ -1285,6 +1285,6 @@ public class DoubleMetaphone2Test extends AbstractStringEncoderTest<DoubleMetaph
      */
     @Test
     public void testDoubleMetaphonePrimary() {
-        this.checkDoubleMetaphone(PRIMARY_INDEX, false);
+        checkDoubleMetaphone(PRIMARY_INDEX, false);
     }
 }
