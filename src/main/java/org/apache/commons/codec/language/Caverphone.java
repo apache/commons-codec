@@ -66,7 +66,7 @@ public class Caverphone implements StringEncoder {
         if (!(obj instanceof String)) {
             throw new EncoderException("Parameter supplied to Caverphone encode is not of type java.lang.String");
         }
-        return this.caverphone((String) obj);
+        return caverphone((String) obj);
     }
 
     /**
@@ -78,7 +78,7 @@ public class Caverphone implements StringEncoder {
      */
     @Override
     public String encode(final String str) {
-        return this.caverphone(str);
+        return caverphone(str);
     }
 
     /**
@@ -91,7 +91,7 @@ public class Caverphone implements StringEncoder {
      * @return {@code true} if the caverphones of these strings are identical, {@code false} otherwise.
      */
     public boolean isCaverphoneEqual(final String str1, final String str2) {
-        return this.caverphone(str1).equals(this.caverphone(str2));
+        return caverphone(str1).equals(caverphone(str2));
     }
 
 }
