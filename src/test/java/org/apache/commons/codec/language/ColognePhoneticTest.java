@@ -114,12 +114,12 @@ public class ColognePhoneticTest extends AbstractStringEncoderTest<ColognePhonet
 
     @Test
     public void testAabjoe() throws EncoderException {
-        this.checkEncoding("01", "Aabjoe");
+        checkEncoding("01", "Aabjoe");
     }
 
     @Test
     public void testAaclan() throws EncoderException {
-        this.checkEncoding("0856", "Aaclan");
+        checkEncoding("0856", "Aaclan");
     }
 
     /**
@@ -129,13 +129,13 @@ public class ColognePhoneticTest extends AbstractStringEncoderTest<ColognePhonet
      */
     @Test
     public void testAychlmajrForCodec122() throws EncoderException {
-        this.checkEncoding("04567", "Aychlmajr");
+        checkEncoding("04567", "Aychlmajr");
     }
 
     @Test
     // Ensure that override still allows tests to work
     public void testCanFail() {
-        assertThrows(AssertionFailedError.class, () -> this.checkEncoding("/", "Fehler"));
+        assertThrows(AssertionFailedError.class, () -> checkEncoding("/", "Fehler"));
     }
 
     @Test
@@ -175,7 +175,7 @@ public class ColognePhoneticTest extends AbstractStringEncoderTest<ColognePhonet
             { "r", "7" }
         };
         // @formatter:on
-        this.checkEncodings(data);
+        checkEncodings(data);
     }
 
     @Test
@@ -218,13 +218,13 @@ public class ColognePhoneticTest extends AbstractStringEncoderTest<ColognePhonet
             { "heithabu", "021" }
         };
         // @formatter:on
-        this.checkEncodings(data);
+        checkEncodings(data);
     }
 
     @Test
     public void testHyphen() throws EncoderException {
         final String[][] data = { { "bergisch-gladbach", "174845214" }, { "M\u00fcller-L\u00fcdenscheidt", "65752682" } }; // Müller-Lüdenscheidt
-        this.checkEncodings(data);
+        checkEncodings(data);
     }
 
     @Test
@@ -242,7 +242,7 @@ public class ColognePhoneticTest extends AbstractStringEncoderTest<ColognePhonet
         };
         //@formatter:on
         for (final String[] element : data) {
-            final boolean encodeEqual = this.getStringEncoder().isEncodeEqual(element[1], element[0]);
+            final boolean encodeEqual = getStringEncoder().isEncodeEqual(element[1], element[0]);
             assertTrue(encodeEqual, element[1] + " != " + element[0]);
         }
     }
@@ -250,18 +250,18 @@ public class ColognePhoneticTest extends AbstractStringEncoderTest<ColognePhonet
     @Test
     public void testSpecialCharsBetweenSameLetters() throws EncoderException {
         final String[] data = { "Test test", "Testtest", "Test-test", "TesT#Test", "TesT?test" };
-        this.checkEncodingVariations("28282", data);
+        checkEncodingVariations("28282", data);
     }
 
     @Test
     public void testVariationsMella() throws EncoderException {
         final String[] data = { "mella", "milah", "moulla", "mellah", "muehle", "mule" };
-        this.checkEncodingVariations("65", data);
+        checkEncodingVariations("65", data);
     }
 
     @Test
     public void testVariationsMeyer() throws EncoderException {
         final String[] data = { "Meier", "Maier", "Mair", "Meyer", "Meyr", "Mejer", "Major" };
-        this.checkEncodingVariations("67", data);
+        checkEncodingVariations("67", data);
     }
 }
