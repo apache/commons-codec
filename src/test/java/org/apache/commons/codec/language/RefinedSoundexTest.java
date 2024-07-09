@@ -36,38 +36,38 @@ public class RefinedSoundexTest extends AbstractStringEncoderTest<RefinedSoundex
     @Test
     public void testDifference() throws EncoderException {
         // Edge cases
-        assertEquals(0, this.getStringEncoder().difference(null, null));
-        assertEquals(0, this.getStringEncoder().difference("", ""));
-        assertEquals(0, this.getStringEncoder().difference(" ", " "));
+        assertEquals(0, getStringEncoder().difference(null, null));
+        assertEquals(0, getStringEncoder().difference("", ""));
+        assertEquals(0, getStringEncoder().difference(" ", " "));
         // Normal cases
-        assertEquals(6, this.getStringEncoder().difference("Smith", "Smythe"));
-        assertEquals(3, this.getStringEncoder().difference("Ann", "Andrew"));
-        assertEquals(1, this.getStringEncoder().difference("Margaret", "Andrew"));
-        assertEquals(1, this.getStringEncoder().difference("Janet", "Margaret"));
+        assertEquals(6, getStringEncoder().difference("Smith", "Smythe"));
+        assertEquals(3, getStringEncoder().difference("Ann", "Andrew"));
+        assertEquals(1, getStringEncoder().difference("Margaret", "Andrew"));
+        assertEquals(1, getStringEncoder().difference("Janet", "Margaret"));
         // Examples from
         // https://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_de-dz_8co5.asp
-        assertEquals(5, this.getStringEncoder().difference("Green", "Greene"));
-        assertEquals(1, this.getStringEncoder().difference("Blotchet-Halls", "Greene"));
+        assertEquals(5, getStringEncoder().difference("Green", "Greene"));
+        assertEquals(1, getStringEncoder().difference("Blotchet-Halls", "Greene"));
         // Examples from
         // https://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_setu-sus_3o6w.asp
-        assertEquals(6, this.getStringEncoder().difference("Smith", "Smythe"));
-        assertEquals(8, this.getStringEncoder().difference("Smithers", "Smythers"));
-        assertEquals(5, this.getStringEncoder().difference("Anothers", "Brothers"));
+        assertEquals(6, getStringEncoder().difference("Smith", "Smythe"));
+        assertEquals(8, getStringEncoder().difference("Smithers", "Smythers"));
+        assertEquals(5, getStringEncoder().difference("Anothers", "Brothers"));
     }
 
     @Test
     public void testEncode() {
-        assertEquals("T6036084", this.getStringEncoder().encode("testing"));
-        assertEquals("T6036084", this.getStringEncoder().encode("TESTING"));
-        assertEquals("T60", this.getStringEncoder().encode("The"));
-        assertEquals("Q503", this.getStringEncoder().encode("quick"));
-        assertEquals("B1908", this.getStringEncoder().encode("brown"));
-        assertEquals("F205", this.getStringEncoder().encode("fox"));
-        assertEquals("J408106", this.getStringEncoder().encode("jumped"));
-        assertEquals("O0209", this.getStringEncoder().encode("over"));
-        assertEquals("T60", this.getStringEncoder().encode("the"));
-        assertEquals("L7050", this.getStringEncoder().encode("lazy"));
-        assertEquals("D6043", this.getStringEncoder().encode("dogs"));
+        assertEquals("T6036084", getStringEncoder().encode("testing"));
+        assertEquals("T6036084", getStringEncoder().encode("TESTING"));
+        assertEquals("T60", getStringEncoder().encode("The"));
+        assertEquals("Q503", getStringEncoder().encode("quick"));
+        assertEquals("B1908", getStringEncoder().encode("brown"));
+        assertEquals("F205", getStringEncoder().encode("fox"));
+        assertEquals("J408106", getStringEncoder().encode("jumped"));
+        assertEquals("O0209", getStringEncoder().encode("over"));
+        assertEquals("T60", getStringEncoder().encode("the"));
+        assertEquals("L7050", getStringEncoder().encode("lazy"));
+        assertEquals("D6043", getStringEncoder().encode("dogs"));
 
         // Testing CODEC-56
         assertEquals("D6043", RefinedSoundex.US_ENGLISH.encode("dogs"));
@@ -75,7 +75,7 @@ public class RefinedSoundexTest extends AbstractStringEncoderTest<RefinedSoundex
 
     @Test
     public void testGetMappingCodeNonLetter() {
-        final char code = this.getStringEncoder().getMappingCode('#');
+        final char code = getStringEncoder().getMappingCode('#');
         assertEquals(0, code, "Code does not equals zero");
     }
 
