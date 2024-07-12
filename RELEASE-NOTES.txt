@@ -1,3 +1,37 @@
+Apache Commons Codec 1.17.1 RELEASE NOTES
+-----------------------------------------
+
+The Apache Commons Codec component contains encoders and decoders for
+various formats such as Base16, Base32, Base64, digest, and Hexadecimal. In addition to these
+widely used encoders and decoders, the codec package also maintains a
+collection of phonetic encoding utilities.
+
+Feature and fix release. Requires a minimum of Java 8.
+
+
+
+Fixed Bugs
+----------
+
+*             Md5Crypt now throws IllegalArgumentException on an invalid prefix. Thanks to Gary Gregory.
+
+Changes
+-------
+
+*             Bump org.apache.commons:commons-parent from 69 to 71 #286. Thanks to Gary Gregory.
+*             Bump org.codehaus.mojo:animal-sniffer-maven-plugin from 1.23 to 1.24 #293. Thanks to Dependabot.
+*             Bump org.codehaus.mojo:taglist-maven-plugin from 3.0.0 to 3.1.0 #292. Thanks to Dependabot.
+
+
+For complete information on Apache Commons Codec, including instructions on how to submit bug reports,
+patches, or suggestions for improvement, see the Apache Commons Codec website:
+
+https://commons.apache.org/proper/commons-codec/
+
+Download page: https://commons.apache.org/proper/commons-codec/download_codec.cgi
+
+---------------------------------------------------------------------------------
+
 Apache Commons Codec 1.17.0 RELEASE NOTES
 -----------------------------------------
 

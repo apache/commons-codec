@@ -45,11 +45,11 @@ Apache Commons Codec
 
 [![Java CI](https://github.com/apache/commons-codec/actions/workflows/maven.yml/badge.svg)](https://github.com/apache/commons-codec/actions/workflows/maven.yml)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/commons-codec/commons-codec/badge.svg?gav=true)](https://maven-badges.herokuapp.com/maven-central/commons-codec/commons-codec/?gav=true)
-[![Javadocs](https://javadoc.io/badge/commons-codec/commons-codec/1.17.0.svg)](https://javadoc.io/doc/commons-codec/commons-codec/1.17.0)
+[![Javadocs](https://javadoc.io/badge/commons-codec/commons-codec/1.17.1.svg)](https://javadoc.io/doc/commons-codec/commons-codec/1.17.1)
 [![CodeQL](https://github.com/apache/commons-codec/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/apache/commons-codec/actions/workflows/codeql-analysis.yml)
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/apache/commons-codec/badge)](https://api.securityscorecards.dev/projects/github.com/apache/commons-codec)
 
-The Apache Commons Codec component contains encoder and decoders for
+The Apache Commons Codec component contains encoders and decoders for
      various formats such as Base16, Base32, Base64, digest, and Hexadecimal. In addition to these
      widely used encoders and decoders, the codec package also maintains a
      collection of phonetic encoding utilities.
@@ -71,7 +71,7 @@ Alternatively, you can pull it from  the central Maven repositories:
 <dependency>
   <groupId>commons-codec</groupId>
   <artifactId>commons-codec</artifactId>
-  <version>1.17.0</version>
+  <version>1.17.1</version>
 </dependency>
 ```
 
@@ -91,7 +91,9 @@ There are some guidelines which will make applying PRs easier for us:
 + No tabs! Please use spaces for indentation.
 + Respect the existing code style for each file.
 + Create minimal diffs - disable on save actions like reformat source code or organize imports. If you feel the source code should be reformatted create a separate PR for this change.
-+ Provide JUnit tests for your changes and make sure your changes don't break any existing tests by running ```mvn```.
++ Provide JUnit tests for your changes and make sure your changes don't break any existing tests by running `mvn`.
++ Before you pushing a PR, run `mvn` (by itself), this runs the default goal, which contains all build checks.
++ To see the code coverage report, regardless of coverage failures, run `mvn clean site -Dcommons.jacoco.haltOnFailure=false`
 
 If you plan to contribute on a regular basis, please consider filing a [contributor license agreement](https://www.apache.org/licenses/#clas).
 You can learn more about contributing via GitHub in our [contribution guidelines](CONTRIBUTING.md).
