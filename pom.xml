@@ -28,7 +28,7 @@ limitations under the License.
   </parent>
   <groupId>commons-codec</groupId>
   <artifactId>commons-codec</artifactId>
-  <version>1.17.1</version>
+  <version>1.17.2-SNAPSHOT</version>
   <name>Apache Commons Codec</name>
   <inceptionYear>2002</inceptionYear>
   <description>
@@ -105,7 +105,7 @@ limitations under the License.
     <commons.rc.version>RC1</commons.rc.version>
     <commons.release.isDistModule>true</commons.release.isDistModule>
     <commons.distSvnStagingUrl>scm:svn:https://dist.apache.org/repos/dist/dev/commons/${commons.componentid}</commons.distSvnStagingUrl>
-    <project.build.outputTimestamp>2024-07-12T16:14:24Z</project.build.outputTimestamp>
+    <project.build.outputTimestamp>2024-07-15T22:27:42Z</project.build.outputTimestamp>
     <commons.jacoco.version>0.8.12</commons.jacoco.version>
     <!-- JaCoCo: Don't make code coverage worse than: -->
     <jacoco.skip>false</jacoco.skip>
