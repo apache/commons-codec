@@ -43,6 +43,11 @@ The <action> type attribute can be add,update,fix,remove.
     <author>Apache Commons Developers</author>
   </properties>
   <body>
+    <release version="1.17.2" date="YYYY-MM-DD" description="This is a feature and maintenance release. Java 8 or later is required.">
+      <!-- FIX -->
+      <!-- ADD -->
+      <!-- UPDATE -->
+    </release>
     <release version="1.17.1" date="2024-07-12" description="Feature and fix release. Requires a minimum of Java 8.">
       <!-- FIX -->
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Md5Crypt now throws IllegalArgumentException on an invalid prefix.</action>
