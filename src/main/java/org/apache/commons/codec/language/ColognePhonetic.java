@@ -30,7 +30,7 @@ import org.apache.commons.codec.StringEncoder;
  * Phonetic) algorithm issued by Hans Joachim Postel in 1969.
  * </p>
  * <p>
- * The <i>K&ouml;lner Phonetik</i> is a phonetic algorithm which is optimized for the German language. It is related to
+ * The <em>K&ouml;lner Phonetik</em> is a phonetic algorithm which is optimized for the German language. It is related to
  * the well-known soundex algorithm.
  * </p>
  *
@@ -305,14 +305,14 @@ public class ColognePhonetic implements StringEncoder {
 
     /**
      * <p>
-     * Implements the <i>K&ouml;lner Phonetik</i> algorithm.
+     * Implements the <em>K&ouml;lner Phonetik</em> algorithm.
      * </p>
      * <p>
      * In contrast to the initial description of the algorithm, this implementation does the encoding in one pass.
      * </p>
      *
      * @param text The source text to encode
-     * @return the corresponding encoding according to the <i>K&ouml;lner Phonetik</i> algorithm
+     * @return the corresponding encoding according to the <em>K&ouml;lner Phonetik</em> algorithm
      */
     public String colognePhonetic(final String text) {
         if (text == null) {
