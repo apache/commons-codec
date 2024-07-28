@@ -24,7 +24,7 @@ limitations under the License.
   <parent>
     <groupId>org.apache.commons</groupId>
     <artifactId>commons-parent</artifactId>
-    <version>71</version>
+    <version>72</version>
   </parent>
   <groupId>commons-codec</groupId>
   <artifactId>commons-codec</artifactId>
@@ -107,6 +107,8 @@ limitations under the License.
     <commons.distSvnStagingUrl>scm:svn:https://dist.apache.org/repos/dist/dev/commons/${commons.componentid}</commons.distSvnStagingUrl>
     <project.build.outputTimestamp>2024-07-15T22:27:42Z</project.build.outputTimestamp>
     <commons.jacoco.version>0.8.12</commons.jacoco.version>
+    <!-- Temp for SUREFIRE-2253 -->
+    <commons.surefire.version>3.2.5</commons.surefire.version>
     <!-- JaCoCo: Don't make code coverage worse than: -->
     <jacoco.skip>false</jacoco.skip>
     <commons.jacoco.haltOnFailure>true</commons.jacoco.haltOnFailure>
