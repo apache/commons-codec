@@ -27,7 +27,9 @@ import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 
+@Timeout(3) // Try to avoid occaisional hang when testing
 public class Md5CryptTest {
 
     @Test
