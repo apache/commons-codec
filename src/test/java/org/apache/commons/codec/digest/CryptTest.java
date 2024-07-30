@@ -18,7 +18,7 @@ package org.apache.commons.codec.digest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -46,7 +46,7 @@ public class CryptTest {
      */
     @Test
     public void testCryptWithEmptySalt() {
-        assertThrows(IllegalArgumentException.class, () -> Crypt.crypt("secret", ""));
+        assertThrowsExactly(IllegalArgumentException.class, () -> Crypt.crypt("secret", ""));
     }
 
     @Test
@@ -56,4 +56,62 @@ public class CryptTest {
         assertTrue(Crypt.crypt("secret", null).startsWith("$6$"));
     }
 
+    @Test
+    public void testSamples() { // From Javadoc
+        assertEquals("$1$xxxx$aMkevjfEIpa35Bh3G4bAc.", Crypt.crypt("secret", "$1$xxxx"));
+        assertEquals("xxWAum7tHdIUw", Crypt.crypt("secret", "xx"));
+    }
+    @Test
+    public void testStored() { // From Javadoc
+        assertEquals("$1$xxxx$aMkevjfEIpa35Bh3G4bAc.", Crypt.crypt("secret", "$1$xxxx$aMkevjfEIpa35Bh3G4bAc."));
+        assertEquals("xxWAum7tHdIUw", Crypt.crypt("secret", "xxWAum7tHdIUw"));
+    }
+
+    // Helper method
+    private void startsWith(String string, String prefix){
+        assertTrue(string.startsWith(prefix), string + " should start with " + prefix);
+    }
+    @Test
+    public void testType() {
+        startsWith(Crypt.crypt("secret", "xxxx"),"xx");
+        startsWith(Crypt.crypt("secret", "$1$xxxx"), "$1$xxxx$");
+        startsWith(Crypt.crypt("secret", "$5$xxxx"), "$5$xxxx$");
+        startsWith(Crypt.crypt("secret", "$6$xxxx"), "$6$xxxx$");
+    }
+    @Test
+    public void testBadType() {
+        assertThrowsExactly(IllegalArgumentException.class, () -> Crypt.crypt("secret", "$2$xxxx"));
+        assertThrowsExactly(IllegalArgumentException.class, () -> Crypt.crypt("secret", "$3$xxxx"));
+        assertThrowsExactly(IllegalArgumentException.class, () -> Crypt.crypt("secret", "$4$"));
+    }
+    @Test
+    public void testBadSalt() {
+        // No salt
+        assertThrowsExactly(IllegalArgumentException.class, () -> Crypt.crypt("secret", "$1$"));
+        assertThrowsExactly(IllegalArgumentException.class, () -> Crypt.crypt("secret", "$5$"));
+        assertThrowsExactly(IllegalArgumentException.class, () -> Crypt.crypt("secret", "$6$"));
+        // wrong char
+        assertThrowsExactly(IllegalArgumentException.class, () -> Crypt.crypt("secret", "$1$%"));
+        assertThrowsExactly(IllegalArgumentException.class, () -> Crypt.crypt("secret", "$5$!"));
+        assertThrowsExactly(IllegalArgumentException.class, () -> Crypt.crypt("secret", "$6$_"));
+    }
+
+    // Allow CLI testing
+    // CLASSPATH=target/classes:target/test-classes/ java org.apache.commons.codec.digest.CryptTest
+    public static void main(String[] args) {
+        final String hash;
+        switch (args.length) {
+            case 1:
+                hash = Crypt.crypt(args[0]);
+                System.out.println(hash.length() + ": " + hash);
+                break;
+            case 2:
+                hash = Crypt.crypt(args[0], args[1]);
+                System.out.println(hash.length() + "; " + hash);
+                break;
+            default:
+                System.out.println("Enter key [salt (remember to quote this!)]");
+                break;
+        }
+    }
 }
