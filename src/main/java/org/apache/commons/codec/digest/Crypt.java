@@ -123,7 +123,7 @@ public class Crypt {
      * identical with that of the libc implementation.
      * </p>
      * <p>
-     * The rest of the salt string is drawn from the set {@code [a-zA-Z0-9./]} and is cut at the maximum length of if a
+     * The rest of the salt string is drawn from the set {@code [a-zA-Z0-9./]} and is cut at the maximum length or if a
      * {@code "$"} sign is encountered. It is therefore valid to enter a complete hash value as salt to e.g. verify a
      * password with:
      * </p>
