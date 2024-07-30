@@ -38,7 +38,8 @@ final class B64 {
     /**
      * Table with characters for Base64 transformation.
      */
-    static final char[] B64T_ARRAY = B64T_STRING.toCharArray();
+    static final char[] B64T_ARRAY = B64T_STRING.toCharArray(); // package access for testing
+    // N.B. Do not make this protected or public. Array contents are mutable!
 
     /**
      * Base64 like conversion of bytes to ASCII chars.
