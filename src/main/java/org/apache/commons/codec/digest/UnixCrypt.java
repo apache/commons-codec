@@ -240,7 +240,7 @@ public class UnixCrypt {
      *            plaintext password
      * @param salt
      *            a two character string drawn from [a-zA-Z0-9./]. The salt may be null, in which case a salt is
-     *            generated for you using {@link SecureRandom}.
+     *            generated for you using {@link B64#getRandomSalt(int)}.
      * @return a 13 character string starting with the salt string
      * @throws IllegalArgumentException
      *             if the salt does not match the allowed pattern
