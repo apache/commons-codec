@@ -62,8 +62,10 @@ public class Crypt {
      * @param keyBytes
      *            plaintext password
      * @param salt
-     *            real salt value without prefix or "rounds=". The salt may be null,
-     *            in which case a salt is generated for you using {@link SecureRandom}.
+     *            the salt, which is used to select the algorithm, see {@link #crypt(String, String)}
+     *            The salt may be null,
+     *            in which case the method delegates to {@link Sha2Crypt#sha512Crypt(byte[])}
+     *
      * @return hash value
      * @throws IllegalArgumentException
      *             if the salt does not match the allowed pattern
