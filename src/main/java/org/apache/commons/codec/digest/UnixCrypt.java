@@ -56,9 +56,6 @@ public class UnixCrypt {
             71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 97, 98, 99, 100, 101, 102,
             103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122 };
 
-    private static final char[] SALT_CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789./"
-            .toCharArray();
-
     private static final boolean[] SHIFT2 = { false, false, true, true, true, true, true, true, false, true, true,
             true, true, true, true, false };
 
@@ -250,10 +247,7 @@ public class UnixCrypt {
      */
     public static String crypt(final byte[] original, String salt) {
         if (salt == null) {
-            final SecureRandom randomGenerator = new SecureRandom();
-            final int numSaltChars = SALT_CHARS.length;
-            salt = "" + SALT_CHARS[randomGenerator.nextInt(numSaltChars)] +
-                    SALT_CHARS[randomGenerator.nextInt(numSaltChars)];
+            salt = B64.getRandomSalt(2);
         } else if (!CRYPT_SALT_PATTERN.matcher(salt).matches()) {
             throw new IllegalArgumentException("Invalid salt value: " + salt);
         }
