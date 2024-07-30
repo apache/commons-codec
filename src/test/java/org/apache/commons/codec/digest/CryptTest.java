@@ -68,12 +68,12 @@ public class CryptTest {
     }
 
     // Helper method
-    private void startsWith(String string, String prefix){
+    private void startsWith(String string, String prefix) {
         assertTrue(string.startsWith(prefix), string + " should start with " + prefix);
     }
     @Test
     public void testType() {
-        startsWith(Crypt.crypt("secret", "xxxx"),"xx");
+        startsWith(Crypt.crypt("secret", "xxxx"), "xx");
         startsWith(Crypt.crypt("secret", "$1$xxxx"), "$1$xxxx$");
         startsWith(Crypt.crypt("secret", "$5$xxxx"), "$5$xxxx$");
         startsWith(Crypt.crypt("secret", "$6$xxxx"), "$6$xxxx$");
