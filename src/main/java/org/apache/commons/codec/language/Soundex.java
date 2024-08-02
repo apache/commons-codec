@@ -33,7 +33,7 @@ public class Soundex implements StringEncoder {
      * The marker character used to indicate a silent (ignored) character.
      * These are ignored except when they appear as the first character.
      * <p>
-     * Note: the {@link #US_ENGLISH_MAPPING_STRING} does not use this mechanism
+     * Note: The {@link #US_ENGLISH_MAPPING_STRING} does not use this mechanism
      * because changing it might break existing code. Mappings that don't contain
      * a silent marker code are treated as though H and W are silent.
      * </p>

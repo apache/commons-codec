@@ -66,7 +66,7 @@ public class BaseNCodecInputStream extends FilterInputStream {
      */
     @Override
     public int available() throws IOException {
-        // Note: the logic is similar to the InflaterInputStream:
+        // Note: The logic is similar to the InflaterInputStream:
         //       as long as we have not reached EOF, indicate that there is more
         //       data available. As we do not know for sure how much data is left,
         //       just return 1 as a safe guess.

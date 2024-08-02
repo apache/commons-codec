@@ -53,7 +53,7 @@ import org.apache.commons.codec.StringEncoder;
  * <li>{@link #soundex(String)} - branching enabled, all codes will be returned, separated by '|'
  * </ul>
  * <p>
- * Note: this implementation has additional branching rules compared to the original description of the algorithm. The
+ * Note: This implementation has additional branching rules compared to the original description of the algorithm. The
  * rules can be customized by overriding the default rules contained in the resource file
  * {@code org/apache/commons/codec/language/dmrules.txt}.
  * </p>

@@ -42,7 +42,7 @@ import org.apache.commons.codec.binary.StringUtils;
  * other methods that require the Digest algorithm name.
  * </p>
  * <p>
- * Note: the class has shorthand methods for all the algorithms present as standard in Java 6. This approach requires lots of methods for each algorithm, and
+ * Note: The class has shorthand methods for all the algorithms present as standard in Java 6. This approach requires lots of methods for each algorithm, and
  * quickly becomes unwieldy. The following code works with all algorithms:
  * </p>
  *
