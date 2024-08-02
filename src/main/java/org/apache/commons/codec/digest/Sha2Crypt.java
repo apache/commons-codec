@@ -67,7 +67,10 @@ public class Sha2Crypt {
     /** The prefixes that can be used to identify this crypt() variant (SHA-512). */
     static final String SHA512_PREFIX = "$6$";
 
-    /** The pattern to match valid salt values. */
+    /**
+     * The pattern to match valid salt values.
+     * <code> $[56]$(rounds=nn$)?[./a-zA-Z0-9]{1,16}.* </code>
+    */
     private static final Pattern SALT_PATTERN = Pattern
             .compile("^(\\$[56]\\$)(rounds=(\\d+)\\$)?([\\.\\/a-zA-Z0-9]{1,16}).*");
 
@@ -98,7 +101,7 @@ public class Sha2Crypt {
      * @param keyBytes
      *            plaintext to hash. Each array element is set to {@code 0} before returning.
      * @param salt
-     *            salt value including prefix ($5$ or $6$) and optionally "rounds=".
+     *            salt value including prefix ($5$) and optionally "rounds=".
      *            The salt may be null, in which case a salt is generated for you using {@link SecureRandom}.
      *            Or you can pass your own {@link Random} in {@link #sha256Crypt(byte[], String, Random)}.
      * @return complete hash value including salt
@@ -122,7 +125,7 @@ public class Sha2Crypt {
      * @param keyBytes
      *            plaintext to hash. Each array element is set to {@code 0} before returning.
      * @param salt
-     *            salt value including prefix ($5$ or $6$) and optionally "rounds=".
+     *            salt value including prefix ($5$) and optionally "rounds=".
      *            The salt may be null, in which case a salt is generated for you using the provided random generator
      * @param random
      *            the instance of {@link Random} to use for generating the salt.
@@ -575,7 +578,7 @@ public class Sha2Crypt {
      * @param keyBytes
      *            plaintext to hash. Each array element is set to {@code 0} before returning.
      * @param salt
-     *            salt value including prefix ($5$ or $6$) and optionally "rounds=".
+     *            salt value including prefix ($6$) and optionally "rounds=".
      *            The salt may be null, in which case a salt is generated for you using {@link SecureRandom}.
      *            Or you can pass your own {@link Random} to {@link #sha512Crypt(byte[], String, Random)}.
      * @return complete hash value including salt
@@ -599,7 +602,7 @@ public class Sha2Crypt {
      * @param keyBytes
      *            plaintext to hash. Each array element is set to {@code 0} before returning.
      * @param salt
-     *            salt value including prefix ($5$ or $6$) and optionally "rounds=".
+     *            salt value including prefix ($6$) and optionally "rounds=".
      *            The salt may be null, in which case a salt is generated for you using the provided random generator
      * @param random
      *            the instance of {@link Random} to use for generating the salt.
