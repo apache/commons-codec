@@ -441,16 +441,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
      *             if a character is not mapped
      */
     public String soundex(final String source) {
-        final String[] branches = soundex(source, true);
-        final StringBuilder sb = new StringBuilder();
-        int index = 0;
-        for (final String branch : branches) {
-            sb.append(branch);
-            if (++index < branches.length) {
-                sb.append('|');
-            }
-        }
-        return sb.toString();
+        return String.join("|", soundex(source, true));
     }
 
     /**
