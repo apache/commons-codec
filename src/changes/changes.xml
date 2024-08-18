@@ -49,7 +49,7 @@ The <action> type attribute can be add,update,fix,remove.
       <!-- ADD -->
       <!-- UPDATE -->
       <action type="update" dev="ggregory" due-to="Dependabot">Bump org.apache.commons:commons-lang3 from 3.14.0 to 3.16.0 #296, #305.</action>
-      <action type="update" dev="ggregory" due-to="Gary Gregory">Bump org.apache.commons:commons-parent from 71 to 72.</action>
+      <action type="update" dev="ggregory" due-to="Gary Gregory">Bump org.apache.commons:commons-parent from 71 to 73 #310.</action>
     </release>
     <release version="1.17.1" date="2024-07-12" description="Feature and fix release. Requires a minimum of Java 8.">
       <!-- FIX -->
