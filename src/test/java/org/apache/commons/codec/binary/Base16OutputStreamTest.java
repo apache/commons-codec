@@ -35,7 +35,7 @@ public class Base16OutputStreamTest {
     /**
      * Test the Base16OutputStream implementation against empty input.
      *
-     * @throws IOException for some failure scenarios..
+     * @throws IOException for some failure scenarios.
      */
     @Test
     public void testBase16EmptyOutputStream() throws IOException {
