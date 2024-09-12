@@ -68,7 +68,7 @@ public class CryptTest {
     }
 
     // Helper method
-    private void startsWith(String string, String prefix) {
+    private void startsWith(final String string, final String prefix) {
         assertTrue(string.startsWith(prefix), string + " should start with " + prefix);
     }
     @Test
@@ -98,7 +98,7 @@ public class CryptTest {
 
     // Allow CLI testing
     // CLASSPATH=target/classes:target/test-classes/ java org.apache.commons.codec.digest.CryptTest
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         final String hash;
         switch (args.length) {
             case 1:
