@@ -279,7 +279,7 @@ public class DoubleMetaphone implements StringEncoder {
         final boolean slavoGermanic = isSlavoGermanic(value);
         int index = isSilentStart(value) ? 1 : 0;
 
-        final DoubleMetaphoneResult result = new DoubleMetaphoneResult(this.getMaxCodeLen());
+        final DoubleMetaphoneResult result = new DoubleMetaphoneResult(getMaxCodeLen());
 
         while (!result.isComplete() && index <= value.length() - 1) {
             switch (value.charAt(index)) {
