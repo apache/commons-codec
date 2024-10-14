@@ -44,7 +44,7 @@ Apache Commons Codec
 ===================
 
 [![Java CI](https://github.com/apache/commons-codec/actions/workflows/maven.yml/badge.svg)](https://github.com/apache/commons-codec/actions/workflows/maven.yml)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/commons-codec/commons-codec/badge.svg?gav=true)](https://maven-badges.herokuapp.com/maven-central/commons-codec/commons-codec/?gav=true)
+[![Maven Central](https://img.shields.io/maven-central/v/commons-codec/commons-codec?label=Maven%20Central)](https://search.maven.org/artifact/commons-codec/commons-codec)
 [![Javadocs](https://javadoc.io/badge/commons-codec/commons-codec/1.17.1.svg)](https://javadoc.io/doc/commons-codec/commons-codec/1.17.1)
 [![CodeQL](https://github.com/apache/commons-codec/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/apache/commons-codec/actions/workflows/codeql-analysis.yml)
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/apache/commons-codec/badge)](https://api.securityscorecards.dev/projects/github.com/apache/commons-codec)
