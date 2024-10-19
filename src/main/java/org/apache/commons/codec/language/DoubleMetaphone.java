@@ -967,7 +967,7 @@ public class DoubleMetaphone implements StringEncoder {
 
     /**
      * Determines whether or not a value is of slavo-germanic origin. A value is
-     * of slavo-germanic origin if it contians any of 'W', 'K', 'CZ', or 'WITZ'.
+     * of slavo-germanic origin if it contains any of 'W', 'K', 'CZ', or 'WITZ'.
      */
     private boolean isSlavoGermanic(final String value) {
         return value.indexOf('W') > -1 || value.indexOf('K') > -1 ||
