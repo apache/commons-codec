@@ -34,7 +34,7 @@ import org.apache.commons.codec.CodecPolicy;
  * character encodings which are compatible with the lower 127 ASCII chart (ISO-8859-1, Windows-1252, UTF-8, etc).
  * </p>
  * <p>
- * <b>Note:</b> It is mandatory to close the stream after the last byte has been written to it, otherwise the
+ * <strong>Note:</strong> It is mandatory to close the stream after the last byte has been written to it, otherwise the
  * final padding will be omitted and the resulting data will be incomplete/inconsistent.
  * </p>
  * <p>

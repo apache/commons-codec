@@ -53,7 +53,7 @@ public class Soundex implements StringEncoder {
      * up the value for the constant values page.)
      * </p>
      * <p>
-     * <b>Note that letters H and W are treated specially.</b>
+     * <strong>Note that letters H and W are treated specially.</strong>
      * They are ignored (after the first letter) and don't act as separators
      * between consonants with the same code.
      * </p>

@@ -54,7 +54,7 @@ import org.apache.commons.codec.Resources;
  * The format of these resources is the following:
  * </p>
  * <ul>
- * <li><b>Rules:</b> whitespace separated strings.
+ * <li><strong>Rules:</strong> whitespace separated strings.
  * There should be 3 columns to each row, and these will be interpreted as:
  * <ol>
  * <li>pattern: a regular expression.</li>
@@ -62,11 +62,11 @@ import org.apache.commons.codec.Resources;
  * <li>acceptOnMatch: 'true' or 'false' indicating if a match rules in or rules out the language.</li>
  * </ol>
  * </li>
- * <li><b>End-of-line comments:</b> Any occurrence of '//' will cause all text following on that line to be
+ * <li><strong>End-of-line comments:</strong> Any occurrence of '//' will cause all text following on that line to be
  * discarded as a comment.</li>
- * <li><b>Multi-line comments:</b> Any line starting with '/*' will start multi-line commenting mode.
+ * <li><strong>Multi-line comments:</strong> Any line starting with '/*' will start multi-line commenting mode.
  * This will skip all content until a line ending in '*' and '/' is found.</li>
- * <li><b>Blank lines:</b> All blank lines will be skipped.</li>
+ * <li><strong>Blank lines:</strong> All blank lines will be skipped.</li>
  * </ul>
  * <p>
  * Port of lang.php

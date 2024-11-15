@@ -40,7 +40,7 @@ import org.junit.jupiter.api.Test;
  * <li>Time for encoding 80,000 times the input 'Angelo': 33,039 millis.</li>
  * <li>Time for encoding 80,000 times the input 'Angelo': 32,297 millis.</li>
  * <li>Time for encoding 80,000 times the input 'Angelo': 32,857 millis.</li>
- * <li>Time for encoding 80,000 times the input 'Angelo': <b>31,561 millis.</b></li>
+ * <li>Time for encoding 80,000 times the input 'Angelo': <strong>31,561 millis.</strong></li>
  * <li>Time for encoding 80,000 times the input 'Angelo': 32,665 millis.</li>
  * <li>Time for encoding 80,000 times the input 'Angelo': 32,215 millis.</li>
  * </ol>
@@ -53,7 +53,7 @@ import org.junit.jupiter.api.Test;
  * <li>Time for encoding 80,000 times the input 'Angelo': 18,196 millis.</li>
  * <li>Time for encoding 80,000 times the input 'Angelo': 13,858 millis.</li>
  * <li>Time for encoding 80,000 times the input 'Angelo': 13,644 millis.</li>
- * <li>Time for encoding 80,000 times the input 'Angelo': <b>13,591 millis.</b></li>
+ * <li>Time for encoding 80,000 times the input 'Angelo': <strong>13,591 millis.</strong></li>
  * <li>Time for encoding 80,000 times the input 'Angelo': 13,861 millis.</li>
  * <li>Time for encoding 80,000 times the input 'Angelo': 13,696 millis.</li>
  * </ol>
@@ -67,7 +67,7 @@ import org.junit.jupiter.api.Test;
  * </p>
  * <ol>
  * <li>Time for encoding 80,000 times the input 'Angelo': 13,547 millis.</li>
- * <li>Time for encoding 80,000 times the input 'Angelo': <b>13,501 millis.</b></li>
+ * <li>Time for encoding 80,000 times the input 'Angelo': <strong>13,501 millis.</strong></li>
  * <li>Time for encoding 80,000 times the input 'Angelo': 13,528 millis.</li>
  * <li>Time for encoding 80,000 times the input 'Angelo': 17,110 millis.</li>
  * <li>Time for encoding 80,000 times the input 'Angelo': 13,910 millis.</li>
@@ -85,7 +85,7 @@ import org.junit.jupiter.api.Test;
  * <li>Time for encoding 80,000 times the input 'Angelo': 13,724 millis.</li>
  * <li>Time for encoding 80,000 times the input 'Angelo': 13,451 millis.</li>
  * <li>Time for encoding 80,000 times the input 'Angelo': 13,742 millis.</li>
- * <li>Time for encoding 80,000 times the input 'Angelo': <b>13,186 millis.</b></li>
+ * <li>Time for encoding 80,000 times the input 'Angelo': <strong>13,186 millis.</strong></li>
  * <li>Time for encoding 80,000 times the input 'Angelo': 13,600 millis.</li>
  * <li>Time for encoding 80,000 times the input 'Angelo': 16,405 millis.</li>
  * </ol>
@@ -98,7 +98,7 @@ import org.junit.jupiter.api.Test;
  * <ol>
  * <li>Time for encoding 80,000 times the input 'Angelo': 13,133 millis.</li>
  * <li>Time for encoding 80,000 times the input 'Angelo': 13,064 millis.</li>
- * <li>Time for encoding 80,000 times the input 'Angelo': <b>12,838 millis.</b></li>
+ * <li>Time for encoding 80,000 times the input 'Angelo': <strong>12,838 millis.</strong></li>
  * <li>Time for encoding 80,000 times the input 'Angelo': 12,970 millis.</li>
  * <li>Time for encoding 80,000 times the input 'Angelo': 13,122 millis.</li>
  * <li>Time for encoding 80,000 times the input 'Angelo': 13,293 millis.</li>
@@ -110,7 +110,7 @@ import org.junit.jupiter.api.Test;
  * <li>Time for encoding 80,000 times the input 'Angelo': 11,576 millis.</li>
  * <li>Time for encoding 80,000 times the input 'Angelo': 11,506 millis.</li>
  * <li>Time for encoding 80,000 times the input 'Angelo': 11,361 millis.</li>
- * <li>Time for encoding 80,000 times the input 'Angelo': <b>11,142 millis.</b></li>
+ * <li>Time for encoding 80,000 times the input 'Angelo': <strong>11,142 millis.</strong></li>
  * <li>Time for encoding 80,000 times the input 'Angelo': 11,430 millis.</li>
  * <li>Time for encoding 80,000 times the input 'Angelo': 11,297 millis.</li>
  * </ol>
