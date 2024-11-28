@@ -37,7 +37,6 @@ import org.apache.commons.codec.CodecPolicy;
  * </p>
  *
  * @see <a href="https://tools.ietf.org/html/rfc4648#section-8">RFC 4648 - 8. Base 16 Encoding</a>
- *
  * @since 1.15
  */
 public class Base16 extends BaseNCodec {
@@ -227,7 +226,6 @@ public class Base16 extends BaseNCodec {
      * Returns whether or not the {@code octet} is in the Base16 alphabet.
      *
      * @param octet The value to test.
-     *
      * @return {@code true} if the value is defined in the Base16 alphabet {@code false} otherwise.
      */
     @Override

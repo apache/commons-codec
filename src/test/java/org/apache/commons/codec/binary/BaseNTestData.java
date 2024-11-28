@@ -134,7 +134,6 @@ public class BaseNTestData {
      *
      * @param in the input stream.
      * @return the byte array
-     *
      * @throws IOException if an error occurs whilst reading the input stream
      */
     static byte[] streamToBytes(final InputStream in) throws IOException {
@@ -153,9 +152,7 @@ public class BaseNTestData {
      *
      * @param in the input stream.
      * @param buf the byte array to use for chunking
-     *
      * @return the bytes read from the input stream
-     *
      * @throws IOException if an error occurs whilst reading the input stream
      */
     static byte[] streamToBytes(final InputStream in, byte[] buf) throws IOException {

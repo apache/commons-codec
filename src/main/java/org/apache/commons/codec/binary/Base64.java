@@ -935,7 +935,6 @@ public class Base64 extends BaseNCodec {
      *
      * @param emptyBitsMask The mask of the lower bits that should be empty
      * @param context the context to be used
-     *
      * @throws IllegalArgumentException if the bits being checked contain any non-zero value
      */
     private void validateCharacter(final int emptyBitsMask, final Context context) {

@@ -80,7 +80,6 @@ public class DigestUtils {
      * @param messageDigest The MessageDigest to use (e.g. MD5)
      * @param data          Data to digest
      * @return the digest
-     *
      * @since 1.11
      */
     public static byte[] digest(final MessageDigest messageDigest, final ByteBuffer data) {
@@ -1424,7 +1423,6 @@ public class DigestUtils {
      *
      * @param data Data to digest
      * @return the digest
-     *
      * @since 1.11
      */
     public byte[] digest(final ByteBuffer data) {
@@ -1495,7 +1493,6 @@ public class DigestUtils {
      *
      * @param data Data to digest
      * @return the digest as a hexadecimal string
-     *
      * @since 1.11
      */
     public String digestAsHex(final ByteBuffer data) {

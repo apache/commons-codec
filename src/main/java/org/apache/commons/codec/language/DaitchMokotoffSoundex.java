@@ -64,7 +64,6 @@ import org.apache.commons.codec.StringEncoder;
  * @see Soundex
  * @see <a href="https://en.wikipedia.org/wiki/Daitch%E2%80%93Mokotoff_Soundex"> Wikipedia - Daitch-Mokotoff Soundex</a>
  * @see <a href="http://www.avotaynu.com/soundex.htm">Avotaynu - Soundexing and Genealogy</a>
- *
  * @since 1.10
  */
 public class DaitchMokotoffSoundex implements StringEncoder {
@@ -379,7 +378,6 @@ public class DaitchMokotoffSoundex implements StringEncoder {
      * </p>
      *
      * @see #soundex(String)
-     *
      * @param obj
      *            Object to encode
      * @return An object (of type {@link String}) containing the DM soundex code, which corresponds to the String
@@ -402,7 +400,6 @@ public class DaitchMokotoffSoundex implements StringEncoder {
      * Encodes a String using the Daitch-Mokotoff soundex algorithm without branching.
      *
      * @see #soundex(String)
-     *
      * @param source
      *            A String object to encode
      * @return A DM Soundex code corresponding to the String supplied

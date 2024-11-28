@@ -39,7 +39,6 @@ final class Utils {
      * @param b
      *            The byte to be converted.
      * @return The numeric value represented by the character in radix 16.
-     *
      * @throws DecoderException
      *             Thrown when the byte is not valid per {@link Character#digit(char,int)}
      */

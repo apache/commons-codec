@@ -86,7 +86,6 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * @param charset
      *            the default string Charset to use.
      * @param decodingPolicy The decoding policy.
-     *
      * @see Charset
      * @since 1.15
      */

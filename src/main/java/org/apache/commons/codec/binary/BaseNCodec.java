@@ -715,7 +715,6 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * Calculates the amount of space needed to encode the supplied array.
      *
      * @param pArray byte[] array which will later be encoded
-     *
      * @return amount of space needed to encode the supplied array.
      * Returns a long since a max-len array will require &gt; Integer.MAX_VALUE
      */
@@ -745,7 +744,6 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * Does not allow whitespace or pad.
      *
      * @param value The value to test
-     *
      * @return {@code true} if the value is defined in the current alphabet, {@code false} otherwise.
      */
     protected abstract boolean isInAlphabet(byte value);
@@ -756,7 +754,6 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      *
      * @param arrayOctet byte array to test
      * @param allowWSPad if {@code true}, then whitespace and PAD are also allowed
-     *
      * @return {@code true} if all bytes are valid characters in the alphabet or if the byte array is empty;
      *         {@code false}, otherwise
      */

@@ -360,7 +360,6 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      * The {@code String} encoding used for decoding and encoding.
      *
      * @return Returns the encoding.
-     *
      * @deprecated Use {@link #getDefaultCharset()}, will be removed in 2.0.
      */
     @Deprecated
