@@ -204,8 +204,8 @@ public class Base64Test {
     @Test
     public void testBase64ImpossibleSamples() {
         final Base64 codec = new Base64(0, null, false, CodecPolicy.STRICT);
-        for (final String s : BASE64_IMPOSSIBLE_CASES) {
-            assertThrows(IllegalArgumentException.class, () -> codec.decode(s));
+        for (final String impossibleBase64Input : BASE64_IMPOSSIBLE_CASES) {
+            assertThrows(IllegalArgumentException.class, () -> codec.decode(impossibleBase64Input));
         }
     }
 

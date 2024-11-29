@@ -85,15 +85,15 @@ public class QCodecTest {
         final String encoded2 = "=?UTF-8?Q?Mind_those_pesky_blanks?=";
         final QCodec qcodec = new QCodec();
         qcodec.setEncodeBlanks(false);
-        String s = qcodec.encode(plain);
-        assertEquals(encoded1, s, "Blanks encoding with the Q codec test");
+        String EncodeText = qcodec.encode(plain);
+        assertEquals(encoded1, EncodeText, "Blanks encoding with the Q codec test");
         qcodec.setEncodeBlanks(true);
-        s = qcodec.encode(plain);
-        assertEquals(encoded2, s, "Blanks encoding with the Q codec test");
-        s = qcodec.decode(encoded1);
-        assertEquals(plain, s, "Blanks decoding with the Q codec test");
-        s = qcodec.decode(encoded2);
-        assertEquals(plain, s, "Blanks decoding with the Q codec test");
+        EncodeText = qcodec.encode(plain);
+        assertEquals(encoded2, EncodeText, "Blanks encoding with the Q codec test");
+        EncodeText = qcodec.decode(encoded1);
+        assertEquals(plain, EncodeText, "Blanks decoding with the Q codec test");
+        EncodeText = qcodec.decode(encoded2);
+        assertEquals(plain, EncodeText, "Blanks decoding with the Q codec test");
     }
 
     @Test
