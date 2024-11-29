@@ -430,8 +430,13 @@ public class Base64InputStreamTest {
         final byte[] decoded = randomData[0];
         final ByteArrayInputStream bin = new ByteArrayInputStream(encoded);
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        final int kilobyte = 1024;
+        final int four_kb_size = 4 * kilobyte;
+        final int eight_kb_size = 8 * kilobyte;
+        final int sixteen_kb_size = 16 * kilobyte;
         try (final Base64InputStream in = new Base64InputStream(bin)) {
-            for (final int i : new int[] { 4 * 1024, 4 * 1024, 8 * 1024, 8 * 1024, 16 * 1024, 16 * 1024, 8 * 1024 }) {
+
+            for (final int i : new int[] { four_kb_size, four_kb_size, eight_kb_size, eight_kb_size, sixteen_kb_size, sixteen_kb_size, eight_kb_size }) {
                 final byte[] buf = new byte[i];
                 final int bytesRead = in.read(buf);
                 assertEquals(i, bytesRead);
