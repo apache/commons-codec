@@ -22,7 +22,7 @@ import java.util.Arrays;
 import java.util.regex.Pattern;
 
 /**
- * UNIX crypt(3) algorithm implementation.
+ * Unix crypt(3) algorithm implementation.
  * <p>
  * This class only implements the traditional 56 bit DES based algorithm. Please use Crypt.crypt() for a method
  * that distinguishes between all the algorithms supported in the current glibc's crypt().
