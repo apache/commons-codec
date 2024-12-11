@@ -98,12 +98,10 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
             throw new DecoderException("Output array is not large enough to accommodate decoded data.");
         }
         // two characters form the hex value.
-        for (int i = outOffset, j = 0; j < len; i++) {
-            int f = toDigit(data[j], j) << 4;
-            j++;
-            f |= toDigit(data[j], j);
-            j++;
-            out[i] = (byte) (f & 0xFF);
+        for (int i = 0, j = outOffset; i < len; i += 2, j++) {
+            final int high = toDigit(data[i], i) << 4;
+            final int low = toDigit(data[i + 1], i + 1);
+            out[j] = (byte) (high | low);
         }
         return outLen;
     }
@@ -207,9 +205,11 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      */
     private static char[] encodeHex(final byte[] data, final int dataOffset, final int dataLen, final char[] toDigits, final char[] out, final int outOffset) {
         // two characters form the hex value.
-        for (int i = dataOffset, j = outOffset; i < dataOffset + dataLen; i++) {
-            out[j++] = toDigits[(0xF0 & data[i]) >>> 4];
-            out[j++] = toDigits[0x0F & data[i]];
+        final int end = dataOffset + dataLen;
+        for (int i = dataOffset, j = outOffset; i < end; i++) {
+            final byte value = data[i];
+            out[j++] = toDigits[value >> 4 & 0x0f];
+            out[j++] = toDigits[value & 0x0f];
         }
         return out;
     }
