@@ -68,16 +68,16 @@ limitations under the License.
       <version>2.18.0</version>
       <scope>test</scope>
     </dependency>
+
+
     <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-engine</artifactId>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-params</artifactId>
-      <scope>test</scope>
-    </dependency>
+
+
   </dependencies>
   <properties>
     <maven.compiler.source>1.8</maven.compiler.source>
@@ -212,7 +212,32 @@ limitations under the License.
           </ignores>
         </configuration>
       </plugin>
+
+          <!-- JaCoCo Plugin -->
+          <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>0.8.10</version>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>prepare-agent</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>report</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>report</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+
+
     </plugins>
+
+
   </build>
   <reporting>
     <plugins>
@@ -240,38 +265,7 @@ limitations under the License.
           </reportSet>
         </reportSets>
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-pmd-plugin</artifactId>
-        <version>${commons.pmd.version}</version>
-        <configuration>
-          <targetJdk>${maven.compiler.target}</targetJdk>
-          <linkXref>true</linkXref>
-          <rulesets>
-            <ruleset>${basedir}/src/conf/pmd.xml</ruleset>
-          </rulesets>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>com.github.spotbugs</groupId>
-        <artifactId>spotbugs-maven-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>taglist-maven-plugin</artifactId>
-        <configuration>
-          <tags>
-            <tag>TODO</tag>
-            <tag>NOPMD</tag>
-            <tag>NOTE</tag>
-          </tags>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>javancss-maven-plugin</artifactId>
-        <version>2.1</version>
-      </plugin>
+
     </plugins>
   </reporting>
   <profiles>
