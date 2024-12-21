@@ -69,13 +69,27 @@ limitations under the License.
       <scope>test</scope>
     </dependency>
 
-
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.12</version>
       <scope>test</scope>
     </dependency>
+
+    <dependency>
+      <groupId>org.openjdk.jmh</groupId>
+      <artifactId>jmh-core</artifactId>
+      <version>1.37</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openjdk.jmh</groupId>
+      <artifactId>jmh-generator-annprocess</artifactId>
+      <version>1.37</version>
+      <scope>provided</scope>
+    </dependency>
+
+
+
 
 
   </dependencies>
@@ -85,7 +99,7 @@ limitations under the License.
     <commons.componentid>codec</commons.componentid>
     <commons.module.name>org.apache.commons.codec</commons.module.name>
     <commons.jira.id>CODEC</commons.jira.id>
-    <commons.jira.pid>12310464</commons.jira.pid>
+    <commons.jira.id>12310464</commons.jira.id>
     <!-- Ensure copies work OK (can be removed later when this is in parent POM) -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -127,6 +141,24 @@ limitations under the License.
             </ignorePathsToDelete>
           </configuration>
         </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.11.0</version>
+          <configuration>
+            <source>11</source>
+            <target>11</target>
+            <annotationProcessorPaths>
+              <path>
+                <groupId>org.openjdk.jmh</groupId>
+                <artifactId>jmh-generator-annprocess</artifactId>
+                <version>1.37</version>
+              </path>
+            </annotationProcessorPaths>
+          </configuration>
+        </plugin>
+
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-checkstyle-plugin</artifactId>
@@ -144,12 +176,14 @@ limitations under the License.
       <plugin>
         <groupId>org.apache.rat</groupId>
         <artifactId>apache-rat-plugin</artifactId>
+        <version>0.13</version>
         <configuration>
           <excludes>
             <exclude>src/test/resources/org/apache/commons/codec/bla.tar</exclude>
             <exclude>src/test/resources/org/apache/commons/codec/bla.tar.xz</exclude>
             <exclude>src/test/resources/org/apache/commons/codec/empty.bin</exclude>
             <exclude>src/test/resources/org/apache/commons/codec/small.bin</exclude>
+            <exclude>src/main/java/org/apache/commons/codec/CodecBenchmark.java</exclude>
           </excludes>
         </configuration>
       </plugin>
@@ -234,7 +268,11 @@ limitations under the License.
             </executions>
           </plugin>
 
-
+      <plugin>
+      <groupId>org.pitest</groupId>
+      <artifactId>pitest-maven</artifactId>
+      <version>1.17.3</version>
+      </plugin>
     </plugins>
 
 
