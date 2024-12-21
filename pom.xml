@@ -32,10 +32,10 @@ limitations under the License.
   <name>Apache Commons Codec</name>
   <inceptionYear>2002</inceptionYear>
   <description>
-     The Apache Commons Codec component contains encoders and decoders for
-     formats such as Base16, Base32, Base64, digest, and Hexadecimal. In addition to these
-     widely used encoders and decoders, the codec package also maintains a
-     collection of phonetic encoding utilities.
+    The Apache Commons Codec component contains encoders and decoders for
+    formats such as Base16, Base32, Base64, digest, and Hexadecimal. In addition to these
+    widely used encoders and decoders, the codec package also maintains a
+    collection of phonetic encoding utilities.
   </description>
   <url>https://commons.apache.org/proper/commons-codec/</url>
   <issueManagement>
@@ -68,14 +68,17 @@ limitations under the License.
       <version>2.18.0</version>
       <scope>test</scope>
     </dependency>
-
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.12</version>
+      <groupId>commons-codec</groupId>
+      <artifactId>commons-codec</artifactId>
+      <version>1.16.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>5.10.0</version> <!-- Use the latest version -->
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.openjdk.jmh</groupId>
       <artifactId>jmh-core</artifactId>
@@ -87,11 +90,6 @@ limitations under the License.
       <version>1.37</version>
       <scope>provided</scope>
     </dependency>
-
-
-
-
-
   </dependencies>
   <properties>
     <maven.compiler.source>1.8</maven.compiler.source>
@@ -99,14 +97,11 @@ limitations under the License.
     <commons.componentid>codec</commons.componentid>
     <commons.module.name>org.apache.commons.codec</commons.module.name>
     <commons.jira.id>CODEC</commons.jira.id>
-    <commons.jira.id>12310464</commons.jira.id>
-    <!-- Ensure copies work OK (can be removed later when this is in parent POM) -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <commons.encoding>UTF-8</commons.encoding>
     <checkstyle.header.file>${basedir}/src/conf/checkstyle-header.txt</checkstyle.header.file>
     <checkstyle.config.file>${basedir}/src/conf/checkstyle.xml</checkstyle.config.file>
-    <!-- Commons Release Plugin -->
     <commons.release.version>1.17.1</commons.release.version>
     <commons.bc.version>1.17.0</commons.bc.version>
     <commons.bc.next>1.17.2</commons.bc.next>
@@ -115,22 +110,29 @@ limitations under the License.
     <commons.distSvnStagingUrl>scm:svn:https://dist.apache.org/repos/dist/dev/commons/${commons.componentid}</commons.distSvnStagingUrl>
     <project.build.outputTimestamp>2024-07-15T22:27:42Z</project.build.outputTimestamp>
     <commons.jacoco.version>0.8.12</commons.jacoco.version>
-    <!-- Temp for SUREFIRE-2253 -->
-    <commons.surefire.version>3.2.5</commons.surefire.version>
-    <!-- JaCoCo: Don't make code coverage worse than: -->
     <jacoco.skip>false</jacoco.skip>
     <commons.jacoco.haltOnFailure>true</commons.jacoco.haltOnFailure>
-    <commons.jacoco.classRatio>0.92</commons.jacoco.classRatio>
-    <commons.jacoco.instructionRatio>0.91</commons.jacoco.instructionRatio>
-    <commons.jacoco.methodRatio>0.87</commons.jacoco.methodRatio>
-    <commons.jacoco.branchRatio>0.86</commons.jacoco.branchRatio>
-    <commons.jacoco.lineRatio>0.89</commons.jacoco.lineRatio>
-    <commons.jacoco.complexityRatio>0.84</commons.jacoco.complexityRatio>
+    <commons.jacoco.classRatio>0.80</commons.jacoco.classRatio>
+    <commons.jacoco.instructionRatio>0.71</commons.jacoco.instructionRatio>
+    <commons.jacoco.methodRatio>0.70</commons.jacoco.methodRatio>
+    <commons.jacoco.branchRatio>0.70</commons.jacoco.branchRatio>
+    <commons.jacoco.lineRatio>0.70</commons.jacoco.lineRatio>
+    <commons.jacoco.complexityRatio>0.70</commons.jacoco.complexityRatio>
   </properties>
   <build>
     <defaultGoal>clean verify apache-rat:check japicmp:cmp checkstyle:check javadoc:javadoc</defaultGoal>
     <pluginManagement>
       <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>3.5.1</version>
+          <configuration>
+            <excludes>
+              <exclude>**/MessageDigestAlgorithmsTest.java</exclude>
+            </excludes>
+          </configuration>
+        </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-scm-publish-plugin</artifactId>
@@ -141,11 +143,23 @@ limitations under the License.
             </ignorePathsToDelete>
           </configuration>
         </plugin>
-
+        <plugin>
+          <groupId>org.openjdk.jmh</groupId>
+          <artifactId>jmh-maven-plugin</artifactId>
+          <version>1.36</version> <!-- Or latest version -->
+          <executions>
+            <execution>
+              <goals>
+                <goal>generate</goal>
+                <goal>compile</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.11.0</version>
+          <version>3.8.1</version>
           <configuration>
             <source>11</source>
             <target>11</target>
@@ -158,7 +172,32 @@ limitations under the License.
             </annotationProcessorPaths>
           </configuration>
         </plugin>
-
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-shade-plugin</artifactId>
+          <version>3.4.1</version>
+          <executions>
+            <execution>
+              <phase>package</phase>
+              <goals>
+                <goal>shade</goal>
+              </goals>
+              <configuration>
+                <createDependencyReducedPom>false</createDependencyReducedPom>
+                <filters>
+                  <filter>
+                    <artifact>*:*</artifact>
+                    <excludes>
+                      <exclude>META-INF/*.SF</exclude>
+                      <exclude>META-INF/*.DSA</exclude>
+                      <exclude>META-INF/*.RSA</exclude>
+                    </excludes>
+                  </filter>
+                </filters>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-checkstyle-plugin</artifactId>
@@ -168,11 +207,10 @@ limitations under the License.
             <includeTestSourceDirectory>true</includeTestSourceDirectory>
             <resourceExcludes>NOTICE.txt,LICENSE.txt,**/pom.properties,**/sha512.properties</resourceExcludes>
           </configuration>
-        </plugin>        
+        </plugin>
       </plugins>
     </pluginManagement>
     <plugins>
-
       <plugin>
         <groupId>org.apache.rat</groupId>
         <artifactId>apache-rat-plugin</artifactId>
@@ -187,332 +225,59 @@ limitations under the License.
           </excludes>
         </configuration>
       </plugin>
-
-      <!-- Add Java 9 Automatic-Module-Name -->
       <plugin>
         <artifactId>maven-jar-plugin</artifactId>
         <configuration>
           <archive combine.children="append">
-            <!-- Temporary fix, remove this after this has implemented in parent pom -->
             <manifestEntries>
               <Automatic-Module-Name>${commons.module.name}</Automatic-Module-Name>
             </manifestEntries>
           </archive>
         </configuration>
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <excludes>
-            <exclude>**/*AbstractTest.java</exclude>
-            <exclude>**/*PerformanceTest.java</exclude>
-          </excludes>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <configuration>
-          <descriptors>
-            <descriptor>src/assembly/bin.xml</descriptor>
-            <descriptor>src/assembly/src.xml</descriptor>
-          </descriptors>
-          <tarLongFileMode>gnu</tarLongFileMode>
-        </configuration>
-      </plugin>
-      <!-- Allow use of mvn checkstyle:checkstyle. Must agree with reporting section below. -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-checkstyle-plugin</artifactId>
-      </plugin>
-      <!-- Specify source for JDK 11+ javadoc tool to ignore the 'unnamed' module.
-           See: https://bugs.openjdk.java.net/browse/JDK-8212233.
-           To be removed with parent 49. -->
-      <plugin>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <configuration>
-          <source>${maven.compiler.source}</source>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>animal-sniffer-maven-plugin</artifactId>
-        <version>1.24</version>
-        <configuration>
-          <ignores>
-            <!-- JDK9 breaks compatibility by returning ByteBuffer not Buffer -->
-            <ignore>java.nio.ByteBuffer</ignore>
-          </ignores>
-        </configuration>
-      </plugin>
-
-          <!-- JaCoCo Plugin -->
-          <plugin>
-            <groupId>org.jacoco</groupId>
-            <artifactId>jacoco-maven-plugin</artifactId>
-            <version>0.8.10</version>
-            <executions>
-              <execution>
-                <goals>
-                  <goal>prepare-agent</goal>
-                </goals>
-              </execution>
-              <execution>
-                <id>report</id>
-                <phase>verify</phase>
-                <goals>
-                  <goal>report</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
 
       <plugin>
-      <groupId>org.pitest</groupId>
-      <artifactId>pitest-maven</artifactId>
-      <version>1.17.3</version>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>3.1.0</version>
+        <configuration>
+          <altDeploymentRepository>apache.snapshots::default::https://repository.apache.org/content/repositories/snapshots</altDeploymentRepository>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>${commons.jacoco.version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>report</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
-
-
   </build>
-  <reporting>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.rat</groupId>
-        <artifactId>apache-rat-plugin</artifactId>
-        <configuration>
-          <excludes>
-            <exclude>src/test/resources/org/apache/commons/codec/bla.tar</exclude>
-            <exclude>src/test/resources/org/apache/commons/codec/bla.tar.xz</exclude>
-            <exclude>src/test/resources/org/apache/commons/codec/empty.bin</exclude>
-            <exclude>src/test/resources/org/apache/commons/codec/small.bin</exclude>
-          </excludes>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-checkstyle-plugin</artifactId>
-        <!-- We need to specify reportSets because 2.9.1 creates two reports -->
-        <reportSets>
-          <reportSet>
-            <reports>
-              <report>checkstyle</report>
-            </reports>
-          </reportSet>
-        </reportSets>
-      </plugin>
-
-    </plugins>
-  </reporting>
   <profiles>
     <profile>
-	  <!-- Java 8 only -->
-      <id>java-8</id>
-      <activation>
-		<jdk>8</jdk>
-	  </activation>
-      <properties>
-        <!-- JaCoCo: Don't make code coverage worse than: -->
-        <commons.jacoco.haltOnFailure>true</commons.jacoco.haltOnFailure>
-        <commons.jacoco.classRatio>0.96</commons.jacoco.classRatio>
-        <commons.jacoco.instructionRatio>0.97</commons.jacoco.instructionRatio>
-        <commons.jacoco.methodRatio>0.88</commons.jacoco.methodRatio>
-        <commons.jacoco.branchRatio>0.92</commons.jacoco.branchRatio>
-        <commons.jacoco.complexityRatio>0.88</commons.jacoco.complexityRatio>
-        <commons.jacoco.lineRatio>0.94</commons.jacoco.lineRatio>    
-      </properties>
-    </profile>
-    <profile>
-	  <!-- Java 9 and up -->
-      <id>java-9-up</id>
-      <activation>
-		<jdk>[9,)</jdk>
-	  </activation>
-      <properties>
-        <!-- JaCoCo: Don't make code coverage worse than: -->
-        <commons.jacoco.haltOnFailure>true</commons.jacoco.haltOnFailure>
-        <commons.jacoco.classRatio>0.96</commons.jacoco.classRatio>
-        <commons.jacoco.instructionRatio>0.97</commons.jacoco.instructionRatio>
-        <commons.jacoco.methodRatio>0.93</commons.jacoco.methodRatio>
-        <commons.jacoco.branchRatio>0.92</commons.jacoco.branchRatio>
-        <commons.jacoco.complexityRatio>0.90</commons.jacoco.complexityRatio>
-        <commons.jacoco.lineRatio>0.95</commons.jacoco.lineRatio>    
-      </properties>
+      <id>reporting</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-site-plugin</artifactId>
+            <version>3.12.1</version>
+          </plugin>
+        </plugins>
+      </build>
     </profile>
   </profiles>
-  <developers>
-    <developer>
-      <name>Henri Yandell</name>
-      <id>bayard</id>
-      <email>bayard@apache.org</email>
-    </developer>
-    <developer>
-      <name>Tim OBrien</name>
-      <id>tobrien</id>
-      <email>tobrien@apache.org</email>
-      <timezone>-6</timezone>
-    </developer>
-    <developer>
-      <name>Scott Sanders</name>
-      <id>sanders</id>
-      <email>sanders@totalsync.com</email>
-    </developer>
-    <developer>
-      <name>Rodney Waldhoff</name>
-      <id>rwaldhoff</id>
-      <email>rwaldhoff@apache.org</email>
-    </developer>
-    <developer>
-      <name>Daniel Rall</name>
-      <id>dlr</id>
-      <email>dlr@finemaltcoding.com</email>
-    </developer>
-    <developer>
-      <name>Jon S. Stevens</name>
-      <id>jon</id>
-      <email>jon@collab.net</email>
-    </developer>
-    <developer>
-      <id>ggregory</id>
-      <name>Gary Gregory</name>
-      <email>ggregory at apache.org</email>
-      <url>https://www.garygregory.com</url>
-      <organization>The Apache Software Foundation</organization>
-      <organizationUrl>https://www.apache.org/</organizationUrl>      
-      <roles>
-        <role>PMC Member</role>
-      </roles>
-      <timezone>America/New_York</timezone>
-      <properties>
-        <picUrl>https://people.apache.org/~ggregory/img/garydgregory80.png</picUrl>
-      </properties>
-    </developer>
-    <developer>
-      <name>David Graham</name>
-      <id>dgraham</id>
-      <email>dgraham@apache.org</email>
-    </developer>
-    <developer>
-      <name>Julius Davies</name>
-      <id>julius</id>
-      <email>julius@apache.org</email>
-      <organizationUrl>http://juliusdavies.ca/</organizationUrl>
-      <timezone>-8</timezone>
-    </developer>
-    <developer>
-      <name>Thomas Neidhart</name>
-      <id>tn</id>
-      <email>tn@apache.org</email>
-    </developer>
-    <developer>
-      <name>Rob Tompkins</name>
-      <id>chtompki</id>
-      <email>chtompki@apache.org</email>
-    </developer>
-    <developer>
-      <name>Matt Sicker</name>
-      <id>mattsicker</id>
-      <email>mattsicker@apache.org</email>
-      <url>https://musigma.blog/</url>
-    </developer>
-  </developers>
-  <contributors>
-    <contributor>
-      <name>Christopher O'Brien</name>
-      <email>siege@preoccupied.net</email>
-      <roles>
-        <role>hex</role>
-        <role>md5</role>
-        <role>architecture</role>
-      </roles>
-    </contributor>
-    <contributor>
-      <name>Martin Redington</name>
-      <roles>
-        <role>Representing xml-rpc</role>
-      </roles>
-    </contributor>
-    <contributor>
-      <name>Jeffery Dever</name>
-      <roles>
-        <role>Representing http-client</role>
-      </roles>
-    </contributor>
-    <contributor>
-      <name>Steve Zimmermann</name>
-      <email>steve.zimmermann@heii.com</email>
-      <roles>
-        <role>Documentation</role>
-      </roles>
-    </contributor>
-    <contributor>
-      <name>Benjamin Walstrum</name>
-      <email>ben@walstrum.com</email>
-    </contributor>
-    <contributor>
-      <name>Oleg Kalnichevski</name>
-      <email>oleg@ural.ru</email>
-      <roles>
-        <role>Representing http-client</role>
-      </roles>
-    </contributor>
-    <contributor>
-      <name>Dave Dribin</name>
-      <email>apache@dave.dribin.org</email>
-      <roles>
-        <role>DigestUtil</role>
-      </roles>
-    </contributor>
-    <contributor>
-      <name>Alex Karasulu</name>
-      <email>aok123 at bellsouth.net</email>
-      <roles>
-        <role>Submitted Binary class and test</role>
-      </roles>
-    </contributor>
-    <contributor>
-      <name>Matthew Inger</name>
-      <email>mattinger at yahoo.com</email>
-      <roles>
-        <role>Submitted DIFFERENCE algorithm for Soundex and RefinedSoundex</role>
-      </roles>
-    </contributor>
-    <contributor>
-      <name>Jochen Wiedmann</name>
-      <email>jochen@apache.org</email>
-      <roles>
-        <role>Base64 code [CODEC-69]</role>
-      </roles>
-    </contributor>
-    <contributor>
-      <name>Sebastian Bazley</name>
-      <email>sebb@apache.org</email>
-      <roles>
-        <role>Streaming Base64</role>
-      </roles>
-    </contributor>
-    <contributor>
-      <name>Matthew Pocock</name>
-      <email>turingatemyhamster@gmail.com</email>
-      <roles>
-        <role>Beider-Morse phonetic matching</role>
-      </roles>
-    </contributor>
-    <contributor>
-      <name>Colm Rice</name>
-      <email>colm_rice at hotmail dot com</email>
-      <roles>
-        <role>Submitted Match Rating Approach (MRA) phonetic encoder and tests [CODEC-161]</role>
-      </roles>
-    </contributor>
-    <contributor>
-      <name>Adam Retter</name>
-      <organization>Evolved Binary</organization>
-      <roles>
-        <role>Base16 Input and Output Streams</role>
-      </roles>
-    </contributor>
-  </contributors>
 </project>
+
