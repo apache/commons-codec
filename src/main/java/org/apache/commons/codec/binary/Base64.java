@@ -530,7 +530,6 @@ public class Base64 extends BaseNCodec {
         this(MIME_CHUNK_SIZE, CHUNK_SEPARATOR, urlSafe);
     }
 
-
     /**
      * Constructs a Base64 codec used for decoding (all modes) and encoding in URL-unsafe mode.
      * <p>
