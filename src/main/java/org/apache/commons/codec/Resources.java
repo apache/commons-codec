@@ -33,7 +33,7 @@ public class Resources {
      * @return An input stream.
      */
     public static InputStream getInputStream(final String name) {
-        final InputStream inputStream = Resources.class.getClassLoader().getResourceAsStream(name);
+        final InputStream inputStream = Resources.class.getResourceAsStream(name);
         if (inputStream == null) {
             throw new IllegalArgumentException("Unable to resolve required resource: " + name);
         }

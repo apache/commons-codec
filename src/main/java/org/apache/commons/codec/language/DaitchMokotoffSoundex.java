@@ -212,7 +212,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
     private static final String MULTILINE_COMMENT_START = "/*";
 
     /** The resource file containing the replacement and folding rules */
-    private static final String RESOURCE_FILE = "org/apache/commons/codec/language/dmrules.txt";
+    private static final String RESOURCE_FILE = "/org/apache/commons/codec/language/dmrules.txt";
 
     /** The code length of a DM soundex value. */
     private static final int MAX_LENGTH = 6;
