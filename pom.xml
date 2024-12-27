@@ -140,7 +140,6 @@ limitations under the License.
       </plugins>
     </pluginManagement>
     <plugins>
-
       <plugin>
         <groupId>org.apache.rat</groupId>
         <artifactId>apache-rat-plugin</artifactId>
@@ -153,7 +152,6 @@ limitations under the License.
           </excludes>
         </configuration>
       </plugin>
-
       <!-- Add Java 9 Automatic-Module-Name -->
       <plugin>
         <artifactId>maven-jar-plugin</artifactId>
