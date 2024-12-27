@@ -166,10 +166,7 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
     @Override
     public void write(final byte[] array, final int offset, final int len) throws IOException {
         Objects.requireNonNull(array, "array");
-        if (offset < 0 || len < 0) {
-            throw new IndexOutOfBoundsException();
-        }
-        if (offset > array.length || offset + len > array.length) {
+        if (offset < 0 || len < 0 || offset > array.length || offset + len > array.length) {
             throw new IndexOutOfBoundsException();
         }
         if (len > 0) {
