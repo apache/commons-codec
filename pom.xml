@@ -93,9 +93,9 @@ limitations under the License.
     <checkstyle.header.file>${basedir}/src/conf/checkstyle-header.txt</checkstyle.header.file>
     <checkstyle.config.file>${basedir}/src/conf/checkstyle.xml</checkstyle.config.file>
     <!-- Commons Release Plugin -->
-    <commons.release.version>1.17.1</commons.release.version>
-    <commons.bc.version>1.17.0</commons.bc.version>
-    <commons.bc.next>1.17.2</commons.bc.next>
+    <commons.release.version>1.17.2</commons.release.version>
+    <commons.bc.version>1.17.1</commons.bc.version>
+    <commons.release.next>1.17.3</commons.release.next>
     <commons.rc.version>RC1</commons.rc.version>
     <commons.release.isDistModule>true</commons.release.isDistModule>
     <commons.distSvnStagingUrl>scm:svn:https://dist.apache.org/repos/dist/dev/commons/${commons.componentid}</commons.distSvnStagingUrl>

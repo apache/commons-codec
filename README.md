@@ -45,12 +45,12 @@ Apache Commons Codec
 
 [![Java CI](https://github.com/apache/commons-codec/actions/workflows/maven.yml/badge.svg)](https://github.com/apache/commons-codec/actions/workflows/maven.yml)
 [![Maven Central](https://img.shields.io/maven-central/v/commons-codec/commons-codec?label=Maven%20Central)](https://search.maven.org/artifact/commons-codec/commons-codec)
-[![Javadocs](https://javadoc.io/badge/commons-codec/commons-codec/1.17.1.svg)](https://javadoc.io/doc/commons-codec/commons-codec/1.17.1)
+[![Javadocs](https://javadoc.io/badge/commons-codec/commons-codec/1.17.2.svg)](https://javadoc.io/doc/commons-codec/commons-codec/1.17.2)
 [![CodeQL](https://github.com/apache/commons-codec/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/apache/commons-codec/actions/workflows/codeql-analysis.yml)
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/apache/commons-codec/badge)](https://api.securityscorecards.dev/projects/github.com/apache/commons-codec)
 
 The Apache Commons Codec component contains encoders and decoders for
-     various formats such as Base16, Base32, Base64, digest, and Hexadecimal. In addition to these
+     formats such as Base16, Base32, Base64, digest, and Hexadecimal. In addition to these
      widely used encoders and decoders, the codec package also maintains a
      collection of phonetic encoding utilities.
 
@@ -65,20 +65,20 @@ Getting the latest release
 --------------------------
 You can download source and binaries from our [download page](https://commons.apache.org/proper/commons-codec/download_codec.cgi).
 
-Alternatively, you can pull it from  the central Maven repositories:
+Alternatively, you can pull it from the central Maven repositories:
 
 ```xml
 <dependency>
   <groupId>commons-codec</groupId>
   <artifactId>commons-codec</artifactId>
-  <version>1.17.1</version>
+  <version>1.17.2</version>
 </dependency>
 ```
 
 Building
 --------
 
-Building requires a Java JDK and [Apache Maven](https://maven.apache.org/). 
+Building requires a Java JDK and [Apache Maven](https://maven.apache.org/).
 The required Java version is found in the `pom.xml` as the `maven.compiler.source` property.
 
 From a command shell, run `mvn` without arguments to invoke the default Maven goal to run all tests and checks.
