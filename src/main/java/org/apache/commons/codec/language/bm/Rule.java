@@ -59,7 +59,7 @@ import org.apache.commons.codec.language.bm.Languages.LanguageSet;
  * Rules are typically loaded from resource files. These are UTF-8 encoded text files. They are systematically
  * named following the pattern:
  * </p>
- * <blockquote>org/apache/commons/codec/language/bm/${NameType#getName}_${RuleType#getName}_${language}.txt</blockquote>
+ * <blockquote>/org/apache/commons/codec/language/bm/${NameType#getName}_${RuleType#getName}_${language}.txt</blockquote>
  * <p>
  * The format of these resources is the following:
  * </p>
@@ -84,8 +84,14 @@ import org.apache.commons.codec.language.bm.Languages.LanguageSet;
  */
 public class Rule {
 
+    /**
+     * A phoneme.
+     */
     public static final class Phoneme implements PhonemeExpr {
 
+        /**
+         * The Phoneme Comparator.
+         */
         public static final Comparator<Phoneme> COMPARATOR = (o1, o2) -> {
             final int o1Length = o1.phonemeText.length();
             final int o2Length = o2.phonemeText.length();
@@ -105,30 +111,61 @@ public class Rule {
 
             return 0;
         };
+
         private final StringBuilder phonemeText;
 
         private final Languages.LanguageSet languages;
 
+        /**
+         * Constructs a new instance.
+         *
+         * @param phonemeText The phoneme text.
+         * @param languages A language set.
+         */
         public Phoneme(final CharSequence phonemeText, final Languages.LanguageSet languages) {
             this.phonemeText = new StringBuilder(phonemeText);
             this.languages = languages;
         }
 
+        /**
+         * Constructs a new instance.
+         *
+         * @param phonemeLeft The left phoneme text.
+         * @param phonemeRight The right phoneme text.
+         */
         public Phoneme(final Phoneme phonemeLeft, final Phoneme phonemeRight) {
             this(phonemeLeft.phonemeText, phonemeLeft.languages);
             this.phonemeText.append(phonemeRight.phonemeText);
         }
 
+        /**
+         * Constructs a new instance.
+         *
+         * @param phonemeLeft The left phoneme text.
+         * @param phonemeRight The right phoneme text.
+         * @param languages A language set.
+         */
         public Phoneme(final Phoneme phonemeLeft, final Phoneme phonemeRight, final Languages.LanguageSet languages) {
             this(phonemeLeft.phonemeText, languages);
             this.phonemeText.append(phonemeRight.phonemeText);
         }
 
-        public Phoneme append(final CharSequence str) {
-            this.phonemeText.append(str);
+        /**
+         * Appends the sequence to the phone text.
+         *
+         * @param sequence The sequence to append.
+         * @return this instance.
+         */
+        public Phoneme append(final CharSequence sequence) {
+            this.phonemeText.append(sequence);
             return this;
         }
 
+        /**
+         * Gets the language set.
+         *
+         * @return the language set.
+         */
         public Languages.LanguageSet getLanguages() {
             return this.languages;
         }
@@ -138,6 +175,11 @@ public class Rule {
             return Collections.singleton(this);
         }
 
+        /**
+         * Gets the phoneme text sequence.
+         *
+         * @return the phoneme text sequence.
+         */
         public CharSequence getPhonemeText() {
             return this.phonemeText;
         }
@@ -177,7 +219,16 @@ public class Rule {
         }
     }
 
+    /**
+     * A phoneme expression.
+     */
     public interface PhonemeExpr {
+
+        /**
+         * Gets an iteration of phonemes.
+         *
+         * @return an iteration of phonemes.
+         */
         Iterable<Phoneme> getPhonemes();
 
         /**
@@ -192,10 +243,18 @@ public class Rule {
         }
     }
 
+    /**
+     * A list of phonemes.
+     */
     public static final class PhonemeList implements PhonemeExpr {
 
         private final List<Phoneme> phonemeList;
 
+        /**
+         * Constructs a new instance.
+         *
+         * @param phonemes the phoneme list.
+         */
         public PhonemeList(final List<Phoneme> phonemes) {
             this.phonemeList = phonemes;
         }
@@ -215,11 +274,24 @@ public class Rule {
      * A minimal wrapper around the functionality of Pattern that we use, to allow for alternate implementations.
      */
     public interface RPattern {
+
+        /**
+         * Tests whether the given input matches this instance.
+         *
+         * @param input the input to test.
+         * @return whether the given input matches this instance.
+         */
         boolean isMatch(CharSequence input);
     }
 
+    /**
+     * Always matches.
+     */
     public static final RPattern ALL_STRINGS_RMATCHER = input -> true;
 
+    /**
+     * Unused.
+     */
     public static final String ALL = "ALL";
 
     private static final String DOUBLE_QUOTE = "\"";
