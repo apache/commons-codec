@@ -48,6 +48,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Rewrite DaitchMokotoffSoundex.soundex(String) using String.join().</action>
       <action type="fix" issue="CODEC-324" dev="ggregory" due-to="Michael Froh">Use Resource.class to load resources, rather than its class loader #353.</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Deprecate CharSequenceUtils.CharSequenceUtils().</action>
+      <action type="fix" dev="ggregory" due-to="Gary Gregory">Deprecate Sha2Crypt.Sha2Crypt().</action>
       <!-- ADD -->
       <!-- UPDATE -->
       <action type="update" dev="ggregory" due-to="Dependabot">Bump org.apache.commons:commons-lang3 from 3.14.0 to 3.17.0 #296, #305, #313.</action>
