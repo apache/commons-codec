@@ -63,6 +63,8 @@ limitations under the License.
       <property name="ordered" value="true" />
       <property name="separated" value="true" />
     </module>
+    <module name="LeftCurly" />
+    <module name="MissingOverride" />
     <module name="OperatorWrap">
       <property name="option" value="eol" />
     </module>
