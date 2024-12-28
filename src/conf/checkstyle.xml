@@ -71,6 +71,7 @@ limitations under the License.
       <property name="option" value="eol" />
     </module>
     <module name="ParenPad" />
+    <module name="RedundantImport" />
     <module name="WhitespaceAfter" />
     <module name="WhitespaceAround" />
   </module>
