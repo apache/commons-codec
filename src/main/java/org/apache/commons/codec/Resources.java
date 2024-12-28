@@ -27,12 +27,15 @@ import java.io.InputStream;
 public class Resources {
 
     /**
-     * Opens the given named resource from the given class.
+     * Gets a read-only stream on the contents of the resource specified by resName. The mapping between the resource name and the stream is managed by this
+     * class's class loader.
      *
      * @param name The resource name.
      * @return An input stream.
+     * @see ClassLoader#getResourceAsStream(String)
      */
     public static InputStream getInputStream(final String name) {
+        // Use java.lang.Class.getResourceAsStream(String) to make JPMS happy
         final InputStream inputStream = Resources.class.getResourceAsStream(name);
         if (inputStream == null) {
             throw new IllegalArgumentException("Unable to resolve required resource: " + name);
