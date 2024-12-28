@@ -78,6 +78,7 @@ public class BaseNTestData {
     private final static int SIZE_KEY = 0;
 
     private final static int LAST_READ_KEY = 1;
+
     /**
      * Tests the supplied byte[] array to see if it contains the specified byte c.
      *
@@ -87,7 +88,9 @@ public class BaseNTestData {
      */
     static boolean bytesContain(final byte[] bytes, final byte c) {
         for (final byte b : bytes) {
-            if (b == c) { return true; }
+            if (b == c) {
+                return true;
+            }
         }
         return false;
     }
