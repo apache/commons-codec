@@ -75,6 +75,7 @@ limitations under the License.
     <module name="RedundantModifier" />
     <module name="RightCurly" />
     <module name="UnusedImports" />
+    <module name="UpperEll" />
     <module name="WhitespaceAfter" />
     <module name="WhitespaceAround" />
   </module>
