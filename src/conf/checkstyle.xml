@@ -22,24 +22,18 @@ limitations under the License.
 
 <!-- commons codec customization of default Checkstyle behavior -->
 <module name="Checker">
-  <property name="localeLanguage" value="en" />
-  <module name="SuppressionFilter">
-    <property name="file" value="src/conf/checkstyle-suppressions.xml"/>
-  </module>
-  <!-- Checks whether files end with a new line. -->
-  <!-- See http://checkstyle.sf.net/config_misc.html#NewlineAtEndOfFile -->
-  <module name="NewlineAtEndOfFile" />
-  <!-- Verify that EVERY source file has the appropriate license -->
-  <module name="Header">
-    <property name="headerFile" value="${checkstyle.header.file}" />
-  </module>
-  <!-- Checks for Tab characters -->
-  <!-- See http://checkstyle.sourceforge.net/config_whitespace.html#FileTabCharacter -->
   <module name="FileTabCharacter">
     <property name="fileExtensions" value="java" />
   </module>
-  <!-- Checks for white space at the end of the line -->
-  <!-- See http://checkstyle.sourceforge.net/config_regexp.html -->
+  <module name="Header">
+    <property name="headerFile" value="${checkstyle.header.file}" />
+  </module>
+  <module name="LineLength">
+      <!-- Ignore lines that begin with " * ", such as within a Javadoc comment. -->
+      <property name="ignorePattern" value="^ *\* *[^ ]"/>
+      <property name="max" value="160"/>
+  </module>
+  <module name="NewlineAtEndOfFile" />
   <module name="RegexpSingleline">
     <property name="format" value="\s+$" />
     <property name="message" value="Line has trailing spaces." />
@@ -51,6 +45,9 @@ limitations under the License.
     <property name="message" value="Deprecated @author tag" />
     <property name="fileExtensions" value="java" />
     <property name="severity" value="warning" />
+  </module>
+  <module name="SuppressionFilter">
+    <property name="file" value="src/conf/checkstyle-suppressions.xml"/>
   </module>
   <module name="TreeWalker">
     <module name="AvoidStarImport" />
@@ -80,10 +77,6 @@ limitations under the License.
     <module name="WhitespaceAround" />
     <module name="WhitespaceAroundCheck" />
   </module>
-  <module name="LineLength">
-      <!-- Ignore lines that begin with " * ", such as within a Javadoc comment. -->
-      <property name="ignorePattern" value="^ *\* *[^ ]"/>
-      <property name="max" value="160"/>
-  </module>
+  <property name="localeLanguage" value="en" />
 </module>
 
