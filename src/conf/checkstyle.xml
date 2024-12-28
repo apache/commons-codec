@@ -65,6 +65,7 @@ limitations under the License.
     </module>
     <module name="LeftCurly" />
     <module name="MissingOverride" />
+    <module name="ModifierOrder" />
     <module name="OperatorWrap">
       <property name="option" value="eol" />
     </module>

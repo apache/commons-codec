@@ -577,7 +577,7 @@ public class PureJavaCrc32 implements Checksum {
     /** The current CRC value, bit-flipped */
     private int crc;
 
-    /** Create a new PureJavaCrc32 object. */
+    /** Constructs a new PureJavaCrc32 object. */
     public PureJavaCrc32() {
         resetCrc();
     }
@@ -639,7 +639,7 @@ public class PureJavaCrc32 implements Checksum {
     }
 
     @Override
-    final public void update(final int b) {
+    public final void update(final int b) {
         crc = crc >>> 8 ^ T[(crc ^ b) << 24 >>> 24];
     }
 

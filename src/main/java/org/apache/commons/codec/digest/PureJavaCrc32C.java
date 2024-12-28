@@ -642,7 +642,7 @@ public class PureJavaCrc32C implements Checksum {
     }
 
     @Override
-    final public void update(final int b) {
+    public final void update(final int b) {
         crc = crc >>> 8 ^ T[T8_0_START + ((crc ^ b) & 0xff)];
     }
 

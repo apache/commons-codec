@@ -35,9 +35,9 @@ public class Base32InputStreamTest {
 
     private static final String ENCODED_FOO = "MZXW6===";
 
-    private final static byte[] CRLF = { (byte) '\r', (byte) '\n' };
+    private static final byte[] CRLF = { (byte) '\r', (byte) '\n' };
 
-    private final static byte[] LF = { (byte) '\n' };
+    private static final byte[] LF = { (byte) '\n' };
 
     private static final String STRING_FIXTURE = "Hello World";
 

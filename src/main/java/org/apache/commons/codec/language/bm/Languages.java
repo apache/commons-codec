@@ -68,7 +68,7 @@ public class Languages {
     /**
      * A set of languages.
      */
-    public static abstract class LanguageSet {
+    public abstract static class LanguageSet {
 
         public static LanguageSet from(final Set<String> langs) {
             return langs.isEmpty() ? NO_LANGUAGES : new SomeLanguages(langs);

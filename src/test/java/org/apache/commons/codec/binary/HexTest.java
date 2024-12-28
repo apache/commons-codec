@@ -44,7 +44,7 @@ public class HexTest {
 
     private static final String BAD_ENCODING_NAME = "UNKNOWN";
 
-    private final static boolean LOG = false;
+    private static final boolean LOG = false;
 
     /**
      * Allocate a ByteBuffer.

@@ -35,9 +35,9 @@ import org.junit.jupiter.api.Test;
  */
 public class Base64Codec13Test {
 
-    private final static String[] STRINGS = new String[181];
-    private final static String[] CHUNKED_STRINGS = new String[STRINGS.length];
-    private final static byte[][] BYTES = new byte[STRINGS.length][];
+    private static final String[] STRINGS = new String[181];
+    private static final String[] CHUNKED_STRINGS = new String[STRINGS.length];
+    private static final byte[][] BYTES = new byte[STRINGS.length][];
 
     static {
         initSTRINGS();

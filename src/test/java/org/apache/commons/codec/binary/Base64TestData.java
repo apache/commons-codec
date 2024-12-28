@@ -39,7 +39,7 @@ public class Base64TestData {
 
     // OpenSSL doesn't include the final \n, but it would be annoying beyond belief
     // to further parameterize commons-codec to support this pointless variation.
-    final static String ENCODED_64_CHARS_PER_LINE =
+    static final String ENCODED_64_CHARS_PER_LINE =
         "9IPNKwUvdLiIAp6ctz12SiQmOGstWyYvSPeevufDhrzaws65voykKjbIj33YWTa9\n" +
         "xA7c/FHypWclrZhQ7onfc3JE93BJ5fT4R9zAEdjbjy1hv4ZYNnET4WJeXMLJ/5p+\n" +
         "qBpTsPpepW8DNVYy1c02/1wyC+kgA6CvRUd9cSr/lt88AEdsTV4GMCn1+EwuAiYd\n" +
@@ -63,7 +63,7 @@ public class Base64TestData {
         "/6YAHZilo8at0OpkkNdNFuhwuGlkBqrZKNUj/gSiYYc06gF/r/z6iWAjpXJRW1qq\n" +
         "3CLZXdZFZ/VrqXeVjtOAu2A=\n";
 
-    final static String ENCODED_76_CHARS_PER_LINE =
+    static final String ENCODED_76_CHARS_PER_LINE =
         "9IPNKwUvdLiIAp6ctz12SiQmOGstWyYvSPeevufDhrzaws65voykKjbIj33YWTa9xA7c/FHypWcl\n" +
         "rZhQ7onfc3JE93BJ5fT4R9zAEdjbjy1hv4ZYNnET4WJeXMLJ/5p+qBpTsPpepW8DNVYy1c02/1wy\n" +
         "C+kgA6CvRUd9cSr/lt88AEdsTV4GMCn1+EwuAiYdivxuzn+cLM8q2jewqlI52tP9J7Cs8vqG71s6\n" +

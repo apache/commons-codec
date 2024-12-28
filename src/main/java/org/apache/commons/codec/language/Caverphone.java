@@ -37,7 +37,7 @@ public class Caverphone implements StringEncoder {
     /**
      * Delegate to a {@link Caverphone2} instance to avoid code duplication.
      */
-    final private Caverphone2 encoder = new Caverphone2();
+    private final Caverphone2 encoder = new Caverphone2();
 
     /**
      * Encodes the given String into a Caverphone value.
