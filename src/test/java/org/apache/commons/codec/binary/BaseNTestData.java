@@ -174,8 +174,7 @@ public class BaseNTestData {
                 System.arraycopy(buf, 0, smallerBuf, 0, size);
                 buf = smallerBuf;
             }
-        }
-        finally {
+        } finally {
             in.close();
         }
         return buf;
