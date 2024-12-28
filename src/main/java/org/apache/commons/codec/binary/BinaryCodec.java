@@ -212,6 +212,13 @@ public class BinaryCodec implements BinaryDecoder, BinaryEncoder {
     }
 
     /**
+     * Constructs a new instance.
+     */
+    public BinaryCodec() {
+        // empty
+    }
+
+    /**
      * Decodes a byte array where each byte represents an ASCII '0' or '1'.
      *
      * @param ascii

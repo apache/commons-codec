@@ -75,16 +75,24 @@ import org.apache.commons.codec.StringEncoder;
  * @see <a href="https://stevemorse.org/phoneticinfo.htm">Reference implementation</a>
  *
  * <p>
- * This class is Not ThreadSafe
+ * This class is Not ThreadSafe.
  * </p>
  * @since 1.6
  */
 public class BeiderMorseEncoder implements StringEncoder {
+
     // Implementation note: This class is a spring-friendly facade to PhoneticEngine. It allows read/write configuration
     // of an immutable PhoneticEngine instance that will be delegated to for the actual encoding.
 
     // a cached object
     private PhoneticEngine engine = new PhoneticEngine(NameType.GENERIC, RuleType.APPROX, true);
+
+    /**
+     * Constructs a new instance.
+     */
+    public BeiderMorseEncoder() {
+        // empty
+    }
 
     @Override
     public Object encode(final Object source) throws EncoderException {

@@ -34,12 +34,19 @@ import org.apache.commons.codec.StringEncoder;
 public abstract class AbstractCaverphone implements StringEncoder {
 
     /**
-     * Encodes an Object using the caverphone algorithm. This method is provided in order to satisfy the requirements of
+     * Constructs a new instance for subclasses.
+     */
+    public AbstractCaverphone() {
+        // empty
+    }
+
+    /**
+     * Encodes an Object using the Caverphone algorithm. This method is provided in order to satisfy the requirements of
      * the Encoder interface, and will throw an EncoderException if the supplied object is not of type {@link String}.
      *
      * @param source
      *            Object to encode
-     * @return An object (or type {@link String}) containing the caverphone code which corresponds to the String
+     * @return An object (or type {@link String}) containing the Caverphone code which corresponds to the String
      *         supplied.
      * @throws EncoderException
      *             if the parameter supplied is not of type {@link String}.

@@ -30,16 +30,6 @@ package org.apache.commons.codec.binary;
 public class CharSequenceUtils {
 
     /**
-     * Consider package-private.
-     *
-     * @deprecated Will be package-private in the next major version.
-     */
-    @Deprecated
-    public CharSequenceUtils() {
-        // empty
-    }
-
-    /**
      * Green implementation of regionMatches.
      *
      * <p>
@@ -85,5 +75,15 @@ public class CharSequenceUtils {
             }
         }
         return true;
+    }
+
+    /**
+     * Consider private.
+     *
+     * @deprecated Will be private in the next major version.
+     */
+    @Deprecated
+    public CharSequenceUtils() {
+        // empty
     }
 }

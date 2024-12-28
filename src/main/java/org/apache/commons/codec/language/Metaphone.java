@@ -75,6 +75,13 @@ public class Metaphone implements StringEncoder {
     private int maxCodeLen = 4;
 
     /**
+     * Constructs a new instance.
+     */
+    public Metaphone() {
+        // empty
+    }
+
+    /**
      * Encodes an Object using the metaphone algorithm.  This method
      * is provided in order to satisfy the requirements of the
      * Encoder interface, and will throw an EncoderException if the

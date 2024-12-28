@@ -306,6 +306,13 @@ public class ColognePhonetic implements StringEncoder {
     }
 
     /**
+     * Constructs a new instance.
+     */
+    public ColognePhonetic() {
+        // empty
+    }
+
+    /**
      * <p>
      * Implements the <em>K&ouml;lner Phonetik</em> algorithm.
      * </p>

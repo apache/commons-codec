@@ -74,6 +74,13 @@ public final class MurmurHash3 {
     public static class IncrementalHash32 extends IncrementalHash32x86 {
 
         /**
+         * Constructs a new instance.
+         */
+        public IncrementalHash32() {
+            // empty
+        }
+
+        /**
          * {@inheritDoc}
          *
          * <p>This implementation contains a sign-extension bug in the finalization step of
@@ -154,6 +161,13 @@ public final class MurmurHash3 {
          * This must be finalised to generate the 32-bit hash value.
          */
         private int hash;
+
+        /**
+         * Constructs a new instance.
+         */
+        public IncrementalHash32x86() {
+            // empty
+        }
 
         /**
          * Adds the byte array to the current incremental hash.

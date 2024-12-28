@@ -74,6 +74,13 @@ public class Languages {
             return langs.isEmpty() ? NO_LANGUAGES : new SomeLanguages(langs);
         }
 
+        /**
+         * Constructs a new instance for subclasses.
+         */
+        public LanguageSet() {
+            // empty
+        }
+
         public abstract boolean contains(String language);
 
         public abstract String getAny();
@@ -162,6 +169,7 @@ public class Languages {
      * No languages at all.
      */
     public static final LanguageSet NO_LANGUAGES = new LanguageSet() {
+
         @Override
         public boolean contains(final String language) {
             return false;
@@ -202,6 +210,7 @@ public class Languages {
      * Any/all languages.
      */
     public static final LanguageSet ANY_LANGUAGE = new LanguageSet() {
+
         @Override
         public boolean contains(final String language) {
             return true;

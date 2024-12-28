@@ -34,11 +34,18 @@ public class Caverphone1 extends AbstractCaverphone {
     private static final String SIX_1 = "111111";
 
     /**
+     * Constructs a new instance.
+     */
+    public Caverphone1() {
+        // empty
+    }
+
+    /**
      * Encodes the given String into a Caverphone value.
      *
      * @param source
      *            String the source string
-     * @return A caverphone code for the given String
+     * @return A Caverphone code for the given String
      */
     @Override
     public String encode(final String source) {

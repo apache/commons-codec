@@ -40,23 +40,30 @@ public class Caverphone implements StringEncoder {
     private final Caverphone2 encoder = new Caverphone2();
 
     /**
+     * Constructs a new instance.
+     */
+    public Caverphone() {
+        // empty
+    }
+
+    /**
      * Encodes the given String into a Caverphone value.
      *
      * @param source
      *            String the source string
-     * @return A caverphone code for the given String
+     * @return A Caverphone code for the given String
      */
     public String caverphone(final String source) {
         return this.encoder.encode(source);
     }
 
     /**
-     * Encodes an Object using the caverphone algorithm. This method is provided in order to satisfy the requirements of
+     * Encodes an Object using the Caverphone algorithm. This method is provided in order to satisfy the requirements of
      * the Encoder interface, and will throw an EncoderException if the supplied object is not of type {@link String}.
      *
      * @param obj
      *            Object to encode
-     * @return An object (or type {@link String}) containing the caverphone code which corresponds to the String
+     * @return An object (or type {@link String}) containing the Caverphone code which corresponds to the String
      *         supplied.
      * @throws EncoderException
      *             if the parameter supplied is not of type {@link String}.
@@ -74,7 +81,7 @@ public class Caverphone implements StringEncoder {
      *
      * @param str
      *            String object to encode
-     * @return The caverphone code corresponding to the String supplied
+     * @return The Caverphone code corresponding to the String supplied
      */
     @Override
     public String encode(final String str) {
@@ -82,13 +89,13 @@ public class Caverphone implements StringEncoder {
     }
 
     /**
-     * Tests if the caverphones of two strings are identical.
+     * Tests if the Caverphones of two strings are identical.
      *
      * @param str1
      *            First of two strings to compare
      * @param str2
      *            Second of two strings to compare
-     * @return {@code true} if the caverphones of these strings are identical, {@code false} otherwise.
+     * @return {@code true} if the Caverphones of these strings are identical, {@code false} otherwise.
      */
     public boolean isCaverphoneEqual(final String str1, final String str2) {
         return caverphone(str1).equals(caverphone(str2));

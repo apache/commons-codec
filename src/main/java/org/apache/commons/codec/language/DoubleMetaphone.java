@@ -37,7 +37,7 @@ import org.apache.commons.codec.binary.StringUtils;
 public class DoubleMetaphone implements StringEncoder {
 
     /**
-     * Inner class for storing results, since there is the optional alternate encoding.
+     * Stores results, since there is the optional alternate encoding.
      */
     public class DoubleMetaphoneResult {
 
@@ -45,36 +45,73 @@ public class DoubleMetaphone implements StringEncoder {
         private final StringBuilder alternate = new StringBuilder(getMaxCodeLen());
         private final int maxLength;
 
+        /**
+         * Constructs a new instance.
+         *
+         * @param maxLength The maximum length.
+         */
         public DoubleMetaphoneResult(final int maxLength) {
             this.maxLength = maxLength;
         }
 
+        /**
+         * Appends the given value as primary and alternative.
+         *
+         * @param value The value to append.
+         */
         public void append(final char value) {
             appendPrimary(value);
             appendAlternate(value);
         }
 
+        /**
+         * Appends the given primary and alternative values.
+         *
+         * @param primary   The primary value.
+         * @param alternate The alternate value.
+         */
         public void append(final char primary, final char alternate) {
             appendPrimary(primary);
             appendAlternate(alternate);
         }
 
+        /**
+         * Appends the given value as primary and alternative.
+         *
+         * @param value The value to append.
+         */
         public void append(final String value) {
             appendPrimary(value);
             appendAlternate(value);
         }
 
+        /**
+         * Appends the given primary and alternative values.
+         *
+         * @param primary   The primary value.
+         * @param alternate The alternate value.
+         */
         public void append(final String primary, final String alternate) {
             appendPrimary(primary);
             appendAlternate(alternate);
         }
 
+        /**
+         * Appends the given value as alternative.
+         *
+         * @param value The value to append.
+         */
         public void appendAlternate(final char value) {
             if (this.alternate.length() < this.maxLength) {
                 this.alternate.append(value);
             }
         }
 
+        /**
+         * Appends the given value as alternative.
+         *
+         * @param value The value to append.
+         */
         public void appendAlternate(final String value) {
             final int addChars = this.maxLength - this.alternate.length();
             if (value.length() <= addChars) {
@@ -84,12 +121,22 @@ public class DoubleMetaphone implements StringEncoder {
             }
         }
 
+        /**
+         * Appends the given value as primary.
+         *
+         * @param value The value to append.
+         */
         public void appendPrimary(final char value) {
             if (this.primary.length() < this.maxLength) {
                 this.primary.append(value);
             }
         }
 
+        /**
+         * Appends the given value as primary.
+         *
+         * @param value The value to append.
+         */
         public void appendPrimary(final String value) {
             final int addChars = this.maxLength - this.primary.length();
             if (value.length() <= addChars) {
@@ -99,47 +146,61 @@ public class DoubleMetaphone implements StringEncoder {
             }
         }
 
+        /**
+         * Gets the alternate string.
+         *
+         * @return the alternate string.
+         */
         public String getAlternate() {
             return this.alternate.toString();
         }
 
+        /**
+         * Gets the primary string.
+         *
+         * @return the primary string.
+         */
         public String getPrimary() {
             return this.primary.toString();
         }
 
+        /**
+         * Tests whether this result is complete.
+         *
+         * @return whether this result is complete.
+         */
         public boolean isComplete() {
-            return this.primary.length() >= this.maxLength &&
-                   this.alternate.length() >= this.maxLength;
+            return this.primary.length() >= this.maxLength && this.alternate.length() >= this.maxLength;
         }
     }
 
     /**
-     * "Vowels" to test for
+     * "Vowels" to test.
      */
     private static final String VOWELS = "AEIOUY";
+
     /**
-     * Prefixes when present which are not pronounced
+     * Prefixes when present which are not pronounced.
      */
-    private static final String[] SILENT_START =
-        { "GN", "KN", "PN", "WR", "PS" };
-    private static final String[] L_R_N_M_B_H_F_V_W_SPACE =
-        { "L", "R", "N", "M", "B", "H", "F", "V", "W", " " };
-    private static final String[] ES_EP_EB_EL_EY_IB_IL_IN_IE_EI_ER =
-        { "ES", "EP", "EB", "EL", "EY", "IB", "IL", "IN", "IE", "EI", "ER" };
+    private static final String[] SILENT_START = { "GN", "KN", "PN", "WR", "PS" };
 
-    private static final String[] L_T_K_S_N_M_B_Z =
-        { "L", "T", "K", "S", "N", "M", "B", "Z" };
+    private static final String[] L_R_N_M_B_H_F_V_W_SPACE = { "L", "R", "N", "M", "B", "H", "F", "V", "W", " " };
+    private static final String[] ES_EP_EB_EL_EY_IB_IL_IN_IE_EI_ER = { "ES", "EP", "EB", "EL", "EY", "IB", "IL", "IN", "IE", "EI", "ER" };
+    private static final String[] L_T_K_S_N_M_B_Z = { "L", "T", "K", "S", "N", "M", "B", "Z" };
 
-    /*
-     * Determines whether {@code value} contains any of the criteria starting at index {@code start} and
-     * matching up to length {@code length}.
+    /**
+     * Tests whether {@code value} contains any of the {@code criteria} starting at index {@code start} and matching up to length {@code length}.
+     *
+     * @param value    The value to test.
+     * @param start    Where in {@code value} to start testing.
+     * @param length   How many to test.
+     * @param criteria The search criteria.
+     * @return Whether there was a match.
      */
-    protected static boolean contains(final String value, final int start, final int length,
-                                      final String... criteria) {
+    protected static boolean contains(final String value, final int start, final int length, final String... criteria) {
         boolean result = false;
         if (start >= 0 && start + length <= value.length()) {
             final String target = value.substring(start, start + length);
-
             for (final String element : criteria) {
                 if (target.equals(element)) {
                     result = true;
@@ -155,10 +216,19 @@ public class DoubleMetaphone implements StringEncoder {
      */
     private int maxCodeLen = 4;
 
-    /*
-     * Gets the character at index {@code index} if available, otherwise
-     * it returns {@code Character.MIN_VALUE} so that there is some sort
-     * of default.
+    /**
+     * Constructs a new instance.
+     */
+    public DoubleMetaphone() {
+        // empty
+    }
+
+    /**
+     * Gets the character at index {@code index} if available, or {@link Character#MIN_VALUE} if out of bounds.
+     *
+     * @param value The String to query.
+     * @param index A string index.
+     * @return The character at the index or {@link Character#MIN_VALUE} if out of bounds.
      */
     protected char charAt(final String value, final int index) {
         if (index < 0 || index >= value.length()) {

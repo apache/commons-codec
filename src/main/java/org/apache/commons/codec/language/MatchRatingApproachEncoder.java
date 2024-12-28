@@ -63,6 +63,13 @@ public class MatchRatingApproachEncoder implements StringEncoder {
                    "TT", "VV", "WW", "XX", "YY", "ZZ" };
 
     /**
+     * Constructs a new instance.
+     */
+    public MatchRatingApproachEncoder() {
+        // empty
+    }
+
+    /**
      * Cleans up a name: 1. Upper-cases everything 2. Removes some common punctuation 3. Removes accents 4. Removes any
      * spaces.
      *
