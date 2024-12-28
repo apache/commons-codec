@@ -106,10 +106,13 @@ public class Metaphone implements StringEncoder {
     }
 
     /**
-     * Returns the maxCodeLen.
-     * @return int
+     * Gets the maxCodeLen.
+     *
+     * @return the maxCodeLen.
      */
-    public int getMaxCodeLen() { return this.maxCodeLen; }
+    public int getMaxCodeLen() {
+        return this.maxCodeLen;
+    }
 
     private boolean isLastChar(final int wdsz, final int n) {
         return n + 1 == wdsz;
@@ -385,8 +388,11 @@ public class Metaphone implements StringEncoder {
 
     /**
      * Sets the maxCodeLen.
-     * @param maxCodeLen The maxCodeLen to set
+     *
+     * @param maxCodeLen The maxCodeLen to set.
      */
-    public void setMaxCodeLen(final int maxCodeLen) { this.maxCodeLen = maxCodeLen; }
+    public void setMaxCodeLen(final int maxCodeLen) {
+        this.maxCodeLen = maxCodeLen;
+    }
 
 }
