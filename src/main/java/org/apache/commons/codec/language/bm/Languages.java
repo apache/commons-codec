@@ -70,8 +70,14 @@ public class Languages {
      */
     public abstract static class LanguageSet {
 
-        public static LanguageSet from(final Set<String> langs) {
-            return langs.isEmpty() ? NO_LANGUAGES : new SomeLanguages(langs);
+        /**
+         * Gets a language set for the given languages.
+         *
+         * @param languages a language set.
+         * @return a LanguageSet.
+         */
+        public static LanguageSet from(final Set<String> languages) {
+            return languages.isEmpty() ? NO_LANGUAGES : new SomeLanguages(languages);
         }
 
         /**
@@ -81,16 +87,43 @@ public class Languages {
             // empty
         }
 
+        /**
+         * Tests whether this instance contains the given value.
+         *
+         * @param language the value to test.
+         * @return whether this instance contains the given value.
+         */
         public abstract boolean contains(String language);
 
+        /**
+         * Gets any of this instance's element.
+         *
+         * @return any of this instance's element.
+         */
         public abstract String getAny();
 
+        /**
+         * Tests whether this instance is empty.
+         *
+         * @return whether this instance is empty.
+         */
         public abstract boolean isEmpty();
 
+        /**
+         * Tests whether this instance contains a single element.
+         *
+         * @return whether this instance contains a single element.
+         */
         public abstract boolean isSingleton();
 
         abstract LanguageSet merge(LanguageSet other);
 
+        /**
+         * Returns an instance restricted to this instances and the given values'.
+         *
+         * @param other The other instance.
+         * @return an instance restricted to this instances and the given values'.
+         */
         public abstract LanguageSet restrictTo(LanguageSet other);
     }
 
@@ -114,6 +147,11 @@ public class Languages {
             return this.languages.iterator().next();
         }
 
+        /**
+         * Gets the language strings
+         *
+         * @return the languages strings.
+         */
         public Set<String> getLanguages() {
             return this.languages;
         }
@@ -161,6 +199,9 @@ public class Languages {
 
     }
 
+    /**
+     * Marker for any language.
+     */
     public static final String ANY = "any";
 
     private static final Map<NameType, Languages> LANGUAGES = new EnumMap<>(NameType.class);
@@ -253,10 +294,22 @@ public class Languages {
         }
     }
 
+    /**
+     * Gets an instance for the given name type.
+     *
+     * @param nameType The name type to lookup.
+     * @return an instance for the given name type.
+     */
     public static Languages getInstance(final NameType nameType) {
         return LANGUAGES.get(nameType);
     }
 
+    /**
+     * Gets a new instance for the given resource name.
+     *
+     * @param languagesResourceName the resource name to lookup.
+     * @return a new instance.
+     */
     public static Languages getInstance(final String languagesResourceName) {
         // read languages list
         final Set<String> ls = new HashSet<>();
@@ -289,6 +342,11 @@ public class Languages {
         this.languages = languages;
     }
 
+    /**
+     * Gets the language set.
+     *
+     * @return the language set.
+     */
     public Set<String> getLanguages() {
         return this.languages;
     }
