@@ -88,7 +88,7 @@ public class XXHash32Test {
     public void verifyChecksum(final String path, final String c) throws IOException {
         initData(path, c);
         final XXHash32 h = new XXHash32();
-        try (final FileInputStream s = new FileInputStream(file)) {
+        try (FileInputStream s = new FileInputStream(file)) {
             final byte[] b = toByteArray(s);
             h.update(b, 0, b.length);
         }
@@ -100,7 +100,7 @@ public class XXHash32Test {
     public void verifyIncrementalChecksum(final String path, final String c) throws IOException {
         initData(path, c);
         final XXHash32 h = new XXHash32();
-        try (final FileInputStream s = new FileInputStream(file)) {
+        try (FileInputStream s = new FileInputStream(file)) {
             final byte[] b = toByteArray(s);
             // Hit the case where the hash should be reset
             h.update(b[0]);

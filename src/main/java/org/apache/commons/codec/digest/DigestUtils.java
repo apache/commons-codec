@@ -1276,7 +1276,7 @@ public class DigestUtils {
      * @since 1.11
      */
     public static MessageDigest updateDigest(final MessageDigest digest, final File data) throws IOException {
-        try (final BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(data))) {
+        try (BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(data))) {
             return updateDigest(digest, inputStream);
         }
     }
@@ -1334,7 +1334,7 @@ public class DigestUtils {
      * @since 1.14
      */
     public static MessageDigest updateDigest(final MessageDigest digest, final Path path, final OpenOption... options) throws IOException {
-        try (final BufferedInputStream inputStream = new BufferedInputStream(Files.newInputStream(path, options))) {
+        try (BufferedInputStream inputStream = new BufferedInputStream(Files.newInputStream(path, options))) {
             return updateDigest(digest, inputStream);
         }
     }

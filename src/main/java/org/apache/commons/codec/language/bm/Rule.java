@@ -241,14 +241,14 @@ public class Rule {
 
                 final Languages ls = Languages.getInstance(s);
                 ls.getLanguages().forEach(l -> {
-                    try (final Scanner scanner = createScanner(s, rt, l)) {
+                    try (Scanner scanner = createScanner(s, rt, l)) {
                         rs.put(l, parseRules(scanner, createResourceName(s, rt, l)));
                     } catch (final IllegalStateException e) {
                         throw new IllegalStateException("Problem processing " + createResourceName(s, rt, l), e);
                     }
                 });
                 if (!rt.equals(RuleType.RULES)) {
-                    try (final Scanner scanner = createScanner(s, rt, "common")) {
+                    try (Scanner scanner = createScanner(s, rt, "common")) {
                         rs.put("common", parseRules(scanner, createResourceName(s, rt, "common")));
                     }
                 }
@@ -444,7 +444,7 @@ public class Rule {
                         throw new IllegalArgumentException("Malformed import statement '" + rawLine + "' in " +
                                                            location);
                     }
-                    try (final Scanner hashIncludeScanner = createScanner(incl)) {
+                    try (Scanner hashIncludeScanner = createScanner(incl)) {
                         lines.putAll(parseRules(hashIncludeScanner, location + "->" + incl));
                     }
                 } else {

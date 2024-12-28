@@ -224,7 +224,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
     private static final Map<Character, Character> FOLDINGS = new HashMap<>();
 
     static {
-        try (final Scanner scanner = new Scanner(Resources.getInputStream(RESOURCE_FILE), CharEncoding.UTF_8)) {
+        try (Scanner scanner = new Scanner(Resources.getInputStream(RESOURCE_FILE), CharEncoding.UTF_8)) {
             parseRules(scanner, RESOURCE_FILE, RULES, FOLDINGS);
         }
 

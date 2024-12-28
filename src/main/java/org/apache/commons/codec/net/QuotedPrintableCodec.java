@@ -281,7 +281,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      *            the buffer to write to
      * @return The number of bytes written to the {@code buffer}
      */
-    private static final int encodeQuotedPrintable(final int b, final ByteArrayOutputStream buffer) {
+    private static int encodeQuotedPrintable(final int b, final ByteArrayOutputStream buffer) {
         buffer.write(ESCAPE_CHAR);
         final char hex1 = Utils.hexDigit(b >> 4);
         final char hex2 = Utils.hexDigit(b);

@@ -291,7 +291,7 @@ public class Base32OutputStreamTest {
 
                 // Strict decoding should throw
                 bout = new ByteArrayOutputStream();
-                try (final Base32OutputStream out2 = new Base32OutputStream(bout, false, 0, null, CodecPolicy.STRICT)) {
+                try (Base32OutputStream out2 = new Base32OutputStream(bout, false, 0, null, CodecPolicy.STRICT)) {
                     assertTrue(out2.isStrictDecoding());
                     assertThrows(IllegalArgumentException.class, () -> out2.write(encoded));
                 }
@@ -309,7 +309,7 @@ public class Base32OutputStreamTest {
     public void testWriteOutOfBounds() throws Exception {
         final byte[] buf = new byte[1024];
         final ByteArrayOutputStream bout = new ByteArrayOutputStream();
-        try (final Base32OutputStream out = new Base32OutputStream(bout)) {
+        try (Base32OutputStream out = new Base32OutputStream(bout)) {
             assertThrows(IndexOutOfBoundsException.class, () -> out.write(buf, -1, 1), "Base32OutputStream.write(buf, -1, 1)");
             assertThrows(IndexOutOfBoundsException.class, () -> out.write(buf, 1, -1), "Base32OutputStream.write(buf, 1, -1)");
             assertThrows(IndexOutOfBoundsException.class, () -> out.write(buf, buf.length + 1, 0), "Base32OutputStream.write(buf, buf, buf.length + 1, 0)");
@@ -326,7 +326,7 @@ public class Base32OutputStreamTest {
     @Test
     public void testWriteToNullCoverage() throws Exception {
         final ByteArrayOutputStream bout = new ByteArrayOutputStream();
-        try (final Base32OutputStream out = new Base32OutputStream(bout)) {
+        try (Base32OutputStream out = new Base32OutputStream(bout)) {
             assertThrows(NullPointerException.class, () -> out.write(null, 0, 0));
         }
     }

@@ -275,7 +275,7 @@ public class Base64OutputStreamTest {
         final byte[] codec98_1024 = new byte[1024];
         System.arraycopy(codec98, 0, codec98_1024, 0, codec98.length);
         final ByteArrayOutputStream data = new ByteArrayOutputStream(1024);
-        try (final Base64OutputStream stream = new Base64OutputStream(data, false)) {
+        try (Base64OutputStream stream = new Base64OutputStream(data, false)) {
             stream.write(codec98_1024, 0, 1024);
         }
 
@@ -324,7 +324,7 @@ public class Base64OutputStreamTest {
     public void testWriteOutOfBounds() throws Exception {
         final byte[] buf = new byte[1024];
         final ByteArrayOutputStream bout = new ByteArrayOutputStream();
-        try (final Base64OutputStream out = new Base64OutputStream(bout)) {
+        try (Base64OutputStream out = new Base64OutputStream(bout)) {
             assertThrows(IndexOutOfBoundsException.class, () -> out.write(buf, -1, 1), "Base64OutputStream.write(buf, -1, 1)");
             assertThrows(IndexOutOfBoundsException.class, () -> out.write(buf, 1, -1), "Base64OutputStream.write(buf, 1, -1)");
             assertThrows(IndexOutOfBoundsException.class, () -> out.write(buf, buf.length + 1, 0), "Base64OutputStream.write(buf, buf.length + 1, 0)");
@@ -341,7 +341,7 @@ public class Base64OutputStreamTest {
     @Test
     public void testWriteToNullCoverage() throws Exception {
         final ByteArrayOutputStream bout = new ByteArrayOutputStream();
-        try (final Base64OutputStream out = new Base64OutputStream(bout)) {
+        try (Base64OutputStream out = new Base64OutputStream(bout)) {
             assertThrows(NullPointerException.class, () -> out.write(null, 0, 0));
         }
     }

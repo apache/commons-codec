@@ -88,12 +88,12 @@ public class DigestUtilsTest {
     public void setUp() throws Exception {
         new Random().nextBytes(testData);
         testFile = Files.createTempFile(DigestUtilsTest.class.getName(), ".dat");
-        try (final OutputStream fos = Files.newOutputStream(testFile)) {
+        try (OutputStream fos = Files.newOutputStream(testFile)) {
             fos.write(testData);
         }
 
         testRandomAccessFile = Files.createTempFile(DigestUtilsTest.class.getName(), ".dat");
-        try (final OutputStream fos = Files.newOutputStream(testRandomAccessFile)) {
+        try (OutputStream fos = Files.newOutputStream(testRandomAccessFile)) {
             fos.write(testData);
         }
         testRandomAccessFileWrapper = RandomAccessFileMode.READ_WRITE.create(testRandomAccessFile);
@@ -114,7 +114,7 @@ public class DigestUtilsTest {
         final String pathName = "src/test/resources/org/apache/commons/codec/empty.bin";
         final String algo = MessageDigestAlgorithms.MD5;
         assertEquals(expected, new DigestUtils(algo).digestAsHex(new File(pathName)));
-        try (final FileInputStream inputStream = new FileInputStream(pathName)) {
+        try (FileInputStream inputStream = new FileInputStream(pathName)) {
             assertEquals(expected, new DigestUtils(algo).digestAsHex(inputStream));
         }
         final byte[] allBytes = Files.readAllBytes(Paths.get(pathName));
@@ -312,7 +312,7 @@ public class DigestUtilsTest {
         final String algo = MessageDigestAlgorithms.SHA_224;
         final DigestUtils digestUtils = new DigestUtils(algo);
         assertEquals(expected, digestUtils.digestAsHex(new File(pathName)));
-        try (final FileInputStream inputStream = new FileInputStream(pathName)) {
+        try (FileInputStream inputStream = new FileInputStream(pathName)) {
             assertEquals(expected, digestUtils.digestAsHex(inputStream));
         }
         final byte[] allBytes = Files.readAllBytes(Paths.get(pathName));

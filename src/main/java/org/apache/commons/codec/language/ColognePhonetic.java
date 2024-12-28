@@ -193,12 +193,12 @@ public class ColognePhonetic implements StringEncoder {
 
         protected int length;
 
-        public CologneBuffer(final char[] data) {
+        CologneBuffer(final char[] data) {
             this.data = data;
             this.length = data.length;
         }
 
-        public CologneBuffer(final int buffSize) {
+        CologneBuffer(final int buffSize) {
             this.data = new char[buffSize];
             this.length = 0;
         }
@@ -218,9 +218,10 @@ public class ColognePhonetic implements StringEncoder {
             return new String(copyData(0, length));
         }
     }
+
     private final class CologneInputBuffer extends CologneBuffer {
 
-        public CologneInputBuffer(final char[] data) {
+        CologneInputBuffer(final char[] data) {
             super(data);
         }
 
@@ -245,11 +246,12 @@ public class ColognePhonetic implements StringEncoder {
             return ch;
         }
     }
+
     private final class CologneOutputBuffer extends CologneBuffer {
 
         private char lastCode;
 
-        public CologneOutputBuffer(final int buffSize) {
+        CologneOutputBuffer(final int buffSize) {
             super(buffSize);
             lastCode = '/'; // impossible value
         }

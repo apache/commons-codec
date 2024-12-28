@@ -169,7 +169,7 @@ public class PhoneticEngine {
         private final int maxPhonemes;
         private boolean found;
 
-        public RulesApplication(final Map<String, List<Rule>> finalRules, final CharSequence input, final PhonemeBuilder phonemeBuilder, final int i,
+        RulesApplication(final Map<String, List<Rule>> finalRules, final CharSequence input, final PhonemeBuilder phonemeBuilder, final int i,
                 final int maxPhonemes) {
             Objects.requireNonNull(finalRules, "finalRules");
             this.finalRules = finalRules;

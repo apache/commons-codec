@@ -129,25 +129,25 @@ public class Base16OutputStreamTest {
     private void testByChunk(final byte[] encoded, final byte[] decoded, final boolean lowerCase) throws IOException {
 
         // Start with encode.
-        try (final ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
-                final OutputStream out = new Base16OutputStream(byteOut, true, lowerCase)) {
+        try (ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
+                OutputStream out = new Base16OutputStream(byteOut, true, lowerCase)) {
             out.write(decoded);
             final byte[] output = byteOut.toByteArray();
             assertArrayEquals(encoded, output, "Streaming chunked base16 encode");
         }
 
         // Now let's try to decode.
-        try (final ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
-                final OutputStream out = new Base16OutputStream(byteOut, false, lowerCase)) {
+        try (ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
+                OutputStream out = new Base16OutputStream(byteOut, false, lowerCase)) {
             out.write(encoded);
             final byte[] output = byteOut.toByteArray();
             assertArrayEquals(decoded, output, "Streaming chunked base16 decode");
         }
 
         // wrap encoder with decoder
-        try (final ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
-             final OutputStream decoderOut = new Base16OutputStream(byteOut, false, lowerCase);
-             final OutputStream encoderOut = new Base16OutputStream(decoderOut, true, lowerCase)) {
+        try (ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
+             OutputStream decoderOut = new Base16OutputStream(byteOut, false, lowerCase);
+             OutputStream encoderOut = new Base16OutputStream(decoderOut, true, lowerCase)) {
 
             encoderOut.write(decoded);
             final byte[] output = byteOut.toByteArray();
@@ -185,8 +185,8 @@ public class Base16OutputStreamTest {
     private void testByteByByte(final byte[] encoded, final byte[] decoded, final boolean lowerCase) throws IOException {
 
         // Start with encode.
-        try (final ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
-                final OutputStream out = new Base16OutputStream(byteOut, true, lowerCase)) {
+        try (ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
+                OutputStream out = new Base16OutputStream(byteOut, true, lowerCase)) {
             for (final byte element : decoded) {
                 out.write(element);
             }
@@ -195,8 +195,8 @@ public class Base16OutputStreamTest {
         }
 
         // Now let's try to decode.
-        try (final ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
-                final OutputStream out = new Base16OutputStream(byteOut, false, lowerCase)) {
+        try (ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
+                OutputStream out = new Base16OutputStream(byteOut, false, lowerCase)) {
             for (final byte element : encoded) {
                 out.write(element);
             }
@@ -205,8 +205,8 @@ public class Base16OutputStreamTest {
         }
 
         // Now let's try to decode with tonnes of flushes.
-        try (final ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
-                final OutputStream out = new Base16OutputStream(byteOut, false, lowerCase)) {
+        try (ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
+                OutputStream out = new Base16OutputStream(byteOut, false, lowerCase)) {
             for (final byte element : encoded) {
                 out.write(element);
                 out.flush();
@@ -216,9 +216,9 @@ public class Base16OutputStreamTest {
         }
 
         // wrap encoder with decoder
-        try (final ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
-                final OutputStream decoderOut = new Base16OutputStream(byteOut, false, lowerCase);
-                final OutputStream encoderOut = new Base16OutputStream(decoderOut, true, lowerCase)) {
+        try (ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
+                OutputStream decoderOut = new Base16OutputStream(byteOut, false, lowerCase);
+                OutputStream encoderOut = new Base16OutputStream(decoderOut, true, lowerCase)) {
             for (final byte element : decoded) {
                 encoderOut.write(element);
             }
@@ -236,7 +236,7 @@ public class Base16OutputStreamTest {
     public void testWriteOutOfBounds() throws IOException {
         final byte[] buf = new byte[1024];
         final ByteArrayOutputStream bout = new ByteArrayOutputStream();
-        try (final Base16OutputStream out = new Base16OutputStream(bout)) {
+        try (Base16OutputStream out = new Base16OutputStream(bout)) {
             assertThrows(IndexOutOfBoundsException.class, () -> out.write(buf, -1, 1), "Base16InputStream.write(buf, -1, 0)");
             assertThrows(IndexOutOfBoundsException.class, () -> out.write(buf, 1, -1), "Base16InputStream.write(buf, 1, -1)");
             assertThrows(IndexOutOfBoundsException.class, () -> out.write(buf, buf.length + 1, 0), "Base16InputStream.write(buf, buf.length + 1, 0)");
@@ -252,7 +252,7 @@ public class Base16OutputStreamTest {
     @Test
     public void testWriteToNullCoverage() throws IOException {
         final ByteArrayOutputStream bout = new ByteArrayOutputStream();
-        try (final Base16OutputStream out = new Base16OutputStream(bout)) {
+        try (Base16OutputStream out = new Base16OutputStream(bout)) {
             assertThrows(NullPointerException.class, () -> out.write(null, 0, 0));
         }
     }

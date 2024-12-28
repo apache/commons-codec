@@ -251,7 +251,7 @@ public class Languages {
     public static Languages getInstance(final String languagesResourceName) {
         // read languages list
         final Set<String> ls = new HashSet<>();
-        try (final Scanner lsScanner = new Scanner(Resources.getInputStream(languagesResourceName),
+        try (Scanner lsScanner = new Scanner(Resources.getInputStream(languagesResourceName),
                 ResourceConstants.ENCODING)) {
             boolean inExtendedComment = false;
             while (lsScanner.hasNextLine()) {

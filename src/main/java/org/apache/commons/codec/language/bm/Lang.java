@@ -135,7 +135,7 @@ public class Lang {
      */
     public static Lang loadFromResource(final String languageRulesResourceName, final Languages languages) {
         final List<LangRule> rules = new ArrayList<>();
-        try (final Scanner scanner = new Scanner(Resources.getInputStream(languageRulesResourceName),
+        try (Scanner scanner = new Scanner(Resources.getInputStream(languageRulesResourceName),
                 ResourceConstants.ENCODING)) {
             boolean inExtendedComment = false;
             while (scanner.hasNextLine()) {

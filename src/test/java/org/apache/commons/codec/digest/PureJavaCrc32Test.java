@@ -228,7 +228,7 @@ public class PureJavaCrc32Test {
             System.out.println(s);
 
             // print to a file
-            try (final PrintStream out = new PrintStream(new FileOutputStream("table" + i + ".txt"), true)) {
+            try (PrintStream out = new PrintStream(new FileOutputStream("table" + i + ".txt"), true)) {
                 out.println(s);
             }
         }
