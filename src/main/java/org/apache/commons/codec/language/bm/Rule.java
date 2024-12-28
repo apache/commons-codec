@@ -265,7 +265,7 @@ public class Rule {
     }
 
     private static String createResourceName(final NameType nameType, final RuleType rt, final String lang) {
-        return String.format("org/apache/commons/codec/language/bm/%s_%s_%s.txt",
+        return String.format("/org/apache/commons/codec/language/bm/%s_%s_%s.txt",
                              nameType.getName(), rt.getName(), lang);
     }
 
@@ -277,7 +277,7 @@ public class Rule {
 
     @SuppressWarnings("resource") // Closing the Scanner closes the resource
     private static Scanner createScanner(final String lang) {
-        final String resName = String.format("org/apache/commons/codec/language/bm/%s.txt", lang);
+        final String resName = String.format("/org/apache/commons/codec/language/bm/%s.txt", lang);
         return new Scanner(Resources.getInputStream(resName), ResourceConstants.ENCODING);
     }
 

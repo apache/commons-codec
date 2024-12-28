@@ -271,7 +271,7 @@ public class Languages {
     }
 
     private static String langResourceName(final NameType nameType) {
-        return String.format("org/apache/commons/codec/language/bm/%s_languages.txt", nameType.getName());
+        return String.format("/org/apache/commons/codec/language/bm/%s_languages.txt", nameType.getName());
     }
 
     private final Set<String> languages;
