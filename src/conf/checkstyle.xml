@@ -53,19 +53,19 @@ limitations under the License.
     <property name="severity" value="warning" />
   </module>
   <module name="TreeWalker">
-    <module name="WhitespaceAfter" />
-    <module name="WhitespaceAround" />
     <module name="ExplicitInitializationCheck" />
-    <module name="OperatorWrap">
-      <property name="option" value="eol" />
-    </module>
     <module name="ImportOrder">
       <property name="option" value="top"/>
       <property name="groups" value="java,javax,org"/>
       <property name="ordered" value="true"/>
       <property name="separated" value="true"/>
     </module>
+    <module name="OperatorWrap">
+      <property name="option" value="eol" />
+    </module>
     <module name="ParenPad" />
+    <module name="WhitespaceAfter" />
+    <module name="WhitespaceAround" />
   </module>
   <module name="LineLength">
       <!-- Ignore lines that begin with " * ", such as within a Javadoc comment. -->
