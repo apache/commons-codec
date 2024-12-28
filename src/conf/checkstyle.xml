@@ -23,26 +23,21 @@ limitations under the License.
 <!-- commons codec customization of default Checkstyle behavior -->
 <module name="Checker">
   <property name="localeLanguage" value="en" />
-
   <module name="SuppressionFilter">
     <property name="file" value="src/conf/checkstyle-suppressions.xml"/>
   </module>
-
   <!-- Checks whether files end with a new line. -->
   <!-- See http://checkstyle.sf.net/config_misc.html#NewlineAtEndOfFile -->
   <module name="NewlineAtEndOfFile" />
-
   <!-- Verify that EVERY source file has the appropriate license -->
   <module name="Header">
     <property name="headerFile" value="${checkstyle.header.file}" />
   </module>
-
   <!-- Checks for Tab characters -->
   <!-- See http://checkstyle.sourceforge.net/config_whitespace.html#FileTabCharacter -->
   <module name="FileTabCharacter">
     <property name="fileExtensions" value="java" />
   </module>
-
   <!-- Checks for white space at the end of the line -->
   <!-- See http://checkstyle.sourceforge.net/config_regexp.html -->
   <module name="RegexpSingleline">
@@ -50,7 +45,6 @@ limitations under the License.
     <property name="message" value="Line has trailing spaces." />
     <property name="fileExtensions" value="java" />
   </module>
-
   <!-- @author tags are deprecated -->
   <module name="RegexpSingleline">
     <property name="format" value="^\s+\*\s+@author\s" />
@@ -58,7 +52,6 @@ limitations under the License.
     <property name="fileExtensions" value="java" />
     <property name="severity" value="warning" />
   </module>
-
   <module name="TreeWalker">
     <module name="WhitespaceAfter" />
     <module name="WhitespaceAround" />
