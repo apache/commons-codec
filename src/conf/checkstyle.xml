@@ -78,6 +78,7 @@ limitations under the License.
     <module name="UpperEll" />
     <module name="WhitespaceAfter" />
     <module name="WhitespaceAround" />
+    <module name="WhitespaceAroundCheck" />
   </module>
   <module name="LineLength">
       <!-- Ignore lines that begin with " * ", such as within a Javadoc comment. -->
