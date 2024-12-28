@@ -53,6 +53,7 @@ limitations under the License.
     <property name="severity" value="warning" />
   </module>
   <module name="TreeWalker">
+    <module name="AvoidStarImport" />
     <module name="ExplicitInitializationCheck" />
     <module name="ImportOrder">
       <property name="option" value="top"/>
