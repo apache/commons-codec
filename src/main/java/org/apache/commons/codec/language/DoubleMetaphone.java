@@ -844,7 +844,7 @@ public class DoubleMetaphone implements StringEncoder {
             index += 3;
         } else if (index == 0 && contains(value, index + 1, 1, "M", "N", "L", "W") ||
                    contains(value, index + 1, 1, "Z")) {
-            //-- german & anglicisations, e.g. "smith" match "schmidt" //
+            //-- german & anglicisations, for example "smith" match "schmidt" //
             // "snider" match "schneider" --//
             //-- also, -sz- in slavic language although in hungarian it //
             //   is pronounced "s" --//
@@ -854,7 +854,7 @@ public class DoubleMetaphone implements StringEncoder {
             index = handleSC(value, result, index);
         } else {
             if (index == value.length() - 1 && contains(value, index - 2, 2, "AI", "OI")) {
-                //-- french e.g. "resnais", "artois" --//
+                //-- french for example "resnais", "artois" --//
                 result.appendAlternate('S');
             } else {
                 result.append('S');
@@ -871,7 +871,7 @@ public class DoubleMetaphone implements StringEncoder {
         if (charAt(value, index + 2) == 'H') {
             //-- Schlesinger's rule --//
             if (contains(value, index + 3, 2, "OO", "ER", "EN", "UY", "ED", "EM")) {
-                //-- Dutch origin, e.g. "school", "schooner" --//
+                //-- Dutch origin, for example "school", "schooner" --//
                 if (contains(value, index + 3, 2, "ER", "EN")) {
                     //-- "schermerhorn", "schenker" --//
                     result.append("X", "SK");
@@ -940,7 +940,7 @@ public class DoubleMetaphone implements StringEncoder {
             result.appendAlternate('F');
             index++;
         } else if (contains(value, index, 4, "WICZ", "WITZ")) {
-            //-- Polish e.g. "filipowicz" --//
+            //-- Polish for example "filipowicz" --//
             result.append("TS", "FX");
             index += 4;
         } else {
@@ -960,7 +960,7 @@ public class DoubleMetaphone implements StringEncoder {
             if (!(index == value.length() - 1 &&
                   (contains(value, index - 3, 3, "IAU", "EAU") ||
                    contains(value, index - 2, 2, "AU", "OU")))) {
-                //-- French e.g. breaux --//
+                //-- French for example breaux --//
                 result.append("KS");
             }
             index = contains(value, index + 1, 1, "C", "X") ? index + 2 : index + 1;
@@ -976,7 +976,7 @@ public class DoubleMetaphone implements StringEncoder {
     private int handleZ(final String value, final DoubleMetaphoneResult result, int index,
                         final boolean slavoGermanic) {
         if (charAt(value, index + 1) == 'H') {
-            //-- Chinese pinyin e.g. "zhao" or Angelina "Zhang" --//
+            //-- Chinese pinyin for example "zhao" or Angelina "Zhang" --//
             result.append('J');
             index += 2;
         } else {

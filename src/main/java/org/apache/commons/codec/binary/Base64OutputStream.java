@@ -98,7 +98,7 @@ public class Base64OutputStream extends BaseNCodecOutputStream {
      *            the nearest multiple of 4). If lineLength &lt;= 0, the encoded data is not divided into lines. If
      *            doEncode is false, lineLength is ignored.
      * @param lineSeparator
-     *            If doEncode is true, each line of encoded data will be terminated with this byte sequence (e.g. \r\n).
+     *            If doEncode is true, each line of encoded data will be terminated with this byte sequence (for example \r\n).
      *            If lineLength &lt;= 0, the lineSeparator is not used. If doEncode is false lineSeparator is ignored.
      */
     public Base64OutputStream(final OutputStream outputStream, final boolean doEncode, final int lineLength, final byte[] lineSeparator) {
@@ -118,7 +118,7 @@ public class Base64OutputStream extends BaseNCodecOutputStream {
      *            the nearest multiple of 4). If lineLength &lt;= 0, the encoded data is not divided into lines. If
      *            doEncode is false, lineLength is ignored.
      * @param lineSeparator
-     *            If doEncode is true, each line of encoded data will be terminated with this byte sequence (e.g. \r\n).
+     *            If doEncode is true, each line of encoded data will be terminated with this byte sequence (for example \r\n).
      *            If lineLength &lt;= 0, the lineSeparator is not used. If doEncode is false lineSeparator is ignored.
      * @param decodingPolicy The decoding policy.
      * @since 1.15

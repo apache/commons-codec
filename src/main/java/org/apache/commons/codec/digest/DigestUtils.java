@@ -65,7 +65,7 @@ public class DigestUtils {
     /**
      * Reads through a byte array and returns the digest for the data. Provided for symmetry with other methods.
      *
-     * @param messageDigest The MessageDigest to use (e.g. MD5)
+     * @param messageDigest The MessageDigest to use (for example MD5)
      * @param data          Data to digest
      * @return the digest
      * @since 1.11
@@ -77,7 +77,7 @@ public class DigestUtils {
     /**
      * Reads through a ByteBuffer and returns the digest for the data
      *
-     * @param messageDigest The MessageDigest to use (e.g. MD5)
+     * @param messageDigest The MessageDigest to use (for example MD5)
      * @param data          Data to digest
      * @return the digest
      * @since 1.11
@@ -90,7 +90,7 @@ public class DigestUtils {
     /**
      * Reads through a File and returns the digest for the data
      *
-     * @param messageDigest The MessageDigest to use (e.g. MD5)
+     * @param messageDigest The MessageDigest to use (for example MD5)
      * @param data          Data to digest
      * @return the digest
      * @throws IOException On error reading from the stream
@@ -103,7 +103,7 @@ public class DigestUtils {
     /**
      * Reads through an InputStream and returns the digest for the data
      *
-     * @param messageDigest The MessageDigest to use (e.g. MD5)
+     * @param messageDigest The MessageDigest to use (for example MD5)
      * @param data          Data to digest
      * @return the digest
      * @throws IOException On error reading from the stream
@@ -116,7 +116,7 @@ public class DigestUtils {
     /**
      * Reads through a File and returns the digest for the data
      *
-     * @param messageDigest The MessageDigest to use (e.g. MD5)
+     * @param messageDigest The MessageDigest to use (for example MD5)
      * @param data          Data to digest
      * @param options       options How to open the file
      * @return the digest
@@ -130,7 +130,7 @@ public class DigestUtils {
     /**
      * Reads through a RandomAccessFile using non-blocking-io (NIO) and returns the digest for the data
      *
-     * @param messageDigest The MessageDigest to use (e.g. MD5)
+     * @param messageDigest The MessageDigest to use (for example MD5)
      * @param data          Data to digest
      * @return the digest
      * @throws IOException On error reading from the stream
@@ -1269,7 +1269,7 @@ public class DigestUtils {
     /**
      * Reads through a File and updates the digest for the data
      *
-     * @param digest The MessageDigest to use (e.g. MD5)
+     * @param digest The MessageDigest to use (for example MD5)
      * @param data   Data to digest
      * @return the digest
      * @throws IOException On error reading from the stream
@@ -1286,7 +1286,7 @@ public class DigestUtils {
      *
      * TODO Decide if this should be public.
      *
-     * @param digest The MessageDigest to use (e.g. MD5)
+     * @param digest The MessageDigest to use (for example MD5)
      * @param data   Data to digest
      * @return the digest
      * @throws IOException On error reading from the stream
@@ -1305,7 +1305,7 @@ public class DigestUtils {
     /**
      * Reads through an InputStream and updates the digest for the data
      *
-     * @param digest      The MessageDigest to use (e.g. MD5)
+     * @param digest      The MessageDigest to use (for example MD5)
      * @param inputStream Data to digest
      * @return the digest
      * @throws IOException On error reading from the stream
@@ -1326,7 +1326,7 @@ public class DigestUtils {
     /**
      * Reads through a Path and updates the digest for the data
      *
-     * @param digest  The MessageDigest to use (e.g. MD5)
+     * @param digest  The MessageDigest to use (for example MD5)
      * @param path    Data to digest
      * @param options options How to open the file
      * @return the digest
@@ -1342,7 +1342,7 @@ public class DigestUtils {
     /**
      * Reads through a RandomAccessFile and updates the digest for the data using non-blocking-io (NIO)
      *
-     * @param digest The MessageDigest to use (e.g. MD5)
+     * @param digest The MessageDigest to use (for example MD5)
      * @param data   Data to digest
      * @return the digest
      * @throws IOException On error reading from the stream

@@ -126,7 +126,7 @@ public class Crypt {
      * </p>
      * <p>
      * The rest of the salt string is drawn from the set {@code [a-zA-Z0-9./]} and is cut at the maximum length or if a
-     * {@code "$"} sign is encountered. It is therefore valid to enter a complete hash value as salt to e.g. verify a
+     * {@code "$"} sign is encountered. It is therefore valid to enter a complete hash value as salt to for example verify a
      * password with:
      * </p>
      * <pre>
@@ -154,7 +154,7 @@ public class Crypt {
      * </pre>
      * <p>
      * This method comes in a variation that accepts a byte[] array to support input strings that are not encoded in
-     * UTF-8 but e.g. in ISO-8859-1 where equal characters result in different byte values.
+     * UTF-8 but for example in ISO-8859-1 where equal characters result in different byte values.
      * </p>
      *
      * @see "The man page of the libc crypt (3) function."

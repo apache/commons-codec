@@ -394,10 +394,10 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     /** Pad byte. Instance variable just in case it needs to vary later. */
     protected final byte pad;
 
-    /** Number of bytes in each full block of unencoded data, e.g. 4 for Base64 and 5 for Base32 */
+    /** Number of bytes in each full block of unencoded data, for example 4 for Base64 and 5 for Base32 */
     private final int unencodedBlockSize;
 
-    /** Number of bytes in each full block of encoded data, e.g. 3 for Base64 and 8 for Base32 */
+    /** Number of bytes in each full block of encoded data, for example 3 for Base64 and 8 for Base32 */
     private final int encodedBlockSize;
 
     /**
@@ -440,8 +440,8 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * If {@code chunkSeparatorLength} is zero, then chunking is disabled.
      * </p>
      *
-     * @param unencodedBlockSize the size of an unencoded block (e.g. Base64 = 3)
-     * @param encodedBlockSize the size of an encoded block (e.g. Base64 = 4)
+     * @param unencodedBlockSize the size of an unencoded block (for example Base64 = 3)
+     * @param encodedBlockSize the size of an encoded block (for example Base64 = 4)
      * @param lineLength if &gt; 0, use chunking with a length {@code lineLength}
      * @param chunkSeparatorLength the chunk separator length, if relevant
      */
@@ -456,8 +456,8 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * If {@code chunkSeparatorLength} is zero, then chunking is disabled.
      * </p>
      *
-     * @param unencodedBlockSize the size of an unencoded block (e.g. Base64 = 3)
-     * @param encodedBlockSize the size of an encoded block (e.g. Base64 = 4)
+     * @param unencodedBlockSize the size of an unencoded block (for example Base64 = 3)
+     * @param encodedBlockSize the size of an encoded block (for example Base64 = 4)
      * @param lineLength if &gt; 0, use chunking with a length {@code lineLength}
      * @param chunkSeparatorLength the chunk separator length, if relevant
      * @param pad byte used as padding byte.
@@ -473,8 +473,8 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * If {@code chunkSeparatorLength} is zero, then chunking is disabled.
      * </p>
      *
-     * @param unencodedBlockSize the size of an unencoded block (e.g. Base64 = 3)
-     * @param encodedBlockSize the size of an encoded block (e.g. Base64 = 4)
+     * @param unencodedBlockSize the size of an unencoded block (for example Base64 = 3)
+     * @param encodedBlockSize the size of an encoded block (for example Base64 = 4)
      * @param lineLength if &gt; 0, use chunking with a length {@code lineLength}
      * @param chunkSeparatorLength the chunk separator length, if relevant
      * @param pad byte used as padding byte.

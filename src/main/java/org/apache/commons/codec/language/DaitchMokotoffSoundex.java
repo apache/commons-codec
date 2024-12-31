@@ -332,7 +332,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
     /**
      * Creates a new instance.
      * <p>
-     * With ASCII-folding enabled, certain accented characters will be transformed to equivalent ASCII characters, e.g.
+     * With ASCII-folding enabled, certain accented characters will be transformed to equivalent ASCII characters, for example
      * è -&gt; e.
      * </p>
      *
