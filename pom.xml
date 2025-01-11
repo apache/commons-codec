@@ -99,6 +99,7 @@ limitations under the License.
     <commons.rc.version>RC1</commons.rc.version>
     <commons.release.isDistModule>true</commons.release.isDistModule>
     <commons.distSvnStagingUrl>scm:svn:https://dist.apache.org/repos/dist/dev/commons/${commons.componentid}</commons.distSvnStagingUrl>
+    <!-- project.build.outputTimestamp is managed by Maven plugins, see https://maven.apache.org/guides/mini/guide-reproducible-builds.html -->
     <project.build.outputTimestamp>2025-01-06T22:01:21Z</project.build.outputTimestamp>
     <commons.jacoco.version>0.8.12</commons.jacoco.version>
     <!-- Temp for SUREFIRE-2253 -->
