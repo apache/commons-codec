@@ -75,7 +75,7 @@ The Javadoc API documents are available online:
   <li><a href="https://javadoc.io/doc/commons-codec/commons-codec">Javadoc archive</a></li>
 </ul>
 <p>
-The <a href="scm.html">subversion repository</a> can be
+The <a href="scm.html">Git repository</a> can be
 <a href="https://gitbox.apache.org/repos/asf?p=commons-codec.git">browsed</a>.
 </p>
 </section>
