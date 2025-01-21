@@ -30,13 +30,15 @@
       <item name="Release History" href="/changes.html" />
       <item name="Issue Tracking" href="/issue-management.html" />
       <item name="Dependency Management" href="/dependency-info.html" />
-      <item name="Javadoc" href="apidocs/index.html" />
-      <item name="Javadoc Archive" href="https://javadoc.io/doc/commons-codec/commons-codec" />
       <item name="Sources" href="/scm.html" />
       <item name="Security" href="security.html" />
       <item name="License" href="https://www.apache.org/licenses/LICENSE-2.0" />
       <item name="Code of Conduct" href="https://www.apache.org/foundation/policies/conduct.html" />
       <item name="Download" href="https://commons.apache.org/codec/download_codec.cgi" />
+      <item name="Javadoc">
+        <item name="Javadoc Current" href="apidocs/index.html" />
+        <item name="Javadoc Archive" href="https://javadoc.io/doc/commons-codec/commons-codec" />
+      </item>
       <!-- End: For all components. -->
       <item name="Users guide" href="/userguide.html"/>
     </menu>
