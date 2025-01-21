@@ -15,30 +15,30 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -->
-<project name="Codec">
-    <bannerRight>
-        <name>Apache Commons Codec</name>
-        <src>/images/logo.png</src>
-        <href>/index.html</href>
-    </bannerRight>
-
-    <body>
-        <menu name="Codec">
-            <item name="Overview"        href="/index.html"/>
-            <item name="Download"        href="https://commons.apache.org/codec/download_codec.cgi"/>
-            <item name="Users guide"     href="/userguide.html"/>
-            <item name="Javadoc Current" href="/apidocs/index.html"/>
-            <item name="Javadoc Archive" href="https://javadoc.io/doc/commons-codec/commons-codec"/>
-        </menu>
-
-        <menu name="Development">
-            <item name="Release Notes"     href="/changes.html"/>
-            <item name="Mailing Lists"     href="/mail-lists.html"/>
-            <item name="Issue Tracking"    href="/issue-tracking.html"/>
-            <item name="Source Repository" href="/scm.html"/>
-            <item name="Javadoc current"   href="/apidocs/index.html"/>
-        </menu>
-
-    </body>
-
-</project>
+<site xmlns="http://maven.apache.org/SITE/2.0.0" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/SITE/2.0.0 http://maven.apache.org/xsd/site-2.0.0.xsd"
+  name="Apache Commons Codec">
+  <bannerRight name="Commons Codec" href="/index.html">
+    <image src="/images/logo.png"/>
+  </bannerRight>
+  <body>
+    <menu name="Commons Codec">
+      <!-- Start: For all components. -->
+      <item name="About" href="index.html" />
+      <item name="Asking Questions" href="/mail-lists.html" />
+      <item name="Release History" href="/changes.html" />
+      <item name="Issue Tracking" href="/issue-management.html" />
+      <item name="Dependency Management" href="/dependency-info.html" />
+      <item name="Javadoc" href="apidocs/index.html" />
+      <item name="Javadoc Archive" href="https://javadoc.io/doc/commons-codec/commons-codec" />
+      <item name="Sources" href="/scm.html" />
+      <item name="Security" href="security.html" />
+      <item name="License" href="https://www.apache.org/licenses/LICENSE-2.0" />
+      <item name="Code of Conduct" href="https://www.apache.org/foundation/policies/conduct.html" />
+      <item name="Download" href="https://commons.apache.org/codec/download_codec.cgi" />
+      <!-- End: For all components. -->
+      <item name="Users guide" href="/userguide.html"/>
+    </menu>
+  </body>
+</site>

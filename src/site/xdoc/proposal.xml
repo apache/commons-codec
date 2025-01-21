@@ -16,7 +16,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<document>
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
  <properties>
   <title>Apache Commons-Codec: Proposal</title>
  </properties>
@@ -97,15 +99,15 @@ limitations under the License.
 
   <p>
    The initial committers on the Codec component shall be as follows:
-   <ul>
+  </p>
+  <ul>
     <li><a href="mailto:sanders@apache.org">Scott Sanders</a></li>
     <li><a href="mailto:bayard@apache.org">Henri Yandell</a></li>
     <li><a href="mailto:rwaldhoff@apache.org">Rodney Waldhoff</a></li>
     <li><a href="mailto:dlr@finemaltcoding.com">Daniel Rall</a></li>
     <li><a href="mailto:jon@collab.net">Jon S. Stevens</a></li>
     <li><a href="mailto:tobrien@apache.org">Tim O'Brien</a></li>
-   </ul>
-  </p>
+  </ul>
 
  </subsection>
 </section>
