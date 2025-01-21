@@ -26,7 +26,6 @@
     <fileSets>
         <fileSet>
             <includes>
-                <include>src/conf/*.*</include>
                 <include>LICENSE.txt</include>
                 <include>NOTICE.txt</include>
                 <include>pmd.xml</include>
