@@ -22,7 +22,7 @@ import java.io.InputStream;
 import org.apache.commons.codec.CodecPolicy;
 
 /**
- * Provides Base32 encoding and decoding in a streaming fashion (unlimited size). When encoding the default lineLength
+ * Provides Base32 decoding in a streaming fashion (unlimited size). When encoding the default lineLength
  * is 76 characters and the default lineEnding is CRLF, but these can be overridden by using the appropriate
  * constructor.
  * <p>

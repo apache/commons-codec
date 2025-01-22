@@ -22,7 +22,7 @@ import java.io.InputStream;
 import org.apache.commons.codec.CodecPolicy;
 
 /**
- * Provides Base16 encoding and decoding in a streaming fashion (unlimited size).
+ * Provides Base16 decoding in a streaming fashion (unlimited size).
  * <p>
  * The default behavior of the Base16InputStream is to DECODE, whereas the default behavior of the
  * {@link Base16OutputStream} is to ENCODE, but this behavior can be overridden by using a different constructor.

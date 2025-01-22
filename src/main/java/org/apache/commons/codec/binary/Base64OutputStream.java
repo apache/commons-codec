@@ -22,7 +22,7 @@ import java.io.OutputStream;
 import org.apache.commons.codec.CodecPolicy;
 
 /**
- * Provides Base64 encoding and decoding in a streaming fashion (unlimited size). When encoding the default lineLength
+ * Provides Base64 encoding in a streaming fashion (unlimited size). When encoding the default lineLength
  * is 76 characters and the default lineEnding is CRLF, but these can be overridden by using the appropriate
  * constructor.
  * <p>

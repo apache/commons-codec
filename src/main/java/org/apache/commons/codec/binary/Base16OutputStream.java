@@ -22,7 +22,7 @@ import java.io.OutputStream;
 import org.apache.commons.codec.CodecPolicy;
 
 /**
- * Provides Hex encoding and decoding in a streaming fashion (unlimited size).
+ * Provides Hex encoding in a streaming fashion (unlimited size).
  * <p>
  * The default behavior of the HexOutputStream is to ENCODE, whereas the default behavior of the
  * {@link Base16InputStream} is to DECODE. But this behavior can be overridden by using a different constructor.
