@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+[This file is very old and possibly out of date compared to what is in Jira.]
+
 This is a list of action items to be finished in the [codec] project.  
 This TODO list reflects the current direction of development, and
 should be updated by all committers when a known issues or task
@@ -33,11 +35,7 @@ When a task in the TODO list is done, change the changes.xml document in xdocs
 * Add a Rot13 implementation to text package 
 
 * figure out a better way to supply test data and expected input/output
-  to the JUNIT test cases
+  to the JUnit test cases
 
 * develop multiple distributions for projects that only wish to use 
-  a specific class, and are worried about footprint (memory and diskspace).
-
-
-
-
+  a specific class, and are worried about footprint (memory and disk space).
