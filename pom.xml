@@ -28,7 +28,7 @@ limitations under the License.
   </parent>
   <groupId>commons-codec</groupId>
   <artifactId>commons-codec</artifactId>
-  <version>1.18.0-SNAPSHOT</version>
+  <version>1.18.0</version>
   <name>Apache Commons Codec</name>
   <inceptionYear>2002</inceptionYear>
   <description>
@@ -100,7 +100,7 @@ limitations under the License.
     <commons.release.isDistModule>true</commons.release.isDistModule>
     <commons.distSvnStagingUrl>scm:svn:https://dist.apache.org/repos/dist/dev/commons/${commons.componentid}</commons.distSvnStagingUrl>
     <!-- project.build.outputTimestamp is managed by Maven plugins, see https://maven.apache.org/guides/mini/guide-reproducible-builds.html -->
-    <project.build.outputTimestamp>2025-01-06T22:01:21Z</project.build.outputTimestamp>
+    <project.build.outputTimestamp>2025-01-24T14:02:30Z</project.build.outputTimestamp>
     <commons.jacoco.version>0.8.12</commons.jacoco.version>
     <!-- Temp for SUREFIRE-2253 -->
     <commons.surefire.version>3.2.5</commons.surefire.version>
