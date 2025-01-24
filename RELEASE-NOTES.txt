@@ -1,3 +1,36 @@
+Apache Commons Codec 1.18.0 RELEASE NOTES
+-----------------------------------------
+
+The Apache Commons Codec component contains encoders and decoders for
+formats such as Base16, Base32, Base64, digest, and Hexadecimal. In addition to these
+widely used encoders and decoders, the codec package also maintains a
+collection of phonetic encoding utilities.
+
+This is a feature and maintenance release. Java 8 or later is required.
+
+
+New features
+------------
+
+*             Add Base32.Builder.setHexDecodeTable(boolean). Thanks to Gary Gregory, Julian Reschke.
+*             Add Base32.Builder.setHexEncodeTable(boolean). Thanks to Gary Gregory, Julian Reschke.
+
+
+Changes
+-------
+
+*             Bump org.apache.commons:commons-parent from 78 to 79. Thanks to Gary Gregory.
+
+
+For complete information on Apache Commons Codec, including instructions on how to submit bug reports,
+patches, or suggestions for improvement, see the Apache Commons Codec website:
+
+https://commons.apache.org/proper/commons-codec/
+
+Download page: https://commons.apache.org/proper/commons-codec/download_codec.cgi
+
+---------------------------------------------------------------------------------
+
 Apache Commons Codec 1.17.2 RELEASE NOTES
 -----------------------------------------
 
