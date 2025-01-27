@@ -180,7 +180,7 @@ public class Base16Test {
     }
 
     @Test
-    public void testDecodeSingleBytesOptimisation() {
+    public void testDecodeSingleBytesOptimization() {
         final BaseNCodec.Context context = new BaseNCodec.Context();
         assertEquals(0, context.ibitWorkArea);
         assertNull(context.buffer);
