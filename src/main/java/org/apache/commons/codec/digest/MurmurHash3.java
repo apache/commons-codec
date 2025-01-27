@@ -158,7 +158,7 @@ public final class MurmurHash3 {
 
         /**
          * The current running hash.
-         * This must be finalised to generate the 32-bit hash value.
+         * This must be finalized to generate the 32-bit hash value.
          */
         private int hash;
 
