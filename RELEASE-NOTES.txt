@@ -1,6 +1,8 @@
 Apache Commons Codec 1.18.0 RELEASE NOTES
 -----------------------------------------
 
+The Apache Commons Codec team is pleased to announce the release of Apache Commons Codec 1.18.0. 
+
 The Apache Commons Codec component contains encoders and decoders for
 formats such as Base16, Base32, Base64, digest, and Hexadecimal. In addition to these
 widely used encoders and decoders, the codec package also maintains a
