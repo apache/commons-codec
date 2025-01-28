@@ -69,6 +69,11 @@ import org.apache.commons.codec.StringEncoder;
 public class DaitchMokotoffSoundex implements StringEncoder {
 
     /**
+     * The NUL character.
+     */
+    private static final char NUL = '\0';
+
+    /**
      * Inner class representing a branch during DM soundex encoding.
      */
     private static final class Branch {
@@ -461,7 +466,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
         final Set<Branch> currentBranches = new LinkedHashSet<>();
         currentBranches.add(new Branch());
 
-        char lastChar = '\0';
+        char lastChar = NUL;
         for (int index = 0; index < input.length(); index++) {
             final char ch = input.charAt(index);
 
