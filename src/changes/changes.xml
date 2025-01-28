@@ -43,6 +43,11 @@ The <action> type attribute can be add,update,fix,remove.
     <author>Apache Commons Developers</author>
   </properties>
   <body>
+    <release version="1.18.1" date="YYYY-MM-DD" description="This is a feature and maintenance release. Java 8 or later is required.">
+      <!-- FIX -->
+      <!-- ADD -->
+      <!-- UPDATE -->
+    </release>
     <release version="1.18.0" date="2025-01-24" description="This is a feature and maintenance release. Java 8 or later is required.">
       <!-- FIX -->
       <!-- ADD -->
