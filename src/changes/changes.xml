@@ -45,8 +45,10 @@ The <action> type attribute can be add,update,fix,remove.
   <body>
     <release version="1.18.1" date="YYYY-MM-DD" description="This is a feature and maintenance release. Java 8 or later is required.">
       <!-- FIX -->
+      <action type="fix" dev="ggregory" due-to="Gary Gregory">Remove -nouses directive from maven-bundle-plugin. OSGi package imports now state 'uses' definitions for package imports, this doesn't affect JPMS (from org.apache.commons:commons-parent:80).</action>
       <!-- ADD -->
       <!-- UPDATE -->
+      <action type="update" dev="ggregory" due-to="Gary Gregory">Bump org.apache.commons:commons-parent from 79 to 80.</action>
     </release>
     <release version="1.18.0" date="2025-01-24" description="This is a feature and maintenance release. Java 8 or later is required.">
       <!-- FIX -->
