@@ -55,6 +55,7 @@ limitations under the License.
     <module name="EmptyBlock">
       <property name="option" value="text" />
     </module>
+    <module name="EqualsHashCode" />
     <module name="ExplicitInitializationCheck" />
     <module name="FinalLocalVariable" />
     <module name="IllegalImport" />
