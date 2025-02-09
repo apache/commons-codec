@@ -482,6 +482,7 @@ public class Base32 extends BaseNCodec {
 //              case 0 : // impossible, as excluded above
             case 1: // 5 bits - either ignore entirely, or raise an exception
                 validateTrailingCharacters();
+                // falls-through
             case 2: // 10 bits, drop 2 and output one byte
                 validateCharacter(MASK_2BITS, context);
                 buffer[context.pos++] = (byte) (context.lbitWorkArea >> 2 & MASK_8BITS);

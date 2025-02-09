@@ -93,18 +93,17 @@ public final class MurmurHash3 {
         @Deprecated
         int finalise(final int hash, final int unprocessedLength, final byte[] unprocessed, final int totalLen) {
             int result = hash;
-            // ************
             // Note: This fails to apply masking using 0xff to the 3 remaining bytes.
-            // ************
             int k1 = 0;
             switch (unprocessedLength) {
             case 3:
                 k1 ^= unprocessed[2] << 16;
+                // falls-through
             case 2:
                 k1 ^= unprocessed[1] << 8;
+                // falls-through
             case 1:
                 k1 ^= unprocessed[0];
-
                 // mix functions
                 k1 *= C1_32;
                 k1 = Integer.rotateLeft(k1, R1_32);
@@ -274,18 +273,18 @@ public final class MurmurHash3 {
             switch (unprocessedLength) {
             case 3:
                 k1 ^= (unprocessed[2] & 0xff) << 16;
+                // falls-through
             case 2:
                 k1 ^= (unprocessed[1] & 0xff) << 8;
+                // falls-through
             case 1:
                 k1 ^= unprocessed[0] & 0xff;
-
                 // mix functions
                 k1 *= C1_32;
                 k1 = Integer.rotateLeft(k1, R1_32);
                 k1 *= C2_32;
                 result ^= k1;
             }
-
             // finalization
             result ^= totalLen;
             return fmix32(result);
@@ -555,7 +554,6 @@ public final class MurmurHash3 {
             h2 += h1;
             h2 = h2 * M + N2;
         }
-
         // tail
         long k1 = 0;
         long k2 = 0;
@@ -563,37 +561,50 @@ public final class MurmurHash3 {
         switch (offset + length - index) {
         case 15:
             k2 ^= ((long) data[index + 14] & 0xff) << 48;
+            // falls-through
         case 14:
             k2 ^= ((long) data[index + 13] & 0xff) << 40;
+            // falls-through
         case 13:
             k2 ^= ((long) data[index + 12] & 0xff) << 32;
+            // falls-through
         case 12:
             k2 ^= ((long) data[index + 11] & 0xff) << 24;
+            // falls-through
         case 11:
             k2 ^= ((long) data[index + 10] & 0xff) << 16;
+            // falls-through
         case 10:
             k2 ^= ((long) data[index + 9] & 0xff) << 8;
+            // falls-through
         case 9:
             k2 ^= data[index + 8] & 0xff;
             k2 *= C2;
             k2 = Long.rotateLeft(k2, R3);
             k2 *= C1;
             h2 ^= k2;
-
+            // falls-through
         case 8:
             k1 ^= ((long) data[index + 7] & 0xff) << 56;
+            // falls-through
         case 7:
             k1 ^= ((long) data[index + 6] & 0xff) << 48;
+            // falls-through
         case 6:
             k1 ^= ((long) data[index + 5] & 0xff) << 40;
+            // falls-through
         case 5:
             k1 ^= ((long) data[index + 4] & 0xff) << 32;
+            // falls-through
         case 4:
             k1 ^= ((long) data[index + 3] & 0xff) << 24;
+            // falls-through
         case 3:
             k1 ^= ((long) data[index + 2] & 0xff) << 16;
+            // falls-through
         case 2:
             k1 ^= ((long) data[index + 1] & 0xff) << 8;
+            // falls-through
         case 1:
             k1 ^= data[index] & 0xff;
             k1 *= C1;
@@ -601,7 +612,6 @@ public final class MurmurHash3 {
             k1 *= C2;
             h1 ^= k1;
         }
-
         // finalization
         h1 ^= length;
         h2 ^= length;
@@ -713,35 +723,31 @@ public final class MurmurHash3 {
     public static int hash32(final byte[] data, final int offset, final int length, final int seed) {
         int hash = seed;
         final int nblocks = length >> 2;
-
         // body
         for (int i = 0; i < nblocks; i++) {
             final int index = offset + (i << 2);
             final int k = getLittleEndianInt(data, index);
             hash = mix32(k, hash);
         }
-
         // tail
-        // ************
         // Note: This fails to apply masking using 0xff to the 3 remaining bytes.
-        // ************
         final int index = offset + (nblocks << 2);
         int k1 = 0;
         switch (offset + length - index) {
         case 3:
             k1 ^= data[index + 2] << 16;
+            // falls-through
         case 2:
             k1 ^= data[index + 1] << 8;
+            // falls-through
         case 1:
             k1 ^= data[index];
-
             // mix functions
             k1 *= C1_32;
             k1 = Integer.rotateLeft(k1, R1_32);
             k1 *= C2_32;
             hash ^= k1;
         }
-
         hash ^= length;
         return fmix32(hash);
     }
@@ -913,32 +919,31 @@ public final class MurmurHash3 {
     public static int hash32x86(final byte[] data, final int offset, final int length, final int seed) {
         int hash = seed;
         final int nblocks = length >> 2;
-
         // body
         for (int i = 0; i < nblocks; i++) {
             final int index = offset + (i << 2);
             final int k = getLittleEndianInt(data, index);
             hash = mix32(k, hash);
         }
-
         // tail
         final int index = offset + (nblocks << 2);
         int k1 = 0;
         switch (offset + length - index) {
         case 3:
             k1 ^= (data[index + 2] & 0xff) << 16;
+            // falls-through
         case 2:
+            // falls-through
             k1 ^= (data[index + 1] & 0xff) << 8;
+            // falls-through
         case 1:
             k1 ^= data[index] & 0xff;
-
             // mix functions
             k1 *= C1_32;
             k1 = Integer.rotateLeft(k1, R1_32);
             k1 *= C2_32;
             hash ^= k1;
         }
-
         hash ^= length;
         return fmix32(hash);
     }
@@ -1038,17 +1043,13 @@ public final class MurmurHash3 {
      */
     @Deprecated
     public static long hash64(final byte[] data, final int offset, final int length, final int seed) {
-        //
         // Note: This fails to apply masking using 0xffffffffL to the seed.
-        //
         long hash = seed;
         final int nblocks = length >> 3;
-
         // body
         for (int i = 0; i < nblocks; i++) {
             final int index = offset + (i << 3);
             long k = getLittleEndianLong(data, index);
-
             // mix functions
             k *= C1;
             k = Long.rotateLeft(k, R1);
@@ -1056,23 +1057,28 @@ public final class MurmurHash3 {
             hash ^= k;
             hash = Long.rotateLeft(hash, R2) * M + N1;
         }
-
         // tail
         long k1 = 0;
         final int index = offset + (nblocks << 3);
         switch (offset + length - index) {
         case 7:
             k1 ^= ((long) data[index + 6] & 0xff) << 48;
+            // falls-through
         case 6:
             k1 ^= ((long) data[index + 5] & 0xff) << 40;
+            // falls-through
         case 5:
             k1 ^= ((long) data[index + 4] & 0xff) << 32;
+            // falls-through
         case 4:
             k1 ^= ((long) data[index + 3] & 0xff) << 24;
+            // falls-through
         case 3:
             k1 ^= ((long) data[index + 2] & 0xff) << 16;
+            // falls-through
         case 2:
             k1 ^= ((long) data[index + 1] & 0xff) << 8;
+            // falls-through
         case 1:
             k1 ^= (long) data[index] & 0xff;
             k1 *= C1;
@@ -1080,7 +1086,6 @@ public final class MurmurHash3 {
             k1 *= C2;
             hash ^= k1;
         }
-
         // finalization
         hash ^= length;
         return fmix64(hash);

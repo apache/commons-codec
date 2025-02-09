@@ -119,10 +119,8 @@ public final class MurmurHash2 {
     public static int hash32(final byte[] data, final int length, final int seed) {
         // Initialize the hash to a random value
         int h = seed ^ length;
-
         // Mix 4 bytes at a time into the hash
         final int nblocks = length >> 2;
-
         // body
         for (int i = 0; i < nblocks; i++) {
             final int index = i << 2;
@@ -133,25 +131,24 @@ public final class MurmurHash2 {
             h *= M32;
             h ^= k;
         }
-
         // Handle the last few bytes of the input array
         final int index = nblocks << 2;
         switch (length - index) {
         case 3:
             h ^= (data[index + 2] & 0xff) << 16;
+            // falls-through
         case 2:
             h ^= (data[index + 1] & 0xff) << 8;
+            // falls-through
         case 1:
             h ^= data[index] & 0xff;
             h *= M32;
         }
-
         // Do a few final mixes of the hash to ensure the last few
         // bytes are well-incorporated.
         h ^= h >>> 13;
         h *= M32;
         h ^= h >>> 15;
-
         return h;
     }
 
@@ -227,9 +224,7 @@ public final class MurmurHash2 {
      */
     public static long hash64(final byte[] data, final int length, final int seed) {
         long h = seed & 0xffffffffL ^ length * M64;
-
         final int nblocks = length >> 3;
-
         // body
         for (int i = 0; i < nblocks; i++) {
             final int index = i << 3;
@@ -242,30 +237,33 @@ public final class MurmurHash2 {
             h ^= k;
             h *= M64;
         }
-
         final int index = nblocks << 3;
         switch (length - index) {
         case 7:
             h ^= ((long) data[index + 6] & 0xff) << 48;
+            // falls-through
         case 6:
             h ^= ((long) data[index + 5] & 0xff) << 40;
+            // falls-through
         case 5:
             h ^= ((long) data[index + 4] & 0xff) << 32;
+            // falls-through
         case 4:
             h ^= ((long) data[index + 3] & 0xff) << 24;
+            // falls-through
         case 3:
             h ^= ((long) data[index + 2] & 0xff) << 16;
+            // falls-through
         case 2:
             h ^= ((long) data[index + 1] & 0xff) << 8;
+            // falls-through
         case 1:
             h ^= (long) data[index] & 0xff;
             h *= M64;
         }
-
         h ^= h >>> R64;
         h *= M64;
         h ^= h >>> R64;
-
         return h;
     }
 

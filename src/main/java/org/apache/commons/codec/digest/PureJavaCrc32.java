@@ -600,7 +600,6 @@ public class PureJavaCrc32 implements Checksum {
     @Override
     public void update(final byte[] b, final int offset, final int len) {
       int localCrc = crc;
-
       final int remainder = len & 0x7;
       int i = offset;
       for (final int end = offset + len - remainder; i < end; i += 8) {
@@ -613,27 +612,32 @@ public class PureJavaCrc32 implements Checksum {
                    T[(b[i + 4] << 24 >>> 24) + 0x300] ^ T[(b[i + 5] << 24 >>> 24) + 0x200] ^
                    T[(b[i + 6] << 24 >>> 24) + 0x100] ^ T[b[i + 7] << 24 >>> 24];
       }
-
-      /* loop unroll - duff's device style */
+      // loop unroll - duff's device style
       switch (remainder) {
       case 7:
           localCrc = localCrc >>> 8 ^ T[(localCrc ^ b[i++]) << 24 >>> 24];
+          // falls-through
       case 6:
           localCrc = localCrc >>> 8 ^ T[(localCrc ^ b[i++]) << 24 >>> 24];
+          // falls-through
       case 5:
           localCrc = localCrc >>> 8 ^ T[(localCrc ^ b[i++]) << 24 >>> 24];
+          // falls-through
       case 4:
           localCrc = localCrc >>> 8 ^ T[(localCrc ^ b[i++]) << 24 >>> 24];
+          // falls-through
       case 3:
           localCrc = localCrc >>> 8 ^ T[(localCrc ^ b[i++]) << 24 >>> 24];
+          // falls-through
       case 2:
           localCrc = localCrc >>> 8 ^ T[(localCrc ^ b[i++]) << 24 >>> 24];
+          // falls-through
       case 1:
           localCrc = localCrc >>> 8 ^ T[(localCrc ^ b[i++]) << 24 >>> 24];
+          // falls-through
       default:
-          /* nothing */
+          // nothing
       }
-
       // Publish crc out to object
       crc = localCrc;
     }

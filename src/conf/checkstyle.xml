@@ -57,6 +57,7 @@ limitations under the License.
     </module>
     <module name="EqualsHashCode" />
     <module name="ExplicitInitialization" />
+    <module name="FallThrough" />
     <module name="FinalLocalVariable" />
     <module name="IllegalImport" />
     <module name="ImportOrder">
