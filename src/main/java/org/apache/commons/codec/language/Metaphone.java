@@ -262,7 +262,7 @@ public class Metaphone implements StringEncoder {
                         code.append('K');
                         break;
                     }
-                    if (!isNextChar(local, n, 'H') || (n == 0 && wdsz >= 3 && isVowel(local, 2))) { // CH consonant -> K consonant
+                    if (!isNextChar(local, n, 'H') || n == 0 && wdsz >= 3 && isVowel(local, 2)) { // CH consonant -> K consonant
                         code.append('K');
                     } else {
                         code.append('X'); // CHvowel -> X
