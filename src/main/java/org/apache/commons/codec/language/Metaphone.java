@@ -227,6 +227,7 @@ public class Metaphone implements StringEncoder {
             final char symb = local.charAt(n);
             // remove duplicate letters except C
             if (symb != 'C' && isPreviousChar(local, n, symb)) {
+                // empty
             } else { // not dup
                 switch (symb) {
                 case 'A':
