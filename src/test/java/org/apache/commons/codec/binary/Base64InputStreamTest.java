@@ -35,6 +35,7 @@ import org.apache.commons.codec.CodecPolicy;
 import org.junit.jupiter.api.Test;
 
 /**
+ * Tests {@link Base64InputStream}.
  */
 public class Base64InputStreamTest {
 

@@ -31,6 +31,9 @@ import java.io.InputStream;
 import org.apache.commons.codec.CodecPolicy;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Tests {@link Base32InputStream}.
+ */
 public class Base32InputStreamTest {
 
     private static final String ENCODED_FOO = "MZXW6===";

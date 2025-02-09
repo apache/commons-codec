@@ -35,7 +35,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test cases for Base16 class.
+ * Tests {@link Base16}.
  */
 public class Base16Test {
 

@@ -28,6 +28,9 @@ import java.io.OutputStream;
 import org.apache.commons.codec.CodecPolicy;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Tests {@link Base32OutputStream}.
+ */
 public class Base32OutputStreamTest {
 
     private static final byte[] CR_LF = {(byte) '\r', (byte) '\n'};

@@ -27,6 +27,7 @@ import java.io.OutputStream;
 import org.junit.jupiter.api.Test;
 
 /**
+ * Tests {@link Base16OutputStream}.
  */
 public class Base16OutputStreamTest {
 
