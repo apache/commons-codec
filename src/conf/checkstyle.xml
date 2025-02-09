@@ -51,6 +51,7 @@ limitations under the License.
     <module name="ArrayTypeStyle" />
     <module name="AvoidStarImport" />
     <module name="CovariantEquals" />
+    <module name="DefaultComesLast" />
     <module name="ExplicitInitializationCheck" />
     <module name="FinalLocalVariable" />
     <module name="IllegalImport" />
