@@ -190,7 +190,7 @@ public class PureJavaCrc32Test {
             }
         }
 
-        public static void main(final String args[]) throws Exception {
+        public static void main(final String[] args) throws Exception {
             printSystemProperties(System.out);
             doBench(CRCS, System.out);
         }

@@ -41,7 +41,7 @@ public abstract class AbstractStringEncoderTest<T extends StringEncoder> {
         }
     }
 
-    protected void checkEncodingVariations(final String expected, final String data[]) throws EncoderException {
+    protected void checkEncodingVariations(final String expected, final String[] data) throws EncoderException {
         for (final String element : data) {
             this.checkEncoding(expected, element);
         }

@@ -48,6 +48,7 @@ limitations under the License.
     <property name="file" value="src/conf/checkstyle-suppressions.xml"/>
   </module>
   <module name="TreeWalker">
+    <module name="ArrayTypeStyle" />
     <module name="AvoidStarImport" />
     <module name="ExplicitInitializationCheck" />
     <module name="FinalLocalVariable" />

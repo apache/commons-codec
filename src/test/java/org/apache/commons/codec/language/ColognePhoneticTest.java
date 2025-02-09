@@ -91,7 +91,7 @@ public class ColognePhoneticTest extends AbstractStringEncoderTest<ColognePhonet
     }
 
     // Allow command-line testing
-    public static void main(final String args[]) {
+    public static void main(final String[] args) {
         final ColognePhonetic coder = new ColognePhonetic();
         for (final String arg : args) {
             final String code = coder.encode(arg);

@@ -41,7 +41,7 @@ public class Codec105ErrorInputStream extends InputStream {
     }
 
     @Override
-    public int read(final byte b[], final int pos, final int len) throws IOException {
+    public int read(final byte[] b, final int pos, final int len) throws IOException {
         if (this.countdown-- > 0) {
             b[pos] = '\n';
             return 1;
