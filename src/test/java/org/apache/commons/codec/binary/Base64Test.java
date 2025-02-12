@@ -133,7 +133,7 @@ public class Base64Test {
     private final Random random = new Random();
 
     /**
-     * @return Returns the random.
+     * @return the random.
      */
     public Random getRandom() {
         return this.random;
