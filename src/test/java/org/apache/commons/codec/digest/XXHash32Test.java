@@ -29,6 +29,7 @@ import java.net.URI;
 import java.net.URL;
 import java.util.stream.Stream;
 
+import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -36,14 +37,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 public class XXHash32Test {
 
     private static long copy(final InputStream input, final OutputStream output, final int bufferSize) throws IOException {
-        final byte[] buffer = new byte[bufferSize];
-        int n = 0;
-        long count = 0;
-        while (-1 != (n = input.read(buffer))) {
-            output.write(buffer, 0, n);
-            count += n;
-        }
-        return count;
+        return IOUtils.copyLarge(input, output, new byte[bufferSize]);
     }
 
     public static Stream<Arguments> data() {
