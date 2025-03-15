@@ -19,14 +19,14 @@ package org.apache.commons.codec.digest;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.URI;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.stream.Stream;
 
 import org.apache.commons.io.IOUtils;
@@ -58,54 +58,48 @@ public class XXHash32Test {
         return output.toByteArray();
     }
 
-    private File file;
+    private Path file;
 
     private String expectedChecksum;
 
-    public void initData(final String path, final String c) throws IOException {
+    public void initData(final String path, final String c) throws Exception {
         final URL url = XXHash32Test.class.getClassLoader().getResource(path);
         if (url == null) {
             throw new FileNotFoundException("couldn't find " + path);
         }
-        URI uri = null;
-        try {
-            uri = url.toURI();
-        } catch (final java.net.URISyntaxException ex) {
-            throw new IOException(ex);
-        }
-        file = new File(uri);
+        file = Paths.get(url.toURI());
         expectedChecksum = c;
     }
 
     @ParameterizedTest
     @MethodSource("data")
-    public void verifyChecksum(final String path, final String c) throws IOException {
+    public void verifyChecksum(final String path, final String c) throws Exception {
         initData(path, c);
-        final XXHash32 h = new XXHash32();
-        try (FileInputStream s = new FileInputStream(file)) {
-            final byte[] b = toByteArray(s);
-            h.update(b, 0, b.length);
+        final XXHash32 hasher = new XXHash32();
+        try (InputStream in = Files.newInputStream(file)) {
+            final byte[] bytes = toByteArray(in);
+            hasher.update(bytes, 0, bytes.length);
         }
-        assertEquals(expectedChecksum, Long.toHexString(h.getValue()), "checksum for " + file.getName());
+        assertEquals(expectedChecksum, Long.toHexString(hasher.getValue()), "checksum for " + file);
     }
 
     @ParameterizedTest
     @MethodSource("data")
-    public void verifyIncrementalChecksum(final String path, final String c) throws IOException {
+    public void verifyIncrementalChecksum(final String path, final String c) throws Exception {
         initData(path, c);
-        final XXHash32 h = new XXHash32();
-        try (FileInputStream s = new FileInputStream(file)) {
-            final byte[] b = toByteArray(s);
+        final XXHash32 hasher = new XXHash32();
+        try (InputStream in = Files.newInputStream(file)) {
+            final byte[] bytes = toByteArray(in);
             // Hit the case where the hash should be reset
-            h.update(b[0]);
-            h.reset();
+            hasher.update(bytes[0]);
+            hasher.reset();
             // Pass in chunks
-            h.update(b[0]);
-            h.update(b, 1, b.length - 2);
-            h.update(b, b.length - 1, 1);
+            hasher.update(bytes[0]);
+            hasher.update(bytes, 1, bytes.length - 2);
+            hasher.update(bytes, bytes.length - 1, 1);
             // Check the hash ignores negative length
-            h.update(b, 0, -1);
+            hasher.update(bytes, 0, -1);
         }
-        assertEquals(expectedChecksum, Long.toHexString(h.getValue()), "checksum for " + file.getName());
+        assertEquals(expectedChecksum, Long.toHexString(hasher.getValue()), "checksum for " + file);
     }
 }

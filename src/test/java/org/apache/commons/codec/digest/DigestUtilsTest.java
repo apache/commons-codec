@@ -27,9 +27,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
@@ -109,15 +108,16 @@ public class DigestUtilsTest {
     }
 
     @Test
-    public void testDigestAs() throws IOException {
+    public void testDigestFileAs() throws IOException {
         final String expected = "d41d8cd98f00b204e9800998ecf8427e";
         final String pathName = "src/test/resources/org/apache/commons/codec/empty.bin";
         final String algo = MessageDigestAlgorithms.MD5;
-        assertEquals(expected, new DigestUtils(algo).digestAsHex(new File(pathName)));
-        try (FileInputStream inputStream = new FileInputStream(pathName)) {
+        final Path path = Paths.get(pathName);
+        assertEquals(expected, new DigestUtils(algo).digestAsHex(path.toFile()));
+        try (InputStream inputStream = Files.newInputStream(path)) {
             assertEquals(expected, new DigestUtils(algo).digestAsHex(inputStream));
         }
-        final byte[] allBytes = Files.readAllBytes(Paths.get(pathName));
+        final byte[] allBytes = Files.readAllBytes(path);
         assertEquals(expected, new DigestUtils(algo).digestAsHex(allBytes));
         assertEquals(expected, new DigestUtils(algo).digestAsHex(ByteBuffer.wrap(allBytes)));
     }
@@ -311,11 +311,12 @@ public class DigestUtilsTest {
         final String pathName = "src/test/resources/org/apache/commons/codec/empty.bin";
         final String algo = MessageDigestAlgorithms.SHA_224;
         final DigestUtils digestUtils = new DigestUtils(algo);
-        assertEquals(expected, digestUtils.digestAsHex(new File(pathName)));
-        try (FileInputStream inputStream = new FileInputStream(pathName)) {
+        final Path path = Paths.get(pathName);
+        assertEquals(expected, digestUtils.digestAsHex(path.toFile()));
+        try (InputStream inputStream = Files.newInputStream(path)) {
             assertEquals(expected, digestUtils.digestAsHex(inputStream));
         }
-        final byte[] allBytes = Files.readAllBytes(Paths.get(pathName));
+        final byte[] allBytes = Files.readAllBytes(path);
         assertEquals(expected, digestUtils.digestAsHex(allBytes));
         assertEquals(expected, digestUtils.digestAsHex(ByteBuffer.wrap(allBytes)));
     }
