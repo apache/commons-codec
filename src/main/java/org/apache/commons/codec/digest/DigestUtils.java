@@ -19,7 +19,6 @@ package org.apache.commons.codec.digest;
 
 import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
@@ -1276,9 +1275,7 @@ public class DigestUtils {
      * @since 1.11
      */
     public static MessageDigest updateDigest(final MessageDigest digest, final File data) throws IOException {
-        try (BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(data))) {
-            return updateDigest(digest, inputStream);
-        }
+        return updateDigest(digest, data.toPath());
     }
 
     /**
@@ -1314,12 +1311,10 @@ public class DigestUtils {
     public static MessageDigest updateDigest(final MessageDigest digest, final InputStream inputStream) throws IOException {
         final byte[] buffer = new byte[BUFFER_SIZE];
         int read = inputStream.read(buffer, 0, BUFFER_SIZE);
-
         while (read > -1) {
             digest.update(buffer, 0, read);
             read = inputStream.read(buffer, 0, BUFFER_SIZE);
         }
-
         return digest;
     }
 
