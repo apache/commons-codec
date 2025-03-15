@@ -25,6 +25,9 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,7 +39,9 @@ import javax.crypto.Mac;
 import org.apache.commons.lang3.JavaVersion;
 import org.apache.commons.lang3.SystemUtils;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -87,6 +92,11 @@ public class HmacAlgorithmsTest {
 
     private static final byte[] EMPTY_BYTE_ARRAY = {};
 
+    @TempDir
+    static Path TempDir;
+
+    static Path TempFile;
+
     // TODO HMAC_SHA_224
     public static Stream<Arguments> data() {
         List<Arguments> list = Arrays.asList(
@@ -104,8 +114,13 @@ public class HmacAlgorithmsTest {
         return list.stream();
     }
 
-    private DigestUtilsTest digestUtilsTest;
+    @BeforeAll
+    public static void init() throws IOException {
+        TempFile = Files.createFile(TempDir.resolve(HmacAlgorithmsTest.class.getSimpleName()));
+        Files.write(TempFile, STANDARD_PHRASE_BYTES, StandardOpenOption.CREATE);
+    }
 
+    private DigestUtilsTest digestUtilsTest;
     @BeforeEach
     public void setUp() throws Exception {
         digestUtilsTest = new DigestUtilsTest();
@@ -208,6 +223,22 @@ public class HmacAlgorithmsTest {
     public void testMacHexByteArray(final HmacAlgorithms hmacAlgorithm, final byte[] standardResultBytes, final String standardResultString) {
         assumeTrue(HmacUtils.isAvailable(hmacAlgorithm));
         assertEquals(standardResultString, new HmacUtils(hmacAlgorithm, STANDARD_KEY_BYTES).hmacHex(STANDARD_PHRASE_BYTES));
+    }
+
+    @ParameterizedTest
+    @MethodSource("data")
+    public void testMacHexFile(final HmacAlgorithms hmacAlgorithm, final byte[] standardResultBytes, final String standardResultString)
+            throws IOException {
+        assumeTrue(HmacUtils.isAvailable(hmacAlgorithm));
+        assertEquals(standardResultString, new HmacUtils(hmacAlgorithm, STANDARD_KEY_BYTES).hmacHex(TempFile.toFile()));
+    }
+
+    @ParameterizedTest
+    @MethodSource("data")
+    public void testMacHexPath(final HmacAlgorithms hmacAlgorithm, final byte[] standardResultBytes, final String standardResultString)
+            throws IOException {
+        assumeTrue(HmacUtils.isAvailable(hmacAlgorithm));
+        assertEquals(standardResultString, new HmacUtils(hmacAlgorithm, STANDARD_KEY_BYTES).hmacHex(TempFile));
     }
 
     @ParameterizedTest

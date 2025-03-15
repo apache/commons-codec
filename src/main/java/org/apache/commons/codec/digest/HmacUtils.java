@@ -19,10 +19,11 @@ package org.apache.commons.codec.digest;
 
 import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
@@ -971,9 +972,7 @@ public final class HmacUtils {
      * @since 1.11
      */
     public byte[] hmac(final File valueToDigest) throws IOException {
-        try (BufferedInputStream stream = new BufferedInputStream(new FileInputStream(valueToDigest))) {
-            return hmac(stream);
-        }
+        return hmac(valueToDigest.toPath());
     }
 
     /**
@@ -992,11 +991,25 @@ public final class HmacUtils {
     public byte[] hmac(final InputStream valueToDigest) throws IOException {
         final byte[] buffer = new byte[STREAM_BUFFER_LENGTH];
         int read;
-
         while ((read = valueToDigest.read(buffer, 0, STREAM_BUFFER_LENGTH)) > -1) {
             mac.update(buffer, 0, read);
         }
         return mac.doFinal();
+    }
+
+    /**
+     * Returns the digest for the file.
+     *
+     * @param valueToDigest the path to use
+     * @return the digest
+     * @throws IOException
+     *             If an I/O error occurs.
+     * @since 1.19.0
+     */
+    public byte[] hmac(final Path valueToDigest) throws IOException {
+        try (BufferedInputStream stream = new BufferedInputStream(Files.newInputStream(valueToDigest))) {
+            return hmac(stream);
+        }
     }
 
     /**
@@ -1059,6 +1072,19 @@ public final class HmacUtils {
      * @since 1.11
      */
     public String hmacHex(final InputStream valueToDigest) throws IOException {
+        return Hex.encodeHexString(hmac(valueToDigest));
+    }
+
+    /**
+     * Returns the digest for the path.
+     *
+     * @param valueToDigest the path to use
+     * @return the digest as a hexadecimal String
+     * @throws IOException
+     *             If an I/O error occurs.
+     * @since 1.19.0
+     */
+    public String hmacHex(final Path valueToDigest) throws IOException {
         return Hex.encodeHexString(hmac(valueToDigest));
     }
 
