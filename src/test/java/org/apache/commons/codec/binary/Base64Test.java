@@ -361,7 +361,7 @@ public class Base64Test {
     @Test
     public void testCodeInteger1() {
         final String encodedInt1 = "li7dzDacuo67Jg7mtqEm2TRuOMU=";
-        final BigInteger bigInt1 = new BigInteger("85739377120809420210425962799" + "0318636601332086981");
+        final BigInteger bigInt1 = new BigInteger("857393771208094202104259627990318636601332086981");
 
         assertEquals(encodedInt1, new String(Base64.encodeInteger(bigInt1)));
         assertEquals(bigInt1, Base64.decodeInteger(encodedInt1.getBytes(CHARSET_UTF8)));
@@ -370,7 +370,7 @@ public class Base64Test {
     @Test
     public void testCodeInteger2() {
         final String encodedInt2 = "9B5ypLY9pMOmtxCeTDHgwdNFeGs=";
-        final BigInteger bigInt2 = new BigInteger("13936727572861167254666467268" + "91466679477132949611");
+        final BigInteger bigInt2 = new BigInteger("1393672757286116725466646726891466679477132949611");
 
         assertEquals(encodedInt2, new String(Base64.encodeInteger(bigInt2)));
         assertEquals(bigInt2, Base64.decodeInteger(encodedInt2.getBytes(CHARSET_UTF8)));
