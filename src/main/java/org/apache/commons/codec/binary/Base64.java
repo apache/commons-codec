@@ -167,16 +167,16 @@ public class Base64 extends BaseNCodec {
      * Base64 uses 6-bit fields.
      */
     /** Mask used to extract 6 bits, used when encoding */
-    private static final int MASK_6BITS = 0x3f;
+    private static final int MASK_6_BITS = 0x3f;
 
     // The static final fields above are used for the original static byte[] methods on Base64.
     // The private member fields below are used with the new streaming approach, which requires
     // some state be preserved between calls of encode() and decode().
 
     /** Mask used to extract 4 bits, used when decoding final trailing character. */
-    private static final int MASK_4BITS = 0xf;
+    private static final int MASK_4_BITS = 0xf;
     /** Mask used to extract 2 bits, used when decoding final trailing character. */
-    private static final int MASK_2BITS = 0x3;
+    private static final int MASK_2_BITS = 0x3;
 
     /**
      * Creates a new Builder.
@@ -782,12 +782,12 @@ public class Base64 extends BaseNCodec {
                     validateTrailingCharacter();
                     break;
                 case 2 : // 12 bits = 8 + 4
-                    validateCharacter(MASK_4BITS, context);
+                    validateCharacter(MASK_4_BITS, context);
                     context.ibitWorkArea = context.ibitWorkArea >> 4; // dump the extra 4 bits
                     buffer[context.pos++] = (byte) (context.ibitWorkArea & MASK_8BITS);
                     break;
                 case 3 : // 18 bits = 8 + 8 + 2
-                    validateCharacter(MASK_2BITS, context);
+                    validateCharacter(MASK_2_BITS, context);
                     context.ibitWorkArea = context.ibitWorkArea >> 2; // dump 2 bits
                     buffer[context.pos++] = (byte) (context.ibitWorkArea >> 8 & MASK_8BITS);
                     buffer[context.pos++] = (byte) (context.ibitWorkArea & MASK_8BITS);
@@ -838,9 +838,9 @@ public class Base64 extends BaseNCodec {
                     break;
                 case 1 : // 8 bits = 6 + 2
                     // top 6 bits:
-                    buffer[context.pos++] = encodeTable[context.ibitWorkArea >> 2 & MASK_6BITS];
+                    buffer[context.pos++] = encodeTable[context.ibitWorkArea >> 2 & MASK_6_BITS];
                     // remaining 2:
-                    buffer[context.pos++] = encodeTable[context.ibitWorkArea << 4 & MASK_6BITS];
+                    buffer[context.pos++] = encodeTable[context.ibitWorkArea << 4 & MASK_6_BITS];
                     // URL-SAFE skips the padding to further reduce size.
                     if (encodeTable == STANDARD_ENCODE_TABLE) {
                         buffer[context.pos++] = pad;
@@ -849,9 +849,9 @@ public class Base64 extends BaseNCodec {
                     break;
 
                 case 2 : // 16 bits = 6 + 6 + 4
-                    buffer[context.pos++] = encodeTable[context.ibitWorkArea >> 10 & MASK_6BITS];
-                    buffer[context.pos++] = encodeTable[context.ibitWorkArea >> 4 & MASK_6BITS];
-                    buffer[context.pos++] = encodeTable[context.ibitWorkArea << 2 & MASK_6BITS];
+                    buffer[context.pos++] = encodeTable[context.ibitWorkArea >> 10 & MASK_6_BITS];
+                    buffer[context.pos++] = encodeTable[context.ibitWorkArea >> 4 & MASK_6_BITS];
+                    buffer[context.pos++] = encodeTable[context.ibitWorkArea << 2 & MASK_6_BITS];
                     // URL-SAFE skips the padding to further reduce size.
                     if (encodeTable == STANDARD_ENCODE_TABLE) {
                         buffer[context.pos++] = pad;
@@ -876,10 +876,10 @@ public class Base64 extends BaseNCodec {
                 }
                 context.ibitWorkArea = (context.ibitWorkArea << 8) + b; // BITS_PER_BYTE
                 if (0 == context.modulus) { // 3 bytes = 24 bits = 4 * 6 bits to extract
-                    buffer[context.pos++] = encodeTable[context.ibitWorkArea >> 18 & MASK_6BITS];
-                    buffer[context.pos++] = encodeTable[context.ibitWorkArea >> 12 & MASK_6BITS];
-                    buffer[context.pos++] = encodeTable[context.ibitWorkArea >> 6 & MASK_6BITS];
-                    buffer[context.pos++] = encodeTable[context.ibitWorkArea & MASK_6BITS];
+                    buffer[context.pos++] = encodeTable[context.ibitWorkArea >> 18 & MASK_6_BITS];
+                    buffer[context.pos++] = encodeTable[context.ibitWorkArea >> 12 & MASK_6_BITS];
+                    buffer[context.pos++] = encodeTable[context.ibitWorkArea >> 6 & MASK_6_BITS];
+                    buffer[context.pos++] = encodeTable[context.ibitWorkArea & MASK_6_BITS];
                     context.currentLinePos += BYTES_PER_ENCODED_BLOCK;
                     if (lineLength > 0 && lineLength <= context.currentLinePos) {
                         System.arraycopy(lineSeparator, 0, buffer, context.pos, lineSeparator.length);

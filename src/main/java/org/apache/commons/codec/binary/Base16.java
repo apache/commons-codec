@@ -92,7 +92,7 @@ public class Base16 extends BaseNCodec {
     private static final byte[] LOWER_CASE_ENCODE_TABLE = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
 
     /** Mask used to extract 4 bits, used when decoding character. */
-    private static final int MASK_4BITS = 0x0f;
+    private static final int MASK_4_BITS = 0x0f;
 
     /**
      * Decode table to use.
@@ -215,8 +215,8 @@ public class Base16 extends BaseNCodec {
         final int end = offset + length;
         for (int i = offset; i < end; i++) {
             final int value = data[i];
-            final int high = value >> BITS_PER_ENCODED_BYTE & MASK_4BITS;
-            final int low = value & MASK_4BITS;
+            final int high = value >> BITS_PER_ENCODED_BYTE & MASK_4_BITS;
+            final int low = value & MASK_4_BITS;
             buffer[context.pos++] = encodeTable[high];
             buffer[context.pos++] = encodeTable[low];
         }
