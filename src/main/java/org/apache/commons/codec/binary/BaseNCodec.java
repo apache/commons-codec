@@ -233,7 +233,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
-     * EOF
+     * End-of-file marker.
      *
      * @since 1.7
      */
@@ -293,6 +293,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
 
     /**
      * The default decoding policy.
+     *
      * @since 1.15
      */
     protected static final CodecPolicy DECODING_POLICY_DEFAULT = CodecPolicy.LENIENT;
@@ -342,8 +343,8 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
 
     /**
      * Checks if a byte value is whitespace or not.
-     * @param byteToCheck
-     *            the byte to check
+     *
+     * @param byteToCheck the byte to check
      * @return true if byte is whitespace, false otherwise
      * @see Character#isWhitespace(int)
      * @deprecated Use {@link Character#isWhitespace(int)}.
@@ -355,6 +356,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
 
     /**
      * Increases our buffer by the {@link #DEFAULT_BUFFER_RESIZE_FACTOR}.
+     *
      * @param context the context to be used
      * @param minCapacity the minimum required capacity
      * @return the resized byte[] buffer
@@ -667,7 +669,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
-     * Ensure that the buffer has room for {@code size} bytes
+     * Ensures that the buffer has room for {@code size} bytes
      *
      * @param size minimum spare space required
      * @param context the context to be used
@@ -687,7 +689,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
-     * Returns the decoding behavior policy.
+     * Gets the decoding behavior policy.
      *
      * <p>
      * The default is lenient. If the decoding policy is strict, then decoding will raise an
@@ -712,7 +714,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
-     * Calculates the amount of space needed to encode the supplied array.
+     * Gets the amount of space needed to encode the supplied array.
      *
      * @param pArray byte[] array which will later be encoded
      * @return amount of space needed to encode the supplied array.
@@ -730,7 +732,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
-     * Returns true if this object has buffered data for reading.
+     * Tests whether this object has buffered data for reading.
      *
      * @param context the context to be used
      * @return true if there is data still available for reading.
@@ -740,7 +742,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
-     * Returns whether or not the {@code octet} is in the current alphabet.
+     * Tests whether or not the {@code octet} is in the current alphabet.
      * Does not allow whitespace or pad.
      *
      * @param value The value to test
@@ -780,7 +782,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
-     * Returns true if decoding behavior is strict. Decoding will raise an {@link IllegalArgumentException} if trailing
+     * Tests true if decoding behavior is strict. Decoding will raise an {@link IllegalArgumentException} if trailing
      * bits are not part of a valid encoding.
      *
      * <p>
@@ -796,7 +798,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
-     * Extracts buffered data into the provided byte[] array, starting at position bPos, up to a maximum of bAvail
+     * Reads buffered data into the provided byte[] array, starting at position bPos, up to a maximum of bAvail
      * bytes. Returns how many bytes were actually extracted.
      * <p>
      * Package private for access from I/O streams.
