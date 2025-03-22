@@ -108,7 +108,6 @@ public class Base64 extends BaseNCodec {
     private static final int BITS_PER_ENCODED_BYTE = 6;
     private static final int BYTES_PER_UNENCODED_BLOCK = 3;
     private static final int BYTES_PER_ENCODED_BLOCK = 4;
-    private static final int ALPHABET_LENGTH = 64;
     private static final int DECODING_TABLE_LENGTH = 256;
 
     /**
@@ -126,8 +125,6 @@ public class Base64 extends BaseNCodec {
             'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
             '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '/'
     };
-    // @formatter:on
-
     /**
      * This is a copy of the STANDARD_ENCODE_TABLE above, but with + and / changed to - and _ to make the encoded Base64 results more URL-SAFE. This table is
      * only used when the Base64's mode is set to URL-SAFE.
@@ -667,7 +664,7 @@ public class Base64 extends BaseNCodec {
     private Base64(final int lineLength, final byte[] lineSeparator, final byte padding, final byte[] encodeTable, final CodecPolicy decodingPolicy) {
         super(BYTES_PER_UNENCODED_BLOCK, BYTES_PER_ENCODED_BLOCK, lineLength, toLength(lineSeparator), padding, decodingPolicy);
         Objects.requireNonNull(encodeTable, "encodeTable");
-        if (encodeTable.length != ALPHABET_LENGTH) {
+        if (encodeTable.length != STANDARD_ENCODE_TABLE.length) {
             throw new IllegalArgumentException("encodeTable must have exactly 64 entries.");
         }
         this.isUrlSafe = encodeTable == URL_SAFE_ENCODE_TABLE;
