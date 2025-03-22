@@ -112,13 +112,13 @@ public class Base64 extends BaseNCodec {
     private static final int DECODING_TABLE_LENGTH = 256;
 
     /**
-     * This array is a lookup table that translates 6-bit positive integer index values into their "Base64 Alphabet"
-     * equivalents as specified in Table 1 of RFC 2045.
+     * This array is a lookup table that translates 6-bit positive integer index values into their "Base64 Alphabet" equivalents as specified in Table 1 of RFC
+     * 2045.
      * <p>
-     * Thanks to "commons" project in ws.apache.org for this code.
-     * https://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/
+     * Thanks to "commons" project in ws.apache.org for this code. https://svn.apache.org/repos/asf/webservices/commons/trunk/modules/util/
      * </p>
      */
+    // @formatter:off
     private static final byte[] STANDARD_ENCODE_TABLE = {
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
             'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
@@ -126,12 +126,13 @@ public class Base64 extends BaseNCodec {
             'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
             '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '/'
     };
+    // @formatter:on
 
     /**
-     * This is a copy of the STANDARD_ENCODE_TABLE above, but with + and /
-     * changed to - and _ to make the encoded Base64 results more URL-SAFE.
-     * This table is only used when the Base64's mode is set to URL-SAFE.
+     * This is a copy of the STANDARD_ENCODE_TABLE above, but with + and / changed to - and _ to make the encoded Base64 results more URL-SAFE. This table is
+     * only used when the Base64's mode is set to URL-SAFE.
      */
+    // @formatter:off
     private static final byte[] URL_SAFE_ENCODE_TABLE = {
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
             'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
@@ -139,7 +140,7 @@ public class Base64 extends BaseNCodec {
             'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
             '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-', '_'
     };
-
+    // @formatter:on
     /**
      * This array is a lookup table that translates Unicode characters drawn from the "Base64 Alphabet" (as specified
      * in Table 1 of RFC 2045) into their 6-bit positive integer equivalents. Characters that are not in the Base64
