@@ -527,18 +527,18 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     /**
      * Decodes a byte[] containing characters in the Base-N alphabet.
      *
-     * @param pArray
+     * @param array
      *            A byte array containing Base-N character data
      * @return a byte array containing binary data
      */
     @Override
-    public byte[] decode(final byte[] pArray) {
-        if (BinaryCodec.isEmpty(pArray)) {
-            return pArray;
+    public byte[] decode(final byte[] array) {
+        if (BinaryCodec.isEmpty(array)) {
+            return array;
         }
         final Context context = new Context();
-        decode(pArray, 0, pArray.length, context);
-        decode(pArray, 0, EOF, context); // Notify decoder of EOF.
+        decode(array, 0, array.length, context);
+        decode(array, 0, EOF, context); // Notify decoder of EOF.
         final byte[] result = new byte[context.pos];
         readResults(result, 0, result.length, context);
         return result;
@@ -583,23 +583,23 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     /**
      * Encodes a byte[] containing binary data, into a byte[] containing characters in the alphabet.
      *
-     * @param pArray
+     * @param array
      *            a byte array containing binary data
      * @return A byte array containing only the base N alphabetic character data
      */
     @Override
-    public byte[] encode(final byte[] pArray) {
-        if (BinaryCodec.isEmpty(pArray)) {
-            return pArray;
+    public byte[] encode(final byte[] array) {
+        if (BinaryCodec.isEmpty(array)) {
+            return array;
         }
-        return encode(pArray, 0, pArray.length);
+        return encode(array, 0, array.length);
     }
 
     /**
      * Encodes a byte[] containing binary data, into a byte[] containing
      * characters in the alphabet.
      *
-     * @param pArray
+     * @param array
      *            a byte array containing binary data
      * @param offset
      *            initial offset of the subarray.
@@ -608,20 +608,20 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * @return A byte array containing only the base N alphabetic character data
      * @since 1.11
      */
-    public byte[] encode(final byte[] pArray, final int offset, final int length) {
-        if (BinaryCodec.isEmpty(pArray)) {
-            return pArray;
+    public byte[] encode(final byte[] array, final int offset, final int length) {
+        if (BinaryCodec.isEmpty(array)) {
+            return array;
         }
         final Context context = new Context();
-        encode(pArray, offset, length, context);
-        encode(pArray, offset, EOF, context); // Notify encoder of EOF.
+        encode(array, offset, length, context);
+        encode(array, offset, EOF, context); // Notify encoder of EOF.
         final byte[] buf = new byte[context.pos - context.readPos];
         readResults(buf, 0, buf.length, context);
         return buf;
     }
 
     // package protected for access from I/O streams
-    abstract void encode(byte[] pArray, int i, int length, Context context);
+    abstract void encode(byte[] array, int i, int length, Context context);
 
     /**
      * Encodes an Object using the Base-N algorithm. This method is provided in order to satisfy the requirements of
@@ -648,24 +648,24 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * This is a duplicate of {@link #encodeToString(byte[])}; it was merged during refactoring.
      * </p>
      *
-     * @param pArray a byte array containing binary data
+     * @param array a byte array containing binary data
      * @return String containing only character data in the appropriate alphabet.
      * @since 1.5
     */
-    public String encodeAsString(final byte[] pArray) {
-        return StringUtils.newStringUtf8(encode(pArray));
+    public String encodeAsString(final byte[] array) {
+        return StringUtils.newStringUtf8(encode(array));
     }
 
     /**
      * Encodes a byte[] containing binary data, into a String containing characters in the Base-N alphabet.
      * Uses UTF8 encoding.
      *
-     * @param pArray
+     * @param array
      *            a byte array containing binary data
      * @return A String containing only Base-N character data
      */
-    public String encodeToString(final byte[] pArray) {
-        return StringUtils.newStringUtf8(encode(pArray));
+    public String encodeToString(final byte[] array) {
+        return StringUtils.newStringUtf8(encode(array));
     }
 
     /**
@@ -716,14 +716,14 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     /**
      * Gets the amount of space needed to encode the supplied array.
      *
-     * @param pArray byte[] array which will later be encoded
+     * @param array byte[] array which will later be encoded
      * @return amount of space needed to encode the supplied array.
      * Returns a long since a max-len array will require &gt; Integer.MAX_VALUE
      */
-    public long getEncodedLength(final byte[] pArray) {
+    public long getEncodedLength(final byte[] array) {
         // Calculate non-chunked size - rounded up to allow for padding
         // cast to long is needed to avoid possibility of overflow
-        long len = (pArray.length + unencodedBlockSize - 1) / unencodedBlockSize * (long) encodedBlockSize;
+        long len = (array.length + unencodedBlockSize - 1) / unencodedBlockSize * (long) encodedBlockSize;
         if (lineLength > 0) { // We're using chunking
             // Round up to nearest multiple
             len += (len + lineLength - 1) / lineLength * chunkSeparatorLength;
