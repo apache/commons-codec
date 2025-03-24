@@ -545,7 +545,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     }
 
     // package protected for access from I/O streams
-    abstract void decode(byte[] pArray, int i, int length, Context context);
+    abstract void decode(byte[] array, int i, int length, Context context);
 
     /**
      * Decodes an Object using the Base-N algorithm. This method is provided in order to satisfy the requirements of
@@ -572,12 +572,12 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     /**
      * Decodes a String containing characters in the Base-N alphabet.
      *
-     * @param pArray
+     * @param array
      *            A String containing Base-N character data
      * @return a byte array containing binary data
      */
-    public byte[] decode(final String pArray) {
-        return decode(StringUtils.getBytesUtf8(pArray));
+    public byte[] decode(final String array) {
+        return decode(StringUtils.getBytesUtf8(array));
     }
 
     /**
