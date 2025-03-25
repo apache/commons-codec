@@ -220,13 +220,13 @@ public class Base64 extends BaseNCodec {
     /**
      * Decodes a byte64-encoded integer according to crypto standards such as W3C's XML-Signature.
      *
-     * @param pArray
+     * @param array
      *            a byte array containing base64 character data
      * @return A BigInteger
      * @since 1.4
      */
-    public static BigInteger decodeInteger(final byte[] pArray) {
-        return new BigInteger(1, decodeBase64(pArray));
+    public static BigInteger decodeInteger(final byte[] array) {
+        return new BigInteger(1, decodeBase64(array));
     }
 
     /**

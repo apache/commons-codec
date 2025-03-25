@@ -41,12 +41,12 @@ public class BaseNCodecTest {
         }
 
         @Override
-        void decode(final byte[] pArray, final int i, final int length, final Context context) {
+        void decode(final byte[] array, final int i, final int length, final Context context) {
             // no-op
         }
 
         @Override
-        void encode(final byte[] pArray, final int i, final int length, final Context context) {
+        void encode(final byte[] array, final int i, final int length, final Context context) {
             // no-op
         }
 
@@ -143,11 +143,11 @@ public class BaseNCodecTest {
     public void setUp() {
         codec = new BaseNCodec(0, 0, 0, 0) {
             @Override
-            void decode(final byte[] pArray, final int i, final int length, final Context context) {
+            void decode(final byte[] array, final int i, final int length, final Context context) {
             }
 
             @Override
-            void encode(final byte[] pArray, final int i, final int length, final Context context) {
+            void encode(final byte[] array, final int i, final int length, final Context context) {
             }
 
             @Override
@@ -381,12 +381,12 @@ public class BaseNCodecTest {
         // Given
         codec = new BaseNCodec(0, 0, 0, 0, (byte) 0x25) {
             @Override
-            void decode(final byte[] pArray, final int i, final int length, final Context context) {
+            void decode(final byte[] array, final int i, final int length, final Context context) {
                 // no-op
             }
 
             @Override
-            void encode(final byte[] pArray, final int i, final int length, final Context context) {
+            void encode(final byte[] array, final int i, final int length, final Context context) {
                 // no-op
             }
 
