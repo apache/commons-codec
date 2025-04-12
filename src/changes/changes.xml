@@ -52,6 +52,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add HmacUtils.hmacHex(Path).</action>      
       <!-- UPDATE -->
       <action type="update" dev="ggregory" due-to="Gary Gregory">Bump org.apache.commons:commons-parent from 79 to 81.</action>
+      <action type="update" dev="ggregory" due-to="Gary Gregory">[test] Bump commons-io:commons-io from 2.18.0 to 2.19.0.</action>
     </release>
     <release version="1.18.0" date="2025-01-24" description="This is a feature and maintenance release. Java 8 or later is required.">
       <!-- FIX -->
