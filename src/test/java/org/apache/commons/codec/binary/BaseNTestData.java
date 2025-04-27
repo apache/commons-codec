@@ -133,7 +133,7 @@ public class BaseNTestData {
     }
 
     /**
-     * Read all bytes from an InputStream into a byte array.
+     * Reads all bytes from an InputStream into a byte array.
      *
      * @param in the input stream.
      * @return the byte array
@@ -150,7 +150,7 @@ public class BaseNTestData {
     }
 
     /**
-     * Read all bytes from an InputStream into a byte array
+     * Reads all bytes from an InputStream into a byte array
      * in chunks of {@code buf.length}.
      *
      * @param in the input stream.
