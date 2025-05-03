@@ -329,13 +329,13 @@ public class Sha2Crypt {
         /*
          * Create byte sequence P.
          */
-        final byte[] pBytes = new byte[keyLen];
+        final byte[] bytes = new byte[keyLen];
         int cp = 0;
         while (cp < keyLen - blocksize) {
-            System.arraycopy(tempResult, 0, pBytes, cp, blocksize);
+            System.arraycopy(tempResult, 0, bytes, cp, blocksize);
             cp += blocksize;
         }
-        System.arraycopy(tempResult, 0, pBytes, cp, keyLen - cp);
+        System.arraycopy(tempResult, 0, bytes, cp, keyLen - cp);
 
         // 17. start digest DS
         /*
@@ -403,7 +403,7 @@ public class Sha2Crypt {
              * Add key or last result.
              */
             if ((i & 1) != 0) {
-                ctx.update(pBytes, 0, keyLen);
+                ctx.update(bytes, 0, keyLen);
             } else {
                 ctx.update(altResult, 0, blocksize);
             }
@@ -421,7 +421,7 @@ public class Sha2Crypt {
              * Add key for numbers not divisible by 7.
              */
             if (i % 7 != 0) {
-                ctx.update(pBytes, 0, keyLen);
+                ctx.update(bytes, 0, keyLen);
             }
 
             // f) for odd round numbers add digest A/C
@@ -432,7 +432,7 @@ public class Sha2Crypt {
             if ((i & 1) != 0) {
                 ctx.update(altResult, 0, blocksize);
             } else {
-                ctx.update(pBytes, 0, keyLen);
+                ctx.update(bytes, 0, keyLen);
             }
 
             // h) finish digest C.
@@ -533,7 +533,7 @@ public class Sha2Crypt {
          */
         // Is there a better way to do this with the JVM?
         Arrays.fill(tempResult, (byte) 0);
-        Arrays.fill(pBytes, (byte) 0);
+        Arrays.fill(bytes, (byte) 0);
         Arrays.fill(sBytes, (byte) 0);
         ctx.reset();
         altCtx.reset();
