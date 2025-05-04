@@ -56,6 +56,7 @@ The <action> type attribute can be add,update,fix,remove.
     </release>
     <release version="1.18.0" date="2025-01-24" description="This is a feature and maintenance release. Java 8 or later is required.">
       <!-- FIX -->
+      <action issue="CODEC-182" dev="sebb" type="fix" due-to="Felix Kaser">Sha2Crypt: tidy up salt Javadoc and validation.</action>
       <!-- ADD -->
       <action type="add" dev="ggregory" due-to="Gary Gregory, Julian Reschke">Add Base32.Builder.setHexDecodeTable(boolean).</action>
       <action type="add" dev="ggregory" due-to="Gary Gregory, Julian Reschke">Add Base32.Builder.setHexEncodeTable(boolean).</action>
