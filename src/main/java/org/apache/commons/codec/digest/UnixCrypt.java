@@ -236,14 +236,11 @@ public class UnixCrypt {
      * Using unspecified characters as salt results incompatible hash values.
      * </p>
      *
-     * @param original
-     *            plaintext password
-     * @param salt
-     *            a two character string drawn from [a-zA-Z0-9./]. The salt may be null, in which case a salt is
-     *            generated for you using {@link B64#getRandomSalt(int)}.
+     * @param original plaintext password
+     * @param salt     a two character string drawn from [a-zA-Z0-9./]. The salt may be null, in which case a salt is generated for you using
+     *                 {@link B64#getRandomSalt(int)}. Only the first two characters are used, others are ignored.
      * @return a 13 character string starting with the salt string
-     * @throws IllegalArgumentException
-     *             if the salt does not match the allowed pattern
+     * @throws IllegalArgumentException if the salt does not match the allowed pattern
      */
     public static String crypt(final byte[] original, String salt) {
         if (salt == null) {

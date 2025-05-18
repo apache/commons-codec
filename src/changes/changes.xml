@@ -47,6 +47,7 @@ The <action> type attribute can be add,update,fix,remove.
       <!-- FIX -->
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Remove -nouses directive from maven-bundle-plugin. OSGi package imports now state 'uses' definitions for package imports, this doesn't affect JPMS (from org.apache.commons:commons-parent:80).</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Refactor DigestUtils.updateDigest(MessageDigest, File) to use NIO.</action>
+      <action type="fix" dev="ggregory" due-to="Gary Gregory" issue="CODEC-328" >Clarify Javadoc for org.apache.commons.codec.digest.UnixCrypt.crypt(byte[],String).</action>
       <!-- ADD -->
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add HmacUtils.hmac(Path).</action>      
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add HmacUtils.hmacHex(Path).</action>      
