@@ -26,6 +26,9 @@ import java.nio.charset.StandardCharsets;
 
 import org.junit.jupiter.api.Test;
 
+/**
+ * Tests {@link UnixCrypt}.
+ */
 public class UnixCryptTest {
 
     @Test
