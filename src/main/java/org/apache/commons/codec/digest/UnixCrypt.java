@@ -22,7 +22,7 @@ import java.util.Arrays;
 import java.util.regex.Pattern;
 
 /**
- * Unix crypt(3) algorithm implementation.
+ * Unix <a href="https://man7.org/linux/man-pages/man3/crypt.3.html">crypt(3)</a> algorithm implementation.
  * <p>
  * This class only implements the traditional 56 bit DES based algorithm. Please use Crypt.crypt() for a method
  * that distinguishes between all the algorithms supported in the current glibc's crypt().
@@ -33,7 +33,7 @@ import java.util.regex.Pattern;
  * </p>
  * <p>
  * This class is slightly incompatible if the given salt contains characters that are not part of the allowed range
- * [a-zA-Z0-9./].
+ * {@code [a-zA-Z0-9./]}.
  * </p>
  * <p>
  * This class is immutable and thread-safe.
