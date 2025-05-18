@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
  * that distinguishes between all the algorithms supported in the current glibc's crypt().
  * </p>
  * <p>
- * The Java implementation was taken from the JetSpeed Portal project (see
+ * The initial Java implementation was taken from the JetSpeed Portal project (see
  * org.apache.jetspeed.services.security.ldap.UnixCrypt).
  * </p>
  * <p>
