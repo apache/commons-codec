@@ -83,8 +83,6 @@ public class DaitchMokotoffSoundex implements StringEncoder {
 
         private Branch() {
             builder = new StringBuilder();
-            lastReplacement = null;
-            cachedString = null;
         }
 
         /**
