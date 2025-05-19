@@ -324,7 +324,7 @@ public class DoubleMetaphone implements StringEncoder {
     }
 
     /**
-     * Encode a value with Double Metaphone.
+     * Encodes a value with Double Metaphone.
      *
      * @param value String to encode
      * @return an encoded string
@@ -334,7 +334,7 @@ public class DoubleMetaphone implements StringEncoder {
     }
 
     /**
-     * Encode a value with Double Metaphone, optionally using the alternate encoding.
+     * Encodes a value with Double Metaphone, optionally using the alternate encoding.
      *
      * @param value String to encode
      * @param alternate use alternate encode
@@ -448,7 +448,7 @@ public class DoubleMetaphone implements StringEncoder {
     }
 
     /**
-     * Encode the value using DoubleMetaphone.  It will only work if
+     * Encodes the value using DoubleMetaphone.  It will only work if
      * {@code obj} is a {@code String} (like {@code Metaphone}).
      *
      * @param obj Object to encode (should be of type String)
@@ -464,7 +464,7 @@ public class DoubleMetaphone implements StringEncoder {
     }
 
     /**
-     * Encode the value using DoubleMetaphone.
+     * Encodes the value using DoubleMetaphone.
      *
      * @param value String to encode
      * @return An encoded String
@@ -475,7 +475,8 @@ public class DoubleMetaphone implements StringEncoder {
     }
 
     /**
-     * Returns the maxCodeLen.
+     * Gets the maxCodeLen.
+     *
      * @return int
      */
     public int getMaxCodeLen() {
@@ -988,7 +989,7 @@ public class DoubleMetaphone implements StringEncoder {
     }
 
     /**
-     * Check if the Double Metaphone values of two {@code String} values
+     * Tests whether the Double Metaphone values of two {@code String} values
      * are equal.
      *
      * @param value1 The left-hand side of the encoded {@link String#equals(Object)}.
@@ -1002,7 +1003,7 @@ public class DoubleMetaphone implements StringEncoder {
     }
 
     /**
-     * Check if the Double Metaphone values of two {@code String} values
+     * Tests whether the Double Metaphone values of two {@code String} values
      * are equal, optionally using the alternate value.
      *
      * @param value1 The left-hand side of the encoded {@link String#equals(Object)}.
@@ -1016,7 +1017,7 @@ public class DoubleMetaphone implements StringEncoder {
     }
 
     /**
-     * Determines whether or not the value starts with a silent letter.  It will
+     * Tests whether or not the value starts with a silent letter.  It will
      * return {@code true} if the value starts with any of 'GN', 'KN',
      * 'PN', 'WR' or 'PS'.
      */
@@ -1032,7 +1033,7 @@ public class DoubleMetaphone implements StringEncoder {
     }
 
     /**
-     * Determines whether or not a value is of slavo-germanic origin. A value is
+     * Tests whether or not a value is of slavo-germanic origin. A value is
      * of slavo-germanic origin if it contains any of 'W', 'K', 'CZ', or 'WITZ'.
      */
     private boolean isSlavoGermanic(final String value) {
@@ -1041,7 +1042,7 @@ public class DoubleMetaphone implements StringEncoder {
     }
 
     /**
-     * Determines whether or not a character is a vowel or not
+     * Tests whether or not a character is a vowel or not
      */
     private boolean isVowel(final char ch) {
         return VOWELS.indexOf(ch) != -1;
@@ -1049,6 +1050,7 @@ public class DoubleMetaphone implements StringEncoder {
 
     /**
      * Sets the maxCodeLen.
+     *
      * @param maxCodeLen The maxCodeLen to set
      */
     public void setMaxCodeLen(final int maxCodeLen) {
