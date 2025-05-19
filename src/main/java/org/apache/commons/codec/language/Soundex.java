@@ -146,7 +146,7 @@ public class Soundex implements StringEncoder {
     }
 
     /**
-     * Creates a soundex instance using the given mapping. This constructor can be used to provide an internationalized
+     * Creates a Soundex instance using the given mapping. This constructor can be used to provide an internationalized
      * mapping for a non-Western character set.
      * <p>
      * Every letter of the alphabet is "mapped" to a numerical value. This char array holds the values to which each
@@ -165,7 +165,7 @@ public class Soundex implements StringEncoder {
     }
 
     /**
-     * Creates a refined soundex instance using a custom mapping. This constructor can be used to customize the mapping,
+     * Creates a refined Soundex instance using a custom mapping. This constructor can be used to customize the mapping,
      * and/or possibly provide an internationalized mapping for a non-Western character set.
      * <p>
      * If the mapping contains an instance of {@link #SILENT_MARKER} then H and W are not given special treatment
@@ -181,7 +181,7 @@ public class Soundex implements StringEncoder {
     }
 
     /**
-     * Creates a refined soundex instance using a custom mapping. This constructor can be used to customize the mapping,
+     * Creates a refined Soundex instance using a custom mapping. This constructor can be used to customize the mapping,
      * and/or possibly provide an internationalized mapping for a non-Western character set.
      *
      * @param mapping
@@ -217,12 +217,12 @@ public class Soundex implements StringEncoder {
     }
 
     /**
-     * Encodes an Object using the soundex algorithm. This method is provided in order to satisfy the requirements of
+     * Encodes an Object using the Soundex algorithm. This method is provided in order to satisfy the requirements of
      * the Encoder interface, and will throw an EncoderException if the supplied object is not of type {@link String}.
      *
      * @param obj
      *                  Object to encode
-     * @return An object (or type {@link String}) containing the soundex code which corresponds to the String
+     * @return An object (or type {@link String}) containing the Soundex code which corresponds to the String
      *             supplied.
      * @throws EncoderException
      *                  if the parameter supplied is not of type {@link String}
@@ -238,7 +238,7 @@ public class Soundex implements StringEncoder {
     }
 
     /**
-     * Encodes a String using the soundex algorithm.
+     * Encodes a String using the Soundex algorithm.
      *
      * @param str
      *                  A String object to encode
@@ -305,7 +305,7 @@ public class Soundex implements StringEncoder {
      *
      * @param str
      *                  String to encode using the Soundex algorithm
-     * @return A soundex code for the String supplied
+     * @return A Soundex code for the String supplied
      * @throws IllegalArgumentException
      *                  if a character is not mapped
      */
