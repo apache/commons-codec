@@ -86,7 +86,7 @@ public class MatchRatingApproachEncoderTest extends AbstractStringEncoderTest<Ma
     }
 
     @Test
-    public final void testCleanName_SuccessfullyClean() {
+    public final void testCleanNameSuccessfullyClean() {
         assertEquals("THISISATEST", getStringEncoder().cleanName("This-ís   a t.,es &t"));
     }
 
@@ -303,6 +303,19 @@ public class MatchRatingApproachEncoderTest extends AbstractStringEncoderTest<Ma
     @Test
     public final void testCompareNameToSingleLetter_KARL_C_DoesNotMatch() {
         assertFalse(getStringEncoder().isEncodeEquals("Karl", "C"));
+    }
+
+    @Test
+    public final void testCompareWithWhitespace() {
+        // sanity check
+        assertTrue(getStringEncoder().isEncodeEquals("Brian", "Bryan"));
+        // whitespace
+        assertTrue(getStringEncoder().isEncodeEquals(" Brian", "Bryan"));
+        assertTrue(getStringEncoder().isEncodeEquals("Brian ", "Bryan"));
+        assertTrue(getStringEncoder().isEncodeEquals(" Brian ", "Bryan"));
+        assertTrue(getStringEncoder().isEncodeEquals("Brian", " Bryan"));
+        assertTrue(getStringEncoder().isEncodeEquals("Brian", "Bryan "));
+        assertTrue(getStringEncoder().isEncodeEquals("Brian", " Bryan "));
     }
 
     @Test
