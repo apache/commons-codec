@@ -21,7 +21,7 @@ import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
 
 /**
- * Encodes a string into a Refined Soundex value. A refined soundex code is
+ * Encodes a string into a Refined Soundex value. A refined Soundex code is
  * optimized for spell checking words. Soundex method originally developed by
  * <CITE>Margaret Odell</CITE> and <CITE>Robert Russell</CITE>.
  *
@@ -77,7 +77,7 @@ public class RefinedSoundex implements StringEncoder {
     }
 
     /**
-     * Creates a refined soundex instance using a custom mapping. This
+     * Creates a refined Soundex instance using a custom mapping. This
      * constructor can be used to customize the mapping, and/or possibly
      * provide an internationalized mapping for a non-Western character set.
      *
@@ -128,7 +128,7 @@ public class RefinedSoundex implements StringEncoder {
     }
 
     /**
-     * Encodes an Object using the refined soundex algorithm. This method is
+     * Encodes an Object using the refined Soundex algorithm. This method is
      * provided in order to satisfy the requirements of the Encoder interface,
      * and will throw an EncoderException if the supplied object is not of type
      * {@link String}.
@@ -136,7 +136,7 @@ public class RefinedSoundex implements StringEncoder {
      * @param obj
      *                  Object to encode
      * @return An object (or type {@link String}) containing the refined
-     *             soundex code which corresponds to the String supplied.
+     *             Soundex code which corresponds to the String supplied.
      * @throws EncoderException
      *                  if the parameter supplied is not of type {@link String}
      */
@@ -149,7 +149,7 @@ public class RefinedSoundex implements StringEncoder {
     }
 
     /**
-     * Encodes a String using the refined soundex algorithm.
+     * Encodes a String using the refined Soundex algorithm.
      *
      * @param str
      *                  A String object to encode
@@ -185,7 +185,7 @@ public class RefinedSoundex implements StringEncoder {
      *
      * @param str
      *                  String to encode using the Refined Soundex algorithm
-     * @return A soundex code for the String supplied
+     * @return A Soundex code for the String supplied
      */
     public String soundex(String str) {
         if (str == null) {
