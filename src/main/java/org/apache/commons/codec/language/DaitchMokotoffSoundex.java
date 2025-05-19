@@ -464,30 +464,19 @@ public class DaitchMokotoffSoundex implements StringEncoder {
         if (source == null) {
             return null;
         }
-
         final String input = cleanup(source);
-
         final Set<Branch> currentBranches = new LinkedHashSet<>();
         currentBranches.add(new Branch());
-
         char lastChar = NUL;
         for (int index = 0; index < input.length(); index++) {
             final char ch = input.charAt(index);
-
-            // ignore whitespace inside a name
-            if (Character.isWhitespace(ch)) {
-                continue;
-            }
-
             final String inputContext = input.substring(index);
             final List<Rule> rules = RULES.get(ch);
             if (rules == null) {
                 continue;
             }
-
             // use an EMPTY_LIST to avoid false positive warnings wrt potential null pointer access
             final List<Branch> nextBranches = branching ? new ArrayList<>() : Collections.emptyList();
-
             for (final Rule rule : rules) {
                 if (rule.matches(inputContext)) {
                     if (branching) {
@@ -512,7 +501,6 @@ public class DaitchMokotoffSoundex implements StringEncoder {
                             nextBranches.add(nextBranch);
                         }
                     }
-
                     if (branching) {
                         currentBranches.clear();
                         currentBranches.addAll(nextBranches);
@@ -521,17 +509,14 @@ public class DaitchMokotoffSoundex implements StringEncoder {
                     break;
                 }
             }
-
             lastChar = ch;
         }
-
         final String[] result = new String[currentBranches.size()];
         int index = 0;
         for (final Branch branch : currentBranches) {
             branch.finish();
             result[index++] = branch.toString();
         }
-
         return result;
     }
 }

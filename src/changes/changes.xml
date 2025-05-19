@@ -53,6 +53,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Precompile regular expressions in Lang.loadFromResource(String, Languages).</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Precompile regular expressions in PhoneticEngine.encode(String, LanguageSet).</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Precompile regular expressions in org.apache.commons.codec.language.bm.Rule.parse*(*).</action>
+      <action type="fix" dev="ggregory" due-to="Gary Gregory">Remove redundant checks for whitespace in DaitchMokotoffSoundex.soundex(String, boolean).</action>
       <!-- ADD -->
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add HmacUtils.hmac(Path).</action>      
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add HmacUtils.hmacHex(Path).</action>      
