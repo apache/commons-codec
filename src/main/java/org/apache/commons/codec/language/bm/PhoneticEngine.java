@@ -29,6 +29,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.apache.commons.codec.language.bm.Languages.LanguageSet;
@@ -227,6 +228,8 @@ public class PhoneticEngine {
 
     private static final Map<NameType, Set<String>> NAME_PREFIXES = new EnumMap<>(NameType.class);
 
+    private static final Pattern QUOTE = Pattern.compile("'");
+
     static {
         NAME_PREFIXES.put(NameType.ASHKENAZI,
                 Collections.unmodifiableSet(
@@ -401,14 +404,14 @@ public class PhoneticEngine {
             }
         }
 
-        final List<String> words = Arrays.asList(input.split("\\s+"));
+        final List<String> words = Arrays.asList(ResourceConstants.SPACES.split(input));
         final List<String> words2 = new ArrayList<>();
 
         // special-case handling of word prefixes based upon the name type
         switch (this.nameType) {
         case SEPHARDIC:
             words.forEach(aWord -> {
-                final String[] parts = aWord.split("'", -1);
+                final String[] parts = QUOTE.split(aWord, -1);
                 words2.add(parts[parts.length - 1]);
             });
             words2.removeAll(NAME_PREFIXES.get(this.nameType));

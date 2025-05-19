@@ -300,6 +300,10 @@ public class Rule {
 
     private static final int HASH_INCLUDE_LENGTH = HASH_INCLUDE.length();
 
+    private static final Pattern AROUND_PLUS = Pattern.compile("[+]");
+
+    private static final Pattern AROUND_PIPE = Pattern.compile("[|]");
+
     private static final Map<NameType, Map<RuleType, Map<String, Map<String, List<Rule>>>>> RULES =
             new EnumMap<>(NameType.class);
 
@@ -452,7 +456,7 @@ public class Rule {
             }
             final String before = ph.substring(0, open);
             final String in = ph.substring(open + 1, ph.length() - 1);
-            final Set<String> langs = new HashSet<>(Arrays.asList(in.split("[+]")));
+            final Set<String> langs = new HashSet<>(Arrays.asList(AROUND_PLUS.split(in)));
 
             return new Phoneme(before, Languages.LanguageSet.from(langs));
         }
@@ -467,7 +471,7 @@ public class Rule {
 
             final List<Phoneme> phs = new ArrayList<>();
             final String body = ph.substring(1, ph.length() - 1);
-            for (final String part : body.split("[|]")) {
+            for (final String part : AROUND_PIPE.split(body)) {
                 phs.add(parsePhoneme(part));
             }
             if (body.startsWith("|") || body.endsWith("|")) {
@@ -521,7 +525,7 @@ public class Rule {
                     }
                 } else {
                     // rule
-                    final String[] parts = line.split("\\s+");
+                    final String[] parts = ResourceConstants.SPACES.split(line);
                     if (parts.length != 4) {
                         throw new IllegalArgumentException("Malformed rule statement split into " + parts.length +
                                                            " parts: " + rawLine + " in " + location);

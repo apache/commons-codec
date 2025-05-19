@@ -103,6 +103,8 @@ public class Lang {
 
     private static final String LANGUAGE_RULES_RN = "/org/apache/commons/codec/language/bm/%s_lang.txt";
 
+    private static final Pattern PLUS = Pattern.compile("\\+");
+
     static {
         for (final NameType s : NameType.values()) {
             LANGS.put(s, loadFromResource(String.format(LANGUAGE_RULES_RN, s.getName()), Languages.getInstance(s)));
@@ -163,7 +165,7 @@ public class Lang {
                     }
 
                     // split it up
-                    final String[] parts = line.split("\\s+");
+                    final String[] parts = ResourceConstants.SPACES.split(line);
 
                     if (parts.length != 3) {
                         throw new IllegalArgumentException("Malformed line '" + rawLine +
@@ -171,7 +173,7 @@ public class Lang {
                     }
 
                     final Pattern pattern = Pattern.compile(parts[0]);
-                    final String[] langs = parts[1].split("\\+");
+                    final String[] langs = PLUS.split(parts[1]);
                     final boolean accept = parts[2].equals("true");
 
                     rules.add(new LangRule(pattern, new HashSet<>(Arrays.asList(langs)), accept));
