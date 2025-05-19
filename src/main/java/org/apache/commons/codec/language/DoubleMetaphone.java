@@ -812,8 +812,6 @@ public class DoubleMetaphone implements StringEncoder {
         return charAt(value, index + 1) == 'R' ? index + 2 : index + 1;
     }
 
-    //-- BEGIN CONDITIONS --//
-
     /**
      * Handles 'S' cases.
      */
@@ -968,8 +966,6 @@ public class DoubleMetaphone implements StringEncoder {
         return index;
     }
 
-    //-- BEGIN HELPER FUNCTIONS --//
-
     /**
      * Handles 'Z' cases.
      */
@@ -1050,8 +1046,6 @@ public class DoubleMetaphone implements StringEncoder {
     private boolean isVowel(final char ch) {
         return VOWELS.indexOf(ch) != -1;
     }
-
-    //-- BEGIN INNER CLASSES --//
 
     /**
      * Sets the maxCodeLen.
