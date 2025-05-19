@@ -151,8 +151,8 @@ public class DaitchMokotoffSoundexTest extends AbstractStringEncoderTest<DaitchM
         assertEquals("645740", soundex("Moskowitz"));
         assertEquals("645740", soundex("Moskovitz"));
         assertEquals("154600|145460|454600|445460", soundex("Jackson"));
-        assertEquals("154654|154645|154644|145465|145464|454654|454645|454644|445465|445464",
-                soundex("Jackson-Jackson"));
+        assertEquals("154654|154645|154644|145465|145464|454654|454645|454644|445465|445464", soundex("Jackson-Jackson"));
+        assertEquals("154654|154645|154644|145465|145464|454654|454645|454644|445465|445464", soundex("JacksonJackson"));
     }
 
     @Test
