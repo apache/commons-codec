@@ -228,6 +228,10 @@ public class DaitchMokotoffSoundex implements StringEncoder {
     /** Folding rules. */
     private static final Map<Character, Character> FOLDINGS = new HashMap<>();
 
+    private static final Pattern EQUAL = Pattern.compile("=");
+
+    private static final Pattern SPACES = Pattern.compile("\\s+");
+
     static {
         try (Scanner scanner = new Scanner(Resources.getInputStream(RESOURCE_FILE), CharEncoding.UTF_8)) {
             parseRules(scanner, RESOURCE_FILE, RULES, FOLDINGS);
@@ -272,7 +276,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
 
                 if (line.contains("=")) {
                     // folding
-                    final String[] parts = line.split("=");
+                    final String[] parts = EQUAL.split(line);
                     if (parts.length != 2) {
                         throw new IllegalArgumentException("Malformed folding statement split into " + parts.length +
                                 " parts: " + rawLine + " in " + location);
@@ -288,7 +292,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
                     asciiFoldings.put(leftCharacter.charAt(0), rightCharacter.charAt(0));
                 } else {
                     // rule
-                    final String[] parts = line.split("\\s+");
+                    final String[] parts = SPACES.split(line);
                     if (parts.length != 4) {
                         throw new IllegalArgumentException("Malformed rule statement split into " + parts.length +
                                 " parts: " + rawLine + " in " + location);
