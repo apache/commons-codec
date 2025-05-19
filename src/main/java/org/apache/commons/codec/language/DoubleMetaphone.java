@@ -310,8 +310,6 @@ public class DoubleMetaphone implements StringEncoder {
                 contains(value, index - 1, 4, "ALLE");
     }
 
-    //-- BEGIN HANDLERS --//
-
     /**
      * Complex condition 0 for 'M'.
      */
@@ -626,8 +624,7 @@ public class DoubleMetaphone implements StringEncoder {
     /**
      * Handles 'G' cases.
      */
-    private int handleG(final String value, final DoubleMetaphoneResult result, int index,
-                        final boolean slavoGermanic) {
+    private int handleG(final String value, final DoubleMetaphoneResult result, int index, final boolean slavoGermanic) {
         if (charAt(value, index + 1) == 'H') {
             index = handleGH(value, result, index);
         } else if (charAt(value, index + 1) == 'N') {
@@ -733,8 +730,7 @@ public class DoubleMetaphone implements StringEncoder {
     /**
      * Handles 'J' cases.
      */
-    private int handleJ(final String value, final DoubleMetaphoneResult result, int index,
-                        final boolean slavoGermanic) {
+    private int handleJ(final String value, final DoubleMetaphoneResult result, int index, final boolean slavoGermanic) {
         if (contains(value, index, 4, "JOSE") || contains(value, 0, 4, "SAN ")) {
                 //-- obvious Spanish, "Jose", "San Jacinto" --//
                 if (index == 0 && charAt(value, index + 4) == ' ' ||
@@ -801,8 +797,7 @@ public class DoubleMetaphone implements StringEncoder {
     /**
      * Handles 'R' cases.
      */
-    private int handleR(final String value, final DoubleMetaphoneResult result, final int index,
-                        final boolean slavoGermanic) {
+    private int handleR(final String value, final DoubleMetaphoneResult result, final int index, final boolean slavoGermanic) {
         if (index == value.length() - 1 && !slavoGermanic &&
             contains(value, index - 2, 2, "IE") &&
             !contains(value, index - 4, 2, "ME", "MA")) {
@@ -816,8 +811,7 @@ public class DoubleMetaphone implements StringEncoder {
     /**
      * Handles 'S' cases.
      */
-    private int handleS(final String value, final DoubleMetaphoneResult result, int index,
-                        final boolean slavoGermanic) {
+    private int handleS(final String value, final DoubleMetaphoneResult result, int index, final boolean slavoGermanic) {
         if (contains(value, index - 1, 3, "ISL", "YSL")) {
             //-- special cases "island", "isle", "carlisle", "carlysle" --//
             index++;
@@ -970,8 +964,7 @@ public class DoubleMetaphone implements StringEncoder {
     /**
      * Handles 'Z' cases.
      */
-    private int handleZ(final String value, final DoubleMetaphoneResult result, int index,
-                        final boolean slavoGermanic) {
+    private int handleZ(final String value, final DoubleMetaphoneResult result, int index, final boolean slavoGermanic) {
         if (charAt(value, index + 1) == 'H') {
             //-- Chinese pinyin for example "zhao" or Angelina "Zhang" --//
             result.append('J');
