@@ -31,7 +31,7 @@ import org.apache.commons.codec.StringEncoder;
  * </p>
  * <p>
  * The <em>K&ouml;lner Phonetik</em> is a phonetic algorithm which is optimized for the German language. It is related to
- * the well-known soundex algorithm.
+ * the well-known Soundex algorithm.
  * </p>
  *
  * <h2>Algorithm</h2>
