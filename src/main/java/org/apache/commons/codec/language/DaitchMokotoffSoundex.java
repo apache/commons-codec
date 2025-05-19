@@ -39,7 +39,7 @@ import org.apache.commons.codec.StringEncoder;
  * accuracy in matching especially Slavish and Yiddish surnames with similar pronunciation but differences in spelling.
  * </p>
  * <p>
- * The main differences compared to the other soundex variants are:
+ * The main differences compared to the other Soundex variants are:
  * </p>
  * <ul>
  * <li>coded names are 6 digits long
@@ -75,7 +75,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
     private static final char NUL = '\0';
 
     /**
-     * Inner class representing a branch during DM soundex encoding.
+     * Inner class representing a branch during DM Soundex encoding.
      */
     private static final class Branch {
         private final StringBuilder builder;
@@ -219,7 +219,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
     /** The resource file containing the replacement and folding rules */
     private static final String RESOURCE_FILE = "/org/apache/commons/codec/language/dmrules.txt";
 
-    /** The code length of a DM soundex value. */
+    /** The code length of a DM Soundex value. */
     private static final int MAX_LENGTH = 6;
 
     /** Transformation rules indexed by the first character of their pattern. */
@@ -353,7 +353,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
     }
 
     /**
-     * Performs a cleanup of the input string before the actual soundex transformation.
+     * Performs a cleanup of the input string before the actual Soundex transformation.
      * <p>
      * Removes all whitespace characters and performs ASCII folding if enabled.
      * </p>
@@ -380,7 +380,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
     }
 
     /**
-     * Encodes an Object using the Daitch-Mokotoff soundex algorithm without branching.
+     * Encodes an Object using the Daitch-Mokotoff Soundex algorithm without branching.
      * <p>
      * This method is provided in order to satisfy the requirements of the Encoder interface, and will throw an
      * EncoderException if the supplied object is not of type {@link String}.
@@ -389,7 +389,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
      * @see #soundex(String)
      * @param obj
      *            Object to encode
-     * @return An object (of type {@link String}) containing the DM soundex code, which corresponds to the String
+     * @return An object (of type {@link String}) containing the DM Soundex code, which corresponds to the String
      *         supplied.
      * @throws EncoderException
      *             if the parameter supplied is not of type {@link String}
@@ -406,7 +406,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
     }
 
     /**
-     * Encodes a String using the Daitch-Mokotoff soundex algorithm without branching.
+     * Encodes a String using the Daitch-Mokotoff Soundex algorithm without branching.
      *
      * @see #soundex(String)
      * @param source
@@ -424,7 +424,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
     }
 
     /**
-     * Encodes a String using the Daitch-Mokotoff soundex algorithm with branching.
+     * Encodes a String using the Daitch-Mokotoff Soundex algorithm with branching.
      * <p>
      * In case a string is encoded into multiple codes (see branching rules), the result will contain all codes,
      * separated by '|'.
