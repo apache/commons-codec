@@ -165,7 +165,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
         private final String[] replacementBeforeVowel;
         private final String[] replacementDefault;
 
-        protected Rule(final String pattern, final String replacementAtStart, final String replacementBeforeVowel,
+        private Rule(final String pattern, final String replacementAtStart, final String replacementBeforeVowel,
                 final String replacementDefault) {
             this.pattern = pattern;
             this.replacementAtStart = replacementAtStart.split("\\|");
@@ -173,11 +173,11 @@ public class DaitchMokotoffSoundex implements StringEncoder {
             this.replacementDefault = replacementDefault.split("\\|");
         }
 
-        public int getPatternLength() {
+        private int getPatternLength() {
             return pattern.length();
         }
 
-        public String[] getReplacements(final String context, final boolean atStart) {
+        private String[] getReplacements(final String context, final boolean atStart) {
             if (atStart) {
                 return replacementAtStart;
             }
@@ -195,7 +195,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
             return ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u';
         }
 
-        public boolean matches(final String context) {
+        private boolean matches(final String context) {
             return context.startsWith(pattern);
         }
 
