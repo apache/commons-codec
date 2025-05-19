@@ -106,7 +106,6 @@ public class DaitchMokotoffSoundex implements StringEncoder {
             if (!(other instanceof Branch)) {
                 return false;
             }
-
             return toString().equals(((Branch) other).toString());
         }
 
@@ -135,7 +134,6 @@ public class DaitchMokotoffSoundex implements StringEncoder {
          */
         private void processNextReplacement(final String replacement, final boolean forceAppend) {
             final boolean append = lastReplacement == null || !lastReplacement.endsWith(replacement) || forceAppend;
-
             if (append && builder.length() < MAX_LENGTH) {
                 builder.append(replacement);
                 // remove all characters after the maximum length
@@ -144,7 +142,6 @@ public class DaitchMokotoffSoundex implements StringEncoder {
                 }
                 cachedString = null;
             }
-
             lastReplacement = replacement;
         }
 
@@ -236,28 +233,24 @@ public class DaitchMokotoffSoundex implements StringEncoder {
         try (Scanner scanner = new Scanner(Resources.getInputStream(RESOURCE_FILE), CharEncoding.UTF_8)) {
             parseRules(scanner, RESOURCE_FILE, RULES, FOLDINGS);
         }
-
         // sort RULES by pattern length in descending order
         RULES.forEach((k, v) -> v.sort((rule1, rule2) -> rule2.getPatternLength() - rule1.getPatternLength()));
     }
 
-    private static void parseRules(final Scanner scanner, final String location,
-            final Map<Character, List<Rule>> ruleMapping, final Map<Character, Character> asciiFoldings) {
+    private static void parseRules(final Scanner scanner, final String location, final Map<Character, List<Rule>> ruleMapping,
+            final Map<Character, Character> asciiFoldings) {
         int currentLine = 0;
         boolean inMultilineComment = false;
-
         while (scanner.hasNextLine()) {
             currentLine++;
             final String rawLine = scanner.nextLine();
             String line = rawLine;
-
             if (inMultilineComment) {
                 if (line.endsWith(MULTILINE_COMMENT_END)) {
                     inMultilineComment = false;
                 }
                 continue;
             }
-
             if (line.startsWith(MULTILINE_COMMENT_START)) {
                 inMultilineComment = true;
             } else {
@@ -266,50 +259,41 @@ public class DaitchMokotoffSoundex implements StringEncoder {
                 if (cmtI >= 0) {
                     line = line.substring(0, cmtI);
                 }
-
                 // trim leading-trailing whitespace
                 line = line.trim();
-
                 if (line.isEmpty()) {
                     continue; // empty lines can be safely skipped
                 }
-
                 if (line.contains("=")) {
                     // folding
                     final String[] parts = EQUAL.split(line);
                     if (parts.length != 2) {
-                        throw new IllegalArgumentException("Malformed folding statement split into " + parts.length +
-                                " parts: " + rawLine + " in " + location);
+                        throw new IllegalArgumentException("Malformed folding statement split into " + parts.length + " parts: " + rawLine + " in " + location);
                     }
                     final String leftCharacter = parts[0];
                     final String rightCharacter = parts[1];
-
                     if (leftCharacter.length() != 1 || rightCharacter.length() != 1) {
-                        throw new IllegalArgumentException("Malformed folding statement - " +
-                                "patterns are not single characters: " + rawLine + " in " + location);
+                        throw new IllegalArgumentException(
+                                "Malformed folding statement - " + "patterns are not single characters: " + rawLine + " in " + location);
                     }
-
                     asciiFoldings.put(leftCharacter.charAt(0), rightCharacter.charAt(0));
                 } else {
                     // rule
                     final String[] parts = SPACES.split(line);
                     if (parts.length != 4) {
-                        throw new IllegalArgumentException("Malformed rule statement split into " + parts.length +
-                                " parts: " + rawLine + " in " + location);
+                        throw new IllegalArgumentException("Malformed rule statement split into " + parts.length + " parts: " + rawLine + " in " + location);
                     }
                     try {
                         final String pattern = stripQuotes(parts[0]);
                         final String replacement1 = stripQuotes(parts[1]);
                         final String replacement2 = stripQuotes(parts[2]);
                         final String replacement3 = stripQuotes(parts[3]);
-
                         final Rule r = new Rule(pattern, replacement1, replacement2, replacement3);
                         final char patternKey = r.pattern.charAt(0);
                         final List<Rule> rules = ruleMapping.computeIfAbsent(patternKey, k -> new ArrayList<>());
                         rules.add(r);
                     } catch (final IllegalArgumentException e) {
-                        throw new IllegalStateException(
-                                "Problem parsing line '" + currentLine + "' in " + location, e);
+                        throw new IllegalStateException("Problem parsing line '" + currentLine + "' in " + location, e);
                     }
                 }
             }
@@ -320,11 +304,9 @@ public class DaitchMokotoffSoundex implements StringEncoder {
         if (str.startsWith(DOUBLE_QUOTE)) {
             str = str.substring(1);
         }
-
         if (str.endsWith(DOUBLE_QUOTE)) {
             str = str.substring(0, str.length() - 1);
         }
-
         return str;
     }
 
@@ -368,7 +350,6 @@ public class DaitchMokotoffSoundex implements StringEncoder {
             if (Character.isWhitespace(ch)) {
                 continue;
             }
-
             ch = Character.toLowerCase(ch);
             final Character character = FOLDINGS.get(ch);
             if (folding && character != null) {
@@ -484,17 +465,13 @@ public class DaitchMokotoffSoundex implements StringEncoder {
                     }
                     final String[] replacements = rule.getReplacements(inputContext, lastChar == '\0');
                     final boolean branchingRequired = replacements.length > 1 && branching;
-
                     for (final Branch branch : currentBranches) {
                         for (final String nextReplacement : replacements) {
                             // if we have multiple replacements, always create a new branch
                             final Branch nextBranch = branchingRequired ? branch.createBranch() : branch;
-
                             // special rule: occurrences of mn or nm are treated differently
                             final boolean force = lastChar == 'm' && ch == 'n' || lastChar == 'n' && ch == 'm';
-
                             nextBranch.processNextReplacement(nextReplacement, force);
-
                             if (!branching) {
                                 break;
                             }
