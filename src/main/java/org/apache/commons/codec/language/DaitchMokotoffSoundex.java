@@ -90,7 +90,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
          *
          * @return a new, identical branch
          */
-        public Branch createBranch() {
+        private Branch createBranch() {
             final Branch branch = new Branch();
             branch.builder.append(toString());
             branch.lastReplacement = this.lastReplacement;
@@ -112,7 +112,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
         /**
          * Finish this branch by appending '0's until the maximum code length has been reached.
          */
-        public void finish() {
+        private void finish() {
             while (builder.length() < MAX_LENGTH) {
                 builder.append('0');
                 cachedString = null;
@@ -132,7 +132,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
          * @param forceAppend
          *            indicates if the default processing shall be overridden
          */
-        public void processNextReplacement(final String replacement, final boolean forceAppend) {
+        private void processNextReplacement(final String replacement, final boolean forceAppend) {
             final boolean append = lastReplacement == null || !lastReplacement.endsWith(replacement) || forceAppend;
 
             if (append && builder.length() < MAX_LENGTH) {
