@@ -17,6 +17,8 @@
 
 package org.apache.commons.codec.language;
 
+import java.util.Locale;
+
 /**
  * Encodes a string into a Caverphone 1.0 value.
  *
@@ -55,7 +57,7 @@ public class Caverphone1 extends AbstractCaverphone {
         }
 
         // 1. Convert to lowercase
-        txt = txt.toLowerCase(java.util.Locale.ENGLISH);
+        txt = txt.toLowerCase(Locale.ENGLISH);
 
         // 2. Remove anything not A-Z
         txt = txt.replaceAll("[^a-z]", "");

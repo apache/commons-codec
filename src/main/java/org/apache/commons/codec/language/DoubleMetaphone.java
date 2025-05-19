@@ -17,6 +17,8 @@
 
 package org.apache.commons.codec.language;
 
+import java.util.Locale;
+
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.binary.StringUtils;
@@ -248,7 +250,7 @@ public class DoubleMetaphone implements StringEncoder {
         if (input.isEmpty()) {
             return null;
         }
-        return input.toUpperCase(java.util.Locale.ENGLISH);
+        return input.toUpperCase(Locale.ENGLISH);
     }
 
     /**

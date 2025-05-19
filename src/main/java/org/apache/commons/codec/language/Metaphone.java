@@ -17,6 +17,8 @@
 
 package org.apache.commons.codec.language;
 
+import java.util.Locale;
+
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
 
@@ -175,10 +177,10 @@ public class Metaphone implements StringEncoder {
         }
         // single character is itself
         if (txtLength == 1) {
-            return txt.toUpperCase(java.util.Locale.ENGLISH);
+            return txt.toUpperCase(Locale.ENGLISH);
         }
 
-        final char[] inwd = txt.toUpperCase(java.util.Locale.ENGLISH).toCharArray();
+        final char[] inwd = txt.toUpperCase(Locale.ENGLISH).toCharArray();
 
         final StringBuilder local = new StringBuilder(40); // manipulate
         final StringBuilder code = new StringBuilder(10); // output

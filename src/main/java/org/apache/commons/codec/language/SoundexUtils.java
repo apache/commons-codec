@@ -17,6 +17,8 @@
 
 package org.apache.commons.codec.language;
 
+import java.util.Locale;
+
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
 
@@ -50,9 +52,9 @@ final class SoundexUtils {
             }
         }
         if (count == len) {
-            return str.toUpperCase(java.util.Locale.ENGLISH);
+            return str.toUpperCase(Locale.ENGLISH);
         }
-        return new String(chars, 0, count).toUpperCase(java.util.Locale.ENGLISH);
+        return new String(chars, 0, count).toUpperCase(Locale.ENGLISH);
     }
 
     /**
