@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import org.apache.commons.codec.CharEncoding;
 import org.apache.commons.codec.EncoderException;
@@ -160,6 +161,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
      * Inner class for storing rules.
      */
     private static final class Rule {
+        private static final Pattern PIPE = Pattern.compile("\\|");
         private final String pattern;
         private final String[] replacementAtStart;
         private final String[] replacementBeforeVowel;
@@ -168,9 +170,9 @@ public class DaitchMokotoffSoundex implements StringEncoder {
         private Rule(final String pattern, final String replacementAtStart, final String replacementBeforeVowel,
                 final String replacementDefault) {
             this.pattern = pattern;
-            this.replacementAtStart = replacementAtStart.split("\\|");
-            this.replacementBeforeVowel = replacementBeforeVowel.split("\\|");
-            this.replacementDefault = replacementDefault.split("\\|");
+            this.replacementAtStart = PIPE.split(replacementAtStart);
+            this.replacementBeforeVowel = PIPE.split(replacementBeforeVowel);
+            this.replacementDefault = PIPE.split(replacementDefault);
         }
 
         private int getPatternLength() {
