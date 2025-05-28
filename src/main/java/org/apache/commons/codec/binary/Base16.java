@@ -22,7 +22,7 @@ import java.util.Objects;
 import org.apache.commons.codec.CodecPolicy;
 
 /**
- * Provides Base32 encoding and decoding as defined by <a href="https://tools.ietf.org/html/rfc4648#section-8">RFC 4648 - 8. Base 16 Encoding</a>.
+ * Provides Base16 encoding and decoding as defined by <a href="https://tools.ietf.org/html/rfc4648#section-8">RFC 4648 - 8. Base 16 Encoding</a>.
  *
  * <p>
  * This class is thread-safe.

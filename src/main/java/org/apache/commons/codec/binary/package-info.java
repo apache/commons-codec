@@ -16,6 +16,6 @@
  */
 
 /**
- * Base64, Base32, Binary, and Hexadecimal String encoding and decoding.
+ * Base64, Base32, Base16, BaseN, Binary, and Hexadecimal String encoding and decoding.
  */
 package org.apache.commons.codec.binary;
