@@ -36,7 +36,7 @@ public class ResourcesTest {
 
     @ParameterizedTest
     @MethodSource("getResourceNames")
-    public void testGetInputStream(final String resName) throws IOException {
+    void testGetInputStream(final String resName) throws IOException {
         try (InputStream in = Resources.getInputStream(resName)) {
             // empty
         }

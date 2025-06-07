@@ -57,7 +57,7 @@ public class LanguageGuessingTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testLanguageGuessing(final String name, final String language) {
+    void testLanguageGuessing(final String name, final String language) {
         final Languages.LanguageSet guesses = this.lang.guessLanguages(name);
 
         assertTrue(guesses.contains(language),

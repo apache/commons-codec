@@ -188,7 +188,7 @@ public class BeiderMorseEncoderTest extends AbstractStringEncoderTest<StringEnco
      * @throws EncoderException for some failure scenarios
      */
     @Test /* timeout = 20000L */
-    public void testSpeedCheck() throws EncoderException {
+    void testSpeedCheck() throws EncoderException {
         final BeiderMorseEncoder bmpm = createGenericApproxEncoder();
         final StringBuilder stringBuffer = new StringBuilder();
         stringBuffer.append(TEST_CHARS[0]);

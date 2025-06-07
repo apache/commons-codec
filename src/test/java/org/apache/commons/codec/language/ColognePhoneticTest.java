@@ -134,7 +134,7 @@ public class ColognePhoneticTest extends AbstractStringEncoderTest<ColognePhonet
 
     @Test
     // Ensure that override still allows tests to work
-    public void testCanFail() {
+    void testCanFail() {
         assertThrows(AssertionFailedError.class, () -> checkEncoding("/", "Fehler"));
     }
 

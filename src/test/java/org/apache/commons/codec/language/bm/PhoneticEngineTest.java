@@ -64,7 +64,7 @@ public class PhoneticEngineTest {
     // TODO Identify if there is a need to an assertTimeout(Duration.ofMillis(10000L) in some point, since this method was marked as @Test(timeout = 10000L)
     @ParameterizedTest
     @MethodSource("data")
-    public void testEncode(final String name, final String phoneticExpected, final NameType nameType,
+    void testEncode(final String name, final String phoneticExpected, final NameType nameType,
                            final RuleType ruleType, final boolean concat, final int maxPhonemes) {
         final PhoneticEngine engine = new PhoneticEngine(nameType, ruleType, concat, maxPhonemes);
 
@@ -86,7 +86,7 @@ public class PhoneticEngineTest {
 
     @ParameterizedTest
     @MethodSource("invalidData")
-    public void testInvalidEncode(final String input, final String phoneticExpected, final NameType nameType,
+    void testInvalidEncode(final String input, final String phoneticExpected, final NameType nameType,
                                   final RuleType ruleType, final boolean concat, final int maxPhonemes) {
         final PhoneticEngine engine = new PhoneticEngine(nameType, ruleType, concat, maxPhonemes);
 

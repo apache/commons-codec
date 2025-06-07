@@ -309,7 +309,7 @@ public class Base64Test {
      * Tests <a href="https://issues.apache.org/jira/browse/CODEC-263">CODEC-263</a>.
      */
     @Test
-    public void testCodec263() {
+    void testCodec263() {
       Base64.decodeBase64("publishMessage");
       assertTrue(Base64.isBase64("publishMessage"));
     }

@@ -44,7 +44,7 @@ public class Base32OutputStreamTest {
 //     * @throws Exception for some failure scenarios.
 //     */
 //    @Test
-//    public void testCodec98NPE() throws Exception {
+//    void testCodec98NPE() throws Exception {
 //        byte[] codec98 = StringUtils.getBytesUtf8(Base32TestData.CODEC_98_NPE);
 //        byte[] codec98_1024 = new byte[1024];
 //        System.arraycopy(codec98, 0, codec98_1024, 0, codec98.length);

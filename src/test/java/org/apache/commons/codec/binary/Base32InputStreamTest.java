@@ -78,7 +78,7 @@ public class Base32InputStreamTest {
     // * @throws Exception for some failure scenarios.
     // */
     // @Test
-    // public void testCodec101() throws Exception {
+    // void testCodec101() throws Exception {
     // byte[] codec101 = StringUtils.getBytesUtf8(Base32TestData.CODEC_101_MULTIPLE_OF_3);
     // ByteArrayInputStream bais = new ByteArrayInputStream(codec101);
     // Base32InputStream in = new Base32InputStream(bais);
@@ -106,7 +106,7 @@ public class Base32InputStreamTest {
      *             for some failure scenarios.
      */
     // @Test
-    // public void testInputStreamReader() throws Exception {
+    // void testInputStreamReader() throws Exception {
     // byte[] codec101 = StringUtils.getBytesUtf8(Base32TestData.CODEC_101_MULTIPLE_OF_3);
     // ByteArrayInputStream bais = new ByteArrayInputStream(codec101);
     // Base32InputStream in = new Base32InputStream(bais);
@@ -123,7 +123,7 @@ public class Base32InputStreamTest {
      *             for some failure scenarios.
      */
     // @Test
-    // public void testCodec98NPE() throws Exception {
+    // void testCodec98NPE() throws Exception {
     // byte[] codec98 = StringUtils.getBytesUtf8(Base32TestData.CODEC_98_NPE);
     // ByteArrayInputStream data = new ByteArrayInputStream(codec98);
     // Base32InputStream stream = new Base32InputStream(data);

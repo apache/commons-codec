@@ -187,7 +187,7 @@ public class HexTest {
 
     @ParameterizedTest
     @MethodSource("org.apache.commons.codec.CharsetsTest#getAvailableCharsetNames()")
-    public void testCustomCharset(final String name) throws UnsupportedEncodingException, DecoderException {
+    void testCustomCharset(final String name) throws UnsupportedEncodingException, DecoderException {
         testCharset(name, "testCustomCharset");
     }
 
@@ -666,7 +666,7 @@ public class HexTest {
 
     @ParameterizedTest
     @MethodSource("org.apache.commons.codec.CharsetsTest#getRequiredCharsets()")
-    public void testRequiredCharset(final Charset charset) throws UnsupportedEncodingException, DecoderException {
+    void testRequiredCharset(final Charset charset) throws UnsupportedEncodingException, DecoderException {
         testCharset(charset.name(), "testRequiredCharset");
     }
 }

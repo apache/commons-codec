@@ -80,7 +80,7 @@ public class Sha512CryptTest {
     }
 
     @Disabled
-    public void testSha512CryptNullSalt() {
+    void testSha512CryptNullSalt() {
         // cannot be tested as sha512Crypt() with all params is private and
         // all public methods check for salt==null.
     }

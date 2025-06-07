@@ -200,7 +200,7 @@ public class BaseNCodecTest {
     }
 
 //    @Test
-//    public void testGetEncodedLength() {
+//    void testGetEncodedLength() {
 //        fail("Not yet implemented");
 //    }
 
@@ -272,47 +272,47 @@ public class BaseNCodecTest {
 
     //
 //    @Test
-//    public void testEncodeObject() {
+//    void testEncodeObject() {
 //        fail("Not yet implemented");
 //    }
 //
 //    @Test
-//    public void testEncodeToString() {
+//    void testEncodeToString() {
 //        fail("Not yet implemented");
 //    }
 //
 //    @Test
-//    public void testDecodeObject() {
+//    void testDecodeObject() {
 //        fail("Not yet implemented");
 //    }
 //
 //    @Test
-//    public void testDecodeString() {
+//    void testDecodeString() {
 //        fail("Not yet implemented");
 //    }
 //
 //    @Test
-//    public void testDecodeByteArray() {
+//    void testDecodeByteArray() {
 //        fail("Not yet implemented");
 //    }
 //
 //    @Test
-//    public void testEncodeByteArray() {
+//    void testEncodeByteArray() {
 //        fail("Not yet implemented");
 //    }
 //
 //    @Test
-//    public void testEncodeAsString() {
+//    void testEncodeAsString() {
 //        fail("Not yet implemented");
 //    }
 //
 //    @Test
-//    public void testEncodeByteArrayIntInt() {
+//    void testEncodeByteArrayIntInt() {
 //        fail("Not yet implemented");
 //    }
 //
 //    @Test
-//    public void testDecodeByteArrayIntInt() {
+//    void testDecodeByteArrayIntInt() {
 //        fail("Not yet implemented");
 //    }
 //
@@ -343,22 +343,22 @@ public class BaseNCodecTest {
     }
 
     //    @Test
-//    public void testHasData() {
+//    void testHasData() {
 //        fail("Not yet implemented");
 //    }
 //
 //    @Test
-//    public void testAvail() {
+//    void testAvail() {
 //        fail("Not yet implemented");
 //    }
 //
 //    @Test
-//    public void testEnsureBufferSize() {
+//    void testEnsureBufferSize() {
 //        fail("Not yet implemented");
 //    }
 //
 //    @Test
-//    public void testReadResults() {
+//    void testReadResults() {
 //        fail("Not yet implemented");
 //    }
 //

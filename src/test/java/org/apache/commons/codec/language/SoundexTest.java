@@ -219,7 +219,7 @@ public class SoundexTest extends AbstractStringEncoderTest<Soundex> {
 
     @Test
 // examples and algorithm rules from:  http://www.genealogy.com/articles/research/00000060.html
-    public void testGenealogy() { // treat vowels and HW as silent
+    void testGenealogy() { // treat vowels and HW as silent
         final Soundex s = Soundex.US_ENGLISH_GENEALOGY;
         assertEquals("H251", s.encode("Heggenburger"));
         assertEquals("B425", s.encode("Blackman"));
@@ -342,7 +342,7 @@ public class SoundexTest extends AbstractStringEncoderTest<Soundex> {
 
     @Test
 // examples and algorithm rules from:  http://west-penwith.org.uk/misc/soundex.htm
-    public void testSimplifiedSoundex() { // treat vowels and HW as separators
+    void testSimplifiedSoundex() { // treat vowels and HW as separators
         final Soundex s = Soundex.US_ENGLISH_SIMPLIFIED;
         assertEquals("W452", s.encode("WILLIAMS"));
         assertEquals("B625", s.encode("BARAGWANATH"));

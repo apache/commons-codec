@@ -50,7 +50,7 @@ public class PercentCodecTest {
 
     @Test
     @Disabled // TODO Should be removed?
-    public void testBasicSpace() throws Exception {
+    void testBasicSpace() throws Exception {
         final PercentCodec percentCodec = new PercentCodec();
         final String input = " ";
         final byte[] encoded = percentCodec.encode(input.getBytes(StandardCharsets.UTF_8));

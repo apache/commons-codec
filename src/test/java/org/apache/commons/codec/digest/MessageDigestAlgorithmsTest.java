@@ -125,7 +125,7 @@ public class MessageDigestAlgorithmsTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testAlgorithm(final String messageDigestAlgorithm) throws NoSuchAlgorithmException {
+    void testAlgorithm(final String messageDigestAlgorithm) throws NoSuchAlgorithmException {
         final String algorithm = messageDigestAlgorithm;
         assertNotNull(algorithm);
         assertFalse(algorithm.isEmpty());
@@ -135,7 +135,7 @@ public class MessageDigestAlgorithmsTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testDigestByteArray(final String messageDigestAlgorithm) {
+    void testDigestByteArray(final String messageDigestAlgorithm) {
         assumeTrue(DigestUtils.isAvailable(messageDigestAlgorithm));
         assertArrayEquals(digestTestData(messageDigestAlgorithm), DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm), getTestData()));
         assertArrayEquals(digestTestData(messageDigestAlgorithm), DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm), getTestData()));
@@ -143,7 +143,7 @@ public class MessageDigestAlgorithmsTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testDigestByteBuffer(final String messageDigestAlgorithm) {
+    void testDigestByteBuffer(final String messageDigestAlgorithm) {
         assumeTrue(DigestUtils.isAvailable(messageDigestAlgorithm));
         assertArrayEquals(digestTestData(messageDigestAlgorithm),
                 DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm), ByteBuffer.wrap(getTestData())));
@@ -153,7 +153,7 @@ public class MessageDigestAlgorithmsTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testDigestFile(final String messageDigestAlgorithm) throws IOException {
+    void testDigestFile(final String messageDigestAlgorithm) throws IOException {
         assumeTrue(DigestUtils.isAvailable(messageDigestAlgorithm));
         assertArrayEquals(digestTestData(messageDigestAlgorithm), DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm), getTestFile()));
         assertArrayEquals(digestTestData(messageDigestAlgorithm), DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm), getTestFile()));
@@ -161,7 +161,7 @@ public class MessageDigestAlgorithmsTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testDigestInputStream(final String messageDigestAlgorithm) throws IOException {
+    void testDigestInputStream(final String messageDigestAlgorithm) throws IOException {
         assumeTrue(DigestUtils.isAvailable(messageDigestAlgorithm));
         assertArrayEquals(digestTestData(messageDigestAlgorithm),
                 DigestUtils.digest(DigestUtils.getDigest(messageDigestAlgorithm), new ByteArrayInputStream(getTestData())));
@@ -179,19 +179,19 @@ public class MessageDigestAlgorithmsTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testDigestPathOpenOptionsEmpty(final String messageDigestAlgorithm) throws IOException {
+    void testDigestPathOpenOptionsEmpty(final String messageDigestAlgorithm) throws IOException {
         testDigestPath(messageDigestAlgorithm);
     }
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testDigestPathStandardOpenOptionRead(final String messageDigestAlgorithm) throws IOException {
+    void testDigestPathStandardOpenOptionRead(final String messageDigestAlgorithm) throws IOException {
         testDigestPath(messageDigestAlgorithm, StandardOpenOption.READ);
     }
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testGetMessageDigest(final String messageDigestAlgorithm) {
+    void testGetMessageDigest(final String messageDigestAlgorithm) {
         assumeTrue(DigestUtils.isAvailable(messageDigestAlgorithm));
         final MessageDigest messageDigest = DigestUtils.getDigest(messageDigestAlgorithm);
         assertEquals(messageDigestAlgorithm, messageDigest.getAlgorithm());
@@ -199,7 +199,7 @@ public class MessageDigestAlgorithmsTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testNonBlockingDigestRandomAccessFile(final String messageDigestAlgorithm) throws IOException {
+    void testNonBlockingDigestRandomAccessFile(final String messageDigestAlgorithm) throws IOException {
         assumeTrue(DigestUtils.isAvailable(messageDigestAlgorithm));
 
         final byte[] expected = digestTestData(messageDigestAlgorithm);
