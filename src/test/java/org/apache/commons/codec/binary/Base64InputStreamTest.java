@@ -57,7 +57,7 @@ public class Base64InputStreamTest {
      *             for some failure scenarios.
      */
     @Test
-    public void testAvailable() throws Throwable {
+    void testAvailable() throws Throwable {
         final InputStream ins = new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));
         try (Base64InputStream b64stream = new Base64InputStream(ins)) {
             assertEquals(1, b64stream.available());
@@ -84,7 +84,7 @@ public class Base64InputStreamTest {
      *             for some failure scenarios.
      */
     @Test
-    public void testBase64EmptyInputStreamMimeChuckSize() throws Exception {
+    void testBase64EmptyInputStreamMimeChuckSize() throws Exception {
         testBase64EmptyInputStream(BaseNCodec.MIME_CHUNK_SIZE);
     }
 
@@ -95,7 +95,7 @@ public class Base64InputStreamTest {
      *             for some failure scenarios.
      */
     @Test
-    public void testBase64EmptyInputStreamPemChuckSize() throws Exception {
+    void testBase64EmptyInputStreamPemChuckSize() throws Exception {
         testBase64EmptyInputStream(BaseNCodec.PEM_CHUNK_SIZE);
     }
 
@@ -106,7 +106,7 @@ public class Base64InputStreamTest {
      *             for some failure scenarios.
      */
     @Test
-    public void testBase64InputStreamByChunk() throws Exception {
+    void testBase64InputStreamByChunk() throws Exception {
         // Hello World test.
         byte[] encoded = StringUtils.getBytesUtf8("SGVsbG8gV29ybGQ=\r\n");
         byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
@@ -145,7 +145,7 @@ public class Base64InputStreamTest {
      *             for some failure scenarios.
      */
     @Test
-    public void testBase64InputStreamByteByByte() throws Exception {
+    void testBase64InputStreamByteByByte() throws Exception {
         // Hello World test.
         byte[] encoded = StringUtils.getBytesUtf8("SGVsbG8gV29ybGQ=\r\n");
         byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
@@ -292,7 +292,7 @@ public class Base64InputStreamTest {
      *             for some failure scenarios.
      */
     @Test
-    public void testCodec101() throws Exception {
+    void testCodec101() throws Exception {
         final byte[] codec101 = StringUtils.getBytesUtf8(Base64TestData.CODEC_101_INPUT_LENGTH_IS_MULTIPLE_OF_3);
         final ByteArrayInputStream bais = new ByteArrayInputStream(codec101);
         try (Base64InputStream in = new Base64InputStream(bais)) {
@@ -309,7 +309,7 @@ public class Base64InputStreamTest {
      * Tests the bug reported in CODEC-105. Bad interactions with InputStream when reading one byte at a time.
      */
     @Test
-    public void testCodec105() throws IOException {
+    void testCodec105() throws IOException {
         try (Base64InputStream in = new Base64InputStream(new Codec105ErrorInputStream(), true, 0, null)) {
             for (int i = 0; i < 5; i++) {
                 in.read();
@@ -321,7 +321,7 @@ public class Base64InputStreamTest {
      * Tests the problem reported in CODEC-130. Missing / wrong implementation of skip.
      */
     @Test
-    public void testCodec130() throws IOException {
+    void testCodec130() throws IOException {
         final ByteArrayOutputStream bos = new ByteArrayOutputStream();
         try (Base64OutputStream base64os = new Base64OutputStream(bos)) {
             base64os.write(StringUtils.getBytesUtf8(STRING_FIXTURE));
@@ -345,7 +345,7 @@ public class Base64InputStreamTest {
      *             for some failure scenarios.
      */
     @Test
-    public void testCodec98NPE() throws Exception {
+    void testCodec98NPE() throws Exception {
         final byte[] codec98 = StringUtils.getBytesUtf8(Base64TestData.CODEC_98_NPE);
         final ByteArrayInputStream data = new ByteArrayInputStream(codec98);
         final Base64InputStream stream = new Base64InputStream(data);
@@ -373,7 +373,7 @@ public class Base64InputStreamTest {
      *             for some failure scenarios.
      */
     @Test
-    public void testInputStreamReader() throws Exception {
+    void testInputStreamReader() throws Exception {
         final byte[] codec101 = StringUtils.getBytesUtf8(Base64TestData.CODEC_101_INPUT_LENGTH_IS_MULTIPLE_OF_3);
         final ByteArrayInputStream bais = new ByteArrayInputStream(codec101);
         final Base64InputStream in = new Base64InputStream(bais);
@@ -391,7 +391,7 @@ public class Base64InputStreamTest {
      *             for some failure scenarios.
      */
     @Test
-    public void testMarkSupported() throws Exception {
+    void testMarkSupported() throws Exception {
         final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
         final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
         try (Base64InputStream in = new Base64InputStream(bin, true, 4, new byte[] { 0, 0, 0 })) {
@@ -407,7 +407,7 @@ public class Base64InputStreamTest {
      *             for some failure scenarios.
      */
     @Test
-    public void testRead0() throws Exception {
+    void testRead0() throws Exception {
         final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
         final byte[] buf = new byte[1024];
         int bytesRead = 0;
@@ -425,7 +425,7 @@ public class Base64InputStreamTest {
      *             for some failure scenarios.
      */
     @Test
-    public void testReadMultipleBufferSizes() throws Exception {
+    void testReadMultipleBufferSizes() throws Exception {
         final byte[][] randomData = BaseNTestData.randomData(new Base64(0, null, false), 1024 * 64);
         final byte[] encoded = randomData[1];
         final byte[] decoded = randomData[0];
@@ -449,7 +449,7 @@ public class Base64InputStreamTest {
      *             for some failure scenarios.
      */
     @Test
-    public void testReadNull() throws Exception {
+    void testReadNull() throws Exception {
         final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
         final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
         try (Base64InputStream in = new Base64InputStream(bin, true, 4, new byte[] { 0, 0, 0 })) {
@@ -464,7 +464,7 @@ public class Base64InputStreamTest {
      *             for some failure scenarios.
      */
     @Test
-    public void testReadOutOfBounds() throws Exception {
+    void testReadOutOfBounds() throws Exception {
         final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
         final byte[] buf = new byte[1024];
         final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
@@ -483,7 +483,7 @@ public class Base64InputStreamTest {
      *             for some failure scenarios.
      */
     @Test
-    public void testSkipBig() throws Throwable {
+    void testSkipBig() throws Throwable {
         final InputStream ins = new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));
         try (Base64InputStream b64stream = new Base64InputStream(ins)) {
             assertEquals(6, b64stream.skip(Integer.MAX_VALUE));
@@ -500,7 +500,7 @@ public class Base64InputStreamTest {
      *             for some failure scenarios.
      */
     @Test
-    public void testSkipNone() throws Throwable {
+    void testSkipNone() throws Throwable {
         final InputStream ins = new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));
         try (Base64InputStream b64stream = new Base64InputStream(ins)) {
             final byte[] actualBytes = new byte[6];
@@ -519,7 +519,7 @@ public class Base64InputStreamTest {
      *             for some failure scenarios.
      */
     @Test
-    public void testSkipPastEnd() throws Throwable {
+    void testSkipPastEnd() throws Throwable {
         final InputStream ins = new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));
         try (Base64InputStream b64stream = new Base64InputStream(ins)) {
             // due to CODEC-130, skip now skips correctly decoded characters rather than encoded
@@ -537,7 +537,7 @@ public class Base64InputStreamTest {
      *             for some failure scenarios.
      */
     @Test
-    public void testSkipToEnd() throws Throwable {
+    void testSkipToEnd() throws Throwable {
         final InputStream ins = new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));
         try (Base64InputStream b64stream = new Base64InputStream(ins)) {
             // due to CODEC-130, skip now skips correctly decoded characters rather than encoded
@@ -555,7 +555,7 @@ public class Base64InputStreamTest {
      *             for some failure scenarios.
      */
     @Test
-    public void testSkipWrongArgument() throws Throwable {
+    void testSkipWrongArgument() throws Throwable {
         final InputStream ins = new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));
         try (Base64InputStream b64stream = new Base64InputStream(ins)) {
             assertThrows(IllegalArgumentException.class, () -> b64stream.skip(-10));
@@ -569,7 +569,7 @@ public class Base64InputStreamTest {
      *             for some failure scenarios.
      */
     @Test
-    public void testStrictDecoding() throws Exception {
+    void testStrictDecoding() throws Exception {
         for (final String s : Base64Test.BASE64_IMPOSSIBLE_CASES) {
             final byte[] encoded = StringUtils.getBytesUtf8(s);
             final Base64InputStream in = new Base64InputStream(new ByteArrayInputStream(encoded), false);

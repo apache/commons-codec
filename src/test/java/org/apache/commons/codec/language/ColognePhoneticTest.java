@@ -113,12 +113,12 @@ public class ColognePhoneticTest extends AbstractStringEncoderTest<ColognePhonet
     }
 
     @Test
-    public void testAabjoe() throws EncoderException {
+    void testAabjoe() throws EncoderException {
         checkEncoding("01", "Aabjoe");
     }
 
     @Test
-    public void testAaclan() throws EncoderException {
+    void testAaclan() throws EncoderException {
         checkEncoding("0856", "Aaclan");
     }
 
@@ -128,7 +128,7 @@ public class ColognePhoneticTest extends AbstractStringEncoderTest<ColognePhonet
      * @throws EncoderException for some failure scenarios
      */
     @Test
-    public void testAychlmajrForCodec122() throws EncoderException {
+    void testAychlmajrForCodec122() throws EncoderException {
         checkEncoding("04567", "Aychlmajr");
     }
 
@@ -139,7 +139,7 @@ public class ColognePhoneticTest extends AbstractStringEncoderTest<ColognePhonet
     }
 
     @Test
-    public void testEdgeCases() throws EncoderException {
+    void testEdgeCases() throws EncoderException {
         // @formatter:off
         final String[][] data = {
             { "a", "0" },
@@ -179,7 +179,7 @@ public class ColognePhoneticTest extends AbstractStringEncoderTest<ColognePhonet
     }
 
     @Test
-    public void testExamples() throws EncoderException {
+    void testExamples() throws EncoderException {
         // @formatter:off
         final String[][] data = {
             { "m\u00DCller", "657" }, // mÜller - why upper case U-umlaut?
@@ -222,13 +222,13 @@ public class ColognePhoneticTest extends AbstractStringEncoderTest<ColognePhonet
     }
 
     @Test
-    public void testHyphen() throws EncoderException {
+    void testHyphen() throws EncoderException {
         final String[][] data = { { "bergisch-gladbach", "174845214" }, { "M\u00fcller-L\u00fcdenscheidt", "65752682" } }; // Müller-Lüdenscheidt
         checkEncodings(data);
     }
 
     @Test
-    public void testIsEncodeEquals() {
+    void testIsEncodeEquals() {
         //@formatter:off
         final String[][] data = {
             { "Muller", "M\u00fcller" }, // Müller
@@ -248,19 +248,19 @@ public class ColognePhoneticTest extends AbstractStringEncoderTest<ColognePhonet
     }
 
     @Test
-    public void testSpecialCharsBetweenSameLetters() throws EncoderException {
+    void testSpecialCharsBetweenSameLetters() throws EncoderException {
         final String[] data = { "Test test", "Testtest", "Test-test", "TesT#Test", "TesT?test" };
         checkEncodingVariations("28282", data);
     }
 
     @Test
-    public void testVariationsMella() throws EncoderException {
+    void testVariationsMella() throws EncoderException {
         final String[] data = { "mella", "milah", "moulla", "mellah", "muehle", "mule" };
         checkEncodingVariations("65", data);
     }
 
     @Test
-    public void testVariationsMeyer() throws EncoderException {
+    void testVariationsMeyer() throws EncoderException {
         final String[] data = { "Meier", "Maier", "Mair", "Meyer", "Meyr", "Mejer", "Major" };
         checkEncodingVariations("67", data);
     }

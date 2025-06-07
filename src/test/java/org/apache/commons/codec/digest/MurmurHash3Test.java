@@ -213,7 +213,7 @@ public class MurmurHash3Test {
      * @see <a href="https://pypi.org/project/mmh3/">mmh3</a>
      */
     @Test
-    public void testHash128() {
+    void testHash128() {
         // mmh3.hash64(bytes, 104729)
         assertArrayEquals(new long[] {-5614308156300707300L, -4165733009867452172L},
             MurmurHash3.hash128(RANDOM_BYTES));
@@ -254,7 +254,7 @@ public class MurmurHash3Test {
      * <p>The test uses random strings created with random unicode code points.</p>
      */
     @Test
-    public void testHash128String() {
+    void testHash128String() {
         final int seed = 104729;
         // Range is end exclusive so this is random strings of length 1-10
         final int minSize = 1;
@@ -285,7 +285,7 @@ public class MurmurHash3Test {
      * broken deprecated method.
      */
     @Test
-    public void testHash128WithOffsetLengthAndNegativeSeed() {
+    void testHash128WithOffsetLengthAndNegativeSeed() {
         // Seed can be negative
         final int seed = -42;
         final int offset = 13;
@@ -324,7 +324,7 @@ public class MurmurHash3Test {
      * @see <a href="https://pypi.org/project/mmh3/">mmh3</a>
      */
     @Test
-    public void testHash128WithOffsetLengthAndSeed() {
+    void testHash128WithOffsetLengthAndSeed() {
         // Seed must be positive
         final int seed = 42;
         final int offset = 13;
@@ -365,7 +365,7 @@ public class MurmurHash3Test {
      * @see <a href="https://pypi.org/project/mmh3/">mmh3</a>
      */
     @Test
-    public void testHash128x64() {
+    void testHash128x64() {
         // Note: Default seed is zero.
 
         // mmh3.hash64(bytes, 0)
@@ -411,7 +411,7 @@ public class MurmurHash3Test {
      * @see <a href="https://pypi.org/project/mmh3/">mmh3</a>
      */
     @Test
-    public void testHash128x64WithOffsetLengthAndNegativeSeed() {
+    void testHash128x64WithOffsetLengthAndNegativeSeed() {
         // Seed can be negative
         final int seed = -42;
         final int offset = 13;
@@ -452,7 +452,7 @@ public class MurmurHash3Test {
      * @see <a href="https://pypi.org/project/mmh3/">mmh3</a>
      */
     @Test
-    public void testHash128x64WithOffsetLengthAndSeed() {
+    void testHash128x64WithOffsetLengthAndSeed() {
         // Seed can be positive
         final int seed = 42;
         final int offset = 13;
@@ -495,7 +495,7 @@ public class MurmurHash3Test {
      * @see <a href="https://pypi.org/project/mmh3/">mmh3</a>
      */
     @Test
-    public void testHash32() {
+    void testHash32() {
         // mmh3.hash(bytes, 104729)
         assertEquals(1905657630, MurmurHash3.hash32(RANDOM_BYTES));
 
@@ -522,7 +522,7 @@ public class MurmurHash3Test {
      * Test the convenience method {@link MurmurHash3#hash32(long)} works as documented.
      */
     @Test
-    public void testHash32Long() {
+    void testHash32Long() {
         // As described in the Javadoc
         final int offset = 0;
         final int seed = 104729;
@@ -541,7 +541,7 @@ public class MurmurHash3Test {
      * Test the convenience method {@link MurmurHash3#hash32(long, long)} works as documented.
      */
     @Test
-    public void testHash32LongLong() {
+    void testHash32LongLong() {
         // As described in the Javadoc
         final int offset = 0;
         final int seed = 104729;
@@ -563,7 +563,7 @@ public class MurmurHash3Test {
      * Test the convenience method {@link MurmurHash3#hash32(long, long, int)} works as documented.
      */
     @Test
-    public void testHash32LongLongSeed() {
+    void testHash32LongLongSeed() {
         // As described in the Javadoc
         final int offset = 0;
         final int seed = 104729;
@@ -585,7 +585,7 @@ public class MurmurHash3Test {
      * Test the convenience method {@link MurmurHash3#hash32(long, int)} works as documented.
      */
     @Test
-    public void testHash32LongSeed() {
+    void testHash32LongSeed() {
         // As described in the Javadoc
         final int offset = 0;
         final int seed = 104729;
@@ -609,7 +609,7 @@ public class MurmurHash3Test {
      * </p>
      */
     @Test
-    public void testHash32String() {
+    void testHash32String() {
         final int seed = 104729;
         // Range is end exclusive so this is random strings of length 1-10
         final int minSize = 1;
@@ -642,7 +642,7 @@ public class MurmurHash3Test {
      * @see <a href="https://pypi.org/project/mmh3/">mmh3</a>
      */
     @Test
-    public void testHash32WithLength() {
+    void testHash32WithLength() {
         // mmh3.hash(bytes, 104729)
         assertEquals(1905657630, MurmurHash3.hash32(RANDOM_BYTES, RANDOM_BYTES.length));
 
@@ -674,7 +674,7 @@ public class MurmurHash3Test {
      * @see <a href="https://pypi.org/project/mmh3/">mmh3</a>
      */
     @Test
-    public void testHash32WithLengthAndSeed() {
+    void testHash32WithLengthAndSeed() {
         final int seed = -42;
         // mmh3.hash(bytes, -42)
         assertEquals(1693958011, MurmurHash3.hash32(RANDOM_BYTES, RANDOM_BYTES.length, seed));
@@ -707,7 +707,7 @@ public class MurmurHash3Test {
      * @see <a href="https://pypi.org/project/mmh3/">mmh3</a>
      */
     @Test
-    public void testHash32WithOffsetLengthAndSeed() {
+    void testHash32WithOffsetLengthAndSeed() {
         final int seed = -42;
         final int offset = 13;
 
@@ -733,7 +733,7 @@ public class MurmurHash3Test {
      * Test to demonstrate the errors in {@link MurmurHash3#hash32(byte[], int, int, int)} if the final 1, 2, or 3 bytes are negative.
      */
     @Test
-    public void testHash32WithTrailingNegativeSignedBytesIsInvalid() {
+    void testHash32WithTrailingNegativeSignedBytesIsInvalid() {
         // import mmh3
         // import numpy as np
         // mmh3.hash(np.uint8([-1]))
@@ -760,7 +760,7 @@ public class MurmurHash3Test {
      * @see <a href="https://pypi.org/project/mmh3/">mmh3</a>
      */
     @Test
-    public void testHash32x86() {
+    void testHash32x86() {
         // Note: Default seed is zero.
 
         // mmh3.hash(bytes, 0)
@@ -789,7 +789,7 @@ public class MurmurHash3Test {
      * @see <a href="https://pypi.org/project/mmh3/">mmh3</a>
      */
     @Test
-    public void testHash32x86WithOffsetLengthAndSeed() {
+    void testHash32x86WithOffsetLengthAndSeed() {
         // Data as above for testing MurmurHash3.hash32(byte[], int, int, int).
         final int seed = -42;
         final int offset = 13;
@@ -805,7 +805,7 @@ public class MurmurHash3Test {
      * Test to demonstrate {@link MurmurHash3#hash32x86(byte[], int, int, int)} is OK if the final 1, 2, or 3 bytes are negative.
      */
     @Test
-    public void testHash32x86WithTrailingNegativeSignedBytes() {
+    void testHash32x86WithTrailingNegativeSignedBytes() {
         // Data as above for testing MurmurHash3.hash32(byte[], int, int, int).
         // This test uses assertEquals().
         assertEquals(-43192051, MurmurHash3.hash32x86(new byte[] { -1 }, 0, 1, 0));
@@ -820,7 +820,7 @@ public class MurmurHash3Test {
      * Test the {@link MurmurHash3#hash64(byte[])} algorithm. Unknown origin of test data. It may be from the Apache Hive project.
      */
     @Test
-    public void testHash64() {
+    void testHash64() {
         final byte[] origin = StringUtils.getBytesUtf8(TEST_HASH64);
         final long hash = MurmurHash3.hash64(origin);
         assertEquals(5785358552565094607L, hash);
@@ -834,7 +834,7 @@ public class MurmurHash3Test {
      * <p>
      */
     @Test
-    public void testHash64InNotEqualToHash128() {
+    void testHash64InNotEqualToHash128() {
         for (int i = 0; i < 32; i++) {
             final byte[] bytes = Arrays.copyOf(RANDOM_BYTES, i);
             final long h1 = MurmurHash3.hash64(bytes);
@@ -848,7 +848,7 @@ public class MurmurHash3Test {
      * Test the {@link MurmurHash3#hash64(byte[], int, int)} algorithm. Unknown origin of test data. It may be from the Apache Hive project.
      */
     @Test
-    public void testHash64WithOffsetAndLength() {
+    void testHash64WithOffsetAndLength() {
         final byte[] origin = StringUtils.getBytesUtf8(TEST_HASH64);
         final byte[] originOffset = new byte[origin.length + 150];
         Arrays.fill(originOffset, (byte) 123);
@@ -862,7 +862,7 @@ public class MurmurHash3Test {
      * {@link MurmurHash3#hash64(byte[])} with the byte[] created from the same primitive data via a {@link ByteBuffer}.
      */
     @Test
-    public void testHash64WithPrimitives() {
+    void testHash64WithPrimitives() {
         // As described in the Javadoc
         final int offset = 0;
         final int seed = 104729;
@@ -892,7 +892,7 @@ public class MurmurHash3Test {
      * Test {@link IncrementalHash32} returns the same values as {@link MurmurHash3#hash32(byte[], int, int, int)}.
      */
     @Test
-    public void testIncrementalHash32() {
+    void testIncrementalHash32() {
         final byte[] bytes = new byte[1023];
         ThreadLocalRandom.current().nextBytes(bytes);
         // The seed does not matter
@@ -923,7 +923,7 @@ public class MurmurHash3Test {
      * Test {@link IncrementalHash32x86} returns the same values as {@link MurmurHash3#hash32x86(byte[], int, int, int)}.
      */
     @Test
-    public void testIncrementalHash32x86() {
+    void testIncrementalHash32x86() {
         final byte[] bytes = new byte[1023];
         ThreadLocalRandom.current().nextBytes(bytes);
         // The seed does not matter
@@ -956,7 +956,7 @@ public class MurmurHash3Test {
      * array.
      */
     @Test
-    public void testIncrementalHashWithUnprocessedBytesAndHugeLengthArray() {
+    void testIncrementalHashWithUnprocessedBytesAndHugeLengthArray() {
         // Assert the test precondition that a large array added to unprocessed bytes
         // will overflow an integer counter. We use the smallest hugeLength possible
         // as some VMs cannot allocate maximum length arrays.

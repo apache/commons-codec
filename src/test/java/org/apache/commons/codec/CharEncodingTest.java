@@ -32,37 +32,37 @@ public class CharEncodingTest {
      * We could make the constructor private in the future, it's a matter a style.
      */
     @Test
-    public void testConstructor() {
+    void testConstructor() {
         new CharEncoding();
     }
 
     @Test
-    public void testIso8859_1() {
+    void testIso8859_1() {
         assertEquals(StandardCharsets.ISO_8859_1.name(), CharEncoding.ISO_8859_1);
     }
 
     @Test
-    public void testUsAscii() {
+    void testUsAscii() {
         assertEquals(StandardCharsets.US_ASCII.name(), CharEncoding.US_ASCII);
     }
 
     @Test
-    public void testUtf16() {
+    void testUtf16() {
         assertEquals(StandardCharsets.UTF_16.name(), CharEncoding.UTF_16);
     }
 
     @Test
-    public void testUtf16Be() {
+    void testUtf16Be() {
         assertEquals(StandardCharsets.UTF_16BE.name(), CharEncoding.UTF_16BE);
     }
 
     @Test
-    public void testUtf16Le() {
+    void testUtf16Le() {
         assertEquals(StandardCharsets.UTF_16LE.name(), CharEncoding.UTF_16LE);
     }
 
     @Test
-    public void testUtf8() {
+    void testUtf8() {
         assertEquals(StandardCharsets.UTF_8.name(), CharEncoding.UTF_8);
     }
 

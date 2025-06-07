@@ -103,7 +103,7 @@ public class BinaryCodecTest {
      * Tests for byte[] decode(byte[])
      */
     @Test
-    public void testDecodeByteArray() {
+    void testDecodeByteArray() {
         // With a single raw binary
         byte[] bits = new byte[1];
         byte[] decoded = instance.decode("00000000".getBytes(CHARSET_UTF8));
@@ -191,7 +191,7 @@ public class BinaryCodecTest {
      * Tests for Object decode(Object)
      */
     @Test
-    public void testDecodeObject() throws Exception {
+    void testDecodeObject() throws Exception {
         byte[] bits;
         // With a single raw binary
         bits = new byte[1];
@@ -263,7 +263,7 @@ public class BinaryCodecTest {
      * Tests for Object decode(Object)
      */
     @Test
-    public void testDecodeObjectException() {
+    void testDecodeObjectException() {
         try {
             this.instance.decode(new Object());
         } catch (final DecoderException e) {
@@ -277,7 +277,7 @@ public class BinaryCodecTest {
      * Tests for byte[] encode(byte[])
      */
     @Test
-    public void testEncodeByteArray() {
+    void testEncodeByteArray() {
         // With a single raw binary
         byte[] bits = new byte[1];
         String l_encoded = new String(instance.encode(bits));
@@ -398,7 +398,7 @@ public class BinaryCodecTest {
      * Tests for Object encode(Object)
      */
     @Test
-    public void testEncodeObject() throws Exception {
+    void testEncodeObject() throws Exception {
         // With a single raw binary
         byte[] bits = new byte[1];
         String l_encoded = new String((char[]) instance.encode((Object) bits));
@@ -518,7 +518,7 @@ public class BinaryCodecTest {
      * Tests for Object encode(Object)
      */
     @Test
-    public void testEncodeObjectException() {
+    void testEncodeObjectException() {
         try {
             instance.encode("");
         } catch (final EncoderException e) {
@@ -532,7 +532,7 @@ public class BinaryCodecTest {
      * Tests for Object encode(Object)
      */
     @Test
-    public void testEncodeObjectNull() throws Exception {
+    void testEncodeObjectNull() throws Exception {
         final Object obj = new byte[0];
         assertEquals(0, ((char[]) instance.encode(obj)).length);
     }
@@ -541,7 +541,7 @@ public class BinaryCodecTest {
      * Tests for byte[] fromAscii(byte[])
      */
     @Test
-    public void testFromAsciiByteArray() {
+    void testFromAsciiByteArray() {
         assertEquals(0, BinaryCodec.fromAscii((byte[]) null).length);
         assertEquals(0, BinaryCodec.fromAscii(new byte[0]).length);
         // With a single raw binary
@@ -632,7 +632,7 @@ public class BinaryCodecTest {
      * Tests for byte[] fromAscii(char[])
      */
     @Test
-    public void testFromAsciiCharArray() {
+    void testFromAsciiCharArray() {
         assertEquals(0, BinaryCodec.fromAscii((char[]) null).length);
         assertEquals(0, BinaryCodec.fromAscii(new char[0]).length);
         // With a single raw binary
@@ -720,7 +720,7 @@ public class BinaryCodecTest {
     }
 
     @Test
-    public void testToAsciiBytes() {
+    void testToAsciiBytes() {
         // With a single raw binary
         byte[] bits = new byte[1];
         String l_encoded = new String(BinaryCodec.toAsciiBytes(bits));
@@ -838,7 +838,7 @@ public class BinaryCodecTest {
     }
 
     @Test
-    public void testToAsciiChars() {
+    void testToAsciiChars() {
         // With a single raw binary
         byte[] bits = new byte[1];
         String l_encoded = new String(BinaryCodec.toAsciiChars(bits));
@@ -959,7 +959,7 @@ public class BinaryCodecTest {
      * Tests the toAsciiString(byte[]) method
      */
     @Test
-    public void testToAsciiString() {
+    void testToAsciiString() {
         // With a single raw binary
         byte[] bits = new byte[1];
         String l_encoded = BinaryCodec.toAsciiString(bits);
@@ -1079,7 +1079,7 @@ public class BinaryCodecTest {
      * Tests for byte[] toByteArray(String)
      */
     @Test
-    public void testToByteArrayFromString() {
+    void testToByteArrayFromString() {
         // With a single raw binary
         byte[] bits = new byte[1];
         byte[] decoded = instance.toByteArray("00000000");

@@ -132,12 +132,12 @@ public class CharSequenceUtilsTest {
      */
     @SuppressWarnings("unused")
     @Test
-    public void testConstructor() {
+    void testConstructor() {
         new CharSequenceUtils();
     }
 
     @Test
-    public void testRegionMatches() {
+    void testRegionMatches() {
         for (final TestData data : TEST_DATA) {
             new RunTest() {
                 @Override

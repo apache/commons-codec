@@ -54,7 +54,7 @@ public class Base64OutputStreamTest {
      *             for some failure scenarios.
      */
     @Test
-    public void testBase64EmptyOutputStreamMimeChunkSize() throws Exception {
+    void testBase64EmptyOutputStreamMimeChunkSize() throws Exception {
         testBase64EmptyOutputStream(BaseNCodec.MIME_CHUNK_SIZE);
     }
 
@@ -65,7 +65,7 @@ public class Base64OutputStreamTest {
      *             for some failure scenarios.
      */
     @Test
-    public void testBase64EmptyOutputStreamPemChunkSize() throws Exception {
+    void testBase64EmptyOutputStreamPemChunkSize() throws Exception {
         testBase64EmptyOutputStream(BaseNCodec.PEM_CHUNK_SIZE);
     }
 
@@ -76,7 +76,7 @@ public class Base64OutputStreamTest {
      *             for some failure scenarios.
      */
     @Test
-    public void testBase64OutputStreamByChunk() throws Exception {
+    void testBase64OutputStreamByChunk() throws Exception {
         // Hello World test.
         byte[] encoded = StringUtils.getBytesUtf8("SGVsbG8gV29ybGQ=\r\n");
         byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
@@ -115,7 +115,7 @@ public class Base64OutputStreamTest {
      *             for some failure scenarios.
      */
     @Test
-    public void testBase64OutputStreamByteByByte() throws Exception {
+    void testBase64OutputStreamByteByByte() throws Exception {
         // Hello World test.
         byte[] encoded = StringUtils.getBytesUtf8("SGVsbG8gV29ybGQ=\r\n");
         byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
@@ -271,7 +271,7 @@ public class Base64OutputStreamTest {
      * @throws Exception for some failure scenarios.
      */
     @Test
-    public void testCodec98NPE() throws Exception {
+    void testCodec98NPE() throws Exception {
         final byte[] codec98 = StringUtils.getBytesUtf8(Base64TestData.CODEC_98_NPE);
         final byte[] codec98_1024 = new byte[1024];
         System.arraycopy(codec98, 0, codec98_1024, 0, codec98.length);
@@ -292,7 +292,7 @@ public class Base64OutputStreamTest {
      *             for some failure scenarios.
      */
     @Test
-    public void testStrictDecoding() throws Exception {
+    void testStrictDecoding() throws Exception {
         for (final String impossibleStr : Base64Test.BASE64_IMPOSSIBLE_CASES) {
             final byte[] impossibleEncoded = StringUtils.getBytesUtf8(impossibleStr);
             ByteArrayOutputStream bout = new ByteArrayOutputStream();
@@ -322,7 +322,7 @@ public class Base64OutputStreamTest {
      *             for some failure scenarios.
      */
     @Test
-    public void testWriteOutOfBounds() throws Exception {
+    void testWriteOutOfBounds() throws Exception {
         final byte[] buf = new byte[1024];
         final ByteArrayOutputStream bout = new ByteArrayOutputStream();
         try (Base64OutputStream out = new Base64OutputStream(bout)) {
@@ -340,7 +340,7 @@ public class Base64OutputStreamTest {
      *             for some failure scenarios.
      */
     @Test
-    public void testWriteToNullCoverage() throws Exception {
+    void testWriteToNullCoverage() throws Exception {
         final ByteArrayOutputStream bout = new ByteArrayOutputStream();
         try (Base64OutputStream out = new Base64OutputStream(bout)) {
             assertThrows(NullPointerException.class, () -> out.write(null, 0, 0));

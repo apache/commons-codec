@@ -44,7 +44,7 @@ public class DaitchMokotoffSoundexTest extends AbstractStringEncoderTest<DaitchM
     }
 
     @Test
-    public void testAccentedCharacterFolding() {
+    void testAccentedCharacterFolding() {
         assertEquals("294795", soundex("Straßburg"));
         assertEquals("294795", soundex("Strasburg"));
 
@@ -53,7 +53,7 @@ public class DaitchMokotoffSoundexTest extends AbstractStringEncoderTest<DaitchM
     }
 
     @Test
-    public void testAdjacentCodes() {
+    void testAdjacentCodes() {
         // AKSSOL
         // A-KS-S-O-L
         // 0-54-4---8 -> wrong
@@ -80,7 +80,7 @@ public class DaitchMokotoffSoundexTest extends AbstractStringEncoderTest<DaitchM
     }
 
     @Test
-    public void testEncodeIgnoreApostrophes() throws EncoderException {
+    void testEncodeIgnoreApostrophes() throws EncoderException {
         checkEncodingVariations("079600", new String[] { "OBrien", "'OBrien", "O'Brien", "OB'rien", "OBr'ien",
                 "OBri'en", "OBrie'n", "OBrien'" });
     }
@@ -90,13 +90,13 @@ public class DaitchMokotoffSoundexTest extends AbstractStringEncoderTest<DaitchM
      *
      * @throws EncoderException for some failure scenarios     */
     @Test
-    public void testEncodeIgnoreHyphens() throws EncoderException {
+    void testEncodeIgnoreHyphens() throws EncoderException {
         checkEncodingVariations("565463", new String[] { "KINGSMITH", "-KINGSMITH", "K-INGSMITH", "KI-NGSMITH",
                 "KIN-GSMITH", "KING-SMITH", "KINGS-MITH", "KINGSM-ITH", "KINGSMI-TH", "KINGSMIT-H", "KINGSMITH-" });
     }
 
     @Test
-    public void testEncodeIgnoreTrimmable() {
+    void testEncodeIgnoreTrimmable() {
         assertEquals("746536", encode(" \t\n\r Washington \t\n\r "));
         assertEquals("746536", encode("Washington"));
     }
@@ -105,7 +105,7 @@ public class DaitchMokotoffSoundexTest extends AbstractStringEncoderTest<DaitchM
      * Examples from http://www.jewishgen.org/infofiles/soundex.html
      */
     @Test
-    public void testSoundexBasic() {
+    void testSoundexBasic() {
         assertEquals("583600", soundex("GOLDEN"));
         assertEquals("087930", soundex("Alpert"));
         assertEquals("791900", soundex("Breuer"));
@@ -130,7 +130,7 @@ public class DaitchMokotoffSoundexTest extends AbstractStringEncoderTest<DaitchM
      * Examples from http://www.avotaynu.com/soundex.htm
      */
     @Test
-    public void testSoundexBasic2() {
+    void testSoundexBasic2() {
         assertEquals("467000|567000", soundex("Ceniow"));
         assertEquals("467000", soundex("Tsenyuv"));
         assertEquals("587400|587500", soundex("Holubica"));
@@ -145,7 +145,7 @@ public class DaitchMokotoffSoundexTest extends AbstractStringEncoderTest<DaitchM
      * Examples from https://en.wikipedia.org/wiki/Daitch%E2%80%93Mokotoff_Soundex
      */
     @Test
-    public void testSoundexBasic3() {
+    void testSoundexBasic3() {
         assertEquals("734000|739400", soundex("Peters"));
         assertEquals("734600|739460", soundex("Peterson"));
         assertEquals("645740", soundex("Moskowitz"));
@@ -161,7 +161,7 @@ public class DaitchMokotoffSoundexTest extends AbstractStringEncoderTest<DaitchM
     }
 
     @Test
-    public void testSpecialRomanianCharacters() {
+    void testSpecialRomanianCharacters() {
         assertEquals("364000|464000", soundex("ţamas")); // t-cedilla
         assertEquals("364000|464000", soundex("țamas")); // t-comma
     }

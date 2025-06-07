@@ -30,7 +30,7 @@ public class XXHash32OverflowTest {
      * copies more data into the unprocessed bytes array.
      */
     @Test
-    public void testIncrementalHashWithUnprocessedBytesAndHugeLengthArray() {
+    void testIncrementalHashWithUnprocessedBytesAndHugeLengthArray() {
         // Assert the test precondition that a large array added to unprocessed bytes
         // will overflow an integer counter. We use the smallest hugeLength possible
         // as some VMs cannot allocate maximum length arrays.

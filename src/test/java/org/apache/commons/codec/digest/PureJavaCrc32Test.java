@@ -350,7 +350,7 @@ public class PureJavaCrc32Test {
     }
 
     @Test
-    public void testCorrectness() throws Exception {
+    void testCorrectness() throws Exception {
         checkSame();
 
         theirs.update(104);

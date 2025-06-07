@@ -108,7 +108,7 @@ public class DigestUtilsTest {
     }
 
     @Test
-    public void testDigestFileAs() throws IOException {
+    void testDigestFileAs() throws IOException {
         final String expected = "d41d8cd98f00b204e9800998ecf8427e";
         final String pathName = "src/test/resources/org/apache/commons/codec/empty.bin";
         final String algo = MessageDigestAlgorithms.MD5;
@@ -123,26 +123,26 @@ public class DigestUtilsTest {
     }
 
     @Test
-    public void testGetMessageDigest() {
+    void testGetMessageDigest() {
         final DigestUtils digestUtils = new DigestUtils(MessageDigestAlgorithms.MD5);
         assertNotNull(digestUtils.getMessageDigest());
         assertEquals(MessageDigestAlgorithms.MD5, digestUtils.getMessageDigest().getAlgorithm());
     }
 
     @Test
-    public void testInternalNoSuchAlgorithmException() {
+    void testInternalNoSuchAlgorithmException() {
         assertThrows(IllegalArgumentException.class, () -> DigestUtils.getDigest("Bogus Bogus"));
     }
 
     @Test
-    public void testIsAvailable() {
+    void testIsAvailable() {
         assertTrue(DigestUtils.isAvailable(MessageDigestAlgorithms.MD5));
         assertFalse(DigestUtils.isAvailable("FOO"));
         assertFalse(DigestUtils.isAvailable(null));
     }
 
     @Test
-    public void testMd2Hex() throws IOException {
+    void testMd2Hex() throws IOException {
         // Examples from RFC 1319
         assertEquals("8350e5a3e24c153df2275c9f80692773", DigestUtils.md2Hex(EMPTY_STRING));
 
@@ -166,7 +166,7 @@ public class DigestUtilsTest {
      * An MD2 hash converted to hexadecimal should always be 32 characters.
      */
     @Test
-    public void testMd2HexLength() {
+    void testMd2HexLength() {
         String hashMe = "this is some string that is longer than 32 characters";
         String hash = DigestUtils.md2Hex(getBytesUtf8(hashMe));
         assertEquals(32, hash.length());
@@ -180,7 +180,7 @@ public class DigestUtilsTest {
      * An MD2 hash should always be a 16 element byte[].
      */
     @Test
-    public void testMd2Length() {
+    void testMd2Length() {
         String hashMe = "this is some string that is longer than 16 characters";
         byte[] hash = DigestUtils.md2(getBytesUtf8(hashMe));
         assertEquals(16, hash.length);
@@ -191,7 +191,7 @@ public class DigestUtilsTest {
     }
 
     @Test
-    public void testMd5Hex() throws IOException {
+    void testMd5Hex() throws IOException {
         // Examples from RFC 1321
         assertEquals("d41d8cd98f00b204e9800998ecf8427e", DigestUtils.md5Hex(EMPTY_STRING));
 
@@ -215,7 +215,7 @@ public class DigestUtilsTest {
      * An MD5 hash converted to hexadecimal should always be 32 characters.
      */
     @Test
-    public void testMd5HexLengthForBytes() {
+    void testMd5HexLengthForBytes() {
         String hashMe = "this is some string that is longer than 32 characters";
         String hash = DigestUtils.md5Hex(getBytesUtf8(hashMe));
         assertEquals(32, hash.length());
@@ -229,7 +229,7 @@ public class DigestUtilsTest {
      * An MD5 hash should always be a 16 element byte[].
      */
     @Test
-    public void testMd5LengthForBytes() {
+    void testMd5LengthForBytes() {
         String hashMe = "this is some string that is longer than 16 characters";
         byte[] hash = DigestUtils.md5(getBytesUtf8(hashMe));
         assertEquals(16, hash.length);
@@ -240,7 +240,7 @@ public class DigestUtilsTest {
     }
 
     @Test
-    public void testSha1Hex() throws IOException {
+    void testSha1Hex() throws IOException {
         // Examples from FIPS 180-1
         assertEquals("a9993e364706816aba3e25717850c26c9cd0d89d", DigestUtils.sha1Hex("abc"));
 
@@ -251,7 +251,7 @@ public class DigestUtilsTest {
     }
 
     @Test
-    public void testSha1UpdateWithByteArray() {
+    void testSha1UpdateWithByteArray() {
         final String d1 = "C'est un homme qui rentre dans un café, et plouf";
         final String d2 = "C'est un homme, c'est qu'une tête, on lui offre un cadeau: 'oh... encore un chapeau!'";
 
@@ -269,7 +269,7 @@ public class DigestUtilsTest {
     }
 
     @Test
-    public void testSha1UpdateWithByteBuffer() {
+    void testSha1UpdateWithByteBuffer() {
         final String d1 = "C'est un homme qui rentre dans un café, et plouf";
         final String d2 = "C'est un homme, c'est qu'une tête, on lui offre un cadeau: 'oh... encore un chapeau!'";
 
@@ -287,7 +287,7 @@ public class DigestUtilsTest {
     }
 
     @Test
-    public void testSha1UpdateWithString() {
+    void testSha1UpdateWithString() {
         final String d1 = "C'est un homme qui rentre dans un café, et plouf";
         final String d2 = "C'est un homme, c'est qu'une tête, on lui offre un cadeau: 'oh... encore un chapeau!'";
 
@@ -305,7 +305,7 @@ public class DigestUtilsTest {
     }
 
     @Test
-    public void testSha224_FileAsHex() throws IOException {
+    void testSha224_FileAsHex() throws IOException {
         assumeJava8();
         final String expected = "d14a028c2a3a2bc9476102bb288234c415a2b01f828ea62ac5b3e42f";
         final String pathName = "src/test/resources/org/apache/commons/codec/empty.bin";
@@ -322,14 +322,14 @@ public class DigestUtilsTest {
     }
 
     @Test
-    public void testSha224_PathAsHex() throws IOException {
+    void testSha224_PathAsHex() throws IOException {
         assumeJava8();
         assertEquals("d14a028c2a3a2bc9476102bb288234c415a2b01f828ea62ac5b3e42f",
                 new DigestUtils(MessageDigestAlgorithms.SHA_224).digestAsHex(Paths.get("src/test/resources/org/apache/commons/codec/empty.bin")));
     }
 
     @Test
-    public void testSha224_StringAsHex() {
+    void testSha224_StringAsHex() {
         assumeJava8();
         assertEquals("d14a028c2a3a2bc9476102bb288234c415a2b01f828ea62ac5b3e42f", new DigestUtils(MessageDigestAlgorithms.SHA_224).digestAsHex(EMPTY_STRING));
         assertEquals("730e109bd7a8a32b1cb9d9a09aa2325d2430587ddbc0c38bad911525",
@@ -339,7 +339,7 @@ public class DigestUtilsTest {
     }
 
     @Test
-    public void testSha256() throws IOException {
+    void testSha256() throws IOException {
         // Examples from FIPS 180-2
         assertEquals("ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad", DigestUtils.sha256Hex("abc"));
         assertEquals("ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad", DigestUtils.sha256Hex(getBytesUtf8("abc")));
@@ -350,12 +350,12 @@ public class DigestUtilsTest {
     }
 
     @Test
-    public void testSha256HexInputStream() throws IOException {
+    void testSha256HexInputStream() throws IOException {
         assertEquals(DigestUtils.sha256Hex(testData), DigestUtils.sha256Hex(new ByteArrayInputStream(testData)));
     }
 
     @Test
-    public void testSha3_224() {
+    void testSha3_224() {
         assumeJava9();
         // Examples from https://csrc.nist.gov/projects/cryptographic-standards-and-guidelines/example-values
         //
@@ -364,13 +364,13 @@ public class DigestUtilsTest {
     }
 
     @Test
-    public void testSha3_224HexInputStream() throws IOException {
+    void testSha3_224HexInputStream() throws IOException {
         assumeJava9();
         assertEquals(DigestUtils.sha3_224Hex(testData), DigestUtils.sha3_224Hex(new ByteArrayInputStream(testData)));
     }
 
     @Test
-    public void testSha3_256() {
+    void testSha3_256() {
         assumeJava9();
         // Examples from https://csrc.nist.gov/projects/cryptographic-standards-and-guidelines/example-values
         //
@@ -379,13 +379,13 @@ public class DigestUtilsTest {
     }
 
     @Test
-    public void testSha3_256HexInputStream() throws IOException {
+    void testSha3_256HexInputStream() throws IOException {
         assumeJava9();
         assertEquals(DigestUtils.sha3_256Hex(testData), DigestUtils.sha3_256Hex(new ByteArrayInputStream(testData)));
     }
 
     @Test
-    public void testSha3_384() {
+    void testSha3_384() {
         assumeJava9();
         // Examples from https://csrc.nist.gov/projects/cryptographic-standards-and-guidelines/example-values
         //
@@ -394,13 +394,13 @@ public class DigestUtilsTest {
     }
 
     @Test
-    public void testSha3_384HexInputStream() throws IOException {
+    void testSha3_384HexInputStream() throws IOException {
         assumeJava9();
         assertEquals(DigestUtils.sha3_384Hex(testData), DigestUtils.sha3_384Hex(new ByteArrayInputStream(testData)));
     }
 
     @Test
-    public void testSha3_512() {
+    void testSha3_512() {
         assumeJava9();
         // Examples from https://csrc.nist.gov/projects/cryptographic-standards-and-guidelines/example-values
         //
@@ -410,13 +410,13 @@ public class DigestUtilsTest {
     }
 
     @Test
-    public void testSha3_512HexInputStream() throws IOException {
+    void testSha3_512HexInputStream() throws IOException {
         assumeJava9();
         assertEquals(DigestUtils.sha3_512Hex(testData), DigestUtils.sha3_512Hex(new ByteArrayInputStream(testData)));
     }
 
     @Test
-    public void testSha384() throws IOException {
+    void testSha384() throws IOException {
         // Examples from FIPS 180-2
         assertEquals("cb00753f45a35e8bb5a03d699ac65007272c32ab0eded1631a8b605a43ff5bed" + "8086072ba1e7cc2358baeca134c825a7", DigestUtils.sha384Hex("abc"));
         assertEquals("cb00753f45a35e8bb5a03d699ac65007272c32ab0eded1631a8b605a43ff5bed" + "8086072ba1e7cc2358baeca134c825a7",
@@ -427,12 +427,12 @@ public class DigestUtilsTest {
     }
 
     @Test
-    public void testSha384HexInputStream() throws IOException {
+    void testSha384HexInputStream() throws IOException {
         assertEquals(DigestUtils.sha384Hex(testData), DigestUtils.sha384Hex(new ByteArrayInputStream(testData)));
     }
 
     @Test
-    public void testSha512() {
+    void testSha512() {
         // Examples from FIPS 180-2
         assertEquals("ddaf35a193617abacc417349ae20413112e6fa4e89a97ea20a9eeee64b55d39a" + "2192992a274fc1a836ba3c23a3feebbd454d4423643ce80e2a9ac94fa54ca49f",
                 DigestUtils.sha512Hex("abc"));
@@ -443,7 +443,7 @@ public class DigestUtilsTest {
     }
 
     @Test
-    public void testSha512_224() throws Exception {
+    void testSha512_224() throws Exception {
         assumeJava9();
         // Examples from
         // https://csrc.nist.gov/CSRC/media/Projects/Cryptographic-Standards-and-Guidelines/documents/examples/SHA512_224.pdf
@@ -465,7 +465,7 @@ public class DigestUtilsTest {
     }
 
     @Test
-    public void testSha512_256() throws Exception {
+    void testSha512_256() throws Exception {
         assumeJava9();
         // Examples from
         // https://csrc.nist.gov/CSRC/media/Projects/Cryptographic-Standards-and-Guidelines/documents/examples/SHA512_256.pdf
@@ -487,13 +487,13 @@ public class DigestUtilsTest {
     }
 
     @Test
-    public void testSha512HexInputStream() throws IOException {
+    void testSha512HexInputStream() throws IOException {
         assertEquals(DigestUtils.sha512Hex(testData), DigestUtils.sha512Hex(new ByteArrayInputStream(testData)));
     }
 
     @SuppressWarnings("deprecation") // deliberate tests of deprecated code
     @Test
-    public void testShaHex() throws IOException {
+    void testShaHex() throws IOException {
         // Examples from FIPS 180-1
         assertEquals("a9993e364706816aba3e25717850c26c9cd0d89d", DigestUtils.shaHex("abc"));
 
@@ -505,7 +505,7 @@ public class DigestUtilsTest {
 
     @SuppressWarnings("deprecation") // deliberate tests of deprecated code
     @Test
-    public void testShaUpdateWithByteArray() {
+    void testShaUpdateWithByteArray() {
         final String d1 = "C'est un homme qui rentre dans un café, et plouf";
         final String d2 = "C'est un homme, c'est qu'une tête, on lui offre un cadeau: 'oh... encore un chapeau!'";
 
@@ -524,7 +524,7 @@ public class DigestUtilsTest {
 
     @SuppressWarnings("deprecation") // deliberate tests of deprecated code
     @Test
-    public void testShaUpdateWithString() {
+    void testShaUpdateWithString() {
         final String d1 = "C'est un homme qui rentre dans un café, et plouf";
         final String d2 = "C'est un homme, c'est qu'une tête, on lui offre un cadeau: 'oh... encore un chapeau!'";
 

@@ -44,7 +44,7 @@ public class RuleTest {
     }
 
     @Test
-    public void testPhonemeComparedToLaterIsNegative() {
+    void testPhonemeComparedToLaterIsNegative() {
         for (final Rule.Phoneme[] phs : makePhonemes()) {
             for (int i = 0; i < phs.length; i++) {
                 for (int j = i + 1; j < phs.length; j++) {
@@ -58,7 +58,7 @@ public class RuleTest {
     }
 
     @Test
-    public void testPhonemeComparedToSelfIsZero() {
+    void testPhonemeComparedToSelfIsZero() {
         for (final Rule.Phoneme[] phs : makePhonemes()) {
             for (final Rule.Phoneme ph : phs) {
                 assertEquals(0, Rule.Phoneme.COMPARATOR.compare(ph, ph),
@@ -68,7 +68,7 @@ public class RuleTest {
     }
 
     @Test
-    public void testSubSequenceWorks() {
+    void testSubSequenceWorks() {
         // AppendableCharSequence is private to Rule. We can only make it through a Phoneme.
 
         final Rule.Phoneme a = new Rule.Phoneme("a", null);

@@ -28,13 +28,13 @@ public abstract class BinaryEncoderAbstractTest {
     protected abstract BinaryEncoder makeEncoder();
 
     @Test
-    public void testEncodeEmpty() throws Exception {
+    void testEncodeEmpty() throws Exception {
         final BinaryEncoder encoder = makeEncoder();
         encoder.encode(new byte[0]);
     }
 
     @Test
-    public void testEncodeNull() {
+    void testEncodeNull() {
         assertThrows(EncoderException.class, () -> makeEncoder().encode(null));
     }
 }

@@ -33,12 +33,12 @@ import org.junit.jupiter.api.Timeout;
 public class Md5CryptTest {
 
     @Test
-    public void testCtor() {
+    void testCtor() {
         assertNotNull(new Md5Crypt());
     }
 
     @Test
-    public void testInvalidPrefix() {
+    void testInvalidPrefix() {
         assertThrows(IllegalArgumentException.class, () -> Md5Crypt.md5Crypt(new byte[] { 1, 2, 3, 4, 5 },
                 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa!", "(.*a){10000}"));
         assertThrows(IllegalArgumentException.class, () -> Md5Crypt.md5Crypt(new byte[] { 1, 2, 3, 4, 5 },
@@ -48,7 +48,7 @@ public class Md5CryptTest {
     }
 
     @Test
-    public void testMd5CryptBytes() {
+    void testMd5CryptBytes() {
         // An empty Bytearray equals an empty String
         assertEquals("$1$foo$9mS5ExwgIECGE5YKlD5o91", Crypt.crypt(new byte[0], "$1$foo"));
         // UTF-8 stores \u00e4 "a with dieresis" as two bytes 0xc3 0xa4.
@@ -58,30 +58,30 @@ public class Md5CryptTest {
     }
 
     @Test
-    public void testMd5CryptExplicitCall() {
+    void testMd5CryptExplicitCall() {
         assertTrue(Md5Crypt.md5Crypt("secret".getBytes()).matches("^\\$1\\$[a-zA-Z0-9./]{0,8}\\$.{1,}$"));
         assertTrue(Md5Crypt.md5Crypt("secret".getBytes(), (String) null).matches("^\\$1\\$[a-zA-Z0-9./]{0,8}\\$.{1,}$"));
     }
 
     @Test
-    public void testMd5CryptExplicitCallWithThreadLocalRandom() {
+    void testMd5CryptExplicitCallWithThreadLocalRandom() {
         final ThreadLocalRandom threadLocalRandom = ThreadLocalRandom.current();
         assertTrue(Md5Crypt.md5Crypt("secret".getBytes(), threadLocalRandom).matches("^\\$1\\$[a-zA-Z0-9./]{0,8}\\$.{1,}$"));
         assertTrue(Md5Crypt.md5Crypt("secret".getBytes(), (String) null).matches("^\\$1\\$[a-zA-Z0-9./]{0,8}\\$.{1,}$"));
     }
 
     @Test
-    public void testMd5CryptLongInput() {
+    void testMd5CryptLongInput() {
         assertEquals("$1$1234$MoxekaNNUgfPRVqoeYjCD/", Crypt.crypt("12345678901234567890", "$1$1234"));
     }
 
     @Test
-    public void testMd5CryptNullData() {
+    void testMd5CryptNullData() {
         assertThrows(NullPointerException.class, () -> Md5Crypt.md5Crypt((byte[]) null));
     }
 
     @Test
-    public void testMd5CryptStrings() {
+    void testMd5CryptStrings() {
         // empty data
         assertEquals("$1$foo$9mS5ExwgIECGE5YKlD5o91", Crypt.crypt("", "$1$foo"));
         // salt gets cut at dollar sign
@@ -94,12 +94,12 @@ public class Md5CryptTest {
     }
 
     @Test
-    public void testMd5CryptWithEmptySalt() {
+    void testMd5CryptWithEmptySalt() {
         assertThrows(IllegalArgumentException.class, () -> Md5Crypt.md5Crypt("secret".getBytes(), ""));
     }
 
     @Test
-    public void testZeroOutInput() {
+    void testZeroOutInput() {
         final byte[] buffer = new byte[200];
         Arrays.fill(buffer, (byte) 'A');
         Md5Crypt.md5Crypt(buffer);

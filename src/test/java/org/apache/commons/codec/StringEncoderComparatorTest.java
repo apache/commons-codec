@@ -34,7 +34,7 @@ public class StringEncoderComparatorTest {
 
     @SuppressWarnings("unchecked") // cannot easily avoid this warning
     @Test
-    public void testComparatorWithDoubleMetaphone() throws Exception {
+    void testComparatorWithDoubleMetaphone() throws Exception {
         final StringEncoderComparator sCompare = new StringEncoderComparator(new DoubleMetaphone());
 
         final String[] testArray = { "Jordan", "Sosa", "Prior", "Pryor" };
@@ -52,7 +52,7 @@ public class StringEncoderComparatorTest {
     }
 
     @Test
-    public void testComparatorWithDoubleMetaphoneAndInvalidInput() throws Exception {
+    void testComparatorWithDoubleMetaphoneAndInvalidInput() throws Exception {
         final StringEncoderComparator sCompare = new StringEncoderComparator(new DoubleMetaphone());
 
         final int compare = sCompare.compare(Double.valueOf(3.0d), Long.valueOf(3));
@@ -60,7 +60,7 @@ public class StringEncoderComparatorTest {
     }
 
     @Test
-    public void testComparatorWithSoundex() throws Exception {
+    void testComparatorWithSoundex() throws Exception {
         final StringEncoderComparator sCompare = new StringEncoderComparator(new Soundex());
 
         assertEquals(0, sCompare.compare("O'Brien", "O'Brian"), "O'Brien and O'Brian didn't come out with the same Soundex, something must be wrong here");

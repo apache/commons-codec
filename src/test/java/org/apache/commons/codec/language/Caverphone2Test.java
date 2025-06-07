@@ -41,7 +41,7 @@ public class Caverphone2Test extends AbstractStringEncoderTest<Caverphone2> {
      *
      * @throws EncoderException for some failure scenarios     */
     @Test
-    public void testCaverphoneRevisitedCommonCodeAT11111111() throws EncoderException {
+    void testCaverphoneRevisitedCommonCodeAT11111111() throws EncoderException {
         checkEncodingVariations("AT11111111", new String[]{
             "add",
             "aid",
@@ -65,7 +65,7 @@ public class Caverphone2Test extends AbstractStringEncoderTest<Caverphone2> {
      *
      * @throws EncoderException for some failure scenarios     */
     @Test
-    public void testCaverphoneRevisitedExamples() throws EncoderException {
+    void testCaverphoneRevisitedExamples() throws EncoderException {
         final String[][] data = {{"Stevenson", "STFNSN1111"}, {"Peter", "PTA1111111"}};
         checkEncodings(data);
     }
@@ -75,7 +75,7 @@ public class Caverphone2Test extends AbstractStringEncoderTest<Caverphone2> {
      *
      * @throws EncoderException for some failure scenarios     */
     @Test
-    public void testCaverphoneRevisitedRandomNameKLN1111111() throws EncoderException {
+    void testCaverphoneRevisitedRandomNameKLN1111111() throws EncoderException {
         checkEncodingVariations("KLN1111111", new String[]{
             "Cailean",
             "Calan",
@@ -166,7 +166,7 @@ public class Caverphone2Test extends AbstractStringEncoderTest<Caverphone2> {
      *
      * @throws EncoderException for some failure scenarios     */
     @Test
-    public void testCaverphoneRevisitedRandomNameTN11111111() throws EncoderException {
+    void testCaverphoneRevisitedRandomNameTN11111111() throws EncoderException {
         checkEncodingVariations("TN11111111", new String[]{
             "Dan",
             "Dane",
@@ -244,7 +244,7 @@ public class Caverphone2Test extends AbstractStringEncoderTest<Caverphone2> {
      *
      * @throws EncoderException for some failure scenarios     */
     @Test
-    public void testCaverphoneRevisitedRandomNameTTA1111111() throws EncoderException {
+    void testCaverphoneRevisitedRandomNameTTA1111111() throws EncoderException {
         checkEncodingVariations("TTA1111111", new String[]{
             "Darda",
             "Datha",
@@ -321,28 +321,28 @@ public class Caverphone2Test extends AbstractStringEncoderTest<Caverphone2> {
      *
      * @throws EncoderException for some failure scenarios     */
     @Test
-    public void testCaverphoneRevisitedRandomWords() throws EncoderException {
+    void testCaverphoneRevisitedRandomWords() throws EncoderException {
         checkEncodingVariations("RTA1111111", new String[]{"rather", "ready", "writer"});
         checkEncoding("SSA1111111", "social");
         checkEncodingVariations("APA1111111", new String[]{"able", "appear"});
     }
 
     @Test
-    public void testEndMb() throws EncoderException {
+    void testEndMb() throws EncoderException {
         final String[][] data = {{"mb", "M111111111"}, {"mbmb", "MPM1111111"}};
         checkEncodings(data);
     }
 
     // Caverphone Revisited
     @Test
-    public void testIsCaverphoneEquals() throws EncoderException {
+    void testIsCaverphoneEquals() throws EncoderException {
         final Caverphone2 caverphone = new Caverphone2();
         assertFalse(caverphone.isEncodeEqual("Peter", "Stevenson"), "Caverphone encodings should not be equal");
         assertTrue(caverphone.isEncodeEqual("Peter", "Peady"), "Caverphone encodings should be equal");
     }
 
     @Test
-    public void testSpecificationExamples() throws EncoderException {
+    void testSpecificationExamples() throws EncoderException {
         final String[][] data = {
             {"Peter", "PTA1111111"},
             {"ready", "RTA1111111"},

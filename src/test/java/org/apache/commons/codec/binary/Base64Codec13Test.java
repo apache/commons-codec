@@ -368,7 +368,7 @@ public class Base64Codec13Test {
      * @throws DecoderException problem
      */
     @Test
-    public void testBinaryDecoder() throws DecoderException {
+    void testBinaryDecoder() throws DecoderException {
         final BinaryDecoder dec = new Base64();
         for (int i = 0; i < STRINGS.length; i++) {
             if (STRINGS[i] != null) {
@@ -386,7 +386,7 @@ public class Base64Codec13Test {
      * @throws EncoderException problem
      */
     @Test
-    public void testBinaryEncoder() throws EncoderException {
+    void testBinaryEncoder() throws EncoderException {
         final BinaryEncoder enc = new Base64();
         for (int i = 0; i < STRINGS.length; i++) {
             if (STRINGS[i] != null) {
@@ -404,7 +404,7 @@ public class Base64Codec13Test {
      * @throws DecoderException problem
      */
     @Test
-    public void testDecoder() throws DecoderException {
+    void testDecoder() throws DecoderException {
         final Decoder dec = new Base64();
         for (int i = 0; i < STRINGS.length; i++) {
             if (STRINGS[i] != null) {
@@ -422,7 +422,7 @@ public class Base64Codec13Test {
      * @throws EncoderException problem
      */
     @Test
-    public void testEncoder() throws EncoderException {
+    void testEncoder() throws EncoderException {
         final Encoder enc = new Base64();
         for (int i = 0; i < STRINGS.length; i++) {
             if (STRINGS[i] != null) {
@@ -438,7 +438,7 @@ public class Base64Codec13Test {
      * static method is behaving identical to commons-codec-1.3.jar.
      */
     @Test
-    public void testStaticDecode() {
+    void testStaticDecode() {
         for (int i = 0; i < STRINGS.length; i++) {
             if (STRINGS[i] != null) {
                 final byte[] base64 = utf8(STRINGS[i]);
@@ -455,7 +455,7 @@ public class Base64Codec13Test {
      * supplied with chunked input.
      */
     @Test
-    public void testStaticDecodeChunked() {
+    void testStaticDecodeChunked() {
         for (int i = 0; i < STRINGS.length; i++) {
             if (STRINGS[i] != null) {
                 final byte[] base64Chunked = utf8(CHUNKED_STRINGS[i]);
@@ -471,7 +471,7 @@ public class Base64Codec13Test {
      * static method is behaving identical to commons-codec-1.3.jar.
      */
     @Test
-    public void testStaticEncode() {
+    void testStaticEncode() {
         for (int i = 0; i < STRINGS.length; i++) {
             if (STRINGS[i] != null) {
                 final byte[] base64 = utf8(STRINGS[i]);
@@ -487,7 +487,7 @@ public class Base64Codec13Test {
      * static method is behaving identical to commons-codec-1.3.jar.
      */
     @Test
-    public void testStaticEncodeChunked() {
+    void testStaticEncodeChunked() {
         for (int i = 0; i < STRINGS.length; i++) {
             if (STRINGS[i] != null) {
                 final byte[] base64Chunked = utf8(CHUNKED_STRINGS[i]);

@@ -54,7 +54,7 @@ public abstract class AbstractStringEncoderTest<T extends StringEncoder> {
     }
 
     @Test
-    public void testEncodeEmpty() throws Exception {
+    void testEncodeEmpty() throws Exception {
         final Encoder encoder = this.getStringEncoder();
         encoder.encode("");
         encoder.encode(" ");
@@ -62,19 +62,19 @@ public abstract class AbstractStringEncoderTest<T extends StringEncoder> {
     }
 
     @Test
-    public void testEncodeNull() throws EncoderException {
+    void testEncodeNull() throws EncoderException {
         final StringEncoder encoder = this.getStringEncoder();
         encoder.encode(null);
     }
 
     @Test
-    public void testEncodeWithInvalidObject() throws Exception {
+    void testEncodeWithInvalidObject() throws Exception {
         final StringEncoder encoder = this.getStringEncoder();
         assertThrows(EncoderException.class, () -> encoder.encode(Float.valueOf(3.4f)),
                 "An exception was not thrown when we tried to encode a Float object");
     }
     @Test
-    public void testLocaleIndependence() throws Exception {
+    void testLocaleIndependence() throws Exception {
         final StringEncoder encoder = this.getStringEncoder();
 
         final String[] data = { "I", "i" };

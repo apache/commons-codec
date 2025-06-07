@@ -213,22 +213,22 @@ public class Base32Test {
     }
 
     @Test
-    public void testBase32AtBufferEnd() {
+    void testBase32AtBufferEnd() {
         testBase32InBuffer(100, 0);
     }
 
     @Test
-    public void testBase32AtBufferMiddle() {
+    void testBase32AtBufferMiddle() {
         testBase32InBuffer(100, 100);
     }
 
     @Test
-    public void testBase32AtBufferStart() {
+    void testBase32AtBufferStart() {
         testBase32InBuffer(0, 100);
     }
 
     @Test
-    public void testBase32BinarySamples() throws Exception {
+    void testBase32BinarySamples() throws Exception {
         final Base32 codec = new Base32();
         for (final Object[] element : BASE32_BINARY_TEST_CASES) {
             final String expected;
@@ -242,7 +242,7 @@ public class Base32Test {
     }
 
     @Test
-    public void testBase32BinarySamplesReverse() throws Exception {
+    void testBase32BinarySamplesReverse() throws Exception {
         final Base32 codec = new Base32();
         for (final Object[] element : BASE32_BINARY_TEST_CASES) {
             assertArrayEquals((byte[]) element[0], codec.decode((String) element[1]));
@@ -250,7 +250,7 @@ public class Base32Test {
     }
 
     @Test
-    public void testBase32Chunked() throws Exception {
+    void testBase32Chunked() throws Exception {
         final Base32 codec = new Base32(20);
         for (final String[] element : BASE32_TEST_CASES_CHUNKED) {
             assertEquals(element[1], codec.encodeAsString(element[0].getBytes(CHARSET_UTF8)));
@@ -258,42 +258,42 @@ public class Base32Test {
     }
 
     @Test
-    public void testBase32DecodingOfTrailing10Bits() {
+    void testBase32DecodingOfTrailing10Bits() {
         assertBase32DecodingOfTrailingBits(10);
     }
 
     @Test
-    public void testBase32DecodingOfTrailing15Bits() {
+    void testBase32DecodingOfTrailing15Bits() {
         assertBase32DecodingOfTrailingBits(15);
     }
 
     @Test
-    public void testBase32DecodingOfTrailing20Bits() {
+    void testBase32DecodingOfTrailing20Bits() {
         assertBase32DecodingOfTrailingBits(20);
     }
 
     @Test
-    public void testBase32DecodingOfTrailing25Bits() {
+    void testBase32DecodingOfTrailing25Bits() {
         assertBase32DecodingOfTrailingBits(25);
     }
 
     @Test
-    public void testBase32DecodingOfTrailing30Bits() {
+    void testBase32DecodingOfTrailing30Bits() {
         assertBase32DecodingOfTrailingBits(30);
     }
 
     @Test
-    public void testBase32DecodingOfTrailing35Bits() {
+    void testBase32DecodingOfTrailing35Bits() {
         assertBase32DecodingOfTrailingBits(35);
     }
 
     @Test
-    public void testBase32DecodingOfTrailing5Bits() {
+    void testBase32DecodingOfTrailing5Bits() {
         assertBase32DecodingOfTrailingBits(5);
     }
 
     @Test
-    public void testBase32HexImpossibleSamples() {
+    void testBase32HexImpossibleSamples() {
         testImpossibleCases(new Base32(0, null, true, BaseNCodec.PAD_DEFAULT, CodecPolicy.STRICT), BASE32HEX_IMPOSSIBLE_CASES);
         // @formatter:off
         testImpossibleCases(Base32.builder()
@@ -314,7 +314,7 @@ public class Base32Test {
     }
 
     @Test
-    public void testBase32HexSamples() throws Exception {
+    void testBase32HexSamples() throws Exception {
         final Base32 codec = new Base32(true);
         for (final String[] element : BASE32HEX_TEST_CASES) {
             assertEquals(element[1], codec.encodeAsString(element[0].getBytes(CHARSET_UTF8)));
@@ -322,7 +322,7 @@ public class Base32Test {
     }
 
     @Test
-    public void testBase32HexSamplesReverse() throws Exception {
+    void testBase32HexSamplesReverse() throws Exception {
         final Base32 codec = new Base32(true);
         for (final String[] element : BASE32HEX_TEST_CASES) {
             assertEquals(element[0], new String(codec.decode(element[1]), CHARSET_UTF8));
@@ -330,7 +330,7 @@ public class Base32Test {
     }
 
     @Test
-    public void testBase32HexSamplesReverseLowercase() throws Exception {
+    void testBase32HexSamplesReverseLowercase() throws Exception {
         final Base32 codec = new Base32(true);
         for (final String[] element : BASE32HEX_TEST_CASES) {
             assertEquals(element[0], new String(codec.decode(element[1].toLowerCase()), CHARSET_UTF8));
@@ -338,12 +338,12 @@ public class Base32Test {
     }
 
     @Test
-    public void testBase32ImpossibleChunked() {
+    void testBase32ImpossibleChunked() {
         testImpossibleCases(new Base32(20, BaseNCodec.CHUNK_SEPARATOR, false, BaseNCodec.PAD_DEFAULT, CodecPolicy.STRICT), BASE32_IMPOSSIBLE_CASES_CHUNKED);
     }
 
     @Test
-    public void testBase32ImpossibleSamples() {
+    void testBase32ImpossibleSamples() {
         testImpossibleCases(new Base32(0, null, false, BaseNCodec.PAD_DEFAULT, CodecPolicy.STRICT), BASE32_IMPOSSIBLE_CASES);
     }
 
@@ -358,7 +358,7 @@ public class Base32Test {
     }
 
     @Test
-    public void testBase32Samples() throws Exception {
+    void testBase32Samples() throws Exception {
         final Base32 codec = new Base32();
         for (final String[] element : BASE32_TEST_CASES) {
             assertEquals(element[1], codec.encodeAsString(element[0].getBytes(CHARSET_UTF8)));
@@ -366,7 +366,7 @@ public class Base32Test {
     }
 
     @Test
-    public void testBase32SamplesNonDefaultPadding() throws Exception {
+    void testBase32SamplesNonDefaultPadding() throws Exception {
         final Base32 codec = new Base32((byte) 0x25); // '%' <=> 0x25
 
         for (final String[] element : BASE32_PAD_TEST_CASES) {
@@ -375,7 +375,7 @@ public class Base32Test {
     }
 
     @Test
-    public void testBuilderCodecPolicy() {
+    void testBuilderCodecPolicy() {
         assertEquals(CodecPolicy.LENIENT, Base32.builder().get().getCodecPolicy());
         assertEquals(CodecPolicy.LENIENT, Base32.builder().setDecodingPolicy(CodecPolicy.LENIENT).get().getCodecPolicy());
         assertEquals(CodecPolicy.STRICT, Base32.builder().setDecodingPolicy(CodecPolicy.STRICT).get().getCodecPolicy());
@@ -384,7 +384,7 @@ public class Base32Test {
     }
 
     @Test
-    public void testBuilderLineAttributes() {
+    void testBuilderLineAttributes() {
         assertNull(Base32.builder().get().getLineSeparator());
         assertNull(Base32.builder().setLineSeparator(BaseNCodec.CHUNK_SEPARATOR).get().getLineSeparator());
         assertArrayEquals(BaseNCodec.CHUNK_SEPARATOR, Base32.builder().setLineLength(4).setLineSeparator(BaseNCodec.CHUNK_SEPARATOR).get().getLineSeparator());
@@ -397,7 +397,7 @@ public class Base32Test {
     }
 
     @Test
-    public void testBuilderPadingByte() {
+    void testBuilderPadingByte() {
         assertNull(Base32.builder().get().getLineSeparator());
         assertNull(Base32.builder().setLineSeparator(BaseNCodec.CHUNK_SEPARATOR).get().getLineSeparator());
         assertArrayEquals(BaseNCodec.CHUNK_SEPARATOR, Base32.builder().setLineLength(4).setLineSeparator(BaseNCodec.CHUNK_SEPARATOR).get().getLineSeparator());
@@ -410,13 +410,13 @@ public class Base32Test {
     }
 
     @Test
-    public void testCodec200() {
+    void testCodec200() {
         final Base32 codec = new Base32(true, (byte) 'W'); // should be allowed
         assertNotNull(codec);
     }
 
     @Test
-    public void testConstructors() {
+    void testConstructors() {
         Base32 base32;
         base32 = new Base32();
         base32 = new Base32(-1);
@@ -442,7 +442,7 @@ public class Base32Test {
      * Test encode and decode of empty byte array.
      */
     @Test
-    public void testEmptyBase32() {
+    void testEmptyBase32() {
         byte[] empty = {};
         byte[] result = new Base32().encode(empty);
         assertEquals(0, result.length, "empty Base32 encode");
@@ -464,7 +464,7 @@ public class Base32Test {
     }
 
     @Test
-    public void testIsInAlphabet() {
+    void testIsInAlphabet() {
         // invalid bounds
         Base32 b32 = new Base32(true);
         assertFalse(b32.isInAlphabet((byte) 0));
@@ -512,7 +512,7 @@ public class Base32Test {
     }
 
     @Test
-    public void testRandomBytes() {
+    void testRandomBytes() {
         for (int i = 0; i < 20; i++) {
             final Base32 codec = new Base32();
             final byte[][] b = BaseNTestData.randomData(codec, i);
@@ -522,7 +522,7 @@ public class Base32Test {
     }
 
     @Test
-    public void testRandomBytesChunked() {
+    void testRandomBytesChunked() {
         for (int i = 0; i < 20; i++) {
             final Base32 codec = new Base32(10);
             final byte[][] b = BaseNTestData.randomData(codec, i);
@@ -532,7 +532,7 @@ public class Base32Test {
     }
 
     @Test
-    public void testRandomBytesHex() {
+    void testRandomBytesHex() {
         for (int i = 0; i < 20; i++) {
             final Base32 codec = new Base32(true);
             final byte[][] b = BaseNTestData.randomData(codec, i);
@@ -542,7 +542,7 @@ public class Base32Test {
     }
 
     @Test
-    public void testSingleCharEncoding() {
+    void testSingleCharEncoding() {
         for (int i = 0; i < 20; i++) {
             Base32 codec = new Base32();
             final BaseNCodec.Context context = new BaseNCodec.Context();

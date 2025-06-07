@@ -34,7 +34,7 @@ public class RefinedSoundexTest extends AbstractStringEncoderTest<RefinedSoundex
     }
 
     @Test
-    public void testDifference() throws EncoderException {
+    void testDifference() throws EncoderException {
         // Edge cases
         assertEquals(0, getStringEncoder().difference(null, null));
         assertEquals(0, getStringEncoder().difference("", ""));
@@ -56,7 +56,7 @@ public class RefinedSoundexTest extends AbstractStringEncoderTest<RefinedSoundex
     }
 
     @Test
-    public void testEncode() {
+    void testEncode() {
         assertEquals("T6036084", getStringEncoder().encode("testing"));
         assertEquals("T6036084", getStringEncoder().encode("TESTING"));
         assertEquals("T60", getStringEncoder().encode("The"));
@@ -74,13 +74,13 @@ public class RefinedSoundexTest extends AbstractStringEncoderTest<RefinedSoundex
     }
 
     @Test
-    public void testGetMappingCodeNonLetter() {
+    void testGetMappingCodeNonLetter() {
         final char code = getStringEncoder().getMappingCode('#');
         assertEquals(0, code, "Code does not equals zero");
     }
 
     @Test
-    public void testInvalidSoundexCharacter() {
+    void testInvalidSoundexCharacter() {
         final char[] invalid = new char[256];
         for (int i = 0; i < invalid.length; i++) {
             invalid[i] = (char) i;
@@ -90,17 +90,17 @@ public class RefinedSoundexTest extends AbstractStringEncoderTest<RefinedSoundex
     }
 
     @Test
-    public void testNewInstance() {
+    void testNewInstance() {
         assertEquals("D6043", new RefinedSoundex().soundex("dogs"));
     }
 
     @Test
-    public void testNewInstance2() {
+    void testNewInstance2() {
         assertEquals("D6043", new RefinedSoundex(RefinedSoundex.US_ENGLISH_MAPPING_STRING.toCharArray()).soundex("dogs"));
     }
 
     @Test
-    public void testNewInstance3() {
+    void testNewInstance3() {
         assertEquals("D6043", new RefinedSoundex(RefinedSoundex.US_ENGLISH_MAPPING_STRING).soundex("dogs"));
     }
 }

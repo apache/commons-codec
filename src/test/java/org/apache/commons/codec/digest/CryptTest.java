@@ -50,7 +50,7 @@ public class CryptTest {
     }
 
     @Test
-    public void testBadSalt() {
+    void testBadSalt() {
         // No salt
         assertThrowsExactly(IllegalArgumentException.class, () -> Crypt.crypt("secret", "$1$"));
         assertThrowsExactly(IllegalArgumentException.class, () -> Crypt.crypt("secret", "$5$"));
@@ -62,18 +62,18 @@ public class CryptTest {
     }
 
     @Test
-    public void testBadType() {
+    void testBadType() {
         assertThrowsExactly(IllegalArgumentException.class, () -> Crypt.crypt("secret", "$2$xxxx"));
         assertThrowsExactly(IllegalArgumentException.class, () -> Crypt.crypt("secret", "$3$xxxx"));
         assertThrowsExactly(IllegalArgumentException.class, () -> Crypt.crypt("secret", "$4$"));
     }
 
     @Test
-    public void testCrypt() {
+    void testCrypt() {
         assertNotNull(new Crypt()); // just for Test Coverage
     }
     @Test
-    public void testCryptWithBytes() {
+    void testCryptWithBytes() {
         final byte[] keyBytes = { 'b', 'y', 't', 'e' };
         final String hash = Crypt.crypt(keyBytes);
         assertEquals(hash, Crypt.crypt("byte", hash));
@@ -87,28 +87,28 @@ public class CryptTest {
      * hash would not be verifiable with other implementations of crypt().
      */
     @Test
-    public void testCryptWithEmptySalt() {
+    void testCryptWithEmptySalt() {
         assertThrowsExactly(IllegalArgumentException.class, () -> Crypt.crypt("secret", ""));
     }
     @Test
-    public void testDefaultCryptVariant() {
+    void testDefaultCryptVariant() {
         // If salt is null or completely omitted, a random "$6$" is used.
         assertTrue(Crypt.crypt("secret").startsWith("$6$"));
         assertTrue(Crypt.crypt("secret", null).startsWith("$6$"));
     }
     @Test
-    public void testSamples() { // From Javadoc
+    void testSamples() { // From Javadoc
         assertEquals("$1$xxxx$aMkevjfEIpa35Bh3G4bAc.", Crypt.crypt("secret", "$1$xxxx"));
         assertEquals("xxWAum7tHdIUw", Crypt.crypt("secret", "xx"));
     }
     @Test
-    public void testStored() { // From Javadoc
+    void testStored() { // From Javadoc
         assertEquals("$1$xxxx$aMkevjfEIpa35Bh3G4bAc.", Crypt.crypt("secret", "$1$xxxx$aMkevjfEIpa35Bh3G4bAc."));
         assertEquals("xxWAum7tHdIUw", Crypt.crypt("secret", "xxWAum7tHdIUw"));
     }
 
     @Test
-    public void testType() {
+    void testType() {
         startsWith(Crypt.crypt("secret", "xxxx"), "xx");
         startsWith(Crypt.crypt("secret", "$1$xxxx"), "$1$xxxx$");
         startsWith(Crypt.crypt("secret", "$5$xxxx"), "$5$xxxx$");

@@ -59,7 +59,7 @@ public class RFC1522CodecTest {
     }
 
     @Test
-    public void testDecodeInvalid() throws Exception {
+    void testDecodeInvalid() throws Exception {
         assertExpectedDecoderException("whatever");
         assertExpectedDecoderException("=?");
         assertExpectedDecoderException("?=");
@@ -75,7 +75,7 @@ public class RFC1522CodecTest {
     }
 
     @Test
-    public void testNullInput() throws Exception {
+    void testNullInput() throws Exception {
         final RFC1522TestCodec testCodec = new RFC1522TestCodec();
         assertNull(testCodec.decodeText(null));
         assertNull(testCodec.encodeText(null, CharEncoding.UTF_8));

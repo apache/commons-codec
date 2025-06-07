@@ -37,7 +37,7 @@ import org.junit.jupiter.api.Test;
 public class PercentCodecTest {
 
     @Test
-    public void testBasicEncodeDecode() throws Exception {
+    void testBasicEncodeDecode() throws Exception {
         final PercentCodec percentCodec = new PercentCodec();
         final String input = "abcdABCD";
         final byte[] encoded = percentCodec.encode(input.getBytes(StandardCharsets.UTF_8));
@@ -58,7 +58,7 @@ public class PercentCodecTest {
     }
 
     @Test
-    public void testConfigurablePercentEncoder() throws Exception {
+    void testConfigurablePercentEncoder() throws Exception {
         final String input = "abc123_-.*\u03B1\u03B2";
         final PercentCodec percentCodec = new PercentCodec("abcdef".getBytes(StandardCharsets.UTF_8), false);
         final byte[] encoded = percentCodec.encode(input.getBytes(StandardCharsets.UTF_8));
@@ -69,7 +69,7 @@ public class PercentCodecTest {
     }
 
     @Test
-    public void testDecodeInvalidEncodedResultDecoding() throws Exception {
+    void testDecodeInvalidEncodedResultDecoding() throws Exception {
         final String inputS = "\u03B1\u03B2";
         final PercentCodec percentCodec = new PercentCodec();
         final byte[] encoded = percentCodec.encode(inputS.getBytes(StandardCharsets.UTF_8));
@@ -81,37 +81,37 @@ public class PercentCodecTest {
     }
 
     @Test
-    public void testDecodeNullObject() throws Exception {
+    void testDecodeNullObject() throws Exception {
         final PercentCodec percentCodec = new PercentCodec();
         assertNull(percentCodec.decode((Object) null));
     }
 
     @Test
-    public void testDecodeUnsupportedObject() {
+    void testDecodeUnsupportedObject() {
         final PercentCodec percentCodec = new PercentCodec();
         assertThrows(DecoderException.class, () -> percentCodec.decode("test"));
     }
 
     @Test
-    public void testEncodeNullObject() throws Exception {
+    void testEncodeNullObject() throws Exception {
         final PercentCodec percentCodec = new PercentCodec();
         assertNull(percentCodec.encode((Object) null));
     }
 
     @Test
-    public void testEncodeUnsupportedObject() {
+    void testEncodeUnsupportedObject() {
         final PercentCodec percentCodec = new PercentCodec();
         assertThrows(EncoderException.class, () -> percentCodec.encode("test"));
     }
 
     @Test
-    public void testInvalidByte() throws Exception {
+    void testInvalidByte() throws Exception {
         final byte[] invalid = { (byte) -1, (byte) 'A' };
         assertThrows(IllegalArgumentException.class, () -> new PercentCodec(invalid, true));
     }
 
     @Test
-    public void testPercentEncoderDecoderWithNullOrEmptyInput() throws Exception {
+    void testPercentEncoderDecoderWithNullOrEmptyInput() throws Exception {
         final PercentCodec percentCodec = new PercentCodec(null, true);
         assertNull(percentCodec.encode(null), "Null input value encoding test");
         assertNull(percentCodec.decode(null), "Null input value decoding test");
@@ -121,7 +121,7 @@ public class PercentCodecTest {
     }
 
     @Test
-    public void testPercentEncoderDecoderWithPlusForSpace() throws Exception {
+    void testPercentEncoderDecoderWithPlusForSpace() throws Exception {
         final String input = "a b c d";
         final PercentCodec percentCodec = new PercentCodec(null, true);
         final byte[] encoded = percentCodec.encode(input.getBytes(StandardCharsets.UTF_8));
@@ -132,7 +132,7 @@ public class PercentCodecTest {
     }
 
     @Test
-    public void testSafeCharEncodeDecodeObject() throws Exception {
+    void testSafeCharEncodeDecodeObject() throws Exception {
         final PercentCodec percentCodec = new PercentCodec(null, true);
         final String input = "abc123_-.*";
         final Object encoded = percentCodec.encode((Object) input.getBytes(StandardCharsets.UTF_8));
@@ -144,7 +144,7 @@ public class PercentCodecTest {
     }
 
     @Test
-    public void testUnsafeCharEncodeDecode() throws Exception {
+    void testUnsafeCharEncodeDecode() throws Exception {
         final PercentCodec percentCodec = new PercentCodec();
         final String input = "\u03B1\u03B2\u03B3\u03B4\u03B5\u03B6% ";
         final byte[] encoded = percentCodec.encode(input.getBytes(StandardCharsets.UTF_8));

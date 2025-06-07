@@ -76,7 +76,7 @@ public class PhoneticEngineRegressionTest {
     }
 
     @Test
-    public void testCompatibilityWithOriginalVersion() {
+    void testCompatibilityWithOriginalVersion() {
         // see CODEC-187
         // comparison: https://stevemorse.org/census/soundex.html
 
@@ -100,7 +100,7 @@ public class PhoneticEngineRegressionTest {
     }
 
     @Test
-    public void testSolrASHKENAZI() {
+    void testSolrASHKENAZI() {
         Map<String, String> args;
 
         // concat is true, ruleType is EXACT
@@ -165,7 +165,7 @@ public class PhoneticEngineRegressionTest {
     }
 
     @Test
-    public void testSolrGENERIC() {
+    void testSolrGENERIC() {
         Map<String, String> args;
 
         // concat is true, ruleType is EXACT
@@ -227,7 +227,7 @@ public class PhoneticEngineRegressionTest {
     }
 
     @Test
-    public void testSolrSEPHARDIC() {
+    void testSolrSEPHARDIC() {
         Map<String, String> args;
 
         // concat is true, ruleType is EXACT

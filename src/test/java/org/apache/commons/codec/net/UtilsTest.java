@@ -32,7 +32,7 @@ public class UtilsTest {
      * to restrict instantiation right now.
      */
     @Test
-    public void testConstructor() {
+    void testConstructor() {
         new Utils();
     }
 

@@ -40,7 +40,7 @@ public class PureJavaCrc32CTest {
     }
 
     @Test
-    public void testDecreasing() {
+    void testDecreasing() {
         for (int i = 0; i < data.length; i++) {
             data[i] = (byte) (31 - i);
         }
@@ -48,7 +48,7 @@ public class PureJavaCrc32CTest {
     }
 
     @Test
-    public void testIncreasing() {
+    void testIncreasing() {
         for (int i = 0; i < data.length; i++) {
             data[i] = (byte) i;
         }
@@ -56,13 +56,13 @@ public class PureJavaCrc32CTest {
     }
 
     @Test
-    public void testOnes() {
+    void testOnes() {
         Arrays.fill(data, (byte) 0xFF);
         check(0x62a8ab43); // 43 ab a8 62
     }
 
     @Test
-    public void testZeros() {
+    void testZeros() {
         Arrays.fill(data, (byte) 0);
         check(0x8a9136aa); // aa 36 91 8a
     }

@@ -1056,12 +1056,12 @@ public class DoubleMetaphoneTest extends AbstractStringEncoderTest<DoubleMetapho
     }
 
     @Test
-    public void testCCedilla() {
+    void testCCedilla() {
         assertTrue(getStringEncoder().isDoubleMetaphoneEqual("\u00e7", "S")); // c-cedilla
     }
 
     @Test
-    public void testCodec184() {
+    void testCodec184() {
         assertTrue(new DoubleMetaphone().isDoubleMetaphoneEqual("", "", false));
         assertTrue(new DoubleMetaphone().isDoubleMetaphoneEqual("", "", true));
         assertFalse(new DoubleMetaphone().isDoubleMetaphoneEqual("aa", "", false));
@@ -1071,12 +1071,12 @@ public class DoubleMetaphoneTest extends AbstractStringEncoderTest<DoubleMetapho
     }
 
     @Test
-    public void testCodec320() {
+    void testCodec320() {
         assertTrue(new DoubleMetaphone().isDoubleMetaphoneEqual("ANGHELINA", "ANKL", false));
     }
 
     @Test
-    public void testDoubleMetaphone() {
+    void testDoubleMetaphone() {
         assertDoubleMetaphone("TSTN", "testing");
         assertDoubleMetaphone("0", "The");
         assertDoubleMetaphone("KK", "quick");
@@ -1117,7 +1117,7 @@ public class DoubleMetaphoneTest extends AbstractStringEncoderTest<DoubleMetapho
     }
 
     @Test
-    public void testEmpty() {
+    void testEmpty() {
         assertNull(getStringEncoder().doubleMetaphone(null));
         assertNull(getStringEncoder().doubleMetaphone(""));
         assertNull(getStringEncoder().doubleMetaphone(" "));
@@ -1125,7 +1125,7 @@ public class DoubleMetaphoneTest extends AbstractStringEncoderTest<DoubleMetapho
     }
 
     @Test
-    public void testIsDoubleMetaphoneEqualBasic() {
+    void testIsDoubleMetaphoneEqualBasic() {
         final String[][] testFixture = { {
                 "", "" }, {
                 "Case", "case" }, {
@@ -1146,7 +1146,7 @@ public class DoubleMetaphoneTest extends AbstractStringEncoderTest<DoubleMetapho
      * Example in the original article but failures in this Java impl:
      */
     @Test
-    public void testIsDoubleMetaphoneEqualExtended1() {
+    void testIsDoubleMetaphoneEqualExtended1() {
         //        String[][] testFixture = new String[][] { { "Smith", "Schmidt" }
         //        };
         //        doubleMetaphoneEqualTest(testFixture, false);
@@ -1154,7 +1154,7 @@ public class DoubleMetaphoneTest extends AbstractStringEncoderTest<DoubleMetapho
     }
 
     @Test
-    public void testIsDoubleMetaphoneEqualExtended2() {
+    void testIsDoubleMetaphoneEqualExtended2() {
         final String[][] testFixture = { { "Jablonski", "Yablonsky" }
         };
         //doubleMetaphoneEqualTest(testFixture, false);
@@ -1166,7 +1166,7 @@ public class DoubleMetaphoneTest extends AbstractStringEncoderTest<DoubleMetapho
      * FIXTURE array.
      */
     @Test
-    public void testIsDoubleMetaphoneEqualExtended3() {
+    void testIsDoubleMetaphoneEqualExtended3() {
         validateFixture(FIXTURE);
         final StringBuilder failures = new StringBuilder();
         final StringBuilder matches = new StringBuilder();
@@ -1198,7 +1198,7 @@ public class DoubleMetaphoneTest extends AbstractStringEncoderTest<DoubleMetapho
     }
 
     @Test
-    public void testIsDoubleMetaphoneEqualWithMATCHES() {
+    void testIsDoubleMetaphoneEqualWithMATCHES() {
         validateFixture(MATCHES);
         for (int i = 0; i < MATCHES.length; i++) {
             final String name0 = MATCHES[i][0];
@@ -1212,13 +1212,13 @@ public class DoubleMetaphoneTest extends AbstractStringEncoderTest<DoubleMetapho
     }
 
     @Test
-    public void testIsDoubleMetaphoneNotEqual() {
+    void testIsDoubleMetaphoneNotEqual() {
         doubleMetaphoneNotEqualTest(false);
         doubleMetaphoneNotEqualTest(true);
     }
 
     @Test
-    public void testNTilde() {
+    void testNTilde() {
         assertTrue(getStringEncoder().isDoubleMetaphoneEqual("\u00f1", "N")); // n-tilde
     }
 
@@ -1226,7 +1226,7 @@ public class DoubleMetaphoneTest extends AbstractStringEncoderTest<DoubleMetapho
      * Test setting maximum length
      */
     @Test
-    public void testSetMaxCodeLength() {
+    void testSetMaxCodeLength() {
         final String value = "jumped";
 
         final DoubleMetaphone doubleMetaphone = new DoubleMetaphone();

@@ -24,7 +24,7 @@ import org.junit.jupiter.api.Test;
 public class Sha2CryptTest {
 
     @Test
-    public void testCtor() {
+    void testCtor() {
         assertNotNull(new Sha2Crypt());
     }
 

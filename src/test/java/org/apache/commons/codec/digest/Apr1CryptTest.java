@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Test;
 public class Apr1CryptTest {
 
     @Test
-    public void testApr1CryptBytes() {
+    void testApr1CryptBytes() {
         // random salt
         final byte[] keyBytes = { '!', 'b', 'c', '.' };
         final String hash = Md5Crypt.apr1Crypt(keyBytes);
@@ -44,7 +44,7 @@ public class Apr1CryptTest {
     }
 
     @Test
-    public void testApr1CryptBytesWithThreadLocalRandom() {
+    void testApr1CryptBytesWithThreadLocalRandom() {
         // random salt
         final byte[] keyBytes = { '!', 'b', 'c', '.' };
         final ThreadLocalRandom threadLocalRandom = ThreadLocalRandom.current();
@@ -60,7 +60,7 @@ public class Apr1CryptTest {
     }
 
     @Test
-    public void testApr1CryptExplicitCall() {
+    void testApr1CryptExplicitCall() {
         // When explicitly called the prefix is optional
         assertEquals("$apr1$1234$mAlH7FRST6FiRZ.kcYL.j1", Md5Crypt.apr1Crypt("secret", "1234"));
         // When explicitly called without salt, a random one will be used.
@@ -69,12 +69,12 @@ public class Apr1CryptTest {
     }
 
     @Test
-    public void testApr1CryptNullData() {
+    void testApr1CryptNullData() {
         assertThrows(NullPointerException.class, () -> Md5Crypt.apr1Crypt((byte[]) null));
     }
 
     @Test
-    public void testApr1CryptStrings() {
+    void testApr1CryptStrings() {
         // A random example using htpasswd
         assertEquals("$apr1$TqI9WECO$LHZB2DqRlk9nObiB6vJG9.", Md5Crypt.apr1Crypt("secret", "$apr1$TqI9WECO"));
         // empty data
@@ -89,17 +89,17 @@ public class Apr1CryptTest {
     }
 
     @Test
-    public void testApr1CryptWithEmptySalt() {
+    void testApr1CryptWithEmptySalt() {
         assertThrows(IllegalArgumentException.class, () -> Md5Crypt.apr1Crypt("secret".getBytes(), ""));
     }
 
     @Test
-    public void testApr1CryptWithInvalidSalt() {
+    void testApr1CryptWithInvalidSalt() {
         assertThrows(IllegalArgumentException.class, () -> Md5Crypt.apr1Crypt(new byte[0], "!"));
     }
 
     @Test
-    public void testApr1CryptWithoutSalt() {
+    void testApr1CryptWithoutSalt() {
         // Without salt, a random is generated
         final String hash = Md5Crypt.apr1Crypt("secret");
         assertTrue(hash.matches("^\\$apr1\\$[a-zA-Z0-9\\./]{8}\\$[a-zA-Z0-9\\./]{22}$"));
@@ -108,7 +108,7 @@ public class Apr1CryptTest {
     }
 
     @Test
-    public void testApr1LongSalt() {
+    void testApr1LongSalt() {
         assertEquals("$apr1$12345678$0lqb/6VUFP8JY/s/jTrIk0", Md5Crypt.apr1Crypt("secret", "12345678901234567890"));
     }
 }

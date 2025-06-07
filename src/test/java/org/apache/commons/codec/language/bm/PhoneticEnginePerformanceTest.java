@@ -123,7 +123,7 @@ public class PhoneticEnginePerformanceTest {
     private static final int LOOP = 80000;
 
     @Test
-    public void test() {
+    void test() {
         final PhoneticEngine engine = new PhoneticEngine(NameType.GENERIC, RuleType.APPROX, true);
         final String input = "Angelo";
         final long startMillis = System.currentTimeMillis();

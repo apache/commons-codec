@@ -62,7 +62,7 @@ public class BCodecTest {
     }
 
     @Test
-    public void testBase64ImpossibleSamplesDefault() throws DecoderException {
+    void testBase64ImpossibleSamplesDefault() throws DecoderException {
         final BCodec codec = new BCodec();
         // Default encoding is lenient
         assertFalse(codec.isStrictDecoding());
@@ -72,7 +72,7 @@ public class BCodecTest {
     }
 
     @Test
-    public void testBase64ImpossibleSamplesLenient() throws DecoderException {
+    void testBase64ImpossibleSamplesLenient() throws DecoderException {
         final BCodec codec = new BCodec(StandardCharsets.UTF_8, CodecPolicy.LENIENT);
         // Default encoding is lenient
         assertFalse(codec.isStrictDecoding());
@@ -82,7 +82,7 @@ public class BCodecTest {
     }
 
     @Test
-    public void testBase64ImpossibleSamplesStrict() {
+    void testBase64ImpossibleSamplesStrict() {
         final BCodec codec = new BCodec(StandardCharsets.UTF_8, CodecPolicy.STRICT);
         assertTrue(codec.isStrictDecoding());
         for (final String s : BASE64_IMPOSSIBLE_CASES) {
@@ -91,7 +91,7 @@ public class BCodecTest {
     }
 
     @Test
-    public void testBasicEncodeDecode() throws Exception {
+    void testBasicEncodeDecode() throws Exception {
         final BCodec bcodec = new BCodec();
         final String plain = "Hello there";
         final String encoded = bcodec.encode(plain);
@@ -100,7 +100,7 @@ public class BCodecTest {
     }
 
     @Test
-    public void testDecodeObjects() throws Exception {
+    void testDecodeObjects() throws Exception {
         final BCodec bcodec = new BCodec();
         final String decoded = "=?UTF-8?B?d2hhdCBub3Q=?=";
         final String plain = (String) bcodec.decode((Object) decoded);
@@ -112,7 +112,7 @@ public class BCodecTest {
     }
 
     @Test
-    public void testDecodeStringWithNull() throws Exception {
+    void testDecodeStringWithNull() throws Exception {
         final BCodec bcodec = new BCodec();
         final String test = null;
         final String result = bcodec.decode(test);
@@ -120,14 +120,14 @@ public class BCodecTest {
     }
 
     @Test
-    public void testEncodeDecodeNull() throws Exception {
+    void testEncodeDecodeNull() throws Exception {
         final BCodec bcodec = new BCodec();
         assertNull(bcodec.encode((String) null), "Null string B encoding test");
         assertNull(bcodec.decode((String) null), "Null string B decoding test");
     }
 
     @Test
-    public void testEncodeObjects() throws Exception {
+    void testEncodeObjects() throws Exception {
         final BCodec bcodec = new BCodec();
         final String plain = "what not";
         final String encoded = (String) bcodec.encode((Object) plain);
@@ -142,7 +142,7 @@ public class BCodecTest {
     }
 
     @Test
-    public void testEncodeStringWithNull() throws Exception {
+    void testEncodeStringWithNull() throws Exception {
         final BCodec bcodec = new BCodec();
         final String test = null;
         final String result = bcodec.encode(test, "charset");
@@ -150,19 +150,19 @@ public class BCodecTest {
     }
 
     @Test
-    public void testInvalidEncoding() {
+    void testInvalidEncoding() {
         assertThrows(UnsupportedCharsetException.class, () -> new BCodec("NONSENSE"));
     }
 
     @Test
-    public void testNullInput() throws Exception {
+    void testNullInput() throws Exception {
         final BCodec bcodec = new BCodec();
         assertNull(bcodec.doDecoding(null));
         assertNull(bcodec.doEncoding(null));
     }
 
     @Test
-    public void testUTF8RoundTrip() throws Exception {
+    void testUTF8RoundTrip() throws Exception {
 
         final String ru_msg = constructString(RUSSIAN_STUFF_UNICODE);
         final String ch_msg = constructString(SWISS_GERMAN_STUFF_UNICODE);

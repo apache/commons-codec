@@ -30,14 +30,14 @@ public class DigestTest {
      * Tests if empty arguments are handled correctly.
      */
     @Test
-    public void testEmptyArguments() {
+    void testEmptyArguments() {
         assertThrows(IllegalArgumentException.class, () -> Digest.main(new String[0]));
     }
     /**
      * Tests if null arguments are handled correctly.
      */
     @Test
-    public void testNullArguments() {
+    void testNullArguments() {
         assertThrows(NullPointerException.class, () -> Digest.main(null));
     }
 }

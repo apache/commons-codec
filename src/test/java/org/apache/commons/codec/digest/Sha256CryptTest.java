@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
 public class Sha256CryptTest {
 
     @Test
-    public void testSha256CryptBytes() {
+    void testSha256CryptBytes() {
         // An empty Bytearray equals an empty String
         assertEquals("$5$foo$Fq9CX624QIfnCAmlGiPKLlAasdacKCRxZztPoeo7o0B", Crypt.crypt(new byte[0], "$5$foo"));
         // UTF-8 stores \u00e4 "a with dieresis" as two bytes 0xc3 0xa4.
@@ -40,18 +40,18 @@ public class Sha256CryptTest {
     }
 
     @Test
-    public void testSha256CryptExplicitCall() {
+    void testSha256CryptExplicitCall() {
         assertTrue(Sha2Crypt.sha256Crypt("secret".getBytes()).matches("^\\$5\\$[a-zA-Z0-9./]{0,16}\\$.{1,}$"));
         assertTrue(Sha2Crypt.sha256Crypt("secret".getBytes(), null).matches("^\\$5\\$[a-zA-Z0-9./]{0,16}\\$.{1,}$"));
     }
 
     @Test
-    public void testSha256CryptNullData() {
+    void testSha256CryptNullData() {
         assertThrows(NullPointerException.class, () -> Sha2Crypt.sha256Crypt((byte[]) null));
     }
 
     @Test
-    public void testSha256CryptStrings() {
+    void testSha256CryptStrings() {
         // empty data
         assertEquals("$5$foo$Fq9CX624QIfnCAmlGiPKLlAasdacKCRxZztPoeo7o0B", Crypt.crypt("", "$5$foo"));
         // salt gets cut at dollar sign
@@ -64,12 +64,12 @@ public class Sha256CryptTest {
     }
 
     @Test
-    public void testSha256CryptWithEmptySalt() {
+    void testSha256CryptWithEmptySalt() {
         assertThrows(IllegalArgumentException.class, () -> Sha2Crypt.sha256Crypt("secret".getBytes(), ""));
     }
 
     @Test
-    public void testSha256LargestThanBlocksize() {
+    void testSha256LargestThanBlocksize() {
         final byte[] buffer = new byte[200];
         Arrays.fill(buffer, 0, 200, (byte) 'A');
         assertEquals("$5$abc$HbF3RRc15OwNKB/RZZ5F.1I6zsLcKXHQoSdB9Owx/Q8", Sha2Crypt.sha256Crypt(buffer, "$5$abc"));
@@ -78,7 +78,7 @@ public class Sha256CryptTest {
     }
 
     @Test
-    public void testSha2CryptRounds() {
+    void testSha2CryptRounds() {
         // minimum rounds?
         assertEquals("$5$rounds=1000$abcd$b8MCU4GEeZIekOy5ahQ8EWfT330hvYGVeDYkBxXBva.", Sha2Crypt.sha256Crypt("secret".getBytes(StandardCharsets.UTF_8), "$5$rounds=50$abcd$"));
         assertEquals("$5$rounds=1001$abcd$SQsJZs7KXKdd2DtklI3TY3tkD7UYA99RD0FBLm4Sk48", Sha2Crypt.sha256Crypt("secret".getBytes(StandardCharsets.UTF_8), "$5$rounds=1001$abcd$"));
@@ -86,7 +86,7 @@ public class Sha256CryptTest {
     }
 
     @Test
-    public void testSha2CryptRoundsThreadLocalRandom() {
+    void testSha2CryptRoundsThreadLocalRandom() {
         final ThreadLocalRandom random = ThreadLocalRandom.current();
         // minimum rounds?
         assertEquals("$5$rounds=1000$abcd$b8MCU4GEeZIekOy5ahQ8EWfT330hvYGVeDYkBxXBva.", Sha2Crypt.sha256Crypt("secret".getBytes(StandardCharsets.UTF_8), "$5$rounds=50$abcd$", random));
@@ -95,7 +95,7 @@ public class Sha256CryptTest {
     }
 
     @Test
-    public void testZeroOutInput() {
+    void testZeroOutInput() {
         final byte[] buffer = new byte[200];
         Arrays.fill(buffer, (byte) 'A');
         Sha2Crypt.sha256Crypt(buffer);

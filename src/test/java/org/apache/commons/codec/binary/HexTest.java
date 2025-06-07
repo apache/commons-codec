@@ -192,42 +192,42 @@ public class HexTest {
     }
 
     @Test
-    public void testCustomCharsetBadName() {
+    void testCustomCharsetBadName() {
         assertThrows(UnsupportedCharsetException.class, () -> new Hex(BAD_ENCODING_NAME));
     }
 
     @Test
-    public void testCustomCharsetToString() {
+    void testCustomCharsetToString() {
         assertTrue(new Hex().toString().contains(Hex.DEFAULT_CHARSET_NAME));
     }
 
     @Test
-    public void testDecodeBadCharacterPos0() {
+    void testDecodeBadCharacterPos0() {
         assertThrows(DecoderException.class, () -> new Hex().decode("q0"));
     }
 
     @Test
-    public void testDecodeBadCharacterPos1() {
+    void testDecodeBadCharacterPos1() {
         assertThrows(DecoderException.class, () -> new Hex().decode("0q"));
     }
 
     @Test
-    public void testDecodeByteArrayEmpty() throws DecoderException {
+    void testDecodeByteArrayEmpty() throws DecoderException {
         assertArrayEquals(new byte[0], new Hex().decode(new byte[0]));
     }
 
     @Test
-    public void testDecodeByteArrayObjectEmpty() throws DecoderException {
+    void testDecodeByteArrayObjectEmpty() throws DecoderException {
         assertArrayEquals(new byte[0], (byte[]) new Hex().decode((Object) new byte[0]));
     }
 
     @Test
-    public void testDecodeByteArrayOddCharacters() {
+    void testDecodeByteArrayOddCharacters() {
         assertThrows(DecoderException.class, () -> new Hex().decode(new byte[] { 65 }), "odd number of characters");
     }
 
     @Test
-    public void testDecodeByteBufferAllocatedButEmpty() throws DecoderException {
+    void testDecodeByteBufferAllocatedButEmpty() throws DecoderException {
         final ByteBuffer bb = allocate(10);
         // Effectively set remaining == 0 => empty
         bb.flip();
@@ -236,17 +236,17 @@ public class HexTest {
     }
 
     @Test
-    public void testDecodeByteBufferEmpty() throws DecoderException {
+    void testDecodeByteBufferEmpty() throws DecoderException {
         assertArrayEquals(new byte[0], new Hex().decode(allocate(0)));
     }
 
     @Test
-    public void testDecodeByteBufferObjectEmpty() throws DecoderException {
+    void testDecodeByteBufferObjectEmpty() throws DecoderException {
         assertArrayEquals(new byte[0], (byte[]) new Hex().decode((Object) allocate(0)));
     }
 
     @Test
-    public void testDecodeByteBufferOddCharacters() {
+    void testDecodeByteBufferOddCharacters() {
         final ByteBuffer bb = allocate(1);
         bb.put((byte) 65);
         bb.flip();
@@ -254,7 +254,7 @@ public class HexTest {
     }
 
     @Test
-    public void testDecodeByteBufferWithLimit() throws DecoderException {
+    void testDecodeByteBufferWithLimit() throws DecoderException {
         final ByteBuffer bb = getByteBufferUtf8("000102030405060708090a0b0c0d0e0f");
         final byte[] expected = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
         // Test pairs of bytes
@@ -267,7 +267,7 @@ public class HexTest {
     }
 
     @Test
-    public void testDecodeByteBufferWithLimitOddCharacters() {
+    void testDecodeByteBufferWithLimitOddCharacters() {
         final ByteBuffer bb = allocate(10);
         bb.put(1, (byte) 65);
         bb.position(1);
@@ -276,76 +276,76 @@ public class HexTest {
     }
 
     @Test
-    public void testDecodeClassCastException() {
+    void testDecodeClassCastException() {
         assertThrows(DecoderException.class, () -> new Hex().decode(new int[] { 65 }), "odd number of characters");
     }
 
     @Test
-    public void testDecodeHexCharArrayEmpty() throws DecoderException {
+    void testDecodeHexCharArrayEmpty() throws DecoderException {
         assertArrayEquals(new byte[0], Hex.decodeHex(new char[0]));
     }
 
     @Test
-    public void testDecodeHexCharArrayOddCharacters1() {
+    void testDecodeHexCharArrayOddCharacters1() {
         checkDecodeHexCharArrayOddCharacters(new char[] { 'A' });
     }
 
     @Test
-    public void testDecodeHexCharArrayOddCharacters3() {
+    void testDecodeHexCharArrayOddCharacters3() {
         checkDecodeHexCharArrayOddCharacters(new char[] { 'A', 'B', 'C' });
     }
 
     @Test
-    public void testDecodeHexCharArrayOddCharacters5() {
+    void testDecodeHexCharArrayOddCharacters5() {
         checkDecodeHexCharArrayOddCharacters(new char[] { 'A', 'B', 'C', 'D', 'E' });
     }
 
     @Test
-    public void testDecodeHexCharArrayOutBufferUnderSized() {
+    void testDecodeHexCharArrayOutBufferUnderSized() {
         final byte[] out = new byte[4];
         assertThrows(DecoderException.class, () -> Hex.decodeHex("aabbccddeeff".toCharArray(), out, 0));
     }
 
     @Test
-    public void testDecodeHexCharArrayOutBufferUnderSizedByOffset() {
+    void testDecodeHexCharArrayOutBufferUnderSizedByOffset() {
         final byte[] out = new byte[6];
         assertThrows(DecoderException.class, () -> Hex.decodeHex("aabbccddeeff".toCharArray(), out, 1));
 
     }
 
     @Test
-    public void testDecodeHexStringEmpty() throws DecoderException {
+    void testDecodeHexStringEmpty() throws DecoderException {
         assertArrayEquals(new byte[0], Hex.decodeHex(""));
     }
 
     @Test
-    public void testDecodeHexStringOddCharacters() {
+    void testDecodeHexStringOddCharacters() {
         assertThrows(DecoderException.class, () -> new Hex().decode("6"), "odd number of characters");
 
     }
 
     @Test
-    public void testDecodeHexStringOddCharacters1() {
+    void testDecodeHexStringOddCharacters1() {
         checkDecodeHexCharArrayOddCharacters("A");
     }
 
     @Test
-    public void testDecodeStringEmpty() throws DecoderException {
+    void testDecodeStringEmpty() throws DecoderException {
         assertArrayEquals(new byte[0], (byte[]) new Hex().decode(""));
     }
 
     @Test
-    public void testEncodeByteArrayEmpty() {
+    void testEncodeByteArrayEmpty() {
         assertArrayEquals(new byte[0], new Hex().encode(new byte[0]));
     }
 
     @Test
-    public void testEncodeByteArrayObjectEmpty() throws EncoderException {
+    void testEncodeByteArrayObjectEmpty() throws EncoderException {
         assertArrayEquals(new char[0], (char[]) new Hex().encode((Object) new byte[0]));
     }
 
     @Test
-    public void testEncodeByteBufferAllocatedButEmpty() {
+    void testEncodeByteBufferAllocatedButEmpty() {
         final ByteBuffer bb = allocate(10);
         // Effectively set remaining == 0 => empty
         bb.flip();
@@ -354,22 +354,22 @@ public class HexTest {
     }
 
     @Test
-    public void testEncodeByteBufferEmpty() {
+    void testEncodeByteBufferEmpty() {
         assertArrayEquals(new byte[0], new Hex().encode(allocate(0)));
     }
 
     @Test
-    public void testEncodeByteBufferObjectEmpty() throws EncoderException {
+    void testEncodeByteBufferObjectEmpty() throws EncoderException {
         assertArrayEquals(new char[0], (char[]) new Hex().encode((Object) allocate(0)));
     }
 
     @Test
-    public void testEncodeClassCastException() {
+    void testEncodeClassCastException() {
         assertThrows(EncoderException.class, () -> new Hex().encode(new int[] { 65 }));
     }
 
     @Test
-    public void testEncodeDecodeHexCharArrayRandom() throws DecoderException, EncoderException {
+    void testEncodeDecodeHexCharArrayRandom() throws DecoderException, EncoderException {
 
         final Hex hex = new Hex();
         for (int i = 5; i > 0; i--) {
@@ -401,7 +401,7 @@ public class HexTest {
     }
 
     @Test
-    public void testEncodeDecodeHexCharArrayRandomToOutput() throws DecoderException {
+    void testEncodeDecodeHexCharArrayRandomToOutput() throws DecoderException {
         for (int i = 5; i > 0; i--) {
             final byte[] data = new byte[ThreadLocalRandom.current().nextInt(10000) + 1];
             ThreadLocalRandom.current().nextBytes(data);
@@ -421,13 +421,13 @@ public class HexTest {
     }
 
     @Test
-    public void testEncodeHex_ByteBufferOfZeroes() {
+    void testEncodeHex_ByteBufferOfZeroes() {
         final char[] c = Hex.encodeHex(allocate(36));
         assertEquals("000000000000000000000000000000000000000000000000000000000000000000000000", new String(c));
     }
 
     @Test
-    public void testEncodeHex_ByteBufferWithLimit() {
+    void testEncodeHex_ByteBufferWithLimit() {
         final ByteBuffer bb = allocate(16);
         for (int i = 0; i < 16; i++) {
             bb.put((byte) i);
@@ -444,13 +444,13 @@ public class HexTest {
     }
 
     @Test
-    public void testEncodeHexByteArrayEmpty() {
+    void testEncodeHexByteArrayEmpty() {
         assertArrayEquals(new char[0], Hex.encodeHex(new byte[0]));
         assertArrayEquals(new byte[0], new Hex().encode(new byte[0]));
     }
 
     @Test
-    public void testEncodeHexByteArrayHelloWorldLowerCaseHex() {
+    void testEncodeHexByteArrayHelloWorldLowerCaseHex() {
         final byte[] b = StringUtils.getBytesUtf8("Hello World");
         final String expected = "48656c6c6f20576f726c64";
         char[] actual;
@@ -463,7 +463,7 @@ public class HexTest {
     }
 
     @Test
-    public void testEncodeHexByteArrayHelloWorldUpperCaseHex() {
+    void testEncodeHexByteArrayHelloWorldUpperCaseHex() {
         final byte[] b = StringUtils.getBytesUtf8("Hello World");
         final String expected = "48656C6C6F20576F726C64";
         char[] actual;
@@ -476,19 +476,19 @@ public class HexTest {
     }
 
     @Test
-    public void testEncodeHexByteArrayZeroes() {
+    void testEncodeHexByteArrayZeroes() {
         final char[] c = Hex.encodeHex(new byte[36]);
         assertEquals("000000000000000000000000000000000000000000000000000000000000000000000000", new String(c));
     }
 
     @Test
-    public void testEncodeHexByteBufferEmpty() {
+    void testEncodeHexByteBufferEmpty() {
         assertArrayEquals(new char[0], Hex.encodeHex(allocate(0)));
         assertArrayEquals(new byte[0], new Hex().encode(allocate(0)));
     }
 
     @Test
-    public void testEncodeHexByteBufferHelloWorldLowerCaseHex() {
+    void testEncodeHexByteBufferHelloWorldLowerCaseHex() {
         final ByteBuffer b = getByteBufferUtf8("Hello World");
         final String expected = "48656c6c6f20576f726c64";
         char[] actual;
@@ -509,7 +509,7 @@ public class HexTest {
     }
 
     @Test
-    public void testEncodeHexByteBufferHelloWorldUpperCaseHex() {
+    void testEncodeHexByteBufferHelloWorldUpperCaseHex() {
         final ByteBuffer b = getByteBufferUtf8("Hello World");
         final String expected = "48656C6C6F20576F726C64";
         char[] actual;
@@ -530,23 +530,23 @@ public class HexTest {
     }
 
     @Test
-    public void testEncodeHexByteString_ByteArrayBoolean_ToLowerCase() {
+    void testEncodeHexByteString_ByteArrayBoolean_ToLowerCase() {
         assertEquals("0a", Hex.encodeHexString(new byte[] { 10 }, true));
     }
 
     @Test
-    public void testEncodeHexByteString_ByteArrayBoolean_ToUpperCase() {
+    void testEncodeHexByteString_ByteArrayBoolean_ToUpperCase() {
         assertEquals("0A", Hex.encodeHexString(new byte[] { 10 }, false));
     }
 
     @Test
-    public void testEncodeHexByteString_ByteArrayOfZeroes() {
+    void testEncodeHexByteString_ByteArrayOfZeroes() {
         final String c = Hex.encodeHexString(new byte[36]);
         assertEquals("000000000000000000000000000000000000000000000000000000000000000000000000", c);
     }
 
     @Test
-    public void testEncodeHexByteString_ByteBufferBoolean_ToLowerCase() {
+    void testEncodeHexByteString_ByteBufferBoolean_ToLowerCase() {
         final ByteBuffer bb = allocate(1);
         bb.put((byte) 10);
         bb.flip();
@@ -554,7 +554,7 @@ public class HexTest {
     }
 
     @Test
-    public void testEncodeHexByteString_ByteBufferBoolean_ToUpperCase() {
+    void testEncodeHexByteString_ByteBufferBoolean_ToUpperCase() {
         final ByteBuffer bb = allocate(1);
         bb.put((byte) 10);
         bb.flip();
@@ -562,13 +562,13 @@ public class HexTest {
     }
 
     @Test
-    public void testEncodeHexByteString_ByteBufferOfZeroes() {
+    void testEncodeHexByteString_ByteBufferOfZeroes() {
         final String c = Hex.encodeHexString(allocate(36));
         assertEquals("000000000000000000000000000000000000000000000000000000000000000000000000", c);
     }
 
     @Test
-    public void testEncodeHexByteString_ByteBufferOfZeroesWithLimit() {
+    void testEncodeHexByteString_ByteBufferOfZeroesWithLimit() {
         final ByteBuffer bb = allocate(36);
         bb.limit(3);
         assertEquals("000000", Hex.encodeHexString(bb));
@@ -580,7 +580,7 @@ public class HexTest {
     }
 
     @Test
-    public void testEncodeHexByteString_ByteBufferWithLimitBoolean_ToLowerCase() {
+    void testEncodeHexByteString_ByteBufferWithLimitBoolean_ToLowerCase() {
         final ByteBuffer bb = allocate(4);
         bb.put(1, (byte) 10);
         bb.position(1);
@@ -590,7 +590,7 @@ public class HexTest {
     }
 
     @Test
-    public void testEncodeHexByteString_ByteBufferWithLimitBoolean_ToUpperCase() {
+    void testEncodeHexByteString_ByteBufferWithLimitBoolean_ToUpperCase() {
         final ByteBuffer bb = allocate(4);
         bb.put(1, (byte) 10);
         bb.position(1);
@@ -600,7 +600,7 @@ public class HexTest {
     }
 
     @Test
-    public void testEncodeHexPartialInput() {
+    void testEncodeHexPartialInput() {
         final byte[] data = "hello world".getBytes(StandardCharsets.UTF_8);
 
         char[] hex = Hex.encodeHex(data, 0, 0, true);
@@ -626,14 +626,14 @@ public class HexTest {
     }
 
     @Test
-    public void testEncodeHexPartialInputOverbounds() {
+    void testEncodeHexPartialInputOverbounds() {
         final byte[] data = "hello world".getBytes(StandardCharsets.UTF_8);
 
         assertThrows(ArrayIndexOutOfBoundsException.class, () -> Hex.encodeHex(data, 9, 10, true));
     }
 
     @Test
-    public void testEncodeHexPartialInputUnderbounds() {
+    void testEncodeHexPartialInputUnderbounds() {
         final byte[] data = "hello world".getBytes(StandardCharsets.UTF_8);
 
         assertThrows(ArrayIndexOutOfBoundsException.class, () -> Hex.encodeHex(data, -2, 10, true));
@@ -644,23 +644,23 @@ public class HexTest {
      * See CODEC-261.
      */
     @Test
-    public void testEncodeHexReadOnlyByteBuffer() {
+    void testEncodeHexReadOnlyByteBuffer() {
         final char[] chars = Hex.encodeHex(ByteBuffer.wrap(new byte[]{10}).asReadOnlyBuffer());
         assertEquals("0a", String.valueOf(chars));
     }
 
     @Test
-    public void testEncodeStringEmpty() throws EncoderException {
+    void testEncodeStringEmpty() throws EncoderException {
         assertArrayEquals(new char[0], (char[]) new Hex().encode(""));
     }
 
     @Test
-    public void testGetCharset() {
+    void testGetCharset() {
         assertEquals(StandardCharsets.UTF_8, new Hex(StandardCharsets.UTF_8).getCharset());
     }
 
     @Test
-    public void testGetCharsetName() {
+    void testGetCharsetName() {
         assertEquals(StandardCharsets.UTF_8.name(), new Hex(StandardCharsets.UTF_8).getCharsetName());
     }
 

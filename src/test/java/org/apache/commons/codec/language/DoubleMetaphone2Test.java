@@ -1276,7 +1276,7 @@ public class DoubleMetaphone2Test extends AbstractStringEncoderTest<DoubleMetaph
      * Test alternative encoding.
      */
     @Test
-    public void testDoubleMetaphoneAlternate() {
+    void testDoubleMetaphoneAlternate() {
         checkDoubleMetaphone(ALTERNATE_INDEX, true);
     }
 
@@ -1284,7 +1284,7 @@ public class DoubleMetaphone2Test extends AbstractStringEncoderTest<DoubleMetaph
      * Test primary encoding.
      */
     @Test
-    public void testDoubleMetaphonePrimary() {
+    void testDoubleMetaphonePrimary() {
         checkDoubleMetaphone(PRIMARY_INDEX, false);
     }
 }

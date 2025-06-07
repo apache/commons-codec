@@ -39,7 +39,7 @@ public class Base16OutputStreamTest {
      * @throws IOException for some failure scenarios.
      */
     @Test
-    public void testBase16EmptyOutputStream() throws IOException {
+    void testBase16EmptyOutputStream() throws IOException {
         final byte[] emptyEncoded = {};
         final byte[] emptyDecoded = {};
         testByteByByte(emptyEncoded, emptyDecoded);
@@ -52,7 +52,7 @@ public class Base16OutputStreamTest {
      * @throws IOException for some failure scenarios.
      */
     @Test
-    public void testBase16OutputStreamByChunk() throws IOException {
+    void testBase16OutputStreamByChunk() throws IOException {
         // Hello World test.
         byte[] encoded = StringUtils.getBytesUtf8("48656C6C6F20576F726C64");
         byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
@@ -79,7 +79,7 @@ public class Base16OutputStreamTest {
      * @throws IOException for some failure scenarios.
      */
     @Test
-    public void testBase16OutputStreamByteByByte() throws IOException {
+    void testBase16OutputStreamByteByByte() throws IOException {
         // Hello World test.
         byte[] encoded = StringUtils.getBytesUtf8("48656C6C6F20576F726C64");
         byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
@@ -234,7 +234,7 @@ public class Base16OutputStreamTest {
      * @throws IOException for some failure scenarios.
      */
     @Test
-    public void testWriteOutOfBounds() throws IOException {
+    void testWriteOutOfBounds() throws IOException {
         final byte[] buf = new byte[1024];
         final ByteArrayOutputStream bout = new ByteArrayOutputStream();
         try (Base16OutputStream out = new Base16OutputStream(bout)) {
@@ -251,7 +251,7 @@ public class Base16OutputStreamTest {
      * @throws IOException for some failure scenarios.
      */
     @Test
-    public void testWriteToNullCoverage() throws IOException {
+    void testWriteToNullCoverage() throws IOException {
         final ByteArrayOutputStream bout = new ByteArrayOutputStream();
         try (Base16OutputStream out = new Base16OutputStream(bout)) {
             assertThrows(NullPointerException.class, () -> out.write(null, 0, 0));

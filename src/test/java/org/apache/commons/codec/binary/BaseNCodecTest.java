@@ -158,12 +158,12 @@ public class BaseNCodecTest {
     }
 
     @Test
-    public void testBaseNCodec() {
+    void testBaseNCodec() {
         assertNotNull(codec);
     }
 
     @Test
-    public void testContainsAlphabetOrPad() {
+    void testContainsAlphabetOrPad() {
         assertFalse(codec.containsAlphabetOrPad(null));
         assertFalse(codec.containsAlphabetOrPad(new byte[]{}));
         assertTrue(codec.containsAlphabetOrPad("OK".getBytes()));
@@ -178,7 +178,7 @@ public class BaseNCodecTest {
      * format is updated.
      */
     @Test
-    public void testContextToString() {
+    void testContextToString() {
         final Context context = new Context();
         context.buffer = new byte[3];
         context.currentLinePos = 13;
@@ -205,7 +205,7 @@ public class BaseNCodecTest {
 //    }
 
     @Test
-    public void testEnsureBufferSize() {
+    void testEnsureBufferSize() {
         final BaseNCodec ncodec = new NoOpBaseNCodec();
         final Context context = new Context();
         assertNull(context.buffer, "Initial buffer should be null");
@@ -246,7 +246,7 @@ public class BaseNCodecTest {
      * on all VMs and may have to be annotated with @Ignore.</p>
      */
     @Test
-    public void testEnsureBufferSizeExpandsToBeyondMaxBufferSize() {
+    void testEnsureBufferSizeExpandsToBeyondMaxBufferSize() {
         assertEnsureBufferSizeExpandsToMaxBufferSize(true);
     }
 
@@ -254,12 +254,12 @@ public class BaseNCodecTest {
      * Test to expand to the max buffer size.
      */
     @Test
-    public void testEnsureBufferSizeExpandsToMaxBufferSize() {
+    void testEnsureBufferSizeExpandsToMaxBufferSize() {
         assertEnsureBufferSizeExpandsToMaxBufferSize(false);
     }
 
     @Test
-    public void testEnsureBufferSizeThrowsOnOverflow() {
+    void testEnsureBufferSizeThrowsOnOverflow() {
         final BaseNCodec ncodec = new NoOpBaseNCodec();
         final Context context = new Context();
 
@@ -317,7 +317,7 @@ public class BaseNCodecTest {
 //    }
 //
     @Test
-    public void testIsInAlphabetByte() {
+    void testIsInAlphabetByte() {
         assertFalse(codec.isInAlphabet((byte) 0));
         assertFalse(codec.isInAlphabet((byte) 'a'));
         assertTrue(codec.isInAlphabet((byte) 'O'));
@@ -325,7 +325,7 @@ public class BaseNCodecTest {
     }
 
     @Test
-    public void testIsInAlphabetByteArrayBoolean() {
+    void testIsInAlphabetByteArrayBoolean() {
         assertTrue(codec.isInAlphabet(new byte[] {}, false));
         assertTrue(codec.isInAlphabet(new byte[] { 'O' }, false));
         assertFalse(codec.isInAlphabet(new byte[] { 'O', ' ' }, false));
@@ -337,7 +337,7 @@ public class BaseNCodecTest {
     }
 
     @Test
-    public void testIsInAlphabetString() {
+    void testIsInAlphabetString() {
         assertTrue(codec.isInAlphabet("OK"));
         assertTrue(codec.isInAlphabet("O=K= \t\n\r"));
     }
@@ -363,7 +363,7 @@ public class BaseNCodecTest {
 //    }
 //
     @Test
-    public void testIsWhiteSpace() {
+    void testIsWhiteSpace() {
         assertTrue(Character.isWhitespace((byte) ' '));
         assertTrue(Character.isWhitespace((byte) '\n'));
         assertTrue(Character.isWhitespace((byte) '\r'));
@@ -377,7 +377,7 @@ public class BaseNCodecTest {
     }
 
     @Test
-    public void testProvidePaddingByte() {
+    void testProvidePaddingByte() {
         // Given
         codec = new BaseNCodec(0, 0, 0, 0, (byte) 0x25) {
             @Override

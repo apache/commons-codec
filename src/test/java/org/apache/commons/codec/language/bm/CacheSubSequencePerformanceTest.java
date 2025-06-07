@@ -50,7 +50,7 @@ public class CacheSubSequencePerformanceTest {
     }
 
     @Test
-    public void test() {
+    void test() {
         final int times = 10000000;
         System.out.print("Test with String : ");
         test("Angelo", times);

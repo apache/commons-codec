@@ -56,24 +56,24 @@ public class NysiisTest extends AbstractStringEncoderTest<Nysiis> {
     }
 
     @Test
-    public void testBran() {
+    void testBran() {
         encodeAll(new String[] { "Brian", "Brown", "Brun" }, "BRAN");
     }
 
     @Test
-    public void testCap() {
+    void testCap() {
         encodeAll(new String[] { "Capp", "Cope", "Copp", "Kipp" }, "CAP");
     }
 
     @Test
-    public void testDad() {
+    void testDad() {
         // Data Quality and Record Linkage Techniques P.121 claims this is DAN,
         // but it should be DAD, verified also with dropby.com
         encodeAll(new String[] { "Dent" }, "DAD");
     }
 
     @Test
-    public void testDan() {
+    void testDan() {
         encodeAll(new String[] { "Dane", "Dean", "Dionne" }, "DAN");
     }
 
@@ -82,7 +82,7 @@ public class NysiisTest extends AbstractStringEncoderTest<Nysiis> {
      *
      * @see <a href="http://www.dropby.com/NYSIISTextStrings.html">http://www.dropby.com/NYSIISTextStrings.html</a>*/
     @Test
-    public void testDropBy() {
+    void testDropBy() {
         // Explanation of differences between this implementation and the one at dropby.com is
         // prepended to the test string. The referenced rules refer to the outlined steps the
         // class description for Nysiis.
@@ -140,14 +140,14 @@ public class NysiisTest extends AbstractStringEncoderTest<Nysiis> {
     }
 
     @Test
-    public void testFal() {
+    void testFal() {
         encodeAll(new String[] { "Phil" }, "FAL");
     }
 
     /**
      * Tests data gathered from around the internets.*/
     @Test
-    public void testOthers() {
+    void testOthers() {
         assertEncodings(
                 new String[] { "O'Daniel", "ODANAL" },
                 new String[] { "O'Donnel", "ODANAL" },
@@ -161,7 +161,7 @@ public class NysiisTest extends AbstractStringEncoderTest<Nysiis> {
     /**
      * Tests rule 1: Translate first characters of name: MAC → MCC, KN → N, K → C, PH, PF → FF, SCH → SSS*/
     @Test
-    public void testRule1() {
+    void testRule1() {
         assertEncodings(
                 new String[] { "MACX", "MCX" },
                 new String[] { "KNX", "NX" },
@@ -174,7 +174,7 @@ public class NysiisTest extends AbstractStringEncoderTest<Nysiis> {
     /**
      * Tests rule 2: Translate last characters of name: EE → Y, IE → Y, DT, RT, RD, NT, ND → D*/
     @Test
-    public void testRule2() {
+    void testRule2() {
         assertEncodings(
                 new String[] { "XEE", "XY" },
                 new String[] { "XIE", "XY" },
@@ -188,7 +188,7 @@ public class NysiisTest extends AbstractStringEncoderTest<Nysiis> {
     /**
      * Tests rule 4.1: EV → AF else A, E, I, O, U → A*/
     @Test
-    public void testRule4Dot1() {
+    void testRule4Dot1() {
         assertEncodings(
                 new String[] { "XEV", "XAF" },
                 new String[] { "XAX", "XAX" },
@@ -201,7 +201,7 @@ public class NysiisTest extends AbstractStringEncoderTest<Nysiis> {
     /**
      * Tests rule 4.2: Q → G, Z → S, M → N*/
     @Test
-    public void testRule4Dot2() {
+    void testRule4Dot2() {
         assertEncodings(
                 new String[] { "XQ", "XG" },
                 new String[] { "XZ", "X" },
@@ -211,7 +211,7 @@ public class NysiisTest extends AbstractStringEncoderTest<Nysiis> {
     /**
      * Tests rule 5: If last character is S, remove it.*/
     @Test
-    public void testRule5() {
+    void testRule5() {
         assertEncodings(
                 new String[] { "XS", "X" },
                 new String[] { "XSS", "X" });
@@ -220,7 +220,7 @@ public class NysiisTest extends AbstractStringEncoderTest<Nysiis> {
     /**
      * Tests rule 6: If last characters are AY, replace with Y.*/
     @Test
-    public void testRule6() {
+    void testRule6() {
         assertEncodings(
                 new String[] { "XAY", "XY" },
                 new String[] { "XAYS", "XY" }); // Rules 5, 6
@@ -229,25 +229,25 @@ public class NysiisTest extends AbstractStringEncoderTest<Nysiis> {
     /**
      * Tests rule 7: If last character is A, remove it.*/
     @Test
-    public void testRule7() {
+    void testRule7() {
         assertEncodings(
                 new String[] { "XA", "X" },
                 new String[] { "XAS", "X" }); // Rules 5, 7
     }
     @Test
-    public void testSnad() {
+    void testSnad() {
         // Data Quality and Record Linkage Techniques P.121 claims this is SNAT,
         // but it should be SNAD
         encodeAll(new String[] { "Schmidt" }, "SNAD");
     }
 
     @Test
-    public void testSnat() {
+    void testSnat() {
         encodeAll(new String[] { "Smith", "Schmit" }, "SNAT");
     }
 
     @Test
-    public void testSpecialBranches() {
+    void testSpecialBranches() {
         encodeAll(new String[] { "Kobwick" }, "CABWAC");
         encodeAll(new String[] { "Kocher" }, "CACAR");
         encodeAll(new String[] { "Fesca" }, "FASC");
@@ -258,12 +258,12 @@ public class NysiisTest extends AbstractStringEncoderTest<Nysiis> {
     }
 
     @Test
-    public void testTranan() {
+    void testTranan() {
         encodeAll(new String[] { "Trueman", "Truman" }, "TRANAN");
     }
 
     @Test
-    public void testTrueVariant() {
+    void testTrueVariant() {
         final Nysiis encoder = new Nysiis(true);
 
         final String encoded = encoder.encode("WESTERLUND");

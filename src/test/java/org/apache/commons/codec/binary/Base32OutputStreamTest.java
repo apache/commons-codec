@@ -74,7 +74,7 @@ public class Base32OutputStreamTest {
      *             for some failure scenarios.
      */
     @Test
-    public void testBase32EmptyOutputStreamMimeChunkSize() throws Exception {
+    void testBase32EmptyOutputStreamMimeChunkSize() throws Exception {
         testBase32EmptyOutputStream(BaseNCodec.MIME_CHUNK_SIZE);
     }
 
@@ -85,7 +85,7 @@ public class Base32OutputStreamTest {
      *             for some failure scenarios.
      */
     @Test
-    public void testBase32EmptyOutputStreamPemChunkSize() throws Exception {
+    void testBase32EmptyOutputStreamPemChunkSize() throws Exception {
         testBase32EmptyOutputStream(BaseNCodec.PEM_CHUNK_SIZE);
     }
 
@@ -96,7 +96,7 @@ public class Base32OutputStreamTest {
      *             for some failure scenarios.
      */
     @Test
-    public void testBase32OutputStreamByChunk() throws Exception {
+    void testBase32OutputStreamByChunk() throws Exception {
         // Hello World test.
         byte[] encoded = StringUtils.getBytesUtf8(Base32TestData.BASE32_FIXTURE);
         byte[] decoded = StringUtils.getBytesUtf8(Base32TestData.STRING_FIXTURE);
@@ -130,7 +130,7 @@ public class Base32OutputStreamTest {
      *             for some failure scenarios.
      */
     @Test
-    public void testBase32OutputStreamByteByByte() throws Exception {
+    void testBase32OutputStreamByteByByte() throws Exception {
         // Hello World test.
         byte[] encoded = StringUtils.getBytesUtf8(Base32TestData.BASE32_FIXTURE);
         byte[] decoded = StringUtils.getBytesUtf8(Base32TestData.STRING_FIXTURE);
@@ -281,7 +281,7 @@ public class Base32OutputStreamTest {
      *             for some failure scenarios.
      */
     @Test
-    public void testStrictDecoding() throws Exception {
+    void testStrictDecoding() throws Exception {
         for (final String s : Base32Test.BASE32_IMPOSSIBLE_CASES) {
             final byte[] encoded = StringUtils.getBytesUtf8(s);
             ByteArrayOutputStream bout = new ByteArrayOutputStream();
@@ -309,7 +309,7 @@ public class Base32OutputStreamTest {
      *             for some failure scenarios.
      */
     @Test
-    public void testWriteOutOfBounds() throws Exception {
+    void testWriteOutOfBounds() throws Exception {
         final byte[] buf = new byte[1024];
         final ByteArrayOutputStream bout = new ByteArrayOutputStream();
         try (Base32OutputStream out = new Base32OutputStream(bout)) {
@@ -327,7 +327,7 @@ public class Base32OutputStreamTest {
      *             for some failure scenarios.
      */
     @Test
-    public void testWriteToNullCoverage() throws Exception {
+    void testWriteToNullCoverage() throws Exception {
         final ByteArrayOutputStream bout = new ByteArrayOutputStream();
         try (Base32OutputStream out = new Base32OutputStream(bout)) {
             assertThrows(NullPointerException.class, () -> out.write(null, 0, 0));
