@@ -67,6 +67,7 @@ public class DaitchMokotoffSoundexTest extends AbstractStringEncoderTest<DaitchM
         assertEquals("547830|545783|594783|594578", soundex("GERSCHFELD"));
     }
 
+    @Test
     public void testEncodeBasic() {
         // same as above, but without branching
         assertEquals("097400", encode("AUERBACH"));
