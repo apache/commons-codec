@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests Rule.
  */
-public class RuleTest {
+class RuleTest {
     private Rule.Phoneme[][] makePhonemes() {
         final String[][] words = {
                 { "rinD", "rinDlt", "rina", "rinalt", "rino", "rinolt", "rinu", "rinult" },

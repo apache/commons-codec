@@ -26,7 +26,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import org.junit.jupiter.api.Test;
 
-public class Apr1CryptTest {
+class Apr1CryptTest {
 
     @Test
     void testApr1CryptBytes() {

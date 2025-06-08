@@ -26,7 +26,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests RefinedSoundex.
  */
-public class RefinedSoundexTest extends AbstractStringEncoderTest<RefinedSoundex> {
+class RefinedSoundexTest extends AbstractStringEncoderTest<RefinedSoundex> {
 
     @Override
     protected RefinedSoundex createStringEncoder() {

@@ -32,7 +32,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link Base64OutputStream}.
  */
-public class Base64OutputStreamTest {
+class Base64OutputStreamTest {
 
     private static final byte[] CR_LF = {(byte) '\r', (byte) '\n'};
 

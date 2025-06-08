@@ -29,7 +29,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 /**
  * Tests PhoneticEngine.
  */
-public class PhoneticEngineTest {
+class PhoneticEngineTest {
 
     private static final Integer TEN = Integer.valueOf(10);
 

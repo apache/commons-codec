@@ -40,7 +40,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 /**
  * Tests {@link org.apache.commons.codec.binary.Hex}.
  */
-public class HexTest {
+class HexTest {
 
     private static final String BAD_ENCODING_NAME = "UNKNOWN";
 

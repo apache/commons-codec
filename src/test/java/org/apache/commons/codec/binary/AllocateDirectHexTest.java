@@ -19,7 +19,7 @@ package org.apache.commons.codec.binary;
 
 import java.nio.ByteBuffer;
 
-public class AllocateDirectHexTest extends HexTest {
+class AllocateDirectHexTest extends HexTest {
 
     @Override
     protected ByteBuffer allocate(final int capacity) {

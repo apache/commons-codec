@@ -33,7 +33,7 @@ import org.junit.jupiter.api.Test;
  *
  * An unusual value is indicated by the term "corner case"
  */
-public class MatchRatingApproachEncoderTest extends AbstractStringEncoderTest<MatchRatingApproachEncoder> {
+class MatchRatingApproachEncoderTest extends AbstractStringEncoderTest<MatchRatingApproachEncoder> {
 
     @Override
     protected MatchRatingApproachEncoder createStringEncoder() {

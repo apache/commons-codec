@@ -28,7 +28,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-public class Sha512CryptTest {
+class Sha512CryptTest {
 
     @Test
     void testSha256LargetThanBlocksize() {

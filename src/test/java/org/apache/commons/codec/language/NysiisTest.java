@@ -26,7 +26,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link Nysiis}
  */
-public class NysiisTest extends AbstractStringEncoderTest<Nysiis> {
+class NysiisTest extends AbstractStringEncoderTest<Nysiis> {
 
     private final Nysiis fullNysiis = new Nysiis(false);
 

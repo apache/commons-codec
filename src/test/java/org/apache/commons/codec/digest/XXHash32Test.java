@@ -34,7 +34,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class XXHash32Test {
+class XXHash32Test {
 
     private static long copy(final InputStream input, final OutputStream output, final int bufferSize) throws IOException {
         return IOUtils.copyLarge(input, output, new byte[bufferSize]);

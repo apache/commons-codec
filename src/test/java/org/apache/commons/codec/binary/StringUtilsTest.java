@@ -33,7 +33,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link StringUtils}
  */
-public class StringUtilsTest {
+class StringUtilsTest {
 
     private static final byte[] BYTES_FIXTURE = { 'a', 'b', 'c' };
 

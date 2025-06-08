@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.Test;
 
-public class MurmurHash2Test {
+class MurmurHash2Test {
 
     /** Random input data with various length. */
     static final byte[][] input = {

@@ -38,7 +38,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link Base32}.
  */
-public class Base32Test {
+class Base32Test {
 
     private static final Charset CHARSET_UTF8 = StandardCharsets.UTF_8;
 

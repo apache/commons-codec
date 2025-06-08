@@ -118,7 +118,7 @@ import org.junit.jupiter.api.Test;
  * Patch applied, committed revision 1541234.
  * </p>
  */
-public class PhoneticEnginePerformanceTest {
+class PhoneticEnginePerformanceTest {
 
     private static final int LOOP = 80000;
 

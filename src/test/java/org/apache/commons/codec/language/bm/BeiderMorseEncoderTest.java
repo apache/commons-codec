@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests BeiderMorseEncoder.
  */
-public class BeiderMorseEncoderTest extends AbstractStringEncoderTest<StringEncoder> {
+class BeiderMorseEncoderTest extends AbstractStringEncoderTest<StringEncoder> {
     private static final char[] TEST_CHARS = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'o', 'u' };
 
     private void assertNotEmpty(final BeiderMorseEncoder bmpm, final String value) throws EncoderException {

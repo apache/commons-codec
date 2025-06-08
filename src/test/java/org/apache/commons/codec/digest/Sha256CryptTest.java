@@ -27,7 +27,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import org.junit.jupiter.api.Test;
 
-public class Sha256CryptTest {
+class Sha256CryptTest {
 
     @Test
     void testSha256CryptBytes() {

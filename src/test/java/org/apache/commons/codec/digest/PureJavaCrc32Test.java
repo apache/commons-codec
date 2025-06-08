@@ -38,7 +38,7 @@ import org.junit.jupiter.api.Test;
  *
  * Copied from Hadoop 2.6.3 (Renamed TestPureJavaCrc32 to PureJavaCrc32Test).
  */
-public class PureJavaCrc32Test {
+class PureJavaCrc32Test {
 
     /**
      * Performance tests to compare performance of the Pure Java implementation to the built-in java.util.zip implementation. This can be run from the command

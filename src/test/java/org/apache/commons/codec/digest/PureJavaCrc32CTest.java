@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link PureJavaCrc32C}. Test data was derived from https://tools.ietf.org/html/rfc3720#appendix-B.4
  */
-public class PureJavaCrc32CTest {
+class PureJavaCrc32CTest {
 
     private final PureJavaCrc32C crc = new PureJavaCrc32C();
 

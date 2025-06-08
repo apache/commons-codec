@@ -31,7 +31,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link Base16InputStream}.
  */
-public class Base16InputStreamTest {
+class Base16InputStreamTest {
 
     /**
      * Decodes to {202, 254, 186, 190, 255, 255}

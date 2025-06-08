@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Test cases for the StingEncoderComparator.
  */
-public class StringEncoderComparatorTest {
+class StringEncoderComparatorTest {
 
     @SuppressWarnings("unchecked") // cannot easily avoid this warning
     @Test

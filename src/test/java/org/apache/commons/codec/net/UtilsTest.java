@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Test;
  * Methods currently get 100%/100% line/branch code coverage from other tests classes.
  * </p>
  */
-public class UtilsTest {
+class UtilsTest {
 
     /**
      * We could make the constructor private but there does not seem to be a point to jumping through extra code hoops

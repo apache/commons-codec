@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link Base32InputStream}.
  */
-public class Base32InputStreamTest {
+class Base32InputStreamTest {
 
     private static final String ENCODED_FOO = "MZXW6===";
 

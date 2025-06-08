@@ -24,7 +24,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link Digest}.
  */
-public class DigestTest {
+class DigestTest {
 
     /**
      * Tests if empty arguments are handled correctly.

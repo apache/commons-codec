@@ -33,7 +33,7 @@ import org.junit.jupiter.api.Test;
  * Tests to make sure future versions of commons-codec.jar have identical Base64
  * behavior as commons-codec-1.3.jar.
  */
-public class Base64Codec13Test {
+class Base64Codec13Test {
 
     private static final String[] STRINGS = new String[181];
     private static final String[] CHUNKED_STRINGS = new String[STRINGS.length];

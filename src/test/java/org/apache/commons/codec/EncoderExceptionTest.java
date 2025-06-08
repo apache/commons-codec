@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link EncoderException}.
  */
-public class EncoderExceptionTest {
+class EncoderExceptionTest {
 
     private static final String MSG = "TEST";
 

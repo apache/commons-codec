@@ -28,7 +28,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 /**
  * Tests {@link Resources}.
  */
-public class ResourcesTest {
+class ResourcesTest {
 
     static List<String> getResourceNames() {
         return Arrays.asList("/org/apache/commons/codec/language/dmrules.txt", "/org/apache/commons/codec/language/bm/lang.txt");

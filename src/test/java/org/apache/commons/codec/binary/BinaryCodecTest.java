@@ -32,7 +32,7 @@ import org.junit.jupiter.api.Test;
 /**
  * TestCase for BinaryCodec class.
  */
-public class BinaryCodecTest {
+class BinaryCodecTest {
 
     private static final Charset CHARSET_UTF8 = StandardCharsets.UTF_8;
 

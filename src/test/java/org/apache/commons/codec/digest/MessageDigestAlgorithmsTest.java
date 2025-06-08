@@ -45,7 +45,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 /**
  * Tests {@link MessageDigestAlgorithms}.
  */
-public class MessageDigestAlgorithmsTest {
+class MessageDigestAlgorithmsTest {
 
     @BeforeAll
     public static void checkValues() throws Exception {

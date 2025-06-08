@@ -26,7 +26,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Sanity checks for {@link CharEncoding}.
  */
-public class CharEncodingTest {
+class CharEncodingTest {
 
     /**
      * We could make the constructor private in the future, it's a matter a style.

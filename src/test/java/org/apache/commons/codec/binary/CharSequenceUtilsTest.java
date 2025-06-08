@@ -31,7 +31,7 @@ import org.junit.jupiter.api.Test;
  * the method is package private. The failing tests have been commented out and the
  * implementation left unchanged.
  */
-public class CharSequenceUtilsTest {
+class CharSequenceUtilsTest {
 
     private abstract static class RunTest {
 

@@ -31,7 +31,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Sanity checks for {@link Charsets}.
  */
-public class CharsetsTest {
+class CharsetsTest {
 
     private static final TreeSet<String> AVAILABLE_CHARSET_NAMES = new TreeSet<>(Charset.availableCharsets().keySet());
 

@@ -28,7 +28,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 /**
  * Tests guessLanguages API.
  */
-public class LanguageGuessingTest {
+class LanguageGuessingTest {
 
     public static Stream<Arguments> data() {
         return Stream.of(

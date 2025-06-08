@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-public class CryptTest {
+class CryptTest {
 
     // Allow CLI testing
     // CLASSPATH=target/classes:target/test-classes/ java org.apache.commons.codec.digest.CryptTest

@@ -28,7 +28,7 @@ import org.junit.jupiter.api.Test;
  * Keep this file in UTF-8 encoding for proper Javadoc processing.
  * </p>
  */
-public class DaitchMokotoffSoundexTest extends AbstractStringEncoderTest<DaitchMokotoffSoundex> {
+class DaitchMokotoffSoundexTest extends AbstractStringEncoderTest<DaitchMokotoffSoundex> {
 
     @Override
     protected DaitchMokotoffSoundex createStringEncoder() {

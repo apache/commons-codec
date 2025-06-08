@@ -26,7 +26,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  */
-public class MetaphoneTest extends AbstractStringEncoderTest<Metaphone> {
+class MetaphoneTest extends AbstractStringEncoderTest<Metaphone> {
 
     public void assertIsMetaphoneEqual(final String source, final String[] matches) {
         // match source to all matches

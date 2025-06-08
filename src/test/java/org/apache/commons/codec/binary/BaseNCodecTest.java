@@ -29,7 +29,7 @@ import org.apache.commons.codec.binary.BaseNCodec.Context;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class BaseNCodecTest {
+class BaseNCodecTest {
 
     /**
      * Extend BaseNCodec without implementation (no operations = NoOp).

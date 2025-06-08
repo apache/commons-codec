@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Test;
 /**
  * RFC 1522 compliant codec test cases
  */
-public class RFC1522CodecTest {
+class RFC1522CodecTest {
 
     static class RFC1522TestCodec extends RFC1522Codec {
 

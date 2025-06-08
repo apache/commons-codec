@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link Base16OutputStream}.
  */
-public class Base16OutputStreamTest {
+class Base16OutputStreamTest {
 
     private static final String STRING_FIXTURE = "Hello World";
 

@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Test;
  *
  * @see "http://www.cuj.com/documents/s=8038/cuj0006philips/"
  */
-public class DoubleMetaphoneTest extends AbstractStringEncoderTest<DoubleMetaphone> {
+class DoubleMetaphoneTest extends AbstractStringEncoderTest<DoubleMetaphone> {
 
     /**
      * Test data from https://aspell.net/test/orig/batch0.tab.

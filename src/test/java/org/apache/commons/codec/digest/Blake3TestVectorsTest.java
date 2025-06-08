@@ -37,7 +37,7 @@ import org.junit.jupiter.params.provider.MethodSource;
  * For each of these hashes, both the extended hash output and the truncated 32-byte hash outputs are validated against
  * these known answer tests (KATs).
  */
-public class Blake3TestVectorsTest {
+class Blake3TestVectorsTest {
     private static final byte[] KEY = "whats the Elvish word for friend".getBytes(StandardCharsets.UTF_8);
     private static final byte[] CTX =
             "BLAKE3 2019-12-27 16:29:52 test vectors context".getBytes(StandardCharsets.UTF_8);

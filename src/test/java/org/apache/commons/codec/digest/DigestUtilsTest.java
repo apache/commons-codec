@@ -51,7 +51,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link DigestUtils}.
  */
-public class DigestUtilsTest {
+class DigestUtilsTest {
 
     private static final String EMPTY_STRING = "";
 

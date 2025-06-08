@@ -32,7 +32,7 @@ import org.junit.jupiter.api.Test;
  *
  * <p>Keep this file in UTF-8 encoding for proper Javadoc processing.</p>
  */
-public class SoundexTest extends AbstractStringEncoderTest<Soundex> {
+class SoundexTest extends AbstractStringEncoderTest<Soundex> {
 
     @Override
     protected Soundex createStringEncoder() {

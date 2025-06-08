@@ -35,7 +35,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Quoted-printable codec test cases
  */
-public class BCodecTest {
+class BCodecTest {
     private static final String[] BASE64_IMPOSSIBLE_CASES = {
             // Require the RFC 1522 "encoded-word" header
             "=?ASCII?B?ZE==?=",

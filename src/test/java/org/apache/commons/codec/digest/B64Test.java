@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 
-public class B64Test {
+class B64Test {
 
     @Test
     void testB64from24bit() {

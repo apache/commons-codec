@@ -33,7 +33,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link HmacUtils}.
  */
-public class HmacUtilsTest {
+class HmacUtilsTest {
 
     @SuppressWarnings("deprecation") // most of the static methods are deprecated
     @Test

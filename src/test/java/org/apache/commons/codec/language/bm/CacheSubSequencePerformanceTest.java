@@ -19,7 +19,7 @@ package org.apache.commons.codec.language.bm;
 
 import org.junit.jupiter.api.Test;
 
-public class CacheSubSequencePerformanceTest {
+class CacheSubSequencePerformanceTest {
 
     private CharSequence cacheSubSequence(final CharSequence cached) {
         final CharSequence[][] cache = new CharSequence[cached.length()][cached.length()];

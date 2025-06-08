@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Percent codec test cases.
  */
-public class PercentCodecTest {
+class PercentCodecTest {
 
     @Test
     void testBasicEncodeDecode() throws Exception {

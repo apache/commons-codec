@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests Caverphone2.
  */
-public class Caverphone2Test extends AbstractStringEncoderTest<Caverphone2> {
+class Caverphone2Test extends AbstractStringEncoderTest<Caverphone2> {
 
     @Override
     protected Caverphone2 createStringEncoder() {

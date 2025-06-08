@@ -49,7 +49,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 /**
  * Tests {@link HmacAlgorithms}.
  */
-public class HmacAlgorithmsTest {
+class HmacAlgorithmsTest {
 
     static final String STANDARD_KEY_STRING = "key";
 

@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-public class Blake3Test {
+class Blake3Test {
     private static void assertThrowsProperExceptionWithKeySize(final int keySize) {
         assertThrows(IllegalArgumentException.class, () -> Blake3.initKeyedHash(new byte[keySize]), "Blake3 keys must be 32 bytes");
     }

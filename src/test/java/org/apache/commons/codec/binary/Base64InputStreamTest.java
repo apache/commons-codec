@@ -37,7 +37,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link Base64InputStream}.
  */
-public class Base64InputStreamTest {
+class Base64InputStreamTest {
 
     /**
      * Decodes to {0, 0, 0, 255, 255, 255}

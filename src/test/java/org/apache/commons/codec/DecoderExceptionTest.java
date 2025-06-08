@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link DecoderException}.
  */
-public class DecoderExceptionTest {
+class DecoderExceptionTest {
 
     private static final String MSG = "TEST";
 

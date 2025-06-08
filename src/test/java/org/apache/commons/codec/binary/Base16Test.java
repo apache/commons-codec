@@ -37,7 +37,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link Base16}.
  */
-public class Base16Test {
+class Base16Test {
 
     private static final Charset CHARSET_UTF8 = StandardCharsets.UTF_8;
 

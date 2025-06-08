@@ -32,7 +32,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Quoted-printable codec test cases
  */
-public class QuotedPrintableCodecTest {
+class QuotedPrintableCodecTest {
 
     static final int[] SWISS_GERMAN_STUFF_UNICODE = { 0x47, 0x72, 0xFC, 0x65, 0x7A, 0x69, 0x5F, 0x7A, 0xE4, 0x6D, 0xE4 };
 

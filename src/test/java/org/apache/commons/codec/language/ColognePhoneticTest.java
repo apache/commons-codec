@@ -38,7 +38,7 @@ import org.opentest4j.AssertionFailedError;
  * Keep this file in UTF-8 encoding for proper Javadoc processing.
  * </p>
  */
-public class ColognePhoneticTest extends AbstractStringEncoderTest<ColognePhonetic> {
+class ColognePhoneticTest extends AbstractStringEncoderTest<ColognePhonetic> {
 
     private static final Set<String> TESTSET = new HashSet<>();
 

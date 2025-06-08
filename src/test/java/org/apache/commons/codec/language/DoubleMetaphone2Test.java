@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
  *
  * @see <a href="https://swoodbridge.com/DoubleMetaPhone/surnames.txt">PHP test program</a>
  */
-public class DoubleMetaphone2Test extends AbstractStringEncoderTest<DoubleMetaphone> {
+class DoubleMetaphone2Test extends AbstractStringEncoderTest<DoubleMetaphone> {
 
     private static final int ALTERNATE_INDEX = 2;
 

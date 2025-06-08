@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import org.junit.jupiter.api.Test;
 
-public class XXHash32OverflowTest {
+class XXHash32OverflowTest {
 
     /**
      * This test hits an edge case where a very large number of bytes is added to the incremental
