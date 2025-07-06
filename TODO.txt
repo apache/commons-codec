@@ -19,8 +19,7 @@
 
 This is a list of action items to be finished in the [codec] project.  
 This TODO list reflects the current direction of development, and
-should be updated by all committers when a known issues or task
-is identified.  
+should be updated by all committers when a known issues or task is identified.  
 
 When a task in the TODO list is done, change the changes.xml document in xdocs
 
