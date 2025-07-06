@@ -427,7 +427,8 @@ public class Rule {
     }
 
     private static PhonemeExpr parsePhonemeExpr(final String ph) {
-        if (ph.startsWith("(")) { // we have a bracketed list of options
+        if (ph.startsWith("(")) {
+            // we have a bracketed list of options
             if (!ph.endsWith(")")) {
                 throw new IllegalArgumentException("Phoneme starts with '(' so must end with ')'");
             }
