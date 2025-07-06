@@ -27,7 +27,7 @@ import java.io.InputStream;
 public class Resources {
 
     /**
-     * Gets a read-only stream on the contents of the resource specified by resName. The mapping between the resource name and the stream is managed by this
+     * Gets an InputStream on the contents of the resource specified by {@code name}. The mapping between the resource name and the stream is managed by this
      * class's class loader.
      *
      * @param name The resource name.
