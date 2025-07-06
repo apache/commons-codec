@@ -294,26 +294,26 @@ public class Rule {
      * Initializes {@code RULES}.
      */
     static {
-        for (final NameType s : NameType.values()) {
-            final Map<RuleType, Map<String, Map<String, List<Rule>>>> rts = new EnumMap<>(RuleType.class);
-            for (final RuleType rt : RuleType.values()) {
-                final Map<String, Map<String, List<Rule>>> rs = new HashMap<>();
-                final Languages ls = Languages.getInstance(s);
-                ls.getLanguages().forEach(l -> {
-                    try (Scanner scanner = createScanner(s, rt, l)) {
-                        rs.put(l, parseRules(scanner, createResourceName(s, rt, l)));
+        for (final NameType nameType : NameType.values()) {
+            final Map<RuleType, Map<String, Map<String, List<Rule>>>> rtsMap = new EnumMap<>(RuleType.class);
+            for (final RuleType ruleType : RuleType.values()) {
+                final Map<String, Map<String, List<Rule>>> rsMap = new HashMap<>();
+                final Languages languages = Languages.getInstance(nameType);
+                languages.getLanguages().forEach(l -> {
+                    try (Scanner scanner = createScanner(nameType, ruleType, l)) {
+                        rsMap.put(l, parseRules(scanner, createResourceName(nameType, ruleType, l)));
                     } catch (final IllegalStateException e) {
-                        throw new IllegalStateException("Problem processing " + createResourceName(s, rt, l), e);
+                        throw new IllegalStateException("Problem processing " + createResourceName(nameType, ruleType, l), e);
                     }
                 });
-                if (!rt.equals(RuleType.RULES)) {
-                    try (Scanner scanner = createScanner(s, rt, "common")) {
-                        rs.put("common", parseRules(scanner, createResourceName(s, rt, "common")));
+                if (!ruleType.equals(RuleType.RULES)) {
+                    try (Scanner scanner = createScanner(nameType, ruleType, "common")) {
+                        rsMap.put("common", parseRules(scanner, createResourceName(nameType, ruleType, "common")));
                     }
                 }
-                rts.put(rt, Collections.unmodifiableMap(rs));
+                rtsMap.put(ruleType, Collections.unmodifiableMap(rsMap));
             }
-            RULES.put(s, Collections.unmodifiableMap(rts));
+            RULES.put(nameType, Collections.unmodifiableMap(rtsMap));
         }
     }
 
