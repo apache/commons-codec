@@ -55,6 +55,10 @@ limitations under the License.
       <url>scm:svn:https://svn.apache.org/repos/infra/websites/production/commons/content/proper/commons-codec/</url>
     </site>
   </distributionManagement>
+  <ciManagement>
+    <system>GitHub</system>
+    <url>https://github.com/apache/commons-cli/actions</url>
+  </ciManagement>
   <dependencies>
     <dependency>
       <groupId>org.apache.commons</groupId>
