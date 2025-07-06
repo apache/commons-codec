@@ -407,7 +407,7 @@ public class Rule {
     public static Map<String, List<Rule>> getInstanceMap(final NameType nameType, final RuleType rt, final String lang) {
         final Map<String, List<Rule>> rules = RULES.get(nameType).get(rt).get(lang);
         if (rules == null) {
-            throw new IllegalArgumentException(String.format("No rules found for %s, %s, %s.", nameType.getName(), rt.getName(), lang));
+            throw new IllegalArgumentException(String.format("No rules found for %s, %s, '%s'.", nameType.getName(), rt.getName(), lang));
         }
         return rules;
     }
