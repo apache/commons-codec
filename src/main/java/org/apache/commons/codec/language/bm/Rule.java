@@ -281,8 +281,12 @@ public class Rule {
 
     /**
      * Unused.
+     *
+     * @deprecated This is unused.
      */
+    @Deprecated
     public static final String ALL = "ALL";
+
     private static final String DOUBLE_QUOTE = "\"";
     private static final String HASH_INCLUDE = "#include";
     private static final int HASH_INCLUDE_LENGTH = HASH_INCLUDE.length();
