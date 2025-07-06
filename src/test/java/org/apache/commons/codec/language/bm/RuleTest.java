@@ -64,6 +64,15 @@ class RuleTest {
     }
 
     @Test
+    void testParsePhonemeExprLang311() {
+        assertEquals(1, Rule.parsePhonemeExpr("()").size());
+        assertEquals(1, Rule.parsePhonemeExpr("(())").size());
+        assertEquals(2, Rule.parsePhonemeExpr("(()|)").size());
+        assertEquals(2, Rule.parsePhonemeExpr("(|())").size());
+        assertEquals(3, Rule.parsePhonemeExpr("(|()|)").size());
+    }
+
+    @Test
     void testSubSequenceWorks() {
         // AppendableCharSequence is private to Rule. We can only make it through a Phoneme.
         final Rule.Phoneme a = new Rule.Phoneme("a", null);

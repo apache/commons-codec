@@ -80,6 +80,8 @@ import org.apache.commons.codec.language.bm.Languages.LanguageSet;
  */
 public class Rule {
 
+    private static final String PIPE = "|";
+
     /**
      * A phoneme.
      */
@@ -426,18 +428,19 @@ public class Rule {
         return new Phoneme(ph, Languages.ANY_LANGUAGE);
     }
 
-    private static PhonemeExpr parsePhonemeExpr(final String ph) {
+    static PhonemeExpr parsePhonemeExpr(final String ph) {
         if (ph.startsWith("(")) {
             // we have a bracketed list of options
             if (!ph.endsWith(")")) {
-                throw new IllegalArgumentException("Phoneme starts with '(' so must end with ')'");
+                throw new IllegalArgumentException("Phoneme starting with '(' must end with ')'");
             }
             final List<Phoneme> phs = new ArrayList<>();
             final String body = ph.substring(1, ph.length() - 1);
-            for (final String part : AROUND_PIPE.split(body)) {
+            final String[] split = AROUND_PIPE.split(body);
+            for (final String part : split) {
                 phs.add(parsePhoneme(part));
             }
-            if (body.startsWith("|") || body.endsWith("|")) {
+            if (split.length > 1 && split[0].length() != 0 && body.startsWith(PIPE) || split[split.length - 1].length() != 0 && body.endsWith(PIPE)) {
                 phs.add(new Phoneme("", Languages.ANY_LANGUAGE));
             }
             return new PhonemeList(phs);
