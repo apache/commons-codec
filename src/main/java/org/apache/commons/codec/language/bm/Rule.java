@@ -289,6 +289,10 @@ public class Rule {
     private static final Pattern AROUND_PLUS = Pattern.compile("[+]");
     private static final Pattern AROUND_PIPE = Pattern.compile("[|]");
     private static final Map<NameType, Map<RuleType, Map<String, Map<String, List<Rule>>>>> RULES = new EnumMap<>(NameType.class);
+
+    /**
+     * Initializes {@code RULES}.
+     */
     static {
         for (final NameType s : NameType.values()) {
             final Map<RuleType, Map<String, Map<String, List<Rule>>>> rts = new EnumMap<>(RuleType.class);
