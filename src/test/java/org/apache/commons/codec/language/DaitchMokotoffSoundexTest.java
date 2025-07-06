@@ -14,13 +14,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.commons.codec.language;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.stream.IntStream;
+
 import org.apache.commons.codec.AbstractStringEncoderTest;
 import org.apache.commons.codec.EncoderException;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  * Tests {@link DaitchMokotoffSoundex}.
@@ -47,7 +52,6 @@ class DaitchMokotoffSoundexTest extends AbstractStringEncoderTest<DaitchMokotoff
     void testAccentedCharacterFolding() {
         assertEquals("294795", soundex("Straßburg"));
         assertEquals("294795", soundex("Strasburg"));
-
         assertEquals("095600", soundex("Éregon"));
         assertEquals("095600", soundex("Eregon"));
     }
@@ -59,7 +63,6 @@ class DaitchMokotoffSoundexTest extends AbstractStringEncoderTest<DaitchMokotoff
         // 0-54-4---8 -> wrong
         // 0-54-----8 -> correct
         assertEquals("054800", soundex("AKSSOL"));
-
         // GERSCHFELD
         // G-E-RS-CH-F-E-L-D
         // 5--4/94-5/4-7-8-3 -> wrong
@@ -82,24 +85,36 @@ class DaitchMokotoffSoundexTest extends AbstractStringEncoderTest<DaitchMokotoff
 
     @Test
     void testEncodeIgnoreApostrophes() throws EncoderException {
-        checkEncodingVariations("079600", new String[] { "OBrien", "'OBrien", "O'Brien", "OB'rien", "OBr'ien",
-                "OBri'en", "OBrie'n", "OBrien'" });
+        checkEncodingVariations("079600", "OBrien", "'OBrien", "O'Brien", "OB'rien", "OBr'ien", "OBri'en", "OBrie'n", "OBrien'");
     }
 
     /**
      * Test data from http://www.myatt.demon.co.uk/sxalg.htm
      *
-     * @throws EncoderException for some failure scenarios     */
+     * @throws EncoderException for some failure scenarios
+     */
     @Test
     void testEncodeIgnoreHyphens() throws EncoderException {
-        checkEncodingVariations("565463", new String[] { "KINGSMITH", "-KINGSMITH", "K-INGSMITH", "KI-NGSMITH",
-                "KIN-GSMITH", "KING-SMITH", "KINGS-MITH", "KINGSM-ITH", "KINGSMI-TH", "KINGSMIT-H", "KINGSMITH-" });
+        checkEncodingVariations("565463", "KINGSMITH", "-KINGSMITH", "K-INGSMITH", "KI-NGSMITH", "KIN-GSMITH", "KING-SMITH", "KINGS-MITH", "KINGSM-ITH",
+                "KINGSMI-TH", "KINGSMIT-H", "KINGSMITH-");
     }
 
     @Test
     void testEncodeIgnoreTrimmable() {
         assertEquals("746536", encode(" \t\n\r Washington \t\n\r "));
         assertEquals("746536", encode("Washington"));
+    }
+
+    static IntStream getNonLetters() {
+        return IntStream.rangeClosed(Character.MIN_VALUE, Character.MAX_VALUE).filter(c -> !Character.isLetter(c));
+    }
+
+    @ParameterizedTest
+    @MethodSource("getNonLetters")
+    void testEncodeIgnoreNonLetters(final int nonLetterInt) throws EncoderException {
+        final char nonLetterChar = (char) nonLetterInt;
+        checkEncodingVariations("746536", "Washington" + nonLetterChar, nonLetterChar + "Washington", nonLetterChar + "Washington" + nonLetterChar,
+                "Washi" + nonLetterChar + "ngton");
     }
 
     /**
@@ -116,7 +131,6 @@ class DaitchMokotoffSoundexTest extends AbstractStringEncoderTest<DaitchMokotoff
         assertEquals("370000", soundex("Topf"));
         assertEquals("586660", soundex("Kleinmann"));
         assertEquals("769600", soundex("Ben Aron"));
-
         assertEquals("097400|097500", soundex("AUERBACH"));
         assertEquals("097400|097500", soundex("OHRBACH"));
         assertEquals("874400", soundex("LIPSHITZ"));
@@ -166,5 +180,4 @@ class DaitchMokotoffSoundexTest extends AbstractStringEncoderTest<DaitchMokotoff
         assertEquals("364000|464000", soundex("ţamas")); // t-cedilla
         assertEquals("364000|464000", soundex("țamas")); // t-comma
     }
-
 }

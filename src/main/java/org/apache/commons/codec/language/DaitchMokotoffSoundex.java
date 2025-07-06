@@ -347,7 +347,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
     private String cleanup(final String input) {
         final StringBuilder sb = new StringBuilder();
         for (char ch : input.toCharArray()) {
-            if (Character.isWhitespace(ch)) {
+            if (Character.isWhitespace(ch) | !Character.isLetter(ch)) {
                 continue;
             }
             ch = Character.toLowerCase(ch);

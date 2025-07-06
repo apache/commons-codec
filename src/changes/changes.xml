@@ -57,6 +57,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="fix" dev="ggregory" due-to="Sebastian Baunsgaard">Javadoc typo in Base16.java #380.</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Deprecate unused constant org.apache.commons.codec.language.bm.Rule.ALL.</action>
       <action type="fix" dev="ggregory" issue="CODEC-331" due-to="IlikeCode, Gary Gregory">org.apache.commons.codec.language.bm.Rule.parsePhonemeExpr(String) adds duplicate empty phoneme when input ends with |.</action>
+      <action type="fix" dev="ggregory" issue="CODEC-331" due-to="IlikeCode, Gary Gregory">org.apache.commons.codec.language.DaitchMokotoffSoundex.cleanup(String) does not remove special characters like punctuation.</action>
       <!-- ADD -->
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add HmacUtils.hmac(Path).</action>      
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add HmacUtils.hmacHex(Path).</action>      
