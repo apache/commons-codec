@@ -428,6 +428,9 @@ public class Rule {
         return new Phoneme(ph, Languages.ANY_LANGUAGE);
     }
 
+    /*
+     * Package-private for testing only.
+     */
     static PhonemeExpr parsePhonemeExpr(final String ph) {
         if (ph.startsWith("(")) {
             // we have a bracketed list of options
