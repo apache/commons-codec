@@ -185,7 +185,7 @@ public class Rule {
          */
         @Deprecated
         public Phoneme join(final Phoneme right) {
-            return new Phoneme(this.phonemeText.toString() + right.phonemeText.toString(), this.languages.restrictTo(right.languages));
+            return new Phoneme(phonemeText.toString() + right.phonemeText.toString(), languages.restrictTo(right.languages));
         }
 
         /**
@@ -195,7 +195,7 @@ public class Rule {
          * @return a new Phoneme
          */
         public Phoneme mergeWithLanguage(final LanguageSet lang) {
-            return new Phoneme(this.phonemeText.toString(), this.languages.merge(lang));
+            return new Phoneme(phonemeText.toString(), languages.merge(lang));
         }
 
         @Override
@@ -647,7 +647,7 @@ public class Rule {
      * @return the left context Pattern
      */
     public RPattern getLContext() {
-        return this.lContext;
+        return lContext;
     }
 
     /**
@@ -656,7 +656,7 @@ public class Rule {
      * @return the pattern
      */
     public String getPattern() {
-        return this.pattern;
+        return pattern;
     }
 
     /**
@@ -665,7 +665,7 @@ public class Rule {
      * @return the phoneme
      */
     public PhonemeExpr getPhoneme() {
-        return this.phoneme;
+        return phoneme;
     }
 
     /**
@@ -674,7 +674,7 @@ public class Rule {
      * @return the right context Pattern
      */
     public RPattern getRContext() {
-        return this.rContext;
+        return rContext;
     }
 
     /**
@@ -689,7 +689,7 @@ public class Rule {
         if (i < 0) {
             throw new IndexOutOfBoundsException("Can not match pattern at negative indexes");
         }
-        final int patternLength = this.pattern.length();
+        final int patternLength = pattern.length();
         final int ipl = i + patternLength;
         if (ipl > input.length()) {
             // not enough room for the pattern to match
@@ -697,12 +697,12 @@ public class Rule {
         }
         // evaluate the pattern, left context and right context
         // fail early if any of the evaluations is not successful
-        if (!input.subSequence(i, ipl).equals(this.pattern)) {
+        if (!input.subSequence(i, ipl).equals(pattern)) {
             return false;
         }
-        if (!this.rContext.isMatch(input.subSequence(ipl, input.length()))) {
+        if (!rContext.isMatch(input.subSequence(ipl, input.length()))) {
             return false;
         }
-        return this.lContext.isMatch(input.subSequence(0, i));
+        return lContext.isMatch(input.subSequence(0, i));
     }
 }
