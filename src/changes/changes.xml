@@ -60,6 +60,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="fix" dev="ggregory" issue="CODEC-331" due-to="IlikeCode, Gary Gregory">org.apache.commons.codec.language.DaitchMokotoffSoundex.cleanup(String) does not remove special characters like punctuation.</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix PMD multiple UnnecessaryFullyQualifiedName in org.apache.commons.codec.binary.StringUtils.</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix PMD UnusedFormalParameter in private constructor in org.apache.commons.codec.binary.Base16.</action>
+      <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix PMD multiple UnnecessaryFullyQualifiedName in org.apache.commons.codec.digest.Blake3.</action>
       <!-- ADD -->
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add HmacUtils.hmac(Path).</action>      
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add HmacUtils.hmacHex(Path).</action>      

@@ -343,7 +343,7 @@ public final class Blake3 {
      * @throws NullPointerException if data is null
      */
     public static byte[] hash(final byte[] data) {
-        return Blake3.initHash().update(data).doFinalize(OUT_LEN);
+        return initHash().update(data).doFinalize(OUT_LEN);
     }
 
     /**
@@ -399,7 +399,7 @@ public final class Blake3 {
      * @throws NullPointerException if key or data are null
      */
     public static byte[] keyedHash(final byte[] key, final byte[] data) {
-        return Blake3.initKeyedHash(key).update(data).doFinalize(OUT_LEN);
+        return initKeyedHash(key).update(data).doFinalize(OUT_LEN);
     }
 
     private static void packInt(final int value, final byte[] dst, final int off, final int len) {
