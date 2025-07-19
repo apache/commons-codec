@@ -173,7 +173,7 @@ public class StringUtils {
         try {
             return string.getBytes(charsetName);
         } catch (final UnsupportedEncodingException e) {
-            throw StringUtils.newIllegalStateException(charsetName, e);
+            throw newIllegalStateException(charsetName, e);
         }
     }
 
@@ -313,7 +313,7 @@ public class StringUtils {
         try {
             return new String(bytes, charsetName);
         } catch (final UnsupportedEncodingException e) {
-            throw StringUtils.newIllegalStateException(charsetName, e);
+            throw newIllegalStateException(charsetName, e);
         }
     }
 
