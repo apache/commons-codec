@@ -178,7 +178,6 @@ limitations under the License.
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
           <excludes>
-            <exclude>**/*AbstractTest.java</exclude>
             <exclude>**/*PerformanceTest.java</exclude>
           </excludes>
         </configuration>
