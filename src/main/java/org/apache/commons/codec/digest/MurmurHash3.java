@@ -241,7 +241,7 @@ public final class MurmurHash3 {
 
             for (int i = 0; i < nblocks; i++) {
                 final int index = newOffset + (i << 2);
-                final int k = getLittleEndianInt(data, index);
+                final int k = MurmurHash.getLittleEndianInt(data, index);
                 hash = mix32(k, hash);
             }
             // Save left-over unprocessed bytes
@@ -368,42 +368,6 @@ public final class MurmurHash3 {
         hash *= 0xc4ceb9fe1a85ec53L;
         hash ^= hash >>> 33;
         return hash;
-    }
-
-    /**
-     * Gets the little-endian int from 4 bytes starting at the specified index.
-     *
-     * @param data The data
-     * @param index The index
-     * @return The little-endian int
-     */
-    private static int getLittleEndianInt(final byte[] data, final int index) {
-        // @formatter:off
-        return data[index    ] & 0xff |
-               (data[index + 1] & 0xff) <<  8 |
-               (data[index + 2] & 0xff) << 16 |
-               (data[index + 3] & 0xff) << 24;
-        // @formatter:on
-    }
-
-    /**
-     * Gets the little-endian long from 8 bytes starting at the specified index.
-     *
-     * @param data The data
-     * @param index The index
-     * @return The little-endian long
-     */
-    private static long getLittleEndianLong(final byte[] data, final int index) {
-        // @formatter:off
-        return (long) data[index    ] & 0xff |
-               ((long) data[index + 1] & 0xff) <<  8 |
-               ((long) data[index + 2] & 0xff) << 16 |
-               ((long) data[index + 3] & 0xff) << 24 |
-               ((long) data[index + 4] & 0xff) << 32 |
-               ((long) data[index + 5] & 0xff) << 40 |
-               ((long) data[index + 6] & 0xff) << 48 |
-               ((long) data[index + 7] & 0xff) << 56;
-        // @formatter:on
     }
 
     /**
@@ -552,8 +516,8 @@ public final class MurmurHash3 {
         // body
         for (int i = 0; i < nblocks; i++) {
             final int index = offset + (i << 4);
-            long k1 = getLittleEndianLong(data, index);
-            long k2 = getLittleEndianLong(data, index + 8);
+            long k1 = MurmurHash.getLittleEndianLong(data, index);
+            long k2 = MurmurHash.getLittleEndianLong(data, index + 8);
 
             // mix functions for k1
             k1 *= C1;
@@ -754,7 +718,7 @@ public final class MurmurHash3 {
         // body
         for (int i = 0; i < nblocks; i++) {
             final int index = offset + (i << 2);
-            final int k = getLittleEndianInt(data, index);
+            final int k = MurmurHash.getLittleEndianInt(data, index);
             hash = mix32(k, hash);
         }
         // tail
@@ -954,7 +918,7 @@ public final class MurmurHash3 {
         // body
         for (int i = 0; i < nblocks; i++) {
             final int index = offset + (i << 2);
-            final int k = getLittleEndianInt(data, index);
+            final int k = MurmurHash.getLittleEndianInt(data, index);
             hash = mix32(k, hash);
         }
         // tail
@@ -1103,7 +1067,7 @@ public final class MurmurHash3 {
         // body
         for (int i = 0; i < nblocks; i++) {
             final int index = offset + (i << 3);
-            long k = getLittleEndianLong(data, index);
+            long k = MurmurHash.getLittleEndianLong(data, index);
             // mix functions
             k *= C1;
             k = Long.rotateLeft(k, R1);

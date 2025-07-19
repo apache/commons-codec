@@ -59,38 +59,6 @@ public final class MurmurHash2 {
     private static final int R64 = 47;
 
     /**
-     * Gets the little-endian int from 4 bytes starting at the specified index.
-     *
-     * @param data The data
-     * @param index The index
-     * @return The little-endian int
-     */
-    private static int getLittleEndianInt(final byte[] data, final int index) {
-        return data[index    ] & 0xff |
-               (data[index + 1] & 0xff) <<  8 |
-               (data[index + 2] & 0xff) << 16 |
-               (data[index + 3] & 0xff) << 24;
-    }
-
-    /**
-     * Gets the little-endian long from 8 bytes starting at the specified index.
-     *
-     * @param data The data
-     * @param index The index
-     * @return The little-endian long
-     */
-    private static long getLittleEndianLong(final byte[] data, final int index) {
-        return (long) data[index    ] & 0xff |
-               ((long) data[index + 1] & 0xff) <<  8 |
-               ((long) data[index + 2] & 0xff) << 16 |
-               ((long) data[index + 3] & 0xff) << 24 |
-               ((long) data[index + 4] & 0xff) << 32 |
-               ((long) data[index + 5] & 0xff) << 40 |
-               ((long) data[index + 6] & 0xff) << 48 |
-               ((long) data[index + 7] & 0xff) << 56;
-    }
-
-    /**
      * Generates a 32-bit hash from byte array with the given length and a default seed value.
      * This is a helper method that will produce the same result as:
      *
@@ -124,7 +92,7 @@ public final class MurmurHash2 {
         // body
         for (int i = 0; i < nblocks; i++) {
             final int index = i << 2;
-            int k = getLittleEndianInt(data, index);
+            int k = MurmurHash.getLittleEndianInt(data, index);
             k *= M32;
             k ^= k >>> R32;
             k *= M32;
@@ -228,7 +196,7 @@ public final class MurmurHash2 {
         // body
         for (int i = 0; i < nblocks; i++) {
             final int index = i << 3;
-            long k = getLittleEndianLong(data, index);
+            long k = MurmurHash.getLittleEndianLong(data, index);
 
             k *= M64;
             k ^= k >>> R64;
