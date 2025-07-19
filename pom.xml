@@ -105,7 +105,6 @@ limitations under the License.
     <commons.distSvnStagingUrl>scm:svn:https://dist.apache.org/repos/dist/dev/commons/${commons.componentid}</commons.distSvnStagingUrl>
     <!-- project.build.outputTimestamp is managed by Maven plugins, see https://maven.apache.org/guides/mini/guide-reproducible-builds.html -->
     <project.build.outputTimestamp>2025-01-27T18:05:48Z</project.build.outputTimestamp>
-    <commons.jacoco.version>0.8.12</commons.jacoco.version>
     <!-- JaCoCo: Don't make code coverage worse than: -->
     <jacoco.skip>false</jacoco.skip>
     <commons.jacoco.haltOnFailure>true</commons.jacoco.haltOnFailure>
