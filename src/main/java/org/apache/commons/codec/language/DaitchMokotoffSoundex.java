@@ -70,11 +70,6 @@ import org.apache.commons.codec.StringEncoder;
 public class DaitchMokotoffSoundex implements StringEncoder {
 
     /**
-     * The NUL character.
-     */
-    private static final char NUL = '\0';
-
-    /**
      * Inner class representing a branch during DM Soundex encoding.
      */
     private static final class Branch {
@@ -204,6 +199,11 @@ public class DaitchMokotoffSoundex implements StringEncoder {
                     Arrays.asList(replacementBeforeVowel), Arrays.asList(replacementDefault));
         }
     }
+
+    /**
+     * The NUL character.
+     */
+    private static final char NUL = '\0';
 
     private static final String COMMENT = "//";
 

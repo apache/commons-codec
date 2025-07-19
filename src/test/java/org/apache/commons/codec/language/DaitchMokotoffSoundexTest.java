@@ -35,6 +35,10 @@ import org.junit.jupiter.params.provider.MethodSource;
  */
 class DaitchMokotoffSoundexTest extends AbstractStringEncoderTest<DaitchMokotoffSoundex> {
 
+    static IntStream getNonLetters() {
+        return IntStream.rangeClosed(Character.MIN_VALUE, Character.MAX_VALUE).filter(c -> !Character.isLetter(c));
+    }
+
     @Override
     protected DaitchMokotoffSoundex createStringEncoder() {
         return new DaitchMokotoffSoundex();
@@ -99,22 +103,18 @@ class DaitchMokotoffSoundexTest extends AbstractStringEncoderTest<DaitchMokotoff
                 "KINGSMI-TH", "KINGSMIT-H", "KINGSMITH-");
     }
 
-    @Test
-    void testEncodeIgnoreTrimmable() {
-        assertEquals("746536", encode(" \t\n\r Washington \t\n\r "));
-        assertEquals("746536", encode("Washington"));
-    }
-
-    static IntStream getNonLetters() {
-        return IntStream.rangeClosed(Character.MIN_VALUE, Character.MAX_VALUE).filter(c -> !Character.isLetter(c));
-    }
-
     @ParameterizedTest
     @MethodSource("getNonLetters")
     void testEncodeIgnoreNonLetters(final int nonLetterInt) throws EncoderException {
         final char nonLetterChar = (char) nonLetterInt;
         checkEncodingVariations("746536", "Washington" + nonLetterChar, nonLetterChar + "Washington", nonLetterChar + "Washington" + nonLetterChar,
                 "Washi" + nonLetterChar + "ngton");
+    }
+
+    @Test
+    void testEncodeIgnoreTrimmable() {
+        assertEquals("746536", encode(" \t\n\r Washington \t\n\r "));
+        assertEquals("746536", encode("Washington"));
     }
 
     /**

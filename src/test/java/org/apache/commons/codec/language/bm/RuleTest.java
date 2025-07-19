@@ -42,6 +42,15 @@ class RuleTest {
     }
 
     @Test
+    void testParsePhonemeExprLang311() {
+        assertEquals(1, Rule.parsePhonemeExpr("()").size());
+        assertEquals(1, Rule.parsePhonemeExpr("(())").size());
+        assertEquals(2, Rule.parsePhonemeExpr("(()|)").size());
+        assertEquals(2, Rule.parsePhonemeExpr("(|())").size());
+        assertEquals(3, Rule.parsePhonemeExpr("(|()|)").size());
+    }
+
+    @Test
     void testPhonemeComparedToLaterIsNegative() {
         for (final Rule.Phoneme[] phs : makePhonemes()) {
             for (int i = 0; i < phs.length; i++) {
@@ -61,15 +70,6 @@ class RuleTest {
                 assertEquals(0, Rule.Phoneme.COMPARATOR.compare(ph, ph), "Phoneme compared to itself should be zero: " + ph.getPhonemeText());
             }
         }
-    }
-
-    @Test
-    void testParsePhonemeExprLang311() {
-        assertEquals(1, Rule.parsePhonemeExpr("()").size());
-        assertEquals(1, Rule.parsePhonemeExpr("(())").size());
-        assertEquals(2, Rule.parsePhonemeExpr("(()|)").size());
-        assertEquals(2, Rule.parsePhonemeExpr("(|())").size());
-        assertEquals(3, Rule.parsePhonemeExpr("(|()|)").size());
     }
 
     @Test

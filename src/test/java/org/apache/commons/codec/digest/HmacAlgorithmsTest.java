@@ -235,18 +235,18 @@ class HmacAlgorithmsTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    void testMacHexPath(final HmacAlgorithms hmacAlgorithm, final byte[] standardResultBytes, final String standardResultString)
-            throws IOException {
-        assumeTrue(HmacUtils.isAvailable(hmacAlgorithm));
-        assertEquals(standardResultString, new HmacUtils(hmacAlgorithm, STANDARD_KEY_BYTES).hmacHex(TempFile));
-    }
-
-    @ParameterizedTest
-    @MethodSource("data")
     void testMacHexInputStream(final HmacAlgorithms hmacAlgorithm, final byte[] standardResultBytes, final String standardResultString)
             throws IOException {
         assumeTrue(HmacUtils.isAvailable(hmacAlgorithm));
         assertEquals(standardResultString, new HmacUtils(hmacAlgorithm, STANDARD_KEY_BYTES).hmacHex(new ByteArrayInputStream(STANDARD_PHRASE_BYTES)));
+    }
+
+    @ParameterizedTest
+    @MethodSource("data")
+    void testMacHexPath(final HmacAlgorithms hmacAlgorithm, final byte[] standardResultBytes, final String standardResultString)
+            throws IOException {
+        assumeTrue(HmacUtils.isAvailable(hmacAlgorithm));
+        assertEquals(standardResultString, new HmacUtils(hmacAlgorithm, STANDARD_KEY_BYTES).hmacHex(TempFile));
     }
 
     @ParameterizedTest

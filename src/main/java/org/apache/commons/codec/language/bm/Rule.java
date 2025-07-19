@@ -80,8 +80,6 @@ import org.apache.commons.codec.language.bm.Languages.LanguageSet;
  */
 public class Rule {
 
-    private static final String PIPE = "|";
-
     /**
      * A phoneme.
      */
@@ -275,6 +273,8 @@ public class Rule {
          */
         boolean isMatch(CharSequence input);
     }
+
+    private static final String PIPE = "|";
 
     /**
      * Always matches.
