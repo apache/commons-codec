@@ -287,11 +287,11 @@ class MetaphoneTest extends AbstractStringEncoderTest<Metaphone> {
     }
 
     /**
-     * Tests (CODEC-57) Metaphone.metaphone(String) returns an empty string when passed the word "why"
+     * Tests (CODEC-57) Metaphone.Metaphone(String) returns an empty string when passed the word "why"
      */
     @Test
     void testWhy() {
-        // PHP returns "H". The original metaphone returns an empty string.
+        // PHP returns "H". The original Metaphone returns an empty string.
         assertEquals("", getStringEncoder().metaphone("WHY"));
     }
 

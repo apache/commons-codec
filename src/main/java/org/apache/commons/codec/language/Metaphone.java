@@ -57,22 +57,22 @@ import org.apache.commons.codec.StringEncoder;
 public class Metaphone implements StringEncoder {
 
     /**
-     * Five values in the English language
+     * Five values in the English language.
      */
     private static final String VOWELS = "AEIOU";
 
     /**
-     * Variable used in Metaphone algorithm
+     * Variable used in Metaphone algorithm.
      */
     private static final String FRONTV = "EIY";
 
     /**
-     * Variable used in Metaphone algorithm
+     * Variable used in Metaphone algorithm.
      */
     private static final String VARSON = "CSPTG";
 
     /**
-     * The max code length for metaphone is 4
+     * The max code length for Metaphone is 4.
      */
     private int maxCodeLen = 4;
 
@@ -84,11 +84,11 @@ public class Metaphone implements StringEncoder {
     }
 
     /**
-     * Encodes an Object using the metaphone algorithm. This method is provided in order to satisfy the requirements of the Encoder interface, and will throw an
+     * Encodes an Object using the Metaphone algorithm. This method is provided in order to satisfy the requirements of the Encoder interface, and will throw an
      * EncoderException if the supplied object is not of type {@link String}.
      *
      * @param obj Object to encode.
-     * @return An object (or type {@link String}) containing the metaphone code which corresponds to the String supplied.
+     * @return An object (or type {@link String}) containing the Metaphone code which corresponds to the String supplied.
      * @throws EncoderException if the parameter supplied is not of type {@link String}.
      */
     @Override
@@ -103,7 +103,7 @@ public class Metaphone implements StringEncoder {
      * Encodes a String using the Metaphone algorithm.
      *
      * @param str String object to encode
-     * @return The metaphone code corresponding to the String supplied
+     * @return The Metaphone code corresponding to the String supplied
      */
     @Override
     public String encode(final String str) {
@@ -124,11 +124,11 @@ public class Metaphone implements StringEncoder {
     }
 
     /**
-     * Tests is the metaphones of two strings are identical.
+     * Tests is the Metaphones of two strings are identical.
      *
      * @param str1 First of two strings to compare.
      * @param str2 Second of two strings to compare.
-     * @return {@code true} if the metaphones of these strings are identical, {@code false} otherwise.
+     * @return {@code true} if the Metaphones of these strings are identical, {@code false} otherwise.
      */
     public boolean isMetaphoneEqual(final String str1, final String str2) {
         return metaphone(str1).equals(metaphone(str2));
@@ -155,14 +155,14 @@ public class Metaphone implements StringEncoder {
     }
 
     /**
-     * Find the metaphone value of a String. This is similar to the
+     * Find the Metaphone value of a String. This is similar to the
      * Soundex algorithm, but better at finding similar sounding words.
      * All input is converted to upper case.
      * Limitations: Input format is expected to be a single ASCII word
      * with only characters in the A - Z range, no punctuation or numbers.
      *
-     * @param txt String to find the metaphone code for.
-     * @return A metaphone code corresponding to the String supplied.
+     * @param txt String to find the Metaphone code for.
+     * @return A Metaphone code corresponding to the String supplied.
      */
     public String metaphone(final String txt) {
         boolean hard = false;

@@ -24,7 +24,7 @@ import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.binary.StringUtils;
 
 /**
- * Encodes a string into a double metaphone value. This Implementation is based on the algorithm by <CITE>Lawrence
+ * Encodes a string into a Double Metaphone value. This Implementation is based on the algorithm by <CITE>Lawrence
  * Philips</CITE>.
  * <p>
  * This class is conditionally thread-safe. The instance field for the maximum code length is mutable
