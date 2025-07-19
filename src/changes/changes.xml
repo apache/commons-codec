@@ -65,6 +65,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix PMD EmptyControlStatement in org.apache.commons.codec.language.Metaphone.</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix SpotBugs [ERROR] Medium: org.apache.commons.codec.binary.BaseNCodec$AbstractBuilder.setEncodeTable(byte[]) may expose internal representation by storing an externally mutable object into BaseNCodec$AbstractBuilder.encodeTable [org.apache.commons.codec.binary.BaseNCodec$AbstractBuilder] At BaseNCodec.java:[line 131] EI_EXPOSE_REP2.</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">The method org.apache.commons.codec.binary.BaseNCodec.AbstractBuilder.setLineSeparator(byte...) now makes a defensive copy.</action>
+      <action type="fix" dev="ggregory" due-to="Gary Gregory">Avoid unnecessary String conversion in org.apache.commons.codec.language.bm.PhoneticEngine.applyFinalRules(PhonemeBuilder, Map).</action>
       <!-- ADD -->
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add HmacUtils.hmac(Path).</action>      
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add HmacUtils.hmacHex(Path).</action>      
