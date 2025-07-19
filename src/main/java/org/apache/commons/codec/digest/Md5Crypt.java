@@ -120,7 +120,7 @@ public class Md5Crypt {
         if (salt != null && !salt.startsWith(APR1_PREFIX)) {
             salt = APR1_PREFIX + salt;
         }
-        return Md5Crypt.md5Crypt(keyBytes, salt, APR1_PREFIX);
+        return md5Crypt(keyBytes, salt, APR1_PREFIX);
     }
 
     /**
