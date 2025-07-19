@@ -42,7 +42,7 @@ import org.apache.commons.codec.binary.StringUtils;
  * code." </blockquote>
  *
  * <p>
- * Original adaption from <a href=https://hive.apache.org/">Apache Hive</a>. 
+ * Original adaption from <a href=https://hive.apache.org/">Apache Hive</a>.
  * That adaption contains a {@code hash64} method that is not part of the original
  * MurmurHash3 code. It is not recommended to use these methods. They will be removed in a future release. To obtain a
  * 64-bit hash use half of the bits from the {@code hash128x64} methods using the input data converted to bytes.
