@@ -28,7 +28,9 @@ import org.apache.commons.codec.CharEncoding;
  * Converts String to and from bytes using the encodings required by the Java specification. These encodings are
  * specified in standard {@link Charset}.
  *
- * <p>This class is immutable and thread-safe.</p>
+ * <p>
+ * This class is immutable and thread-safe.
+ * </p>
  *
  * @see CharEncoding
  * @see Charset
@@ -265,8 +267,7 @@ public class StringUtils {
         return getBytes(string, StandardCharsets.UTF_8);
     }
 
-    private static IllegalStateException newIllegalStateException(final String charsetName,
-                                                                  final UnsupportedEncodingException e) {
+    private static IllegalStateException newIllegalStateException(final String charsetName, final UnsupportedEncodingException e) {
         return new IllegalStateException(charsetName + ": " + e);
     }
 
