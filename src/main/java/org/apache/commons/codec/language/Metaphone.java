@@ -228,9 +228,8 @@ public class Metaphone implements StringEncoder {
         while (code.length() < getMaxCodeLen() && n < wdsz) { // max code size of 4 works well
             final char symb = local.charAt(n);
             // remove duplicate letters except C
-            if (symb != 'C' && isPreviousChar(local, n, symb)) {
-                // empty
-            } else { // not dup
+            if (symb == 'C' || !isPreviousChar(local, n, symb)) {
+                // not dup
                 switch (symb) {
                 case 'A':
                 case 'E':
