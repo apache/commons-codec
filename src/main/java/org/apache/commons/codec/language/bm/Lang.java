@@ -95,7 +95,7 @@ public class Lang {
         }
 
         public boolean matches(final String txt) {
-            return this.pattern.matcher(txt).find();
+            return pattern.matcher(txt).find();
         }
     }
 
@@ -213,7 +213,7 @@ public class Lang {
      */
     public Languages.LanguageSet guessLanguages(final String input) {
         final String text = input.toLowerCase(Locale.ENGLISH);
-        final Set<String> langs = new HashSet<>(this.languages.getLanguages());
+        final Set<String> langs = new HashSet<>(languages.getLanguages());
         rules.forEach(rule -> {
             if (rule.matches(text)) {
                 if (rule.acceptOnMatch) {
