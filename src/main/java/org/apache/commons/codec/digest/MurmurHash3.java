@@ -38,11 +38,13 @@ import org.apache.commons.codec.binary.StringUtils;
  * <a href="https://github.com/aappleby/smhasher">SMHasher</a>:
  * </p>
  *
- * <blockquote> "All MurmurHash versions are public domain software, and the author disclaims all copyright to their
- * code." </blockquote>
+ * <blockquote>
+ * "All MurmurHash versions are public domain software, and the author disclaims all copyright to their
+ * code."
+ * </blockquote>
  *
  * <p>
- * Original adaption from <a href=https://hive.apache.org/">Apache Hive</a>.
+ * Original adaption from <a href="https://hive.apache.org/">Apache Hive</a>.
  * That adaption contains a {@code hash64} method that is not part of the original
  * MurmurHash3 code. It is not recommended to use these methods. They will be removed in a future release. To obtain a
  * 64-bit hash use half of the bits from the {@code hash128x64} methods using the input data converted to bytes.
@@ -62,12 +64,16 @@ public final class MurmurHash3 {
      * Generates 32-bit hash from input bytes. Bytes can be added incrementally and the new
      * hash computed.
      *
-     * <p>This is an implementation of the 32-bit hash function {@code MurmurHash3_x86_32}
-     * from Austin Appleby's original MurmurHash3 {@code c++} code in SMHasher.</p>
+     * <p>
+     * This is an implementation of the 32-bit hash function {@code MurmurHash3_x86_32}
+     * from Austin Appleby's original MurmurHash3 {@code c++} code in SMHasher.
+     * </p>
      *
-     * <p>This implementation contains a sign-extension bug in the finalization step of
+     * <p>
+     * This implementation contains a sign-extension bug in the finalization step of
      * any bytes left over from dividing the length by 4. This manifests if any of these
-     * bytes are negative.</p>
+     * bytes are negative.
+     * </p>
      *
      * @deprecated Use IncrementalHash32x86. This corrects the processing of trailing bytes.
      */
@@ -84,9 +90,11 @@ public final class MurmurHash3 {
         /**
          * {@inheritDoc}
          *
-         * <p>This implementation contains a sign-extension bug in the finalization step of
+         * <p>
+         * This implementation contains a sign-extension bug in the finalization step of
          * any bytes left over from dividing the length by 4. This manifests if any of these
-         * bytes are negative.<p>
+         * bytes are negative.
+         * <p>
          *
          * @deprecated Use IncrementalHash32x86. This corrects the processing of trailing bytes.
          */
@@ -121,8 +129,10 @@ public final class MurmurHash3 {
      * Generates 32-bit hash from input bytes. Bytes can be added incrementally and the new
      * hash computed.
      *
-     * <p>This is an implementation of the 32-bit hash function {@code MurmurHash3_x86_32}
-     * from Austin Appleby's original MurmurHash3 {@code c++} code in SMHasher.</p>
+     * <p>
+     * This is an implementation of the 32-bit hash function {@code MurmurHash3_x86_32}
+     * from Austin Appleby's original MurmurHash3 {@code c++} code in SMHasher.
+     * </p>
      *
      * @since 1.14
      */
@@ -406,8 +416,10 @@ public final class MurmurHash3 {
      * int hash = MurmurHash3.hash128(data, offset, data.length, seed);
      * </pre>
      *
-     * <p>Note: The sign extension bug in {@link #hash128(byte[], int, int, int)} does not effect
-     * this result as the default seed is positive.</p>
+     * <p>
+     * Note: The sign extension bug in {@link #hash128(byte[], int, int, int)} does not effect
+     * this result as the default seed is positive.
+     * </p>
      *
      * @param data The input byte array
      * @return The 128-bit hash (2 longs)
@@ -420,11 +432,15 @@ public final class MurmurHash3 {
     /**
      * Generates 128-bit hash from the byte array with the given offset, length and seed.
      *
-     * <p>This is an implementation of the 128-bit hash function {@code MurmurHash3_x64_128}
-     * from Austin Appleby's original MurmurHash3 {@code c++} code in SMHasher.</p>
+     * <p>
+     * This is an implementation of the 128-bit hash function {@code MurmurHash3_x64_128}
+     * from Austin Appleby's original MurmurHash3 {@code c++} code in SMHasher.
+     * </p>
      *
-     * <p>This implementation contains a sign-extension bug in the seed initialization.
-     * This manifests if the seed is negative.</p>
+     * <p>
+     * This implementation contains a sign-extension bug in the seed initialization.
+     * This manifests if the seed is negative.
+     * </p>
      *
      * @param data The input byte array
      * @param offset The first element of array
@@ -459,8 +475,10 @@ public final class MurmurHash3 {
      * int hash = MurmurHash3.hash128(bytes, offset, bytes.length, seed);
      * </pre>
      *
-     * <p>Note: The sign extension bug in {@link #hash128(byte[], int, int, int)} does not effect
-     * this result as the default seed is positive.</p>
+     * <p>
+     * Note: The sign extension bug in {@link #hash128(byte[], int, int, int)} does not effect
+     * this result as the default seed is positive.
+     * </p>
      *
      * @param data The input String
      * @return The 128-bit hash (2 longs)
