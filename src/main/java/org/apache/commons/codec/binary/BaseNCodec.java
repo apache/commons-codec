@@ -390,7 +390,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     /**
      * Deprecated: Will be removed in 2.0.
      * <p>
-     * instance variable just in case it needs to vary later
+     * Instance variable just in case it needs to vary later
      * </p>
      *
      * @deprecated Use {@link #pad}. Will be removed in 2.0.
