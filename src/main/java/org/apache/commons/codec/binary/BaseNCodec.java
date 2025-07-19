@@ -150,7 +150,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
          * @return {@code this} instance.
          */
         public B setLineSeparator(final byte... lineSeparator) {
-            this.lineSeparator = lineSeparator != null ? lineSeparator : CHUNK_SEPARATOR;
+            this.lineSeparator = lineSeparator != null ? lineSeparator.clone() : CHUNK_SEPARATOR;
             return asThis();
         }
 
