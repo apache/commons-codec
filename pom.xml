@@ -253,7 +253,6 @@ limitations under the License.
         <version>${commons.pmd.version}</version>
         <configuration>
           <targetJdk>${maven.compiler.target}</targetJdk>
-          <linkXref>true</linkXref>
           <rulesets>
             <ruleset>${basedir}/src/conf/pmd.xml</ruleset>
           </rulesets>
