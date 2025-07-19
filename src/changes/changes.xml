@@ -66,6 +66,7 @@ The <action> type attribute can be add,update,fix,remove.
       <!-- ADD -->
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add HmacUtils.hmac(Path).</action>      
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add HmacUtils.hmacHex(Path).</action>      
+      <action type="add" dev="ggregory" due-to="Gary Gregory">Add PMD check to the default Maven goal.</action>      
       <!-- UPDATE -->
       <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump org.apache.commons:commons-parent from 79 to 85 #375.</action>
       <action type="update" dev="ggregory" due-to="Gary Gregory">[test] Bump commons-io:commons-io from 2.18.0 to 2.20.0.</action>

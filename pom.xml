@@ -119,7 +119,7 @@ limitations under the License.
     <commons.jacoco.complexityRatio>0.84</commons.jacoco.complexityRatio>
   </properties>
   <build>
-    <defaultGoal>clean verify apache-rat:check japicmp:cmp checkstyle:check javadoc:javadoc</defaultGoal>
+    <defaultGoal>clean verify apache-rat:check japicmp:cmp pmd:check checkstyle:check javadoc:javadoc</defaultGoal>
     <pluginManagement>
       <plugins>
         <plugin>
