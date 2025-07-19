@@ -123,9 +123,9 @@ public class DaitchMokotoffSoundex implements StringEncoder {
          * Process the next replacement to be added to this branch.
          *
          * @param replacement
-         *            the next replacement to append
+         *            the next replacement to append.
          * @param forceAppend
-         *            indicates if the default processing shall be overridden
+         *            indicates if the default processing shall be overridden.
          */
         private void processNextReplacement(final String replacement, final boolean forceAppend) {
             final boolean append = lastReplacement == null || !lastReplacement.endsWith(replacement) || forceAppend;
@@ -341,8 +341,8 @@ public class DaitchMokotoffSoundex implements StringEncoder {
      * </p>
      *
      * @param input
-     *            the input string to clean up
-     * @return a cleaned up string
+     *            the input string to clean up.
+     * @return a cleaned up string.
      */
     private String cleanup(final String input) {
         final StringBuilder sb = new StringBuilder();
@@ -369,13 +369,13 @@ public class DaitchMokotoffSoundex implements StringEncoder {
      *
      * @see #soundex(String)
      * @param obj
-     *            Object to encode
+     *            Object to encode.
      * @return An object (of type {@link String}) containing the DM Soundex code, which corresponds to the String
      *         supplied.
      * @throws EncoderException
-     *             if the parameter supplied is not of type {@link String}
+     *             if the parameter supplied is not of type {@link String}.
      * @throws IllegalArgumentException
-     *             if a character is not mapped
+     *             if a character is not mapped.
      */
     @Override
     public Object encode(final Object obj) throws EncoderException {
@@ -391,10 +391,10 @@ public class DaitchMokotoffSoundex implements StringEncoder {
      *
      * @see #soundex(String)
      * @param source
-     *            A String object to encode
-     * @return A DM Soundex code corresponding to the String supplied
+     *            A String object to encode.
+     * @return A DM Soundex code corresponding to the String supplied.
      * @throws IllegalArgumentException
-     *             if a character is not mapped
+     *             if a character is not mapped.
      */
     @Override
     public String encode(final String source) {
@@ -422,10 +422,10 @@ public class DaitchMokotoffSoundex implements StringEncoder {
      * </p>
      *
      * @param source
-     *            A String object to encode
-     * @return A string containing a set of DM Soundex codes corresponding to the String supplied
+     *            A String object to encode.
+     * @return A string containing a set of DM Soundex codes corresponding to the String supplied.
      * @throws IllegalArgumentException
-     *             if a character is not mapped
+     *             if a character is not mapped.
      */
     public String soundex(final String source) {
         return String.join("|", soundex(source, true));
@@ -435,11 +435,11 @@ public class DaitchMokotoffSoundex implements StringEncoder {
      * Perform the actual DM Soundex algorithm on the input string.
      *
      * @param source
-     *            A String object to encode
+     *            A String object to encode.
      * @param branching
-     *            If branching shall be performed
+     *            If branching shall be performed.
      * @return A string array containing all DM Soundex codes corresponding to the String supplied depending on the
-     *         selected branching mode
+     *         selected branching mode.
      */
     private String[] soundex(final String source, final boolean branching) {
         if (source == null) {

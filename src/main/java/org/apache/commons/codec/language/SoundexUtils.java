@@ -133,8 +133,8 @@ final class SoundexUtils {
      * StringUtils.isEmpty("  bob  ") = false
      * </pre>
      *
-     * @param cs  the CharSequence to check, may be null
-     * @return {@code true} if the CharSequence is empty or null
+     * @param cs  the CharSequence to check, may be null.
+     * @return {@code true} if the CharSequence is empty or null.
      */
     static boolean isEmpty(final CharSequence cs) {
         return cs == null || cs.length() == 0;

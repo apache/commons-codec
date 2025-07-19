@@ -46,8 +46,8 @@ public class Caverphone2 extends AbstractCaverphone {
      * Encodes the given String into a Caverphone 2.0 value.
      *
      * @param source
-     *            String the source string
-     * @return A Caverphone code for the given String
+     *            String the source string.
+     * @return A Caverphone code for the given String.
      */
     @Override
     public String encode(final String source) {

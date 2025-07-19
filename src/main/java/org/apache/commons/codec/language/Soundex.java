@@ -135,7 +135,7 @@ public class Soundex implements StringEncoder {
     private final boolean specialCaseHW;
 
     /**
-     * Creates an instance using US_ENGLISH_MAPPING
+     * Creates an instance using US_ENGLISH_MAPPING.
      *
      * @see Soundex#Soundex(char[])
      * @see Soundex#US_ENGLISH_MAPPING_STRING
@@ -153,11 +153,11 @@ public class Soundex implements StringEncoder {
      * letter is mapped. This implementation contains a default map for US_ENGLISH
      * </p>
      * <p>
-     * If the mapping contains an instance of {@link #SILENT_MARKER} then H and W are not given special treatment
+     * If the mapping contains an instance of {@link #SILENT_MARKER} then H and W are not given special treatment.
      * </p>
      *
      * @param mapping
-     *                  Mapping array to use when finding the corresponding code for a given character
+     *                  Mapping array to use when finding the corresponding code for a given character.
      */
     public Soundex(final char[] mapping) {
         this.soundexMapping = mapping.clone();
@@ -168,11 +168,11 @@ public class Soundex implements StringEncoder {
      * Creates a refined Soundex instance using a custom mapping. This constructor can be used to customize the mapping,
      * and/or possibly provide an internationalized mapping for a non-Western character set.
      * <p>
-     * If the mapping contains an instance of {@link #SILENT_MARKER} then H and W are not given special treatment
+     * If the mapping contains an instance of {@link #SILENT_MARKER} then H and W are not given special treatment.
      * </p>
      *
      * @param mapping
-     *            Mapping string to use when finding the corresponding code for a given character
+     *            Mapping string to use when finding the corresponding code for a given character.
      * @since 1.4
      */
     public Soundex(final String mapping) {
@@ -185,7 +185,7 @@ public class Soundex implements StringEncoder {
      * and/or possibly provide an internationalized mapping for a non-Western character set.
      *
      * @param mapping
-     *            Mapping string to use when finding the corresponding code for a given character
+     *            Mapping string to use when finding the corresponding code for a given character.
      * @param specialCaseHW if true, then
      * @since 1.11
      */
@@ -195,21 +195,16 @@ public class Soundex implements StringEncoder {
     }
 
     /**
-     * Encodes the Strings and returns the number of characters in the two encoded Strings that are the same. This
-     * return value ranges from 0 through 4: 0 indicates little or no similarity, and 4 indicates strong similarity or
-     * identical values.
+     * Encodes the Strings and returns the number of characters in the two encoded Strings that are the same. This return value ranges from 0 through 4: 0
+     * indicates little or no similarity, and 4 indicates strong similarity or identical values.
      *
-     * @param s1
-     *                  A String that will be encoded and compared.
-     * @param s2
-     *                  A String that will be encoded and compared.
+     * @param s1 A String that will be encoded and compared.
+     * @param s2 A String that will be encoded and compared.
      * @return The number of characters in the two encoded Strings that are the same from 0 to 4.
      * @see SoundexUtils#difference(StringEncoder,String,String)
-     * @see <a href="https://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_de-dz_8co5.asp"> MS
-     *          T-SQL DIFFERENCE</a>
+     * @see <a href="https://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_de-dz_8co5.asp"> MS T-SQL DIFFERENCE</a>
      *
-     * @throws EncoderException
-     *                  if an error occurs encoding one of the strings
+     * @throws EncoderException if an error occurs encoding one of the strings.
      * @since 1.3
      */
     public int difference(final String s1, final String s2) throws EncoderException {
@@ -217,17 +212,13 @@ public class Soundex implements StringEncoder {
     }
 
     /**
-     * Encodes an Object using the Soundex algorithm. This method is provided in order to satisfy the requirements of
-     * the Encoder interface, and will throw an EncoderException if the supplied object is not of type {@link String}.
+     * Encodes an Object using the Soundex algorithm. This method is provided in order to satisfy the requirements of the Encoder interface, and will throw an
+     * EncoderException if the supplied object is not of type {@link String}.
      *
-     * @param obj
-     *                  Object to encode
-     * @return An object (or type {@link String}) containing the Soundex code which corresponds to the String
-     *             supplied.
-     * @throws EncoderException
-     *                  if the parameter supplied is not of type {@link String}
-     * @throws IllegalArgumentException
-     *                  if a character is not mapped
+     * @param obj Object to encode.
+     * @return An object (or type {@link String}) containing the Soundex code which corresponds to the String supplied.
+     * @throws EncoderException         if the parameter supplied is not of type {@link String}.
+     * @throws IllegalArgumentException if a character is not mapped.
      */
     @Override
     public Object encode(final Object obj) throws EncoderException {
@@ -240,11 +231,9 @@ public class Soundex implements StringEncoder {
     /**
      * Encodes a String using the Soundex algorithm.
      *
-     * @param str
-     *                  A String object to encode
-     * @return A Soundex code corresponding to the String supplied
-     * @throws IllegalArgumentException
-     *                  if a character is not mapped
+     * @param str A String object to encode.
+     * @return A Soundex code corresponding to the String supplied.
+     * @throws IllegalArgumentException if a character is not mapped.
      */
     @Override
     public String encode(final String str) {
@@ -255,7 +244,7 @@ public class Soundex implements StringEncoder {
      * Returns the maxLength. Standard Soundex
      *
      * @deprecated This feature is not needed since the encoding size must be constant. Will be removed in 2.0.
-     * @return int
+     * @return the maxLength.
      */
     @Deprecated
     public int getMaxLength() {
@@ -293,7 +282,7 @@ public class Soundex implements StringEncoder {
      *
      * @deprecated This feature is not needed since the encoding size must be constant. Will be removed in 2.0.
      * @param maxLength
-     *                  The maxLength to set
+     *                  The maxLength to set.
      */
     @Deprecated
     public void setMaxLength(final int maxLength) {
@@ -303,11 +292,9 @@ public class Soundex implements StringEncoder {
     /**
      * Retrieves the Soundex code for a given String object.
      *
-     * @param str
-     *                  String to encode using the Soundex algorithm
-     * @return A Soundex code for the String supplied
-     * @throws IllegalArgumentException
-     *                  if a character is not mapped
+     * @param str String to encode using the Soundex algorithm.
+     * @return A Soundex code for the String supplied.
+     * @throws IllegalArgumentException if a character is not mapped.
      */
     public String soundex(String str) {
         if (str == null) {

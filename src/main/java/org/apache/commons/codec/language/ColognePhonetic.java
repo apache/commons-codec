@@ -320,8 +320,8 @@ public class ColognePhonetic implements StringEncoder {
      * In contrast to the initial description of the algorithm, this implementation does the encoding in one pass.
      * </p>
      *
-     * @param text The source text to encode
-     * @return the corresponding encoding according to the <em>K&ouml;lner Phonetik</em> algorithm
+     * @param text The source text to encode.
+     * @return the corresponding encoding according to the <em>K&ouml;lner Phonetik</em> algorithm.
      */
     public String colognePhonetic(final String text) {
         if (text == null) {
@@ -426,7 +426,7 @@ public class ColognePhonetic implements StringEncoder {
      * @param text1 source text to encode before testing for equality.
      * @param text2 source text to encode before testing for equality.
      * @return {@code true} if the encoding the first string equals the encoding of the second string, {@code false}
-     *         otherwise
+     *         otherwise.
      */
     public boolean isEncodeEqual(final String text1, final String text2) {
         return colognePhonetic(text1).equals(colognePhonetic(text2));

@@ -45,7 +45,7 @@ public abstract class AbstractCaverphone implements StringEncoder {
      * the Encoder interface, and will throw an EncoderException if the supplied object is not of type {@link String}.
      *
      * @param source
-     *            Object to encode
+     *            Object to encode.
      * @return An object (or type {@link String}) containing the Caverphone code which corresponds to the String
      *         supplied.
      * @throws EncoderException
@@ -65,9 +65,9 @@ public abstract class AbstractCaverphone implements StringEncoder {
      * This method might be promoted to a new AbstractStringEncoder superclass.
      *
      * @param str1
-     *            First of two strings to compare
+     *            First of two strings to compare.
      * @param str2
-     *            Second of two strings to compare
+     *            Second of two strings to compare.
      * @return {@code true} if the encodings of these strings are identical, {@code false} otherwise.
      * @throws EncoderException
      *             thrown if there is an error condition during the encoding process.

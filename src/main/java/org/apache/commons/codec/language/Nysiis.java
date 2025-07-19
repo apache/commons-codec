@@ -96,8 +96,8 @@ public class Nysiis implements StringEncoder {
      * Tests if the given character is a vowel.
      *
      * @param c
-     *            the character to test
-     * @return {@code true} if the character is a vowel, {@code false} otherwise
+     *            the character to test.
+     * @return {@code true} if the character is a vowel, {@code false} otherwise.
      */
     private static boolean isVowel(final char c) {
         return c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U';
@@ -108,14 +108,14 @@ public class Nysiis implements StringEncoder {
      * a time: [i-1, i, i+1, i+2].
      *
      * @param prev
-     *            the previous character
+     *            the previous character.
      * @param curr
-     *            the current character
+     *            the current character.
      * @param next
-     *            the next character
+     *            the next character.
      * @param aNext
-     *            the after next character
-     * @return a transcoded array of characters, starting from the current position
+     *            the after next character.
+     * @return a transcoded array of characters, starting from the current position.
      */
     private static char[] transcodeRemaining(final char prev, final char curr, final char next, final char aNext) {
         // 1. EV -> AF
@@ -190,24 +190,20 @@ public class Nysiis implements StringEncoder {
      * </ul>
      *
      * @param strict
-     *            the strict mode
+     *            the strict mode.
      */
     public Nysiis(final boolean strict) {
         this.strict = strict;
     }
 
     /**
-     * Encodes an Object using the NYSIIS algorithm. This method is provided in order to satisfy the requirements of the
-     * Encoder interface, and will throw an {@link EncoderException} if the supplied object is not of type
-     * {@link String}.
+     * Encodes an Object using the NYSIIS algorithm. This method is provided in order to satisfy the requirements of the Encoder interface, and will throw an
+     * {@link EncoderException} if the supplied object is not of type {@link String}.
      *
-     * @param obj
-     *            Object to encode
+     * @param obj Object to encode.
      * @return An object (or a {@link String}) containing the NYSIIS code which corresponds to the given String.
-     * @throws EncoderException
-     *            if the parameter supplied is not of a {@link String}
-     * @throws IllegalArgumentException
-     *            if a character is not mapped
+     * @throws EncoderException         if the parameter supplied is not of a {@link String}.
+     * @throws IllegalArgumentException if a character is not mapped.
      */
     @Override
     public Object encode(final Object obj) throws EncoderException {
@@ -220,11 +216,9 @@ public class Nysiis implements StringEncoder {
     /**
      * Encodes a String using the NYSIIS algorithm.
      *
-     * @param str
-     *            A String object to encode
-     * @return A Nysiis code corresponding to the String supplied
-     * @throws IllegalArgumentException
-     *            if a character is not mapped
+     * @param str A String object to encode.
+     * @return A Nysiis code corresponding to the String supplied.
+     * @throws IllegalArgumentException if a character is not mapped.
      */
     @Override
     public String encode(final String str) {
@@ -243,9 +237,8 @@ public class Nysiis implements StringEncoder {
     /**
      * Retrieves the NYSIIS code for a given String object.
      *
-     * @param str
-     *            String to encode using the NYSIIS algorithm
-     * @return A NYSIIS code for the String supplied
+     * @param str String to encode using the NYSIIS algorithm.
+     * @return A NYSIIS code for the String supplied.
      */
     public String nysiis(String str) {
         if (str == null) {

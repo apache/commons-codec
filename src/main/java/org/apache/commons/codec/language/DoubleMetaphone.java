@@ -214,7 +214,7 @@ public class DoubleMetaphone implements StringEncoder {
     }
 
     /**
-     * Maximum length of an encoding, default is 4
+     * Maximum length of an encoding, default is 4.
      */
     private int maxCodeLen = 4;
 
@@ -326,8 +326,8 @@ public class DoubleMetaphone implements StringEncoder {
     /**
      * Encodes a value with Double Metaphone.
      *
-     * @param value String to encode
-     * @return an encoded string
+     * @param value String to encode.
+     * @return an encoded string.
      */
     public String doubleMetaphone(final String value) {
         return doubleMetaphone(value, false);
@@ -336,9 +336,9 @@ public class DoubleMetaphone implements StringEncoder {
     /**
      * Encodes a value with Double Metaphone, optionally using the alternate encoding.
      *
-     * @param value String to encode
-     * @param alternate use alternate encode
-     * @return an encoded string
+     * @param value String to encode.
+     * @param alternate use alternate encode.
+     * @return an encoded string.
      */
     public String doubleMetaphone(String value, final boolean alternate) {
         value = cleanInput(value);
@@ -451,9 +451,9 @@ public class DoubleMetaphone implements StringEncoder {
      * Encodes the value using DoubleMetaphone.  It will only work if
      * {@code obj} is a {@code String} (like {@code Metaphone}).
      *
-     * @param obj Object to encode (should be of type String)
-     * @return An encoded Object (will be of type String)
-     * @throws EncoderException encode parameter is not of type String
+     * @param obj Object to encode (should be of type String).
+     * @return An encoded Object (will be of type String).
+     * @throws EncoderException encode parameter is not of type String.
      */
     @Override
     public Object encode(final Object obj) throws EncoderException {
@@ -466,8 +466,8 @@ public class DoubleMetaphone implements StringEncoder {
     /**
      * Encodes the value using DoubleMetaphone.
      *
-     * @param value String to encode
-     * @return An encoded String
+     * @param value String to encode.
+     * @return An encoded String.
      */
     @Override
     public String encode(final String value) {
@@ -477,7 +477,7 @@ public class DoubleMetaphone implements StringEncoder {
     /**
      * Gets the maxCodeLen.
      *
-     * @return int
+     * @return the maxCodeLen.
      */
     public int getMaxCodeLen() {
         return this.maxCodeLen;
@@ -1037,7 +1037,7 @@ public class DoubleMetaphone implements StringEncoder {
     }
 
     /**
-     * Tests whether or not a character is a vowel or not
+     * Tests whether or not a character is a vowel or not.
      */
     private boolean isVowel(final char ch) {
         return VOWELS.indexOf(ch) != -1;
@@ -1046,7 +1046,7 @@ public class DoubleMetaphone implements StringEncoder {
     /**
      * Sets the maxCodeLen.
      *
-     * @param maxCodeLen The maxCodeLen to set
+     * @param maxCodeLen The maxCodeLen to set.
      */
     public void setMaxCodeLen(final int maxCodeLen) {
         this.maxCodeLen = maxCodeLen;

@@ -84,16 +84,12 @@ public class Metaphone implements StringEncoder {
     }
 
     /**
-     * Encodes an Object using the metaphone algorithm.  This method
-     * is provided in order to satisfy the requirements of the
-     * Encoder interface, and will throw an EncoderException if the
-     * supplied object is not of type {@link String}.
+     * Encodes an Object using the metaphone algorithm. This method is provided in order to satisfy the requirements of the Encoder interface, and will throw an
+     * EncoderException if the supplied object is not of type {@link String}.
      *
-     * @param obj Object to encode
-     * @return An object (or type {@link String}) containing the
-     *         metaphone code which corresponds to the String supplied.
-     * @throws EncoderException if the parameter supplied is not
-     *                          of type {@link String}
+     * @param obj Object to encode.
+     * @return An object (or type {@link String}) containing the metaphone code which corresponds to the String supplied.
+     * @throws EncoderException if the parameter supplied is not of type {@link String}.
      */
     @Override
     public Object encode(final Object obj) throws EncoderException {
@@ -130,10 +126,9 @@ public class Metaphone implements StringEncoder {
     /**
      * Tests is the metaphones of two strings are identical.
      *
-     * @param str1 First of two strings to compare
-     * @param str2 Second of two strings to compare
-     * @return {@code true} if the metaphones of these strings are identical,
-     *        {@code false} otherwise.
+     * @param str1 First of two strings to compare.
+     * @param str2 Second of two strings to compare.
+     * @return {@code true} if the metaphones of these strings are identical, {@code false} otherwise.
      */
     public boolean isMetaphoneEqual(final String str1, final String str2) {
         return metaphone(str1).equals(metaphone(str2));
@@ -166,8 +161,8 @@ public class Metaphone implements StringEncoder {
      * Limitations: Input format is expected to be a single ASCII word
      * with only characters in the A - Z range, no punctuation or numbers.
      *
-     * @param txt String to find the metaphone code for
-     * @return A metaphone code corresponding to the String supplied
+     * @param txt String to find the metaphone code for.
+     * @return A metaphone code corresponding to the String supplied.
      */
     public String metaphone(final String txt) {
         boolean hard = false;
