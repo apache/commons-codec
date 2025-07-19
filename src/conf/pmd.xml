@@ -21,6 +21,5 @@ limitations under the License.
     xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.net/ruleset_2_0_0.xsd">
   <description>Excludes from default PMD rules.</description>
   <rule ref="category/java/codestyle.xml">
-    <exclude name="UselessParentheses"/>
   </rule>
 </ruleset>
