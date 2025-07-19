@@ -105,8 +105,8 @@ public class DoubleMetaphone implements StringEncoder {
          * @param value The value to append.
          */
         public void appendAlternate(final char value) {
-            if (this.alternate.length() < this.maxLength) {
-                this.alternate.append(value);
+            if (alternate.length() < maxLength) {
+                alternate.append(value);
             }
         }
 
@@ -116,11 +116,11 @@ public class DoubleMetaphone implements StringEncoder {
          * @param value The value to append.
          */
         public void appendAlternate(final String value) {
-            final int addChars = this.maxLength - this.alternate.length();
+            final int addChars = maxLength - alternate.length();
             if (value.length() <= addChars) {
-                this.alternate.append(value);
+                alternate.append(value);
             } else {
-                this.alternate.append(value, 0, addChars);
+                alternate.append(value, 0, addChars);
             }
         }
 
@@ -130,8 +130,8 @@ public class DoubleMetaphone implements StringEncoder {
          * @param value The value to append.
          */
         public void appendPrimary(final char value) {
-            if (this.primary.length() < this.maxLength) {
-                this.primary.append(value);
+            if (primary.length() < maxLength) {
+                primary.append(value);
             }
         }
 
@@ -141,11 +141,11 @@ public class DoubleMetaphone implements StringEncoder {
          * @param value The value to append.
          */
         public void appendPrimary(final String value) {
-            final int addChars = this.maxLength - this.primary.length();
+            final int addChars = maxLength - primary.length();
             if (value.length() <= addChars) {
-                this.primary.append(value);
+                primary.append(value);
             } else {
-                this.primary.append(value, 0, addChars);
+                primary.append(value, 0, addChars);
             }
         }
 
@@ -155,7 +155,7 @@ public class DoubleMetaphone implements StringEncoder {
          * @return the alternate string.
          */
         public String getAlternate() {
-            return this.alternate.toString();
+            return alternate.toString();
         }
 
         /**
@@ -164,7 +164,7 @@ public class DoubleMetaphone implements StringEncoder {
          * @return the primary string.
          */
         public String getPrimary() {
-            return this.primary.toString();
+            return primary.toString();
         }
 
         /**
@@ -173,7 +173,7 @@ public class DoubleMetaphone implements StringEncoder {
          * @return whether this result is complete.
          */
         public boolean isComplete() {
-            return this.primary.length() >= this.maxLength && this.alternate.length() >= this.maxLength;
+            return primary.length() >= maxLength && alternate.length() >= maxLength;
         }
     }
 
@@ -367,7 +367,7 @@ public class DoubleMetaphone implements StringEncoder {
                 index = charAt(value, index + 1) == 'B' ? index + 2 : index + 1;
                 break;
             case '\u00C7':
-                // A C with a Cedilla
+                // C with a Cedilla
                 result.append('S');
                 index++;
                 break;
@@ -406,7 +406,7 @@ public class DoubleMetaphone implements StringEncoder {
                 index = charAt(value, index + 1) == 'N' ? index + 2 : index + 1;
                 break;
             case '\u00D1':
-                // N with a tilde (spanish ene)
+                // N with a tilde (Spanish ene)
                 result.append('N');
                 index++;
                 break;
@@ -481,7 +481,7 @@ public class DoubleMetaphone implements StringEncoder {
      * @return the maxCodeLen.
      */
     public int getMaxCodeLen() {
-        return this.maxCodeLen;
+        return maxCodeLen;
     }
 
     /**
@@ -1030,7 +1030,7 @@ public class DoubleMetaphone implements StringEncoder {
 
     /**
      * Tests whether or not a value is of slavo-germanic origin. A value is
-     * of slavo-germanic origin if it contains any of 'W', 'K', 'CZ', or 'WITZ'.
+     * of Slavo-Germanic origin if it contains any of 'W', 'K', 'CZ', or 'WITZ'.
      */
     private boolean isSlavoGermanic(final String value) {
         return value.indexOf('W') > -1 || value.indexOf('K') > -1 ||
