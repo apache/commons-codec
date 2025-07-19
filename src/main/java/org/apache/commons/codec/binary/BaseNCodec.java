@@ -128,7 +128,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
          * @return {@code this} instance.
          */
         public B setEncodeTable(final byte... encodeTable) {
-            this.encodeTable = encodeTable != null ? encodeTable : defaultEncodeTable;
+            this.encodeTable = encodeTable != null ? encodeTable.clone() : defaultEncodeTable;
             return asThis();
         }
 

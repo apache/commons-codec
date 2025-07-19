@@ -667,7 +667,8 @@ public class Base64 extends BaseNCodec {
         if (encodeTable.length != STANDARD_ENCODE_TABLE.length) {
             throw new IllegalArgumentException("encodeTable must have exactly 64 entries.");
         }
-        this.isUrlSafe = encodeTable == URL_SAFE_ENCODE_TABLE;
+        // same array first or equal contents second
+        this.isUrlSafe = encodeTable == URL_SAFE_ENCODE_TABLE || Arrays.equals(encodeTable, URL_SAFE_ENCODE_TABLE);
         if (encodeTable == STANDARD_ENCODE_TABLE || this.isUrlSafe) {
             decodeTable = DECODE_TABLE;
             // No need of a defensive copy of an internal table.
