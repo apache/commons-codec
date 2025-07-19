@@ -153,8 +153,8 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
                 buffer.write(b);
             } else {
                 buffer.write(ESCAPE_CHAR);
-                final char hex1 = Utils.hexDigit(b >> 4);
-                final char hex2 = Utils.hexDigit(b);
+                final char hex1 = Utils.hexChar(b >> 4);
+                final char hex2 = Utils.hexChar(b);
                 buffer.write(hex1);
                 buffer.write(hex2);
             }
