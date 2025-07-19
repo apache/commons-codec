@@ -635,8 +635,6 @@ public class PureJavaCrc32C implements Checksum {
         case 1:
             localCrc = localCrc >>> 8 ^ T[T8_0_START + ((localCrc ^ b[off++]) & 0xff)];
             // falls-through
-        default:
-            break; // satisfy Findbugs
         }
         // Publish crc out to object
         crc = localCrc;
