@@ -1,3 +1,66 @@
+Apache Commons Codec 1.19.0 Release Notes
+-----------------------------------------
+
+The Apache Commons Codec team is pleased to announce the release of Apache Commons Codec 1.19.0.
+
+The Apache Commons Codec component contains encoders and decoders for
+formats such as Base16, Base32, Base64, digest, and Hexadecimal. In addition to these
+widely used encoders and decoders, the codec package also maintains a
+collection of phonetic encoding utilities.
+
+This is a feature and maintenance release. Java 8 or later is required.
+
+
+New features
+------------
+
+*             Add HmacUtils.hmac(Path). Thanks to Gary Gregory.
+*             Add HmacUtils.hmacHex(Path). Thanks to Gary Gregory.
+*             Add PMD check to the default Maven goal. Thanks to Gary Gregory.
+*             Add SpotBugs check to the default Maven goal. Thanks to Gary Gregory.
+
+Fixed Bugs
+----------
+
+*             Remove -nouses directive from maven-bundle-plugin. OSGi package imports now state 'uses' definitions for package imports, this doesn't affect JPMS (from org.apache.commons:commons-parent:80). Thanks to Gary Gregory.
+*             Refactor DigestUtils.updateDigest(MessageDigest, File) to use NIO. Thanks to Gary Gregory.
+* CODEC-328:  Clarify Javadoc for org.apache.commons.codec.digest.UnixCrypt.crypt(byte[],String). Thanks to Gary Gregory.
+*             Precompile regular expressions in DaitchMokotoffSoundex.Rule. Thanks to Gary Gregory.
+*             Precompile regular expressions in DaitchMokotoffSoundex.parseRules(Scanner, String, Map, Map). Thanks to Gary Gregory.
+*             Precompile regular expressions in Lang.loadFromResource(String, Languages). Thanks to Gary Gregory.
+*             Precompile regular expressions in PhoneticEngine.encode(String, LanguageSet). Thanks to Gary Gregory.
+*             Precompile regular expressions in org.apache.commons.codec.language.bm.Rule.parse*(*). Thanks to Gary Gregory.
+*             Remove redundant checks for whitespace in DaitchMokotoffSoundex.soundex(String, boolean). Thanks to Gary Gregory.
+*             Javadoc typo in Base16.java #380. Thanks to Sebastian Baunsgaard.
+*             Deprecate unused constant org.apache.commons.codec.language.bm.Rule.ALL. Thanks to Gary Gregory.
+* CODEC-331:  org.apache.commons.codec.language.bm.Rule.parsePhonemeExpr(String) adds duplicate empty phoneme when input ends with |. Thanks to IlikeCode, Gary Gregory.
+* CODEC-331:  org.apache.commons.codec.language.DaitchMokotoffSoundex.cleanup(String) does not remove special characters like punctuation. Thanks to IlikeCode, Gary Gregory.
+*             Fix PMD multiple UnnecessaryFullyQualifiedName in org.apache.commons.codec.binary.StringUtils. Thanks to Gary Gregory.
+*             Fix PMD UnusedFormalParameter in private constructor in org.apache.commons.codec.binary.Base16. Thanks to Gary Gregory.
+*             Fix PMD multiple UnnecessaryFullyQualifiedName in org.apache.commons.codec.digest.Blake3. Thanks to Gary Gregory.
+*             Fix PMD UnnecessaryFullyQualifiedName in org.apache.commons.codec.digest.Md5Crypt. Thanks to Gary Gregory.
+*             Fix PMD EmptyControlStatement in org.apache.commons.codec.language.Metaphone. Thanks to Gary Gregory.
+*             Fix SpotBugs [ERROR] Medium: org.apache.commons.codec.binary.BaseNCodec$AbstractBuilder.setEncodeTable(byte[]) may expose internal representation by storing an externally mutable object into BaseNCodec$AbstractBuilder.encodeTable [org.apache.commons.codec.binary.BaseNCodec$AbstractBuilder] At BaseNCodec.java:[line 131] EI_EXPOSE_REP2. Thanks to Gary Gregory.
+*             The method org.apache.commons.codec.binary.BaseNCodec.AbstractBuilder.setLineSeparator(byte...) now makes a defensive copy. Thanks to Gary Gregory.
+*             Avoid unnecessary String conversion in org.apache.commons.codec.language.bm.PhoneticEngine.applyFinalRules(PhonemeBuilder, Map). Thanks to Gary Gregory.
+*             Fix SpotBugs [ERROR] High: Potentially dangerous use of non-short-circuit logic in org.apache.commons.codec.language.DaitchMokotoffSoundex.cleanup(String) [org.apache.commons.codec.language.DaitchMokotoffSoundex] At DaitchMokotoffSoundex.java:[line 350] NS_DANGEROUS_NON_SHORT_CIRCUIT. Thanks to Gary Gregory.
+
+Changes
+-------
+
+*             Bump org.apache.commons:commons-parent from 79 to 85 #375. Thanks to Gary Gregory, Dependabot.
+*             [test] Bump commons-io:commons-io from 2.18.0 to 2.20.0. Thanks to Gary Gregory.
+*             [test] Bump org.apache.commons:commons-lang3 from 3.17.0 to 3.18.0 #386. Thanks to Gary Gregory, Dependabot.
+
+
+For complete information on Apache Commons Codec, including instructions on how to submit bug reports,
+patches, or suggestions for improvement, see the Apache Commons Codec website:
+
+https://commons.apache.org/proper/commons-codec/
+
+Download page: https://commons.apache.org/proper/commons-codec/download_codec.cgi
+
+---------------------------------------------------------------------------------
 Apache Commons Codec 1.18.0 Release Notes
 -----------------------------------------
 
