@@ -151,21 +151,21 @@ public class BinaryCodec implements BinaryDecoder, BinaryEncoder {
         }
         final int rawLength = raw.length;
         // get 8 times the bytes with 3 bit shifts to the left of the length
-        final byte[] l_ascii = new byte[rawLength << 3];
+        final byte[] ascii = new byte[rawLength << 3];
         /*
          * We decr index jj by 8 as we go along to not recompute indices using multiplication every time inside the
          * loop.
          */
-        for (int ii = 0, jj = l_ascii.length - 1; ii < rawLength; ii++, jj -= 8) {
+        for (int ii = 0, jj = ascii.length - 1; ii < rawLength; ii++, jj -= 8) {
             for (int bits = 0; bits < BITS.length; ++bits) {
                 if ((raw[ii] & BITS[bits]) == 0) {
-                    l_ascii[jj - bits] = '0';
+                    ascii[jj - bits] = '0';
                 } else {
-                    l_ascii[jj - bits] = '1';
+                    ascii[jj - bits] = '1';
                 }
             }
         }
-        return l_ascii;
+        return ascii;
     }
 
     /**
@@ -182,21 +182,21 @@ public class BinaryCodec implements BinaryDecoder, BinaryEncoder {
         }
         final int rawLength = raw.length;
         // get 8 times the bytes with 3 bit shifts to the left of the length
-        final char[] l_ascii = new char[rawLength << 3];
+        final char[] ascii = new char[rawLength << 3];
         /*
          * We decr index jj by 8 as we go along to not recompute indices using multiplication every time inside the
          * loop.
          */
-        for (int ii = 0, jj = l_ascii.length - 1; ii < rawLength; ii++, jj -= 8) {
+        for (int ii = 0, jj = ascii.length - 1; ii < rawLength; ii++, jj -= 8) {
             for (int bits = 0; bits < BITS.length; ++bits) {
                 if ((raw[ii] & BITS[bits]) == 0) {
-                    l_ascii[jj - bits] = '0';
+                    ascii[jj - bits] = '0';
                 } else {
-                    l_ascii[jj - bits] = '1';
+                    ascii[jj - bits] = '1';
                 }
             }
         }
-        return l_ascii;
+        return ascii;
     }
 
     /**
