@@ -274,7 +274,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
                     final String rightCharacter = parts[1];
                     if (leftCharacter.length() != 1 || rightCharacter.length() != 1) {
                         throw new IllegalArgumentException(
-                                "Malformed folding statement - " + "patterns are not single characters: " + rawLine + " in " + location);
+                                "Malformed folding statement - patterns are not single characters: " + rawLine + " in " + location);
                     }
                     asciiFoldings.put(leftCharacter.charAt(0), rightCharacter.charAt(0));
                 } else {

@@ -56,7 +56,7 @@ class StringEncoderComparatorTest {
         final StringEncoderComparator sCompare = new StringEncoderComparator(new DoubleMetaphone());
 
         final int compare = sCompare.compare(Double.valueOf(3.0d), Long.valueOf(3));
-        assertEquals(0, compare, "Trying to compare objects that make no sense to the underlying encoder" + " should return a zero compare code");
+        assertEquals(0, compare, "Trying to compare objects that make no sense to the underlying encoder should return a zero compare code");
     }
 
     @Test

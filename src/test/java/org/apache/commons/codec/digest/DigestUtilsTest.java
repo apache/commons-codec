@@ -145,20 +145,20 @@ class DigestUtilsTest {
     void testMd2Hex() throws IOException {
         // Examples from RFC 1319
         assertEquals("8350e5a3e24c153df2275c9f80692773", DigestUtils.md2Hex(EMPTY_STRING));
-
         assertEquals("32ec01ec4a6dac72c0ab96fb34c0b5d1", DigestUtils.md2Hex("a"));
-
         assertEquals("da853b0d3f88d99b30283a69e6ded6bb", DigestUtils.md2Hex("abc"));
-
         assertEquals("ab4f496bfb2a530b219ff33031fe06b0", DigestUtils.md2Hex("message digest"));
-
         assertEquals("4e8ddff3650292ab5a4108c3aa47940b", DigestUtils.md2Hex("abcdefghijklmnopqrstuvwxyz"));
-
-        assertEquals("da33def2a42df13975352846c30338cd", DigestUtils.md2Hex("ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "abcdefghijklmnopqrstuvwxyz" + "0123456789"));
-
+        // @formatter:off
+        assertEquals("da33def2a42df13975352846c30338cd", DigestUtils.md2Hex(
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+                "abcdefghijklmnopqrstuvwxyz" +
+                "0123456789"));
         assertEquals("d5976f79d83d3a0dc9806c3c66f3efd8",
-                DigestUtils.md2Hex("1234567890123456789012345678901234567890" + "1234567890123456789012345678901234567890"));
-
+                DigestUtils.md2Hex(
+                        "1234567890123456789012345678901234567890" +
+                        "1234567890123456789012345678901234567890"));
+        // @formatter:on
         assertEquals(DigestUtils.md2Hex(testData), DigestUtils.md2Hex(new ByteArrayInputStream(testData)));
     }
 
@@ -194,20 +194,21 @@ class DigestUtilsTest {
     void testMd5Hex() throws IOException {
         // Examples from RFC 1321
         assertEquals("d41d8cd98f00b204e9800998ecf8427e", DigestUtils.md5Hex(EMPTY_STRING));
-
         assertEquals("0cc175b9c0f1b6a831c399e269772661", DigestUtils.md5Hex("a"));
-
         assertEquals("900150983cd24fb0d6963f7d28e17f72", DigestUtils.md5Hex("abc"));
-
         assertEquals("f96b697d7cb7938d525a2f31aaf161d0", DigestUtils.md5Hex("message digest"));
-
         assertEquals("c3fcd3d76192e4007dfb496cca67e13b", DigestUtils.md5Hex("abcdefghijklmnopqrstuvwxyz"));
-
-        assertEquals("d174ab98d277d9f5a5611c2c9f419d9f", DigestUtils.md5Hex("ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "abcdefghijklmnopqrstuvwxyz" + "0123456789"));
+        // @formatter:off
+        assertEquals("d174ab98d277d9f5a5611c2c9f419d9f", DigestUtils.md5Hex(
+              "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+              "abcdefghijklmnopqrstuvwxyz" +
+              "0123456789"));
 
         assertEquals("57edf4a22be3c955ac49da2e2107b67a",
-                DigestUtils.md5Hex("1234567890123456789012345678901234567890" + "1234567890123456789012345678901234567890"));
-
+                DigestUtils.md5Hex(
+                      "1234567890123456789012345678901234567890" +
+                      "1234567890123456789012345678901234567890"));
+        // @formatter:on
         assertEquals(DigestUtils.md5Hex(testData), DigestUtils.md5Hex(new ByteArrayInputStream(testData)));
     }
 
@@ -246,7 +247,7 @@ class DigestUtilsTest {
 
         assertEquals("a9993e364706816aba3e25717850c26c9cd0d89d", DigestUtils.sha1Hex(getBytesUtf8("abc")));
 
-        assertEquals("84983e441c3bd26ebaae4aa1f95129e5e54670f1", DigestUtils.sha1Hex("abcdbcdecdefdefgefghfghighij" + "hijkijkljklmklmnlmnomnopnopq"));
+        assertEquals("84983e441c3bd26ebaae4aa1f95129e5e54670f1", DigestUtils.sha1Hex("abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq"));
         assertEquals(DigestUtils.sha1Hex(testData), DigestUtils.sha1Hex(new ByteArrayInputStream(testData)));
     }
 
@@ -418,11 +419,11 @@ class DigestUtilsTest {
     @Test
     void testSha384() throws IOException {
         // Examples from FIPS 180-2
-        assertEquals("cb00753f45a35e8bb5a03d699ac65007272c32ab0eded1631a8b605a43ff5bed" + "8086072ba1e7cc2358baeca134c825a7", DigestUtils.sha384Hex("abc"));
-        assertEquals("cb00753f45a35e8bb5a03d699ac65007272c32ab0eded1631a8b605a43ff5bed" + "8086072ba1e7cc2358baeca134c825a7",
+        assertEquals("cb00753f45a35e8bb5a03d699ac65007272c32ab0eded1631a8b605a43ff5bed8086072ba1e7cc2358baeca134c825a7", DigestUtils.sha384Hex("abc"));
+        assertEquals("cb00753f45a35e8bb5a03d699ac65007272c32ab0eded1631a8b605a43ff5bed8086072ba1e7cc2358baeca134c825a7",
                 DigestUtils.sha384Hex(getBytesUtf8("abc")));
-        assertEquals("09330c33f71147e83d192fc782cd1b4753111b173b3b05d22fa08086e3b0f712" + "fcc7c71a557e2db966c3e9fa91746039",
-                DigestUtils.sha384Hex("abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmn" + "hijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu"));
+        assertEquals("09330c33f71147e83d192fc782cd1b4753111b173b3b05d22fa08086e3b0f712fcc7c71a557e2db966c3e9fa91746039",
+                DigestUtils.sha384Hex("abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu"));
         assertEquals(DigestUtils.sha384Hex(testData), DigestUtils.sha384Hex(new ByteArrayInputStream(testData)));
     }
 
@@ -434,12 +435,12 @@ class DigestUtilsTest {
     @Test
     void testSha512() {
         // Examples from FIPS 180-2
-        assertEquals("ddaf35a193617abacc417349ae20413112e6fa4e89a97ea20a9eeee64b55d39a" + "2192992a274fc1a836ba3c23a3feebbd454d4423643ce80e2a9ac94fa54ca49f",
+        assertEquals("ddaf35a193617abacc417349ae20413112e6fa4e89a97ea20a9eeee64b55d39a2192992a274fc1a836ba3c23a3feebbd454d4423643ce80e2a9ac94fa54ca49f",
                 DigestUtils.sha512Hex("abc"));
-        assertEquals("ddaf35a193617abacc417349ae20413112e6fa4e89a97ea20a9eeee64b55d39a" + "2192992a274fc1a836ba3c23a3feebbd454d4423643ce80e2a9ac94fa54ca49f",
+        assertEquals("ddaf35a193617abacc417349ae20413112e6fa4e89a97ea20a9eeee64b55d39a2192992a274fc1a836ba3c23a3feebbd454d4423643ce80e2a9ac94fa54ca49f",
                 DigestUtils.sha512Hex(getBytesUtf8("abc")));
-        assertEquals("8e959b75dae313da8cf4f72814fc143f8f7779c6eb9f7fa17299aeadb6889018" + "501d289e4900f7e4331b99dec4b5433ac7d329eeb6dd26545e96e55b874be909",
-                DigestUtils.sha512Hex("abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmn" + "hijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu"));
+        assertEquals("8e959b75dae313da8cf4f72814fc143f8f7779c6eb9f7fa17299aeadb6889018501d289e4900f7e4331b99dec4b5433ac7d329eeb6dd26545e96e55b874be909",
+                DigestUtils.sha512Hex("abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu"));
     }
 
     @Test
@@ -499,7 +500,7 @@ class DigestUtilsTest {
 
         assertEquals("a9993e364706816aba3e25717850c26c9cd0d89d", DigestUtils.shaHex(getBytesUtf8("abc")));
 
-        assertEquals("84983e441c3bd26ebaae4aa1f95129e5e54670f1", DigestUtils.shaHex("abcdbcdecdefdefgefghfghighij" + "hijkijkljklmklmnlmnomnopnopq"));
+        assertEquals("84983e441c3bd26ebaae4aa1f95129e5e54670f1", DigestUtils.shaHex("abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq"));
         assertEquals(DigestUtils.shaHex(testData), DigestUtils.shaHex(new ByteArrayInputStream(testData)));
     }
 
