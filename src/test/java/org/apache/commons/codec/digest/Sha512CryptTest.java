@@ -19,6 +19,7 @@ package org.apache.commons.codec.digest;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.nio.charset.StandardCharsets;
@@ -112,4 +113,8 @@ class Sha512CryptTest {
         assertArrayEquals(new byte[buffer.length], buffer);
     }
 
+    @Test
+    public void testCodec182() {
+        assertThrowsExactly(IllegalArgumentException.class, () -> Sha2Crypt.sha512Crypt("secret".getBytes(StandardCharsets.UTF_8), "$5$abcd$"));
+    }
 }
