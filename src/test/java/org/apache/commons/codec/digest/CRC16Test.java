@@ -18,6 +18,7 @@
 package org.apache.commons.codec.digest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 
 import java.nio.charset.StandardCharsets;
 import java.util.zip.Checksum;
@@ -32,31 +33,19 @@ class CRC16Test {
     private static final byte[] BYTES_123456789 = "123456789".getBytes(StandardCharsets.US_ASCII);
 
     @Test
-    void testDefault() {
-        final Checksum crc16 = CRC16.crc16();
+    void testDefaultCcitt() {
+        final Checksum crc16 = CRC16.ccitt();
         crc16.update(BYTES_123456789, 0, 9);
-        assertEquals(0xBB3D, crc16.getValue());
+        assertEquals(0x2189, crc16.getValue());
         crc16.update(BYTES_123456789, 0, 9);
-        assertEquals(0xED7B, crc16.getValue());
+        assertEquals(0xE026, crc16.getValue());
         crc16.reset();
         crc16.update(BYTES_123456789, 0, 9);
-        assertEquals(0xBB3D, crc16.getValue());
+        assertEquals(0x2189, crc16.getValue());
     }
 
     @Test
-    void testInit() {
-        final Checksum crc16 = CRC16.builder().setInit(0xFFFF).get();
-        crc16.update(BYTES_123456789, 0, 9);
-        assertEquals(0x4B37, crc16.getValue());
-        crc16.update(BYTES_123456789, 0, 9);
-        assertEquals(0x090A, crc16.getValue());
-        crc16.reset();
-        crc16.update(BYTES_123456789, 0, 9);
-        assertEquals(0x4B37, crc16.getValue());
-    }
-
-    @Test
-    void testModbus() {
+    void testDefaultModbus() {
         final Checksum crc16 = CRC16.modbus();
         crc16.update(BYTES_123456789, 0, 9);
         assertEquals(0x4B37, crc16.getValue());
@@ -68,8 +57,50 @@ class CRC16Test {
     }
 
     @Test
+    void testGetTables() {
+        assertNotSame(CRC16.getCcittTable(), CRC16.getCcittTable());
+        assertNotSame(CRC16.getModbusTable(), CRC16.getModbusTable());
+    }
+
+    @Test
+    void testInit() {
+        final Checksum crc16 = CRC16.builder().setTable(CRC16.getModbusTable()).setInit(0xFFFF).get();
+        crc16.update(BYTES_123456789, 0, 9);
+        assertEquals(0x4B37, crc16.getValue());
+        crc16.update(BYTES_123456789, 0, 9);
+        assertEquals(0x090A, crc16.getValue());
+        crc16.reset();
+        crc16.update(BYTES_123456789, 0, 9);
+        assertEquals(0x4B37, crc16.getValue());
+    }
+
+    @Test
+    void testModbusCustom() {
+        final Checksum crc16 = CRC16.builder().setTable(CRC16.getModbusTable()).setInit(0xFFFF).get();
+        crc16.update(BYTES_123456789, 0, 9);
+        assertEquals(0x4B37, crc16.getValue());
+        crc16.update(BYTES_123456789, 0, 9);
+        assertEquals(0x090A, crc16.getValue());
+        crc16.reset();
+        crc16.update(BYTES_123456789, 0, 9);
+        assertEquals(0x4B37, crc16.getValue());
+    }
+
+    @Test
     void testReset() {
-        final Checksum crc16 = new CRC16();
+        final Checksum crc16 = CRC16.modbus();
+        crc16.update(BYTES_123456789, 0, 9);
+        assertEquals(0x4B37, crc16.getValue());
+        crc16.update(BYTES_123456789, 0, 9);
+        assertEquals(0x090A, crc16.getValue());
+        crc16.reset();
+        crc16.update(BYTES_123456789, 0, 9);
+        assertEquals(0x4B37, crc16.getValue());
+    }
+
+    @Test
+    void testResetCustomModbus() {
+        final Checksum crc16 = CRC16.builder().setTable(CRC16.getModbusTable()).setInit(0x0000).get();
         crc16.update(BYTES_123456789, 0, 9);
         assertEquals(0xBB3D, crc16.getValue());
         crc16.update(BYTES_123456789, 0, 9);
@@ -81,14 +112,14 @@ class CRC16Test {
 
     @Test
     void testUpdateArray() {
-        final Checksum crc16 = new CRC16();
+        final Checksum crc16 = CRC16.builder().setTable(CRC16.getModbusTable()).setInit(0x0000).get();
         crc16.update(BYTES_123456789, 0, 9);
         assertEquals(0xBB3D, crc16.getValue());
     }
 
     @Test
     void testUpdateInt() {
-        final Checksum crc16 = new CRC16();
+        final Checksum crc16 = CRC16.builder().setTable(CRC16.getModbusTable()).setInit(0x0000).get();
         final byte[] bytes = BYTES_123456789;
         for (final byte element : bytes) {
             crc16.update(element);
