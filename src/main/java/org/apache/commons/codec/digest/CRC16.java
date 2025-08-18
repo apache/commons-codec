@@ -26,6 +26,15 @@ import java.util.zip.Checksum;
  * <p>
  * Since there are so many CRC-16 variants, we do not pick a default.
  * </p>
+ * <p>
+ * To create a create a custom variant of CRC16-MODBUS with a init value of {@code 0x0000}, call:
+ * </p>
+ * <pre>
+ * Checksum crc16 = CRC16.builder()
+ *     .setTable(CRC16.getModbusTable())
+ *     .setInit(0x0000)
+ *     .get();
+ * </pre>
  *
  * @see <a href="https://en.wikipedia.org/wiki/Cyclic_redundancy_check">Cyclic redundancy check</a>
  * @see <a href="https://reveng.sourceforge.io/crc-catalogue/16.htm">Catalogue of parametrised CRC algorithms with 16 bits</a>
