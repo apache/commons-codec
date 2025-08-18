@@ -22,8 +22,7 @@ import java.util.function.Supplier;
 import java.util.zip.Checksum;
 
 /**
- * CRC-16 checksum implementation based on polynomial {@code x<sup>16</spu> + x^15 + x^2 + 1 (0x8005)} and the initial value {@code 0x0000}. This CRC variant is
- * also known as CRC-16-MODBUS.
+ * CRC-16 checksum implementations you can customize with a table and input value.
  * <p>
  * Since there are so many CRC-16 variants, we do not pick a default.
  * </p>
@@ -210,6 +209,9 @@ public class CRC16 implements Checksum {
 
     /**
      * Creates a new CRC16-MODBUS.
+     * <p>
+     * CRC-16 checksum implementation based on polynomial {@code x<sup>16</spu> + x^15 + x^2 + 1 (0x8005)}.
+     * </p>
      * <p>
      * The init value is {@code 0xFFFF}.
      * </p>
