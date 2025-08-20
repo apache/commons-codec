@@ -146,7 +146,7 @@ public class Rule {
          * Appends the sequence to the phone text.
          *
          * @param sequence The sequence to append.
-         * @return this instance.
+         * @return {@code this} instance.
          */
         public Phoneme append(final CharSequence sequence) {
             this.phonemeText.append(sequence);

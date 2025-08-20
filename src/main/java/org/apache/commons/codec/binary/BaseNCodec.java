@@ -83,7 +83,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
          * (B) this
          * </pre>
          *
-         * @return this instance typed as the subclass type {@code B}.
+         * @return {@code this} instance typed as the subclass type {@code B}.
          */
         @SuppressWarnings("unchecked")
         B asThis() {

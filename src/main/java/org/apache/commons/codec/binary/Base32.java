@@ -82,7 +82,7 @@ public class Base32 extends BaseNCodec {
          * </p>
          *
          * @param useHex use Base32 hexadecimal if {@code true}, otherwise use the Base32 alphabet.
-         * @return this instance.
+         * @return {@code this} instance.
          * @since 1.18.0
          */
         public Builder setHexDecodeTable(final boolean useHex) {
@@ -96,7 +96,7 @@ public class Base32 extends BaseNCodec {
          * </p>
          *
          * @param useHex use Base32 hexadecimal if {@code true}, otherwise use the Base32 alphabet.
-         * @return this instance.
+         * @return {@code this} instance.
          * @since 1.18.0
          */
         public Builder setHexEncodeTable(final boolean useHex) {
