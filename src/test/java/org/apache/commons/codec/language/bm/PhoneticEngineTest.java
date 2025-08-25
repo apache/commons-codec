@@ -20,6 +20,7 @@ package org.apache.commons.codec.language.bm;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.params.ParameterizedTest;
@@ -32,6 +33,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 class PhoneticEngineTest {
 
     private static final Integer TEN = Integer.valueOf(10);
+
+    private static final Pattern PIPE_PATTERN = Pattern.compile("\\|");
+    private static final Pattern MINUS_PATTERN = Pattern.compile("-");
 
     public static Stream<Arguments> data() {
         // @formatter:off
@@ -73,12 +77,12 @@ class PhoneticEngineTest {
         assertEquals(phoneticExpected, phoneticActual, "phoneme incorrect");
 
         if (concat) {
-            final String[] split = phoneticActual.split("\\|");
+            final String[] split = PIPE_PATTERN.split(phoneticActual);
             assertTrue(split.length <= maxPhonemes);
         } else {
-            final String[] words = phoneticActual.split("-");
+            final String[] words = MINUS_PATTERN.split(phoneticActual);
             for (final String word : words) {
-                final String[] split = word.split("\\|");
+                final String[] split = PIPE_PATTERN.split(word);
                 assertTrue(split.length <= maxPhonemes);
             }
         }

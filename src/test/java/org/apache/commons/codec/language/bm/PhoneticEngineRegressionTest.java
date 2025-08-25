@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.regex.Pattern;
 
 import org.junit.jupiter.api.Test;
 
@@ -30,6 +31,8 @@ import org.junit.jupiter.api.Test;
  * Tests PhoneticEngine and Languages.LanguageSet in ways very similar to code found in solr-3.6.0.
  */
 class PhoneticEngineRegressionTest {
+
+    private static final Pattern COMMA_PATTERN = Pattern.compile(",");
 
     /**
      * This code is similar in style to code found in Solr:
@@ -57,7 +60,7 @@ class PhoneticEngineRegressionTest {
         if (languageSetArg == null || languageSetArg.equals("auto")) {
             languageSet = null;
         } else {
-            languageSet = Languages.LanguageSet.from(new HashSet<>(Arrays.asList(languageSetArg.split(","))));
+            languageSet = Languages.LanguageSet.from(new HashSet<>(Arrays.asList(COMMA_PATTERN.split(languageSetArg))));
         }
 
         /*

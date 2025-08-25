@@ -25,6 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertTimeout;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.Duration;
+import java.util.regex.Pattern;
 
 import org.apache.commons.codec.AbstractStringEncoderTest;
 import org.apache.commons.codec.EncoderException;
@@ -35,6 +36,9 @@ import org.junit.jupiter.api.Test;
  * Tests BeiderMorseEncoder.
  */
 class BeiderMorseEncoderTest extends AbstractStringEncoderTest<StringEncoder> {
+
+    private static final Pattern PIPE_PATTERN = Pattern.compile("\\|");
+
     private static final char[] TEST_CHARS = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'o', 'u' };
 
     private void assertNotEmpty(final BeiderMorseEncoder bmpm, final String value) throws EncoderException {
@@ -151,7 +155,7 @@ class BeiderMorseEncoderTest extends AbstractStringEncoderTest<StringEncoder> {
         final String phonemes = encoder.encode(phrase);
         assertFalse(phonemes.isEmpty());
 
-        final String[] phonemeArr = phonemes.split("\\|");
+        final String[] phonemeArr = PIPE_PATTERN.split(phonemes);
         assertTrue(phonemeArr.length <= 10);
     }
 
