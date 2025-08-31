@@ -17,14 +17,18 @@
 
 package org.apache.commons.codec.digest;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 import java.util.function.Supplier;
 import java.util.zip.Checksum;
 
 import org.apache.commons.codec.binary.StringUtils;
+import org.apache.commons.io.file.PathUtils;
+import org.apache.commons.io.function.Uncheck;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -34,8 +38,27 @@ import org.junit.jupiter.params.provider.MethodSource;
  */
 class CRC16Test {
 
+    private static final String BIG_TEXT = Uncheck.get(() -> PathUtils.readString(Paths.get("LICENSE.txt"), StandardCharsets.US_ASCII));
     private static final byte[] TEST_BYTES = "123456789".getBytes(StandardCharsets.US_ASCII);
     private static final int TEST_BYTES_LEN = TEST_BYTES.length;
+
+    static Object[][] testArcDefault() {
+        // @formatter:off
+        return new Object[][] {
+            { "", 0x0000 },
+            { "1", 0xD4C1 },
+            { "12", 0x4594 },
+            { "123", 0xBA04 },
+            { "1234", 0x14BA },
+            { "12345", 0xA455 },
+            { "123456", 0x29E4 },
+            { "1234567", 0x9D68 },
+            { "12345678", 0x3C9D },
+            { "123456789", 0xBB3D },
+            { BIG_TEXT, 0xD01C }
+        };
+        // @formatter:on
+    }
 
     static Object[][] testCcittDefault() {
         // @formatter:off
@@ -49,7 +72,39 @@ class CRC16Test {
             { "123456", 0x11FD },
             { "1234567", 0x6947 },
             { "12345678", 0x8B19 },
-            { "123456789", 0x2189 }
+            { "123456789", 0x2189 },
+            { BIG_TEXT, 0xA912 }
+        };
+        // @formatter:on
+    }
+
+    @SuppressWarnings("unchecked")
+    static Supplier<int[]>[] testGetTables() {
+        // @formatter:off
+        return new Supplier[] {
+            CRC16::getArcTable,
+            CRC16::getCcittTable,
+            CRC16::getMcrf4xxTable,
+            CRC16::getModbusTable,
+            CRC16::getNrsc5Table
+        };
+        // @formatter:on
+    }
+
+    static Object[][] testMcrf4xxDefault() {
+        // @formatter:off
+        return new Object[][] {
+            { "", 0xFFFF },
+            { "1", 0x2F8D },
+            { "12", 0x4D53 },
+            { "123", 0x634B },
+            { "1234", 0x8B13 },
+            { "12345", 0x44BF },
+            { "123456", 0x198D },
+            { "1234567", 0x1AC8 },
+            { "12345678", 0xF795 },
+            { "123456789", 0x6F91 },
+            { BIG_TEXT, 0x93C0 }
         };
         // @formatter:on
     }
@@ -66,13 +121,32 @@ class CRC16Test {
             { "123456", 0x32E4 },
             { "1234567", 0x9D73 },
             { "12345678", 0x37DD },
-            { "123456789", 0x4B37 }
+            { "123456789", 0x4B37 },
+            { BIG_TEXT, 0xEC67 }
+        };
+        // @formatter:on
+    }
+
+    static Object[][] testNrsc5Default() {
+        // @formatter:off
+        return new Object[][] {
+            { "", 0xFFFF },
+            { "1", 0x083E },
+            { "12", 0xDB99 },
+            { "123", 0x8286 },
+            { "1234", 0x95DC },
+            { "12345", 0xB42C },
+            { "123456", 0x7CFF },
+            { "1234567", 0xB565 },
+            { "12345678", 0x9C8A },
+            { "123456789", 0xA066 },
+            { BIG_TEXT, 0x2A84 }
         };
         // @formatter:on
     }
 
     private Supplier<String> messageSupplier(final Checksum crc16, final long expected) {
-        return () -> String.format("Expected %X, actual %s", expected, crc16);
+        return () -> String.format("Expected %04X but was %s", expected, crc16);
     }
 
     void stdUpdate(final Checksum crc16) {
@@ -81,15 +155,23 @@ class CRC16Test {
 
     @ParameterizedTest
     @MethodSource
+    void testArcDefault(final String source, final long expected) {
+        testUpdateReset(source, expected, CRC16.arc());
+    }
+
+    @ParameterizedTest
+    @MethodSource
     void testCcittDefault(final String source, final long expected) {
         testUpdateReset(source, expected, CRC16.ccitt());
     }
 
-    @Test
-    void testGetTables() {
-        assertNotSame(CRC16.getCcittTable(), CRC16.getCcittTable());
-        assertNotSame(CRC16.getModbusTable(), CRC16.getModbusTable());
-        assertNotSame(CRC16.getCdma2000Table(), CRC16.getCdma2000Table());
+    @ParameterizedTest
+    @MethodSource
+    void testGetTables(final Supplier<int[]> supplier) {
+        final int[] value1 = supplier.get();
+        final int[] value2 = supplier.get();
+        assertNotSame(value1, value2);
+        assertArrayEquals(value1, value2);
     }
 
     @Test
@@ -102,6 +184,12 @@ class CRC16Test {
         crc16.reset();
         stdUpdate(crc16);
         assertEquals(0x4B37, crc16.getValue());
+    }
+
+    @ParameterizedTest
+    @MethodSource
+    void testMcrf4xxDefault(final String source, final long expected) {
+        testUpdateReset(source, expected, CRC16.mcrf4xx());
     }
 
     @Test
@@ -120,6 +208,12 @@ class CRC16Test {
     @MethodSource
     void testModbusDefault(final String source, final long expected) {
         testUpdateReset(source, expected, CRC16.modbus());
+    }
+
+    @ParameterizedTest
+    @MethodSource
+    void testNrsc5Default(final String source, final long expected) {
+        testUpdateReset(source, expected, CRC16.nrsc5());
     }
 
     @Test
@@ -173,5 +267,4 @@ class CRC16Test {
         actual = crc16.getValue();
         assertEquals(expected, actual, messageSupplier(crc16, expected));
     }
-
 }
