@@ -224,7 +224,7 @@ public class CRC16 implements Checksum {
     private static final int[] MAXIM = ARC;
     private static final int MAXIM_INIT = 0x0000;
     private static final int MAXIM_XOROUT = 0xFFFF;
-        private static final int[] MCRF4XX = CCITT;
+    private static final int[] MCRF4XX = CCITT;
     private static final int MCRF4XX_INIT = 0xFFFF;
     private static final int[] MODBUS = ARC;
     private static final int MODBUS_INIT = 0xFFFF;
