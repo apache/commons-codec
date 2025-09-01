@@ -270,9 +270,10 @@ public class CRC16 implements Checksum {
 
     /**
      * Creates a new CRC16-CCITT Checksum.
-     * <p>
-     * The init value is {@code 0x0000}.
-     * </p>
+     * <ul>
+     * <li>The init value is {@code 0x0000}.</li>
+     * <li>The XorOut value is {@code 0x0000}.</li>
+     * </ul>
      * <p>
      * Also known as:
      * </p>
@@ -304,9 +305,10 @@ public class CRC16 implements Checksum {
 
     /**
      * Creates a new CRC16-CCITT Checksum.
-     * <p>
-     * The init value is {@code 0x0000}.
-     * </p>
+     * <ul>
+     * <li>The init value is {@code 0x0000}.</li>
+     * <li>The XorOut value is {@code 0x0000}.</li>
+     * </ul>
      * <p>
      * Also known as:
      * </p>
@@ -328,9 +330,10 @@ public class CRC16 implements Checksum {
 
     /**
      * Creates a new CRC16-DNP Checksum.
-     * <p>
-     * The init value is {@code 0x0000}.
-     * </p>
+     * <ul>
+     * <li>The init value is {@code 0x0000}.</li>
+     * <li>The XorOut value is {@code 0xFFFF}.</li>
+     * </ul>
      *
      * @return a new CRC16-DNP Checksum.
      */
@@ -412,9 +415,10 @@ public class CRC16 implements Checksum {
 
     /**
      * Creates a new CRC16-IBM-SDLC Checksum.
-     * <p>
-     * The init value is {@code 0xFFFF}.
-     * </p>
+     * <ul>
+     * <li>The init value is {@code 0xFFFF}.</li>
+     * <li>The XorOut value is {@code 0xFFFF}.</li>
+     * </ul>
      * <p>
      * Also known as:
      * </p>
@@ -438,9 +442,10 @@ public class CRC16 implements Checksum {
      * <p>
      * CRC-16 checksum implementation based on polynomial {@code x<sup>16</spu> + x^15 + x^2 + 1 (0x8005)}.
      * </p>
-     * <p>
-     * The init value is {@code 0xFFFF}.
-     * </p>
+     * <ul>
+     * <li>The init value is {@code 0xFFFF}.</li>
+     * <li>The XorOut value is {@code 0xFFFF}.</li>
+     * </ul>
      * <p>
      * Also known as:
      * </p>
@@ -456,9 +461,10 @@ public class CRC16 implements Checksum {
 
     /**
      * Creates a new instance for CRC16-MCRF4XX Checksum.
-     * <p>
-     * The init value is {@code 0xFFFF}.
-     * </p>
+     * <ul>
+     * <li>The init value is {@code 0xFFFF}.</li>
+     * <li>The XorOut value is {@code 0x0000}.</li>
+     * </ul>
      *
      * @return a new CRC16-MCRF4XX Checksum.
      */
@@ -471,9 +477,10 @@ public class CRC16 implements Checksum {
      * <p>
      * CRC-16 checksum implementation based on polynomial {@code x<sup>16</spu> + x^15 + x^2 + 1 (0x8005)}.
      * </p>
-     * <p>
-     * The init value is {@code 0xFFFF}.
-     * </p>
+     * <ul>
+     * <li>The init value is {@code 0xFFFF}.</li>
+     * <li>The XorOut value is {@code 0x0000}.</li>
+     * </ul>
      * <p>
      * Also known as:
      * </p>
@@ -490,9 +497,10 @@ public class CRC16 implements Checksum {
 
     /**
      * Creates a new instance for CRC16-NRSC-5 Checksum.
-     * <p>
-     * The init value is {@code 0xFFFF}.
-     * </p>
+     * <ul>
+     * <li>The init value is {@code 0xFFFF}.</li>
+     * <li>The XorOut value is {@code 0x0000}.</li>
+     * </ul>
      *
      * @return a new CRC16-NRSC-5 Checksum.
      */
@@ -502,9 +510,10 @@ public class CRC16 implements Checksum {
 
     /**
      * Creates a new instance for CRC16-USB Checksum.
-     * <p>
-     * The init value is {@code 0xFFFF}.
-     * </p>
+     * <ul>
+     * <li>The init value is {@code 0xFFFF}.</li>
+     * <li>The XorOut value is {@code 0xFFFF}.</li>
+     * </ul>
      *
      * @return a new CRC16-USB Checksum.
      */
