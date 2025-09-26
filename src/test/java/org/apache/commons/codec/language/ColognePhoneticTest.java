@@ -128,7 +128,7 @@ class ColognePhoneticTest extends AbstractStringEncoderTest<ColognePhonetic> {
      * @throws EncoderException for some failure scenarios
      */
     @Test
-    void testAychlmajrForCodec122() throws EncoderException {
+    void testAychlmajrCodec122() throws EncoderException {
         checkEncoding("04567", "Aychlmajr");
     }
 
