@@ -66,7 +66,8 @@ public class Base32 extends BaseNCodec {
     public static class Builder extends AbstractBuilder<Base32, Builder> {
 
         /**
-         * Constructs a new instance.
+         * Constructs a new instance using <a href="https://datatracker.ietf.org/doc/html/rfc4648#section-6">RFC 4648 Section 6, Table 3: The Base 32
+         * Alphabet</a>.
          */
         public Builder() {
             super(ENCODE_TABLE);
@@ -97,7 +98,13 @@ public class Base32 extends BaseNCodec {
          * This overrides a value previously set with {@link #setEncodeTable(byte...)}.
          * </p>
          *
-         * @param useHex use Base32 hexadecimal if {@code true}, otherwise use the Base32 alphabet.
+         * @param useHex
+         *               <ul>
+         *               <li>If true, then use <a href="https://datatracker.ietf.org/doc/html/rfc4648#section-7">RFC 4648 Section 7, Table 4: Base 32 Encoding
+         *               with Extended Hex Alphabet</a></li>
+         *               <li>If false, then use <a href="https://datatracker.ietf.org/doc/html/rfc4648#section-6">RFC 4648 Section 6, Table 3: The Base 32
+         *               Alphabet</a></li>
+         *               </ul>
          * @return {@code this} instance.
          * @since 1.18.0
          */
@@ -114,6 +121,7 @@ public class Base32 extends BaseNCodec {
 
     private static final int BYTES_PER_ENCODED_BLOCK = 8;
     private static final int BYTES_PER_UNENCODED_BLOCK = 5;
+
     /**
      * This array is a lookup table that translates Unicode characters drawn from the "Base32 Alphabet" (as specified in Table 3 of RFC 4648) into their 5-bit
      * positive integer equivalents. Characters that are not in the Base32 alphabet but fall within the bounds of the array are translated to -1.
@@ -134,8 +142,10 @@ public class Base32 extends BaseNCodec {
     // @formatter:on
 
     /**
-     * This array is a lookup table that translates 5-bit positive integer index values into their "Base32 Alphabet" equivalents as specified in Table 3 of RFC
-     * 4648.
+     * This array is a lookup table that translates 5-bit positive integer index values into their "Base32 Alphabet" equivalents as specified in
+     * <a href="https://datatracker.ietf.org/doc/html/rfc4648#section-6">RFC 4648 Section 6, Table 3: The Base 32 Alphabet</a>.
+     *
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc4648#section-6">RFC 4648 Section 6, Table 3: The Base 32 Alphabet</a>
      */
     // @formatter:off
     private static final byte[] ENCODE_TABLE = {
@@ -148,6 +158,7 @@ public class Base32 extends BaseNCodec {
     /**
      * This array is a lookup table that translates Unicode characters drawn from the "Base32 Hex Alphabet" (as specified in Table 4 of RFC 4648) into their
      * 5-bit positive integer equivalents. Characters that are not in the Base32 Hex alphabet but fall within the bounds of the array are translated to -1.
+     *
      */
     // @formatter:off
     private static final byte[] HEX_DECODE_TABLE = {
@@ -165,8 +176,11 @@ public class Base32 extends BaseNCodec {
     // @formatter:on
 
     /**
-     * This array is a lookup table that translates 5-bit positive integer index values into their "Base32 Hex Alphabet" equivalents as specified in Table 4 of
-     * RFC 4648.
+     * This array is a lookup table that translates 5-bit positive integer index values into their "Base 32 Encoding with Extended Hex Alphabet" equivalents as
+     * specified in <a href="https://datatracker.ietf.org/doc/html/rfc4648#section-7">RFC 4648 Section 7, Table 4: Base 32 Encoding with Extended Hex
+     * Alphabet</a>.
+     *
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc4648#section-7">RFC 4648 Section 7, Table 4: Base 32 Encoding with Extended Hex Alphabet</a>
      */
     // @formatter:off
     private static final byte[] HEX_ENCODE_TABLE = {
@@ -209,6 +223,18 @@ public class Base32 extends BaseNCodec {
         return useHex ? HEX_DECODE_TABLE : DECODE_TABLE;
     }
 
+    /**
+     * Gets the encoding table that matches {@code useHex}.
+     *
+     * @param useHex
+     *               <ul>
+     *               <li>If true, then use <a href="https://datatracker.ietf.org/doc/html/rfc4648#section-7">RFC 4648 Section 7, Table 4: Base 32 Encoding with
+     *               Extended Hex Alphabet</a></li>
+     *               <li>If false, then use <a href="https://datatracker.ietf.org/doc/html/rfc4648#section-6">RFC 4648 Section 6, Table 3: The Base 32
+     *               Alphabet</a></li>
+     *               </ul>
+     * @return the encoding table that matches {@code useHex}.
+     */
     private static byte[] encodeTable(final boolean useHex) {
         return useHex ? HEX_ENCODE_TABLE : ENCODE_TABLE;
     }
@@ -250,7 +276,13 @@ public class Base32 extends BaseNCodec {
      * When encoding the line length is 0 (no chunking).
      * </p>
      *
-     * @param useHex if {@code true} then use Base32 Hex alphabet
+     * @param useHex
+     *               <ul>
+     *               <li>If true, then use <a href="https://datatracker.ietf.org/doc/html/rfc4648#section-7">RFC 4648 Section 7, Table 4: Base 32 Encoding with
+     *               Extended Hex Alphabet</a></li>
+     *               <li>If false, then use <a href="https://datatracker.ietf.org/doc/html/rfc4648#section-6">RFC 4648 Section 6, Table 3: The Base 32
+     *               Alphabet</a></li>
+     *               </ul>
      */
     public Base32(final boolean useHex) {
         this(0, null, useHex, PAD_DEFAULT);
@@ -262,7 +294,13 @@ public class Base32 extends BaseNCodec {
      * When encoding the line length is 0 (no chunking).
      * </p>
      *
-     * @param useHex  if {@code true} then use Base32 Hex alphabet
+     * @param useHex
+     *               <ul>
+     *               <li>If true, then use <a href="https://datatracker.ietf.org/doc/html/rfc4648#section-7">RFC 4648 Section 7, Table 4: Base 32 Encoding with
+     *               Extended Hex Alphabet</a></li>
+     *               <li>If false, then use <a href="https://datatracker.ietf.org/doc/html/rfc4648#section-6">RFC 4648 Section 6, Table 3: The Base 32
+     *               Alphabet</a></li>
+     *               </ul>
      * @param padding byte used as padding byte.
      */
     public Base32(final boolean useHex, final byte padding) {
@@ -324,7 +362,13 @@ public class Base32 extends BaseNCodec {
      * @param lineLength    Each line of encoded data will be at most of the given length (rounded down to the nearest multiple of 8). If lineLength &lt;= 0,
      *                      then the output will not be divided into lines (chunks). Ignored when decoding.
      * @param lineSeparator Each line of encoded data will end with this sequence of bytes.
-     * @param useHex        if {@code true}, then use Base32 Hex alphabet, otherwise use Base32 alphabet
+     * @param useHex
+     *               <ul>
+     *               <li>If true, then use <a href="https://datatracker.ietf.org/doc/html/rfc4648#section-7">RFC 4648 Section 7, Table 4: Base 32 Encoding with
+     *               Extended Hex Alphabet</a></li>
+     *               <li>If false, then use <a href="https://datatracker.ietf.org/doc/html/rfc4648#section-6">RFC 4648 Section 6, Table 3: The Base 32
+     *               Alphabet</a></li>
+     *               </ul>
      * @throws IllegalArgumentException Thrown when the {@code lineSeparator} contains Base32 characters. Or the lineLength &gt; 0 and lineSeparator is null.
      */
     public Base32(final int lineLength, final byte[] lineSeparator, final boolean useHex) {
@@ -343,7 +387,13 @@ public class Base32 extends BaseNCodec {
      * @param lineLength    Each line of encoded data will be at most of the given length (rounded down to the nearest multiple of 8). If lineLength &lt;= 0,
      *                      then the output will not be divided into lines (chunks). Ignored when decoding.
      * @param lineSeparator Each line of encoded data will end with this sequence of bytes.
-     * @param useHex        if {@code true}, then use Base32 Hex alphabet, otherwise use Base32 alphabet
+     * @param useHex
+     *               <ul>
+     *               <li>If true, then use <a href="https://datatracker.ietf.org/doc/html/rfc4648#section-7">RFC 4648 Section 7, Table 4: Base 32 Encoding with
+     *               Extended Hex Alphabet</a></li>
+     *               <li>If false, then use <a href="https://datatracker.ietf.org/doc/html/rfc4648#section-6">RFC 4648 Section 6, Table 3: The Base 32
+     *               Alphabet</a></li>
+     *               </ul>
      * @param padding       padding byte.
      * @throws IllegalArgumentException Thrown when the {@code lineSeparator} contains Base32 characters. Or the lineLength &gt; 0 and lineSeparator is null.
      */
@@ -363,7 +413,13 @@ public class Base32 extends BaseNCodec {
      * @param lineLength     Each line of encoded data will be at most of the given length (rounded down to the nearest multiple of 8). If lineLength &lt;= 0,
      *                       then the output will not be divided into lines (chunks). Ignored when decoding.
      * @param lineSeparator  Each line of encoded data will end with this sequence of bytes.
-     * @param useHex         use Base32 hexadecimal if {@code true}, otherwise use the Base32 alphabet.
+     * @param useHex
+     *               <ul>
+     *               <li>If true, then use <a href="https://datatracker.ietf.org/doc/html/rfc4648#section-7">RFC 4648 Section 7, Table 4: Base 32 Encoding with
+     *               Extended Hex Alphabet</a></li>
+     *               <li>If false, then use <a href="https://datatracker.ietf.org/doc/html/rfc4648#section-6">RFC 4648 Section 6, Table 3: The Base 32
+     *               Alphabet</a></li>
+     *               </ul>
      * @param padding        padding byte.
      * @param decodingPolicy The decoding policy.
      * @throws IllegalArgumentException Thrown when the {@code lineSeparator} contains Base32 characters. Or the lineLength &gt; 0 and lineSeparator is null.
