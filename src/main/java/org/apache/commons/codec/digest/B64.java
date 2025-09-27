@@ -69,6 +69,7 @@ final class B64 {
 
     /**
      * Generates a string of random chars from the B64T set.
+     *
      * <p>
      * The salt is generated with {@link SecureRandom}.
      * </p>
@@ -82,6 +83,7 @@ final class B64 {
 
     /**
      * Generates a string of random chars from the B64T set.
+     *
      * <p>
      * The salt is generated with the {@link Random} provided.
      * </p>
