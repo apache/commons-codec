@@ -51,7 +51,7 @@ import org.apache.commons.codec.CodecPolicy;
  * This class is thread-safe.
  * </p>
  * <p>
- * You can configure instances with the {@link Builder}.
+ * To configure a new instance, use a {@link Builder}. For example:
  * </p>
  * <pre>
  * Base64 base64 = Base64.builder()
@@ -59,7 +59,7 @@ import org.apache.commons.codec.CodecPolicy;
  *   .setEncodeTable(customEncodeTable)         // default is built in, null resets to default
  *   .setLineLength(0)                          // default is none
  *   .setLineSeparator('\r', '\n')              // default is CR LF, null resets to default
- *   .setPadding('=')                           // default is =
+ *   .setPadding('=')                           // default is '='
  *   .setUrlSafe(false)                         // default is false
  *   .get()
  * </pre>
@@ -73,6 +73,21 @@ public class Base64 extends BaseNCodec {
 
     /**
      * Builds {@link Base64} instances.
+     *
+     * <p>
+     * To configure a new instance, use a {@link Builder}. For example:
+     * </p>
+     *
+     * <pre>
+     * Base64 base64 = Base64.builder()
+     *   .setDecodingPolicy(DecodingPolicy.LENIENT) // default is lenient, null resets to default
+     *   .setEncodeTable(customEncodeTable)         // default is built in, null resets to default
+     *   .setLineLength(0)                          // default is none
+     *   .setLineSeparator('\r', '\n')              // default is CR LF, null resets to default
+     *   .setPadding('=')                           // default is '='
+     *   .setUrlSafe(false)                         // default is false
+     *   .get()
+     * </pre>
      *
      * @since 1.17.0
      */
@@ -182,6 +197,21 @@ public class Base64 extends BaseNCodec {
 
     /**
      * Creates a new Builder.
+     *
+     * <p>
+     * To configure a new instance, use a {@link Builder}. For example:
+     * </p>
+     *
+     * <pre>
+     * Base64 base64 = Base64.builder()
+     *   .setDecodingPolicy(DecodingPolicy.LENIENT) // default is lenient, null resets to default
+     *   .setEncodeTable(customEncodeTable)         // default is built in, null resets to default
+     *   .setLineLength(0)                          // default is none
+     *   .setLineSeparator('\r', '\n')              // default is CR LF, null resets to default
+     *   .setPadding('=')                           // default is '='
+     *   .setUrlSafe(false)                         // default is false
+     *   .get()
+     * </pre>
      *
      * @return a new Builder.
      * @since 1.17.0
@@ -525,7 +555,9 @@ public class Base64 extends BaseNCodec {
      *            if {@code true}, URL-safe encoding is used. In most cases this should be set to
      *            {@code false}.
      * @since 1.4
+     * @deprecated Use {@link #builder()} and {@link Builder}.
      */
+    @Deprecated
     public Base64(final boolean urlSafe) {
         this(MIME_CHUNK_SIZE, CHUNK_SEPARATOR, urlSafe);
     }
@@ -548,7 +580,9 @@ public class Base64 extends BaseNCodec {
      *            4). If lineLength &lt;= 0, then the output will not be divided into lines (chunks). Ignored when
      *            decoding.
      * @since 1.4
+     * @deprecated Use {@link #builder()} and {@link Builder}.
      */
+    @Deprecated
     public Base64(final int lineLength) {
         this(lineLength, CHUNK_SEPARATOR);
     }
@@ -575,7 +609,9 @@ public class Base64 extends BaseNCodec {
      * @throws IllegalArgumentException
      *             Thrown when the provided lineSeparator included some base64 characters.
      * @since 1.4
+     * @deprecated Use {@link #builder()} and {@link Builder}.
      */
+    @Deprecated
     public Base64(final int lineLength, final byte[] lineSeparator) {
         this(lineLength, lineSeparator, false);
     }
@@ -606,7 +642,9 @@ public class Base64 extends BaseNCodec {
      * @throws IllegalArgumentException
      *             Thrown when the {@code lineSeparator} contains Base64 characters.
      * @since 1.4
+     * @deprecated Use {@link #builder()} and {@link Builder}.
      */
+    @Deprecated
     public Base64(final int lineLength, final byte[] lineSeparator, final boolean urlSafe) {
         this(lineLength, lineSeparator, PAD_DEFAULT, toUrlSafeEncodeTable(urlSafe), DECODING_POLICY_DEFAULT);
     }
@@ -638,7 +676,9 @@ public class Base64 extends BaseNCodec {
      * @throws IllegalArgumentException
      *             Thrown when the {@code lineSeparator} contains Base64 characters.
      * @since 1.15
+     * @deprecated Use {@link #builder()} and {@link Builder}.
      */
+    @Deprecated
     public Base64(final int lineLength, final byte[] lineSeparator, final boolean urlSafe, final CodecPolicy decodingPolicy) {
         this(lineLength, lineSeparator, PAD_DEFAULT, toUrlSafeEncodeTable(urlSafe), decodingPolicy);
     }

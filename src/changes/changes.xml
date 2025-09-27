@@ -45,7 +45,8 @@ The <action> type attribute can be add,update,fix,remove.
   <body>
     <release version="1.20.0" date="YYYY-MM-DD" description="This is a feature and maintenance release. Java 8 or later is required.">
       <!-- FIX -->
-      <action type="update" dev="ggregory" due-to="Gary Gregory">Deprecate Base32 constructors in favor of the builder added in version 1.17.0.</action>
+      <action type="update" dev="ggregory" due-to="Gary Gregory">Deprecate all but one Base32 constructor in favor of the builder added in version 1.17.0.</action>
+      <action type="update" dev="ggregory" due-to="Gary Gregory">Deprecate all but one Base64 constructor in favor of the builder added in version 1.17.0.</action>
       <!-- ADD -->
       <action type="add" dev="ggregory" due-to="Fredrik Kjellberg, Gary Gregory">Add org.apache.commons.codec.digest.CRC16.</action>
       <!-- UPDATE -->

@@ -172,7 +172,6 @@ public class Base32 extends BaseNCodec {
     /**
      * This array is a lookup table that translates Unicode characters drawn from the "Base32 Hex Alphabet" (as specified in Table 4 of RFC 4648) into their
      * 5-bit positive integer equivalents. Characters that are not in the Base32 Hex alphabet but fall within the bounds of the array are translated to -1.
-     *
      */
     // @formatter:off
     private static final byte[] HEX_DECODE_TABLE = {
