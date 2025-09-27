@@ -28,6 +28,7 @@ import org.apache.commons.codec.CodecPolicy;
  * {@link Base16OutputStream} is to ENCODE, but this behavior can be overridden by using a different constructor.
  * </p>
  *
+ * @see Base16
  * @since 1.15
  */
 public class Base16InputStream extends BaseNCodecInputStream {

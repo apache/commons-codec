@@ -51,6 +51,8 @@ import org.apache.commons.codec.CodecPolicy;
  *   .get()
  * </pre>
  *
+ * @see Base32InputStream
+ * @see Base32OutputStream
  * @see <a href="http://www.ietf.org/rfc/rfc4648.txt">RFC 4648</a>
  * @since 1.5
  */

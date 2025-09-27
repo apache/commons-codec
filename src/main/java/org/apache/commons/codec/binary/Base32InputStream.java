@@ -49,6 +49,8 @@ import org.apache.commons.codec.CodecPolicy;
  * the original, i.e. no changes occur on the final character. This requires that the input bytes use the same padding
  * and alphabet as the encoder.
  * </p>
+ *
+ * @see Base32
  * @see <a href="http://www.ietf.org/rfc/rfc4648.txt">RFC 4648</a>
  * @since 1.5
  */

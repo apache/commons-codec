@@ -64,6 +64,8 @@ import org.apache.commons.codec.CodecPolicy;
  *   .get()
  * </pre>
  *
+ * @see Base64InputStream
+ * @see Base64OutputStream
  * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>
  * @since 1.0
  */

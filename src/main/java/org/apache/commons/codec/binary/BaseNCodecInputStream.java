@@ -46,9 +46,9 @@ public class BaseNCodecInputStream extends FilterInputStream {
     /**
      * Constructs a new instance.
      *
-     * @param inputStream the input stream
-     * @param baseNCodec the codec
-     * @param doEncode set to true to perform encoding, else decoding
+     * @param inputStream the input stream.
+     * @param baseNCodec the codec.
+     * @param doEncode set to true to perform encoding, else decoding.
      */
     protected BaseNCodecInputStream(final InputStream inputStream, final BaseNCodec baseNCodec, final boolean doEncode) {
         super(inputStream);
@@ -60,8 +60,7 @@ public class BaseNCodecInputStream extends FilterInputStream {
     /**
      * {@inheritDoc}
      *
-     * @return {@code 0} if the {@link InputStream} has reached {@code EOF},
-     * {@code 1} otherwise
+     * @return {@code 0} if the {@link InputStream} has reached {@code EOF}, {@code 1} otherwise.
      * @since 1.7
      */
     @Override
@@ -82,7 +81,7 @@ public class BaseNCodecInputStream extends FilterInputStream {
      * into 8-bit bytes and discard the remainder.
      * </p>
      *
-     * @return true if using strict decoding
+     * @return true if using strict decoding.
      * @since 1.15
      */
     public boolean isStrictDecoding() {
@@ -118,8 +117,7 @@ public class BaseNCodecInputStream extends FilterInputStream {
      * Reads one {@code byte} from this input stream.
      *
      * @return the byte as an integer in the range 0 to 255. Returns -1 if EOF has been reached.
-     * @throws IOException
-     *             if an I/O error occurs.
+     * @throws IOException if an I/O error occurs.
      */
     @Override
     public int read() throws IOException {
@@ -135,23 +133,15 @@ public class BaseNCodecInputStream extends FilterInputStream {
     }
 
     /**
-     * Attempts to read {@code len} bytes into the specified {@code b} array starting at {@code offset}
-     * from this InputStream.
+     * Attempts to read {@code len} bytes into the specified {@code b} array starting at {@code offset} from this InputStream.
      *
-     * @param array
-     *            destination byte array
-     * @param offset
-     *            where to start writing the bytes
-     * @param len
-     *            maximum number of bytes to read
-     *
-     * @return number of bytes read
-     * @throws IOException
-     *             if an I/O error occurs.
-     * @throws NullPointerException
-     *             if the byte array parameter is null
-     * @throws IndexOutOfBoundsException
-     *             if offset, len or buffer size are invalid
+     * @param array  destination byte array.
+     * @param offset where to start writing the bytes.
+     * @param len    maximum number of bytes to read.
+     * @return number of bytes read.
+     * @throws IOException               if an I/O error occurs.
+     * @throws NullPointerException      if the byte array parameter is null.
+     * @throws IndexOutOfBoundsException if offset, len or buffer size are invalid.
      */
     @Override
     public int read(final byte[] array, final int offset, final int len) throws IOException {
@@ -207,7 +197,7 @@ public class BaseNCodecInputStream extends FilterInputStream {
      * The {@link #reset} method of {@link BaseNCodecInputStream} does nothing except throw an {@link IOException}.
      * </p>
      *
-     * @throws IOException if this method is invoked
+     * @throws IOException if this method is invoked.
      * @since 1.7
      */
     @Override
@@ -218,7 +208,7 @@ public class BaseNCodecInputStream extends FilterInputStream {
     /**
      * {@inheritDoc}
      *
-     * @throws IllegalArgumentException if the provided skip length is negative
+     * @throws IllegalArgumentException if the provided skip length is negative.
      * @since 1.7
      */
     @Override
