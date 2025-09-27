@@ -80,7 +80,7 @@ public class Base32OutputStream extends BaseNCodecOutputStream {
      *            true if we should encode all data written to us, false if we should decode.
      */
     public Base32OutputStream(final OutputStream outputStream, final boolean doEncode) {
-        super(outputStream, new Base32(false), doEncode);
+        super(outputStream, Base32.builder().get(), doEncode);
     }
 
     /**
@@ -100,7 +100,7 @@ public class Base32OutputStream extends BaseNCodecOutputStream {
      *            If lineLength &lt;= 0, the lineSeparator is not used. If doEncode is false lineSeparator is ignored.
      */
     public Base32OutputStream(final OutputStream outputStream, final boolean doEncode, final int lineLength, final byte[] lineSeparator) {
-        super(outputStream, new Base32(lineLength, lineSeparator), doEncode);
+        super(outputStream, Base32.builder().setLineLength(lineLength).setLineSeparator(lineSeparator).get(), doEncode);
     }
 
     /**
@@ -123,7 +123,7 @@ public class Base32OutputStream extends BaseNCodecOutputStream {
      */
     public Base32OutputStream(final OutputStream outputStream, final boolean doEncode, final int lineLength, final byte[] lineSeparator,
         final CodecPolicy decodingPolicy) {
-        super(outputStream, new Base32(lineLength, lineSeparator, false, BaseNCodec.PAD_DEFAULT, decodingPolicy), doEncode);
+        super(outputStream, Base32.builder().setLineLength(lineLength).setLineSeparator(lineSeparator).setDecodingPolicy(decodingPolicy).get(), doEncode);
     }
 
 }
