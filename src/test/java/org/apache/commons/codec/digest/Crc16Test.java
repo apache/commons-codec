@@ -34,9 +34,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 /**
- * Tests {@link CRC16}.
+ * Tests {@link Crc16}.
  */
-class CRC16Test {
+class Crc16Test {
 
     private static final String BIG_TEXT = Uncheck.get(() -> PathUtils.readString(Paths.get("LICENSE.txt"), StandardCharsets.US_ASCII));
     private static final byte[] TEST_BYTES = "123456789".getBytes(StandardCharsets.US_ASCII);
@@ -100,13 +100,13 @@ class CRC16Test {
     static Supplier<int[]>[] testGetTables() {
         // @formatter:off
         return new Supplier[] {
-            CRC16::getArcTable,
-            CRC16::getCcittTable,
-            CRC16::getDnpTable,
-            CRC16::getMcrf4xxTable,
-            CRC16::getMaximTable,
-            CRC16::getModbusTable,
-            CRC16::getNrsc5Table
+            Crc16::getArcTable,
+            Crc16::getCcittTable,
+            Crc16::getDnpTable,
+            Crc16::getMcrf4xxTable,
+            Crc16::getMaximTable,
+            Crc16::getModbusTable,
+            Crc16::getNrsc5Table
         };
         // @formatter:on
     }
@@ -230,19 +230,19 @@ class CRC16Test {
     @ParameterizedTest
     @MethodSource
     void testArcDefault(final String source, final long expected) {
-        testUpdateReset(source, expected, CRC16.arc());
+        testUpdateReset(source, expected, Crc16.arc());
     }
 
     @ParameterizedTest
     @MethodSource
     void testCcittDefault(final String source, final long expected) {
-        testUpdateReset(source, expected, CRC16.ccitt());
+        testUpdateReset(source, expected, Crc16.ccitt());
     }
 
     @ParameterizedTest
     @MethodSource
     void testDnpDefault(final String source, final long expected) {
-        testUpdateReset(source, expected, CRC16.dnp());
+        testUpdateReset(source, expected, Crc16.dnp());
     }
 
     @ParameterizedTest
@@ -257,12 +257,12 @@ class CRC16Test {
     @ParameterizedTest
     @MethodSource
     void testIbmSdlcDefault(final String source, final long expected) {
-        testUpdateReset(source, expected, CRC16.ibmSdlc());
+        testUpdateReset(source, expected, Crc16.ibmSdlc());
     }
 
     @Test
     void testInit() {
-        final Checksum crc16 = CRC16.builder().setTable(CRC16.getModbusTable()).setInit(0xFFFF).get();
+        final Checksum crc16 = Crc16.builder().setTable(Crc16.getModbusTable()).setInit(0xFFFF).get();
         stdUpdate(crc16);
         assertEquals(0x4B37, crc16.getValue());
         stdUpdate(crc16);
@@ -275,18 +275,18 @@ class CRC16Test {
     @ParameterizedTest
     @MethodSource
     void testMaximDefault(final String source, final long expected) {
-        testUpdateReset(source, expected, CRC16.maxim());
+        testUpdateReset(source, expected, Crc16.maxim());
     }
 
     @ParameterizedTest
     @MethodSource
     void testMcrf4xxDefault(final String source, final long expected) {
-        testUpdateReset(source, expected, CRC16.mcrf4xx());
+        testUpdateReset(source, expected, Crc16.mcrf4xx());
     }
 
     @Test
     void testModbusCustom() {
-        final Checksum crc16 = CRC16.builder().setTable(CRC16.getModbusTable()).setInit(0xFFFF).get();
+        final Checksum crc16 = Crc16.builder().setTable(Crc16.getModbusTable()).setInit(0xFFFF).get();
         stdUpdate(crc16);
         assertEquals(0x4B37, crc16.getValue());
         stdUpdate(crc16);
@@ -299,18 +299,18 @@ class CRC16Test {
     @ParameterizedTest
     @MethodSource
     void testModbusDefault(final String source, final long expected) {
-        testUpdateReset(source, expected, CRC16.modbus());
+        testUpdateReset(source, expected, Crc16.modbus());
     }
 
     @ParameterizedTest
     @MethodSource
     void testNrsc5Default(final String source, final long expected) {
-        testUpdateReset(source, expected, CRC16.nrsc5());
+        testUpdateReset(source, expected, Crc16.nrsc5());
     }
 
     @Test
     void testReset() {
-        final Checksum crc16 = CRC16.modbus();
+        final Checksum crc16 = Crc16.modbus();
         stdUpdate(crc16);
         assertEquals(0x4B37, crc16.getValue());
         stdUpdate(crc16);
@@ -322,7 +322,7 @@ class CRC16Test {
 
     @Test
     void testResetCustomModbus() {
-        final Checksum crc16 = CRC16.builder().setTable(CRC16.getModbusTable()).setInit(0x0000).get();
+        final Checksum crc16 = Crc16.builder().setTable(Crc16.getModbusTable()).setInit(0x0000).get();
         stdUpdate(crc16);
         assertEquals(0xBB3D, crc16.getValue());
         stdUpdate(crc16);
@@ -334,14 +334,14 @@ class CRC16Test {
 
     @Test
     void testUpdateArray() {
-        final Checksum crc16 = CRC16.builder().setTable(CRC16.getModbusTable()).setInit(0x0000).get();
+        final Checksum crc16 = Crc16.builder().setTable(Crc16.getModbusTable()).setInit(0x0000).get();
         stdUpdate(crc16);
         assertEquals(0xBB3D, crc16.getValue());
     }
 
     @Test
     void testUpdateInt() {
-        final Checksum crc16 = CRC16.builder().setTable(CRC16.getModbusTable()).setInit(0x0000).get();
+        final Checksum crc16 = Crc16.builder().setTable(Crc16.getModbusTable()).setInit(0x0000).get();
         final byte[] bytes = TEST_BYTES;
         for (final byte element : bytes) {
             crc16.update(element);
@@ -363,7 +363,7 @@ class CRC16Test {
     @ParameterizedTest
     @MethodSource
     void testUsbDefault(final String source, final long expected) {
-        testUpdateReset(source, expected, CRC16.usb());
+        testUpdateReset(source, expected, Crc16.usb());
     }
 
 }

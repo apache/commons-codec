@@ -31,7 +31,6 @@ import java.util.zip.Checksum;
  * </p>
  *
  * <pre>
- *
  * Checksum crc16 = CRC16.builder().setTable(CRC16.getModbusTable()).setInit(0x0000).get();
  * </pre>
  *
@@ -41,12 +40,12 @@ import java.util.zip.Checksum;
  * @see <a href="https://crccalc.com/?crc=123456789&method=&datatype=ascii&outtype=hex">crccalc</a>
  * @since 1.20.0
  */
-public class CRC16 implements Checksum {
+public final class Crc16 implements Checksum {
 
     /**
-     * Builds CRC16 instances.
+     * Builds {@link Crc16} instances.
      */
-    public static class Builder implements Supplier<CRC16> {
+    public static final class Builder implements Supplier<Crc16> {
 
         private int init;
         private int[] table;
@@ -60,11 +59,11 @@ public class CRC16 implements Checksum {
         }
 
         /**
-         * Creates a new {@link CRC16} instance.
+         * Creates a new {@link Crc16} instance.
          */
         @Override
-        public CRC16 get() {
-            return new CRC16(this);
+        public Crc16 get() {
+            return new Crc16(this);
         }
 
         /**
@@ -89,7 +88,7 @@ public class CRC16 implements Checksum {
         }
 
         /**
-         * Sets the XorOut value to XOR to the current checksum returned by {@link CRC16#getValue()}.
+         * Sets the XorOut value to XOR to the current checksum returned by {@link Crc16#getValue()}.
          *
          * @param xorOut the XorOut value.
          * @return {@code this} instance.
@@ -270,6 +269,7 @@ public class CRC16 implements Checksum {
 
     /**
      * Creates a new CRC16-CCITT Checksum.
+     *
      * <ul>
      * <li>The init value is {@code 0x0000}.</li>
      * <li>The XorOut value is {@code 0x0000}.</li>
@@ -287,12 +287,13 @@ public class CRC16 implements Checksum {
      *
      * @return a new CRC16-CCITT Checksum.
      */
-    public static CRC16 arc() {
+    public static Crc16 arc() {
         return builder().setInit(ARC_INIT).table(ARC).get();
     }
 
     /**
      * Creates a new builder.
+     *
      * <p>
      * Since there are so many CRC-16 variants, we do not pick a default.
      * </p>
@@ -324,12 +325,13 @@ public class CRC16 implements Checksum {
      *
      * @return a new CRC16-CCITT Checksum.
      */
-    public static CRC16 ccitt() {
+    public static Crc16 ccitt() {
         return builder().setInit(CCITT_INIT).table(CCITT).get();
     }
 
     /**
      * Creates a new CRC16-DNP Checksum.
+     *
      * <ul>
      * <li>The init value is {@code 0x0000}.</li>
      * <li>The XorOut value is {@code 0xFFFF}.</li>
@@ -337,7 +339,7 @@ public class CRC16 implements Checksum {
      *
      * @return a new CRC16-DNP Checksum.
      */
-    public static CRC16 dnp() {
+    public static Crc16 dnp() {
         return builder().setInit(DNP_INIT).setXorOut(DNP_XOROUT).table(DNP).get();
     }
 
@@ -415,6 +417,7 @@ public class CRC16 implements Checksum {
 
     /**
      * Creates a new CRC16-IBM-SDLC Checksum.
+     *
      * <ul>
      * <li>The init value is {@code 0xFFFF}.</li>
      * <li>The XorOut value is {@code 0xFFFF}.</li>
@@ -433,12 +436,13 @@ public class CRC16 implements Checksum {
      *
      * @return a new CRC16-IBM-SDLC Checksum.
      */
-    public static CRC16 ibmSdlc() {
+    public static Crc16 ibmSdlc() {
         return builder().setInit(IBM_SDLC_INIT).setXorOut(IBM_SDLC_XOROUT).table(IBM_SDLC).get();
     }
 
     /**
      * Creates a new instance for CRC16-MAXIM Checksum.
+     *
      * <p>
      * CRC-16 checksum implementation based on polynomial {@code x<sup>16</spu> + x^15 + x^2 + 1 (0x8005)}.
      * </p>
@@ -455,12 +459,13 @@ public class CRC16 implements Checksum {
      *
      * @return a new CRC16-MAXIM Checksum.
      */
-    public static CRC16 maxim() {
+    public static Crc16 maxim() {
         return builder().setInit(MAXIM_INIT).setXorOut(MAXIM_XOROUT).table(MAXIM).get();
     }
 
     /**
      * Creates a new instance for CRC16-MCRF4XX Checksum.
+     *
      * <ul>
      * <li>The init value is {@code 0xFFFF}.</li>
      * <li>The XorOut value is {@code 0x0000}.</li>
@@ -468,12 +473,13 @@ public class CRC16 implements Checksum {
      *
      * @return a new CRC16-MCRF4XX Checksum.
      */
-    public static CRC16 mcrf4xx() {
+    public static Crc16 mcrf4xx() {
         return builder().setInit(MCRF4XX_INIT).table(MCRF4XX).get();
     }
 
     /**
      * Creates a new instance for CRC16-MODBUS Checksum.
+     *
      * <p>
      * CRC-16 checksum implementation based on polynomial {@code x<sup>16</spu> + x^15 + x^2 + 1 (0x8005)}.
      * </p>
@@ -491,12 +497,13 @@ public class CRC16 implements Checksum {
      *
      * @return a new CRC16-MODBUS Checksum.
      */
-    public static CRC16 modbus() {
+    public static Crc16 modbus() {
         return builder().setInit(MODBUS_INIT).table(MODBUS).get();
     }
 
     /**
      * Creates a new instance for CRC16-NRSC-5 Checksum.
+     *
      * <ul>
      * <li>The init value is {@code 0xFFFF}.</li>
      * <li>The XorOut value is {@code 0x0000}.</li>
@@ -504,12 +511,13 @@ public class CRC16 implements Checksum {
      *
      * @return a new CRC16-NRSC-5 Checksum.
      */
-    public static CRC16 nrsc5() {
+    public static Crc16 nrsc5() {
         return builder().setInit(NRSC5_INIT).table(NRSC5).get();
     }
 
     /**
      * Creates a new instance for CRC16-USB Checksum.
+     *
      * <ul>
      * <li>The init value is {@code 0xFFFF}.</li>
      * <li>The XorOut value is {@code 0xFFFF}.</li>
@@ -517,7 +525,7 @@ public class CRC16 implements Checksum {
      *
      * @return a new CRC16-USB Checksum.
      */
-    public static CRC16 usb() {
+    public static Crc16 usb() {
         return builder().setInit(USB_INIT).setXorOut(USB_XOROUT).table(USB).get();
     }
 
@@ -532,7 +540,7 @@ public class CRC16 implements Checksum {
     /**
      * Constructs a new instance.
      */
-    private CRC16(final Builder builder) {
+    private Crc16(final Builder builder) {
         this.init = builder.init;
         this.xorOut = builder.xorOut;
         this.crc = builder.init;
@@ -551,7 +559,7 @@ public class CRC16 implements Checksum {
 
     @Override
     public String toString() {
-        return String.format("CRC16 [init=0x%04X, crc=0x%04X, xorOut=0x%04X, crc^xorOut=0x%04X]", init, crc, xorOut, getValue());
+        return String.format("%s [init=0x%04X, crc=0x%04X, xorOut=0x%04X, crc^xorOut=0x%04X]", getClass().getSimpleName(), init, crc, xorOut, getValue());
     }
 
     @Override
