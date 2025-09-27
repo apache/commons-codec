@@ -58,7 +58,7 @@ import org.apache.commons.codec.CodecPolicy;
  * @see <a href="http://www.ietf.org/rfc/rfc4648.txt">RFC 4648</a>
  * @since 1.5
  */
-public class Base32OutputStream extends BaseNCodecOutputStream {
+public class Base32OutputStream extends BaseNCodecOutputStream<Base32> {
 
     /**
      * Constructs a Base32OutputStream such that all data written is Base32-encoded to the original provided OutputStream.

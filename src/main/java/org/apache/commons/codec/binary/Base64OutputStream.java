@@ -62,7 +62,7 @@ import org.apache.commons.codec.CodecPolicy;
  * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>
  * @since 1.4
  */
-public class Base64OutputStream extends BaseNCodecOutputStream {
+public class Base64OutputStream extends BaseNCodecOutputStream<Base64> {
 
     /**
      * Constructs a Base64OutputStream such that all data written is Base64-encoded to the original provided OutputStream.

@@ -31,7 +31,7 @@ import org.apache.commons.codec.CodecPolicy;
  * @see Base16
  * @since 1.15
  */
-public class Base16OutputStream extends BaseNCodecOutputStream {
+public class Base16OutputStream extends BaseNCodecOutputStream<Base16> {
 
     /**
      * Constructs a Base16OutputStream such that all data written is Base16-encoded to the original provided OutputStream.

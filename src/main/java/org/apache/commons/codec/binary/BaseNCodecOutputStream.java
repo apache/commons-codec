@@ -35,13 +35,14 @@ import org.apache.commons.codec.binary.BaseNCodec.Context;
  * >CloseShieldOutputStream</a>.
  * </p>
  *
+ * @param <T> A BaseNCodec subclass.
  * @since 1.5
  */
-public class BaseNCodecOutputStream extends FilterOutputStream {
+public class BaseNCodecOutputStream<T extends BaseNCodec> extends FilterOutputStream {
 
     private final boolean doEncode;
 
-    private final BaseNCodec baseNCodec;
+    private final T baseNCodec;
 
     private final byte[] singleByte = new byte[1];
 
@@ -56,7 +57,7 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
      * @param basedCodec a BaseNCodec.
      * @param doEncode true to encode, false to decode, TODO should be an enum?
      */
-    public BaseNCodecOutputStream(final OutputStream outputStream, final BaseNCodec basedCodec, final boolean doEncode) {
+    public BaseNCodecOutputStream(final OutputStream outputStream, final T basedCodec, final boolean doEncode) {
         super(outputStream);
         this.baseNCodec = basedCodec;
         this.doEncode = doEncode;
