@@ -25,12 +25,12 @@ package org.apache.commons.codec;
 public enum CodecPolicy {
 
     /**
-     * The strict policy. Data that causes a codec to fail should throw an exception.
+     * The <em>strict</em> policy. Data that causes a codec to fail should throw an exception.
      */
     STRICT,
 
     /**
-     * The lenient policy. Data that causes a codec to fail should not throw an exception.
+     * The <em>lenient</em> policy. Data that causes a codec to fail should not throw an exception.
      */
     LENIENT
 }
