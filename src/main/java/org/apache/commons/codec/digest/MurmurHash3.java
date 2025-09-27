@@ -146,11 +146,11 @@ public final class MurmurHash3 {
          * of a 32-bit integer; byte 1 will be the least significant byte, byte 4 the most
          * significant.
          *
-         * @param b1 The first byte
-         * @param b2 The second byte
-         * @param b3 The third byte
-         * @param b4 The fourth byte
-         * @return The 32-bit integer
+         * @param b1 The first byte.
+         * @param b2 The second byte.
+         * @param b3 The third byte.
+         * @param b4 The fourth byte.
+         * @return The 32-bit integer.
          */
         private static int orBytes(final byte b1, final byte b2, final byte b3, final byte b4) {
             return b1 & 0xff | (b2 & 0xff) << 8 | (b3 & 0xff) << 16 | (b4 & 0xff) << 24;
@@ -181,9 +181,9 @@ public final class MurmurHash3 {
         /**
          * Adds the byte array to the current incremental hash.
          *
-         * @param data The input byte array
-         * @param offset The offset of data
-         * @param length The length of array
+         * @param data The input byte array.
+         * @param offset The offset of data.
+         * @param length The length of array.
          */
         public final void add(final byte[] data, final int offset, final int length) {
             if (length <= 0) {
@@ -267,11 +267,11 @@ public final class MurmurHash3 {
          * Finalizes the running hash to the output 32-bit hash by processing remaining bytes
          * and performing final mixing.
          *
-         * @param hash The running hash
+         * @param hash The running hash.
          * @param unprocessedLength The number of unprocessed bytes in the tail data.
          * @param unprocessed Up to 3 unprocessed bytes from input data.
          * @param totalLen The total number of input bytes added since the start.
-         * @return The 32-bit hash
+         * @return The 32-bit hash.
          */
         int finalise(final int hash, final int unprocessedLength, final byte[] unprocessed, final int totalLen) {
             int result = hash;
@@ -299,7 +299,7 @@ public final class MurmurHash3 {
         /**
          * Starts a new incremental hash.
          *
-         * @param seed The initial seed value
+         * @param seed The initial seed value.
          */
         public final void start(final int seed) {
             // Reset
@@ -343,8 +343,8 @@ public final class MurmurHash3 {
     /**
      * Performs the final avalanche mix step of the 32-bit hash function {@code MurmurHash3_x86_32}.
      *
-     * @param hash The current hash
-     * @return The final hash
+     * @param hash The current hash.
+     * @return The final hash.
      */
     private static int fmix32(int hash) {
         hash ^= hash >>> 16;
@@ -358,8 +358,8 @@ public final class MurmurHash3 {
     /**
      * Performs the final avalanche mix step of the 64-bit hash function {@code MurmurHash3_x64_128}.
      *
-     * @param hash The current hash
-     * @return The final hash
+     * @param hash The current hash.
+     * @return The final hash.
      */
     private static long fmix64(long hash) {
         hash ^= hash >>> 33;
@@ -385,8 +385,8 @@ public final class MurmurHash3 {
      * this result as the default seed is positive.
      * </p>
      *
-     * @param data The input byte array
-     * @return The 128-bit hash (2 longs)
+     * @param data The input byte array.
+     * @return The 128-bit hash (2 longs).
      * @see #hash128(byte[], int, int, int)
      */
     public static long[] hash128(final byte[] data) {
@@ -406,11 +406,11 @@ public final class MurmurHash3 {
      * This manifests if the seed is negative.
      * </p>
      *
-     * @param data The input byte array
-     * @param offset The first element of array
-     * @param length The length of array
-     * @param seed The initial seed value
-     * @return The 128-bit hash (2 longs)
+     * @param data The input byte array.
+     * @param offset The first element of array.
+     * @param length The length of array.
+     * @param seed The initial seed value.
+     * @return The 128-bit hash (2 longs).
      * @deprecated Use {@link #hash128x64(byte[], int, int, int)}. This corrects the seed initialization.
      */
     @Deprecated
@@ -424,9 +424,9 @@ public final class MurmurHash3 {
 
     /**
      * Generates 128-bit hash from a string with a default seed.
+     *
      * <p>
-     * Before 1.14 the string was converted using default encoding.
-     * Since 1.14 the string is converted to bytes using UTF-8 encoding.
+     * Before 1.14 the string was converted using default encoding. Since 1.14 the string is converted to bytes using UTF-8 encoding.
      * </p>
      * <p>
      * This is a helper method that will produce the same result as:
@@ -440,15 +440,13 @@ public final class MurmurHash3 {
      * </pre>
      *
      * <p>
-     * Note: The sign extension bug in {@link #hash128(byte[], int, int, int)} does not effect
-     * this result as the default seed is positive.
+     * Note: The sign extension bug in {@link #hash128(byte[], int, int, int)} does not effect this result as the default seed is positive.
      * </p>
      *
-     * @param data The input String
-     * @return The 128-bit hash (2 longs)
+     * @param data The input String.
+     * @return The 128-bit hash (2 longs).
      * @see #hash128(byte[], int, int, int)
-     * @deprecated Use {@link #hash128x64(byte[])} using the bytes returned from
-     * {@link String#getBytes(java.nio.charset.Charset)}.
+     * @deprecated Use {@link #hash128x64(byte[])} using the bytes returned from {@link String#getBytes(java.nio.charset.Charset)}.
      */
     @Deprecated
     public static long[] hash128(final String data) {
@@ -466,8 +464,8 @@ public final class MurmurHash3 {
      * int hash = MurmurHash3.hash128x64(data, offset, data.length, seed);
      * </pre>
      *
-     * @param data The input byte array
-     * @return The 128-bit hash (2 longs)
+     * @param data The input byte array.
+     * @return The 128-bit hash (2 longs).
      * @see #hash128x64(byte[], int, int, int)
      * @since 1.14
      */
@@ -483,11 +481,11 @@ public final class MurmurHash3 {
      * from Austin Appleby's original MurmurHash3 {@code c++} code in SMHasher.
      * </p>
      *
-     * @param data The input byte array
-     * @param offset The first element of array
-     * @param length The length of array
-     * @param seed The initial seed value
-     * @return The 128-bit hash (2 longs)
+     * @param data The input byte array.
+     * @param offset The first element of array.
+     * @param length The length of array.
+     * @param seed The initial seed value.
+     * @return The 128-bit hash (2 longs).
      * @since 1.14
      */
     public static long[] hash128x64(final byte[] data, final int offset, final int length, final int seed) {
@@ -503,11 +501,11 @@ public final class MurmurHash3 {
      * from Austin Appleby's original MurmurHash3 {@code c++} code in SMHasher.
      * </p>
      *
-     * @param data The input byte array
-     * @param offset The first element of array
-     * @param length The length of array
-     * @param seed The initial seed value
-     * @return The 128-bit hash (2 longs)
+     * @param data The input byte array.
+     * @param offset The first element of array.
+     * @param length The length of array.
+     * @param seed The initial seed value.
+     * @return The 128-bit hash (2 longs).
      */
     private static long[] hash128x64Internal(final byte[] data, final int offset, final int length, final long seed) {
         long h1 = seed;
@@ -518,7 +516,6 @@ public final class MurmurHash3 {
             final int index = offset + (i << 4);
             long k1 = MurmurHash.getLittleEndianLong(data, index);
             long k2 = MurmurHash.getLittleEndianLong(data, index + 8);
-
             // mix functions for k1
             k1 *= C1;
             k1 = Long.rotateLeft(k1, R1);
@@ -527,7 +524,6 @@ public final class MurmurHash3 {
             h1 = Long.rotateLeft(h1, R2);
             h1 += h2;
             h1 = h1 * M + N1;
-
             // mix functions for k2
             k2 *= C2;
             k2 = Long.rotateLeft(k2, R3);
@@ -626,8 +622,8 @@ public final class MurmurHash3 {
      * bytes are negative.
      * </p>
      *
-     * @param data The input byte array
-     * @return The 32-bit hash
+     * @param data The input byte array.
+     * @return The 32-bit hash.
      * @see #hash32(byte[], int, int, int)
      * @deprecated Use {@link #hash32x86(byte[], int, int, int)}. This corrects the processing of trailing bytes.
      */
@@ -652,9 +648,9 @@ public final class MurmurHash3 {
      * bytes are negative.
      * </p>
      *
-     * @param data The input byte array
-     * @param length The length of array
-     * @return The 32-bit hash
+     * @param data The input byte array.
+     * @param length The length of array.
+     * @return The 32-bit hash.
      * @see #hash32(byte[], int, int, int)
      * @deprecated Use {@link #hash32x86(byte[], int, int, int)}. This corrects the processing of trailing bytes.
      */
@@ -678,10 +674,10 @@ public final class MurmurHash3 {
      * bytes are negative.
      * </p>
      *
-     * @param data The input byte array
-     * @param length The length of array
-     * @param seed The initial seed value
-     * @return The 32-bit hash
+     * @param data The input byte array.
+     * @param length The length of array.
+     * @param seed The initial seed value.
+     * @return The 32-bit hash.
      * @see #hash32(byte[], int, int, int)
      * @deprecated Use {@link #hash32x86(byte[], int, int, int)}. This corrects the processing of trailing bytes.
      */
@@ -704,10 +700,10 @@ public final class MurmurHash3 {
      * bytes are negative.
      * </p>
      *
-     * @param data The input byte array
-     * @param offset The offset of data
-     * @param length The length of array
-     * @param seed The initial seed value
+     * @param data The input byte array.
+     * @param offset The offset of data.
+     * @param length The length of array.
+     * @param seed The initial seed value.
      * @return The 32-bit hash
      * @deprecated Use {@link #hash32x86(byte[], int, int, int)}. This corrects the processing of trailing bytes.
      */
@@ -756,8 +752,8 @@ public final class MurmurHash3 {
      *                                            .array(), offset, 8, seed);
      * </pre>
      *
-     * @param data The long to hash
-     * @return The 32-bit hash
+     * @param data The long to hash.
+     * @return The 32-bit hash.
      * @see #hash32x86(byte[], int, int, int)
      */
     public static int hash32(final long data) {
@@ -775,9 +771,9 @@ public final class MurmurHash3 {
      *                                            .array(), offset, 8, seed);
      * </pre>
      *
-     * @param data The long to hash
-     * @param seed The initial seed value
-     * @return The 32-bit hash
+     * @param data The long to hash.
+     * @param seed The initial seed value.
+     * @return The 32-bit hash.
      * @see #hash32x86(byte[], int, int, int)
      */
     public static int hash32(final long data, final int seed) {
@@ -804,9 +800,9 @@ public final class MurmurHash3 {
      *                                            .array(), offset, 16, seed);
      * </pre>
      *
-     * @param data1 The first long to hash
-     * @param data2 The second long to hash
-     * @return The 32-bit hash
+     * @param data1 The first long to hash.
+     * @param data2 The second long to hash.
+     * @return The 32-bit hash.
      * @see #hash32x86(byte[], int, int, int)
      */
     public static int hash32(final long data1, final long data2) {
@@ -825,10 +821,10 @@ public final class MurmurHash3 {
      *                                            .array(), offset, 16, seed);
      * </pre>
      *
-     * @param data1 The first long to hash
-     * @param data2 The second long to hash
-     * @param seed The initial seed value
-     * @return The 32-bit hash
+     * @param data1 The first long to hash.
+     * @param data2 The second long to hash.
+     * @param seed The initial seed value.
+     * @return The 32-bit hash.
      * @see #hash32x86(byte[], int, int, int)
      */
     public static int hash32(final long data1, final long data2, final int seed) {
@@ -888,8 +884,8 @@ public final class MurmurHash3 {
      * int hash = MurmurHash3.hash32x86(data, offset, data.length, seed);
      * </pre>
      *
-     * @param data The input byte array
-     * @return The 32-bit hash
+     * @param data The input byte array.
+     * @return The 32-bit hash.
      * @see #hash32x86(byte[], int, int, int)
      * @since 1.14
      */
@@ -905,11 +901,11 @@ public final class MurmurHash3 {
      * from Austin Appleby's original MurmurHash3 {@code c++} code in SMHasher.
      * </p>
      *
-     * @param data The input byte array
-     * @param offset The offset of data
-     * @param length The length of array
-     * @param seed The initial seed value
-     * @return The 32-bit hash
+     * @param data The input byte array.
+     * @param offset The offset of data.
+     * @param length The length of array.
+     * @param seed The initial seed value.
+     * @return The 32-bit hash.
      * @since 1.14
      */
     public static int hash32x86(final byte[] data, final int offset, final int length, final int seed) {
@@ -947,18 +943,17 @@ public final class MurmurHash3 {
     /**
      * Generates 64-bit hash from a byte array with a default seed.
      *
-     * <p><strong>This is not part of the original MurmurHash3 {@code c++} implementation.</strong></p>
-     *
      * <p>
-     * This is a Murmur3-like 64-bit variant.
-     * The method does not produce the same result as either half of the hash bytes from
-     * {@linkplain #hash128x64(byte[])} with the same byte data.
-     * This method will be removed in a future release.
+     * <strong>This is not part of the original MurmurHash3 {@code c++} implementation.</strong>
      * </p>
      *
      * <p>
-     * Note: The sign extension bug in {@link #hash64(byte[], int, int, int)} does not effect
-     * this result as the default seed is positive.
+     * This is a Murmur3-like 64-bit variant. The method does not produce the same result as either half of the hash bytes from {@linkplain #hash128x64(byte[])}
+     * with the same byte data. This method will be removed in a future release.
+     * </p>
+     *
+     * <p>
+     * Note: The sign extension bug in {@link #hash64(byte[], int, int, int)} does not effect this result as the default seed is positive.
      * </p>
      *
      * <p>
@@ -966,16 +961,16 @@ public final class MurmurHash3 {
      * </p>
      *
      * <pre>
+     *
      * int offset = 0;
      * int seed = 104729;
      * long hash = MurmurHash3.hash64(data, offset, data.length, seed);
      * </pre>
      *
-     * @param data The input byte array
-     * @return The 64-bit hash
+     * @param data The input byte array.
+     * @return The 64-bit hash.
      * @see #hash64(byte[], int, int, int)
-     * @deprecated Not part of the MurmurHash3 implementation.
-     * Use half of the hash bytes from {@link #hash128x64(byte[])}.
+     * @deprecated Not part of the MurmurHash3 implementation. Use half of the hash bytes from {@link #hash128x64(byte[])}.
      */
     @Deprecated
     public static long hash64(final byte[] data) {
@@ -985,20 +980,17 @@ public final class MurmurHash3 {
     /**
      * Generates 64-bit hash from a byte array with the given offset and length and a default seed.
      *
-     * <p><strong>
-     * This is not part of the original MurmurHash3 {@code c++} implementation.
-     * </strong></p>
-     *
      * <p>
-     * This is a Murmur3-like 64-bit variant.
-     * The method does not produce the same result as either half of the hash bytes from
-     * {@linkplain #hash128x64(byte[])} with the same byte data.
-     * This method will be removed in a future release.
+     * <strong> This is not part of the original MurmurHash3 {@code c++} implementation. </strong>
      * </p>
      *
      * <p>
-     * Note: The sign extension bug in {@link #hash64(byte[], int, int, int)} does not effect
-     * this result as the default seed is positive.
+     * This is a Murmur3-like 64-bit variant. The method does not produce the same result as either half of the hash bytes from {@linkplain #hash128x64(byte[])}
+     * with the same byte data. This method will be removed in a future release.
+     * </p>
+     *
+     * <p>
+     * Note: The sign extension bug in {@link #hash64(byte[], int, int, int)} does not effect this result as the default seed is positive.
      * </p>
      *
      * <p>
@@ -1006,17 +998,17 @@ public final class MurmurHash3 {
      * </p>
      *
      * <pre>
+     *
      * int seed = 104729;
      * long hash = MurmurHash3.hash64(data, offset, length, seed);
      * </pre>
      *
-     * @param data The input byte array
-     * @param offset The offset of data
-     * @param length The length of array
-     * @return The 64-bit hash
+     * @param data   The input byte array.
+     * @param offset The offset of data.
+     * @param length The length of array.
+     * @return The 64-bit hash.
      * @see #hash64(byte[], int, int, int)
-     * @deprecated Not part of the MurmurHash3 implementation.
-     * Use half of the hash bytes from {@link #hash128x64(byte[], int, int, int)}.
+     * @deprecated Not part of the MurmurHash3 implementation. Use half of the hash bytes from {@link #hash128x64(byte[], int, int, int)}.
      */
     @Deprecated
     public static long hash64(final byte[] data, final int offset, final int length) {
@@ -1026,38 +1018,34 @@ public final class MurmurHash3 {
     /**
      * Generates 64-bit hash from a byte array with the given offset, length and seed.
      *
-     * <p><strong>This is not part of the original MurmurHash3 {@code c++} implementation.</strong></p>
-     *
      * <p>
-     * This is a Murmur3-like 64-bit variant.
-     * This method will be removed in a future release.
+     * <strong>This is not part of the original MurmurHash3 {@code c++} implementation.</strong>
      * </p>
      *
      * <p>
-     * This implementation contains a sign-extension bug in the seed initialization.
-     * This manifests if the seed is negative.
+     * This is a Murmur3-like 64-bit variant. This method will be removed in a future release.
      * </p>
      *
      * <p>
-     * This algorithm processes 8 bytes chunks of data in a manner similar to the 16 byte chunks
-     * of data processed in the MurmurHash3 {@code MurmurHash3_x64_128} method. However the hash
-     * is not mixed with a hash chunk from the next 8 bytes of data. The method will not return
-     * the same value as the first or second 64-bits of the function
-     * {@link #hash128(byte[], int, int, int)}.
+     * This implementation contains a sign-extension bug in the seed initialization. This manifests if the seed is negative.
      * </p>
      *
      * <p>
-     * Use of this method is not advised. Use the first long returned from
-     * {@link #hash128x64(byte[], int, int, int)}.
+     * This algorithm processes 8 bytes chunks of data in a manner similar to the 16 byte chunks of data processed in the MurmurHash3
+     * {@code MurmurHash3_x64_128} method. However the hash is not mixed with a hash chunk from the next 8 bytes of data. The method will not return the same
+     * value as the first or second 64-bits of the function {@link #hash128(byte[], int, int, int)}.
      * </p>
      *
-     * @param data The input byte array
-     * @param offset The offset of data
-     * @param length The length of array
-     * @param seed The initial seed value
-     * @return The 64-bit hash
-     * @deprecated Not part of the MurmurHash3 implementation.
-     * Use half of the hash bytes from {@link #hash128x64(byte[], int, int, int)}.
+     * <p>
+     * Use of this method is not advised. Use the first long returned from {@link #hash128x64(byte[], int, int, int)}.
+     * </p>
+     *
+     * @param data   The input byte array.
+     * @param offset The offset of data.
+     * @param length The length of array.
+     * @param seed   The initial seed value.
+     * @return The 64-bit hash.
+     * @deprecated Not part of the MurmurHash3 implementation. Use half of the hash bytes from {@link #hash128x64(byte[], int, int, int)}.
      */
     @Deprecated
     public static long hash64(final byte[] data, final int offset, final int length, final int seed) {
@@ -1112,20 +1100,17 @@ public final class MurmurHash3 {
     /**
      * Generates 64-bit hash from an int with a default seed.
      *
-     * <p><strong>
-     * This is not part of the original MurmurHash3 {@code c++} implementation.
-     * </strong></p>
-     *
      * <p>
-     * This is a Murmur3-like 64-bit variant.
-     * The method does not produce the same result as either half of the hash bytes from
-     * {@linkplain #hash128x64(byte[])} with the same byte data from the {@code int}.
-     * This method will be removed in a future release.
+     * <strong> This is not part of the original MurmurHash3 {@code c++} implementation. </strong>
      * </p>
      *
      * <p>
-     * Note: The sign extension bug in {@link #hash64(byte[], int, int, int)} does not effect
-     * this result as the default seed is positive.
+     * This is a Murmur3-like 64-bit variant. The method does not produce the same result as either half of the hash bytes from {@linkplain #hash128x64(byte[])}
+     * with the same byte data from the {@code int}. This method will be removed in a future release.
+     * </p>
+     *
+     * <p>
+     * Note: The sign extension bug in {@link #hash64(byte[], int, int, int)} does not effect this result as the default seed is positive.
      * </p>
      *
      * <p>
@@ -1133,18 +1118,16 @@ public final class MurmurHash3 {
      * </p>
      *
      * <pre>
+     *
      * int offset = 0;
      * int seed = 104729;
-     * long hash = MurmurHash3.hash64(ByteBuffer.allocate(4)
-     *                                          .putInt(data)
-     *                                          .array(), offset, 4, seed);
+     * long hash = MurmurHash3.hash64(ByteBuffer.allocate(4).putInt(data).array(), offset, 4, seed);
      * </pre>
      *
-     * @param data The int to hash
-     * @return The 64-bit hash
+     * @param data The int to hash.
+     * @return The 64-bit hash.
      * @see #hash64(byte[], int, int, int)
-     * @deprecated Not part of the MurmurHash3 implementation.
-     * Use half of the hash bytes from {@link #hash128x64(byte[])} with the bytes from the {@code int}.
+     * @deprecated Not part of the MurmurHash3 implementation. Use half of the hash bytes from {@link #hash128x64(byte[])} with the bytes from the {@code int}.
      */
     @Deprecated
     public static long hash64(final int data) {
@@ -1162,20 +1145,17 @@ public final class MurmurHash3 {
     /**
      * Generates 64-bit hash from a long with a default seed.
      *
-     * <p><strong>
-     * This is not part of the original MurmurHash3 {@code c++} implementation.
-     * </strong></p>
-     *
      * <p>
-     * This is a Murmur3-like 64-bit variant.
-     * The method does not produce the same result as either half of the hash bytes from
-     * {@linkplain #hash128x64(byte[])} with the same byte data from the {@code long}.
-     * This method will be removed in a future release.
+     * <strong> This is not part of the original MurmurHash3 {@code c++} implementation. </strong>
      * </p>
      *
      * <p>
-     * Note: The sign extension bug in {@link #hash64(byte[], int, int, int)} does not effect
-     * this result as the default seed is positive.
+     * This is a Murmur3-like 64-bit variant. The method does not produce the same result as either half of the hash bytes from {@linkplain #hash128x64(byte[])}
+     * with the same byte data from the {@code long}. This method will be removed in a future release.
+     * </p>
+     *
+     * <p>
+     * Note: The sign extension bug in {@link #hash64(byte[], int, int, int)} does not effect this result as the default seed is positive.
      * </p>
      *
      * <p>
@@ -1183,18 +1163,16 @@ public final class MurmurHash3 {
      * </p>
      *
      * <pre>
+     *
      * int offset = 0;
      * int seed = 104729;
-     * long hash = MurmurHash3.hash64(ByteBuffer.allocate(8)
-     *                                          .putLong(data)
-     *                                          .array(), offset, 8, seed);
+     * long hash = MurmurHash3.hash64(ByteBuffer.allocate(8).putLong(data).array(), offset, 8, seed);
      * </pre>
      *
-     * @param data The long to hash
-     * @return The 64-bit hash
+     * @param data The long to hash.
+     * @return The 64-bit hash.
      * @see #hash64(byte[], int, int, int)
-     * @deprecated Not part of the MurmurHash3 implementation.
-     * Use half of the hash bytes from {@link #hash128x64(byte[])} with the bytes from the {@code long}.
+     * @deprecated Not part of the MurmurHash3 implementation. Use half of the hash bytes from {@link #hash128x64(byte[])} with the bytes from the {@code long}.
      */
     @Deprecated
     public static long hash64(final long data) {
@@ -1214,18 +1192,17 @@ public final class MurmurHash3 {
     /**
      * Generates 64-bit hash from a short with a default seed.
      *
-     * <p><strong>This is not part of the original MurmurHash3 {@code c++} implementation.</strong></p>
-     *
      * <p>
-     * This is a Murmur3-like 64-bit variant.
-     * The method does not produce the same result as either half of the hash bytes from
-     * {@linkplain #hash128x64(byte[])} with the same byte data from the {@code short}.
-     * This method will be removed in a future release.
+     * <strong>This is not part of the original MurmurHash3 {@code c++} implementation.</strong>
      * </p>
      *
      * <p>
-     * Note: The sign extension bug in {@link #hash64(byte[], int, int, int)} does not effect
-     * this result as the default seed is positive.
+     * This is a Murmur3-like 64-bit variant. The method does not produce the same result as either half of the hash bytes from {@linkplain #hash128x64(byte[])}
+     * with the same byte data from the {@code short}. This method will be removed in a future release.
+     * </p>
+     *
+     * <p>
+     * Note: The sign extension bug in {@link #hash64(byte[], int, int, int)} does not effect this result as the default seed is positive.
      * </p>
      *
      * <p>
@@ -1233,18 +1210,17 @@ public final class MurmurHash3 {
      * </p>
      *
      * <pre>
+     *
      * int offset = 0;
      * int seed = 104729;
-     * long hash = MurmurHash3.hash64(ByteBuffer.allocate(2)
-     *                                          .putShort(data)
-     *                                          .array(), offset, 2, seed);
+     * long hash = MurmurHash3.hash64(ByteBuffer.allocate(2).putShort(data).array(), offset, 2, seed);
      * </pre>
      *
-     * @param data The short to hash
-     * @return The 64-bit hash
+     * @param data The short to hash.
+     * @return The 64-bit hash.
      * @see #hash64(byte[], int, int, int)
-     * @deprecated Not part of the MurmurHash3 implementation.
-     * Use half of the hash bytes from {@link #hash128x64(byte[])} with the bytes from the {@code short}.
+     * @deprecated Not part of the MurmurHash3 implementation. Use half of the hash bytes from {@link #hash128x64(byte[])} with the bytes from the
+     *             {@code short}.
      */
     @Deprecated
     public static long hash64(final short data) {
@@ -1256,7 +1232,6 @@ public final class MurmurHash3 {
         k1 = Long.rotateLeft(k1, R1);
         k1 *= C2;
         hash ^= k1;
-
         // finalization
         hash ^= Short.BYTES;
         return fmix64(hash);
@@ -1265,9 +1240,9 @@ public final class MurmurHash3 {
     /**
      * Performs the intermediate mix step of the 32-bit hash function {@code MurmurHash3_x86_32}.
      *
-     * @param k The data to add to the hash
-     * @param hash The current hash
-     * @return The new hash
+     * @param k The data to add to the hash.
+     * @param hash The current hash.
+     * @return The new hash.
      */
     private static int mix32(int k, int hash) {
         k *= C1_32;

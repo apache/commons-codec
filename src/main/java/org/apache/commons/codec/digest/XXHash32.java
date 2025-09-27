@@ -49,9 +49,9 @@ public class XXHash32 implements Checksum {
     /**
      * Gets the little-endian int from 4 bytes starting at the specified index.
      *
-     * @param buffer The data
-     * @param idx The index
-     * @return The little-endian int
+     * @param buffer The data.
+     * @param idx The index.
+     * @return The little-endian int.
      */
     private static int getInt(final byte[] buffer, final int idx) {
         return buffer[idx    ] & 0xff |
@@ -82,6 +82,7 @@ public class XXHash32 implements Checksum {
 
     /**
      * Creates an XXHash32 instance.
+     *
      * @param seed the seed to use
      */
     public XXHash32(final int seed) {
@@ -104,7 +105,6 @@ public class XXHash32 implements Checksum {
             hash = state[2] + PRIME5;
         }
         hash += totalLen;
-
         int idx = 0;
         final int limit = pos - 4;
         for (; idx <= limit; idx += 4) {
@@ -113,7 +113,6 @@ public class XXHash32 implements Checksum {
         while (idx < pos) {
             hash = rotateLeft(hash + (buffer[idx++] & 0xff) * PRIME5, 11) * PRIME1;
         }
-
         hash ^= hash >>> 15;
         hash *= PRIME2;
         hash ^= hash >>> 13;
@@ -135,17 +134,14 @@ public class XXHash32 implements Checksum {
         int s1 = state[1];
         int s2 = state[2];
         int s3 = state[3];
-
         s0 = rotateLeft(s0 + getInt(b, offset) * PRIME2, ROTATE_BITS) * PRIME1;
         s1 = rotateLeft(s1 + getInt(b, offset + 4) * PRIME2, ROTATE_BITS) * PRIME1;
         s2 = rotateLeft(s2 + getInt(b, offset + 8) * PRIME2, ROTATE_BITS) * PRIME1;
         s3 = rotateLeft(s3 + getInt(b, offset + 12) * PRIME2, ROTATE_BITS) * PRIME1;
-
         state[0] = s0;
         state[1] = s1;
         state[2] = s2;
         state[3] = s3;
-
         stateUpdated = true;
     }
 
@@ -163,9 +159,7 @@ public class XXHash32 implements Checksum {
             return;
         }
         totalLen += len;
-
         final int end = off + len;
-
         // Check if the unprocessed bytes and new bytes can fill a block of 16.
         // Make this overflow safe in the event that len is Integer.MAX_VALUE.
         // Equivalent to: (pos + len < BUF_SIZE)
@@ -174,7 +168,6 @@ public class XXHash32 implements Checksum {
             pos += len;
             return;
         }
-
         // Process left-over bytes with new bytes
         if (pos > 0) {
             final int size = BUF_SIZE - pos;
@@ -182,13 +175,11 @@ public class XXHash32 implements Checksum {
             process(buffer, 0);
             off += size;
         }
-
         final int limit = end - BUF_SIZE;
         while (off <= limit) {
             process(b, off);
             off += BUF_SIZE;
         }
-
         // Handle left-over bytes
         if (off < end) {
             pos = end - off;
