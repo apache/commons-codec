@@ -58,7 +58,7 @@ import org.apache.commons.codec.CodecPolicy;
  * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>
  * @since 1.4
  */
-public class Base64InputStream extends BaseNCodecInputStream {
+public class Base64InputStream extends BaseNCodecInputStream<Base64> {
 
     /**
      * Constructs a Base64InputStream such that all data read is Base64-decoded from the original provided InputStream.

@@ -47,6 +47,7 @@ The <action> type attribute can be add,update,fix,remove.
       <!-- FIX -->
       <action type="update" dev="ggregory" due-to="Gary Gregory">Deprecate all but one Base32 constructor in favor of the builder added in version 1.17.0.</action>
       <action type="update" dev="ggregory" due-to="Gary Gregory">Deprecate all but one Base64 constructor in favor of the builder added in version 1.17.0.</action>
+      <action type="update" dev="ggregory" due-to="Gary Gregory">BaseNCodecInputStream subclasses are now type-safe to match its matching BaseNCodec.</action>
       <!-- ADD -->
       <action type="add" dev="ggregory" due-to="Fredrik Kjellberg, Gary Gregory">Add org.apache.commons.codec.digest.CRC16.</action>
       <!-- UPDATE -->

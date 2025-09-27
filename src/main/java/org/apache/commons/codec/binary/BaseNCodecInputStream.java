@@ -27,13 +27,17 @@ import java.util.Objects;
 import org.apache.commons.codec.binary.BaseNCodec.Context;
 
 /**
- * Abstract superclass for Base-N input streams.
+ * Abstracts Base-N input streams.
  *
+ * @param <T> A BaseNCodec subclass.
+ * @see Base16InputStream
+ * @see Base32InputStream
+ * @see Base64InputStream
  * @since 1.5
  */
-public class BaseNCodecInputStream extends FilterInputStream {
+public class BaseNCodecInputStream<T extends BaseNCodec> extends FilterInputStream {
 
-    private final BaseNCodec baseNCodec;
+    private final T baseNCodec;
 
     private final boolean doEncode;
 
@@ -50,7 +54,7 @@ public class BaseNCodecInputStream extends FilterInputStream {
      * @param baseNCodec the codec.
      * @param doEncode set to true to perform encoding, else decoding.
      */
-    protected BaseNCodecInputStream(final InputStream inputStream, final BaseNCodec baseNCodec, final boolean doEncode) {
+    protected BaseNCodecInputStream(final InputStream inputStream, final T baseNCodec, final boolean doEncode) {
         super(inputStream);
         this.doEncode = doEncode;
         this.baseNCodec = baseNCodec;
