@@ -39,15 +39,15 @@ import org.apache.commons.codec.CodecPolicy;
  * This class is thread-safe.
  * </p>
  * <p>
- * You can configure instances with the {@link Builder}.
+ * To configure a new instance, use a {@link Builder}. For example:
  * </p>
  * <pre>
  * Base32 base32 = Base32.builder()
  *   .setDecodingPolicy(DecodingPolicy.LENIENT) // default is lenient
- *   .setEncodeTable(customEncodeTable)
  *   .setLineLength(0)                          // default is none
  *   .setLineSeparator('\r', '\n')              // default is CR LF
- *   .setPadding('=')                           // default is =
+ *   .setPadding('=')                           // default is '='
+ *   .setEncodeTable(customEncodeTable)         // default is RFC 4648 Section 6, Table 3: The Base 32 Alphabet
  *   .get()
  * </pre>
  *
@@ -60,6 +60,20 @@ public class Base32 extends BaseNCodec {
 
     /**
      * Builds {@link Base32} instances.
+     *
+     * <p>
+     * To configure a new instance, use a {@link Builder}. For example:
+     * </p>
+     *
+     * <pre>
+     * Base32 base32 = Base32.builder()
+     *   .setDecodingPolicy(DecodingPolicy.LENIENT) // default is lenient
+     *   .setLineLength(0)                          // default is none
+     *   .setLineSeparator('\r', '\n')              // default is CR LF
+     *   .setPadding('=')                           // default is '='
+     *   .setEncodeTable(customEncodeTable)         // default is RFC 4648 Section 6, Table 3: The Base 32 Alphabet
+     *   .get()
+     * </pre>
      *
      * @since 1.17.0
      */
@@ -212,6 +226,20 @@ public class Base32 extends BaseNCodec {
     /**
      * Creates a new Builder.
      *
+     * <p>
+     * To configure a new instance, use a {@link Builder}. For example:
+     * </p>
+     *
+     * <pre>
+     * Base32 base32 = Base32.builder()
+     *   .setDecodingPolicy(DecodingPolicy.LENIENT) // default is lenient
+     *   .setLineLength(0)                          // default is none
+     *   .setLineSeparator('\r', '\n')              // default is CR LF
+     *   .setPadding('=')                           // default is '='
+     *   .setEncodeTable(customEncodeTable)         // default is RFC 4648 Section 6, Table 3: The Base 32 Alphabet
+     *   .get()
+     * </pre>
+     *
      * @return a new Builder.
      * @since 1.17.0
      */
@@ -283,7 +311,9 @@ public class Base32 extends BaseNCodec {
      *               <li>If false, then use <a href="https://datatracker.ietf.org/doc/html/rfc4648#section-6">RFC 4648 Section 6, Table 3: The Base 32
      *               Alphabet</a></li>
      *               </ul>
+     * @deprecated Use {@link #builder()} and {@link Builder}.
      */
+    @Deprecated
     public Base32(final boolean useHex) {
         this(0, null, useHex, PAD_DEFAULT);
     }
@@ -302,7 +332,9 @@ public class Base32 extends BaseNCodec {
      *               Alphabet</a></li>
      *               </ul>
      * @param padding byte used as padding byte.
+     * @deprecated Use {@link #builder()} and {@link Builder}.
      */
+    @Deprecated
     public Base32(final boolean useHex, final byte padding) {
         this(0, null, useHex, padding);
     }
@@ -314,7 +346,9 @@ public class Base32 extends BaseNCodec {
      * </p>
      *
      * @param pad byte used as padding byte.
+     * @deprecated Use {@link #builder()} and {@link Builder}.
      */
+    @Deprecated
     public Base32(final byte pad) {
         this(false, pad);
     }
@@ -327,7 +361,9 @@ public class Base32 extends BaseNCodec {
      *
      * @param lineLength Each line of encoded data will be at most of the given length (rounded down to the nearest multiple of 8). If lineLength &lt;= 0, then
      *                   the output will not be divided into lines (chunks). Ignored when decoding.
+     * @deprecated Use {@link #builder()} and {@link Builder}.
      */
+    @Deprecated
     public Base32(final int lineLength) {
         this(lineLength, CHUNK_SEPARATOR);
     }
@@ -345,7 +381,9 @@ public class Base32 extends BaseNCodec {
      *                      then the output will not be divided into lines (chunks). Ignored when decoding.
      * @param lineSeparator Each line of encoded data will end with this sequence of bytes.
      * @throws IllegalArgumentException Thrown when the {@code lineSeparator} contains Base32 characters.
+     * @deprecated Use {@link #builder()} and {@link Builder}.
      */
+    @Deprecated
     public Base32(final int lineLength, final byte[] lineSeparator) {
         this(lineLength, lineSeparator, false, PAD_DEFAULT);
     }
@@ -370,7 +408,9 @@ public class Base32 extends BaseNCodec {
      *               Alphabet</a></li>
      *               </ul>
      * @throws IllegalArgumentException Thrown when the {@code lineSeparator} contains Base32 characters. Or the lineLength &gt; 0 and lineSeparator is null.
+     * @deprecated Use {@link #builder()} and {@link Builder}.
      */
+    @Deprecated
     public Base32(final int lineLength, final byte[] lineSeparator, final boolean useHex) {
         this(lineLength, lineSeparator, useHex, PAD_DEFAULT);
     }
@@ -396,7 +436,9 @@ public class Base32 extends BaseNCodec {
      *               </ul>
      * @param padding       padding byte.
      * @throws IllegalArgumentException Thrown when the {@code lineSeparator} contains Base32 characters. Or the lineLength &gt; 0 and lineSeparator is null.
+     * @deprecated Use {@link #builder()} and {@link Builder}.
      */
+    @Deprecated
     public Base32(final int lineLength, final byte[] lineSeparator, final boolean useHex, final byte padding) {
         this(lineLength, lineSeparator, useHex, padding, DECODING_POLICY_DEFAULT);
     }
@@ -424,7 +466,9 @@ public class Base32 extends BaseNCodec {
      * @param decodingPolicy The decoding policy.
      * @throws IllegalArgumentException Thrown when the {@code lineSeparator} contains Base32 characters. Or the lineLength &gt; 0 and lineSeparator is null.
      * @since 1.15
+     * @deprecated Use {@link #builder()} and {@link Builder}.
      */
+    @Deprecated
     public Base32(final int lineLength, final byte[] lineSeparator, final boolean useHex, final byte padding, final CodecPolicy decodingPolicy) {
         this(lineLength, lineSeparator, encodeTable(useHex), padding, decodingPolicy);
     }
