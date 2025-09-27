@@ -499,7 +499,7 @@ public class Base64 extends BaseNCodec {
         return resizedBytes;
     }
 
-    private static byte[] toUrlSafeEncodeTable(final boolean urlSafe) {
+    static byte[] toUrlSafeEncodeTable(final boolean urlSafe) {
         return urlSafe ? URL_SAFE_ENCODE_TABLE : STANDARD_ENCODE_TABLE;
     }
 

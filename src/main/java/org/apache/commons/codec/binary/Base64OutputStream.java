@@ -84,7 +84,7 @@ public class Base64OutputStream extends BaseNCodecOutputStream {
      *            true if we should encode all data written to us, false if we should decode.
      */
     public Base64OutputStream(final OutputStream outputStream, final boolean doEncode) {
-        super(outputStream, new Base64(false), doEncode);
+        super(outputStream, Base64.builder().get(), doEncode);
     }
 
     /**
@@ -104,7 +104,7 @@ public class Base64OutputStream extends BaseNCodecOutputStream {
      *            If lineLength &lt;= 0, the lineSeparator is not used. If doEncode is false lineSeparator is ignored.
      */
     public Base64OutputStream(final OutputStream outputStream, final boolean doEncode, final int lineLength, final byte[] lineSeparator) {
-        super(outputStream, new Base64(lineLength, lineSeparator), doEncode);
+        super(outputStream, Base64.builder().setLineLength(lineLength).setLineSeparator(lineSeparator).get(), doEncode);
     }
 
     /**
@@ -126,7 +126,7 @@ public class Base64OutputStream extends BaseNCodecOutputStream {
      * @since 1.15
      */
     public Base64OutputStream(final OutputStream outputStream, final boolean doEncode, final int lineLength, final byte[] lineSeparator,
-        final CodecPolicy decodingPolicy) {
-        super(outputStream, new Base64(lineLength, lineSeparator, false, decodingPolicy), doEncode);
+            final CodecPolicy decodingPolicy) {
+        super(outputStream, Base64.builder().setLineLength(lineLength).setLineSeparator(lineSeparator).setDecodingPolicy(decodingPolicy).get(), doEncode);
     }
 }
