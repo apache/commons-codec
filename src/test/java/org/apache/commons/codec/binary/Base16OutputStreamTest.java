@@ -18,6 +18,7 @@
 package org.apache.commons.codec.binary;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.ByteArrayOutputStream;
@@ -84,12 +85,10 @@ class Base16OutputStreamTest {
         byte[] encoded = StringUtils.getBytesUtf8("48656C6C6F20576F726C64");
         byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
         testByteByByte(encoded, decoded);
-
         // Single Byte test.
         encoded = StringUtils.getBytesUtf8("41");
-        decoded = new byte[]{(byte) 0x41};
+        decoded = new byte[] { (byte) 0x41 };
         testByteByByte(encoded, decoded);
-
         // test random data of sizes 0 through 150
         final BaseNCodec codec = new Base16(true);
         for (int i = 0; i <= 150; i++) {
@@ -98,6 +97,11 @@ class Base16OutputStreamTest {
             decoded = randomData[0];
             testByteByByte(encoded, decoded, true);
         }
+    }
+
+    @Test
+    void testBuilder() {
+        assertNotNull(Base16OutputStream.builder().getBaseNCodec());
     }
 
     /**
@@ -184,7 +188,6 @@ class Base16OutputStreamTest {
      * @throws IOException Usually signifies a bug in the Base16 commons-codec implementation.
      */
     private void testByteByByte(final byte[] encoded, final byte[] decoded, final boolean lowerCase) throws IOException {
-
         // Start with encode.
         try (ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
                 OutputStream out = new Base16OutputStream(byteOut, true, lowerCase)) {
@@ -194,7 +197,16 @@ class Base16OutputStreamTest {
             final byte[] output = byteOut.toByteArray();
             assertArrayEquals(encoded, output, "Streaming byte-by-byte base16 encode");
         }
-
+        try (ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
+                OutputStream out = Base16OutputStream.builder()
+                        .setOutputStream(byteOut).setEncode(true).setBaseNCodec(new Base16(lowerCase))
+                        .get()) {
+            for (final byte element : decoded) {
+                out.write(element);
+            }
+            final byte[] output = byteOut.toByteArray();
+            assertArrayEquals(encoded, output, "Streaming byte-by-byte base16 encode");
+        }
         // Now let's try to decode.
         try (ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
                 OutputStream out = new Base16OutputStream(byteOut, false, lowerCase)) {
@@ -204,7 +216,6 @@ class Base16OutputStreamTest {
             final byte[] output = byteOut.toByteArray();
             assertArrayEquals(decoded, output, "Streaming byte-by-byte base16 decode");
         }
-
         // Now let's try to decode with tonnes of flushes.
         try (ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
                 OutputStream out = new Base16OutputStream(byteOut, false, lowerCase)) {
@@ -215,7 +226,6 @@ class Base16OutputStreamTest {
             final byte[] output = byteOut.toByteArray();
             assertArrayEquals(decoded, output, "Streaming byte-by-byte flush() base16 decode");
         }
-
         // wrap encoder with decoder
         try (ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
                 OutputStream decoderOut = new Base16OutputStream(byteOut, false, lowerCase);

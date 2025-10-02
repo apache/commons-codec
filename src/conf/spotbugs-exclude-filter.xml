@@ -98,4 +98,10 @@
     <Class name="org.apache.commons.codec.language.bm.Rule$PhonemeList" />
     <Method name="&lt;init&gt;" />
   </Match>
+  <Match>
+    <!-- By design -->
+    <Bug pattern="EI_EXPOSE_REP2" />
+    <Class name="org.apache.commons.codec.binary.BaseNCodecOutputStream$AbstractBuilder" />
+    <Method name="setOutputStream" />
+  </Match>
 </FindBugsFilter>

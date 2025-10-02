@@ -20,6 +20,7 @@ package org.apache.commons.codec.binary;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -145,6 +146,11 @@ class Base64OutputStreamTest {
             decoded = randomData[0];
             testByteByByte(encoded, decoded, 0, LF);
         }
+    }
+
+    @Test
+    void testBuilder() {
+        assertNotNull(Base64OutputStream.builder().getBaseNCodec());
     }
 
     /**
@@ -302,16 +308,37 @@ class Base64OutputStreamTest {
                 out.write(impossibleEncoded);
             }
             assertTrue(bout.size() > 0);
-
             // Strict decoding should throw
             bout = new ByteArrayOutputStream();
-            final Base64OutputStream out = new Base64OutputStream(bout, false, 0, null, CodecPolicy.STRICT);
-            // May throw on write or on close depending on the position of the
-            // impossible last character in the output block size
-            assertThrows(IllegalArgumentException.class, () -> {
-                out.write(impossibleEncoded);
-                out.close();
-            });
+            try (Base64OutputStream out = new Base64OutputStream(bout, false, 0, null, CodecPolicy.STRICT)) {
+                // May throw on write or on close depending on the position of the
+                // impossible last character in the output block size
+                assertThrows(IllegalArgumentException.class, () -> {
+                    out.write(impossibleEncoded);
+                    out.close();
+                });
+            }
+            try (Base64OutputStream out = Base64OutputStream.builder()
+                    .setOutputStream(bout).setEncode(false)
+                    .setBaseNCodec(Base64.builder().setLineLength(0).setLineSeparator(null).setDecodingPolicy(CodecPolicy.STRICT).get())
+                    .get()) {
+                assertTrue(out.isStrictDecoding());
+                assertThrows(IllegalArgumentException.class, () -> {
+                    out.write(impossibleEncoded);
+                    out.close();
+                });
+            }
+            try (Base64OutputStream out = Base64OutputStream.builder()
+                    .setOutputStream(bout).setEncode(false)
+                    .setBaseNCodec(Base64.builder().setDecodingPolicy(CodecPolicy.STRICT).get())
+                    .get()) {
+                // May throw on write or on close depending on the position of the
+                // impossible last character in the output block size
+                assertThrows(IllegalArgumentException.class, () -> {
+                    out.write(impossibleEncoded);
+                    out.close();
+                });
+            }
         }
     }
 

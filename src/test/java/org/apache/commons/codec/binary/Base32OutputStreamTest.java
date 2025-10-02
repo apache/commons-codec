@@ -19,6 +19,7 @@ package org.apache.commons.codec.binary;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -155,6 +156,11 @@ class Base32OutputStreamTest {
             decoded = randomData[0];
             testByteByByte(encoded, decoded, 0, LF);
         }
+    }
+
+    @Test
+    void testBuilder() {
+        assertNotNull(Base32OutputStream.builder().getBaseNCodec());
     }
 
     /**
@@ -295,6 +301,20 @@ class Base32OutputStreamTest {
                 // Strict decoding should throw
                 bout = new ByteArrayOutputStream();
                 try (Base32OutputStream out2 = new Base32OutputStream(bout, false, 0, null, CodecPolicy.STRICT)) {
+                    assertTrue(out2.isStrictDecoding());
+                    assertThrows(IllegalArgumentException.class, () -> out2.write(encoded));
+                }
+                try (Base32OutputStream out2 = Base32OutputStream.builder()
+                        .setOutputStream(bout).setEncode(false)
+                        .setBaseNCodec(Base32.builder().setLineLength(0).setLineSeparator(null).setDecodingPolicy(CodecPolicy.STRICT).get())
+                        .get()) {
+                    assertTrue(out2.isStrictDecoding());
+                    assertThrows(IllegalArgumentException.class, () -> out2.write(encoded));
+                }
+                try (Base32OutputStream out2 = Base32OutputStream.builder()
+                        .setOutputStream(bout).setEncode(false)
+                        .setBaseNCodec(Base32.builder().setDecodingPolicy(CodecPolicy.STRICT).get())
+                        .get()) {
                     assertTrue(out2.isStrictDecoding());
                     assertThrows(IllegalArgumentException.class, () -> out2.write(encoded));
                 }

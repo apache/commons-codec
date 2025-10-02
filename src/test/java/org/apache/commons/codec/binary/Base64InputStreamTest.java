@@ -177,6 +177,11 @@ class Base64InputStreamTest {
         }
     }
 
+    @Test
+    void testBuilder() {
+        assertNotNull(Base64InputStream.builder().getBaseNCodec());
+    }
+
     /**
      * Tests method does three tests on the supplied data: 1. encoded ---[DECODE]--> decoded 2. decoded ---[ENCODE]--> encoded 3. decoded
      * ---[WRAP-WRAP-WRAP-etc...] --> decoded
@@ -576,11 +581,19 @@ class Base64InputStreamTest {
             // Default is lenient decoding; it should not throw
             assertFalse(in.isStrictDecoding());
             BaseNTestData.streamToBytes(in);
-
             // Strict decoding should throw
             final Base64InputStream in2 = new Base64InputStream(new ByteArrayInputStream(encoded), false, 0, null, CodecPolicy.STRICT);
             assertTrue(in2.isStrictDecoding());
             assertThrows(IllegalArgumentException.class, () -> BaseNTestData.streamToBytes(in2));
+            // Same with a builder
+            try (Base64InputStream in3 = Base64InputStream.builder()
+                    .setInputStream(new ByteArrayInputStream(encoded))
+                    .setEncode(false)
+                    .setBaseNCodec(Base64.builder().setLineLength(0).setLineSeparator(null).setDecodingPolicy(CodecPolicy.STRICT).get())
+                    .get()) {
+                assertTrue(in3.isStrictDecoding());
+                assertThrows(IllegalArgumentException.class, () -> BaseNTestData.streamToBytes(in3));
+            }
         }
     }
 }

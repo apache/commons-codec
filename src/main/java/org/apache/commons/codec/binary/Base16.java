@@ -49,7 +49,6 @@ public class Base16 extends BaseNCodec {
     private static final int BITS_PER_ENCODED_BYTE = 4;
     private static final int BYTES_PER_ENCODED_BLOCK = 2;
     private static final int BYTES_PER_UNENCODED_BLOCK = 1;
-
     /**
      * This array is a lookup table that translates Unicode characters drawn from the "Base16 Alphabet" (as specified in Table 5 of RFC 4648) into their 4-bit
      * positive integer equivalents. Characters that are not in the Base16 alphabet but fall within the bounds of the array are translated to -1.
@@ -64,13 +63,11 @@ public class Base16 extends BaseNCodec {
             -1, 10, 11, 12, 13, 14, 15                                      // 40-46 A-F
     };
     // @formatter:on
-
     /**
      * This array is a lookup table that translates 4-bit positive integer index values into their "Base16 Alphabet" equivalents as specified in Table 5 of RFC
      * 4648.
      */
     private static final byte[] UPPER_CASE_ENCODE_TABLE = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
-
     /**
      * This array is a lookup table that translates Unicode characters drawn from the a lower-case "Base16 Alphabet" into their 4-bit positive integer
      * equivalents. Characters that are not in the Base16 alphabet but fall within the bounds of the array are translated to -1.
@@ -87,20 +84,16 @@ public class Base16 extends BaseNCodec {
             -1, 10, 11, 12, 13, 14, 15                                      // 60-66 a-f
     };
     // @formatter:on
-
     /**
      * This array is a lookup table that translates 4-bit positive integer index values into their "Base16 Alphabet" lower-case equivalents.
      */
     private static final byte[] LOWER_CASE_ENCODE_TABLE = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
-
     /** Mask used to extract 4 bits, used when decoding character. */
     private static final int MASK_4_BITS = 0x0f;
-
     /**
      * Decode table to use.
      */
     private final byte[] decodeTable;
-
     /**
      * Encode table to use.
      */
@@ -124,6 +117,17 @@ public class Base16 extends BaseNCodec {
 
     /**
      * Constructs a Base16 codec used for decoding and encoding.
+     *
+     * @param lowerCase      if {@code true} then use a lower-case Base16 alphabet.
+     * @param decodingPolicy Decoding policy.
+     */
+    public Base16(final boolean lowerCase, final CodecPolicy decodingPolicy) {
+        this(lowerCase ? LOWER_CASE_ENCODE_TABLE : UPPER_CASE_ENCODE_TABLE, decodingPolicy);
+    }
+
+    /**
+     * Constructs a Base16 codec used for decoding and encoding.
+     *
      * @param encodeTable    the encode table.
      * @param decodingPolicy Decoding policy.
      */
@@ -132,16 +136,6 @@ public class Base16 extends BaseNCodec {
         Objects.requireNonNull(encodeTable, "encodeTable");
         this.encodeTable = encodeTable;
         this.decodeTable = encodeTable == LOWER_CASE_ENCODE_TABLE ? LOWER_CASE_DECODE_TABLE : UPPER_CASE_DECODE_TABLE;
-    }
-
-    /**
-     * Constructs a Base16 codec used for decoding and encoding.
-     *
-     * @param lowerCase      if {@code true} then use a lower-case Base16 alphabet.
-     * @param decodingPolicy Decoding policy.
-     */
-    public Base16(final boolean lowerCase, final CodecPolicy decodingPolicy) {
-        this(lowerCase ? LOWER_CASE_ENCODE_TABLE : UPPER_CASE_ENCODE_TABLE, decodingPolicy);
     }
 
     @Override
@@ -240,7 +234,7 @@ public class Base16 extends BaseNCodec {
      */
     private void validateTrailingCharacter() {
         if (isStrictDecoding()) {
-            throw new IllegalArgumentException("Strict decoding: Last encoded character is a valid base 16 alphabet character but not a possible encoding. " +
+            throw new IllegalArgumentException("Strict decoding: Last encoded character is a valid Base 16 alphabet character but not a possible encoding. " +
                     "Decoding requires at least two characters to create one byte.");
         }
     }

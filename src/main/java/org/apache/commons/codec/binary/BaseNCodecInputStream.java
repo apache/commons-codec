@@ -29,32 +29,86 @@ import org.apache.commons.codec.binary.BaseNCodec.Context;
 /**
  * Abstracts Base-N input streams.
  *
- * @param <T> A BaseNCodec subclass.
+ * @param <C> A BaseNCodec subclass.
+ * @param <T> A BaseNCodecInputStream subclass.
+ * @param <B> A subclass.
  * @see Base16InputStream
  * @see Base32InputStream
  * @see Base64InputStream
  * @since 1.5
  */
-public class BaseNCodecInputStream<T extends BaseNCodec> extends FilterInputStream {
+public class BaseNCodecInputStream<C extends BaseNCodec, T extends BaseNCodecInputStream<C, T, B>, B extends BaseNCodecInputStream.AbstracBuilder<T, C, B>>
+        extends FilterInputStream {
 
-    private final T baseNCodec;
+    /**
+     * Builds input stream instances in {@link BaseNCodec} format.
+     *
+     * @param <T> the input stream type to build.
+     * @param <C> A {@link BaseNCodec} subclass.
+     * @param <B> the builder subclass.
+     * @since 1.20.0
+     */
+    public abstract static class AbstracBuilder<T, C extends BaseNCodec, B extends AbstractBaseNCodecStreamBuilder<T, C, B>>
+        extends AbstractBaseNCodecStreamBuilder<T, C, B> {
 
+        private InputStream inputStream;
+
+        /**
+         * Constructs a new instance.
+         */
+        public AbstracBuilder() {
+            // super
+        }
+
+        /**
+         * Gets the input stream.
+         *
+         * @return the input stream.
+         */
+        protected InputStream getInputStream() {
+            return inputStream;
+        }
+
+        /**
+         * Sets the input stream.
+         *
+         * @param inputStream the input stream.
+         * @return {@code this} instance.
+         */
+        public B setInputStream(final InputStream inputStream) {
+            this.inputStream = inputStream;
+            return asThis();
+        }
+    }
+
+    private final C baseNCodec;
     private final boolean doEncode;
-
     private final byte[] singleByte = new byte[1];
-
     private final byte[] buf;
-
     private final Context context = new Context();
 
     /**
      * Constructs a new instance.
      *
-     * @param inputStream the input stream.
-     * @param baseNCodec the codec.
-     * @param doEncode set to true to perform encoding, else decoding.
+     * @param builder A builder.
+     * @since 1.20.0
      */
-    protected BaseNCodecInputStream(final InputStream inputStream, final T baseNCodec, final boolean doEncode) {
+    @SuppressWarnings("resource") // Caller closes.
+    protected BaseNCodecInputStream(final AbstracBuilder<T, C, B> builder) {
+        super(builder.getInputStream());
+        this.baseNCodec = builder.getBaseNCodec();
+        this.doEncode = builder.getEncode();
+        this.buf = new byte[doEncode ? 4096 : 8192];
+    }
+
+    /**
+     * Constructs a new instance.
+     *
+     * @param inputStream the input stream.
+     * @param baseNCodec  the codec.
+     * @param doEncode    set to true to perform encoding, else decoding.
+     */
+    protected BaseNCodecInputStream(final InputStream inputStream, final C baseNCodec, final boolean doEncode) {
         super(inputStream);
         this.doEncode = doEncode;
         this.baseNCodec = baseNCodec;
@@ -70,19 +124,17 @@ public class BaseNCodecInputStream<T extends BaseNCodec> extends FilterInputStre
     @Override
     public int available() throws IOException {
         // Note: The logic is similar to the InflaterInputStream:
-        //       as long as we have not reached EOF, indicate that there is more
-        //       data available. As we do not know for sure how much data is left,
-        //       just return 1 as a safe guess.
+        // as long as we have not reached EOF, indicate that there is more
+        // data available. As we do not know for sure how much data is left,
+        // just return 1 as a safe guess.
         return context.eof ? 0 : 1;
     }
 
     /**
-     * Returns true if decoding behavior is strict. Decoding will raise an
-     * {@link IllegalArgumentException} if trailing bits are not part of a valid encoding.
+     * Returns true if decoding behavior is strict. Decoding will raise an {@link IllegalArgumentException} if trailing bits are not part of a valid encoding.
      *
      * <p>
-     * The default is false for lenient encoding. Decoding will compose trailing bits
-     * into 8-bit bytes and discard the remainder.
+     * The default is false for lenient encoding. Decoding will compose trailing bits into 8-bit bytes and discard the remainder.
      * </p>
      *
      * @return true if using strict decoding.
@@ -158,21 +210,13 @@ public class BaseNCodecInputStream<T extends BaseNCodec> extends FilterInputStre
         }
         int readLen = 0;
         /*
-         Rationale for while-loop on (readLen == 0):
-         -----
-         Base32.readResults() usually returns > 0 or EOF (-1).  In the
-         rare case where it returns 0, we just keep trying.
-
-         This is essentially an undocumented contract for InputStream
-         implementors that want their code to work properly with
-         java.io.InputStreamReader, since the latter hates it when
-         InputStream.read(byte[]) returns a zero.  Unfortunately our
-         readResults() call must return 0 if a large amount of the data
-         being decoded was non-base32, so this while-loop enables proper
-         interop with InputStreamReader for that scenario.
-         -----
-         This is a fix for CODEC-101
-        */
+         * Rationale for while-loop on (readLen == 0): ----- Base32.readResults() usually returns > 0 or EOF (-1). In the rare case where it returns 0, we just
+         * keep trying.
+         *
+         * This is essentially an undocumented contract for InputStream implementors that want their code to work properly with java.io.InputStreamReader, since
+         * the latter hates it when InputStream.read(byte[]) returns a zero. Unfortunately our readResults() call must return 0 if a large amount of the data
+         * being decoded was non-base32, so this while-loop enables proper interop with InputStreamReader for that scenario. ----- This is a fix for CODEC-101
+         */
         // Attempt to read the request length
         while (readLen < len) {
             if (!baseNCodec.hasData(context)) {

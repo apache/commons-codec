@@ -20,18 +20,55 @@ package org.apache.commons.codec.binary;
 import java.io.InputStream;
 
 import org.apache.commons.codec.CodecPolicy;
+import org.apache.commons.codec.binary.BaseNCodecInputStream.AbstracBuilder; // NOPMD: Required by ECJ (Eclipse)
 
 /**
  * Provides Base16 decoding in a streaming fashion (unlimited size).
  * <p>
- * The default behavior of the Base16InputStream is to DECODE, whereas the default behavior of the
- * {@link Base16OutputStream} is to ENCODE, but this behavior can be overridden by using a different constructor.
+ * The default behavior of the Base16InputStream is to DECODE, whereas the default behavior of the {@link Base16OutputStream} is to ENCODE, but this behavior
+ * can be overridden by using a different constructor.
  * </p>
  *
  * @see Base16
  * @since 1.15
  */
-public class Base16InputStream extends BaseNCodecInputStream<Base16> {
+public class Base16InputStream extends BaseNCodecInputStream<Base16, Base16InputStream, Base16InputStream.Builder> {
+
+    /**
+     * Builds instances of Base16InputStream.
+     */
+    public static class Builder extends AbstracBuilder<Base16InputStream, Base16, Builder> {
+
+        /**
+         * Constructs a new instance.
+         */
+        public Builder() {
+            // empty
+        }
+
+        @Override
+        public Base16InputStream get() {
+            return new Base16InputStream(this);
+        }
+
+        @Override
+        protected Base16 newBaseNCodec() {
+            return new Base16();
+        }
+    }
+
+    /**
+     * Constructs a new Builder.
+     *
+     * @return a new Builder.
+     */
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    private Base16InputStream(final Builder builder) {
+        super(builder);
+    }
 
     /**
      * Constructs a Base16InputStream such that all data read is Base16-decoded from the original provided InputStream.
@@ -39,44 +76,42 @@ public class Base16InputStream extends BaseNCodecInputStream<Base16> {
      * @param inputStream InputStream to wrap.
      */
     public Base16InputStream(final InputStream inputStream) {
-        this(inputStream, false);
+        super(builder().setInputStream(inputStream));
     }
 
     /**
-     * Constructs a Base16InputStream such that all data read is either Base16-encoded or Base16-decoded from the original
-     * provided InputStream.
+     * Constructs a Base16InputStream such that all data read is either Base16-encoded or Base16-decoded from the original provided InputStream.
      *
      * @param inputStream InputStream to wrap.
-     * @param doEncode true if we should encode all data read from us, false if we should decode.
+     * @param encode    true if we should encode all data read from us, false if we should decode.
      */
-    public Base16InputStream(final InputStream inputStream, final boolean doEncode) {
-        this(inputStream, doEncode, false);
+    @Deprecated
+    public Base16InputStream(final InputStream inputStream, final boolean encode) {
+        super(builder().setInputStream(inputStream).setEncode(encode));
     }
 
     /**
-     * Constructs a Base16InputStream such that all data read is either Base16-encoded or Base16-decoded from the original
-     * provided InputStream.
+     * Constructs a Base16InputStream such that all data read is either Base16-encoded or Base16-decoded from the original provided InputStream.
      *
      * @param inputStream InputStream to wrap.
-     * @param doEncode true if we should encode all data read from us, false if we should decode.
-     * @param lowerCase if {@code true} then use a lower-case Base16 alphabet.
+     * @param encode    true if we should encode all data read from us, false if we should decode.
+     * @param lowerCase   if {@code true} then use a lower-case Base16 alphabet.
      */
-    public Base16InputStream(final InputStream inputStream, final boolean doEncode,
-            final boolean lowerCase) {
-        this(inputStream, doEncode, lowerCase, CodecPolicy.LENIENT);
+    @Deprecated
+    public Base16InputStream(final InputStream inputStream, final boolean encode, final boolean lowerCase) {
+        super(builder().setInputStream(inputStream).setEncode(encode).setBaseNCodec(new Base16(lowerCase)));
     }
 
     /**
-     * Constructs a Base16InputStream such that all data read is either Base16-encoded or Base16-decoded from the original
-     * provided InputStream.
+     * Constructs a Base16InputStream such that all data read is either Base16-encoded or Base16-decoded from the original provided InputStream.
      *
-     * @param inputStream InputStream to wrap.
-     * @param doEncode true if we should encode all data read from us, false if we should decode.
-     * @param lowerCase if {@code true} then use a lower-case Base16 alphabet.
+     * @param inputStream    InputStream to wrap.
+     * @param encode       true if we should encode all data read from us, false if we should decode.
+     * @param lowerCase      if {@code true} then use a lower-case Base16 alphabet.
      * @param decodingPolicy Decoding policy.
      */
-    public Base16InputStream(final InputStream inputStream, final boolean doEncode,
-            final boolean lowerCase, final CodecPolicy decodingPolicy) {
-        super(inputStream, new Base16(lowerCase, decodingPolicy), doEncode);
+    @Deprecated
+    public Base16InputStream(final InputStream inputStream, final boolean encode, final boolean lowerCase, final CodecPolicy decodingPolicy) {
+        super(builder().setInputStream(inputStream).setEncode(encode).setBaseNCodec(new Base16(lowerCase, decodingPolicy)));
     }
 }

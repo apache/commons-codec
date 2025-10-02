@@ -20,6 +20,7 @@ package org.apache.commons.codec.binary;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -69,6 +70,17 @@ class Base32InputStreamTest {
         final byte[] emptyDecoded = {};
         testByteByByte(emptyEncoded, emptyDecoded, chuckSize, CRLF);
         testByChunk(emptyEncoded, emptyDecoded, chuckSize, CRLF);
+    }
+
+    /**
+     * Tests the Base32InputStream implementation against empty input.
+     *
+     * @throws Exception
+     *             for some failure scenarios.
+     */
+    @Test
+    void testBase32EmptyInputStreamMimeChuckSize() throws Exception {
+        testBase32EmptyInputStream(BaseNCodec.MIME_CHUNK_SIZE);
     }
 
     // /**
@@ -136,17 +148,6 @@ class Base32InputStreamTest {
     // "codec-98 NPE Base32InputStream", Base32TestData.CODEC_98_NPE_DECODED, decoded
     // );
     // }
-
-    /**
-     * Tests the Base32InputStream implementation against empty input.
-     *
-     * @throws Exception
-     *             for some failure scenarios.
-     */
-    @Test
-    void testBase32EmptyInputStreamMimeChuckSize() throws Exception {
-        testBase32EmptyInputStream(BaseNCodec.MIME_CHUNK_SIZE);
-    }
 
     /**
      * Tests the Base32InputStream implementation against empty input.
@@ -230,6 +231,11 @@ class Base32InputStreamTest {
             decoded = randomData[0];
             testByteByByte(encoded, decoded, 0, LF);
         }
+    }
+
+    @Test
+    void testBuilder() {
+        assertNotNull(Base32InputStream.builder().getBaseNCodec());
     }
 
     /**
@@ -368,7 +374,7 @@ class Base32InputStreamTest {
         final Base32InputStream ins = new Base32InputStream(bis);
 
         // we skip the first character read from the reader
-        ins.skip(1);
+        assertEquals(1, ins.skip(1));
         final byte[] decodedBytes = BaseNTestData.streamToBytes(ins, new byte[64]);
         final String str = StringUtils.newStringUtf8(decodedBytes);
 
@@ -543,11 +549,19 @@ class Base32InputStreamTest {
             // Default is lenient decoding; it should not throw
             assertFalse(in.isStrictDecoding());
             BaseNTestData.streamToBytes(in);
-
             // Strict decoding should throw
             final Base32InputStream in2 = new Base32InputStream(new ByteArrayInputStream(encoded), false, 0, null, CodecPolicy.STRICT);
             assertTrue(in2.isStrictDecoding());
             assertThrows(IllegalArgumentException.class, () -> BaseNTestData.streamToBytes(in2));
+            // Same with a builder
+            try (Base32InputStream in3 = Base32InputStream.builder()
+                    .setInputStream(new ByteArrayInputStream(encoded))
+                    .setEncode(false)
+                    .setBaseNCodec(Base32.builder().setLineLength(0).setLineSeparator(null).setDecodingPolicy(CodecPolicy.STRICT).get())
+                    .get()) {
+                assertTrue(in3.isStrictDecoding());
+                assertThrows(IllegalArgumentException.class, () -> BaseNTestData.streamToBytes(in3));
+            }
         }
     }
 }
