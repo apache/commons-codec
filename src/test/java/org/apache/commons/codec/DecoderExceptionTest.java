@@ -46,6 +46,13 @@ class DecoderExceptionTest {
     }
 
     @Test
+    void testConstructorStringObjectArray() {
+        final DecoderException e = new DecoderException("Hello %s", "World!");
+        assertEquals("Hello World!", e.getMessage());
+        assertNull(e.getCause());
+    }
+
+    @Test
     void testConstructorStringThrowable() {
         final DecoderException e = new DecoderException(MSG, t);
         assertEquals(MSG, e.getMessage());
