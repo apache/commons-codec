@@ -52,26 +52,30 @@ class MessageDigestAlgorithmsTest {
         final Field[] fields = MessageDigestAlgorithms.class.getDeclaredFields();
         boolean ok = true;
         int psf = 0;
-        for (final Field f : fields) {
-            // Ignore cobertura instrumentation fields
-            if (f.getName().contains("cobertura")) {
+        for (final Field field : fields) {
+            // Ignore Cobertura instrumentation fields
+            final String name = field.getName();
+            if (name.contains("cobertura")) {
                 continue;
             }
-
             // Only interested in public fields
-            final int modifiers = f.getModifiers();
+            final int modifiers = field.getModifiers();
             if (Modifier.isPublic(modifiers) && Modifier.isStatic(modifiers) && Modifier.isFinal(modifiers)) {
                 psf++;
-                if (!contains((String) f.get(null))) {
-                    System.out.println("Not found in MessageDigestAlgorithms.values(): " + f.getName());
+                // SHAKE128_256 and SHAKE128_512 are only in Java 25 and up.
+                if (!contains((String) field.get(null))) {
+                    System.out.printf(
+                            "Not found in MessageDigestAlgorithms.values(): %s; note that SHAKE128_256 and SHAKE128_512 are only on Java 25 and up.%n", name);
                     ok = false;
                 }
             }
         }
         if (!ok) {
+            // SHAKE128_256 and SHAKE128_512 are only in Java 25 and up.
             fail("One or more entries are missing from the MessageDigestAlgorithms.values() array");
         }
         if (psf != MessageDigestAlgorithms.values().length) {
+            // SHAKE128_256 and SHAKE128_512 are only in Java 25 and up.
             fail("One or more unexpected entries found in the MessageDigestAlgorithms.values() array");
         }
     }

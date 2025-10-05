@@ -90,8 +90,8 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      */
     public static int decodeHex(final char[] data, final byte[] out, final int outOffset) throws DecoderException {
         final int len = data.length;
-        if ((len & 0x01) != 0) {
-            throw new DecoderException("Odd number of characters.");
+        if ((len & 1) != 0) {
+            throw new DecoderException("Odd number of characters %,d.", len);
         }
         final int outLen = len >> 1;
         if (out.length - outOffset < outLen) {
@@ -365,7 +365,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
     protected static int toDigit(final char ch, final int index) throws DecoderException {
         final int digit = Character.digit(ch, 16);
         if (digit == -1) {
-            throw new DecoderException("Illegal hexadecimal character " + ch + " at index " + index);
+            throw new DecoderException("Illegal hexadecimal character 0x%02X at index %,d.", ch & 0xFF, index);
         }
         return digit;
     }

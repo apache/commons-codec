@@ -58,7 +58,7 @@ public class DecoderException extends Exception {
      * @param args    the format arguments to use.
      *
      * @see String#format(String, Object...)
-     * @since 1.20
+     * @since 1.20.0
      */
     public DecoderException(final String message, Object... args) {
         super(String.format(message, args));

@@ -342,6 +342,38 @@ public class DigestUtils {
     }
 
     /**
+     * Gets an SHAKE128_256 digest.
+     *
+     * @return An SHAKE128_256 digest instance.
+     * @throws IllegalArgumentException when a {@link NoSuchAlgorithmException} is caught, which should not happen on Oracle Java 25 and greater.
+     * @see MessageDigestAlgorithms#SHAKE128_256
+     * @see <a href="https://docs.oracle.com/en/java/javase/25/docs/specs/security/standard-names.html#messagedigest-algorithms"> Java 25 Cryptography
+     *      Architecture Standard Algorithm Name Documentation</a>
+     * @see <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf">FIPS PUB 202 - SHA-3 Standard: Permutation-Based Hash and Extendable-Output
+     *      Functions</a>
+     * @since 1.20.0
+     */
+    public static MessageDigest getShake128_256Digest() {
+        return getDigest(MessageDigestAlgorithms.SHAKE128_256);
+    }
+
+    /**
+     * Gets an SHAKE128_512 digest.
+     *
+     * @return An SHAKE128_512 digest instance.
+     * @throws IllegalArgumentException when a {@link NoSuchAlgorithmException} is caught, which should not happen on Oracle Java 25 and greater.
+     * @see MessageDigestAlgorithms#SHAKE256_512
+     * @see <a href="https://docs.oracle.com/en/java/javase/25/docs/specs/security/standard-names.html#messagedigest-algorithms"> Java 25 Cryptography
+     *      Architecture Standard Algorithm Name Documentation</a>
+     * @see <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf">FIPS PUB 202 - SHA-3 Standard: Permutation-Based Hash and Extendable-Output
+     *      Functions</a>
+     * @since 1.20.0
+     */
+    public static MessageDigest getShake256_512Digest() {
+        return getDigest(MessageDigestAlgorithms.SHAKE256_512);
+    }
+
+    /**
      * Test whether the algorithm is supported.
      *
      * @param messageDigestAlgorithm the algorithm name
@@ -1237,6 +1269,145 @@ public class DigestUtils {
     @Deprecated
     public static String shaHex(final String data) {
         return sha1Hex(data);
+    }
+
+    /**
+     * Calculates the SHAKE128-256 digest and returns the value as a {@code byte[]}.
+     * <p>
+     * SHAKE128-256 produces a 256 bit digest.
+     * </p>
+     *
+     * @param data Data to digest.
+     * @return A 256 bit SHAKE128-256 digest.
+     * @since 1.20.0
+     */
+    public static byte[] shake128_256(final byte[] data) {
+        return getShake128_256Digest().digest(data);
+    }
+
+    /**
+     * Calculates the SHAKE128-256 digest and returns the value as a {@code byte[]}.
+     *
+     * @param data Data to digest.
+     * @return A 256 bit SHAKE128-256 digest.
+     * @throws IOException On error reading from the stream.
+     * @since 1.20.0
+     */
+    public static byte[] shake128_256(final InputStream data) throws IOException {
+        return digest(getShake128_256Digest(), data);
+    }
+
+    /**
+     * Calculates the SHAKE128-256 digest and returns the value as a {@code byte[]}.
+     *
+     * @param data Data to digest; converted to bytes using {@link StringUtils#getBytesUtf8(String)}
+     * @return SHAKE128-256 digest
+     * @since 1.20.0
+     */
+    public static byte[] shake128_256(final String data) {
+        return shake128_256(StringUtils.getBytesUtf8(data));
+    }
+
+    /**
+     * Calculates the SHAKE128-256 digest and returns the value as a hexadecimal string.
+     *
+     * @param data Data to digest
+     * @return SHAKE128-256 digest as a hexadecimal string
+     * @since 1.20.0
+     */
+    public static String shake128_256Hex(final byte[] data) {
+        return Hex.encodeHexString(shake128_256(data));
+    }
+
+    /**
+     * Calculates the SHAKE128-256 digest and returns the value as a hexadecimal string.
+     *
+     * @param data Data to digest
+     * @return SHAKE128-256 digest as a hexadecimal string
+     * @throws IOException On error reading from the stream
+     * @since 1.20.0
+     */
+    public static String shake128_256Hex(final InputStream data) throws IOException {
+        return Hex.encodeHexString(shake128_256(data));
+    }
+
+    /**
+     * Calculates the SHAKE128-256 digest and returns the value as a hexadecimal string.
+     *
+     * @param data Data to digest
+     * @return SHAKE128-256 digest as a hexadecimal string
+     * @since 1.20.0
+     */
+    public static String shake128_256Hex(final String data) {
+        return Hex.encodeHexString(shake128_256(data));
+    }
+
+    /**
+     * Calculates the SHAKE256-512 digest and returns the value as a {@code byte[]}.
+     *
+     * @param data Data to digest
+     * @return SHAKE256-512 digest
+     * @since 1.20.0
+     */
+    public static byte[] shake256_512(final byte[] data) {
+        return getShake256_512Digest().digest(data);
+    }
+
+    /**
+     * Calculates the SHAKE256-512 digest and returns the value as a {@code byte[]}.
+     *
+     * @param data Data to digest
+     * @return SHAKE256-512 digest
+     * @throws IOException On error reading from the stream
+     * @since 1.20.0
+     */
+    public static byte[] shake256_512(final InputStream data) throws IOException {
+        return digest(getShake256_512Digest(), data);
+    }
+
+    /**
+     * Calculates the SHAKE256-512 digest and returns the value as a {@code byte[]}.
+     *
+     * @param data Data to digest; converted to bytes using {@link StringUtils#getBytesUtf8(String)}
+     * @return SHAKE256-512 digest
+     * @since 1.20.0
+     */
+    public static byte[] shake256_512(final String data) {
+        return shake256_512(StringUtils.getBytesUtf8(data));
+    }
+
+    /**
+     * Calculates the SHAKE256-512 digest and returns the value as a hexadecimal string.
+     *
+     * @param data Data to digest
+     * @return SHAKE256-512 digest as a hexadecimal string
+     * @since 1.20.0
+     */
+    public static String shake256_512Hex(final byte[] data) {
+        return Hex.encodeHexString(shake256_512(data));
+    }
+
+    /**
+     * Calculates the SHAKE256-512 digest and returns the value as a hexadecimal string.
+     *
+     * @param data Data to digest
+     * @return SHAKE256-512 digest as a hexadecimal string
+     * @throws IOException On error reading from the stream
+     * @since 1.20.0
+     */
+    public static String shake256_512Hex(final InputStream data) throws IOException {
+        return Hex.encodeHexString(shake256_512(data));
+    }
+
+    /**
+     * Calculates the SHAKE256-512 digest and returns the value as a hexadecimal string.
+     *
+     * @param data Data to digest
+     * @return SHAKE256-512 digest as a hexadecimal string
+     * @since 1.20.0
+     */
+    public static String shake256_512Hex(final String data) {
+        return Hex.encodeHexString(shake256_512(data));
     }
 
     /**

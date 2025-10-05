@@ -36,8 +36,10 @@ import java.security.MessageDigest;
  *      Java 11 Cryptography Architecture Standard Algorithm Name Documentation</a>
  * @see <a href="https://docs.oracle.com/en/java/javase/17/docs/specs/security/standard-names.html#messagedigest-algorithms">
  *      Java 17 Cryptography Architecture Standard Algorithm Name Documentation</a>
- * @see <a href="https://docs.oracle.com/en/java/javase/25/docs/specs/security/standard-names.html#messagedigest-algorithms">
+ * @see <a href="https://docs.oracle.com/en/java/javase/21/docs/specs/security/standard-names.html#messagedigest-algorithms">
  *      Java 21 Cryptography Architecture Standard Algorithm Name Documentation</a>
+ * @see <a href="https://docs.oracle.com/en/java/javase/25/docs/specs/security/standard-names.html#messagedigest-algorithms">
+ *      Java 25 Cryptography Architecture Standard Algorithm Name Documentation</a>
  *
  * @see <a href="https://dx.doi.org/10.6028/NIST.FIPS.180-4">FIPS PUB 180-4</a>
  * @see <a href="https://dx.doi.org/10.6028/NIST.FIPS.202">FIPS PUB 202</a>
@@ -106,7 +108,7 @@ public class MessageDigestAlgorithms {
     public static final String SHA_512_256 = "SHA-512/256";
 
     /**
-     * The SHA3-224 hash algorithm defined in the FIPS PUB 202.
+     * The SHA3-224 hash algorithm defined in the <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf">FIPS PUB 202</a>.
      * <p>
      * Included starting in Oracle Java 9.
      * </p>
@@ -116,7 +118,7 @@ public class MessageDigestAlgorithms {
     public static final String SHA3_224 = "SHA3-224";
 
     /**
-     * The SHA3-256 hash algorithm defined in the FIPS PUB 202.
+     * The SHA3-256 hash algorithm defined in the <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf">FIPS PUB 202</a>.
      * <p>
      * Included starting in Oracle Java 9.
      * </p>
@@ -126,7 +128,7 @@ public class MessageDigestAlgorithms {
     public static final String SHA3_256 = "SHA3-256";
 
     /**
-     * The SHA3-384 hash algorithm defined in the FIPS PUB 202.
+     * The SHA3-384 hash algorithm defined in the <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf">FIPS PUB 202</a>.
      * <p>
      * Included starting in Oracle Java 9.
      * </p>
@@ -136,7 +138,7 @@ public class MessageDigestAlgorithms {
     public static final String SHA3_384 = "SHA3-384";
 
     /**
-     * The SHA3-512 hash algorithm defined in the FIPS PUB 202.
+     * The SHA3-512 hash algorithm defined in the <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf">FIPS PUB 202</a>.
      * <p>
      * Included starting in Oracle Java 9.
      * </p>
@@ -146,6 +148,34 @@ public class MessageDigestAlgorithms {
     public static final String SHA3_512 = "SHA3-512";
 
     /**
+     * The SHAKE128-256 hash algorithm defined in the <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf">FIPS PUB 202</a>.
+     * <p>
+     * Included starting in Oracle Java 25.
+     * </p>
+     *
+     * @see <a href="https://docs.oracle.com/en/java/javase/25/docs/specs/security/standard-names.html#messagedigest-algorithms"> Java 25 Cryptography
+     *      Architecture Standard Algorithm Name Documentation</a>
+     * @see <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf">FIPS PUB 202 - SHA-3 Standard: Permutation-Based Hash and Extendable-Output
+     *      Functions</a>
+     * @since 1.20.0
+     */
+    public static final String SHAKE128_256 = "SHAKE128-256";
+
+    /**
+     * The SHAKE128-512 hash algorithm defined in the <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf">FIPS PUB 202</a>.
+     * <p>
+     * Included starting in Oracle Java 25.
+     * </p>
+     *
+     * @see <a href="https://docs.oracle.com/en/java/javase/25/docs/specs/security/standard-names.html#messagedigest-algorithms"> Java 25 Cryptography
+     *      Architecture Standard Algorithm Name Documentation</a>
+     * @see <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf">FIPS PUB 202 - SHA-3 Standard: Permutation-Based Hash and Extendable-Output
+     *      Functions</a>
+     * @since 1.20.0
+     */
+    public static final String SHAKE256_512 = "SHAKE256-512";
+
+    /**
      * Gets all constant values defined in this class.
      *
      * @return all constant values defined in this class.
@@ -153,10 +183,8 @@ public class MessageDigestAlgorithms {
      */
     public static String[] values() {
         // Do not use a constant array here as that can be changed externally by accident or design
-        return new String[] {
-            MD2, MD5, SHA_1, SHA_224, SHA_256, SHA_384,
-            SHA_512, SHA_512_224, SHA_512_256, SHA3_224, SHA3_256, SHA3_384, SHA3_512
-        };
+        return new String[] { MD2, MD5, SHA_1, SHA_224, SHA_256, SHA_384, SHA_512, SHA_512_224, SHA_512_256, SHA3_224, SHA3_256, SHA3_384, SHA3_512,
+                SHAKE128_256, SHAKE256_512 };
     }
 
     private MessageDigestAlgorithms() {
