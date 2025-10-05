@@ -853,7 +853,7 @@ class DigestUtilsTest {
     void testShake128_256(final String binaryInputText, final int inputBitSize, final String hexOutputText) throws Exception {
         final String cleanBinary = clean(binaryInputText);
         final String cleanBinaryInput = StringUtils.reverse(cleanBinary);
-        final byte[] bytesInput = inputBitSize > 0 ? Binary.toByteArray(cleanBinaryInput) : ArrayUtils.EMPTY_BYTE_ARRAY;
+        final byte[] bytesInput = Binary.toByteArray(cleanBinaryInput);
         // sanity check on the test fixture
         assertEquals(inputBitSize, bytesInput.length * Byte.SIZE);
         final String resultString = clean(hexOutputText).substring(0, SHAKE128_256_BYTE_LEN * 2);
@@ -892,7 +892,7 @@ class DigestUtilsTest {
     void testShake256_512(final String binaryInputText, final int inputBitSize, final String hexOutputText) throws Exception {
         final String cleanBinary = clean(binaryInputText);
         final String cleanBinaryInput = StringUtils.reverse(cleanBinary);
-        final byte[] bytesInput = inputBitSize > 0 ? Binary.toByteArray(cleanBinaryInput) : ArrayUtils.EMPTY_BYTE_ARRAY;
+        final byte[] bytesInput = Binary.toByteArray(cleanBinaryInput);
         // sanity check on the test fixture
         assertEquals(inputBitSize, bytesInput.length * Byte.SIZE);
         final String resultString = clean(hexOutputText).substring(0, SHAKE128_512_BYTE_LEN * 2);

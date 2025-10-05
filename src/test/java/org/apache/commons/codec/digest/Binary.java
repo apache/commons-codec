@@ -34,8 +34,8 @@ class Binary {
             throw new IllegalArgumentException(String.format("Binary string length must be a multiple of %,d.", Byte.SIZE));
         }
         final byte[] byteArray = new byte[inLen / Byte.SIZE];
-        for (int i = 0; i < byteArray.length; i += Byte.SIZE) {
-            byteArray[i] = (byte) Integer.parseInt(binary.substring(i, i + Byte.SIZE), RADIX);
+        for (int i = 0, j = 0; i < byteArray.length; i++, j += Byte.SIZE) {
+            byteArray[i] = (byte) Integer.parseInt(binary.substring(j, j + Byte.SIZE), RADIX);
         }
         return byteArray;
     }
