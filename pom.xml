@@ -210,7 +210,7 @@ limitations under the License.
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>animal-sniffer-maven-plugin</artifactId>
-        <version>1.24</version>
+        <version>${commons.animal-sniffer.version}</version>
         <configuration>
           <ignores>
             <!-- JDK9 breaks compatibility by returning ByteBuffer not Buffer -->
