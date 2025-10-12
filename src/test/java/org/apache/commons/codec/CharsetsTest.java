@@ -25,7 +25,6 @@ import java.util.Collection;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import org.apache.commons.io.Charsets;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -40,7 +39,12 @@ class CharsetsTest {
     }
 
     public static Collection<Charset> getRequiredCharsets() {
-        return Charsets.requiredCharsets().values();
+        return org.apache.commons.io.Charsets.requiredCharsets().values();
+    }
+
+    @Test
+    void testDeprecatedConstructor() {
+        new Charsets();
     }
 
     @SuppressWarnings("deprecation")
