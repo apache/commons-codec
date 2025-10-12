@@ -18,7 +18,6 @@
 package org.apache.commons.codec.binary;
 
 import java.util.Arrays;
-import java.util.Objects;
 
 import org.apache.commons.codec.CodecPolicy;
 
@@ -158,11 +157,6 @@ public class Base16 extends BaseNCodec {
     private final byte[] decodeTable;
 
     /**
-     * Encode table to use.
-     */
-    private final byte[] encodeTable;
-
-    /**
      * Constructs a Base16 codec used for decoding and encoding.
      */
     public Base16() {
@@ -194,7 +188,6 @@ public class Base16 extends BaseNCodec {
 
     private Base16(final Builder builder) {
         super(builder);
-        this.encodeTable = Objects.requireNonNull(builder.getEncodeTable(), "encodeTable");
         this.decodeTable = Arrays.equals(encodeTable, LOWER_CASE_ENCODE_TABLE) ? LOWER_CASE_DECODE_TABLE : UPPER_CASE_DECODE_TABLE;
     }
 

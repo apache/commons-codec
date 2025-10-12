@@ -506,14 +506,6 @@ public class Base64 extends BaseNCodec {
     }
 
     /**
-     * Encode table to use: either STANDARD or URL_SAFE or custom.
-     * Note: the DECODE_TABLE above remains static because it is able
-     * to decode both STANDARD and URL_SAFE streams, but the encodeTable must be a member variable so we can switch
-     * between the two modes.
-     */
-    private final byte[] encodeTable;
-
-    /**
      * Decode table to use.
      */
     private final byte[] decodeTable;
@@ -698,7 +690,6 @@ public class Base64 extends BaseNCodec {
         }
         this.isStandardEncodeTable = Arrays.equals(builder.getEncodeTable(), STANDARD_ENCODE_TABLE);
         this.isUrlSafe = Arrays.equals(builder.getEncodeTable(), URL_SAFE_ENCODE_TABLE);
-        this.encodeTable = builder.getEncodeTable();
         this.decodeTable = this.isStandardEncodeTable || this.isUrlSafe ? DECODE_TABLE : calculateDecodeTable(this.encodeTable);
         // TODO could be simplified if there is no requirement to reject invalid line sep when length <=0
         // @see test case Base64Test.testConstructors()

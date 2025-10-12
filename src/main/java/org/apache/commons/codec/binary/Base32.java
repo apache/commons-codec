@@ -281,11 +281,6 @@ public class Base32 extends BaseNCodec {
     private final int encodeSize;
 
     /**
-     * Encode table to use.
-     */
-    private final byte[] encodeTable;
-
-    /**
      * Line separator for encoding. Not used when decoding. Only used if lineLength &gt; 0.
      */
     private final byte[] lineSeparator;
@@ -344,7 +339,6 @@ public class Base32 extends BaseNCodec {
     private Base32(final Builder builder) {
         super(builder);
         Objects.requireNonNull(builder.getEncodeTable(), "encodeTable");
-        this.encodeTable = builder.getEncodeTable();
         this.decodeTable = Arrays.equals(builder.getEncodeTable(), HEX_ENCODE_TABLE) ? HEX_DECODE_TABLE : DECODE_TABLE;
         if (builder.getLineLength() > 0) {
             final byte[] lineSeparator = builder.getLineSeparator();
