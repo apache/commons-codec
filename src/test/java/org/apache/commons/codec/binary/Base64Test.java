@@ -41,6 +41,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 /**
  * Tests {@link Base64}.
@@ -893,15 +894,20 @@ class Base64Test {
      * @see <a href="https://tools.ietf.org/html/rfc4648">https://tools.ietf.org/
      *      html/rfc4648</a>
      */
-    @Test
-    void testRfc4648Section10DecodeEncode() {
-        testDecodeEncode("");
-        testDecodeEncode("Zg==");
-        testDecodeEncode("Zm8=");
-        testDecodeEncode("Zm9v");
-        testDecodeEncode("Zm9vYg==");
-        testDecodeEncode("Zm9vYmE=");
-        testDecodeEncode("Zm9vYmFy");
+    @ParameterizedTest
+    // @formatter:off
+    @ValueSource(strings = {
+            "",
+            "Zg==",
+            "Zm8=",
+            "Zm9v",
+            "Zm9vYg==",
+            "Zm9vYmE=",
+            "Zm9vYmFy"
+    })
+    // @formatter:on
+    void testRfc4648Section10DecodeEncode(final String input) {
+        testDecodeEncode(input);
     }
 
     /**
