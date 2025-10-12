@@ -98,11 +98,13 @@ public class Base64 extends BaseNCodec {
          */
         public Builder() {
             super(STANDARD_ENCODE_TABLE);
+            setEncodedBlockSize(BYTES_PER_ENCODED_BLOCK);
+            setUnencodedBlockSize(BYTES_PER_UNENCODED_BLOCK);
         }
 
         @Override
         public Base64 get() {
-            return new Base64(getLineLength(), getLineSeparator(), getPadding(), getEncodeTable(), getDecodingPolicy());
+            return new Base64(this);
         }
 
         /**
@@ -529,6 +531,9 @@ public class Base64 extends BaseNCodec {
 
     private final boolean isUrlSafe;
 
+    private final boolean isStandardEncodeTable;
+
+
     /**
      * Constructs a Base64 codec used for decoding (all modes) and encoding in URL-unsafe mode.
      * <p>
@@ -646,7 +651,8 @@ public class Base64 extends BaseNCodec {
      */
     @Deprecated
     public Base64(final int lineLength, final byte[] lineSeparator, final boolean urlSafe) {
-        this(lineLength, lineSeparator, PAD_DEFAULT, toUrlSafeEncodeTable(urlSafe), DECODING_POLICY_DEFAULT);
+        this(builder().setLineLength(lineLength).setLineSeparator(lineSeparator != null ? lineSeparator : EMPTY_BYTE_ARRAY).setPadding(PAD_DEFAULT)
+                .setEncodeTableRaw(toUrlSafeEncodeTable(urlSafe)).setDecodingPolicy(DECODING_POLICY_DEFAULT));
     }
 
     /**
@@ -680,56 +686,31 @@ public class Base64 extends BaseNCodec {
      */
     @Deprecated
     public Base64(final int lineLength, final byte[] lineSeparator, final boolean urlSafe, final CodecPolicy decodingPolicy) {
-        this(lineLength, lineSeparator, PAD_DEFAULT, toUrlSafeEncodeTable(urlSafe), decodingPolicy);
+        this(builder().setLineLength(lineLength).setLineSeparator(lineSeparator).setPadding(PAD_DEFAULT).setEncodeTableRaw(toUrlSafeEncodeTable(urlSafe))
+                .setDecodingPolicy(decodingPolicy));
     }
 
-    /**
-     * Constructs a Base64 codec used for decoding (all modes) and encoding in URL-unsafe mode.
-     * <p>
-     * When encoding the line length and line separator are given in the constructor, and the encoding table is STANDARD_ENCODE_TABLE.
-     * </p>
-     * <p>
-     * Line lengths that aren't multiples of 4 will still essentially end up being multiples of 4 in the encoded data.
-     * </p>
-     * <p>
-     * When decoding all variants are supported.
-     * </p>
-     *
-     * @param lineLength     Each line of encoded data will be at most of the given length (rounded down to the nearest multiple of 4). If lineLength &lt;= 0,
-     *                       then the output will not be divided into lines (chunks). Ignored when decoding.
-     * @param lineSeparator  Each line of encoded data will end with this sequence of bytes; the constructor makes a defensive copy. May be null.
-     * @param padding        padding byte.
-     * @param encodeTable    The manual encodeTable - a byte array of 64 chars.
-     * @param decodingPolicy The decoding policy.
-     * @throws IllegalArgumentException Thrown when the {@code lineSeparator} contains Base64 characters.
-     */
-    private Base64(final int lineLength, final byte[] lineSeparator, final byte padding, final byte[] encodeTable, final CodecPolicy decodingPolicy) {
-        super(BYTES_PER_UNENCODED_BLOCK, BYTES_PER_ENCODED_BLOCK, lineLength, toLength(lineSeparator), padding, decodingPolicy);
-        Objects.requireNonNull(encodeTable, "encodeTable");
-        if (encodeTable.length != STANDARD_ENCODE_TABLE.length) {
+    private Base64(final Builder builder) {
+        super(builder);
+        Objects.requireNonNull(builder.getEncodeTable(), "encodeTable");
+        if (builder.getEncodeTable().length != STANDARD_ENCODE_TABLE.length) {
             throw new IllegalArgumentException("encodeTable must have exactly 64 entries.");
         }
-        // same array first or equal contents second
-        this.isUrlSafe = encodeTable == URL_SAFE_ENCODE_TABLE || Arrays.equals(encodeTable, URL_SAFE_ENCODE_TABLE);
-        if (encodeTable == STANDARD_ENCODE_TABLE || this.isUrlSafe) {
-            decodeTable = DECODE_TABLE;
-            // No need of a defensive copy of an internal table.
-            this.encodeTable = encodeTable;
-        } else {
-            this.encodeTable = encodeTable.clone();
-            this.decodeTable = calculateDecodeTable(this.encodeTable);
-        }
+        this.isStandardEncodeTable = Arrays.equals(builder.getEncodeTable(), STANDARD_ENCODE_TABLE);
+        this.isUrlSafe = Arrays.equals(builder.getEncodeTable(), URL_SAFE_ENCODE_TABLE);
+        this.encodeTable = builder.getEncodeTable();
+        this.decodeTable = this.isStandardEncodeTable || this.isUrlSafe ? DECODE_TABLE : calculateDecodeTable(this.encodeTable);
         // TODO could be simplified if there is no requirement to reject invalid line sep when length <=0
         // @see test case Base64Test.testConstructors()
-        if (lineSeparator != null) {
-            final byte[] lineSeparatorCopy = lineSeparator.clone();
-            if (containsAlphabetOrPad(lineSeparatorCopy)) {
-                final String sep = StringUtils.newStringUtf8(lineSeparatorCopy);
+        if (builder.getLineSeparator().length > 0) {
+            final byte[] lineSeparatorB = builder.getLineSeparator();
+            if (containsAlphabetOrPad(lineSeparatorB)) {
+                final String sep = StringUtils.newStringUtf8(lineSeparatorB);
                 throw new IllegalArgumentException("lineSeparator must not contain base64 characters: [" + sep + "]");
             }
-            if (lineLength > 0) { // null line-sep forces no chunking rather than throwing IAE
-                this.encodeSize = BYTES_PER_ENCODED_BLOCK + lineSeparatorCopy.length;
-                this.lineSeparator = lineSeparatorCopy;
+            if (builder.getLineLength() > 0) { // null line-sep forces no chunking rather than throwing IAE
+                this.encodeSize = BYTES_PER_ENCODED_BLOCK + lineSeparatorB.length;
+                this.lineSeparator = lineSeparatorB;
             } else {
                 this.encodeSize = BYTES_PER_ENCODED_BLOCK;
                 this.lineSeparator = null;
@@ -885,7 +866,7 @@ public class Base64 extends BaseNCodec {
                     // remaining 2:
                     buffer[context.pos++] = encodeTable[context.ibitWorkArea << 4 & MASK_6_BITS];
                     // URL-SAFE skips the padding to further reduce size.
-                    if (encodeTable == STANDARD_ENCODE_TABLE) {
+                    if (isStandardEncodeTable) {
                         buffer[context.pos++] = pad;
                         buffer[context.pos++] = pad;
                     }
@@ -896,7 +877,7 @@ public class Base64 extends BaseNCodec {
                     buffer[context.pos++] = encodeTable[context.ibitWorkArea >> 4 & MASK_6_BITS];
                     buffer[context.pos++] = encodeTable[context.ibitWorkArea << 2 & MASK_6_BITS];
                     // URL-SAFE skips the padding to further reduce size.
-                    if (encodeTable == STANDARD_ENCODE_TABLE) {
+                    if (isStandardEncodeTable) {
                         buffer[context.pos++] = pad;
                     }
                     break;

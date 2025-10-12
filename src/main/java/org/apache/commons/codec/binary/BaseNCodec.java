@@ -349,6 +349,11 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     static final byte[] CHUNK_SEPARATOR = {'\r', '\n'};
 
     /**
+     * The empty byte array.
+     */
+    static final byte[] EMPTY_BYTE_ARRAY = {};
+
+    /**
      * Create a positive capacity at least as large the minimum required capacity.
      * If the minimum capacity is negative then this throws an OutOfMemoryError as no array
      * can be allocated.

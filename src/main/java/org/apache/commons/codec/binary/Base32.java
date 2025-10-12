@@ -345,20 +345,16 @@ public class Base32 extends BaseNCodec {
         super(builder);
         Objects.requireNonNull(builder.getEncodeTable(), "encodeTable");
         this.encodeTable = builder.getEncodeTable();
-        this.decodeTable = builder.getEncodeTable() == HEX_ENCODE_TABLE || Arrays.equals(builder.getEncodeTable(), HEX_ENCODE_TABLE) ?
-                HEX_DECODE_TABLE : DECODE_TABLE;
+        this.decodeTable = Arrays.equals(builder.getEncodeTable(), HEX_ENCODE_TABLE) ? HEX_DECODE_TABLE : DECODE_TABLE;
         if (builder.getLineLength() > 0) {
-            if (builder.getLineSeparator() == null) {
-                throw new IllegalArgumentException("lineLength " + lineLength + " > 0, but lineSeparator is null");
-            }
-            final byte[] lineSeparatorCopy = builder.getLineSeparator().clone();
+            final byte[] lineSeparator = builder.getLineSeparator();
             // Must be done after initializing the tables
-            if (containsAlphabetOrPad(lineSeparatorCopy)) {
-                final String sep = StringUtils.newStringUtf8(lineSeparatorCopy);
+            if (containsAlphabetOrPad(lineSeparator)) {
+                final String sep = StringUtils.newStringUtf8(lineSeparator);
                 throw new IllegalArgumentException("lineSeparator must not contain Base32 characters: [" + sep + "]");
             }
-            this.encodeSize = BYTES_PER_ENCODED_BLOCK + lineSeparatorCopy.length;
-            this.lineSeparator = lineSeparatorCopy;
+            this.encodeSize = BYTES_PER_ENCODED_BLOCK + lineSeparator.length;
+            this.lineSeparator = lineSeparator;
         } else {
             this.encodeSize = BYTES_PER_ENCODED_BLOCK;
             this.lineSeparator = null;
@@ -499,8 +495,8 @@ public class Base32 extends BaseNCodec {
      */
     @Deprecated
     public Base32(final int lineLength, final byte[] lineSeparator, final boolean useHex, final byte padding, final CodecPolicy decodingPolicy) {
-        this(builder().setLineLength(lineLength).setLineSeparator(lineSeparator).setEncodeTableRaw(encodeTable(useHex)).setPadding(padding)
-                .setDecodingPolicy(decodingPolicy));
+        this(builder().setLineLength(lineLength).setLineSeparator(lineSeparator != null ? lineSeparator : EMPTY_BYTE_ARRAY)
+                .setEncodeTableRaw(encodeTable(useHex)).setPadding(padding).setDecodingPolicy(decodingPolicy));
     }
 
     /**

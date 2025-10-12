@@ -31,6 +31,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Random;
+import java.util.stream.Stream;
 
 import org.apache.commons.codec.CodecPolicy;
 import org.apache.commons.codec.DecoderException;
@@ -38,6 +39,9 @@ import org.apache.commons.codec.EncoderException;
 import org.apache.commons.lang3.ArrayUtils;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  * Tests {@link Base64}.
@@ -130,6 +134,24 @@ class Base64Test {
         }
     }
 
+    static Stream<Object> testIsBase64() {
+        // @formatter:off
+        return Stream.of(
+            Arguments.of(new byte[] { 1, 2, 3 }, false),
+            Arguments.of(new byte[] { Byte.MIN_VALUE }, false),
+            Arguments.of(new byte[] { -125 }, false),
+            Arguments.of(new byte[] { -10 }, false),
+            Arguments.of(new byte[] { 0 }, false),
+            Arguments.of(new byte[] { 64, Byte.MAX_VALUE }, false),
+            Arguments.of(new byte[] { Byte.MAX_VALUE }, false),
+            Arguments.of(new byte[] { 'A' }, true),
+            Arguments.of(new byte[] { 'A', Byte.MIN_VALUE }, false),
+            Arguments.of(new byte[] { 'A', 'Z', 'a' }, true),
+            Arguments.of(new byte[] { '/', '=', '+' }, true),
+            Arguments.of(new byte[] { '$' }, false));
+        // @formatter:off
+    }
+
     private final Random random = new Random();
 
     /**
@@ -149,22 +171,16 @@ class Base64Test {
         byte[] encodedBytes = Base64.encodeBase64(StringUtils.getBytesUtf8(content));
         encodedContent = StringUtils.newStringUtf8(encodedBytes);
         assertEquals("SGVsbG8gV29ybGQ=", encodedContent, "encoding hello world");
-
-        Base64 b64 = new Base64(BaseNCodec.MIME_CHUNK_SIZE, null); // null
-                                                                    // lineSeparator
-                                                                    // same as
-                                                                    // saying
-                                                                    // no-chunking
+        // null lineSeparator same as saying no-chunking
+        Base64 b64 = new Base64(BaseNCodec.MIME_CHUNK_SIZE, null);
         encodedBytes = b64.encode(StringUtils.getBytesUtf8(content));
         encodedContent = StringUtils.newStringUtf8(encodedBytes);
         assertEquals("SGVsbG8gV29ybGQ=", encodedContent, "encoding hello world");
-
-        b64 = new Base64(0, null); // null lineSeparator same as saying
-                                    // no-chunking
+        // null lineSeparator same as saying no-chunking
+        b64 = new Base64(0, null);
         encodedBytes = b64.encode(StringUtils.getBytesUtf8(content));
         encodedContent = StringUtils.newStringUtf8(encodedBytes);
         assertEquals("SGVsbG8gV29ybGQ=", encodedContent, "encoding hello world");
-
         // bogus characters to decode (to skip actually) {e-acute*6}
         final byte[] decode = b64.decode("SGVsbG{\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9}8gV29ybGQ=");
         final String decodeString = StringUtils.newStringUtf8(decode);
@@ -692,23 +708,16 @@ class Base64Test {
         assertEquals(FOX_TEXT, new String(Base64.decodeBase64(FOX_BASE64.getBytes(CHARSET_UTF8))));
     }
 
-    @Test
-    void testIsArrayByteBase64() {
-        assertFalse(Base64.isBase64(new byte[] { Byte.MIN_VALUE }));
-        assertFalse(Base64.isBase64(new byte[] { -125 }));
-        assertFalse(Base64.isBase64(new byte[] { -10 }));
-        assertFalse(Base64.isBase64(new byte[] { 0 }));
-        assertFalse(Base64.isBase64(new byte[] { 64, Byte.MAX_VALUE }));
-        assertFalse(Base64.isBase64(new byte[] { Byte.MAX_VALUE }));
+    @ParameterizedTest
+    @MethodSource("testIsBase64")
+    void testIsArrayByteBase64(final byte[] arrayOctet, final boolean match) {
+        assertEquals(match, Base64.isArrayByteBase64(arrayOctet));
+    }
 
-        assertTrue(Base64.isBase64(new byte[] { 'A' }));
-
-        assertFalse(Base64.isBase64(new byte[] { 'A', Byte.MIN_VALUE }));
-
-        assertTrue(Base64.isBase64(new byte[] { 'A', 'Z', 'a' }));
-        assertTrue(Base64.isBase64(new byte[] { '/', '=', '+' }));
-
-        assertFalse(Base64.isBase64(new byte[] { '$' }));
+    @ParameterizedTest
+    @MethodSource
+    void testIsBase64(final byte[] arrayOctet, final boolean match) {
+        assertEquals(match, Base64.isBase64(arrayOctet));
     }
 
     /**

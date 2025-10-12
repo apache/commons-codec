@@ -427,13 +427,12 @@ class Base32Test {
         // even when line length is negative.
         base32 = new Base32(-1, new byte[] { 'A' });
         base32 = new Base32(32, new byte[] { '$' }); // OK
-        assertArrayEquals(BaseNCodec.CHUNK_SEPARATOR, new Base32(32, null).getLineSeparator(), "null line separator use the default");
+        assertArrayEquals(new byte[0], new Base32(32, null).getLineSeparator(), "null line separator use an empty array");
         assertThrows(IllegalArgumentException.class, () -> new Base32(32, new byte[] { 'A' }), "'A' as a line separator");
         assertThrows(IllegalArgumentException.class, () -> new Base32(32, new byte[] { '=' }), "'=' as a line separator");
         assertThrows(IllegalArgumentException.class, () -> new Base32(32, new byte[] { 'A', '$' }), "'A$' as a line separator");
         assertThrows(IllegalArgumentException.class, () -> new Base32(32, new byte[] { '\n' }, false, (byte) 'A'), "'A' as padding");
         assertThrows(IllegalArgumentException.class, () -> new Base32(32, new byte[] { '\n' }, false, (byte) ' '), "' ' as padding");
-
         base32 = new Base32(32, new byte[] { ' ', '$', '\n', '\r', '\t' }); // OK
         assertNotNull(base32);
     }
