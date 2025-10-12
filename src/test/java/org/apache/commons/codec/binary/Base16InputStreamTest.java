@@ -93,7 +93,7 @@ class Base16InputStreamTest {
         decoded = BaseNTestData.DECODED;
         testByChunk(encoded, decoded);
         // test random data of sizes 0 through 150
-        final BaseNCodec codec = new Base16(true);
+        final BaseNCodec codec = Base16.builder().setLowerCase(true).get();
         for (int i = 0; i <= 150; i++) {
             final byte[][] randomData = BaseNTestData.randomData(codec, i);
             encoded = randomData[1];
@@ -122,7 +122,7 @@ class Base16InputStreamTest {
         decoded = BaseNTestData.DECODED;
         testByteByByte(encoded, decoded);
         // test random data of sizes 0 through 150
-        final BaseNCodec codec = new Base16(true);
+        final BaseNCodec codec = Base16.builder().setLowerCase(true).get();
         for (int i = 0; i <= 150; i++) {
             final byte[][] randomData = BaseNTestData.randomData(codec, i);
             encoded = randomData[1];
@@ -225,7 +225,7 @@ class Base16InputStreamTest {
         }
         try (InputStream in = Base16InputStream.builder()
                 .setInputStream(new ByteArrayInputStream(decoded))
-                .setEncode(true).setBaseNCodec(new Base16(lowerCase))
+                .setEncode(true).setBaseNCodec(Base16.builder().setLowerCase(lowerCase).get())
                 .get()) {
             final byte[] output = new byte[encoded.length];
             for (int i = 0; i < output.length; i++) {

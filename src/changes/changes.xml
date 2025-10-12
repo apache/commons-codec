@@ -52,6 +52,7 @@ The <action> type attribute can be add,update,fix,remove.
       <!-- ADD -->
       <action type="add" dev="ggregory" due-to="Fredrik Kjellberg, Gary Gregory">Add org.apache.commons.codec.digest.CRC16.</action>
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add builders to org.apache.commons.codec.digest streams and deprecate some old constructors.</action>
+      <action type="add" dev="ggregory" due-to="Gary Gregory">Add builder to Base16 streams and deprecate some old constructors.</action>
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add support for SHAKE128-256 and SHAKE256-512 to `DigestUtils` and `MessageDigestAlgorithms` on Java 25 and up.</action>
       <!-- UPDATE -->
       <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump org.apache.commons:commons-parent from 85 to 89.</action>

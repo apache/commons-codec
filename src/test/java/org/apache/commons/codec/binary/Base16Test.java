@@ -248,7 +248,7 @@ class Base16Test {
     @Test
     void testIsInAlphabet() {
         // invalid bounds
-        Base16 b16 = new Base16(true);
+        Base16 b16 = Base16.builder().setLowerCase(true).get();
         assertFalse(b16.isInAlphabet((byte) 0));
         assertFalse(b16.isInAlphabet((byte) 1));
         assertFalse(b16.isInAlphabet((byte) -1));
@@ -256,7 +256,6 @@ class Base16Test {
         assertFalse(b16.isInAlphabet((byte) -16));
         assertFalse(b16.isInAlphabet((byte) 128));
         assertFalse(b16.isInAlphabet((byte) 255));
-
         // lower-case
         b16 = new Base16(true);
         for (char c = '0'; c <= '9'; c++) {
@@ -273,7 +272,6 @@ class Base16Test {
         assertFalse(b16.isInAlphabet((byte) ('a' - 1)));
         assertFalse(b16.isInAlphabet((byte) ('f' + 1)));
         assertFalse(b16.isInAlphabet((byte) ('z' + 1)));
-
         // upper-case
         b16 = new Base16(false);
         for (char c = '0'; c <= '9'; c++) {

@@ -65,7 +65,7 @@ class Base16OutputStreamTest {
         testByChunk(encoded, decoded);
 
         // test random data of sizes 0 through 150
-        final BaseNCodec codec = new Base16(true);
+        final BaseNCodec codec = Base16.builder().setLowerCase(true).get();
         for (int i = 0; i <= 150; i++) {
             final byte[][] randomData = BaseNTestData.randomData(codec, i);
             encoded = randomData[1];
@@ -90,7 +90,7 @@ class Base16OutputStreamTest {
         decoded = new byte[] { (byte) 0x41 };
         testByteByByte(encoded, decoded);
         // test random data of sizes 0 through 150
-        final BaseNCodec codec = new Base16(true);
+        final BaseNCodec codec = Base16.builder().setLowerCase(true).get();
         for (int i = 0; i <= 150; i++) {
             final byte[][] randomData = BaseNTestData.randomData(codec, i);
             encoded = randomData[1];
@@ -199,7 +199,7 @@ class Base16OutputStreamTest {
         }
         try (ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
                 OutputStream out = Base16OutputStream.builder()
-                        .setOutputStream(byteOut).setEncode(true).setBaseNCodec(new Base16(lowerCase))
+                        .setOutputStream(byteOut).setEncode(true).setBaseNCodec(Base16.builder().setLowerCase(lowerCase).get())
                         .get()) {
             for (final byte element : decoded) {
                 out.write(element);
