@@ -978,15 +978,20 @@ class Base64Test {
      * @see <a href="https://tools.ietf.org/html/rfc4648">https://tools.ietf.org/
      *      html/rfc4648</a>
      */
-    @Test
-    void testRfc4648Section10EncodeDecode() {
-        testEncodeDecode("");
-        testEncodeDecode("f");
-        testEncodeDecode("fo");
-        testEncodeDecode("foo");
-        testEncodeDecode("foob");
-        testEncodeDecode("fooba");
-        testEncodeDecode("foobar");
+    @ParameterizedTest
+    // @formatter:off
+    @ValueSource(strings = {
+            "",
+            "f",
+            "fo",
+            "foo",
+            "foob",
+            "fooba",
+            "foobar",
+    })
+    // @formatter:on
+    void testRfc4648Section10EncodeDecode(final String input) {
+        testEncodeDecode(input);
     }
 
     @Test
@@ -1219,10 +1224,7 @@ class Base64Test {
         final String s3 = null;
         final String s4a = "K/fMJwH+Q5e0nr7tWsxwkA==\r\n";
         final String s4b = "K_fMJwH-Q5e0nr7tWsxwkA";
-        final byte[] b4 = Hex.decodeHex("2bf7cc2701fe4397b49ebeed5acc7090"); // for
-                                                                                            // url-safe
-                                                                                            // tests
-
+        final byte[] b4 = Hex.decodeHex("2bf7cc2701fe4397b49ebeed5acc7090"); // for url-safe tests
         assertEquals("Hello World", StringUtils.newStringUtf8(base64.decode(s1)), "StringToByte Hello World");
         assertEquals("Hello World", StringUtils.newStringUtf8((byte[]) base64.decode((Object) s1)), "StringToByte Hello World");
         assertEquals("Hello World", StringUtils.newStringUtf8(Base64.decodeBase64(s1)), "StringToByte static Hello World");
