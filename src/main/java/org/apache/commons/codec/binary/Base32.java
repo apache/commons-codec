@@ -17,6 +17,7 @@
 
 package org.apache.commons.codec.binary;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 import org.apache.commons.codec.CodecPolicy;
@@ -85,11 +86,13 @@ public class Base32 extends BaseNCodec {
          */
         public Builder() {
             super(ENCODE_TABLE);
+            setEncodedBlockSize(BYTES_PER_ENCODED_BLOCK);
+            setUnencodedBlockSize(BYTES_PER_UNENCODED_BLOCK);
         }
 
         @Override
         public Base32 get() {
-            return new Base32(getLineLength(), getLineSeparator(), getEncodeTable(), getPadding(), getDecodingPolicy());
+            return new Base32(this);
         }
 
         /**
@@ -338,6 +341,33 @@ public class Base32 extends BaseNCodec {
         this(0, null, useHex, padding);
     }
 
+    private Base32(final Builder builder) {
+        super(builder);
+        Objects.requireNonNull(builder.getEncodeTable(), "encodeTable");
+        this.encodeTable = builder.getEncodeTable();
+        this.decodeTable = builder.getEncodeTable() == HEX_ENCODE_TABLE || Arrays.equals(builder.getEncodeTable(), HEX_ENCODE_TABLE) ?
+                HEX_DECODE_TABLE : DECODE_TABLE;
+        if (builder.getLineLength() > 0) {
+            if (builder.getLineSeparator() == null) {
+                throw new IllegalArgumentException("lineLength " + lineLength + " > 0, but lineSeparator is null");
+            }
+            final byte[] lineSeparatorCopy = builder.getLineSeparator().clone();
+            // Must be done after initializing the tables
+            if (containsAlphabetOrPad(lineSeparatorCopy)) {
+                final String sep = StringUtils.newStringUtf8(lineSeparatorCopy);
+                throw new IllegalArgumentException("lineSeparator must not contain Base32 characters: [" + sep + "]");
+            }
+            this.encodeSize = BYTES_PER_ENCODED_BLOCK + lineSeparatorCopy.length;
+            this.lineSeparator = lineSeparatorCopy;
+        } else {
+            this.encodeSize = BYTES_PER_ENCODED_BLOCK;
+            this.lineSeparator = null;
+        }
+        if (isInAlphabet(builder.getPadding()) || Character.isWhitespace(builder.getPadding())) {
+            throw new IllegalArgumentException("pad must not be in alphabet or whitespace");
+        }
+    }
+
     /**
      * Constructs a Base32 codec used for decoding and encoding.
      * <p>
@@ -469,50 +499,8 @@ public class Base32 extends BaseNCodec {
      */
     @Deprecated
     public Base32(final int lineLength, final byte[] lineSeparator, final boolean useHex, final byte padding, final CodecPolicy decodingPolicy) {
-        this(lineLength, lineSeparator, encodeTable(useHex), padding, decodingPolicy);
-    }
-
-    /**
-     * Constructs a Base32 / Base32 Hex codec used for decoding and encoding.
-     * <p>
-     * When encoding the line length and line separator are given in the constructor.
-     * </p>
-     * <p>
-     * Line lengths that aren't multiples of 8 will still essentially end up being multiples of 8 in the encoded data.
-     * </p>
-     *
-     * @param lineLength     Each line of encoded data will be at most of the given length (rounded down to the nearest multiple of 8). If lineLength &lt;= 0,
-     *                       then the output will not be divided into lines (chunks). Ignored when decoding.
-     * @param lineSeparator  Each line of encoded data will end with this sequence of bytes.
-     * @param encodeTable    A Base32 alphabet.
-     * @param padding        padding byte.
-     * @param decodingPolicy The decoding policy.
-     * @throws IllegalArgumentException Thrown when the {@code lineSeparator} contains Base32 characters. Or the lineLength &gt; 0 and lineSeparator is null.
-     */
-    private Base32(final int lineLength, final byte[] lineSeparator, final byte[] encodeTable, final byte padding, final CodecPolicy decodingPolicy) {
-        super(BYTES_PER_UNENCODED_BLOCK, BYTES_PER_ENCODED_BLOCK, lineLength, toLength(lineSeparator), padding, decodingPolicy);
-        Objects.requireNonNull(encodeTable, "encodeTable");
-        this.encodeTable = encodeTable;
-        this.decodeTable = encodeTable == HEX_ENCODE_TABLE ? HEX_DECODE_TABLE : DECODE_TABLE;
-        if (lineLength > 0) {
-            if (lineSeparator == null) {
-                throw new IllegalArgumentException("lineLength " + lineLength + " > 0, but lineSeparator is null");
-            }
-            final byte[] lineSeparatorCopy = lineSeparator.clone();
-            // Must be done after initializing the tables
-            if (containsAlphabetOrPad(lineSeparatorCopy)) {
-                final String sep = StringUtils.newStringUtf8(lineSeparatorCopy);
-                throw new IllegalArgumentException("lineSeparator must not contain Base32 characters: [" + sep + "]");
-            }
-            this.encodeSize = BYTES_PER_ENCODED_BLOCK + lineSeparatorCopy.length;
-            this.lineSeparator = lineSeparatorCopy;
-        } else {
-            this.encodeSize = BYTES_PER_ENCODED_BLOCK;
-            this.lineSeparator = null;
-        }
-        if (isInAlphabet(padding) || Character.isWhitespace(padding)) {
-            throw new IllegalArgumentException("pad must not be in alphabet or whitespace");
-        }
+        this(builder().setLineLength(lineLength).setLineSeparator(lineSeparator).setEncodeTableRaw(encodeTable(useHex)).setPadding(padding)
+                .setDecodingPolicy(decodingPolicy));
     }
 
     /**
