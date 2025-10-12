@@ -390,6 +390,16 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
+     * Gets the array length or 0 if null.
+     *
+     * @param array the array or null.
+     * @return the array length or 0 if null.
+     */
+    static int getLength(final byte[] array) {
+        return array == null ? 0 : array.length;
+    }
+
+    /**
      * Checks if a byte value is whitespace or not.
      *
      * @param byteToCheck the byte to check
@@ -423,16 +433,6 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         final byte[] b = Arrays.copyOf(context.buffer, newCapacity);
         context.buffer = b;
         return b;
-    }
-
-    /**
-     * Gets the array length or 0 if null.
-     *
-     * @param array the array or null.
-     * @return the array length or 0 if null.
-     */
-    static int toLength(final byte[] array) {
-        return array == null ? 0 : array.length;
     }
 
     /**
