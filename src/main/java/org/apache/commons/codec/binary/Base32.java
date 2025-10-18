@@ -18,7 +18,6 @@
 package org.apache.commons.codec.binary;
 
 import java.util.Arrays;
-import java.util.Objects;
 
 import org.apache.commons.codec.CodecPolicy;
 
@@ -86,6 +85,8 @@ public class Base32 extends BaseNCodec {
          */
         public Builder() {
             super(ENCODE_TABLE);
+            setDecodeTableRaw(DECODE_TABLE);
+            setEncodeTableRaw(ENCODE_TABLE);
             setEncodedBlockSize(BYTES_PER_ENCODED_BLOCK);
             setUnencodedBlockSize(BYTES_PER_UNENCODED_BLOCK);
         }
@@ -93,6 +94,12 @@ public class Base32 extends BaseNCodec {
         @Override
         public Base32 get() {
             return new Base32(this);
+        }
+
+        @Override
+        public Builder setEncodeTable(byte... encodeTable) {
+            super.setDecodeTableRaw(Arrays.equals(encodeTable, HEX_ENCODE_TABLE) ? HEX_DECODE_TABLE : DECODE_TABLE);
+            return super.setEncodeTable(encodeTable);
         }
 
         /**
@@ -270,11 +277,6 @@ public class Base32 extends BaseNCodec {
     }
 
     /**
-     * Decode table to use.
-     */
-    private final byte[] decodeTable;
-
-    /**
      * Convenience variable to help us determine when our buffer is going to run out of room and needs resizing. {@code encodeSize = {@link
      * #BYTES_PER_ENCODED_BLOCK} + lineSeparator.length;}
      */
@@ -338,8 +340,6 @@ public class Base32 extends BaseNCodec {
 
     private Base32(final Builder builder) {
         super(builder);
-        Objects.requireNonNull(builder.getEncodeTable(), "encodeTable");
-        this.decodeTable = Arrays.equals(builder.getEncodeTable(), HEX_ENCODE_TABLE) ? HEX_DECODE_TABLE : DECODE_TABLE;
         if (builder.getLineLength() > 0) {
             final byte[] lineSeparator = builder.getLineSeparator();
             // Must be done after initializing the tables
@@ -489,8 +489,15 @@ public class Base32 extends BaseNCodec {
      */
     @Deprecated
     public Base32(final int lineLength, final byte[] lineSeparator, final boolean useHex, final byte padding, final CodecPolicy decodingPolicy) {
-        this(builder().setLineLength(lineLength).setLineSeparator(lineSeparator != null ? lineSeparator : EMPTY_BYTE_ARRAY)
-                .setEncodeTableRaw(encodeTable(useHex)).setPadding(padding).setDecodingPolicy(decodingPolicy));
+        // @formatter:off
+        this(builder()
+                .setLineLength(lineLength)
+                .setLineSeparator(lineSeparator != null ? lineSeparator : EMPTY_BYTE_ARRAY)
+                .setDecodeTable(decodeTable(useHex))
+                .setEncodeTableRaw(encodeTable(useHex))
+                .setPadding(padding)
+                .setDecodingPolicy(decodingPolicy));
+        // @formatter:on
     }
 
     /**

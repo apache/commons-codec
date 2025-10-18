@@ -65,6 +65,8 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         private byte[] lineSeparator = CHUNK_SEPARATOR;
         private final byte[] defaultEncodeTable;
         private byte[] encodeTable;
+        private byte[] decodeTable;
+
         /** Padding byte. */
         private byte padding = PAD_DEFAULT;
 
@@ -88,6 +90,10 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         @SuppressWarnings("unchecked")
         B asThis() {
             return (B) this;
+        }
+
+        byte[] getDecodeTable() {
+            return decodeTable;
         }
 
         CodecPolicy getDecodingPolicy() {
@@ -119,6 +125,29 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         }
 
         /**
+         * Sets the decode table.
+         *
+         * @param decodeTable the decode table.
+         * @return {@code this} instance.
+         * @since 1.20.0
+         */
+        public B setDecodeTable(final byte[] decodeTable) {
+            this.decodeTable = decodeTable != null ? decodeTable.clone() : null;
+            return asThis();
+        }
+
+        /**
+         * Sets the decode table.
+         *
+         * @param decodeTable the decode table, null resets to the default.
+         * @return {@code this} instance.
+         */
+        B setDecodeTableRaw(final byte[] decodeTable) {
+            this.decodeTable = decodeTable;
+            return asThis();
+        }
+
+        /**
          * Sets the decoding policy.
          *
          * @param decodingPolicy the decoding policy, null resets to the default.
@@ -133,7 +162,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
          * Sets the encoded block size, subclasses normally set this on construction.
          *
          * @param encodedBlockSize the encoded block size, subclasses normally set this on construction.
-         * @return this
+         * @return {@code this} instance.
          */
         B setEncodedBlockSize(final int encodedBlockSize) {
             this.encodedBlockSize = encodedBlockSize;
@@ -199,7 +228,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
          * Sets the unencoded block size, subclasses normally set this on construction.
          *
          * @param unencodedBlockSize the unencoded block size, subclasses normally set this on construction.
-         * @return this
+         * @return {@code this} instance.
          */
         B setUnencodedBlockSize(final int unencodedBlockSize) {
             this.unencodedBlockSize = unencodedBlockSize;
@@ -444,6 +473,12 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * </p>
      */
     private final CodecPolicy decodingPolicy;
+
+    /**
+     * Decode table to use.
+     */
+    final byte[] decodeTable;
+
     /**
      * Encode table.
      */
@@ -463,7 +498,8 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         this.chunkSeparatorLength = builder.lineSeparator.length;
         this.pad = builder.padding;
         this.decodingPolicy = Objects.requireNonNull(builder.decodingPolicy, "codecPolicy");
-        this.encodeTable = builder.getEncodeTable();
+        this.encodeTable = Objects.requireNonNull(builder.getEncodeTable(), "builder.getEncodeTable()");
+        this.decodeTable = builder.getDecodeTable();
     }
 
     /**
@@ -530,6 +566,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         this.pad = pad;
         this.decodingPolicy = Objects.requireNonNull(decodingPolicy, "codecPolicy");
         this.encodeTable = null;
+        this.decodeTable = null;
     }
 
     /**

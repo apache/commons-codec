@@ -98,6 +98,8 @@ public class Base64 extends BaseNCodec {
          */
         public Builder() {
             super(STANDARD_ENCODE_TABLE);
+            setDecodeTableRaw(DECODE_TABLE);
+            setEncodeTableRaw(STANDARD_ENCODE_TABLE);
             setEncodedBlockSize(BYTES_PER_ENCODED_BLOCK);
             setUnencodedBlockSize(BYTES_PER_UNENCODED_BLOCK);
         }
@@ -105,6 +107,14 @@ public class Base64 extends BaseNCodec {
         @Override
         public Base64 get() {
             return new Base64(this);
+        }
+
+        @Override
+        public Builder setEncodeTable(final byte... encodeTable) {
+            final boolean isStandardEncodeTable = Arrays.equals(encodeTable, STANDARD_ENCODE_TABLE);
+            final boolean isUrlSafe = Arrays.equals(encodeTable, URL_SAFE_ENCODE_TABLE);
+            super.setDecodeTableRaw(isStandardEncodeTable || isUrlSafe ? DECODE_TABLE : calculateDecodeTable(encodeTable));
+            return super.setEncodeTable(encodeTable);
         }
 
         /**
@@ -220,6 +230,21 @@ public class Base64 extends BaseNCodec {
      */
     public static Builder builder() {
         return new Builder();
+    }
+
+    /**
+     * Calculates a decode table for a given encode table.
+     *
+     * @param encodeTable that is used to determine decode lookup table
+     * @return decodeTable
+     */
+    private static byte[] calculateDecodeTable(final byte[] encodeTable) {
+        final byte[] decodeTable = new byte[DECODING_TABLE_LENGTH];
+        Arrays.fill(decodeTable, (byte) -1);
+        for (int i = 0; i < encodeTable.length; i++) {
+            decodeTable[encodeTable[i]] = (byte) i;
+        }
+        return decodeTable;
     }
 
     /**
@@ -506,11 +531,6 @@ public class Base64 extends BaseNCodec {
     }
 
     /**
-     * Decode table to use.
-     */
-    private final byte[] decodeTable;
-
-    /**
      * Line separator for encoding. Not used when decoding. Only used if lineLength &gt; 0.
      */
     private final byte[] lineSeparator;
@@ -523,8 +543,8 @@ public class Base64 extends BaseNCodec {
 
     private final boolean isUrlSafe;
 
-    private final boolean isStandardEncodeTable;
 
+    private final boolean isStandardEncodeTable;
 
     /**
      * Constructs a Base64 codec used for decoding (all modes) and encoding in URL-unsafe mode.
@@ -557,6 +577,35 @@ public class Base64 extends BaseNCodec {
     @Deprecated
     public Base64(final boolean urlSafe) {
         this(MIME_CHUNK_SIZE, CHUNK_SEPARATOR, urlSafe);
+    }
+
+    private Base64(final Builder builder) {
+        super(builder);
+        final byte[] encTable = builder.getEncodeTable();
+        if (encTable.length != STANDARD_ENCODE_TABLE.length) {
+            throw new IllegalArgumentException("encodeTable must have exactly 64 entries.");
+        }
+        this.isStandardEncodeTable = Arrays.equals(encTable, STANDARD_ENCODE_TABLE);
+        this.isUrlSafe = Arrays.equals(encTable, URL_SAFE_ENCODE_TABLE);
+        // TODO could be simplified if there is no requirement to reject invalid line sep when length <=0
+        // @see test case Base64Test.testConstructors()
+        if (builder.getLineSeparator().length > 0) {
+            final byte[] lineSeparatorB = builder.getLineSeparator();
+            if (containsAlphabetOrPad(lineSeparatorB)) {
+                final String sep = StringUtils.newStringUtf8(lineSeparatorB);
+                throw new IllegalArgumentException("lineSeparator must not contain base64 characters: [" + sep + "]");
+            }
+            if (builder.getLineLength() > 0) { // null line-sep forces no chunking rather than throwing IAE
+                this.encodeSize = BYTES_PER_ENCODED_BLOCK + lineSeparatorB.length;
+                this.lineSeparator = lineSeparatorB;
+            } else {
+                this.encodeSize = BYTES_PER_ENCODED_BLOCK;
+                this.lineSeparator = null;
+            }
+        } else {
+            this.encodeSize = BYTES_PER_ENCODED_BLOCK;
+            this.lineSeparator = null;
+        }
     }
 
     /**
@@ -680,51 +729,6 @@ public class Base64 extends BaseNCodec {
     public Base64(final int lineLength, final byte[] lineSeparator, final boolean urlSafe, final CodecPolicy decodingPolicy) {
         this(builder().setLineLength(lineLength).setLineSeparator(lineSeparator).setPadding(PAD_DEFAULT).setEncodeTableRaw(toUrlSafeEncodeTable(urlSafe))
                 .setDecodingPolicy(decodingPolicy));
-    }
-
-    private Base64(final Builder builder) {
-        super(builder);
-        Objects.requireNonNull(builder.getEncodeTable(), "encodeTable");
-        if (builder.getEncodeTable().length != STANDARD_ENCODE_TABLE.length) {
-            throw new IllegalArgumentException("encodeTable must have exactly 64 entries.");
-        }
-        this.isStandardEncodeTable = Arrays.equals(builder.getEncodeTable(), STANDARD_ENCODE_TABLE);
-        this.isUrlSafe = Arrays.equals(builder.getEncodeTable(), URL_SAFE_ENCODE_TABLE);
-        this.decodeTable = this.isStandardEncodeTable || this.isUrlSafe ? DECODE_TABLE : calculateDecodeTable(this.encodeTable);
-        // TODO could be simplified if there is no requirement to reject invalid line sep when length <=0
-        // @see test case Base64Test.testConstructors()
-        if (builder.getLineSeparator().length > 0) {
-            final byte[] lineSeparatorB = builder.getLineSeparator();
-            if (containsAlphabetOrPad(lineSeparatorB)) {
-                final String sep = StringUtils.newStringUtf8(lineSeparatorB);
-                throw new IllegalArgumentException("lineSeparator must not contain base64 characters: [" + sep + "]");
-            }
-            if (builder.getLineLength() > 0) { // null line-sep forces no chunking rather than throwing IAE
-                this.encodeSize = BYTES_PER_ENCODED_BLOCK + lineSeparatorB.length;
-                this.lineSeparator = lineSeparatorB;
-            } else {
-                this.encodeSize = BYTES_PER_ENCODED_BLOCK;
-                this.lineSeparator = null;
-            }
-        } else {
-            this.encodeSize = BYTES_PER_ENCODED_BLOCK;
-            this.lineSeparator = null;
-        }
-    }
-
-    /**
-     * Calculates a decode table for a given encode table.
-     *
-     * @param encodeTable that is used to determine decode lookup table
-     * @return decodeTable
-     */
-    private byte[] calculateDecodeTable(final byte[] encodeTable) {
-        final byte[] decodeTable = new byte[DECODING_TABLE_LENGTH];
-        Arrays.fill(decodeTable, (byte) -1);
-        for (int i = 0; i < encodeTable.length; i++) {
-            decodeTable[encodeTable[i]] = (byte) i;
-        }
-        return decodeTable;
     }
 
     /**

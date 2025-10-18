@@ -65,6 +65,8 @@ public class Base16 extends BaseNCodec {
          */
         public Builder() {
             super(null);
+            setDecodeTable(UPPER_CASE_DECODE_TABLE);
+            setEncodeTable(UPPER_CASE_ENCODE_TABLE);
             setEncodedBlockSize(BYTES_PER_ENCODED_BLOCK);
             setUnencodedBlockSize(BYTES_PER_UNENCODED_BLOCK);
             setLineLength(0);
@@ -74,6 +76,12 @@ public class Base16 extends BaseNCodec {
         @Override
         public Base16 get() {
             return new Base16(this);
+        }
+
+        @Override
+        public Builder setEncodeTable(byte... encodeTable) {
+            super.setDecodeTableRaw(Arrays.equals(encodeTable, LOWER_CASE_ENCODE_TABLE) ? LOWER_CASE_DECODE_TABLE : UPPER_CASE_DECODE_TABLE);
+            return super.setEncodeTable(encodeTable);
         }
 
         /**
@@ -152,11 +160,6 @@ public class Base16 extends BaseNCodec {
     }
 
     /**
-     * Decode table to use.
-     */
-    private final byte[] decodeTable;
-
-    /**
      * Constructs a Base16 codec used for decoding and encoding.
      */
     public Base16() {
@@ -188,7 +191,6 @@ public class Base16 extends BaseNCodec {
 
     private Base16(final Builder builder) {
         super(builder);
-        this.decodeTable = Arrays.equals(encodeTable, LOWER_CASE_ENCODE_TABLE) ? LOWER_CASE_DECODE_TABLE : UPPER_CASE_DECODE_TABLE;
     }
 
     @Override

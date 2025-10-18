@@ -494,7 +494,7 @@ class Base32Test {
         // hex table
         b32 = new Base32(true);
         for (char c = '0'; c <= '9'; c++) {
-            assertTrue(b32.isInAlphabet((byte) c));
+            assertTrue(b32.isInAlphabet((byte) c), String.valueOf(c));
         }
         for (char c = 'A'; c <= 'V'; c++) {
             assertTrue(b32.isInAlphabet((byte) c));
