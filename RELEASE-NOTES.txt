@@ -1,3 +1,45 @@
+Apache Commons Codec 1.20.0 Release Notes
+-----------------------------------------
+
+The Apache Commons Codec team is pleased to announce the release of Apache Commons Codec 1.20.0.
+
+The Apache Commons Codec component contains encoders and decoders for
+formats such as Base16, Base32, Base64, digest, and Hexadecimal. In addition to these
+widely used encoders and decoders, the codec package also maintains a
+collection of phonetic encoding utilities.
+
+This is a feature and maintenance release. Java 8 or later is required.
+
+
+New features
+------------
+
+*             Add org.apache.commons.codec.digest.Crc16. Thanks to Fredrik Kjellberg, Gary Gregory.
+*             Add builders to org.apache.commons.codec.digest streams and deprecate some old constructors. Thanks to Gary Gregory.
+*             Add builder to Base16 streams and deprecate some old constructors. Thanks to Gary Gregory.
+*             Add support for SHAKE128-256 and SHAKE256-512 to `DigestUtils` and `MessageDigestAlgorithms` on Java 25 and up. Thanks to Gary Gregory.
+*             Add BaseNCodec.AbstractBuilder.setDecodeTable(byte[]) and refactor subclasses. Thanks to Gary Gregory.
+
+
+Changes
+-------
+
+*             Deprecate all but one Base32 constructor in favor of the builder added in version 1.17.0. Thanks to Gary Gregory.
+*             Deprecate all but one Base64 constructor in favor of the builder added in version 1.17.0. Thanks to Gary Gregory.
+*             BaseNCodecInputStream subclasses are now type-safe to match its matching BaseNCodec. Thanks to Gary Gregory.
+*             BaseNCodecOutputStream subclasses are now type-safe to match its matching BaseNCodec. Thanks to Gary Gregory.
+*             Bump org.apache.commons:commons-parent from 85 to 91. Thanks to Gary Gregory, Dependabot.
+*             [test] Bump org.apache.commons:commons-lang3 from 3.18.0 to 3.19.0. Thanks to Gary Gregory.
+
+
+For complete information on Apache Commons Codec, including instructions on how to submit bug reports,
+patches, or suggestions for improvement, see the Apache Commons Codec website:
+
+https://commons.apache.org/proper/commons-codec/
+
+Download page: https://commons.apache.org/proper/commons-codec/download_codec.cgi
+
+---------------------------------------------------------------------------------
 Apache Commons Codec 1.19.0 Release Notes
 -----------------------------------------
 
