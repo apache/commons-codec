@@ -456,7 +456,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
             if (rules == null) {
                 continue;
             }
-            // use an EMPTY_LIST to avoid false positive warnings wrt potential null pointer access
+            // Use an EMPTY_LIST to avoid false positive warnings regarding potential null pointer access.
             final List<Branch> nextBranches = branching ? new ArrayList<>() : Collections.emptyList();
             for (final Rule rule : rules) {
                 if (rule.matches(inputContext)) {
