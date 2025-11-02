@@ -97,7 +97,7 @@ public class Base32 extends BaseNCodec {
         }
 
         @Override
-        public Builder setEncodeTable(byte... encodeTable) {
+        public Builder setEncodeTable(final byte... encodeTable) {
             super.setDecodeTableRaw(Arrays.equals(encodeTable, HEX_ENCODE_TABLE) ? HEX_DECODE_TABLE : DECODE_TABLE);
             return super.setEncodeTable(encodeTable);
         }

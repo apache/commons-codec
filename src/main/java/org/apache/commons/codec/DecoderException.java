@@ -60,7 +60,7 @@ public class DecoderException extends Exception {
      * @see String#format(String, Object...)
      * @since 1.20.0
      */
-    public DecoderException(final String message, Object... args) {
+    public DecoderException(final String message, final Object... args) {
         super(String.format(message, args));
     }
 

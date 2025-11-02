@@ -79,7 +79,7 @@ public class Base16 extends BaseNCodec {
         }
 
         @Override
-        public Builder setEncodeTable(byte... encodeTable) {
+        public Builder setEncodeTable(final byte... encodeTable) {
             super.setDecodeTableRaw(Arrays.equals(encodeTable, LOWER_CASE_ENCODE_TABLE) ? LOWER_CASE_DECODE_TABLE : UPPER_CASE_DECODE_TABLE);
             return super.setEncodeTable(encodeTable);
         }
