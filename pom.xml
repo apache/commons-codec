@@ -46,7 +46,7 @@ limitations under the License.
     <connection>scm:git:https://gitbox.apache.org/repos/asf/commons-codec</connection>
     <developerConnection>scm:git:https://gitbox.apache.org/repos/asf/commons-codec</developerConnection>
     <url>https://github.com/apache/commons-codec</url>
-    <tag>HEAD</tag>
+    <tag>rel/commons-io-2.20.0</tag>
   </scm>
   <distributionManagement>
     <site>
