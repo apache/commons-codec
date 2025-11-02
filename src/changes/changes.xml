@@ -576,7 +576,7 @@ The <action> type attribute can be add,update,fix,remove.
         This version is released under the
         &lt;a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0&lt;/a>
         , please see LICENSE.txt. Previous versions were released under the
-        &lt;a href="http://www.apache.org/licenses/LICENSE-1.1">Apache License 1.1&lt;/a>
+        &lt;a href="https://www.apache.org/licenses/LICENSE-1.1">Apache License 1.1&lt;/a>
       </action>
       <action dev="ggregory" type="update">
         The Board recommendation to remove Javadoc author tags has been

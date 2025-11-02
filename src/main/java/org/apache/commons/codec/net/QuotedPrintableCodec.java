@@ -34,7 +34,7 @@ import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.binary.StringUtils;
 
 /**
- * Codec for the Quoted-Printable section of <a href="http://www.ietf.org/rfc/rfc1521.txt">RFC 1521</a>.
+ * Codec for the Quoted-Printable section of <a href="https://www.ietf.org/rfc/rfc1521.txt">RFC 1521</a>.
  * <p>
  * The Quoted-Printable encoding is intended to represent data that largely consists of octets that correspond to
  * printable characters in the ASCII character set. It encodes the data in such a way that the resulting octets are
@@ -63,7 +63,7 @@ import org.apache.commons.codec.binary.StringUtils;
  * This class is immutable and thread-safe.
  * </p>
  *
- * @see <a href="http://www.ietf.org/rfc/rfc1521.txt">RFC 1521 MIME (Multipurpose Internet Mail Extensions) Part One:
+ * @see <a href="https://www.ietf.org/rfc/rfc1521.txt">RFC 1521 MIME (Multipurpose Internet Mail Extensions) Part One:
  *          Mechanisms for Specifying and Describing the Format of Internet Message Bodies </a>
  *
  * @since 1.3

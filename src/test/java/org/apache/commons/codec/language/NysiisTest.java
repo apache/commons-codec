@@ -80,7 +80,7 @@ class NysiisTest extends AbstractStringEncoderTest<Nysiis> {
     /**
      * Tests data gathered from around the internet.
      *
-     * @see <a href="http://www.dropby.com/NYSIISTextStrings.html">http://www.dropby.com/NYSIISTextStrings.html</a>*/
+     * @see <a href="https://www.dropby.com/NYSIISTextStrings.html">http://www.dropby.com/NYSIISTextStrings.html</a>*/
     @Test
     void testDropBy() {
         // Explanation of differences between this implementation and the one at dropby.com is

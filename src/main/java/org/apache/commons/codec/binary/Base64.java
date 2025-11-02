@@ -24,7 +24,7 @@ import java.util.Objects;
 import org.apache.commons.codec.CodecPolicy;
 
 /**
- * Provides Base64 encoding and decoding as defined by <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>.
+ * Provides Base64 encoding and decoding as defined by <a href="https://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>.
  *
  * <p>
  * This class implements section <cite>6.8. Base64 Content-Transfer-Encoding</cite> from RFC 2045 <cite>Multipurpose
@@ -66,7 +66,7 @@ import org.apache.commons.codec.CodecPolicy;
  *
  * @see Base64InputStream
  * @see Base64OutputStream
- * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>
+ * @see <a href="https://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>
  * @since 1.0
  */
 public class Base64 extends BaseNCodec {

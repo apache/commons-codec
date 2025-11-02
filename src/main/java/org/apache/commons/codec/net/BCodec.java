@@ -31,10 +31,10 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.BaseNCodec;
 
 /**
- * Identical to the Base64 encoding defined by <a href="http://www.ietf.org/rfc/rfc1521.txt">RFC 1521</a>
+ * Identical to the Base64 encoding defined by <a href="https://www.ietf.org/rfc/rfc1521.txt">RFC 1521</a>
  * and allows a character set to be specified.
  * <p>
- * <a href="http://www.ietf.org/rfc/rfc1522.txt">RFC 1522</a> describes techniques to allow the encoding of non-ASCII
+ * <a href="https://www.ietf.org/rfc/rfc1522.txt">RFC 1522</a> describes techniques to allow the encoding of non-ASCII
  * text in various portions of a RFC 822 [2] message header, in a manner which is unlikely to confuse existing message
  * handling software.
  * </p>
@@ -42,7 +42,7 @@ import org.apache.commons.codec.binary.BaseNCodec;
  * This class is immutable and thread-safe.
  * </p>
  *
- * @see <a href="http://www.ietf.org/rfc/rfc1522.txt">MIME (Multipurpose Internet Mail Extensions) Part Two: Message
+ * @see <a href="https://www.ietf.org/rfc/rfc1522.txt">MIME (Multipurpose Internet Mail Extensions) Part Two: Message
  *          Header Extensions for Non-ASCII Text</a>
  *
  * @since 1.3

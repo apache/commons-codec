@@ -64,7 +64,7 @@ import org.apache.commons.codec.StringEncoder;
  *
  * @see Soundex
  * @see <a href="https://en.wikipedia.org/wiki/Daitch%E2%80%93Mokotoff_Soundex"> Wikipedia - Daitch-Mokotoff Soundex</a>
- * @see <a href="http://www.avotaynu.com/soundex.htm">Avotaynu - Soundexing and Genealogy</a>
+ * @see <a href="https://www.avotaynu.com/soundex.htm">Avotaynu - Soundexing and Genealogy</a>
  * @since 1.10
  */
 public class DaitchMokotoffSoundex implements StringEncoder {
@@ -456,7 +456,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
             if (rules == null) {
                 continue;
             }
-            // use an EMPTY_LIST to avoid false positive warnings wrt potential null pointer access
+            // Use an EMPTY_LIST to avoid false positive warnings regarding potential null pointer access.
             final List<Branch> nextBranches = branching ? new ArrayList<>() : Collections.emptyList();
             for (final Rule rule : rules) {
                 if (rule.matches(inputContext)) {

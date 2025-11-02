@@ -48,7 +48,7 @@ import org.apache.commons.codec.binary.BaseNCodecInputStream.AbstracBuilder; // 
  * </p>
  *
  * @see Base32
- * @see <a href="http://www.ietf.org/rfc/rfc4648.txt">RFC 4648</a>
+ * @see <a href="https://www.ietf.org/rfc/rfc4648.txt">RFC 4648</a>
  * @since 1.5
  */
 public class Base32InputStream extends BaseNCodecInputStream<Base32, Base32InputStream, Base32InputStream.Builder> {

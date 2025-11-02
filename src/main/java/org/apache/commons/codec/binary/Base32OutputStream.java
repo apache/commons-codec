@@ -52,7 +52,7 @@ import org.apache.commons.codec.binary.BaseNCodecOutputStream.AbstractBuilder; /
  * </p>
  *
  * @see Base32
- * @see <a href="http://www.ietf.org/rfc/rfc4648.txt">RFC 4648</a>
+ * @see <a href="https://www.ietf.org/rfc/rfc4648.txt">RFC 4648</a>
  * @since 1.5
  */
 public class Base32OutputStream extends BaseNCodecOutputStream<Base32, Base32OutputStream, Base32OutputStream.Builder> {

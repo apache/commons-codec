@@ -30,10 +30,10 @@ import org.apache.commons.codec.StringEncoder;
 
 /**
  * Similar to the Quoted-Printable content-transfer-encoding defined in
- * <a href="http://www.ietf.org/rfc/rfc1521.txt">RFC 1521</a> and designed to allow text containing mostly ASCII
+ * <a href="https://www.ietf.org/rfc/rfc1521.txt">RFC 1521</a> and designed to allow text containing mostly ASCII
  * characters to be decipherable on an ASCII terminal without decoding.
  * <p>
- * <a href="http://www.ietf.org/rfc/rfc1522.txt">RFC 1522</a> describes techniques to allow the encoding of non-ASCII
+ * <a href="https://www.ietf.org/rfc/rfc1522.txt">RFC 1522</a> describes techniques to allow the encoding of non-ASCII
  * text in various portions of a RFC 822 [2] message header, in a manner which is unlikely to confuse existing message
  * handling software.
  * </p>
@@ -46,7 +46,7 @@ import org.apache.commons.codec.StringEncoder;
  * {@link #setEncodeBlanks(boolean)} after initial setup.
  * </p>
  *
- * @see <a href="http://www.ietf.org/rfc/rfc1522.txt">MIME (Multipurpose Internet Mail Extensions) Part Two: Message
+ * @see <a href="https://www.ietf.org/rfc/rfc1522.txt">MIME (Multipurpose Internet Mail Extensions) Part Two: Message
  *          Header Extensions for Non-ASCII Text</a>
  *
  * @since 1.3
