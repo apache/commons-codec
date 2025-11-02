@@ -29,7 +29,7 @@ import java.util.regex.Pattern;
  * The libc crypt() "$1$" and Apache "$apr1$" MD5-based hash algorithm.
  * <p>
  * Based on the public domain ("beer-ware") C implementation from Poul-Henning Kamp which was found at: <a
- * href="http://www.freebsd.org/cgi/cvsweb.cgi/src/lib/libcrypt/crypt-md5.c?rev=1.1;content-type=text%2Fplain">
+ * href="https://www.freebsd.org/cgi/cvsweb.cgi/src/lib/libcrypt/crypt-md5.c?rev=1.1;content-type=text%2Fplain">
  * crypt-md5.c @ freebsd.org</a>
  * </p>
  * <p>

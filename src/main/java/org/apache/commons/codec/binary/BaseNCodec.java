@@ -302,7 +302,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * The {@value} character limit does not count the trailing CRLF, but counts all other characters, including any equal signs.
      * </p>
      *
-     * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045 section 6.8</a>
+     * @see <a href="https://www.ietf.org/rfc/rfc2045.txt">RFC 2045 section 6.8</a>
      */
     public static final int MIME_CHUNK_SIZE = 76;
     /**
@@ -345,7 +345,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     /**
      * Chunk separator per RFC 2045 section 2.1.
      *
-     * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045 section 2.1</a>
+     * @see <a href="https://www.ietf.org/rfc/rfc2045.txt">RFC 2045 section 2.1</a>
      */
     static final byte[] CHUNK_SEPARATOR = { '\r', '\n' };
     /**
@@ -381,7 +381,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * Gets a copy of the chunk separator per RFC 2045 section 2.1.
      *
      * @return the chunk separator
-     * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045 section 2.1</a>
+     * @see <a href="https://www.ietf.org/rfc/rfc2045.txt">RFC 2045 section 2.1</a>
      * @since 1.15
      */
     public static byte[] getChunkSeparator() {

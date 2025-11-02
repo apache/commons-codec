@@ -65,7 +65,7 @@ import org.apache.commons.codec.StringEncoder;
  * </p>
  *
  * @see <a href="https://en.wikipedia.org/wiki/NYSIIS">NYSIIS on Wikipedia</a>
- * @see <a href="http://www.dropby.com/NYSIIS.html">NYSIIS on dropby.com</a>
+ * @see <a href="https://www.dropby.com/NYSIIS.html">NYSIIS on dropby.com</a>
  * @see Soundex
  * @since 1.7
  */

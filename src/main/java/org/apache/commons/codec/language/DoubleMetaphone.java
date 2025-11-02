@@ -35,7 +35,7 @@ import org.apache.commons.codec.binary.StringUtils;
  *
  * @see <a href="https://drdobbs.com/the-double-metaphone-search-algorithm/184401251?pgno=2">Dr. Dobbs Original Article</a>
  * @see <a href="https://en.wikipedia.org/wiki/Metaphone">Wikipedia Metaphone</a>
- * @see <a href="http://aspell.net/metaphone/dmetaph.cpp">Double Metaphone C++ source by Lawrence Philips</a>
+ * @see <a href="https://aspell.net/metaphone/dmetaph.cpp">Double Metaphone C++ source by Lawrence Philips</a>
  */
 public class DoubleMetaphone implements StringEncoder {
 
