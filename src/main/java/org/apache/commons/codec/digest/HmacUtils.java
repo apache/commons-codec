@@ -876,7 +876,7 @@ public final class HmacUtils {
     /**
      * Preserves binary compatibility only.
      * As for previous versions does not provide useful behavior
-     * @deprecated since 1.11; only useful to preserve binary compatibility
+     * @deprecated Since 1.11; only useful to preserve binary compatibility
      */
     @Deprecated
     public HmacUtils() {

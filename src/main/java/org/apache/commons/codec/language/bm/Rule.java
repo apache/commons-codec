@@ -181,7 +181,7 @@ public class Rule {
          *
          * @param right the Phoneme to join
          * @return a new Phoneme
-         * @deprecated since 1.9
+         * @deprecated Since 1.9
          */
         @Deprecated
         public Phoneme join(final Phoneme right) {
