@@ -48,8 +48,8 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix oak leaf icon references in overview.html when running `mvn clean javadoc:javadoc`.</action>
       <!-- ADD -->
       <!-- UPDATE -->
+      <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump org.apache.commons:commons-parent from 91 to 93 #415, #418.</action>
       <action type="update" dev="ggregory" due-to="Gary Gregory">Bump commons-io:commons-io from 2.20.0 to 2.21.0.</action>
-      <action type="update" dev="ggregory" due-to="Gary Gregory">Bump org.apache.commons:commons-parent from 91 to 92 #415.</action>
       <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump org.apache.commons:commons-lang3 from 3.19.0 to 3.20.0.</action>
     </release>
     <release version="1.20.0" date="2025-10-30" description="This is a feature and maintenance release. Java 8 or later is required.">
