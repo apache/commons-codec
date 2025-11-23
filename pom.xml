@@ -152,12 +152,12 @@ limitations under the License.
         <groupId>org.apache.rat</groupId>
         <artifactId>apache-rat-plugin</artifactId>
         <configuration>
-          <excludes>
-            <exclude>src/test/resources/org/apache/commons/codec/bla.tar</exclude>
-            <exclude>src/test/resources/org/apache/commons/codec/bla.tar.xz</exclude>
-            <exclude>src/test/resources/org/apache/commons/codec/empty.bin</exclude>
-            <exclude>src/test/resources/org/apache/commons/codec/small.bin</exclude>
-          </excludes>
+          <inputExcludes>
+            <inputExclude>src/test/resources/org/apache/commons/codec/bla.tar</inputExclude>
+            <inputExclude>src/test/resources/org/apache/commons/codec/bla.tar.xz</inputExclude>
+            <inputExclude>src/test/resources/org/apache/commons/codec/empty.bin</inputExclude>
+            <inputExclude>src/test/resources/org/apache/commons/codec/small.bin</inputExclude>
+          </inputExcludes>
         </configuration>
       </plugin>
       <!-- Add Java 9 Automatic-Module-Name -->
@@ -225,12 +225,12 @@ limitations under the License.
         <groupId>org.apache.rat</groupId>
         <artifactId>apache-rat-plugin</artifactId>
         <configuration>
-          <excludes>
-            <exclude>src/test/resources/org/apache/commons/codec/bla.tar</exclude>
-            <exclude>src/test/resources/org/apache/commons/codec/bla.tar.xz</exclude>
-            <exclude>src/test/resources/org/apache/commons/codec/empty.bin</exclude>
-            <exclude>src/test/resources/org/apache/commons/codec/small.bin</exclude>
-          </excludes>
+          <inputExcludes>
+            <inputExclude>src/test/resources/org/apache/commons/codec/bla.tar</inputExclude>
+            <inputExclude>src/test/resources/org/apache/commons/codec/bla.tar.xz</inputExclude>
+            <inputExclude>src/test/resources/org/apache/commons/codec/empty.bin</inputExclude>
+            <inputExclude>src/test/resources/org/apache/commons/codec/small.bin</inputExclude>
+          </inputExcludes>
         </configuration>
       </plugin>
       <plugin>
