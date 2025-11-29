@@ -28,7 +28,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test cases for the StingEncoderComparator.
+ * Test cases for the StringEncoderComparator.
  */
 class StringEncoderComparatorTest {
 
