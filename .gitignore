@@ -11,3 +11,7 @@ target/
 .classpath
 .externalToolBuilders/*
 /commons-codec.iml
+
+# NetBeans files
+nb-configuration.xml
+nbactions.xml
