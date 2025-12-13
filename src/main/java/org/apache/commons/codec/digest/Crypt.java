@@ -114,11 +114,11 @@ public class Crypt {
      * The exact algorithm depends on the format of the salt string:
      * </p>
      * <ul>
-     * <li>SHA-512 salts start with {@code $6$} and are up to 16 chars long.
-     * <li>SHA-256 salts start with {@code $5$} and are up to 16 chars long
-     * <li>MD5 salts start with {@code $1$} and are up to 8 chars long
-     * <li>DES, the traditional UnixCrypt algorithm is used with only 2 chars
-     * <li>Only the first 8 chars of the passwords are used in the DES algorithm!
+     * <li>SHA-512 salts start with {@code $6$} and are up to 16 chars long.</li>
+     * <li>SHA-256 salts start with {@code $5$} and are up to 16 chars long</li>
+     * <li>MD5 salts start with {@code $1$} and are up to 8 chars long</li>
+     * <li>DES, the traditional UnixCrypt algorithm is used with only 2 chars</li>
+     * <li>Only the first 8 chars of the passwords are used in the DES algorithm!</li>
      * </ul>
      * <p>
      * The magic strings {@code "$apr1$"} and {@code "$2a$"} are not recognized by this method as its output should be
@@ -140,10 +140,10 @@ public class Crypt {
      * The total length is dependent on the algorithm used:
      * </p>
      * <ul>
-     * <li>SHA-512: 106 chars
-     * <li>SHA-256: 63 chars
-     * <li>MD5: 34 chars
-     * <li>DES: 13 chars
+     * <li>SHA-512: 106 chars</li>
+     * <li>SHA-256: 63 chars</li>
+     * <li>MD5: 34 chars</li>
+     * <li>DES: 13 chars</li>
      * </ul>
      * <p>
      * Example:

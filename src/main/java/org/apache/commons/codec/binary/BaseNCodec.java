@@ -38,9 +38,9 @@ import org.apache.commons.codec.EncoderException;
  * unused from the final character or entire characters. The default mode is lenient decoding.
  * </p>
  * <ul>
- * <li>Lenient: Any trailing bits are composed into 8-bit bytes where possible. The remainder are discarded.
+ * <li>Lenient: Any trailing bits are composed into 8-bit bytes where possible. The remainder are discarded.</li>
  * <li>Strict: The decoding will raise an {@link IllegalArgumentException} if trailing bits are not part of a valid encoding. Any unused bits from the final
- * character must be zero. Impossible counts of entire final characters are not allowed.
+ * character must be zero. Impossible counts of entire final characters are not allowed.</li>
  * </ul>
  * <p>
  * When strict decoding is enabled it is expected that the decoded bytes will be re-encoded to a byte array that matches the original, i.e. no changes occur on
@@ -463,9 +463,9 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * Defines the decoding behavior when the input bytes contain leftover trailing bits that cannot be created by a valid encoding. These can be bits that are
      * unused from the final character or entire characters. The default mode is lenient decoding. Set this to {@code true} to enable strict decoding.
      * <ul>
-     * <li>Lenient: Any trailing bits are composed into 8-bit bytes where possible. The remainder are discarded.
+     * <li>Lenient: Any trailing bits are composed into 8-bit bytes where possible. The remainder are discarded.</li>
      * <li>Strict: The decoding will raise an {@link IllegalArgumentException} if trailing bits are not part of a valid encoding. Any unused bits from the final
-     * character must be zero. Impossible counts of entire final characters are not allowed.
+     * character must be zero. Impossible counts of entire final characters are not allowed.</li>
      * </ul>
      * <p>
      * When strict decoding is enabled it is expected that the decoded bytes will be re-encoded to a byte array that matches the original, i.e. no changes occur

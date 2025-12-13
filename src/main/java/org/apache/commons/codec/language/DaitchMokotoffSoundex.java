@@ -42,16 +42,16 @@ import org.apache.commons.codec.StringEncoder;
  * The main differences compared to the other Soundex variants are:
  * </p>
  * <ul>
- * <li>coded names are 6 digits long
- * <li>the initial character of the name is coded
- * <li>rules to encoded multi-character n-grams
- * <li>multiple possible encodings for the same name (branching)
+ * <li>coded names are 6 digits long</li>
+ * <li>the initial character of the name is coded</li>
+ * <li>rules to encoded multi-character n-grams</li>
+ * <li>multiple possible encodings for the same name (branching)</li>
  * </ul>
  * <p>
  * This implementation supports branching, depending on the used method:
  * <ul>
- * <li>{@link #encode(String)} - branching disabled, only the first code will be returned
- * <li>{@link #soundex(String)} - branching enabled, all codes will be returned, separated by '|'
+ * <li>{@link #encode(String)} - branching disabled, only the first code will be returned</li>
+ * <li>{@link #soundex(String)} - branching enabled, all codes will be returned, separated by '|'</li>
  * </ul>
  * <p>
  * Note: This implementation has additional branching rules compared to the original description of the algorithm. The
