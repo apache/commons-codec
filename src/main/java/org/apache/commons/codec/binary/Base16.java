@@ -85,7 +85,7 @@ public class Base16 extends BaseNCodec {
         }
 
         /**
-         * Sets whether to use the the lower-case Base16 alphabet.
+         * Sets whether to use the lower-case Base16 alphabet.
          *
          * @param lowerCase {@code true} to use the lower-case Base16 alphabet.
          * @return {@code this} instance.
