@@ -374,9 +374,7 @@ class DigestUtilsTest {
     }
 
     private boolean isJava25Plus() {
-        return SystemUtils.JAVA_SPECIFICATION_VERSION.equals("25") || SystemUtils.JAVA_SPECIFICATION_VERSION.startsWith("25.");
-        // TODO Commons Lang
-        // return SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_25);
+        return SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_25);
     }
 
     private boolean isJava9Plus() {
