@@ -113,12 +113,14 @@ public class Base64 extends BaseNCodec {
         public Builder setEncodeTable(final byte... encodeTable) {
             final boolean isStandardEncodeTable = Arrays.equals(encodeTable, STANDARD_ENCODE_TABLE);
             final boolean isUrlSafe = Arrays.equals(encodeTable, URL_SAFE_ENCODE_TABLE);
-            super.setDecodeTableRaw(isStandardEncodeTable || isUrlSafe ? DECODE_TABLE : calculateDecodeTable(encodeTable));
+            setDecodeTableRaw(isStandardEncodeTable || isUrlSafe ? DECODE_TABLE : calculateDecodeTable(encodeTable));
             return super.setEncodeTable(encodeTable);
         }
 
         /**
          * Sets the URL-safe encoding policy.
+         * This method does not modify behavior on decoding operations. For configuration of the decoding behavior,
+         * please use {@link #setDecodeTableFormat} method.
          *
          * @param urlSafe URL-safe encoding policy, null resets to the default.
          * @return {@code this} instance.
@@ -130,33 +132,38 @@ public class Base64 extends BaseNCodec {
         /**
          * Sets the format of the decoding table.
          * This method allows to explicitly state whether a "standard" or "URL Safe" Base64 decoding is expected.
+         * This method does not modify behavior on encoding operations. For configuration of the encoding behavior,
+         * please use {@link #setUrlSafe} method.
          * <p>
-         * Note: By default, the implementation uses the MIXED approach, allowing a seamless handling of
-         * both URL_SAFE and STANDARD base64.
+         * Note: By default, the implementation uses the {@link DecodeTableFormat#MIXED} approach, allowing a
+         * seamless handling of both {@link DecodeTableFormat#URL_SAFE} and {@link DecodeTableFormat#STANDARD} base64.
          * </p>
          *
          * @param format table format to be used on Base64 decoding.
+         *               Use {@link DecodeTableFormat#MIXED} or null to reset to the default behavior.
          * @return {@code this} instance.
          */
         public Builder setDecodeTableFormat(final DecodeTableFormat format) {
+            if (format == null) {
+                return setDecodeTableRaw(DECODE_TABLE);
+            }
             switch (format) {
                 case STANDARD:
-                    return super.setDecodeTableRaw(STANDARD_DECODE_TABLE);
+                    return setDecodeTableRaw(STANDARD_DECODE_TABLE);
                 case URL_SAFE:
-                    return super.setDecodeTableRaw(URL_SAFE_DECODE_TABLE);
+                    return setDecodeTableRaw(URL_SAFE_DECODE_TABLE);
                 case MIXED:
                 default:
-                    return super.setDecodeTableRaw(DECODE_TABLE);
+                    return setDecodeTableRaw(DECODE_TABLE);
             }
         }
 
     }
 
     /**
-     * Defines the Base64 table format to be used on decoding
-     * <p>
-     * Note: By default, the MIXED approach is used, allowing a seamless handling of both URL_SAFE and STANDARD base64.
-     * </p>
+     * Defines the Base64 table format to be used on decoding.
+     * By default, the method uses {@link DecodeTableFormat#MIXED} approach, allowing a seamless handling of
+     * both {@link DecodeTableFormat#URL_SAFE} and {@link DecodeTableFormat#STANDARD} base64 options.
      */
     public enum DecodeTableFormat {
 
@@ -173,9 +180,7 @@ public class Base64 extends BaseNCodec {
         /**
          * Represents a joint approach, allowing a seamless decoding of both character sets,
          * corresponding to either Table 1 of RFC 2045 or Table 2 of RFC 4648.
-         * <p>
-         * Note: This decoding table is used by default.
-         * </p>
+         * This decoding table is used by default.
          */
         MIXED
 
@@ -233,7 +238,7 @@ public class Base64 extends BaseNCodec {
      * </p>
      */
     private static final byte[] DECODE_TABLE = {
-            //   0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
+        //   0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
             -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 00-0f
             -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 10-1f
             -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 62, -1, 62, -1, 63, // 20-2f + - /
@@ -248,10 +253,8 @@ public class Base64 extends BaseNCodec {
      * This array is a lookup table that translates Unicode characters drawn from the "Base64 Alphabet" (as specified
      * in Table 1 of RFC 2045) into their 6-bit positive integer equivalents. Characters that are not in the Base64
      * alphabet but fall within the bounds of the array are translated to -1.
-     * <p>
-     * Note: This decoding table handles only the "standard" base64 characters, such as '+' and '/'.
+     * This decoding table handles only the "standard" base64 characters, such as '+' and '/'.
      * The "url-safe" characters such as '-' and '_' are not supported by the table.
-     * </p>
      */
     private static final byte[] STANDARD_DECODE_TABLE = {
         //   0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
@@ -270,10 +273,8 @@ public class Base64 extends BaseNCodec {
      * (as specified in Table 2 of RFC 4648) into their 6-bit positive integer equivalents.
      * Characters that are not in the Base64 URL Safe alphabet but fall within the bounds of the array
      * are translated to -1.
-     * <p>
-     * Note: This decoding table handles only the "URL Safe" base64 characters, such as '-' and '_'.
+     * This decoding table handles only the "URL Safe" base64 characters, such as '-' and '_'.
      * The "standard" characters such as '+' and '/' are not supported by the table.
-     * </p>
      */
     private static final byte[] URL_SAFE_DECODE_TABLE = {
             //   0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
@@ -347,15 +348,13 @@ public class Base64 extends BaseNCodec {
      * <p>
      * <strong>Note:</strong> this method seamlessly handles data encoded in URL-safe or normal mode.
      * For enforcing verification against strict standard Base64 or Base64 URL Safe tables,
-     * please use {@code #decodeBase64Standard} or {@code decodeBase64Url} methods respectively.
-     * </p>
-     * <p>
-     * <strong>Note 2:</strong> this method skips any unknown or not supported bytes.
+     * please use {@link #decodeBase64Standard} or {@link #decodeBase64Url} methods respectively.
+     * This method skips any unknown or not supported bytes.
      * </p>
      *
      * @param base64Data
      *            Byte array containing Base64 data
-     * @return Array containing decoded data.
+     * @return New array containing decoded data.
      */
     public static byte[] decodeBase64(final byte[] base64Data) {
         return new Base64().decode(base64Data);
@@ -366,15 +365,13 @@ public class Base64 extends BaseNCodec {
      * <p>
      * <strong>Note:</strong> this method seamlessly handles data encoded in URL-safe or normal mode.
      * For enforcing verification against strict standard Base64 or Base64 URL Safe tables,
-     * please use {@code #decodeBase64Standard} or {@code decodeBase64Url} methods respectively.
-     * </p>
-     * <p>
-     * <strong>Note 2:</strong> this method skips any unknown or not supported characters.
+     * please use {@link #decodeBase64Standard} or {@link #decodeBase64Url} methods respectively.
+     * This method skips any unknown or not supported bytes.
      * </p>
      *
      * @param base64String
      *            String containing Base64 data
-     * @return Array containing decoded data.
+     * @return New array containing decoded data.
      * @since 1.4
      */
     public static byte[] decodeBase64(final String base64String) {
@@ -385,14 +382,12 @@ public class Base64 extends BaseNCodec {
      * Decodes standard Base64 data into octets.
      * <p>
      * Note: implementation of this method is aligned with the Table 1 of RFC 2045.
-     * </p>
-     * <p>
-     * Note 2 this method skips any unknown or not supported bytes.
+     * This method skips any unknown or not supported bytes.
      * </p>
      *
      * @param base64Data
      *            Byte array containing Base64 data
-     * @return Array containing decoded data.
+     * @return New array containing decoded data.
      * @since 1.21
      */
     public static byte[] decodeBase64Standard(final byte[] base64Data) {
@@ -403,14 +398,12 @@ public class Base64 extends BaseNCodec {
      * Decodes a standard Base64 String into octets.
      * <p>
      * Note: implementation of this method is aligned with the Table 1 of RFC 2045.
-     * </p>
-     * <p>
-     * Note 2: this method skips any unknown or not supported characters.
+     * This method skips any unknown or not supported characters.
      * </p>
      *
      * @param base64String
      *            String containing Base64 data
-     * @return Array containing decoded data.
+     * @return New array containing decoded data.
      * @since 1.21
      */
     public static byte[] decodeBase64Standard(final String base64String) {
@@ -421,14 +414,12 @@ public class Base64 extends BaseNCodec {
      * Decodes URL Safe Base64 data into octets.
      * <p>
      * Note: implementation of this method is aligned with the Table 2 of RFC 4648.
-     * </p>
-     * <p>
-     * Note 2 this method skips any unknown or not supported bytes.
+     * This method skips any unknown or not supported characters.
      * </p>
      *
      * @param base64Data
      *            Byte array containing Base64 data
-     * @return Array containing decoded data.
+     * @return New array containing decoded data.
      * @since 1.21
      */
     public static byte[] decodeBase64Url(final byte[] base64Data) {
@@ -439,14 +430,12 @@ public class Base64 extends BaseNCodec {
      * Decodes a URL Safe Base64 String into octets.
      * <p>
      * Note: implementation of this method is aligned with the Table 2 of RFC 4648.
-     * </p>
-     * <p>
-     * Note 2 this method skips any unknown or not supported characters.
+     * This method skips any unknown or not supported characters.
      * </p>
      *
      * @param base64String
      *            String containing Base64 data
-     * @return Array containing decoded data.
+     * @return New array containing decoded data.
      * @since 1.21
      */
     public static byte[] decodeBase64Url(final String base64String) {
@@ -628,11 +617,13 @@ public class Base64 extends BaseNCodec {
     }
 
     /**
-     * Returns whether or not the {@code octet} is in the base 64 alphabet.
+     * Tests whether or not the {@code octet} is in the base 64 alphabet.
      * <p>
-     * Note: this method threats both characters '+' and '/' and  '-' and '_' as valid base64 characters.
+     * Note: this method threats all characters included within standard base64 and base64url encodings
+     * as valid base64 characters. This includes the '+' and '/' (standard base64), as well as
+     * '-' and '_' (url safe base64) characters.
      * For enforcing verification against strict standard Base64 or Base64 URL Safe tables,
-     * please use {@code #isBase64Standard} or {@code isBase64Url} methods respectively.
+     * please use {@link #isBase64Standard} or {@link #isBase64Url} methods respectively.
      * </p>
      *
      * @param octet
@@ -648,9 +639,11 @@ public class Base64 extends BaseNCodec {
      * Tests a given byte array to see if it contains only valid characters within the Base64 alphabet. Currently the
      * method treats whitespace as valid.
      * <p>
-     * Note: this method threats both characters '+' and '/' and  '-' and '_' as valid base64 characters.
+     * Note: this method threats all characters included within standard base64 and base64url encodings
+     * as valid base64 characters. This includes the '+' and '/' (standard base64), as well as
+     * '-' and '_' (url safe base64) characters.
      * For enforcing verification against strict standard Base64 or Base64 URL Safe tables,
-     * please use {@code #isBase64Standard} or {@code isBase64Url} methods respectively.
+     * please use {@link #isBase64Standard} or {@link #isBase64Url} methods respectively.
      * </p>
      *
      * @param arrayOctet
@@ -672,9 +665,11 @@ public class Base64 extends BaseNCodec {
      * Tests a given String to see if it contains only valid characters within the Base64 alphabet. Currently the
      * method treats whitespace as valid.
      * <p>
-     * Note: this method threats both characters '+' and '/' and  '-' and '_' as valid base64 characters.
+     * Note: this method threats all characters included within standard base64 and base64url encodings
+     * as valid base64 characters. This includes the '+' and '/' (standard base64), as well as
+     * '-' and '_' (url safe base64) characters.
      * For enforcing verification against strict standard Base64 or Base64 URL Safe tables,
-     * please use {@code #isBase64Standard} or {@code isBase64Url} methods respectively.
+     * please use {@link #isBase64Standard} or {@link #isBase64Url} methods respectively.
      * </p>
      *
      * @param base64
@@ -688,7 +683,7 @@ public class Base64 extends BaseNCodec {
     }
 
     /**
-     * Returns whether or not the {@code octet} is in the standard base 64 alphabet.
+     * Tests whether or not the {@code octet} is in the standard base 64 alphabet.
      * <p>
      * Note: implementation of this method is aligned with the Table 1 of RFC 2045.
      * </p>
@@ -744,7 +739,7 @@ public class Base64 extends BaseNCodec {
     }
 
     /**
-     * Returns whether or not the {@code octet} is in the url safe base 64 alphabet.
+     * Tests whether or not the {@code octet} is in the url safe base 64 alphabet.
      * <p>
      * Note: implementation of this method is aligned with the Table 2 of RFC 4648.
      * </p>
