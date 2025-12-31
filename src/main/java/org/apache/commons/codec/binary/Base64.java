@@ -120,6 +120,7 @@ public class Base64 extends BaseNCodec {
          *
          * @param format table format to be used on Base64 decoding. Use {@link DecodeTableFormat#MIXED} or null to reset to the default behavior.
          * @return {@code this} instance.
+         * @since 1.21
          */
         public Builder setDecodeTableFormat(final DecodeTableFormat format) {
             if (format == null) {
@@ -144,11 +145,12 @@ public class Base64 extends BaseNCodec {
             return super.setEncodeTable(encodeTable);
         }
 
+        // Javadoc 8 can't find {@link #setDecodeTableFormat(DecodeTableFormat)}
         /**
          * Sets the URL-safe encoding policy.
          * <p>
          * This method does not modify behavior on decoding operations. For configuration of the decoding behavior, please use
-         * {@link #setDecodeTableFormat(DecodeTableFormat)} method.
+         * {@code Builder.setDecodeTableFormat(DecodeTableFormat)} method.
          * </p>
          *
          * @param urlSafe URL-safe encoding policy, null resets to the default.
