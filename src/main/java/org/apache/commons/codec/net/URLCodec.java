@@ -57,6 +57,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      * BitSet of www-form-url safe characters.
      * This is a copy of the internal BitSet which is now used for the conversion.
      * Changes to this field are ignored.
+     *
      * @deprecated 1.11 Will be removed in 2.0 (CODEC-230)
      */
     @Deprecated

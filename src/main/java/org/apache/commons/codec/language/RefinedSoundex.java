@@ -45,6 +45,7 @@ public class RefinedSoundex implements StringEncoder {
      * 8: M N
      * 9: R
      * </pre>
+     *
      * @since 1.4
      */
     //                                                      ABCDEFGHIJKLMNOPQRSTUVWXYZ

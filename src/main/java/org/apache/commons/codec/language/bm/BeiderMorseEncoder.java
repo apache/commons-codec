@@ -71,12 +71,12 @@ import org.apache.commons.codec.StringEncoder;
  * <p>
  * <strong>Note</strong>: this version of the Beider-Morse encoding is equivalent with v3.4 of the reference implementation.
  * </p>
- * @see <a href="https://stevemorse.org/phonetics/bmpm.htm">Beider-Morse Phonetic Matching</a>
- * @see <a href="https://stevemorse.org/phoneticinfo.htm">Reference implementation</a>
- *
  * <p>
  * This class is Not ThreadSafe.
  * </p>
+ *
+ * @see <a href="https://stevemorse.org/phonetics/bmpm.htm">Beider-Morse Phonetic Matching</a>
+ * @see <a href="https://stevemorse.org/phoneticinfo.htm">Reference implementation</a>
  * @since 1.6
  */
 public class BeiderMorseEncoder implements StringEncoder {

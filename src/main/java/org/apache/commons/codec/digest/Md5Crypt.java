@@ -170,6 +170,7 @@ public class Md5Crypt {
      * <p>
      * A salt is generated for you using {@link SecureRandom}.
      * </p>
+     *
      * @param keyBytes
      *            plaintext string to hash. Each array element is set to {@code 0} before returning.
      * @return the hash value.
@@ -189,6 +190,7 @@ public class Md5Crypt {
      * <p>
      * A salt is generated for you using the instance of {@link Random} you supply.
      * </p>
+     *
      * @param keyBytes
      *            plaintext string to hash. Each array element is set to {@code 0} before returning.
      * @param random

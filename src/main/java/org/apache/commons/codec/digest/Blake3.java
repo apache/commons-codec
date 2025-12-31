@@ -498,6 +498,7 @@ public final class Blake3 {
 
     /**
      * Resets this instance back to its initial state when it was first constructed.
+     *
      * @return {@code this} instance.
      */
     public Blake3 reset() {
