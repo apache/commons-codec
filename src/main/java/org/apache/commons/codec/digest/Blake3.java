@@ -338,9 +338,9 @@ public final class Blake3 {
     /**
      * Calculates the Blake3 hash of the provided data.
      *
-     * @param data source array to absorb data from
-     * @return 32-byte hash squeezed from the provided data
-     * @throws NullPointerException if data is null
+     * @param data source array to absorb data from.
+     * @return 32-byte hash squeezed from the provided data.
+     * @throws NullPointerException if data is null.
      */
     public static byte[] hash(final byte[] data) {
         return initHash().update(data).doFinalize(OUT_LEN);
@@ -360,9 +360,9 @@ public final class Blake3 {
      * The instance returned functions as a key-derivation function which can further absorb additional context data
      * before squeezing derived key data.
      *
-     * @param kdfContext a globally unique key-derivation context byte string to separate key derivation contexts from each other
-     * @return fresh Blake3 instance in key derivation mode
-     * @throws NullPointerException if kdfContext is null
+     * @param kdfContext a globally unique key-derivation context byte string to separate key derivation contexts from each other.
+     * @return fresh Blake3 instance in key derivation mode.
+     * @throws NullPointerException if kdfContext is null.
      */
     public static Blake3 initKeyDerivationFunction(final byte[] kdfContext) {
         Objects.requireNonNull(kdfContext);
@@ -377,10 +377,10 @@ public final class Blake3 {
      * Constructs a fresh Blake3 keyed hash function. The instance returned functions as a pseudorandom function (PRF) or as a
      * message authentication code (MAC).
      *
-     * @param key 32-byte secret key
-     * @return fresh Blake3 instance in keyed mode using the provided key
-     * @throws NullPointerException     if key is null
-     * @throws IllegalArgumentException if key is not 32 bytes
+     * @param key 32-byte secret key.
+     * @return fresh Blake3 instance in keyed mode using the provided key.
+     * @throws NullPointerException     if key is null.
+     * @throws IllegalArgumentException if key is not 32 bytes.
      */
     public static Blake3 initKeyedHash(final byte[] key) {
         Objects.requireNonNull(key);
@@ -393,9 +393,9 @@ public final class Blake3 {
     /**
      * Calculates the Blake3 keyed hash (MAC) of the provided data.
      *
-     * @param key  32-byte secret key
-     * @param data source array to absorb data from
-     * @return 32-byte mac squeezed from the provided data
+     * @param key  32-byte secret key.
+     * @param data source array to absorb data from.
+     * @return 32-byte mac squeezed from the provided data.
      * @throws NullPointerException if key or data are null
      */
     public static byte[] keyedHash(final byte[] key, final byte[] data) {
@@ -454,9 +454,9 @@ public final class Blake3 {
      * Finalizes hash output data that depends on the sequence of updated bytes preceding this invocation and any
      * previously finalized bytes. Note that this can finalize up to 2<sup>64</sup> bytes per instance.
      *
-     * @param out destination array to finalize bytes into
+     * @param out destination array to finalize bytes into.
      * @return {@code this} instance.
-     * @throws NullPointerException if out is null
+     * @throws NullPointerException if out is null.
      */
     public Blake3 doFinalize(final byte[] out) {
         return doFinalize(out, 0, out.length);
@@ -466,13 +466,13 @@ public final class Blake3 {
      * Finalizes an arbitrary number of bytes into the provided output array that depends on the sequence of previously
      * updated and finalized bytes. Note that this can finalize up to 2<sup>64</sup> bytes per instance.
      *
-     * @param out    destination array to finalize bytes into
-     * @param offset where in the array to begin writing bytes to
-     * @param length number of bytes to finalize
+     * @param out    destination array to finalize bytes into.
+     * @param offset where in the array to begin writing bytes to.
+     * @param length number of bytes to finalize.
      * @return {@code this} instance.
-     * @throws NullPointerException      if out is null
+     * @throws NullPointerException      if out is null.
      * @throws IndexOutOfBoundsException if offset or length are negative or if offset + length is greater than the
-     *                                   length of the provided array
+     *                                   length of the provided array.
      */
     public Blake3 doFinalize(final byte[] out, final int offset, final int length) {
         checkBufferArgs(out, offset, length);
@@ -483,9 +483,9 @@ public final class Blake3 {
     /**
      * Squeezes and returns an arbitrary number of bytes dependent on the sequence of previously absorbed and squeezed bytes.
      *
-     * @param nrBytes number of bytes to finalize
-     * @return requested number of finalized bytes
-     * @throws IllegalArgumentException if nrBytes is negative
+     * @param nrBytes number of bytes to finalize.
+     * @return requested number of finalized bytes.
+     * @throws IllegalArgumentException if nrBytes is negative.
      */
     public byte[] doFinalize(final int nrBytes) {
         if (nrBytes < 0) {
@@ -508,9 +508,9 @@ public final class Blake3 {
     /**
      * Updates this hash state using the provided bytes.
      *
-     * @param in source array to update data from
+     * @param in source array to update data from.
      * @return {@code this} instance.
-     * @throws NullPointerException if in is null
+     * @throws NullPointerException if in is null.
      */
     public Blake3 update(final byte[] in) {
         return update(in, 0, in.length);
@@ -519,13 +519,13 @@ public final class Blake3 {
     /**
      * Updates this hash state using the provided bytes at an offset.
      *
-     * @param in     source array to update data from
-     * @param offset where in the array to begin reading bytes
-     * @param length number of bytes to update
+     * @param in     source array to update data from.
+     * @param offset where in the array to begin reading bytes.
+     * @param length number of bytes to update.
      * @return {@code this} instance.
-     * @throws NullPointerException      if in is null
+     * @throws NullPointerException      if in is null.
      * @throws IndexOutOfBoundsException if offset or length are negative or if offset + length is greater than the
-     *                                   length of the provided array
+     *                                   length of the provided array.
      */
     public Blake3 update(final byte[] in, final int offset, final int length) {
         checkBufferArgs(in, offset, length);
