@@ -657,17 +657,12 @@ public final class HmacUtils {
     /**
      * Tests whether this algorithm is available
      *
-     * @param name the name to check.
+     * @param hmacAlgorithms the HmacAlgorithms to check.
      * @return whether this algorithm is available.
      * @since 1.11
      */
-    public static boolean isAvailable(final HmacAlgorithms name) {
-        try {
-            Mac.getInstance(name.getName());
-            return true;
-        } catch (final NoSuchAlgorithmException e) {
-            return false;
-        }
+    public static boolean isAvailable(final HmacAlgorithms hmacAlgorithms) {
+        return isAvailable(hmacAlgorithms.getName());
     }
 
     /**
