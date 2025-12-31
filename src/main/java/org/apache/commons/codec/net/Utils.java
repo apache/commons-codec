@@ -22,7 +22,9 @@ import org.apache.commons.codec.DecoderException;
 /**
  * Utility methods for this package.
  *
- * <p>This class is immutable and thread-safe.</p>
+ * <p>
+ * This class is immutable and thread-safe.
+ * </p>
  *
  * @since 1.4
  */
@@ -36,11 +38,9 @@ final class Utils {
     /**
      * Returns the numeric value of the character {@code b} in radix 16.
      *
-     * @param b
-     *            The byte to be converted.
+     * @param b The byte to be converted.
      * @return The numeric value represented by the character in radix 16.
-     * @throws DecoderException
-     *             Thrown when the byte is not valid per {@link Character#digit(char,int)}
+     * @throws DecoderException Thrown when the byte is not valid per {@link Character#digit(char,int)}.
      */
     static int digit16(final byte b) throws DecoderException {
         final int i = Character.digit((char) b, RADIX);
@@ -53,11 +53,10 @@ final class Utils {
     /**
      * Returns the upper case hexadecimal digit of the lower 4 bits of the int.
      *
-     * @param b the input int
+     * @param b the input int.
      * @return the upper case hexadecimal digit of the lower 4 bits of the int.
      */
     static char hexChar(final int b) {
         return Character.toUpperCase(Character.forDigit(b & 0xF, RADIX));
     }
-
 }

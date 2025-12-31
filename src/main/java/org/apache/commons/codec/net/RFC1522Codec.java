@@ -29,16 +29,14 @@ import org.apache.commons.codec.binary.StringUtils;
 /**
  * Implements methods common to all codecs defined in RFC 1522.
  * <p>
- * <a href="https://www.ietf.org/rfc/rfc1522.txt">RFC 1522</a> describes techniques to allow the
- * encoding of non-ASCII text in various portions of a RFC 822 [2] message header, in a manner which
- * is unlikely to confuse existing message handling software.
+ * <a href="https://www.ietf.org/rfc/rfc1522.txt">RFC 1522</a> describes techniques to allow the encoding of non-ASCII text in various portions of a RFC 822 [2]
+ * message header, in a manner which is unlikely to confuse existing message handling software.
  * </p>
  * <p>
  * This class is immutable and thread-safe.
  * </p>
  *
- * @see <a href="https://www.ietf.org/rfc/rfc1522.txt">MIME (Multipurpose Internet Mail Extensions) Part Two:
- *          Message Header Extensions for Non-ASCII Text</a>
+ * @see <a href="https://www.ietf.org/rfc/rfc1522.txt">MIME (Multipurpose Internet Mail Extensions) Part Two: Message Header Extensions for Non-ASCII Text</a>
  * @since 1.3
  */
 abstract class RFC1522Codec {
@@ -64,17 +62,14 @@ abstract class RFC1522Codec {
     /**
      * Applies an RFC 1522 compliant decoding scheme to the given string of text.
      * <p>
-     * This method processes the "encoded-word" header common to all the RFC 1522 codecs and then invokes
-     * {@link #doDecoding(byte[])}  method of a concrete class to perform the specific decoding.
+     * This method processes the "encoded-word" header common to all the RFC 1522 codecs and then invokes {@link #doDecoding(byte[])} method of a concrete class
+     * to perform the specific decoding.
      * </p>
      *
-     * @param text
-     *            a string to decode
+     * @param text a string to decode.
      * @return A new decoded String or {@code null} if the input is {@code null}.
-     * @throws DecoderException
-     *             thrown if there is an error condition during the decoding process.
-     * @throws UnsupportedEncodingException
-     *             thrown if charset specified in the "encoded-word" header is not supported
+     * @throws DecoderException             thrown if there is an error condition during the decoding process.
+     * @throws UnsupportedEncodingException thrown if charset specified in the "encoded-word" header is not supported.
      */
     protected String decodeText(final String text) throws DecoderException, UnsupportedEncodingException {
         if (text == null) {
@@ -112,39 +107,32 @@ abstract class RFC1522Codec {
     /**
      * Decodes an array of bytes using the defined encoding scheme.
      *
-     * @param bytes
-     *            Data to be decoded
-     * @return a byte array that contains decoded data
-     * @throws DecoderException
-     *             A decoder exception is thrown if a Decoder encounters a failure condition during the decode process.
+     * @param bytes Data to be decoded.
+     * @return a byte array that contains decoded data.
+     * @throws DecoderException A decoder exception is thrown if a Decoder encounters a failure condition during the decode process.
      */
     protected abstract byte[] doDecoding(byte[] bytes) throws DecoderException;
 
     /**
      * Encodes an array of bytes using the defined encoding scheme.
      *
-     * @param bytes
-     *            Data to be encoded
-     * @return A byte array containing the encoded data
-     * @throws EncoderException
-     *             thrown if the Encoder encounters a failure condition during the encoding process.
+     * @param bytes Data to be encoded.
+     * @return A byte array containing the encoded data.
+     * @throws EncoderException thrown if the Encoder encounters a failure condition during the encoding process.
      */
     protected abstract byte[] doEncoding(byte[] bytes) throws EncoderException;
 
     /**
      * Applies an RFC 1522 compliant encoding scheme to the given string of text with the given charset.
      * <p>
-     * This method constructs the "encoded-word" header common to all the RFC 1522 codecs and then invokes
-     * {@link #doEncoding(byte[])}  method of a concrete class to perform the specific encoding.
+     * This method constructs the "encoded-word" header common to all the RFC 1522 codecs and then invokes {@link #doEncoding(byte[])} method of a concrete
+     * class to perform the specific encoding.
      * </p>
      *
-     * @param text
-     *            a string to encode
-     * @param charset
-     *            a charset to be used
-     * @return RFC 1522 compliant "encoded-word"
-     * @throws EncoderException
-     *             thrown if there is an error condition during the Encoding process.
+     * @param text    a string to encode.
+     * @param charset a charset to be used.
+     * @return RFC 1522 compliant "encoded-word".
+     * @throws EncoderException thrown if there is an error condition during the Encoding process.
      * @see Charset
      */
     protected String encodeText(final String text, final Charset charset) throws EncoderException {
@@ -165,19 +153,15 @@ abstract class RFC1522Codec {
     /**
      * Applies an RFC 1522 compliant encoding scheme to the given string of text with the given charset.
      * <p>
-     * This method constructs the "encoded-word" header common to all the RFC 1522 codecs and then invokes
-     * {@link #doEncoding(byte[])}  method of a concrete class to perform the specific encoding.
+     * This method constructs the "encoded-word" header common to all the RFC 1522 codecs and then invokes {@link #doEncoding(byte[])} method of a concrete
+     * class to perform the specific encoding.
      * </p>
      *
-     * @param text
-     *            a string to encode
-     * @param charsetName
-     *            the charset to use
-     * @return RFC 1522 compliant "encoded-word"
-     * @throws EncoderException
-     *             thrown if there is an error condition during the Encoding process.
-     * @throws UnsupportedCharsetException
-     *             if charset is not available
+     * @param text        a string to encode.
+     * @param charsetName the charset to use.
+     * @return RFC 1522 compliant "encoded-word".
+     * @throws EncoderException            thrown if there is an error condition during the Encoding process.
+     * @throws UnsupportedCharsetException if charset is not available.
      * @see Charset
      */
     protected String encodeText(final String text, final String charsetName) throws EncoderException {
@@ -191,7 +175,7 @@ abstract class RFC1522Codec {
     /**
      * Gets the default Charset name used for string decoding and encoding.
      *
-     * @return the default Charset name
+     * @return the default Charset name.
      * @since 1.7
      */
     public Charset getCharset() {
@@ -201,7 +185,7 @@ abstract class RFC1522Codec {
     /**
      * Gets the default Charset name used for string decoding and encoding.
      *
-     * @return the default Charset name
+     * @return the default Charset name.
      */
     public String getDefaultCharset() {
         return charset.name();
