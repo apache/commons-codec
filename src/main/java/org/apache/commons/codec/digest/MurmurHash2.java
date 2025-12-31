@@ -68,7 +68,7 @@ public final class MurmurHash2 {
      * </pre>
      *
      * @param data The input byte array.
-     * @param length The length of the array
+     * @param length The length of the array.
      * @return The 32-bit hash.
      * @see #hash32(byte[], int, int)
      */
@@ -80,7 +80,7 @@ public final class MurmurHash2 {
      * Generates a 32-bit hash from byte array with the given length and seed.
      *
      * @param data The input byte array.
-     * @param length The length of the array
+     * @param length The length of the array.
      * @param seed The initial seed value.
      * @return The 32-bit hash.
      */
@@ -155,7 +155,7 @@ public final class MurmurHash2 {
      * </pre>
      *
      * @param text The input string.
-     * @param from The starting index
+     * @param from The starting index.
      * @param length The length of the substring.
      * @return The 32-bit hash.
      * @see #hash32(byte[], int, int)
@@ -186,7 +186,7 @@ public final class MurmurHash2 {
      * Generates a 64-bit hash from byte array of the given length and seed.
      *
      * @param data The input byte array.
-     * @param length The length of the array
+     * @param length The length of the array.
      * @param seed The initial seed value.
      * @return The 64-bit hash of the given array.
      */
@@ -272,7 +272,7 @@ public final class MurmurHash2 {
      * </pre>
      *
      * @param text The input string.
-     * @param from The starting index
+     * @param from The starting index.
      * @param length The length of the substring.
      * @return The 64-bit hash.
      * @see #hash64(byte[], int, int)

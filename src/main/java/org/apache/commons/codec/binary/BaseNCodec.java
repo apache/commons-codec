@@ -415,7 +415,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * Increases our buffer by the {@link #DEFAULT_BUFFER_RESIZE_FACTOR}.
      *
      * @param context     the context to be used.
-     * @param minCapacity the minimum required capacity
+     * @param minCapacity the minimum required capacity.
      * @return the resized byte[] buffer.
      * @throws OutOfMemoryError if the {@code minCapacity} is negative.
      */

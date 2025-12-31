@@ -264,7 +264,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * @param sourceStr
      *            string to convert to quoted-printable form.
      * @param sourceCharset
-     *            the Charset for sourceStr
+     *            the Charset for sourceStr.
      * @return quoted-printable string.
      * @throws EncoderException
      *             thrown if a failure condition is encountered during the encoding process.
@@ -280,7 +280,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * @param sourceStr
      *            string to convert to quoted-printable form.
      * @param sourceCharset
-     *            the Charset for sourceStr
+     *            the Charset for sourceStr.
      * @return quoted-printable string.
      * @throws EncoderException
      *             thrown if a failure condition is encountered during the encoding process.

@@ -256,7 +256,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      * @param str
      *            URL safe string to convert into its original form.
      * @param charsetName
-     *            the original string charset
+     *            the original string charset.
      * @return original string.
      * @throws DecoderException
      *             Thrown if URL decoding is unsuccessful.
@@ -334,7 +334,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      * @param str
      *            string to convert to a URL safe form.
      * @param charsetName
-     *            the charset for str
+     *            the charset for str.
      * @return URL safe string.
      * @throws UnsupportedEncodingException
      *             Thrown if charset is not supported.

@@ -64,7 +64,7 @@ public class Crypt {
      * @param salt
      *            the salt, which is used to select the algorithm, see {@link #crypt(String, String)}
      *            The salt may be null,
-     *            in which case the method delegates to {@link Sha2Crypt#sha512Crypt(byte[])}
+     *            in which case the method delegates to {@link Sha2Crypt#sha512Crypt(byte[])}.
      *
      * @return hash value.
      * @throws IllegalArgumentException
@@ -162,12 +162,12 @@ public class Crypt {
      *            plaintext password as entered by the used.
      * @param salt
      *            real salt value without prefix or "rounds=". The salt may be null, in which case a
-     *            salt is generated for you using {@link SecureRandom}
-     * @return hash value, i.e. encrypted password including the salt string
+     *            salt is generated for you using {@link SecureRandom}.
+     * @return hash value, i.e. encrypted password including the salt string.
      * @throws IllegalArgumentException
      *             if the salt does not match the allowed pattern.
      * @throws IllegalArgumentException
-     *             when a {@link java.security.NoSuchAlgorithmException} is caught. *
+     *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
     public static String crypt(final String key, final String salt) {
         return crypt(key.getBytes(StandardCharsets.UTF_8), salt);

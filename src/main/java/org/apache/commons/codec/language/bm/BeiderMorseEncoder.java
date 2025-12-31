@@ -142,7 +142,7 @@ public class BeiderMorseEncoder implements StringEncoder {
      *
      * @param concat
      *            true if multiple encodings are to be combined with a '|', false if just the first one is
-     *            to be considered
+     *            to be considered.
      */
     public void setConcat(final boolean concat) {
         this.engine = new PhoneticEngine(this.engine.getNameType(),

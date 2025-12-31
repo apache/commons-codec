@@ -1414,7 +1414,7 @@ public class DigestUtils {
      * Updates the given {@link MessageDigest}.
      *
      * @param messageDigest the {@link MessageDigest} to update.
-     * @param valueToDigest the value to update the {@link MessageDigest} with
+     * @param valueToDigest the value to update the {@link MessageDigest} with.
      * @return the updated {@link MessageDigest}.
      * @since 1.7
      */
@@ -1427,7 +1427,7 @@ public class DigestUtils {
      * Updates the given {@link MessageDigest}.
      *
      * @param messageDigest the {@link MessageDigest} to update.
-     * @param valueToDigest the value to update the {@link MessageDigest} with
+     * @param valueToDigest the value to update the {@link MessageDigest} with.
      * @return the updated {@link MessageDigest}.
      * @since 1.11
      */
@@ -1440,7 +1440,7 @@ public class DigestUtils {
      * Reads through a File and updates the digest for the data
      *
      * @param digest The MessageDigest to use (for example MD5).
-     * @param data   Data to digest
+     * @param data   Data to digest.
      * @return the digest.
      * @throws IOException On error reading from the stream.
      * @since 1.11
@@ -1455,7 +1455,7 @@ public class DigestUtils {
      * TODO Decide if this should be public.
      *
      * @param digest The MessageDigest to use (for example MD5).
-     * @param data   Data to digest
+     * @param data   Data to digest.
      * @return the digest.
      * @throws IOException On error reading from the stream.
      * @since 1.14
@@ -1474,7 +1474,7 @@ public class DigestUtils {
      * Reads through an InputStream and updates the digest for the data
      *
      * @param digest      The MessageDigest to use (for example MD5).
-     * @param inputStream Data to digest
+     * @param inputStream Data to digest.
      * @return the digest.
      * @throws IOException On error reading from the stream.
      * @since 1.8
@@ -1493,7 +1493,7 @@ public class DigestUtils {
      * Reads through a Path and updates the digest for the data
      *
      * @param digest  The MessageDigest to use (for example MD5).
-     * @param path    Data to digest
+     * @param path    Data to digest.
      * @param options options How to open the file.
      * @return the digest.
      * @throws IOException On error reading from the stream.
@@ -1509,7 +1509,7 @@ public class DigestUtils {
      * Reads through a RandomAccessFile and updates the digest for the data using non-blocking-io (NIO)
      *
      * @param digest The MessageDigest to use (for example MD5).
-     * @param data   Data to digest
+     * @param data   Data to digest.
      * @return the digest.
      * @throws IOException On error reading from the stream.
      * @since 1.14
@@ -1526,7 +1526,7 @@ public class DigestUtils {
      * {@link String#getBytes(java.nio.charset.Charset)} and pass that to the {@link DigestUtils#updateDigest(MessageDigest, byte[])} method
      *
      * @param messageDigest the {@link MessageDigest} to update.
-     * @param valueToDigest the value to update the {@link MessageDigest} with; converted to bytes using {@link StringUtils#getBytesUtf8(String)}
+     * @param valueToDigest the value to update the {@link MessageDigest} with; converted to bytes using {@link StringUtils#getBytesUtf8(String)}.
      * @return the updated {@link MessageDigest}.
      * @since 1.7
      */
@@ -1623,7 +1623,7 @@ public class DigestUtils {
      * Reads through a File and returns the digest for the data
      *
      * @param data    Data to digest.
-     * @param options options How to open the file
+     * @param options options How to open the file.
      * @return the digest.
      * @throws IOException On error reading from the stream.
      * @since 1.14
@@ -1693,7 +1693,7 @@ public class DigestUtils {
      * Reads through a File and returns the digest for the data
      *
      * @param data    Data to digest.
-     * @param options options How to open the file
+     * @param options options How to open the file.
      * @return the digest as a hexadecimal string.
      * @throws IOException On error reading from the stream.
      * @since 1.11

@@ -361,7 +361,7 @@ public class Rule {
      * Gets rules for a combination of name type, rule type and languages.
      *
      * @param nameType the NameType to consider.
-     * @param rt       the RuleType to consider
+     * @param rt       the RuleType to consider.
      * @param langs    the set of languages to consider.
      * @return a list of Rules that apply.
      */
@@ -376,7 +376,7 @@ public class Rule {
      * Gets rules for a combination of name type, rule type and a single language.
      *
      * @param nameType the NameType to consider.
-     * @param rt       the RuleType to consider
+     * @param rt       the RuleType to consider.
      * @param lang     the language to consider.
      * @return a list of Rules that apply.
      */
@@ -388,7 +388,7 @@ public class Rule {
      * Gets rules for a combination of name type, rule type and languages.
      *
      * @param nameType the NameType to consider.
-     * @param rt       the RuleType to consider
+     * @param rt       the RuleType to consider.
      * @param langs    the set of languages to consider.
      * @return a map containing all Rules that apply, grouped by the first character of the rule pattern.
      * @since 1.9
@@ -401,7 +401,7 @@ public class Rule {
      * Gets rules for a combination of name type, rule type and a single language.
      *
      * @param nameType the NameType to consider.
-     * @param rt       the RuleType to consider
+     * @param rt       the RuleType to consider.
      * @param lang     the language to consider.
      * @return a map containing all Rules that apply, grouped by the first character of the rule pattern.
      * @since 1.9
@@ -630,7 +630,7 @@ public class Rule {
      * Creates a new rule.
      *
      * @param pattern  the pattern.
-     * @param lContext the left context
+     * @param lContext the left context.
      * @param rContext the right context.
      * @param phoneme  the resulting phoneme.
      */
@@ -682,7 +682,7 @@ public class Rule {
      * {@code pattern} matches at i and {@code rContext} matches from the end of the match of {@code pattern} to the end of {@code input}.
      *
      * @param input the input String.
-     * @param i     the int position within the input
+     * @param i     the int position within the input.
      * @return true if the pattern and left/right context match, false otherwise.
      */
     public boolean patternAndContextMatches(final CharSequence input, final int i) {

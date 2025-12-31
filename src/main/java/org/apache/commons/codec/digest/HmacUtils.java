@@ -304,7 +304,7 @@ public final class HmacUtils {
      * @param key           The key for the keyed digest (must not be null).
      * @param valueToDigest The value (data) which should to digest
      *                      <p>
-     *                      The InputStream must not be null and will not be closed
+     *                      The InputStream must not be null and will not be closed.
      *                      </p>
      * @return HmacSHA1 MAC for the given key and value.
      * @throws IOException              If an I/O error occurs.

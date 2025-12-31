@@ -248,7 +248,7 @@ public class PhoneticEngine {
      * Joins some strings with an internal separator.
      *
      * @param strings   Strings to join.
-     * @param sep       String to separate them with
+     * @param sep       String to separate them with.
      * @return a single String consisting of each element of {@code strings} interleaved by {@code sep}.
      */
     private static String join(final List<String> strings, final String sep) {
@@ -271,7 +271,7 @@ public class PhoneticEngine {
      * @param nameType
      *            the type of names it will use.
      * @param ruleType
-     *            the type of rules it will apply
+     *            the type of rules it will apply.
      * @param concatenate
      *            if it will concatenate multiple encodings.
      */
@@ -285,11 +285,11 @@ public class PhoneticEngine {
      * @param nameType
      *            the type of names it will use.
      * @param ruleType
-     *            the type of rules it will apply
+     *            the type of rules it will apply.
      * @param concatenate
      *            if it will concatenate multiple encodings.
      * @param maxPhonemes
-     *            the maximum number of phonemes that will be handled
+     *            the maximum number of phonemes that will be handled.
      * @since 1.7
      */
     public PhoneticEngine(final NameType nameType, final RuleType ruleType, final boolean concatenate, final int maxPhonemes) {
@@ -308,7 +308,7 @@ public class PhoneticEngine {
      * language-independent representation.
      *
      * @param phonemeBuilder the current phonemes.
-     * @param finalRules the final rules to apply
+     * @param finalRules the final rules to apply.
      * @return the resulting phonemes.
      */
     private PhonemeBuilder applyFinalRules(final PhonemeBuilder phonemeBuilder,
@@ -372,9 +372,9 @@ public class PhoneticEngine {
      * @param input
      *            String to phoneticise; a String with dashes or spaces separating each word.
      * @param languageSet
-     *            set of possible origin languages
+     *            set of possible origin languages.
      * @return a phonetic representation of the input; a String containing '-'-separated phonetic representations of the
-     *         input
+     *         input.
      */
     public String encode(String input, final Languages.LanguageSet languageSet) {
         final Map<String, List<Rule>> rules = Rule.getInstanceMap(this.nameType, RuleType.RULES, languageSet);

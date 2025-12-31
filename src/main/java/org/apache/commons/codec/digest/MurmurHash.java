@@ -26,7 +26,7 @@ final class MurmurHash {
      * Gets the little-endian int from 4 bytes starting at the specified index.
      *
      * @param data  The data.
-     * @param index The index
+     * @param index The index.
      * @return The little-endian int.
      */
     static int getLittleEndianInt(final byte[] data, final int index) {
@@ -42,7 +42,7 @@ final class MurmurHash {
      * Gets the little-endian long from 8 bytes starting at the specified index.
      *
      * @param data  The data.
-     * @param index The index
+     * @param index The index.
      * @return The little-endian long.
      */
     static long getLittleEndianLong(final byte[] data, final int index) {
