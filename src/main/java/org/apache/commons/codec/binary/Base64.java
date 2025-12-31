@@ -109,26 +109,6 @@ public class Base64 extends BaseNCodec {
             return new Base64(this);
         }
 
-        @Override
-        public Builder setEncodeTable(final byte... encodeTable) {
-            final boolean isStandardEncodeTable = Arrays.equals(encodeTable, STANDARD_ENCODE_TABLE);
-            final boolean isUrlSafe = Arrays.equals(encodeTable, URL_SAFE_ENCODE_TABLE);
-            setDecodeTableRaw(isStandardEncodeTable || isUrlSafe ? DECODE_TABLE : calculateDecodeTable(encodeTable));
-            return super.setEncodeTable(encodeTable);
-        }
-
-        /**
-         * Sets the URL-safe encoding policy.
-         * This method does not modify behavior on decoding operations. For configuration of the decoding behavior,
-         * please use {@link #setDecodeTableFormat} method.
-         *
-         * @param urlSafe URL-safe encoding policy, null resets to the default.
-         * @return {@code this} instance.
-         */
-        public Builder setUrlSafe(final boolean urlSafe) {
-            return setEncodeTable(toUrlSafeEncodeTable(urlSafe));
-        }
-
         /**
          * Sets the format of the decoding table.
          * This method allows to explicitly state whether a "standard" or "URL Safe" Base64 decoding is expected.
@@ -156,6 +136,26 @@ public class Base64 extends BaseNCodec {
                 default:
                     return setDecodeTableRaw(DECODE_TABLE);
             }
+        }
+
+        @Override
+        public Builder setEncodeTable(final byte... encodeTable) {
+            final boolean isStandardEncodeTable = Arrays.equals(encodeTable, STANDARD_ENCODE_TABLE);
+            final boolean isUrlSafe = Arrays.equals(encodeTable, URL_SAFE_ENCODE_TABLE);
+            setDecodeTableRaw(isStandardEncodeTable || isUrlSafe ? DECODE_TABLE : calculateDecodeTable(encodeTable));
+            return super.setEncodeTable(encodeTable);
+        }
+
+        /**
+         * Sets the URL-safe encoding policy.
+         * This method does not modify behavior on decoding operations. For configuration of the decoding behavior,
+         * please use {@link #setDecodeTableFormat} method.
+         *
+         * @param urlSafe URL-safe encoding policy, null resets to the default.
+         * @return {@code this} instance.
+         */
+        public Builder setUrlSafe(final boolean urlSafe) {
+            return setEncodeTable(toUrlSafeEncodeTable(urlSafe));
         }
 
     }
