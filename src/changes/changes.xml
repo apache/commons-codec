@@ -43,12 +43,13 @@ The <action> type attribute can be add,update,fix,remove.
     <author>Apache Commons Developers</author>
   </properties>
   <body>
-    <release version="1.20.1" date="YYYY-MM-DD" description="This is a feature and maintenance release. Java 8 or later is required.">
+    <release version="1.21.0" date="YYYY-MM-DD" description="This is a feature and maintenance release. Java 8 or later is required.">
       <!-- FIX -->
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix oak leaf icon references in overview.html when running `mvn clean javadoc:javadoc`.</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix Apache RAT plugin console warnings.</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix malformed Javadoc comments.</action>
       <!-- ADD -->
+      <action type="fix" dev="ggregory" due-to="Aleksandr Beliakov, Gary Gregory" issue="CODEC-333">Add distinct Base64 decoding for standard and URL-safe.</action>
       <!-- UPDATE -->
       <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump org.apache.commons:commons-parent from 91 to 93 #415, #418.</action>
       <action type="update" dev="ggregory" due-to="Gary Gregory">Bump commons-io:commons-io from 2.20.0 to 2.21.0.</action>
