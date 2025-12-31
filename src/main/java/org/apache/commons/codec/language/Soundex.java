@@ -259,8 +259,8 @@ public class Soundex implements StringEncoder {
     /**
      * Sets the maxLength.
      *
-     * @deprecated This feature is not needed since the encoding size must be constant. Will be removed in 2.0.
      * @param maxLength The maxLength to set.
+     * @deprecated This feature is not needed since the encoding size must be constant. Will be removed in 2.0.
      */
     @Deprecated
     public void setMaxLength(final int maxLength) {
