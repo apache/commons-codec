@@ -517,7 +517,7 @@ public class Base32 extends BaseNCodec {
      * @param input   byte[] array of ASCII data to Base32 decode.
      * @param inPos   Position to start reading data from.
      * @param inAvail Amount of bytes available from input for decoding.
-     * @param context the context to be used
+     * @param context the context to be used.
      */
     @Override
     void decode(final byte[] input, int inPos, final int inAvail, final Context context) {
@@ -623,7 +623,7 @@ public class Base32 extends BaseNCodec {
      * @param input   byte[] array of binary data to Base32 encode.
      * @param inPos   Position to start reading data from.
      * @param inAvail Amount of bytes available from input for encoding.
-     * @param context the context to be used
+     * @param context the context to be used.
      */
     @Override
     void encode(final byte[] input, int inPos, final int inAvail, final Context context) {
@@ -733,7 +733,7 @@ public class Base32 extends BaseNCodec {
     /**
      * Returns whether or not the {@code octet} is in the Base32 alphabet.
      *
-     * @param octet The value to test
+     * @param octet The value to test.
      * @return {@code true} if the value is defined in the Base32 alphabet {@code false} otherwise.
      */
     @Override
@@ -748,9 +748,9 @@ public class Base32 extends BaseNCodec {
      * that will be discarded.
      * </p>
      *
-     * @param emptyBitsMask The mask of the lower bits that should be empty
-     * @param context       the context to be used
-     * @throws IllegalArgumentException if the bits being checked contain any non-zero value
+     * @param emptyBitsMask The mask of the lower bits that should be empty.
+     * @param context       the context to be used.
+     * @throws IllegalArgumentException if the bits being checked contain any non-zero value.
      */
     private void validateCharacter(final long emptyBitsMask, final Context context) {
         // Use the long bit work area
@@ -763,7 +763,7 @@ public class Base32 extends BaseNCodec {
     /**
      * Validates whether decoding allows final trailing characters that cannot be created during encoding.
      *
-     * @throws IllegalArgumentException if strict decoding is enabled
+     * @throws IllegalArgumentException if strict decoding is enabled.
      */
     private void validateTrailingCharacters() {
         if (isStrictDecoding()) {

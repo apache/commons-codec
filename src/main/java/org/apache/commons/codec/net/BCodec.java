@@ -100,7 +100,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * @param charsetName
      *            the default Charset to use.
      * @throws java.nio.charset.UnsupportedCharsetException
-     *             If the named Charset is unavailable
+     *             If the named Charset is unavailable.
      * @since 1.7 throws UnsupportedCharsetException if the named Charset is unavailable
      * @see Charset
      */
@@ -113,8 +113,8 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * representation.
      *
      * @param value
-     *            Base64 object to convert into its original form
-     * @return original object
+     *            Base64 object to convert into its original form.
+     * @return original object.
      * @throws DecoderException
      *             Thrown if the argument is not a {@code String}. Thrown if a failure condition is encountered
      *             during the decode process.
@@ -135,8 +135,8 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * representation.
      *
      * @param value
-     *            Base64 string to convert into its original form
-     * @return original string
+     *            Base64 string to convert into its original form.
+     * @return original string.
      * @throws DecoderException
      *             A decoder exception is thrown if a failure condition is encountered during the decode process.
      */
@@ -169,8 +169,8 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * Encodes an object into its Base64 form using the default Charset. Unsafe characters are escaped.
      *
      * @param value
-     *            object to convert to Base64 form
-     * @return Base64 object
+     *            object to convert to Base64 form.
+     * @return Base64 object.
      * @throws EncoderException
      *             thrown if a failure condition is encountered during the encoding process.
      */
@@ -189,8 +189,8 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * Encodes a string into its Base64 form using the default Charset. Unsafe characters are escaped.
      *
      * @param strSource
-     *            string to convert to Base64 form
-     * @return Base64 string
+     *            string to convert to Base64 form.
+     * @return Base64 string.
      * @throws EncoderException
      *             thrown if a failure condition is encountered during the encoding process.
      */
@@ -203,10 +203,10 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * Encodes a string into its Base64 form using the specified Charset. Unsafe characters are escaped.
      *
      * @param strSource
-     *            string to convert to Base64 form
+     *            string to convert to Base64 form.
      * @param sourceCharset
-     *            the Charset for {@code value}
-     * @return Base64 string
+     *            the Charset for {@code value}.
+     * @return Base64 string.
      * @throws EncoderException
      *             thrown if a failure condition is encountered during the encoding process.
      * @since 1.7
@@ -219,10 +219,10 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * Encodes a string into its Base64 form using the specified Charset. Unsafe characters are escaped.
      *
      * @param strSource
-     *            string to convert to Base64 form
+     *            string to convert to Base64 form.
      * @param sourceCharset
-     *            the Charset for {@code value}
-     * @return Base64 string
+     *            the Charset for {@code value}.
+     * @return Base64 string.
      * @throws EncoderException
      *             thrown if a failure condition is encountered during the encoding process.
      */
@@ -246,7 +246,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * <p>The default is false for lenient encoding. Decoding will compose trailing bits
      * into 8-bit bytes and discard the remainder.
      *
-     * @return true if using strict decoding
+     * @return true if using strict decoding.
      * @since 1.15
      */
     public boolean isStrictDecoding() {

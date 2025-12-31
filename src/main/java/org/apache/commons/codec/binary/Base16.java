@@ -285,7 +285,7 @@ public class Base16 extends BaseNCodec {
     /**
      * Validates whether decoding allows an entire final trailing character that cannot be used for a complete byte.
      *
-     * @throws IllegalArgumentException if strict decoding is enabled
+     * @throws IllegalArgumentException if strict decoding is enabled.
      */
     private void validateTrailingCharacter() {
         if (isStrictDecoding()) {

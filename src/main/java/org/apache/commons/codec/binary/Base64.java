@@ -497,7 +497,7 @@ public class Base64 extends BaseNCodec {
      * Encodes binary data using the base64 algorithm, optionally chunking the output into 76 character blocks.
      *
      * @param binaryData    Array containing binary data to encode.
-     * @param isChunked     if {@code true} this encoder will chunk the base64 output into 76 character blocks
+     * @param isChunked     if {@code true} this encoder will chunk the base64 output into 76 character blocks.
      * @param urlSafe       if {@code true} this encoder will emit - and _ instead of the usual + and / characters. <strong>No padding is added when encoding
      *                      using the URL-safe alphabet.</strong>
      * @param maxResultSize The maximum result size to accept.
@@ -536,7 +536,7 @@ public class Base64 extends BaseNCodec {
      * <strong> We changed the behavior of this method from multi-line chunking (1.4) to single-line non-chunking (1.5).</strong>
      * </p>
      *
-     * @param binaryData binary data to encode
+     * @param binaryData binary data to encode.
      * @return String containing Base64 characters.
      * @since 1.4 (NOTE: 1.4 chunked the output, whereas 1.5 does not).
      */
@@ -754,8 +754,8 @@ public class Base64 extends BaseNCodec {
     /**
      * Returns a byte-array representation of a {@code BigInteger} without sign bit.
      *
-     * @param bigInt {@code BigInteger} to be converted
-     * @return a byte array representation of the BigInteger parameter
+     * @param bigInt {@code BigInteger} to be converted.
+     * @return a byte array representation of the BigInteger parameter.
      */
     static byte[] toIntegerBytes(final BigInteger bigInt) {
         int bitlen = bigInt.bitLength();

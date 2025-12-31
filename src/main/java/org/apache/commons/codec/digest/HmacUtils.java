@@ -172,7 +172,7 @@ public final class HmacUtils {
      * @param algorithm the name of the algorithm requested. See
      *                  <a href= "https://docs.oracle.com/javase/6/docs/technotes/guides/security/crypto/CryptoSpec.html#AppA" >Appendix A in the Java
      *                  Cryptography Architecture Reference Guide</a> for information about standard algorithm names.
-     * @param key       The key for the keyed digest (must not be null)
+     * @param key       The key for the keyed digest (must not be null).
      * @return A Mac instance initialized with the given key.
      * @throws IllegalArgumentException when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      * @see Mac#getInstance(String)
@@ -301,7 +301,7 @@ public final class HmacUtils {
     /**
      * Returns a HmacSHA1 Message Authentication Code (MAC) for the given key and value.
      *
-     * @param key           The key for the keyed digest (must not be null)
+     * @param key           The key for the keyed digest (must not be null).
      * @param valueToDigest The value (data) which should to digest
      *                      <p>
      *                      The InputStream must not be null and will not be closed
@@ -333,9 +333,9 @@ public final class HmacUtils {
     /**
      * Returns a HmacSHA1 Message Authentication Code (MAC) as hexadecimal string (lowercase) for the given key and value.
      *
-     * @param key           The key for the keyed digest (must not be null)
-     * @param valueToDigest The value (data) which should to digest (maybe empty or null)
-     * @return HmacSHA1 MAC for the given key and value as hexadecimal string (lowercase)
+     * @param key           The key for the keyed digest (must not be null).
+     * @param valueToDigest The value (data) which should to digest (maybe empty or null).
+     * @return HmacSHA1 MAC for the given key and value as hexadecimal string (lowercase).
      * @throws IllegalArgumentException when a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      * @deprecated (1.11) Use {@code new HmacUtils(HmacAlgorithms.HMAC_SHA_1, byte[]).hmacHex(byte[])}
      */

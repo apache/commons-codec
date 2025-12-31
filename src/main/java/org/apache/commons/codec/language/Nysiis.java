@@ -228,7 +228,7 @@ public class Nysiis implements StringEncoder {
     /**
      * Indicates the strict mode for this {@link Nysiis} encoder.
      *
-     * @return {@code true} if the encoder is configured for strict mode, {@code false} otherwise
+     * @return {@code true} if the encoder is configured for strict mode, {@code false} otherwise.
      */
     public boolean isStrict() {
         return this.strict;

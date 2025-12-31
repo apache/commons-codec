@@ -69,8 +69,8 @@ public class PhoneticEngine {
          * phoneme of zero characters. This can then be appended to. This should be the only way to create a new
          * phoneme from scratch.
          *
-         * @param languages the set of languages
-         * @return  a new, empty phoneme builder
+         * @param languages the set of languages.
+         * @return  a new, empty phoneme builder.
          */
         public static PhonemeBuilder empty(final Languages.LanguageSet languages) {
             return new PhonemeBuilder(new Rule.Phoneme("", languages));
@@ -90,7 +90,7 @@ public class PhoneticEngine {
         /**
          * Creates a new phoneme builder containing all phonemes in this one extended by {@code str}.
          *
-         * @param str   the characters to append to the phonemes
+         * @param str   the characters to append to the phonemes.
          */
         public void append(final CharSequence str) {
             phonemes.forEach(ph -> ph.append(str));
@@ -103,8 +103,8 @@ public class PhoneticEngine {
          * incompatible.
          * </p>
          *
-         * @param phonemeExpr   the expression to apply
-         * @param maxPhonemes   the maximum number of phonemes to build up
+         * @param phonemeExpr   the expression to apply.
+         * @param maxPhonemes   the maximum number of phonemes to build up.
          */
         public void apply(final Rule.PhonemeExpr phonemeExpr, final int maxPhonemes) {
             final Set<Rule.Phoneme> newPhonemes = new LinkedHashSet<>(Math.min(phonemes.size() * phonemeExpr.size(), maxPhonemes));
@@ -129,7 +129,7 @@ public class PhoneticEngine {
         /**
          * Gets underlying phoneme set. Please don't mutate.
          *
-         * @return  the phoneme set
+         * @return  the phoneme set.
          */
         public Set<Rule.Phoneme> getPhonemes() {
             return phonemes;
@@ -140,7 +140,7 @@ public class PhoneticEngine {
          * joined with a pipe. This is explicitly provided in place of toString as it is a potentially
          * expensive operation, which should be avoided when debugging.
          *
-         * @return  the stringified phoneme set
+         * @return  the stringified phoneme set.
          */
         public String makeString() {
             return phonemes.stream().map(Rule.Phoneme::getPhonemeText).collect(Collectors.joining("|"));
@@ -193,7 +193,7 @@ public class PhoneticEngine {
          * and pattern. Then applies this rule to the phoneme builder to produce updated phonemes. If there was no
          * match, {@code i} is advanced one and the character is silently dropped from the phonetic spelling.
          *
-         * @return {@code this}
+         * @return {@code this}.
          */
         public RulesApplication invoke() {
             found = false;
@@ -247,9 +247,9 @@ public class PhoneticEngine {
     /**
      * Joins some strings with an internal separator.
      *
-     * @param strings   Strings to join
+     * @param strings   Strings to join.
      * @param sep       String to separate them with
-     * @return a single String consisting of each element of {@code strings} interleaved by {@code sep}
+     * @return a single String consisting of each element of {@code strings} interleaved by {@code sep}.
      */
     private static String join(final List<String> strings, final String sep) {
         return strings.stream().collect(Collectors.joining(sep));
@@ -269,11 +269,11 @@ public class PhoneticEngine {
      * Generates a new, fully-configured phonetic engine.
      *
      * @param nameType
-     *            the type of names it will use
+     *            the type of names it will use.
      * @param ruleType
      *            the type of rules it will apply
      * @param concatenate
-     *            if it will concatenate multiple encodings
+     *            if it will concatenate multiple encodings.
      */
     public PhoneticEngine(final NameType nameType, final RuleType ruleType, final boolean concatenate) {
         this(nameType, ruleType, concatenate, DEFAULT_MAX_PHONEMES);
@@ -283,11 +283,11 @@ public class PhoneticEngine {
      * Generates a new, fully-configured phonetic engine.
      *
      * @param nameType
-     *            the type of names it will use
+     *            the type of names it will use.
      * @param ruleType
      *            the type of rules it will apply
      * @param concatenate
-     *            if it will concatenate multiple encodings
+     *            if it will concatenate multiple encodings.
      * @param maxPhonemes
      *            the maximum number of phonemes that will be handled
      * @since 1.7
@@ -307,9 +307,9 @@ public class PhoneticEngine {
      * Applies the final rules to convert from a language-specific phonetic representation to a
      * language-independent representation.
      *
-     * @param phonemeBuilder the current phonemes
+     * @param phonemeBuilder the current phonemes.
      * @param finalRules the final rules to apply
-     * @return the resulting phonemes
+     * @return the resulting phonemes.
      */
     private PhonemeBuilder applyFinalRules(final PhonemeBuilder phonemeBuilder,
             final Map<String, List<Rule>> finalRules) {
@@ -358,8 +358,8 @@ public class PhoneticEngine {
      * Encodes a string to its phonetic representation.
      *
      * @param input
-     *            the String to encode
-     * @return the encoding of the input
+     *            the String to encode.
+     * @return the encoding of the input.
      */
     public String encode(final String input) {
         final Languages.LanguageSet languageSet = this.lang.guessLanguages(input);
@@ -370,7 +370,7 @@ public class PhoneticEngine {
      * Encodes an input string into an output phonetic representation, given a set of possible origin languages.
      *
      * @param input
-     *            String to phoneticise; a String with dashes or spaces separating each word
+     *            String to phoneticise; a String with dashes or spaces separating each word.
      * @param languageSet
      *            set of possible origin languages
      * @return a phonetic representation of the input; a String containing '-'-separated phonetic representations of the
@@ -462,7 +462,7 @@ public class PhoneticEngine {
     /**
      * Gets the Lang language guessing rules being used.
      *
-     * @return the Lang in use
+     * @return the Lang in use.
      */
     public Lang getLang() {
         return this.lang;
@@ -471,7 +471,7 @@ public class PhoneticEngine {
     /**
      * Gets the maximum number of phonemes the engine will calculate for a given input.
      *
-     * @return the maximum number of phonemes
+     * @return the maximum number of phonemes.
      * @since 1.7
      */
     public int getMaxPhonemes() {
@@ -481,7 +481,7 @@ public class PhoneticEngine {
     /**
      * Gets the NameType being used.
      *
-     * @return the NameType in use
+     * @return the NameType in use.
      */
     public NameType getNameType() {
         return this.nameType;
@@ -490,7 +490,7 @@ public class PhoneticEngine {
     /**
      * Gets the RuleType being used.
      *
-     * @return the RuleType in use
+     * @return the RuleType in use.
      */
     public RuleType getRuleType() {
         return this.ruleType;
@@ -499,7 +499,7 @@ public class PhoneticEngine {
     /**
      * Gets if multiple phonetic encodings are concatenated or if just the first one is kept.
      *
-     * @return true if multiple phonetic encodings are returned, false if just the first is
+     * @return true if multiple phonetic encodings are returned, false if just the first is.
      */
     public boolean isConcat() {
         return this.concat;

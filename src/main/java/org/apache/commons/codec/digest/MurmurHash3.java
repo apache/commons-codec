@@ -256,7 +256,7 @@ public final class MurmurHash3 {
          * Generates the 32-bit hash value. Repeat calls to this method with no additional data
          * will generate the same hash value.
          *
-         * @return The 32-bit hash
+         * @return The 32-bit hash.
          */
         public final int end() {
             // Allow calling end() again after adding no data to return the same result.
@@ -704,7 +704,7 @@ public final class MurmurHash3 {
      * @param offset The offset of data.
      * @param length The length of array.
      * @param seed The initial seed value.
-     * @return The 32-bit hash
+     * @return The 32-bit hash.
      * @deprecated Use {@link #hash32x86(byte[], int, int, int)}. This corrects the processing of trailing bytes.
      */
     @Deprecated
@@ -862,8 +862,8 @@ public final class MurmurHash3 {
      * bytes are negative.
      * </p>
      *
-     * @param data The input string
-     * @return The 32-bit hash
+     * @param data The input string.
+     * @return The 32-bit hash.
      * @see #hash32(byte[], int, int, int)
      * @deprecated Use {@link #hash32x86(byte[], int, int, int)} with the bytes returned from
      * {@link String#getBytes(java.nio.charset.Charset)}. This corrects the processing of trailing bytes.

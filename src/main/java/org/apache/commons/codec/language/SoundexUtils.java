@@ -81,7 +81,7 @@ final class SoundexUtils {
      *          MS T-SQL DIFFERENCE</a>
      *
      * @throws EncoderException
-     *                  if an error occurs encoding one of the strings
+     *                  if an error occurs encoding one of the strings.
      */
     static int difference(final StringEncoder encoder, final String s1, final String s2) throws EncoderException {
         return differenceEncoded(encoder.encode(s1), encoder.encode(s2));

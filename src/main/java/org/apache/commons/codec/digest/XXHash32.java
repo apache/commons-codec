@@ -83,7 +83,7 @@ public class XXHash32 implements Checksum {
     /**
      * Creates an XXHash32 instance.
      *
-     * @param seed the seed to use
+     * @param seed the seed to use.
      */
     public XXHash32(final int seed) {
         this.seed = seed;

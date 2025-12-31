@@ -357,9 +357,9 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * Create a positive capacity at least as large the minimum required capacity. If the minimum capacity is negative then this throws an OutOfMemoryError as
      * no array can be allocated.
      *
-     * @param minCapacity the minimum capacity
-     * @return the capacity
-     * @throws OutOfMemoryError if the {@code minCapacity} is negative
+     * @param minCapacity the minimum capacity.
+     * @return the capacity.
+     * @throws OutOfMemoryError if the {@code minCapacity} is negative.
      */
     private static int createPositiveCapacity(final int minCapacity) {
         if (minCapacity < 0) {
@@ -380,7 +380,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     /**
      * Gets a copy of the chunk separator per RFC 2045 section 2.1.
      *
-     * @return the chunk separator
+     * @return the chunk separator.
      * @see <a href="https://www.ietf.org/rfc/rfc2045.txt">RFC 2045 section 2.1</a>
      * @since 1.15
      */
@@ -401,8 +401,8 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     /**
      * Checks if a byte value is whitespace or not.
      *
-     * @param byteToCheck the byte to check
-     * @return true if byte is whitespace, false otherwise
+     * @param byteToCheck the byte to check.
+     * @return true if byte is whitespace, false otherwise.
      * @see Character#isWhitespace(int)
      * @deprecated Use {@link Character#isWhitespace(int)}.
      */
@@ -414,10 +414,10 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     /**
      * Increases our buffer by the {@link #DEFAULT_BUFFER_RESIZE_FACTOR}.
      *
-     * @param context     the context to be used
+     * @param context     the context to be used.
      * @param minCapacity the minimum required capacity
-     * @return the resized byte[] buffer
-     * @throws OutOfMemoryError if the {@code minCapacity} is negative
+     * @return the resized byte[] buffer.
+     * @throws OutOfMemoryError if the {@code minCapacity} is negative.
      */
     private static byte[] resizeBuffer(final Context context, final int minCapacity) {
         // Overflow-conscious code treats the min and new capacity as unsigned.
@@ -732,7 +732,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      *
      * @param size    minimum spare space required.
      * @param context the context to be used.
-     * @return the buffer
+     * @return the buffer.
      */
     protected byte[] ensureBufferSize(final int size, final Context context) {
         if (context.buffer == null) {

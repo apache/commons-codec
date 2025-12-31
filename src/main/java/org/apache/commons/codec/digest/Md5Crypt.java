@@ -72,7 +72,7 @@ public class Md5Crypt {
      * </p>
      *
      * @param keyBytes plaintext string to hash. Each array element is set to {@code 0} before returning.
-     * @return the hash value
+     * @return the hash value.
      * @throws IllegalArgumentException when a {@link java.security.NoSuchAlgorithmException} is caught. *
      * @see #apr1Crypt(byte[], String)
      */
@@ -89,7 +89,7 @@ public class Md5Crypt {
      * @param keyBytes plaintext string to hash. Each array element is set to {@code 0} before returning.
      * @param random the instance of {@link Random} to use for generating the salt.
      *              Consider using {@link SecureRandom} for more secure salts.
-     * @return the hash value
+     * @return the hash value.
      * @throws IllegalArgumentException when a {@link java.security.NoSuchAlgorithmException} is caught. *
      * @see #apr1Crypt(byte[], String)
      * @since 1.12
@@ -109,9 +109,9 @@ public class Md5Crypt {
      * @param salt
      *            An APR1 salt. The salt may be null, in which case a salt is generated for you using
      *            {@link SecureRandom}
-     * @return the hash value
+     * @return the hash value.
      * @throws IllegalArgumentException
-     *             if the salt does not match the allowed pattern
+     *             if the salt does not match the allowed pattern.
      * @throws IllegalArgumentException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
@@ -131,7 +131,7 @@ public class Md5Crypt {
      *
      * @param keyBytes
      *            plaintext string to hash. Each array element is set to {@code 0} before returning.
-     * @return the hash value
+     * @return the hash value.
      * @throws IllegalArgumentException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      * @see #apr1Crypt(byte[], String)
@@ -152,9 +152,9 @@ public class Md5Crypt {
      * @param salt
      *            salt string including the prefix and optionally garbage at the end. The salt may be null, in which
      *            case a salt is generated for you using {@link SecureRandom}.
-     * @return the hash value
+     * @return the hash value.
      * @throws IllegalArgumentException
-     *             if the salt does not match the allowed pattern
+     *             if the salt does not match the allowed pattern.
      * @throws IllegalArgumentException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
@@ -172,7 +172,7 @@ public class Md5Crypt {
      * </p>
      * @param keyBytes
      *            plaintext string to hash. Each array element is set to {@code 0} before returning.
-     * @return the hash value
+     * @return the hash value.
      * @throws IllegalArgumentException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      * @see #md5Crypt(byte[], String)
@@ -194,7 +194,7 @@ public class Md5Crypt {
      * @param random
      *            the instance of {@link Random} to use for generating the salt.
      *            Consider using {@link SecureRandom} for more secure salts.
-     * @return the hash value
+     * @return the hash value.
      * @throws IllegalArgumentException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      * @see #md5Crypt(byte[], String)
@@ -216,9 +216,9 @@ public class Md5Crypt {
      * @param salt
      *            salt string including the prefix and optionally garbage at the end. The salt may be null, in which
      *            case a salt is generated for you using {@link SecureRandom}.
-     * @return the hash value
+     * @return the hash value.
      * @throws IllegalArgumentException
-     *             if the salt does not match the allowed pattern
+     *             if the salt does not match the allowed pattern.
      * @throws IllegalArgumentException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
@@ -240,9 +240,9 @@ public class Md5Crypt {
      *            is generated for you using {@link SecureRandom}.
      * @param prefix
      *            The salt prefix {@value #APR1_PREFIX}, {@value #MD5_PREFIX}.
-     * @return the hash value
+     * @return the hash value.
      * @throws IllegalArgumentException
-     *             if the salt does not match the allowed pattern
+     *             if the salt does not match the allowed pattern.
      * @throws IllegalArgumentException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
@@ -266,9 +266,9 @@ public class Md5Crypt {
      * @param random
      *            the instance of {@link Random} to use for generating the salt.
      *            Consider using {@link SecureRandom} for more secure salts.
-     * @return the hash value
+     * @return the hash value.
      * @throws IllegalArgumentException
-     *             if the salt or prefix does not match the allowed pattern
+     *             if the salt or prefix does not match the allowed pattern.
      * @throws IllegalArgumentException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      * @since 1.12

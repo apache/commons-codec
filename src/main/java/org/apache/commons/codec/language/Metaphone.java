@@ -102,8 +102,8 @@ public class Metaphone implements StringEncoder {
     /**
      * Encodes a String using the Metaphone algorithm.
      *
-     * @param str String object to encode
-     * @return The Metaphone code corresponding to the String supplied
+     * @param str String object to encode.
+     * @return The Metaphone code corresponding to the String supplied.
      */
     @Override
     public String encode(final String str) {

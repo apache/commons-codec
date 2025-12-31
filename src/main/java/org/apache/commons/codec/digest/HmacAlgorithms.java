@@ -115,7 +115,7 @@ public enum HmacAlgorithms {
      * @see <a href=
      *      "https://docs.oracle.com/javase/9/security/oracleproviders.htm#JSSEC-GUID-A47B1249-593C-4C38-A0D0-68FA7681E0A7">
      *      Java 9 Cryptography Architecture Sun Providers Documentation</a>
-     * @return The algorithm name ("HmacSHA512" for example)
+     * @return The algorithm name ("HmacSHA512" for example).
      */
     @Override
     public String toString() {

@@ -225,7 +225,7 @@ public class BinaryCodec implements BinaryDecoder, BinaryEncoder {
      * Decodes a byte array where each byte represents an ASCII '0' or '1'.
      *
      * @param ascii each byte represents an ASCII '0' or '1'.
-     * @return the raw encoded binary where each bit corresponds to a byte in the byte array argument
+     * @return the raw encoded binary where each bit corresponds to a byte in the byte array argument.
      * @throws DecoderException if argument is not a byte[], char[] or String.
      * @see org.apache.commons.codec.Decoder#decode(Object)
      */

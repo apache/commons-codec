@@ -43,8 +43,8 @@ public class Crypt {
      * </p>
      *
      * @param keyBytes
-     *            plaintext password
-     * @return hash value
+     *            plaintext password.
+     * @return hash value.
      * @throws IllegalArgumentException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
@@ -60,15 +60,15 @@ public class Crypt {
      * </p>
      *
      * @param keyBytes
-     *            plaintext password
+     *            plaintext password.
      * @param salt
      *            the salt, which is used to select the algorithm, see {@link #crypt(String, String)}
      *            The salt may be null,
      *            in which case the method delegates to {@link Sha2Crypt#sha512Crypt(byte[])}
      *
-     * @return hash value
+     * @return hash value.
      * @throws IllegalArgumentException
-     *             if the salt does not match the allowed pattern
+     *             if the salt does not match the allowed pattern.
      * @throws IllegalArgumentException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
@@ -99,8 +99,8 @@ public class Crypt {
      *
      * @see #crypt(String, String)
      * @param key
-     *            plaintext password
-     * @return hash value
+     *            plaintext password.
+     * @return hash value.
      * @throws IllegalArgumentException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught.
      */
@@ -159,13 +159,13 @@ public class Crypt {
      *
      * @see "The man page of the libc crypt (3) function."
      * @param key
-     *            plaintext password as entered by the used
+     *            plaintext password as entered by the used.
      * @param salt
      *            real salt value without prefix or "rounds=". The salt may be null, in which case a
      *            salt is generated for you using {@link SecureRandom}
      * @return hash value, i.e. encrypted password including the salt string
      * @throws IllegalArgumentException
-     *             if the salt does not match the allowed pattern
+     *             if the salt does not match the allowed pattern.
      * @throws IllegalArgumentException
      *             when a {@link java.security.NoSuchAlgorithmException} is caught. *
      */

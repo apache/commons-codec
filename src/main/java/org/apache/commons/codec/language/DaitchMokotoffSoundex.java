@@ -84,7 +84,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
         /**
          * Creates a new branch, identical to this branch.
          *
-         * @return a new, identical branch
+         * @return a new, identical branch.
          */
         private Branch createBranch() {
             final Branch branch = new Branch();
@@ -328,7 +328,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
      * </p>
      *
      * @param folding
-     *            if ASCII-folding shall be performed before encoding
+     *            if ASCII-folding shall be performed before encoding.
      */
     public DaitchMokotoffSoundex(final boolean folding) {
         this.folding = folding;

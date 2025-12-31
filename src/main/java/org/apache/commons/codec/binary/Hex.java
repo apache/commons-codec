@@ -66,9 +66,9 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * returned array will be half the length of the passed array, as it takes two characters to represent any given
      * byte. An exception is thrown if the passed char array has an odd number of elements.
      *
-     * @param data An array of characters containing hexadecimal digits
+     * @param data An array of characters containing hexadecimal digits.
      * @return A byte array containing binary data decoded from the supplied char array.
-     * @throws DecoderException Thrown if an odd number of characters or illegal characters are supplied
+     * @throws DecoderException Thrown if an odd number of characters or illegal characters are supplied.
      */
     public static byte[] decodeHex(final char[] data) throws DecoderException {
         final byte[] out = new byte[data.length >> 1];
@@ -440,7 +440,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * same values. The returned array will be half the length of the passed String or array, as it takes two characters
      * to represent any given byte. An exception is thrown if the passed char array has an odd number of elements.
      *
-     * @param object A String, ByteBuffer, byte[], or an array of character bytes containing hexadecimal digits
+     * @param object A String, ByteBuffer, byte[], or an array of character bytes containing hexadecimal digits.
      * @return A byte array containing binary data decoded from the supplied byte array (representing characters).
      * @throws DecoderException Thrown if an odd number of characters is supplied to this function or the object is not
      *                          a String or char[].

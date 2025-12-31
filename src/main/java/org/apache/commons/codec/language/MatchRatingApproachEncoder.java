@@ -279,8 +279,8 @@ public class MatchRatingApproachEncoder implements StringEncoder {
      * </p>
      *
      * @param letter
-     *            The letter under investigation
-     * @return True if a vowel, else false
+     *            The letter under investigation.
+     * @return True if a vowel, else false.
      */
     boolean isVowel(final String letter) {
         return letter.equalsIgnoreCase("E") || letter.equalsIgnoreCase("A") || letter.equalsIgnoreCase("O") ||

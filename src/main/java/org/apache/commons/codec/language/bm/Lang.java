@@ -115,8 +115,8 @@ public class Lang {
      * Gets a Lang instance for one of the supported NameTypes.
      *
      * @param nameType
-     *            the NameType to look up
-     * @return a Lang encapsulating the language guessing rules for that name type
+     *            the NameType to look up.
+     * @return a Lang encapsulating the language guessing rules for that name type.
      */
     public static Lang instance(final NameType nameType) {
         return LANGS.get(nameType);
@@ -130,9 +130,9 @@ public class Lang {
      * </p>
      *
      * @param languageRulesResourceName
-     *            the fully-qualified resource name to load
+     *            the fully-qualified resource name to load.
      * @param languages
-     *            the languages that these rules will support
+     *            the languages that these rules will support.
      * @return a Lang encapsulating the loaded language-guessing rules.
      */
     public static Lang loadFromResource(final String languageRulesResourceName, final Languages languages) {
@@ -196,8 +196,8 @@ public class Lang {
      * Guesses the language of a word.
      *
      * @param text
-     *            the word
-     * @return the language that the word originates from or {@link Languages#ANY} if there was no unique match
+     *            the word.
+     * @return the language that the word originates from or {@link Languages#ANY} if there was no unique match.
      */
     public String guessLanguage(final String text) {
         final Languages.LanguageSet ls = guessLanguages(text);
@@ -208,8 +208,8 @@ public class Lang {
      * Guesses the languages of a word.
      *
      * @param input
-     *            the word
-     * @return a Set of Strings of language names that are potential matches for the input word
+     *            the word.
+     * @return a Set of Strings of language names that are potential matches for the input word.
      */
     public Languages.LanguageSet guessLanguages(final String input) {
         final String text = input.toLowerCase(Locale.ENGLISH);

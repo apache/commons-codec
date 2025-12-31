@@ -112,7 +112,7 @@ public class BaseNCodecOutputStream<C extends BaseNCodec, T extends BaseNCodecOu
      *
      * @param outputStream the underlying output or null.
      * @param basedCodec   a BaseNCodec.
-     * @param doEncode     true to encode, false to decode, TODO should be an enum?
+     * @param doEncode     true to encode, false to decode, TODO should be an enum?.
      */
     public BaseNCodecOutputStream(final OutputStream outputStream, final C basedCodec, final boolean doEncode) {
         super(outputStream);

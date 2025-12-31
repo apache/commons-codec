@@ -162,7 +162,7 @@ public class BaseNCodecInputStream<C extends BaseNCodec, T extends BaseNCodecInp
     /**
      * {@inheritDoc}
      *
-     * @return Always returns {@code false}
+     * @return Always returns {@code false}.
      */
     @Override
     public boolean markSupported() {

@@ -63,9 +63,9 @@ public class StringEncoderComparator implements Comparator {
      * If an {@link EncoderException} is encountered, return {@code 0}.
      *
      * @param o1
-     *            the object to compare
+     *            the object to compare.
      * @param o2
-     *            the object to compare to
+     *            the object to compare to.
      * @return the Comparable.compareTo() return code or 0 if an encoding error was caught.
      * @see Comparable
      */

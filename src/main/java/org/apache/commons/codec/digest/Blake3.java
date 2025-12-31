@@ -349,7 +349,7 @@ public final class Blake3 {
     /**
      * Constructs a fresh Blake3 hash function. The instance returned functions as an arbitrary length message digest.
      *
-     * @return fresh Blake3 instance in hashed mode
+     * @return fresh Blake3 instance in hashed mode.
      */
     public static Blake3 initHash() {
         return new Blake3(IV, 0);
@@ -396,7 +396,7 @@ public final class Blake3 {
      * @param key  32-byte secret key.
      * @param data source array to absorb data from.
      * @return 32-byte mac squeezed from the provided data.
-     * @throws NullPointerException if key or data are null
+     * @throws NullPointerException if key or data are null.
      */
     public static byte[] keyedHash(final byte[] key, final byte[] data) {
         return initKeyedHash(key).update(data).doFinalize(OUT_LEN);

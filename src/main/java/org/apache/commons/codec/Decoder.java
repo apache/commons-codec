@@ -35,8 +35,8 @@ public interface Decoder {
      * {@link ClassCastException} occurs this decode method will throw a DecoderException.
      *
      * @param source
-     *            the object to decode
-     * @return a 'decoded" object
+     *            the object to decode.
+     * @return a 'decoded" object.
      * @throws DecoderException
      *             a decoder exception can be thrown for any number of reasons. Some good candidates are that the
      *             parameter passed to this method is null, a param cannot be cast to the appropriate type for a
