@@ -247,31 +247,38 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
          * Placeholder for the bytes we're dealing with for our based logic. Bitwise operations store and extract the encoding or decoding from this variable.
          */
         int ibitWorkArea;
+
         /**
          * Placeholder for the bytes we're dealing with for our based logic. Bitwise operations store and extract the encoding or decoding from this variable.
          */
         long lbitWorkArea;
+
         /**
          * Buffer for streaming.
          */
         byte[] buffer;
+
         /**
          * Position where next character should be written in the buffer.
          */
         int pos;
+
         /**
          * Position where next character should be read from the buffer.
          */
         int readPos;
+
         /**
          * Boolean flag to indicate the EOF has been reached. Once EOF has been reached, this object becomes useless, and must be thrown away.
          */
         boolean eof;
+
         /**
          * Variable tracks how many characters have been written to the current line. Only used when encoding. We use it to make sure each encoded line never
          * goes beyond lineLength (if lineLength &gt; 0).
          */
         int currentLinePos;
+
         /**
          * Writes to the buffer only occur after every 3/5 reads when encoding, and every 4/8 reads when decoding. This variable helps track that.
          */
@@ -295,6 +302,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * @since 1.7
      */
     static final int EOF = -1;
+
     /**
      * MIME chunk size per RFC 2045 section 6.8.
      *
@@ -305,6 +313,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * @see <a href="https://www.ietf.org/rfc/rfc2045.txt">RFC 2045 section 6.8</a>
      */
     public static final int MIME_CHUNK_SIZE = 76;
+
     /**
      * PEM chunk size per RFC 1421 section 4.3.2.4.
      *
@@ -316,10 +325,12 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      */
     public static final int PEM_CHUNK_SIZE = 64;
     private static final int DEFAULT_BUFFER_RESIZE_FACTOR = 2;
+
     /**
      * Defines the default buffer size - currently {@value} - must be large enough for at least one encoded block+separator
      */
     private static final int DEFAULT_BUFFER_SIZE = 8192;
+
     /**
      * The maximum size buffer to allocate.
      *
@@ -330,24 +341,29 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * exceeds VM limit. </blockquote>
      */
     private static final int MAX_BUFFER_SIZE = Integer.MAX_VALUE - 8;
+
     /** Mask used to extract 8 bits, used in decoding bytes */
     protected static final int MASK_8BITS = 0xff;
+
     /**
      * Byte used to pad output.
      */
     protected static final byte PAD_DEFAULT = '='; // Allow static access to default
+
     /**
      * The default decoding policy.
      *
      * @since 1.15
      */
     protected static final CodecPolicy DECODING_POLICY_DEFAULT = CodecPolicy.LENIENT;
+
     /**
      * Chunk separator per RFC 2045 section 2.1.
      *
      * @see <a href="https://www.ietf.org/rfc/rfc2045.txt">RFC 2045 section 2.1</a>
      */
     static final byte[] CHUNK_SEPARATOR = { '\r', '\n' };
+
     /**
      * The empty byte array.
      */
@@ -444,21 +460,27 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      */
     @Deprecated
     protected final byte PAD = PAD_DEFAULT;
+
     /** Pad byte. Instance variable just in case it needs to vary later. */
     protected final byte pad;
+
     /** Number of bytes in each full block of unencoded data, for example 4 for Base64 and 5 for Base32 */
     private final int unencodedBlockSize;
+
     /** Number of bytes in each full block of encoded data, for example 3 for Base64 and 8 for Base32 */
     private final int encodedBlockSize;
+
     /**
      * Chunksize for encoding. Not used when decoding. A value of zero or less implies no chunking of the encoded data. Rounded down to the nearest multiple of
      * encodedBlockSize.
      */
     protected final int lineLength;
+
     /**
      * Size of chunk separator. Not used unless {@link #lineLength} &gt; 0.
      */
     private final int chunkSeparatorLength;
+
     /**
      * Defines the decoding behavior when the input bytes contain leftover trailing bits that cannot be created by a valid encoding. These can be bits that are
      * unused from the final character or entire characters. The default mode is lenient decoding. Set this to {@code true} to enable strict decoding.

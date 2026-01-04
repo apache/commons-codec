@@ -105,6 +105,7 @@ public class Base16 extends BaseNCodec {
     private static final int BYTES_PER_ENCODED_BLOCK = 2;
 
     private static final int BYTES_PER_UNENCODED_BLOCK = 1;
+
     /**
      * This array is a lookup table that translates Unicode characters drawn from the "Base16 Alphabet" (as specified in Table 5 of RFC 4648) into their 4-bit
      * positive integer equivalents. Characters that are not in the Base16 alphabet but fall within the bounds of the array are translated to -1.
@@ -119,6 +120,7 @@ public class Base16 extends BaseNCodec {
             -1, 10, 11, 12, 13, 14, 15                                      // 40-46 A-F
     };
     // @formatter:on
+
     /**
      * This array is a lookup table that translates 4-bit positive integer index values into their "Base16 Alphabet" equivalents as specified in Table 5 of RFC
      * 4648.
@@ -141,6 +143,7 @@ public class Base16 extends BaseNCodec {
             -1, 10, 11, 12, 13, 14, 15                                      // 60-66 a-f
     };
     // @formatter:on
+
     /**
      * This array is a lookup table that translates 4-bit positive integer index values into their "Base16 Alphabet" lower-case equivalents.
      */

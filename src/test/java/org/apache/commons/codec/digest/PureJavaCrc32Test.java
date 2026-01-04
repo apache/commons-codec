@@ -50,8 +50,10 @@ class PureJavaCrc32Test {
      */
     public static class PerformanceTest {
         private static final class BenchResult {
+
             /** CRC value */
             final long value;
+
             /** Speed (MB per second) */
             final double mbps;
 
@@ -214,6 +216,7 @@ class PureJavaCrc32Test {
      * Generate a table to perform checksums based on the same CRC-32 polynomial that java.util.zip.CRC32 uses.
      */
     public static class Table {
+
         /** Generate CRC-32 lookup tables */
         public static void main(final String[] args) throws FileNotFoundException {
             if (args.length != 1) {

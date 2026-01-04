@@ -61,6 +61,7 @@ class DigestUtilsTest {
     private static final int SHAKE128_256_BYTE_LEN = 256 / Byte.SIZE;
     private static final int SHAKE128_512_BYTE_LEN = 512 / Byte.SIZE;
     private static final String EMPTY_STRING = "";
+
     /**
      * Tests SHAKE128 sample of 0-bit message.
      *
@@ -104,6 +105,7 @@ class DigestUtilsTest {
             "43 E4 1B 45 A6 53 F2 A5 C4 49 2C 1A DD 54 45 12" +
             "DD A2 52 98 33 46 2B 71 A4 1A 45 BE 97 29 0B 6F";
     // @formatter:on
+
     /**
      * Tests SHAKE256 sample of 0-bit message.
      *
@@ -147,6 +149,7 @@ class DigestUtilsTest {
             "AB 0B AE 31 63 39 89 43 04 E3 58 77 B0 C2 8A 9B" +
             "1F D1 66 C7 96 B9 CC 25 8A 06 4A 8F 57 E2 7F 2A";
     // @formatter:on
+
     /**
      * Tests SHAKE128 sample of 1600-bit message.
      *
@@ -190,6 +193,7 @@ class DigestUtilsTest {
             "44 C9 FB 35 9F D5 6A C0 A9 A7 5A 74 3C FF 68 62" +
             "F1 7D 72 59 AB 07 52 16 C0 69 95 11 64 3B 64 39";
     // @formatter:on
+
     /**
      * Tests SHAKE256 sample of 1600-bit message.
      *

@@ -315,6 +315,7 @@ public final class MurmurHash3 {
      */
     @Deprecated
     public static final long NULL_HASHCODE = 2862933555777941757L;
+
     /**
      * A default seed to use for the murmur hash algorithm.
      * Has the value {@code 104729}.

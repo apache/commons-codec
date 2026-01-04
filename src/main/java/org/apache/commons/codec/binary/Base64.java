@@ -145,7 +145,6 @@ public class Base64 extends BaseNCodec {
             return super.setEncodeTable(encodeTable);
         }
 
-        // Javadoc 8 can't find {@link #setDecodeTableFormat(DecodeTableFormat)}
         /**
          * Sets the URL-safe encoding policy.
          * <p>
@@ -157,6 +156,7 @@ public class Base64 extends BaseNCodec {
          * @return {@code this} instance.
          */
         public Builder setUrlSafe(final boolean urlSafe) {
+            // Javadoc 8 can't find {@link #setDecodeTableFormat(DecodeTableFormat)}
             return setEncodeTable(toUrlSafeEncodeTable(urlSafe));
         }
 
@@ -220,6 +220,7 @@ public class Base64 extends BaseNCodec {
             'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
             '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '/'
     };
+
     /**
      * This is a copy of the STANDARD_ENCODE_TABLE above, but with + and / changed to - and _ to make the encoded Base64 results more URL-SAFE. This table is
      * only used when the Base64's mode is set to URL-SAFE.
@@ -299,6 +300,7 @@ public class Base64 extends BaseNCodec {
     /**
      * Base64 uses 6-bit fields.
      */
+
     /** Mask used to extract 6 bits, used when encoding */
     private static final int MASK_6_BITS = 0x3f;
 
@@ -787,6 +789,7 @@ public class Base64 extends BaseNCodec {
      * Line separator for encoding. Not used when decoding. Only used if lineLength &gt; 0.
      */
     private final byte[] lineSeparator;
+
     /**
      * Convenience variable to help us determine when our buffer is going to run out of room and needs resizing. {@code encodeSize = 4 + lineSeparator.length;}
      */

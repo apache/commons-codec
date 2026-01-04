@@ -52,6 +52,7 @@ import org.apache.commons.codec.StringEncoder;
  * @since 1.3
  */
 public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder {
+
     /**
      * BitSet of printable characters as defined in RFC 1522.
      */

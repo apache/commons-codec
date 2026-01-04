@@ -291,6 +291,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * The default Charset used for string decoding and encoding.
      */
     private final Charset charset;
+
     /**
      * Indicates whether soft line breaks shall be used during encoding (rule #3-5).
      */

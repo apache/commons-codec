@@ -33,6 +33,7 @@ class DigestTest {
     void testEmptyArguments() {
         assertThrows(IllegalArgumentException.class, () -> Digest.main(new String[0]));
     }
+
     /**
      * Tests if null arguments are handled correctly.
      */
