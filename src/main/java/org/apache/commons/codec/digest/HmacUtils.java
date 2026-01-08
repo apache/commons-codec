@@ -154,7 +154,7 @@ public final class HmacUtils {
      * Returns an initialized {@code Mac} for the given {@code algorithm}.
      *
      * @param algorithm the name of the algorithm requested. See
-     *                  <a href= "https://docs.oracle.com/javase/6/docs/technotes/guides/security/crypto/CryptoSpec.html#AppA" >Appendix A in the Java
+     *                  <a href= "https://docs.oracle.com/javase/8/docs/technotes/guides/security/crypto/CryptoSpec.html#AppA" >Appendix A in the Java
      *                  Cryptography Architecture Reference Guide</a> for information about standard algorithm names.
      * @param key       The key for the keyed digest (must not be null).
      * @return A Mac instance initialized with the given key.
@@ -170,7 +170,7 @@ public final class HmacUtils {
      * Returns an initialized {@code Mac} for the given {@code algorithm}.
      *
      * @param algorithm the name of the algorithm requested. See
-     *                  <a href= "https://docs.oracle.com/javase/6/docs/technotes/guides/security/crypto/CryptoSpec.html#AppA" >Appendix A in the Java
+     *                  <a href= "https://docs.oracle.com/javase/8/docs/technotes/guides/security/crypto/CryptoSpec.html#AppA" >Appendix A in the Java
      *                  Cryptography Architecture Reference Guide</a> for information about standard algorithm names.
      * @param key       The key for the keyed digest (must not be null).
      * @return A Mac instance initialized with the given key.

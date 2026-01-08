@@ -22,7 +22,7 @@ import java.nio.charset.StandardCharsets;
 /**
  * Charsets required of every implementation of the Java platform.
  *
- * From the Java documentation <a href="https://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard
+ * From the Java documentation <a href="https://docs.oracle.com/javase/8/docs/api/java/nio/charset/Charset.html">Standard
  * charsets</a>:
  * <p>
  * <cite>Every implementation of the Java platform is required to support the following character encodings. Consult the
@@ -53,7 +53,7 @@ import java.nio.charset.StandardCharsets;
  * This class is immutable and thread-safe.
  * </p>
  *
- * @see <a href="https://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
+ * @see <a href="https://docs.oracle.com/javase/8/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
  * @since 1.7
  */
 public class Charsets {
@@ -69,7 +69,7 @@ public class Charsets {
      * Every implementation of the Java platform is required to support this character encoding.
      * </p>
      *
-     * @see <a href="https://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
+     * @see <a href="https://docs.oracle.com/javase/8/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      * @deprecated Use {@link java.nio.charset.StandardCharsets#ISO_8859_1} instead.
      */
     @Deprecated
@@ -81,7 +81,7 @@ public class Charsets {
      * Every implementation of the Java platform is required to support this character encoding.
      * </p>
      *
-     * @see <a href="https://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
+     * @see <a href="https://docs.oracle.com/javase/8/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      * @deprecated Use {@link java.nio.charset.StandardCharsets#US_ASCII} instead.
      */
     @Deprecated
@@ -94,7 +94,7 @@ public class Charsets {
      * Every implementation of the Java platform is required to support this character encoding.
      * </p>
      *
-     * @see <a href="https://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
+     * @see <a href="https://docs.oracle.com/javase/8/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      * @deprecated Use {@link java.nio.charset.StandardCharsets#UTF_16} instead.
      */
     @Deprecated
@@ -106,7 +106,7 @@ public class Charsets {
      * Every implementation of the Java platform is required to support this character encoding.
      * </p>
      *
-     * @see <a href="https://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
+     * @see <a href="https://docs.oracle.com/javase/8/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      * @deprecated Use {@link java.nio.charset.StandardCharsets#UTF_16BE} instead.
      */
     @Deprecated
@@ -118,7 +118,7 @@ public class Charsets {
      * Every implementation of the Java platform is required to support this character encoding.
      * </p>
      *
-     * @see <a href="https://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
+     * @see <a href="https://docs.oracle.com/javase/8/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      * @deprecated Use {@link java.nio.charset.StandardCharsets#UTF_16LE} instead.
      */
     @Deprecated
@@ -130,7 +130,7 @@ public class Charsets {
      * Every implementation of the Java platform is required to support this character encoding.
      * </p>
      *
-     * @see <a href="https://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
+     * @see <a href="https://docs.oracle.com/javase/8/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      * @deprecated Use {@link java.nio.charset.StandardCharsets#UTF_8} instead.
      */
     @Deprecated
