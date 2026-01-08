@@ -107,10 +107,6 @@ public enum HmacAlgorithms {
     /**
      * The algorithm name.
      *
-     * @see <a href="https://docs.oracle.com/javase/6/docs/technotes/guides/security/SunProviders.html#SunJCEProvider">
-     *      Java 6 Cryptography Architecture Sun Providers Documentation</a>
-     * @see <a href="https://docs.oracle.com/javase/7/docs/technotes/guides/security/SunProviders.html#SunJCEProvider">
-     *      Java 7 Cryptography Architecture Sun Providers Documentation</a>
      * @see <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/security/SunProviders.html#SunJCEProvider">
      *      Java 8 Cryptography Architecture Sun Providers Documentation</a>
      * @see <a href=
