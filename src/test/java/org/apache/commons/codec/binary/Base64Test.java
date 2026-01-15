@@ -150,6 +150,20 @@ class Base64Test {
         // @formatter:on
     }
 
+    static Stream<Object> testIsBase64Url() {
+        // @formatter:off
+        return Stream.of(
+            Arguments.of((byte) '=', true),
+            Arguments.of((byte) 32, false),
+            Arguments.of((byte) 0, false),
+            Arguments.of((byte) 1, false),
+            Arguments.of((byte) 2, false),
+            Arguments.of((byte) 999, false),
+            Arguments.of((byte) -1, false)
+            );
+        // @formatter:on
+    }
+
     private final Random random = new Random();
 
     /**
@@ -760,6 +774,12 @@ class Base64Test {
     @MethodSource
     void testIsBase64(final byte[] arrayOctet, final boolean match) {
         assertEquals(match, Base64.isBase64(arrayOctet));
+    }
+
+    @ParameterizedTest
+    @MethodSource
+    void testIsBase64Url(final byte octet, final boolean match) {
+        assertEquals(match, Base64.isBase64Url(octet));
     }
 
     /**
