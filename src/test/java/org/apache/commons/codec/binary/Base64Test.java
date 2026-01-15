@@ -575,7 +575,25 @@ class Base64Test {
             "Zm9vYmF+",
             "Zm9vYmF/"
     })
-    void testDecodeEncodeStandard(final String encodedText) {
+    void testDecodeEncodeStandardByteArray(final String encodedText) {
+        final String decodedText = StringUtils.newStringUsAscii(Base64.decodeBase64Standard(encodedText.getBytes(CHARSET_UTF8)));
+        final String encodedText2 = Base64.encodeBase64String(StringUtils.getBytesUtf8(decodedText));
+        assertEquals(encodedText, encodedText2);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "",
+            "Zg==",
+            "Zm8=",
+            "Zm9v",
+            "Zm9vYg==",
+            "Zm9vYmE=",
+            "Zm9vYmFy",
+            "Zm9vYmF+",
+            "Zm9vYmF/"
+    })
+    void testDecodeEncodeStandardString(final String encodedText) {
         final String decodedText = StringUtils.newStringUsAscii(Base64.decodeBase64Standard(encodedText));
         final String encodedText2 = Base64.encodeBase64String(StringUtils.getBytesUtf8(decodedText));
         assertEquals(encodedText, encodedText2);
