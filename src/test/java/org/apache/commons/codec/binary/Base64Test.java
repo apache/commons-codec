@@ -777,6 +777,12 @@ class Base64Test {
     }
 
     @ParameterizedTest
+    @MethodSource("testIsBase64Url")
+    void testIsBase64Standard(final byte octet, final boolean match) {
+        assertEquals(match, Base64.isBase64Standard(octet));
+    }
+
+    @ParameterizedTest
     @MethodSource
     void testIsBase64Url(final byte octet, final boolean match) {
         assertEquals(match, Base64.isBase64Url(octet));
