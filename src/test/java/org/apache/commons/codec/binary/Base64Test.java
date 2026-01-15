@@ -611,6 +611,25 @@ class Base64Test {
             "Zm9vYmF-",
             "Zm9vYmF_"
     })
+    void testDecodeEncodeUrlSafeByteArray(final String encodedText) {
+        final String decodedText = StringUtils.newStringUsAscii(Base64.decodeBase64UrlSafe(encodedText.getBytes(CHARSET_UTF8)));
+        final String encodedText2 = Base64.encodeBase64URLSafeString(StringUtils.getBytesUtf8(decodedText));
+        assertEquals(encodedText, encodedText2);
+    }
+
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "",
+            "Zg",
+            "Zm8",
+            "Zm9v",
+            "Zm9vYg",
+            "Zm9vYmE",
+            "Zm9vYmFy",
+            "Zm9vYmF-",
+            "Zm9vYmF_"
+    })
     void testDecodeEncodeUrl(final String encodedText) {
         final String decodedText = StringUtils.newStringUsAscii(Base64.decodeBase64UrlSafe(encodedText));
         final String encodedText2 = Base64.encodeBase64URLSafeString(StringUtils.getBytesUtf8(decodedText));
