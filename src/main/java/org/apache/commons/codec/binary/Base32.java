@@ -742,7 +742,7 @@ public class Base32 extends BaseNCodec {
     }
 
     /**
-     * Validates whether decoding the final trailing character is possible in the context of the set of possible base 32 values.
+     * Validates whether decoding the final trailing character is possible in the context of the set of possible Base32 values.
      * <p>
      * The character is valid if the lower bits within the provided mask are zero. This is used to test the final trailing base-32 digit is zero in the bits
      * that will be discarded.
@@ -756,7 +756,7 @@ public class Base32 extends BaseNCodec {
         // Use the long bit work area
         if (isStrictDecoding() && (context.lbitWorkArea & emptyBitsMask) != 0) {
             throw new IllegalArgumentException("Strict decoding: Last encoded character (before the paddings if any) is a valid " +
-                    "base 32 alphabet but not a possible encoding. Expected the discarded bits from the character to be zero.");
+                    "Base32 alphabet but not a possible encoding. Expected the discarded bits from the character to be zero.");
         }
     }
 
@@ -768,7 +768,7 @@ public class Base32 extends BaseNCodec {
     private void validateTrailingCharacters() {
         if (isStrictDecoding()) {
             throw new IllegalArgumentException("Strict decoding: Last encoded character(s) (before the paddings if any) are valid " +
-                    "base 32 alphabet but not a possible encoding. Decoding requires either 2, 4, 5, or 7 trailing 5-bit characters to create bytes.");
+                    "Base32 alphabet but not a possible encoding. Decoding requires either 2, 4, 5, or 7 trailing 5-bit characters to create bytes.");
         }
     }
 }

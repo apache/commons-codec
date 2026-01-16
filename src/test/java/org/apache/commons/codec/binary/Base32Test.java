@@ -160,7 +160,7 @@ class Base32Test {
     // @formatter:on
 
     /**
-     * Test base 32 decoding of the final trailing bits. Trailing encoded bytes
+     * Test Base32 decoding of the final trailing bits. Trailing encoded bytes
      * cannot fit exactly into 5-bit characters so the last character has a limited
      * alphabet where the final bits are zero. This asserts that illegal final
      * characters throw an exception when decoding.
