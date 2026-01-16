@@ -601,7 +601,7 @@ public class Base64 extends BaseNCodec {
     }
 
     /**
-     * Tests whether or not the {@code octet} is in the base 64 alphabet.
+     * Tests whether or not the {@code octet} is in the Base64 alphabet.
      * <p>
      * This method threats all characters included within standard base64 and base64url encodings as valid base64 characters. This includes the '+' and '/'
      * (standard base64), as well as '-' and '_' (URL-safe base64) characters. For enforcing verification against strict standard Base64 or Base64 URL-safe
@@ -609,7 +609,7 @@ public class Base64 extends BaseNCodec {
      * </p>
      *
      * @param octet The value to test.
-     * @return {@code true} if the value is defined in the base 64 alphabet, {@code false} otherwise.
+     * @return {@code true} if the value is defined in the Base64 alphabet, {@code false} otherwise.
      * @since 1.4
      */
     public static boolean isBase64(final byte octet) {
@@ -654,14 +654,14 @@ public class Base64 extends BaseNCodec {
     }
 
     /**
-     * Tests whether or not the {@code octet} is in the standard base 64 alphabet.
+     * Tests whether or not the {@code octet} is in the standard Base64 alphabet.
      * <p>
      * This implementation is aligned with <a href="https://www.ietf.org/rfc/rfc2045#:~:text=Table%201%3A%20The%20Base64%20Alphabet">RFC 2045 Table 1: The
      * Base64 Alphabet</a>.
      * </p>
      *
      * @param octet The value to test.
-     * @return {@code true} if the value is defined in the standard base 64 alphabet, {@code false} otherwise.
+     * @return {@code true} if the value is defined in the standard Base64 alphabet, {@code false} otherwise.
      * @since 1.21
      */
     public static boolean isBase64Standard(final byte octet) {
@@ -705,7 +705,7 @@ public class Base64 extends BaseNCodec {
     }
 
     /**
-     * Tests whether or not the {@code octet} is in the URL-safe base 64 alphabet.
+     * Tests whether or not the {@code octet} is in the URL-safe Base64 alphabet.
      * <p>
      * This implementation is aligned with
      * <a href="https://datatracker.ietf.org/doc/html/rfc4648#:~:text=Table%202%3A%20The%20%22URL%20and%20Filename%20safe%22%20Base%2064%20Alphabet">RFC 4648
@@ -713,7 +713,7 @@ public class Base64 extends BaseNCodec {
      * </p>
      *
      * @param octet The value to test.
-     * @return {@code true} if the value is defined in the URL-safe base 64 alphabet, {@code false} otherwise.
+     * @return {@code true} if the value is defined in the URL-safe Base64 alphabet, {@code false} otherwise.
      * @since 1.21
      */
     public static boolean isBase64Url(final byte octet) {
@@ -1164,7 +1164,7 @@ public class Base64 extends BaseNCodec {
     }
 
     /**
-     * Validates whether decoding the final trailing character is possible in the context of the set of possible base 64 values.
+     * Validates whether decoding the final trailing character is possible in the context of the set of possible Base64 values.
      * <p>
      * The character is valid if the lower bits within the provided mask are zero. This is used to test the final trailing base-64 digit is zero in the bits
      * that will be discarded.
@@ -1176,10 +1176,8 @@ public class Base64 extends BaseNCodec {
      */
     private void validateCharacter(final int emptyBitsMask, final Context context) {
         if (isStrictDecoding() && (context.ibitWorkArea & emptyBitsMask) != 0) {
-            throw new IllegalArgumentException(
-                "Strict decoding: Last encoded character (before the paddings if any) is a valid " +
-                "base 64 alphabet but not a possible encoding. " +
-                "Expected the discarded bits from the character to be zero.");
+            throw new IllegalArgumentException("Strict decoding: Last encoded character (before the paddings if any) is a valid "
+                    + "Base64 alphabet but not a possible encoding. Expected the discarded bits from the character to be zero.");
         }
     }
 
@@ -1190,10 +1188,8 @@ public class Base64 extends BaseNCodec {
      */
     private void validateTrailingCharacter() {
         if (isStrictDecoding()) {
-            throw new IllegalArgumentException(
-                "Strict decoding: Last encoded character (before the paddings if any) is a valid " +
-                "base 64 alphabet but not a possible encoding. " +
-                "Decoding requires at least two trailing 6-bit characters to create bytes.");
+            throw new IllegalArgumentException("Strict decoding: Last encoded character (before the paddings if any) is a valid "
+                    + "Base64 alphabet but not a possible encoding. Decoding requires at least two trailing 6-bit characters to create bytes.");
         }
     }
 
