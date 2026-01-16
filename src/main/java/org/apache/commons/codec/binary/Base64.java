@@ -44,7 +44,8 @@ import org.apache.commons.codec.CodecPolicy;
  * <li>Padding; defaults is {@code '='}.</li>
  * </ul>
  * <p>
- * The URL-safe parameter is only applied to encode operations. Decoding seamlessly handles both modes, see also {@link Builder#setDecodeTableFormat(DecodeTableFormat)}.
+ * The URL-safe parameter is only applied to encode operations. Decoding seamlessly handles both modes, see also
+ * {@code Builder#setDecodeTableFormat(DecodeTableFormat)}.
  * </p>
  * <p>
  * Since this class operates directly on byte streams, and not character streams, it is hard-coded to only encode/decode character encodings which are
