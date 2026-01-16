@@ -52,7 +52,7 @@ import org.apache.commons.codec.binary.BaseNCodecInputStream.AbstracBuilder; // 
  * </p>
  *
  * @see Base64
- * @see <a href="https://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>
+ * @see <a href="https://www.ietf.org/rfc/rfc2045">RFC 2045</a>
  * @since 1.4
  */
 public class Base64InputStream extends BaseNCodecInputStream<Base64, Base64InputStream, Base64InputStream.Builder> {

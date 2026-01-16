@@ -46,7 +46,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 /**
  * Tests {@link Base64}.
  *
- * @see <a href="https://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>
+ * @see <a href="https://www.ietf.org/rfc/rfc2045">RFC 2045</a>
  */
 class Base64Test {
 

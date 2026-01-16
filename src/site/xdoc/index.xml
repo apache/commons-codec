@@ -51,7 +51,7 @@ forked versions of Base64 had significantly diverged from one
 another.  XML-RPC had applied numerous fixes and patches which
 were not applied to the Commons HttpClient Base64.  Different
 subprojects had differing implementations at various levels
-of compliance with the <a href="https://www.ietf.org/rfc/rfc2045.txt">
+of compliance with the <a href="https://www.ietf.org/rfc/rfc2045">
 RFC 2045</a>.
 </p>
 <p>
