@@ -32,15 +32,19 @@ import org.apache.commons.codec.CodecPolicy;
  * This class implements <a href="https://www.ietf.org/rfc/rfc2045#section-6.8">RFC 2045 6.8. Base64 Content-Transfer-Encoding</a>.
  * </p>
  * <p>
- * The class can be parameterized in the following manner with various constructors:
+ * The class can be parameterized in the following manner with its {@link Builder}:
  * </p>
  * <ul>
  * <li>URL-safe mode: Default off.</li>
  * <li>Line length: Default 76. Line length that aren't multiples of 4 will still essentially end up being multiples of 4 in the encoded data.
  * <li>Line separator: Default is CRLF ({@code "\r\n"})</li>
+ * <li>Strict or lenient decoding policy; default is {@link CodecPolicy#LENIENT}.</li>
+ * <li>Custom decoding table.</li>
+ * <li>Custom encoding table.</li>
+ * <li>Padding; defaults is {@code '='}.</li>
  * </ul>
  * <p>
- * The URL-safe parameter is only applied to encode operations. Decoding seamlessly handles both modes.
+ * The URL-safe parameter is only applied to encode operations. Decoding seamlessly handles both modes, see also {@link Builder#setDecodeTableFormat(DecodeTableFormat)}.
  * </p>
  * <p>
  * Since this class operates directly on byte streams, and not character streams, it is hard-coded to only encode/decode character encodings which are
@@ -55,7 +59,7 @@ import org.apache.commons.codec.CodecPolicy;
  *
  * <pre>
  * Base64 base64 = Base64.builder()
- *   .setDecodingPolicy(DecodingPolicy.LENIENT) // default is lenient, null resets to default
+ *   .setDecodingPolicy(CodecPolicy.LENIENT)    // default is lenient, null resets to default
  *   .setEncodeTable(customEncodeTable)         // default is built in, null resets to default
  *   .setLineLength(0)                          // default is none
  *   .setLineSeparator('\r', '\n')              // default is CR LF, null resets to default
@@ -81,7 +85,7 @@ public class Base64 extends BaseNCodec {
      *
      * <pre>
      * Base64 base64 = Base64.builder()
-     *   .setDecodingPolicy(DecodingPolicy.LENIENT) // default is lenient, null resets to default
+     *   .setCodecPolicy(CodecPolicy.LENIENT)       // default is lenient, null resets to default
      *   .setEncodeTable(customEncodeTable)         // default is built in, null resets to default
      *   .setLineLength(0)                          // default is none
      *   .setLineSeparator('\r', '\n')              // default is CR LF, null resets to default
@@ -323,7 +327,7 @@ public class Base64 extends BaseNCodec {
      *
      * <pre>
      * Base64 base64 = Base64.builder()
-     *   .setDecodingPolicy(DecodingPolicy.LENIENT) // default is lenient, null resets to default
+     *   .setDecodingPolicy(CodecPolicy.LENIENT) // default is lenient, null resets to default
      *   .setEncodeTable(customEncodeTable)         // default is built in, null resets to default
      *   .setLineLength(0)                          // default is none
      *   .setLineSeparator('\r', '\n')              // default is CR LF, null resets to default
@@ -358,8 +362,8 @@ public class Base64 extends BaseNCodec {
      * Decodes Base64 data into octets.
      * <p>
      * This method seamlessly handles data encoded in URL-safe or normal mode. For enforcing verification against strict standard Base64 or Base64 URL-safe
-     * tables, please use {@link #decodeBase64Standard(byte[])} or {@link #decodeBase64UrlSafe(byte[])} methods respectively. This method skips any unknown or
-     * not supported bytes.
+     * tables, please use {@link #decodeBase64Standard(byte[])} or {@link #decodeBase64UrlSafe(byte[])} methods respectively. This method skips unknown or
+     * unsupported bytes.
      * </p>
      *
      * @param base64Data Byte array containing Base64 data.
@@ -373,8 +377,8 @@ public class Base64 extends BaseNCodec {
      * Decodes a Base64 String into octets.
      * <p>
      * This method seamlessly handles data encoded in URL-safe or normal mode. For enforcing verification against strict standard Base64 or Base64 URL-safe
-     * tables, please use {@link #decodeBase64Standard(String)} or {@link #decodeBase64UrlSafe(String)} methods respectively. This method skips any unknown or
-     * not supported bytes.
+     * tables, please use {@link #decodeBase64Standard(String)} or {@link #decodeBase64UrlSafe(String)} methods respectively. This method skips unknown or
+     * unsupported bytes.
      * </p>
      *
      * @param base64String String containing Base64 data.
@@ -389,7 +393,7 @@ public class Base64 extends BaseNCodec {
      * Decodes standard Base64 data into octets.
      * <p>
      * This implementation is aligned with the <a href="https://www.ietf.org/rfc/rfc2045#:~:text=Table%201%3A%20The%20Base64%20Alphabet">RFC 2045 Table 1: The
-     * Base64 Alphabet</a>. This method skips any unknown or not supported bytes.
+     * Base64 Alphabet</a>. This method skips unknown or unsupported bytes.
      * </p>
      *
      * @param base64Data Byte array containing Base64 data.
@@ -404,7 +408,7 @@ public class Base64 extends BaseNCodec {
      * Decodes a standard Base64 String into octets.
      * <p>
      * This implementation is aligned with the <a href="https://www.ietf.org/rfc/rfc2045#:~:text=Table%201%3A%20The%20Base64%20Alphabet">RFC 2045 Table 1: The
-     * Base64 Alphabet</a>. This method skips any unknown or not supported characters.
+     * Base64 Alphabet</a>. This method skips unknown or unsupported characters.
      * </p>
      *
      * @param base64String String containing Base64 data.
@@ -420,7 +424,7 @@ public class Base64 extends BaseNCodec {
      * <p>
      * This implementation is aligned with
      * <a href="https://datatracker.ietf.org/doc/html/rfc4648#:~:text=Table%202%3A%20The%20%22URL%20and%20Filename%20safe%22%20Base%2064%20Alphabet">RFC 4648
-     * Table 2: The "URL and Filename safe" Base 64 Alphabet</a>. This method skips any unknown or not supported characters.
+     * Table 2: The "URL and Filename safe" Base 64 Alphabet</a>. This method skips unknown or unsupported characters.
      * </p>
      *
      * @param base64Data Byte array containing Base64 data.
@@ -436,7 +440,7 @@ public class Base64 extends BaseNCodec {
      * <p>
      * This implementation is aligned with
      * <a href="https://datatracker.ietf.org/doc/html/rfc4648#:~:text=Table%202%3A%20The%20%22URL%20and%20Filename%20safe%22%20Base%2064%20Alphabet">RFC 4648
-     * Table 2: The "URL and Filename safe" Base 64 Alphabet</a>. This method skips any unknown or not supported characters.
+     * Table 2: The "URL and Filename safe" Base 64 Alphabet</a>. This method skips unknown or unsupported characters.
      * </p>
      *
      * @param base64String String containing Base64 data.
