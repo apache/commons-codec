@@ -1176,8 +1176,8 @@ public class Base64 extends BaseNCodec {
      */
     private void validateCharacter(final int emptyBitsMask, final Context context) {
         if (isStrictDecoding() && (context.ibitWorkArea & emptyBitsMask) != 0) {
-            throw new IllegalArgumentException("Strict decoding: Last encoded character (before the paddings if any) is a valid "
-                    + "Base64 alphabet but not a possible encoding. Expected the discarded bits from the character to be zero.");
+            throw new IllegalArgumentException("Strict decoding: Last encoded character (before the paddings if any) is a valid " +
+                    "Base64 alphabet but not a possible encoding. Expected the discarded bits from the character to be zero.");
         }
     }
 
@@ -1188,8 +1188,8 @@ public class Base64 extends BaseNCodec {
      */
     private void validateTrailingCharacter() {
         if (isStrictDecoding()) {
-            throw new IllegalArgumentException("Strict decoding: Last encoded character (before the paddings if any) is a valid "
-                    + "Base64 alphabet but not a possible encoding. Decoding requires at least two trailing 6-bit characters to create bytes.");
+            throw new IllegalArgumentException("Strict decoding: Last encoded character (before the paddings if any) is a valid " +
+                    "Base64 alphabet but not a possible encoding. Decoding requires at least two trailing 6-bit characters to create bytes.");
         }
     }
 
