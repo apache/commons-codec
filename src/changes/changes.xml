@@ -51,7 +51,7 @@ The <action> type attribute can be add,update,fix,remove.
       <!-- ADD -->
       <action type="add" dev="ggregory" due-to="Aleksandr Beliakov, Gary Gregory" issue="CODEC-333">Add distinct Base64 decoding for standard and URL-safe formats.</action>
       <!-- UPDATE -->
-      <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump org.apache.commons:commons-parent from 91 to 95 #415, #418.</action>
+      <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump org.apache.commons:commons-parent from 91 to 96 #415, #418.</action>
       <action type="update" dev="ggregory" due-to="Gary Gregory">Bump commons-io:commons-io from 2.20.0 to 2.21.0.</action>
       <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump org.apache.commons:commons-lang3 from 3.19.0 to 3.20.0.</action>
     </release>
