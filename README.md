@@ -45,7 +45,7 @@ Apache Commons Codec
 
 [![Java CI](https://github.com/apache/commons-codec/actions/workflows/maven.yml/badge.svg)](https://github.com/apache/commons-codec/actions/workflows/maven.yml)
 [![Maven Central](https://img.shields.io/maven-central/v/commons-codec/commons-codec?label=Maven%20Central)](https://search.maven.org/artifact/commons-codec/commons-codec)
-[![Javadocs](https://javadoc.io/badge/commons-codec/commons-codec/1.20.0.svg)](https://javadoc.io/doc/commons-codec/commons-codec/1.20.0)
+[![Javadocs](https://javadoc.io/badge/commons-codec/commons-codec/1.21.0.svg)](https://javadoc.io/doc/commons-codec/commons-codec/1.21.0)
 [![CodeQL](https://github.com/apache/commons-codec/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/apache/commons-codec/actions/workflows/codeql-analysis.yml)
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/apache/commons-codec/badge)](https://api.securityscorecards.dev/projects/github.com/apache/commons-codec)
 
@@ -71,7 +71,7 @@ Alternatively, you can pull it from the central Maven repositories:
 <dependency>
   <groupId>commons-codec</groupId>
   <artifactId>commons-codec</artifactId>
-  <version>1.20.0</version>
+  <version>1.21.0</version>
 </dependency>
 ```
 
@@ -114,7 +114,6 @@ Additional Resources
 + [Apache Commons Homepage](https://commons.apache.org/)
 + [Apache Issue Tracker (JIRA)](https://issues.apache.org/jira/browse/CODEC)
 + [Apache Commons Slack Channel](https://the-asf.slack.com/archives/C60NVB8AD)
-+ [Apache Commons Twitter Account](https://twitter.com/ApacheCommons)
 
 Apache Commons Components
 -------------------------

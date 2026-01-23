@@ -1,3 +1,44 @@
+Apache Commons Codec 1.21.0 Release Notes
+-----------------------------------------
+
+The Apache Commons Codec team is pleased to announce the release of Apache Commons Codec 1.21.0.
+
+The Apache Commons Codec component contains encoders and decoders for
+formats such as Base16, Base32, Base64, digest, and Hexadecimal. In addition to these
+widely used encoders and decoders, the codec package also maintains a
+collection of phonetic encoding utilities.
+
+This is a feature and maintenance release. Java 8 or later is required.
+
+
+New features
+------------
+
+* CODEC-333:  Add distinct Base64 decoding for standard and URL-safe formats. Thanks to Aleksandr Beliakov, Gary Gregory.
+
+Fixed Bugs
+----------
+
+*             Fix oak leaf icon references in overview.html when running `mvn clean javadoc:javadoc`. Thanks to Gary Gregory.
+*             Fix Apache RAT plugin console warnings. Thanks to Gary Gregory.
+*             Fix malformed Javadoc comments. Thanks to Gary Gregory.
+
+Changes
+-------
+
+*             Bump org.apache.commons:commons-parent from 91 to 96 #415, #418. Thanks to Gary Gregory, Dependabot.
+*             Bump commons-io:commons-io from 2.20.0 to 2.21.0. Thanks to Gary Gregory.
+*             Bump org.apache.commons:commons-lang3 from 3.19.0 to 3.20.0. Thanks to Gary Gregory, Dependabot.
+
+
+For complete information on Apache Commons Codec, including instructions on how to submit bug reports,
+patches, or suggestions for improvement, see the Apache Commons Codec website:
+
+https://commons.apache.org/proper/commons-codec/
+
+Download page: https://commons.apache.org/proper/commons-codec/download_codec.cgi
+
+---------------------------------------------------------------------------------
 Apache Commons Codec 1.20.0 Release Notes
 -----------------------------------------
 
