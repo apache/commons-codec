@@ -136,7 +136,8 @@ class NysiisTest extends AbstractStringEncoderTest<Nysiis> {
                 new String[] { "JILES", "JAL" },
                 // violates 6: if the last two characters are AY, remove A
                 new String[] { "CARRAWAY", "CARY" },       // Original: CARAY
-                new String[] { "YAMADA", "YANAD" });
+                new String[] { "YAMADA", "YANAD" },
+                new String[] { "ASH", "A"});
     }
 
     @Test
