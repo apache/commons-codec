@@ -33,8 +33,8 @@ public class Base58Test {
         final String encodedContent = StringUtils.newStringUtf8(encodedBytes);
         assertEquals("JxF12TrwUP45BMd", encodedContent, "encoding hello world");
 
-//        final byte[] decodedBytes = new Base58().decode(encodedBytes);
-//        final String decodedContent = StringUtils.newStringUtf8(decodedBytes);
-//        assertEquals(content, decodedContent, "decoding hello world");
+        final byte[] decodedBytes = new Base58().decode(encodedBytes);
+        final String decodedContent = StringUtils.newStringUtf8(decodedBytes);
+        assertEquals(content, decodedContent, "decoding hello world");
     }
 }
