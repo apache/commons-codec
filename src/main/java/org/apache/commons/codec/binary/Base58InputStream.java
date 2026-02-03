@@ -19,9 +19,6 @@ package org.apache.commons.codec.binary;
 
 import java.io.InputStream;
 
-import org.apache.commons.codec.CodecPolicy;
-import org.apache.commons.codec.binary.BaseNCodecInputStream.AbstracBuilder; // NOPMD: Required by ECJ (Eclipse)
-
 /**
  * Provides Base58 decoding in a streaming fashion (unlimited size). When encoding the default lineLength is 76 characters and the default lineEnding is CRLF,
  * but these can be overridden by using the appropriate constructor.

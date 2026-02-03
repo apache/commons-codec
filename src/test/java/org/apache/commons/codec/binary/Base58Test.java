@@ -91,7 +91,7 @@ public class Base58Test {
     @Test
     void testIsInAlphabet() {
         final Base58 base58 = new Base58();
-        
+
         // Valid characters
         for (char c = '1'; c <= '9'; c++) {
             assertTrue(base58.isInAlphabet((byte) c), "char " + c);
@@ -117,7 +117,7 @@ public class Base58Test {
         assertFalse(base58.isInAlphabet((byte) 'O'), "char O");
         assertFalse(base58.isInAlphabet((byte) 'I'), "char I");
         assertFalse(base58.isInAlphabet((byte) 'l'), "char l");
-        
+
         // Out of bounds
         assertFalse(base58.isInAlphabet((byte) -1));
         assertFalse(base58.isInAlphabet((byte) 0));
@@ -166,10 +166,10 @@ public class Base58Test {
         final byte[] input = new byte[] { 0, 0, 1, 2, 3 };
         final byte[] encoded = new Base58().encode(input);
         final String encodedStr = new String(encoded);
-        
+
         // Should start with "11" (two leading ones for two leading zeros)
         assertTrue(encodedStr.startsWith("11"), "Leading zeros should encode as '1' characters");
-        
+
         // Decode should restore the leading zeros
         final byte[] decoded = new Base58().decode(encoded);
         assertArrayEquals(input, decoded, "Decoded should match original including leading zeros");
