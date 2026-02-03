@@ -70,11 +70,21 @@ public class Base58OutputStream extends BaseNCodecOutputStream<Base58, Base58Out
             setEncode(true);
         }
 
+        /**
+         * Builds a new Base58OutputStream instance with the configured settings.
+         *
+         * @return a new Base58OutputStream
+         */
         @Override
         public Base58OutputStream get() {
             return new Base58OutputStream(this);
         }
 
+        /**
+         * Creates a new Base58 codec instance.
+         *
+         * @return a new Base58 codec
+         */
         @Override
         protected Base58 newBaseNCodec() {
             return new Base58();
