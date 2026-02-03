@@ -24,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Random;
@@ -163,7 +164,7 @@ public class Base58Test {
     @Test
     void testLeadingZeros() {
         // Test that leading zero bytes are encoded as '1' characters
-        final byte[] input = new byte[] { 0, 0, 1, 2, 3 };
+        final byte[] input = new byte[]{0, 0, 1, 2, 3};
         final byte[] encoded = new Base58().encode(input);
         final String encodedStr = new String(encoded);
 
@@ -179,7 +180,7 @@ public class Base58Test {
     void testSingleBytes() {
         // Test encoding of single bytes
         for (int i = 1; i <= 255; i++) {
-            final byte[] data = new byte[] { (byte) i };
+            final byte[] data = new byte[]{(byte) i};
             final byte[] enc = new Base58().encode(data);
             final byte[] dec = new Base58().decode(enc);
             assertArrayEquals(data, dec, "Failed for byte value: " + i);
@@ -196,17 +197,17 @@ public class Base58Test {
     @Test
     void testRoundTrip() {
         final String[] testStrings = {
-            "",
-            "a",
-            "ab",
-            "abc",
-            "abcd",
-            "abcde",
-            "abcdef",
-            "Hello World",
-            "The quick brown fox jumps over the lazy dog",
-            "1234567890",
-            "!@#$%^&*()"
+                "",
+                "a",
+                "ab",
+                "abc",
+                "abcd",
+                "abcde",
+                "abcdef",
+                "Hello World",
+                "The quick brown fox jumps over the lazy dog",
+                "1234567890",
+                "!@#$%^&*()"
         };
 
         for (final String test : testStrings) {
@@ -225,5 +226,37 @@ public class Base58Test {
 
         assertEquals("5m7UdtXCfQxGvX2K9dLrkNs7AFMS98qn8", StringUtils.newStringUtf8(encoded), "Hex encoding failed");
         assertEquals(hexString, StringUtils.newStringUtf8(decoded), "Hex decoding failed");
+    }
+
+    @Test
+    void testTestVectors() {
+        final String content = "Hello World!";
+        final String content1 = "The quick brown fox jumps over the lazy dog.";
+        final long content2 = 0x0000287fb4cdL; // Use long to preserve the full 48-bit value
+
+        final byte[] encodedBytes = new Base58().encode(StringUtils.getBytesUtf8(content));
+        final byte[] encodedBytes1 = new Base58().encode(StringUtils.getBytesUtf8(content1));
+
+        final byte[] content2Bytes = ByteBuffer.allocate(8).putLong(content2).array();
+        final byte[] content2Trimmed = new byte[6];
+        System.arraycopy(content2Bytes, 2, content2Trimmed, 0, 6);
+        final byte[] encodedBytes2 = new Base58().encode(content2Trimmed);
+
+        final String encodedContent = StringUtils.newStringUtf8(encodedBytes);
+        final String encodedContent1 = StringUtils.newStringUtf8(encodedBytes1);
+        final String encodedContent2 = StringUtils.newStringUtf8(encodedBytes2);
+
+        assertEquals("2NEpo7TZRRrLZSi2U", encodedContent, "encoding hello world");
+        assertEquals("USm3fpXnKG5EUBx2ndxBDMPVciP5hGey2Jh4NDv6gmeo1LkMeiKrLJUUBk6Z", encodedContent1);
+        assertEquals("11233QC4", encodedContent2, "encoding 0x0000287fb4cd");
+
+        final byte[] decodedBytes = new Base58().decode(encodedBytes);
+        final byte[] decodedBytes1 = new Base58().decode(encodedBytes1);
+        final byte[] decodedBytes2 = new Base58().decode(encodedBytes2);
+        final String decodedContent = StringUtils.newStringUtf8(decodedBytes);
+        final String decodedContent1 = StringUtils.newStringUtf8(decodedBytes1);
+        assertEquals(content, decodedContent, "decoding hello world");
+        assertEquals(content1, decodedContent1);
+        assertArrayEquals(content2Trimmed, decodedBytes2, "decoding 0x0000287fb4cd");
     }
 }
