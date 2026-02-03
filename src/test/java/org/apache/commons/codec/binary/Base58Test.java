@@ -216,4 +216,14 @@ public class Base58Test {
             assertArrayEquals(input, decoded, "Round trip failed for: " + test);
         }
     }
+
+    @Test
+    void testHexEncoding() {
+        final String hexString = "48656c6c6f20576f726c6421";
+        final byte[] encoded = new Base58().encode(StringUtils.getBytesUtf8(hexString));
+        final byte[] decoded = new Base58().decode(StringUtils.newStringUtf8(encoded));
+
+        assertEquals("2NEpo7TZRRrLZSi2U", StringUtils.newStringUtf8(encoded), "Hex encoding failed");
+        assertEquals(hexString, StringUtils.newStringUtf8(decoded), "Hex decoding failed");
+    }
 }
