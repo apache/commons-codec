@@ -300,12 +300,11 @@ public class Base58 extends BaseNCodec {
         public Builder() {
             super(ENCODE_TABLE);
             setDecodeTable(DECODE_TABLE);
-            setEncodeTable(ENCODE_TABLE);
         }
 
         /**
          * Builds a new Base58 instance with the configured settings.
-         *
+
          * @return a new Base58 codec
          */
         @Override

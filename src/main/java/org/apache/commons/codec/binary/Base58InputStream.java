@@ -54,7 +54,7 @@ public class Base58InputStream extends BaseNCodecInputStream<Base58, Base58Input
      *
      * @since 1.20.0
      */
-    public static class Builder extends AbstracBuilder<Base58InputStream, Base58, Builder> {
+    public static class Builder extends BaseNCodecInputStream.AbstracBuilder<Base58InputStream, Base58, Builder> {
 
         /**
          * Constructs a new instance.

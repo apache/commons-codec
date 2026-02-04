@@ -58,7 +58,7 @@ public class Base58OutputStream extends BaseNCodecOutputStream<Base58, Base58Out
      *
      * @since 1.20.0
      */
-    public static class Builder extends AbstractBuilder<Base58OutputStream, Base58, Builder> {
+    public static class Builder extends BaseNCodecOutputStream.AbstractBuilder<Base58OutputStream, Base58, Builder> {
 
         /**
          * Constructs a new instance.
