@@ -19,6 +19,7 @@ package org.apache.commons.codec.binary;
 
 import static org.apache.commons.codec.binary.BaseNCodec.EOF;
 
+import java.io.ByteArrayInputStream;
 import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -67,6 +68,17 @@ public class BaseNCodecInputStream<C extends BaseNCodec, T extends BaseNCodecInp
          */
         protected InputStream getInputStream() {
             return inputStream;
+        }
+
+        /**
+         * Sets the input bytes.
+         *
+         * @param inputBytes the input bytes.
+         * @return {@code this} instance.
+         * @since 1.22.0
+         */
+        public B setByteArray(final byte[] inputBytes) {
+            return setInputStream(inputBytes == null ? null : new ByteArrayInputStream(inputBytes));
         }
 
         /**

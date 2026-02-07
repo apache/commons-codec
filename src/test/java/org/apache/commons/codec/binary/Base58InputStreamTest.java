@@ -131,7 +131,7 @@ class Base58InputStreamTest {
      * @throws Exception Usually signifies a bug in the Base58 commons-codec implementation.
      */
     private void testByChunk(final byte[] encoded, final byte[] decoded, final int chunkSize, final byte[] separator) throws Exception {
-        try (InputStream in = Base58InputStream.builder().setInputStream(new ByteArrayInputStream(decoded)).setEncode(true).get()) {
+        try (InputStream in = Base58InputStream.builder().setByteArray(decoded).setEncode(true).get()) {
             final byte[] output = BaseNTestData.streamToBytes(in);
             assertEquals(-1, in.read(), "EOF");
             assertEquals(-1, in.read(), "Still EOF");
@@ -169,7 +169,7 @@ class Base58InputStreamTest {
      */
     private void testByteByByte(final byte[] encoded, final byte[] decoded, final int chunkSize, final byte[] separator) throws Exception {
         InputStream in;
-        in = Base58InputStream.builder().setInputStream(new ByteArrayInputStream(decoded)).setEncode(true).get();
+        in = Base58InputStream.builder().setByteArray(decoded).setEncode(true).get();
         byte[] output = BaseNTestData.streamToBytes(in);
         assertEquals(-1, in.read(), "EOF");
         assertEquals(-1, in.read(), "Still EOF");
@@ -200,8 +200,7 @@ class Base58InputStreamTest {
     @Test
     void testMarkSupported() throws Exception {
         final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
-        final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
-        try (Base58InputStream in = Base58InputStream.builder().setInputStream(bin).setEncode(true).get()) {
+        try (Base58InputStream in = Base58InputStream.builder().setByteArray(decoded).setEncode(true).get()) {
             // Always returns false for now.
             assertFalse(in.markSupported(), "Base58InputStream.markSupported() is false");
         }
@@ -217,8 +216,7 @@ class Base58InputStreamTest {
         final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
         final byte[] buf = new byte[1024];
         int bytesRead = 0;
-        final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
-        try (Base58InputStream in = Base58InputStream.builder().setInputStream(bin).setEncode(true).get()) {
+        try (Base58InputStream in = Base58InputStream.builder().setByteArray(decoded).setEncode(true).get()) {
             bytesRead = in.read(buf, 0, 0);
             assertEquals(0, bytesRead, "Base58InputStream.read(buf, 0, 0) returns 0");
         }
@@ -232,8 +230,7 @@ class Base58InputStreamTest {
     @Test
     void testReadNull() throws Exception {
         final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
-        final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
-        try (Base58InputStream in = Base58InputStream.builder().setInputStream(bin).setEncode(true).get()) {
+        try (Base58InputStream in = Base58InputStream.builder().setByteArray(decoded).setEncode(true).get()) {
             assertThrows(NullPointerException.class, () -> in.read(null, 0, 0));
         }
     }
@@ -247,8 +244,7 @@ class Base58InputStreamTest {
     void testReadOutOfBounds() throws Exception {
         final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
         final byte[] buf = new byte[1024];
-        final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
-        try (Base58InputStream in = Base58InputStream.builder().setInputStream(bin).setEncode(true).get()) {
+        try (Base58InputStream in = Base58InputStream.builder().setByteArray(decoded).setEncode(true).get()) {
             assertThrows(IndexOutOfBoundsException.class, () -> in.read(buf, -1, 0), "Base58InputStream.read(buf, -1, 0)");
             assertThrows(IndexOutOfBoundsException.class, () -> in.read(buf, 0, -1), "Base58InputStream.read(buf, 0, -1)");
             assertThrows(IndexOutOfBoundsException.class, () -> in.read(buf, buf.length + 1, 0), "Base58InputStream.read(buf, buf.length + 1, 0)");

@@ -587,7 +587,7 @@ class Base64InputStreamTest {
             assertThrows(IllegalArgumentException.class, () -> BaseNTestData.streamToBytes(in2));
             // Same with a builder
             try (Base64InputStream in3 = Base64InputStream.builder()
-                    .setInputStream(new ByteArrayInputStream(encoded))
+                    .setByteArray(encoded)
                     .setEncode(false)
                     .setBaseNCodec(Base64.builder().setLineLength(0).setLineSeparator(null).setDecodingPolicy(CodecPolicy.STRICT).get())
                     .get()) {

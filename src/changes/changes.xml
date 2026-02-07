@@ -47,6 +47,7 @@ The <action> type attribute can be add,update,fix,remove.
       <!-- FIX -->
       <!-- ADD -->
       <action type="add" dev="ggregory" due-to="Inkeet, Gary Gregory, Wolff Bock von Wuelfingen" issue="CODEC-326">Add Base58 support.</action>
+      <action type="add" dev="ggregory" due-to="Gary Gregory">Add BaseNCodecInputStream.AbstracBuilder.setByteArray(byte[]).</action>
       <!-- UPDATE -->
     </release>
     <release version="1.21.0" date="2026-01-23" description="This is a feature and maintenance release. Java 8 or later is required.">

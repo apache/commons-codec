@@ -555,7 +555,7 @@ class Base32InputStreamTest {
             assertThrows(IllegalArgumentException.class, () -> BaseNTestData.streamToBytes(in2));
             // Same with a builder
             try (Base32InputStream in3 = Base32InputStream.builder()
-                    .setInputStream(new ByteArrayInputStream(encoded))
+                    .setByteArray(encoded)
                     .setEncode(false)
                     .setBaseNCodec(Base32.builder().setLineLength(0).setLineSeparator(null).setDecodingPolicy(CodecPolicy.STRICT).get())
                     .get()) {

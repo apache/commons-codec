@@ -224,7 +224,7 @@ class Base16InputStreamTest {
             assertArrayEquals(encoded, output, "Streaming Base16 encode");
         }
         try (InputStream in = Base16InputStream.builder()
-                .setInputStream(new ByteArrayInputStream(decoded))
+                .setByteArray(decoded)
                 .setEncode(true).setBaseNCodec(Base16.builder().setLowerCase(lowerCase).get())
                 .get()) {
             final byte[] output = new byte[encoded.length];
@@ -403,7 +403,7 @@ class Base16InputStreamTest {
             assertThrows(IllegalArgumentException.class, () -> b16Stream.skip(-10));
         }
         // Same with a builder
-        try (Base16InputStream b16Stream = Base16InputStream.builder().setInputStream(ins).get()) {
+        try (Base16InputStream b16Stream = Base16InputStream.builder().setByteArray(StringUtils.getBytesIso8859_1(ENCODED_B16)).get()) {
             assertThrows(IllegalArgumentException.class, () -> b16Stream.skip(-10));
         }
     }
