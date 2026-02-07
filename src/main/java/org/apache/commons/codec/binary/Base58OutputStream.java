@@ -40,7 +40,7 @@ import java.io.OutputStream;
  * </p>
  * <ul>
  * <li>Lenient: Any trailing bits are composed into 8-bit bytes where possible. The remainder are discarded.</li>
- * <li>Strict: The decoding will raise an {@link IllegalArgumentException} if trailing bits are not part of a valid encoding. Any unused bits from the final
+ * <li>Strict: The decoding will throw an {@link IllegalArgumentException} if trailing bits are not part of a valid encoding. Any unused bits from the final
  * character must be zero. Impossible counts of entire final characters are not allowed.</li>
  * </ul>
  * <p>
@@ -49,6 +49,7 @@ import java.io.OutputStream;
  * </p>
  *
  * @see Base58
+ * @see <a href="https://datatracker.ietf.org/doc/html/draft-msporny-base58-03">The Base58 Encoding Scheme draft-msporny-base58-03</a>
  * @since 1.22.0
  */
 public class Base58OutputStream extends BaseNCodecOutputStream<Base58, Base58OutputStream, Base58OutputStream.Builder> {
@@ -68,7 +69,7 @@ public class Base58OutputStream extends BaseNCodecOutputStream<Base58, Base58Out
         /**
          * Builds a new Base58OutputStream instance with the configured settings.
          *
-         * @return a new Base58OutputStream
+         * @return a new Base58OutputStream.
          */
         @Override
         public Base58OutputStream get() {
@@ -78,7 +79,7 @@ public class Base58OutputStream extends BaseNCodecOutputStream<Base58, Base58Out
         /**
          * Creates a new Base58 codec instance.
          *
-         * @return a new Base58 codec
+         * @return a new Base58 codec.
          */
         @Override
         protected Base58 newBaseNCodec() {
@@ -108,15 +109,4 @@ public class Base58OutputStream extends BaseNCodecOutputStream<Base58, Base58Out
         this(builder().setOutputStream(outputStream));
     }
 
-    /**
-     * Constructs a Base58OutputStream such that all data written is either Base58-encoded or Base58-decoded to the original provided OutputStream.
-     *
-     * @param outputStream OutputStream to wrap.
-     * @param encode     true if we should encode all data written to us, false if we should decode.
-     * @deprecated Use {@link #builder()} and {@link Builder}.
-     */
-    @Deprecated
-    public Base58OutputStream(final OutputStream outputStream, final boolean encode) {
-        super(builder().setOutputStream(outputStream).setEncode(encode));
-    }
 }

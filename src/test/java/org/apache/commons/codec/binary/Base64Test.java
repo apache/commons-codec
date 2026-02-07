@@ -60,6 +60,7 @@ class Base64Test {
      * Example test cases with valid characters but impossible combinations of
      * trailing characters (i.e. cannot be created during encoding).
      */
+    // @formatter:off
     static final String[] BASE64_IMPOSSIBLE_CASES = {
         "ZE==",
         "ZmC=",
@@ -67,11 +68,13 @@ class Base64Test {
         "Zm9vYmC=",
         "AB",
     };
+    // @formatter:on
 
     /**
      * Copy of the standard base-64 encoding table. Used to test decoding the final
      * character of encoded bytes.
      */
+    // @formatter:off
     private static final byte[] STANDARD_ENCODE_TABLE = {
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
             'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
@@ -79,6 +82,7 @@ class Base64Test {
             'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
             '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '/'
     };
+    // @formatter:on
 
     /**
      * Test base 64 decoding of the final trailing bits. Trailing encoded bytes
@@ -611,8 +615,8 @@ class Base64Test {
             "Zm9vYmF-",
             "Zm9vYmF_"
     })
-    void testDecodeEncodeUrlSafeByteArray(final String encodedText) {
-        final String decodedText = StringUtils.newStringUsAscii(Base64.decodeBase64UrlSafe(encodedText.getBytes(CHARSET_UTF8)));
+    void testDecodeEncodeUrl(final String encodedText) {
+        final String decodedText = StringUtils.newStringUsAscii(Base64.decodeBase64UrlSafe(encodedText));
         final String encodedText2 = Base64.encodeBase64URLSafeString(StringUtils.getBytesUtf8(decodedText));
         assertEquals(encodedText, encodedText2);
     }
@@ -630,8 +634,8 @@ class Base64Test {
             "Zm9vYmF-",
             "Zm9vYmF_"
     })
-    void testDecodeEncodeUrl(final String encodedText) {
-        final String decodedText = StringUtils.newStringUsAscii(Base64.decodeBase64UrlSafe(encodedText));
+    void testDecodeEncodeUrlSafeByteArray(final String encodedText) {
+        final String decodedText = StringUtils.newStringUsAscii(Base64.decodeBase64UrlSafe(encodedText.getBytes(CHARSET_UTF8)));
         final String encodedText2 = Base64.encodeBase64URLSafeString(StringUtils.getBytesUtf8(decodedText));
         assertEquals(encodedText, encodedText2);
     }

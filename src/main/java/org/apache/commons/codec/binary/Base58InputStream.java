@@ -36,7 +36,7 @@ import java.io.InputStream;
  * </p>
  * <ul>
  * <li>Lenient: Any trailing bits are composed into 8-bit bytes where possible. The remainder are discarded.</li>
- * <li>Strict: The decoding will raise an {@link IllegalArgumentException} if trailing bits are not part of a valid encoding. Any unused bits from the final
+ * <li>Strict: The decoding will throw an {@link IllegalArgumentException} if trailing bits are not part of a valid encoding. Any unused bits from the final
  * character must be zero. Impossible counts of entire final characters are not allowed.</li>
  * </ul>
  * <p>
@@ -45,6 +45,7 @@ import java.io.InputStream;
  * </p>
  *
  * @see Base58
+ * @see <a href="https://datatracker.ietf.org/doc/html/draft-msporny-base58-03">The Base58 Encoding Scheme draft-msporny-base58-03</a>
  * @since 1.22.0
  */
 public class Base58InputStream extends BaseNCodecInputStream<Base58, Base58InputStream, Base58InputStream.Builder> {
@@ -92,17 +93,5 @@ public class Base58InputStream extends BaseNCodecInputStream<Base58, Base58Input
      */
     public Base58InputStream(final InputStream inputStream) {
         super(builder().setInputStream(inputStream));
-    }
-
-    /**
-     * Constructs a Base58InputStream such that all data read is either Base58-encoded or Base58-decoded from the original provided InputStream.
-     *
-     * @param inputStream InputStream to wrap.
-     * @param encode    true if we should encode all data read from us, false if we should decode.
-     * @deprecated Use {@link #builder()} and {@link Builder}.
-     */
-    @Deprecated
-    public Base58InputStream(final InputStream inputStream, final boolean encode) {
-        super(builder().setInputStream(inputStream).setEncode(encode));
     }
 }
