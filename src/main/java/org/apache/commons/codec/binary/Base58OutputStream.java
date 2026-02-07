@@ -49,14 +49,12 @@ import java.io.OutputStream;
  * </p>
  *
  * @see Base58
- * @since 1.15
+ * @since 1.21.0
  */
 public class Base58OutputStream extends BaseNCodecOutputStream<Base58, Base58OutputStream, Base58OutputStream.Builder> {
 
     /**
      * Builds instances of Base58OutputStream.
-     *
-     * @since 1.20.0
      */
     public static class Builder extends BaseNCodecOutputStream.AbstractBuilder<Base58OutputStream, Base58, Builder> {
 
@@ -92,7 +90,6 @@ public class Base58OutputStream extends BaseNCodecOutputStream<Base58, Base58Out
      * Constructs a new Builder.
      *
      * @return a new Builder.
-     * @since 1.20.0
      */
     public static Builder builder() {
         return new Builder();
