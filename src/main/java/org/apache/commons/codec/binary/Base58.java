@@ -44,7 +44,7 @@ import java.util.WeakHashMap;
  *
  * @see Base58InputStream
  * @see Base58OutputStream
- * @since 1.21.0
+ * @since 1.22.0
  */
 public class Base58 extends BaseNCodec {
 
