@@ -45,7 +45,7 @@ import java.io.InputStream;
  * </p>
  *
  * @see Base58
- * @since 1.15
+ * @since 1.21.0
  */
 public class Base58InputStream extends BaseNCodecInputStream<Base58, Base58InputStream, Base58InputStream.Builder> {
 
@@ -78,7 +78,6 @@ public class Base58InputStream extends BaseNCodecInputStream<Base58, Base58Input
      * Constructs a new Builder.
      *
      * @return a new Builder.
-     * @since 1.20.0
      */
     public static Builder builder() {
         return new Builder();
