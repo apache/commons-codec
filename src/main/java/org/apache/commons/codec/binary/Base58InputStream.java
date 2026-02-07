@@ -45,14 +45,12 @@ import java.io.InputStream;
  * </p>
  *
  * @see Base58
- * @since 1.21.0
+ * @since 1.22.0
  */
 public class Base58InputStream extends BaseNCodecInputStream<Base58, Base58InputStream, Base58InputStream.Builder> {
 
     /**
      * Builds instances of Base58InputStream.
-     *
-     * @since 1.20.0
      */
     public static class Builder extends BaseNCodecInputStream.AbstracBuilder<Base58InputStream, Base58, Builder> {
 
