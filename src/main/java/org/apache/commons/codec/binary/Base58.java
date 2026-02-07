@@ -289,8 +289,6 @@ public class Base58 extends BaseNCodec {
 
     /**
      * Builds {@link Base58} instances with custom configuration.
-     *
-     * @since 1.20.0
      */
     public static class Builder extends AbstractBuilder<Base58, Base58.Builder> {
 
