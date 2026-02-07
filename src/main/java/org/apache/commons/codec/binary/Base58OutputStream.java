@@ -49,7 +49,7 @@ import java.io.OutputStream;
  * </p>
  *
  * @see Base58
- * @since 1.21.0
+ * @since 1.22.0
  */
 public class Base58OutputStream extends BaseNCodecOutputStream<Base58, Base58OutputStream, Base58OutputStream.Builder> {
 
