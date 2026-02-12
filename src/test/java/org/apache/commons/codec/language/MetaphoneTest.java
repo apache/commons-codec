@@ -275,19 +275,14 @@ class MetaphoneTest extends AbstractStringEncoderTest<Metaphone> {
         assertEquals("SNS", getStringEncoder().metaphone("SCIENCE"));
         assertEquals("SN", getStringEncoder().metaphone("SCENE"));
         assertEquals("S", getStringEncoder().metaphone("SCY"));
-
         assertEquals("SKTL", getStringEncoder().metaphone("SCHEDULE"));
         assertEquals("SKMT", getStringEncoder().metaphone("SCHEMATIC"));
         assertEquals("TSKR", getStringEncoder().metaphone("DISCHARGE"));
-
         assertEquals("EX", getStringEncoder().metaphone("ECHO"));
-
         assertEquals("TX", getStringEncoder().metaphone("TEACH"));
-
         assertEquals("XR", getStringEncoder().metaphone("CHERI"));
         assertEquals("XP", getStringEncoder().metaphone("CHIP"));
         assertEquals("XRST", getStringEncoder().metaphone("CHRIST"));
-
         assertEquals("X", getStringEncoder().metaphone("CIAO"));
         assertEquals("ST", getStringEncoder().metaphone("CITY"));
         assertEquals("KT", getStringEncoder().metaphone("CAT"));
