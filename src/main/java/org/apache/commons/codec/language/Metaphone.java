@@ -246,7 +246,11 @@ public class Metaphone implements StringEncoder {
                     if (isPreviousChar(local, n, 'S') && !isLastChar(wdsz, n) && FRONTV.indexOf(local.charAt(n + 1)) >= 0) {
                         break;
                     }
-                    if (regionMatch(local, n, "CIA")) { // "CIA" -> X
+                    if (isPreviousChar(local, n, 'S') && isNextChar(local, n, 'H')) { // SCH->sk
+                        code.append('K');
+                        break;
+                    }
+                    if (regionMatch(local, n, "CIA") || isNextChar(local, n, 'H')) { // "CIA" -> X or CH -> X
                         code.append('X');
                         break;
                     }
@@ -254,15 +258,7 @@ public class Metaphone implements StringEncoder {
                         code.append('S');
                         break; // CI,CE,CY -> S
                     }
-                    if (isPreviousChar(local, n, 'S') && isNextChar(local, n, 'H')) { // SCH->sk
-                        code.append('K');
-                        break;
-                    }
-                    if (!isNextChar(local, n, 'H') || n == 0 && wdsz >= 3 && isVowel(local, 2)) { // CH consonant -> K consonant
-                        code.append('K');
-                    } else {
-                        code.append('X'); // CHvowel -> X
-                    }
+                    code.append('K'); // default C -> K
                     break;
                 case 'D':
                     if (!isLastChar(wdsz, n + 1) && isNextChar(local, n, 'G') && FRONTV.indexOf(local.charAt(n + 2)) >= 0) { // DGE DGI DGY -> J
