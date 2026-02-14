@@ -42,7 +42,9 @@ class ColognePhoneticTest extends AbstractStringEncoderTest<ColognePhonetic> {
 
     private static final Set<String> TESTSET = new HashSet<>();
 
-    /** Character sequences to be tested by the code. */
+    /**
+     * Character sequences to be tested by the code.
+     */
     // @formatter:off
     private static final String[] MATCHES = {
             ".*[AEIOUJY].*",         // A, E, I, J, O, U, Y
@@ -133,7 +135,7 @@ class ColognePhoneticTest extends AbstractStringEncoderTest<ColognePhonetic> {
     }
 
     @Test
-    // Ensure that override still allows tests to work
+        // Ensure that override still allows tests to work
     void testCanFail() {
         assertThrows(AssertionFailedError.class, () -> checkEncoding("/", "Fehler"));
     }
@@ -182,6 +184,8 @@ class ColognePhoneticTest extends AbstractStringEncoderTest<ColognePhonetic> {
     void testExamples() throws EncoderException {
         // @formatter:off
         final String[][] data = {
+            { "m\u00FClhler", "657" },
+            { "m\u00FCleler", "6557" },
             { "m\u00DCller", "657" }, // mÜller - why upper case U-umlaut?
             { "m\u00FCller", "657" }, // müller - add equivalent lower-case
             { "schmidt", "862" },
@@ -223,7 +227,7 @@ class ColognePhoneticTest extends AbstractStringEncoderTest<ColognePhonetic> {
 
     @Test
     void testHyphen() throws EncoderException {
-        final String[][] data = { { "bergisch-gladbach", "174845214" }, { "M\u00fcller-L\u00fcdenscheidt", "65752682" } }; // Müller-Lüdenscheidt
+        final String[][] data = {{"bergisch-gladbach", "174845214"}, {"M\u00fcller-L\u00fcdenscheidt", "65752682"}}; // Müller-Lüdenscheidt
         checkEncodings(data);
     }
 
@@ -249,19 +253,19 @@ class ColognePhoneticTest extends AbstractStringEncoderTest<ColognePhonetic> {
 
     @Test
     void testSpecialCharsBetweenSameLetters() throws EncoderException {
-        final String[] data = { "Test test", "Testtest", "Test-test", "TesT#Test", "TesT?test" };
+        final String[] data = {"Test test", "Testtest", "Test-test", "TesT#Test", "TesT?test"};
         checkEncodingVariations("28282", data);
     }
 
     @Test
     void testVariationsMella() throws EncoderException {
-        final String[] data = { "mella", "milah", "moulla", "mellah", "muehle", "mule" };
+        final String[] data = {"mella", "milah", "moulla", "mellah", "muehle", "mule"};
         checkEncodingVariations("65", data);
     }
 
     @Test
     void testVariationsMeyer() throws EncoderException {
-        final String[] data = { "Meier", "Maier", "Mair", "Meyer", "Meyr", "Mejer", "Major" };
+        final String[] data = {"Meier", "Maier", "Mair", "Meyer", "Meyr", "Mejer", "Major"};
         checkEncodingVariations("67", data);
     }
 }

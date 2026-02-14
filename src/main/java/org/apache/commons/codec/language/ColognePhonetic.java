@@ -151,7 +151,7 @@ import org.apache.commons.codec.StringEncoder;
  * </table>
  *
  * <h4>Example:</h4>
- *
+ * <p>
  * {@code "M}&uuml;{@code ller-L}&uuml;<code>denscheidt"
  * =&gt; "MULLERLUDENSCHEIDT" =&gt; "6005507500206880022"</code>
  *
@@ -270,26 +270,29 @@ public class ColognePhonetic implements StringEncoder {
          * @param code the code to store.
          */
         public void put(final char code) {
-            if (code != CHAR_IGNORE && lastCode != code && (code != '0' || length == 0)) {
-                data[length] = code;
-                length++;
+            if (code == CHAR_IGNORE) {
+                return;
+            }
+            if (lastCode != code && (code != '0' || length == 0)) {
+                data[length++] = code;
             }
             lastCode = code;
         }
     }
+
     // Predefined char arrays for better performance and less GC load
-    private static final char[] AEIJOUY = { 'A', 'E', 'I', 'J', 'O', 'U', 'Y' };
-    private static final char[] CSZ = { 'C', 'S', 'Z' };
-    private static final char[] FPVW = { 'F', 'P', 'V', 'W' };
-    private static final char[] GKQ = { 'G', 'K', 'Q' };
-    private static final char[] CKQ = { 'C', 'K', 'Q' };
-    private static final char[] AHKLOQRUX = { 'A', 'H', 'K', 'L', 'O', 'Q', 'R', 'U', 'X' };
+    private static final char[] AEIJOUY = {'A', 'E', 'I', 'J', 'O', 'U', 'Y'};
+    private static final char[] CSZ = {'C', 'S', 'Z'};
+    private static final char[] FPVW = {'F', 'P', 'V', 'W'};
+    private static final char[] GKQ = {'G', 'K', 'Q'};
+    private static final char[] CKQ = {'C', 'K', 'Q'};
+    private static final char[] AHKLOQRUX = {'A', 'H', 'K', 'L', 'O', 'Q', 'R', 'U', 'X'};
 
-    private static final char[] SZ = { 'S', 'Z' };
+    private static final char[] SZ = {'S', 'Z'};
 
-    private static final char[] AHKOQUX = { 'A', 'H', 'K', 'O', 'Q', 'U', 'X' };
+    private static final char[] AHKOQUX = {'A', 'H', 'K', 'O', 'Q', 'U', 'X'};
 
-    private static final char[] DTX = { 'D', 'T', 'X' };
+    private static final char[] DTX = {'D', 'T', 'X'};
 
     private static final char CHAR_IGNORE = '-';    // is this character to be ignored?
 
@@ -346,7 +349,7 @@ public class ColognePhonetic implements StringEncoder {
             }
 
             if (chr < 'A' || chr > 'Z') {
-                    continue; // ignore unwanted characters
+                continue; // ignore unwanted characters
             }
 
             if (arrayContains(AEIJOUY, chr)) {
@@ -380,21 +383,21 @@ public class ColognePhonetic implements StringEncoder {
                 output.put('8');
             } else {
                 switch (chr) {
-                case 'R':
-                    output.put('7');
-                    break;
-                case 'L':
-                    output.put('5');
-                    break;
-                case 'M':
-                case 'N':
-                    output.put('6');
-                    break;
-                case 'H':
-                    output.put(CHAR_IGNORE); // needed by put
-                    break;
-                default:
-                    break;
+                    case 'R':
+                        output.put('7');
+                        break;
+                    case 'L':
+                        output.put('5');
+                        break;
+                    case 'M':
+                    case 'N':
+                        output.put('6');
+                        break;
+                    case 'H':
+                        output.put(CHAR_IGNORE); // needed by put
+                        break;
+                    default:
+                        break;
                 }
             }
 
@@ -407,10 +410,10 @@ public class ColognePhonetic implements StringEncoder {
     public Object encode(final Object object) throws EncoderException {
         if (!(object instanceof String)) {
             throw new EncoderException("This method's parameter was expected to be of the type " +
-                String.class.getName() +
-                ". But actually it was of the type " +
-                object.getClass().getName() +
-                ".");
+                    String.class.getName() +
+                    ". But actually it was of the type " +
+                    object.getClass().getName() +
+                    ".");
         }
         return encode((String) object);
     }
@@ -426,7 +429,7 @@ public class ColognePhonetic implements StringEncoder {
      * @param text1 source text to encode before testing for equality.
      * @param text2 source text to encode before testing for equality.
      * @return {@code true} if the encoding the first string equals the encoding of the second string, {@code false}
-     *         otherwise.
+     * otherwise.
      */
     public boolean isEncodeEqual(final String text1, final String text2) {
         return colognePhonetic(text1).equals(colognePhonetic(text2));
