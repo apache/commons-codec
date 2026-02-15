@@ -152,7 +152,7 @@ import org.apache.commons.codec.StringEncoder;
  *
  * <h4>Example:</h4>
  *
- * {@code "M}&uuml;{@code ller-L}&uuml;{@code denscheidt"} -> {@code "MULLERLUDENSCHEIDT"} -> {@code "6005507500206880022"}
+ * {@code "M}&uuml;{@code ller-L}&uuml;{@code denscheidt"} -&gt; {@code "MULLERLUDENSCHEIDT"} -&gt; {@code "6005507500206880022"}
  *
  * </li>
  *
@@ -160,7 +160,7 @@ import org.apache.commons.codec.StringEncoder;
  * <h3>Step 2:</h3>
  * Collapse of all multiple consecutive code digits.
  * <h4>Example:</h4>
- * {@code "6005507500206880022"} -> {@code "6050750206802"}</li>
+ * {@code "6005507500206880022"} -&gt; {@code "6050750206802"}</li>
  *
  * <li>
  * <h3>Step 3:</h3>
@@ -168,7 +168,7 @@ import org.apache.commons.codec.StringEncoder;
  * if they occur after removing the "0" digits.
  *
  * <h4>Example:</h4>
- * {@code "6050750206802"} -> {@code "65752682"}</li>
+ * {@code "6050750206802"} -&gt; {@code "65752682"}</li>
  *
  * </ul>
  *
