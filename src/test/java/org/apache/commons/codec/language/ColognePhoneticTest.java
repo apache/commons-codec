@@ -32,7 +32,7 @@ import org.junit.jupiter.api.Test;
 import org.opentest4j.AssertionFailedError;
 
 /**
- * Tests the {@code ColognePhonetic} class.
+ * Tests the {@link ColognePhonetic} class.
  *
  * <p>
  * Keep this file in UTF-8 encoding for proper Javadoc processing.

@@ -26,8 +26,8 @@ import org.apache.commons.codec.StringEncoder;
 /**
  * Encodes a string into a Cologne Phonetic value.
  * <p>
- * Implements the <a href="https://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik">K&ouml;lner Phonetik</a> (Cologne
- * Phonetic) algorithm issued by Hans Joachim Postel in 1969.
+ * Implements the <a href="https://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik">K&ouml;lner Phonetik</a>
+ * (<a href="https://en.wikipedia.org/wiki/Cologne_phonetics">Cologne phonetics</a>) algorithm issued by Hans Joachim Postel in 1969.
  * </p>
  * <p>
  * The <em>K&ouml;lner Phonetik</em> is a phonetic algorithm which is optimized for the German language. It is related to
@@ -176,6 +176,7 @@ import org.apache.commons.codec.StringEncoder;
  * This class is thread-safe.
  * </p>
  *
+ * @see <a href="https://en.wikipedia.org/wiki/Cologne_phonetics">Wikipedia: Cologne phonetics</a>
  * @see <a href="https://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik">Wikipedia (de): K&ouml;lner Phonetik (in German)</a>
  * @since 1.5
  */
