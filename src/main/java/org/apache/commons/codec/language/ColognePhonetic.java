@@ -270,11 +270,15 @@ public class ColognePhonetic implements StringEncoder {
          * @param code the code to store.
          */
         public void put(final char code) {
-            if (code != CHAR_IGNORE && lastCode != code && (code != '0' || length == 0)) {
+            final boolean accept = code != CHAR_IGNORE;
+            final boolean nonZ = code != '0';
+            if (accept && lastCode != code && (nonZ || length == 0)) {
                 data[length] = code;
                 length++;
             }
-            lastCode = code;
+            if (nonZ && accept) {
+                lastCode = code;
+            }
         }
     }
     // Predefined char arrays for better performance and less GC load
@@ -398,8 +402,8 @@ public class ColognePhonetic implements StringEncoder {
     @Override
     public Object encode(final Object object) throws EncoderException {
         if (!(object instanceof String)) {
-            throw new EncoderException("This method's parameter was expected to be of the type " + String.class.getName() + ". But actually it was of the type "
-                    + object.getClass().getName() + ".");
+            throw new EncoderException(String.format("This method's parameter was expected to be of the type %s. But actually it was of the type %s.",
+                    String.class.getName(), object.getClass().getName()));
         }
         return encode((String) object);
     }
@@ -434,20 +438,19 @@ public class ColognePhonetic implements StringEncoder {
     private char[] preprocess(final String text) {
         // This converts German small sharp s (Eszett) to SS
         final char[] chrs = text.toUpperCase(Locale.GERMAN).toCharArray();
-
         for (int index = 0; index < chrs.length; index++) {
             switch (chrs[index]) {
-                case '\u00C4': // capital A, umlaut mark
-                    chrs[index] = 'A';
-                    break;
-                case '\u00DC': // capital U, umlaut mark
-                    chrs[index] = 'U';
-                    break;
-                case '\u00D6': // capital O, umlaut mark
-                    chrs[index] = 'O';
-                    break;
-                default:
-                    break;
+            case '\u00C4': // capital A, umlaut mark
+                chrs[index] = 'A';
+                break;
+            case '\u00DC': // capital U, umlaut mark
+                chrs[index] = 'U';
+                break;
+            case '\u00D6': // capital O, umlaut mark
+                chrs[index] = 'O';
+                break;
+            default:
+                break;
             }
         }
         return chrs;

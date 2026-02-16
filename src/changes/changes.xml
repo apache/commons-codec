@@ -46,6 +46,7 @@ The <action> type attribute can be add,update,fix,remove.
     <release version="1.22.0" date="YYYY-MM-DD" description="This is a feature and maintenance release. Java 8 or later is required.">
       <!-- FIX -->
       <action type="fix" dev="ggregory" due-to="Shalu Jha, Andrey, Gary Gregory" issue="CODEC-249">Fix Incorrect transform of CH digraph according Metaphone basic rules #423.</action>
+      <action type="fix" dev="ggregory" due-to="DRUser123, Shalu Jha, Gary Gregory" issue="CODEC-317">ColognePhonetic can create duplicate consecutive codes in some cases.</action>
       <!-- ADD -->
       <action type="add" dev="ggregory" due-to="Inkeet, Gary Gregory, Wolff Bock von Wuelfingen" issue="CODEC-326">Add Base58 support.</action>
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add BaseNCodecInputStream.AbstracBuilder.setByteArray(byte[]).</action>
