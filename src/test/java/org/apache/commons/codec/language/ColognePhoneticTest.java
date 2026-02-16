@@ -24,11 +24,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import org.apache.commons.codec.AbstractStringEncoderTest;
 import org.apache.commons.codec.EncoderException;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.opentest4j.AssertionFailedError;
 
 /**
@@ -99,6 +103,110 @@ class ColognePhoneticTest extends AbstractStringEncoderTest<ColognePhonetic> {
         }
     }
 
+    static Stream<Arguments> testBasicEncoding() {
+        // @formatter:off
+        return Stream.of(
+            Arguments.arguments("01", "Aabjoe"),
+            Arguments.arguments("0856", "Aaclan"),
+            Arguments.arguments("04567", "Aychlmajr") // CODEC-122
+        );
+        // @formatter:on
+    }
+
+    static Stream<Arguments> testEdgeCases() {
+        // @formatter:off
+        return Stream.of(
+            Arguments.arguments("a", "0"),
+            Arguments.arguments("e", "0"),
+            Arguments.arguments("i", "0"),
+            Arguments.arguments("o", "0"),
+            Arguments.arguments("u", "0"),
+            Arguments.arguments("\u00E4", "0"), // a-umlaut
+            Arguments.arguments("\u00F6", "0"), // o-umlaut
+            Arguments.arguments("\u00FC", "0"), // u-umlaut
+            Arguments.arguments("\u00DF", "8"), // small sharp s
+            Arguments.arguments("aa", "0"),
+            Arguments.arguments("ha", "0"),
+            Arguments.arguments("h", ""),
+            Arguments.arguments("aha", "0"),
+            Arguments.arguments("b", "1"),
+            Arguments.arguments("p", "1"),
+            Arguments.arguments("ph", "3"),
+            Arguments.arguments("f", "3"),
+            Arguments.arguments("v", "3"),
+            Arguments.arguments("w", "3"),
+            Arguments.arguments("g", "4"),
+            Arguments.arguments("k", "4"),
+            Arguments.arguments("q", "4"),
+            Arguments.arguments("x", "48"),
+            Arguments.arguments("ax", "048"),
+            Arguments.arguments("cx", "48"),
+            Arguments.arguments("l", "5"),
+            Arguments.arguments("cl", "45"),
+            Arguments.arguments("acl", "085"),
+            Arguments.arguments("mn", "6"),
+            Arguments.arguments("{mn}", "6"), // test chars above Z
+            Arguments.arguments("r", "7")
+        );
+        // @formatter:on
+    }
+
+    static Stream<Arguments> testExamples() {
+        // @formatter:off
+        return Stream.of(
+            Arguments.arguments("m\u00DCller", "657"), // mÜller - why upper case U-umlaut?
+            Arguments.arguments("m\u00FCller", "657"), // müller - add equivalent lower-case
+            Arguments.arguments("schmidt", "862"),
+            Arguments.arguments("schneider", "8627"),
+            Arguments.arguments("fischer", "387"),
+            Arguments.arguments("weber", "317"),
+            Arguments.arguments("wagner", "3467"),
+            Arguments.arguments("becker", "147"),
+            Arguments.arguments("hoffmann", "0366"),
+            Arguments.arguments("sch\u00C4fer", "837"), // schÄfer - why upper case A-umlaut ?
+            Arguments.arguments("sch\u00e4fer", "837"), // schäfer - add equivalent lower-case
+            Arguments.arguments("Breschnew", "17863"),
+            Arguments.arguments("Wikipedia", "3412"),
+            Arguments.arguments("peter", "127"),
+            Arguments.arguments("pharma", "376"),
+            Arguments.arguments("m\u00f6nchengladbach", "664645214"), // mönchengladbach
+            Arguments.arguments("deutsch", "28"),
+            Arguments.arguments("deutz", "28"),
+            Arguments.arguments("hamburg", "06174"),
+            Arguments.arguments("hannover", "0637"),
+            Arguments.arguments("christstollen", "478256"),
+            Arguments.arguments("Xanthippe", "48621"),
+            Arguments.arguments("Zacharias", "8478"),
+            Arguments.arguments("Holzbau", "0581"),
+            Arguments.arguments("matsch", "68"),
+            Arguments.arguments("matz", "68"),
+            Arguments.arguments("Arbeitsamt", "071862"),
+            Arguments.arguments("Eberhard", "01772"),
+            Arguments.arguments("Eberhardt", "01772"),
+            Arguments.arguments("Celsius", "8588"),
+            Arguments.arguments("Ace", "08"),
+            Arguments.arguments("shch", "84"), // CODEC-254
+            Arguments.arguments("xch", "484"), // CODEC-255
+            Arguments.arguments("heithabu", "021")
+        );
+        // @formatter:on
+    }
+
+    static Stream<Arguments> testIsEncodeEquals() {
+        // @formatter:off
+        return Stream.of(
+            Arguments.arguments("Muller", "M\u00fcller"), // Müller
+            Arguments.arguments("Meyer", "Mayr"),
+            Arguments.arguments("house", "house"),
+            Arguments.arguments("House", "house"),
+            Arguments.arguments("Haus", "house"),
+            Arguments.arguments("ganz", "Gans"),
+            Arguments.arguments("ganz", "G\u00e4nse"), // Gänse
+            Arguments.arguments("Miyagi", "Miyako")
+        );
+        // @formatter:on
+    }
+
     @Override
     // Capture test strings for later checking
     public void checkEncoding(final String expected, final String source) throws EncoderException {
@@ -112,24 +220,10 @@ class ColognePhoneticTest extends AbstractStringEncoderTest<ColognePhonetic> {
         return new ColognePhonetic();
     }
 
-    @Test
-    void testAabjoe() throws EncoderException {
-        checkEncoding("01", "Aabjoe");
-    }
-
-    @Test
-    void testAaclan() throws EncoderException {
-        checkEncoding("0856", "Aaclan");
-    }
-
-    /**
-     * Tests [CODEC-122]
-     *
-     * @throws EncoderException for some failure scenarios
-     */
-    @Test
-    void testAychlmajrCodec122() throws EncoderException {
-        checkEncoding("04567", "Aychlmajr");
+    @ParameterizedTest
+    @MethodSource
+    void testBasicEncoding(final String expected, final String source) throws EncoderException {
+        checkEncoding(expected, source);
     }
 
     @Test
@@ -138,87 +232,16 @@ class ColognePhoneticTest extends AbstractStringEncoderTest<ColognePhonetic> {
         assertThrows(AssertionFailedError.class, () -> checkEncoding("/", "Fehler"));
     }
 
-    @Test
-    void testEdgeCases() throws EncoderException {
-        // @formatter:off
-        final String[][] data = {
-            { "a", "0" },
-            { "e", "0" },
-            { "i", "0" },
-            { "o", "0" },
-            { "u", "0" },
-            { "\u00E4", "0" }, // a-umlaut
-            { "\u00F6", "0" }, // o-umlaut
-            { "\u00FC", "0" }, // u-umlaut
-            { "\u00DF", "8" }, // small sharp s
-            { "aa", "0" },
-            { "ha", "0" },
-            { "h", "" },
-            { "aha", "0" },
-            { "b", "1" },
-            { "p", "1" },
-            { "ph", "3" },
-            { "f", "3" },
-            { "v", "3" },
-            { "w", "3" },
-            { "g", "4" },
-            { "k", "4" },
-            { "q", "4" },
-            { "x", "48" },
-            { "ax", "048" },
-            { "cx", "48" },
-            { "l", "5" },
-            { "cl", "45" },
-            { "acl", "085" },
-            { "mn", "6" },
-            { "{mn}", "6" }, // test chars above Z
-            { "r", "7" }
-        };
-        // @formatter:on
-        checkEncodings(data);
+    @ParameterizedTest
+    @MethodSource
+    void testEdgeCases(final String source, final String expected) throws EncoderException {
+        checkEncoding(expected, source);
     }
 
-    @Test
-    void testExamples() throws EncoderException {
-        // @formatter:off
-        final String[][] data = {
-            { "m\u00DCller", "657" }, // mÜller - why upper case U-umlaut?
-            { "m\u00FCller", "657" }, // müller - add equivalent lower-case
-            { "schmidt", "862" },
-            { "schneider", "8627" },
-            { "fischer", "387" },
-            { "weber", "317" },
-            { "wagner", "3467" },
-            { "becker", "147" },
-            { "hoffmann", "0366" },
-            { "sch\u00C4fer", "837" }, // schÄfer - why upper case A-umlaut ?
-            { "sch\u00e4fer", "837" }, // schäfer - add equivalent lower-case
-            { "Breschnew", "17863" },
-            { "Wikipedia", "3412" },
-            { "peter", "127" },
-            { "pharma", "376" },
-            { "m\u00f6nchengladbach", "664645214" }, // mönchengladbach
-            { "deutsch", "28" },
-            { "deutz", "28" },
-            { "hamburg", "06174" },
-            { "hannover", "0637" },
-            { "christstollen", "478256" },
-            { "Xanthippe", "48621" },
-            { "Zacharias", "8478" },
-            { "Holzbau", "0581" },
-            { "matsch", "68" },
-            { "matz", "68" },
-            { "Arbeitsamt", "071862" },
-            { "Eberhard", "01772" },
-            { "Eberhardt", "01772" },
-            { "Celsius", "8588" },
-            { "Ace", "08" },
-            { "shch", "84" }, // CODEC-254
-            { "xch", "484" }, // CODEC-255
-            { "heithabu", "021" }
-        };
-        // @formatter:on
-        checkEncodings(data);
+    @ParameterizedTest
+    @MethodSource
+    void testExamples(final String source, final String expected) throws EncoderException {
+        checkEncoding(expected, source);
     }
 
     @Test
@@ -227,24 +250,11 @@ class ColognePhoneticTest extends AbstractStringEncoderTest<ColognePhonetic> {
         checkEncodings(data);
     }
 
-    @Test
-    void testIsEncodeEquals() {
-        //@formatter:off
-        final String[][] data = {
-            { "Muller", "M\u00fcller" }, // Müller
-            { "Meyer", "Mayr" },
-            { "house", "house" },
-            { "House", "house" },
-            { "Haus", "house" },
-            { "ganz", "Gans" },
-            { "ganz", "G\u00e4nse" }, // Gänse
-            { "Miyagi", "Miyako" }
-        };
-        //@formatter:on
-        for (final String[] element : data) {
-            final boolean encodeEqual = getStringEncoder().isEncodeEqual(element[1], element[0]);
-            assertTrue(encodeEqual, element[1] + " != " + element[0]);
-        }
+    @ParameterizedTest
+    @MethodSource
+    void testIsEncodeEquals(final String source, final String expected) {
+        final boolean encodeEqual = getStringEncoder().isEncodeEqual(expected, source);
+        assertTrue(encodeEqual, () -> expected + " != " + source);
     }
 
     @Test
