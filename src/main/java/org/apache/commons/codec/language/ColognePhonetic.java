@@ -279,7 +279,6 @@ public class ColognePhonetic implements StringEncoder {
             }
         }
     }
-
     // Predefined char arrays for better performance and less GC load
     private static final char[] AEIJOUY = { 'A', 'E', 'I', 'J', 'O', 'U', 'Y' };
     private static final char[] CSZ = { 'C', 'S', 'Z' };
