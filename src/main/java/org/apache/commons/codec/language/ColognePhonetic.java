@@ -270,13 +270,13 @@ public class ColognePhonetic implements StringEncoder {
          * @param code the code to store.
          */
         public void put(final char code) {
-            if (code == CHAR_IGNORE) {
-                return;
+            if (code != CHAR_IGNORE && lastCode != code && (code != '0' || length == 0)) {
+                data[length] = code;
+                length++;
             }
-            if (lastCode != code && (code != '0' || length == 0)) {
-                data[length++] = code;
+            if(code != '-' ) {
+                lastCode = code;
             }
-            lastCode = code;
         }
     }
 

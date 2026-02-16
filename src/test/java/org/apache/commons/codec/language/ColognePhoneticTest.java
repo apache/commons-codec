@@ -156,6 +156,7 @@ class ColognePhoneticTest extends AbstractStringEncoderTest<ColognePhonetic> {
             { "aa", "0" },
             { "ha", "0" },
             { "h", "" },
+            { "hh", "" },
             { "aha", "0" },
             { "b", "1" },
             { "p", "1" },
@@ -184,6 +185,9 @@ class ColognePhoneticTest extends AbstractStringEncoderTest<ColognePhonetic> {
     void testExamples() throws EncoderException {
         // @formatter:off
         final String[][] data = {
+            {"aeiou", "0"},
+            {"Ares", "078"},
+            {"abab", "011"},
             { "m\u00FClhler", "657" },
             { "m\u00FCleler", "6557" },
             { "m\u00DCller", "657" }, // mÜller - why upper case U-umlaut?
@@ -195,6 +199,7 @@ class ColognePhoneticTest extends AbstractStringEncoderTest<ColognePhonetic> {
             { "wagner", "3467" },
             { "becker", "147" },
             { "hoffmann", "0366" },
+            { "hoffman", "0366" },
             { "sch\u00C4fer", "837" }, // schÄfer - why upper case A-umlaut ?
             { "sch\u00e4fer", "837" }, // schäfer - add equivalent lower-case
             { "Breschnew", "17863" },
@@ -219,7 +224,11 @@ class ColognePhoneticTest extends AbstractStringEncoderTest<ColognePhonetic> {
             { "Ace", "08" },
             { "shch", "84" }, // CODEC-254
             { "xch", "484" }, // CODEC-255
-            { "heithabu", "021" }
+            { "heithabu", "021" },
+            { "anna", "06" },
+            { "bobb", "11" },
+            { "muleler", "6557" },
+            { "xcx", "4848" }
         };
         // @formatter:on
         checkEncodings(data);
