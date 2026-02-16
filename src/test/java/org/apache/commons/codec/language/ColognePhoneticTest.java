@@ -259,19 +259,16 @@ class ColognePhoneticTest extends AbstractStringEncoderTest<ColognePhonetic> {
 
     @Test
     void testSpecialCharsBetweenSameLetters() throws EncoderException {
-        final String[] data = { "Test test", "Testtest", "Test-test", "TesT#Test", "TesT?test" };
-        checkEncodingVariations("28282", data);
+        checkEncodingVariations("28282", "Test test", "Testtest", "Test-test", "TesT#Test", "TesT?test");
     }
 
     @Test
     void testVariationsMella() throws EncoderException {
-        final String[] data = { "mella", "milah", "moulla", "mellah", "muehle", "mule" };
-        checkEncodingVariations("65", data);
+        checkEncodingVariations("65", "mella", "milah", "moulla", "mellah", "muehle", "mule");
     }
 
     @Test
     void testVariationsMeyer() throws EncoderException {
-        final String[] data = { "Meier", "Maier", "Mair", "Meyer", "Meyr", "Mejer", "Major" };
-        checkEncodingVariations("67", data);
+        checkEncodingVariations("67", "Meier", "Maier", "Mair", "Meyer", "Meyr", "Mejer", "Major");
     }
 }
