@@ -109,8 +109,7 @@ public class MatchRatingApproachEncoder implements StringEncoder {
     @Override
     public final Object encode(final Object object) throws EncoderException {
         if (!(object instanceof String)) {
-            throw new EncoderException(
-                    "Parameter supplied to Match Rating Approach encoder is not of type java.lang.String");
+            throw new EncoderException("Parameter supplied to Match Rating Approach encoder is not of type java.lang.String");
         }
         return encode((String) object);
     }

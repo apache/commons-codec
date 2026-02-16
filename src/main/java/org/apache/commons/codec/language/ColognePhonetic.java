@@ -327,28 +327,21 @@ public class ColognePhonetic implements StringEncoder {
         if (text == null) {
             return null;
         }
-
         final CologneInputBuffer input = new CologneInputBuffer(preprocess(text));
         final CologneOutputBuffer output = new CologneOutputBuffer(input.length() * 2);
-
         char nextChar;
-
         char lastChar = CHAR_IGNORE;
         char chr;
-
         while (!input.isEmpty()) {
             chr = input.removeNext();
-
             if (!input.isEmpty()) {
                 nextChar = input.getNextChar();
             } else {
                 nextChar = CHAR_IGNORE;
             }
-
             if (chr < 'A' || chr > 'Z') {
-                    continue; // ignore unwanted characters
+                continue; // ignore unwanted characters
             }
-
             if (arrayContains(AEIJOUY, chr)) {
                 output.put('0');
             } else if (chr == 'B' || chr == 'P' && nextChar != 'H') {
@@ -397,7 +390,6 @@ public class ColognePhonetic implements StringEncoder {
                     break;
                 }
             }
-
             lastChar = chr;
         }
         return output.toString();
@@ -406,11 +398,8 @@ public class ColognePhonetic implements StringEncoder {
     @Override
     public Object encode(final Object object) throws EncoderException {
         if (!(object instanceof String)) {
-            throw new EncoderException("This method's parameter was expected to be of the type " +
-                String.class.getName() +
-                ". But actually it was of the type " +
-                object.getClass().getName() +
-                ".");
+            throw new EncoderException("This method's parameter was expected to be of the type " + String.class.getName() + ". But actually it was of the type "
+                    + object.getClass().getName() + ".");
         }
         return encode((String) object);
     }
