@@ -187,29 +187,29 @@ public class ColognePhonetic implements StringEncoder {
      * However, it is not shared between threads, as it is constructed on demand
      * by the method {@link ColognePhonetic#colognePhonetic(String)}
      */
-    abstract static class CologneBuffer {
+    private abstract static class CologneBuffer {
 
         protected final char[] data;
 
         protected int length;
 
-        CologneBuffer(final char[] data) {
+        protected CologneBuffer(final char[] data) {
             this.data = data;
             this.length = data.length;
         }
 
-        CologneBuffer(final int buffSize) {
+        protected CologneBuffer(final int buffSize) {
             this.data = new char[buffSize];
             this.length = 0;
         }
 
         protected abstract char[] copyData(int start, int length);
 
-        public boolean isEmpty() {
+        boolean isEmpty() {
             return length() == 0;
         }
 
-        public int length() {
+        int length() {
             return length;
         }
 
@@ -232,7 +232,7 @@ public class ColognePhonetic implements StringEncoder {
             return newData;
         }
 
-        public char getNextChar() {
+        char getNextChar() {
             return data[getNextPos()];
         }
 
@@ -240,7 +240,7 @@ public class ColognePhonetic implements StringEncoder {
             return data.length - length;
         }
 
-        public char removeNext() {
+        char removeNext() {
             final char ch = getNextChar();
             length--;
             return ch;
@@ -269,7 +269,7 @@ public class ColognePhonetic implements StringEncoder {
          *
          * @param code the code to store.
          */
-        public void put(final char code) {
+        void put(final char code) {
             final boolean accept = code != CHAR_IGNORE;
             final boolean nonZ = code != '0';
             if (accept && lastCode != code && (nonZ || length == 0)) {
