@@ -183,9 +183,8 @@ import org.apache.commons.codec.StringEncoder;
 public class ColognePhonetic implements StringEncoder {
 
     /**
-     * This class is not thread-safe; the field {@link #length} is mutable.
-     * However, it is not shared between threads, as it is constructed on demand
-     * by the method {@link ColognePhonetic#colognePhonetic(String)}
+     * This class is not thread-safe; the field {@link #length} is mutable. However, it is not shared between threads, as it is constructed on demand by the
+     * method {@link ColognePhonetic#colognePhonetic(String)}.
      */
     private abstract static class CologneBuffer {
 
@@ -262,10 +261,8 @@ public class ColognePhonetic implements StringEncoder {
         }
 
         /**
-         * Stores the next code in the output buffer, keeping track of the previous code.
-         * '0' is only stored if it is the first entry.
-         * Ignored chars are never stored.
-         * If the code is the same as the last code (whether stored or not) it is not stored.
+         * Stores the next code in the output buffer, keeping track of the previous code. '0' is only stored if it is the first entry. Ignored chars are never
+         * stored. If the code is the same as the last code (whether stored or not) it is not stored.
          *
          * @param code the code to store.
          */
@@ -418,16 +415,14 @@ public class ColognePhonetic implements StringEncoder {
      *
      * @param text1 source text to encode before testing for equality.
      * @param text2 source text to encode before testing for equality.
-     * @return {@code true} if the encoding the first string equals the encoding of the second string, {@code false}
-     *         otherwise.
+     * @return {@code true} if the encoding the first string equals the encoding of the second string, {@code false} otherwise.
      */
     public boolean isEncodeEqual(final String text1, final String text2) {
         return colognePhonetic(text1).equals(colognePhonetic(text2));
     }
 
     /**
-     * Converts the string to upper case and replaces Germanic umlaut characters
-     * The following characters are mapped:
+     * Converts the string to upper case and replaces Germanic umlaut characters The following characters are mapped:
      * <ul>
      * <li>capital A, umlaut mark</li>
      * <li>capital U, umlaut mark</li>
