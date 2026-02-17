@@ -26,8 +26,8 @@ import org.apache.commons.codec.StringEncoder;
 /**
  * Encodes a string into a Cologne Phonetic value.
  * <p>
- * Implements the <a href="https://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik">K&ouml;lner Phonetik</a> (Cologne
- * Phonetic) algorithm issued by Hans Joachim Postel in 1969.
+ * Implements the <a href="https://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik">K&ouml;lner Phonetik</a>
+ * (<a href="https://en.wikipedia.org/wiki/Cologne_phonetics">Cologne phonetics</a>) algorithm issued by Hans Joachim Postel in 1969.
  * </p>
  * <p>
  * The <em>K&ouml;lner Phonetik</em> is a phonetic algorithm which is optimized for the German language. It is related to
@@ -152,8 +152,7 @@ import org.apache.commons.codec.StringEncoder;
  *
  * <h4>Example:</h4>
  *
- * {@code "M}&uuml;{@code ller-L}&uuml;<code>denscheidt"
- * =&gt; "MULLERLUDENSCHEIDT" =&gt; "6005507500206880022"</code>
+ * {@code "M}&uuml;{@code ller-L}&uuml;{@code denscheidt"} -&gt; {@code "MULLERLUDENSCHEIDT"} -&gt; {@code "6005507500206880022"}
  *
  * </li>
  *
@@ -161,7 +160,7 @@ import org.apache.commons.codec.StringEncoder;
  * <h3>Step 2:</h3>
  * Collapse of all multiple consecutive code digits.
  * <h4>Example:</h4>
- * {@code "6005507500206880022" =&gt; "6050750206802"}</li>
+ * {@code "6005507500206880022"} -&gt; {@code "6050750206802"}</li>
  *
  * <li>
  * <h3>Step 3:</h3>
@@ -169,7 +168,7 @@ import org.apache.commons.codec.StringEncoder;
  * if they occur after removing the "0" digits.
  *
  * <h4>Example:</h4>
- * {@code "6050750206802" =&gt; "65752682"}</li>
+ * {@code "6050750206802"} -&gt; {@code "65752682"}</li>
  *
  * </ul>
  *
@@ -177,39 +176,39 @@ import org.apache.commons.codec.StringEncoder;
  * This class is thread-safe.
  * </p>
  *
+ * @see <a href="https://en.wikipedia.org/wiki/Cologne_phonetics">Wikipedia: Cologne phonetics</a>
  * @see <a href="https://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik">Wikipedia (de): K&ouml;lner Phonetik (in German)</a>
  * @since 1.5
  */
 public class ColognePhonetic implements StringEncoder {
 
     /**
-     * This class is not thread-safe; the field {@link #length} is mutable.
-     * However, it is not shared between threads, as it is constructed on demand
-     * by the method {@link ColognePhonetic#colognePhonetic(String)}
+     * This class is not thread-safe; the field {@link #length} is mutable. However, it is not shared between threads, as it is constructed on demand by the
+     * method {@link ColognePhonetic#colognePhonetic(String)}.
      */
-    abstract static class CologneBuffer {
+    private abstract static class CologneBuffer {
 
         protected final char[] data;
 
         protected int length;
 
-        CologneBuffer(final char[] data) {
+        protected CologneBuffer(final char[] data) {
             this.data = data;
             this.length = data.length;
         }
 
-        CologneBuffer(final int buffSize) {
+        protected CologneBuffer(final int buffSize) {
             this.data = new char[buffSize];
             this.length = 0;
         }
 
         protected abstract char[] copyData(int start, int length);
 
-        public boolean isEmpty() {
+        boolean isEmpty() {
             return length() == 0;
         }
 
-        public int length() {
+        int length() {
             return length;
         }
 
@@ -232,7 +231,7 @@ public class ColognePhonetic implements StringEncoder {
             return newData;
         }
 
-        public char getNextChar() {
+        char getNextChar() {
             return data[getNextPos()];
         }
 
@@ -240,7 +239,7 @@ public class ColognePhonetic implements StringEncoder {
             return data.length - length;
         }
 
-        public char removeNext() {
+        char removeNext() {
             final char ch = getNextChar();
             length--;
             return ch;
@@ -262,19 +261,19 @@ public class ColognePhonetic implements StringEncoder {
         }
 
         /**
-         * Stores the next code in the output buffer, keeping track of the previous code.
-         * '0' is only stored if it is the first entry.
-         * Ignored chars are never stored.
-         * If the code is the same as the last code (whether stored or not) it is not stored.
+         * Stores the next code in the output buffer, keeping track of the previous code. '0' is only stored if it is the first entry. Ignored chars are never
+         * stored. If the code is the same as the last code (whether stored or not) it is not stored.
          *
          * @param code the code to store.
          */
-        public void put(final char code) {
-            if (code != CHAR_IGNORE && lastCode != code && (code != '0' || length == 0)) {
+        void put(final char code) {
+            final boolean accept = code != CHAR_IGNORE;
+            final boolean nonZ = code != '0';
+            if (accept && lastCode != code && (nonZ || length == 0)) {
                 data[length] = code;
                 length++;
             }
-            if (code != '-') {
+            if (nonZ && accept) {
                 lastCode = code;
             }
         }
@@ -329,28 +328,21 @@ public class ColognePhonetic implements StringEncoder {
         if (text == null) {
             return null;
         }
-
         final CologneInputBuffer input = new CologneInputBuffer(preprocess(text));
         final CologneOutputBuffer output = new CologneOutputBuffer(input.length() * 2);
-
         char nextChar;
-
         char lastChar = CHAR_IGNORE;
         char chr;
-
         while (!input.isEmpty()) {
             chr = input.removeNext();
-
             if (!input.isEmpty()) {
                 nextChar = input.getNextChar();
             } else {
                 nextChar = CHAR_IGNORE;
             }
-
             if (chr < 'A' || chr > 'Z') {
-                    continue; // ignore unwanted characters
+                continue; // ignore unwanted characters
             }
-
             if (arrayContains(AEIJOUY, chr)) {
                 output.put('0');
             } else if (chr == 'B' || chr == 'P' && nextChar != 'H') {
@@ -399,7 +391,6 @@ public class ColognePhonetic implements StringEncoder {
                     break;
                 }
             }
-
             lastChar = chr;
         }
         return output.toString();
@@ -408,11 +399,8 @@ public class ColognePhonetic implements StringEncoder {
     @Override
     public Object encode(final Object object) throws EncoderException {
         if (!(object instanceof String)) {
-            throw new EncoderException("This method's parameter was expected to be of the type " +
-                String.class.getName() +
-                ". But actually it was of the type " +
-                object.getClass().getName() +
-                ".");
+            throw new EncoderException(String.format("This method's parameter was expected to be of the type %s. But actually it was of the type %s.",
+                    String.class.getName(), object.getClass().getName()));
         }
         return encode((String) object);
     }
@@ -427,16 +415,14 @@ public class ColognePhonetic implements StringEncoder {
      *
      * @param text1 source text to encode before testing for equality.
      * @param text2 source text to encode before testing for equality.
-     * @return {@code true} if the encoding the first string equals the encoding of the second string, {@code false}
-     *         otherwise.
+     * @return {@code true} if the encoding the first string equals the encoding of the second string, {@code false} otherwise.
      */
     public boolean isEncodeEqual(final String text1, final String text2) {
         return colognePhonetic(text1).equals(colognePhonetic(text2));
     }
 
     /**
-     * Converts the string to upper case and replaces Germanic umlaut characters
-     * The following characters are mapped:
+     * Converts the string to upper case and replaces Germanic umlaut characters The following characters are mapped:
      * <ul>
      * <li>capital A, umlaut mark</li>
      * <li>capital U, umlaut mark</li>
@@ -447,20 +433,19 @@ public class ColognePhonetic implements StringEncoder {
     private char[] preprocess(final String text) {
         // This converts German small sharp s (Eszett) to SS
         final char[] chrs = text.toUpperCase(Locale.GERMAN).toCharArray();
-
         for (int index = 0; index < chrs.length; index++) {
             switch (chrs[index]) {
-                case '\u00C4': // capital A, umlaut mark
-                    chrs[index] = 'A';
-                    break;
-                case '\u00DC': // capital U, umlaut mark
-                    chrs[index] = 'U';
-                    break;
-                case '\u00D6': // capital O, umlaut mark
-                    chrs[index] = 'O';
-                    break;
-                default:
-                    break;
+            case '\u00C4': // capital A, umlaut mark
+                chrs[index] = 'A';
+                break;
+            case '\u00DC': // capital U, umlaut mark
+                chrs[index] = 'U';
+                break;
+            case '\u00D6': // capital O, umlaut mark
+                chrs[index] = 'O';
+                break;
+            default:
+                break;
             }
         }
         return chrs;

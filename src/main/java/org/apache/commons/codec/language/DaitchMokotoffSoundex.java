@@ -380,8 +380,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
     @Override
     public Object encode(final Object obj) throws EncoderException {
         if (!(obj instanceof String)) {
-            throw new EncoderException(
-                    "Parameter supplied to DaitchMokotoffSoundex encode is not of type java.lang.String");
+            throw new EncoderException("Parameter supplied to DaitchMokotoffSoundex encode is not of type java.lang.String");
         }
         return encode((String) obj);
     }

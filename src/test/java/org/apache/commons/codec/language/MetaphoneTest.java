@@ -272,11 +272,28 @@ class MetaphoneTest extends AbstractStringEncoderTest<Metaphone> {
 
     @Test
     void testTranslateOfSCHAndCH() {
+        assertEquals("SNS", getStringEncoder().metaphone("SCIENCE"));
+        assertEquals("SN", getStringEncoder().metaphone("SCENE"));
+        assertEquals("S", getStringEncoder().metaphone("SCY"));
         assertEquals("SKTL", getStringEncoder().metaphone("SCHEDULE"));
         assertEquals("SKMT", getStringEncoder().metaphone("SCHEMATIC"));
-
-        assertEquals("KRKT", getStringEncoder().metaphone("CHARACTER"));
+        assertEquals("TSKR", getStringEncoder().metaphone("DISCHARGE"));
+        assertEquals("EX", getStringEncoder().metaphone("ECHO"));
         assertEquals("TX", getStringEncoder().metaphone("TEACH"));
+        assertEquals("XR", getStringEncoder().metaphone("CHERI"));
+        assertEquals("XP", getStringEncoder().metaphone("CHIP"));
+        assertEquals("XRST", getStringEncoder().metaphone("CHRIST"));
+        assertEquals("X", getStringEncoder().metaphone("CIAO"));
+        assertEquals("ST", getStringEncoder().metaphone("CITY"));
+        assertEquals("KT", getStringEncoder().metaphone("CAT"));
+
+    }
+
+    @Test
+    void testTranslateOfCHCharacterWithMaxCodeLenFive() {
+        final Metaphone metaphone = new Metaphone();
+        metaphone.setMaxCodeLen(5);
+        assertEquals("XRKTR", metaphone.metaphone("CHARACTER"));
     }
 
     @Test

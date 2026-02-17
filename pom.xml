@@ -28,7 +28,7 @@ limitations under the License.
   </parent>
   <groupId>commons-codec</groupId>
   <artifactId>commons-codec</artifactId>
-  <version>1.21.1-SNAPSHOT</version>
+  <version>1.22.0-SNAPSHOT</version>
   <name>Apache Commons Codec</name>
   <inceptionYear>2002</inceptionYear>
   <description>
@@ -96,9 +96,9 @@ limitations under the License.
     <checkstyle.header.file>${basedir}/src/conf/checkstyle-header.txt</checkstyle.header.file>
     <checkstyle.config.file>${basedir}/src/conf/checkstyle.xml</checkstyle.config.file>
     <!-- Commons Release Plugin -->
-    <commons.release.version>1.21.1</commons.release.version>
+    <commons.release.version>1.22.0</commons.release.version>
     <commons.bc.version>1.21.0</commons.bc.version>
-    <commons.release.next>1.21.2</commons.release.next>
+    <commons.release.next>1.22.1</commons.release.next>
     <commons.rc.version>RC1</commons.rc.version>
     <commons.release.isDistModule>true</commons.release.isDistModule>
     <commons.distSvnStagingUrl>scm:svn:https://dist.apache.org/repos/dist/dev/commons/${commons.componentid}</commons.distSvnStagingUrl>
