@@ -17,6 +17,7 @@
 
 package org.apache.commons.codec.binary;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -1157,5 +1158,32 @@ class BinaryCodecTest {
         decoded = instance.toByteArray("1111111111111111");
         assertEquals(new String(bits), new String(decoded));
         assertEquals(0, instance.toByteArray((String) null).length);
+    }
+
+    @Test
+    void testFromAsciiByteArrayLengthLessThan8ReturnsEmpty() {
+        assertArrayEquals(new byte[0], BinaryCodec.fromAscii("1".getBytes(CHARSET_UTF8)));
+    }
+
+    @Test
+    void testFromAsciiCharArrayLengthLessThan8ReturnsEmpty() {
+        assertArrayEquals(new byte[0], BinaryCodec.fromAscii("1".toCharArray()));
+    }
+
+    @Test
+    void testFromAsciiByteArrayLengthNotMultipleOf8IgnoresLeadingBits() {
+        assertArrayEquals(new byte[] { 0 }, BinaryCodec.fromAscii("100000000".getBytes(CHARSET_UTF8)));
+        assertArrayEquals(new byte[] { (byte) 0x80 }, BinaryCodec.fromAscii("010000000".getBytes(CHARSET_UTF8)));
+    }
+
+    @Test
+    void testFromAsciiCharArrayLengthNotMultipleOf8IgnoresLeadingBits() {
+        assertArrayEquals(new byte[] { 0 }, BinaryCodec.fromAscii("100000000".toCharArray()));
+        assertArrayEquals(new byte[] { (byte) 0x80 }, BinaryCodec.fromAscii("010000000".toCharArray()));
+    }
+
+    @Test
+    void testToAsciiStringNullReturnsEmptyString() {
+        assertEquals("", BinaryCodec.toAsciiString(null));
     }
 }
