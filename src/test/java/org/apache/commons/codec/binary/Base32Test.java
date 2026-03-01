@@ -28,11 +28,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.stream.IntStream;
 
 import org.apache.commons.codec.CodecPolicy;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.lang3.ArrayUtils;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  * Tests {@link Base32}.
@@ -209,6 +212,10 @@ class Base32Test {
                 assertArrayEquals(encoded, codec.encode(decoded));
             }
         }
+    }
+
+    static IntStream rangeProvider() {
+        return IntStream.range(0, 21);
     }
 
     @Test
@@ -509,51 +516,47 @@ class Base32Test {
         assertFalse(b32.isInAlphabet((byte) ('v' + 1)));
     }
 
-    @Test
-    void testRandomBytes() {
-        for (int i = 0; i < 20; i++) {
-            final Base32 codec = new Base32();
-            final byte[][] b = BaseNTestData.randomData(codec, i);
-            assertEquals(b[1].length, codec.getEncodedLength(b[0]), i + " " + codec.lineLength);
-            // assertEquals(b[0], codec.decode(b[1]));
-        }
+    @ParameterizedTest
+    @MethodSource("rangeProvider")
+    void testRandomBytes(final int i) {
+        final Base32 codec = new Base32();
+        final byte[][] b = BaseNTestData.randomData(codec, i);
+        assertEquals(b[1].length, codec.getEncodedLength(b[0]), i + " " + codec.lineLength);
+        // assertEquals(b[0], codec.decode(b[1]));
     }
 
-    @Test
-    void testRandomBytesChunked() {
-        for (int i = 0; i < 20; i++) {
-            final Base32 codec = new Base32(10);
-            final byte[][] b = BaseNTestData.randomData(codec, i);
-            assertEquals(b[1].length, codec.getEncodedLength(b[0]), i + " " + codec.lineLength);
-            // assertEquals(b[0], codec.decode(b[1]));
-        }
+    @ParameterizedTest
+    @MethodSource("rangeProvider")
+    void testRandomBytesChunked(final int i) {
+        final Base32 codec = new Base32(10);
+        final byte[][] b = BaseNTestData.randomData(codec, i);
+        assertEquals(b[1].length, codec.getEncodedLength(b[0]), i + " " + codec.lineLength);
+        // assertEquals(b[0], codec.decode(b[1]));
     }
 
-    @Test
-    void testRandomBytesHex() {
-        for (int i = 0; i < 20; i++) {
-            final Base32 codec = new Base32(true);
-            final byte[][] b = BaseNTestData.randomData(codec, i);
-            assertEquals(b[1].length, codec.getEncodedLength(b[0]), i + " " + codec.lineLength);
-            // assertEquals(b[0], codec.decode(b[1]));
-        }
+    @ParameterizedTest
+    @MethodSource("rangeProvider")
+    void testRandomBytesHex(final int i) {
+        final Base32 codec = new Base32(true);
+        final byte[][] b = BaseNTestData.randomData(codec, i);
+        assertEquals(b[1].length, codec.getEncodedLength(b[0]), i + " " + codec.lineLength);
+        // assertEquals(b[0], codec.decode(b[1]));
     }
 
-    @Test
-    void testSingleCharEncoding() {
-        for (int i = 0; i < 20; i++) {
-            Base32 codec = new Base32();
-            final BaseNCodec.Context context = new BaseNCodec.Context();
-            final byte[] unencoded = new byte[i];
-            final byte[] allInOne = codec.encode(unencoded);
-            codec = new Base32();
-            for (int j = 0; j < unencoded.length; j++) {
-                codec.encode(unencoded, j, 1, context);
-            }
-            codec.encode(unencoded, 0, -1, context);
-            final byte[] singly = new byte[allInOne.length];
-            codec.readResults(singly, 0, 100, context);
-            assertArrayEquals(allInOne, singly);
+    @ParameterizedTest
+    @MethodSource("rangeProvider")
+    void testSingleCharEncoding(final int i) {
+        Base32 codec = new Base32();
+        final BaseNCodec.Context context = new BaseNCodec.Context();
+        final byte[] unencoded = new byte[i];
+        final byte[] allInOne = codec.encode(unencoded);
+        codec = new Base32();
+        for (int j = 0; j < unencoded.length; j++) {
+            codec.encode(unencoded, j, 1, context);
         }
+        codec.encode(unencoded, 0, -1, context);
+        final byte[] singly = new byte[allInOne.length];
+        codec.readResults(singly, 0, 100, context);
+        assertArrayEquals(allInOne, singly);
     }
 }
