@@ -24,7 +24,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -554,9 +553,7 @@ class Base32Test {
             codec.encode(unencoded, 0, -1, context);
             final byte[] singly = new byte[allInOne.length];
             codec.readResults(singly, 0, 100, context);
-            if (!Arrays.equals(allInOne, singly)) {
-                fail();
-            }
+            assertArrayEquals(allInOne, singly);
         }
     }
 }
