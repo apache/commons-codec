@@ -17,12 +17,51 @@
 
 package org.apache.commons.codec.binary;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.nio.ByteBuffer;
+
+import org.apache.commons.codec.DecoderException;
+import org.junit.jupiter.api.Test;
 
 class AllocateDirectHexTest extends HexTest {
 
     @Override
     protected ByteBuffer allocate(final int capacity) {
         return ByteBuffer.allocateDirect(capacity);
+    }
+
+    @Test
+    void testAllocateProducesDirectByteBufferWithoutArray() {
+        final ByteBuffer directBuffer = allocate(8);
+        assertTrue(directBuffer.isDirect());
+        assertFalse(directBuffer.hasArray());
+    }
+
+    @Test
+    void testEncodeDecodeDirectByteBufferWithPositionAndLimit() throws DecoderException {
+        final ByteBuffer encodeInput = allocate(4);
+        encodeInput.put((byte) 0x0A);
+        encodeInput.put((byte) 0x0B);
+        encodeInput.put((byte) 0x0C);
+        encodeInput.put((byte) 0x0D);
+        encodeInput.position(1);
+        encodeInput.limit(3);
+
+        assertEquals("0b0c", Hex.encodeHexString(encodeInput));
+        assertEquals(0, encodeInput.remaining());
+
+        final ByteBuffer decodeInput = allocate(4);
+        decodeInput.put((byte) '0');
+        decodeInput.put((byte) 'b');
+        decodeInput.put((byte) '0');
+        decodeInput.put((byte) 'c');
+        decodeInput.flip();
+
+        assertArrayEquals(new byte[] { 0x0B, 0x0C }, new Hex().decode(decodeInput));
+        assertEquals(0, decodeInput.remaining());
     }
 }
