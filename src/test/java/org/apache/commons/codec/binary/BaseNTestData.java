@@ -17,8 +17,6 @@
 
 package org.apache.commons.codec.binary;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Random;
 
 /**
@@ -74,32 +72,12 @@ public class BaseNTestData {
             -22, 1, 127, -81, -4, -6, -119, 96, 35, -91, 114, 81, 91, 90, -86, -36, 34, -39, 93, -42, 69, 103, -11,
             107, -87, 119, -107, -114, -45, -128, -69, 96};
 
-    private static final int SIZE_KEY = 0;
-
-    private static final int LAST_READ_KEY = 1;
-
-    private static int[] fill(final byte[] buf, final int offset, final InputStream in)
-            throws IOException {
-        int read = in.read(buf, offset, buf.length - offset);
-        int lastRead = read;
-        if (read == -1) {
-            read = 0;
-        }
-        while (lastRead != -1 && read + offset < buf.length) {
-            lastRead = in.read(buf, offset + read, buf.length - read - offset);
-            if (lastRead != -1) {
-                read += lastRead;
-            }
-        }
-        return new int[]{offset + read, lastRead};
-    }
-
     /**
      * Returns an encoded and decoded copy of the same random data.
      *
-     * @param codec the codec to use
-     * @param size amount of random data to generate and encode
-     * @return two byte[] arrays:  [0] = decoded, [1] = encoded
+     * @param codec the codec to use.
+     * @param size amount of random data to generate and encode.
+     * @return two byte[] arrays:  [0] = decoded, [1] = encoded.
      */
     static byte[][] randomData(final BaseNCodec codec, final int size) {
         final Random r = new Random();
@@ -107,42 +85,5 @@ public class BaseNTestData {
         r.nextBytes(decoded);
         final byte[] encoded = codec.encode(decoded);
         return new byte[][] {decoded, encoded};
-    }
-
-    private static byte[] resizeArray(final byte[] bytes) {
-        final byte[] biggerBytes = new byte[bytes.length * 2];
-        System.arraycopy(bytes, 0, biggerBytes, 0, bytes.length);
-        return biggerBytes;
-    }
-
-    /**
-     * Reads all bytes from an InputStream into a byte array
-     * in chunks of {@code buf.length}.
-     *
-     * @param in the input stream.
-     * @param buf the byte array to use for chunking
-     * @return the bytes read from the input stream
-     * @throws IOException if an error occurs whilst reading the input stream
-     */
-    static byte[] streamToBytes(final InputStream in, byte[] buf) throws IOException {
-        try {
-            int[] status = fill(buf, 0, in);
-            int size = status[SIZE_KEY];
-            int lastRead = status[LAST_READ_KEY];
-            while (lastRead != -1) {
-                buf = resizeArray(buf);
-                status = fill(buf, size, in);
-                size = status[SIZE_KEY];
-                lastRead = status[LAST_READ_KEY];
-            }
-            if (buf.length != size) {
-                final byte[] smallerBuf = new byte[size];
-                System.arraycopy(buf, 0, smallerBuf, 0, size);
-                buf = smallerBuf;
-            }
-        } finally {
-            in.close();
-        }
-        return buf;
     }
 }

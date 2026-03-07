@@ -340,7 +340,7 @@ class Base64InputStreamTest {
 
         // we skip the first character read from the reader
         ins.skip(1);
-        final byte[] decodedBytes = BaseNTestData.streamToBytes(ins, new byte[64]);
+        final byte[] decodedBytes = IOUtils.toByteArray(ins);
         final String str = StringUtils.newStringUtf8(decodedBytes);
 
         assertEquals(STRING_FIXTURE.substring(1), str);
@@ -359,7 +359,7 @@ class Base64InputStreamTest {
         final Base64InputStream stream = new Base64InputStream(data);
 
         // This line causes an NPE in commons-codec-1.4.jar:
-        final byte[] decodedBytes = BaseNTestData.streamToBytes(stream, new byte[1024]);
+        final byte[] decodedBytes = IOUtils.toByteArray(stream);
 
         final String decoded = StringUtils.newStringUtf8(decodedBytes);
         assertEquals(Base64TestData.CODEC_98_NPE_DECODED, decoded, "codec-98 NPE Base64InputStream");

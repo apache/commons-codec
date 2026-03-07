@@ -377,7 +377,7 @@ class Base32InputStreamTest {
 
         // we skip the first character read from the reader
         assertEquals(1, ins.skip(1));
-        final byte[] decodedBytes = BaseNTestData.streamToBytes(ins, new byte[64]);
+        final byte[] decodedBytes = IOUtils.toByteArray(ins);
         final String str = StringUtils.newStringUtf8(decodedBytes);
 
         assertEquals(STRING_FIXTURE.substring(1), str);
