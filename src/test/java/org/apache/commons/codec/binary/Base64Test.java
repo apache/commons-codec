@@ -1555,9 +1555,9 @@ class Base64Test {
             final byte[] decoded = randomData[0];
             final byte[] result = Base64.decodeBase64(encoded);
             assertArrayEquals(decoded, result, "url-safe i=" + i);
-            assertFalse(BaseNTestData.bytesContain(encoded, (byte) '='), "url-safe i=" + i + " no '='");
-            assertFalse(BaseNTestData.bytesContain(encoded, (byte) '\\'), "url-safe i=" + i + " no '\\'");
-            assertFalse(BaseNTestData.bytesContain(encoded, (byte) '+'), "url-safe i=" + i + " no '+'");
+            assertFalse(ArrayUtils.contains(encoded, (byte) '='), "url-safe i=" + i + " no '='");
+            assertFalse(ArrayUtils.contains(encoded, (byte) '\\'), "url-safe i=" + i + " no '\\'");
+            assertFalse(ArrayUtils.contains(encoded, (byte) '+'), "url-safe i=" + i + " no '+'");
         }
 
     }

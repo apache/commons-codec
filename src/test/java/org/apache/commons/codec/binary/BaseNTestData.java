@@ -21,8 +21,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Random;
 
-import org.apache.commons.lang3.ArrayUtils;
-
 /**
  * Data and functions common to BaseN tests.
  */
@@ -79,17 +77,6 @@ public class BaseNTestData {
     private static final int SIZE_KEY = 0;
 
     private static final int LAST_READ_KEY = 1;
-
-    /**
-     * Tests the supplied byte[] array to see if it contains the specified byte c.
-     *
-     * @param bytes byte[] array to test
-     * @param c byte to look for
-     * @return true if bytes contains c, false otherwise
-     */
-    static boolean bytesContain(final byte[] bytes, final byte c) {
-        return ArrayUtils.contains(bytes, c);
-    }
 
     private static int[] fill(final byte[] buf, final int offset, final InputStream in)
             throws IOException {
