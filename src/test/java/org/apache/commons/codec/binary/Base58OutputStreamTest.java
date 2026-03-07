@@ -29,11 +29,16 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link Base58OutputStream}.
  */
-class Base58OutputStreamTest {
+class Base58OutputStreamTest extends AbstractBaseNOutputStreamTest {
 
     private static final byte[] CR_LF = { (byte) '\r', (byte) '\n' };
 
     private static final byte[] LF = { (byte) '\n' };
+
+    @Override
+    OutputStream newOutputStream() {
+        return new Base58OutputStream(new ByteArrayOutputStream());
+    }
 
     private void testBase58EmptyOutputStream(final int chunkSize) throws Exception {
         final byte[] emptyEncoded = {};

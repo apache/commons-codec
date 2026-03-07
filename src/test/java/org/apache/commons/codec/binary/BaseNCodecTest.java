@@ -31,31 +31,6 @@ import org.junit.jupiter.api.Test;
 
 class BaseNCodecTest {
 
-    /**
-     * Extend BaseNCodec without implementation (no operations = NoOp).
-     * Used for testing the memory allocation in {@link BaseNCodec#ensureBufferSize(int, Context)}.
-     */
-    private static final class NoOpBaseNCodec extends BaseNCodec {
-        NoOpBaseNCodec() {
-            super(0, 0, 0, 0);
-        }
-
-        @Override
-        void decode(final byte[] array, final int i, final int length, final Context context) {
-            // no-op
-        }
-
-        @Override
-        void encode(final byte[] array, final int i, final int length, final Context context) {
-            // no-op
-        }
-
-        @Override
-        protected boolean isInAlphabet(final byte value) {
-            return false;
-        }
-    }
-
     private static void assertEnsureBufferSizeExpandsToMaxBufferSize(final boolean exceedMaxBufferSize) {
         // This test is memory hungry.
         // By default expansion will double the buffer size.

@@ -33,13 +33,18 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link Base64OutputStream}.
  */
-class Base64OutputStreamTest {
+class Base64OutputStreamTest extends AbstractBaseNOutputStreamTest {
 
     private static final byte[] CR_LF = {(byte) '\r', (byte) '\n'};
 
     private static final byte[] LF = {(byte) '\n'};
 
     private static final String STRING_FIXTURE = "Hello World";
+
+    @Override
+    OutputStream newOutputStream() {
+        return new Base64OutputStream(new ByteArrayOutputStream());
+    }
 
     private void testBase64EmptyOutputStream(final int chunkSize) throws Exception {
         final byte[] emptyEncoded = {};

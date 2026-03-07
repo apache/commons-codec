@@ -30,9 +30,14 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link Base16OutputStream}.
  */
-class Base16OutputStreamTest {
+class Base16OutputStreamTest extends AbstractBaseNOutputStreamTest {
 
     private static final String STRING_FIXTURE = "Hello World";
+
+    @Override
+    OutputStream newOutputStream() {
+        return new Base16OutputStream(new ByteArrayOutputStream());
+    }
 
     /**
      * Test the Base16OutputStream implementation against empty input.
@@ -132,7 +137,6 @@ class Base16OutputStreamTest {
      * @throws IOException Usually signifies a bug in the Base16 commons-codec implementation.
      */
     private void testByChunk(final byte[] encoded, final byte[] decoded, final boolean lowerCase) throws IOException {
-
         // Start with encode.
         try (ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
                 OutputStream out = new Base16OutputStream(byteOut, true, lowerCase)) {
@@ -140,7 +144,6 @@ class Base16OutputStreamTest {
             final byte[] output = byteOut.toByteArray();
             assertArrayEquals(encoded, output, "Streaming chunked base16 encode");
         }
-
         // Now let's try to decode.
         try (ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
                 OutputStream out = new Base16OutputStream(byteOut, false, lowerCase)) {
@@ -148,7 +151,6 @@ class Base16OutputStreamTest {
             final byte[] output = byteOut.toByteArray();
             assertArrayEquals(decoded, output, "Streaming chunked base16 decode");
         }
-
         // wrap encoder with decoder
         try (ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
              OutputStream decoderOut = new Base16OutputStream(byteOut, false, lowerCase);
@@ -156,7 +158,6 @@ class Base16OutputStreamTest {
 
             encoderOut.write(decoded);
             final byte[] output = byteOut.toByteArray();
-
             assertArrayEquals(decoded, output, "Streaming chunked base16 wrap-wrap!");
         }
     }
@@ -235,6 +236,15 @@ class Base16OutputStreamTest {
             }
             final byte[] output = byteOut.toByteArray();
             assertArrayEquals(decoded, output, "Streaming byte-by-byte base16 wrap-wrap!");
+        }
+    }
+
+    @Override
+    @Test
+    void testClose() throws IOException {
+        try (OutputStream out = newOutputStream()) {
+            out.close();
+            out.close();
         }
     }
 

@@ -32,7 +32,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link Base32OutputStream}.
  */
-class Base32OutputStreamTest {
+class Base32OutputStreamTest extends AbstractBaseNOutputStreamTest {
 
     private static final byte[] CR_LF = {(byte) '\r', (byte) '\n'};
 
@@ -60,6 +60,11 @@ class Base32OutputStreamTest {
 //            "codec-98 NPE Base32OutputStream", Base32TestData.CODEC_98_NPE_DECODED, decoded
 //        );
 //    }
+
+    @Override
+    OutputStream newOutputStream() {
+        return new Base32OutputStream(new ByteArrayOutputStream());
+    }
 
     private void testBase32EmptyOutputStream(final int chunkSize) throws Exception {
         final byte[] emptyEncoded = {};
