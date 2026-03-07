@@ -173,7 +173,7 @@ class Base64Test {
     /**
      * @return the random.
      */
-    public Random getRandom() {
+    Random getRandom() {
         return this.random;
     }
 

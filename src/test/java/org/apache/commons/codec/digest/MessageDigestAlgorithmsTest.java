@@ -48,7 +48,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 class MessageDigestAlgorithmsTest {
 
     @BeforeAll
-    public static void checkValues() throws Exception {
+    static void checkValues() throws Exception {
         final Field[] fields = MessageDigestAlgorithms.class.getDeclaredFields();
         boolean ok = true;
         int psf = 0;
@@ -89,7 +89,7 @@ class MessageDigestAlgorithmsTest {
         return false;
     }
 
-    public static String[] data() {
+    static String[] data() {
         return MessageDigestAlgorithms.values();
     }
 
@@ -116,13 +116,13 @@ class MessageDigestAlgorithmsTest {
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         digestUtilsTest = new DigestUtilsTest();
         digestUtilsTest.setUp();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    void tearDown() throws Exception {
         digestUtilsTest.tearDown();
         digestUtilsTest = null;
     }

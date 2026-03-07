@@ -28,7 +28,7 @@ import org.junit.jupiter.api.Test;
  */
 class MetaphoneTest extends AbstractStringEncoderTest<Metaphone> {
 
-    public void assertIsMetaphoneEqual(final String source, final String[] matches) {
+    void assertIsMetaphoneEqual(final String source, final String[] matches) {
         // match source to all matches
         for (final String matche : matches) {
             assertTrue(getStringEncoder().isMetaphoneEqual(source, matche), "Source: " + source + ", should have same Metaphone as: " + matche);
@@ -41,7 +41,7 @@ class MetaphoneTest extends AbstractStringEncoderTest<Metaphone> {
         }
     }
 
-    public void assertMetaphoneEqual(final String[][] pairs) {
+    void assertMetaphoneEqual(final String[][] pairs) {
         validateFixture(pairs);
         for (final String[] pair : pairs) {
             final String name0 = pair[0];

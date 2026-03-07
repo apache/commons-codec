@@ -74,7 +74,7 @@ class ColognePhoneticTest extends AbstractStringEncoderTest<ColognePhonetic> {
 
     @AfterAll
     // Check that all possible input sequence conditions are represented
-    public static void finishTests() {
+    static void finishTests() {
         int errors = 0;
         for (final String m : MATCHES) {
             if (!hasTestCase(m)) {

@@ -113,9 +113,9 @@ class BaseNCodecTest {
     }
 
     BaseNCodec codec;
-    @BeforeEach
 
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         codec = new BaseNCodec(0, 0, 0, 0) {
             @Override
             void decode(final byte[] array, final int i, final int length, final Context context) {

@@ -92,12 +92,12 @@ class BinaryCodecTest {
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         this.instance = new BinaryCodec();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    void tearDown() throws Exception {
         this.instance = null;
     }
 

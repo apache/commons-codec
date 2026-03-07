@@ -37,7 +37,7 @@ class PhoneticEngineTest {
     private static final Pattern PIPE_PATTERN = Pattern.compile("\\|");
     private static final Pattern MINUS_PATTERN = Pattern.compile("-");
 
-    public static Stream<Arguments> data() {
+    static Stream<Arguments> data() {
         // @formatter:off
         return Stream.of(
                 Arguments.of("Renault", "rinD|rinDlt|rina|rinalt|rino|rinolt|rinu|rinult", NameType.GENERIC, RuleType.APPROX, Boolean.TRUE, TEN),
@@ -53,7 +53,7 @@ class PhoneticEngineTest {
         // @formatter:on
     }
 
-    public static Stream<Arguments> invalidData() {
+    static Stream<Arguments> invalidData() {
         // @formatter:off
         return Stream.of(
                 Arguments.of("bar", "bar|bor|var|vor", NameType.ASHKENAZI, RuleType.APPROX, Boolean.FALSE, TEN),

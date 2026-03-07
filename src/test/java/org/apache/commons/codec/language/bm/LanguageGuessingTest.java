@@ -30,7 +30,7 @@ import org.junit.jupiter.params.provider.MethodSource;
  */
 class LanguageGuessingTest {
 
-    public static Stream<Arguments> data() {
+    static Stream<Arguments> data() {
         return Stream.of(
             Arguments.of("Renault", "french"),
             Arguments.of("Mickiewicz", "polish"),

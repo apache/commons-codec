@@ -98,7 +98,7 @@ class HmacAlgorithmsTest {
     static Path TempFile;
 
     // TODO HMAC_SHA_224
-    public static Stream<Arguments> data() {
+    static Stream<Arguments> data() {
         List<Arguments> list = Arrays.asList(
         // @formatter:off
                 Arguments.of(HmacAlgorithms.HMAC_MD5, STANDARD_MD5_RESULT_BYTES, STANDARD_MD5_RESULT_STRING),
@@ -115,20 +115,21 @@ class HmacAlgorithmsTest {
     }
 
     @BeforeAll
-    public static void init() throws IOException {
+    static void init() throws IOException {
         TempFile = Files.createFile(TempDir.resolve(HmacAlgorithmsTest.class.getSimpleName()));
         Files.write(TempFile, STANDARD_PHRASE_BYTES, StandardOpenOption.CREATE);
     }
 
     private DigestUtilsTest digestUtilsTest;
+
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         digestUtilsTest = new DigestUtilsTest();
         digestUtilsTest.setUp();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    void tearDown() throws Exception {
         digestUtilsTest.tearDown();
         digestUtilsTest = null;
     }

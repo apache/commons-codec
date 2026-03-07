@@ -1021,7 +1021,7 @@ class DoubleMetaphoneTest extends AbstractStringEncoderTest<DoubleMetaphone> {
     /**
      * Tests encoding APIs in one place.
      */
-    public void assertDoubleMetaphoneAlt(final String expected, final String source) {
+    private void assertDoubleMetaphoneAlt(final String expected, final String source) {
         assertEquals(expected, getStringEncoder().doubleMetaphone(source, true));
     }
 
@@ -1030,7 +1030,7 @@ class DoubleMetaphoneTest extends AbstractStringEncoderTest<DoubleMetaphone> {
         return new DoubleMetaphone();
     }
 
-    public void doubleMetaphoneEqualTest(final String[][] pairs, final boolean useAlternate) {
+    private void doubleMetaphoneEqualTest(final String[][] pairs, final boolean useAlternate) {
         validateFixture(pairs);
         for (final String[] pair : pairs) {
             final String name0 = pair[0];
@@ -1045,7 +1045,7 @@ class DoubleMetaphoneTest extends AbstractStringEncoderTest<DoubleMetaphone> {
         }
     }
 
-    public void doubleMetaphoneNotEqualTest(final boolean alternate) {
+    private void doubleMetaphoneNotEqualTest(final boolean alternate) {
         assertFalse(getStringEncoder().isDoubleMetaphoneEqual("Brain", "Band", alternate));
         assertFalse(getStringEncoder().isDoubleMetaphoneEqual("Band", "Brain", alternate));
 
@@ -1243,7 +1243,7 @@ class DoubleMetaphoneTest extends AbstractStringEncoderTest<DoubleMetaphone> {
         assertEquals("AMP", doubleMetaphone.doubleMetaphone(value, true), "Max=3 Alternate");
     }
 
-    public void validateFixture(final String[][] pairs) {
+    private void validateFixture(final String[][] pairs) {
         if (pairs.length == 0) {
             fail("Test fixture is empty");
         }

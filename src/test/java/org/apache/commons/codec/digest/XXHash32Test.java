@@ -40,7 +40,7 @@ class XXHash32Test {
         return IOUtils.copyLarge(input, output, new byte[bufferSize]);
     }
 
-    public static Stream<Arguments> data() {
+    static Stream<Arguments> data() {
         // @formatter:off
         return Stream.of(
             // reference checksums created with xxh32sum
@@ -62,7 +62,7 @@ class XXHash32Test {
 
     private String expectedChecksum;
 
-    public void initData(final String path, final String c) throws Exception {
+    private void initData(final String path, final String c) throws Exception {
         final URL url = XXHash32Test.class.getClassLoader().getResource(path);
         if (url == null) {
             throw new FileNotFoundException("couldn't find " + path);
@@ -73,7 +73,7 @@ class XXHash32Test {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void verifyChecksum(final String path, final String c) throws Exception {
+    void verifyChecksum(final String path, final String c) throws Exception {
         initData(path, c);
         final XXHash32 hasher = new XXHash32();
         try (InputStream in = Files.newInputStream(file)) {
@@ -85,7 +85,7 @@ class XXHash32Test {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void verifyIncrementalChecksum(final String path, final String c) throws Exception {
+    void verifyIncrementalChecksum(final String path, final String c) throws Exception {
         initData(path, c);
         final XXHash32 hasher = new XXHash32();
         try (InputStream in = Files.newInputStream(file)) {
