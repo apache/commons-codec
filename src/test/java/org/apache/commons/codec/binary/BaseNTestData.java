@@ -22,6 +22,7 @@ import java.io.InputStream;
 import java.util.Random;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.ArrayUtils;
 
 /**
  * Data and functions common to BaseN tests.
@@ -88,12 +89,7 @@ public class BaseNTestData {
      * @return true if bytes contains c, false otherwise
      */
     static boolean bytesContain(final byte[] bytes, final byte c) {
-        for (final byte b : bytes) {
-            if (b == c) {
-                return true;
-            }
-        }
-        return false;
+        return ArrayUtils.contains(bytes, c);
     }
 
     private static int[] fill(final byte[] buf, final int offset, final InputStream in)
