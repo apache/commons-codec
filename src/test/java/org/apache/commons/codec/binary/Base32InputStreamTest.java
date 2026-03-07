@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.commons.codec.CodecPolicy;
+import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -259,14 +260,14 @@ class Base32InputStreamTest {
     private void testByChunk(final byte[] encoded, final byte[] decoded, final int chunkSize, final byte[] separator) throws Exception {
         // Start with encode.
         try (InputStream in = new Base32InputStream(new ByteArrayInputStream(decoded), true, chunkSize, separator)) {
-            final byte[] output = BaseNTestData.streamToBytes(in);
+            final byte[] output = IOUtils.toByteArray(in);
             assertEquals(-1, in.read(), "EOF");
             assertEquals(-1, in.read(), "Still EOF");
             assertArrayEquals(encoded, output, "Streaming base32 encode");
         }
         // Now let's try to decode.
         try (InputStream in = new Base32InputStream(new ByteArrayInputStream(encoded))) {
-            final byte[] output = BaseNTestData.streamToBytes(in);
+            final byte[] output = IOUtils.toByteArray(in);
 
             assertEquals(-1, in.read(), "EOF");
             assertEquals(-1, in.read(), "Still EOF");
@@ -278,7 +279,8 @@ class Base32InputStreamTest {
             in = new Base32InputStream(in, true, chunkSize, separator);
             in = new Base32InputStream(in, false);
         }
-        final byte[] output = BaseNTestData.streamToBytes(in);
+        final InputStream in1 = in;
+        final byte[] output = IOUtils.toByteArray(in1);
         assertEquals(-1, in.read(), "EOF");
         assertEquals(-1, in.read(), "Still EOF");
         assertArrayEquals(decoded, output, "Streaming base32 wrap-wrap-wrap!");
@@ -548,11 +550,11 @@ class Base32InputStreamTest {
             final Base32InputStream in = new Base32InputStream(new ByteArrayInputStream(encoded), false);
             // Default is lenient decoding; it should not throw
             assertFalse(in.isStrictDecoding());
-            BaseNTestData.streamToBytes(in);
+            IOUtils.toByteArray(in);
             // Strict decoding should throw
             final Base32InputStream in2 = new Base32InputStream(new ByteArrayInputStream(encoded), false, 0, null, CodecPolicy.STRICT);
             assertTrue(in2.isStrictDecoding());
-            assertThrows(IllegalArgumentException.class, () -> BaseNTestData.streamToBytes(in2));
+            assertThrows(IllegalArgumentException.class, () -> IOUtils.toByteArray(in2));
             // Same with a builder
             try (Base32InputStream in3 = Base32InputStream.builder()
                     .setByteArray(encoded)
@@ -560,7 +562,7 @@ class Base32InputStreamTest {
                     .setBaseNCodec(Base32.builder().setLineLength(0).setLineSeparator(null).setDecodingPolicy(CodecPolicy.STRICT).get())
                     .get()) {
                 assertTrue(in3.isStrictDecoding());
-                assertThrows(IllegalArgumentException.class, () -> BaseNTestData.streamToBytes(in3));
+                assertThrows(IllegalArgumentException.class, () -> IOUtils.toByteArray(in3));
             }
         }
     }

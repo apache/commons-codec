@@ -27,6 +27,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -164,14 +165,14 @@ class Base16InputStreamTest {
     private void testByChunk(final byte[] encoded, final byte[] decoded, final boolean lowerCase) throws IOException {
         // Start with encode.
         try (InputStream in = new Base16InputStream(new ByteArrayInputStream(decoded), true, lowerCase)) {
-            final byte[] output = BaseNTestData.streamToBytes(in);
+            final byte[] output = IOUtils.toByteArray(in);
             assertEquals(-1, in.read(), "EOF");
             assertEquals(-1, in.read(), "Still EOF");
             assertArrayEquals(encoded, output, "Streaming Base16 encode");
         }
         // Now let's try to decode.
         try (InputStream in = new Base16InputStream(new ByteArrayInputStream(encoded), false, lowerCase)) {
-            final byte[] output = BaseNTestData.streamToBytes(in);
+            final byte[] output = IOUtils.toByteArray(in);
             assertEquals(-1, in.read(), "EOF");
             assertEquals(-1, in.read(), "Still EOF");
             assertArrayEquals(decoded, output, "Streaming Base16 decode");
@@ -180,7 +181,7 @@ class Base16InputStreamTest {
         try (InputStream in = new ByteArrayInputStream(decoded);
                 InputStream inEncode = new Base16InputStream(in, true, lowerCase);
                 InputStream inDecode = new Base16InputStream(inEncode, false, lowerCase)) {
-            final byte[] output = BaseNTestData.streamToBytes(inDecode);
+            final byte[] output = IOUtils.toByteArray(inDecode);
             assertEquals(-1, inDecode.read(), "EOF");
             assertEquals(-1, inDecode.read(), "Still EOF");
             assertArrayEquals(decoded, output, "Streaming Base16 wrap-wrap!");

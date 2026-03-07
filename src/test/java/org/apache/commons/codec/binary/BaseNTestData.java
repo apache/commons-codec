@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Random;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.ArrayUtils;
 
 /**
@@ -127,17 +126,6 @@ public class BaseNTestData {
         final byte[] biggerBytes = new byte[bytes.length * 2];
         System.arraycopy(bytes, 0, biggerBytes, 0, bytes.length);
         return biggerBytes;
-    }
-
-    /**
-     * Reads all bytes from an InputStream into a byte array.
-     *
-     * @param in the input stream.
-     * @return the byte array
-     * @throws IOException if an error occurs whilst reading the input stream
-     */
-    static byte[] streamToBytes(final InputStream in) throws IOException {
-        return IOUtils.toByteArray(in);
     }
 
     /**

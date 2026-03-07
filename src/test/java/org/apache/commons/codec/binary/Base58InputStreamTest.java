@@ -27,6 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
+import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -132,13 +133,13 @@ class Base58InputStreamTest {
      */
     private void testByChunk(final byte[] encoded, final byte[] decoded, final int chunkSize, final byte[] separator) throws Exception {
         try (InputStream in = Base58InputStream.builder().setByteArray(decoded).setEncode(true).get()) {
-            final byte[] output = BaseNTestData.streamToBytes(in);
+            final byte[] output = IOUtils.toByteArray(in);
             assertEquals(-1, in.read(), "EOF");
             assertEquals(-1, in.read(), "Still EOF");
             assertArrayEquals(encoded, output, "Streaming base58 encode");
         }
         try (InputStream in = new Base58InputStream(new ByteArrayInputStream(encoded))) {
-            final byte[] output = BaseNTestData.streamToBytes(in);
+            final byte[] output = IOUtils.toByteArray(in);
             assertEquals(-1, in.read(), "EOF");
             assertEquals(-1, in.read(), "Still EOF");
             assertArrayEquals(decoded, output, "Streaming base58 decode");
@@ -148,7 +149,8 @@ class Base58InputStreamTest {
             in = Base58InputStream.builder().setInputStream(in).setEncode(true).get();
             in = Base58InputStream.builder().setInputStream(in).setEncode(false).get();
         }
-        final byte[] output = BaseNTestData.streamToBytes(in);
+        final InputStream in1 = in;
+        final byte[] output = IOUtils.toByteArray(in1);
         assertEquals(-1, in.read(), "EOF");
         assertEquals(-1, in.read(), "Still EOF");
         assertArrayEquals(decoded, output, "Streaming base58 wrap-wrap-wrap!");
@@ -170,13 +172,15 @@ class Base58InputStreamTest {
     private void testByteByByte(final byte[] encoded, final byte[] decoded, final int chunkSize, final byte[] separator) throws Exception {
         InputStream in;
         in = Base58InputStream.builder().setByteArray(decoded).setEncode(true).get();
-        byte[] output = BaseNTestData.streamToBytes(in);
+        final InputStream in1 = in;
+        byte[] output = IOUtils.toByteArray(in1);
         assertEquals(-1, in.read(), "EOF");
         assertEquals(-1, in.read(), "Still EOF");
         assertArrayEquals(encoded, output, "Streaming base58 encode");
         in.close();
         in = new Base58InputStream(new ByteArrayInputStream(encoded));
-        output = BaseNTestData.streamToBytes(in);
+        final InputStream in2 = in;
+        output = IOUtils.toByteArray(in2);
         assertEquals(-1, in.read(), "EOF");
         assertEquals(-1, in.read(), "Still EOF");
         assertArrayEquals(decoded, output, "Streaming base58 decode");
@@ -186,7 +190,8 @@ class Base58InputStreamTest {
             in = Base58InputStream.builder().setInputStream(in).setEncode(true).get();
             in = Base58InputStream.builder().setInputStream(in).setEncode(false).get();
         }
-        output = BaseNTestData.streamToBytes(in);
+        final InputStream in3 = in;
+        output = IOUtils.toByteArray(in3);
         assertEquals(-1, in.read(), "EOF");
         assertEquals(-1, in.read(), "Still EOF");
         assertArrayEquals(decoded, output, "Streaming base58 wrap-wrap-wrap!");
