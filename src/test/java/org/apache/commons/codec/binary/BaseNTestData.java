@@ -17,10 +17,11 @@
 
 package org.apache.commons.codec.binary;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Random;
+
+import org.apache.commons.io.IOUtils;
 
 /**
  * Data and functions common to BaseN tests.
@@ -140,13 +141,7 @@ public class BaseNTestData {
      * @throws IOException if an error occurs whilst reading the input stream
      */
     static byte[] streamToBytes(final InputStream in) throws IOException {
-        final ByteArrayOutputStream os = new ByteArrayOutputStream();
-        final byte[] buf = new byte[4096];
-        int read;
-        while ((read = in.read(buf)) > -1) {
-            os.write(buf, 0, read);
-        }
-        return os.toByteArray();
+        return IOUtils.toByteArray(in);
     }
 
     /**
