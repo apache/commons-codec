@@ -25,10 +25,14 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import org.apache.commons.codec.CodecPolicy;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
  * Tests {@link Base64OutputStream}.
@@ -273,6 +277,32 @@ class Base64OutputStreamTest extends AbstractBaseNOutputStreamTest {
         output = byteOut.toByteArray();
 
         assertArrayEquals(decoded, output, "Streaming byte-by-byte base64 wrap-wrap-wrap!");
+    }
+
+    /**
+     * Tests https://issues.apache.org/jira/browse/CODEC-334
+     */
+    @Test
+    void testCloseIdempotentCreateTempFile() throws Exception {
+        final Path tmp = Files.createTempFile("codec-test", ".bin");
+        try {
+            final OutputStream out = new Base64OutputStream(new FileOutputStream(tmp.toFile()));
+            out.close();
+            out.close();
+        } finally {
+            Files.deleteIfExists(tmp);
+        }
+    }
+
+    /**
+     * Tests https://issues.apache.org/jira/browse/CODEC-334
+     */
+    @Test
+    void testCloseIdempotentFileOutputStream(@TempDir final Path tempDir) throws Exception {
+        final Path tmp = Files.createFile(tempDir.resolve(getClass().getSimpleName() + ".tmp"));
+        try (OutputStream out = new Base64OutputStream(new FileOutputStream(tmp.toFile()))) {
+            out.close();
+        }
     }
 
     /**
