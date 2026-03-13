@@ -34,6 +34,6 @@ abstract class AbstractBaseNOutputStreamTest {
         try (OutputStream out = newOutputStream()) {
             out.close();
             out.close();
-        }
+        } // closes a third time, which should be a no-op
     }
 }
