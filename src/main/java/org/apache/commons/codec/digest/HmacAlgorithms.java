@@ -18,22 +18,17 @@
 package org.apache.commons.codec.digest;
 
 /**
- * Standard {@link HmacUtils} algorithm names from the <cite>Java Cryptography Architecture Standard Algorithm Name
- * Documentation</cite>.
- *
+ * Enumerates the standard {@link HmacUtils} algorithm names from the <cite>Java Cryptography Architecture Standard Algorithm Name Documentation</cite>.
  * <p>
  * <strong>Note: Not all JCE implementations support all the algorithms in this enum.</strong>
  * </p>
  *
- * @see <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/security/SunProviders.html#SunJCEProvider"> Java
- *      8 Cryptography Architecture Sun Providers Documentation</a>
- * @see <a href=
- *      "https://docs.oracle.com/en/java/javase/11/security/oracle-providers.html#GUID-A47B1249-593C-4C38-A0D0-68FA7681E0A7">
- *      Java 11 Cryptography Architecture Sun Providers Documentation</a>
- * @see <a href=
- *      "https://docs.oracle.com/en/java/javase/17/security/oracle-providers.html#GUID-A47B1249-593C-4C38-A0D0-68FA7681E0A7">
- *      Java 17 Cryptography Architecture Sun Providers Documentation</a>
- *
+ * @see <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/security/SunProviders.html#SunJCEProvider"> Java 8 Cryptography Architecture Sun
+ *      Providers Documentation</a>
+ * @see <a href= "https://docs.oracle.com/en/java/javase/11/security/oracle-providers.html#GUID-A47B1249-593C-4C38-A0D0-68FA7681E0A7"> Java 11 Cryptography
+ *      Architecture Sun Providers Documentation</a>
+ * @see <a href= "https://docs.oracle.com/en/java/javase/17/security/oracle-providers.html#GUID-A47B1249-593C-4C38-A0D0-68FA7681E0A7"> Java 17 Cryptography
+ *      Architecture Sun Providers Documentation</a>
  * @since 1.10
  */
 public enum HmacAlgorithms {

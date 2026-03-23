@@ -18,7 +18,7 @@
 package org.apache.commons.codec;
 
 /**
- * Defines encoding and decoding policies.
+ * Enumerates encoding and decoding policies.
  *
  * @since 1.15
  */

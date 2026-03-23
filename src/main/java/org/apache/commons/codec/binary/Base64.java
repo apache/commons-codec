@@ -168,7 +168,7 @@ public class Base64 extends BaseNCodec {
     }
 
     /**
-     * Defines the Base64 table format to be used on decoding.
+     * Enumerates the Base64 table format to be used on decoding.
      * <p>
      * By default, the method uses {@link DecodeTableFormat#MIXED} approach, allowing a seamless handling of both {@link DecodeTableFormat#URL_SAFE} and
      * {@link DecodeTableFormat#STANDARD} base64 options.

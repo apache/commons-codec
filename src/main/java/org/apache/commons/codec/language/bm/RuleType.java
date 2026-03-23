@@ -18,7 +18,7 @@
 package org.apache.commons.codec.language.bm;
 
 /**
- * Types of rule.
+ * Enumerates the types of rule.
  *
  * @since 1.6
  */
