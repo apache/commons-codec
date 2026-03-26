@@ -230,7 +230,7 @@ public class DigestUtils {
      * @throws IOException On error accessing the file
      * @since 1.22.0
      */
-    public static byte[] gitTree(final MessageDigest messageDigest, final Path data, final OpenOption...options) throws IOException {
+    public static byte[] gitTree(final MessageDigest messageDigest, final Path data, final OpenOption... options) throws IOException {
         final List<GitDirectoryEntry> entries = new ArrayList<>();
         try (DirectoryStream<Path> files = Files.newDirectoryStream(data)) {
             for (final Path path : files) {

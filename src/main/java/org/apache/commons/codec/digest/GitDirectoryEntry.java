@@ -19,6 +19,7 @@ package org.apache.commons.codec.digest;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
+import java.util.Objects;
 
 /**
  * Represents a single entry in a Git tree object.
@@ -62,6 +63,21 @@ class GitDirectoryEntry implements Comparable<GitDirectoryEntry> {
      */
     private final byte[] rawObjectId;
 
+    private static String getFileName(final Path path) {
+        final Path fileName = path.getFileName();
+        if (fileName == null) {
+            throw new IllegalArgumentException(path.toString());
+        }
+        return fileName.toString();
+    }
+
+    /**
+     * Creates an entry
+     *
+     * @param name The name of the entry
+     * @param type The type of the entry
+     * @param rawObjectId The id of the entry
+     */
     private GitDirectoryEntry(final String name, final Type type, final byte[] rawObjectId) {
         this.name = name;
         this.type = type;
@@ -69,8 +85,17 @@ class GitDirectoryEntry implements Comparable<GitDirectoryEntry> {
         this.rawObjectId = rawObjectId;
     }
 
+    /**
+     * Creates an entry
+     *
+     * @param path The path of the entry; must not be an empty path
+     * @param type The type of the entry
+     * @param rawObjectId The id of the entry
+     * @throws IllegalArgumentException If the path is empty
+     * @throws NullPointerException If any argument is {@code null}
+     */
     GitDirectoryEntry(final Path path, final Type type, final byte[] rawObjectId) {
-        this(path.getFileName().toString(), type, rawObjectId);
+        this(getFileName(path), Objects.requireNonNull(type), Objects.requireNonNull(rawObjectId));
     }
 
     /**
