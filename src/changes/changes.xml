@@ -48,6 +48,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="fix" dev="ggregory" due-to="Shalu Jha, Andrey, Gary Gregory" issue="CODEC-249">Fix Incorrect transform of CH digraph according Metaphone basic rules #423.</action>
       <action type="fix" dev="ggregory" due-to="DRUser123, Shalu Jha, Gary Gregory" issue="CODEC-317">ColognePhonetic can create duplicate consecutive codes in some cases.</action>
       <action type="fix" dev="ggregory" due-to="fancying, Gary Gregory">Add boundary tests for BinaryCodec.fromAscii partial-bit inputs #425.</action>
+      <action type="fix" dev="ggregory" due-to="Partha Paul, Gary Gregory" issue="CODEC-336">Base64.Builder.setUrlSafe(boolean) Javadoc incorrectly states null is accepted for primitive boolean parameter.</action>
       <!-- ADD -->
       <action type="add" dev="ggregory" due-to="Inkeet, Gary Gregory, Wolff Bock von Wuelfingen" issue="CODEC-326">Add Base58 support.</action>
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add BaseNCodecInputStream.AbstracBuilder.setByteArray(byte[]).</action>

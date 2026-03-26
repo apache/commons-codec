@@ -157,7 +157,7 @@ public class Base64 extends BaseNCodec {
          * {@code Builder.setDecodeTableFormat(DecodeTableFormat)} method.
          * </p>
          *
-         * @param urlSafe URL-safe encoding policy, null resets to the default.
+         * @param urlSafe URL-safe encoding policy.
          * @return {@code this} instance.
          */
         public Builder setUrlSafe(final boolean urlSafe) {
