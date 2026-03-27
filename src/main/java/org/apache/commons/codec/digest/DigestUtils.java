@@ -161,6 +161,7 @@ public class DigestUtils {
      * @since 1.22.0
      */
     public static byte[] gitBlob(final MessageDigest messageDigest, final byte[] data) {
+        messageDigest.reset();
         updateDigest(messageDigest, gitBlobPrefix(data.length));
         return digest(messageDigest, data);
     }
@@ -182,6 +183,7 @@ public class DigestUtils {
      * @since 1.22.0
      */
     public static byte[] gitBlob(final MessageDigest messageDigest, final Path data, final OpenOption... options) throws IOException {
+        messageDigest.reset();
         updateDigest(messageDigest, gitBlobPrefix(Files.size(data)));
         return updateDigest(messageDigest, data, options).digest();
     }
@@ -210,6 +212,7 @@ public class DigestUtils {
             final byte[] treeEntryBytes = entry.toTreeEntryBytes();
             baos.write(treeEntryBytes, 0, treeEntryBytes.length);
         }
+        messageDigest.reset();
         updateDigest(messageDigest, gitTreePrefix(baos.size()));
         return updateDigest(messageDigest, baos.toByteArray()).digest();
     }
