@@ -18,17 +18,24 @@
 package org.apache.commons.codec.digest;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.TreeSet;
 
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.binary.StringUtils;
@@ -137,6 +144,134 @@ public class DigestUtils {
      */
     public static byte[] digest(final MessageDigest messageDigest, final RandomAccessFile data) throws IOException {
         return updateDigest(messageDigest, data).digest();
+    }
+
+    /**
+     * Reads through a byte array and return a generalized Git blob identifier
+     *
+     * <p>The identifier is computed in the way described by the
+     * <a href="https://www.swhid.org/swhid-specification/v1.2/5.Core_identifiers/#52-contents">SWHID contents identifier</a>, but it can use any hash
+     * algorithm.</p>
+     *
+     * <p>When the hash algorithm is SHA-1, the identifier is identical to Git blob identifier and SWHID contents identifier.</p>
+     *
+     * @param messageDigest The MessageDigest to use (for example SHA-1).
+     * @param data          Data to digest.
+     * @return A generalized Git blob identifier.
+     * @since 1.22.0
+     */
+    public static byte[] gitBlob(final MessageDigest messageDigest, final byte[] data) {
+        messageDigest.reset();
+        updateDigest(messageDigest, gitBlobPrefix(data.length));
+        return digest(messageDigest, data);
+    }
+
+    /**
+     * Reads through a byte array and return a generalized Git blob identifier
+     *
+     * <p>The identifier is computed in the way described by the
+     * <a href="https://www.swhid.org/swhid-specification/v1.2/5.Core_identifiers/#52-contents">SWHID contents identifier</a>, but it can use any hash
+     * algorithm.</p>
+     *
+     * <p>When the hash algorithm is SHA-1, the identifier is identical to Git blob identifier and SWHID contents identifier.</p>
+     *
+     * @param messageDigest The MessageDigest to use (for example SHA-1).
+     * @param data          Data to digest.
+     * @param options       Options how to open the file
+     * @return A generalized Git blob identifier.
+     * @throws IOException On error accessing the file
+     * @since 1.22.0
+     */
+    public static byte[] gitBlob(final MessageDigest messageDigest, final Path data, final OpenOption... options) throws IOException {
+        messageDigest.reset();
+        updateDigest(messageDigest, gitBlobPrefix(Files.size(data)));
+        return updateDigest(messageDigest, data, options).digest();
+    }
+
+    private static byte[] gitBlobPrefix(final long dataSize) {
+        return ("blob " + dataSize + "\0").getBytes(StandardCharsets.UTF_8);
+    }
+
+    /**
+     * Returns a generalized Git tree identifier
+     *
+     * <p>The identifier is computed in the way described by the
+     * <a href="https://www.swhid.org/swhid-specification/v1.2/5.Core_identifiers/#53-directories">SWHID directory identifier</a>, but it can use any hash
+     * algorithm.</p>
+     *
+     * <p>When the hash algorithm is SHA-1, the identifier is identical to Git tree identifier and SWHID directory identifier.</p>
+     *
+     * @param messageDigest The MessageDigest to use (for example SHA-1)
+     * @param entries       The directory entries
+     * @return A generalized Git tree identifier.
+     */
+    static byte[] gitTree(final MessageDigest messageDigest, final Collection<GitDirectoryEntry> entries) {
+        final TreeSet<GitDirectoryEntry> treeSet = new TreeSet<>(entries);
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        for (final GitDirectoryEntry entry : treeSet) {
+            final byte[] treeEntryBytes = entry.toTreeEntryBytes();
+            baos.write(treeEntryBytes, 0, treeEntryBytes.length);
+        }
+        messageDigest.reset();
+        updateDigest(messageDigest, gitTreePrefix(baos.size()));
+        return updateDigest(messageDigest, baos.toByteArray()).digest();
+    }
+
+    /**
+     * Reads through a byte array and return a generalized Git tree identifier
+     *
+     * <p>The identifier is computed in the way described by the
+     * <a href="https://www.swhid.org/swhid-specification/v1.2/5.Core_identifiers/#53-directories">SWHID directory identifier</a>, but it can use any hash
+     * algorithm.</p>
+     *
+     * <p>When the hash algorithm is SHA-1, the identifier is identical to Git tree identifier and SWHID directory identifier.</p>
+     *
+     * @param messageDigest The MessageDigest to use (for example SHA-1).
+     * @param data          Data to digest.
+     * @param options       Options how to open the file
+     * @return A generalized Git tree identifier.
+     * @throws IOException On error accessing the file
+     * @since 1.22.0
+     */
+    public static byte[] gitTree(final MessageDigest messageDigest, final Path data, final OpenOption... options) throws IOException {
+        final List<GitDirectoryEntry> entries = new ArrayList<>();
+        try (DirectoryStream<Path> files = Files.newDirectoryStream(data)) {
+            for (final Path path : files) {
+                final GitDirectoryEntry.Type type = getGitDirectoryEntryType(path);
+                final byte[] rawObjectId;
+                if (type == GitDirectoryEntry.Type.DIRECTORY) {
+                    rawObjectId = gitTree(messageDigest, path, options);
+                } else {
+                    rawObjectId = gitBlob(messageDigest, path, options);
+                }
+                entries.add(new GitDirectoryEntry(path, type, rawObjectId));
+            }
+        }
+        return gitTree(messageDigest, entries);
+    }
+
+    /**
+     * Returns the {@link GitDirectoryEntry.Type} of a file.
+     *
+     * @param path The file to check.
+     * @return A {@link GitDirectoryEntry.Type}
+     */
+    private static GitDirectoryEntry.Type getGitDirectoryEntryType(final Path path) {
+        // Symbolic links first
+        if (Files.isSymbolicLink(path)) {
+            return GitDirectoryEntry.Type.SYMBOLIC_LINK;
+        }
+        if (Files.isDirectory(path)) {
+            return GitDirectoryEntry.Type.DIRECTORY;
+        }
+        if (Files.isExecutable(path)) {
+            return GitDirectoryEntry.Type.EXECUTABLE;
+        }
+        return GitDirectoryEntry.Type.REGULAR;
+    }
+
+    private static byte[] gitTreePrefix(final long dataSize) {
+        return ("tree " + dataSize + "\0").getBytes(StandardCharsets.UTF_8);
     }
 
     /**
