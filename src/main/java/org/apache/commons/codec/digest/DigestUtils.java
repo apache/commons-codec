@@ -443,7 +443,11 @@ public class DigestUtils {
     }
 
     private static byte[] gitBlobPrefix(final long dataSize) {
-        return ("blob " + dataSize + "\0").getBytes(StandardCharsets.UTF_8);
+        return gitPrefix("blob ", dataSize);
+    }
+
+    private static byte[] gitPrefix(final String prefix, final long dataSize) {
+        return (prefix + dataSize + "\0").getBytes(StandardCharsets.UTF_8);
     }
 
     /**
@@ -505,7 +509,7 @@ public class DigestUtils {
     }
 
     private static byte[] gitTreePrefix(final long dataSize) {
-        return ("tree " + dataSize + "\0").getBytes(StandardCharsets.UTF_8);
+        return gitPrefix("tree ", dataSize);
     }
 
     /**
