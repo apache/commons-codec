@@ -20,6 +20,7 @@ package org.apache.commons.codec.digest;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -32,6 +33,14 @@ class GitDirectoryEntryTest {
 
     private static final byte[] ZERO_ID = new byte[20];
 
+    @Test
+    void testConstructor() {
+        assertThrows(NullPointerException.class, () -> new GitDirectoryEntry(null, GitDirectoryEntry.Type.REGULAR, ZERO_ID));
+        assertThrows(NullPointerException.class, () -> new GitDirectoryEntry(Paths.get("hello.txt"), null, ZERO_ID));
+        assertThrows(NullPointerException.class, () -> new GitDirectoryEntry(Paths.get("hello.txt"), GitDirectoryEntry.Type.REGULAR, null));
+        assertThrows(IllegalArgumentException.class, () -> new GitDirectoryEntry(Paths.get("/"), GitDirectoryEntry.Type.REGULAR, ZERO_ID));
+    }
+
     /**
      * Equality and hash code are based solely on the entry name.
      */
@@ -39,20 +48,15 @@ class GitDirectoryEntryTest {
     void testEqualityBasedOnNameOnly() {
         final byte[] otherId = new byte[20];
         Arrays.fill(otherId, (byte) 0xff);
-
         final GitDirectoryEntry regular = new GitDirectoryEntry(Paths.get("foo"), GitDirectoryEntry.Type.REGULAR, ZERO_ID);
         final GitDirectoryEntry executable = new GitDirectoryEntry(Paths.get("foo"), GitDirectoryEntry.Type.EXECUTABLE, otherId);
-
         // Same name, different type and object id -> equal
         assertEquals(regular, executable);
         assertEquals(regular.hashCode(), executable.hashCode());
-
         // Different name -> not equal
         assertNotEquals(regular, new GitDirectoryEntry(Paths.get("bar"), GitDirectoryEntry.Type.REGULAR, ZERO_ID));
-
         // Same reference -> equal
         assertEquals(regular, regular);
-
         // Not equal to null or unrelated type
         assertNotEquals(regular, null);
         assertNotEquals(regular, "foo");
@@ -66,7 +70,6 @@ class GitDirectoryEntryTest {
         final GitDirectoryEntry fromLabel = new GitDirectoryEntry(Paths.get("hello.txt"), GitDirectoryEntry.Type.REGULAR, ZERO_ID);
         final GitDirectoryEntry fromRelative = new GitDirectoryEntry(Paths.get("subdir/hello.txt"), GitDirectoryEntry.Type.REGULAR, ZERO_ID);
         final GitDirectoryEntry fromAbsolute = new GitDirectoryEntry(Paths.get("hello.txt").toAbsolutePath(), GitDirectoryEntry.Type.REGULAR, ZERO_ID);
-
         assertEquals(fromLabel, fromRelative);
         assertEquals(fromLabel, fromAbsolute);
         assertArrayEquals(fromLabel.toTreeEntryBytes(), fromRelative.toTreeEntryBytes());
@@ -85,10 +88,8 @@ class GitDirectoryEntryTest {
         final GitDirectoryEntry fooDir = new GitDirectoryEntry(Paths.get("foo"), GitDirectoryEntry.Type.DIRECTORY, ZERO_ID);
         final GitDirectoryEntry foobar = new GitDirectoryEntry(Paths.get("foobar"), GitDirectoryEntry.Type.REGULAR, ZERO_ID);
         final GitDirectoryEntry zeta = new GitDirectoryEntry(Paths.get("zeta.txt"), GitDirectoryEntry.Type.REGULAR, ZERO_ID);
-
         final List<GitDirectoryEntry> entries = new ArrayList<>(Arrays.asList(zeta, foobar, fooDir, alpha, fooTxt));
         entries.sort(GitDirectoryEntry::compareTo);
-
         assertEquals(Arrays.asList(alpha, fooTxt, fooDir, foobar, zeta), entries);
     }
 }
