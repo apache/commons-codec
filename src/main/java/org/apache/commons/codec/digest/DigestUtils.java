@@ -438,6 +438,11 @@ public class DigestUtils {
      */
     public static byte[] gitBlob(final MessageDigest messageDigest, final Path data, final OpenOption... options) throws IOException {
         messageDigest.reset();
+        if (Files.isSymbolicLink(data)) {
+            final byte[] linkTarget = Files.readSymbolicLink(data).toString().getBytes(StandardCharsets.UTF_8);
+            updateDigest(messageDigest, gitBlobPrefix(linkTarget.length));
+            return digest(messageDigest, linkTarget);
+        }
         updateDigest(messageDigest, gitBlobPrefix(Files.size(data)));
         return updateDigest(messageDigest, data, options).digest();
     }

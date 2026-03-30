@@ -50,8 +50,10 @@ import org.apache.commons.lang3.JavaVersion;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.SystemUtils;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -515,6 +517,24 @@ class DigestUtilsTest {
     @MethodSource("gitBlobProvider")
     void testGitBlobPath(final String resourceName, final String expectedSha1Hex) throws Exception {
         assertArrayEquals(Hex.decodeHex(expectedSha1Hex), DigestUtils.gitBlob(DigestUtils.getSha1Digest(), resourcePath(resourceName)));
+    }
+
+    @Test
+    void testGitBlobSymlink(@TempDir final Path tempDir) throws Exception {
+        final Path subDir = Files.createDirectory(tempDir.resolve("subdir"));
+        Files.write(subDir.resolve("file.txt"), "hello".getBytes(StandardCharsets.UTF_8));
+        final Path linkToDir;
+        final Path linkToFile;
+        try {
+            linkToDir = Files.createSymbolicLink(tempDir.resolve("link-to-dir"), Paths.get("subdir"));
+            linkToFile = Files.createSymbolicLink(tempDir.resolve("link-to-file"), Paths.get("subdir/file.txt"));
+        } catch (final UnsupportedOperationException e) {
+            Assumptions.assumeTrue(false, "Symbolic links not supported on this filesystem");
+            return;
+        }
+        final MessageDigest sha1 = DigestUtils.getSha1Digest();
+        assertArrayEquals(Hex.decodeHex("8bbe8a53790056316b23b7c270f10ab6bf6bb1b4"), DigestUtils.gitBlob(sha1, linkToDir));
+        assertArrayEquals(Hex.decodeHex("dfe6ef8392ae13a11ff85419b4fd906d997b6cb7"), DigestUtils.gitBlob(sha1, linkToFile));
     }
 
     @ParameterizedTest
