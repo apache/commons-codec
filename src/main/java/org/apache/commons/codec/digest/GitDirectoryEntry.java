@@ -52,22 +52,22 @@ class GitDirectoryEntry implements Comparable<GitDirectoryEntry> {
     enum Type {
 
         /**
-         * A sub-directory (Git sub-tree)
+         * A sub-directory (Git sub-tree).
          */
         DIRECTORY("40000"),
 
         /**
-         * An executable file
+         * An executable file.
          */
         EXECUTABLE("100755"),
 
         /**
-         * A regular (non-executable) file
+         * A regular (non-executable) file.
          */
         REGULAR("100644"),
 
         /**
-         * A symbolic link
+         * A symbolic link.
          */
         SYMBOLIC_LINK("120000");
 
@@ -112,20 +112,20 @@ class GitDirectoryEntry implements Comparable<GitDirectoryEntry> {
     private final byte[] rawObjectId;
 
     /**
-     * Creates an entry
+     * Creates an entry.
      *
-     * @param path The path of the entry; must not be an empty path
-     * @param type The type of the entry
-     * @param rawObjectId The id of the entry
-     * @throws IllegalArgumentException If the path is empty
-     * @throws NullPointerException If any argument is {@code null}
+     * @param path The path of the entry; must not be an empty path.
+     * @param type The type of the entry.
+     * @param rawObjectId The id of the entry.
+     * @throws IllegalArgumentException If the path is empty.
+     * @throws NullPointerException If any argument is {@code null}.
      */
     GitDirectoryEntry(final Path path, final Type type, final byte[] rawObjectId) {
-        this(getFileName(path), Objects.requireNonNull(type), Objects.requireNonNull(rawObjectId));
+        this(getFileName(path), type, rawObjectId);
     }
 
     /**
-     * Creates an entry
+     * Creates an entry.
      *
      * @param name The name of the entry
      * @param type The type of the entry
@@ -133,9 +133,9 @@ class GitDirectoryEntry implements Comparable<GitDirectoryEntry> {
      */
     private GitDirectoryEntry(final String name, final Type type, final byte[] rawObjectId) {
         this.name = name;
-        this.type = type;
+        this.type = Objects.requireNonNull(type);
         this.sortKey = type == Type.DIRECTORY ? name + "/" : name;
-        this.rawObjectId = rawObjectId;
+        this.rawObjectId = Objects.requireNonNull(rawObjectId);
     }
 
     @Override
@@ -168,7 +168,7 @@ class GitDirectoryEntry implements Comparable<GitDirectoryEntry> {
      *   &lt;mode&gt; SP &lt;name&gt; NUL &lt;20-byte-object-id&gt;
      * </pre>
      *
-     * @return the binary tree-entry encoding; never {@code null}
+     * @return the binary tree-entry encoding; never {@code null}.
      */
     byte[] toTreeEntryBytes() {
         final byte[] nameBytes = name.getBytes(StandardCharsets.UTF_8);
