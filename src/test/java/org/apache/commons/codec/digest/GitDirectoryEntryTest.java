@@ -33,21 +33,6 @@ class GitDirectoryEntryTest {
     private static final byte[] ZERO_ID = new byte[20];
 
     /**
-     * The Path constructor must extract the filename component.
-     */
-    @Test
-    void testPathConstructorUsesFilename() {
-        final GitDirectoryEntry fromLabel = new GitDirectoryEntry(Paths.get("hello.txt"), GitDirectoryEntry.Type.REGULAR, ZERO_ID);
-        final GitDirectoryEntry fromRelative = new GitDirectoryEntry(Paths.get("subdir/hello.txt"), GitDirectoryEntry.Type.REGULAR, ZERO_ID);
-        final GitDirectoryEntry fromAbsolute = new GitDirectoryEntry(Paths.get("hello.txt").toAbsolutePath(), GitDirectoryEntry.Type.REGULAR, ZERO_ID);
-
-        assertEquals(fromLabel, fromRelative);
-        assertEquals(fromLabel, fromAbsolute);
-        assertArrayEquals(fromLabel.toTreeEntryBytes(), fromRelative.toTreeEntryBytes());
-        assertArrayEquals(fromLabel.toTreeEntryBytes(), fromAbsolute.toTreeEntryBytes());
-    }
-
-    /**
      * Equality and hash code are based solely on the entry name.
      */
     @Test
@@ -71,6 +56,21 @@ class GitDirectoryEntryTest {
         // Not equal to null or unrelated type
         assertNotEquals(regular, null);
         assertNotEquals(regular, "foo");
+    }
+
+    /**
+     * The Path constructor must extract the filename component.
+     */
+    @Test
+    void testPathConstructorUsesFilename() {
+        final GitDirectoryEntry fromLabel = new GitDirectoryEntry(Paths.get("hello.txt"), GitDirectoryEntry.Type.REGULAR, ZERO_ID);
+        final GitDirectoryEntry fromRelative = new GitDirectoryEntry(Paths.get("subdir/hello.txt"), GitDirectoryEntry.Type.REGULAR, ZERO_ID);
+        final GitDirectoryEntry fromAbsolute = new GitDirectoryEntry(Paths.get("hello.txt").toAbsolutePath(), GitDirectoryEntry.Type.REGULAR, ZERO_ID);
+
+        assertEquals(fromLabel, fromRelative);
+        assertEquals(fromLabel, fromAbsolute);
+        assertArrayEquals(fromLabel.toTreeEntryBytes(), fromRelative.toTreeEntryBytes());
+        assertArrayEquals(fromLabel.toTreeEntryBytes(), fromAbsolute.toTreeEntryBytes());
     }
 
     /**

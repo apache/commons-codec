@@ -271,6 +271,13 @@ class MetaphoneTest extends AbstractStringEncoderTest<Metaphone> {
     }
 
     @Test
+    void testTranslateOfCHCharacterWithMaxCodeLenFive() {
+        final Metaphone metaphone = new Metaphone();
+        metaphone.setMaxCodeLen(5);
+        assertEquals("XRKTR", metaphone.metaphone("CHARACTER"));
+    }
+
+    @Test
     void testTranslateOfSCHAndCH() {
         assertEquals("SNS", getStringEncoder().metaphone("SCIENCE"));
         assertEquals("SN", getStringEncoder().metaphone("SCENE"));
@@ -287,13 +294,6 @@ class MetaphoneTest extends AbstractStringEncoderTest<Metaphone> {
         assertEquals("ST", getStringEncoder().metaphone("CITY"));
         assertEquals("KT", getStringEncoder().metaphone("CAT"));
 
-    }
-
-    @Test
-    void testTranslateOfCHCharacterWithMaxCodeLenFive() {
-        final Metaphone metaphone = new Metaphone();
-        metaphone.setMaxCodeLen(5);
-        assertEquals("XRKTR", metaphone.metaphone("CHARACTER"));
     }
 
     @Test

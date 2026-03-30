@@ -42,106 +42,6 @@ import java.util.Objects;
 class GitDirectoryEntry implements Comparable<GitDirectoryEntry> {
 
     /**
-     * The entry name (file or directory name, no path separator).
-     */
-    private final String name;
-
-    /**
-     * The key used for ordering entries within a tree object.
-     *
-     * <p>>Git appends {@code '/'} to directory names before comparing.</p>
-     */
-    private final String sortKey;
-
-    /**
-     * The Git object type, which determines the Unix file-mode prefix.
-     */
-    private final Type type;
-
-    /**
-     * The raw object id of the referenced blob or sub-tree.
-     */
-    private final byte[] rawObjectId;
-
-    private static String getFileName(final Path path) {
-        final Path fileName = path.getFileName();
-        if (fileName == null) {
-            throw new IllegalArgumentException(path.toString());
-        }
-        return fileName.toString();
-    }
-
-    /**
-     * Creates an entry
-     *
-     * @param name The name of the entry
-     * @param type The type of the entry
-     * @param rawObjectId The id of the entry
-     */
-    private GitDirectoryEntry(final String name, final Type type, final byte[] rawObjectId) {
-        this.name = name;
-        this.type = type;
-        this.sortKey = type == Type.DIRECTORY ? name + "/" : name;
-        this.rawObjectId = rawObjectId;
-    }
-
-    /**
-     * Creates an entry
-     *
-     * @param path The path of the entry; must not be an empty path
-     * @param type The type of the entry
-     * @param rawObjectId The id of the entry
-     * @throws IllegalArgumentException If the path is empty
-     * @throws NullPointerException If any argument is {@code null}
-     */
-    GitDirectoryEntry(final Path path, final Type type, final byte[] rawObjectId) {
-        this(getFileName(path), Objects.requireNonNull(type), Objects.requireNonNull(rawObjectId));
-    }
-
-    /**
-     * Returns the binary encoding of this entry as it appears inside a Git tree object.
-     *
-     * <p>The format follows the Git tree entry layout:</p>
-     * <pre>
-     *   &lt;mode&gt; SP &lt;name&gt; NUL &lt;20-byte-object-id&gt;
-     * </pre>
-     *
-     * @return the binary tree-entry encoding; never {@code null}
-     */
-    byte[] toTreeEntryBytes() {
-        final byte[] nameBytes = name.getBytes(StandardCharsets.UTF_8);
-        final byte[] result = new byte[type.mode.length + nameBytes.length + rawObjectId.length + 2];
-        System.arraycopy(type.mode, 0, result, 0, type.mode.length);
-        result[type.mode.length] = ' ';
-        System.arraycopy(nameBytes, 0, result, type.mode.length + 1, nameBytes.length);
-        result[type.mode.length + nameBytes.length + 1] = '\0';
-        System.arraycopy(rawObjectId, 0, result, type.mode.length + nameBytes.length + 2, rawObjectId.length);
-        return result;
-    }
-
-    @Override
-    public int compareTo(GitDirectoryEntry o) {
-        return sortKey.compareTo(o.sortKey);
-    }
-
-    @Override
-    public int hashCode() {
-        return name.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-        if (!(obj instanceof GitDirectoryEntry)) {
-            return false;
-        }
-        final GitDirectoryEntry other = (GitDirectoryEntry) obj;
-        return name.equals(other.name);
-    }
-
-    /**
      * The type of a Git tree entry, which maps to a Unix file-mode string.
      *
      * <p>Git encodes the file type and permission bits as an ASCII octal string that precedes the entry name in the binary tree format. The values defined here
@@ -179,5 +79,105 @@ class GitDirectoryEntry implements Comparable<GitDirectoryEntry> {
         Type(final String mode) {
             this.mode = mode.getBytes(StandardCharsets.US_ASCII);
         }
+    }
+
+    private static String getFileName(final Path path) {
+        final Path fileName = path.getFileName();
+        if (fileName == null) {
+            throw new IllegalArgumentException(path.toString());
+        }
+        return fileName.toString();
+    }
+
+    /**
+     * The entry name (file or directory name, no path separator).
+     */
+    private final String name;
+
+    /**
+     * The key used for ordering entries within a tree object.
+     *
+     * <p>>Git appends {@code '/'} to directory names before comparing.</p>
+     */
+    private final String sortKey;
+
+    /**
+     * The Git object type, which determines the Unix file-mode prefix.
+     */
+    private final Type type;
+
+    /**
+     * The raw object id of the referenced blob or sub-tree.
+     */
+    private final byte[] rawObjectId;
+
+    /**
+     * Creates an entry
+     *
+     * @param path The path of the entry; must not be an empty path
+     * @param type The type of the entry
+     * @param rawObjectId The id of the entry
+     * @throws IllegalArgumentException If the path is empty
+     * @throws NullPointerException If any argument is {@code null}
+     */
+    GitDirectoryEntry(final Path path, final Type type, final byte[] rawObjectId) {
+        this(getFileName(path), Objects.requireNonNull(type), Objects.requireNonNull(rawObjectId));
+    }
+
+    /**
+     * Creates an entry
+     *
+     * @param name The name of the entry
+     * @param type The type of the entry
+     * @param rawObjectId The id of the entry
+     */
+    private GitDirectoryEntry(final String name, final Type type, final byte[] rawObjectId) {
+        this.name = name;
+        this.type = type;
+        this.sortKey = type == Type.DIRECTORY ? name + "/" : name;
+        this.rawObjectId = rawObjectId;
+    }
+
+    @Override
+    public int compareTo(GitDirectoryEntry o) {
+        return sortKey.compareTo(o.sortKey);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof GitDirectoryEntry)) {
+            return false;
+        }
+        final GitDirectoryEntry other = (GitDirectoryEntry) obj;
+        return name.equals(other.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
+
+    /**
+     * Returns the binary encoding of this entry as it appears inside a Git tree object.
+     *
+     * <p>The format follows the Git tree entry layout:</p>
+     * <pre>
+     *   &lt;mode&gt; SP &lt;name&gt; NUL &lt;20-byte-object-id&gt;
+     * </pre>
+     *
+     * @return the binary tree-entry encoding; never {@code null}
+     */
+    byte[] toTreeEntryBytes() {
+        final byte[] nameBytes = name.getBytes(StandardCharsets.UTF_8);
+        final byte[] result = new byte[type.mode.length + nameBytes.length + rawObjectId.length + 2];
+        System.arraycopy(type.mode, 0, result, 0, type.mode.length);
+        result[type.mode.length] = ' ';
+        System.arraycopy(nameBytes, 0, result, type.mode.length + 1, nameBytes.length);
+        result[type.mode.length + nameBytes.length + 1] = '\0';
+        System.arraycopy(rawObjectId, 0, result, type.mode.length + nameBytes.length + 2, rawObjectId.length);
+        return result;
     }
 }

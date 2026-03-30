@@ -242,6 +242,21 @@ class DigestUtilsTest {
             "CA 92 BF 0B E5 61 5E 96 95 9D 76 71 97 A0 BE EB";
     // @formatter:on
 
+    /**
+     * Binary body of the test tree object used in {@link #testGitTreeCollection}.
+     *
+     * <p>Each entry has the format {@code <mode> SP <name> NUL <20-byte-object-id>}.</p>
+     */
+    private static final String TREE_BODY_HEX =
+            // 100644 hello.txt\0 + objectId
+            "3130303634342068656c6c6f2e74787400" + "a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0" +
+            // 120000 link.txt\0 + objectId
+            "313230303030206c696e6b2e74787400" + "1234567890abcdef1234567890abcdef12345678" +
+            // 100755 run.sh\0 + objectId
+            "3130303735352072756e2e736800" + "f0e1d2c3b4a5f6e7d8c9b0a1f2e3d4c5b6a7f8e9" +
+            // 40000 src\0 + objectId
+            "34303030302073726300" + "deadbeefdeadbeefdeadbeefdeadbeefdeadbeef";
+
     static Stream<Arguments> gitBlobProvider() {
         return Stream.of(Arguments.of("DigestUtilsTest/hello.txt", "5f4a83288e67f1be2d6fcdad84165a86c6a970d7"),
                 Arguments.of("DigestUtilsTest/greetings.txt", "6cf4f797455661e61d1ee6913fc29344f5897243"),
@@ -369,10 +384,10 @@ class DigestUtilsTest {
                         "1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1", 1_600, SHAKE256_MSG_1600));
         // @formatter:on
     }
-
     private final byte[] testData = new byte[DigestUtils.BUFFER_SIZE * DigestUtils.BUFFER_SIZE];
     private Path testFile;
     private Path testRandomAccessFile;
+
     private RandomAccessFile testRandomAccessFileWrapper;
 
     private String clean(final String input) {
@@ -501,21 +516,6 @@ class DigestUtilsTest {
     void testGitBlobPath(final String resourceName, final String expectedSha1Hex) throws Exception {
         assertArrayEquals(Hex.decodeHex(expectedSha1Hex), DigestUtils.gitBlob(DigestUtils.getSha1Digest(), resourcePath(resourceName)));
     }
-
-    /**
-     * Binary body of the test tree object used in {@link #testGitTreeCollection}.
-     *
-     * <p>Each entry has the format {@code <mode> SP <name> NUL <20-byte-object-id>}.</p>
-     */
-    private static final String TREE_BODY_HEX =
-            // 100644 hello.txt\0 + objectId
-            "3130303634342068656c6c6f2e74787400" + "a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0" +
-            // 120000 link.txt\0 + objectId
-            "313230303030206c696e6b2e74787400" + "1234567890abcdef1234567890abcdef12345678" +
-            // 100755 run.sh\0 + objectId
-            "3130303735352072756e2e736800" + "f0e1d2c3b4a5f6e7d8c9b0a1f2e3d4c5b6a7f8e9" +
-            // 40000 src\0 + objectId
-            "34303030302073726300" + "deadbeefdeadbeefdeadbeefdeadbeefdeadbeef";
 
     @ParameterizedTest
     @ValueSource(strings = {MessageDigestAlgorithms.SHA_1, MessageDigestAlgorithms.SHA_256})
