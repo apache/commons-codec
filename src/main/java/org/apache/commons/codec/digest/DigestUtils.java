@@ -401,7 +401,7 @@ public class DigestUtils {
     }
 
     /**
-     * Reads through a byte array and return a generalized Git blob identifier
+     * Reads through a byte array and return a generalized Git blob identifier.
      *
      * <p>The identifier is computed in the way described by the
      * <a href="https://www.swhid.org/swhid-specification/v1.2/5.Core_identifiers/#52-contents">SWHID contents identifier</a>, but it can use any hash
@@ -421,7 +421,7 @@ public class DigestUtils {
     }
 
     /**
-     * Reads through a byte array and return a generalized Git blob identifier
+     * Reads through a byte array and return a generalized Git blob identifier.
      *
      * <p>The identifier is computed in the way described by the
      * <a href="https://www.swhid.org/swhid-specification/v1.2/5.Core_identifiers/#52-contents">SWHID contents identifier</a>, but it can use any hash
@@ -431,9 +431,9 @@ public class DigestUtils {
      *
      * @param messageDigest The MessageDigest to use (for example SHA-1).
      * @param data          Data to digest.
-     * @param options       Options how to open the file
+     * @param options       Options how to open the file.
      * @return A generalized Git blob identifier.
-     * @throws IOException On error accessing the file
+     * @throws IOException On error accessing the file.
      * @since 1.22.0
      */
     public static byte[] gitBlob(final MessageDigest messageDigest, final Path data, final OpenOption... options) throws IOException {
@@ -451,7 +451,7 @@ public class DigestUtils {
     }
 
     /**
-     * Returns a generalized Git tree identifier
+     * Returns a generalized Git tree identifier.
      *
      * <p>The identifier is computed in the way described by the
      * <a href="https://www.swhid.org/swhid-specification/v1.2/5.Core_identifiers/#53-directories">SWHID directory identifier</a>, but it can use any hash
@@ -459,8 +459,8 @@ public class DigestUtils {
      *
      * <p>When the hash algorithm is SHA-1, the identifier is identical to Git tree identifier and SWHID directory identifier.</p>
      *
-     * @param messageDigest The MessageDigest to use (for example SHA-1)
-     * @param entries       The directory entries
+     * @param messageDigest The MessageDigest to use (for example SHA-1).
+     * @param entries       The directory entries.
      * @return A generalized Git tree identifier.
      */
     static byte[] gitTree(final MessageDigest messageDigest, final Collection<GitDirectoryEntry> entries) {
@@ -476,7 +476,7 @@ public class DigestUtils {
     }
 
     /**
-     * Reads through a byte array and return a generalized Git tree identifier
+     * Reads through a byte array and return a generalized Git tree identifier.
      *
      * <p>The identifier is computed in the way described by the
      * <a href="https://www.swhid.org/swhid-specification/v1.2/5.Core_identifiers/#53-directories">SWHID directory identifier</a>, but it can use any hash
@@ -486,9 +486,9 @@ public class DigestUtils {
      *
      * @param messageDigest The MessageDigest to use (for example SHA-1).
      * @param data          Data to digest.
-     * @param options       Options how to open the file
+     * @param options       Options how to open the file.
      * @return A generalized Git tree identifier.
-     * @throws IOException On error accessing the file
+     * @throws IOException On error accessing the file.
      * @since 1.22.0
      */
     public static byte[] gitTree(final MessageDigest messageDigest, final Path data, final OpenOption... options) throws IOException {
