@@ -62,7 +62,10 @@ import org.apache.commons.codec.binary.StringUtils;
  * See <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/security/crypto/CryptoSpec.html#AppA">Appendix A in the Java Cryptography Architecture
  * Reference Guide</a> for information about standard algorithm names.
  * </p>
- * 
+ * <p>
+ * The use of SHA3-512 requires Java 9 or higher.
+ * </p>
+ *
  * @see MessageDigestAlgorithms
  */
 public class DigestUtils {
