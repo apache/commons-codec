@@ -298,14 +298,14 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
     private final boolean strict;
 
     /**
-     * Default constructor, assumes default Charset of {@link StandardCharsets#UTF_8}
+     * Constructs a new instance, assumes default Charset of {@link StandardCharsets#UTF_8}
      */
     public QuotedPrintableCodec() {
         this(StandardCharsets.UTF_8, false);
     }
 
     /**
-     * Constructor which allows for the selection of the strict mode.
+     * Constructs a new instance for the selection of the strict mode.
      *
      * @param strict if {@code true}, soft line breaks will be used.
      * @since 1.10
@@ -315,7 +315,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
     }
 
     /**
-     * Constructor which allows for the selection of a default Charset.
+     * Constructs a new instance for the selection of a default Charset.
      *
      * @param charset the default string Charset to use.
      * @since 1.7
@@ -325,7 +325,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
     }
 
     /**
-     * Constructor which allows for the selection of a default Charset and strict mode.
+     * Constructs a new instance for the selection of a default Charset and strict mode.
      *
      * @param charset the default string Charset to use.
      * @param strict  if {@code true}, soft line breaks will be used.
@@ -337,7 +337,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
     }
 
     /**
-     * Constructor which allows for the selection of a default Charset.
+     * Constructs a new instance for the selection of a default Charset.
      *
      * @param charsetName the default string Charset to use.
      * @throws UnsupportedCharsetException If no support for the named Charset is available in this instance of the Java virtual machine.

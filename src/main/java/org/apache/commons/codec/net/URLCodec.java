@@ -179,7 +179,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
     }
 
     /**
-     * Constructor which allows for the selection of a default charset.
+     * Constructs a new instance for the selection of a default charset.
      *
      * @param charset the default string charset to use.
      */

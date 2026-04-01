@@ -108,14 +108,14 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     private boolean encodeBlanks;
 
     /**
-     * Default constructor.
+     * Constructs a new instance.
      */
     public QCodec() {
         this(StandardCharsets.UTF_8);
     }
 
     /**
-     * Constructor which allows for the selection of a default Charset.
+     * Constructs a new instance for the selection of a default Charset.
      *
      * @param charset
      *            the default string Charset to use.
@@ -128,7 +128,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     }
 
     /**
-     * Constructor which allows for the selection of a default Charset.
+     * Constructs a new instance for the selection of a default Charset.
      *
      * @param charsetName
      *            the Charset to use.

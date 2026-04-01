@@ -61,14 +61,14 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     private final CodecPolicy decodingPolicy;
 
     /**
-     * Default constructor.
+     * Constructs a new instance.
      */
     public BCodec() {
         this(StandardCharsets.UTF_8);
     }
 
     /**
-     * Constructor which allows for the selection of a default Charset
+     * Constructs a new instance for the selection of a default Charset.
      *
      * @param charset
      *            the default string Charset to use.
@@ -81,7 +81,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     }
 
     /**
-     * Constructor which allows for the selection of a default Charset.
+     * Constructs a new instance for the selection of a default Charset.
      *
      * @param charset
      *            the default string Charset to use.
@@ -95,7 +95,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     }
 
     /**
-     * Constructor which allows for the selection of a default Charset
+     * Constructs a new instance for the selection of a default Charset.
      *
      * @param charsetName
      *            the default Charset to use.
