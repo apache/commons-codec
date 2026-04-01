@@ -299,34 +299,34 @@ public class Md5Crypt {
         }
         final byte[] saltBytes = saltString.getBytes(StandardCharsets.UTF_8);
 
-        final MessageDigest ctx = DigestUtils.getMd5Digest();
+        final MessageDigest messageDigestMd5 = DigestUtils.getMd5Digest();
 
         /*
          * The password first, since that is what is most unknown
          */
-        ctx.update(keyBytes);
+        messageDigestMd5.update(keyBytes);
 
         /*
          * Then our magic string
          */
-        ctx.update(prefix.getBytes(StandardCharsets.UTF_8));
+        messageDigestMd5.update(prefix.getBytes(StandardCharsets.UTF_8));
 
         /*
          * Then the raw salt
          */
-        ctx.update(saltBytes);
+        messageDigestMd5.update(saltBytes);
 
         /*
          * Then just as many characters of the MD5(pw,salt,pw)
          */
-        MessageDigest ctx1 = DigestUtils.getMd5Digest();
-        ctx1.update(keyBytes);
-        ctx1.update(saltBytes);
-        ctx1.update(keyBytes);
-        byte[] finalb = ctx1.digest();
+        MessageDigest altMessageDigestMd5 = DigestUtils.getMd5Digest();
+        altMessageDigestMd5.update(keyBytes);
+        altMessageDigestMd5.update(saltBytes);
+        altMessageDigestMd5.update(keyBytes);
+        byte[] finalb = altMessageDigestMd5.digest();
         int ii = keyLen;
         while (ii > 0) {
-            ctx.update(finalb, 0, Math.min(ii, 16));
+            messageDigestMd5.update(finalb, 0, Math.min(ii, 16));
             ii -= 16;
         }
 
@@ -342,9 +342,9 @@ public class Md5Crypt {
         final int j = 0;
         while (ii > 0) {
             if ((ii & 1) == 1) {
-                ctx.update(finalb[j]);
+                messageDigestMd5.update(finalb[j]);
             } else {
-                ctx.update(keyBytes[j]);
+                messageDigestMd5.update(keyBytes[j]);
             }
             ii >>= 1;
         }
@@ -353,34 +353,34 @@ public class Md5Crypt {
          * Now make the output string
          */
         final StringBuilder passwd = new StringBuilder(prefix + saltString + "$");
-        finalb = ctx.digest();
+        finalb = messageDigestMd5.digest();
 
         /*
          * and now, just to make sure things don't run too fast On a 60 Mhz Pentium this takes 34 milliseconds, so you
          * would need 30 seconds to build a 1000 entry dictionary...
          */
         for (int i = 0; i < ROUNDS; i++) {
-            ctx1 = DigestUtils.getMd5Digest();
+            altMessageDigestMd5 = DigestUtils.getMd5Digest();
             if ((i & 1) != 0) {
-                ctx1.update(keyBytes);
+                altMessageDigestMd5.update(keyBytes);
             } else {
-                ctx1.update(finalb, 0, BLOCKSIZE);
+                altMessageDigestMd5.update(finalb, 0, BLOCKSIZE);
             }
 
             if (i % 3 != 0) {
-                ctx1.update(saltBytes);
+                altMessageDigestMd5.update(saltBytes);
             }
 
             if (i % 7 != 0) {
-                ctx1.update(keyBytes);
+                altMessageDigestMd5.update(keyBytes);
             }
 
             if ((i & 1) != 0) {
-                ctx1.update(finalb, 0, BLOCKSIZE);
+                altMessageDigestMd5.update(finalb, 0, BLOCKSIZE);
             } else {
-                ctx1.update(keyBytes);
+                altMessageDigestMd5.update(keyBytes);
             }
-            finalb = ctx1.digest();
+            finalb = altMessageDigestMd5.digest();
         }
 
         // The following was nearly identical to the Sha2Crypt code.
@@ -397,8 +397,8 @@ public class Md5Crypt {
          * Don't leave anything around in JVM they could use.
          */
         // Is there a better way to do this with the JVM?
-        ctx.reset();
-        ctx1.reset();
+        messageDigestMd5.reset();
+        altMessageDigestMd5.reset();
         Arrays.fill(keyBytes, (byte) 0);
         Arrays.fill(saltBytes, (byte) 0);
         Arrays.fill(finalb, (byte) 0);
