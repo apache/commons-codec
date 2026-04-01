@@ -50,7 +50,7 @@ import org.apache.commons.codec.binary.BaseNCodec;
 public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder {
 
     /**
-     * The default decoding policy.
+     * The default decoding policy is lenient.
      */
     private static final CodecPolicy DECODING_POLICY_DEFAULT = CodecPolicy.LENIENT;
 
