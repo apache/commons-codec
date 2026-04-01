@@ -41,14 +41,14 @@ import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.binary.StringUtils;
 
 /**
- * Operations to simplify common {@link java.security.MessageDigest} tasks. This class is immutable and thread-safe. However the MessageDigest instances it
- * creates generally won't be.
+ * Operations to simplify common {@link MessageDigest} tasks. This class is immutable and thread-safe. However the {@link MessageDigest} instances
+ * it creates generally won't be.
  * <p>
  * The {@link MessageDigestAlgorithms} class provides constants for standard digest algorithms that can be used with the {@link #getDigest(String)} method and
  * other methods that require the Digest algorithm name.
  * </p>
  * <p>
- * Note: The class has shorthand methods for all the algorithms present as standard in Java 6. This approach requires lots of methods for each algorithm, and
+ * Note: The class has shorthand methods for all the algorithms present as standard in Java 8. This approach requires lots of methods for each algorithm, and
  * quickly becomes unwieldy. The following code works with all algorithms:
  * </p>
  *
@@ -58,7 +58,11 @@ import org.apache.commons.codec.binary.StringUtils;
  * byte [] digest = new DigestUtils(SHA_224).digest(dataToDigest);
  * String hdigest = new DigestUtils(SHA_224).digestAsHex(new File("pom.xml"));
  * </pre>
- *
+ * <p>
+ * See <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/security/crypto/CryptoSpec.html#AppA">Appendix A in the Java Cryptography Architecture
+ * Reference Guide</a> for information about standard algorithm names.
+ * </p>
+ * 
  * @see MessageDigestAlgorithms
  */
 public class DigestUtils {
