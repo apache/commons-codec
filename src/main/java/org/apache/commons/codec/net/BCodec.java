@@ -154,7 +154,8 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
         if (bytes == null) {
             return null;
         }
-        return new Base64(0, BaseNCodec.getChunkSeparator(), false, decodingPolicy).decode(bytes);
+        return Base64.builder().setLineLength(0).setLineSeparator(BaseNCodec.getChunkSeparator()).setUrlSafe(false).setDecodingPolicy(decodingPolicy).get()
+                .decode(bytes);
     }
 
     @Override
