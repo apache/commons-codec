@@ -27,6 +27,6 @@ public class BaseNCodecOutputStreamTest extends AbstractBaseNOutputStreamTest {
 
     @Override
     OutputStream newOutputStream() {
-        return new BaseNCodecOutputStream(new ByteArrayOutputStream(), new NoOpBaseNCodec(), true);
+        return new BaseNCodecOutputStream<>(new ByteArrayOutputStream(), new NoOpBaseNCodec(), true);
     }
 }
