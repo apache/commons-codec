@@ -27,7 +27,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
@@ -38,7 +40,14 @@ import org.junit.jupiter.api.Test;
  */
 public class Base58Test {
 
+    private static final int BOUND = 10_000;
+
     private static final Charset CHARSET_UTF8 = StandardCharsets.UTF_8;
+
+    private static void assertArrayEqualsAt(final byte[] data, final byte[] dec, final int i) {
+        final AtomicInteger counter = new AtomicInteger(i);
+        assertArrayEquals(data, dec, () -> String.format("Failed for length %,d: %s", counter.get(), Arrays.toString(data)));
+    }
 
     private final Random random = new Random();
 
@@ -66,13 +75,24 @@ public class Base58Test {
     }
 
     @Test
+    void testEncodeDecode() {
+        for (int i = 1; i < 5; i++) {
+            final byte[] data = new byte[random.nextInt(BOUND) + 1];
+            Arrays.fill(data, (byte) i);
+            final byte[] enc = new Base58().encode(data);
+            final byte[] dec = new Base58().decode(enc);
+            assertArrayEqualsAt(data, dec, i);
+        }
+    }
+
+    @Test
     void testEncodeDecodeRandom() {
         for (int i = 1; i < 5; i++) {
-            final byte[] data = new byte[random.nextInt(10000) + 1];
+            final byte[] data = new byte[random.nextInt(BOUND) + 1];
             random.nextBytes(data);
             final byte[] enc = new Base58().encode(data);
             final byte[] dec = new Base58().decode(enc);
-            assertArrayEquals(data, dec);
+            assertArrayEqualsAt(data, dec, i);
         }
     }
 
@@ -80,10 +100,21 @@ public class Base58Test {
     void testEncodeDecodeSmall() {
         for (int i = 0; i < 12; i++) {
             final byte[] data = new byte[i];
+            Arrays.fill(data, (byte) i);
+            final byte[] enc = new Base58().encode(data);
+            final byte[] dec = new Base58().decode(enc);
+            assertArrayEqualsAt(data, dec, i);
+        }
+    }
+
+    @Test
+    void testEncodeDecodeSmallRandom() {
+        for (int i = 0; i < 12; i++) {
+            final byte[] data = new byte[i];
             random.nextBytes(data);
             final byte[] enc = new Base58().encode(data);
             final byte[] dec = new Base58().decode(enc);
-            assertArrayEquals(data, dec);
+            assertArrayEqualsAt(data, dec, i);
         }
     }
 
