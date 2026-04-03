@@ -77,7 +77,7 @@ public class BaseNTestData {
      *
      * @param codec the codec to use.
      * @param size amount of random data to generate and encode.
-     * @return two byte[] arrays:  [0] = decoded, [1] = encoded.
+     * @return two byte[] arrays: [0] = decoded, [1] = encoded.
      */
     static byte[][] randomData(final BaseNCodec codec, final int size) {
         final Random r = new Random();
