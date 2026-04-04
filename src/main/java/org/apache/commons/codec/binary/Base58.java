@@ -19,8 +19,6 @@ package org.apache.commons.codec.binary;
 
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
-import java.util.Map;
-import java.util.WeakHashMap;
 
 /**
  * Provides Base58 encoding and decoding as commonly used in cryptocurrency and blockchain applications.
@@ -138,8 +136,6 @@ public class Base58 extends BaseNCodec {
         return new Builder();
     }
 
-    private final transient Map<Context, byte[]> accumulated = new WeakHashMap<>();
-
     /**
      * Constructs a Base58 codec used for encoding and decoding.
      */
@@ -238,20 +234,19 @@ public class Base58 extends BaseNCodec {
         }
         if (length < 0) {
             context.eof = true;
-            final byte[] accumulate = accumulated.getOrDefault(context, EMPTY);
+            final byte[] accumulate = context.buffer = context.buffer != null ? context.buffer : EMPTY;
             if (accumulate.length > 0) {
                 convertFromBase58(accumulate, context);
             }
-            accumulated.remove(context);
             return;
         }
-        final byte[] accumulate = accumulated.getOrDefault(context, EMPTY);
+        final byte[] accumulate = context.buffer = context.buffer != null ? context.buffer : EMPTY;
         final byte[] newAccumulated = new byte[accumulate.length + length];
         if (accumulate.length > 0) {
             System.arraycopy(accumulate, 0, newAccumulated, 0, accumulate.length);
         }
         System.arraycopy(array, offset, newAccumulated, accumulate.length, length);
-        accumulated.put(context, newAccumulated);
+        context.buffer = newAccumulated;
     }
 
     /**
@@ -272,18 +267,17 @@ public class Base58 extends BaseNCodec {
         }
         if (length < 0) {
             context.eof = true;
-            final byte[] accumulate = accumulated.getOrDefault(context, EMPTY);
+            final byte[] accumulate = context.buffer = context.buffer != null ? context.buffer : EMPTY;
             convertToBase58(accumulate, context);
-            accumulated.remove(context);
             return;
         }
-        final byte[] accumulate = accumulated.getOrDefault(context, EMPTY);
+        final byte[] accumulate = context.buffer = context.buffer != null ? context.buffer : EMPTY;
         final byte[] newAccumulated = new byte[accumulate.length + length];
         if (accumulate.length > 0) {
             System.arraycopy(accumulate, 0, newAccumulated, 0, accumulate.length);
         }
         System.arraycopy(array, offset, newAccumulated, accumulate.length, length);
-        accumulated.put(context, newAccumulated);
+        context.buffer = newAccumulated;
     }
 
     /**
