@@ -69,7 +69,7 @@ public class Base58 extends BaseNCodec {
         /**
          * Builds a new Base58 instance with the configured settings.
          *
-         * @return a new Base58 codec
+         * @return a new Base58 codec.
          */
         @Override
         public Base58 get() {
@@ -185,9 +185,9 @@ public class Base58 extends BaseNCodec {
      * encoding.
      * </p>
      *
-     * @param accumulate the binary data to encode
-     * @param context    the context for this encoding operation
-     * @return the buffer containing the encoded data
+     * @param accumulate the binary data to encode.
+     * @param context    the context for this encoding operation.
+     * @return the buffer containing the encoded data.
      */
     private byte[] convertToBase58(final byte[] accumulate, final Context context) {
         final StringBuilder base58 = getStringBuilder(accumulate);
