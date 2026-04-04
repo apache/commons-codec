@@ -843,12 +843,12 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * Tests a given byte array to see if it contains only valid characters within the alphabet. The method optionally treats whitespace and pad as valid.
      *
      * @param arrayOctet byte array to test.
-     * @param allowWSPad if {@code true}, then whitespace and PAD are also allowed.
+     * @param allowWhitespacePad if {@code true}, then whitespace and PAD are also allowed.
      * @return {@code true} if all bytes are valid characters in the alphabet or if the byte array is empty; {@code false}, otherwise.
      */
-    public boolean isInAlphabet(final byte[] arrayOctet, final boolean allowWSPad) {
+    public boolean isInAlphabet(final byte[] arrayOctet, final boolean allowWhitespacePad) {
         for (final byte octet : arrayOctet) {
-            if (!isInAlphabet(octet) && (!allowWSPad || octet != pad && !Character.isWhitespace(octet))) {
+            if (!isInAlphabet(octet) && (!allowWhitespacePad || octet != pad && !Character.isWhitespace(octet))) {
                 return false;
             }
         }
