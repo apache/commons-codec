@@ -160,7 +160,7 @@ public class Base58 extends BaseNCodec {
             final byte b = base58Data[i];
             final int digit = b < DECODE_TABLE.length ? DECODE_TABLE[b] : -1;
             if (digit < 0) {
-                throw new IllegalArgumentException("Invalid character in Base58 string: " + (char) b);
+                throw new IllegalArgumentException(String.format("Invalid character in Base58 string: 0x%02x", b));
             }
             value = value.add(BigInteger.valueOf(digit).multiply(power));
             power = power.multiply(base);
