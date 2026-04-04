@@ -53,6 +53,7 @@ import java.util.WeakHashMap;
  */
 public class Base58 extends BaseNCodec {
 
+    private static final BigInteger BASE = BigInteger.valueOf(58);
     private static final byte[] EMPTY = new byte[0];
 
     /**
@@ -156,7 +157,6 @@ public class Base58 extends BaseNCodec {
             }
             leadingOnes++;
         }
-        final BigInteger base = BigInteger.valueOf(58);
         BigInteger power = BigInteger.ONE;
         for (int i = base58Data.length - 1; i >= leadingOnes; i--) {
             final byte b = base58Data[i];
@@ -165,7 +165,7 @@ public class Base58 extends BaseNCodec {
                 throw new IllegalArgumentException(String.format("Invalid character in Base58 string: 0x%02x", b));
             }
             value = value.add(BigInteger.valueOf(digit).multiply(power));
-            power = power.multiply(base);
+            power = power.multiply(BASE);
         }
         byte[] decoded = value.toByteArray();
         if (decoded.length > 1 && decoded[0] == 0) {
@@ -288,7 +288,7 @@ public class Base58 extends BaseNCodec {
         }
         final StringBuilder base58 = new StringBuilder();
         while (value.signum() > 0) {
-            final BigInteger[] divRem = value.divideAndRemainder(BigInteger.valueOf(58));
+            final BigInteger[] divRem = value.divideAndRemainder(BASE);
             base58.append((char) ENCODE_TABLE[divRem[1].intValue()]);
             value = divRem[0];
         }
