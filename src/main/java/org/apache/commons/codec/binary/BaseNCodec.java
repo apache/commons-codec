@@ -887,16 +887,16 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * Package private for access from I/O streams.
      * </p>
      *
-     * @param b       byte[] array to extract the buffered data into.
-     * @param bPos    position in byte[] array to start extraction at.
-     * @param bAvail  amount of bytes we're allowed to extract. We may extract fewer (if fewer are available).
-     * @param context the context to be used.
+     * @param b         byte[] array to extract the buffered data into.
+     * @param position  position in byte[] array to start extraction at.
+     * @param available amount of bytes we're allowed to extract. We may extract fewer (if fewer are available).
+     * @param context   the context to be used.
      * @return The number of bytes successfully extracted into the provided byte[] array.
      */
-    int readResults(final byte[] b, final int bPos, final int bAvail, final Context context) {
+    int readResults(final byte[] b, final int position, final int available, final Context context) {
         if (hasData(context)) {
-            final int len = Math.min(available(context), bAvail);
-            System.arraycopy(context.buffer, context.readPos, b, bPos, len);
+            final int len = Math.min(available(context), available);
+            System.arraycopy(context.buffer, context.readPos, b, position, len);
             context.readPos += len;
             if (!hasData(context)) {
                 // All data read.
