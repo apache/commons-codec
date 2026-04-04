@@ -163,22 +163,22 @@ public class Base58 extends BaseNCodec {
      * binary data.
      * </p>
      *
-     * @param base58Data the Base58 encoded data.
+     * @param base58 the Base58 encoded data.
      * @param context    the context for this decoding operation.
      * @throws IllegalArgumentException if the Base58 data contains invalid characters.
      */
-    private void convertFromBase58(final byte[] base58Data, final Context context) {
+    private void convertFromBase58(final byte[] base58, final Context context) {
         BigInteger value = BigInteger.ZERO;
         int leadingOnes = 0;
-        for (final byte b : base58Data) {
+        for (final byte b : base58) {
             if (b != '1') {
                 break;
             }
             leadingOnes++;
         }
         BigInteger power = BigInteger.ONE;
-        for (int i = base58Data.length - 1; i >= leadingOnes; i--) {
-            final byte b = base58Data[i];
+        for (int i = base58.length - 1; i >= leadingOnes; i--) {
+            final byte b = base58[i];
             final int digit = b < DECODE_TABLE.length ? DECODE_TABLE[b] : -1;
             if (digit < 0) {
                 throw new IllegalArgumentException(String.format("Invalid character in Base58 string: 0x%02x", b));
