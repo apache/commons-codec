@@ -306,6 +306,6 @@ public class Base58 extends BaseNCodec {
      */
     @Override
     protected boolean isInAlphabet(final byte value) {
-        return value >= 0 && value < DECODE_TABLE.length && DECODE_TABLE[value] != -1;
+        return isInAlphabet(value, DECODE_TABLE);
     }
 }

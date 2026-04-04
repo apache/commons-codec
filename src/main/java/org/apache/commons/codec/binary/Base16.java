@@ -282,7 +282,7 @@ public class Base16 extends BaseNCodec {
      */
     @Override
     public boolean isInAlphabet(final byte octet) {
-        return (octet & 0xff) < decodeTable.length && decodeTable[octet] != -1;
+        return isInAlphabet((byte) (octet & 0xff), decodeTable);
     }
 
     /**

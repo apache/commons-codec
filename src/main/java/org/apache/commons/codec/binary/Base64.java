@@ -1150,7 +1150,7 @@ public class Base64 extends BaseNCodec {
      */
     @Override
     protected boolean isInAlphabet(final byte octet) {
-        return octet >= 0 && octet < decodeTable.length && decodeTable[octet] != -1;
+        return isInAlphabet(octet, decodeTable);
     }
 
     /**

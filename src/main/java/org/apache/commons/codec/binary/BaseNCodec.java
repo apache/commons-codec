@@ -450,6 +450,10 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         return b;
     }
 
+    protected static boolean isInAlphabet(final byte value, final byte[] table) {
+        return value >= 0 && value < table.length && table[value] != -1;
+    }
+
     /**
      * Deprecated: Will be removed in 2.0.
      * <p>

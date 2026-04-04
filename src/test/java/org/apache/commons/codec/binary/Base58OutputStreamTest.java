@@ -22,7 +22,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
@@ -122,16 +124,18 @@ class Base58OutputStreamTest extends AbstractBaseNOutputStreamTest {
                 out.write(element);
             }
         }
-        byte[] output = byteOut.toByteArray();
-        assertArrayEquals(encoded, output, "Streaming byte-by-byte Base58 encode");
+        final byte[] output0 = byteOut.toByteArray();
+        assertArrayEquals(encoded, output0, "Streaming byte-by-byte Base58 encode");
         byteOut = new ByteArrayOutputStream();
         try (OutputStream out = Base58OutputStream.builder().setOutputStream(byteOut).setEncode(false).get()) {
             for (final byte element : encoded) {
                 out.write(element);
             }
         }
-        output = byteOut.toByteArray();
-        assertArrayEquals(decoded, output, "Streaming byte-by-byte Base58 decode");
+        final byte[] output1 = byteOut.toByteArray();
+        assertArrayEquals(decoded, output1,
+                () -> String.format("Streaming byte-by-byte Base58 decode, chunkSize=%d, separator=%s, encoded=%s, decoded=%s, output=%s", chunkSize,
+                        Arrays.toString(separator), Arrays.toString(encoded), Arrays.toString(decoded), Arrays.toString(output1)));
         byteOut = new ByteArrayOutputStream();
         try (OutputStream out = Base58OutputStream.builder().setOutputStream(byteOut).setEncode(false).get()) {
             for (final byte element : encoded) {
@@ -139,7 +143,7 @@ class Base58OutputStreamTest extends AbstractBaseNOutputStreamTest {
                 out.flush();
             }
         }
-        output = byteOut.toByteArray();
+        byte[] output = byteOut.toByteArray();
         assertArrayEquals(decoded, output, "Streaming byte-by-byte flush() Base58 decode");
         byteOut = new ByteArrayOutputStream();
         OutputStream out = byteOut;
@@ -153,6 +157,31 @@ class Base58OutputStreamTest extends AbstractBaseNOutputStreamTest {
         out.close();
         output = byteOut.toByteArray();
         assertArrayEquals(decoded, output, "Streaming byte-by-byte Base58 wrap-wrap-wrap!");
+    }
+
+    @Test
+    void testDecodeByte49() throws IOException {
+        // Version 1.21.1:
+        // AssertionFailedError: Streaming byte-by-byte Base58 decode, chunkSize=0, separator=[10], encoded=[49], decoded=[0], output=[0, 0] ==> array lengths
+        // differ, expected: <1> but was: <2>
+        ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
+        final byte[] decoded = new byte[] { 0 };
+        try (OutputStream out = Base58OutputStream.builder().setOutputStream(byteOut).setEncode(false).get()) {
+            for (final byte element : decoded) {
+                out.write(element);
+            }
+        }
+        final byte[] encoded = new byte[] { 49 };
+        assertArrayEquals(encoded, byteOut.toByteArray());
+        byteOut = new ByteArrayOutputStream();
+        try (OutputStream out = Base58OutputStream.builder().setOutputStream(byteOut).setEncode(false).get()) {
+            for (final byte element : encoded) {
+                out.write(element);
+            }
+        }
+        final byte[] output = byteOut.toByteArray();
+        assertArrayEquals(decoded, output, () -> String.format("Streaming byte-by-byte Base58 decode, encoded=%s, decoded=%s, output=%s",
+                Arrays.toString(encoded), Arrays.toString(decoded), Arrays.toString(output)));
     }
 
     @Test

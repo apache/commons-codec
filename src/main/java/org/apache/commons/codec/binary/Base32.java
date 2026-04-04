@@ -738,7 +738,7 @@ public class Base32 extends BaseNCodec {
      */
     @Override
     public boolean isInAlphabet(final byte octet) {
-        return octet >= 0 && octet < decodeTable.length && decodeTable[octet] != -1;
+        return isInAlphabet(octet, decodeTable);
     }
 
     /**
