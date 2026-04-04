@@ -24,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -33,7 +34,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
+import org.apache.commons.lang3.ArrayFill;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 /**
  * Tests {@link Base58}.
@@ -222,6 +226,17 @@ public class Base58Test {
             final byte[] decoded = new Base58().decode(encoded);
             assertArrayEquals(input, decoded, "Round trip failed for: " + test);
         }
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = { 0, 1, 2, 3, 4 })
+    void testRoundtripByte0(final int len) throws IOException {
+        // Sanity check, each step from scratch:
+        final byte[] zeros = new byte[len];
+        final byte[] encoded0s = ArrayFill.fill(zeros.clone(), (byte) '1');
+        assertArrayEquals(encoded0s, Base58.builder().get().encode(zeros));
+        final byte[] decoded = Base58.builder().get().decode(encoded0s);
+        assertArrayEquals(zeros, decoded, () -> String.format("zeros=%s, decoded=%s", Arrays.toString(zeros), Arrays.toString(decoded)));
     }
 
     @Test

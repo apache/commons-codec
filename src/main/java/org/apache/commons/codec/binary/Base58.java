@@ -184,7 +184,7 @@ public class Base58 extends BaseNCodec {
             value = value.add(BigInteger.valueOf(digit).multiply(power));
             power = power.multiply(BASE);
         }
-        byte[] decoded = value.toByteArray();
+        byte[] decoded = value.equals(BigInteger.ZERO) ? EMPTY : value.toByteArray();
         if (decoded.length > 1 && decoded[0] == 0) {
             final byte[] tmp = new byte[decoded.length - 1];
             System.arraycopy(decoded, 1, tmp, 0, tmp.length);
