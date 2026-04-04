@@ -219,7 +219,7 @@ public class Base58 extends BaseNCodec {
     /**
      * Decodes the given Base58 encoded data.
      * <p>
-     * This implementation accumulates data internally. When length &lt; 0 (EOF), the accumulated data is converted from Base58 to binary.
+     * This implementation accumulates data internally. When length is less than 0 (EOF), the accumulated data is converted from Base58 to binary.
      * </p>
      *
      * @param array   the byte array containing Base58 encoded data.
@@ -252,7 +252,7 @@ public class Base58 extends BaseNCodec {
     /**
      * Encodes the given binary data as Base58.
      * <p>
-     * This implementation accumulates data internally. When length &lt; 0 (EOF), the accumulated data is converted to Base58.
+     * This implementation accumulates data internally. When length is less than 0 (EOF), the accumulated data is converted to Base58.
      * </p>
      *
      * @param array   the byte array containing binary data to encode.
