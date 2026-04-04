@@ -53,6 +53,8 @@ import java.util.WeakHashMap;
  */
 public class Base58 extends BaseNCodec {
 
+    private static final byte[] EMPTY = new byte[0];
+
     /**
      * Builds {@link Base58} instances with custom configuration.
      */
@@ -217,14 +219,14 @@ public class Base58 extends BaseNCodec {
         }
         if (length < 0) {
             context.eof = true;
-            final byte[] accumulate = accumulated.getOrDefault(context, new byte[0]);
+            final byte[] accumulate = accumulated.getOrDefault(context, EMPTY);
             if (accumulate.length > 0) {
                 convertFromBase58(accumulate, context);
             }
             accumulated.remove(context);
             return;
         }
-        final byte[] accumulate = accumulated.getOrDefault(context, new byte[0]);
+        final byte[] accumulate = accumulated.getOrDefault(context, EMPTY);
         final byte[] newAccumulated = new byte[accumulate.length + length];
         if (accumulate.length > 0) {
             System.arraycopy(accumulate, 0, newAccumulated, 0, accumulate.length);
@@ -251,12 +253,12 @@ public class Base58 extends BaseNCodec {
         }
         if (length < 0) {
             context.eof = true;
-            final byte[] accumulate = accumulated.getOrDefault(context, new byte[0]);
+            final byte[] accumulate = accumulated.getOrDefault(context, EMPTY);
             convertToBase58(accumulate, context);
             accumulated.remove(context);
             return;
         }
-        final byte[] accumulate = accumulated.getOrDefault(context, new byte[0]);
+        final byte[] accumulate = accumulated.getOrDefault(context, EMPTY);
         final byte[] newAccumulated = new byte[accumulate.length + length];
         if (accumulate.length > 0) {
             System.arraycopy(accumulate, 0, newAccumulated, 0, accumulate.length);
