@@ -53,13 +53,10 @@ import java.util.WeakHashMap;
  */
 public class Base58 extends BaseNCodec {
 
-    private static final BigInteger BASE = BigInteger.valueOf(58);
-    private static final byte[] EMPTY = new byte[0];
-
     /**
      * Builds {@link Base58} instances with custom configuration.
      */
-    public static class Builder extends AbstractBuilder<Base58, Base58.Builder> {
+    public static class Builder extends AbstractBuilder<Base58, Builder> {
 
         /**
          * Constructs a new Base58 builder.
@@ -90,6 +87,9 @@ public class Base58 extends BaseNCodec {
             return super.setEncodeTable(encodeTable);
         }
     }
+    private static final BigInteger BASE = BigInteger.valueOf(58);
+
+    private static final byte[] EMPTY = new byte[0];
 
     /**
      * Base58 alphabet: 123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz
@@ -118,6 +118,25 @@ public class Base58 extends BaseNCodec {
             -1, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, -1, 44, 45, 46, // 60-6f 'a'-'k', 'm'-'o' (skip 'l')
             47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57,                     // 70-7a 'p'-'z'
     };
+
+    /**
+     * Creates a new Builder.
+     *
+     * <p>
+     * To configure a new instance, use a {@link Builder}. For example:
+     * </p>
+     *
+     * <pre>
+     * Base58 base58 = Base58.builder()
+     *   .setEncode(true)
+     *   .get()
+     * </pre>
+     *
+     * @return a new Builder.
+     */
+    public static Builder builder() {
+        return new Builder();
+    }
 
     private final transient Map<Context, byte[]> accumulated = new WeakHashMap<>();
 

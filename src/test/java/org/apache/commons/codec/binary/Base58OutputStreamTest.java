@@ -18,12 +18,13 @@
 package org.apache.commons.codec.binary;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
@@ -160,28 +161,19 @@ class Base58OutputStreamTest extends AbstractBaseNOutputStreamTest {
     }
 
     @Test
-    void testDecodeByte49() throws IOException {
-        // Version 1.21.1:
-        // AssertionFailedError: Streaming byte-by-byte Base58 decode, chunkSize=0, separator=[10], encoded=[49], decoded=[0], output=[0, 0] ==> array lengths
-        // differ, expected: <1> but was: <2>
-        ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
-        final byte[] decoded = new byte[] { 0 };
-        try (OutputStream out = Base58OutputStream.builder().setOutputStream(byteOut).setEncode(false).get()) {
-            for (final byte element : decoded) {
-                out.write(element);
-            }
-        }
-        final byte[] encoded = new byte[] { 49 };
-        assertArrayEquals(encoded, byteOut.toByteArray());
-        byteOut = new ByteArrayOutputStream();
-        try (OutputStream out = Base58OutputStream.builder().setOutputStream(byteOut).setEncode(false).get()) {
-            for (final byte element : encoded) {
-                out.write(element);
-            }
-        }
-        final byte[] output = byteOut.toByteArray();
-        assertArrayEquals(decoded, output, () -> String.format("Streaming byte-by-byte Base58 decode, encoded=%s, decoded=%s, output=%s",
-                Arrays.toString(encoded), Arrays.toString(decoded), Arrays.toString(output)));
+    void testRfcTestVector1() {
+        assertEquals("2NEpo7TZRRrLZSi2U", Base58.builder().get().encodeToString("Hello World!".getBytes(StandardCharsets.US_ASCII)));
+    }
+
+    @Test
+    void testRfcTestVector2() {
+        assertEquals("USm3fpXnKG5EUBx2ndxBDMPVciP5hGey2Jh4NDv6gmeo1LkMeiKrLJUUBk6Z",
+                Base58.builder().get().encodeToString("The quick brown fox jumps over the lazy dog.".getBytes(StandardCharsets.US_ASCII)));
+    }
+
+    @Test
+    void testRfcTestVector3() {
+        assertEquals("11233QC4", Base58.builder().get().encodeToString(new byte[] { 00, 00, 0x28, 0x7f, (byte) 0xb4, (byte) 0xcd }));
     }
 
     @Test
