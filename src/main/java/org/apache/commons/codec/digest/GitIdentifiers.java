@@ -416,7 +416,7 @@ public class GitIdentifiers {
     private static void populateFromPath(final TreeIdBuilder builder, final Path directory) throws IOException {
         try (DirectoryStream<Path> files = Files.newDirectoryStream(directory)) {
             for (final Path path : files) {
-                final String name = path.getFileName().toString();
+                final String name = Objects.toString(path.getFileName());
                 final FileMode mode = getGitDirectoryEntryType(path);
                 switch (mode) {
                     case DIRECTORY:
