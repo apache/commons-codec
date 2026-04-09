@@ -181,7 +181,7 @@ public class GitIdentifiers {
      * Builds a Git tree identifier for a virtual directory structure, such as the contents of
      * an archive.
      */
-    public static class TreeIdBuilder {
+    public static final class TreeIdBuilder {
 
         /**
          * A supplier of a blob identifier that may throw {@link IOException}.
@@ -200,7 +200,7 @@ public class GitIdentifiers {
         private final Map<String, DirectoryEntry> fileEntries = new HashMap<>();
         private final MessageDigest messageDigest;
 
-        TreeIdBuilder(final MessageDigest messageDigest) {
+        private TreeIdBuilder(final MessageDigest messageDigest) {
             this.messageDigest = Objects.requireNonNull(messageDigest);
         }
 
