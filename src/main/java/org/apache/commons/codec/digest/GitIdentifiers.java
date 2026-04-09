@@ -406,11 +406,15 @@ public class GitIdentifiers {
     }
 
     private static byte[] getGitBlobPrefix(final long dataSize) {
-        return ("blob " + dataSize + "\0").getBytes(StandardCharsets.UTF_8);
+        return getGitPrefix("blob", dataSize);
+    }
+
+    private static byte[] getGitPrefix(final String type, final long dataSize) {
+        return (type + " " + dataSize + "\0").getBytes(StandardCharsets.UTF_8);
     }
 
     private static byte[] getGitTreePrefix(final long dataSize) {
-        return ("tree " + dataSize + "\0").getBytes(StandardCharsets.UTF_8);
+        return getGitPrefix("tree", dataSize);
     }
 
     private static void populateFromPath(final TreeIdBuilder builder, final Path directory) throws IOException {
