@@ -19,9 +19,11 @@ package org.apache.commons.codec.digest;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -47,20 +49,8 @@ import org.junit.jupiter.params.provider.ValueSource;
  */
 class GitIdentifiersTest {
 
-    /**
-     * Binary body of the test tree object used in {@link #testTreeIdCollection}.
-     *
-     * <p>Each entry has the format {@code <mode> SP <name> NUL <20-byte-object-id>}.</p>
-     */
-    private static final String TREE_BODY_HEX =
-            // 100644 hello.txt\0 + objectId
-            "3130303634342068656c6c6f2e74787400" + "a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0" +
-            // 120000 link.txt\0 + objectId
-            "313230303030206c696e6b2e74787400" + "1234567890abcdef1234567890abcdef12345678" +
-            // 100755 run.sh\0 + objectId
-            "3130303735352072756e2e736800" + "f0e1d2c3b4a5f6e7d8c9b0a1f2e3d4c5b6a7f8e9" +
-            // 40000 src\0 + objectId
-            "34303030302073726300" + "deadbeefdeadbeefdeadbeefdeadbeefdeadbeef";
+
+    private static final byte[] ZERO_ID = new byte[20];
 
     static Stream<Arguments> blobIdProvider() {
         return Stream.of(Arguments.of("DigestUtilsTest/hello.txt", "5f4a83288e67f1be2d6fcdad84165a86c6a970d7"),
@@ -72,6 +62,20 @@ class GitIdentifiersTest {
         return Paths.get(GitIdentifiersTest.class.getClassLoader().getResource(resourceName).toURI());
     }
 
+    static Stream<Arguments> testTreeIdBuilder() {
+        return Stream.of(
+                Arguments.of(MessageDigestAlgorithms.SHA_1,
+                        "ce013625030ba8dba906f756967f9e9ca394464a",  // blob id of "hello\n"
+                        "8bbe8a53790056316b23b7c270f10ab6bf6bb1b4",  // blob id of "subdir"
+                        "1a2485251c33a70432394c93fb89330ef214bfc9",  // blob id of "#!/bin/sh\n"
+                        "4b825dc642cb6eb9a060e54bf8d69288fbee4904"), // tree id of empty directory
+                Arguments.of(MessageDigestAlgorithms.SHA_256,
+                        "2cf8d83d9ee29543b34a87727421fdecb7e3f3a183d337639025de576db9ebb4",
+                        "33910dae80b0db75dbad7fa521dbbf1885a07edfab1228871c41a2e94ccd7edb",
+                        "1249034e3cf9007362d695b09b1fbdb4c578903bf10b665749b94743f8177ce1",
+                        "6ef19b41225c5369f1c104d45d8d85efa9b057b53b14b4b9b939dd74decc5321"));
+    }
+
     @ParameterizedTest
     @MethodSource("blobIdProvider")
     void testBlobIdByteArray(final String resourceName, final String expectedSha1Hex) throws Exception {
@@ -81,19 +85,47 @@ class GitIdentifiersTest {
 
     @ParameterizedTest
     @MethodSource("blobIdProvider")
+    void testBlobIdInputStream(final String resourceName, final String expectedSha1Hex) throws Exception {
+        final byte[] data = Files.readAllBytes(resourcePath(resourceName));
+        assertArrayEquals(Hex.decodeHex(expectedSha1Hex),
+                GitIdentifiers.blobId(DigestUtils.getSha1Digest(), new ByteArrayInputStream(data)));
+    }
+
+    @ParameterizedTest
+    @MethodSource("blobIdProvider")
+    void testBlobIdInputStreamWithSize(final String resourceName, final String expectedSha1Hex) throws Exception {
+        final byte[] data = Files.readAllBytes(resourcePath(resourceName));
+        assertArrayEquals(Hex.decodeHex(expectedSha1Hex),
+                GitIdentifiers.blobId(DigestUtils.getSha1Digest(), data.length, new ByteArrayInputStream(data)));
+    }
+
+    @ParameterizedTest
+    @MethodSource("blobIdProvider")
     void testBlobIdPath(final String resourceName, final String expectedSha1Hex) throws Exception {
         assertArrayEquals(Hex.decodeHex(expectedSha1Hex), GitIdentifiers.blobId(DigestUtils.getSha1Digest(), resourcePath(resourceName)));
     }
 
-
-    private static final byte[] ZERO_ID = new byte[20];
+    @Test
+    void testBlobIdSymlink(@TempDir final Path tempDir) throws Exception {
+        final Path subDir = Files.createDirectory(tempDir.resolve("subdir"));
+        Files.write(subDir.resolve("file.txt"), "hello".getBytes(StandardCharsets.UTF_8));
+        try {
+            final Path linkToDir = Files.createSymbolicLink(tempDir.resolve("link-to-dir"), Paths.get("subdir"));
+            final Path linkToFile = Files.createSymbolicLink(tempDir.resolve("link-to-file"), Paths.get("subdir/file.txt"));
+            final MessageDigest sha1 = DigestUtils.getSha1Digest();
+            assertArrayEquals(Hex.decodeHex("8bbe8a53790056316b23b7c270f10ab6bf6bb1b4"), GitIdentifiers.blobId(sha1, linkToDir));
+            assertArrayEquals(Hex.decodeHex("dfe6ef8392ae13a11ff85419b4fd906d997b6cb7"), GitIdentifiers.blobId(sha1, linkToFile));
+        } catch (final UnsupportedOperationException e) {
+            Assumptions.abort("Symbolic links not supported on this filesystem");
+        }
+    }
 
     @Test
     void testDirectoryEntryConstructor() {
-        assertThrows(NullPointerException.class, () -> new DirectoryEntry(null, DirectoryEntry.Type.REGULAR, ZERO_ID));
-        assertThrows(NullPointerException.class, () -> new DirectoryEntry(Paths.get("hello.txt"), null, ZERO_ID));
-        assertThrows(NullPointerException.class, () -> new DirectoryEntry(Paths.get("hello.txt"), DirectoryEntry.Type.REGULAR, null));
-        assertThrows(IllegalArgumentException.class, () -> new DirectoryEntry(Paths.get("/"), DirectoryEntry.Type.REGULAR, ZERO_ID));
+        assertThrows(NullPointerException.class, () -> new DirectoryEntry(null, GitIdentifiers.FileMode.REGULAR, ZERO_ID));
+        assertThrows(NullPointerException.class, () -> new DirectoryEntry("hello.txt", null, ZERO_ID));
+        assertThrows(NullPointerException.class, () -> new DirectoryEntry("hello.txt", GitIdentifiers.FileMode.REGULAR, null));
+        assertThrows(IllegalArgumentException.class, () -> new DirectoryEntry("/", GitIdentifiers.FileMode.REGULAR, ZERO_ID));
     }
 
     /**
@@ -103,32 +135,18 @@ class GitIdentifiersTest {
     void testDirectoryEntryEqualityBasedOnNameOnly() {
         final byte[] otherId = new byte[20];
         Arrays.fill(otherId, (byte) 0xff);
-        final DirectoryEntry regular = new DirectoryEntry(Paths.get("foo"), DirectoryEntry.Type.REGULAR, ZERO_ID);
-        final DirectoryEntry executable = new DirectoryEntry(Paths.get("foo"), DirectoryEntry.Type.EXECUTABLE, otherId);
+        final DirectoryEntry regular = new DirectoryEntry("foo", GitIdentifiers.FileMode.REGULAR, ZERO_ID);
+        final DirectoryEntry executable = new DirectoryEntry("foo", GitIdentifiers.FileMode.EXECUTABLE, otherId);
         // Same name, different type and object id -> equal
         assertEquals(regular, executable);
         assertEquals(regular.hashCode(), executable.hashCode());
         // Different name -> not equal
-        assertNotEquals(regular, new DirectoryEntry(Paths.get("bar"), DirectoryEntry.Type.REGULAR, ZERO_ID));
+        assertNotEquals(regular, new DirectoryEntry("bar", GitIdentifiers.FileMode.REGULAR, ZERO_ID));
         // Same reference -> equal
         assertEquals(regular, regular);
         // Not equal to null or unrelated type
-        assertNotEquals(null, regular);
-        assertNotEquals("foo", regular);
-    }
-
-    /**
-     * The Path constructor must extract the filename component.
-     */
-    @Test
-    void testDirectoryEntryPathConstructorUsesFilename() {
-        final DirectoryEntry fromLabel = new DirectoryEntry(Paths.get("hello.txt"), DirectoryEntry.Type.REGULAR, ZERO_ID);
-        final DirectoryEntry fromRelative = new DirectoryEntry(Paths.get("subdir/hello.txt"), DirectoryEntry.Type.REGULAR, ZERO_ID);
-        final DirectoryEntry fromAbsolute = new DirectoryEntry(Paths.get("hello.txt").toAbsolutePath(), DirectoryEntry.Type.REGULAR, ZERO_ID);
-        assertEquals(fromLabel, fromRelative);
-        assertEquals(fromLabel, fromAbsolute);
-        assertArrayEquals(fromLabel.toTreeEntryBytes(), fromRelative.toTreeEntryBytes());
-        assertArrayEquals(fromLabel.toTreeEntryBytes(), fromAbsolute.toTreeEntryBytes());
+        assertFalse(regular.equals(null));
+        assertFalse(regular.equals("foo"));
     }
 
     /**
@@ -138,56 +156,120 @@ class GitIdentifiersTest {
      */
     @Test
     void testDirectoryEntrySortOrder() {
-        final DirectoryEntry alpha = new DirectoryEntry(Paths.get("alpha.txt"), DirectoryEntry.Type.REGULAR, ZERO_ID);
-        final DirectoryEntry fooTxt = new DirectoryEntry(Paths.get("foo.txt"), DirectoryEntry.Type.REGULAR, ZERO_ID);
-        final DirectoryEntry fooDir = new DirectoryEntry(Paths.get("foo"), DirectoryEntry.Type.DIRECTORY, ZERO_ID);
-        final DirectoryEntry foobar = new DirectoryEntry(Paths.get("foobar"), DirectoryEntry.Type.REGULAR, ZERO_ID);
-        final DirectoryEntry zeta = new DirectoryEntry(Paths.get("zeta.txt"), DirectoryEntry.Type.REGULAR, ZERO_ID);
+        final DirectoryEntry alpha = new DirectoryEntry("alpha.txt", GitIdentifiers.FileMode.REGULAR, ZERO_ID);
+        final DirectoryEntry fooTxt = new DirectoryEntry("foo.txt", GitIdentifiers.FileMode.REGULAR, ZERO_ID);
+        final DirectoryEntry fooDir = new DirectoryEntry("foo", GitIdentifiers.FileMode.DIRECTORY, ZERO_ID);
+        final DirectoryEntry foobar = new DirectoryEntry("foobar", GitIdentifiers.FileMode.REGULAR, ZERO_ID);
+        final DirectoryEntry zeta = new DirectoryEntry("zeta.txt", GitIdentifiers.FileMode.REGULAR, ZERO_ID);
         final List<DirectoryEntry> entries = new ArrayList<>(Arrays.asList(zeta, foobar, fooDir, alpha, fooTxt));
         entries.sort(DirectoryEntry::compareTo);
         assertEquals(Arrays.asList(alpha, fooTxt, fooDir, foobar, zeta), entries);
     }
 
+    @ParameterizedTest
+    @MethodSource
+    void testTreeIdBuilder(final String algorithm, final String helloHex, final String linkHex, final String runHex, final String srcHex) throws Exception {
+        final byte[] helloContent = "hello\n".getBytes(StandardCharsets.UTF_8);
+        final byte[] runContent = "#!/bin/sh\n".getBytes(StandardCharsets.UTF_8);
+        final byte[] linkTarget = "subdir".getBytes(StandardCharsets.UTF_8);
+        final MessageDigest md = DigestUtils.getDigest(algorithm);
+
+        // Verify individual blob IDs against pre-computed constants.
+        assertArrayEquals(Hex.decodeHex(helloHex), GitIdentifiers.blobId(md, helloContent));
+        assertArrayEquals(Hex.decodeHex(linkHex), GitIdentifiers.blobId(md, linkTarget));
+        assertArrayEquals(Hex.decodeHex(runHex), GitIdentifiers.blobId(md, runContent));
+
+        // Entries are supplied out of order to verify that the builder sorts them correctly.
+        final GitIdentifiers.TreeIdBuilder builder = GitIdentifiers.treeIdBuilder(md);
+        builder.addDirectory("src");
+        builder.addFile(GitIdentifiers.FileMode.EXECUTABLE, "run.sh", runContent);
+        builder.addFile(GitIdentifiers.FileMode.REGULAR, "hello.txt", helloContent);
+        builder.addFile(GitIdentifiers.FileMode.SYMBOLIC_LINK, "link.txt", linkTarget);
+
+        // Expected tree body: entries in Git sort order (hello.txt, link.txt, run.sh, src/).
+        // Each entry: hex-encoded "<mode> <name>\0" followed by the object id.
+        final byte[] treeBody = Hex.decodeHex("3130303634342068656c6c6f2e74787400" + helloHex +   // 100644 hello.txt\0
+                "313230303030206c696e6b2e74787400" + linkHex +   // 120000 link.txt\0
+                "3130303735352072756e2e736800" + runHex +   // 100755 run.sh\0
+                "34303030302073726300" + srcHex);   // 40000 src\0
+        md.reset();
+        DigestUtils.updateDigest(md, ("tree " + treeBody.length + "\0").getBytes(StandardCharsets.UTF_8));
+        assertArrayEquals(DigestUtils.updateDigest(md, treeBody).digest(), builder.build());
+    }
+
     @Test
-    void testBlobIdSymlink(@TempDir final Path tempDir) throws Exception {
-        final Path subDir = Files.createDirectory(tempDir.resolve("subdir"));
-        Files.write(subDir.resolve("file.txt"), "hello".getBytes(StandardCharsets.UTF_8));
-        final Path linkToDir;
-        final Path linkToFile;
-        try {
-            linkToDir = Files.createSymbolicLink(tempDir.resolve("link-to-dir"), Paths.get("subdir"));
-            linkToFile = Files.createSymbolicLink(tempDir.resolve("link-to-file"), Paths.get("subdir/file.txt"));
-        } catch (final UnsupportedOperationException e) {
-            Assumptions.assumeTrue(false, "Symbolic links not supported on this filesystem");
-            return;
-        }
-        final MessageDigest sha1 = DigestUtils.getSha1Digest();
-        assertArrayEquals(Hex.decodeHex("8bbe8a53790056316b23b7c270f10ab6bf6bb1b4"), GitIdentifiers.blobId(sha1, linkToDir));
-        assertArrayEquals(Hex.decodeHex("dfe6ef8392ae13a11ff85419b4fd906d997b6cb7"), GitIdentifiers.blobId(sha1, linkToFile));
+    void testTreeIdBuilderAddFileInputStream() throws Exception {
+        final MessageDigest md = DigestUtils.getSha1Digest();
+        final byte[] content = "Hello, World!\n".getBytes(StandardCharsets.UTF_8);
+
+        final GitIdentifiers.TreeIdBuilder byteArrayBuilder = GitIdentifiers.treeIdBuilder(md);
+        byteArrayBuilder.addFile(GitIdentifiers.FileMode.REGULAR, "file.txt", content);
+        final byte[] expected = byteArrayBuilder.build();
+
+        final GitIdentifiers.TreeIdBuilder streamBuilder = GitIdentifiers.treeIdBuilder(md);
+        streamBuilder.addFile(GitIdentifiers.FileMode.REGULAR, "file.txt", new ByteArrayInputStream(content));
+        assertArrayEquals(expected, streamBuilder.build());
+
+        final GitIdentifiers.TreeIdBuilder sizedStreamBuilder = GitIdentifiers.treeIdBuilder(md);
+        sizedStreamBuilder.addFile(GitIdentifiers.FileMode.REGULAR, "file.txt", content.length, new ByteArrayInputStream(content));
+        assertArrayEquals(expected, sizedStreamBuilder.build());
+    }
+
+    @Test
+    void testTreeIdBuilderEmptyPathSegments() throws Exception {
+        final MessageDigest md = DigestUtils.getSha1Digest();
+        final byte[] content = "hello\n".getBytes(StandardCharsets.UTF_8);
+
+        // Canonical form
+        final GitIdentifiers.TreeIdBuilder canonical = GitIdentifiers.treeIdBuilder(md);
+        canonical.addFile(GitIdentifiers.FileMode.REGULAR, "subdir/file.txt", content);
+        final byte[] expected = canonical.build();
+
+        // Leading slash
+        final GitIdentifiers.TreeIdBuilder withLeading = GitIdentifiers.treeIdBuilder(md);
+        withLeading.addFile(GitIdentifiers.FileMode.REGULAR, "/subdir/file.txt", content);
+        assertArrayEquals(expected, withLeading.build());
+
+        // Consecutive slashes
+        final GitIdentifiers.TreeIdBuilder withDouble = GitIdentifiers.treeIdBuilder(md);
+        withDouble.addFile(GitIdentifiers.FileMode.REGULAR, "subdir//file.txt", content);
+        assertArrayEquals(expected, withDouble.build());
+
+        // addDirectory with leading/trailing slashes
+        final GitIdentifiers.TreeIdBuilder viaDirectory = GitIdentifiers.treeIdBuilder(md);
+        viaDirectory.addDirectory("/subdir/").addFile(GitIdentifiers.FileMode.REGULAR, "file.txt", content);
+        assertArrayEquals(expected, viaDirectory.build());
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {MessageDigestAlgorithms.SHA_1, MessageDigestAlgorithms.SHA_256})
-    void testTreeIdCollection(final String algorithm) throws Exception {
-        final byte[] helloId = Hex.decodeHex("a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0");
-        final byte[] runId = Hex.decodeHex("f0e1d2c3b4a5f6e7d8c9b0a1f2e3d4c5b6a7f8e9");
-        final byte[] linkId = Hex.decodeHex("1234567890abcdef1234567890abcdef12345678");
-        final byte[] srcId = Hex.decodeHex("deadbeefdeadbeefdeadbeefdeadbeefdeadbeef");
+    @ValueSource(strings = {".", ".."})
+    void testTreeIdBuilderInvalidPathSegments(final String segment) {
+        final MessageDigest md = DigestUtils.getSha1Digest();
+        final byte[] data = new byte[0];
+        // Sole path component
+        assertThrows(IllegalArgumentException.class,
+                () -> GitIdentifiers.treeIdBuilder(md).addFile(GitIdentifiers.FileMode.REGULAR, segment, data));
+        assertThrows(IllegalArgumentException.class,
+                () -> GitIdentifiers.treeIdBuilder(md).addDirectory(segment));
+        // Embedded in a longer path
+        assertThrows(IllegalArgumentException.class,
+                () -> GitIdentifiers.treeIdBuilder(md).addFile(GitIdentifiers.FileMode.REGULAR, "subdir/" + segment + "/file.txt", data));
+        assertThrows(IllegalArgumentException.class,
+                () -> GitIdentifiers.treeIdBuilder(md).addDirectory("subdir/" + segment));
+    }
 
-        // Entries are supplied out of order to verify that the method sorts them correctly.
-        final List<DirectoryEntry> entries = new ArrayList<>();
-        entries.add(new DirectoryEntry(Paths.get("src"), DirectoryEntry.Type.DIRECTORY, srcId));
-        entries.add(new DirectoryEntry(Paths.get("run.sh"), DirectoryEntry.Type.EXECUTABLE, runId));
-        entries.add(new DirectoryEntry(Paths.get("hello.txt"), DirectoryEntry.Type.REGULAR, helloId));
-        entries.add(new DirectoryEntry(Paths.get("link.txt"), DirectoryEntry.Type.SYMBOLIC_LINK, linkId));
+    @Test
+    void testTreeIdBuilderNestedFileEquivalentToDirectoryAndFile() throws Exception {
+        final MessageDigest md = DigestUtils.getSha1Digest();
+        final byte[] content = "hello\n".getBytes(StandardCharsets.UTF_8);
 
-        // Compute expected value
-        final byte[] treeBody = Hex.decodeHex(TREE_BODY_HEX);
-        final MessageDigest md = DigestUtils.getDigest(algorithm);
-        DigestUtils.updateDigest(md, ("tree " + treeBody.length + "\0").getBytes(StandardCharsets.UTF_8));
-        final byte[] expected = DigestUtils.updateDigest(md, treeBody).digest();
+        final GitIdentifiers.TreeIdBuilder direct = GitIdentifiers.treeIdBuilder(md);
+        direct.addFile(GitIdentifiers.FileMode.REGULAR, "nested/file.txt", content);
 
-        assertArrayEquals(expected, GitIdentifiers.treeId(md, entries));
+        final GitIdentifiers.TreeIdBuilder indirect = GitIdentifiers.treeIdBuilder(md);
+        indirect.addDirectory("nested").addFile(GitIdentifiers.FileMode.REGULAR, "file.txt", content);
+
+        assertArrayEquals(direct.build(), indirect.build());
     }
 
     @Test
