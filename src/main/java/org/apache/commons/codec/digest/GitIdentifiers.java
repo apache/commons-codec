@@ -230,7 +230,7 @@ public class GitIdentifiers {
          *
          * <p>The stream is eagerly drained.</p>
          *
-         * <p>If the size of the stream is known in advance, consider using {@link #addFile(FileMode, String, long, InputStream)} instead.</p>
+         * <p>If the size of the stream is known in advance, consider using {@link TreeIdBuilder#addFile(FileMode, String, long, InputStream)} instead.</p>
          *
          * @param mode The file mode (e.g. {@link FileMode#REGULAR}).
          * @param name The relative path of the entry in normalized form(may contain {@code '/'}).
