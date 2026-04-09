@@ -90,7 +90,6 @@ public class GitIdentifiers {
      * @param data          Path to the file to digest.
      * @return A generalized Git blob identifier.
      * @throws IOException On error accessing the file.
-     * @since 1.22.0
      */
     public static byte[] blobId(final MessageDigest messageDigest, final Path data) throws IOException {
         messageDigest.reset();
@@ -149,7 +148,6 @@ public class GitIdentifiers {
      * @param data          Path to the directory to digest.
      * @return A generalized Git tree identifier.
      * @throws IOException On error accessing the directory or its contents.
-     * @since 1.22.0
      */
     public static byte[] treeId(final MessageDigest messageDigest, final Path data) throws IOException {
         final List<GitDirectoryEntry> entries = new ArrayList<>();
