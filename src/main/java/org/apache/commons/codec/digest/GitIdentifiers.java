@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
-import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.ArrayList;
@@ -89,12 +88,11 @@ public class GitIdentifiers {
      *
      * @param messageDigest The MessageDigest to use (for example SHA-1).
      * @param data          Path to the file to digest.
-     * @param options       Options how to open the file.
      * @return A generalized Git blob identifier.
      * @throws IOException On error accessing the file.
      * @since 1.22.0
      */
-    public static byte[] blobId(final MessageDigest messageDigest, final Path data, final OpenOption... options) throws IOException {
+    public static byte[] blobId(final MessageDigest messageDigest, final Path data) throws IOException {
         messageDigest.reset();
         if (Files.isSymbolicLink(data)) {
             final byte[] linkTarget = Files.readSymbolicLink(data).toString().getBytes(StandardCharsets.UTF_8);
@@ -102,7 +100,7 @@ public class GitIdentifiers {
             return DigestUtils.digest(messageDigest, linkTarget);
         }
         DigestUtils.updateDigest(messageDigest, gitBlobPrefix(Files.size(data)));
-        return DigestUtils.updateDigest(messageDigest, data, options).digest();
+        return DigestUtils.updateDigest(messageDigest, data).digest();
     }
 
     private static byte[] gitBlobPrefix(final long dataSize) {
@@ -149,21 +147,20 @@ public class GitIdentifiers {
      *
      * @param messageDigest The MessageDigest to use (for example SHA-1).
      * @param data          Path to the directory to digest.
-     * @param options       Options how to open files within the directory.
      * @return A generalized Git tree identifier.
      * @throws IOException On error accessing the directory or its contents.
      * @since 1.22.0
      */
-    public static byte[] treeId(final MessageDigest messageDigest, final Path data, final OpenOption... options) throws IOException {
+    public static byte[] treeId(final MessageDigest messageDigest, final Path data) throws IOException {
         final List<GitDirectoryEntry> entries = new ArrayList<>();
         try (DirectoryStream<Path> files = Files.newDirectoryStream(data)) {
             for (final Path path : files) {
                 final GitDirectoryEntry.Type type = getGitDirectoryEntryType(path);
                 final byte[] rawObjectId;
                 if (type == GitDirectoryEntry.Type.DIRECTORY) {
-                    rawObjectId = treeId(messageDigest, path, options);
+                    rawObjectId = treeId(messageDigest, path);
                 } else {
-                    rawObjectId = blobId(messageDigest, path, options);
+                    rawObjectId = blobId(messageDigest, path);
                 }
                 entries.add(new GitDirectoryEntry(path, type, rawObjectId));
             }
