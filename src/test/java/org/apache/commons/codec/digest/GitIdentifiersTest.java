@@ -18,6 +18,9 @@
 package org.apache.commons.codec.digest;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -25,10 +28,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
 import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.codec.digest.GitIdentifiers.DirectoryEntry;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -80,6 +85,69 @@ class GitIdentifiersTest {
         assertArrayEquals(Hex.decodeHex(expectedSha1Hex), GitIdentifiers.blobId(DigestUtils.getSha1Digest(), resourcePath(resourceName)));
     }
 
+
+    private static final byte[] ZERO_ID = new byte[20];
+
+    @Test
+    void testDirectoryEntryConstructor() {
+        assertThrows(NullPointerException.class, () -> new DirectoryEntry(null, DirectoryEntry.Type.REGULAR, ZERO_ID));
+        assertThrows(NullPointerException.class, () -> new DirectoryEntry(Paths.get("hello.txt"), null, ZERO_ID));
+        assertThrows(NullPointerException.class, () -> new DirectoryEntry(Paths.get("hello.txt"), DirectoryEntry.Type.REGULAR, null));
+        assertThrows(IllegalArgumentException.class, () -> new DirectoryEntry(Paths.get("/"), DirectoryEntry.Type.REGULAR, ZERO_ID));
+    }
+
+    /**
+     * Equality and hash code are based solely on the entry name.
+     */
+    @Test
+    void testDirectoryEntryEqualityBasedOnNameOnly() {
+        final byte[] otherId = new byte[20];
+        Arrays.fill(otherId, (byte) 0xff);
+        final DirectoryEntry regular = new DirectoryEntry(Paths.get("foo"), DirectoryEntry.Type.REGULAR, ZERO_ID);
+        final DirectoryEntry executable = new DirectoryEntry(Paths.get("foo"), DirectoryEntry.Type.EXECUTABLE, otherId);
+        // Same name, different type and object id -> equal
+        assertEquals(regular, executable);
+        assertEquals(regular.hashCode(), executable.hashCode());
+        // Different name -> not equal
+        assertNotEquals(regular, new DirectoryEntry(Paths.get("bar"), DirectoryEntry.Type.REGULAR, ZERO_ID));
+        // Same reference -> equal
+        assertEquals(regular, regular);
+        // Not equal to null or unrelated type
+        assertNotEquals(null, regular);
+        assertNotEquals("foo", regular);
+    }
+
+    /**
+     * The Path constructor must extract the filename component.
+     */
+    @Test
+    void testDirectoryEntryPathConstructorUsesFilename() {
+        final DirectoryEntry fromLabel = new DirectoryEntry(Paths.get("hello.txt"), DirectoryEntry.Type.REGULAR, ZERO_ID);
+        final DirectoryEntry fromRelative = new DirectoryEntry(Paths.get("subdir/hello.txt"), DirectoryEntry.Type.REGULAR, ZERO_ID);
+        final DirectoryEntry fromAbsolute = new DirectoryEntry(Paths.get("hello.txt").toAbsolutePath(), DirectoryEntry.Type.REGULAR, ZERO_ID);
+        assertEquals(fromLabel, fromRelative);
+        assertEquals(fromLabel, fromAbsolute);
+        assertArrayEquals(fromLabel.toTreeEntryBytes(), fromRelative.toTreeEntryBytes());
+        assertArrayEquals(fromLabel.toTreeEntryBytes(), fromAbsolute.toTreeEntryBytes());
+    }
+
+    /**
+     * Entries should be sorted by Git sort rule.
+     *
+     * <p>Git compares the names of the entries, but adds a {@code /} at the end of directory entries.</p>
+     */
+    @Test
+    void testDirectoryEntrySortOrder() {
+        final DirectoryEntry alpha = new DirectoryEntry(Paths.get("alpha.txt"), DirectoryEntry.Type.REGULAR, ZERO_ID);
+        final DirectoryEntry fooTxt = new DirectoryEntry(Paths.get("foo.txt"), DirectoryEntry.Type.REGULAR, ZERO_ID);
+        final DirectoryEntry fooDir = new DirectoryEntry(Paths.get("foo"), DirectoryEntry.Type.DIRECTORY, ZERO_ID);
+        final DirectoryEntry foobar = new DirectoryEntry(Paths.get("foobar"), DirectoryEntry.Type.REGULAR, ZERO_ID);
+        final DirectoryEntry zeta = new DirectoryEntry(Paths.get("zeta.txt"), DirectoryEntry.Type.REGULAR, ZERO_ID);
+        final List<DirectoryEntry> entries = new ArrayList<>(Arrays.asList(zeta, foobar, fooDir, alpha, fooTxt));
+        entries.sort(DirectoryEntry::compareTo);
+        assertEquals(Arrays.asList(alpha, fooTxt, fooDir, foobar, zeta), entries);
+    }
+
     @Test
     void testBlobIdSymlink(@TempDir final Path tempDir) throws Exception {
         final Path subDir = Files.createDirectory(tempDir.resolve("subdir"));
@@ -107,11 +175,11 @@ class GitIdentifiersTest {
         final byte[] srcId = Hex.decodeHex("deadbeefdeadbeefdeadbeefdeadbeefdeadbeef");
 
         // Entries are supplied out of order to verify that the method sorts them correctly.
-        final List<GitDirectoryEntry> entries = new ArrayList<>();
-        entries.add(new GitDirectoryEntry(Paths.get("src"), GitDirectoryEntry.Type.DIRECTORY, srcId));
-        entries.add(new GitDirectoryEntry(Paths.get("run.sh"), GitDirectoryEntry.Type.EXECUTABLE, runId));
-        entries.add(new GitDirectoryEntry(Paths.get("hello.txt"), GitDirectoryEntry.Type.REGULAR, helloId));
-        entries.add(new GitDirectoryEntry(Paths.get("link.txt"), GitDirectoryEntry.Type.SYMBOLIC_LINK, linkId));
+        final List<DirectoryEntry> entries = new ArrayList<>();
+        entries.add(new DirectoryEntry(Paths.get("src"), DirectoryEntry.Type.DIRECTORY, srcId));
+        entries.add(new DirectoryEntry(Paths.get("run.sh"), DirectoryEntry.Type.EXECUTABLE, runId));
+        entries.add(new DirectoryEntry(Paths.get("hello.txt"), DirectoryEntry.Type.REGULAR, helloId));
+        entries.add(new DirectoryEntry(Paths.get("link.txt"), DirectoryEntry.Type.SYMBOLIC_LINK, linkId));
 
         // Compute expected value
         final byte[] treeBody = Hex.decodeHex(TREE_BODY_HEX);
@@ -127,4 +195,5 @@ class GitIdentifiersTest {
         assertArrayEquals(Hex.decodeHex("e4b21f6d78ceba6eb7c211ac15e3337ec4614e8a"),
                 GitIdentifiers.treeId(DigestUtils.getSha1Digest(), resourcePath("DigestUtilsTest")));
     }
+
 }
