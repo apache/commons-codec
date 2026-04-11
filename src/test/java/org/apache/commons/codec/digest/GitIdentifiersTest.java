@@ -163,12 +163,12 @@ class GitIdentifiersTest {
     void testTreeIdBuilder(final String algorithm, final String helloHex, final String linkHex, final String runHex, final String srcHex) throws Exception {
         final byte[] helloContent = "hello\n".getBytes(StandardCharsets.UTF_8);
         final byte[] runContent = "#!/bin/sh\n".getBytes(StandardCharsets.UTF_8);
-        final byte[] linkTarget = "subdir".getBytes(StandardCharsets.UTF_8);
+        final String linkTarget = "subdir";
         final MessageDigest md = DigestUtils.getDigest(algorithm);
 
         // Verify individual blob IDs against pre-computed constants.
         assertArrayEquals(Hex.decodeHex(helloHex), GitIdentifiers.blobId(md, helloContent));
-        assertArrayEquals(Hex.decodeHex(linkHex), GitIdentifiers.blobId(md, linkTarget));
+        assertArrayEquals(Hex.decodeHex(linkHex), GitIdentifiers.blobId(md, linkTarget.getBytes(StandardCharsets.UTF_8)));
         assertArrayEquals(Hex.decodeHex(runHex), GitIdentifiers.blobId(md, runContent));
 
         // Entries are supplied out of order to verify that the builder sorts them correctly.
@@ -176,7 +176,7 @@ class GitIdentifiersTest {
         builder.addDirectory("src");
         builder.addFile(GitIdentifiers.FileMode.EXECUTABLE, "run.sh", runContent);
         builder.addFile(GitIdentifiers.FileMode.REGULAR, "hello.txt", helloContent);
-        builder.addFile(GitIdentifiers.FileMode.SYMBOLIC_LINK, "link.txt", linkTarget);
+        builder.addSymbolicLink("link.txt", linkTarget);
 
         // Expected tree body: entries in Git sort order (hello.txt, link.txt, run.sh, src/).
         // Each entry: hex-encoded "<mode> <name>\0" followed by the object id.

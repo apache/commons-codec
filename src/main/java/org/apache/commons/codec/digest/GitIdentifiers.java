@@ -267,6 +267,20 @@ public class GitIdentifiers {
         }
 
         /**
+         * Adds a symbolic link entry at the give path within this tree.
+         *
+         * <p>If {@code name} contains {@code '/'}, intermediate subdirectories are created automatically.</p>
+         *
+         * @param name The relative path of the entry in normalized form(may contain {@code '/'}).
+         * @param target The target of the symbolic link.
+         * @throws IOException If an I/O error occurs.
+         * @throws IllegalArgumentException If any path component is {@code "."} or {@code ".."}.
+         */
+        public void addSymbolicLink(final String name, final String target) throws IOException {
+            addFile(FileMode.SYMBOLIC_LINK, name, target.getBytes(StandardCharsets.UTF_8));
+        }
+
+        /**
          * Computes the Git tree identifier for this directory and all its descendants.
          *
          * @return The raw tree identifier bytes.
