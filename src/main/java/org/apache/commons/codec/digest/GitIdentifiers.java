@@ -191,11 +191,13 @@ public class GitIdentifiers {
             byte[] get() throws IOException;
         }
 
-        private static void checkPathComponent(String name) {
-            if (".".equals(name) || "..".equals(name)) {
+        private static String requireNoParentTraversal(String name) {
+            if ("..".equals(name)) {
                 throw new IllegalArgumentException("Path component not allowed: " + name);
             }
+            return name;
         }
+
         private final Map<String, TreeIdBuilder> dirEntries = new HashMap<>();
         private final Map<String, DirectoryEntry> fileEntries = new HashMap<>();
         private final MessageDigest messageDigest;
@@ -209,16 +211,16 @@ public class GitIdentifiers {
          *
          * @param name The relative path of the subdirectory in normalized form (may contain {@code '/'}).
          * @return The {@link TreeIdBuilder} for the subdirectory.
-         * @throws IllegalArgumentException If any path component is {@code "."} or {@code ".."}.
+         * @throws IllegalArgumentException If any path component is {@code ".."}.
          */
         public TreeIdBuilder addDirectory(final String name) {
             TreeIdBuilder current = this;
             for (final String component : name.split("/", -1)) {
-                if (component.isEmpty()) {
+                // Noop segments
+                if (component.isEmpty() || ".".equals(component)) {
                     continue;
                 }
-                checkPathComponent(component);
-                current = current.dirEntries.computeIfAbsent(component, k -> new TreeIdBuilder(messageDigest));
+                current = current.dirEntries.computeIfAbsent(requireNoParentTraversal(component), k -> new TreeIdBuilder(messageDigest));
             }
             return current;
         }
@@ -235,17 +237,16 @@ public class GitIdentifiers {
          * @param dataSize The exact number of bytes in {@code data}.
          * @param data     The file content.
          * @throws IOException If the stream cannot be read.
-         * @throws IllegalArgumentException If any path component is {@code "."} or {@code ".."}.
+         * @throws IllegalArgumentException If any path component is {@code ".."}.
          */
         public void addFile(final FileMode mode, final String name, final long dataSize, final InputStream data) throws IOException {
             addFile(mode, name, () -> blobId(messageDigest, dataSize, data));
         }
 
         private void addFile(final FileMode mode, final String name, final BlobIdSupplier blobId) throws IOException {
-            final int slash = name.indexOf('/');
+            final int slash = name.lastIndexOf('/');
             if (slash < 0) {
-                checkPathComponent(name);
-                fileEntries.put(name, new DirectoryEntry(name, mode, blobId.get()));
+                fileEntries.put(name, new DirectoryEntry(requireNoParentTraversal(name), mode, blobId.get()));
             } else {
                 addDirectory(name.substring(0, slash)).addFile(mode, name.substring(slash + 1), blobId);
             }
@@ -260,7 +261,7 @@ public class GitIdentifiers {
          * @param name The relative path of the entry in normalized form(may contain {@code '/'}).
          * @param data The file content.
          * @throws IOException If an I/O error occurs.
-         * @throws IllegalArgumentException If any path component is {@code "."} or {@code ".."}.
+         * @throws IllegalArgumentException If any path component is {@code ".."}.
          */
         public void addFile(final FileMode mode, final String name, final byte[] data) throws IOException {
             addFile(mode, name, () -> blobId(messageDigest, data));
@@ -274,7 +275,7 @@ public class GitIdentifiers {
          * @param name The relative path of the entry in normalized form(may contain {@code '/'}).
          * @param target The target of the symbolic link.
          * @throws IOException If an I/O error occurs.
-         * @throws IllegalArgumentException If any path component is {@code "."} or {@code ".."}.
+         * @throws IllegalArgumentException If any path component is {@code ".."}.
          */
         public void addSymbolicLink(final String name, final String target) throws IOException {
             addFile(FileMode.SYMBOLIC_LINK, name, target.getBytes(StandardCharsets.UTF_8));

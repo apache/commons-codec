@@ -204,46 +204,19 @@ class GitIdentifiersTest {
     }
 
     @Test
-    void testTreeIdBuilderEmptyPathSegments() throws Exception {
-        final MessageDigest md = DigestUtils.getSha1Digest();
-        final byte[] content = "hello\n".getBytes(StandardCharsets.UTF_8);
-
-        // Canonical form
-        final GitIdentifiers.TreeIdBuilder canonical = GitIdentifiers.treeIdBuilder(md);
-        canonical.addFile(GitIdentifiers.FileMode.REGULAR, "subdir/file.txt", content);
-        final byte[] expected = canonical.build();
-
-        // Leading slash
-        final GitIdentifiers.TreeIdBuilder withLeading = GitIdentifiers.treeIdBuilder(md);
-        withLeading.addFile(GitIdentifiers.FileMode.REGULAR, "/subdir/file.txt", content);
-        assertArrayEquals(expected, withLeading.build());
-
-        // Consecutive slashes
-        final GitIdentifiers.TreeIdBuilder withDouble = GitIdentifiers.treeIdBuilder(md);
-        withDouble.addFile(GitIdentifiers.FileMode.REGULAR, "subdir//file.txt", content);
-        assertArrayEquals(expected, withDouble.build());
-
-        // addDirectory with leading/trailing slashes
-        final GitIdentifiers.TreeIdBuilder viaDirectory = GitIdentifiers.treeIdBuilder(md);
-        viaDirectory.addDirectory("/subdir/").addFile(GitIdentifiers.FileMode.REGULAR, "file.txt", content);
-        assertArrayEquals(expected, viaDirectory.build());
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = {".", ".."})
-    void testTreeIdBuilderInvalidPathSegments(final String segment) {
+    void testTreeIdBuilderInvalidPathSegments() {
         final MessageDigest md = DigestUtils.getSha1Digest();
         final byte[] data = new byte[0];
         // Sole path component
         assertThrows(IllegalArgumentException.class,
-                () -> GitIdentifiers.treeIdBuilder(md).addFile(GitIdentifiers.FileMode.REGULAR, segment, data));
+                () -> GitIdentifiers.treeIdBuilder(md).addFile(GitIdentifiers.FileMode.REGULAR, "..", data));
         assertThrows(IllegalArgumentException.class,
-                () -> GitIdentifiers.treeIdBuilder(md).addDirectory(segment));
+                () -> GitIdentifiers.treeIdBuilder(md).addDirectory(".."));
         // Embedded in a longer path
         assertThrows(IllegalArgumentException.class,
-                () -> GitIdentifiers.treeIdBuilder(md).addFile(GitIdentifiers.FileMode.REGULAR, "subdir/" + segment + "/file.txt", data));
+                () -> GitIdentifiers.treeIdBuilder(md).addFile(GitIdentifiers.FileMode.REGULAR, "subdir/../file.txt", data));
         assertThrows(IllegalArgumentException.class,
-                () -> GitIdentifiers.treeIdBuilder(md).addDirectory("subdir/" + segment));
+                () -> GitIdentifiers.treeIdBuilder(md).addDirectory("subdir/.."));
     }
 
     @Test
@@ -258,6 +231,33 @@ class GitIdentifiersTest {
         indirect.addDirectory("nested").addFile(GitIdentifiers.FileMode.REGULAR, "file.txt", content);
 
         assertArrayEquals(direct.build(), indirect.build());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"", "."})
+    void testTreeIdBuilderNoopPathSegments(String segment) throws Exception {
+        final MessageDigest md = DigestUtils.getSha1Digest();
+        final byte[] content = "hello\n".getBytes(StandardCharsets.UTF_8);
+
+        // Canonical form
+        final GitIdentifiers.TreeIdBuilder canonical = GitIdentifiers.treeIdBuilder(md);
+        canonical.addFile(GitIdentifiers.FileMode.REGULAR, "subdir/file.txt", content);
+        final byte[] expected = canonical.build();
+
+        // Leading segment
+        final GitIdentifiers.TreeIdBuilder withLeading = GitIdentifiers.treeIdBuilder(md);
+        withLeading.addFile(GitIdentifiers.FileMode.REGULAR, segment + "/subdir/file.txt", content);
+        assertArrayEquals(expected, withLeading.build());
+
+        // Intermediate segment
+        final GitIdentifiers.TreeIdBuilder withIntermediate = GitIdentifiers.treeIdBuilder(md);
+        withIntermediate.addFile(GitIdentifiers.FileMode.REGULAR, "subdir/" + segment + "/file.txt", content);
+        assertArrayEquals(expected, withIntermediate.build());
+
+        // addDirectory with leading/trailing segments
+        final GitIdentifiers.TreeIdBuilder viaDirectory = GitIdentifiers.treeIdBuilder(md);
+        viaDirectory.addDirectory(segment + "/subdir/" + segment).addFile(GitIdentifiers.FileMode.REGULAR, "file.txt", content);
+        assertArrayEquals(expected, viaDirectory.build());
     }
 
     @Test
