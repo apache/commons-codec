@@ -224,26 +224,6 @@ public class GitIdentifiers {
         }
 
         /**
-         * Adds a file entry at the given path within this tree.
-         *
-         * <p>If {@code name} contains {@code '/'}, intermediate subdirectories are created automatically.</p>
-         *
-         * <p>The stream is eagerly drained.</p>
-         *
-         * <p>If the size of the stream is known in advance, consider using {@link #addFile(GitIdentifiers.FileMode, String, long, InputStream)}
-         * instead.</p>
-         *
-         * @param mode The file mode (e.g. {@link FileMode#REGULAR}).
-         * @param name The relative path of the entry in normalized form(may contain {@code '/'}).
-         * @param data The file content.
-         * @throws IOException If the stream cannot be read.
-         * @throws IllegalArgumentException If any path component is {@code "."} or {@code ".."}.
-         */
-        public void addFile(final FileMode mode, final String name, final InputStream data) throws IOException {
-            addFile(mode, name, () -> blobId(messageDigest, readAllBytes(data)));
-        }
-
-        /**
          * Adds a file entry at the given path within this tree, streaming content without buffering.
          *
          * <p>If {@code name} contains {@code '/'}, intermediate subdirectories are created automatically.</p>
@@ -328,23 +308,6 @@ public class GitIdentifiers {
         messageDigest.reset();
         DigestUtils.updateDigest(messageDigest, getGitBlobPrefix(data.length));
         return DigestUtils.digest(messageDigest, data);
-    }
-
-    /**
-     * Reads through a stream and returns a generalized Git blob identifier.
-     *
-     * <p>The stream is drained and its contents are buffered to determine the size before hashing. To avoid
-     * buffering, use {@link #blobId(MessageDigest, long, InputStream)} when the size is known in advance.</p>
-     *
-     * <p>When the hash algorithm is SHA-1, the identifier is identical to Git blob identifier and SWHID contents identifier.</p>
-     *
-     * @param messageDigest The MessageDigest to use (for example SHA-1).
-     * @param data          Stream to digest.
-     * @return A generalized Git blob identifier.
-     * @throws IOException On error reading the stream.
-     */
-    public static byte[] blobId(final MessageDigest messageDigest, final InputStream data) throws IOException {
-        return blobId(messageDigest, readAllBytes(data));
     }
 
     /**
@@ -439,16 +402,6 @@ public class GitIdentifiers {
                 }
             }
         }
-    }
-
-    private static byte[] readAllBytes(final InputStream in) throws IOException {
-        final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        final byte[] buf = new byte[DigestUtils.BUFFER_SIZE];
-        int n;
-        while ((n = in.read(buf)) != -1) {
-            out.write(buf, 0, n);
-        }
-        return out.toByteArray();
     }
 
     /**

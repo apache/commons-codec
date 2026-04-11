@@ -85,14 +85,6 @@ class GitIdentifiersTest {
 
     @ParameterizedTest
     @MethodSource("blobIdProvider")
-    void testBlobIdInputStream(final String resourceName, final String expectedSha1Hex) throws Exception {
-        final byte[] data = Files.readAllBytes(resourcePath(resourceName));
-        assertArrayEquals(Hex.decodeHex(expectedSha1Hex),
-                GitIdentifiers.blobId(DigestUtils.getSha1Digest(), new ByteArrayInputStream(data)));
-    }
-
-    @ParameterizedTest
-    @MethodSource("blobIdProvider")
     void testBlobIdInputStreamWithSize(final String resourceName, final String expectedSha1Hex) throws Exception {
         final byte[] data = Files.readAllBytes(resourcePath(resourceName));
         assertArrayEquals(Hex.decodeHex(expectedSha1Hex),
@@ -205,10 +197,6 @@ class GitIdentifiersTest {
         final GitIdentifiers.TreeIdBuilder byteArrayBuilder = GitIdentifiers.treeIdBuilder(md);
         byteArrayBuilder.addFile(GitIdentifiers.FileMode.REGULAR, "file.txt", content);
         final byte[] expected = byteArrayBuilder.build();
-
-        final GitIdentifiers.TreeIdBuilder streamBuilder = GitIdentifiers.treeIdBuilder(md);
-        streamBuilder.addFile(GitIdentifiers.FileMode.REGULAR, "file.txt", new ByteArrayInputStream(content));
-        assertArrayEquals(expected, streamBuilder.build());
 
         final GitIdentifiers.TreeIdBuilder sizedStreamBuilder = GitIdentifiers.treeIdBuilder(md);
         sizedStreamBuilder.addFile(GitIdentifiers.FileMode.REGULAR, "file.txt", content.length, new ByteArrayInputStream(content));
