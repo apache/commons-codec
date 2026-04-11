@@ -359,12 +359,11 @@ public class GitIdentifiers {
      * @throws IOException On error accessing the file.
      */
     public static byte[] blobId(final MessageDigest messageDigest, final Path data) throws IOException {
-        messageDigest.reset();
         if (Files.isSymbolicLink(data)) {
             final byte[] linkTarget = Files.readSymbolicLink(data).toString().getBytes(StandardCharsets.UTF_8);
-            DigestUtils.updateDigest(messageDigest, getGitBlobPrefix(linkTarget.length));
-            return DigestUtils.digest(messageDigest, linkTarget);
+            return blobId(messageDigest, linkTarget);
         }
+        messageDigest.reset();
         DigestUtils.updateDigest(messageDigest, getGitBlobPrefix(Files.size(data)));
         return DigestUtils.updateDigest(messageDigest, data).digest();
     }
@@ -400,19 +399,10 @@ public class GitIdentifiers {
             for (final Path path : files) {
                 final String name = Objects.toString(path.getFileName());
                 final FileMode mode = getGitDirectoryEntryType(path);
-                switch (mode) {
-                    case DIRECTORY:
-                        populateFromPath(builder.addDirectory(name), path);
-                        break;
-                    case SYMBOLIC_LINK:
-                        final byte[] linkTarget = Files.readSymbolicLink(path).toString().getBytes(StandardCharsets.UTF_8);
-                        builder.addFile(FileMode.SYMBOLIC_LINK, name, linkTarget);
-                        break;
-                    default:
-                        try (InputStream is = Files.newInputStream(path)) {
-                            builder.addFile(mode, name, Files.size(path), is);
-                        }
-                        break;
+                if (mode == FileMode.DIRECTORY) {
+                    populateFromPath(builder.addDirectory(name), path);
+                } else {
+                    builder.addFile(mode, name, () -> blobId(builder.messageDigest, path));
                 }
             }
         }
