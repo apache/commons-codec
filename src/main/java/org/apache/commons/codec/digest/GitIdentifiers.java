@@ -210,7 +210,7 @@ public class GitIdentifiers {
         }
 
         /**
-         * Annds and returns the {@link TreeIdBuilder} for the named subdirectory, creating it if absent.
+         * Adds and returns the {@link TreeIdBuilder} for the named subdirectory, creating it if absent.
          *
          * @param name The relative path of the subdirectory in normalized form (may contain {@code '/'}).
          * @return The {@link TreeIdBuilder} for the subdirectory.
