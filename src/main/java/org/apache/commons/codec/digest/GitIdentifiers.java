@@ -271,7 +271,7 @@ public class GitIdentifiers {
         }
 
         /**
-         * Adds a symbolic link entry at the give path within this tree.
+         * Adds a symbolic link entry at the given path within this tree.
          *
          * <p>If {@code name} contains {@code '/'}, intermediate subdirectories are created automatically.</p>
          *
