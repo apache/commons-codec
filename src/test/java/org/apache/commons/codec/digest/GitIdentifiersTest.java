@@ -258,8 +258,8 @@ class GitIdentifiersTest {
         builder.addFile(GitIdentifiers.FileMode.EXECUTABLE, "src/run.sh", RUN_CONTENT);
 
         // Check trees
-        assertArrayEquals(mainTreeId, builder.build());
-        assertArrayEquals(srcTreeId, builder.addDirectory("src").build());
+        assertArrayEquals(mainTreeId, builder.get());
+        assertArrayEquals(srcTreeId, builder.addDirectory("src").get());
     }
 
     @Test
@@ -269,11 +269,11 @@ class GitIdentifiersTest {
 
         final GitIdentifiers.TreeIdBuilder byteArrayBuilder = GitIdentifiers.treeIdBuilder(md);
         byteArrayBuilder.addFile(GitIdentifiers.FileMode.REGULAR, "file.txt", content);
-        final byte[] expected = byteArrayBuilder.build();
+        final byte[] expected = byteArrayBuilder.get();
 
         final GitIdentifiers.TreeIdBuilder sizedStreamBuilder = GitIdentifiers.treeIdBuilder(md);
         sizedStreamBuilder.addFile(GitIdentifiers.FileMode.REGULAR, "file.txt", content.length, new ByteArrayInputStream(content));
-        assertArrayEquals(expected, sizedStreamBuilder.build());
+        assertArrayEquals(expected, sizedStreamBuilder.get());
     }
 
     @Test
@@ -303,7 +303,7 @@ class GitIdentifiersTest {
         final GitIdentifiers.TreeIdBuilder indirect = GitIdentifiers.treeIdBuilder(md);
         indirect.addDirectory("nested").addFile(GitIdentifiers.FileMode.REGULAR, "file.txt", content);
 
-        assertArrayEquals(direct.build(), indirect.build());
+        assertArrayEquals(direct.get(), indirect.get());
     }
 
     @ParameterizedTest
@@ -315,22 +315,22 @@ class GitIdentifiersTest {
         // Canonical form
         final GitIdentifiers.TreeIdBuilder canonical = GitIdentifiers.treeIdBuilder(md);
         canonical.addFile(GitIdentifiers.FileMode.REGULAR, "subdir/file.txt", content);
-        final byte[] expected = canonical.build();
+        final byte[] expected = canonical.get();
 
         // Leading segment
         final GitIdentifiers.TreeIdBuilder withLeading = GitIdentifiers.treeIdBuilder(md);
         withLeading.addFile(GitIdentifiers.FileMode.REGULAR, segment + "/subdir/file.txt", content);
-        assertArrayEquals(expected, withLeading.build());
+        assertArrayEquals(expected, withLeading.get());
 
         // Intermediate segment
         final GitIdentifiers.TreeIdBuilder withIntermediate = GitIdentifiers.treeIdBuilder(md);
         withIntermediate.addFile(GitIdentifiers.FileMode.REGULAR, "subdir/" + segment + "/file.txt", content);
-        assertArrayEquals(expected, withIntermediate.build());
+        assertArrayEquals(expected, withIntermediate.get());
 
         // addDirectory with leading/trailing segments
         final GitIdentifiers.TreeIdBuilder viaDirectory = GitIdentifiers.treeIdBuilder(md);
         viaDirectory.addDirectory(segment + "/subdir/" + segment).addFile(GitIdentifiers.FileMode.REGULAR, "file.txt", content);
-        assertArrayEquals(expected, viaDirectory.build());
+        assertArrayEquals(expected, viaDirectory.get());
     }
 
     @Test

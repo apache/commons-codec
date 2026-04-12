@@ -30,6 +30,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.Supplier;
 
 /**
  * Computes <a href="https://git-scm.com/">Git</a> object identifiers and their generalizations described by the
@@ -200,7 +201,7 @@ public class GitIdentifiers {
      * Builds a Git tree identifier for a virtual directory structure, such as the contents of
      * an archive.
      */
-    public static final class TreeIdBuilder {
+    public static final class TreeIdBuilder implements Supplier<byte[]> {
 
         /**
          * Supplies a blob identifier that may throw {@link IOException}.
@@ -305,9 +306,9 @@ public class GitIdentifiers {
          *
          * @return The raw tree identifier bytes.
          */
-        public byte[] build() {
+        public byte[] get() {
             final Set<DirectoryEntry> entries = new TreeSet<>(fileEntries.values());
-            dirEntries.forEach((k, v) -> entries.add(new DirectoryEntry(k, FileMode.DIRECTORY, v.build())));
+            dirEntries.forEach((k, v) -> entries.add(new DirectoryEntry(k, FileMode.DIRECTORY, v.get())));
             final ByteArrayOutputStream baos = new ByteArrayOutputStream();
             for (final DirectoryEntry entry : entries) {
                 baos.write(entry.type.modeBytes, 0, entry.type.modeBytes.length);
@@ -428,7 +429,7 @@ public class GitIdentifiers {
      * @throws IOException On error accessing the directory or its contents.
      */
     public static byte[] treeId(final MessageDigest messageDigest, final Path data) throws IOException {
-        return treeIdBuilder(messageDigest).populate(data).build();
+        return treeIdBuilder(messageDigest).populate(data).get();
     }
 
     /**
