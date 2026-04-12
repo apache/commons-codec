@@ -32,7 +32,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 /**
- * Computes Git object identifiers and their generalizations described by the
+ * Computes <a href="https://git-scm.com/">Git</a> object identifiers and their generalizations described by the
  * <a href="https://www.swhid.org/swhid-specification/">SWHID specification</a>.
  *
  * <p>When the hash algorithm is SHA-1, the identifiers produced by this class are identical to those used by Git.
@@ -156,6 +156,20 @@ public class GitIdentifiers {
          * A symbolic link.
          */
         SYMBOLIC_LINK("120000");
+
+        private static FileMode get(final Path path) {
+            // Symbolic links first
+            if (Files.isSymbolicLink(path)) {
+                return SYMBOLIC_LINK;
+            }
+            if (Files.isDirectory(path)) {
+                return DIRECTORY;
+            }
+            if (Files.isExecutable(path)) {
+                return EXECUTABLE;
+            }
+            return REGULAR;
+        }
 
         /**
          * The octal mode as used by Git.
@@ -378,20 +392,6 @@ public class GitIdentifiers {
         return getGitPrefix("blob", dataSize);
     }
 
-    private static FileMode getGitDirectoryEntryType(final Path path) {
-        // Symbolic links first
-        if (Files.isSymbolicLink(path)) {
-            return FileMode.SYMBOLIC_LINK;
-        }
-        if (Files.isDirectory(path)) {
-            return FileMode.DIRECTORY;
-        }
-        if (Files.isExecutable(path)) {
-            return FileMode.EXECUTABLE;
-        }
-        return FileMode.REGULAR;
-    }
-
     private static byte[] getGitPrefix(final String type, final long dataSize) {
         return (type + " " + dataSize + "\0").getBytes(StandardCharsets.UTF_8);
     }
@@ -404,7 +404,7 @@ public class GitIdentifiers {
         try (DirectoryStream<Path> files = Files.newDirectoryStream(directory)) {
             for (final Path path : files) {
                 final String name = Objects.toString(path.getFileName());
-                final FileMode mode = getGitDirectoryEntryType(path);
+                final FileMode mode = FileMode.get(path);
                 if (mode == FileMode.DIRECTORY) {
                     populateFromPath(builder.addDirectory(name), path);
                 } else {
