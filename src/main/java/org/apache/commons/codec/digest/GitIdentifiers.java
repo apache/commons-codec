@@ -407,7 +407,7 @@ public class GitIdentifiers {
         return getGitPrefix("tree", dataSize);
     }
 
-    private static void populate(final TreeIdBuilder builder, final Path directory) throws IOException {
+    private static TreeIdBuilder populate(final TreeIdBuilder builder, final Path directory) throws IOException {
         try (DirectoryStream<Path> files = Files.newDirectoryStream(directory)) {
             for (final Path path : files) {
                 final String name = Objects.toString(path.getFileName());
@@ -419,6 +419,7 @@ public class GitIdentifiers {
                 }
             }
         }
+        return builder;
     }
 
     /**
@@ -436,9 +437,7 @@ public class GitIdentifiers {
      * @throws IOException On error accessing the directory or its contents.
      */
     public static byte[] treeId(final MessageDigest messageDigest, final Path data) throws IOException {
-        final TreeIdBuilder builder = treeIdBuilder(messageDigest);
-        populate(builder, data);
-        return builder.build();
+        return populate(treeIdBuilder(messageDigest), data).build();
     }
 
     /**
