@@ -142,21 +142,21 @@ public class GitIdentifiers {
          *
          * @see <a href="https://git-scm.com/docs/git-fast-import">git-fast-import - Backend for fast Git data importers</a>
          */
-        DIRECTORY("40000"),
+        DIRECTORY(new byte[] { '4', '0', '0', '0', '0' }),
 
         /**
          * A regular, but executable, file.
          */
-        EXECUTABLE("100755"),
+        EXECUTABLE(new byte[] { '1', '0', '0', '7', '5', '5' }),
 
         /**
          * A gitlink, SHA-1 of the object refers to a commit in another repository. Git links can only be specified either by SHA or through a commit mark. They
          * are used to implement submodules.
          *
-         * @see <a href="https://git-scm.com/docs/gitdatamodel">gitdatamodel - Git’s core data model</a>
+         * @see <a href="https://git-scm.com/docs/gitdatamodel">gitdatamodel - Git&apos;s core data model</a>
          * @see <a href="https://git-scm.com/docs/git-fast-import">git-fast-import - Backend for fast Git data importers</a>
          */
-        GIT_LINK("160000"),
+        GIT_LINK(new byte[] { '1', '6', '0', '0', '0', '0' }),
 
         /**
          * A regular (non-executable) file.
@@ -164,12 +164,12 @@ public class GitIdentifiers {
          * The majority of files in most projects use this mode. If in doubt, this is what you want.
          * </p>
          */
-        REGULAR("100644"),
+        REGULAR(new byte[] { '1', '0', '0', '6', '4', '4' }),
 
         /**
          * A symbolic link. The content of the file will be the link target.
          */
-        SYMBOLIC_LINK("120000");
+        SYMBOLIC_LINK(new byte[] { '1', '2', '0', '0', '0', '0' });
 
         private static FileMode get(final Path path) {
             // Symbolic links first
@@ -190,8 +190,9 @@ public class GitIdentifiers {
          */
         private final byte[] modeBytes;
 
-        FileMode(final String mode) {
-            this.modeBytes = mode.getBytes(StandardCharsets.US_ASCII);
+        FileMode(final byte[] modeBytes) {
+            // No need for a defensive copy since the array is private and never exposed,
+            this.modeBytes = modeBytes;
         }
     }
 
