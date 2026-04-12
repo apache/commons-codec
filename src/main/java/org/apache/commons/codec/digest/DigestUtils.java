@@ -1457,7 +1457,7 @@ public class DigestUtils {
     }
 
     /**
-     * Reads through a RandomAccessFile and updates the digest for the data using non-blocking-io (NIO).
+     * Reads through a FileChannel and updates the digest for the data using non-blocking-io (NIO).
      *
      * TODO Decide if this should be public.
      *
