@@ -47,6 +47,87 @@ import java.util.TreeSet;
 public class GitIdentifiers {
 
     /**
+     * Represents a single entry in a Git tree object.
+     *
+     * <p>A Git tree object encodes a directory snapshot. Each entry holds:</p>
+     * <ul>
+     *   <li>a {@link FileMode} that determines the Unix file mode (e.g. {@code 100644} for a regular file),</li>
+     *   <li>the entry name (file or directory name, without a path separator),</li>
+     *   <li>the raw object id of the referenced blob or sub-tree.</li>
+     * </ul>
+     *
+     * <p>Entries are ordered by {@link #compareTo} using Git's tree-sort rule: directory names are compared as if they ended with {@code '/'}, so that {@code foo/}
+     * sorts after {@code foobar}.</p>
+     *
+     * @see <a href="https://git-scm.com/book/en/v2/Git-Internals-Git-Objects">Git Internals – Git Objects</a>
+     * @see <a href="https://www.swhid.org/swhid-specification/v1.2/5.Core_identifiers/#53-directories">SWHID Directory Identifier</a>
+     */
+    static class DirectoryEntry implements Comparable<DirectoryEntry> {
+
+        /**
+         * The entry name (file or directory name, no path separator).
+         */
+        private final String name;
+
+        /**
+         * The raw object id of the referenced blob or sub-tree.
+         */
+        private final byte[] rawObjectId;
+
+        /**
+         * The key used for ordering entries within a tree object.
+         *
+         * <p>>Git appends {@code '/'} to directory names before comparing.</p>
+         */
+        private final String sortKey;
+
+        /**
+         * The Git object type, which determines the Unix file-mode prefix.
+         */
+        private final FileMode type;
+
+        /**
+         * Creates an entry.
+         *
+         * @param name The name of the entry
+         * @param type The type of the entry
+         * @param rawObjectId The id of the entry
+         */
+        DirectoryEntry(final String name, final FileMode type, final byte[] rawObjectId) {
+            if (Objects.requireNonNull(name).indexOf('/') >= 0) {
+                throw new IllegalArgumentException("Entry name must not contain '/': " + name);
+            }
+            this.name = name;
+            this.type = Objects.requireNonNull(type);
+            this.sortKey = type == FileMode.DIRECTORY ? name + "/" : name;
+            this.rawObjectId = Objects.requireNonNull(rawObjectId);
+        }
+
+        @Override
+        public int compareTo(final DirectoryEntry o) {
+            return sortKey.compareTo(o.sortKey);
+        }
+
+        @Override
+        public boolean equals(final Object obj) {
+            if (obj == this) {
+                return true;
+            }
+            if (!(obj instanceof DirectoryEntry)) {
+                return false;
+            }
+            final DirectoryEntry other = (DirectoryEntry) obj;
+            return name.equals(other.name);
+        }
+
+        @Override
+        public int hashCode() {
+            return name.hashCode();
+        }
+
+    }
+
+    /**
      * The type of a Git tree entry, which maps to a Unix file-mode string.
      *
      * <p>Git encodes the file type and permission bits as an ASCII octal string that precedes the entry name in the binary tree format. The values defined here
@@ -100,84 +181,6 @@ public class GitIdentifiers {
     }
 
     /**
-     * Represents a single entry in a Git tree object.
-     *
-     * <p>A Git tree object encodes a directory snapshot. Each entry holds:</p>
-     * <ul>
-     *   <li>a {@link FileMode} that determines the Unix file mode (e.g. {@code 100644} for a regular file),</li>
-     *   <li>the entry name (file or directory name, without a path separator),</li>
-     *   <li>the raw object id of the referenced blob or sub-tree.</li>
-     * </ul>
-     *
-     * <p>Entries are ordered by {@link #compareTo} using Git's tree-sort rule: directory names are compared as if they ended with {@code '/'}, so that {@code foo/}
-     * sorts after {@code foobar}.</p>
-     *
-     * @see <a href="https://git-scm.com/book/en/v2/Git-Internals-Git-Objects">Git Internals – Git Objects</a>
-     * @see <a href="https://www.swhid.org/swhid-specification/v1.2/5.Core_identifiers/#53-directories">SWHID Directory Identifier</a>
-     */
-    static class DirectoryEntry implements Comparable<DirectoryEntry> {
-
-        /**
-         * The entry name (file or directory name, no path separator).
-         */
-        private final String name;
-        /**
-         * The raw object id of the referenced blob or sub-tree.
-         */
-        private final byte[] rawObjectId;
-        /**
-         * The key used for ordering entries within a tree object.
-         *
-         * <p>>Git appends {@code '/'} to directory names before comparing.</p>
-         */
-        private final String sortKey;
-        /**
-         * The Git object type, which determines the Unix file-mode prefix.
-         */
-        private final FileMode type;
-
-        /**
-         * Creates an entry.
-         *
-         * @param name The name of the entry
-         * @param type The type of the entry
-         * @param rawObjectId The id of the entry
-         */
-        DirectoryEntry(final String name, final FileMode type, final byte[] rawObjectId) {
-            if (Objects.requireNonNull(name).indexOf('/') >= 0) {
-                throw new IllegalArgumentException("Entry name must not contain '/': " + name);
-            }
-            this.name = name;
-            this.type = Objects.requireNonNull(type);
-            this.sortKey = type == FileMode.DIRECTORY ? name + "/" : name;
-            this.rawObjectId = Objects.requireNonNull(rawObjectId);
-        }
-
-        @Override
-        public int compareTo(final DirectoryEntry o) {
-            return sortKey.compareTo(o.sortKey);
-        }
-
-        @Override
-        public boolean equals(final Object obj) {
-            if (obj == this) {
-                return true;
-            }
-            if (!(obj instanceof DirectoryEntry)) {
-                return false;
-            }
-            final DirectoryEntry other = (DirectoryEntry) obj;
-            return name.equals(other.name);
-        }
-
-        @Override
-        public int hashCode() {
-            return name.hashCode();
-        }
-
-    }
-
-    /**
      * Builds a Git tree identifier for a virtual directory structure, such as the contents of
      * an archive.
      */
@@ -191,7 +194,7 @@ public class GitIdentifiers {
             byte[] get() throws IOException;
         }
 
-        private static String requireNoParentTraversal(String name) {
+        private static String requireNoParentTraversal(final String name) {
             if ("..".equals(name)) {
                 throw new IllegalArgumentException("Path component not allowed: " + name);
             }
@@ -225,24 +228,6 @@ public class GitIdentifiers {
             return current;
         }
 
-        /**
-         * Adds a file entry at the given path within this tree, streaming content without buffering.
-         *
-         * <p>If {@code name} contains {@code '/'}, intermediate subdirectories are created automatically.</p>
-         *
-         * <p>The stream is eagerly drained.</p>
-         *
-         * @param mode     The file mode (e.g. {@link FileMode#REGULAR}).
-         * @param name The relative path of the entry in normalized form(may contain {@code '/'}).
-         * @param dataSize The exact number of bytes in {@code data}.
-         * @param data     The file content.
-         * @throws IOException If the stream cannot be read.
-         * @throws IllegalArgumentException If any path component is {@code ".."}.
-         */
-        public void addFile(final FileMode mode, final String name, final long dataSize, final InputStream data) throws IOException {
-            addFile(mode, name, () -> blobId(messageDigest, dataSize, data));
-        }
-
         private void addFile(final FileMode mode, final String name, final BlobIdSupplier blobId) throws IOException {
             final int slash = name.lastIndexOf('/');
             if (slash < 0) {
@@ -265,6 +250,24 @@ public class GitIdentifiers {
          */
         public void addFile(final FileMode mode, final String name, final byte[] data) throws IOException {
             addFile(mode, name, () -> blobId(messageDigest, data));
+        }
+
+        /**
+         * Adds a file entry at the given path within this tree, streaming content without buffering.
+         *
+         * <p>If {@code name} contains {@code '/'}, intermediate subdirectories are created automatically.</p>
+         *
+         * <p>The stream is eagerly drained.</p>
+         *
+         * @param mode     The file mode (e.g. {@link FileMode#REGULAR}).
+         * @param name The relative path of the entry in normalized form(may contain {@code '/'}).
+         * @param dataSize The exact number of bytes in {@code data}.
+         * @param data     The file content.
+         * @throws IOException If the stream cannot be read.
+         * @throws IllegalArgumentException If any path component is {@code ".."}.
+         */
+        public void addFile(final FileMode mode, final String name, final long dataSize, final InputStream data) throws IOException {
+            addFile(mode, name, () -> blobId(messageDigest, dataSize, data));
         }
 
         /**
@@ -369,6 +372,10 @@ public class GitIdentifiers {
         return DigestUtils.updateDigest(messageDigest, data).digest();
     }
 
+    private static byte[] getGitBlobPrefix(final long dataSize) {
+        return getGitPrefix("blob", dataSize);
+    }
+
     private static FileMode getGitDirectoryEntryType(final Path path) {
         // Symbolic links first
         if (Files.isSymbolicLink(path)) {
@@ -381,10 +388,6 @@ public class GitIdentifiers {
             return FileMode.EXECUTABLE;
         }
         return FileMode.REGULAR;
-    }
-
-    private static byte[] getGitBlobPrefix(final long dataSize) {
-        return getGitPrefix("blob", dataSize);
     }
 
     private static byte[] getGitPrefix(final String type, final long dataSize) {
