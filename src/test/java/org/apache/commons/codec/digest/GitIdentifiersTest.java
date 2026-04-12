@@ -346,14 +346,14 @@ class GitIdentifiersTest {
     @MethodSource("virtualTreeProvider")
     void testTreeIdPathUnix(final String algorithm, final byte[] helloId, final byte[] linkId, final byte[] linkTxtId,
             final byte[] runId, final byte[] srcTreeId, final byte[] mainTreeId, final @TempDir Path tempDir) throws Exception {
-        MessageDigest md = DigestUtils.getDigest(algorithm);
+        final MessageDigest md = DigestUtils.getDigest(algorithm);
 
         // Files
-        Path link = tempDir.resolve("link");
-        Path linkTxt = tempDir.resolve("link.txt");
-        Path src = tempDir.resolve("src");
-        Path hello = src.resolve("hello.txt");
-        Path run = src.resolve("run.sh");
+        final Path link = tempDir.resolve("link");
+        final Path linkTxt = tempDir.resolve("link.txt");
+        final Path src = tempDir.resolve("src");
+        final Path hello = src.resolve("hello.txt");
+        final Path run = src.resolve("run.sh");
 
         // Create the same structure as the virtual tree.
         try {
