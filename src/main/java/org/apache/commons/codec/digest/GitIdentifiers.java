@@ -330,6 +330,21 @@ public class GitIdentifiers {
             DigestUtils.updateDigest(messageDigest, getGitTreePrefix(baos.size()));
             return DigestUtils.updateDigest(messageDigest, baos.toByteArray()).digest();
         }
+
+        private TreeIdBuilder populate(final Path directory) throws IOException {
+            try (DirectoryStream<Path> files = Files.newDirectoryStream(directory)) {
+                for (final Path path : files) {
+                    final String name = Objects.toString(path.getFileName());
+                    final FileMode mode = FileMode.get(path);
+                    if (mode == FileMode.DIRECTORY) {
+                        addDirectory(name).populate(path);
+                    } else {
+                        addFile(mode, name, () -> blobId(messageDigest, path));
+                    }
+                }
+            }
+            return this;
+        }
     }
 
     /**
@@ -407,21 +422,6 @@ public class GitIdentifiers {
         return getGitPrefix("tree", dataSize);
     }
 
-    private static TreeIdBuilder populate(final TreeIdBuilder builder, final Path directory) throws IOException {
-        try (DirectoryStream<Path> files = Files.newDirectoryStream(directory)) {
-            for (final Path path : files) {
-                final String name = Objects.toString(path.getFileName());
-                final FileMode mode = FileMode.get(path);
-                if (mode == FileMode.DIRECTORY) {
-                    populate(builder.addDirectory(name), path);
-                } else {
-                    builder.addFile(mode, name, () -> blobId(builder.messageDigest, path));
-                }
-            }
-        }
-        return builder;
-    }
-
     /**
      * Reads through a directory and returns a generalized Git tree identifier.
      *
@@ -437,7 +437,7 @@ public class GitIdentifiers {
      * @throws IOException On error accessing the directory or its contents.
      */
     public static byte[] treeId(final MessageDigest messageDigest, final Path data) throws IOException {
-        return populate(treeIdBuilder(messageDigest), data).build();
+        return treeIdBuilder(messageDigest).populate(data).build();
     }
 
     /**
