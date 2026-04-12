@@ -28,12 +28,14 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.attribute.PosixFilePermissions;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
+import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.GitIdentifiers.DirectoryEntry;
 import org.junit.jupiter.api.Assumptions;
@@ -49,8 +51,83 @@ import org.junit.jupiter.params.provider.ValueSource;
  */
 class GitIdentifiersTest {
 
-
     private static final byte[] ZERO_ID = new byte[20];
+
+    // Virtual tree:
+    //
+    // link      -> src           (symlink)
+    // link.txt  -> src/hello.txt (symlink)
+    // src/
+    //   hello.txt                (regular file)
+    //   run.sh                   (executable file)
+
+    /** Content of {@code src/hello.txt}. */
+    private static final byte[] HELLO_CONTENT = "hello\n".getBytes(StandardCharsets.UTF_8);
+    /** SHA-1 blob id of {@link #HELLO_CONTENT}: {@code printf 'hello\n' | git hash-object --stdin} */
+    private static final byte[] HELLO_BLOB_ID_SHA1 = hex("ce013625030ba8dba906f756967f9e9ca394464a");
+    /** SHA-256 blob id of {@link #HELLO_CONTENT}. */
+    private static final byte[] HELLO_BLOB_ID_SHA256 = hex("2cf8d83d9ee29543b34a87727421fdecb7e3f3a183d337639025de576db9ebb4");
+
+    /** Content of {@code src/run.sh}. */
+    private static final byte[] RUN_CONTENT = "#!/bin/sh\n".getBytes(StandardCharsets.UTF_8);
+    /** SHA-1 blob id of {@link #RUN_CONTENT}: {@code printf '#!/bin/sh\n' | git hash-object --stdin} */
+    private static final byte[] RUN_BLOB_ID_SHA1 = hex("1a2485251c33a70432394c93fb89330ef214bfc9");
+    /** SHA-256 blob id of {@link #RUN_CONTENT}. */
+    private static final byte[] RUN_BLOB_ID_SHA256 = hex("1249034e3cf9007362d695b09b1fbdb4c578903bf10b665749b94743f8177ce1");
+
+    /** Target of symlink {@code link}. */
+    private static final String LINK_CONTENT = "src";
+    /** SHA-1 blob id of the symlink target {@link #LINK_CONTENT}: {@code printf 'src' | git hash-object --stdin} */
+    private static final byte[] LINK_BLOB_ID_SHA1 = hex("e8310385c56dc4bbe379f43400f3181f6a59f260");
+    /** SHA-256 blob id of the symlink target {@link #LINK_CONTENT}. */
+    private static final byte[] LINK_BLOB_ID_SHA256 = hex("e1bdca538422554ea204da85e0cec156b12b6808473083610ff95ea390843ab6");
+
+    /** Target of symlink {@code link.txt}. */
+    private static final String LINK_TXT_CONTENT = "src/hello.txt";
+    /** SHA-1 blob id of the symlink target {@link #LINK_TXT_CONTENT}: {@code printf 'src/hello.txt' | git hash-object --stdin} */
+    private static final byte[] LINK_TXT_BLOB_ID_SHA1 = hex("132a953033e00dcff94f5cccb261f52cd1d71173");
+    /** SHA-256 blob id of the symlink target {@link #LINK_TXT_CONTENT}. */
+    private static final byte[] LINK_TXT_BLOB_ID_SHA256 = hex("2499925193a48a84a546a2f7cd3ce7789d4e073ef1e7276fe682bfbb2b636cef");
+
+    // Tree ids can be recomputed in a git repository with:
+    //   git init /tmp/t && cd /tmp/t
+    // followed by writing the blob objects and calling git mktree.
+
+    /**
+     * SHA-1 tree id of {@code src/} (hello.txt + run.sh):
+     * <pre>
+     * printf '100644 blob ce013625030ba8dba906f756967f9e9ca394464a\thello.txt\n
+     *         100755 blob 1a2485251c33a70432394c93fb89330ef214bfc9\trun.sh\n' | git mktree
+     * </pre>
+     */
+    private static final byte[] SRC_TREE_ID_SHA1 = hex("5575b4a0141a2287ec2836a620e5d6aa8fb203ba");
+    /**
+     * SHA-256 tree id of {@code src/}:
+     * <pre>
+     * printf '100644 blob 2cf8d83d9ee29543b34a87727421fdecb7e3f3a183d337639025de576db9ebb4\thello.txt\n
+     *         100755 blob 1249034e3cf9007362d695b09b1fbdb4c578903bf10b665749b94743f8177ce1\trun.sh\n' | git mktree
+     * </pre>
+     */
+    private static final byte[] SRC_TREE_ID_SHA256 = hex("5b4e74befcb98e3050c511d02353d00565b2172be0a2bc5de833f011ad27f694");
+
+    /**
+     * SHA-1 tree id of the main directory (link + link.txt + src/):
+     * <pre>
+     * printf '120000 blob e8310385c56dc4bbe379f43400f3181f6a59f260\tlink\n
+     *         120000 blob 132a953033e00dcff94f5cccb261f52cd1d71173\tlink.txt\n
+     *         040000 tree 5575b4a0141a2287ec2836a620e5d6aa8fb203ba\tsrc\n' | git mktree
+     * </pre>
+     */
+    private static final byte[] MAIN_TREE_ID_SHA1 = hex("3217900fd0a6624cd6aa169c2a9f289f7f34432b");
+    /**
+     * SHA-256 tree id of the main directory:
+     * <pre>
+     * printf '120000 blob e1bdca538422554ea204da85e0cec156b12b6808473083610ff95ea390843ab6\tlink\n
+     *         120000 blob 2499925193a48a84a546a2f7cd3ce7789d4e073ef1e7276fe682bfbb2b636cef\tlink.txt\n
+     *         040000 tree 5b4e74befcb98e3050c511d02353d00565b2172be0a2bc5de833f011ad27f694\tsrc\n' | git mktree
+     * </pre>
+     */
+    private static final byte[] MAIN_TREE_ID_SHA256 = hex("58e9a59940e4d2ae7e374b63fedf3b7bba8cfdc60308f64abd066db137300bcd");
 
     static Stream<Arguments> blobIdProvider() {
         return Stream.of(Arguments.of("DigestUtilsTest/hello.txt", "5f4a83288e67f1be2d6fcdad84165a86c6a970d7"),
@@ -58,22 +135,25 @@ class GitIdentifiersTest {
                 Arguments.of("DigestUtilsTest/subdir/nested.txt", "07a392ddb4dbff06a373a7617939f30b2dcfe719"));
     }
 
+    /** Decodes a compile-time hex literal; throws {@link AssertionError} on malformed input. */
+    private static byte[] hex(final String hex) {
+        try {
+            return Hex.decodeHex(hex);
+        } catch (final DecoderException e) {
+            throw new AssertionError(e);
+        }
+    }
+
     private static Path resourcePath(final String resourceName) throws Exception {
         return Paths.get(GitIdentifiersTest.class.getClassLoader().getResource(resourceName).toURI());
     }
 
-    static Stream<Arguments> testTreeIdBuilder() {
+    static Stream<Arguments> virtualTreeProvider() {
         return Stream.of(
-                Arguments.of(MessageDigestAlgorithms.SHA_1,
-                        "ce013625030ba8dba906f756967f9e9ca394464a",  // blob id of "hello\n"
-                        "8bbe8a53790056316b23b7c270f10ab6bf6bb1b4",  // blob id of "subdir"
-                        "1a2485251c33a70432394c93fb89330ef214bfc9",  // blob id of "#!/bin/sh\n"
-                        "4b825dc642cb6eb9a060e54bf8d69288fbee4904"), // tree id of empty directory
-                Arguments.of(MessageDigestAlgorithms.SHA_256,
-                        "2cf8d83d9ee29543b34a87727421fdecb7e3f3a183d337639025de576db9ebb4",
-                        "33910dae80b0db75dbad7fa521dbbf1885a07edfab1228871c41a2e94ccd7edb",
-                        "1249034e3cf9007362d695b09b1fbdb4c578903bf10b665749b94743f8177ce1",
-                        "6ef19b41225c5369f1c104d45d8d85efa9b057b53b14b4b9b939dd74decc5321"));
+                Arguments.of(MessageDigestAlgorithms.SHA_1, HELLO_BLOB_ID_SHA1, LINK_BLOB_ID_SHA1, LINK_TXT_BLOB_ID_SHA1, RUN_BLOB_ID_SHA1,
+                        SRC_TREE_ID_SHA1, MAIN_TREE_ID_SHA1),
+                Arguments.of(MessageDigestAlgorithms.SHA_256, HELLO_BLOB_ID_SHA256, LINK_BLOB_ID_SHA256, LINK_TXT_BLOB_ID_SHA256, RUN_BLOB_ID_SHA256,
+                        SRC_TREE_ID_SHA256, MAIN_TREE_ID_SHA256));
     }
 
     @ParameterizedTest
@@ -159,34 +239,27 @@ class GitIdentifiersTest {
     }
 
     @ParameterizedTest
-    @MethodSource
-    void testTreeIdBuilder(final String algorithm, final String helloHex, final String linkHex, final String runHex, final String srcHex) throws Exception {
-        final byte[] helloContent = "hello\n".getBytes(StandardCharsets.UTF_8);
-        final byte[] runContent = "#!/bin/sh\n".getBytes(StandardCharsets.UTF_8);
-        final String linkTarget = "subdir";
+    @MethodSource("virtualTreeProvider")
+    void testTreeIdBuilder(final String algorithm, final byte[] helloId, final byte[] linkId, final byte[] linkTxtId, final byte[] runId,
+            final byte[] srcTreeId, final byte[] mainTreeId) throws Exception {
         final MessageDigest md = DigestUtils.getDigest(algorithm);
 
         // Verify individual blob IDs against pre-computed constants.
-        assertArrayEquals(Hex.decodeHex(helloHex), GitIdentifiers.blobId(md, helloContent));
-        assertArrayEquals(Hex.decodeHex(linkHex), GitIdentifiers.blobId(md, linkTarget.getBytes(StandardCharsets.UTF_8)));
-        assertArrayEquals(Hex.decodeHex(runHex), GitIdentifiers.blobId(md, runContent));
+        assertArrayEquals(helloId, GitIdentifiers.blobId(md, HELLO_CONTENT));
+        assertArrayEquals(linkId, GitIdentifiers.blobId(md, LINK_CONTENT.getBytes(StandardCharsets.UTF_8)));
+        assertArrayEquals(linkTxtId, GitIdentifiers.blobId(md, LINK_TXT_CONTENT.getBytes(StandardCharsets.UTF_8)));
+        assertArrayEquals(runId, GitIdentifiers.blobId(md, RUN_CONTENT));
 
         // Entries are supplied out of order to verify that the builder sorts them correctly.
         final GitIdentifiers.TreeIdBuilder builder = GitIdentifiers.treeIdBuilder(md);
-        builder.addDirectory("src");
-        builder.addFile(GitIdentifiers.FileMode.EXECUTABLE, "run.sh", runContent);
-        builder.addFile(GitIdentifiers.FileMode.REGULAR, "hello.txt", helloContent);
-        builder.addSymbolicLink("link.txt", linkTarget);
+        builder.addSymbolicLink("link.txt", LINK_TXT_CONTENT);
+        builder.addFile(GitIdentifiers.FileMode.REGULAR, "src/hello.txt", HELLO_CONTENT);
+        builder.addSymbolicLink("link", LINK_CONTENT);
+        builder.addFile(GitIdentifiers.FileMode.EXECUTABLE, "src/run.sh", RUN_CONTENT);
 
-        // Expected tree body: entries in Git sort order (hello.txt, link.txt, run.sh, src/).
-        // Each entry: hex-encoded "<mode> <name>\0" followed by the object id.
-        final byte[] treeBody = Hex.decodeHex("3130303634342068656c6c6f2e74787400" + helloHex +   // 100644 hello.txt\0
-                "313230303030206c696e6b2e74787400" + linkHex +   // 120000 link.txt\0
-                "3130303735352072756e2e736800" + runHex +   // 100755 run.sh\0
-                "34303030302073726300" + srcHex);   // 40000 src\0
-        md.reset();
-        DigestUtils.updateDigest(md, ("tree " + treeBody.length + "\0").getBytes(StandardCharsets.UTF_8));
-        assertArrayEquals(DigestUtils.updateDigest(md, treeBody).digest(), builder.build());
+        // Check trees
+        assertArrayEquals(mainTreeId, builder.build());
+        assertArrayEquals(srcTreeId, builder.addDirectory("src").build());
     }
 
     @Test
@@ -266,4 +339,39 @@ class GitIdentifiersTest {
                 GitIdentifiers.treeId(DigestUtils.getSha1Digest(), resourcePath("DigestUtilsTest")));
     }
 
+    @ParameterizedTest
+    @MethodSource("virtualTreeProvider")
+    void testTreeIdPathUnix(final String algorithm, final byte[] helloId, final byte[] linkId, final byte[] linkTxtId,
+            final byte[] runId, final byte[] srcTreeId, final byte[] mainTreeId, final @TempDir Path tempDir) throws Exception {
+        final MessageDigest md = DigestUtils.getDigest(algorithm);
+
+        // Files
+        final Path link = tempDir.resolve("link");
+        final Path linkTxt = tempDir.resolve("link.txt");
+        final Path src = tempDir.resolve("src");
+        final Path hello = src.resolve("hello.txt");
+        final Path run = src.resolve("run.sh");
+
+        // Create the same structure as the virtual tree.
+        try {
+            Files.createSymbolicLink(link, Paths.get(LINK_CONTENT));
+            Files.createSymbolicLink(linkTxt, Paths.get(LINK_TXT_CONTENT));
+        } catch (final UnsupportedOperationException e) {
+            Assumptions.abort("Symbolic links not supported on this filesystem");
+        }
+        Files.createDirectory(src);
+        Files.write(hello, HELLO_CONTENT);
+        Files.write(run, RUN_CONTENT);
+        Files.setPosixFilePermissions(run, PosixFilePermissions.fromString("rwxr-xr-x"));
+
+        // Verify individual blob IDs against pre-computed constants.
+        assertArrayEquals(helloId, GitIdentifiers.blobId(md, hello));
+        assertArrayEquals(linkId, GitIdentifiers.blobId(md, link));
+        assertArrayEquals(linkTxtId, GitIdentifiers.blobId(md, linkTxt));
+        assertArrayEquals(runId, GitIdentifiers.blobId(md, run));
+
+        // Check trees
+        assertArrayEquals(mainTreeId, GitIdentifiers.treeId(md, tempDir));
+        assertArrayEquals(srcTreeId, GitIdentifiers.treeId(md, src));
+    }
 }

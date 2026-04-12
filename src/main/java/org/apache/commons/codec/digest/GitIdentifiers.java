@@ -186,27 +186,12 @@ public class GitIdentifiers {
         }
 
         /**
-         * The octal mode as used by Git.
-         */
-        private final String mode;
-
-        /**
          * Serialized {@code mode}: since this is mutable, it must remain private.
          */
         private final byte[] modeBytes;
 
         FileMode(final String mode) {
-            this.mode = mode;
             this.modeBytes = mode.getBytes(StandardCharsets.US_ASCII);
-        }
-
-        /**
-         * Gets the octal mode as used by Git.
-         *
-         * @return The octal mode.
-         */
-        public String getMode() {
-            return mode;
         }
     }
 
