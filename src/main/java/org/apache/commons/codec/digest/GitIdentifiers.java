@@ -148,6 +148,15 @@ public class GitIdentifiers {
         EXECUTABLE("100755"),
 
         /**
+         * A gitlink, SHA-1 of the object refers to a commit in another repository. Git links can only be specified either by SHA or through a commit mark. They
+         * are used to implement submodules.
+         *
+         * @see <a href="https://git-scm.com/docs/gitdatamodel">gitdatamodel - Git’s core data model</a>
+         * @see <a href="https://git-scm.com/docs/git-fast-import">git-fast-import - Backend for fast Git data importers</a>
+         */
+        GIT_LINK("160000"),
+
+        /**
          * A regular (non-executable) file.
          */
         REGULAR("100644"),
