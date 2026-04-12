@@ -33,7 +33,7 @@ import org.junit.jupiter.api.Timeout;
 class Md5CryptTest {
 
     @Test
-    void testCtor() {
+    void testCtorDeprecated() {
         assertNotNull(new Md5Crypt());
     }
 
