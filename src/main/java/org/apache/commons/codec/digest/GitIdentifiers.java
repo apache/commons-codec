@@ -138,12 +138,14 @@ public class GitIdentifiers {
     public enum FileMode {
 
         /**
-         * A sub-directory (Git sub-tree).
+         * A subdirectory. Subdirectories can only be specified by SHA or through a tree mark set with {@code --import-marks}.
+         *
+         * @see <a href="https://git-scm.com/docs/git-fast-import">git-fast-import - Backend for fast Git data importers</a>
          */
         DIRECTORY("40000"),
 
         /**
-         * An executable file.
+         * A regular, but executable, file.
          */
         EXECUTABLE("100755"),
 
@@ -158,11 +160,14 @@ public class GitIdentifiers {
 
         /**
          * A regular (non-executable) file.
+         * <p>
+         * The majority of files in most projects use this mode. If in doubt, this is what you want.
+         * </p>
          */
         REGULAR("100644"),
 
         /**
-         * A symbolic link.
+         * A symbolic link. The content of the file will be the link target.
          */
         SYMBOLIC_LINK("120000");
 
