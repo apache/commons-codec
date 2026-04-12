@@ -279,7 +279,7 @@ class GitIdentifiersTest {
     @Test
     void testTreeIdBuilderInvalidPathSegments() {
         final MessageDigest md = DigestUtils.getSha1Digest();
-        final byte[] data = new byte[0];
+        final byte[] data = {};
         // Sole path component
         assertThrows(IllegalArgumentException.class,
                 () -> GitIdentifiers.treeIdBuilder(md).addFile(GitIdentifiers.FileMode.REGULAR, "..", data));
@@ -308,7 +308,7 @@ class GitIdentifiersTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"", "."})
-    void testTreeIdBuilderNoopPathSegments(String segment) throws Exception {
+    void testTreeIdBuilderNoopPathSegments(final String segment) throws Exception {
         final MessageDigest md = DigestUtils.getSha1Digest();
         final byte[] content = "hello\n".getBytes(StandardCharsets.UTF_8);
 
