@@ -407,13 +407,13 @@ public class GitIdentifiers {
         return getGitPrefix("tree", dataSize);
     }
 
-    private static void populateFromPath(final TreeIdBuilder builder, final Path directory) throws IOException {
+    private static void populate(final TreeIdBuilder builder, final Path directory) throws IOException {
         try (DirectoryStream<Path> files = Files.newDirectoryStream(directory)) {
             for (final Path path : files) {
                 final String name = Objects.toString(path.getFileName());
                 final FileMode mode = FileMode.get(path);
                 if (mode == FileMode.DIRECTORY) {
-                    populateFromPath(builder.addDirectory(name), path);
+                    populate(builder.addDirectory(name), path);
                 } else {
                     builder.addFile(mode, name, () -> blobId(builder.messageDigest, path));
                 }
@@ -437,7 +437,7 @@ public class GitIdentifiers {
      */
     public static byte[] treeId(final MessageDigest messageDigest, final Path data) throws IOException {
         final TreeIdBuilder builder = treeIdBuilder(messageDigest);
-        populateFromPath(builder, data);
+        populate(builder, data);
         return builder.build();
     }
 
