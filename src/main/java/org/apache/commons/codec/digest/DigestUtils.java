@@ -1547,7 +1547,7 @@ public class DigestUtils {
     /**
      * Preserves binary compatibility only. As for previous versions does not provide useful behavior
      *
-     * @deprecated Since 1.11; only useful to preserve binary compatibility
+     * @deprecated Since 1.11; only useful to preserve binary compatibility.
      */
     @Deprecated
     public DigestUtils() {
