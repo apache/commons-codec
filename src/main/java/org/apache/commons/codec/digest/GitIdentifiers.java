@@ -313,20 +313,18 @@ public class GitIdentifiers {
          * Computes the Git tree identifier for this directory and all its descendants.
          *
          * @return The raw tree identifier bytes.
-         * @throws IOException If a digest operation fails.
          */
-        public byte[] build() throws IOException {
+        public byte[] build() {
             final Set<DirectoryEntry> entries = new TreeSet<>(fileEntries.values());
-            for (final Map.Entry<String, TreeIdBuilder> e : dirEntries.entrySet()) {
-                entries.add(new DirectoryEntry(e.getKey(), FileMode.DIRECTORY, e.getValue().build()));
-            }
+            dirEntries.forEach((k, v) -> entries.add(new DirectoryEntry(k, FileMode.DIRECTORY, v.build())));
             final ByteArrayOutputStream baos = new ByteArrayOutputStream();
             for (final DirectoryEntry entry : entries) {
-                baos.write(entry.type.modeBytes);
+                baos.write(entry.type.modeBytes, 0, entry.type.modeBytes.length);
                 baos.write(' ');
-                baos.write(entry.name.getBytes(StandardCharsets.UTF_8));
+                final byte[] bytes = entry.name.getBytes(StandardCharsets.UTF_8);
+                baos.write(bytes, 0, bytes.length);
                 baos.write('\0');
-                baos.write(entry.rawObjectId);
+                baos.write(entry.rawObjectId, 0, entry.rawObjectId.length);
             }
             messageDigest.reset();
             DigestUtils.updateDigest(messageDigest, getGitTreePrefix(baos.size()));
