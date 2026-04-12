@@ -32,7 +32,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 /**
- * Operations for computing Git object identifiers and their generalizations described by the
+ * Computes Git object identifiers and their generalizations described by the
  * <a href="https://www.swhid.org/swhid-specification/">SWHID specification</a>.
  *
  * <p>When the hash algorithm is SHA-1, the identifiers produced by this class are identical to those used by Git.
@@ -87,11 +87,11 @@ public class GitIdentifiers {
         private final FileMode type;
 
         /**
-         * Creates an entry.
+         * Constructs a new entry.
          *
-         * @param name The name of the entry
-         * @param type The type of the entry
-         * @param rawObjectId The id of the entry
+         * @param name The name of the entry.
+         * @param type The type of the entry.
+         * @param rawObjectId The id of the entry.
          */
         DirectoryEntry(final String name, final FileMode type, final byte[] rawObjectId) {
             if (Objects.requireNonNull(name).indexOf('/') >= 0) {
@@ -173,7 +173,7 @@ public class GitIdentifiers {
         /**
          * Gets the octal mode as used by Git.
          *
-         * @return The octal mode
+         * @return The octal mode.
          */
         public String getMode() {
             return mode;
@@ -187,7 +187,7 @@ public class GitIdentifiers {
     public static final class TreeIdBuilder {
 
         /**
-         * A supplier of a blob identifier that may throw {@link IOException}.
+         * Supplies a blob identifier that may throw {@link IOException}.
          */
         @FunctionalInterface
         private interface BlobIdSupplier {
@@ -210,7 +210,7 @@ public class GitIdentifiers {
         }
 
         /**
-         * Returns the {@link TreeIdBuilder} for the named subdirectory, creating it if absent.
+         * Annds and returns the {@link TreeIdBuilder} for the named subdirectory, creating it if absent.
          *
          * @param name The relative path of the subdirectory in normalized form (may contain {@code '/'}).
          * @return The {@link TreeIdBuilder} for the subdirectory.
