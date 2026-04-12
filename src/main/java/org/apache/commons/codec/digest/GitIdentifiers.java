@@ -89,9 +89,9 @@ public class GitIdentifiers {
         /**
          * Constructs a new entry.
          *
-         * @param name The name of the entry.
-         * @param type The type of the entry.
-         * @param rawObjectId The id of the entry.
+         * @param name The name of the entry, not containing {@code '/'}.
+         * @param type The type of the entry, not null.
+         * @param rawObjectId The id of the entry, not null.
          */
         DirectoryEntry(final String name, final FileMode type, final byte[] rawObjectId) {
             if (Objects.requireNonNull(name).indexOf('/') >= 0) {
