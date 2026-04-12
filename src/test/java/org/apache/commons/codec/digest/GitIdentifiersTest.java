@@ -63,15 +63,6 @@ class GitIdentifiersTest {
     //   hello.txt                (regular file)
     //   run.sh                   (executable file)
 
-    /** Decodes a compile-time hex literal; throws {@link AssertionError} on malformed input. */
-    private static byte[] hex(final String hex) {
-        try {
-            return Hex.decodeHex(hex);
-        } catch (final DecoderException e) {
-            throw new AssertionError(e);
-        }
-    }
-
     /** Content of {@code src/hello.txt}. */
     private static final byte[] HELLO_CONTENT = "hello\n".getBytes(StandardCharsets.UTF_8);
     /** SHA-1 blob id of {@link #HELLO_CONTENT}: {@code printf 'hello\n' | git hash-object --stdin} */
@@ -144,6 +135,15 @@ class GitIdentifiersTest {
         return Stream.of(Arguments.of("DigestUtilsTest/hello.txt", "5f4a83288e67f1be2d6fcdad84165a86c6a970d7"),
                 Arguments.of("DigestUtilsTest/greetings.txt", "6cf4f797455661e61d1ee6913fc29344f5897243"),
                 Arguments.of("DigestUtilsTest/subdir/nested.txt", "07a392ddb4dbff06a373a7617939f30b2dcfe719"));
+    }
+
+    /** Decodes a compile-time hex literal; throws {@link AssertionError} on malformed input. */
+    private static byte[] hex(final String hex) {
+        try {
+            return Hex.decodeHex(hex);
+        } catch (final DecoderException e) {
+            throw new AssertionError(e);
+        }
     }
 
     private static Path resourcePath(final String resourceName) throws Exception {
