@@ -593,7 +593,7 @@ public class PureJavaCrc32 implements Checksum {
         resetCrc();
     }
 
-    // called by ctor, so must not be overrideable
+    // called by ctor, so must not be overridable
     private void resetCrc() {
         crc = 0xffffffff;
     }

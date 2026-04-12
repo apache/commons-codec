@@ -225,7 +225,7 @@ public class BaseNCodecInputStream<C extends BaseNCodec, T extends BaseNCodecInp
          * Rationale for while-loop on (readLen == 0): ----- Base32.readResults() usually returns > 0 or EOF (-1). In the rare case where it returns 0, we just
          * keep trying.
          *
-         * This is essentially an undocumented contract for InputStream implementors that want their code to work properly with java.io.InputStreamReader, since
+         * This is essentially an undocumented contract for InputStream implementers that want their code to work properly with java.io.InputStreamReader, since
          * the latter hates it when InputStream.read(byte[]) returns a zero. Unfortunately our readResults() call must return 0 if a large amount of the data
          * being decoded was non-base32, so this while-loop enables proper interop with InputStreamReader for that scenario. ----- This is a fix for CODEC-101
          */

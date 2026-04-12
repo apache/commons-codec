@@ -48,7 +48,7 @@ import org.apache.commons.codec.binary.StringUtils;
  * byte[] key = {1,2,3,4}; // don't use this actual key!
  * String valueToDigest = "The quick brown fox jumps over the lazy dog";
  * byte[] hmac = new HmacUtils(HMAC_SHA_224, key).hmac(valueToDigest);
- * // Mac re-use
+ * // Mac reuse
  * HmacUtils hm1 = new HmacUtils("HmacAlgoName", key); // use a valid name here!
  * String hexPom = hm1.hmacHex(new File("pom.xml"));
  * String hexNot = hm1.hmacHex(new File("NOTICE.txt"));
