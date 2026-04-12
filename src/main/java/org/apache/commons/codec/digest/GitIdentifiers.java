@@ -132,6 +132,8 @@ public class GitIdentifiers {
      *
      * <p>Git encodes the file type and permission bits as an ASCII octal string that precedes the entry name in the binary tree format. The values defined here
      * cover the four entry types that Git itself produces.</p>
+     *
+     * @see <a href="https://git-scm.com/book/en/v2/Git-Internals-Git-Objects">Git Internals – Git Objects</a>
      */
     public enum FileMode {
 
