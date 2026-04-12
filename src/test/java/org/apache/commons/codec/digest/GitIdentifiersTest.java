@@ -341,7 +341,6 @@ class GitIdentifiersTest {
                 GitIdentifiers.treeId(DigestUtils.getSha1Digest(), resourcePath("DigestUtilsTest")));
     }
 
-    @DisabledOnOs(OS.WINDOWS)
     @ParameterizedTest
     @MethodSource("virtualTreeProvider")
     void testTreeIdPathUnix(final String algorithm, final byte[] helloId, final byte[] linkId, final byte[] linkTxtId,
