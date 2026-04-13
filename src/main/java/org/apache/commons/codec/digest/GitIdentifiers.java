@@ -306,6 +306,7 @@ public class GitIdentifiers {
          *
          * @return The raw tree identifier bytes.
          */
+        @Override
         public byte[] get() {
             final Set<DirectoryEntry> entries = new TreeSet<>(fileEntries.values());
             dirEntries.forEach((k, v) -> entries.add(new DirectoryEntry(k, FileMode.DIRECTORY, v.get())));
