@@ -1,3 +1,45 @@
+Apache Commons Codec 1.22.0 Release Notes
+-----------------------------------------
+
+The Apache Commons Codec team is pleased to announce the release of Apache Commons Codec 1.22.0.
+
+The Apache Commons Codec component contains encoders and decoders for
+formats such as Base16, Base32, Base64, digest, and Hexadecimal. In addition to these
+widely used encoders and decoders, the codec package also maintains a
+collection of phonetic encoding utilities.
+
+This is a feature and maintenance release. Java 8 or later is required.
+
+
+New features
+------------
+
+* CODEC-326:  Add Base58 support. Thanks to Inkeet, Gary Gregory, Wolff Bock von Wuelfingen.
+*             Add BaseNCodecInputStream.AbstracBuilder.setByteArray(byte[]). Thanks to Gary Gregory.
+* CODEC-335:  Add GitIdentifiers to compute Git blob and tree object identifiers. Thanks to Piotr P. Karwasz, Gary Gregory.
+
+Fixed Bugs
+----------
+
+* CODEC-249:  Fix Incorrect transform of CH digraph according Metaphone basic rules #423. Thanks to Shalu Jha, Andrey, Gary Gregory.
+* CODEC-317:  ColognePhonetic can create duplicate consecutive codes in some cases. Thanks to DRUser123, Shalu Jha, Gary Gregory.
+*             Add boundary tests for BinaryCodec.fromAscii partial-bit inputs #425. Thanks to fancying, Gary Gregory.
+* CODEC-336:  Base64.Builder.setUrlSafe(boolean) Javadoc incorrectly states null is accepted for primitive boolean parameter. Thanks to Partha Paul, Gary Gregory.
+
+Changes
+-------
+
+*             Bump org.apache.commons:commons-parent from 96 to 98. Thanks to Gary Gregory.
+
+
+For complete information on Apache Commons Codec, including instructions on how to submit bug reports,
+patches, or suggestions for improvement, see the Apache Commons Codec website:
+
+https://commons.apache.org/proper/commons-codec/
+
+Download page: https://commons.apache.org/proper/commons-codec/download_codec.cgi
+
+---------------------------------------------------------------------------------
 Apache Commons Codec 1.21.0 Release Notes
 -----------------------------------------
 
