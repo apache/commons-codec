@@ -246,8 +246,8 @@ class ColognePhoneticTest extends AbstractStringEncoderTest<ColognePhonetic> {
 
     @Test
     void testHyphen() throws EncoderException {
-        final String[][] data = { { "bergisch-gladbach", "174845214" }, { "M\u00fcller-L\u00fcdenscheidt", "65752682" } }; // Müller-Lüdenscheidt
-        checkEncodings(data);
+        // Müller-Lüdenscheidt
+        checkEncodings(new String[][] { { "bergisch-gladbach", "174845214" }, { "M\u00fcller-L\u00fcdenscheidt", "65752682" } });
     }
 
     @ParameterizedTest

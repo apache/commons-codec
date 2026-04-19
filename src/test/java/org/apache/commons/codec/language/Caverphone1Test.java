@@ -65,8 +65,7 @@ class Caverphone1Test extends AbstractStringEncoderTest<Caverphone1> {
 
     @Test
     void testEndMb() throws EncoderException {
-        final String[][] data = {{"mb", "M11111"}, {"mbmb", "MPM111"}};
-        checkEncodings(data);
+        checkEncodings(new String[][] {{"mb", "M11111"}, {"mbmb", "MPM111"}});
     }
 
     /**
@@ -88,8 +87,7 @@ class Caverphone1Test extends AbstractStringEncoderTest<Caverphone1> {
      */
     @Test
     void testSpecificationV1Examples() throws EncoderException {
-        final String[][] data = {{"David", "TFT111"}, {"Whittle", "WTL111"}};
-        checkEncodings(data);
+        checkEncodings(new String[][] {{"David", "TFT111"}, {"Whittle", "WTL111"}});
     }
 
     /**
@@ -99,8 +97,7 @@ class Caverphone1Test extends AbstractStringEncoderTest<Caverphone1> {
      */
     @Test
     void testWikipediaExamples() throws EncoderException {
-        final String[][] data = {{"Lee", "L11111"}, {"Thompson", "TMPSN1"}};
-        checkEncodings(data);
+        checkEncodings(new String[][] {{"Lee", "L11111"}, {"Thompson", "TMPSN1"}});
     }
 
 }

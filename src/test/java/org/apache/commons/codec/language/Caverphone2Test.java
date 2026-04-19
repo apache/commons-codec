@@ -68,8 +68,7 @@ class Caverphone2Test extends AbstractStringEncoderTest<Caverphone2> {
      * @throws EncoderException for some failure scenarios     */
     @Test
     void testCaverphoneRevisitedExamples() throws EncoderException {
-        final String[][] data = {{"Stevenson", "STFNSN1111"}, {"Peter", "PTA1111111"}};
-        checkEncodings(data);
+        checkEncodings(new String[][] {{"Stevenson", "STFNSN1111"}, {"Peter", "PTA1111111"}});
     }
 
     /**
@@ -330,15 +329,14 @@ class Caverphone2Test extends AbstractStringEncoderTest<Caverphone2> {
      * @throws EncoderException for some failure scenarios     */
     @Test
     void testCaverphoneRevisitedRandomWords() throws EncoderException {
-        checkEncodingVariations("RTA1111111", new String[]{"rather", "ready", "writer"});
+        checkEncodingVariations("RTA1111111", "rather", "ready", "writer");
         checkEncoding("SSA1111111", "social");
-        checkEncodingVariations("APA1111111", new String[]{"able", "appear"});
+        checkEncodingVariations("APA1111111", "able", "appear");
     }
 
     @Test
     void testEndMb() throws EncoderException {
-        final String[][] data = {{"mb", "M111111111"}, {"mbmb", "MPM1111111"}};
-        checkEncodings(data);
+        checkEncodings(new String[][] {{"mb", "M111111111"}, {"mbmb", "MPM1111111"}});
     }
 
     // Caverphone Revisited
@@ -351,15 +349,14 @@ class Caverphone2Test extends AbstractStringEncoderTest<Caverphone2> {
 
     @Test
     void testSpecificationExamples() throws EncoderException {
-        final String[][] data = {
+        checkEncodings(new String[][] {
             {"Peter", "PTA1111111"},
             {"ready", "RTA1111111"},
             {"social", "SSA1111111"},
             {"able", "APA1111111"},
             {"Tedder", "TTA1111111"},
             {"Karleen", "KLN1111111"},
-            {"Dyun", "TN11111111"}};
-        checkEncodings(data);
+            {"Dyun", "TN11111111"}});
     }
 
 }
