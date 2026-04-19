@@ -42,7 +42,8 @@ class Caverphone2Test extends AbstractStringEncoderTest<Caverphone2> {
      * @throws EncoderException for some failure scenarios     */
     @Test
     void testCaverphoneRevisitedCommonCodeAT11111111() throws EncoderException {
-        checkEncodingVariations("AT11111111", new String[]{
+        // @formatter:off
+        checkEncodingVariations("AT11111111",
             "add",
             "aid",
             "at",
@@ -57,7 +58,8 @@ class Caverphone2Test extends AbstractStringEncoderTest<Caverphone2> {
             "heart",
             "it",
             "out",
-            "old"});
+            "old");
+        // @formatter:on
     }
 
     /**
@@ -76,7 +78,8 @@ class Caverphone2Test extends AbstractStringEncoderTest<Caverphone2> {
      * @throws EncoderException for some failure scenarios     */
     @Test
     void testCaverphoneRevisitedRandomNameKLN1111111() throws EncoderException {
-        checkEncodingVariations("KLN1111111", new String[]{
+        // @formatter:off
+        checkEncodingVariations("KLN1111111",
             "Cailean",
             "Calan",
             "Calen",
@@ -158,7 +161,8 @@ class Caverphone2Test extends AbstractStringEncoderTest<Caverphone2> {
             "Quillan",
             "Quillon",
             "Qulllon",
-            "Xylon"});
+            "Xylon");
+        // @formatter:on
     }
 
     /**
@@ -167,7 +171,8 @@ class Caverphone2Test extends AbstractStringEncoderTest<Caverphone2> {
      * @throws EncoderException for some failure scenarios     */
     @Test
     void testCaverphoneRevisitedRandomNameTN11111111() throws EncoderException {
-        checkEncodingVariations("TN11111111", new String[]{
+        // @formatter:off
+        checkEncodingVariations("TN11111111",
             "Dan",
             "Dane",
             "Dann",
@@ -236,7 +241,8 @@ class Caverphone2Test extends AbstractStringEncoderTest<Caverphone2> {
             "Town",
             "Towne",
             "Turne",
-            "Tyne"});
+            "Tyne");
+        // @formatter:on
     }
 
     /**
@@ -245,7 +251,8 @@ class Caverphone2Test extends AbstractStringEncoderTest<Caverphone2> {
      * @throws EncoderException for some failure scenarios     */
     @Test
     void testCaverphoneRevisitedRandomNameTTA1111111() throws EncoderException {
-        checkEncodingVariations("TTA1111111", new String[]{
+        // @formatter:off
+        checkEncodingVariations("TTA1111111",
             "Darda",
             "Datha",
             "Dedie",
@@ -313,7 +320,8 @@ class Caverphone2Test extends AbstractStringEncoderTest<Caverphone2> {
             "Tudor",
             "Turtle",
             "Tuttle",
-            "Tutto"});
+            "Tutto");
+        // @formatter:on
     }
 
     /**

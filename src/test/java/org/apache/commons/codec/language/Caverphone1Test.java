@@ -43,7 +43,8 @@ class Caverphone1Test extends AbstractStringEncoderTest<Caverphone1> {
      */
     @Test
     void testCaverphoneRevisitedCommonCodeAT1111() throws EncoderException {
-        checkEncodingVariations("AT1111", new String[]{
+        // @formatter:off
+        checkEncodingVariations("AT1111",
             "add",
             "aid",
             "at",
@@ -58,7 +59,8 @@ class Caverphone1Test extends AbstractStringEncoderTest<Caverphone1> {
             "heart",
             "it",
             "out",
-            "old"});
+            "old");
+        // @formatter:on
     }
 
     @Test
