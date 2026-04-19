@@ -41,7 +41,8 @@ class SoundexTest extends AbstractStringEncoderTest<Soundex> {
 
     @Test
     void testB650() throws EncoderException {
-        checkEncodingVariations("B650", new String[]{
+        // @formatter:off
+        checkEncodingVariations("B650",
             "BARHAM",
             "BARONE",
             "BARRON",
@@ -81,13 +82,13 @@ class SoundexTest extends AbstractStringEncoderTest<Soundex> {
             "BYRAM",
             "BYRNE",
             "BYRON",
-            "BYRUM"});
+            "BYRUM");
+        // @formatter:on
     }
 
     @Test
     void testBadCharacters() {
         assertEquals("H452", getStringEncoder().encode("HOL>MES"));
-
     }
 
     @Test
@@ -181,7 +182,8 @@ class SoundexTest extends AbstractStringEncoderTest<Soundex> {
 
     @Test
     void testEncodeIgnoreApostrophes() throws EncoderException {
-        checkEncodingVariations("O165", new String[]{
+        // @formatter:off
+        checkEncodingVariations("O165",
             "OBrien",
             "'OBrien",
             "O'Brien",
@@ -189,7 +191,8 @@ class SoundexTest extends AbstractStringEncoderTest<Soundex> {
             "OBr'ien",
             "OBri'en",
             "OBrie'n",
-            "OBrien'"});
+            "OBrien'");
+        // @formatter:on
     }
 
     /**
@@ -198,7 +201,8 @@ class SoundexTest extends AbstractStringEncoderTest<Soundex> {
      * @throws EncoderException for some failure scenarios     */
     @Test
     void testEncodeIgnoreHyphens() throws EncoderException {
-        checkEncodingVariations("K525", new String[]{
+        // @formatter:off
+        checkEncodingVariations("K525",
             "KINGSMITH",
             "-KINGSMITH",
             "K-INGSMITH",
@@ -209,7 +213,8 @@ class SoundexTest extends AbstractStringEncoderTest<Soundex> {
             "KINGSM-ITH",
             "KINGSMI-TH",
             "KINGSMIT-H",
-            "KINGSMITH-"});
+            "KINGSMITH-");
+        // @formatter:on
     }
 
     @Test
@@ -266,7 +271,8 @@ class SoundexTest extends AbstractStringEncoderTest<Soundex> {
         assertEquals("S460", getStringEncoder().encode("Sgler"));
         assertEquals("S460", getStringEncoder().encode("Swhgler"));
         // Also S460:
-        checkEncodingVariations("S460", new String[]{
+        // @formatter:off
+        checkEncodingVariations("S460",
             "SAILOR",
             "SALYER",
             "SAYLOR",
@@ -282,7 +288,8 @@ class SoundexTest extends AbstractStringEncoderTest<Soundex> {
             "SHULER",
             "SILAR",
             "SILER",
-            "SILLER"});
+            "SILLER");
+        // @formatter:on
     }
 
     /**
@@ -303,7 +310,7 @@ class SoundexTest extends AbstractStringEncoderTest<Soundex> {
      * @throws EncoderException for some failure scenarios     */
     @Test
     void testMsSqlServer2() throws EncoderException {
-        checkEncodingVariations("E625", new String[]{"Erickson", "Erickson", "Erikson", "Ericson", "Ericksen", "Ericsen"});
+        checkEncodingVariations("E625", "Erickson", "Erickson", "Erikson", "Ericson", "Ericksen", "Ericsen");
     }
 
     /**
