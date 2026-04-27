@@ -38,7 +38,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 /**
- * Tests {@link org.apache.commons.codec.binary.Hex}.
+ * Tests {@link Hex}.
  */
 class HexTest {
 

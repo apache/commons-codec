@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests {@link org.apache.commons.codec.binary.CharSequenceUtils}.
+ * Tests {@link CharSequenceUtils}.
  *
  * <p>Tests copied from Apache Commons Lang 3.11. The implementation in codec is based on
  * an earlier version of Lang and some tests fail. The CharSequenceUtils class is public but
