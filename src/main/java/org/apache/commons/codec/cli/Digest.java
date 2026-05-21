@@ -14,8 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.commons.codec.cli;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -36,18 +38,17 @@ import org.apache.commons.codec.digest.MessageDigestAlgorithms;
  */
 public class Digest {
 
+    private static final String EMPTY = "";
+
     /**
-     * Runs the digest algorithm in {@code args[0]} on the file in {@code args[1]}. If there is no {@code args[1]}, use
-     * standard input.
+     * Runs the digest algorithm in {@code args[0]} on the file in {@code args[1]}. If there is no {@code args[1]}, use standard input.
      *
      * <p>
      * The algorithm can also be {@code ALL} or {@code *} to output one line for each known algorithm.
      * </p>
      *
-     * @param args
-     *            {@code args[0]} is one of {@link MessageDigestAlgorithms} name,
-     *            {@link MessageDigest} name, {@code ALL}, or {@code *}.
-     *            {@code args[1+]} is a FILE/DIRECTORY/String.
+     * @param args {@code args[0]} is one of {@link MessageDigestAlgorithms} name, {@link MessageDigest} name, {@code ALL}, or {@code *}. {@code args[1+]} is a
+     *             FILE/DIRECTORY/String.
      * @throws IOException if an error occurs.
      */
     public static void main(final String[] args) throws IOException {
@@ -62,16 +63,11 @@ public class Digest {
         Objects.requireNonNull(args);
         final int argsLength = args.length;
         if (argsLength == 0) {
-            throw new IllegalArgumentException(
-                    String.format("Usage: java %s [algorithm] [FILE|DIRECTORY|string] ...", Digest.class.getName()));
+            throw new IllegalArgumentException(String.format("Usage: java %s [algorithm] [FILE|DIRECTORY|string] ...", Digest.class.getName()));
         }
         this.args = args;
         this.algorithm = args[0];
-        if (argsLength <= 1) {
-            this.inputs = null;
-        } else {
-            this.inputs = Arrays.copyOfRange(args, 1, argsLength);
-        }
+        this.inputs = argsLength > 1 ? Arrays.copyOfRange(args, 1, argsLength) : null;
     }
 
     private void println(final String prefix, final byte[] digest) {
@@ -84,25 +80,26 @@ public class Digest {
         // where '*' is used for binary files
         // shasum(1) has a -b option which generates " *" separator
         // we don't distinguish binary files at present
-        System.out.println(prefix + Hex.encodeHexString(digest) + (fileName != null ? "  " + fileName : ""));
+        System.out.println(prefix + Hex.encodeHexString(digest) + (fileName != null ? "  " + fileName : EMPTY));
     }
 
     private void run() throws IOException {
+        final BufferedInputStream systemIn = inputs != null ? null : new BufferedInputStream(System.in);
         if (algorithm.equalsIgnoreCase("ALL") || algorithm.equals("*")) {
-            run(MessageDigestAlgorithms.values());
+            run(systemIn, MessageDigestAlgorithms.values());
             return;
         }
         final MessageDigest messageDigest = DigestUtils.getDigest(algorithm, null);
         if (messageDigest != null) {
-            run("", messageDigest);
+            run(systemIn, EMPTY, messageDigest);
         } else {
-            run("", DigestUtils.getDigest(algorithm.toUpperCase(Locale.ROOT)));
+            run(systemIn, EMPTY, DigestUtils.getDigest(algorithm.toUpperCase(Locale.ROOT)));
         }
     }
 
-    private void run(final String prefix, final MessageDigest messageDigest) throws IOException {
+    private void run(final BufferedInputStream systemIn, final String prefix, final MessageDigest messageDigest) throws IOException {
         if (inputs == null) {
-            println(prefix, DigestUtils.digest(messageDigest, System.in));
+            println(prefix, DigestUtils.digest(messageDigest, systemIn));
             return;
         }
         for (final String source : inputs) {
@@ -122,22 +119,29 @@ public class Digest {
         }
     }
 
-    private void run(final String prefix, final MessageDigest messageDigest, final File[] files) throws IOException {
-        for (final File file : files) {
-            if (file.isFile()) {
-                println(prefix, DigestUtils.digest(messageDigest, file), file.getName());
+    private void run(final BufferedInputStream systemIn, final String prefix, final String messageDigestAlgorithm) throws IOException {
+        run(systemIn, prefix, DigestUtils.getDigest(messageDigestAlgorithm));
+    }
+
+    private void run(final BufferedInputStream systemIn, final String[] digestAlgorithms) throws IOException {
+        for (final String messageDigestAlgorithm : digestAlgorithms) {
+            if (DigestUtils.isAvailable(messageDigestAlgorithm)) {
+                if (systemIn != null) {
+                    // 1 GB arbitrary default.
+                    systemIn.mark(Integer.getInteger(getClass().getName() + ".markReadLimit", 1_073_741_824));
+                }
+                run(systemIn, messageDigestAlgorithm + " ", messageDigestAlgorithm);
+                if (systemIn != null) {
+                    systemIn.reset();
+                }
             }
         }
     }
 
-    private void run(final String prefix, final String messageDigestAlgorithm) throws IOException {
-        run(prefix, DigestUtils.getDigest(messageDigestAlgorithm));
-    }
-
-    private void run(final String[] digestAlgorithms) throws IOException {
-        for (final String messageDigestAlgorithm : digestAlgorithms) {
-            if (DigestUtils.isAvailable(messageDigestAlgorithm)) {
-                run(messageDigestAlgorithm + " ", messageDigestAlgorithm);
+    private void run(final String prefix, final MessageDigest messageDigest, final File[] files) throws IOException {
+        for (final File file : files) {
+            if (file.isFile()) {
+                println(prefix, DigestUtils.digest(messageDigest, file), file.getName());
             }
         }
     }
