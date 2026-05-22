@@ -462,7 +462,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
                     if (branching) {
                         nextBranches.clear();
                     }
-                    final String[] replacements = rule.getReplacements(inputContext, lastChar == '\0');
+                    final String[] replacements = rule.getReplacements(inputContext, lastChar == NUL);
                     final boolean branchingRequired = replacements.length > 1 && branching;
                     for (final Branch branch : currentBranches) {
                         for (final String nextReplacement : replacements) {
