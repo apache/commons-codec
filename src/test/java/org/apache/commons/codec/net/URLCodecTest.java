@@ -22,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.nio.charset.StandardCharsets;
+import java.util.BitSet;
 
 import org.apache.commons.codec.CharEncoding;
 import org.apache.commons.codec.DecoderException;
@@ -178,6 +179,30 @@ class URLCodecTest {
         assertEquals("Hello+there%21", encoded, "Basic URL encoding test");
         assertEquals(plain, urlCodec.decode(encoded), "Basic URL decoding test");
         validateState(urlCodec);
+    }
+
+    @Test
+    void testEncodeUrlWithPercentMarkedSafeEscapesPercent() throws Exception {
+        final BitSet safe = new BitSet();
+        safe.set('%');
+        final String plain = "%";
+        final byte[] encoded = URLCodec.encodeUrl(safe, plain.getBytes(StandardCharsets.US_ASCII));
+        final String encodedS = new String(encoded, StandardCharsets.US_ASCII);
+        assertEquals("%25", encodedS, "URLCodec should escape percent even when marked safe");
+        final byte[] decoded = URLCodec.decodeUrl(encoded);
+        assertEquals(plain, new String(decoded, StandardCharsets.US_ASCII), "URLCodec percent decoding test");
+    }
+
+    @Test
+    void testEncodeUrlWithPlusMarkedSafeEscapesPlus() throws Exception {
+        final BitSet safe = new BitSet();
+        safe.set('+');
+        final String plain = "+";
+        final byte[] encoded = URLCodec.encodeUrl(safe, plain.getBytes(StandardCharsets.US_ASCII));
+        final String encodedS = new String(encoded, StandardCharsets.US_ASCII);
+        assertEquals("%2B", encodedS, "URLCodec should escape plus even when marked safe");
+        final byte[] decoded = URLCodec.decodeUrl(encoded);
+        assertEquals(plain, new String(decoded, StandardCharsets.US_ASCII), "URLCodec plus decoding test");
     }
 
     @Test
