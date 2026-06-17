@@ -399,6 +399,45 @@ class Base32Test {
     }
 
     @Test
+    void testBuilderCustomEncodeTableAffectsDecodeTable() {
+        final byte[] encodeTable = ENCODE_TABLE.clone();
+        final byte temp = encodeTable[0];
+        encodeTable[0] = encodeTable[1];
+        encodeTable[1] = temp;
+        final Base32 base32 = Base32.builder().setEncodeTable(encodeTable).setLineLength(0).get();
+        final byte[] data = { 0 };
+        final byte[] encoded = base32.encode(data);
+        assertEquals("BB======", new String(encoded, StandardCharsets.US_ASCII));
+        assertArrayEquals(data, base32.decode(encoded));
+    }
+
+    @Test
+    void testBuilderCustomEncodeTableRejectsDuplicateEntries() {
+        final byte[] encodeTable = ENCODE_TABLE.clone();
+        encodeTable[1] = encodeTable[0];
+        assertThrows(IllegalArgumentException.class, () -> Base32.builder().setEncodeTable(encodeTable));
+    }
+
+    @Test
+    void testBuilderCustomEncodeTableRejectsInvalidLength() {
+        assertThrows(IllegalArgumentException.class, () -> Base32.builder().setEncodeTable(Arrays.copyOf(ENCODE_TABLE, ENCODE_TABLE.length - 1)));
+    }
+
+    @Test
+    void testBuilderCustomEncodeTableWithNonAsciiBytes() {
+        final byte[] encodeTable = new byte[32];
+        for (int i = 0; i < encodeTable.length; i++) {
+            encodeTable[i] = (byte) (0x80 + i);
+        }
+        final Base32 base32 = Base32.builder().setEncodeTable(encodeTable).setLineLength(0).get();
+        final byte[] data = { 0 };
+        final byte[] encoded = base32.encode(data);
+        assertArrayEquals(new byte[] { (byte) 0x80, (byte) 0x80, '=', '=', '=', '=', '=', '=' }, encoded);
+        assertTrue(base32.isInAlphabet((byte) 0x80));
+        assertArrayEquals(data, base32.decode(encoded));
+    }
+
+    @Test
     void testBuilderLineAttributes() {
         assertNull(Base32.builder().get().getLineSeparator());
         assertNull(Base32.builder().setLineSeparator(BaseNCodec.CHUNK_SEPARATOR).get().getLineSeparator());
