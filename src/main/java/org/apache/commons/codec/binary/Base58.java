@@ -18,7 +18,7 @@
 package org.apache.commons.codec.binary;
 
 import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 /**
  * Provides Base58 encoding and decoding as commonly used in cryptocurrency and blockchain applications.
@@ -75,17 +75,22 @@ public class Base58 extends BaseNCodec {
         }
 
         /**
-         * Creates a new Base58 codec instance.
+         * Sets the encode table and derives the matching decode table.
          *
-         * @return a new Base58 codec.
+         * @param encodeTable the encode table with exactly 58 unique entries, null resets to the default.
+         * @return {@code this} instance.
+         * @throws IllegalArgumentException if the encode table does not contain exactly 58 unique entries.
          */
         @Override
         public Base58.Builder setEncodeTable(final byte... encodeTable) {
-            super.setDecodeTableRaw(DECODE_TABLE);
+            super.setDecodeTableRaw(toDecodeTable(encodeTable));
             return super.setEncodeTable(encodeTable);
         }
     }
     private static final BigInteger BASE = BigInteger.valueOf(58);
+
+    private static final int DECODING_TABLE_LENGTH = 256;
+    private static final int ENCODING_TABLE_LENGTH = 58;
 
     private static final byte[] EMPTY = new byte[0];
 
@@ -139,6 +144,43 @@ public class Base58 extends BaseNCodec {
     }
 
     /**
+     * Calculates a decode table for a given encode table.
+     *
+     * @param encodeTable that is used to determine decode lookup table.
+     * @return A new decode table.
+     * @throws IllegalArgumentException if the encode table does not contain exactly 58 unique entries.
+     */
+    private static byte[] calculateDecodeTable(final byte[] encodeTable) {
+        if (encodeTable.length != ENCODING_TABLE_LENGTH) {
+            throw new IllegalArgumentException("encodeTable must have exactly 58 entries.");
+        }
+        final byte[] decodeTable = new byte[DECODING_TABLE_LENGTH];
+        Arrays.fill(decodeTable, (byte) -1);
+        for (int i = 0; i < encodeTable.length; i++) {
+            final int encodedByte = encodeTable[i] & 0xff;
+            if (decodeTable[encodedByte] != -1) {
+                throw new IllegalArgumentException("encodeTable must not contain duplicate entries.");
+            }
+            decodeTable[encodedByte] = (byte) i;
+        }
+        return decodeTable;
+    }
+
+    /**
+     * Gets the decode table that matches the given encode table.
+     *
+     * @param encodeTable that is used to determine decode lookup table.
+     * @return the matching decode table.
+     */
+    private static byte[] toDecodeTable(final byte[] encodeTable) {
+        final byte[] table = encodeTable != null ? encodeTable : ENCODE_TABLE;
+        if (Arrays.equals(table, ENCODE_TABLE)) {
+            return DECODE_TABLE;
+        }
+        return calculateDecodeTable(table);
+    }
+
+    /**
      * Constructs a Base58 codec used for encoding and decoding.
      */
     public Base58() {
@@ -157,8 +199,8 @@ public class Base58 extends BaseNCodec {
     /**
      * Converts Base58 encoded data to binary.
      * <p>
-     * Uses BigInteger arithmetic to convert the Base58 string to binary data. Leading '1' characters in the Base58 encoding represent leading zero bytes in the
-     * binary data.
+     * Uses BigInteger arithmetic to convert the Base58 string to binary data. Leading characters that match the first Base58 alphabet entry represent leading
+     * zero bytes in the binary data.
      * </p>
      *
      * @param base58 the Base58 encoded data.
@@ -167,17 +209,18 @@ public class Base58 extends BaseNCodec {
      */
     private void convertFromBase58(final byte[] base58, final Context context) {
         BigInteger value = BigInteger.ZERO;
-        int leadingOnes = 0;
+        int leadingZeros = 0;
+        final int zero = encodeTable[0] & 0xff;
         for (final byte b : base58) {
-            if (b != '1') {
+            if ((b & 0xff) != zero) {
                 break;
             }
-            leadingOnes++;
+            leadingZeros++;
         }
         BigInteger power = BigInteger.ONE;
-        for (int i = base58.length - 1; i >= leadingOnes; i--) {
-            final byte b = base58[i];
-            final int digit = b < DECODE_TABLE.length ? DECODE_TABLE[b] : -1;
+        for (int i = base58.length - 1; i >= leadingZeros; i--) {
+            final int b = base58[i] & 0xff;
+            final int digit = b < decodeTable.length ? decodeTable[b] : -1;
             if (digit < 0) {
                 throw new IllegalArgumentException(String.format("Invalid character in Base58 string: 0x%02x", b));
             }
@@ -190,8 +233,8 @@ public class Base58 extends BaseNCodec {
             System.arraycopy(decoded, 1, tmp, 0, tmp.length);
             decoded = tmp;
         }
-        final byte[] result = new byte[leadingOnes + decoded.length];
-        System.arraycopy(decoded, 0, result, leadingOnes, decoded.length);
+        final byte[] result = new byte[leadingZeros + decoded.length];
+        System.arraycopy(decoded, 0, result, leadingZeros, decoded.length);
         final byte[] buffer = ensureBufferSize(result.length, context);
         System.arraycopy(result, 0, buffer, context.pos, result.length);
         context.pos += result.length;
@@ -200,8 +243,8 @@ public class Base58 extends BaseNCodec {
     /**
      * Converts accumulated binary data to Base58 encoding.
      * <p>
-     * Uses BigInteger arithmetic to convert the binary data to Base58. Leading zeros in the binary data are represented as '1' characters in the Base58
-     * encoding.
+     * Uses BigInteger arithmetic to convert the binary data to Base58. Leading zeros in the binary data are represented as the first character in the Base58
+     * alphabet.
      * </p>
      *
      * @param accumulate the binary data to encode.
@@ -210,8 +253,10 @@ public class Base58 extends BaseNCodec {
      */
     private byte[] convertToBase58(final byte[] accumulate, final Context context) {
         final StringBuilder base58 = getStringBuilder(accumulate);
-        final String encoded = base58.reverse().toString();
-        final byte[] encodedBytes = encoded.getBytes(StandardCharsets.UTF_8);
+        final byte[] encodedBytes = new byte[base58.length()];
+        for (int i = 0; i < encodedBytes.length; i++) {
+            encodedBytes[i] = (byte) base58.charAt(encodedBytes.length - 1 - i);
+        }
         final byte[] buffer = ensureBufferSize(encodedBytes.length, context);
         System.arraycopy(encodedBytes, 0, buffer, context.pos, encodedBytes.length);
         context.pos += encodedBytes.length;
@@ -285,8 +330,8 @@ public class Base58 extends BaseNCodec {
     /**
      * Builds the Base58 string representation of the given binary data.
      * <p>
-     * Converts binary data to a BigInteger and divides by 58 repeatedly to get the Base58 digits. Handles leading zeros by counting them and appending '1' for
-     * each leading zero byte.
+     * Converts binary data to a BigInteger and divides by 58 repeatedly to get the Base58 digits. Handles leading zeros by counting them and appending the first
+     * character in the Base58 alphabet for each leading zero byte.
      * </p>
      *
      * @param accumulate the binary data to convert.
@@ -304,11 +349,11 @@ public class Base58 extends BaseNCodec {
         final StringBuilder base58 = new StringBuilder();
         while (value.signum() > 0) {
             final BigInteger[] divRem = value.divideAndRemainder(BASE);
-            base58.append((char) ENCODE_TABLE[divRem[1].intValue()]);
+            base58.append((char) (encodeTable[divRem[1].intValue()] & 0xff));
             value = divRem[0];
         }
         for (int i = 0; i < leadingZeros; i++) {
-            base58.append('1');
+            base58.append((char) (encodeTable[0] & 0xff));
         }
         return base58;
     }
@@ -321,6 +366,7 @@ public class Base58 extends BaseNCodec {
      */
     @Override
     protected boolean isInAlphabet(final byte value) {
-        return isInAlphabet(value, DECODE_TABLE);
+        final int octet = value & 0xff;
+        return octet < decodeTable.length && decodeTable[octet] != -1;
     }
 }
