@@ -132,6 +132,28 @@ class PercentCodecTest {
     }
 
     @Test
+    void testPercentEncoderDecoderWithPlusForSpaceEscapesLiteralPlus() throws Exception {
+        final String input = "a+b c";
+        final PercentCodec percentCodec = new PercentCodec(null, true);
+        final byte[] encoded = percentCodec.encode(input.getBytes(StandardCharsets.UTF_8));
+        final String encodedS = new String(encoded, StandardCharsets.UTF_8);
+        assertEquals("a%2Bb+c", encodedS, "PercentCodec plus for space should escape literal plus");
+        final byte[] decode = percentCodec.decode(encoded);
+        assertEquals(new String(decode, StandardCharsets.UTF_8), input, "PercentCodec literal plus decoding test");
+    }
+
+    @Test
+    void testPercentEncoderDecoderWithPlusForSpaceEscapesLiteralPlusWithoutSpaces() throws Exception {
+        final String input = "a+b";
+        final PercentCodec percentCodec = new PercentCodec(null, true);
+        final byte[] encoded = percentCodec.encode(input.getBytes(StandardCharsets.UTF_8));
+        final String encodedS = new String(encoded, StandardCharsets.UTF_8);
+        assertEquals("a%2Bb", encodedS, "PercentCodec plus for space should escape literal plus without spaces");
+        final byte[] decode = percentCodec.decode(encoded);
+        assertEquals(new String(decode, StandardCharsets.UTF_8), input, "PercentCodec literal plus decoding test");
+    }
+
+    @Test
     void testSafeCharEncodeDecodeObject() throws Exception {
         final PercentCodec percentCodec = new PercentCodec(null, true);
         final String input = "abc123_-.*";
