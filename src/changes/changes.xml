@@ -45,6 +45,7 @@ The <action> type attribute can be add,update,fix,remove.
   <body>
     <release version="1.22.1" date="YYYY-MM-DD" description="This is a feature and maintenance release. Java 8 or later is required.">
       <!-- FIX -->
+      <action type="fix" issue="CODEC-343" dev="ggregory" due-to="Ruiqi Dong, Gary Gregory">Base32.Builder.setHexDecodeTable(boolean) sets the encode table to a decode lookup table.</action>
       <action type="add" issue="CODEC-337" dev="pkarwasz" due-to="Ruiqi Dong, Gary Gregory">Digest ALL reuses System.in, so only the first algorithm sees the real input (#431).</action>
       <!-- ADD -->
       <!-- UPDATE -->

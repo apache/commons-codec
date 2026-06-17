@@ -103,7 +103,7 @@ public class Base32 extends BaseNCodec {
         }
 
         /**
-         * Sets the decode table to use Base32 hexadecimal if {@code true}, otherwise use the Base32 alphabet.
+         * Sets the encode and decode tables to use Base32 hexadecimal if {@code true}, otherwise use the Base32 alphabet.
          * <p>
          * This overrides a value previously set with {@link #setEncodeTable(byte...)}.
          * </p>
@@ -113,7 +113,7 @@ public class Base32 extends BaseNCodec {
          * @since 1.18.0
          */
         public Builder setHexDecodeTable(final boolean useHex) {
-            return setEncodeTable(decodeTable(useHex));
+            return setEncodeTable(encodeTable(useHex));
         }
 
         /**

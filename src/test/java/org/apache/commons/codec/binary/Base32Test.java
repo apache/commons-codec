@@ -320,6 +320,15 @@ class Base32Test {
     }
 
     @Test
+    void testBuilderSetHexDecodeTableDecodesOwnOutput() {
+        final Base32 base32 = Base32.builder().setHexDecodeTable(true).setLineLength(0).get();
+        final byte[] data = { 0 };
+        final byte[] encoded = base32.encode(data);
+        assertEquals("00======", new String(encoded, StandardCharsets.US_ASCII));
+        assertArrayEquals(data, base32.decode(encoded));
+    }
+
+    @Test
     void testBase32HexSamples() throws Exception {
         final Base32 codec = new Base32(true);
         for (final String[] element : BASE32HEX_TEST_CASES) {
