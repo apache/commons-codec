@@ -96,9 +96,19 @@ public class Base32 extends BaseNCodec {
             return new Base32(this);
         }
 
+        /**
+         * Sets the encode table and derives the matching decode table.
+         * <p>
+         * The RFC 4648 Base32 and Base32 Hex tables keep their case-insensitive decoders.
+         * </p>
+         *
+         * @param encodeTable the encode table with exactly 32 unique entries, null resets to the default.
+         * @return {@code this} instance.
+         * @throws IllegalArgumentException if the encode table does not contain exactly 32 unique entries.
+         */
         @Override
         public Builder setEncodeTable(final byte... encodeTable) {
-            super.setDecodeTableRaw(Arrays.equals(encodeTable, HEX_ENCODE_TABLE) ? HEX_DECODE_TABLE : DECODE_TABLE);
+            super.setDecodeTableRaw(toDecodeTable(encodeTable));
             return super.setEncodeTable(encodeTable);
         }
 
@@ -145,6 +155,8 @@ public class Base32 extends BaseNCodec {
 
     private static final int BYTES_PER_ENCODED_BLOCK = 8;
     private static final int BYTES_PER_UNENCODED_BLOCK = 5;
+    private static final int DECODING_TABLE_LENGTH = 256;
+    private static final int ENCODING_TABLE_LENGTH = 1 << BITS_PER_ENCODED_BYTE;
 
     /**
      * This array is a lookup table that translates Unicode characters drawn from the "Base32 Alphabet" (as specified in Table 3 of RFC 4648) into their 5-bit
@@ -256,6 +268,29 @@ public class Base32 extends BaseNCodec {
         return new Builder();
     }
 
+    /**
+     * Calculates a decode table for a given encode table.
+     *
+     * @param encodeTable that is used to determine decode lookup table.
+     * @return A new decode table.
+     * @throws IllegalArgumentException if the encode table does not contain exactly 32 unique entries.
+     */
+    private static byte[] calculateDecodeTable(final byte[] encodeTable) {
+        if (encodeTable.length != ENCODING_TABLE_LENGTH) {
+            throw new IllegalArgumentException("encodeTable must have exactly 32 entries.");
+        }
+        final byte[] decodeTable = new byte[DECODING_TABLE_LENGTH];
+        Arrays.fill(decodeTable, (byte) -1);
+        for (int i = 0; i < encodeTable.length; i++) {
+            final int encodedByte = encodeTable[i] & 0xff;
+            if (decodeTable[encodedByte] != -1) {
+                throw new IllegalArgumentException("encodeTable must not contain duplicate entries.");
+            }
+            decodeTable[encodedByte] = (byte) i;
+        }
+        return decodeTable;
+    }
+
     private static byte[] decodeTable(final boolean useHex) {
         return useHex ? HEX_DECODE_TABLE : DECODE_TABLE;
     }
@@ -274,6 +309,23 @@ public class Base32 extends BaseNCodec {
      */
     private static byte[] encodeTable(final boolean useHex) {
         return useHex ? HEX_ENCODE_TABLE : ENCODE_TABLE;
+    }
+
+    /**
+     * Gets the decode table that matches the given encode table.
+     *
+     * @param encodeTable that is used to determine decode lookup table.
+     * @return the matching decode table.
+     */
+    private static byte[] toDecodeTable(final byte[] encodeTable) {
+        final byte[] table = encodeTable != null ? encodeTable : ENCODE_TABLE;
+        if (Arrays.equals(table, ENCODE_TABLE)) {
+            return DECODE_TABLE;
+        }
+        if (Arrays.equals(table, HEX_ENCODE_TABLE)) {
+            return HEX_DECODE_TABLE;
+        }
+        return calculateDecodeTable(table);
     }
 
     /**
@@ -530,14 +582,14 @@ public class Base32 extends BaseNCodec {
         }
         final int decodeSize = this.encodeSize - 1;
         for (int i = 0; i < inAvail; i++) {
-            final byte b = input[inPos++];
-            if (b == pad) {
+            final int b = input[inPos++] & 0xff;
+            if (b == (pad & 0xff)) {
                 // We're done.
                 context.eof = true;
                 break;
             }
             final byte[] buffer = ensureBufferSize(decodeSize, context);
-            if (b >= 0 && b < this.decodeTable.length) {
+            if (b < this.decodeTable.length) {
                 final int result = this.decodeTable[b];
                 if (result >= 0) {
                     context.modulus = (context.modulus + 1) % BYTES_PER_ENCODED_BLOCK;
@@ -738,7 +790,8 @@ public class Base32 extends BaseNCodec {
      */
     @Override
     public boolean isInAlphabet(final byte octet) {
-        return isInAlphabet(octet, decodeTable);
+        final int value = octet & 0xff;
+        return value < decodeTable.length && decodeTable[value] != -1;
     }
 
     /**
