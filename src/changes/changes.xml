@@ -46,6 +46,8 @@ The <action> type attribute can be add,update,fix,remove.
     <release version="1.22.1" date="YYYY-MM-DD" description="This is a feature and maintenance release. Java 8 or later is required.">
       <!-- FIX -->
       <action type="fix" issue="CODEC-341" dev="ggregory" due-to="Ruiqi Dong, Gary Gregory">Base16.Builder.setEncodeTable(byte...) can create a codec that cannot decode its own output.</action>
+      <action type="fix" issue="CODEC-339" dev="ggregory" due-to="Ruiqi Dong, Gary Gregory">URLCodec.encodeUrl(BitSet, byte[]) allows custom safe sets to emit URL encoding control characters.</action>
+      <action type="fix" issue="CODEC-338" dev="ggregory" due-to="Ruiqi Dong, Gary Gregory">PercentCodec loses literal '+' when plusForSpace is enabled.</action>
       <action type="add" issue="CODEC-337" dev="pkarwasz" due-to="Ruiqi Dong, Gary Gregory">Digest ALL reuses System.in, so only the first algorithm sees the real input (#431).</action>
       <!-- ADD -->
       <!-- UPDATE -->
