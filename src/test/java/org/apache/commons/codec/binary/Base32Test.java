@@ -320,15 +320,6 @@ class Base32Test {
     }
 
     @Test
-    void testBuilderSetHexDecodeTableDecodesOwnOutput() {
-        final Base32 base32 = Base32.builder().setHexDecodeTable(true).setLineLength(0).get();
-        final byte[] data = { 0 };
-        final byte[] encoded = base32.encode(data);
-        assertEquals("00======", new String(encoded, StandardCharsets.US_ASCII));
-        assertArrayEquals(data, base32.decode(encoded));
-    }
-
-    @Test
     void testBase32HexSamples() throws Exception {
         final Base32 codec = new Base32(true);
         for (final String[] element : BASE32HEX_TEST_CASES) {
@@ -461,6 +452,15 @@ class Base32Test {
         assertNull(Base32.builder().setLineLength(0).setLineSeparator(null).get().getLineSeparator());
         assertArrayEquals(new byte[] { 1 }, Base32.builder().setLineLength(4).setLineSeparator((byte) 1).get().getLineSeparator());
         assertEquals("MZXXQ___", Base32.builder().setLineLength(4).setPadding((byte) '_').get().encodeToString("fox".getBytes(CHARSET_UTF8)));
+    }
+
+    @Test
+    void testBuilderSetHexDecodeTableDecodesOwnOutput() {
+        final Base32 base32 = Base32.builder().setHexDecodeTable(true).setLineLength(0).get();
+        final byte[] data = { 0 };
+        final byte[] encoded = base32.encode(data);
+        assertEquals("00======", new String(encoded, StandardCharsets.US_ASCII));
+        assertArrayEquals(data, base32.decode(encoded));
     }
 
     @Test
