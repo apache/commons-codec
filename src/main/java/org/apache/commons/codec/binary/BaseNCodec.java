@@ -58,6 +58,17 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      */
     public abstract static class AbstractBuilder<T, B extends AbstractBuilder<T, B>> implements Supplier<T> {
 
+        /**
+         * Clones the given array or returns a default array if the array is null.
+         *
+         * @param array        The array to test and clone if not null.
+         * @param defaultArray The default array to return if the array is null.
+         * @return A clone of the array or the default array if the array is null.
+         */
+        static byte[] clone(final byte[] array, final byte[] defaultArray) {
+            return array != null ? array.clone() : defaultArray;
+        }
+
         private int unencodedBlockSize;
         private int encodedBlockSize;
         private CodecPolicy decodingPolicy = DECODING_POLICY_DEFAULT;
@@ -132,7 +143,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
          * @since 1.20.0
          */
         public B setDecodeTable(final byte[] decodeTable) {
-            this.decodeTable = decodeTable != null ? decodeTable.clone() : null;
+            this.decodeTable = clone(decodeTable, null);
             return asThis();
         }
 
@@ -176,7 +187,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
          * @return {@code this} instance.
          */
         public B setEncodeTable(final byte... encodeTable) {
-            this.encodeTable = encodeTable != null ? encodeTable.clone() : defaultEncodeTable;
+            this.encodeTable = clone(encodeTable, defaultEncodeTable);
             return asThis();
         }
 
@@ -209,7 +220,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
          * @return {@code this} instance.
          */
         public B setLineSeparator(final byte... lineSeparator) {
-            this.lineSeparator = lineSeparator != null ? lineSeparator.clone() : CHUNK_SEPARATOR;
+            this.lineSeparator = clone(lineSeparator , CHUNK_SEPARATOR);
             return asThis();
         }
 
