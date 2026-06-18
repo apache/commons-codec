@@ -536,7 +536,6 @@ class Base64Test {
         final Base64 base64 = Base64.builder().setEncodeTable(encodeTable).get();
         final byte[] data = { 0 };
         final byte[] encoded = base64.encode(data);
-
         assertArrayEquals(new byte[] { (byte) 0x80, (byte) 0x80 }, encoded);
         assertTrue(base64.isInAlphabet(encoded, false));
         assertArrayEquals(data, base64.decode(encoded));
@@ -548,7 +547,6 @@ class Base64Test {
         encodeTable[0] = '=';
         final Base64 base64 = Base64.builder().setEncodeTable(encodeTable).setPadding((byte) '.').get();
         final byte[] data = { 0 };
-
         assertArrayEquals(data, base64.decode(base64.encode(data)));
     }
 
@@ -556,7 +554,6 @@ class Base64Test {
     void testCustomEncodingAlphabetRejectsConfiguredPaddingByte() {
         final byte[] encodeTable = STANDARD_ENCODE_TABLE.clone();
         encodeTable[0] = '=';
-
         assertThrows(IllegalArgumentException.class, () -> Base64.builder().setEncodeTable(encodeTable).get());
         assertThrows(IllegalArgumentException.class, () -> Base64.builder().setPadding((byte) 'A').get());
     }
@@ -565,7 +562,6 @@ class Base64Test {
     void testCustomEncodingAlphabetRejectsDuplicateEntries() {
         final byte[] encodeTable = STANDARD_ENCODE_TABLE.clone();
         encodeTable[1] = encodeTable[0];
-
         assertThrows(IllegalArgumentException.class, () -> Base64.builder().setEncodeTable(encodeTable));
     }
 
