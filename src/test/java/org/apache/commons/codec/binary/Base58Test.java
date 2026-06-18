@@ -46,11 +46,25 @@ public class Base58Test {
 
     private static final int BOUND = 10_000;
 
+    private static final String DEFAULT_ALPHABET = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
+
     private static final Charset CHARSET_UTF8 = StandardCharsets.UTF_8;
 
     private static void assertArrayEqualsAt(final byte[] data, final byte[] dec, final int i) {
         final AtomicInteger counter = new AtomicInteger(i);
         assertArrayEquals(data, dec, () -> String.format("Failed for length %,d: %s", counter.get(), Arrays.toString(data)));
+    }
+
+    private static byte[] newEncodeTable() {
+        return DEFAULT_ALPHABET.getBytes(StandardCharsets.US_ASCII);
+    }
+
+    private static byte[] newSwappedEncodeTable() {
+        final byte[] encodeTable = newEncodeTable();
+        final byte tmp = encodeTable[0];
+        encodeTable[0] = encodeTable[1];
+        encodeTable[1] = tmp;
+        return encodeTable;
     }
 
     private final Random random = new Random();
@@ -64,6 +78,45 @@ public class Base58Test {
         final byte[] decodedBytes = new Base58().decode(encodedBytes);
         final String decodedContent = StringUtils.newStringUtf8(decodedBytes);
         assertEquals(content, decodedContent, "decoding hello world");
+    }
+
+    @Test
+    void testBuilderCustomEncodeTableAffectsEncodeAndDecode() {
+        final Base58 base58 = Base58.builder().setEncodeTable(newSwappedEncodeTable()).get();
+        assertEquals("1", new String(base58.encode(new byte[] { 1 }), StandardCharsets.US_ASCII));
+        assertArrayEquals(new byte[] { 1 }, base58.decode("1".getBytes(StandardCharsets.US_ASCII)));
+    }
+
+    @Test
+    void testBuilderCustomEncodeTableAffectsIsInAlphabet() {
+        final byte[] encodeTable = newEncodeTable();
+        encodeTable[0] = '0';
+        final Base58 base58 = Base58.builder().setEncodeTable(encodeTable).get();
+        assertTrue(base58.isInAlphabet((byte) '0'));
+        assertFalse(base58.isInAlphabet((byte) '1'));
+        assertEquals("0", new String(base58.encode(new byte[] { 0 }), StandardCharsets.US_ASCII));
+        assertArrayEquals(new byte[] { 0 }, base58.decode("0".getBytes(StandardCharsets.US_ASCII)));
+    }
+
+    @Test
+    void testBuilderCustomEncodeTableAffectsLeadingZeros() {
+        final Base58 base58 = Base58.builder().setEncodeTable(newSwappedEncodeTable()).get();
+        final byte[] data = { 0, 0, 1 };
+        final byte[] encoded = base58.encode(data);
+        assertEquals("221", new String(encoded, StandardCharsets.US_ASCII));
+        assertArrayEquals(data, base58.decode(encoded));
+    }
+
+    @Test
+    void testBuilderCustomEncodeTableRejectsDuplicateEntries() {
+        final byte[] encodeTable = newEncodeTable();
+        encodeTable[1] = encodeTable[0];
+        assertThrows(IllegalArgumentException.class, () -> Base58.builder().setEncodeTable(encodeTable));
+    }
+
+    @Test
+    void testBuilderCustomEncodeTableRejectsInvalidLength() {
+        assertThrows(IllegalArgumentException.class, () -> Base58.builder().setEncodeTable(Arrays.copyOf(newEncodeTable(), DEFAULT_ALPHABET.length() - 1)));
     }
 
     @Test
