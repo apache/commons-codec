@@ -530,6 +530,42 @@ class Base64Test {
     }
 
     @Test
+    void testCustomEncodingAlphabetAllowsNonAsciiBytes() {
+        final byte[] encodeTable = STANDARD_ENCODE_TABLE.clone();
+        encodeTable[0] = (byte) 0x80;
+        final Base64 base64 = Base64.builder().setEncodeTable(encodeTable).get();
+        final byte[] data = { 0 };
+        final byte[] encoded = base64.encode(data);
+        assertArrayEquals(new byte[] { (byte) 0x80, (byte) 0x80 }, encoded);
+        assertTrue(base64.isInAlphabet(encoded, false));
+        assertArrayEquals(data, base64.decode(encoded));
+    }
+
+    @Test
+    void testCustomEncodingAlphabetAllowsPaddingByteWhenPaddingChanges() {
+        final byte[] encodeTable = STANDARD_ENCODE_TABLE.clone();
+        encodeTable[0] = '=';
+        final Base64 base64 = Base64.builder().setEncodeTable(encodeTable).setPadding((byte) '.').get();
+        final byte[] data = { 0 };
+        assertArrayEquals(data, base64.decode(base64.encode(data)));
+    }
+
+    @Test
+    void testCustomEncodingAlphabetRejectsConfiguredPaddingByte() {
+        final byte[] encodeTable = STANDARD_ENCODE_TABLE.clone();
+        encodeTable[0] = '=';
+        assertThrows(IllegalArgumentException.class, () -> Base64.builder().setEncodeTable(encodeTable).get());
+        assertThrows(IllegalArgumentException.class, () -> Base64.builder().setPadding((byte) 'A').get());
+    }
+
+    @Test
+    void testCustomEncodingAlphabetRejectsDuplicateEntries() {
+        final byte[] encodeTable = STANDARD_ENCODE_TABLE.clone();
+        encodeTable[1] = encodeTable[0];
+        assertThrows(IllegalArgumentException.class, () -> Base64.builder().setEncodeTable(encodeTable));
+    }
+
+    @Test
     void testCustomEncodingAlphabet_illegal() {
         final byte[] encodeTable = {
                 '.', '-', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M'

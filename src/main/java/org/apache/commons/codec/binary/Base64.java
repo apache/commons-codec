@@ -142,11 +142,16 @@ public class Base64 extends BaseNCodec {
             }
         }
 
+        /**
+         * Sets the encode table.
+         *
+         * @param encodeTable the encode table with exactly 64 unique entries, null resets to the default.
+         * @return {@code this} instance.
+         * @throws IllegalArgumentException if {@code encodeTable} does not contain exactly 64 unique entries.
+         */
         @Override
         public Builder setEncodeTable(final byte... encodeTable) {
-            final boolean isStandardEncodeTable = Arrays.equals(encodeTable, STANDARD_ENCODE_TABLE);
-            final boolean isUrlSafe = Arrays.equals(encodeTable, URL_SAFE_ENCODE_TABLE);
-            setDecodeTableRaw(isStandardEncodeTable || isUrlSafe ? DECODE_TABLE : calculateDecodeTable(encodeTable));
+            setDecodeTableRaw(toDecodeTable(encodeTable));
             return super.setEncodeTable(encodeTable);
         }
 
@@ -351,12 +356,36 @@ public class Base64 extends BaseNCodec {
      * @return A new decode table.
      */
     private static byte[] calculateDecodeTable(final byte[] encodeTable) {
+        if (encodeTable.length != STANDARD_ENCODE_TABLE.length) {
+            throw new IllegalArgumentException("encodeTable must have exactly 64 entries.");
+        }
         final byte[] decodeTable = new byte[DECODING_TABLE_LENGTH];
         Arrays.fill(decodeTable, (byte) -1);
         for (int i = 0; i < encodeTable.length; i++) {
-            decodeTable[encodeTable[i]] = (byte) i;
+            final int encodedByte = encodeTable[i] & 0xff;
+            if (decodeTable[encodedByte] != -1) {
+                throw new IllegalArgumentException("encodeTable must not contain duplicate entries.");
+            }
+            decodeTable[encodedByte] = (byte) i;
         }
         return decodeTable;
+    }
+
+    private static boolean contains(final byte[] bytes, final byte value) {
+        for (final byte element : bytes) {
+            if (element == value) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static byte[] toDecodeTable(final byte[] encodeTable) {
+        final byte[] table = encodeTable != null ? encodeTable : STANDARD_ENCODE_TABLE;
+        if (Arrays.equals(table, STANDARD_ENCODE_TABLE) || Arrays.equals(table, URL_SAFE_ENCODE_TABLE)) {
+            return DECODE_TABLE;
+        }
+        return calculateDecodeTable(table);
     }
 
     /**
@@ -839,6 +868,9 @@ public class Base64 extends BaseNCodec {
         if (encTable.length != STANDARD_ENCODE_TABLE.length) {
             throw new IllegalArgumentException("encodeTable must have exactly 64 entries.");
         }
+        if (contains(encTable, pad)) {
+            throw new IllegalArgumentException("encodeTable must not contain the padding byte.");
+        }
         this.isStandardEncodeTable = Arrays.equals(encTable, STANDARD_ENCODE_TABLE);
         this.isUrlSafe = Arrays.equals(encTable, URL_SAFE_ENCODE_TABLE);
         // TODO could be simplified if there is no requirement to reject invalid line sep when length <=0
@@ -992,14 +1024,14 @@ public class Base64 extends BaseNCodec {
         }
         final int decodeSize = this.encodeSize - 1;
         for (int i = 0; i < inAvail; i++) {
-            final byte[] buffer = ensureBufferSize(decodeSize, context);
-            final byte b = input[inPos++];
-            if (b == pad) {
+            final int b = input[inPos++] & 0xff;
+            if (b == (pad & 0xff)) {
                 // We're done.
                 context.eof = true;
                 break;
             }
-            if (b >= 0 && b < decodeTable.length) {
+            final byte[] buffer = ensureBufferSize(decodeSize, context);
+            if (b < decodeTable.length) {
                 final int result = decodeTable[b];
                 if (result >= 0) {
                     context.modulus = (context.modulus + 1) % BYTES_PER_ENCODED_BLOCK;
@@ -1150,7 +1182,8 @@ public class Base64 extends BaseNCodec {
      */
     @Override
     protected boolean isInAlphabet(final byte octet) {
-        return isInAlphabet(octet, decodeTable);
+        final int value = octet & 0xff;
+        return value < decodeTable.length && decodeTable[value] != -1;
     }
 
     /**
