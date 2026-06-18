@@ -159,6 +159,16 @@ public class Base16 extends BaseNCodec {
     /** Mask used to extract 4 bits, used when decoding character. */
     private static final int MASK_4_BITS = 0x0f;
 
+    /**
+     * Constructs a new builder.
+     *
+     * @return a new builder.
+     * @since 1.20.0
+     */
+    public static Builder builder() {
+        return new Builder();
+    }
+
     private static byte[] toDecodeTable(final byte[] encodeTable) {
         if (Arrays.equals(encodeTable, UPPER_CASE_ENCODE_TABLE)) {
             return UPPER_CASE_DECODE_TABLE;
@@ -183,16 +193,6 @@ public class Base16 extends BaseNCodec {
             decodeTable[b] = (byte) i;
         }
         return decodeTable;
-    }
-
-    /**
-     * Constructs a new builder.
-     *
-     * @return a new builder.
-     * @since 1.20.0
-     */
-    public static Builder builder() {
-        return new Builder();
     }
 
     /**

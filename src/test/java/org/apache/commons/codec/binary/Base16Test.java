@@ -92,6 +92,15 @@ class Base16Test {
     }
 
     @Test
+    void testBuilderSetLowerCaseDecodesOwnOutput() {
+        final Base16 base16 = Base16.builder().setLowerCase(true).get();
+        final byte[] data = { (byte) 0xab };
+        final byte[] encoded = base16.encode(data);
+        assertEquals("ab", new String(encoded, StandardCharsets.US_ASCII));
+        assertArrayEquals(data, base16.decode(encoded));
+    }
+
+    @Test
     void testByteToStringVariations() {
         final Base16 base16 = new Base16();
         final byte[] b1 = StringUtils.getBytesUtf8("Hello World");
@@ -171,15 +180,6 @@ class Base16Test {
     void testCustomEncodeTableRejectsInvalidLength() {
         assertThrows(IllegalArgumentException.class,
                 () -> Base16.builder().setEncodeTable("0123456789ABCDE".getBytes(StandardCharsets.US_ASCII)));
-    }
-
-    @Test
-    void testBuilderSetLowerCaseDecodesOwnOutput() {
-        final Base16 base16 = Base16.builder().setLowerCase(true).get();
-        final byte[] data = { (byte) 0xab };
-        final byte[] encoded = base16.encode(data);
-        assertEquals("ab", new String(encoded, StandardCharsets.US_ASCII));
-        assertArrayEquals(data, base16.decode(encoded));
     }
 
     @Test
