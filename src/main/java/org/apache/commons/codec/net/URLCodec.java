@@ -53,6 +53,8 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      */
     protected static final byte ESCAPE_CHAR = '%';
 
+    private static final byte PLUS_CHAR = '+';
+
     /**
      * BitSet of www-form-url safe characters.
      * This is a copy of the internal BitSet which is now used for the conversion.
@@ -107,7 +109,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
         final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         for (int i = 0; i < bytes.length; i++) {
             final int b = bytes[i];
-            if (b == '+') {
+            if (b == PLUS_CHAR) {
                 buffer.write(' ');
             } else if (b == ESCAPE_CHAR) {
                 try {
@@ -126,9 +128,11 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
 
     /**
      * Encodes an array of bytes into an array of URL safe 7-bit characters. Unsafe characters are escaped.
+     * The characters {@code %} and {@code +} are always escaped because {@link #decodeUrl(byte[])}
+     * treats them as URL-encoding syntax.
      *
      * @param urlsafe
-     *            bitset of characters deemed URL safe.
+     *            bitset of characters deemed URL safe, except for {@code %} and {@code +}.
      * @param bytes
      *            array of bytes to convert to URL safe characters.
      * @return array of bytes containing URL safe characters.
@@ -147,9 +151,9 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
             if (b < 0) {
                 b = 256 + b;
             }
-            if (urlsafe.get(b)) {
+            if (urlsafe.get(b) && b != ESCAPE_CHAR && b != PLUS_CHAR) {
                 if (b == ' ') {
-                    b = '+';
+                    b = PLUS_CHAR;
                 }
                 buffer.write(b);
             } else {
