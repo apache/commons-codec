@@ -87,7 +87,7 @@ public class Base58 extends BaseNCodec {
     }
     private static final BigInteger BASE = BigInteger.valueOf(58);
 
-    private static final byte[] EMPTY = new byte[0];
+    private static final byte[] EMPTY = {};
 
     /**
      * Base58 alphabet: 123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz

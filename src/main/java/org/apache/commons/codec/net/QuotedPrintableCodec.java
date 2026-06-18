@@ -72,7 +72,6 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
     private static final BitSet PRINTABLE_CHARS = new BitSet(256);
     private static final byte ESCAPE_CHAR = '=';
     private static final byte TAB = 9;
-    private static final byte SPACE = 32;
     private static final byte CR = 13;
     private static final byte LF = 10;
 
@@ -96,7 +95,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
             PRINTABLE_CHARS.set(i);
         }
         PRINTABLE_CHARS.set(TAB);
-        PRINTABLE_CHARS.set(SPACE);
+        PRINTABLE_CHARS.set(Utils.SPACE);
     }
 
     /**
@@ -284,7 +283,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * @return {@code true} if the byte is either a space or tab character.
      */
     private static boolean isWhitespace(final int b) {
-        return b == SPACE || b == TAB;
+        return b == Utils.SPACE || b == TAB;
     }
 
     /**

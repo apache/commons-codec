@@ -33,7 +33,7 @@ import org.apache.commons.codec.CodecPolicy;
  * </p>
  * <p>
  * The only additional feature above those specified in RFC 4648 is support for working with a lower-case alphabet in addition to the default upper-case
- * alphabet.
+ * alphabet, and configuring a custom 16-byte alphabet with {@link Builder#setEncodeTable(byte...)}.
  * </p>
  *
  * @see Base16InputStream
@@ -78,10 +78,18 @@ public class Base16 extends BaseNCodec {
             return new Base16(this);
         }
 
+        /**
+         * Sets the Base16 encode table and derives the matching decode table.
+         *
+         * @param encodeTable 16 unique bytes, null resets to the default upper-case table.
+         * @return {@code this} instance.
+         * @throws IllegalArgumentException if {@code encodeTable} does not contain 16 unique bytes.
+         */
         @Override
         public Builder setEncodeTable(final byte... encodeTable) {
-            super.setDecodeTableRaw(Arrays.equals(encodeTable, LOWER_CASE_ENCODE_TABLE) ? LOWER_CASE_DECODE_TABLE : UPPER_CASE_DECODE_TABLE);
-            return super.setEncodeTable(encodeTable);
+            final byte[] table = encodeTable != null ? encodeTable : UPPER_CASE_ENCODE_TABLE;
+            super.setDecodeTableRaw(toDecodeTable(table));
+            return super.setEncodeTable(table);
         }
 
         /**
@@ -91,8 +99,7 @@ public class Base16 extends BaseNCodec {
          * @return {@code this} instance.
          */
         public Builder setLowerCase(final boolean lowerCase) {
-            setEncodeTableRaw(lowerCase ? LOWER_CASE_ENCODE_TABLE : UPPER_CASE_ENCODE_TABLE);
-            return asThis();
+            return setEncodeTable(lowerCase ? LOWER_CASE_ENCODE_TABLE : UPPER_CASE_ENCODE_TABLE);
         }
 
     }
@@ -160,6 +167,32 @@ public class Base16 extends BaseNCodec {
      */
     public static Builder builder() {
         return new Builder();
+    }
+
+    private static byte[] toDecodeTable(final byte[] encodeTable) {
+        if (Arrays.equals(encodeTable, UPPER_CASE_ENCODE_TABLE)) {
+            return UPPER_CASE_DECODE_TABLE;
+        }
+        if (Arrays.equals(encodeTable, LOWER_CASE_ENCODE_TABLE)) {
+            return LOWER_CASE_DECODE_TABLE;
+        }
+        if (encodeTable.length != 1 << BITS_PER_ENCODED_BYTE) {
+            throw new IllegalArgumentException("Base16 encode table must contain 16 entries.");
+        }
+        int max = -1;
+        for (final byte b : encodeTable) {
+            max = Math.max(max, b & 0xff);
+        }
+        final byte[] decodeTable = new byte[max + 1];
+        Arrays.fill(decodeTable, (byte) -1);
+        for (int i = 0; i < encodeTable.length; i++) {
+            final int b = encodeTable[i] & 0xff;
+            if (decodeTable[b] != -1) {
+                throw new IllegalArgumentException("Duplicate value in Base16 encode table: " + b);
+            }
+            decodeTable[b] = (byte) i;
+        }
+        return decodeTable;
     }
 
     /**
@@ -241,8 +274,9 @@ public class Base16 extends BaseNCodec {
 
     private int decodeOctet(final byte octet) {
         int decoded = -1;
-        if ((octet & 0xff) < decodeTable.length) {
-            decoded = decodeTable[octet];
+        final int b = octet & 0xff;
+        if (b < decodeTable.length) {
+            decoded = decodeTable[b];
         }
         if (decoded == -1) {
             throw new IllegalArgumentException("Invalid octet in encoded value: " + (int) octet);
@@ -282,7 +316,8 @@ public class Base16 extends BaseNCodec {
      */
     @Override
     public boolean isInAlphabet(final byte octet) {
-        return isInAlphabet((byte) (octet & 0xff), decodeTable);
+        final int b = octet & 0xff;
+        return b < decodeTable.length && decodeTable[b] != -1;
     }
 
     /**
