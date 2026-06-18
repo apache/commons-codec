@@ -35,6 +35,8 @@ final class Utils {
      */
     private static final int RADIX = 16;
 
+    static final byte SPACE = 32;
+
     /**
      * Returns the numeric value of the character {@code b} in radix 16.
      *
