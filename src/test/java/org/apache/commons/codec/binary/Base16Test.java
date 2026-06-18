@@ -155,7 +155,6 @@ class Base16Test {
         final byte tmp = encodeTable[0];
         encodeTable[0] = encodeTable[1];
         encodeTable[1] = tmp;
-
         final Base16 base16 = Base16.builder().setEncodeTable(encodeTable).get();
         final byte[] encoded = base16.encode(new byte[] { 1 });
         assertEquals("10", new String(encoded, StandardCharsets.US_ASCII), "Custom Base16 alphabet encoding test");
