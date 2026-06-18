@@ -45,6 +45,11 @@ public class PercentCodec implements BinaryEncoder, BinaryDecoder {
     private static final byte ESCAPE_CHAR = '%';
 
     /**
+     * The plus character used to encode spaces when plusForSpace is true.
+     */
+    private static final byte PLUS_CHAR = '+';
+
+    /**
      * The bit set used to store the character that should be always encoded.
      */
     private final BitSet alwaysEncodeChars = new BitSet();
@@ -80,6 +85,9 @@ public class PercentCodec implements BinaryEncoder, BinaryDecoder {
     public PercentCodec(final byte[] alwaysEncodeChars, final boolean plusForSpace) {
         this.plusForSpace = plusForSpace;
         insertAlwaysEncodeChars(alwaysEncodeChars);
+        if (plusForSpace) {
+            insertAlwaysEncodeChar(PLUS_CHAR);
+        }
     }
 
     private boolean canEncode(final byte c) {
