@@ -18,6 +18,7 @@
 package org.apache.commons.codec.language;
 
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 /**
  * Encodes a string into a Caverphone 1.0 value.
@@ -34,6 +35,26 @@ import java.util.Locale;
 public class Caverphone1 extends AbstractCaverphone {
 
     private static final String SIX_1 = "111111";
+
+    // Patterns are compiled once: String.replaceAll compiles its regex on every call, which on a hot
+    // encode path (one encode applies seventeen of them) is a large, repeated allocation.
+    private static final Pattern NON_LOWER = Pattern.compile("[^a-z]");
+    private static final Pattern START_COUGH = Pattern.compile("^cough");
+    private static final Pattern START_ROUGH = Pattern.compile("^rough");
+    private static final Pattern START_TOUGH = Pattern.compile("^tough");
+    private static final Pattern START_ENOUGH = Pattern.compile("^enough");
+    private static final Pattern START_GN = Pattern.compile("^gn");
+    private static final Pattern FINAL_MB = Pattern.compile("mb$");
+    private static final Pattern START_VOWEL = Pattern.compile("^[aeiou]");
+    private static final Pattern VOWEL = Pattern.compile("[aeiou]");
+    private static final Pattern RUN_S = Pattern.compile("s+");
+    private static final Pattern RUN_T = Pattern.compile("t+");
+    private static final Pattern RUN_P = Pattern.compile("p+");
+    private static final Pattern RUN_K = Pattern.compile("k+");
+    private static final Pattern RUN_F = Pattern.compile("f+");
+    private static final Pattern RUN_M = Pattern.compile("m+");
+    private static final Pattern RUN_N = Pattern.compile("n+");
+    private static final Pattern START_H = Pattern.compile("^h");
 
     /**
      * Constructs a new instance.
@@ -60,18 +81,18 @@ public class Caverphone1 extends AbstractCaverphone {
         txt = txt.toLowerCase(Locale.ENGLISH);
 
         // 2. Remove anything not A-Z
-        txt = txt.replaceAll("[^a-z]", "");
+        txt = NON_LOWER.matcher(txt).replaceAll("");
 
         // 3. Handle various start options
         // 2 is a temporary placeholder to indicate a consonant which we are no longer interested in.
-        txt = txt.replaceAll("^cough", "cou2f");
-        txt = txt.replaceAll("^rough", "rou2f");
-        txt = txt.replaceAll("^tough", "tou2f");
-        txt = txt.replaceAll("^enough", "enou2f");
-        txt = txt.replaceAll("^gn", "2n");
+        txt = START_COUGH.matcher(txt).replaceAll("cou2f");
+        txt = START_ROUGH.matcher(txt).replaceAll("rou2f");
+        txt = START_TOUGH.matcher(txt).replaceAll("tou2f");
+        txt = START_ENOUGH.matcher(txt).replaceAll("enou2f");
+        txt = START_GN.matcher(txt).replaceAll("2n");
 
         // End
-        txt = txt.replaceAll("mb$", "m2");
+        txt = FINAL_MB.matcher(txt).replaceAll("m2");
 
         // 4. Handle replacements
         txt = txt.replace("cq", "2q");
@@ -91,25 +112,25 @@ public class Caverphone1 extends AbstractCaverphone {
         txt = txt.replace("b", "p");
         txt = txt.replace("sh", "s2");
         txt = txt.replace("z", "s");
-        txt = txt.replaceAll("^[aeiou]", "A");
+        txt = START_VOWEL.matcher(txt).replaceAll("A");
         // 3 is a temporary placeholder marking a vowel
-        txt = txt.replaceAll("[aeiou]", "3");
+        txt = VOWEL.matcher(txt).replaceAll("3");
         txt = txt.replace("3gh3", "3kh3");
         txt = txt.replace("gh", "22");
         txt = txt.replace("g", "k");
-        txt = txt.replaceAll("s+", "S");
-        txt = txt.replaceAll("t+", "T");
-        txt = txt.replaceAll("p+", "P");
-        txt = txt.replaceAll("k+", "K");
-        txt = txt.replaceAll("f+", "F");
-        txt = txt.replaceAll("m+", "M");
-        txt = txt.replaceAll("n+", "N");
+        txt = RUN_S.matcher(txt).replaceAll("S");
+        txt = RUN_T.matcher(txt).replaceAll("T");
+        txt = RUN_P.matcher(txt).replaceAll("P");
+        txt = RUN_K.matcher(txt).replaceAll("K");
+        txt = RUN_F.matcher(txt).replaceAll("F");
+        txt = RUN_M.matcher(txt).replaceAll("M");
+        txt = RUN_N.matcher(txt).replaceAll("N");
         txt = txt.replace("w3", "W3");
         txt = txt.replace("wy", "Wy"); // 1.0 only
         txt = txt.replace("wh3", "Wh3");
         txt = txt.replace("why", "Why"); // 1.0 only
         txt = txt.replace("w", "2");
-        txt = txt.replaceAll("^h", "A");
+        txt = START_H.matcher(txt).replaceAll("A");
         txt = txt.replace("h", "2");
         txt = txt.replace("r3", "R3");
         txt = txt.replace("ry", "Ry"); // 1.0 only
