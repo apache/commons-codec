@@ -721,6 +721,15 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
             return array;
         }
         final Context context = new Context();
+        // Pre-size the buffer to the exact encoded length so a one-shot encode of a small input
+        // does not allocate the default streaming buffer (getDefaultBufferSize, 8192 bytes). The
+        // streaming path (via OutputStream) still grows from the default size. If the encoded length
+        // does not fit an int, fall back to the streaming buffer; such an output cannot be returned
+        // as a single array anyway.
+        final long encodedLength = getEncodedLength(length);
+        if (encodedLength <= Integer.MAX_VALUE) {
+            context.buffer = new byte[(int) encodedLength];
+        }
         encode(array, offset, length, context);
         encode(array, offset, EOF, context); // Notify encoder of EOF.
         final byte[] buf = new byte[context.pos - context.readPos];
@@ -822,9 +831,20 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * @return amount of space needed to encode the supplied array. Returns a long since a max-len array will require &gt; Integer.MAX_VALUE.
      */
     public long getEncodedLength(final byte[] array) {
+        return getEncodedLength(array.length);
+    }
+
+    /**
+     * Gets the amount of space needed to encode {@code inputLength} bytes.
+     *
+     * @param inputLength the number of bytes that will later be encoded.
+     * @return amount of space needed to encode the input. Returns a long since a max-len array will require
+     *         &gt; Integer.MAX_VALUE.
+     */
+    private long getEncodedLength(final int inputLength) {
         // Calculate non-chunked size - rounded up to allow for padding
         // cast to long is needed to avoid possibility of overflow
-        long len = (array.length + unencodedBlockSize - 1) / unencodedBlockSize * (long) encodedBlockSize;
+        long len = (inputLength + unencodedBlockSize - 1) / unencodedBlockSize * (long) encodedBlockSize;
         if (lineLength > 0) { // We're using chunking
             // Round up to nearest multiple
             len += (len + lineLength - 1) / lineLength * chunkSeparatorLength;
