@@ -17,6 +17,7 @@
 package org.apache.commons.codec.language;
 
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
@@ -63,6 +64,14 @@ public class MatchRatingApproachEncoder implements StringEncoder {
             { "BB", "CC", "DD", "FF", "GG", "HH", "JJ", "KK", "LL", "MM", "NN", "PP", "QQ", "RR", "SS",
                    "TT", "VV", "WW", "XX", "YY", "ZZ" };
 
+    // Patterns are compiled once: String.replaceAll compiles its regex on every call, which on a hot
+    // encode path is a repeated allocation. The regexes are unchanged, so the produced codes are identical.
+    private static final Pattern[] PUNCTUATION_TO_TRIM = {
+            Pattern.compile("\\-"), Pattern.compile("[&]"), Pattern.compile("\\'"),
+            Pattern.compile("\\."), Pattern.compile("[\\,]") };
+    private static final Pattern WHITESPACE = Pattern.compile("\\s+");
+    private static final Pattern WHITESPACE_RUN_AT_BOUNDARY = Pattern.compile("\\s{2,}\\b");
+
     /**
      * Constructs a new instance.
      */
@@ -86,13 +95,12 @@ public class MatchRatingApproachEncoder implements StringEncoder {
     String cleanName(final String name) {
         String upperName = name.toUpperCase(Locale.ENGLISH);
 
-        final String[] charsToTrim = { "\\-", "[&]", "\\'", "\\.", "[\\,]" };
-        for (final String str : charsToTrim) {
-            upperName = upperName.replaceAll(str, EMPTY);
+        for (final Pattern pattern : PUNCTUATION_TO_TRIM) {
+            upperName = pattern.matcher(upperName).replaceAll(EMPTY);
         }
 
         upperName = removeAccents(upperName);
-        return upperName.replaceAll("\\s+", EMPTY);
+        return WHITESPACE.matcher(upperName).replaceAll(EMPTY);
     }
 
     /**
@@ -337,8 +345,8 @@ public class MatchRatingApproachEncoder implements StringEncoder {
         }
 
         // Char arrays -> string & remove extraneous space
-        final String strA = new String(name1Char).replaceAll("\\s+", EMPTY);
-        final String strB = new String(name2Char).replaceAll("\\s+", EMPTY);
+        final String strA = WHITESPACE.matcher(new String(name1Char)).replaceAll(EMPTY);
+        final String strB = WHITESPACE.matcher(new String(name2Char)).replaceAll(EMPTY);
 
         // Final bit - subtract the longest string from 6 and return this int value
         if (strA.length() > strB.length()) {
@@ -421,7 +429,7 @@ public class MatchRatingApproachEncoder implements StringEncoder {
         name = name.replace("O", EMPTY);
         name = name.replace("U", EMPTY);
 
-        name = name.replaceAll("\\s{2,}\\b", SPACE);
+        name = WHITESPACE_RUN_AT_BOUNDARY.matcher(name).replaceAll(SPACE);
 
         // return isVowel(firstLetter) ? (firstLetter + name) : name;
         if (isVowel(firstLetter)) {
