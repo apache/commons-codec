@@ -49,9 +49,9 @@ public class BaseNCodecOutputStream<C extends BaseNCodec, T extends BaseNCodecOu
     /**
      * Builds output stream instances in {@link BaseNCodec} format.
      *
-     * @param <T> the output stream type to build.
+     * @param <T> The output stream type to build.
      * @param <C> A {@link BaseNCodec} subclass.
-     * @param <B> the builder subclass.
+     * @param <B> The builder subclass.
      * @since 1.20.0
      */
     public abstract static class AbstractBuilder<T, C extends BaseNCodec, B extends AbstractBuilder<T, C, B>>

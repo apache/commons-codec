@@ -22,9 +22,9 @@ import java.util.function.Supplier;
 /**
  * Builds input and output stream instances in {@link BaseNCodec} format.
  *
- * @param <T> the stream type to build.
+ * @param <T> The stream type to build.
  * @param <C> A {@link BaseNCodec} subclass.
- * @param <B> the builder subclass.
+ * @param <B> The builder subclass.
  * @since 1.20.0
  */
 public abstract class AbstractBaseNCodecStreamBuilder<T, C extends BaseNCodec, B extends AbstractBaseNCodecStreamBuilder<T, C, B>> implements Supplier<T> {

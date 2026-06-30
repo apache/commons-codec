@@ -52,8 +52,8 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     /**
      * Builds {@link Base64} instances.
      *
-     * @param <T> the codec type to build.
-     * @param <B> the codec builder subtype.
+     * @param <T> The codec type to build.
+     * @param <B> The codec builder subtype.
      * @since 1.17.0
      */
     public abstract static class AbstractBuilder<T, B extends AbstractBuilder<T, B>> implements Supplier<T> {
