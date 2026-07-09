@@ -195,19 +195,19 @@ public class Base58 extends BaseNCodec {
         super(builder);
     }
 
-    private void code(final byte[] array, final int offset, final int length, final Context context, BiConsumer<byte[], Context> consumer) {
+    private void code(final byte[] array, final int offset, final int length, final Context context, final BiConsumer<byte[], Context> consumer) {
         if (context.eof) {
             return;
         }
         if (length < 0) {
             context.eof = true;
-            final byte[] accumulate = context.buffer = context.buffer != null ? context.buffer : BaseNCodec.EMPTY_BYTE_ARRAY;
+            final byte[] accumulate = context.buffer = context.buffer != null ? context.buffer : EMPTY_BYTE_ARRAY;
             if (accumulate.length > 0) {
                 consumer.accept(accumulate, context);
             }
             return;
         }
-        final byte[] accumulate = context.buffer = context.buffer != null ? context.buffer : BaseNCodec.EMPTY_BYTE_ARRAY;
+        final byte[] accumulate = context.buffer = context.buffer != null ? context.buffer : EMPTY_BYTE_ARRAY;
         final byte[] newAccumulated = new byte[accumulate.length + length];
         if (accumulate.length > 0) {
             System.arraycopy(accumulate, 0, newAccumulated, 0, accumulate.length);

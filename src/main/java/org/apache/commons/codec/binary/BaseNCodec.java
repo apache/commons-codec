@@ -426,7 +426,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         return array == null ? 0 : array.length;
     }
 
-    private static int gte0(int value) {
+    private static int gte0(final int value) {
         if (value < 0) {
             throw new IllegalArgumentException("value must be greater than or equal to 0.");
         }
