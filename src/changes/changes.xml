@@ -53,6 +53,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="fix" issue="CODEC-339" dev="ggregory" due-to="Ruiqi Dong, Gary Gregory">URLCodec.encodeUrl(BitSet, byte[]) allows custom safe sets to emit URL encoding control characters.</action>
       <action type="fix" issue="CODEC-338" dev="ggregory" due-to="Ruiqi Dong, Gary Gregory">PercentCodec loses literal '+' when plusForSpace is enabled.</action>
       <action type="fix" issue="CODEC-337" dev="pkarwasz" due-to="Ruiqi Dong, Gary Gregory">Digest ALL reuses System.in, so only the first algorithm sees the real input (#431).</action>
+      <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix Base64.toIntegerBytes(BigInteger) for zero edge case (#441).</action>
       <!-- ADD -->
       <!-- UPDATE -->
       <action type="update" dev="ggregory" due-to="Gary Gregory">Bump org.apache.commons:commons-parent from 98 to 102.</action>
