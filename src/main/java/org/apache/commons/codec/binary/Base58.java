@@ -19,6 +19,7 @@ package org.apache.commons.codec.binary;
 
 import java.math.BigInteger;
 import java.util.Arrays;
+import java.util.function.BiConsumer;
 
 /**
  * Provides Base58 encoding and decoding as commonly used in cryptocurrency and blockchain applications.
@@ -196,6 +197,27 @@ public class Base58 extends BaseNCodec {
         super(builder);
     }
 
+    private void code(final byte[] array, final int offset, final int length, final Context context, BiConsumer<byte[], Context> consumer) {
+        if (context.eof) {
+            return;
+        }
+        if (length < 0) {
+            context.eof = true;
+            final byte[] accumulate = context.buffer = context.buffer != null ? context.buffer : EMPTY;
+            if (accumulate.length > 0) {
+                consumer.accept(accumulate, context);
+            }
+            return;
+        }
+        final byte[] accumulate = context.buffer = context.buffer != null ? context.buffer : EMPTY;
+        final byte[] newAccumulated = new byte[accumulate.length + length];
+        if (accumulate.length > 0) {
+            System.arraycopy(accumulate, 0, newAccumulated, 0, accumulate.length);
+        }
+        System.arraycopy(array, offset, newAccumulated, accumulate.length, length);
+        context.buffer = newAccumulated;
+    }
+
     /**
      * Converts Base58 encoded data to binary.
      * <p>
@@ -276,24 +298,7 @@ public class Base58 extends BaseNCodec {
      */
     @Override
     void decode(final byte[] array, final int offset, final int length, final Context context) {
-        if (context.eof) {
-            return;
-        }
-        if (length < 0) {
-            context.eof = true;
-            final byte[] accumulate = context.buffer = context.buffer != null ? context.buffer : EMPTY;
-            if (accumulate.length > 0) {
-                convertFromBase58(accumulate, context);
-            }
-            return;
-        }
-        final byte[] accumulate = context.buffer = context.buffer != null ? context.buffer : EMPTY;
-        final byte[] newAccumulated = new byte[accumulate.length + length];
-        if (accumulate.length > 0) {
-            System.arraycopy(accumulate, 0, newAccumulated, 0, accumulate.length);
-        }
-        System.arraycopy(array, offset, newAccumulated, accumulate.length, length);
-        context.buffer = newAccumulated;
+        code(array, offset, length, context, this::convertFromBase58);
     }
 
     /**
@@ -309,22 +314,7 @@ public class Base58 extends BaseNCodec {
      */
     @Override
     void encode(final byte[] array, final int offset, final int length, final Context context) {
-        if (context.eof) {
-            return;
-        }
-        if (length < 0) {
-            context.eof = true;
-            final byte[] accumulate = context.buffer = context.buffer != null ? context.buffer : EMPTY;
-            convertToBase58(accumulate, context);
-            return;
-        }
-        final byte[] accumulate = context.buffer = context.buffer != null ? context.buffer : EMPTY;
-        final byte[] newAccumulated = new byte[accumulate.length + length];
-        if (accumulate.length > 0) {
-            System.arraycopy(accumulate, 0, newAccumulated, 0, accumulate.length);
-        }
-        System.arraycopy(array, offset, newAccumulated, accumulate.length, length);
-        context.buffer = newAccumulated;
+        code(array, offset, length, context, this::convertToBase58);
     }
 
     /**
