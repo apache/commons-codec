@@ -17,6 +17,7 @@
 
 package org.apache.commons.codec.binary;
 
+import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.function.Supplier;
@@ -477,6 +478,25 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         final byte[] b = Arrays.copyOf(context.buffer, newCapacity);
         context.buffer = b;
         return b;
+    }
+
+    /**
+     * Returns a byte-array representation of a {@code BigInteger} without sign bit.
+     * <p>
+     * The value {@link BigInteger#ZERO} maps to an empty array.
+     * </p>
+     *
+     * @param bigInt {@code BigInteger} to be converted.
+     * @return a byte array representation of the BigInteger parameter.
+     */
+    static byte[] toUnsignedBytes(final BigInteger value) {
+        byte[] unsigned = value.equals(BigInteger.ZERO) ? EMPTY_BYTE_ARRAY : value.toByteArray();
+        if (unsigned.length > 0 && unsigned[0] == 0) {
+            final byte[] tmp = new byte[unsigned.length - 1];
+            System.arraycopy(unsigned, 1, tmp, 0, tmp.length);
+            unsigned = tmp;
+        }
+        return unsigned;
     }
 
     /**

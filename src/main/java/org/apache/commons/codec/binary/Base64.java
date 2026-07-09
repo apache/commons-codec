@@ -614,7 +614,7 @@ public class Base64 extends BaseNCodec {
      */
     public static byte[] encodeInteger(final BigInteger bigInteger) {
         Objects.requireNonNull(bigInteger, "bigInteger");
-        return encodeBase64(toIntegerBytes(bigInteger), false);
+        return encodeBase64(toUnsignedBytes(bigInteger), false);
     }
 
     /**
@@ -785,22 +785,6 @@ public class Base64 extends BaseNCodec {
      */
     public static boolean isBase64Url(final String base64) {
         return isBase64Url(StringUtils.getBytesUtf8(base64));
-    }
-
-    /**
-     * Returns a byte-array representation of a {@code BigInteger} without sign bit.
-     *
-     * @param bigInt {@code BigInteger} to be converted.
-     * @return a byte array representation of the BigInteger parameter.
-     */
-    static byte[] toIntegerBytes(final BigInteger bigInt) {
-        byte[] unsigned = bigInt.toByteArray();
-        if (unsigned[0] == 0 && unsigned.length != 1) {
-            final byte[] tmp = new byte[unsigned.length - 1];
-            System.arraycopy(unsigned, 1, tmp, 0, tmp.length);
-            unsigned = tmp;
-        }
-        return unsigned;
     }
 
     static byte[] toUrlSafeEncodeTable(final boolean urlSafe) {

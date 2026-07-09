@@ -93,8 +93,6 @@ public class Base58 extends BaseNCodec {
     private static final int DECODING_TABLE_LENGTH = 256;
     private static final int ENCODING_TABLE_LENGTH = 58;
 
-    private static final byte[] EMPTY = {};
-
     /**
      * Base58 alphabet: 123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz
      * (excludes: 0, I, O, l).
@@ -203,13 +201,13 @@ public class Base58 extends BaseNCodec {
         }
         if (length < 0) {
             context.eof = true;
-            final byte[] accumulate = context.buffer = context.buffer != null ? context.buffer : EMPTY;
+            final byte[] accumulate = context.buffer = context.buffer != null ? context.buffer : BaseNCodec.EMPTY_BYTE_ARRAY;
             if (accumulate.length > 0) {
                 consumer.accept(accumulate, context);
             }
             return;
         }
-        final byte[] accumulate = context.buffer = context.buffer != null ? context.buffer : EMPTY;
+        final byte[] accumulate = context.buffer = context.buffer != null ? context.buffer : BaseNCodec.EMPTY_BYTE_ARRAY;
         final byte[] newAccumulated = new byte[accumulate.length + length];
         if (accumulate.length > 0) {
             System.arraycopy(accumulate, 0, newAccumulated, 0, accumulate.length);
@@ -249,12 +247,7 @@ public class Base58 extends BaseNCodec {
             value = value.add(BigInteger.valueOf(digit).multiply(power));
             power = power.multiply(BASE);
         }
-        byte[] decoded = value.equals(BigInteger.ZERO) ? EMPTY : value.toByteArray();
-        if (decoded.length > 1 && decoded[0] == 0) {
-            final byte[] tmp = new byte[decoded.length - 1];
-            System.arraycopy(decoded, 1, tmp, 0, tmp.length);
-            decoded = tmp;
-        }
+        final byte[] decoded = toUnsignedBytes(value);
         final byte[] result = new byte[leadingZeros + decoded.length];
         System.arraycopy(decoded, 0, result, leadingZeros, decoded.length);
         final byte[] buffer = ensureBufferSize(result.length, context);
