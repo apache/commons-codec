@@ -794,25 +794,13 @@ public class Base64 extends BaseNCodec {
      * @return a byte array representation of the BigInteger parameter.
      */
     static byte[] toIntegerBytes(final BigInteger bigInt) {
-        int bitlen = bigInt.bitLength();
-        // round bitlen
-        bitlen = bitlen + 7 >> 3 << 3;
-        final byte[] bigBytes = bigInt.toByteArray();
-        if (bigInt.bitLength() % 8 != 0 && bigInt.bitLength() / 8 + 1 == bitlen / 8) {
-            return bigBytes;
+        byte[] unsigned = bigInt.toByteArray();
+        if (unsigned[0] == 0 && unsigned.length != 1) {
+            final byte[] tmp = new byte[unsigned.length - 1];
+            System.arraycopy(unsigned, 1, tmp, 0, tmp.length);
+            unsigned = tmp;
         }
-        // set up params for copying everything but sign bit
-        int startSrc = 0;
-        int len = bigBytes.length;
-        // if bigInt is exactly byte-aligned, just skip signbit in copy
-        if (bigInt.bitLength() % 8 == 0) {
-            startSrc = 1;
-            len--;
-        }
-        final int startDst = bitlen / 8 - len; // to pad w/ nulls as per spec
-        final byte[] resizedBytes = new byte[bitlen / 8];
-        System.arraycopy(bigBytes, startSrc, resizedBytes, startDst, len);
-        return resizedBytes;
+        return unsigned;
     }
 
     static byte[] toUrlSafeEncodeTable(final boolean urlSafe) {
