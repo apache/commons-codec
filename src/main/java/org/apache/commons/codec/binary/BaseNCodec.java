@@ -176,7 +176,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
          * @return {@code this} instance.
          */
         B setEncodedBlockSize(final int encodedBlockSize) {
-            this.encodedBlockSize = encodedBlockSize;
+            this.encodedBlockSize = gte0(encodedBlockSize);
             return asThis();
         }
 
@@ -242,7 +242,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
          * @return {@code this} instance.
          */
         B setUnencodedBlockSize(final int unencodedBlockSize) {
-            this.unencodedBlockSize = unencodedBlockSize;
+            this.unencodedBlockSize = gte0(unencodedBlockSize);
             return asThis();
         }
     }
@@ -425,6 +425,13 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         return array == null ? 0 : array.length;
     }
 
+    private static int gte0(int value) {
+        if (value < 0) {
+            throw new IllegalArgumentException("value must be greater than or equal to 0.");
+        }
+        return value;
+    }
+
     /**
      * Tests whether or not the {@code value} is in the given {@code table}.
      *
@@ -535,8 +542,8 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * @since 1.20.0
      */
     protected BaseNCodec(final AbstractBuilder<?, ?> builder) {
-        this.unencodedBlockSize = builder.unencodedBlockSize;
-        this.encodedBlockSize = builder.encodedBlockSize;
+        this.unencodedBlockSize = gte0(builder.unencodedBlockSize);
+        this.encodedBlockSize = gte0(builder.encodedBlockSize);
         final boolean useChunking = builder.lineLength > 0 && builder.lineSeparator.length > 0;
         this.lineLength = useChunking ? builder.lineLength / builder.encodedBlockSize * builder.encodedBlockSize : 0;
         this.chunkSeparatorLength = builder.lineSeparator.length;
