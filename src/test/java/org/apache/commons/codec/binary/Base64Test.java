@@ -171,7 +171,7 @@ class Base64Test {
     private final Random random = new Random();
 
     /**
-     * @return the random.
+     * @return The random.
      */
     Random getRandom() {
         return this.random;

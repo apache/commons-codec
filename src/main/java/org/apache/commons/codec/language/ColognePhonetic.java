@@ -322,7 +322,7 @@ public class ColognePhonetic implements StringEncoder {
      * </p>
      *
      * @param text The source text to encode.
-     * @return the corresponding encoding according to the <em>K&ouml;lner Phonetik</em> algorithm.
+     * @return The corresponding encoding according to the <em>K&ouml;lner Phonetik</em> algorithm.
      */
     public String colognePhonetic(final String text) {
         if (text == null) {

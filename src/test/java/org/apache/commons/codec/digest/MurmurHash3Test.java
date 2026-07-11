@@ -154,7 +154,7 @@ class MurmurHash3Test {
     /**
      * Creates a set of long values to test the hash utility methods.
      *
-     * @return the data
+     * @return The data
      */
     private static long[] createLongTestData() {
         final long[] data = new long[100];
@@ -173,7 +173,7 @@ class MurmurHash3Test {
      * Creates the random blocks of data to process up to max length.
      *
      * @param maxLength the max length
-     * @return the blocks
+     * @return The blocks
      */
     private static int[] createRandomBlocks(final int maxLength) {
         final int[] blocks = new int[20];

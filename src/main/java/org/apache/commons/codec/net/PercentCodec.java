@@ -136,8 +136,8 @@ public class PercentCodec implements BinaryEncoder, BinaryDecoder {
      * Decodes a byte[] Object, whose bytes are encoded with Percent-Encoding.
      *
      * @param obj the object to decode.
-     * @return the decoding result byte[] as Object.
-     * @throws DecoderException if the object is not a byte array.
+     * @return The decoding result byte[] as Object.
+     * @throws DecoderException Thrown if the object is not a byte array.
      */
     @Override
     public Object decode(final Object obj) throws DecoderException {
@@ -193,8 +193,8 @@ public class PercentCodec implements BinaryEncoder, BinaryDecoder {
      * Encodes an object into using the Percent-Encoding. Only byte[] objects are accepted.
      *
      * @param obj the object to encode.
-     * @return the encoding result byte[] as Object.
-     * @throws EncoderException if the object is not a byte array.
+     * @return The encoding result byte[] as Object.
+     * @throws EncoderException Thrown if the object is not a byte array.
      */
     @Override
     public Object encode(final Object obj) throws EncoderException {

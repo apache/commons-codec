@@ -102,7 +102,7 @@ class BaseNCodecTest {
      * long presumableFreeMemory = Runtime.getRuntime().maxMemory() - allocatedMemory;
      * </pre>
      *
-     * @return the presumable free memory
+     * @return The presumable free memory
      * @see <a href="https://stackoverflow.com/a/18366283">
      *     Christian Fries StackOverflow answer on Java available memory</a>
      */

@@ -309,7 +309,7 @@ public class PhoneticEngine {
      *
      * @param phonemeBuilder the current phonemes.
      * @param finalRules the final rules to apply.
-     * @return the resulting phonemes.
+     * @return The resulting phonemes.
      */
     private PhonemeBuilder applyFinalRules(final PhonemeBuilder phonemeBuilder,
             final Map<String, List<Rule>> finalRules) {
@@ -359,7 +359,7 @@ public class PhoneticEngine {
      *
      * @param input
      *            the String to encode.
-     * @return the encoding of the input.
+     * @return The encoding of the input.
      */
     public String encode(final String input) {
         final Languages.LanguageSet languageSet = this.lang.guessLanguages(input);
@@ -462,7 +462,7 @@ public class PhoneticEngine {
     /**
      * Gets the Lang language guessing rules being used.
      *
-     * @return the Lang in use.
+     * @return The Lang in use.
      */
     public Lang getLang() {
         return this.lang;
@@ -471,7 +471,7 @@ public class PhoneticEngine {
     /**
      * Gets the maximum number of phonemes the engine will calculate for a given input.
      *
-     * @return the maximum number of phonemes.
+     * @return The maximum number of phonemes.
      * @since 1.7
      */
     public int getMaxPhonemes() {
@@ -481,7 +481,7 @@ public class PhoneticEngine {
     /**
      * Gets the NameType being used.
      *
-     * @return the NameType in use.
+     * @return The NameType in use.
      */
     public NameType getNameType() {
         return this.nameType;
@@ -490,7 +490,7 @@ public class PhoneticEngine {
     /**
      * Gets the RuleType being used.
      *
-     * @return the RuleType in use.
+     * @return The RuleType in use.
      */
     public RuleType getRuleType() {
         return this.ruleType;

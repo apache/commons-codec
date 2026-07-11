@@ -305,7 +305,7 @@ public class Base32 extends BaseNCodec {
      *               <li>If false, then use <a href="https://datatracker.ietf.org/doc/html/rfc4648#section-6">RFC 4648 Section 6, Table 3: The Base 32
      *               Alphabet</a></li>
      *               </ul>
-     * @return the encoding table that matches {@code useHex}.
+     * @return The encoding table that matches {@code useHex}.
      */
     private static byte[] encodeTable(final boolean useHex) {
         return useHex ? HEX_ENCODE_TABLE : ENCODE_TABLE;
@@ -315,7 +315,7 @@ public class Base32 extends BaseNCodec {
      * Gets the decode table that matches the given encode table.
      *
      * @param encodeTable that is used to determine decode lookup table.
-     * @return the matching decode table.
+     * @return The matching decode table.
      */
     private static byte[] toDecodeTable(final byte[] encodeTable) {
         final byte[] table = encodeTable != null ? encodeTable : ENCODE_TABLE;
@@ -776,7 +776,7 @@ public class Base32 extends BaseNCodec {
     /**
      * Gets the line separator (for testing only).
      *
-     * @return the line separator.
+     * @return The line separator.
      */
     byte[] getLineSeparator() {
         return lineSeparator;

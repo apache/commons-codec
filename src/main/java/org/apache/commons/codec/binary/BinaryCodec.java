@@ -75,7 +75,7 @@ public class BinaryCodec implements BinaryDecoder, BinaryEncoder {
      * Decodes a byte array where each byte represents an ASCII '0' or '1'.
      *
      * @param ascii each byte represents an ASCII '0' or '1'.
-     * @return the raw encoded binary where each bit corresponds to a byte in the byte array argument.
+     * @return The raw encoded binary where each bit corresponds to a byte in the byte array argument.
      */
     public static byte[] fromAscii(final byte[] ascii) {
         if (isEmpty(ascii)) {
@@ -101,7 +101,7 @@ public class BinaryCodec implements BinaryDecoder, BinaryEncoder {
      * Decodes a char array where each char represents an ASCII '0' or '1'.
      *
      * @param ascii each char represents an ASCII '0' or '1'.
-     * @return the raw encoded binary where each bit corresponds to a char in the char array argument.
+     * @return The raw encoded binary where each bit corresponds to a char in the char array argument.
      */
     public static byte[] fromAscii(final char[] ascii) {
         if (ascii == null || ascii.length == 0) {
@@ -213,7 +213,7 @@ public class BinaryCodec implements BinaryDecoder, BinaryEncoder {
      * Decodes a byte array where each byte represents an ASCII '0' or '1'.
      *
      * @param ascii each byte represents an ASCII '0' or '1'.
-     * @return the raw encoded binary where each bit corresponds to a byte in the byte array argument.
+     * @return The raw encoded binary where each bit corresponds to a byte in the byte array argument.
      * @see org.apache.commons.codec.Decoder#decode(Object)
      */
     @Override
@@ -225,7 +225,7 @@ public class BinaryCodec implements BinaryDecoder, BinaryEncoder {
      * Decodes a byte array where each byte represents an ASCII '0' or '1'.
      *
      * @param ascii each byte represents an ASCII '0' or '1'.
-     * @return the raw encoded binary where each bit corresponds to a byte in the byte array argument.
+     * @return The raw encoded binary where each bit corresponds to a byte in the byte array argument.
      * @throws DecoderException if argument is not a byte[], char[] or String.
      * @see org.apache.commons.codec.Decoder#decode(Object)
      */
@@ -278,7 +278,7 @@ public class BinaryCodec implements BinaryDecoder, BinaryEncoder {
      * Decodes a String where each char of the String represents an ASCII '0' or '1'.
      *
      * @param ascii String of '0' and '1' characters.
-     * @return the raw encoded binary where each bit corresponds to a byte in the byte array argument.
+     * @return The raw encoded binary where each bit corresponds to a byte in the byte array argument.
      * @see org.apache.commons.codec.Decoder#decode(Object)
      */
     public byte[] toByteArray(final String ascii) {

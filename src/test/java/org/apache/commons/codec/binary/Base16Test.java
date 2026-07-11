@@ -44,7 +44,7 @@ class Base16Test {
     private final Random random = new Random();
 
     /**
-     * @return the random.
+     * @return The random.
      */
     Random getRandom() {
         return this.random;

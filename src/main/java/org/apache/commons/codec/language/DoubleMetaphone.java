@@ -152,7 +152,7 @@ public class DoubleMetaphone implements StringEncoder {
         /**
          * Gets the alternate string.
          *
-         * @return the alternate string.
+         * @return The alternate string.
          */
         public String getAlternate() {
             return alternate.toString();
@@ -161,7 +161,7 @@ public class DoubleMetaphone implements StringEncoder {
         /**
          * Gets the primary string.
          *
-         * @return the primary string.
+         * @return The primary string.
          */
         public String getPrimary() {
             return primary.toString();
@@ -478,7 +478,7 @@ public class DoubleMetaphone implements StringEncoder {
     /**
      * Gets the maxCodeLen.
      *
-     * @return the maxCodeLen.
+     * @return The maxCodeLen.
      */
     public int getMaxCodeLen() {
         return maxCodeLen;

@@ -150,7 +150,7 @@ public class Languages {
         /**
          * Gets the language strings
          *
-         * @return the languages strings.
+         * @return The languages strings.
          */
         public Set<String> getLanguages() {
             return this.languages;
@@ -345,7 +345,7 @@ public class Languages {
     /**
      * Gets the language set.
      *
-     * @return the language set.
+     * @return The language set.
      */
     public Set<String> getLanguages() {
         return this.languages;

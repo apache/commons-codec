@@ -19,6 +19,8 @@ package org.apache.commons.codec.net;
 
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.BitSet;
 
 import org.apache.commons.codec.BinaryDecoder;
@@ -33,8 +35,8 @@ import org.apache.commons.codec.binary.StringUtils;
 /**
  * Implements the 'www-form-urlencoded' encoding scheme, also misleadingly known as URL encoding.
  * <p>
- * This codec is meant to be a replacement for standard Java classes {@link java.net.URLEncoder} and
- * {@link java.net.URLDecoder} on older Java platforms, as these classes in Java versions below
+ * This codec is meant to be a replacement for standard Java classes {@link URLEncoder} and
+ * {@link URLDecoder} on older Java platforms, as these classes in Java versions below
  * 1.4 rely on the platform's default charset encoding.
  * </p>
  * <p>
@@ -354,7 +356,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
     /**
      * The default charset used for string decoding and encoding.
      *
-     * @return the default string charset.
+     * @return The default string charset.
      */
     public String getDefaultCharset() {
         return this.charset;
@@ -363,7 +365,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
     /**
      * The {@code String} encoding used for decoding and encoding.
      *
-     * @return the encoding.
+     * @return The encoding.
      * @deprecated Use {@link #getDefaultCharset()}, will be removed in 2.0.
      */
     @Deprecated

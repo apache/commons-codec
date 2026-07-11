@@ -92,7 +92,7 @@ public enum HmacAlgorithms {
     /**
      * Gets the algorithm name.
      *
-     * @return the algorithm name.
+     * @return The algorithm name.
      * @since 1.11
      */
     public String getName() {

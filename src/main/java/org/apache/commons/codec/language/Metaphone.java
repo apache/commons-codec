@@ -113,7 +113,7 @@ public class Metaphone implements StringEncoder {
     /**
      * Gets the maxCodeLen.
      *
-     * @return the maxCodeLen.
+     * @return The maxCodeLen.
      */
     public int getMaxCodeLen() {
         return this.maxCodeLen;

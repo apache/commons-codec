@@ -66,7 +66,7 @@ public class StringEncoderComparator implements Comparator {
      *            the object to compare.
      * @param o2
      *            the object to compare to.
-     * @return the Comparable.compareTo() return code or 0 if an encoding error was caught.
+     * @return The Comparable.compareTo() return code or 0 if an encoding error was caught.
      * @see Comparable
      */
     @Override

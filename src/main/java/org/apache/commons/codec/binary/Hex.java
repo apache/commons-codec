@@ -84,7 +84,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * @param data An array of characters containing hexadecimal digits.
      * @param out A byte array to contain the binary data decoded from the supplied char array.
      * @param outOffset The position within {@code out} to start writing the decoded bytes.
-     * @return the number of bytes written to {@code out}.
+     * @return The number of bytes written to {@code out}.
      * @throws DecoderException Thrown if an odd number of characters or illegal characters are supplied.
      * @since 1.15
      */
@@ -203,7 +203,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * @param toDigits the output alphabet (must contain at least 16 chars).
      * @param out a char[] which will hold the resultant appropriate characters from the alphabet.
      * @param outOffset the position within {@code out} at which to start writing the encoded characters.
-     * @return the given {@code out}.
+     * @return The given {@code out}.
      */
     private static char[] encodeHex(final byte[] data, final int dataOffset, final int dataLen, final char[] toDigits, final char[] out, final int outOffset) {
         // two characters form the hex value.
@@ -336,7 +336,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * {@link ByteBuffer#remaining()} will be used.
      *
      * @param byteBuffer the byte buffer.
-     * @return the byte[].
+     * @return The byte[].
      */
     private static byte[] toByteArray(final ByteBuffer byteBuffer) {
         final int remaining = byteBuffer.remaining();
@@ -537,7 +537,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
     /**
      * Gets the charset.
      *
-     * @return the charset.
+     * @return The charset.
      * @since 1.7
      */
     public Charset getCharset() {
@@ -547,7 +547,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
     /**
      * Gets the charset name.
      *
-     * @return the charset name.
+     * @return The charset name.
      * @since 1.4
      */
     public String getCharsetName() {

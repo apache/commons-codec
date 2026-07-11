@@ -141,7 +141,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * @param b      byte to write.
      * @param encode indicates whether the octet shall be encoded.
      * @param buffer the buffer to write to.
-     * @return the number of bytes that have been written to the buffer.
+     * @return The number of bytes that have been written to the buffer.
      */
     private static int encodeByte(final int b, final boolean encode, final ByteArrayOutputStream buffer) {
         if (encode) {
@@ -266,7 +266,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      *
      * @param index position in the array.
      * @param bytes the byte array.
-     * @return the unsigned octet at position {@code index} from the array.
+     * @return The unsigned octet at position {@code index} from the array.
      */
     private static int getUnsignedOctet(final int index, final byte[] bytes) {
         int b = bytes[index];
@@ -529,7 +529,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
     /**
      * Gets the default Charset name used for string decoding and encoding.
      *
-     * @return the default Charset name.
+     * @return The default Charset name.
      * @since 1.7
      */
     public Charset getCharset() {
@@ -539,7 +539,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
     /**
      * Gets the default Charset name used for string decoding and encoding.
      *
-     * @return the default Charset name.
+     * @return The default Charset name.
      */
     public String getDefaultCharset() {
         return this.charset.name();

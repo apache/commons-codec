@@ -18,6 +18,7 @@
 package org.apache.commons.codec.binary;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.function.Supplier;
@@ -347,7 +348,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * The maximum size buffer to allocate.
      *
      * <p>
-     * This is set to the same size used in the JDK {@link java.util.ArrayList}:
+     * This is set to the same size used in the JDK {@link ArrayList}:
      * </p>
      * <blockquote> Some VMs reserve some header words in an array. Attempts to allocate larger arrays may result in OutOfMemoryError: Requested array size
      * exceeds VM limit. </blockquote>
@@ -386,7 +387,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * no array can be allocated.
      *
      * @param minCapacity the minimum capacity.
-     * @return the capacity.
+     * @return The capacity.
      * @throws OutOfMemoryError if the {@code minCapacity} is negative.
      */
     private static int createPositiveCapacity(final int minCapacity) {
@@ -408,7 +409,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     /**
      * Gets a copy of the chunk separator per RFC 2045 section 2.1.
      *
-     * @return the chunk separator.
+     * @return The chunk separator.
      * @see <a href="https://www.ietf.org/rfc/rfc2045">RFC 2045 section 2.1</a>
      * @since 1.15
      */
@@ -420,7 +421,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * Gets the array length or 0 if null.
      *
      * @param array the array or null.
-     * @return the array length or 0 if null.
+     * @return The array length or 0 if null.
      */
     static int getLength(final byte[] array) {
         return array == null ? 0 : array.length;
@@ -462,7 +463,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      *
      * @param context     the context to be used.
      * @param minCapacity the minimum required capacity.
-     * @return the resized byte[] buffer.
+     * @return The resized byte[] buffer.
      * @throws OutOfMemoryError if the {@code minCapacity} is negative.
      */
     private static byte[] resizeBuffer(final Context context, final int minCapacity) {
@@ -803,7 +804,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      *
      * @param size    minimum spare space required.
      * @param context the context to be used.
-     * @return the buffer.
+     * @return The buffer.
      */
     protected byte[] ensureBufferSize(final int size, final Context context) {
         if (context.buffer == null) {
@@ -836,7 +837,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     /**
      * Gets the default buffer size. Can be overridden.
      *
-     * @return the default buffer size.
+     * @return The default buffer size.
      */
     protected int getDefaultBufferSize() {
         return DEFAULT_BUFFER_SIZE;

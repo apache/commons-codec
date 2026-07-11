@@ -1140,7 +1140,7 @@ public class Base64 extends BaseNCodec {
     /**
      * Gets the line separator (for testing only).
      *
-     * @return the line separator.
+     * @return The line separator.
      */
     byte[] getLineSeparator() {
         return lineSeparator;

@@ -64,7 +64,7 @@ public class BaseNCodecInputStream<C extends BaseNCodec, T extends BaseNCodecInp
         /**
          * Gets the input stream.
          *
-         * @return the input stream.
+         * @return The input stream.
          */
         protected InputStream getInputStream() {
             return inputStream;
@@ -184,7 +184,7 @@ public class BaseNCodecInputStream<C extends BaseNCodec, T extends BaseNCodecInp
     /**
      * Reads one {@code byte} from this input stream.
      *
-     * @return the byte as an integer in the range 0 to 255. Returns -1 if EOF has been reached.
+     * @return The byte as an integer in the range 0 to 255. Returns -1 if EOF has been reached.
      * @throws IOException if an I/O error occurs.
      */
     @Override

@@ -49,7 +49,7 @@ public enum NameType {
     /**
      * Gets the short version of the name type.
      *
-     * @return the NameType short string.
+     * @return The NameType short string.
      */
     public String getName() {
         return this.name;

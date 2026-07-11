@@ -169,7 +169,7 @@ public class Base58 extends BaseNCodec {
      * Gets the decode table that matches the given encode table.
      *
      * @param encodeTable that is used to determine decode lookup table.
-     * @return the matching decode table.
+     * @return The matching decode table.
      */
     private static byte[] toDecodeTable(final byte[] encodeTable) {
         final byte[] table = encodeTable != null ? encodeTable : ENCODE_TABLE;
@@ -264,7 +264,7 @@ public class Base58 extends BaseNCodec {
      *
      * @param accumulate the binary data to encode.
      * @param context    the context for this encoding operation.
-     * @return the buffer containing the encoded data.
+     * @return The buffer containing the encoded data.
      */
     private byte[] convertToBase58(final byte[] accumulate, final Context context) {
         final StringBuilder base58 = getStringBuilder(accumulate);

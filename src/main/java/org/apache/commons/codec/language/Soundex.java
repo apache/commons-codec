@@ -224,7 +224,7 @@ public class Soundex implements StringEncoder {
     /**
      * Returns the maxLength. Standard Soundex
      *
-     * @return the maxLength.
+     * @return The maxLength.
      * @deprecated This feature is not needed since the encoding size must be constant. Will be removed in 2.0.
      */
     @Deprecated

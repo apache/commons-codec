@@ -54,7 +54,7 @@ class HexTest {
      * {@link ByteBuffer#allocateDirect(int)}
      *
      * @param capacity the capacity
-     * @return the byte buffer
+     * @return The byte buffer
      */
     protected ByteBuffer allocate(final int capacity) {
         return ByteBuffer.allocate(capacity);
@@ -121,7 +121,7 @@ class HexTest {
      * <p>The buffer is allocated using {@link #allocate(int)}.
      *
      * @param string the String to encode
-     * @return the byte buffer
+     * @return The byte buffer
      */
     private ByteBuffer getByteBufferUtf8(final String string) {
         final byte[] bytes = string.getBytes(StandardCharsets.UTF_8);

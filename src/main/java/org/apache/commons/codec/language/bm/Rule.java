@@ -156,7 +156,7 @@ public class Rule {
         /**
          * Gets the language set.
          *
-         * @return the language set.
+         * @return The language set.
          */
         public Languages.LanguageSet getLanguages() {
             return this.languages;
@@ -170,7 +170,7 @@ public class Rule {
         /**
          * Gets the phoneme text sequence.
          *
-         * @return the phoneme text sequence.
+         * @return The phoneme text sequence.
          */
         public CharSequence getPhonemeText() {
             return this.phonemeText;
@@ -224,7 +224,7 @@ public class Rule {
         /**
          * Gets the expression size in phonemes.
          *
-         * @return the expression size in phonemes.
+         * @return The expression size in phonemes.
          * @since 1.17.0
          */
         default int size() {
@@ -644,7 +644,7 @@ public class Rule {
     /**
      * Gets the left context. This is a regular expression that must match to the left of the pattern.
      *
-     * @return the left context Pattern.
+     * @return The left context Pattern.
      */
     public RPattern getLContext() {
         return lContext;
@@ -653,7 +653,7 @@ public class Rule {
     /**
      * Gets the pattern. This is a string-literal that must exactly match.
      *
-     * @return the pattern.
+     * @return The pattern.
      */
     public String getPattern() {
         return pattern;
@@ -662,7 +662,7 @@ public class Rule {
     /**
      * Gets the phoneme. If the rule matches, this is the phoneme associated with the pattern match.
      *
-     * @return the phoneme.
+     * @return The phoneme.
      */
     public PhonemeExpr getPhoneme() {
         return phoneme;
@@ -671,7 +671,7 @@ public class Rule {
     /**
      * Gets the right context. This is a regular expression that must match to the right of the pattern.
      *
-     * @return the right context Pattern.
+     * @return The right context Pattern.
      */
     public RPattern getRContext() {
         return rContext;

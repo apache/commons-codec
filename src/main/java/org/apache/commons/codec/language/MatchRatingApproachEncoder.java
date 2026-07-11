@@ -297,7 +297,7 @@ public class MatchRatingApproachEncoder implements StringEncoder {
      *
      * @param name1 first name.
      * @param name1 second name.
-     * @return the length as above.
+     * @return The length as above.
      */
     int leftToRightThenRightToLeftProcessing(final String name1, final String name2) {
         final char[] name1Char = name1.toCharArray();

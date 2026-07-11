@@ -17,6 +17,7 @@
 package org.apache.commons.codec.digest;
 
 import java.nio.charset.StandardCharsets;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
 /**
@@ -35,18 +36,15 @@ public class Crypt {
     /**
      * Encrypts a password in a crypt(3) compatible way.
      * <p>
-     * A random salt and the default algorithm (currently SHA-512) are used. See {@link #crypt(String, String)} for
-     * details.
+     * A random salt and the default algorithm (currently SHA-512) are used. See {@link #crypt(String, String)} for details.
      * </p>
      * <p>
      * A salt is generated for you using {@link SecureRandom}.
      * </p>
      *
-     * @param keyBytes
-     *            plaintext password.
-     * @return hash value.
-     * @throws IllegalArgumentException
-     *             when a {@link java.security.NoSuchAlgorithmException} is caught.
+     * @param keyBytes The plaintext password.
+     * @return The hash value.
+     * @throws IllegalArgumentException Thrown if a {@link NoSuchAlgorithmException} is caught.
      */
     public static String crypt(final byte[] keyBytes) {
         return crypt(keyBytes, null);
@@ -55,22 +53,15 @@ public class Crypt {
     /**
      * Encrypts a password in a crypt(3) compatible way.
      * <p>
-     * If no salt is provided, a random salt and the default algorithm (currently SHA-512) will be used. See
-     * {@link #crypt(String, String)} for details.
+     * If no salt is provided, a random salt and the default algorithm (currently SHA-512) will be used. See {@link #crypt(String, String)} for details.
      * </p>
      *
-     * @param keyBytes
-     *            plaintext password.
-     * @param salt
-     *            the salt, which is used to select the algorithm, see {@link #crypt(String, String)}
-     *            The salt may be null,
-     *            in which case the method delegates to {@link Sha2Crypt#sha512Crypt(byte[])}.
-     *
+     * @param keyBytes The plaintext password.
+     * @param salt     The salt, which is used to select the algorithm, see {@link #crypt(String, String)} The salt may be null, in which case the method
+     *                 delegates to {@link Sha2Crypt#sha512Crypt(byte[])}.
      * @return hash value.
-     * @throws IllegalArgumentException
-     *             if the salt does not match the allowed pattern.
-     * @throws IllegalArgumentException
-     *             when a {@link java.security.NoSuchAlgorithmException} is caught.
+     * @throws IllegalArgumentException Thrown if the salt does not match the allowed pattern.
+     * @throws IllegalArgumentException Thrown if a {@link NoSuchAlgorithmException} is caught.
      */
     public static String crypt(final byte[] keyBytes, final String salt) {
         if (salt == null) {
@@ -98,11 +89,9 @@ public class Crypt {
      * </p>
      *
      * @see #crypt(String, String)
-     * @param key
-     *            plaintext password.
-     * @return hash value.
-     * @throws IllegalArgumentException
-     *             when a {@link java.security.NoSuchAlgorithmException} is caught.
+     * @param key The plaintext password.
+     * @return The hash value.
+     * @throws IllegalArgumentException Thrown if a {@link NoSuchAlgorithmException} is caught.
      */
     public static String crypt(final String key) {
         return crypt(key, null);
@@ -121,23 +110,21 @@ public class Crypt {
      * <li>Only the first 8 chars of the passwords are used in the DES algorithm!</li>
      * </ul>
      * <p>
-     * The magic strings {@code "$apr1$"} and {@code "$2a$"} are not recognized by this method as its output should be
-     * identical with that of the libc implementation.
+     * The magic strings {@code "$apr1$"} and {@code "$2a$"} are not recognized by this method as its output should be identical with that of the libc
+     * implementation.
      * </p>
      * <p>
-     * The rest of the salt string is drawn from the set {@code [a-zA-Z0-9./]} and is cut at the maximum length or if a
-     * {@code "$"} sign is encountered. It is therefore valid to enter a complete hash value as salt to for example verify a
-     * password with:
+     * The rest of the salt string is drawn from the set {@code [a-zA-Z0-9./]} and is cut at the maximum length or if a {@code "$"} sign is encountered. It is
+     * therefore valid to enter a complete hash value as salt to for example verify a password with:
      * </p>
+     *
      * <pre>
      * storedPwd.equals(crypt(enteredPwd, storedPwd))
      * </pre>
      * <p>
-     * The resulting string starts with the marker string ({@code $n$}), where n is the same as the input salt.
-     * The salt is then appended, followed by a {@code "$"} sign.
-     * This is followed by the actual hash value.
-     * For DES the string only contains the salt and actual hash.
-     * The total length is dependent on the algorithm used:
+     * The resulting string starts with the marker string ({@code $n$}), where n is the same as the input salt. The salt is then appended, followed by a
+     * {@code "$"} sign. This is followed by the actual hash value. For DES the string only contains the salt and actual hash. The total length is dependent on
+     * the algorithm used:
      * </p>
      * <ul>
      * <li>SHA-512: 106 chars</li>
@@ -148,26 +135,22 @@ public class Crypt {
      * <p>
      * Example:
      * </p>
+     *
      * <pre>
      *      crypt("secret", "$1$xxxx") =&gt; "$1$xxxx$aMkevjfEIpa35Bh3G4bAc."
      *      crypt("secret", "xx") =&gt; "xxWAum7tHdIUw"
      * </pre>
      * <p>
-     * This method comes in a variation that accepts a byte[] array to support input strings that are not encoded in
-     * UTF-8 but for example in ISO-8859-1 where equal characters result in different byte values.
+     * This method comes in a variation that accepts a byte[] array to support input strings that are not encoded in UTF-8 but for example in ISO-8859-1 where
+     * equal characters result in different byte values.
      * </p>
      *
      * @see "The man page of the libc crypt (3) function."
-     * @param key
-     *            plaintext password as entered by the used.
-     * @param salt
-     *            real salt value without prefix or "rounds=". The salt may be null, in which case a
-     *            salt is generated for you using {@link SecureRandom}.
-     * @return hash value, i.e. encrypted password including the salt string.
-     * @throws IllegalArgumentException
-     *             if the salt does not match the allowed pattern.
-     * @throws IllegalArgumentException
-     *             when a {@link java.security.NoSuchAlgorithmException} is caught.
+     * @param key  The plaintext password as entered by the used.
+     * @param salt The real salt value without prefix or "rounds=". The salt may be null, in which case a salt is generated for you using {@link SecureRandom}.
+     * @return The hash value, that is, the encrypted password including the salt string.
+     * @throws IllegalArgumentException Thrown if the salt does not match the allowed pattern.
+     * @throws IllegalArgumentException Thrown if a {@link NoSuchAlgorithmException} is caught.
      */
     public static String crypt(final String key, final String salt) {
         return crypt(key.getBytes(StandardCharsets.UTF_8), salt);

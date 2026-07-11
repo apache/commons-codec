@@ -69,7 +69,7 @@ public class BaseNCodecOutputStream<C extends BaseNCodec, T extends BaseNCodecOu
         /**
          * Gets the input stream.
          *
-         * @return the input stream.
+         * @return The input stream.
          */
         protected OutputStream getOutputStream() {
             return outputStream;

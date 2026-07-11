@@ -113,7 +113,7 @@ public class BeiderMorseEncoder implements StringEncoder {
     /**
      * Gets the name type currently in operation.
      *
-     * @return the NameType currently being used.
+     * @return The NameType currently being used.
      */
     public NameType getNameType() {
         return this.engine.getNameType();
@@ -122,7 +122,7 @@ public class BeiderMorseEncoder implements StringEncoder {
     /**
      * Gets the rule type currently in operation.
      *
-     * @return the RuleType currently being used.
+     * @return The RuleType currently being used.
      */
     public RuleType getRuleType() {
         return this.engine.getRuleType();

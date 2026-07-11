@@ -83,7 +83,7 @@ public class Sha2Crypt {
      *
      * @param keyBytes Plaintext to hash. Each array element is set to {@code 0} before returning.
      * @return The Complete hash value.
-     * @throws IllegalArgumentException Thrown if a {@link java.security.NoSuchAlgorithmException} is caught.
+     * @throws IllegalArgumentException Thrown if a {@link NoSuchAlgorithmException} is caught.
      */
     public static String sha256Crypt(final byte[] keyBytes) {
         return sha256Crypt(keyBytes, null);
@@ -100,7 +100,7 @@ public class Sha2Crypt {
      *                 If one does not want to use {@link SecureRandom}, you can pass your own {@link Random} in {@link #sha256Crypt(byte[], String, Random)}.
      * @return The Complete hash value including salt.
      * @throws IllegalArgumentException Thrown if the salt does not match the allowed pattern.
-     * @throws IllegalArgumentException Thrown if a {@link java.security.NoSuchAlgorithmException} is caught.
+     * @throws IllegalArgumentException Thrown if a {@link NoSuchAlgorithmException} is caught.
      */
     public static String sha256Crypt(final byte[] keyBytes, String salt) {
         if (salt == null) {
@@ -120,7 +120,7 @@ public class Sha2Crypt {
      * @param random   the instance of {@link Random} to use for generating the salt. Consider using {@link SecureRandom} for more secure salts.
      * @return The Complete hash value including salt.
      * @throws IllegalArgumentException Thrown if the salt does not match the allowed pattern.
-     * @throws IllegalArgumentException Thrown if a {@link java.security.NoSuchAlgorithmException} is caught.
+     * @throws IllegalArgumentException Thrown if a {@link NoSuchAlgorithmException} is caught.
      * @since 1.12
      */
     public static String sha256Crypt(final byte[] keyBytes, String salt, final Random random) {
@@ -538,7 +538,7 @@ public class Sha2Crypt {
      *
      * @param keyBytes Plaintext to hash. Each array element is set to {@code 0} before returning.
      * @return Complete hash value.
-     * @throws IllegalArgumentException Thrown if a {@link java.security.NoSuchAlgorithmException} is caught.
+     * @throws IllegalArgumentException Thrown if a {@link NoSuchAlgorithmException} is caught.
      */
     public static String sha512Crypt(final byte[] keyBytes) {
         return sha512Crypt(keyBytes, null);
@@ -557,7 +557,7 @@ public class Sha2Crypt {
      *                 {@link #sha512Crypt(byte[], String, Random)}.
      * @return Complete hash value including salt.
      * @throws IllegalArgumentException Thrown if the salt does not match the allowed pattern.
-     * @throws IllegalArgumentException Thrown if a {@link java.security.NoSuchAlgorithmException} is caught.
+     * @throws IllegalArgumentException Thrown if a {@link NoSuchAlgorithmException} is caught.
      */
     public static String sha512Crypt(final byte[] keyBytes, String salt) {
         if (salt == null) {
@@ -578,7 +578,7 @@ public class Sha2Crypt {
      * @param random   The instance of {@link Random} to use for generating the salt. Consider using {@link SecureRandom} for more secure salts.
      * @return Complete hash value including salt.
      * @throws IllegalArgumentException if the salt does not match the allowed pattern.
-     * @throws IllegalArgumentException when a {@link java.security.NoSuchAlgorithmException} is caught.
+     * @throws IllegalArgumentException Thrown if a {@link NoSuchAlgorithmException} is caught.
      * @since 1.12
      */
     public static String sha512Crypt(final byte[] keyBytes, String salt, final Random random) {

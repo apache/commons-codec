@@ -141,7 +141,7 @@ public class Charsets {
      *
      * @param charset
      *            A charset or null.
-     * @return the given Charset or the default Charset if the given Charset is null.
+     * @return The given Charset or the default Charset if the given Charset is null.
      */
     public static Charset toCharset(final Charset charset) {
         return charset == null ? Charset.defaultCharset() : charset;

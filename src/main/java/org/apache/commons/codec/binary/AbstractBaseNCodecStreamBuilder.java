@@ -47,7 +47,7 @@ public abstract class AbstractBaseNCodecStreamBuilder<T, C extends BaseNCodec, B
     /**
      * Gets the codec to encode/decode a stream.
      *
-     * @return the codec to encode/decode a stream.
+     * @return The codec to encode/decode a stream.
      */
     protected C getBaseNCodec() {
         return baseNCodec;

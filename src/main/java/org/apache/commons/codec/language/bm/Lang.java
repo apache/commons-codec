@@ -197,7 +197,7 @@ public class Lang {
      *
      * @param text
      *            the word.
-     * @return the language that the word originates from or {@link Languages#ANY} if there was no unique match.
+     * @return The language that the word originates from or {@link Languages#ANY} if there was no unique match.
      */
     public String guessLanguage(final String text) {
         final Languages.LanguageSet ls = guessLanguages(text);
