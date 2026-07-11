@@ -140,7 +140,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      *
      * @param b      byte to write.
      * @param encode indicates whether the octet shall be encoded.
-     * @param buffer the buffer to write to.
+     * @param buffer The buffer to write to.
      * @return The number of bytes that have been written to the buffer.
      */
     private static int encodeByte(final int b, final boolean encode, final ByteArrayOutputStream buffer) {
@@ -249,7 +249,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * Encodes byte into its quoted-printable representation.
      *
      * @param b      byte to encode.
-     * @param buffer the buffer to write to.
+     * @param buffer The buffer to write to.
      * @return The number of bytes written to the {@code buffer}.
      */
     private static int encodeQuotedPrintable(final int b, final ByteArrayOutputStream buffer) {
@@ -265,7 +265,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * Gets the byte at position {@code index} of the byte array and make sure it is unsigned.
      *
      * @param index position in the array.
-     * @param bytes the byte array.
+     * @param bytes The byte array.
      * @return The unsigned octet at position {@code index} from the array.
      */
     private static int getUnsignedOctet(final int index, final byte[] bytes) {
@@ -316,7 +316,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
     /**
      * Constructs a new instance for the selection of a default Charset.
      *
-     * @param charset the default string Charset to use.
+     * @param charset The default string Charset to use.
      * @since 1.7
      */
     public QuotedPrintableCodec(final Charset charset) {
@@ -326,7 +326,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
     /**
      * Constructs a new instance for the selection of a default Charset and strict mode.
      *
-     * @param charset the default string Charset to use.
+     * @param charset The default string Charset to use.
      * @param strict  if {@code true}, soft line breaks will be used.
      * @since 1.10
      */
@@ -338,7 +338,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
     /**
      * Constructs a new instance for the selection of a default Charset.
      *
-     * @param charsetName the default string Charset to use.
+     * @param charsetName The default string Charset to use.
      * @throws UnsupportedCharsetException If no support for the named Charset is available in this instance of the Java virtual machine.
      * @throws IllegalArgumentException    If the given charsetName is null.
      * @throws IllegalCharsetNameException If the given Charset name is illegal.
@@ -405,7 +405,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * representation.
      *
      * @param sourceStr     quoted-printable string to convert into its original form.
-     * @param sourceCharset the original string Charset.
+     * @param sourceCharset The original string Charset.
      * @return original string.
      * @throws DecoderException Thrown if quoted-printable decoding is unsuccessful.
      * @since 1.7
@@ -422,7 +422,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * representation.
      *
      * @param sourceStr     quoted-printable string to convert into its original form.
-     * @param sourceCharset the original string Charset.
+     * @param sourceCharset The original string Charset.
      * @return original string.
      * @throws DecoderException             Thrown if quoted-printable decoding is unsuccessful.
      * @throws UnsupportedEncodingException Thrown if Charset is not supported.
@@ -496,7 +496,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * </p>
      *
      * @param sourceStr     string to convert to quoted-printable form.
-     * @param sourceCharset the Charset for sourceStr.
+     * @param sourceCharset The Charset for sourceStr.
      * @return quoted-printable string.
      * @since 1.7
      */
@@ -515,7 +515,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * </p>
      *
      * @param sourceStr     string to convert to quoted-printable form.
-     * @param sourceCharset the Charset for sourceStr.
+     * @param sourceCharset The Charset for sourceStr.
      * @return quoted-printable string.
      * @throws UnsupportedEncodingException Thrown if the Charset is not supported.
      */

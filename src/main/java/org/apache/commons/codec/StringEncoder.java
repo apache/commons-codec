@@ -25,7 +25,7 @@ public interface StringEncoder extends Encoder {
     /**
      * Encodes a String and returns a String.
      *
-     * @param source the String to encode.
+     * @param source The String to encode.
      * @return The encoded String.
      * @throws EncoderException thrown if there is an error condition during the encoding process.
      */

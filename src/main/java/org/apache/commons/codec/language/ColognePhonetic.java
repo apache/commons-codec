@@ -264,7 +264,7 @@ public class ColognePhonetic implements StringEncoder {
          * Stores the next code in the output buffer, keeping track of the previous code. '0' is only stored if it is the first entry. Ignored chars are never
          * stored. If the code is the same as the last code (whether stored or not) it is not stored.
          *
-         * @param code the code to store.
+         * @param code The code to store.
          */
         void put(final char code) {
             final boolean accept = code != CHAR_IGNORE;

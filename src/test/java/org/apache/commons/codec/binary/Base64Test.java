@@ -90,7 +90,7 @@ class Base64Test {
      * alphabet where the final bits are zero. This asserts that illegal final
      * characters throw an exception when decoding.
      *
-     * @param nbits the number of trailing bits (must be a factor of 6 and {@code <24})
+     * @param nbits The number of trailing bits (must be a factor of 6 and {@code <24})
      */
     private static void assertBase64DecodingOfTrailingBits(final int nbits) {
         final Base64 codec = new Base64(0, null, false, CodecPolicy.STRICT);

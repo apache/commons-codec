@@ -69,7 +69,7 @@ public final class Crc16 implements Checksum {
         /**
          * Sets the initial value.
          *
-         * @param init the initial value.
+         * @param init The initial value.
          * @return {@code this} instance.
          */
         public Builder setInit(final int init) {
@@ -80,7 +80,7 @@ public final class Crc16 implements Checksum {
         /**
          * Sets the lookup table.
          *
-         * @param table the lookup table, making a clone of the input array, must not be null.
+         * @param table The lookup table, making a clone of the input array, must not be null.
          * @return {@code this} instance.
          */
         public Builder setTable(final int[] table) {
@@ -90,7 +90,7 @@ public final class Crc16 implements Checksum {
         /**
          * Sets the XorOut value to XOR to the current checksum returned by {@link Crc16#getValue()}.
          *
-         * @param xorOut the XorOut value.
+         * @param xorOut The XorOut value.
          * @return {@code this} instance.
          */
         public Builder setXorOut(final int xorOut) {
@@ -101,7 +101,7 @@ public final class Crc16 implements Checksum {
         /**
          * Sets the lookup table without making a clone.
          *
-         * @param table the lookup table, must not be null.
+         * @param table The lookup table, must not be null.
          * @return {@code this} instance.
          */
         private Builder table(final int[] table) {

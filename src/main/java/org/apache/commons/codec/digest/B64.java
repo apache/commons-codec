@@ -89,7 +89,7 @@ final class B64 {
      * </p>
      *
      * @param num Number of chars to generate.
-     * @param random an instance of {@link Random}.
+     * @param random An instance of {@link Random}.
      * @return A random salt {@link String}.
      */
     static String getRandomSalt(final int num, final Random random) {

@@ -117,7 +117,7 @@ public class Sha2Crypt {
      *
      * @param keyBytes plaintext to hash. Each array element is set to {@code 0} before returning.
      * @param salt     real salt value without prefix or "rounds=".
-     * @param random   the instance of {@link Random} to use for generating the salt. Consider using {@link SecureRandom} for more secure salts.
+     * @param random   The instance of {@link Random} to use for generating the salt. Consider using {@link SecureRandom} for more secure salts.
      * @return The Complete hash value including salt.
      * @throws IllegalArgumentException Thrown if the salt does not match the allowed pattern.
      * @throws IllegalArgumentException Thrown if a {@link NoSuchAlgorithmException} is caught.
@@ -143,7 +143,7 @@ public class Sha2Crypt {
      * @param keyBytes   plaintext to hash. Each array element is set to {@code 0} before returning.
      * @param salt       real salt value without prefix or {@code "rounds="}; may not be null.
      * @param saltPrefix either {@code $5$} or {@code $6$}.
-     * @param blocksize  a value that differs between {@code $5$}  and {@code $6$}.
+     * @param blocksize  A value that differs between {@code $5$}  and {@code $6$}.
      * @param algorithm  {@link MessageDigest} algorithm identifier string.
      * @return The Complete hash value including prefix and salt.
      * @throws IllegalArgumentException Thrown if the given salt is {@code null} or does not match the allowed pattern.

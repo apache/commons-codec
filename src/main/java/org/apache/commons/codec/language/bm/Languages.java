@@ -73,7 +73,7 @@ public class Languages {
         /**
          * Gets a language set for the given languages.
          *
-         * @param languages a language set.
+         * @param languages A language set.
          * @return A LanguageSet.
          */
         public static LanguageSet from(final Set<String> languages) {
@@ -90,7 +90,7 @@ public class Languages {
         /**
          * Tests whether this instance contains the given value.
          *
-         * @param language the value to test.
+         * @param language The value to test.
          * @return whether this instance contains the given value.
          */
         public abstract boolean contains(String language);
@@ -307,7 +307,7 @@ public class Languages {
     /**
      * Gets a new instance for the given resource name.
      *
-     * @param languagesResourceName the resource name to lookup.
+     * @param languagesResourceName The resource name to lookup.
      * @return A new instance.
      */
     public static Languages getInstance(final String languagesResourceName) {

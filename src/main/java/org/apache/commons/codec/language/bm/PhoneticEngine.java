@@ -69,7 +69,7 @@ public class PhoneticEngine {
          * phoneme of zero characters. This can then be appended to. This should be the only way to create a new
          * phoneme from scratch.
          *
-         * @param languages the set of languages.
+         * @param languages The set of languages.
          * @return  a new, empty phoneme builder.
          */
         public static PhonemeBuilder empty(final Languages.LanguageSet languages) {
@@ -90,7 +90,7 @@ public class PhoneticEngine {
         /**
          * Creates a new phoneme builder containing all phonemes in this one extended by {@code str}.
          *
-         * @param str   the characters to append to the phonemes.
+         * @param str   The characters to append to the phonemes.
          */
         public void append(final CharSequence str) {
             phonemes.forEach(ph -> ph.append(str));
@@ -103,8 +103,8 @@ public class PhoneticEngine {
          * incompatible.
          * </p>
          *
-         * @param phonemeExpr   the expression to apply.
-         * @param maxPhonemes   the maximum number of phonemes to build up.
+         * @param phonemeExpr   The expression to apply.
+         * @param maxPhonemes   The maximum number of phonemes to build up.
          */
         public void apply(final Rule.PhonemeExpr phonemeExpr, final int maxPhonemes) {
             final Set<Rule.Phoneme> newPhonemes = new LinkedHashSet<>(Math.min(phonemes.size() * phonemeExpr.size(), maxPhonemes));
@@ -307,8 +307,8 @@ public class PhoneticEngine {
      * Applies the final rules to convert from a language-specific phonetic representation to a
      * language-independent representation.
      *
-     * @param phonemeBuilder the current phonemes.
-     * @param finalRules the final rules to apply.
+     * @param phonemeBuilder The current phonemes.
+     * @param finalRules The final rules to apply.
      * @return The resulting phonemes.
      */
     private PhonemeBuilder applyFinalRules(final PhonemeBuilder phonemeBuilder,

@@ -55,7 +55,7 @@ public class DecoderException extends Exception {
      * {@link #initCause}.
      *
      * @param message The format message which is saved for later retrieval by the {@link #getMessage()} method.
-     * @param args    the format arguments to use.
+     * @param args    The format arguments to use.
      *
      * @see String#format(String, Object...)
      * @since 1.20.0

@@ -55,7 +55,7 @@ final class Utils {
     /**
      * Returns the upper case hexadecimal digit of the lower 4 bits of the int.
      *
-     * @param b the input int.
+     * @param b The input int.
      * @return The upper case hexadecimal digit of the lower 4 bits of the int.
      */
     static char hexChar(final int b) {

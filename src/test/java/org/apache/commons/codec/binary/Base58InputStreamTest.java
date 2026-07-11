@@ -126,7 +126,7 @@ class Base58InputStreamTest {
      * By "[WRAP-WRAP-WRAP-etc...]" we mean situation where the Base58InputStream wraps itself in encode and decode mode over and over again.
      *
      * @param encoded   base58 encoded data
-     * @param decoded   the data from above, but decoded
+     * @param decoded   The data from above, but decoded
      * @param chunkSize chunk size (line-length) of the base58 encoded data.
      * @param separator Line separator in the base58 encoded data.
      * @throws Exception Usually signifies a bug in the Base58 commons-codec implementation.
@@ -164,7 +164,7 @@ class Base58InputStreamTest {
      * By "[WRAP-WRAP-WRAP-etc...]" we mean situation where the Base58InputStream wraps itself in encode and decode mode over and over again.
      *
      * @param encoded   base58 encoded data
-     * @param decoded   the data from above, but decoded
+     * @param decoded   The data from above, but decoded
      * @param chunkSize chunk size (line-length) of the base58 encoded data.
      * @param separator Line separator in the base58 encoded data.
      * @throws Exception Usually signifies a bug in the Base58 commons-codec implementation.

@@ -78,7 +78,7 @@ public class BaseNCodecOutputStream<C extends BaseNCodec, T extends BaseNCodecOu
         /**
          * Sets the input stream.
          *
-         * @param outputStream the input stream.
+         * @param outputStream The input stream.
          * @return {@code this} instance.
          */
         public B setOutputStream(final OutputStream outputStream) {
@@ -110,8 +110,8 @@ public class BaseNCodecOutputStream<C extends BaseNCodec, T extends BaseNCodecOu
      *
      * TODO should this be protected?
      *
-     * @param outputStream the underlying output or null.
-     * @param basedCodec   a BaseNCodec.
+     * @param outputStream The underlying output or null.
+     * @param basedCodec   A BaseNCodec.
      * @param doEncode     true to encode, false to decode, TODO should be an enum?.
      */
     public BaseNCodecOutputStream(final OutputStream outputStream, final C basedCodec, final boolean doEncode) {

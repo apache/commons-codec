@@ -66,7 +66,7 @@ abstract class RFC1522Codec {
      * to perform the specific decoding.
      * </p>
      *
-     * @param text a string to decode.
+     * @param text A string to decode.
      * @return A new decoded String or {@code null} if the input is {@code null}.
      * @throws DecoderException             Thrown if there is an error condition during the decoding process.
      * @throws UnsupportedEncodingException Thrown if charset specified in the "encoded-word" header is not supported.
@@ -129,8 +129,8 @@ abstract class RFC1522Codec {
      * class to perform the specific encoding.
      * </p>
      *
-     * @param text    a string to encode.
-     * @param charset a charset to be used.
+     * @param text    A string to encode.
+     * @param charset A charset to be used.
      * @return RFC 1522 compliant "encoded-word".
      * @throws EncoderException Thrown if there is an error condition during the Encoding process.
      * @see Charset
@@ -157,8 +157,8 @@ abstract class RFC1522Codec {
      * class to perform the specific encoding.
      * </p>
      *
-     * @param text        a string to encode.
-     * @param charsetName the charset to use.
+     * @param text        A string to encode.
+     * @param charsetName The charset to use.
      * @return RFC 1522 compliant "encoded-word".
      * @throws EncoderException            Thrown if there is an error condition during the Encoding process.
      * @throws UnsupportedCharsetException Thrown if charset is not available.

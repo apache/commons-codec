@@ -149,7 +149,7 @@ public class DigestUtils {
     /**
      * Gets a {@code MessageDigest} for the given {@code algorithm}.
      *
-     * @param algorithm the name of the algorithm requested. See
+     * @param algorithm The name of the algorithm requested. See
      *                  <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/security/crypto/CryptoSpec.html#AppA">Appendix A in the Java
      *                  Cryptography Architecture Reference Guide</a> for information about standard algorithm names.
      * @return A digest instance.
@@ -167,7 +167,7 @@ public class DigestUtils {
     /**
      * Gets a {@code MessageDigest} for the given {@code algorithm} or a default if there is a problem getting the algorithm.
      *
-     * @param algorithm            the name of the algorithm requested. See
+     * @param algorithm            The name of the algorithm requested. See
      *                             <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/security/crypto/CryptoSpec.html#AppA"> Appendix A in the Java
      *                             Cryptography Architecture Reference Guide</a> for information about standard algorithm names.
      * @param defaultMessageDigest The default MessageDigest.
@@ -210,7 +210,7 @@ public class DigestUtils {
     /**
      * Gets a {@code MessageDigest} for the given {@code algorithm}.
      *
-     * @param algorithm the name of the algorithm requested. See
+     * @param algorithm The name of the algorithm requested. See
      *                  <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/security/crypto/CryptoSpec.html#AppA"> Appendix A in the Java
      *                  Cryptography Architecture Reference Guide</a> for information about standard algorithm names.
      * @return A digest instance.
@@ -383,7 +383,7 @@ public class DigestUtils {
     /**
      * Test whether the algorithm is supported.
      *
-     * @param messageDigestAlgorithm the algorithm name.
+     * @param messageDigestAlgorithm The algorithm name.
      * @return {@code true} if the algorithm can be found.
      * @since 1.11
      */
@@ -1420,8 +1420,8 @@ public class DigestUtils {
     /**
      * Updates the given {@link MessageDigest}.
      *
-     * @param messageDigest the {@link MessageDigest} to update.
-     * @param valueToDigest the value to update the {@link MessageDigest} with.
+     * @param messageDigest The {@link MessageDigest} to update.
+     * @param valueToDigest The value to update the {@link MessageDigest} with.
      * @return The updated {@link MessageDigest}.
      * @since 1.7
      */
@@ -1433,8 +1433,8 @@ public class DigestUtils {
     /**
      * Updates the given {@link MessageDigest}.
      *
-     * @param messageDigest the {@link MessageDigest} to update.
-     * @param valueToDigest the value to update the {@link MessageDigest} with.
+     * @param messageDigest The {@link MessageDigest} to update.
+     * @param valueToDigest The value to update the {@link MessageDigest} with.
      * @return The updated {@link MessageDigest}.
      * @since 1.11
      */
@@ -1532,8 +1532,8 @@ public class DigestUtils {
      * To update the digest using a different charset for the conversion, convert the String to a byte array using
      * {@link String#getBytes(java.nio.charset.Charset)} and pass that to the {@link DigestUtils#updateDigest(MessageDigest, byte[])} method
      *
-     * @param messageDigest the {@link MessageDigest} to update.
-     * @param valueToDigest the value to update the {@link MessageDigest} with; converted to bytes using {@link StringUtils#getBytesUtf8(String)}.
+     * @param messageDigest The {@link MessageDigest} to update.
+     * @param valueToDigest The value to update the {@link MessageDigest} with; converted to bytes using {@link StringUtils#getBytesUtf8(String)}.
      * @return The updated {@link MessageDigest}.
      * @since 1.7
      */
@@ -1559,7 +1559,7 @@ public class DigestUtils {
      *
      * This can then be used to create digests using methods such as {@link #digest(byte[])} and {@link #digestAsHex(File)}.
      *
-     * @param digest the {@link MessageDigest} to use.
+     * @param digest The {@link MessageDigest} to use.
      * @since 1.11
      */
     public DigestUtils(final MessageDigest digest) {
@@ -1571,7 +1571,7 @@ public class DigestUtils {
      *
      * This can then be used to create digests using methods such as {@link #digest(byte[])} and {@link #digestAsHex(File)}.
      *
-     * @param name the name of the {@link MessageDigest} to use.
+     * @param name The name of the {@link MessageDigest} to use.
      * @see #getDigest(String)
      * @throws IllegalArgumentException Thrown if a {@link NoSuchAlgorithmException} is caught.
      * @since 1.11

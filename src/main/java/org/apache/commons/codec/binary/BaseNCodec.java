@@ -140,7 +140,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         /**
          * Sets the decode table.
          *
-         * @param decodeTable the decode table.
+         * @param decodeTable The decode table.
          * @return {@code this} instance.
          * @since 1.20.0
          */
@@ -152,7 +152,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         /**
          * Sets the decode table.
          *
-         * @param decodeTable the decode table, null resets to the default.
+         * @param decodeTable The decode table, null resets to the default.
          * @return {@code this} instance.
          */
         B setDecodeTableRaw(final byte[] decodeTable) {
@@ -163,7 +163,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         /**
          * Sets the decoding policy.
          *
-         * @param decodingPolicy the decoding policy, null resets to the default.
+         * @param decodingPolicy The decoding policy, null resets to the default.
          * @return {@code this} instance.
          */
         public B setDecodingPolicy(final CodecPolicy decodingPolicy) {
@@ -174,7 +174,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         /**
          * Sets the encoded block size, subclasses normally set this on construction.
          *
-         * @param encodedBlockSize the encoded block size, subclasses normally set this on construction.
+         * @param encodedBlockSize The encoded block size, subclasses normally set this on construction.
          * @return {@code this} instance.
          */
         B setEncodedBlockSize(final int encodedBlockSize) {
@@ -185,7 +185,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         /**
          * Sets the encode table.
          *
-         * @param encodeTable the encode table, null resets to the default.
+         * @param encodeTable The encode table, null resets to the default.
          * @return {@code this} instance.
          */
         public B setEncodeTable(final byte... encodeTable) {
@@ -196,7 +196,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         /**
          * Sets the encode table.
          *
-         * @param encodeTable the encode table, null resets to the default.
+         * @param encodeTable The encode table, null resets to the default.
          * @return {@code this} instance.
          */
         B setEncodeTableRaw(final byte... encodeTable) {
@@ -207,7 +207,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         /**
          * Sets the line length.
          *
-         * @param lineLength the line length, less than 0 resets to the default.
+         * @param lineLength The line length, less than 0 resets to the default.
          * @return {@code this} instance.
          */
         public B setLineLength(final int lineLength) {
@@ -218,7 +218,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         /**
          * Sets the line separator.
          *
-         * @param lineSeparator the line separator, null resets to the default.
+         * @param lineSeparator The line separator, null resets to the default.
          * @return {@code this} instance.
          */
         public B setLineSeparator(final byte... lineSeparator) {
@@ -229,7 +229,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         /**
          * Sets the padding byte.
          *
-         * @param padding the padding byte.
+         * @param padding The padding byte.
          * @return {@code this} instance.
          */
         public B setPadding(final byte padding) {
@@ -240,7 +240,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         /**
          * Sets the unencoded block size, subclasses normally set this on construction.
          *
-         * @param unencodedBlockSize the unencoded block size, subclasses normally set this on construction.
+         * @param unencodedBlockSize The unencoded block size, subclasses normally set this on construction.
          * @return {@code this} instance.
          */
         B setUnencodedBlockSize(final int unencodedBlockSize) {
@@ -386,7 +386,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * Create a positive capacity at least as large the minimum required capacity. If the minimum capacity is negative then this throws an OutOfMemoryError as
      * no array can be allocated.
      *
-     * @param minCapacity the minimum capacity.
+     * @param minCapacity The minimum capacity.
      * @return The capacity.
      * @throws OutOfMemoryError if the {@code minCapacity} is negative.
      */
@@ -420,7 +420,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     /**
      * Gets the array length or 0 if null.
      *
-     * @param array the array or null.
+     * @param array The array or null.
      * @return The array length or 0 if null.
      */
     static int getLength(final byte[] array) {
@@ -448,7 +448,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     /**
      * Checks if a byte value is whitespace or not.
      *
-     * @param byteToCheck the byte to check.
+     * @param byteToCheck The byte to check.
      * @return true if byte is whitespace, false otherwise.
      * @see Character#isWhitespace(int)
      * @deprecated Use {@link Character#isWhitespace(int)}.
@@ -461,8 +461,8 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     /**
      * Increases our buffer by the {@link #DEFAULT_BUFFER_RESIZE_FACTOR}.
      *
-     * @param context     the context to be used.
-     * @param minCapacity the minimum required capacity.
+     * @param context     The context to be used.
+     * @param minCapacity The minimum required capacity.
      * @return The resized byte[] buffer.
      * @throws OutOfMemoryError if the {@code minCapacity} is negative.
      */
@@ -581,10 +581,10 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * disabled.
      * </p>
      *
-     * @param unencodedBlockSize   the size of an unencoded block (for example Base64 = 3).
-     * @param encodedBlockSize     the size of an encoded block (for example Base64 = 4).
+     * @param unencodedBlockSize   The size of an unencoded block (for example Base64 = 3).
+     * @param encodedBlockSize     The size of an encoded block (for example Base64 = 4).
      * @param lineLength           if &gt; 0, use chunking with a length {@code lineLength}.
-     * @param chunkSeparatorLength the chunk separator length, if relevant.
+     * @param chunkSeparatorLength The chunk separator length, if relevant.
      * @deprecated Use {@link BaseNCodec#BaseNCodec(AbstractBuilder)}.
      */
     @Deprecated
@@ -599,10 +599,10 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * disabled.
      * </p>
      *
-     * @param unencodedBlockSize   the size of an unencoded block (for example Base64 = 3).
-     * @param encodedBlockSize     the size of an encoded block (for example Base64 = 4).
+     * @param unencodedBlockSize   The size of an unencoded block (for example Base64 = 3).
+     * @param encodedBlockSize     The size of an encoded block (for example Base64 = 4).
      * @param lineLength           if &gt; 0, use chunking with a length {@code lineLength}.
-     * @param chunkSeparatorLength the chunk separator length, if relevant.
+     * @param chunkSeparatorLength The chunk separator length, if relevant.
      * @param pad                  byte used as padding byte.
      * @deprecated Use {@link BaseNCodec#BaseNCodec(AbstractBuilder)}.
      */
@@ -618,10 +618,10 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * disabled.
      * </p>
      *
-     * @param unencodedBlockSize   the size of an unencoded block (for example Base64 = 3).
-     * @param encodedBlockSize     the size of an encoded block (for example Base64 = 4).
+     * @param unencodedBlockSize   The size of an unencoded block (for example Base64 = 3).
+     * @param encodedBlockSize     The size of an encoded block (for example Base64 = 4).
      * @param lineLength           if &gt; 0, use chunking with a length {@code lineLength}.
-     * @param chunkSeparatorLength the chunk separator length, if relevant.
+     * @param chunkSeparatorLength The chunk separator length, if relevant.
      * @param pad                  byte used as padding byte.
      * @param decodingPolicy       Decoding policy.
      * @since 1.15
@@ -644,7 +644,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     /**
      * Returns the amount of buffered data available for reading.
      *
-     * @param context the context to be used.
+     * @param context The context to be used.
      * @return The amount of buffered data available for reading.
      */
     int available(final Context context) { // package protected for access from I/O streams
@@ -724,7 +724,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     /**
      * Encodes a byte[] containing binary data, into a byte[] containing characters in the alphabet.
      *
-     * @param array a byte array containing binary data.
+     * @param array A byte array containing binary data.
      * @return A byte array containing only the base N alphabetic character data.
      */
     @Override
@@ -738,7 +738,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     /**
      * Encodes a byte[] containing binary data, into a byte[] containing characters in the alphabet.
      *
-     * @param array  a byte array containing binary data.
+     * @param array  A byte array containing binary data.
      * @param offset initial offset of the subarray.
      * @param length length of the subarray.
      * @return A byte array containing only the base N alphabetic character data.
@@ -781,7 +781,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * This is a duplicate of {@link #encodeToString(byte[])}; it was merged during refactoring.
      * </p>
      *
-     * @param array a byte array containing binary data.
+     * @param array A byte array containing binary data.
      * @return String containing only character data in the appropriate alphabet.
      * @since 1.5
      */
@@ -792,7 +792,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     /**
      * Encodes a byte[] containing binary data, into a String containing characters in the Base-N alphabet. Uses UTF8 encoding.
      *
-     * @param array a byte array containing binary data.
+     * @param array A byte array containing binary data.
      * @return A String containing only Base-N character data.
      */
     public String encodeToString(final byte[] array) {
@@ -803,7 +803,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * Ensures that the buffer has room for {@code size} bytes
      *
      * @param size    minimum spare space required.
-     * @param context the context to be used.
+     * @param context The context to be used.
      * @return The buffer.
      */
     protected byte[] ensureBufferSize(final int size, final Context context) {
@@ -863,7 +863,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     /**
      * Tests whether this object has buffered data for reading.
      *
-     * @param context the context to be used.
+     * @param context The context to be used.
      * @return true if there is data still available for reading.
      */
     boolean hasData(final Context context) { // package protected for access from I/O streams
@@ -929,7 +929,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * @param b         byte[] array to extract the buffered data into.
      * @param position  position in byte[] array to start extraction at.
      * @param available amount of bytes we're allowed to extract. We may extract fewer (if fewer are available).
-     * @param context   the context to be used.
+     * @param context   The context to be used.
      * @return The number of bytes successfully extracted into the provided byte[] array.
      */
     int readResults(final byte[] b, final int position, final int available, final Context context) {

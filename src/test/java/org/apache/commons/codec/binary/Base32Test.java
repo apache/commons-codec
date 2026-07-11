@@ -167,7 +167,7 @@ class Base32Test {
      * alphabet where the final bits are zero. This asserts that illegal final
      * characters throw an exception when decoding.
      *
-     * @param nbits the number of trailing bits (must be a factor of 5 and {@code <40})
+     * @param nbits The number of trailing bits (must be a factor of 5 and {@code <40})
      */
     private static void assertBase32DecodingOfTrailingBits(final int nbits) {
         // Requires strict decoding

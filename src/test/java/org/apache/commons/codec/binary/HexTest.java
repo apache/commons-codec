@@ -53,7 +53,7 @@ class HexTest {
      * The method is overridden in AllocateDirectHexTest to use
      * {@link ByteBuffer#allocateDirect(int)}
      *
-     * @param capacity the capacity
+     * @param capacity The capacity
      * @return The byte buffer
      */
     protected ByteBuffer allocate(final int capacity) {
@@ -120,7 +120,7 @@ class HexTest {
      *
      * <p>The buffer is allocated using {@link #allocate(int)}.
      *
-     * @param string the String to encode
+     * @param string The String to encode
      * @return The byte buffer
      */
     private ByteBuffer getByteBufferUtf8(final String string) {

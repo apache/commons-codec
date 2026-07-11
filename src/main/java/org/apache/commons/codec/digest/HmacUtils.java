@@ -153,7 +153,7 @@ public final class HmacUtils {
     /**
      * Returns an initialized {@link Mac} for the given {@code algorithm}.
      *
-     * @param algorithm the name of the algorithm requested. See
+     * @param algorithm The name of the algorithm requested. See
      *                  <a href= "https://docs.oracle.com/javase/8/docs/technotes/guides/security/crypto/CryptoSpec.html#AppA" >Appendix A in the Java
      *                  Cryptography Architecture Reference Guide</a> for information about standard algorithm names.
      * @param key       The key for the keyed digest (must not be null).
@@ -169,7 +169,7 @@ public final class HmacUtils {
     /**
      * Returns an initialized {@link Mac} for the given {@code algorithm}.
      *
-     * @param algorithm the name of the algorithm requested. See
+     * @param algorithm The name of the algorithm requested. See
      *                  <a href= "https://docs.oracle.com/javase/8/docs/technotes/guides/security/crypto/CryptoSpec.html#AppA" >Appendix A in the Java
      *                  Cryptography Architecture Reference Guide</a> for information about standard algorithm names.
      * @param key       The key for the keyed digest (must not be null).
@@ -646,7 +646,7 @@ public final class HmacUtils {
     /**
      * Tests whether this algorithm is available
      *
-     * @param hmacAlgorithms the HmacAlgorithms to check.
+     * @param hmacAlgorithms The HmacAlgorithms to check.
      * @return whether this algorithm is available.
      * @since 1.11
      */
@@ -657,7 +657,7 @@ public final class HmacUtils {
     /**
      * Tests whether this algorithm is available
      *
-     * @param name the name to check.
+     * @param name The name to check.
      * @return whether this algorithm is available.
      * @since 1.11
      */
@@ -673,8 +673,8 @@ public final class HmacUtils {
     /**
      * Resets and then updates the given {@link Mac} with the value.
      *
-     * @param mac           the initialized {@link Mac} to update.
-     * @param valueToDigest the value to update the {@link Mac} with (maybe null or empty).
+     * @param mac           The initialized {@link Mac} to update.
+     * @param valueToDigest The value to update the {@link Mac} with (maybe null or empty).
      * @return The updated {@link Mac}.
      * @throws IllegalStateException if the Mac was not initialized.
      */
@@ -687,8 +687,8 @@ public final class HmacUtils {
     /**
      * Resets and then updates the given {@link Mac} with the value.
      *
-     * @param mac           the initialized {@link Mac} to update.
-     * @param valueToDigest the value to update the {@link Mac} with.
+     * @param mac           The initialized {@link Mac} to update.
+     * @param valueToDigest The value to update the {@link Mac} with.
      *                      <p>
      *                      The InputStream must not be null and will not be closed.
      *                      </p>
@@ -710,8 +710,8 @@ public final class HmacUtils {
     /**
      * Resets and then updates the given {@link Mac} with the value.
      *
-     * @param mac           the initialized {@link Mac} to update.
-     * @param valueToDigest the value to update the {@link Mac} with (maybe null or empty).
+     * @param mac           The initialized {@link Mac} to update.
+     * @param valueToDigest The value to update the {@link Mac} with (maybe null or empty).
      * @return The updated {@link Mac}.
      * @throws IllegalStateException if the Mac was not initialized.
      */
@@ -737,7 +737,7 @@ public final class HmacUtils {
      * Creates an instance using the provided algorithm type.
      *
      * @param algorithm to use.
-     * @param key       the key to use.
+     * @param key       The key to use.
      * @throws IllegalArgumentException Thrown if a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      * @since 1.11
      */
@@ -749,7 +749,7 @@ public final class HmacUtils {
      * Creates an instance using the provided algorithm type.
      *
      * @param algorithm to use.
-     * @param key       the key to use.
+     * @param key       The key to use.
      * @throws IllegalArgumentException Thrown if a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      * @since 1.11
      */
@@ -765,7 +765,7 @@ public final class HmacUtils {
      * Creates an instance using the provided algorithm type.
      *
      * @param algorithm to use.
-     * @param key       the key to use.
+     * @param key       The key to use.
      * @throws IllegalArgumentException Thrown if a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      * @since 1.11
      */
@@ -777,7 +777,7 @@ public final class HmacUtils {
      * Creates an instance using the provided algorithm type.
      *
      * @param algorithm to use.
-     * @param key       the key to use.
+     * @param key       The key to use.
      * @throws IllegalArgumentException Thrown if a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      * @since 1.11
      */
@@ -788,7 +788,7 @@ public final class HmacUtils {
     /**
      * Returns the digest for the input data.
      *
-     * @param valueToDigest the input to use.
+     * @param valueToDigest The input to use.
      * @return The digest as a byte[].
      * @since 1.11
      */
@@ -799,7 +799,7 @@ public final class HmacUtils {
     /**
      * Returns the digest for the input data.
      *
-     * @param valueToDigest the input to use.
+     * @param valueToDigest The input to use.
      * @return The digest as a byte[].
      * @since 1.11
      */
@@ -811,7 +811,7 @@ public final class HmacUtils {
     /**
      * Returns the digest for the file.
      *
-     * @param valueToDigest the file to use.
+     * @param valueToDigest The file to use.
      * @return The digest.
      * @throws IOException If an I/O error occurs.
      * @since 1.11
@@ -823,7 +823,7 @@ public final class HmacUtils {
     /**
      * Returns the digest for the stream.
      *
-     * @param valueToDigest the data to use.
+     * @param valueToDigest The data to use.
      *                      <p>
      *                      The InputStream must not be null and will not be closed.
      *                      </p>
@@ -843,7 +843,7 @@ public final class HmacUtils {
     /**
      * Returns the digest for the file.
      *
-     * @param valueToDigest the path to use.
+     * @param valueToDigest The path to use.
      * @return The digest.
      * @throws IOException If an I/O error occurs.
      * @since 1.19.0
@@ -857,7 +857,7 @@ public final class HmacUtils {
     /**
      * Returns the digest for the input data.
      *
-     * @param valueToDigest the input to use, treated as UTF-8.
+     * @param valueToDigest The input to use, treated as UTF-8.
      * @return The digest as a byte[].
      * @since 1.11
      */
@@ -868,7 +868,7 @@ public final class HmacUtils {
     /**
      * Returns the digest for the input data.
      *
-     * @param valueToDigest the input to use.
+     * @param valueToDigest The input to use.
      * @return The digest as a hexadecimal String.
      * @since 1.11
      */
@@ -879,7 +879,7 @@ public final class HmacUtils {
     /**
      * Returns the digest for the input data.
      *
-     * @param valueToDigest the input to use.
+     * @param valueToDigest The input to use.
      * @return The digest as a hexadecimal String.
      * @since 1.11
      */
@@ -890,7 +890,7 @@ public final class HmacUtils {
     /**
      * Returns the digest for the file.
      *
-     * @param valueToDigest the file to use.
+     * @param valueToDigest The file to use.
      * @return The digest as a hexadecimal String.
      * @throws IOException If an I/O error occurs.
      * @since 1.11
@@ -902,7 +902,7 @@ public final class HmacUtils {
     /**
      * Returns the digest for the stream.
      *
-     * @param valueToDigest the data to use.
+     * @param valueToDigest The data to use.
      *                      <p>
      *                      The InputStream must not be null and will not be closed.
      *                      </p>
@@ -917,7 +917,7 @@ public final class HmacUtils {
     /**
      * Returns the digest for the path.
      *
-     * @param valueToDigest the path to use.
+     * @param valueToDigest The path to use.
      * @return The digest as a hexadecimal String.
      * @throws IOException If an I/O error occurs.
      * @since 1.19.0
@@ -929,7 +929,7 @@ public final class HmacUtils {
     /**
      * Returns the digest for the input data.
      *
-     * @param valueToDigest the input to use, treated as UTF-8.
+     * @param valueToDigest The input to use, treated as UTF-8.
      * @return The digest as a hexadecimal String.
      * @since 1.11
      */

@@ -75,7 +75,7 @@ public class BaseNTestData {
     /**
      * Returns an encoded and decoded copy of the same random data.
      *
-     * @param codec the codec to use.
+     * @param codec The codec to use.
      * @param size amount of random data to generate and encode.
      * @return two byte[] arrays: [0] = decoded, [1] = encoded.
      */

@@ -105,9 +105,9 @@ class MurmurHash3Test {
      *
      * <p>The bytes are added to the incremental hash in the given blocks.</p>
      *
-     * @param bytes the bytes
-     * @param seed the seed
-     * @param blocks the blocks
+     * @param bytes The bytes
+     * @param seed The seed
+     * @param blocks The blocks
      */
     private static void assertIncrementalHash32(final byte[] bytes, final int seed, final int... blocks) {
         int offset = 0;
@@ -131,9 +131,9 @@ class MurmurHash3Test {
      *
      * <p>The bytes are added to the incremental hash in the given blocks.</p>
      *
-     * @param bytes the bytes
-     * @param seed the seed
-     * @param blocks the blocks
+     * @param bytes The bytes
+     * @param seed The seed
+     * @param blocks The blocks
      */
     private static void assertIncrementalHash32x86(final byte[] bytes, final int seed, final int... blocks) {
         int offset = 0;
@@ -172,7 +172,7 @@ class MurmurHash3Test {
     /**
      * Creates the random blocks of data to process up to max length.
      *
-     * @param maxLength the max length
+     * @param maxLength The max length
      * @return The blocks
      */
     private static int[] createRandomBlocks(final int maxLength) {
@@ -191,9 +191,9 @@ class MurmurHash3Test {
     /**
      * Check if the bytes are negative in the given range.
      *
-     * @param bytes the bytes
-     * @param start the start
-     * @param length the length
+     * @param bytes The bytes
+     * @param start The start
+     * @param length The length
      * @return true, if negative bytes exist
      */
     private static boolean negativeBytes(final byte[] bytes, final int start, final int length) {

@@ -72,7 +72,7 @@ public abstract class AbstractBaseNCodecStreamBuilder<T, C extends BaseNCodec, B
     /**
      * Sets a BaseNCodec subclass of type C.
      *
-     * @param baseNCodec a BaseNCodec subclass of type C.
+     * @param baseNCodec A BaseNCodec subclass of type C.
      * @return {@code this} instance.
      */
     public B setBaseNCodec(final C baseNCodec) {

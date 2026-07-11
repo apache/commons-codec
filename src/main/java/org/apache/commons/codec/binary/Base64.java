@@ -145,7 +145,7 @@ public class Base64 extends BaseNCodec {
         /**
          * Sets the encode table.
          *
-         * @param encodeTable the encode table with exactly 64 unique entries, null resets to the default.
+         * @param encodeTable The encode table with exactly 64 unique entries, null resets to the default.
          * @return {@code this} instance.
          * @throws IllegalArgumentException if {@code encodeTable} does not contain exactly 64 unique entries.
          */
@@ -484,7 +484,7 @@ public class Base64 extends BaseNCodec {
     /**
      * Decodes a byte64-encoded integer according to crypto standards such as W3C's XML-Signature.
      *
-     * @param array a byte array containing base64 character data.
+     * @param array A byte array containing base64 character data.
      * @return A BigInteger.
      * @since 1.4
      */
@@ -607,7 +607,7 @@ public class Base64 extends BaseNCodec {
     /**
      * Encodes to a byte64-encoded integer according to crypto standards such as W3C's XML-Signature.
      *
-     * @param bigInteger a BigInteger.
+     * @param bigInteger A BigInteger.
      * @return A byte array containing base64 character data.
      * @throws NullPointerException if null is passed in.
      * @since 1.4
@@ -984,7 +984,7 @@ public class Base64 extends BaseNCodec {
      * @param input   byte[] array of ASCII data to base64 decode.
      * @param inPos   Position to start reading data from.
      * @param inAvail Amount of bytes available from input for decoding.
-     * @param context the context to be used.
+     * @param context The context to be used.
      */
     @Override
     void decode(final byte[] input, int inPos, final int inAvail, final Context context) {
@@ -1063,7 +1063,7 @@ public class Base64 extends BaseNCodec {
      * @param in      byte[] array of binary data to base64 encode.
      * @param inPos   Position to start reading data from.
      * @param inAvail Amount of bytes available from input for encoding.
-     * @param context the context to be used.
+     * @param context The context to be used.
      */
     @Override
     void encode(final byte[] in, int inPos, final int inAvail, final Context context) {
@@ -1176,7 +1176,7 @@ public class Base64 extends BaseNCodec {
      * </p>
      *
      * @param emptyBitsMask The mask of the lower bits that should be empty.
-     * @param context       the context to be used.
+     * @param context       The context to be used.
      * @throws IllegalArgumentException if the bits being checked contain any non-zero value.
      */
     private void validateCharacter(final int emptyBitsMask, final Context context) {

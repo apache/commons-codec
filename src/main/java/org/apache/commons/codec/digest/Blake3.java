@@ -360,7 +360,7 @@ public final class Blake3 {
      * The instance returned functions as a key-derivation function which can further absorb additional context data
      * before squeezing derived key data.
      *
-     * @param kdfContext a globally unique key-derivation context byte string to separate key derivation contexts from each other.
+     * @param kdfContext A globally unique key-derivation context byte string to separate key derivation contexts from each other.
      * @return fresh Blake3 instance in key derivation mode.
      * @throws NullPointerException if kdfContext is null.
      */

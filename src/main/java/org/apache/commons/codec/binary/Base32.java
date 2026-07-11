@@ -102,7 +102,7 @@ public class Base32 extends BaseNCodec {
          * The RFC 4648 Base32 and Base32 Hex tables keep their case-insensitive decoders.
          * </p>
          *
-         * @param encodeTable the encode table with exactly 32 unique entries, null resets to the default.
+         * @param encodeTable The encode table with exactly 32 unique entries, null resets to the default.
          * @return {@code this} instance.
          * @throws IllegalArgumentException if the encode table does not contain exactly 32 unique entries.
          */
@@ -569,7 +569,7 @@ public class Base32 extends BaseNCodec {
      * @param input   byte[] array of ASCII data to Base32 decode.
      * @param inPos   Position to start reading data from.
      * @param inAvail Amount of bytes available from input for decoding.
-     * @param context the context to be used.
+     * @param context The context to be used.
      */
     @Override
     void decode(final byte[] input, int inPos, final int inAvail, final Context context) {
@@ -675,7 +675,7 @@ public class Base32 extends BaseNCodec {
      * @param input   byte[] array of binary data to Base32 encode.
      * @param inPos   Position to start reading data from.
      * @param inAvail Amount of bytes available from input for encoding.
-     * @param context the context to be used.
+     * @param context The context to be used.
      */
     @Override
     void encode(final byte[] input, int inPos, final int inAvail, final Context context) {
@@ -802,7 +802,7 @@ public class Base32 extends BaseNCodec {
      * </p>
      *
      * @param emptyBitsMask The mask of the lower bits that should be empty.
-     * @param context       the context to be used.
+     * @param context       The context to be used.
      * @throws IllegalArgumentException if the bits being checked contain any non-zero value.
      */
     private void validateCharacter(final long emptyBitsMask, final Context context) {

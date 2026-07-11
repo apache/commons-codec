@@ -73,7 +73,7 @@ public class BaseNCodecInputStream<C extends BaseNCodec, T extends BaseNCodecInp
         /**
          * Sets the input bytes.
          *
-         * @param inputBytes the input bytes.
+         * @param inputBytes The input bytes.
          * @return {@code this} instance.
          * @since 1.22.0
          */
@@ -84,7 +84,7 @@ public class BaseNCodecInputStream<C extends BaseNCodec, T extends BaseNCodecInp
         /**
          * Sets the input stream.
          *
-         * @param inputStream the input stream.
+         * @param inputStream The input stream.
          * @return {@code this} instance.
          */
         public B setInputStream(final InputStream inputStream) {
@@ -116,8 +116,8 @@ public class BaseNCodecInputStream<C extends BaseNCodec, T extends BaseNCodecInp
     /**
      * Constructs a new instance.
      *
-     * @param inputStream the input stream.
-     * @param baseNCodec  the codec.
+     * @param inputStream The input stream.
+     * @param baseNCodec  The codec.
      * @param doEncode    set to true to perform encoding, else decoding.
      */
     protected BaseNCodecInputStream(final InputStream inputStream, final C baseNCodec, final boolean doEncode) {
@@ -162,7 +162,7 @@ public class BaseNCodecInputStream<C extends BaseNCodec, T extends BaseNCodecInp
      * The {@link #mark} method of {@link BaseNCodecInputStream} does nothing.
      * </p>
      *
-     * @param readLimit the maximum limit of bytes that can be read before the mark position becomes invalid.
+     * @param readLimit The maximum limit of bytes that can be read before the mark position becomes invalid.
      * @see #markSupported()
      * @since 1.7
      */

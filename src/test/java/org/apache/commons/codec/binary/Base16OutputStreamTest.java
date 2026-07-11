@@ -117,7 +117,7 @@ class Base16OutputStreamTest extends AbstractBaseNOutputStreamTest {
      * mode over and over again.
      *
      * @param encoded base16 encoded data
-     * @param decoded the data from above, but decoded
+     * @param decoded The data from above, but decoded
      * @throws IOException Usually signifies a bug in the Base16 commons-codec implementation.
      */
     private void testByChunk(final byte[] encoded, final byte[] decoded) throws IOException {
@@ -132,7 +132,7 @@ class Base16OutputStreamTest extends AbstractBaseNOutputStreamTest {
      * mode over and over again.
      *
      * @param encoded base16 encoded data
-     * @param decoded the data from above, but decoded
+     * @param decoded The data from above, but decoded
      * @param lowerCase if {@code true} then use a lower-case Base16 alphabet
      * @throws IOException Usually signifies a bug in the Base16 commons-codec implementation.
      */
@@ -170,7 +170,7 @@ class Base16OutputStreamTest extends AbstractBaseNOutputStreamTest {
      * mode over and over again.
      *
      * @param encoded base16 encoded data
-     * @param decoded the data from above, but decoded
+     * @param decoded The data from above, but decoded
      * @throws IOException Usually signifies a bug in the Base16 commons-codec implementation.
      */
     private void testByteByByte(final byte[] encoded, final byte[] decoded) throws IOException {
@@ -185,7 +185,7 @@ class Base16OutputStreamTest extends AbstractBaseNOutputStreamTest {
      * mode over and over again.
      *
      * @param encoded base16 encoded data
-     * @param decoded the data from above, but decoded
+     * @param decoded The data from above, but decoded
      * @throws IOException Usually signifies a bug in the Base16 commons-codec implementation.
      */
     private void testByteByByte(final byte[] encoded, final byte[] decoded, final boolean lowerCase) throws IOException {

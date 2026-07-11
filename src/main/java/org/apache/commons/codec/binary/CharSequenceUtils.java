@@ -37,11 +37,11 @@ public class CharSequenceUtils {
      * package.
      * </p>
      *
-     * @param cs         the {@code CharSequence} to be processed.
+     * @param cs         The {@code CharSequence} to be processed.
      * @param ignoreCase whether or not to be case-insensitive.
-     * @param thisStart  the index to start on the {@code cs} CharSequence.
-     * @param substring  the {@code CharSequence} to be looked for.
-     * @param start      the index to start on the {@code substring} CharSequence.
+     * @param thisStart  The index to start on the {@code cs} CharSequence.
+     * @param substring  The {@code CharSequence} to be looked for.
+     * @param start      The index to start on the {@code substring} CharSequence.
      * @param length     character length of the region.
      * @return whether the region matched.
      */

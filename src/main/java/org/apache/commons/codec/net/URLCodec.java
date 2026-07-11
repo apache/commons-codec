@@ -187,7 +187,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
     /**
      * Constructs a new instance for the selection of a default charset.
      *
-     * @param charset the default string charset to use.
+     * @param charset The default string charset to use.
      */
     public URLCodec(final String charset) {
         this.charset = charset;

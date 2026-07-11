@@ -78,7 +78,7 @@ public class Base58 extends BaseNCodec {
         /**
          * Sets the encode table and derives the matching decode table.
          *
-         * @param encodeTable the encode table with exactly 58 unique entries, null resets to the default.
+         * @param encodeTable The encode table with exactly 58 unique entries, null resets to the default.
          * @return {@code this} instance.
          * @throws IllegalArgumentException if the encode table does not contain exactly 58 unique entries.
          */
@@ -189,7 +189,7 @@ public class Base58 extends BaseNCodec {
     /**
      * Constructs a Base58 codec used for encoding and decoding with custom configuration.
      *
-     * @param builder the builder with custom configuration.
+     * @param builder The builder with custom configuration.
      */
     public Base58(final Builder builder) {
         super(builder);
@@ -223,8 +223,8 @@ public class Base58 extends BaseNCodec {
      * zero bytes in the binary data.
      * </p>
      *
-     * @param base58 the Base58 encoded data.
-     * @param context    the context for this decoding operation.
+     * @param base58 The Base58 encoded data.
+     * @param context    The context for this decoding operation.
      * @throws IllegalArgumentException if the Base58 data contains invalid characters.
      */
     private void convertFromBase58(final byte[] base58, final Context context) {
@@ -262,8 +262,8 @@ public class Base58 extends BaseNCodec {
      * alphabet.
      * </p>
      *
-     * @param accumulate the binary data to encode.
-     * @param context    the context for this encoding operation.
+     * @param accumulate The binary data to encode.
+     * @param context    The context for this encoding operation.
      * @return The buffer containing the encoded data.
      */
     private byte[] convertToBase58(final byte[] accumulate, final Context context) {
@@ -284,10 +284,10 @@ public class Base58 extends BaseNCodec {
      * This implementation accumulates data internally. When length is less than 0 (EOF), the accumulated data is converted from Base58 to binary.
      * </p>
      *
-     * @param array   the byte array containing Base58 encoded data.
-     * @param offset  the offset in the array to start from.
-     * @param length  the number of bytes to decode, or negative to signal EOF.
-     * @param context the context for this decoding operation.
+     * @param array   The byte array containing Base58 encoded data.
+     * @param offset  The offset in the array to start from.
+     * @param length  The number of bytes to decode, or negative to signal EOF.
+     * @param context The context for this decoding operation.
      */
     @Override
     void decode(final byte[] array, final int offset, final int length, final Context context) {
@@ -300,10 +300,10 @@ public class Base58 extends BaseNCodec {
      * This implementation accumulates data internally. When length is less than 0 (EOF), the accumulated data is converted to Base58.
      * </p>
      *
-     * @param array   the byte array containing binary data to encode.
-     * @param offset  the offset in the array to start from.
-     * @param length  the number of bytes to encode, or negative to signal EOF.
-     * @param context the context for this encoding operation.
+     * @param array   The byte array containing binary data to encode.
+     * @param offset  The offset in the array to start from.
+     * @param length  The number of bytes to encode, or negative to signal EOF.
+     * @param context The context for this encoding operation.
      */
     @Override
     void encode(final byte[] array, final int offset, final int length, final Context context) {
@@ -317,7 +317,7 @@ public class Base58 extends BaseNCodec {
      * character in the Base58 alphabet for each leading zero byte.
      * </p>
      *
-     * @param accumulate the binary data to convert.
+     * @param accumulate The binary data to convert.
      * @return A StringBuilder with the Base58 representation (not yet reversed).
      */
     private StringBuilder getStringBuilder(final byte[] accumulate) {
