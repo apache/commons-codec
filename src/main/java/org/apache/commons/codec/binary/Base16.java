@@ -162,7 +162,7 @@ public class Base16 extends BaseNCodec {
     /**
      * Constructs a new builder.
      *
-     * @return a new builder.
+     * @return A new builder.
      * @since 1.20.0
      */
     public static Builder builder() {

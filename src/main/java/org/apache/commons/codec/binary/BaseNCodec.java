@@ -300,7 +300,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         /**
          * Returns a String useful for debugging (especially within a debugger.)
          *
-         * @return a String useful for debugging.
+         * @return A String useful for debugging.
          */
         @Override
         public String toString() {
@@ -488,7 +488,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * </p>
      *
      * @param bigInt {@code BigInteger} to be converted.
-     * @return a byte array representation of the BigInteger parameter.
+     * @return A byte array representation of the BigInteger parameter.
      */
     static byte[] toUnsignedBytes(final BigInteger value) {
         byte[] unsigned = value.equals(BigInteger.ZERO) ? EMPTY_BYTE_ARRAY : value.toByteArray();
@@ -674,7 +674,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * Decodes a byte[] containing characters in the Base-N alphabet.
      *
      * @param array A byte array containing Base-N character data.
-     * @return a byte array containing binary data.
+     * @return A byte array containing binary data.
      */
     @Override
     public byte[] decode(final byte[] array) {
@@ -715,7 +715,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * Decodes a String containing characters in the Base-N alphabet.
      *
      * @param array A String containing Base-N character data.
-     * @return a byte array containing binary data.
+     * @return A byte array containing binary data.
      */
     public byte[] decode(final String array) {
         return decode(StringUtils.getBytesUtf8(array));

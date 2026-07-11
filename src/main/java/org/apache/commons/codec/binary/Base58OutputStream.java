@@ -69,7 +69,7 @@ public class Base58OutputStream extends BaseNCodecOutputStream<Base58, Base58Out
         /**
          * Builds a new Base58OutputStream instance with the configured settings.
          *
-         * @return a new Base58OutputStream.
+         * @return A new Base58OutputStream.
          */
         @Override
         public Base58OutputStream get() {
@@ -79,7 +79,7 @@ public class Base58OutputStream extends BaseNCodecOutputStream<Base58, Base58Out
         /**
          * Creates a new Base58 codec instance.
          *
-         * @return a new Base58 codec.
+         * @return A new Base58 codec.
          */
         @Override
         protected Base58 newBaseNCodec() {
@@ -90,7 +90,7 @@ public class Base58OutputStream extends BaseNCodecOutputStream<Base58, Base58Out
     /**
      * Constructs a new Builder.
      *
-     * @return a new Builder.
+     * @return A new Builder.
      */
     public static Builder builder() {
         return new Builder();

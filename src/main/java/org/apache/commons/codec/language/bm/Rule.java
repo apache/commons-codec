@@ -180,7 +180,7 @@ public class Rule {
          * Deprecated since 1.9.
          *
          * @param right the Phoneme to join.
-         * @return a new Phoneme.
+         * @return A new Phoneme.
          * @deprecated Since 1.9
          */
         @Deprecated
@@ -192,7 +192,7 @@ public class Rule {
          * Returns a new Phoneme with the same text but a union of its current language set and the given one.
          *
          * @param lang the language set to merge.
-         * @return a new Phoneme.
+         * @return A new Phoneme.
          */
         public Phoneme mergeWithLanguage(final LanguageSet lang) {
             return new Phoneme(phonemeText.toString(), languages.merge(lang));
@@ -217,7 +217,7 @@ public class Rule {
         /**
          * Gets an iteration of phonemes.
          *
-         * @return an iteration of phonemes.
+         * @return An iteration of phonemes.
          */
         Iterable<Phoneme> getPhonemes();
 
@@ -363,7 +363,7 @@ public class Rule {
      * @param nameType the NameType to consider.
      * @param rt       the RuleType to consider.
      * @param langs    the set of languages to consider.
-     * @return a list of Rules that apply.
+     * @return A list of Rules that apply.
      */
     public static List<Rule> getInstance(final NameType nameType, final RuleType rt, final Languages.LanguageSet langs) {
         final Map<String, List<Rule>> ruleMap = getInstanceMap(nameType, rt, langs);
@@ -378,7 +378,7 @@ public class Rule {
      * @param nameType the NameType to consider.
      * @param rt       the RuleType to consider.
      * @param lang     the language to consider.
-     * @return a list of Rules that apply.
+     * @return A list of Rules that apply.
      */
     public static List<Rule> getInstance(final NameType nameType, final RuleType rt, final String lang) {
         return getInstance(nameType, rt, LanguageSet.from(new HashSet<>(Arrays.asList(lang))));
@@ -390,7 +390,7 @@ public class Rule {
      * @param nameType the NameType to consider.
      * @param rt       the RuleType to consider.
      * @param langs    the set of languages to consider.
-     * @return a map containing all Rules that apply, grouped by the first character of the rule pattern.
+     * @return A map containing all Rules that apply, grouped by the first character of the rule pattern.
      * @since 1.9
      */
     public static Map<String, List<Rule>> getInstanceMap(final NameType nameType, final RuleType rt, final Languages.LanguageSet langs) {
@@ -403,7 +403,7 @@ public class Rule {
      * @param nameType the NameType to consider.
      * @param rt       the RuleType to consider.
      * @param lang     the language to consider.
-     * @return a map containing all Rules that apply, grouped by the first character of the rule pattern.
+     * @return A map containing all Rules that apply, grouped by the first character of the rule pattern.
      * @since 1.9
      */
     public static Map<String, List<Rule>> getInstanceMap(final NameType nameType, final RuleType rt, final String lang) {
@@ -531,7 +531,7 @@ public class Rule {
      * Attempts to compile the regex into direct string ops, falling back to Pattern and Matcher in the worst case.
      *
      * @param regex the regular expression to compile.
-     * @return an RPattern that will match this regex.
+     * @return An RPattern that will match this regex.
      */
     private static RPattern pattern(final String regex) {
         final boolean startsWith = regex.startsWith("^");

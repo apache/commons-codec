@@ -89,7 +89,7 @@ public class Base64OutputStream extends BaseNCodecOutputStream<Base64, Base64Out
     /**
      * Constructs a new Builder.
      *
-     * @return a new Builder.
+     * @return A new Builder.
      */
     public static Builder builder() {
         return new Builder();

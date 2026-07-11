@@ -325,7 +325,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
      * Converts a boolean to an alphabet.
      *
      * @param toLowerCase true for lowercase, false for uppercase.
-     * @return an alphabet.
+     * @return An alphabet.
      */
     private static char[] toAlphabet(final boolean toLowerCase) {
         return toLowerCase ? DIGITS_LOWER : DIGITS_UPPER;
@@ -557,7 +557,7 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
     /**
      * Returns a string representation of the object, which includes the charset name.
      *
-     * @return a string representation of the object.
+     * @return A string representation of the object.
      */
     @Override
     public String toString() {

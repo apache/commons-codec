@@ -108,7 +108,7 @@ abstract class RFC1522Codec {
      * Decodes an array of bytes using the defined encoding scheme.
      *
      * @param bytes Data to be decoded.
-     * @return a byte array that contains decoded data.
+     * @return A byte array that contains decoded data.
      * @throws DecoderException Thrown if a Decoder encounters a failure condition during the decode process.
      */
     protected abstract byte[] doDecoding(byte[] bytes) throws DecoderException;

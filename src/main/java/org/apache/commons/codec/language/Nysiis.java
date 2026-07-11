@@ -115,7 +115,7 @@ public class Nysiis implements StringEncoder {
      *            the next character.
      * @param aNext
      *            the after next character.
-     * @return a transcoded array of characters, starting from the current position.
+     * @return A transcoded array of characters, starting from the current position.
      */
     private static char[] transcodeRemaining(final char prev, final char curr, final char next, final char aNext) {
         // 1. EV -> AF

@@ -65,7 +65,7 @@ public abstract class AbstractBaseNCodecStreamBuilder<T, C extends BaseNCodec, B
     /**
      * Creates a new BaseNCodec subclass of type C.
      *
-     * @return a new BaseNCodec subclass of type C.
+     * @return A new BaseNCodec subclass of type C.
      */
     protected abstract C newBaseNCodec();
 

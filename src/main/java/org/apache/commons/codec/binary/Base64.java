@@ -342,7 +342,7 @@ public class Base64 extends BaseNCodec {
      *   .get()
      * </pre>
      *
-     * @return a new Builder.
+     * @return A new Builder.
      * @since 1.17.0
      */
     public static Builder builder() {

@@ -328,7 +328,7 @@ public class DoubleMetaphone implements StringEncoder {
      * Encodes a value with Double Metaphone.
      *
      * @param value String to encode.
-     * @return an encoded string.
+     * @return An encoded string.
      */
     public String doubleMetaphone(final String value) {
         return doubleMetaphone(value, false);
@@ -339,7 +339,7 @@ public class DoubleMetaphone implements StringEncoder {
      *
      * @param value String to encode.
      * @param alternate use alternate encode.
-     * @return an encoded string.
+     * @return An encoded string.
      */
     public String doubleMetaphone(String value, final boolean alternate) {
         value = cleanInput(value);

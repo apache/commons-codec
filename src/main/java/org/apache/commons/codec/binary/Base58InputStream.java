@@ -76,7 +76,7 @@ public class Base58InputStream extends BaseNCodecInputStream<Base58, Base58Input
     /**
      * Constructs a new Builder.
      *
-     * @return a new Builder.
+     * @return A new Builder.
      */
     public static Builder builder() {
         return new Builder();

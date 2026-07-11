@@ -60,7 +60,7 @@ public class Base16OutputStream extends BaseNCodecOutputStream<Base16, Base16Out
     /**
      * Constructs a new Builder.
      *
-     * @return a new Builder.
+     * @return A new Builder.
      */
     public static Builder builder() {
         return new Builder();

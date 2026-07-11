@@ -81,7 +81,7 @@ public class Base32InputStream extends BaseNCodecInputStream<Base32, Base32Input
     /**
      * Constructs a new Builder.
      *
-     * @return a new Builder.
+     * @return A new Builder.
      * @since 1.20.0
      */
     public static Builder builder() {

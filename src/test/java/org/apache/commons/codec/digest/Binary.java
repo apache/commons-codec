@@ -25,7 +25,7 @@ class Binary {
      * Converts a string of 0s and 1s to a byte array.
      *
      * @param binary a string of 0s and 1s to a byte array.
-     * @return a byte array
+     * @return A byte array
      */
     static byte[] toByteArray(final String binary) {
         // Ensure the binary string length is a multiple of 8

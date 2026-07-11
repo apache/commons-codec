@@ -85,7 +85,7 @@ public class Base32OutputStream extends BaseNCodecOutputStream<Base32, Base32Out
     /**
      * Constructs a new Builder.
      *
-     * @return a new Builder.
+     * @return A new Builder.
      */
     public static Builder builder() {
         return new Builder();

@@ -84,7 +84,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
         /**
          * Creates a new branch, identical to this branch.
          *
-         * @return a new, identical branch.
+         * @return A new, identical branch.
          */
         private Branch createBranch() {
             final Branch branch = new Branch();
@@ -342,7 +342,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
      *
      * @param input
      *            the input string to clean up.
-     * @return a cleaned up string.
+     * @return A cleaned up string.
      */
     private String cleanup(final String input) {
         final StringBuilder sb = new StringBuilder();

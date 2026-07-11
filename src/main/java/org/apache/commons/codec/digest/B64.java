@@ -75,7 +75,7 @@ final class B64 {
      * </p>
      *
      * @param num Number of chars to generate.
-     * @return a random salt {@link String}.
+     * @return A random salt {@link String}.
      */
     static String getRandomSalt(final int num) {
         return getRandomSalt(num, new SecureRandom());
@@ -90,7 +90,7 @@ final class B64 {
      *
      * @param num Number of chars to generate.
      * @param random an instance of {@link Random}.
-     * @return a random salt {@link String}.
+     * @return A random salt {@link String}.
      */
     static String getRandomSalt(final int num, final Random random) {
       final StringBuilder saltString = new StringBuilder(num);

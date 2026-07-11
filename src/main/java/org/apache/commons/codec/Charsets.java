@@ -151,7 +151,7 @@ public class Charsets {
      * Returns a Charset for the named charset. If the name is null, return the default Charset.
      *
      * @param charset The name of the requested charset, may be null.
-     * @return a Charset for the named charset.
+     * @return A Charset for the named charset.
      * @throws java.nio.charset.UnsupportedCharsetException If the named charset is unavailable.
      */
     public static Charset toCharset(final String charset) {

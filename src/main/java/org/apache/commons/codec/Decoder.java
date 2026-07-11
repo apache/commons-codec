@@ -36,7 +36,7 @@ public interface Decoder {
      *
      * @param source
      *            the object to decode.
-     * @return a 'decoded" object.
+     * @return A 'decoded" object.
      * @throws DecoderException
      *             a decoder exception can be thrown for any number of reasons. Some good candidates are that the
      *             parameter passed to this method is null, a param cannot be cast to the appropriate type for a

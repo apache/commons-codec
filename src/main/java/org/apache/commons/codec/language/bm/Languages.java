@@ -74,7 +74,7 @@ public class Languages {
          * Gets a language set for the given languages.
          *
          * @param languages a language set.
-         * @return a LanguageSet.
+         * @return A LanguageSet.
          */
         public static LanguageSet from(final Set<String> languages) {
             return languages.isEmpty() ? NO_LANGUAGES : new SomeLanguages(languages);
@@ -122,7 +122,7 @@ public class Languages {
          * Returns an instance restricted to this instances and the given values'.
          *
          * @param other The other instance.
-         * @return an instance restricted to this instances and the given values'.
+         * @return An instance restricted to this instances and the given values'.
          */
         public abstract LanguageSet restrictTo(LanguageSet other);
     }
@@ -298,7 +298,7 @@ public class Languages {
      * Gets an instance for the given name type.
      *
      * @param nameType The name type to lookup.
-     * @return an instance for the given name type.
+     * @return An instance for the given name type.
      */
     public static Languages getInstance(final NameType nameType) {
         return LANGUAGES.get(nameType);
@@ -308,7 +308,7 @@ public class Languages {
      * Gets a new instance for the given resource name.
      *
      * @param languagesResourceName the resource name to lookup.
-     * @return a new instance.
+     * @return A new instance.
      */
     public static Languages getInstance(final String languagesResourceName) {
         // read languages list

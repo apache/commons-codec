@@ -249,7 +249,7 @@ public class PhoneticEngine {
      *
      * @param strings   Strings to join.
      * @param sep       String to separate them with.
-     * @return a single String consisting of each element of {@code strings} interleaved by {@code sep}.
+     * @return A single String consisting of each element of {@code strings} interleaved by {@code sep}.
      */
     private static String join(final List<String> strings, final String sep) {
         return strings.stream().collect(Collectors.joining(sep));
@@ -373,7 +373,7 @@ public class PhoneticEngine {
      *            String to phoneticise; a String with dashes or spaces separating each word.
      * @param languageSet
      *            set of possible origin languages.
-     * @return a phonetic representation of the input; a String containing '-'-separated phonetic representations of the
+     * @return A phonetic representation of the input; a String containing '-'-separated phonetic representations of the
      *         input.
      */
     public String encode(String input, final Languages.LanguageSet languageSet) {

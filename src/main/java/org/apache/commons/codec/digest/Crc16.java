@@ -285,7 +285,7 @@ public final class Crc16 implements Checksum {
      * <li>CRC-IBM</li>
      * </ul>
      *
-     * @return a new CRC16-CCITT Checksum.
+     * @return A new CRC16-CCITT Checksum.
      */
     public static Crc16 arc() {
         return builder().setInit(ARC_INIT).table(ARC).get();
@@ -298,7 +298,7 @@ public final class Crc16 implements Checksum {
      * Since there are so many CRC-16 variants, we do not pick a default.
      * </p>
      *
-     * @return a new builder.
+     * @return A new builder.
      */
     public static Builder builder() {
         return new Builder();
@@ -323,7 +323,7 @@ public final class Crc16 implements Checksum {
      * <li>KERMIT</li>
      * </ul>
      *
-     * @return a new CRC16-CCITT Checksum.
+     * @return A new CRC16-CCITT Checksum.
      */
     public static Crc16 ccitt() {
         return builder().setInit(CCITT_INIT).table(CCITT).get();
@@ -337,7 +337,7 @@ public final class Crc16 implements Checksum {
      * <li>The XorOut value is {@code 0xFFFF}.</li>
      * </ul>
      *
-     * @return a new CRC16-DNP Checksum.
+     * @return A new CRC16-DNP Checksum.
      */
     public static Crc16 dnp() {
         return builder().setInit(DNP_INIT).setXorOut(DNP_XOROUT).table(DNP).get();
@@ -346,7 +346,7 @@ public final class Crc16 implements Checksum {
     /**
      * Gets a copy of the CRC16-CCITT table.
      *
-     * @return a copy of the CCRC16-CITT table.
+     * @return A copy of the CCRC16-CITT table.
      */
     public static int[] getArcTable() {
         return ARC.clone();
@@ -355,7 +355,7 @@ public final class Crc16 implements Checksum {
     /**
      * Gets a copy of the CRC16-CCITT table.
      *
-     * @return a copy of the CCRC16-CITT table.
+     * @return A copy of the CCRC16-CITT table.
      */
     public static int[] getCcittTable() {
         return CCITT.clone();
@@ -364,7 +364,7 @@ public final class Crc16 implements Checksum {
     /**
      * Gets a copy of the CRC16-DNP table.
      *
-     * @return a copy of the CCRC16-DNP table.
+     * @return A copy of the CCRC16-DNP table.
      */
     public static int[] getDnpTable() {
         return DNP.clone();
@@ -373,7 +373,7 @@ public final class Crc16 implements Checksum {
     /**
      * Gets a copy of the CRC16-IBM-SDLC table.
      *
-     * @return a copy of the CRC16-IBM-SDLC table.
+     * @return A copy of the CRC16-IBM-SDLC table.
      */
     public static int[] getIbmSdlcTable() {
         return IBM_SDLC.clone();
@@ -382,7 +382,7 @@ public final class Crc16 implements Checksum {
     /**
      * Gets a copy of the CRC16-MAXIM table.
      *
-     * @return a copy of the CRC16-MAXIM table.
+     * @return A copy of the CRC16-MAXIM table.
      */
     public static int[] getMaximTable() {
         return MAXIM.clone();
@@ -391,7 +391,7 @@ public final class Crc16 implements Checksum {
     /**
      * Gets a copy of the CRC16-MCRF4XX table.
      *
-     * @return a copy of the CRC16-MCRF4XX table.
+     * @return A copy of the CRC16-MCRF4XX table.
      */
     public static int[] getMcrf4xxTable() {
         return MCRF4XX.clone();
@@ -400,7 +400,7 @@ public final class Crc16 implements Checksum {
     /**
      * Gets a copy of the CRC16-MODBUS table.
      *
-     * @return a copy of the CRC16-MODBUS table.
+     * @return A copy of the CRC16-MODBUS table.
      */
     public static int[] getModbusTable() {
         return MODBUS.clone();
@@ -409,7 +409,7 @@ public final class Crc16 implements Checksum {
     /**
      * Gets a copy of the CRC16-NRSC-5 table.
      *
-     * @return a copy of the CRC16-NRSC-5 table.
+     * @return A copy of the CRC16-NRSC-5 table.
      */
     public static int[] getNrsc5Table() {
         return NRSC5.clone();
@@ -434,7 +434,7 @@ public final class Crc16 implements Checksum {
      * <li>X-25</li>
      * </ul>
      *
-     * @return a new CRC16-IBM-SDLC Checksum.
+     * @return A new CRC16-IBM-SDLC Checksum.
      */
     public static Crc16 ibmSdlc() {
         return builder().setInit(IBM_SDLC_INIT).setXorOut(IBM_SDLC_XOROUT).table(IBM_SDLC).get();
@@ -457,7 +457,7 @@ public final class Crc16 implements Checksum {
      * <li>CRC-16/MAXIM-DOW</li>
      * </ul>
      *
-     * @return a new CRC16-MAXIM Checksum.
+     * @return A new CRC16-MAXIM Checksum.
      */
     public static Crc16 maxim() {
         return builder().setInit(MAXIM_INIT).setXorOut(MAXIM_XOROUT).table(MAXIM).get();
@@ -471,7 +471,7 @@ public final class Crc16 implements Checksum {
      * <li>The XorOut value is {@code 0x0000}.</li>
      * </ul>
      *
-     * @return a new CRC16-MCRF4XX Checksum.
+     * @return A new CRC16-MCRF4XX Checksum.
      */
     public static Crc16 mcrf4xx() {
         return builder().setInit(MCRF4XX_INIT).table(MCRF4XX).get();
@@ -495,7 +495,7 @@ public final class Crc16 implements Checksum {
      * <li>MODBUST</li>
      * </ul>
      *
-     * @return a new CRC16-MODBUS Checksum.
+     * @return A new CRC16-MODBUS Checksum.
      */
     public static Crc16 modbus() {
         return builder().setInit(MODBUS_INIT).table(MODBUS).get();
@@ -509,7 +509,7 @@ public final class Crc16 implements Checksum {
      * <li>The XorOut value is {@code 0x0000}.</li>
      * </ul>
      *
-     * @return a new CRC16-NRSC-5 Checksum.
+     * @return A new CRC16-NRSC-5 Checksum.
      */
     public static Crc16 nrsc5() {
         return builder().setInit(NRSC5_INIT).table(NRSC5).get();
@@ -523,7 +523,7 @@ public final class Crc16 implements Checksum {
      * <li>The XorOut value is {@code 0xFFFF}.</li>
      * </ul>
      *
-     * @return a new CRC16-USB Checksum.
+     * @return A new CRC16-USB Checksum.
      */
     public static Crc16 usb() {
         return builder().setInit(USB_INIT).setXorOut(USB_XOROUT).table(USB).get();

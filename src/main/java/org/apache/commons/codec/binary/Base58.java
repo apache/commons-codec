@@ -68,7 +68,7 @@ public class Base58 extends BaseNCodec {
         /**
          * Builds a new Base58 instance with the configured settings.
          *
-         * @return a new Base58 codec.
+         * @return A new Base58 codec.
          */
         @Override
         public Base58 get() {
@@ -136,7 +136,7 @@ public class Base58 extends BaseNCodec {
      *   .get()
      * </pre>
      *
-     * @return a new Builder.
+     * @return A new Builder.
      */
     public static Builder builder() {
         return new Builder();
@@ -318,7 +318,7 @@ public class Base58 extends BaseNCodec {
      * </p>
      *
      * @param accumulate the binary data to convert.
-     * @return a StringBuilder with the Base58 representation (not yet reversed).
+     * @return A StringBuilder with the Base58 representation (not yet reversed).
      */
     private StringBuilder getStringBuilder(final byte[] accumulate) {
         BigInteger value = new BigInteger(1, accumulate);
