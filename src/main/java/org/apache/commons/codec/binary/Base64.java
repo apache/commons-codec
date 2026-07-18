@@ -380,14 +380,6 @@ public class Base64 extends BaseNCodec {
         return false;
     }
 
-    private static byte[] toDecodeTable(final byte[] encodeTable) {
-        final byte[] table = encodeTable != null ? encodeTable : STANDARD_ENCODE_TABLE;
-        if (Arrays.equals(table, STANDARD_ENCODE_TABLE) || Arrays.equals(table, URL_SAFE_ENCODE_TABLE)) {
-            return DECODE_TABLE;
-        }
-        return calculateDecodeTable(table);
-    }
-
     /**
      * Decodes Base64 data into octets.
      * <p>
@@ -785,6 +777,14 @@ public class Base64 extends BaseNCodec {
      */
     public static boolean isBase64Url(final String base64) {
         return isBase64Url(StringUtils.getBytesUtf8(base64));
+    }
+
+    private static byte[] toDecodeTable(final byte[] encodeTable) {
+        final byte[] table = encodeTable != null ? encodeTable : STANDARD_ENCODE_TABLE;
+        if (Arrays.equals(table, STANDARD_ENCODE_TABLE) || Arrays.equals(table, URL_SAFE_ENCODE_TABLE)) {
+            return DECODE_TABLE;
+        }
+        return calculateDecodeTable(table);
     }
 
     static byte[] toUrlSafeEncodeTable(final boolean urlSafe) {

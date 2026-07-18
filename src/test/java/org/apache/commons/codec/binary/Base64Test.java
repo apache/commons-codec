@@ -530,6 +530,14 @@ class Base64Test {
     }
 
     @Test
+    void testCustomEncodingAlphabet_illegal() {
+        final byte[] encodeTable = {
+                '.', '-', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M'
+        };
+        assertThrows(IllegalArgumentException.class, () -> Base64.builder().setEncodeTable(encodeTable).get());
+    }
+
+    @Test
     void testCustomEncodingAlphabetAllowsNonAsciiBytes() {
         final byte[] encodeTable = STANDARD_ENCODE_TABLE.clone();
         encodeTable[0] = (byte) 0x80;
@@ -563,14 +571,6 @@ class Base64Test {
         final byte[] encodeTable = STANDARD_ENCODE_TABLE.clone();
         encodeTable[1] = encodeTable[0];
         assertThrows(IllegalArgumentException.class, () -> Base64.builder().setEncodeTable(encodeTable));
-    }
-
-    @Test
-    void testCustomEncodingAlphabet_illegal() {
-        final byte[] encodeTable = {
-                '.', '-', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M'
-        };
-        assertThrows(IllegalArgumentException.class, () -> Base64.builder().setEncodeTable(encodeTable).get());
     }
 
     @Test
