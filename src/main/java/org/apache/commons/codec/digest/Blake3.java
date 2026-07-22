@@ -290,7 +290,7 @@ public final class Blake3 {
     // @formatter:on
 
     private static void checkBufferArgs(final byte[] buffer, final int offset, final int length) {
-        Objects.requireNonNull(buffer);
+        Objects.requireNonNull(buffer, "buffer");
         if (offset < 0) {
             throw new IndexOutOfBoundsException("Offset must be non-negative");
         }
@@ -365,7 +365,7 @@ public final class Blake3 {
      * @throws NullPointerException if kdfContext is null.
      */
     public static Blake3 initKeyDerivationFunction(final byte[] kdfContext) {
-        Objects.requireNonNull(kdfContext);
+        Objects.requireNonNull(kdfContext, "kdfContext");
         final EngineState kdf = new EngineState(IV, DERIVE_KEY_CONTEXT);
         kdf.inputData(kdfContext, 0, kdfContext.length);
         final byte[] key = new byte[KEY_LEN];
@@ -383,7 +383,7 @@ public final class Blake3 {
      * @throws IllegalArgumentException if key is not 32 bytes.
      */
     public static Blake3 initKeyedHash(final byte[] key) {
-        Objects.requireNonNull(key);
+        Objects.requireNonNull(key, "key");
         if (key.length != KEY_LEN) {
             throw new IllegalArgumentException("Blake3 keys must be 32 bytes");
         }

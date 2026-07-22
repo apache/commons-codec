@@ -95,13 +95,13 @@ public class GitIdentifiers {
          * @param rawObjectId The id of the entry, not null.
          */
         DirectoryEntry(final String name, final FileMode type, final byte[] rawObjectId) {
-            if (Objects.requireNonNull(name).indexOf('/') >= 0) {
+            if (Objects.requireNonNull(name, "name").indexOf('/') >= 0) {
                 throw new IllegalArgumentException("Entry name must not contain '/': " + name);
             }
             this.name = name;
-            this.type = Objects.requireNonNull(type);
+            this.type = Objects.requireNonNull(type, "type");
             this.sortKey = type == FileMode.DIRECTORY ? name + "/" : name;
-            this.rawObjectId = Objects.requireNonNull(rawObjectId);
+            this.rawObjectId = Objects.requireNonNull(rawObjectId, "rawObjectId");
         }
 
         @Override
@@ -223,7 +223,7 @@ public class GitIdentifiers {
         private final MessageDigest messageDigest;
 
         private TreeIdBuilder(final MessageDigest messageDigest) {
-            this.messageDigest = Objects.requireNonNull(messageDigest);
+            this.messageDigest = Objects.requireNonNull(messageDigest, "messageDigest");
         }
 
         /**

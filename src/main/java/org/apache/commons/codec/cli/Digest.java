@@ -60,7 +60,7 @@ public class Digest {
     private final String[] inputs;
 
     private Digest(final String[] args) {
-        Objects.requireNonNull(args);
+        Objects.requireNonNull(args, "args");
         final int argsLength = args.length;
         if (argsLength == 0) {
             throw new IllegalArgumentException(String.format("Usage: java %s [algorithm] [FILE|DIRECTORY|string] ...", Digest.class.getName()));
