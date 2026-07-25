@@ -335,8 +335,9 @@ public class Base58 extends BaseNCodec {
             base58.append((char) (encodeTable[divRem[1].intValue()] & 0xff));
             value = divRem[0];
         }
+        final char zero = (char) (encodeTable[0] & 0xff);
         for (int i = 0; i < leadingZeros; i++) {
-            base58.append((char) (encodeTable[0] & 0xff));
+            base58.append(zero);
         }
         return base58;
     }
