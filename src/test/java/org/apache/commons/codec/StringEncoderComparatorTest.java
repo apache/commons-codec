@@ -18,6 +18,7 @@
 package org.apache.commons.codec;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Arrays;
 import java.util.List;
@@ -57,5 +58,15 @@ class StringEncoderComparatorTest {
     void testComparatorWithSoundex() throws Exception {
         final StringEncoderComparator sCompare = new StringEncoderComparator(new Soundex());
         assertEquals(0, sCompare.compare("O'Brien", "O'Brian"), "O'Brien and O'Brian didn't come out with the same Soundex, something must be wrong here");
+    }
+
+    @Test
+    void testConstructor() throws Exception {
+        assertThrows(NullPointerException.class, () -> new StringEncoderComparator(null));
+    }
+
+    @Test
+    void testDeprecatedConstructor() throws Exception {
+        assertThrows(NullPointerException.class, () -> new StringEncoderComparator().compare("test", "test"));
     }
 }
