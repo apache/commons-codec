@@ -435,17 +435,6 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
-     * Tests whether or not the {@code value} is in the given {@code table}.
-     *
-     * @param value The value to test.
-     * @param table The table to test against.
-     * @return {@code true} if the value is in the table, {@code false} otherwise.
-     */
-    static boolean isInAlphabet(final byte value, final byte[] table) {
-        return value >= 0 && value < table.length && table[value] != -1;
-    }
-
-    /**
      * Checks if a byte value is whitespace or not.
      *
      * @param byteToCheck The byte to check.
