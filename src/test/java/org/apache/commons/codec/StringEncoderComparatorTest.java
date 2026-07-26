@@ -36,16 +36,11 @@ class StringEncoderComparatorTest {
     @Test
     void testComparatorWithDoubleMetaphone() throws Exception {
         final StringEncoderComparator sCompare = new StringEncoderComparator(new DoubleMetaphone());
-
         final String[] testArray = { "Jordan", "Sosa", "Prior", "Pryor" };
         final List<String> testList = Arrays.asList(testArray);
-
         final String[] controlArray = { "Jordan", "Prior", "Pryor", "Sosa" };
-
         testList.sort(sCompare); // unchecked
-
         final String[] resultArray = testList.toArray(ArrayUtils.EMPTY_STRING_ARRAY);
-
         for (int i = 0; i < resultArray.length; i++) {
             assertEquals(controlArray[i], resultArray[i], "Result Array not Equal to Control Array at index: " + i);
         }
@@ -54,7 +49,6 @@ class StringEncoderComparatorTest {
     @Test
     void testComparatorWithDoubleMetaphoneAndInvalidInput() throws Exception {
         final StringEncoderComparator sCompare = new StringEncoderComparator(new DoubleMetaphone());
-
         final int compare = sCompare.compare(Double.valueOf(3.0d), Long.valueOf(3));
         assertEquals(0, compare, "Trying to compare objects that make no sense to the underlying encoder should return a zero compare code");
     }
@@ -62,7 +56,6 @@ class StringEncoderComparatorTest {
     @Test
     void testComparatorWithSoundex() throws Exception {
         final StringEncoderComparator sCompare = new StringEncoderComparator(new Soundex());
-
         assertEquals(0, sCompare.compare("O'Brien", "O'Brian"), "O'Brien and O'Brian didn't come out with the same Soundex, something must be wrong here");
     }
 }
