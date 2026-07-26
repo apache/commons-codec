@@ -417,16 +417,6 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         return CHUNK_SEPARATOR.clone();
     }
 
-    /**
-     * Gets the array length or 0 if null.
-     *
-     * @param array The array or null.
-     * @return The array length or 0 if null.
-     */
-    static int getLength(final byte[] array) {
-        return array == null ? 0 : array.length;
-    }
-
     private static int gte0(final int value) {
         if (value < 0) {
             throw new IllegalArgumentException("value must be greater than or equal to 0.");
