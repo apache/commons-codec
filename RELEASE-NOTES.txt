@@ -1,3 +1,48 @@
+Apache Commons Codec 1.22.1 Release Notes
+-----------------------------------------
+
+The Apache Commons Codec team is pleased to announce the release of Apache Commons Codec 1.22.1.
+
+The Apache Commons Codec component contains encoders and decoders for
+formats such as Base16, Base32, Base64, digest, and Hexadecimal. In addition to these
+widely used encoders and decoders, the codec package also maintains a
+collection of phonetic encoding utilities.
+
+This is a feature and maintenance release. Java 8 or later is required.
+
+
+
+Fixed Bugs
+----------
+
+* CODEC-344:  Base64.Builder.setEncodeTable(byte...) accepts invalid custom alphabets. Thanks to Ruiqi Dong, Gary Gregory.
+* CODEC-340:  Base58.Builder.setEncodeTable(byte...) is ignored when encoding and decoding. Thanks to Ruiqi Dong, Gary Gregory.
+* CODEC-342:  Base32.Builder.setEncodeTable(byte...) can create a codec that cannot decode its own output. Thanks to Ruiqi Dong, Gary Gregory.
+* CODEC-343:  Base32.Builder.setHexDecodeTable(boolean) sets the encode table to a decode lookup table. Thanks to Ruiqi Dong, Gary Gregory.
+* CODEC-341:  Base16.Builder.setEncodeTable(byte...) can create a codec that cannot decode its own output. Thanks to Ruiqi Dong, Gary Gregory.
+* CODEC-339:  URLCodec.encodeUrl(BitSet, byte[]) allows custom safe sets to emit URL encoding control characters. Thanks to Ruiqi Dong, Gary Gregory.
+* CODEC-338:  PercentCodec loses literal '+' when plusForSpace is enabled. Thanks to Ruiqi Dong, Gary Gregory.
+* CODEC-337:  Digest ALL reuses System.in, so only the first algorithm sees the real input (#431). Thanks to Ruiqi Dong, Gary Gregory.
+*             Fix Base64.toIntegerBytes(BigInteger) for zero edge case (#441). Thanks to Gary Gregory.
+*             Add messages when throwing NullPointerException. Thanks to Gary Gregory.
+*             Add messages when throwing NullPointerException. Thanks to Gary Gregory.
+*             StringEncoderComparator.StringEncoderComparator(StringEncoder) now fails fast on null input. Thanks to Gary Gregory.
+
+Changes
+-------
+
+*             Bump org.apache.commons:commons-parent from 98 to 103. Thanks to Gary Gregory.
+*             Bump commons-io:commons-io from 2.21.0 to 2.22.0. Thanks to Gary Gregory.
+
+
+For complete information on Apache Commons Codec, including instructions on how to submit bug reports,
+patches, or suggestions for improvement, see the Apache Commons Codec website:
+
+https://commons.apache.org/proper/commons-codec/
+
+Download page: https://commons.apache.org/proper/commons-codec/download_codec.cgi
+
+---------------------------------------------------------------------------------
 Apache Commons Codec 1.22.0 Release Notes
 -----------------------------------------
 
