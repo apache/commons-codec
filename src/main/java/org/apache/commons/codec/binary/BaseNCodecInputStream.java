@@ -185,7 +185,7 @@ public class BaseNCodecInputStream<C extends BaseNCodec, T extends BaseNCodecInp
      * Reads one {@code byte} from this input stream.
      *
      * @return The byte as an integer in the range 0 to 255. Returns -1 if EOF has been reached.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     @Override
     public int read() throws IOException {
@@ -257,7 +257,7 @@ public class BaseNCodecInputStream<C extends BaseNCodec, T extends BaseNCodecInp
      * The {@link #reset} method of {@link BaseNCodecInputStream} does nothing except throw an {@link IOException}.
      * </p>
      *
-     * @throws IOException if this method is invoked.
+     * @throws IOException Thrown if this method is invoked.
      * @since 1.7
      */
     @Override

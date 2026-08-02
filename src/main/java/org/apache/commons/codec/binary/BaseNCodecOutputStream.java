@@ -128,7 +128,7 @@ public class BaseNCodecOutputStream<C extends BaseNCodec, T extends BaseNCodecOu
      * <a href= "https://commons.apache.org/proper/commons-io/apidocs/org/apache/commons/io/output/CloseShieldOutputStream.html" >CloseShieldOutputStream</a>.
      * </p>
      *
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     @Override
     public void close() throws IOException {
@@ -154,7 +154,7 @@ public class BaseNCodecOutputStream<C extends BaseNCodec, T extends BaseNCodecOu
     /**
      * Flushes this output stream and forces any buffered output bytes to be written out to the stream.
      *
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     @Override
     public void flush() throws IOException {
@@ -166,7 +166,7 @@ public class BaseNCodecOutputStream<C extends BaseNCodec, T extends BaseNCodecOu
      * flushed.
      *
      * @param propagate boolean flag to indicate whether the wrapped OutputStream should also be flushed.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     private void flush(final boolean propagate) throws IOException {
         final int avail = baseNCodec.available(context);
@@ -226,7 +226,7 @@ public class BaseNCodecOutputStream<C extends BaseNCodec, T extends BaseNCodecOu
      * Writes the specified {@code byte} to this output stream.
      *
      * @param i source byte.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     @Override
     public void write(final int i) throws IOException {
