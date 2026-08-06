@@ -37,6 +37,7 @@ import org.apache.commons.codec.EncoderException;
 import org.apache.commons.lang3.ArrayFill;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 /**
@@ -53,6 +54,14 @@ public class Base58Test {
     private static void assertArrayEqualsAt(final byte[] data, final byte[] dec, final int i) {
         final AtomicInteger counter = new AtomicInteger(i);
         assertArrayEquals(data, dec, () -> String.format("Failed for length %,d: %s", counter.get(), Arrays.toString(data)));
+    }
+
+    private static byte[] fromHex(final String hex) {
+        try {
+            return Hex.decodeHex(hex);
+        } catch (final DecoderException e) {
+            throw new AssertionError("Invalid test-vector hex: " + hex, e);
+        }
     }
 
     private static byte[] newEncodeTable() {
@@ -126,6 +135,19 @@ public class Base58Test {
         new Base58().decode(ArrayFill.fill(new byte[n], (byte) 'z'));
     }
 
+    /**
+     * Verifies that characters not in the Base58 alphabet (whitespace, punctuation, excluded
+     * letters) are rejected during decoding.
+     */
+    @ParameterizedTest
+    @ValueSource(strings = { "0", "O", "I", "l", "+", "/", " ", "=", "~" })
+    void testDecodeRejectsNonAlphabetCharacters(final String badChar) {
+        // Wrap in a valid prefix/suffix so only the bad char triggers the error.
+        final byte[] input = ("1" + badChar + "1").getBytes(StandardCharsets.US_ASCII);
+        assertThrows(IllegalArgumentException.class, () -> new Base58().decode(input),
+            "expected rejection of character: " + badChar);
+    }
+
     @Test
     void testEmptyBase58() {
         byte[] empty = {};
@@ -191,6 +213,45 @@ public class Base58Test {
         assertEquals(hexString, StringUtils.newStringUtf8(decoded), "Hex decoding failed");
     }
 
+    /**
+     * Tests encode and decode against every test vector in the IETF Base58 encoding draft
+     * (draft-msporny-base58-03, Appendix A). The hex column is the raw binary input; the second
+     * column is the expected Base58 output.
+     *
+     * @see <a href="https://datatracker.ietf.org/doc/html/draft-msporny-base58-03#appendix-A">
+     *      draft-msporny-base58-03 Appendix A</a>
+     */
+    @ParameterizedTest(name = "[{index}] hex={0}")
+    @CsvSource({
+        // single byte 'a' (0x61)
+        "61,                                                                                     2g",
+        // "bbb"
+        "626262,                                                                                 a3gV",
+        // "ccc"
+        "636363,                                                                                 aPEr",
+        // "simply a long string"
+        "73696d706c792061206c6f6e6720737472696e67,                                               2cFupjhnEsSn59qHXstmK2ffpLv2",
+        // leading zero byte + random payload (produces leading '1')
+        // 25-byte Bitcoin address payload (version + RIPEMD160 hash + checksum) from Bitcoin wiki
+        "00010966776006953d5567439e5e39f86a0d273beed61967f6,                                     16UwLL9Risc3QfPqBUvKofHmBQ7wMtjvM",
+        "516b6fcd0f,                                                                             ABnLTmg",
+        "bf4f89001e670274dd,                                                                     3SEo3LWLoPntC",
+        "572e4794,                                                                               3EFU7m",
+        "ecac89cad93923c02321,                                                                   EJDM8drfXA6uyA",
+        "10c8511e,                                                                               Rt5zm",
+        // ten zero bytes -> ten '1' characters
+        "00000000000000000000,                                                                   1111111111",
+        // 43-byte payload whose Base58 encoding is exactly the full alphabet in order
+        "000111d38e5fc9071ffcd20b4a763cc9ae4f252bb4e48fd66a835e252ada93ff480d6dd43dc62a641155a5, 123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
+    })
+    void testIetfDraftBase58Vectors(final String hex, final String expectedBase58) {
+        final byte[] binary = fromHex(hex.trim());
+        final String base58 = expectedBase58.trim();
+        final byte[] base58Bytes = base58.getBytes(StandardCharsets.US_ASCII);
+        assertArrayEquals(base58Bytes, new Base58().encode(binary), "encode failed for hex=" + hex.trim());
+        assertArrayEquals(binary, new Base58().decode(base58Bytes), "decode failed for base58=" + base58);
+    }
+
     @Test
     void testInvalidCharacters() {
         // Test decoding with invalid characters (those not in Base58 alphabet)
@@ -230,6 +291,30 @@ public class Base58Test {
         assertFalse(base58.isInAlphabet((byte) 0));
         assertFalse(base58.isInAlphabet((byte) 128));
         assertFalse(base58.isInAlphabet((byte) 255));
+    }
+
+    /**
+     * Verifies that the number of leading {@code '1'} characters in the encoded output exactly
+     * equals the number of leading zero bytes in the input, for a range of counts.
+     */
+    @ParameterizedTest
+    @ValueSource(ints = { 0, 1, 2, 3, 5, 10 })
+    void testLeadingZeroByteCountPreserved(final int zeros) {
+        // Append a non-zero tail so the total value is non-trivial.
+        final byte[] data = new byte[zeros + 3];
+        data[zeros]     = 0x01;
+        data[zeros + 1] = 0x02;
+        data[zeros + 2] = 0x03;
+        final byte[] encoded = new Base58().encode(data);
+        int leadingOnes = 0;
+        for (final byte b : encoded) {
+            if (b != '1') {
+                break;
+            }
+            leadingOnes++;
+        }
+        assertEquals(zeros, leadingOnes, "leading '1' count must equal leading zero-byte count");
+        assertArrayEquals(data, new Base58().decode(encoded), "round-trip must preserve leading zeros");
     }
 
     @Test
@@ -288,6 +373,19 @@ public class Base58Test {
         }
     }
 
+    /**
+     * Round-trips arrays of all-{@code 0xFF} bytes (maximum unsigned byte value) to confirm
+     * that bytes with the high bit set are handled correctly.
+     */
+    @ParameterizedTest
+    @ValueSource(ints = { 1, 2, 3, 4, 8, 16 })
+    void testRoundTripAllMaxBytes(final int len) {
+        final byte[] data = new byte[len];
+        Arrays.fill(data, (byte) 0xFF);
+        assertArrayEquals(data, new Base58().decode(new Base58().encode(data)),
+            "round-trip failed for " + len + " x 0xFF bytes");
+    }
+
     @ParameterizedTest
     @ValueSource(ints = { 0, 1, 2, 3, 4 })
     void testRoundtripByte0(final int len) throws IOException {
@@ -308,6 +406,19 @@ public class Base58Test {
             final byte[] dec = new Base58().decode(enc);
             assertArrayEquals(data, dec, "Failed for byte value: " + i);
         }
+    }
+
+    /**
+     * Encodes a single zero byte; it must produce the single character {@code '1'}, and the
+     * round-trip must restore {@code [0x00]}.  This byte value is excluded from {@link #testSingleBytes()}
+     * which starts at {@code 1}.
+     */
+    @Test
+    void testSingleByteZero() {
+        final byte[] data = { 0 };
+        final byte[] encoded = new Base58().encode(data);
+        assertArrayEquals(new byte[] { '1' }, encoded, "single zero byte must encode as '1'");
+        assertArrayEquals(data, new Base58().decode(encoded), "round-trip of single zero byte");
     }
 
     @Test
