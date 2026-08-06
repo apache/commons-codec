@@ -469,7 +469,7 @@ public class PhoneticEngine {
     }
 
     /**
-     * Finds the last occurrence of a repeating prefix in a string, starting from the beginning of the string and moving forward.
+     * Finds the index past the last occurrence of a repeating prefix in a string, starting from the beginning of the string and moving forward.
      *
      * @param source    The source string to search within.
      * @param prefix    The prefix to look for.
