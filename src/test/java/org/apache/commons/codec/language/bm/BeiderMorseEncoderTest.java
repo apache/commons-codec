@@ -30,6 +30,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.codec.AbstractStringEncoderTest;
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -91,6 +92,11 @@ class BeiderMorseEncoderTest extends AbstractStringEncoderTest<StringEncoder> {
                 assertNotEmpty(bmpm, valueU);
             }
         }
+    }
+
+    @Test
+    void testDQuoteRepeat() throws Exception {
+        assertEquals("(D|a|i|o)-(dD|da|di|do)", new BeiderMorseEncoder().encode(StringUtils.repeat("d'", 20000) + "aaa"));
     }
 
     @Test

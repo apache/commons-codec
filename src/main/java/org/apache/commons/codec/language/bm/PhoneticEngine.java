@@ -387,8 +387,13 @@ public class PhoneticEngine {
         input = input.toLowerCase(Locale.ENGLISH).replace('-', ' ').trim();
 
         if (this.nameType == NameType.GENERIC) {
-            if (input.startsWith("d'")) { // check for d'
-                final String remainder = input.substring(2);
+            final String dQuotePrefix = "d'";
+            final int dqpLen = dQuotePrefix.length();
+            if (input.startsWith(dQuotePrefix)) { // check for d'
+                String remainder = input.substring(dqpLen);
+                // Find remainder without allocating new string.
+                final int start = lastRepeat(remainder, dQuotePrefix, dqpLen);
+                remainder = remainder.substring(start);
                 final String combined = "d" + remainder;
                 return "(" + encode(remainder) + ")-(" + encode(combined) + ")";
             }
@@ -502,5 +507,21 @@ public class PhoneticEngine {
      */
     public boolean isConcat() {
         return this.concat;
+    }
+
+    private int lastRepeat(final String source, final String prefix, final int prefixLen) {
+        // Find without allocating new string.
+        int start = 0;
+        while (start + prefixLen <= source.length()) {
+            int i = 0;
+            while (i < prefixLen && source.charAt(start + i) == prefix.charAt(i)) {
+                i++;
+            }
+            if (i != prefixLen) {
+                break;
+            }
+            start += prefixLen;
+        }
+        return start;
     }
 }
