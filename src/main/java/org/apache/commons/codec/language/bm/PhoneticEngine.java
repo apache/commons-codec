@@ -362,8 +362,7 @@ public class PhoneticEngine {
      * @return The encoding of the input.
      */
     public String encode(final String input) {
-        final Languages.LanguageSet languageSet = this.lang.guessLanguages(input);
-        return encode(input, languageSet);
+        return encode(input, lang.guessLanguages(input));
     }
 
     /**
