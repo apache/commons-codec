@@ -42,9 +42,6 @@ class PhoneticEngineRegressionTest {
      * regressions in Commons-Codec.
      */
     private static String encode(final Map<String, String> args, final boolean concat, final String input) {
-        final Languages.LanguageSet languageSet;
-        final PhoneticEngine engine;
-
         // PhoneticEngine = NameType + RuleType + concat
         // we use common-codec's defaults: GENERIC + APPROX + true
         final String nameTypeArg = args.get("nameType");
@@ -53,9 +50,16 @@ class PhoneticEngineRegressionTest {
         final String ruleTypeArg = args.get("ruleType");
         final RuleType ruleType = ruleTypeArg == null ? RuleType.APPROX : RuleType.valueOf(ruleTypeArg);
 
-        engine = new PhoneticEngine(nameType, ruleType, concat);
+        // @formatter:off
+        final PhoneticEngine engine = PhoneticEngine.builder()
+            .setNameType(nameType)
+            .setRuleType(ruleType)
+            .setConcat(concat)
+            .get();
+        // @formatter:on
 
         // LanguageSet: defaults to automagic, otherwise a comma-separated list.
+        final Languages.LanguageSet languageSet;
         final String languageSetArg = args.get("languageSet");
         if (languageSetArg == null || languageSetArg.equals("auto")) {
             languageSet = null;

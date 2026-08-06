@@ -124,7 +124,13 @@ class PhoneticEnginePerformanceTest {
 
     @Test
     void test() {
-        final PhoneticEngine engine = new PhoneticEngine(NameType.GENERIC, RuleType.APPROX, true);
+        // @formatter:off
+        final PhoneticEngine engine = PhoneticEngine.builder()
+            .setNameType(NameType.GENERIC)
+            .setRuleType(RuleType.APPROX)
+            .setConcat(true)
+            .get();
+        // @formatter:on
         final String input = "Angelo";
         final long startMillis = System.currentTimeMillis();
         for (int i = 0; i < LOOP; i++) {

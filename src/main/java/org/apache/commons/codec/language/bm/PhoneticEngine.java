@@ -29,6 +29,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.function.Supplier;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -55,8 +56,91 @@ import org.apache.commons.codec.language.bm.Rule.Phoneme;
 public class PhoneticEngine {
 
     /**
-     * Utility for manipulating a set of phonemes as they are being built up. Not intended for use outside this package, and probably not outside the
-     * {@link PhoneticEngine} class.
+     * Builder for a PhoneticEngine.
+     *
+     * @since 1.23.0
+     */
+    public static class Builder implements Supplier<PhoneticEngine> {
+
+        private NameType nameType = NameType.GENERIC;
+
+        private RuleType ruleType = RuleType.APPROX;
+
+        private boolean concat = true;
+
+        private int maxPhonemes = DEFAULT_MAX_PHONEMES;
+
+        private Builder() {
+            // empty
+        }
+
+        @Override
+        public PhoneticEngine get() {
+            return new PhoneticEngine(this);
+        }
+
+        /**
+         * Sets all the properties of this builder to match those of the given engine.
+         *
+         * @param engine The engine to copy properties from.
+         * @return This builder.
+         */
+        public Builder setAll(final PhoneticEngine engine) {
+            this.nameType = engine.getNameType();
+            this.ruleType = engine.getRuleType();
+            this.concat = engine.isConcat();
+            this.maxPhonemes = engine.getMaxPhonemes();
+            return this;
+        }
+
+        /**
+         * Sets whether the engine will concatenate multiple encodings.
+         *
+         * @param concat Whether the engine will concatenate multiple encodings.
+         * @return This builder.
+         */
+        public Builder setConcat(final boolean concat) {
+            this.concat = concat;
+            return this;
+        }
+
+        /**
+         * Sets maximum number of phonemes the engine will handle.
+         *
+         * @param maxPhonemes The maximum number of phonemes the engine will handle.
+         * @return This builder.
+         */
+        public Builder setMaxPhonemes(final int maxPhonemes) {
+            this.maxPhonemes = maxPhonemes;
+            return this;
+        }
+
+        /**
+         * Sets the name type for the engine to be built.
+         *
+         * @param nameType The type of names the engine will use.
+         * @return This builder.
+         */
+        public Builder setNameType(final NameType nameType) {
+            this.nameType = nameType;
+            return this;
+        }
+
+        /**
+         * Sets the rule type for the engine to be built.
+         *
+         * @param ruleType The type of rules the engine will use.
+         * @return This builder.
+         */
+        public Builder setRuleType(final RuleType ruleType) {
+            this.ruleType = ruleType;
+            return this;
+        }
+    }
+
+    /**
+     * Manipulates a set of phonemes as they are being built up. Not intended for use outside this package, and probably not outside the {@link PhoneticEngine}
+     * class.
      *
      * @since 1.6
      */
@@ -234,6 +318,16 @@ public class PhoneticEngine {
     }
 
     /**
+     * Creates a new builder for a PhoneticEngine.
+     *
+     * @return a new builder for a PhoneticEngine.
+     * @since 1.23.0
+     */
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    /**
      * Joins some strings with an internal separator.
      *
      * @param strings Strings to join.
@@ -254,13 +348,19 @@ public class PhoneticEngine {
 
     private final int maxPhonemes;
 
+    private PhoneticEngine(final Builder builder) {
+        this(builder.nameType, builder.ruleType, builder.concat, builder.maxPhonemes);
+    }
+
     /**
      * Generates a new, fully-configured phonetic engine.
      *
      * @param nameType    the type of names it will use.
      * @param ruleType    the type of rules it will apply.
      * @param concatenate if it will concatenate multiple encodings.
+     * @deprecated Use {@link #builder()} instead.
      */
+    @Deprecated
     public PhoneticEngine(final NameType nameType, final RuleType ruleType, final boolean concatenate) {
         this(nameType, ruleType, concatenate, DEFAULT_MAX_PHONEMES);
     }
@@ -273,7 +373,9 @@ public class PhoneticEngine {
      * @param concatenate if it will concatenate multiple encodings.
      * @param maxPhonemes the maximum number of phonemes that will be handled.
      * @since 1.7
+     * @deprecated Use {@link #builder()} instead.
      */
+    @Deprecated
     public PhoneticEngine(final NameType nameType, final RuleType ruleType, final boolean concatenate, final int maxPhonemes) {
         if (ruleType == RuleType.RULES) {
             throw new IllegalArgumentException("ruleType must not be " + RuleType.RULES);
