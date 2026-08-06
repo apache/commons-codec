@@ -69,7 +69,7 @@ public class Sha2Crypt {
 
     /** The pattern to match valid salt values. */
     private static final Pattern SALT_PATTERN = Pattern
-            .compile("^\\$([56])\\$(rounds=(\\d+)\\$)?([\\.\\/a-zA-Z0-9]{1,16}).*");
+            .compile("^\\$([56])\\$(rounds=(\\d+)\\$)?([\\.\\/a-zA-Z0-9]{1,16})$");
 
     /**
      * Generates a libc crypt() compatible "$5$" hash value with random salt.
