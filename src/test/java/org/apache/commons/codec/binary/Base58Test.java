@@ -119,6 +119,13 @@ public class Base58Test {
         assertThrows(IllegalArgumentException.class, () -> Base58.builder().setEncodeTable(Arrays.copyOf(newEncodeTable(), DEFAULT_ALPHABET.length() - 1)));
     }
 
+    @ParameterizedTest
+    @ValueSource(ints = { 20_000, 40_000, 80_000, 160_000, 320_000 })
+    void testDecodeLargeInput(final int n) {
+        // any valid non-'1' Base58 char
+        new Base58().decode(ArrayFill.fill(new byte[n], (byte) 'z'));
+    }
+
     @Test
     void testEmptyBase58() {
         byte[] empty = {};
