@@ -235,8 +235,6 @@ public class PhoneticEngine {
      * Although this class is not thread-safe (it has mutable unprotected fields), it is not shared between threads as it is constructed as needed by the
      * calling methods.
      * </p>
-     *
-     * @since 1.6
      */
     private static final class RulesApplication {
 
