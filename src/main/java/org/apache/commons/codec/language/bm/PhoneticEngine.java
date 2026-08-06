@@ -403,7 +403,8 @@ public class PhoneticEngine {
         phonemeBuilder.getPhonemes().forEach(phoneme -> {
             PhonemeBuilder subBuilder = PhonemeBuilder.empty(phoneme.getLanguages());
             final CharSequence phonemeText = phoneme.getPhonemeText();
-            for (int i = 0; i < phonemeText.length();) {
+            final int length = phonemeText.length();
+            for (int i = 0; i < length;) {
                 final RulesApplication rulesApplication = new RulesApplication(finalRules, phonemeText, subBuilder, i, maxPhonemes).invoke();
                 final boolean found = rulesApplication.isFound();
                 subBuilder = rulesApplication.getPhonemeBuilder();
