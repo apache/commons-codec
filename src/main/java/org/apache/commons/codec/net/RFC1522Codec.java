@@ -81,7 +81,7 @@ abstract class RFC1522Codec {
         final int terminator = text.length() - 2;
         int from = 2;
         int to = text.indexOf(SEP, from);
-        if (to == terminator) {
+        if (to < 0 || to == terminator) {
             throw new DecoderException("RFC 1522 violation: charset token not found");
         }
         final String charset = text.substring(from, to);

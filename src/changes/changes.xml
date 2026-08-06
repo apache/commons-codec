@@ -46,6 +46,7 @@ The <action> type attribute can be add,update,fix,remove.
     <release version="1.23.0" date="YYYY-MM-DD" description="This is a feature and maintenance release. Java 8 or later is required.">
       <!-- FIX -->
       <action type="fix" dev="ggregory" due-to="Yu Bao, Gary Gregory">Optimize PhoneticEngine.encode(String, LanguageSet) for speed.</action>
+      <action type="fix" dev="ggregory" due-to="Yu Bao, Gary Gregory">RFC1522Codec.decodeText(String) now throws a DecoderException instead of a StringIndexOutOfBoundsException when a separator is missing.</action>
       <!-- ADD -->
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add and use PhoneticEngine.Builder and deprecate old constructors.</action>
       <!-- UPDATE -->

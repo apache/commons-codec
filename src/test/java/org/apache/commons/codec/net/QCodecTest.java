@@ -71,6 +71,12 @@ class QCodecTest {
     }
 
     @Test
+    void testDecodeSeparatorNotFoundThrowsDecoderException() {
+        // QCodec
+        assertThrows(DecoderException.class, () -> new QCodec().decode("=?="));
+    }
+
+    @Test
     void testDecodeStringWithNull() throws Exception {
         final QCodec qcodec = new QCodec();
         final String test = null;

@@ -112,6 +112,11 @@ class BCodecTest {
     }
 
     @Test
+    void testDecodeSeparatorNotFoundThrowsDecoderException() {
+        assertThrows(DecoderException.class, () -> new BCodec().decode("=?="));
+    }
+
+    @Test
     void testDecodeStringWithNull() throws Exception {
         final BCodec bcodec = new BCodec();
         final String test = null;
