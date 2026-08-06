@@ -19,7 +19,11 @@ package org.apache.commons.codec.digest;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.nio.charset.StandardCharsets;
+
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class Sha2CryptTest {
 
@@ -28,4 +32,14 @@ class Sha2CryptTest {
         assertNotNull(new Sha2Crypt());
     }
 
+    @ParameterizedTest
+    @ValueSource(ints = { 100_000, 1_000_000, 5_000_000 /*, 50_000_000*/ })
+    void testLargeRounds(final int rounds) {
+        final String salt = "$6$rounds=" + rounds + "$abcdefghijklmnop";
+        final long t = System.nanoTime();
+        Crypt.crypt("anything".getBytes(StandardCharsets.UTF_8), salt);
+        Crypt.crypt("anything".getBytes(StandardCharsets.UTF_8), "$6$rounds=5000000$abcdefghijklmnop");
+        // Full effect (WARNING: ~2 min):
+        // Crypt.crypt("anything".getBytes(), "$6$rounds=999999999$abcdefghijklmnop");
+    }
 }

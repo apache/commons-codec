@@ -177,7 +177,7 @@ public class Sha2Crypt {
 
         // 1. start digest A
         // Prepare for the real work.
-        MessageDigest messageDigest = DigestUtils.getDigest(algorithm);
+        final MessageDigest messageDigest = DigestUtils.getDigest(algorithm);
 
         // 2. the password string is added to digest A
         /*
@@ -202,34 +202,34 @@ public class Sha2Crypt {
 
         // 4. start digest B
         /*
-         * Compute alternate sha512 sum with input KEY, SALT, and KEY. The final result will be added to the first
+         * Compute alternate SHA sum with input KEY, SALT, and KEY. The final result will be added to the first
          * context.
          */
-        MessageDigest altMessageDigestMd5 = DigestUtils.getDigest(algorithm);
+        final MessageDigest altDigest = DigestUtils.getDigest(algorithm);
 
         // 5. add the password to digest B
         /*
          * Add key.
          */
-        altMessageDigestMd5.update(keyBytes);
+        altDigest.update(keyBytes);
 
         // 6. add the salt string to digest B
         /*
          * Add salt.
          */
-        altMessageDigestMd5.update(saltBytes);
+        altDigest.update(saltBytes);
 
         // 7. add the password again to digest B
         /*
          * Add key again.
          */
-        altMessageDigestMd5.update(keyBytes);
+        altDigest.update(keyBytes);
 
         // 8. finish digest B
         /*
          * Now get result of this (32 bytes) and add it to the other context.
          */
-        byte[] altResult = altMessageDigestMd5.digest();
+        byte[] altResult = altDigest.digest();
 
         // 9. For each block of 32 or 64 bytes in the password string (excluding
         // the terminating NUL in the C representation), add digest B to digest A
@@ -239,7 +239,7 @@ public class Sha2Crypt {
         /*
          * (Remark: the C code comment seems wrong for key length > 32!)
          */
-        int cnt = keyBytes.length;
+        int cnt = keyLen;
         while (cnt > blocksize) {
             messageDigest.update(altResult, 0, blocksize);
             cnt -= blocksize;
@@ -263,7 +263,7 @@ public class Sha2Crypt {
          * Take the binary representation of the length of the key and for every 1 add the alternate sum, for every 0
          * the key.
          */
-        cnt = keyBytes.length;
+        cnt = keyLen;
         while (cnt > 0) {
             if ((cnt & 1) != 0) {
                 messageDigest.update(altResult, 0, blocksize);
@@ -283,7 +283,7 @@ public class Sha2Crypt {
         /*
          * Start computation of P byte sequence.
          */
-        altMessageDigestMd5 = DigestUtils.getDigest(algorithm);
+        altDigest.reset();
 
         // 14. for every byte in the password (excluding the terminating NUL byte
         // in the C representation of the string)
@@ -293,14 +293,14 @@ public class Sha2Crypt {
          * For every character in the password add the entire password.
          */
         for (int i = 1; i <= keyLen; i++) {
-            altMessageDigestMd5.update(keyBytes);
+            altDigest.update(keyBytes);
         }
 
         // 15. finish digest DP
         /*
          * Finish the digest.
          */
-        byte[] tempResult = altMessageDigestMd5.digest();
+        byte[] tempResult = altDigest.digest();
 
         // 16. produce byte sequence P of the same length as the password where
         //
@@ -324,7 +324,7 @@ public class Sha2Crypt {
         /*
          * Start computation of S byte sequence.
          */
-        altMessageDigestMd5 = DigestUtils.getDigest(algorithm);
+        altDigest.reset();
 
         // 18. repeat the following 16+A[0] times, where A[0] represents the first
         // byte in digest A interpreted as an 8-bit unsigned value
@@ -334,14 +334,14 @@ public class Sha2Crypt {
          * For every character in the password add the entire password.
          */
         for (int i = 1; i <= 16 + (altResult[0] & 0xff); i++) {
-            altMessageDigestMd5.update(saltBytes);
+            altDigest.update(saltBytes);
         }
 
         // 19. finish digest DS
         /*
          * Finish the digest.
          */
-        tempResult = altMessageDigestMd5.digest();
+        tempResult = altDigest.digest();
 
         // 20. produce byte sequence S of the same length as the salt string where
         //
@@ -370,15 +370,14 @@ public class Sha2Crypt {
         // digest produced in step 12. In the latter steps it is the digest
         // produced in step 21.h. The following text uses the notation
         // "digest A/C" to describe this behavior.
-        /*
-         * Repeatedly run the collected hash value through sha512 to burn CPU cycles.
-         */
-        for (int i = 0; i <= rounds - 1; i++) {
+        //
+        // Repeatedly run the collected hash value through SHA to burn CPU cycles.
+        for (int i = 0; i < rounds; i++) {
             // a) start digest C
             /*
-             * New context.
+             * Reset and reuse the existing digest context.
              */
-            messageDigest = DigestUtils.getDigest(algorithm);
+            messageDigest.reset();
 
             // b) for odd round numbers add the byte sequence P to digest C
             // c) for even round numbers add digest A/C
@@ -515,11 +514,12 @@ public class Sha2Crypt {
          * cannot get any information.
          */
         // Is there a better way to do this with the JVM?
+        Arrays.fill(altResult, (byte) 0);
         Arrays.fill(tempResult, (byte) 0);
         Arrays.fill(bytes, (byte) 0);
         Arrays.fill(sBytes, (byte) 0);
         messageDigest.reset();
-        altMessageDigestMd5.reset();
+        altDigest.reset();
         Arrays.fill(keyBytes, (byte) 0);
         Arrays.fill(saltBytes, (byte) 0);
 
