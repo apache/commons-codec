@@ -252,8 +252,7 @@ public class PhoneticEngine {
 
         RulesApplication(final Map<String, List<Rule>> finalRules, final CharSequence input, final PhonemeBuilder phonemeBuilder, final int i,
                 final int maxPhonemes) {
-            Objects.requireNonNull(finalRules, "finalRules");
-            this.finalRules = finalRules;
+            this.finalRules = Objects.requireNonNull(finalRules, "finalRules");
             this.phonemeBuilder = phonemeBuilder;
             this.input = input;
             this.i = i;
