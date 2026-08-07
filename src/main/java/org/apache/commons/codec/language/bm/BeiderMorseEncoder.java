@@ -71,17 +71,65 @@ import org.apache.commons.codec.StringEncoder;
  * @since 1.6
  */
 public class BeiderMorseEncoder implements StringEncoder {
-    // Implementation note: This class is a spring-friendly facade to PhoneticEngine. It allows read/write configuration
-    // of an immutable PhoneticEngine instance that will be delegated to for the actual encoding.
 
-    // a cached object
+    /**
+     * Creates a new builder for a Beider-Morse encoder.
+     *
+     * @since 1.23.0
+     */
+    public static final class Builder {
+
+        private PhoneticEngine engine = PhoneticEngine.builder().get();
+
+        private Builder() {
+            // empty.
+        }
+
+        /**
+         * Gets a new Beider-Morse encoder with the current configuration.
+         *
+         * @return a new Beider-Morse encoder with the current configuration.
+         */
+        public BeiderMorseEncoder get() {
+            return new BeiderMorseEncoder(this);
+        }
+
+        /**
+         * Sets the phonetic engine to use.
+         *
+         * @param engine the phonetic engine to use.
+         * @return this builder, for chaining.
+         */
+        public Builder setPhoneticEngine(final PhoneticEngine engine) {
+            this.engine = engine != null ? engine : PhoneticEngine.builder().get();
+            return this;
+        }
+    }
+
+    /**
+     * Creates a new builder for a BeiderMorseEncoder.
+     *
+     * @return a new builder for a BeiderMorseEncoder.
+     * @since 1.23.0
+     */
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    /** A cached object. */
     private PhoneticEngine engine = PhoneticEngine.builder().get();
 
     /**
      * Constructs a new instance.
+     *
+     * @deprecated Use {@link #builder()} to create a new instance.
      */
     public BeiderMorseEncoder() {
         // empty
+    }
+
+    private BeiderMorseEncoder(final Builder builder) {
+        engine = builder.engine;
     }
 
     @Override
