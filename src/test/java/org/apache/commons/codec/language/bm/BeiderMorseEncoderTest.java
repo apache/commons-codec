@@ -98,9 +98,12 @@ class BeiderMorseEncoderTest extends AbstractStringEncoderTest<StringEncoder> {
         }
     }
 
-    @Test
-    void testDQuoteRepeat() throws Exception {
-        assertEquals("(D|a|i|o)-(dD|da|di|do)", new BeiderMorseEncoder().encode(StringUtils.repeat("d'", 20000) + "aaa"));
+    @ParameterizedTest
+    @ValueSource(ints = { 20_000, 100_000, 200_000, 400_000 })
+    void testDQuoteRepeatLarge(final int repeat) throws Exception {
+        final String source = StringUtils.repeat("d'", repeat) + "aaa";
+        assertEquals("(D|a|i|o)-(dD|da|di|do)",
+                BeiderMorseEncoder.builder().setPhoneticEngine(PhoneticEngine.builder().setMaxInputLength(source.length()).get()).get().encode(source));
     }
 
     @Test
@@ -127,11 +130,12 @@ class BeiderMorseEncoderTest extends AbstractStringEncoderTest<StringEncoder> {
 
     @Disabled("For performance testing.")
     @ParameterizedTest
-    @ValueSource(ints = { 2000, 8000, 16000, 32000 })
-    void testEncodeLarge(final int target) throws EncoderException {
+    @ValueSource(ints = { 2_000, 8_000, 16_000, 32_000 })
+    void testEncodeLargePerf(final int target) throws EncoderException {
         final String[] units = { "a", "e", "i", "o", "u", "ai", "ei", "ou", "au", "ie", "tsch", "sch", "zh", "kh", "ye", "yo" };
         final Random r = new Random(1);
-        final BeiderMorseEncoder enc = new BeiderMorseEncoder(); // default GENERIC/APPROX, maxPhonemes=20
+        // default GENERIC/APPROX, maxPhonemes=20
+        final BeiderMorseEncoder enc = new BeiderMorseEncoder();
         final StringBuilder sb = new StringBuilder();
         while (sb.length() < target) {
             sb.append(units[r.nextInt(units.length)]); // one long token, no spaces

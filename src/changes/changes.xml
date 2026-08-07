@@ -48,10 +48,11 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="fix" dev="ggregory" due-to="Yu Bao, Gary Gregory">Optimize PhoneticEngine.encode(String, LanguageSet) for speed.</action>
       <action type="fix" dev="ggregory" due-to="Yu Bao, Gary Gregory">RFC1522Codec.decodeText(String) now throws a DecoderException instead of a StringIndexOutOfBoundsException when a separator is missing.</action>
       <action type="fix" dev="ggregory" due-to="Yu Bao, Gary Gregory">Optimize Base58.convertFromBase58(byte[], Context) for speed and temp object allocation.</action>
-      <action type="fix" dev="ggregory" due-to="Yu Bao, Gary Gregory">Allocate a single MessageDigest and use it in Sha2Crypt.sha2Crypt(byte[], String, String, int, String)..</action>
+      <action type="fix" dev="ggregory" due-to="Yu Bao, Gary Gregory">Allocate a single MessageDigest and use it in Sha2Crypt.sha2Crypt(byte[], String, String, int, String).</action>
       <!-- ADD -->
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add and use PhoneticEngine.Builder and deprecate old constructors.</action>
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add BeiderMorseEncoder.Builder and deprecate old constructor.</action>
+      <action type="fix" dev="ggregory" due-to="Yu Bao, Gary Gregory">Add PhoneticEngine.Builder.setMaxInputLength(int).</action>
       <!-- UPDATE -->
     </release>
     <release version="1.22.1" date="2026-07-27" description="This is a feature and maintenance release. Java 8 or later is required.">

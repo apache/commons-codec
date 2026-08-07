@@ -17,11 +17,13 @@
 
 package org.apache.commons.codec.language.bm;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import org.junit.jupiter.api.Test;
 
@@ -247,5 +249,126 @@ class PhoneticEngineBuilderTest {
     void testSetRuleTypeExact() {
         final PhoneticEngine engine = PhoneticEngine.builder().setRuleType(RuleType.EXACT).get();
         assertEquals(RuleType.EXACT, engine.getRuleType());
+    }
+
+    /**
+     * Returns a string of {@code 'a'} characters with the given length, compatible with Java 8.
+     *
+     * @param length the desired length.
+     * @return a string of the specified length filled with {@code 'a'}.
+     */
+    private static String repeat(final int length) {
+        final char[] chars = new char[length];
+        java.util.Arrays.fill(chars, 'a');
+        return new String(chars);
+    }
+
+    /**
+     * Tests that the default maximum input length (666) allows input of exactly that length to be encoded without throwing.
+     */
+    @Test
+    void testDefaultMaxInputLengthAllowsInputAtLimit() {
+        // Default max input length is 666 (Hubert Blaine Wolfeschlegelsteinhausenbergerdorff Sr.)
+        final PhoneticEngine engine = PhoneticEngine.builder().get();
+        final String input = repeat(666);
+        assertDoesNotThrow(() -> engine.encode(input));
+    }
+
+    /**
+     * Tests that the default maximum input length (666) causes an {@link IllegalArgumentException}
+     * when input exceeds that limit.
+     */
+    @Test
+    void testDefaultMaxInputLengthRejectsInputBeyondLimit() {
+        final PhoneticEngine engine = PhoneticEngine.builder().get();
+        final String input = repeat(667);
+        assertThrows(IllegalArgumentException.class, () -> engine.encode(input));
+    }
+
+    /**
+     * Tests {@link PhoneticEngine.Builder#setMaxInputLength(int)} with a custom value:
+     * input exactly at the limit is accepted.
+     */
+    @Test
+    void testSetMaxInputLengthAllowsInputAtCustomLimit() {
+        final int customLimit = 10;
+        final PhoneticEngine engine = PhoneticEngine.builder().setMaxInputLength(customLimit).get();
+        final String input = repeat(customLimit);
+        assertDoesNotThrow(() -> engine.encode(input));
+    }
+
+    /**
+     * Tests {@link PhoneticEngine.Builder#setMaxInputLength(int)} with a custom value:
+     * input one character beyond the limit is rejected with {@link IllegalArgumentException}.
+     */
+    @Test
+    void testSetMaxInputLengthRejectsInputBeyondCustomLimit() {
+        final int customLimit = 10;
+        final PhoneticEngine engine = PhoneticEngine.builder().setMaxInputLength(customLimit).get();
+        final String input = repeat(customLimit + 1);
+        assertThrows(IllegalArgumentException.class, () -> engine.encode(input));
+    }
+
+    /**
+     * Tests {@link PhoneticEngine.Builder#setMaxInputLength(int)} with a limit of 0:
+     * any non-empty input is rejected.
+     */
+    @Test
+    void testSetMaxInputLengthZeroRejectsAnyInput() {
+        final PhoneticEngine engine = PhoneticEngine.builder().setMaxInputLength(0).get();
+        assertThrows(IllegalArgumentException.class, () -> engine.encode("a"));
+    }
+
+    /**
+     * Tests {@link PhoneticEngine.Builder#setMaxInputLength(int)} with a limit of 0:
+     * null input bypasses the length check but causes a {@link NullPointerException} downstream.
+     */
+    @Test
+    void testSetMaxInputLengthZeroNullInputThrowsNpe() {
+        final PhoneticEngine engine = PhoneticEngine.builder().setMaxInputLength(0).get();
+        // null is not blocked by the length check, but encoding null causes NPE
+        assertThrows(NullPointerException.class, () -> engine.encode(null));
+    }
+
+    /**
+     * Tests {@link PhoneticEngine.Builder#setMaxInputLength(int)} that the setter returns
+     * the same builder instance to enable method chaining.
+     */
+    @Test
+    void testSetMaxInputLengthReturnsBuilder() {
+        final PhoneticEngine.Builder builder = PhoneticEngine.builder();
+        assertNotNull(builder.setMaxInputLength(100));
+    }
+
+    /**
+     * Tests that {@link PhoneticEngine.Builder#setMaxInputLength(int)} can be combined
+     * with other builder settings and still produces a valid engine.
+     */
+    @Test
+    void testSetMaxInputLengthWithOtherSettings() {
+        // @formatter:off
+        final PhoneticEngine engine = PhoneticEngine.builder()
+                .setNameType(NameType.ASHKENAZI)
+                .setRuleType(RuleType.APPROX)
+                .setConcat(true)
+                .setMaxPhonemes(10)
+                .setMaxInputLength(5)
+                .get();
+        // @formatter:on
+        assertNotNull(engine);
+        assertDoesNotThrow(() -> engine.encode("abcde"));
+        assertThrows(IllegalArgumentException.class, () -> engine.encode("abcdef"));
+    }
+
+    /**
+     * Tests that {@link PhoneticEngine.Builder#setMaxInputLength(int)} with {@link Integer#MAX_VALUE}
+     * allows very long input.
+     */
+    @Test
+    void testSetMaxInputLengthMaxValue() {
+        final PhoneticEngine engine = PhoneticEngine.builder().setMaxInputLength(Integer.MAX_VALUE).get();
+        // A very long string should not trigger the length check
+        final String input = repeat(10_000);
+        assertDoesNotThrow(() -> engine.encode(input));
     }
 }

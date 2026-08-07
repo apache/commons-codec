@@ -183,6 +183,9 @@ public class BeiderMorseEncoder implements StringEncoder {
 
     /**
      * Sets the number of maximum of phonemes that shall be considered by the engine.
+     * <p>
+     * A value less than 0 will reset the maximum number of phonemes to the default {@value PhoneticEngine.Builder#MAX_PHONEMES}.
+     * </p>
      *
      * @param maxPhonemes the maximum number of phonemes returned by the engine.
      * @since 1.7
@@ -194,6 +197,9 @@ public class BeiderMorseEncoder implements StringEncoder {
     /**
      * Sets the type of name. Use {@link NameType#GENERIC} unless you specifically want phonetic encodings optimized for Ashkenazi or Sephardic Jewish family
      * names.
+     * <p>
+     * A null value will reset the name type to the default of {@link NameType#GENERIC}.
+     * </p>
      *
      * @param nameType the NameType in use.
      */
@@ -203,6 +209,9 @@ public class BeiderMorseEncoder implements StringEncoder {
 
     /**
      * Sets the rule type to apply. This will widen or narrow the range of phonetic encodings considered.
+     * <p>
+     * A null value will reset the rule type to the default of {@link RuleType#APPROX}.
+     * </p>
      *
      * @param ruleType {@link RuleType#APPROX} or {@link RuleType#EXACT} for approximate or exact phonetic matches.
      */

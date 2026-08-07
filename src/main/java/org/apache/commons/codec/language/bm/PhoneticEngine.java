@@ -62,13 +62,20 @@ public class PhoneticEngine {
      */
     public static class Builder implements Supplier<PhoneticEngine> {
 
-        private NameType nameType = NameType.GENERIC;
+        /** See https://en.wikipedia.org/wiki/Hubert_Blaine_Wolfeschlegelsteinhausenbergerdorff_Sr. */
+        private static final int MAX_INPUT_LENGTH = 666;
 
-        private RuleType ruleType = RuleType.APPROX;
+        private static final int MAX_PHONEMES = 20;
 
         private boolean concat = true;
 
-        private int maxPhonemes = DEFAULT_MAX_PHONEMES;
+        private int maxInputLength = MAX_INPUT_LENGTH;
+
+        private int maxPhonemes = MAX_PHONEMES;
+
+        private NameType nameType = NameType.GENERIC;
+
+        private RuleType ruleType = RuleType.APPROX;
 
         private Builder() {
             // empty
@@ -105,35 +112,60 @@ public class PhoneticEngine {
         }
 
         /**
+         * Sets the maximum input length allowed.
+         * <p>
+         * A value less than 0 will reset the maximum input length to the default value of {@value #MAX_INPUT_LENGTH}, see
+         * <a href="https://en.wikipedia.org/wiki/Hubert_Blaine_Wolfeschlegelsteinhausenbergerdorff_Sr.">Hubert Blaine Wolfeschlegelsteinhausenbergerdorff
+         * Sr.</a>.
+         * </p>
+         *
+         * @param maxInputLength the maximum input length allowed.
+         * @return This builder.
+         */
+        public Builder setMaxInputLength(final int maxInputLength) {
+            this.maxInputLength = maxInputLength < 0 ? MAX_INPUT_LENGTH : maxInputLength;
+            return this;
+        }
+
+        /**
          * Sets maximum number of phonemes the engine will handle.
+         * <p>
+         * A value less than 0 will reset the maximum number of phonemes to the default {@value #MAX_PHONEMES}.
+         * </p>
          *
          * @param maxPhonemes The maximum number of phonemes the engine will handle.
          * @return This builder.
          */
         public Builder setMaxPhonemes(final int maxPhonemes) {
-            this.maxPhonemes = maxPhonemes;
+            this.maxPhonemes = maxPhonemes < 0 ? MAX_PHONEMES : maxPhonemes;
             return this;
         }
 
         /**
          * Sets the name type for the engine to be built.
+         * <p>
+         * A null value will reset the name type to the default of {@link NameType#GENERIC}.
+         * </p>
          *
          * @param nameType The type of names the engine will use.
          * @return This builder.
          */
         public Builder setNameType(final NameType nameType) {
-            this.nameType = nameType;
+            this.nameType = nameType != null ? nameType : NameType.GENERIC;
             return this;
         }
 
         /**
          * Sets the rule type for the engine to be built.
+         * <p>
+         * A null value will reset the rule type to the default of {@link RuleType#APPROX}.
+         * </p>
          *
          * @param ruleType The type of rules the engine will use.
          * @return This builder.
          */
         public Builder setRuleType(final RuleType ruleType) {
-            this.ruleType = ruleType;
+            this.ruleType = ruleType != null ? ruleType : RuleType.APPROX;
             return this;
         }
     }
@@ -240,15 +272,15 @@ public class PhoneticEngine {
 
         private final Map<String, List<Rule>> finalRules;
 
-        private final CharSequence input;
-
-        private final PhonemeBuilder phonemeBuilder;
+        private boolean found;
 
         private int i;
 
+        private final CharSequence input;
+
         private final int maxPhonemes;
 
-        private boolean found;
+        private final PhonemeBuilder phonemeBuilder;
 
         RulesApplication(final Map<String, List<Rule>> finalRules, final CharSequence input, final PhonemeBuilder phonemeBuilder, final int i,
                 final int maxPhonemes) {
@@ -301,8 +333,6 @@ public class PhoneticEngine {
         }
     }
 
-    private static final int DEFAULT_MAX_PHONEMES = 20;
-
     private static final Map<NameType, Set<String>> NAME_PREFIXES = new EnumMap<>(NameType.class);
 
     private static final Pattern QUOTE = Pattern.compile("'");
@@ -335,53 +365,64 @@ public class PhoneticEngine {
         return strings.stream().collect(Collectors.joining(sep));
     }
 
+    private final boolean concat;
+
     private final Lang lang;
+
+    private final int maxInputLength;
+
+    private final int maxPhonemes;
 
     private final NameType nameType;
 
     private final RuleType ruleType;
 
-    private final boolean concat;
-
-    private final int maxPhonemes;
-
+    /**
+     * Creates a new, fully-configured phonetic engine.
+     *
+     * @param builder The builder to use for configuration.
+     * @throws IllegalArgumentException if ruleType is RULES.
+     */
     private PhoneticEngine(final Builder builder) {
-        this(builder.nameType, builder.ruleType, builder.concat, builder.maxPhonemes);
+        if (builder.ruleType == RuleType.RULES) {
+            throw new IllegalArgumentException("ruleType must not be " + RuleType.RULES);
+        }
+        this.nameType = builder.nameType;
+        this.ruleType = builder.ruleType;
+        this.concat = builder.concat;
+        this.lang = Lang.instance(builder.nameType);
+        this.maxPhonemes = builder.maxPhonemes;
+        this.maxInputLength = builder.maxInputLength;
     }
 
     /**
      * Generates a new, fully-configured phonetic engine.
      *
-     * @param nameType    the type of names it will use.
-     * @param ruleType    the type of rules it will apply.
+     * @param nameType    the type of names it will use, null is treated as {@link NameType#GENERIC}.
+     * @param ruleType    the type of rules it will apply, null is treated as {@link RuleType#APPROX}.
      * @param concatenate if it will concatenate multiple encodings.
      * @deprecated Use {@link #builder()} instead.
      */
     @Deprecated
     public PhoneticEngine(final NameType nameType, final RuleType ruleType, final boolean concatenate) {
-        this(nameType, ruleType, concatenate, DEFAULT_MAX_PHONEMES);
+        this(nameType, ruleType, concatenate, Builder.MAX_PHONEMES);
     }
 
     /**
      * Generates a new, fully-configured phonetic engine.
      *
-     * @param nameType    the type of names it will use.
-     * @param ruleType    the type of rules it will apply.
+     * @param nameType    the type of names it will use, null is treated as {@link NameType#GENERIC}.
+     * @param ruleType    the type of rules it will apply, null is treated as {@link RuleType#APPROX}.
      * @param concatenate if it will concatenate multiple encodings.
-     * @param maxPhonemes the maximum number of phonemes that will be handled.
+     * @param maxPhonemes the maximum number of phonemes that will be handled, less than 0 will reset to the default of {@value Builder#MAX_PHONEMES}.
+     * @throws IllegalArgumentException if ruleType is RULES.
      * @since 1.7
      * @deprecated Use {@link #builder()} instead.
      */
     @Deprecated
     public PhoneticEngine(final NameType nameType, final RuleType ruleType, final boolean concatenate, final int maxPhonemes) {
-        if (ruleType == RuleType.RULES) {
-            throw new IllegalArgumentException("ruleType must not be " + RuleType.RULES);
-        }
-        this.nameType = nameType;
-        this.ruleType = ruleType;
-        this.concat = concatenate;
-        this.lang = Lang.instance(nameType);
-        this.maxPhonemes = maxPhonemes;
+        this(builder().setNameType(nameType).setRuleType(ruleType).setConcat(concatenate).setMaxPhonemes(maxPhonemes)
+                .setMaxInputLength(Builder.MAX_INPUT_LENGTH));
     }
 
     /**
@@ -430,8 +471,9 @@ public class PhoneticEngine {
     /**
      * Encodes a string to its phonetic representation.
      *
-     * @param input the String to encode.
+     * @param input the String to encode, not null.
      * @return The encoding of the input.
+     * @throws IllegalArgumentException if the input is longer than the maximum allowed length.
      */
     public String encode(final String input) {
         return encode(input, lang.guessLanguages(input));
@@ -440,11 +482,15 @@ public class PhoneticEngine {
     /**
      * Encodes an input string into an output phonetic representation, given a set of possible origin languages.
      *
-     * @param input       String to phoneticise; a String with dashes or spaces separating each word.
+     * @param input       String to phoneticise; a String with dashes or spaces separating each word, not null.
      * @param languageSet set of possible origin languages.
      * @return A phonetic representation of the input; a String containing '-'-separated phonetic representations of the input.
+     * @throws IllegalArgumentException if the input is longer than the maximum allowed length.
      */
     public String encode(String input, final Languages.LanguageSet languageSet) {
+        if (input.length() > maxInputLength) {
+            throw new IllegalArgumentException("Input is greater than maxInputLength (" + maxInputLength + ").");
+        }
         final Map<String, List<Rule>> rules = Rule.getInstanceMap(this.nameType, RuleType.RULES, languageSet);
         // rules common across many (all) languages
         final Map<String, List<Rule>> finalRules1 = Rule.getInstanceMap(this.nameType, this.ruleType, "common");
