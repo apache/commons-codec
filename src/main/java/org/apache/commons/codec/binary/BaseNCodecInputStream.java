@@ -131,6 +131,7 @@ public class BaseNCodecInputStream<C extends BaseNCodec, T extends BaseNCodecInp
      * {@inheritDoc}
      *
      * @return {@code 0} if the {@link InputStream} has reached {@code EOF}, {@code 1} otherwise.
+     * @throws IOException if an I/O error occurs.
      * @since 1.7
      */
     @Override
@@ -269,6 +270,7 @@ public class BaseNCodecInputStream<C extends BaseNCodec, T extends BaseNCodecInp
      * {@inheritDoc}
      *
      * @throws IllegalArgumentException if the provided skip length is negative.
+     * @throws IOException if an I/O error occurs.
      * @since 1.7
      */
     @Override
