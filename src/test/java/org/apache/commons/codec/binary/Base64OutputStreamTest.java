@@ -26,6 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -348,20 +349,23 @@ class Base64OutputStreamTest extends AbstractBaseNOutputStreamTest {
             try (Base64OutputStream out = new Base64OutputStream(bout, false, 0, null, CodecPolicy.STRICT)) {
                 // May throw on write or on close depending on the position of the
                 // impossible last character in the output block size
-                assertThrows(IllegalArgumentException.class, () -> {
+                final IOException ioe = assertThrows(IOException.class, () -> {
                     out.write(impossibleEncoded);
                     out.close();
                 });
+                assertTrue(ioe.getCause() instanceof IllegalArgumentException);
+
             }
             try (Base64OutputStream out = Base64OutputStream.builder()
                     .setOutputStream(bout).setEncode(false)
                     .setBaseNCodec(Base64.builder().setLineLength(0).setLineSeparator(null).setDecodingPolicy(CodecPolicy.STRICT).get())
                     .get()) {
                 assertTrue(out.isStrictDecoding());
-                assertThrows(IllegalArgumentException.class, () -> {
+                final IOException ioe = assertThrows(IOException.class, () -> {
                     out.write(impossibleEncoded);
                     out.close();
                 });
+                assertTrue(ioe.getCause() instanceof IllegalArgumentException);
             }
             try (Base64OutputStream out = Base64OutputStream.builder()
                     .setOutputStream(bout).setEncode(false)
@@ -369,10 +373,11 @@ class Base64OutputStreamTest extends AbstractBaseNOutputStreamTest {
                     .get()) {
                 // May throw on write or on close depending on the position of the
                 // impossible last character in the output block size
-                assertThrows(IllegalArgumentException.class, () -> {
+                final IOException ioe = assertThrows(IOException.class, () -> {
                     out.write(impossibleEncoded);
                     out.close();
                 });
+                assertTrue(ioe.getCause() instanceof IllegalArgumentException);
             }
         }
     }

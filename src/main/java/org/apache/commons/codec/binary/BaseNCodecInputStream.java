@@ -35,6 +35,7 @@ import org.apache.commons.codec.binary.BaseNCodec.Context;
  * @param <B> A subclass.
  * @see Base16InputStream
  * @see Base32InputStream
+ * @see Base58InputStream
  * @see Base64InputStream
  * @since 1.5
  */
@@ -235,12 +236,7 @@ public class BaseNCodecInputStream<C extends BaseNCodec, T extends BaseNCodecInp
             if (!baseNCodec.hasData(context)) {
                 // Obtain more data.
                 // buf is reused across calls to read to avoid repeated allocations
-                final int c = in.read(buf);
-                if (doEncode) {
-                    baseNCodec.encode(buf, 0, c, context);
-                } else {
-                    baseNCodec.decode(buf, 0, c, context);
-                }
+                BaseNCodec.code(doEncode, baseNCodec, buf, 0, in.read(buf), context);
             }
             final int read = baseNCodec.readResults(array, offset + readLen, len - readLen, context);
             if (read < 0) {

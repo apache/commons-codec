@@ -138,17 +138,13 @@ public class BaseNCodecOutputStream<C extends BaseNCodec, T extends BaseNCodecOu
     }
 
     /**
-     * Writes EOF.
+     * Notifies the decoder or encoder of EOF (-1).
      *
+     * @throws IOException Thrown when a problem is detected processing data.
      * @since 1.11
      */
-    public void eof() {
-        // Notify encoder of EOF (-1).
-        if (doEncode) {
-            baseNCodec.encode(singleByte, 0, EOF, context);
-        } else {
-            baseNCodec.decode(singleByte, 0, EOF, context);
-        }
+    public void eof() throws IOException {
+        BaseNCodec.code(doEncode, baseNCodec, singleByte, 0, EOF, context);
     }
 
     /**
@@ -213,11 +209,7 @@ public class BaseNCodecOutputStream<C extends BaseNCodec, T extends BaseNCodecOu
             throw new IndexOutOfBoundsException();
         }
         if (len > 0) {
-            if (doEncode) {
-                baseNCodec.encode(array, offset, len, context);
-            } else {
-                baseNCodec.decode(array, offset, len, context);
-            }
+            BaseNCodec.code(doEncode, baseNCodec, array, offset, len, context);
             flush(false);
         }
     }

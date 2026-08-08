@@ -17,6 +17,7 @@
 
 package org.apache.commons.codec.binary;
 
+import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -381,6 +382,19 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * The empty byte array.
      */
     static final byte[] EMPTY_BYTE_ARRAY = {};
+
+    static void code(final boolean doEncode, final BaseNCodec baseNCodec, final byte[] buf, final int offset, final int len, final Context context)
+            throws IOException {
+        try {
+            if (doEncode) {
+                baseNCodec.encode(buf, offset, len, context);
+            } else {
+                baseNCodec.decode(buf, offset, len, context);
+            }
+        } catch (final IllegalArgumentException e) {
+            throw new IOException(e.getMessage(), e);
+        }
+    }
 
     /**
      * Create a positive capacity at least as large the minimum required capacity. If the minimum capacity is negative then this throws an OutOfMemoryError as

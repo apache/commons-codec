@@ -587,7 +587,8 @@ class Base64InputStreamTest {
             // Strict decoding should throw
             final Base64InputStream in2 = new Base64InputStream(new ByteArrayInputStream(encoded), false, 0, null, CodecPolicy.STRICT);
             assertTrue(in2.isStrictDecoding());
-            assertThrows(IllegalArgumentException.class, () -> IOUtils.toByteArray(in2));
+            IOException ioe = assertThrows(IOException.class, () -> IOUtils.toByteArray(in2));
+            assertTrue(ioe.getCause() instanceof IllegalArgumentException);
             // Same with a builder
             try (Base64InputStream in3 = Base64InputStream.builder()
                     .setByteArray(encoded)
@@ -595,7 +596,8 @@ class Base64InputStreamTest {
                     .setBaseNCodec(Base64.builder().setLineLength(0).setLineSeparator(null).setDecodingPolicy(CodecPolicy.STRICT).get())
                     .get()) {
                 assertTrue(in3.isStrictDecoding());
-                assertThrows(IllegalArgumentException.class, () -> IOUtils.toByteArray(in3));
+                ioe = assertThrows(IOException.class, () -> IOUtils.toByteArray(in3));
+                assertTrue(ioe.getCause() instanceof IllegalArgumentException);
             }
         }
     }
