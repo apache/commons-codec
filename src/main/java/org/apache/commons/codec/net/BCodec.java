@@ -149,13 +149,29 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
         }
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws IllegalArgumentException Thrown when a problem is detected processing data.
+     */
     @Override
-    protected byte[] doDecoding(final byte[] bytes) {
+    protected byte[] doDecoding(final byte[] bytes) throws DecoderException {
         if (bytes == null) {
             return null;
         }
-        return Base64.builder().setLineLength(0).setLineSeparator(BaseNCodec.getChunkSeparator()).setUrlSafe(false).setDecodingPolicy(decodingPolicy).get()
-                .decode(bytes);
+        // @formatter:off
+        try {
+            return Base64.builder()
+                    .setLineLength(0)
+                    .setLineSeparator(BaseNCodec.getChunkSeparator())
+                    .setUrlSafe(false)
+                    .setDecodingPolicy(decodingPolicy)
+                    .get()
+                    .decode(bytes);
+        } catch (final IllegalArgumentException e) {
+            throw new DecoderException(e.getMessage(), e);
+        }
+        // @formatter:on
     }
 
     @Override
