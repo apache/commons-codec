@@ -229,6 +229,11 @@ public class Base16 extends BaseNCodec {
         super(builder);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws IllegalArgumentException Thrown when a problem is detected processing data.
+     */
     @Override
     void decode(final byte[] data, int offset, final int length, final Context context) {
         if (context.eof || length < 0) {

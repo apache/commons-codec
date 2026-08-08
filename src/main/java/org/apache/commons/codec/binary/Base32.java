@@ -562,14 +562,15 @@ public class Base32 extends BaseNCodec {
      * for other bytes, too. This method subscribes to the garbage-in, garbage-out philosophy: it will not check the provided data for validity.
      * </p>
      * <p>
-     * Output is written to {@link org.apache.commons.codec.binary.BaseNCodec.Context#buffer Context#buffer} as 8-bit octets, using
-     * {@link org.apache.commons.codec.binary.BaseNCodec.Context#pos Context#pos} as the buffer position
+     * Output is written to {@link BaseNCodec.Context#buffer Context#buffer} as 8-bit octets, using
+     * {@link BaseNCodec.Context#pos Context#pos} as the buffer position
      * </p>
      *
      * @param input   byte[] array of ASCII data to Base32 decode.
      * @param inPos   Position to start reading data from.
      * @param inAvail Amount of bytes available from input for decoding.
      * @param context The context to be used.
+     * @throws IllegalArgumentException Thrown when a problem is detected processing data.
      */
     @Override
     void decode(final byte[] input, int inPos, final int inAvail, final Context context) {
@@ -676,6 +677,7 @@ public class Base32 extends BaseNCodec {
      * @param inPos   Position to start reading data from.
      * @param inAvail Amount of bytes available from input for encoding.
      * @param context The context to be used.
+     * @throws IllegalArgumentException Thrown when a problem is detected processing data.
      */
     @Override
     void encode(final byte[] input, int inPos, final int inAvail, final Context context) {

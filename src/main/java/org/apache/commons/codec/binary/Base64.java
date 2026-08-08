@@ -390,6 +390,7 @@ public class Base64 extends BaseNCodec {
      *
      * @param base64Data Byte array containing Base64 data.
      * @return New array containing decoded data.
+     * @throws IllegalArgumentException Thrown when a problem is detected processing data.
      */
     public static byte[] decodeBase64(final byte[] base64Data) {
         return new Base64().decode(base64Data);
@@ -405,6 +406,7 @@ public class Base64 extends BaseNCodec {
      *
      * @param base64String String containing Base64 data.
      * @return New array containing decoded data.
+     * @throws IllegalArgumentException Thrown when a problem is detected processing data.
      * @since 1.4
      */
     public static byte[] decodeBase64(final String base64String) {
@@ -420,6 +422,7 @@ public class Base64 extends BaseNCodec {
      *
      * @param base64Data Byte array containing Base64 data.
      * @return New array containing decoded data.
+     * @throws IllegalArgumentException Thrown when a problem is detected processing data.
      * @since 1.21
      */
     public static byte[] decodeBase64Standard(final byte[] base64Data) {
@@ -435,6 +438,7 @@ public class Base64 extends BaseNCodec {
      *
      * @param base64String String containing Base64 data.
      * @return New array containing decoded data.
+     * @throws IllegalArgumentException Thrown when a problem is detected processing data.
      * @since 1.21
      */
     public static byte[] decodeBase64Standard(final String base64String) {
@@ -451,6 +455,7 @@ public class Base64 extends BaseNCodec {
      *
      * @param base64Data Byte array containing Base64 data.
      * @return New array containing decoded data.
+     * @throws IllegalArgumentException Thrown when a problem is detected processing data.
      * @since 1.21
      */
     public static byte[] decodeBase64UrlSafe(final byte[] base64Data) {
@@ -467,6 +472,7 @@ public class Base64 extends BaseNCodec {
      *
      * @param base64String String containing Base64 data.
      * @return New array containing decoded data.
+     * @throws IllegalArgumentException Thrown when a problem is detected processing data.
      * @since 1.21
      */
     public static byte[] decodeBase64UrlSafe(final String base64String) {
@@ -478,6 +484,7 @@ public class Base64 extends BaseNCodec {
      *
      * @param array A byte array containing base64 character data.
      * @return A BigInteger.
+     * @throws IllegalArgumentException Thrown when a problem is detected processing data.
      * @since 1.4
      */
     public static BigInteger decodeInteger(final byte[] array) {
@@ -985,6 +992,7 @@ public class Base64 extends BaseNCodec {
      * @param inPos   Position to start reading data from.
      * @param inAvail Amount of bytes available from input for decoding.
      * @param context The context to be used.
+     * @throws IllegalArgumentException Thrown when a problem is detected processing data.
      */
     @Override
     void decode(final byte[] input, int inPos, final int inAvail, final Context context) {
@@ -1064,6 +1072,7 @@ public class Base64 extends BaseNCodec {
      * @param inPos   Position to start reading data from.
      * @param inAvail Amount of bytes available from input for encoding.
      * @param context The context to be used.
+     * @throws IllegalArgumentException Thrown when a problem is detected processing data.
      */
     @Override
     void encode(final byte[] in, int inPos, final int inAvail, final Context context) {

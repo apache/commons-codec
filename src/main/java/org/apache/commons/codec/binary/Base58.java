@@ -327,6 +327,7 @@ public class Base58 extends BaseNCodec {
      * @param offset  The offset in the array to start from.
      * @param length  The number of bytes to decode, or negative to signal EOF.
      * @param context The context for this decoding operation.
+     * @throws IllegalArgumentException Thrown when a problem is detected processing data.
      */
     @Override
     void decode(final byte[] array, final int offset, final int length, final Context context) {

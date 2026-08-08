@@ -654,6 +654,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      *
      * @param array A byte array containing Base-N character data.
      * @return A byte array containing binary data.
+     * @throws IllegalArgumentException Thrown when a problem is detected processing data.
      */
     @Override
     public byte[] decode(final byte[] array) {
@@ -668,7 +669,17 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         return result;
     }
 
-    // package protected for access from I/O streams
+    /**
+     * Decodes a byte[] containing characters in the Base-N alphabet into a temporary context buffer.
+     * <p>
+     * This method is package protected for access from I/O streams.
+     * </p>
+     *
+     * @param array  A byte array containing Base-N character data.
+     * @param offset initial offset of the subarray.
+     * @param length length of the subarray.
+     * @throws IllegalArgumentException Thrown when a problem is detected processing data.
+     */
     abstract void decode(byte[] array, int i, int length, Context context);
 
     /**
@@ -678,6 +689,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * @param obj Object to decode.
      * @return An object (of type byte[]) containing the binary data which corresponds to the byte[] or String supplied.
      * @throws DecoderException if the parameter supplied is not of type byte[].
+     * @throws IllegalArgumentException Thrown when a problem is detected processing data.
      */
     @Override
     public Object decode(final Object obj) throws DecoderException {
@@ -695,6 +707,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      *
      * @param array A String containing Base-N character data.
      * @return A byte array containing binary data.
+     * @throws IllegalArgumentException Thrown when a problem is detected processing data.
      */
     public byte[] decode(final String array) {
         return decode(StringUtils.getBytesUtf8(array));
@@ -705,6 +718,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      *
      * @param array A byte array containing binary data.
      * @return A byte array containing only the base N alphabetic character data.
+     * @throws IllegalArgumentException Thrown when a problem is detected processing data.
      */
     @Override
     public byte[] encode(final byte[] array) {
@@ -721,6 +735,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * @param offset initial offset of the subarray.
      * @param length length of the subarray.
      * @return A byte array containing only the base N alphabetic character data.
+     * @throws IllegalArgumentException Thrown when a problem is detected processing data.
      * @since 1.11
      */
     public byte[] encode(final byte[] array, final int offset, final int length) {
@@ -735,7 +750,17 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         return buf;
     }
 
-    // package protected for access from I/O streams
+    /**
+     * Encodes a byte[] containing characters in the Base-N alphabet into a temporary context buffer.
+     * <p>
+     * This method is package protected for access from I/O streams.
+     * </p>
+     *
+     * @param array  A byte array containing Base-N character data.
+     * @param offset initial offset of the subarray.
+     * @param length length of the subarray.
+     * @throws IllegalArgumentException Thrown when a problem is detected processing data.
+     */
     abstract void encode(byte[] array, int i, int length, Context context);
 
     /**
