@@ -57,8 +57,9 @@ public class GitIdentifiers {
      *   <li>the raw object id of the referenced blob or sub-tree.</li>
      * </ul>
      *
-     * <p>Entries are ordered by {@link #compareTo} using Git's tree-sort rule: directory names are compared as if they ended with {@code '/'}, so that {@code foo/}
-     * sorts after {@code foobar}.</p>
+     * <p>Entries are ordered by {@link #compareTo} using Git's tree-sort rule: names are compared as unsigned UTF-8 bytes, and directory names are compared as if
+     * they ended with {@code '/'}, so that {@code foo/} sorts after {@code foobar}. Comparing the UTF-8 bytes rather than the Java {@link String} is what keeps
+     * the order Git's for names outside the Basic Multilingual Plane, whose UTF-16 code units do not sort in code point order.</p>
      *
      * @see <a href="https://git-scm.com/book/en/v2/Git-Internals-Git-Objects">Git Internals – Git Objects</a>
      * @see <a href="https://www.swhid.org/swhid-specification/v1.2/5.Core_identifiers/#53-directories">SWHID Directory Identifier</a>
@@ -76,11 +77,11 @@ public class GitIdentifiers {
         private final byte[] rawObjectId;
 
         /**
-         * The key used for ordering entries within a tree object.
+         * The key used for ordering entries within a tree object, as the UTF-8 bytes Git itself compares.
          *
-         * <p>>Git appends {@code '/'} to directory names before comparing.</p>
+         * <p>Git appends {@code '/'} to directory names before comparing.</p>
          */
-        private final String sortKey;
+        private final byte[] sortKey;
 
         /**
          * The Git object type, which determines the Unix file-mode prefix.
@@ -100,13 +101,22 @@ public class GitIdentifiers {
             }
             this.name = name;
             this.type = Objects.requireNonNull(type, "type");
-            this.sortKey = type == FileMode.DIRECTORY ? name + "/" : name;
+            this.sortKey = (type == FileMode.DIRECTORY ? name + "/" : name).getBytes(StandardCharsets.UTF_8);
             this.rawObjectId = Objects.requireNonNull(rawObjectId, "rawObjectId");
         }
 
         @Override
         public int compareTo(final DirectoryEntry o) {
-            return sortKey.compareTo(o.sortKey);
+            final byte[] a = sortKey;
+            final byte[] b = o.sortKey;
+            final int shared = Math.min(a.length, b.length);
+            for (int i = 0; i < shared; i++) {
+                final int diff = (a[i] & 0xff) - (b[i] & 0xff);
+                if (diff != 0) {
+                    return diff;
+                }
+            }
+            return a.length - b.length;
         }
 
         @Override

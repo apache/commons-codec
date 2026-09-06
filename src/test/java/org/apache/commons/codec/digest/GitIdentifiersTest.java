@@ -24,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -219,6 +220,36 @@ class GitIdentifiersTest {
         // Not equal to null or unrelated type
         assertFalse(regular.equals(null));
         assertFalse(regular.equals("foo"));
+    }
+
+    /**
+     * Tree entry names are ordered by their UTF-8 bytes, which is not the order {@link String#compareTo(String)} gives for names outside the Basic Multilingual
+     * Plane: U+FF21 encodes to {@code EF BC A1} and U+1F600 to {@code F0 9F 98 80}, so Git sorts U+FF21 first, while the UTF-16 code units place the surrogate
+     * pair of U+1F600 first.
+     *
+     * <p>The expected identifier is the one {@code git write-tree} produces for a tree holding the same two entries.</p>
+     */
+    @Test
+    void testTreeIdSortsSupplementaryPlaneNamesLikeGit(@TempDir final Path tempDir) throws Exception {
+        final String fullWidthA = "\uFF21";
+        final String grinningFace = "\uD83D\uDE00";
+        final byte[] content = "x".getBytes(StandardCharsets.UTF_8);
+        final String expected = "9f9c1fc3580195f51d3e71b384ef1d57740e2151";
+        final MessageDigest md = DigestUtils.getSha1Digest();
+
+        // Entries are added in the wrong order on purpose, so only the sort decides the result.
+        final GitIdentifiers.TreeIdBuilder builder = GitIdentifiers.treeIdBuilder(md);
+        builder.addFile(GitIdentifiers.FileMode.REGULAR, grinningFace, content);
+        builder.addFile(GitIdentifiers.FileMode.REGULAR, fullWidthA, content);
+        assertEquals(expected, Hex.encodeHexString(builder.get()));
+
+        try {
+            Files.write(tempDir.resolve(fullWidthA), content);
+            Files.write(tempDir.resolve(grinningFace), content);
+        } catch (final IOException e) {
+            Assumptions.abort("Filesystem cannot hold the test entry names: " + e);
+        }
+        assertEquals(expected, Hex.encodeHexString(GitIdentifiers.treeId(md, tempDir)));
     }
 
     /**
