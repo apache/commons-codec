@@ -190,7 +190,7 @@ class Base45Test {
     @ValueSource(chars = { '!', '"', '#', '&', '\'', '(', ')', ',', ';', '<', '=', '>', '?', '@', '[', '\\', ']', '^', '_', '`', 'a', 'z' })
     void testDecodeInvalidCharacters(final char c) {
         final Base45 codec = new Base45();
-        // Characters not in the Base45 alphabet (excluding whitespace and space)
+        // Characters not in the Base45 alphabet
         final String input = "Q" + c + "D";
         assertThrows(IllegalArgumentException.class, () -> codec.decode(input), () -> "Should reject character '" + c + "' (ASCII " + (int) c + ")");
     }
@@ -282,19 +282,19 @@ class Base45Test {
     }
 
     /**
-     * Tests that whitespace (CR, LF, TAB) characters not in the Base45 alphabet are silently skipped during decoding. This supports line-wrapped encoded data.
+     * Tests that non-alphabet whitespace is rejected, including within groups and at the start and end of the input.
      */
-    @Test
-    void testDecodeSkipsNonAlphabetWhitespace() {
+    @ParameterizedTest
+    @ValueSource(strings = { "\r", "\n", "\t", "\r\n", "\u000B", "\f", "\u001C", "\u001D", "\u001E", "\u001F" })
+    void testDecodeRejectsNonAlphabetWhitespace(final String whitespace) {
         final Base45 codec = new Base45();
-        // "QED8WEX0" split across lines with CR+LF
-        final byte[] expected = "ietf!".getBytes(StandardCharsets.US_ASCII);
-        // With CR LF between groups
-        assertArrayEquals(expected, codec.decode("QED\r\n8WEX0"), "Should skip CR+LF");
-        // With LF only
-        assertArrayEquals(expected, codec.decode("QED\n8WEX0"), "Should skip LF");
-        // With TAB
-        assertArrayEquals(expected, codec.decode("QED\t8WEX0"), "Should skip TAB");
+        assertThrows(IllegalArgumentException.class, () -> codec.decode(whitespace));
+        final String encoded = "QED8WEX0";
+        for (int i = 0; i <= encoded.length(); i++) {
+            final String input = encoded.substring(0, i) + whitespace + encoded.substring(i);
+            assertThrows(IllegalArgumentException.class, () -> codec.decode(input));
+            assertThrows(IllegalArgumentException.class, () -> codec.decode(input.getBytes(StandardCharsets.US_ASCII)));
+        }
     }
 
     /**
@@ -306,6 +306,7 @@ class Base45Test {
         // ' ' has value 36 in Base45 alphabet
         // Verify space is in alphabet
         assertTrue(codec.isInAlphabet((byte) ' '), "Space should be in Base45 alphabet");
+        assertArrayEquals("Hello!!".getBytes(StandardCharsets.US_ASCII), codec.decode("%69 VD92EX0"));
         // Round-trip test for data that encodes to/contains a space
         final byte[] input = { (byte) 0xF0, (byte) 0xF0 }; // Some value that produces a space in output
         final byte[] encoded = codec.encode(input);
@@ -753,7 +754,7 @@ class Base45Test {
 
     /**
      * Tests that the pad character is NOT treated as part of the alphabet, because Base45 (RFC 9285) has no padding, while whitespace is still honored per the
-     * {@code allowWhitespacePad} flag (consistent with {@code decode} skipping it).
+     * {@code allowWhitespacePad} flag. Decoding still rejects non-alphabet whitespace.
      */
     @Test
     void testIsInAlphabetArrayDoesNotAllowPad() {

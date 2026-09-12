@@ -296,13 +296,9 @@ public class Base45 extends BaseNCodec {
      * has been reached.
      * </p>
      * <p>
-     * Input characters not in the Base45 alphabet are treated as follows:
+     * Input characters not in the Base45 alphabet, including CR, LF, and TAB, cause an {@link IllegalArgumentException}. Space {@code ' '} is part of the
+     * Base45 alphabet and is decoded as data.
      * </p>
-     * <ul>
-     * <li>Whitespace characters (e.g., CR, LF, TAB) that are not in the Base45 alphabet are silently skipped (note: space {@code ' '} IS in the Base45 alphabet
-     * and is not skipped).</li>
-     * <li>Any other non-alphabet character causes an {@link IllegalArgumentException}.</li>
-     * </ul>
      *
      * @param input   byte array of Base45-encoded character data to decode.
      * @param inPos   Position to start reading data from.
@@ -343,15 +339,7 @@ public class Base45 extends BaseNCodec {
         }
         for (int i = 0; i < inAvail; i++) {
             final int b = input[inPos++] & 0xFF;
-            // Characters not in the Base45 alphabet:
-            // - Whitespace (excluding space ' ' which IS in the alphabet): skip silently.
-            // - Any other non-alphabet character: throw.
             if (b >= decodeTable.length || decodeTable[b] < 0) {
-                if (Character.isWhitespace(b)) {
-                    // Skip whitespace characters that are not in the alphabet (e.g., CR, LF, TAB).
-                    // Note: space (ASCII 32) is part of the Base45 alphabet and is handled above.
-                    continue;
-                }
                 throw new IllegalArgumentException("Invalid Base45 character '" + (char) b + "' (value " + b + ").");
             }
             final int value = decodeTable[b];
