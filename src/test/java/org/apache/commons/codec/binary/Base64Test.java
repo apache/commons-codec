@@ -1035,7 +1035,7 @@ class Base64Test {
     }
 
     /**
-     * Tests RFC 1421 section 4.3.2.4 chuck size definition.
+     * Tests RFC 1421 section 4.3.2.4 chunk size definition.
      */
     @Test
     void testRfc1421Section6Dot8ChunkSizeDefinition() {
@@ -1051,7 +1051,7 @@ class Base64Test {
     }
 
     /**
-     * Tests RFC 2045 section 6.8 chuck size definition.
+     * Tests RFC 2045 section 6.8 chunk size definition.
      */
     @Test
     void testRfc2045Section6Dot8ChunkSizeDefinition() {

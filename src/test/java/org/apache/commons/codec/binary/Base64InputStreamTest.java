@@ -71,11 +71,11 @@ class Base64InputStreamTest {
         }
     }
 
-    private void testBase64EmptyInputStream(final int chuckSize) throws Exception {
+    private void testBase64EmptyInputStream(final int chunkSize) throws Exception {
         final byte[] emptyEncoded = {};
         final byte[] emptyDecoded = {};
-        testByteByByte(emptyEncoded, emptyDecoded, chuckSize, CRLF);
-        testByChunk(emptyEncoded, emptyDecoded, chuckSize, CRLF);
+        testByteByByte(emptyEncoded, emptyDecoded, chunkSize, CRLF);
+        testByChunk(emptyEncoded, emptyDecoded, chunkSize, CRLF);
     }
 
     /**
