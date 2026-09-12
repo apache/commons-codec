@@ -58,8 +58,8 @@ public class GitIdentifiers {
      * </ul>
      *
      * <p>Entries are ordered by {@link #compareTo} using Git's tree-sort rule: names are compared as unsigned UTF-8 bytes, and directory names are compared as if
-     * they ended with {@code '/'}, so that {@code foo/} sorts after {@code foobar}. Comparing the UTF-8 bytes rather than the Java {@link String} is what keeps
-     * the order Git's for names outside the Basic Multilingual Plane, whose UTF-16 code units do not sort in code point order.</p>
+     * they ended with {@code '/'}, so that {@code foo/} sorts after {@code foobar}. Comparing the UTF-8 bytes rather than the Java {@link String} matches Git's
+     * order for names outside the Basic Multilingual Plane, whose UTF-16 code units do not sort in code point order.</p>
      *
      * @see <a href="https://git-scm.com/book/en/v2/Git-Internals-Git-Objects">Git Internals – Git Objects</a>
      * @see <a href="https://www.swhid.org/swhid-specification/v1.2/5.Core_identifiers/#53-directories">SWHID Directory Identifier</a>
@@ -116,7 +116,7 @@ public class GitIdentifiers {
                     return diff;
                 }
             }
-            return a.length - b.length;
+            return a.length != b.length ? a.length - b.length : name.compareTo(o.name);
         }
 
         @Override

@@ -223,9 +223,9 @@ class GitIdentifiersTest {
     }
 
     /**
-     * Tree entry names are ordered by their UTF-8 bytes, which is not the order {@link String#compareTo(String)} gives for names outside the Basic Multilingual
-     * Plane: U+FF21 encodes to {@code EF BC A1} and U+1F600 to {@code F0 9F 98 80}, so Git sorts U+FF21 first, while the UTF-16 code units place the surrogate
-     * pair of U+1F600 first.
+     * Tree entry names are ordered by their UTF-8 bytes, which is not the order {@link String#compareTo(String)} gives when a supplementary character meets a
+     * Basic Multilingual Plane character from U+E000 up: U+FF21 encodes to {@code EF BC A1} and U+1F600 to {@code F0 9F 98 80}, so Git sorts U+FF21 first, while
+     * the UTF-16 code units place the surrogate pair of U+1F600 first.
      *
      * <p>The expected identifier is the one {@code git write-tree} produces for a tree holding the same two entries.</p>
      */
@@ -250,6 +250,21 @@ class GitIdentifiersTest {
             Assumptions.abort("Filesystem cannot hold the test entry names: " + e);
         }
         assertEquals(expected, Hex.encodeHexString(GitIdentifiers.treeId(md, tempDir)));
+    }
+
+    /**
+     * A lone surrogate encodes to {@code ?} in UTF-8, the same byte as a question mark, so the two names share a sort key; both entries must stay in the tree.
+     */
+    @Test
+    void testTreeIdKeepsNamesWithTheSameUtf8Bytes() throws Exception {
+        final byte[] content = "x".getBytes(StandardCharsets.UTF_8);
+        final MessageDigest md = DigestUtils.getSha1Digest();
+        final GitIdentifiers.TreeIdBuilder one = GitIdentifiers.treeIdBuilder(md);
+        one.addFile(GitIdentifiers.FileMode.REGULAR, "?", content);
+        final GitIdentifiers.TreeIdBuilder both = GitIdentifiers.treeIdBuilder(md);
+        both.addFile(GitIdentifiers.FileMode.REGULAR, "?", content);
+        both.addFile(GitIdentifiers.FileMode.REGULAR, "\uD800", content);
+        assertNotEquals(Hex.encodeHexString(one.get()), Hex.encodeHexString(both.get()));
     }
 
     /**
