@@ -22,8 +22,8 @@ import java.io.OutputStream;
 /**
  * Provides <a href="https://datatracker.ietf.org/doc/html/rfc9285">RFC 9285 Base45</a> encoding in a streaming fashion (unlimited size).
  * <p>
- * <strong>Note:</strong> It is mandatory to close the stream after the last byte has been written to it, otherwise the final padding will be omitted and the
- * resulting data will be incomplete/inconsistent.
+ * <strong>Note:</strong> Call {@link #close()} or {@link #eof()} after the last byte has been written; otherwise the final
+ * partial block will be omitted and the resulting data will be incomplete.
  * </p>
  *
  * @see Base45
