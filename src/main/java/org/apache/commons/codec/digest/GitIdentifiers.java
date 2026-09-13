@@ -39,6 +39,10 @@ import java.util.function.Supplier;
  * <p>When the hash algorithm is SHA-1, the identifiers produced by this class are identical to those used by Git.
  * Other hash algorithms produce generalized identifiers as described by the SWHID specification.</p>
  *
+ * <p>Git and SWHID treat file names and symbolic link targets as opaque byte sequences with no defined encoding. The
+ * identifiers produced here coincide with Git's or SWHID's own identifiers only if the original names and targets were
+ * UTF-8 encoded.</p>
+ *
  * <p>This class is immutable and thread-safe. However, the {@link MessageDigest} instances passed to it generally won't be.</p>
  *
  * @see <a href="https://git-scm.com/book/en/v2/Git-Internals-Git-Objects">Git Internals – Git Objects</a>
