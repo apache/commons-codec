@@ -53,11 +53,11 @@ class Base45InputStreamTest {
         }
     }
 
-    private void testBase45EmptyInputStream(final int chunckSize) throws Exception {
+    private void testBase45EmptyInputStream(final int chunkSize) throws Exception {
         final byte[] emptyEncoded = {};
         final byte[] emptyDecoded = {};
-        testByChunk(emptyEncoded, emptyDecoded, chunckSize, CRLF);
-        testByteByByte(emptyEncoded, emptyDecoded, chunckSize, CRLF);
+        testByChunk(emptyEncoded, emptyDecoded, chunkSize, CRLF);
+        testByteByByte(emptyEncoded, emptyDecoded, chunkSize, CRLF);
     }
 
     /**
@@ -66,7 +66,7 @@ class Base45InputStreamTest {
      * @throws Exception for some failure scenarios.
      */
     @Test
-    void testBase45EmptyInputStreamMimeChuckSize() throws Exception {
+    void testBase45EmptyInputStreamMimeChunkSize() throws Exception {
         testBase45EmptyInputStream(BaseNCodec.MIME_CHUNK_SIZE);
     }
 
@@ -76,7 +76,7 @@ class Base45InputStreamTest {
      * @throws Exception for some failure scenarios.
      */
     @Test
-    void testBase45EmptyInputStreamPemChuckSize() throws Exception {
+    void testBase45EmptyInputStreamPemChunkSize() throws Exception {
         testBase45EmptyInputStream(BaseNCodec.PEM_CHUNK_SIZE);
     }
 
