@@ -56,6 +56,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add and use PhoneticEngine.Builder and deprecate old constructors.</action>
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add BeiderMorseEncoder.Builder and deprecate old constructor.</action>
       <action type="add" dev="ggregory" due-to="Yu Bao, Gary Gregory">Add PhoneticEngine.Builder.setMaxInputLength(int).</action>
+      <action type="add" dev="ggregory" due-to="Gary Gregory">Add Base45 support.</action>
       <!-- UPDATE -->
       <action type="update" dev="ggregory" due-to="Gary Gregory">Bump org.apache.commons:commons-parent from 103 to 105.</action>
     </release>
