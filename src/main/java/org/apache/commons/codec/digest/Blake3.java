@@ -50,7 +50,9 @@ import java.util.Objects;
  * <h2>Key Derivation</h2>
  * <p>A specific hash mode for deriving session keys and other derived keys in a unique key derivation context
  * identified by some sequence of bytes. These context strings should be unique but do not need to be kept secret.
- * Additional input data is hashed for key material which can be finalized to derive subkeys.</p>
+ * Additional input data is hashed for key material which can be finalized to derive subkeys. To derive multiple subkeys,
+ * request their combined length in one finalization and split the output. Repeated finalizations start at the beginning
+ * of the same output and do not derive new subkeys.</p>
  * <pre>{@code
  *      String context = "org.apache.commons.codec.digest.Blake3Example";
  *      byte[] sharedSecret = ...;
@@ -60,10 +62,9 @@ import java.util.Objects;
  *      kdf.update(sharedSecret);
  *      kdf.update(senderId);
  *      kdf.update(recipientId);
- *      byte[] txKey = new byte[32];
- *      byte[] rxKey = new byte[32];
- *      kdf.doFinalize(txKey);
- *      kdf.doFinalize(rxKey);
+ *      byte[] keys = kdf.doFinalize(64);
+ *      byte[] txKey = Arrays.copyOfRange(keys, 0, 32);
+ *      byte[] rxKey = Arrays.copyOfRange(keys, 32, 64);
  * }</pre>
  * <p>
  * Adapted from the ISC-licensed O(1) Cryptography library by Matt Sicker and ported from the reference public domain
@@ -451,8 +452,13 @@ public final class Blake3 {
     }
 
     /**
-     * Finalizes hash output data that depends on the sequence of updated bytes preceding this invocation and any
-     * previously finalized bytes. Note that this can finalize up to 2<sup>64</sup> bytes per instance.
+     * Finalizes hash output into the provided array.
+     *
+     * <p>
+     * This method does not change the hash state. Each invocation starts at the beginning of the output for the bytes supplied to {@code update()}.
+     * Repeated invocations without additional input produce the same output prefix. Additional calls to {@code update()} append input to the existing hash
+     * state, even after finalization.
+     * </p>
      *
      * @param out destination array to finalize bytes into.
      * @return {@code this} instance.
@@ -463,8 +469,13 @@ public final class Blake3 {
     }
 
     /**
-     * Finalizes an arbitrary number of bytes into the provided output array that depends on the sequence of previously
-     * updated and finalized bytes. Note that this can finalize up to 2<sup>64</sup> bytes per instance.
+     * Finalizes hash output into a region of the provided array.
+     *
+     * <p>
+     * This method does not change the hash state. Each invocation starts at the beginning of the output for the bytes supplied to {@code update()}.
+     * Repeated invocations without additional input produce the same output prefix. The offset selects the destination array position, not a position in
+     * the hash output. Additional calls to {@code update()} append input to the existing hash state, even after finalization.
+     * </p>
      *
      * @param out    destination array to finalize bytes into.
      * @param offset where in the array to begin writing bytes to.
@@ -481,7 +492,13 @@ public final class Blake3 {
     }
 
     /**
-     * Squeezes and returns an arbitrary number of bytes dependent on the sequence of previously absorbed and squeezed bytes.
+     * Finalizes hash output into a new array.
+     *
+     * <p>
+     * This method does not change the hash state. Each invocation starts at the beginning of the output for the bytes supplied to {@code update()}.
+     * Repeated invocations without additional input produce the same output prefix. Additional calls to {@code update()} append input to the existing hash
+     * state, even after finalization.
+     * </p>
      *
      * @param nrBytes number of bytes to finalize.
      * @return requested number of finalized bytes.
@@ -509,6 +526,10 @@ public final class Blake3 {
     /**
      * Updates this hash state using the provided bytes.
      *
+     * <p>
+     * Input is appended to the existing hash state, including after finalization. Call {@link #reset()} first to start a new message.
+     * </p>
+     *
      * @param in source array to update data from.
      * @return {@code this} instance.
      * @throws NullPointerException if in is null.
@@ -519,6 +540,10 @@ public final class Blake3 {
 
     /**
      * Updates this hash state using the provided bytes at an offset.
+     *
+     * <p>
+     * Input is appended to the existing hash state, including after finalization. Call {@link #reset()} first to start a new message.
+     * </p>
      *
      * @param in     source array to update data from.
      * @param offset where in the array to begin reading bytes.
