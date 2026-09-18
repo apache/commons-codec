@@ -123,6 +123,9 @@ public class BaseNCodecOutputStream<C extends BaseNCodec, T extends BaseNCodecOu
     /**
      * Closes this output stream and releases any system resources associated with the stream.
      * <p>
+     * The underlying stream is closed even if final conversion or flushing fails. If closing also fails, its exception is suppressed on the original exception.
+     * </p>
+     * <p>
      * To write the EOF marker without closing the stream, call {@link #eof()} or use an <a href="https://commons.apache.org/proper/commons-io/">Apache Commons
      * IO</a>
      * <a href= "https://commons.apache.org/proper/commons-io/apidocs/org/apache/commons/io/output/CloseShieldOutputStream.html" >CloseShieldOutputStream</a>.
@@ -132,9 +135,10 @@ public class BaseNCodecOutputStream<C extends BaseNCodec, T extends BaseNCodecOu
      */
     @Override
     public void close() throws IOException {
-        eof();
-        flush();
-        out.close();
+        try (OutputStream outputStream = out) { // NOPMD
+            eof();
+            flush();
+        }
     }
 
     /**
