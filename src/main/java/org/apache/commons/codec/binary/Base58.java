@@ -32,8 +32,9 @@ import java.util.function.BiConsumer;
  * </p>
  * <p>
  * Decoding rejects input longer than a configurable maximum ({@link #DEFAULT_MAX_DECODE_LENGTH} encoded bytes by default, see
- * {@link Builder#setMaxDecodeLength(int)}). Encoding is not limited: callers should bound untrusted binary input before encoding. Encoded output
- * can exceed the default decode limit; raise the limit explicitly when decoding larger trusted values.
+ * {@link Builder#setMaxDecodeLength(int)}). Encoding rejects binary input longer than {@link #DEFAULT_MAX_ENCODE_LENGTH} bytes by default; configure it with
+ * {@link Builder#setMaxEncodeLength(int)}. These limits apply to the total input across all chunks in an operation. Memory usage is proportional to the
+ * accumulated input and conversion output. Encoded output can exceed the decode limit; configure both limits appropriately for larger trusted values.
  * </p>
  * <p>
  * This class is thread-safe for read operations but the Context object used during encoding/decoding should not be shared between threads.
@@ -62,6 +63,7 @@ public class Base58 extends BaseNCodec {
     public static class Builder extends AbstractBuilder<Base58, Builder> {
 
         private int maxDecodeLength = DEFAULT_MAX_DECODE_LENGTH;
+        private int maxEncodeLength = DEFAULT_MAX_ENCODE_LENGTH;
 
         /**
          * Constructs a new Base58 builder.
@@ -83,6 +85,10 @@ public class Base58 extends BaseNCodec {
 
         int getMaxDecodeLength() {
             return maxDecodeLength;
+        }
+
+        int getMaxEncodeLength() {
+            return maxEncodeLength;
         }
 
         /**
@@ -116,6 +122,26 @@ public class Base58 extends BaseNCodec {
             this.maxDecodeLength = maxDecodeLength;
             return this;
         }
+
+        /**
+         * Sets the maximum number of binary bytes accepted by a single encode operation.
+         * <p>
+         * Defaults to {@link Base58#DEFAULT_MAX_ENCODE_LENGTH}. Pass {@link Integer#MAX_VALUE} to effectively disable the limit for trusted input.
+         * </p>
+         *
+         * @param maxEncodeLength The maximum accepted binary input length; must be positive.
+         * @return {@code this} instance.
+         * @throws IllegalArgumentException if maxEncodeLength is not positive.
+         * @since 1.23.0
+         */
+        public Builder setMaxEncodeLength(final int maxEncodeLength) {
+            if (maxEncodeLength <= 0) {
+                throw new IllegalArgumentException("maxEncodeLength must be positive.");
+            }
+            this.maxEncodeLength = maxEncodeLength;
+            return this;
+        }
+
     }
     private static final BigInteger BASE = BigInteger.valueOf(58);
 
@@ -131,6 +157,16 @@ public class Base58 extends BaseNCodec {
      * @since 1.23.0
      */
     public static final int DEFAULT_MAX_DECODE_LENGTH = 8192;
+
+    /**
+     * The default maximum number of binary bytes accepted by a single encode operation: {@value}.
+     * <p>
+     * Use {@link Builder#setMaxEncodeLength(int)} to raise (or effectively disable) the limit for trusted input.
+     * </p>
+     *
+     * @since 1.23.0
+     */
+    public static final int DEFAULT_MAX_ENCODE_LENGTH = 8192;
 
     /**
      * Base58 alphabet: 123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz
@@ -224,6 +260,11 @@ public class Base58 extends BaseNCodec {
     private final int maxDecodeLength;
 
     /**
+     * The maximum number of binary bytes accepted by a single encode operation.
+     */
+    private final int maxEncodeLength;
+
+    /**
      * Constructs a Base58 codec used for encoding and decoding.
      */
     public Base58() {
@@ -238,34 +279,46 @@ public class Base58 extends BaseNCodec {
     public Base58(final Builder builder) {
         super(builder);
         this.maxDecodeLength = builder.getMaxDecodeLength();
+        this.maxEncodeLength = builder.getMaxEncodeLength();
     }
 
-    private void checkDecodeLength(final int length, final int accumulatedLength) {
-        if (length > maxDecodeLength - accumulatedLength) {
-            throw new IllegalArgumentException("Base58 input exceeds the maximum decode length of " + maxDecodeLength +
-                    " bytes; use Base58.Builder.setMaxDecodeLength(int) to raise the limit.");
+    private void checkLength(final int length, final int accumulatedLength, final int maximum, final String operation) {
+        if (length > maximum - accumulatedLength) {
+            throw new IllegalArgumentException("Base58 input exceeds the maximum " + operation + " length of " + maximum + " bytes.");
         }
     }
 
-    private void code(final byte[] array, final int offset, final int length, final Context context, final BiConsumer<byte[], Context> consumer) {
+    private void code(final byte[] array, final int offset, final int length, final Context context, final int maximum, final String operation,
+            final BiConsumer<byte[], Context> consumer) {
         if (context.eof) {
             return;
         }
+        // Base58 needs the complete input before it can convert, so input is accumulated in context.buffer. The number of accumulated bytes
+        // is tracked in context.ibitWorkArea (otherwise unused by this codec) so the buffer can grow geometrically; reallocating an
+        // exact-size buffer per chunk would copy the whole accumulation on every chunk, making streaming quadratic in the input length.
         if (length < 0) {
             context.eof = true;
-            final byte[] accumulate = context.buffer = context.buffer != null ? context.buffer : EMPTY_BYTE_ARRAY;
+            final byte[] accumulate = context.buffer = context.buffer == null ? EMPTY_BYTE_ARRAY :
+                    context.buffer.length == context.ibitWorkArea ? context.buffer : Arrays.copyOf(context.buffer, context.ibitWorkArea);
             if (accumulate.length > 0) {
                 consumer.accept(accumulate, context);
             }
             return;
         }
-        final byte[] accumulate = context.buffer = context.buffer != null ? context.buffer : EMPTY_BYTE_ARRAY;
-        final byte[] newAccumulated = new byte[accumulate.length + length];
-        if (accumulate.length > 0) {
-            System.arraycopy(accumulate, 0, newAccumulated, 0, accumulate.length);
+        final int accumulated = context.ibitWorkArea;
+        checkLength(length, accumulated, maximum, operation);
+        if (length > Integer.MAX_VALUE - 8 - accumulated) {
+            throw new IllegalArgumentException("Base58 input too large to accumulate: " + ((long) accumulated + length) + " bytes.");
         }
-        System.arraycopy(array, offset, newAccumulated, accumulate.length, length);
-        context.buffer = newAccumulated;
+        final int required = accumulated + length;
+        byte[] buffer = context.buffer != null ? context.buffer : EMPTY_BYTE_ARRAY;
+        if (required > buffer.length) {
+            // Grow geometrically to amortize copying across chunks.
+            buffer = Arrays.copyOf(buffer, (int) Math.min(Math.max((long) buffer.length * 2, required), Math.min(maximum, Integer.MAX_VALUE - 8L)));
+        }
+        System.arraycopy(array, offset, buffer, accumulated, length);
+        context.buffer = buffer;
+        context.ibitWorkArea = required;
     }
 
     /**
@@ -288,7 +341,7 @@ public class Base58 extends BaseNCodec {
      * @throws IllegalArgumentException if the Base58 data contains invalid characters or is longer than the configured maximum decode length.
      */
     private void convertFromBase58(final byte[] base58, final Context context) {
-        checkDecodeLength(base58.length, 0);
+        checkLength(base58.length, 0, maxDecodeLength, "decode");
         final int zero = encodeTable[0] & 0xff;
         // Count leading Base58 "zero" characters; each represents a leading zero byte in the output.
         int leadingZeros = 0;
@@ -386,10 +439,7 @@ public class Base58 extends BaseNCodec {
      */
     @Override
     void decode(final byte[] array, final int offset, final int length, final Context context) {
-        if (!context.eof && length > 0) {
-            checkDecodeLength(length, context.buffer != null ? context.buffer.length : 0);
-        }
-        code(array, offset, length, context, this::convertFromBase58);
+        code(array, offset, length, context, maxDecodeLength, "decode", this::convertFromBase58);
     }
 
     /**
@@ -405,7 +455,7 @@ public class Base58 extends BaseNCodec {
      */
     @Override
     void encode(final byte[] array, final int offset, final int length, final Context context) {
-        code(array, offset, length, context, this::convertToBase58);
+        code(array, offset, length, context, maxEncodeLength, "encode", this::convertToBase58);
     }
 
     /**

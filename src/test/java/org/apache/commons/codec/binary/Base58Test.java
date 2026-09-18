@@ -165,7 +165,7 @@ public class Base58Test {
         for (int i = 1; i < 5; i++) {
             final byte[] data = new byte[random.nextInt(BOUND) + 1];
             Arrays.fill(data, (byte) i);
-            final byte[] enc = new Base58().encode(data);
+            final byte[] enc = Base58.builder().setMaxEncodeLength(BOUND).get().encode(data);
             final byte[] dec = Base58.builder().setMaxDecodeLength(BOUND * 2).get().decode(enc);
             assertArrayEqualsAt(data, dec, i);
         }
@@ -176,7 +176,7 @@ public class Base58Test {
         for (int i = 1; i < 5; i++) {
             final byte[] data = new byte[random.nextInt(BOUND) + 1];
             random.nextBytes(data);
-            final byte[] enc = new Base58().encode(data);
+            final byte[] enc = Base58.builder().setMaxEncodeLength(BOUND).get().encode(data);
             final byte[] dec = Base58.builder().setMaxDecodeLength(BOUND * 2).get().decode(enc);
             assertArrayEqualsAt(data, dec, i);
         }

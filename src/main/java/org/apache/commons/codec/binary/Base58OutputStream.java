@@ -22,18 +22,30 @@ import java.io.OutputStream;
 /**
  * Provides Base58 encoding through a stream interface.
  *
- * <p>The default behavior of Base58InputStream is to decode, and the default behavior of Base58OutputStream is to encode. The builder can select either
- * behavior with {@code setEncode(boolean)}.</p>
+ * <p>
+ * The default behavior of Base58InputStream is to decode, and the default behavior of Base58OutputStream is to encode. The builder can select either
+ * behavior with {@code setEncode(boolean)}.
+ * </p>
  *
- * <p>Results are available only after EOF. Decoding accepts at most
+ * <p>
+ * Results are available only after EOF. Decoding accepts at most
  * {@link Base58#DEFAULT_MAX_DECODE_LENGTH} encoded bytes by default and throws {@link java.io.IOException} when an input chunk would exceed the cumulative
  * limit. To configure the limit, pass a codec built with {@link Base58.Builder#setMaxDecodeLength(int)} to the stream builder's
- * {@code setBaseNCodec(Base58)} method.</p>
+ * {@code setBaseNCodec(Base58)} method.
+ * </p>
  *
- * <p>Encoding has no input limit. Callers should bound untrusted binary input before encoding, and explicitly raise the decode limit when decoding larger
- * trusted values. Encoded output can exceed the default decode limit.</p>
+ * <p>
+ * Encoding accepts at most {@link Base58#DEFAULT_MAX_ENCODE_LENGTH} binary bytes by default and throws {@link java.io.IOException} when an input chunk would
+ * exceed that cumulative limit. Configure it with {@link Base58.Builder#setMaxEncodeLength(int)} on the codec passed to {@code setBaseNCodec(Base58)}.
+ * </p>
+ * <p>
+ * The complete input is retained until EOF. Memory usage is proportional to the accumulated input and conversion output. Configure both input limits
+ * appropriately for larger trusted values; encoded output can exceed the decode limit.
+ * </p>
  *
- * <p>Close the output stream or call {@link #eof()} after the last write to complete conversion.</p>
+ * <p>
+ * Close the output stream or call {@link #eof()} after the last write to complete conversion.
+ * </p>
  *
  * @see Base58
  * @see <a href="https://datatracker.ietf.org/doc/html/draft-msporny-base58-03">The Base58 Encoding Scheme draft-msporny-base58-03</a>

@@ -77,16 +77,16 @@ class Base58MaxDecodeLengthTest {
     @Test
     void testEncodingMayExceedDecodeLimit() throws IOException {
         final byte[] input = new byte[Base58.DEFAULT_MAX_DECODE_LENGTH + 1];
-        final Base58 codec = new Base58();
+        final Base58 codec = Base58.builder().setMaxEncodeLength(input.length).get();
         final byte[] encoded = codec.encode(input);
         assertEquals(input.length, encoded.length);
         assertThrows(IllegalArgumentException.class, () -> codec.decode(encoded));
         final ByteArrayOutputStream sink = new ByteArrayOutputStream();
-        try (Base58OutputStream stream = new Base58OutputStream(sink)) {
+        try (Base58OutputStream stream = Base58OutputStream.builder().setOutputStream(sink).setBaseNCodec(codec).get()) {
             stream.write(input);
         }
         assertArrayEquals(encoded, sink.toByteArray());
-        try (Base58InputStream stream = Base58InputStream.builder().setByteArray(input).setEncode(true).get()) {
+        try (Base58InputStream stream = Base58InputStream.builder().setByteArray(input).setEncode(true).setBaseNCodec(codec).get()) {
             assertArrayEquals(encoded, IOUtils.toByteArray(stream));
         }
         final ByteArrayOutputStream decoded = new ByteArrayOutputStream();
