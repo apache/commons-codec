@@ -99,6 +99,9 @@ abstract class RFC1522Codec {
         }
         from = to + 1;
         to = text.indexOf(SEP, from);
+        if (to != terminator) {
+            throw new DecoderException("RFC 1522 violation: '?' embedded in the encoded content");
+        }
         byte[] data = StringUtils.getBytesUsAscii(text.substring(from, to));
         data = doDecoding(data);
         return new String(data, charset);

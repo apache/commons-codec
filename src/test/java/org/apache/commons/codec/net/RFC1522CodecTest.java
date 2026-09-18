@@ -72,6 +72,9 @@ class RFC1522CodecTest {
         assertExpectedDecoderException("=??T?stuff?=");
         assertExpectedDecoderException("=?UTF-8??stuff?=");
         assertExpectedDecoderException("=?UTF-8?W?stuff?=");
+        assertExpectedDecoderException("=?UTF-8?T?stuff?more?=");
+        assertExpectedDecoderException("=?UTF-8?T?stuff??=");
+        assertExpectedDecoderException("=?UTF-8?T???=");
     }
 
     @Test

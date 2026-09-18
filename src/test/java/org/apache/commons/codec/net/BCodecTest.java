@@ -100,6 +100,24 @@ class BCodecTest {
     }
 
     @Test
+    void testDecodeEmbeddedQuestionMark() {
+        for (final BCodec codec : new BCodec[] {new BCodec(), new BCodec(StandardCharsets.UTF_8, CodecPolicy.LENIENT),
+                new BCodec(StandardCharsets.UTF_8, CodecPolicy.STRICT)}) {
+            for (final String encoded : new String[] {"=?UTF-8?B?QUJD?REVG?=", "=?UTF-8?B?QQ==??=", "=?UTF-8?B???="}) {
+                assertThrows(DecoderException.class, () -> codec.decode(encoded), encoded);
+            }
+        }
+    }
+
+    @Test
+    void testDecodeEncodedQuestionMark() throws DecoderException {
+        for (final CodecPolicy policy : CodecPolicy.values()) {
+            final BCodec codec = new BCodec(StandardCharsets.UTF_8, policy);
+            assertEquals("ABC?DEF", codec.decode("=?UTF-8?B?QUJDP0RFRg==?="));
+        }
+    }
+
+    @Test
     void testDecodeObjects() throws Exception {
         final BCodec bcodec = new BCodec();
         final String decoded = "=?UTF-8?B?d2hhdCBub3Q=?=";

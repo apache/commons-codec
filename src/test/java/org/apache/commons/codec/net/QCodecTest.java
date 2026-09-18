@@ -59,6 +59,19 @@ class QCodecTest {
     }
 
     @Test
+    void testDecodeEmbeddedQuestionMark() {
+        final QCodec codec = new QCodec();
+        for (final String encoded : new String[] {"=?UTF-8?Q?ABC?DEF?=", "=?UTF-8?Q?ABC??=", "=?UTF-8?Q???="}) {
+            assertThrows(DecoderException.class, () -> codec.decode(encoded), encoded);
+        }
+    }
+
+    @Test
+    void testDecodeEncodedQuestionMark() throws DecoderException {
+        assertEquals("ABC?DEF", new QCodec().decode("=?UTF-8?Q?ABC=3FDEF?="));
+    }
+
+    @Test
     void testDecodeObjects() throws Exception {
         final QCodec qcodec = new QCodec();
         final String decoded = "=?UTF-8?Q?1+1 =3D 2?=";
