@@ -99,7 +99,7 @@ public class Base32 extends BaseNCodec {
         /**
          * Sets the encode table and derives the matching decode table.
          * <p>
-         * The RFC 4648 Base32 and Base32 Hex tables keep their case-insensitive decoders.
+         * The RFC 4648 Base32 and Base32 Hex tables keep their case-insensitive decoders in lenient mode. Strict decoding requires the encoding alphabet.
          * </p>
          *
          * @param encodeTable The encode table with exactly 32 unique entries, null resets to the default.
@@ -335,7 +335,7 @@ public class Base32 extends BaseNCodec {
     private final int encodeSize;
 
     /**
-     * Line separator for encoding. Not used when decoding. Only used if lineLength &gt; 0.
+     * Line separator for encoding and strict decoding. Only used if lineLength &gt; 0.
      */
     private final byte[] lineSeparator;
 
@@ -431,7 +431,7 @@ public class Base32 extends BaseNCodec {
      * </p>
      *
      * @param lineLength Each line of encoded data will be at most of the given length (rounded down to the nearest multiple of 8). If lineLength &lt;= 0, then
-     *                   the output will not be divided into lines (chunks). Ignored when decoding.
+     *                   the output will not be divided into lines (chunks). Ignored when decoding leniently.
      * @deprecated Use {@link #builder()} and {@link Builder}.
      */
     @Deprecated
@@ -449,7 +449,7 @@ public class Base32 extends BaseNCodec {
      * </p>
      *
      * @param lineLength    Each line of encoded data will be at most of the given length (rounded down to the nearest multiple of 8). If lineLength &lt;= 0,
-     *                      then the output will not be divided into lines (chunks). Ignored when decoding.
+     *                      then the output will not be divided into lines (chunks). Ignored when decoding leniently.
      * @param lineSeparator Each line of encoded data will end with this sequence of bytes.
      * @throws IllegalArgumentException Thrown when the {@code lineSeparator} contains Base32 characters.
      * @deprecated Use {@link #builder()} and {@link Builder}.
@@ -469,7 +469,7 @@ public class Base32 extends BaseNCodec {
      * </p>
      *
      * @param lineLength    Each line of encoded data will be at most of the given length (rounded down to the nearest multiple of 8). If lineLength &lt;= 0,
-     *                      then the output will not be divided into lines (chunks). Ignored when decoding.
+     *                      then the output will not be divided into lines (chunks). Ignored when decoding leniently.
      * @param lineSeparator Each line of encoded data will end with this sequence of bytes.
      * @param useHex
      *               <ul>
@@ -496,7 +496,7 @@ public class Base32 extends BaseNCodec {
      * </p>
      *
      * @param lineLength    Each line of encoded data will be at most of the given length (rounded down to the nearest multiple of 8). If lineLength &lt;= 0,
-     *                      then the output will not be divided into lines (chunks). Ignored when decoding.
+     *                      then the output will not be divided into lines (chunks). Ignored when decoding leniently.
      * @param lineSeparator Each line of encoded data will end with this sequence of bytes.
      * @param useHex
      *               <ul>
@@ -524,7 +524,7 @@ public class Base32 extends BaseNCodec {
      * </p>
      *
      * @param lineLength     Each line of encoded data will be at most of the given length (rounded down to the nearest multiple of 8). If lineLength &lt;= 0,
-     *                       then the output will not be divided into lines (chunks). Ignored when decoding.
+     *                       then the output will not be divided into lines (chunks). Ignored when decoding leniently.
      * @param lineSeparator  Each line of encoded data will end with this sequence of bytes.
      * @param useHex
      *               <ul>
@@ -555,11 +555,11 @@ public class Base32 extends BaseNCodec {
     /**
      * <p>
      * Decodes all of the provided data, starting at inPos, for inAvail bytes. Should be called at least twice: once with the data to decode, and once with
-     * inAvail set to "-1" to alert decoder that EOF has been reached. The "-1" call is not necessary when decoding, but it doesn't hurt, either.
+     * inAvail set to "-1" to alert decoder that EOF has been reached. Strict decoding requires the "-1" call to validate the complete input.
      * </p>
      * <p>
-     * Ignores all non-Base32 characters. This is how chunked (for example 76 character) data is handled, since CR and LF are silently ignored, but has implications
-     * for other bytes, too. This method subscribes to the garbage-in, garbage-out philosophy: it will not check the provided data for validity.
+     * Lenient decoding ignores non-alphabet characters and stops at the first padding byte. Strict decoding accepts only the canonical form produced by this
+     * instance's encoder, including its alphabet, padding, and line separators.
      * </p>
      * <p>
      * Output is written to {@link BaseNCodec.Context#buffer Context#buffer} as 8-bit octets, using
@@ -580,11 +580,18 @@ public class Base32 extends BaseNCodec {
         }
         if (inAvail < 0) {
             context.eof = true;
+            if (isStrictDecoding()) {
+                validateCanonicalEnd(true, context);
+            }
         }
         final int decodeSize = this.encodeSize - 1;
         for (int i = 0; i < inAvail; i++) {
             final int b = input[inPos++] & 0xff;
-            if (b == (pad & 0xff)) {
+            if (isStrictDecoding()) {
+                if (!validateCanonicalByte(b, lineSeparator, true, context)) {
+                    continue;
+                }
+            } else if (b == (pad & 0xff)) {
                 // We're done.
                 context.eof = true;
                 break;
@@ -606,9 +613,8 @@ public class Base32 extends BaseNCodec {
                 }
             }
         }
-        // Two forms of EOF as far as Base32 decoder is concerned: actual
-        // EOF (-1) and first time '=' character is encountered in stream.
-        // This approach makes the '=' padding characters completely optional.
+        // Strict decoding waits for physical EOF to validate the complete input.
+        // Lenient decoding also treats the first padding byte as EOF.
         if (context.eof && context.modulus > 0) { // if modulus == 0, nothing to do
             final byte[] buffer = ensureBufferSize(decodeSize, context);
             // We ignore partial bytes, i.e. only multiples of 8 count.

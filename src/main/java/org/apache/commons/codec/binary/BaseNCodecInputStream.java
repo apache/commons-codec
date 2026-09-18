@@ -145,11 +145,10 @@ public class BaseNCodecInputStream<C extends BaseNCodec, T extends BaseNCodecInp
     }
 
     /**
-     * Returns true if decoding behavior is strict. Decoding will raise an {@link IllegalArgumentException} if trailing bits are not part of a valid encoding.
+     * Tests whether decoding behavior is strict.
      *
-     * <p>
-     * The default is false for lenient encoding. Decoding will compose trailing bits into 8-bit bytes and discard the remainder.
-     * </p>
+     * <p>Strict decoding rejects invalid trailing bits and, for Base32 and Base64, noncanonical input. Decoding errors are reported as {@link IOException}.
+     * To complete validation, consume this stream to EOF. Decoded bytes can be emitted before a later validation error.</p>
      *
      * @return true if using strict decoding.
      * @since 1.15

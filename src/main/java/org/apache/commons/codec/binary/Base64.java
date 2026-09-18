@@ -44,7 +44,7 @@ import org.apache.commons.codec.CodecPolicy;
  * <li>Padding; defaults is {@code '='}.</li>
  * </ul>
  * <p>
- * The URL-safe parameter is only applied to encode operations. Decoding seamlessly handles both modes, see also
+ * The URL-safe parameter selects the encoding alphabet. Lenient decoding seamlessly handles both modes; strict decoding requires the encoding alphabet. See also
  * {@code Builder#setDecodeTableFormat(DecodeTableFormat)}.
  * </p>
  * <p>
@@ -120,7 +120,8 @@ public class Base64 extends BaseNCodec {
          * does not modify behavior on encoding operations. For configuration of the encoding behavior, please use {@link #setUrlSafe(boolean)} method.
          * <p>
          * By default, the implementation uses the {@link DecodeTableFormat#MIXED} approach, allowing a seamless handling of both
-         * {@link DecodeTableFormat#URL_SAFE} and {@link DecodeTableFormat#STANDARD} base64.
+         * {@link DecodeTableFormat#URL_SAFE} and {@link DecodeTableFormat#STANDARD} base64 in lenient mode. Strict decoding additionally requires each character
+         * to match the configured encoding table.
          * </p>
          *
          * @param format table format to be used on Base64 decoding. Use {@link DecodeTableFormat#MIXED} or null to reset to the default behavior.
@@ -158,8 +159,8 @@ public class Base64 extends BaseNCodec {
         /**
          * Sets the URL-safe encoding policy.
          * <p>
-         * This method does not modify behavior on decoding operations. For configuration of the decoding behavior, please use
-         * {@code Builder.setDecodeTableFormat(DecodeTableFormat)} method.
+         * Strict decoding requires this alphabet and its padding convention. Lenient decoding accepts both alphabets by default; use
+         * {@code Builder.setDecodeTableFormat(DecodeTableFormat)} to select a decoding table.
          * </p>
          *
          * @param urlSafe URL-safe encoding policy.
@@ -799,7 +800,7 @@ public class Base64 extends BaseNCodec {
     }
 
     /**
-     * Line separator for encoding. Not used when decoding. Only used if lineLength &gt; 0.
+     * Line separator for encoding and strict decoding. Only used if lineLength &gt; 0.
      */
     private final byte[] lineSeparator;
 
@@ -816,7 +817,7 @@ public class Base64 extends BaseNCodec {
      * When encoding the line length is 0 (no chunking), and the encoding table is STANDARD_ENCODE_TABLE.
      * </p>
      * <p>
-     * When decoding all variants are supported.
+     * When decoding leniently all variants are supported. Strict decoding requires the configured encoding alphabet and layout.
      * </p>
      */
     public Base64() {
@@ -829,7 +830,7 @@ public class Base64 extends BaseNCodec {
      * When encoding the line length is 76, the line separator is CRLF, and the encoding table is STANDARD_ENCODE_TABLE.
      * </p>
      * <p>
-     * When decoding all variants are supported.
+     * When decoding leniently all variants are supported. Strict decoding requires the configured encoding alphabet and layout.
      * </p>
      *
      * @param urlSafe if {@code true}, URL-safe encoding is used. In most cases this should be set to {@code false}.
@@ -882,11 +883,11 @@ public class Base64 extends BaseNCodec {
      * Line lengths that aren't multiples of 4 will still essentially end up being multiples of 4 in the encoded data.
      * </p>
      * <p>
-     * When decoding all variants are supported.
+     * When decoding leniently all variants are supported. Strict decoding requires the configured encoding alphabet and layout.
      * </p>
      *
      * @param lineLength Each line of encoded data will be at most of the given length (rounded down to the nearest multiple of 4). If lineLength &lt;= 0, then
-     *                   the output will not be divided into lines (chunks). Ignored when decoding.
+     *                   the output will not be divided into lines (chunks). Ignored when decoding leniently.
      * @since 1.4
      * @deprecated Use {@link #builder()} and {@link Builder}.
      */
@@ -904,11 +905,11 @@ public class Base64 extends BaseNCodec {
      * Line lengths that aren't multiples of 4 will still essentially end up being multiples of 4 in the encoded data.
      * </p>
      * <p>
-     * When decoding all variants are supported.
+     * When decoding leniently all variants are supported. Strict decoding requires the configured encoding alphabet and layout.
      * </p>
      *
      * @param lineLength    Each line of encoded data will be at most of the given length (rounded down to the nearest multiple of 4). If lineLength &lt;= 0,
-     *                      then the output will not be divided into lines (chunks). Ignored when decoding.
+     *                      then the output will not be divided into lines (chunks). Ignored when decoding leniently.
      * @param lineSeparator Each line of encoded data will end with this sequence of bytes.
      * @throws IllegalArgumentException Thrown when the provided lineSeparator included some base64 characters.
      * @since 1.4
@@ -928,11 +929,11 @@ public class Base64 extends BaseNCodec {
      * Line lengths that aren't multiples of 4 will still essentially end up being multiples of 4 in the encoded data.
      * </p>
      * <p>
-     * When decoding all variants are supported.
+     * When decoding leniently all variants are supported. Strict decoding requires the configured encoding alphabet and layout.
      * </p>
      *
      * @param lineLength    Each line of encoded data will be at most of the given length (rounded down to the nearest multiple of 4). If lineLength &lt;= 0,
-     *                      then the output will not be divided into lines (chunks). Ignored when decoding.
+     *                      then the output will not be divided into lines (chunks). Ignored when decoding leniently.
      * @param lineSeparator Each line of encoded data will end with this sequence of bytes.
      * @param urlSafe       Instead of emitting '+' and '/' we emit '-' and '_' respectively. urlSafe is only applied to encode operations. Decoding seamlessly
      *                      handles both modes. <strong>No padding is added when using the URL-safe alphabet.</strong>
@@ -955,14 +956,14 @@ public class Base64 extends BaseNCodec {
      * Line lengths that aren't multiples of 4 will still essentially end up being multiples of 4 in the encoded data.
      * </p>
      * <p>
-     * When decoding all variants are supported.
+     * When decoding leniently all variants are supported. Strict decoding requires the configured encoding alphabet and layout.
      * </p>
      *
      * @param lineLength     Each line of encoded data will be at most of the given length (rounded down to the nearest multiple of 4). If lineLength &lt;= 0,
-     *                       then the output will not be divided into lines (chunks). Ignored when decoding.
+     *                       then the output will not be divided into lines (chunks). Ignored when decoding leniently.
      * @param lineSeparator  Each line of encoded data will end with this sequence of bytes.
-     * @param urlSafe        Instead of emitting '+' and '/' we emit '-' and '_' respectively. urlSafe is only applied to encode operations. Decoding seamlessly
-     *                       handles both modes. <strong>No padding is added when using the URL-safe alphabet.</strong>
+     * @param urlSafe        Instead of emitting '+' and '/' we emit '-' and '_' respectively. Strict decoding requires this alphabet. Lenient
+     *                       decoding handles both modes. <strong>No padding is added when using the URL-safe alphabet.</strong>
      * @param decodingPolicy The decoding policy.
      * @throws IllegalArgumentException Thrown when the {@code lineSeparator} contains Base64 characters.
      * @since 1.15
@@ -977,11 +978,11 @@ public class Base64 extends BaseNCodec {
     /**
      * <p>
      * Decodes all of the provided data, starting at inPos, for inAvail bytes. Should be called at least twice: once with the data to decode, and once with
-     * inAvail set to "-1" to alert decoder that EOF has been reached. The "-1" call is not necessary when decoding, but it doesn't hurt, either.
+     * inAvail set to "-1" to alert decoder that EOF has been reached. Strict decoding requires the "-1" call to validate the complete input.
      * </p>
      * <p>
-     * Ignores all non-base64 characters. This is how chunked (for example 76 character) data is handled, since CR and LF are silently ignored, but has
-     * implications for other bytes, too. This method subscribes to the garbage-in, garbage-out philosophy: it will not check the provided data for validity.
+     * Lenient decoding ignores non-alphabet characters and stops at the first padding byte. Strict decoding accepts only the canonical form produced by this
+     * instance's encoder, including its alphabet, padding, and line separators.
      * </p>
      * <p>
      * Thanks to "commons" project in ws.apache.org for the bitwise operations, and general approach.
@@ -1001,11 +1002,18 @@ public class Base64 extends BaseNCodec {
         }
         if (inAvail < 0) {
             context.eof = true;
+            if (isStrictDecoding()) {
+                validateCanonicalEnd(isStandardEncodeTable, context);
+            }
         }
         final int decodeSize = this.encodeSize - 1;
         for (int i = 0; i < inAvail; i++) {
             final int b = input[inPos++] & 0xff;
-            if (b == (pad & 0xff)) {
+            if (isStrictDecoding()) {
+                if (!validateCanonicalByte(b, lineSeparator, isStandardEncodeTable, context)) {
+                    continue;
+                }
+            } else if (b == (pad & 0xff)) {
                 // We're done.
                 context.eof = true;
                 break;
@@ -1025,9 +1033,8 @@ public class Base64 extends BaseNCodec {
             }
         }
 
-        // Two forms of EOF as far as base64 decoder is concerned: actual
-        // EOF (-1) and first time '=' character is encountered in stream.
-        // This approach makes the '=' padding characters completely optional.
+        // Strict decoding waits for physical EOF to validate the complete input.
+        // Lenient decoding also treats the first padding byte as EOF.
         if (context.eof && context.modulus != 0) {
             final byte[] buffer = ensureBufferSize(decodeSize, context);
 

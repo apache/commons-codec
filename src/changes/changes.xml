@@ -54,6 +54,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Throw IOException instead of IllegalArgumentException in BaseNCodecOutputStream and BaseNCodecOutputStream IO methods.</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Throw DecoderException instead of IllegalArgumentException in RFC1522Codec.decodeText(String).</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix Blake3 KDF example and clarify finalization semantics.</action>
+      <action type="fix" dev="ggregory" due-to="Gary Gregory">Base32 and Base64 STRICT decoding now require the encoder's canonical alphabet, padding, and line separators, and validate streams through EOF. Use LENIENT to retain permissive decoding.</action>
       <!-- ADD -->
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add and use PhoneticEngine.Builder and deprecate old constructors.</action>
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add BeiderMorseEncoder.Builder and deprecate old constructor.</action>

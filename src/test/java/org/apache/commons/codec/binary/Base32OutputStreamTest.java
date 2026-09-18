@@ -308,7 +308,10 @@ class Base32OutputStreamTest extends AbstractBaseNOutputStreamTest {
                 bout = new ByteArrayOutputStream();
                 try (Base32OutputStream out2 = new Base32OutputStream(bout, false, 0, null, CodecPolicy.STRICT)) {
                     assertTrue(out2.isStrictDecoding());
-                    final IOException ioe = assertThrows(IOException.class, () -> out2.write(encoded));
+                    final IOException ioe = assertThrows(IOException.class, () -> {
+                        out2.write(encoded);
+                        out2.eof();
+                    });
                     assertTrue(ioe.getCause() instanceof IllegalArgumentException);
                 }
                 try (Base32OutputStream out2 = Base32OutputStream.builder()
@@ -316,7 +319,10 @@ class Base32OutputStreamTest extends AbstractBaseNOutputStreamTest {
                         .setBaseNCodec(Base32.builder().setLineLength(0).setLineSeparator(null).setDecodingPolicy(CodecPolicy.STRICT).get())
                         .get()) {
                     assertTrue(out2.isStrictDecoding());
-                    final IOException ioe = assertThrows(IOException.class, () -> out2.write(encoded));
+                    final IOException ioe = assertThrows(IOException.class, () -> {
+                        out2.write(encoded);
+                        out2.eof();
+                    });
                     assertTrue(ioe.getCause() instanceof IllegalArgumentException);
                 }
                 try (Base32OutputStream out2 = Base32OutputStream.builder()
@@ -324,7 +330,10 @@ class Base32OutputStreamTest extends AbstractBaseNOutputStreamTest {
                         .setBaseNCodec(Base32.builder().setDecodingPolicy(CodecPolicy.STRICT).get())
                         .get()) {
                     assertTrue(out2.isStrictDecoding());
-                    final IOException ioe = assertThrows(IOException.class, () -> out2.write(encoded));
+                    final IOException ioe = assertThrows(IOException.class, () -> {
+                        out2.write(encoded);
+                        out2.eof();
+                    });
                     assertTrue(ioe.getCause() instanceof IllegalArgumentException);
                 }
             }

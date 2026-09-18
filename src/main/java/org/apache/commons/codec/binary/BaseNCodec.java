@@ -37,18 +37,16 @@ import org.apache.commons.codec.EncoderException;
  * This class is thread-safe.
  * </p>
  * <p>
- * You can set the decoding behavior when the input bytes contain leftover trailing bits that cannot be created by a valid encoding. These can be bits that are
- * unused from the final character or entire characters. The default mode is lenient decoding.
+ * The default decoding policy is lenient. Strict decoding rejects trailing bits that cannot be produced by an encoding, including nonzero unused bits and
+ * impossible counts of final characters.
  * </p>
- * <ul>
- * <li>Lenient: Any trailing bits are composed into 8-bit bytes where possible. The remainder are discarded.</li>
- * <li>Strict: The decoding will raise an {@link IllegalArgumentException} if trailing bits are not part of a valid encoding. Any unused bits from the final
- * character must be zero. Impossible counts of entire final characters are not allowed.</li>
- * </ul>
- * <p>
- * When strict decoding is enabled it is expected that the decoded bytes will be re-encoded to a byte array that matches the original, i.e. no changes occur on
- * the final character. This requires that the input bytes use the same padding and alphabet as the encoder.
- * </p>
+ *
+ * <p>For {@link Base32} and {@link Base64}, strict decoding additionally requires the exact canonical form produced by this instance's encoder. Re-encoding
+ * successfully decoded input reproduces the input byte for byte. This includes the configured alphabet, padding, line length, and line separator, including
+ * the final line separator when chunking is enabled. Whitespace and alphabet aliases are rejected unless the encoder produces them in that position.</p>
+ *
+ * <p>Strict validation completes only at the end of the input. When decoding streams, consume the input stream to EOF or finish the output stream with
+ * {@link BaseNCodecOutputStream#eof()} or {@link BaseNCodecOutputStream#close()}. A stream can emit decoded bytes before a later validation error.</p>
  */
 public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
 
@@ -288,7 +286,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         boolean eof;
 
         /**
-         * Variable tracks how many characters have been written to the current line. Only used when encoding. We use it to make sure each encoded line never
+         * Variable tracks how many characters have been written to or strictly decoded from the current line. We use it to make sure each encoded line never
          * goes beyond lineLength (if lineLength &gt; 0).
          */
         int currentLinePos;
@@ -297,6 +295,21 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
          * Writes to the buffer only occur after every 3/5 reads when encoding, and every 4/8 reads when decoding. This variable helps track that.
          */
         int modulus;
+
+        /**
+         * Number of padding bytes consumed by strict decoding.
+         */
+        int strictPadding;
+
+        /**
+         * Position within the configured line separator during strict decoding.
+         */
+        int strictSeparatorPos;
+
+        /**
+         * Whether strict decoding has encountered a short final line.
+         */
+        boolean strictFinalLine;
 
         /**
          * Returns a String useful for debugging (especially within a debugger.)
@@ -514,7 +527,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     private final int encodedBlockSize;
 
     /**
-     * Chunksize for encoding. Not used when decoding. A value of zero or less implies no chunking of the encoded data. Rounded down to the nearest multiple of
+     * Chunk size for encoding and strict decoding. A value of zero or less implies no chunking of the encoded data. Rounded down to the nearest multiple of
      * encodedBlockSize.
      */
     protected final int lineLength;
@@ -525,17 +538,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     private final int chunkSeparatorLength;
 
     /**
-     * Defines the decoding behavior when the input bytes contain leftover trailing bits that cannot be created by a valid encoding. These can be bits that are
-     * unused from the final character or entire characters. The default mode is lenient decoding. Set this to {@code true} to enable strict decoding.
-     * <ul>
-     * <li>Lenient: Any trailing bits are composed into 8-bit bytes where possible. The remainder are discarded.</li>
-     * <li>Strict: The decoding will raise an {@link IllegalArgumentException} if trailing bits are not part of a valid encoding. Any unused bits from the final
-     * character must be zero. Impossible counts of entire final characters are not allowed.</li>
-     * </ul>
-     * <p>
-     * When strict decoding is enabled it is expected that the decoded bytes will be re-encoded to a byte array that matches the original, i.e. no changes occur
-     * on the final character. This requires that the input bytes use the same padding and alphabet as the encoder.
-     * </p>
+     * Decoding policy, including canonical validation for Base32 and Base64.
      */
     private final CodecPolicy decodingPolicy;
 
@@ -840,12 +843,9 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     /**
      * Gets the decoding behavior policy.
      *
-     * <p>
-     * The default is lenient. If the decoding policy is strict, then decoding will raise an {@link IllegalArgumentException} if trailing bits are not part of a
-     * valid encoding. Decoding will compose trailing bits into 8-bit bytes and discard the remainder.
-     * </p>
+     * <p>The default is lenient. Strict decoding rejects invalid trailing bits and, for Base32 and Base64, noncanonical input as described in this class.</p>
      *
-     * @return true if using strict decoding.
+     * @return The decoding policy.
      * @since 1.15
      */
     public CodecPolicy getCodecPolicy() {
@@ -924,11 +924,9 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
-     * Tests true if decoding behavior is strict. Decoding will raise an {@link IllegalArgumentException} if trailing bits are not part of a valid encoding.
+     * Tests whether decoding behavior is strict.
      *
-     * <p>
-     * The default is false for lenient decoding. Decoding will compose trailing bits into 8-bit bytes and discard the remainder.
-     * </p>
+     * <p>Strict decoding rejects invalid trailing bits and, for Base32 and Base64, noncanonical input as described in this class.</p>
      *
      * @return true if using strict decoding.
      * @since 1.15
@@ -965,5 +963,78 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
             return len;
         }
         return context.eof ? EOF : 0;
+    }
+
+    /**
+     * Validates a byte against the canonical Base32 or Base64 encoding, consuming padding and line separators.
+     *
+     * @param value The unsigned input byte.
+     * @param lineSeparator The configured line separator.
+     * @param padded Whether the encoder pads partial blocks.
+     * @param context The decoding context, whose modulus counts alphabet characters only.
+     * @return Whether the byte is an alphabet character to decode.
+     * @throws IllegalArgumentException if the byte cannot occur in a canonical encoding.
+     */
+    boolean validateCanonicalByte(final int value, final byte[] lineSeparator, final boolean padded, final Context context) {
+        if (lineLength > 0 && (context.strictSeparatorPos > 0 || context.currentLinePos == lineLength ||
+                value == (lineSeparator[0] & MASK_8BITS))) {
+            if (context.currentLinePos == 0 || value != (lineSeparator[context.strictSeparatorPos] & MASK_8BITS)) {
+                throw new IllegalArgumentException("Strict decoding: Invalid line separator or line length.");
+            }
+            if (context.strictSeparatorPos == 0) {
+                validateCanonicalPadding(padded, context);
+                context.strictFinalLine = context.currentLinePos < lineLength;
+            }
+            if (++context.strictSeparatorPos == lineSeparator.length) {
+                context.strictSeparatorPos = 0;
+                context.currentLinePos = 0;
+            }
+            return false;
+        }
+        if (context.strictFinalLine) {
+            throw new IllegalArgumentException("Strict decoding: Data follows the final line separator.");
+        }
+        if (value == (pad & MASK_8BITS)) {
+            if (!padded || context.modulus == 0 || context.strictPadding >= encodedBlockSize - context.modulus) {
+                throw new IllegalArgumentException("Strict decoding: Unexpected padding.");
+            }
+            context.strictPadding++;
+        } else {
+            final int decoded = value < decodeTable.length ? decodeTable[value] : -1;
+            if (context.strictPadding != 0 || decoded < 0 || decoded >= encodeTable.length || (encodeTable[decoded] & MASK_8BITS) != value) {
+                throw new IllegalArgumentException("Strict decoding: Unexpected character or data after padding.");
+            }
+        }
+        if (lineLength > 0) {
+            context.currentLinePos++;
+        }
+        return value != (pad & MASK_8BITS);
+    }
+
+    /**
+     * Validates the end of a canonical Base32 or Base64 encoding.
+     *
+     * @param padded Whether the encoder pads partial blocks.
+     * @param context The decoding context.
+     * @throws IllegalArgumentException if padding or the final line separator is incomplete.
+     */
+    void validateCanonicalEnd(final boolean padded, final Context context) {
+        validateCanonicalPadding(padded, context);
+        if (context.strictSeparatorPos != 0 || context.currentLinePos != 0) {
+            throw new IllegalArgumentException("Strict decoding: Missing or incomplete final line separator.");
+        }
+    }
+
+    /**
+     * Validates the number of padding bytes at the end of a line or input.
+     *
+     * @param padded Whether the encoder pads partial blocks.
+     * @param context The decoding context.
+     * @throws IllegalArgumentException if required padding is missing.
+     */
+    private void validateCanonicalPadding(final boolean padded, final Context context) {
+        if (padded && context.modulus != 0 && context.strictPadding != encodedBlockSize - context.modulus) {
+            throw new IllegalArgumentException("Strict decoding: Incorrect padding length.");
+        }
     }
 }
