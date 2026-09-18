@@ -28,8 +28,12 @@ import java.util.function.BiConsumer;
  * commonly used in Bitcoin and other blockchain systems.
  * </p>
  * <p>
- * This implementation accumulates data internally until EOF is signaled, at which point the entire input is converted using BigInteger arithmetic. This is
- * necessary because Base58 encoding/decoding requires access to the complete data to properly handle leading zeros.
+ * Encoding and decoding produce results when EOF is signaled.
+ * </p>
+ * <p>
+ * Decoding rejects input longer than a configurable maximum ({@link #DEFAULT_MAX_DECODE_LENGTH} encoded bytes by default, see
+ * {@link Builder#setMaxDecodeLength(int)}). Encoding is not limited: callers should bound untrusted binary input before encoding. Encoded output
+ * can exceed the default decode limit; raise the limit explicitly when decoding larger trusted values.
  * </p>
  * <p>
  * This class is thread-safe for read operations but the Context object used during encoding/decoding should not be shared between threads.
@@ -57,6 +61,8 @@ public class Base58 extends BaseNCodec {
      */
     public static class Builder extends AbstractBuilder<Base58, Builder> {
 
+        private int maxDecodeLength = DEFAULT_MAX_DECODE_LENGTH;
+
         /**
          * Constructs a new Base58 builder.
          */
@@ -75,6 +81,10 @@ public class Base58 extends BaseNCodec {
             return new Base58(this);
         }
 
+        int getMaxDecodeLength() {
+            return maxDecodeLength;
+        }
+
         /**
          * Sets the encode table and derives the matching decode table.
          *
@@ -87,11 +97,40 @@ public class Base58 extends BaseNCodec {
             super.setDecodeTableRaw(toDecodeTable(encodeTable));
             return super.setEncodeTable(encodeTable);
         }
+
+        /**
+         * Sets the maximum number of encoded bytes accepted by a single decode operation.
+         * <p>
+         * Defaults to {@link Base58#DEFAULT_MAX_DECODE_LENGTH}. Pass {@link Integer#MAX_VALUE} to effectively disable the limit for trusted input.
+         * </p>
+         *
+         * @param maxDecodeLength The maximum accepted encoded input length; must be positive.
+         * @return {@code this} instance.
+         * @throws IllegalArgumentException if maxDecodeLength is not positive.
+         * @since 1.23.0
+         */
+        public Builder setMaxDecodeLength(final int maxDecodeLength) {
+            if (maxDecodeLength <= 0) {
+                throw new IllegalArgumentException("maxDecodeLength must be positive.");
+            }
+            this.maxDecodeLength = maxDecodeLength;
+            return this;
+        }
     }
     private static final BigInteger BASE = BigInteger.valueOf(58);
 
     private static final int DECODING_TABLE_LENGTH = 256;
     private static final int ENCODING_TABLE_LENGTH = 58;
+
+    /**
+     * The default maximum number of encoded bytes accepted by a single decode operation: {@value}.
+     * <p>
+     * Use {@link Builder#setMaxDecodeLength(int)} to raise (or effectively disable) the limit for trusted input.
+     * </p>
+     *
+     * @since 1.23.0
+     */
+    public static final int DEFAULT_MAX_DECODE_LENGTH = 8192;
 
     /**
      * Base58 alphabet: 123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz
@@ -180,6 +219,11 @@ public class Base58 extends BaseNCodec {
     }
 
     /**
+     * The maximum number of encoded bytes accepted by a single decode operation.
+     */
+    private final int maxDecodeLength;
+
+    /**
      * Constructs a Base58 codec used for encoding and decoding.
      */
     public Base58() {
@@ -193,6 +237,14 @@ public class Base58 extends BaseNCodec {
      */
     public Base58(final Builder builder) {
         super(builder);
+        this.maxDecodeLength = builder.getMaxDecodeLength();
+    }
+
+    private void checkDecodeLength(final int length, final int accumulatedLength) {
+        if (length > maxDecodeLength - accumulatedLength) {
+            throw new IllegalArgumentException("Base58 input exceeds the maximum decode length of " + maxDecodeLength +
+                    " bytes; use Base58.Builder.setMaxDecodeLength(int) to raise the limit.");
+        }
     }
 
     private void code(final byte[] array, final int offset, final int length, final Context context, final BiConsumer<byte[], Context> consumer) {
@@ -221,8 +273,8 @@ public class Base58 extends BaseNCodec {
      * <p>
      * Uses 32-bit word arithmetic ({@code int[]} with {@code long} carry) to convert the Base58 string to binary data, avoiding {@link BigInteger} and its
      * per-digit object allocation. Each Base58 digit is processed left-to-right using Horner's scheme: {@code value = value * 58 + digit}. An
-     * {@code wordsStart} cursor tracks the leftmost word that contains data, so the inner loop only touches the active portion of the work buffer — the active
-     * range grows by at most one word per four digits (since log(58)/log(256) &lt; 1), keeping total work well below {@code inputLength²}.
+     * {@code wordsStart} cursor tracks the leftmost word that contains data, so the inner loop only touches the active portion of the work buffer. The active
+     * range grows linearly with the number of digits, so total conversion work is quadratic in the input length.
      * </p>
      * <p>
      * At each word position the carry satisfies {@code carry &le; 57 + 58 &times; (2³²&minus;1) &lt; 2⁴⁰}, which fits in a Java {@code long}.
@@ -233,9 +285,10 @@ public class Base58 extends BaseNCodec {
      *
      * @param base58  The Base58 encoded data.
      * @param context The context for this decoding operation.
-     * @throws IllegalArgumentException if the Base58 data contains invalid characters.
+     * @throws IllegalArgumentException if the Base58 data contains invalid characters or is longer than the configured maximum decode length.
      */
     private void convertFromBase58(final byte[] base58, final Context context) {
+        checkDecodeLength(base58.length, 0);
         final int zero = encodeTable[0] & 0xff;
         // Count leading Base58 "zero" characters; each represents a leading zero byte in the output.
         int leadingZeros = 0;
@@ -245,8 +298,10 @@ public class Base58 extends BaseNCodec {
             }
             leadingZeros++;
         }
-        // Instead of using BigInteger instances, we use a 32-bit word array.
-        // This provides ~4x speedup and avoids per-digit object allocation.
+        // Horner's scheme uses 32-bit words and a long carry, avoiding per-digit BigInteger allocation.
+        // wordsStart tracks the active word range, which grows linearly with the number of digits.
+        // Traversing this range for each digit makes conversion quadratic in the input length.
+        // At each word, carry <= 57 + 58 * (2^32 - 1) < 2^40, which fits in a long.
         //
         // Work buffer of 32-bit words, big-endian, right-aligned.
         // Upper bound on decoded bytes is base58.length, so (base58.length+3)/4 words suffice.
@@ -331,6 +386,9 @@ public class Base58 extends BaseNCodec {
      */
     @Override
     void decode(final byte[] array, final int offset, final int length, final Context context) {
+        if (!context.eof && length > 0) {
+            checkDecodeLength(length, context.buffer != null ? context.buffer.length : 0);
+        }
         code(array, offset, length, context, this::convertFromBase58);
     }
 

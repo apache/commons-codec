@@ -20,33 +20,20 @@ package org.apache.commons.codec.binary;
 import java.io.OutputStream;
 
 /**
- * Provides Base58 encoding in a streaming fashion (unlimited size). When encoding the default lineLength is 76 characters and the default lineEnding is CRLF,
- * but these can be overridden by using the appropriate constructor.
- * <p>
- * The default behavior of the Base58OutputStream is to ENCODE, whereas the default behavior of the Base58InputStream is to DECODE. But this behavior can be
- * overridden by using a different constructor.
- * </p>
- * <p>
- * Since this class operates directly on byte streams, and not character streams, it is hard-coded to only encode/decode character encodings which are
- * compatible with the lower 127 ASCII chart (ISO-8859-1, Windows-1252, UTF-8, etc).
- * </p>
- * <p>
- * <strong>Note:</strong> It is mandatory to close the stream after the last byte has been written to it, otherwise the final padding will be omitted and the
- * resulting data will be incomplete/inconsistent.
- * </p>
- * <p>
- * You can set the decoding behavior when the input bytes contain leftover trailing bits that cannot be created by a valid encoding. These can be bits that are
- * unused from the final character or entire characters. The default mode is lenient decoding.
- * </p>
- * <ul>
- * <li>Lenient: Any trailing bits are composed into 8-bit bytes where possible. The remainder are discarded.</li>
- * <li>Strict: The decoding will throw an {@link IllegalArgumentException} if trailing bits are not part of a valid encoding. Any unused bits from the final
- * character must be zero. Impossible counts of entire final characters are not allowed.</li>
- * </ul>
- * <p>
- * When strict decoding is enabled it is expected that the decoded bytes will be re-encoded to a byte array that matches the original, i.e. no changes occur on
- * the final character. This requires that the input bytes use the same padding and alphabet as the encoder.
- * </p>
+ * Provides Base58 encoding through a stream interface.
+ *
+ * <p>The default behavior of Base58InputStream is to decode, and the default behavior of Base58OutputStream is to encode. The builder can select either
+ * behavior with {@code setEncode(boolean)}.</p>
+ *
+ * <p>Results are available only after EOF. Decoding accepts at most
+ * {@link Base58#DEFAULT_MAX_DECODE_LENGTH} encoded bytes by default and throws {@link java.io.IOException} when an input chunk would exceed the cumulative
+ * limit. To configure the limit, pass a codec built with {@link Base58.Builder#setMaxDecodeLength(int)} to the stream builder's
+ * {@code setBaseNCodec(Base58)} method.</p>
+ *
+ * <p>Encoding has no input limit. Callers should bound untrusted binary input before encoding, and explicitly raise the decode limit when decoding larger
+ * trusted values. Encoded output can exceed the default decode limit.</p>
+ *
+ * <p>Close the output stream or call {@link #eof()} after the last write to complete conversion.</p>
  *
  * @see Base58
  * @see <a href="https://datatracker.ietf.org/doc/html/draft-msporny-base58-03">The Base58 Encoding Scheme draft-msporny-base58-03</a>

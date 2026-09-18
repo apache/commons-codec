@@ -132,7 +132,7 @@ public class Base58Test {
     @ValueSource(ints = { 20_000, 40_000, 80_000, 160_000, 320_000 })
     void testDecodeLargeInput(final int n) {
         // any valid non-'1' Base58 char
-        new Base58().decode(ArrayFill.fill(new byte[n], (byte) 'z'));
+        Base58.builder().setMaxDecodeLength(n).get().decode(ArrayFill.fill(new byte[n], (byte) 'z'));
     }
 
     /**
@@ -166,7 +166,7 @@ public class Base58Test {
             final byte[] data = new byte[random.nextInt(BOUND) + 1];
             Arrays.fill(data, (byte) i);
             final byte[] enc = new Base58().encode(data);
-            final byte[] dec = new Base58().decode(enc);
+            final byte[] dec = Base58.builder().setMaxDecodeLength(BOUND * 2).get().decode(enc);
             assertArrayEqualsAt(data, dec, i);
         }
     }
@@ -177,7 +177,7 @@ public class Base58Test {
             final byte[] data = new byte[random.nextInt(BOUND) + 1];
             random.nextBytes(data);
             final byte[] enc = new Base58().encode(data);
-            final byte[] dec = new Base58().decode(enc);
+            final byte[] dec = Base58.builder().setMaxDecodeLength(BOUND * 2).get().decode(enc);
             assertArrayEqualsAt(data, dec, i);
         }
     }
