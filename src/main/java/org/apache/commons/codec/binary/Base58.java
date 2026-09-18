@@ -105,6 +105,25 @@ public class Base58 extends BaseNCodec {
         }
 
         /**
+         * Sets the line length to zero.
+         * <p>
+         * Base58 does not support line chunking. Zero or a negative value selects unchunked output.
+         * </p>
+         *
+         * @param lineLength The line length; must not be positive.
+         * @return {@code this} instance.
+         * @throws IllegalArgumentException if lineLength is positive.
+         * @since 1.23.0
+         */
+        @Override
+        public Builder setLineLength(final int lineLength) {
+            if (lineLength > 0) {
+                throw new IllegalArgumentException("Base58 does not support line chunking.");
+            }
+            return super.setLineLength(lineLength);
+        }
+
+        /**
          * Sets the maximum number of encoded bytes accepted by a single decode operation.
          * <p>
          * Defaults to {@link Base58#DEFAULT_MAX_DECODE_LENGTH}. Pass {@link Integer#MAX_VALUE} to effectively disable the limit for trusted input.
@@ -207,7 +226,7 @@ public class Base58 extends BaseNCodec {
      *
      * <pre>
      * Base58 base58 = Base58.builder()
-     *   .setEncode(true)
+     *   .setMaxEncodeLength(4096)
      *   .get()
      * </pre>
      *
@@ -456,6 +475,23 @@ public class Base58 extends BaseNCodec {
     @Override
     void encode(final byte[] array, final int offset, final int length, final Context context) {
         code(array, offset, length, context, maxEncodeLength, "encode", this::convertToBase58);
+    }
+
+    /**
+     * Gets the number of Base58 characters needed to encode the supplied array.
+     * <p>
+     * The length depends on the input bytes, including leading zeros. This method observes the configured maximum encode length.
+     * </p>
+     *
+     * @param array The binary input to encode.
+     * @return The number of Base58 characters that encoding the array produces.
+     * @throws IllegalArgumentException if the input exceeds the configured maximum encode length.
+     * @since 1.23.0
+     */
+    @Override
+    public long getEncodedLength(final byte[] array) {
+        checkLength(array.length, 0, maxEncodeLength, "encode");
+        return getStringBuilder(array).length();
     }
 
     /**

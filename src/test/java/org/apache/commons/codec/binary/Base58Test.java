@@ -205,6 +205,31 @@ public class Base58Test {
     }
 
     @Test
+    void testEncodedLength() {
+        final Base58 codec = new Base58();
+        assertEquals(0, codec.getEncodedLength(new byte[0]));
+        assertEquals(1, codec.getEncodedLength(new byte[] { 0 }));
+        assertEquals(3, codec.getEncodedLength(new byte[] { 0, 0, 0 }));
+        assertEquals(1, codec.getEncodedLength(new byte[] { 57 }));
+        assertEquals(2, codec.getEncodedLength(new byte[] { 58 }));
+        assertEquals(3, codec.getEncodedLength(new byte[] { 0, 58 }));
+        final Random random = new Random(58);
+        for (int length = 1; length <= 256; length++) {
+            final byte[] input = new byte[length];
+            random.nextBytes(input);
+            assertEquals(codec.encode(input).length, codec.getEncodedLength(input));
+        }
+    }
+
+    @Test
+    void testEncodedLengthLimit() {
+        final Base58 codec = Base58.builder().setMaxEncodeLength(10).get();
+        assertEquals(10, codec.getEncodedLength(new byte[10]));
+        assertThrows(IllegalArgumentException.class, () -> codec.getEncodedLength(new byte[11]));
+        assertEquals(11, Base58.builder().setMaxEncodeLength(11).get().getEncodedLength(new byte[11]));
+    }
+
+    @Test
     void testHexEncoding() {
         final String hexString = "48656c6c6f20576f726c6421";
         final byte[] encoded = new Base58().encode(StringUtils.getBytesUtf8(hexString));
@@ -328,6 +353,17 @@ public class Base58Test {
         // Decode should restore the leading zeros
         final byte[] decoded = new Base58().decode(encoded);
         assertArrayEquals(input, decoded, "Decoded should match original including leading zeros");
+    }
+
+    @Test
+    void testLineLength() {
+        assertThrows(IllegalArgumentException.class, () -> Base58.builder().setLineLength(76));
+        assertThrows(IllegalArgumentException.class, () -> Base58.builder().setLineSeparator(new byte[0]).setLineLength(1));
+        for (final int length : new int[] { 0, -1 }) {
+            final Base58 codec = Base58.builder().setLineLength(length).get();
+            assertArrayEquals(new byte[] { '2', '1' }, codec.encode(new byte[] { 58 }));
+            assertEquals(2, codec.getEncodedLength(new byte[] { 58 }));
+        }
     }
 
     @Test
