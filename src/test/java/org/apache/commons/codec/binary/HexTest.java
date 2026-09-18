@@ -36,6 +36,7 @@ import org.apache.commons.codec.EncoderException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 /**
  * Tests {@link Hex}.
@@ -327,6 +328,21 @@ class HexTest {
     @Test
     void testDecodeHexStringOddCharacters1() {
         checkDecodeHexCharArrayOddCharacters("A");
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = { "\uFF14\uFF11", "\u0664\u0661", "\u096A\u0967", "\uFF21\uFF26", "\uFF41\uFF46", "4\uFF11" })
+    void testDecodeNonAsciiUnicodeDigits(final String input) {
+        // Alternate spellings must not decode to the same bytes as ASCII hexadecimal strings.
+        assertThrows(DecoderException.class, () -> Hex.decodeHex(input));
+        assertThrows(DecoderException.class, () -> Hex.decodeHex(input.toCharArray()));
+        assertThrows(DecoderException.class, () -> Hex.decodeHex(input.toCharArray(), new byte[input.length() / 2], 0));
+        assertThrows(DecoderException.class, () -> new Hex().decode(input));
+        final byte[] utf8 = input.getBytes(StandardCharsets.UTF_8);
+        assertThrows(DecoderException.class, () -> new Hex().decode(utf8));
+        final ByteBuffer buffer = allocate(utf8.length);
+        buffer.put(utf8).flip();
+        assertThrows(DecoderException.class, () -> new Hex().decode(buffer));
     }
 
     @Test

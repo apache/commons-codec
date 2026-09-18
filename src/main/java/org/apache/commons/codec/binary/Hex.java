@@ -31,7 +31,14 @@ import org.apache.commons.codec.EncoderException;
  * Converts hexadecimal Strings. The Charset used for certain operation can be set, the default is set in
  * {@link #DEFAULT_CHARSET_NAME}
  *
+ * <p>
+ * Decoding accepts only the ASCII hexadecimal characters {@code 0-9}, {@code A-F}, and {@code a-f}. Non-ASCII Unicode digits and fullwidth letters
+ * are rejected.
+ * </p>
+ *
+ * <p>
  * This class is thread-safe.
+ * </p>
  *
  * @since 1.1
  */
@@ -357,15 +364,30 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
     /**
      * Converts a hexadecimal character to an integer.
      *
+     * <p>
+     * Only the ASCII characters {@code '0'} to {@code '9'}, {@code 'A'} to {@code 'F'} and {@code 'a'} to {@code 'f'} are accepted. Other Unicode digits,
+     * such as fullwidth or Arabic-Indic digits, are rejected even though {@link Character#digit(char, int)} would accept them. These alternate spellings
+     * can bypass textual blocklists or replay caches that compare hexadecimal strings without decoding or normalizing them first.
+     * </p>
+     *
      * @param ch    A character to convert to an integer digit.
      * @param index The index of the character in the source.
      * @return An integer.
      * @throws DecoderException Thrown if ch is an illegal hexadecimal character.
      */
     protected static int toDigit(final char ch, final int index) throws DecoderException {
-        final int digit = Character.digit(ch, 16);
+        final int digit;
+        if (ch >= '0' && ch <= '9') {
+            digit = ch - '0';
+        } else if (ch >= 'A' && ch <= 'F') {
+            digit = ch - 'A' + 10;
+        } else if (ch >= 'a' && ch <= 'f') {
+            digit = ch - 'a' + 10;
+        } else {
+            digit = -1;
+        }
         if (digit == -1) {
-            throw new DecoderException("Illegal hexadecimal character 0x%02X at index %,d.", ch & 0xFF, index);
+            throw new DecoderException("Illegal hexadecimal character 0x%02X at index %,d.", ch & 0xFFFF, index);
         }
         return digit;
     }

@@ -60,6 +60,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Implement Base58 encoded-length calculation and explicitly reject unsupported line chunking.</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Close the underlying BaseNCodecOutputStream output even when final conversion or flushing fails, preserving suppressed close exceptions.</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Reject invalid GitIdentifiers tree entry names and file/directory name conflicts to prevent ambiguous tree serialization and colliding identifiers.</action>
+      <action type="fix" dev="ggregory" due-to="Gary Gregory">Hex decoding now accepts only ASCII hexadecimal characters (0-9, A-F, a-f). Previously accepted non-ASCII Unicode digits and fullwidth letters now cause DecoderException, including when supplied as UTF-8 bytes or ByteBuffers.</action>
       <!-- ADD -->
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add and use PhoneticEngine.Builder and deprecate old constructors.</action>
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add BeiderMorseEncoder.Builder and deprecate old constructor.</action>
