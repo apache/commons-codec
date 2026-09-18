@@ -289,12 +289,11 @@ class PhoneticEngineBuilderTest {
 
     /**
      * Tests {@link PhoneticEngine.Builder#setMaxInputLength(int)} with a limit of 0:
-     * null input bypasses the length check but causes a {@link NullPointerException} downstream.
+     * null input causes a {@link NullPointerException}.
      */
     @Test
     void testSetMaxInputLengthZeroNullInputThrowsNpe() {
         final PhoneticEngine engine = PhoneticEngine.builder().setMaxInputLength(0).get();
-        // null is not blocked by the length check, but encoding null causes NPE
         assertThrows(NullPointerException.class, () -> engine.encode(null));
     }
 

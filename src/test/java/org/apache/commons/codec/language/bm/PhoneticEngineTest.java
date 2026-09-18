@@ -18,14 +18,18 @@
 package org.apache.commons.codec.language.bm;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 /**
  * Tests PhoneticEngine.
@@ -95,5 +99,27 @@ class PhoneticEngineTest {
         final PhoneticEngine engine = new PhoneticEngine(nameType, ruleType, concat, maxPhonemes);
 
         assertEquals(engine.encode(input), phoneticExpected);
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = { -1, 0, 10, 666 })
+    void testRejectsOversizedInputBeforeLanguageGuessing(final int configuredLimit) throws Exception {
+        final PhoneticEngine engine = PhoneticEngine.builder().setMaxInputLength(configuredLimit).get();
+        final int limit = configuredLimit < 0 ? 666 : configuredLimit;
+        final char[] chars = new char[limit + 1];
+        Arrays.fill(chars, 'a');
+        final String input = new String(chars);
+
+        // Make language guessing fail if reached, without changing the shared Lang instance or relying on timing.
+        final Field langField = PhoneticEngine.class.getDeclaredField("lang");
+        langField.setAccessible(true);
+        langField.set(engine, null);
+        assertThrows(NullPointerException.class, () -> engine.encode(input.substring(1)));
+
+        final String message = "Input is greater than maxInputLength (" + limit + ").";
+        assertEquals(message, assertThrows(IllegalArgumentException.class, () -> engine.encode(input)).getMessage());
+        assertEquals(message, assertThrows(IllegalArgumentException.class, () -> engine.encode(input, Languages.ANY_LANGUAGE)).getMessage());
+        final BeiderMorseEncoder encoder = BeiderMorseEncoder.builder().setPhoneticEngine(engine).get();
+        assertEquals(message, assertThrows(IllegalArgumentException.class, () -> encoder.encode(input)).getMessage());
     }
 }

@@ -476,6 +476,11 @@ public class PhoneticEngine {
      * @throws IllegalArgumentException if the input is longer than the maximum allowed length.
      */
     public String encode(final String input) {
+        // enforce the input length limit before language guessing runs over the input,
+        // so over-limit input cannot buy a full multi-pass scan before the guard fires
+        if (input.length() > maxInputLength) {
+            throw new IllegalArgumentException("Input is greater than maxInputLength (" + maxInputLength + ").");
+        }
         return encode(input, lang.guessLanguages(input));
     }
 
