@@ -45,8 +45,29 @@ import org.apache.commons.codec.EncoderException;
  * successfully decoded input reproduces the input byte for byte. This includes the configured alphabet, padding, line length, and line separator, including
  * the final line separator when chunking is enabled. Whitespace and alphabet aliases are rejected unless the encoder produces them in that position.</p>
  *
- * <p>Strict validation completes only at the end of the input. When decoding streams, consume the input stream to EOF or finish the output stream with
- * {@link BaseNCodecOutputStream#eof()} or {@link BaseNCodecOutputStream#close()}. A stream can emit decoded bytes before a later validation error.</p>
+ * <p>
+ * Lenient decoding can map different encoded values to the same bytes. If an application uses encoded values as identifiers for blocklists, replay caches,
+ * or deduplication, validate canonical input before comparing those identifiers, or compare a consistently normalized representation throughout the
+ * application. Decoding alone does not authenticate input; signature verification must use the representation required by the signing protocol.
+ * </p>
+ *
+ * <p>
+ * For example, select canonical Base32 decoding with:
+ * </p>
+ *
+ * <pre>
+ * Base32 base32 = Base32.builder().setDecodingPolicy(CodecPolicy.STRICT).get();
+ * </pre>
+ *
+ * <p>
+ * This instance requires the uppercase Base32 alphabet, padding for partial blocks, and no line separators. See {@link Base64} for standard and URL-safe
+ * Base64 examples.
+ * </p>
+ *
+ * <p>
+ * Strict validation completes only at the end of the input. When decoding streams, consume the input stream to EOF or finish the output stream with
+ * {@link BaseNCodecOutputStream#eof()} or {@link BaseNCodecOutputStream#close()}. A stream can emit decoded bytes before a later validation error.
+ * </p>
  */
 public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
 
@@ -669,6 +690,9 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     /**
      * Decodes a byte[] containing characters in the Base-N alphabet.
      *
+     * <p>Uses this instance's decoding policy. Lenient decoding can accept multiple representations of the same bytes. For canonical Base32 or Base64 input,
+     * configure {@link CodecPolicy#STRICT}; see the class documentation for examples and guidance on comparing encoded values.</p>
+     *
      * @param array A byte array containing Base-N character data.
      * @return A byte array containing binary data.
      * @throws IllegalArgumentException Thrown when a problem is detected processing data.
@@ -703,6 +727,9 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * Decodes an Object using the Base-N algorithm. This method is provided in order to satisfy the requirements of the Decoder interface, and will throw a
      * DecoderException if the supplied object is not of type byte[] or String.
      *
+     * <p>Uses this instance's decoding policy. Lenient decoding can accept multiple representations of the same bytes. For canonical Base32 or Base64 input,
+     * configure {@link CodecPolicy#STRICT}; see the class documentation for examples and guidance on comparing encoded values.</p>
+     *
      * @param obj Object to decode.
      * @return An object (of type byte[]) containing the binary data which corresponds to the byte[] or String supplied.
      * @throws DecoderException if the parameter supplied is not of type byte[].
@@ -721,6 +748,9 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
 
     /**
      * Decodes a String containing characters in the Base-N alphabet.
+     *
+     * <p>Uses this instance's decoding policy. Lenient decoding can accept multiple representations of the same bytes. For canonical Base32 or Base64 input,
+     * configure {@link CodecPolicy#STRICT}; see the class documentation for examples and guidance on comparing encoded values.</p>
      *
      * @param array A String containing Base-N character data.
      * @return A byte array containing binary data.

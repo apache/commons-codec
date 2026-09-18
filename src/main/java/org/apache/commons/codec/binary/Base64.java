@@ -69,6 +69,21 @@ import org.apache.commons.codec.CodecPolicy;
  *   .get()
  * </pre>
  *
+ * <p>
+ * The static decoding convenience methods use {@link CodecPolicy#LENIENT}. They accept noncanonical input, so different encoded strings can decode to the
+ * same bytes. Selecting a standard or URL-safe decode table does not enable strict validation. To require canonical input, configure a strict instance:
+ * </p>
+ *
+ * <pre>
+ * Base64 standard = Base64.builder().setDecodingPolicy(CodecPolicy.STRICT).get();
+ * Base64 urlSafe = Base64.builder().setUrlSafe(true).setDecodingPolicy(CodecPolicy.STRICT).get();
+ * </pre>
+ *
+ * <p>
+ * These instances accept unchunked input using their respective encoding alphabets. The standard instance requires padding for partial blocks; the URL-safe
+ * instance requires unpadded input. See {@link BaseNCodec} for the full canonical decoding contract and guidance on comparing encoded values.
+ * </p>
+ *
  * @see Base64InputStream
  * @see Base64OutputStream
  * @see <a href="https://www.ietf.org/rfc/rfc2045">RFC 2045 Multipurpose Internet Mail Extensions (MIME) Part One: Format of Internet Message Bodies</a>
@@ -382,12 +397,14 @@ public class Base64 extends BaseNCodec {
     }
 
     /**
-     * Decodes Base64 data into octets.
-     * <p>
-     * This method seamlessly handles data encoded in URL-safe or normal mode. For enforcing verification against strict standard Base64 or Base64 URL-safe
-     * tables, please use {@link #decodeBase64Standard(byte[])} or {@link #decodeBase64UrlSafe(byte[])} methods respectively. This method skips unknown or
-     * unsupported bytes.
-     * </p>
+     * Decodes Base64 data into octets using lenient decoding.
+     *
+     * <p>This method uses the standard and URL-safe alphabets. It skips unsupported input, discards data after the first padding character, and accepts
+     * noncanonical padding and trailing bits. Different encoded inputs can therefore produce the same decoded bytes. This method does not validate canonical
+     * input.</p>
+     *
+     * <p>For canonical decoding, use {@code Base64.builder().setDecodingPolicy(CodecPolicy.STRICT).get().decode(base64Data)}.
+     * See {@link BaseNCodec} for guidance on comparing encoded values.</p>
      *
      * @param base64Data Byte array containing Base64 data.
      * @return New array containing decoded data.
@@ -398,12 +415,14 @@ public class Base64 extends BaseNCodec {
     }
 
     /**
-     * Decodes a Base64 String into octets.
-     * <p>
-     * This method seamlessly handles data encoded in URL-safe or normal mode. For enforcing verification against strict standard Base64 or Base64 URL-safe
-     * tables, please use {@link #decodeBase64Standard(String)} or {@link #decodeBase64UrlSafe(String)} methods respectively. This method skips unknown or
-     * unsupported bytes.
-     * </p>
+     * Decodes a Base64 string into octets using lenient decoding.
+     *
+     * <p>This method uses the standard and URL-safe alphabets. It skips unsupported input, discards data after the first padding character, and accepts
+     * noncanonical padding and trailing bits. Different encoded inputs can therefore produce the same decoded bytes. This method does not validate canonical
+     * input.</p>
+     *
+     * <p>For canonical decoding, use {@code Base64.builder().setDecodingPolicy(CodecPolicy.STRICT).get().decode(base64String)}.
+     * See {@link BaseNCodec} for guidance on comparing encoded values.</p>
      *
      * @param base64String String containing Base64 data.
      * @return New array containing decoded data.
@@ -415,11 +434,13 @@ public class Base64 extends BaseNCodec {
     }
 
     /**
-     * Decodes standard Base64 data into octets.
-     * <p>
-     * This implementation is aligned with the <a href="https://www.ietf.org/rfc/rfc2045#:~:text=Table%201%3A%20The%20Base64%20Alphabet">RFC 2045 Table 1: The
-     * Base64 Alphabet</a>. This method skips unknown or unsupported bytes.
-     * </p>
+     * Decodes standard Base64 data into octets using lenient decoding.
+     *
+     * <p>This method uses the standard alphabet. It skips unsupported input, discards data after the first padding character, and accepts noncanonical
+     * padding and trailing bits. Different encoded inputs can therefore produce the same decoded bytes. This method does not validate canonical input.</p>
+     *
+     * <p>For canonical decoding, use {@code Base64.builder().setDecodingPolicy(CodecPolicy.STRICT).get().decode(base64Data)}.
+     * See {@link BaseNCodec} for guidance on comparing encoded values.</p>
      *
      * @param base64Data Byte array containing Base64 data.
      * @return New array containing decoded data.
@@ -431,11 +452,13 @@ public class Base64 extends BaseNCodec {
     }
 
     /**
-     * Decodes a standard Base64 String into octets.
-     * <p>
-     * This implementation is aligned with the <a href="https://www.ietf.org/rfc/rfc2045#:~:text=Table%201%3A%20The%20Base64%20Alphabet">RFC 2045 Table 1: The
-     * Base64 Alphabet</a>. This method skips unknown or unsupported characters.
-     * </p>
+     * Decodes a standard Base64 string into octets using lenient decoding.
+     *
+     * <p>This method uses the standard alphabet. It skips unsupported input, discards data after the first padding character, and accepts noncanonical
+     * padding and trailing bits. Different encoded inputs can therefore produce the same decoded bytes. This method does not validate canonical input.</p>
+     *
+     * <p>For canonical decoding, use {@code Base64.builder().setDecodingPolicy(CodecPolicy.STRICT).get().decode(base64String)}.
+     * See {@link BaseNCodec} for guidance on comparing encoded values.</p>
      *
      * @param base64String String containing Base64 data.
      * @return New array containing decoded data.
@@ -447,12 +470,13 @@ public class Base64 extends BaseNCodec {
     }
 
     /**
-     * Decodes URL-safe Base64 data into octets.
-     * <p>
-     * This implementation is aligned with
-     * <a href="https://datatracker.ietf.org/doc/html/rfc4648#:~:text=Table%202%3A%20The%20%22URL%20and%20Filename%20safe%22%20Base%2064%20Alphabet">RFC 4648
-     * Table 2: The "URL and Filename safe" Base 64 Alphabet</a>. This method skips unknown or unsupported characters.
-     * </p>
+     * Decodes URL-safe Base64 data into octets using lenient decoding.
+     *
+     * <p>This method uses the URL-safe alphabet. It skips unsupported input, discards data after the first padding character, and accepts noncanonical
+     * padding and trailing bits. Different encoded inputs can therefore produce the same decoded bytes. This method does not validate canonical input.</p>
+     *
+     * <p>For canonical decoding, use {@code Base64.builder().setUrlSafe(true).setDecodingPolicy(CodecPolicy.STRICT).get().decode(base64Data)}.
+     * See {@link BaseNCodec} for guidance on comparing encoded values.</p>
      *
      * @param base64Data Byte array containing Base64 data.
      * @return New array containing decoded data.
@@ -464,12 +488,13 @@ public class Base64 extends BaseNCodec {
     }
 
     /**
-     * Decodes a URL-safe Base64 String into octets.
-     * <p>
-     * This implementation is aligned with
-     * <a href="https://datatracker.ietf.org/doc/html/rfc4648#:~:text=Table%202%3A%20The%20%22URL%20and%20Filename%20safe%22%20Base%2064%20Alphabet">RFC 4648
-     * Table 2: The "URL and Filename safe" Base 64 Alphabet</a>. This method skips unknown or unsupported characters.
-     * </p>
+     * Decodes a URL-safe Base64 string into octets using lenient decoding.
+     *
+     * <p>This method uses the URL-safe alphabet. It skips unsupported input, discards data after the first padding character, and accepts noncanonical
+     * padding and trailing bits. Different encoded inputs can therefore produce the same decoded bytes. This method does not validate canonical input.</p>
+     *
+     * <p>For canonical decoding, use {@code Base64.builder().setUrlSafe(true).setDecodingPolicy(CodecPolicy.STRICT).get().decode(base64String)}.
+     * See {@link BaseNCodec} for guidance on comparing encoded values.</p>
      *
      * @param base64String String containing Base64 data.
      * @return New array containing decoded data.
@@ -632,9 +657,9 @@ public class Base64 extends BaseNCodec {
     /**
      * Tests whether or not the {@code octet} is in the Base64 alphabet.
      * <p>
-     * This method threats all characters included within standard base64 and base64url encodings as valid base64 characters. This includes the '+' and '/'
-     * (standard base64), as well as '-' and '_' (URL-safe base64) characters. For enforcing verification against strict standard Base64 or Base64 URL-safe
-     * tables, please use {@link #isBase64Standard(byte)} or {@link #isBase64Url(byte)} methods respectively.
+     * This method treats all characters included within standard base64 and base64url encodings as valid base64 characters. This includes the '+' and '/'
+     * (standard base64), as well as '-' and '_' (URL-safe base64) characters. To test membership in only the standard Base64 or Base64 URL-safe
+     * alphabet, use {@link #isBase64Standard(byte)} or {@link #isBase64Url(byte)} methods respectively.
      * </p>
      *
      * @param octet The value to test.
@@ -649,9 +674,12 @@ public class Base64 extends BaseNCodec {
      * Tests a given byte array to see if it contains only valid characters within the Base64 alphabet. Currently the method treats whitespace as valid.
      * <p>
      * This method treats all characters included within standard base64 and base64url encodings as valid base64 characters. This includes the '+' and '/'
-     * (standard base64), as well as '-' and '_' (URL-safe base64) characters. For enforcing verification against strict standard Base64 or Base64 URL-safe
-     * tables, please use {@link #isBase64Standard(byte[])} or {@link #isBase64Url(byte[])} methods respectively.
+     * (standard base64), as well as '-' and '_' (URL-safe base64) characters. To test membership in only the standard Base64 or Base64 URL-safe
+     * alphabet, use {@link #isBase64Standard(byte[])} or {@link #isBase64Url(byte[])} methods respectively.
      * </p>
+     *
+     * <p>This is a character-membership check, not canonical validation. It permits whitespace and padding in any position and does not check trailing bits.
+     * Use an instance configured with {@link CodecPolicy#STRICT} to require canonical input.</p>
      *
      * @param arrayOctet byte array to test.
      * @return {@code true} if all bytes are valid characters in the Base64 alphabet or if the byte array is empty; {@code false}, otherwise.
@@ -669,10 +697,13 @@ public class Base64 extends BaseNCodec {
     /**
      * Tests a given String to see if it contains only valid characters within the Base64 alphabet. Currently the method treats whitespace as valid.
      * <p>
-     * This method threats all characters included within standard base64 and base64url encodings as valid base64 characters. This includes the '+' and '/'
-     * (standard base64), as well as '-' and '_' (URL-safe base64) characters. For enforcing verification against strict standard Base64 or Base64 URL-safe
-     * tables, please use {@link #isBase64Standard(String)} or {@link #isBase64Url(String)} methods respectively.
+     * This method treats all characters included within standard base64 and base64url encodings as valid base64 characters. This includes the '+' and '/'
+     * (standard base64), as well as '-' and '_' (URL-safe base64) characters. To test membership in only the standard Base64 or Base64 URL-safe
+     * alphabet, use {@link #isBase64Standard(String)} or {@link #isBase64Url(String)} methods respectively.
      * </p>
+     *
+     * <p>This is a character-membership check, not canonical validation. It permits whitespace and padding in any position and does not check trailing bits.
+     * Use an instance configured with {@link CodecPolicy#STRICT} to require canonical input.</p>
      *
      * @param base64 String to test.
      * @return {@code true} if all characters in the String are valid characters in the Base64 alphabet or if the String is empty; {@code false}, otherwise.
@@ -704,6 +735,9 @@ public class Base64 extends BaseNCodec {
      * Base64 Alphabet</a>.
      * </p>
      *
+     * <p>This is a character-membership check, not canonical validation. It permits whitespace and padding in any position and does not check trailing bits.
+     * Use an instance configured with {@link CodecPolicy#STRICT} to require canonical input.</p>
+     *
      * @param arrayOctet byte array to test.
      * @return {@code true} if all bytes are valid characters in the standard Base64 alphabet. {@code false}, otherwise.
      * @since 1.21
@@ -723,6 +757,9 @@ public class Base64 extends BaseNCodec {
      * This implementation is aligned with <a href="https://www.ietf.org/rfc/rfc2045#:~:text=Table%201%3A%20The%20Base64%20Alphabet">RFC 2045 Table 1: The
      * Base64 Alphabet</a>.
      * </p>
+     *
+     * <p>This is a character-membership check, not canonical validation. It permits whitespace and padding in any position and does not check trailing bits.
+     * Use an instance configured with {@link CodecPolicy#STRICT} to require canonical input.</p>
      *
      * @param base64 String to test.
      * @return {@code true} if all characters in the String are valid characters in the standard Base64 alphabet or if the String is empty; {@code false},
@@ -757,6 +794,9 @@ public class Base64 extends BaseNCodec {
      * Table 2: The "URL and Filename safe" Base 64 Alphabet</a>.
      * </p>
      *
+     * <p>This is a character-membership check, not canonical validation. It permits whitespace and padding in any position and does not check trailing bits.
+     * Use an instance configured with {@link CodecPolicy#STRICT} to require canonical input.</p>
+     *
      * @param arrayOctet byte array to test.
      * @return {@code true} if all bytes are valid characters in the URL-safe Base64 alphabet, {@code false}, otherwise.
      * @since 1.21
@@ -777,6 +817,9 @@ public class Base64 extends BaseNCodec {
      * <a href="https://datatracker.ietf.org/doc/html/rfc4648#:~:text=Table%202%3A%20The%20%22URL%20and%20Filename%20safe%22%20Base%2064%20Alphabet">RFC 4648
      * Table 2: The "URL and Filename safe" Base 64 Alphabet</a>.
      * </p>
+     *
+     * <p>This is a character-membership check, not canonical validation. It permits whitespace and padding in any position and does not check trailing bits.
+     * Use an instance configured with {@link CodecPolicy#STRICT} to require canonical input.</p>
      *
      * @param base64 String to test.
      * @return {@code true} if all characters in the String are valid characters in the URL-safe Base64 alphabet or if the String is empty; {@code false},
