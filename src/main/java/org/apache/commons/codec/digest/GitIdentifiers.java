@@ -70,6 +70,20 @@ public class GitIdentifiers {
      */
     static class DirectoryEntry implements Comparable<DirectoryEntry> {
 
+        private static String requireValidName(final String name) {
+            Objects.requireNonNull(name, "name");
+            if (name.isEmpty() || ".".equals(name) || "..".equals(name)) {
+                throw new IllegalArgumentException("Entry name must not be empty, '.' or '..'");
+            }
+            if (name.indexOf('/') >= 0 || name.indexOf('\0') >= 0) {
+                throw new IllegalArgumentException("Entry name must not contain '/' or NUL");
+            }
+            if (!StandardCharsets.UTF_8.newEncoder().canEncode(name)) {
+                throw new IllegalArgumentException("Entry name must not contain unpaired surrogates");
+            }
+            return name;
+        }
+
         /**
          * The entry name (file or directory name, no path separator).
          */
@@ -95,15 +109,12 @@ public class GitIdentifiers {
         /**
          * Constructs a new entry.
          *
-         * @param name The name of the entry, not containing {@code '/'}.
+         * @param name The nonempty entry name, not {@code .} or {@code ..}, without {@code '/'}, NUL or unpaired surrogates.
          * @param type The type of the entry, not null.
          * @param rawObjectId The id of the entry, not null.
          */
         DirectoryEntry(final String name, final FileMode type, final byte[] rawObjectId) {
-            if (Objects.requireNonNull(name, "name").indexOf('/') >= 0) {
-                throw new IllegalArgumentException("Entry name must not contain '/': " + name);
-            }
-            this.name = name;
+            this.name = requireValidName(name);
             this.type = Objects.requireNonNull(type, "type");
             this.sortKey = (type == FileMode.DIRECTORY ? name + "/" : name).getBytes(StandardCharsets.UTF_8);
             this.rawObjectId = Objects.requireNonNull(rawObjectId, "rawObjectId");
@@ -225,13 +236,6 @@ public class GitIdentifiers {
             byte[] get() throws IOException;
         }
 
-        private static String requireNoParentTraversal(final String name) {
-            if ("..".equals(name)) {
-                throw new IllegalArgumentException("Path component not allowed: " + name);
-            }
-            return name;
-        }
-
         private final Map<String, TreeIdBuilder> dirEntries = new HashMap<>();
         private final Map<String, DirectoryEntry> fileEntries = new HashMap<>();
         private final MessageDigest messageDigest;
@@ -245,7 +249,7 @@ public class GitIdentifiers {
          *
          * @param name The relative path of the subdirectory in normalized form (may contain {@code '/'}).
          * @return The {@link TreeIdBuilder} for the subdirectory.
-         * @throws IllegalArgumentException If any path component is {@code ".."}.
+         * @throws IllegalArgumentException If any path component is {@code ".."}, contains NUL or contains unpaired surrogates.
          */
         public TreeIdBuilder addDirectory(final String name) {
             TreeIdBuilder current = this;
@@ -254,7 +258,7 @@ public class GitIdentifiers {
                 if (component.isEmpty() || ".".equals(component)) {
                     continue;
                 }
-                current = current.dirEntries.computeIfAbsent(requireNoParentTraversal(component), k -> new TreeIdBuilder(messageDigest));
+                current = current.dirEntries.computeIfAbsent(DirectoryEntry.requireValidName(component), k -> new TreeIdBuilder(messageDigest));
             }
             return current;
         }
@@ -262,7 +266,8 @@ public class GitIdentifiers {
         private void addFile(final FileMode mode, final String name, final BlobIdSupplier blobId) throws IOException {
             final int slash = name.lastIndexOf('/');
             if (slash < 0) {
-                fileEntries.put(name, new DirectoryEntry(requireNoParentTraversal(name), mode, blobId.get()));
+                DirectoryEntry.requireValidName(name);
+                fileEntries.put(name, new DirectoryEntry(name, mode, blobId.get()));
             } else {
                 addDirectory(name.substring(0, slash)).addFile(mode, name.substring(slash + 1), blobId);
             }
@@ -277,7 +282,8 @@ public class GitIdentifiers {
          * @param name The relative path of the entry in normalized form(may contain {@code '/'}).
          * @param data The file content.
          * @throws IOException If an I/O error occurs.
-         * @throws IllegalArgumentException If any path component is {@code ".."}.
+         * @throws IllegalArgumentException If the entry name is empty or {@code "."}, or any path component is {@code ".."}, contains NUL or contains unpaired
+         *                                  surrogates.
          */
         public void addFile(final FileMode mode, final String name, final byte[] data) throws IOException {
             addFile(mode, name, () -> blobId(messageDigest, data));
@@ -295,7 +301,8 @@ public class GitIdentifiers {
          * @param dataSize The exact number of bytes in {@code data}.
          * @param data     The file content.
          * @throws IOException If the stream cannot be read.
-         * @throws IllegalArgumentException If any path component is {@code ".."}.
+         * @throws IllegalArgumentException If the entry name is empty or {@code "."}, or any path component is {@code ".."}, contains NUL or contains unpaired
+         *                                  surrogates.
          */
         public void addFile(final FileMode mode, final String name, final long dataSize, final InputStream data) throws IOException {
             addFile(mode, name, () -> blobId(messageDigest, dataSize, data));
@@ -309,7 +316,8 @@ public class GitIdentifiers {
          * @param name The relative path of the entry in normalized form(may contain {@code '/'}).
          * @param target The target of the symbolic link.
          * @throws IOException If an I/O error occurs.
-         * @throws IllegalArgumentException If any path component is {@code ".."}.
+         * @throws IllegalArgumentException If the entry name is empty or {@code "."}, or any path component is {@code ".."}, contains NUL or contains unpaired
+         *                                  surrogates.
          */
         public void addSymbolicLink(final String name, final String target) throws IOException {
             addFile(FileMode.SYMBOLIC_LINK, name, target.getBytes(StandardCharsets.UTF_8));
@@ -319,9 +327,15 @@ public class GitIdentifiers {
          * Computes the Git tree identifier for this directory and all its descendants.
          *
          * @return The raw tree identifier bytes.
+         * @throws IllegalStateException If a file and a directory have the same name in this directory or any descendant.
          */
         @Override
         public byte[] get() {
+            for (final String name : dirEntries.keySet()) {
+                if (fileEntries.containsKey(name)) {
+                    throw new IllegalStateException("File and directory have the same name: " + name);
+                }
+            }
             final Set<DirectoryEntry> entries = new TreeSet<>(fileEntries.values());
             dirEntries.forEach((k, v) -> entries.add(new DirectoryEntry(k, FileMode.DIRECTORY, v.get())));
             final ByteArrayOutputStream baos = new ByteArrayOutputStream();

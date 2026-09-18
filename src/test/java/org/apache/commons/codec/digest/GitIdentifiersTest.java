@@ -223,51 +223,6 @@ class GitIdentifiersTest {
     }
 
     /**
-     * Tree entry names are ordered by their UTF-8 bytes, which is not the order {@link String#compareTo(String)} gives when a supplementary character meets a
-     * Basic Multilingual Plane character from U+E000 up: U+FF21 encodes to {@code EF BC A1} and U+1F600 to {@code F0 9F 98 80}, so Git sorts U+FF21 first, while
-     * the UTF-16 code units place the surrogate pair of U+1F600 first.
-     *
-     * <p>The expected identifier is the one {@code git write-tree} produces for a tree holding the same two entries.</p>
-     */
-    @Test
-    void testTreeIdSortsSupplementaryPlaneNamesLikeGit(@TempDir final Path tempDir) throws Exception {
-        final String fullWidthA = "\uFF21";
-        final String grinningFace = "\uD83D\uDE00";
-        final byte[] content = "x".getBytes(StandardCharsets.UTF_8);
-        final String expected = "9f9c1fc3580195f51d3e71b384ef1d57740e2151";
-        final MessageDigest md = DigestUtils.getSha1Digest();
-
-        // Entries are added in the wrong order on purpose, so only the sort decides the result.
-        final GitIdentifiers.TreeIdBuilder builder = GitIdentifiers.treeIdBuilder(md);
-        builder.addFile(GitIdentifiers.FileMode.REGULAR, grinningFace, content);
-        builder.addFile(GitIdentifiers.FileMode.REGULAR, fullWidthA, content);
-        assertEquals(expected, Hex.encodeHexString(builder.get()));
-
-        try {
-            Files.write(tempDir.resolve(fullWidthA), content);
-            Files.write(tempDir.resolve(grinningFace), content);
-        } catch (final IOException e) {
-            Assumptions.abort("Filesystem cannot hold the test entry names: " + e);
-        }
-        assertEquals(expected, Hex.encodeHexString(GitIdentifiers.treeId(md, tempDir)));
-    }
-
-    /**
-     * A lone surrogate encodes to {@code ?} in UTF-8, the same byte as a question mark, so the two names share a sort key; both entries must stay in the tree.
-     */
-    @Test
-    void testTreeIdKeepsNamesWithTheSameUtf8Bytes() throws Exception {
-        final byte[] content = "x".getBytes(StandardCharsets.UTF_8);
-        final MessageDigest md = DigestUtils.getSha1Digest();
-        final GitIdentifiers.TreeIdBuilder one = GitIdentifiers.treeIdBuilder(md);
-        one.addFile(GitIdentifiers.FileMode.REGULAR, "?", content);
-        final GitIdentifiers.TreeIdBuilder both = GitIdentifiers.treeIdBuilder(md);
-        both.addFile(GitIdentifiers.FileMode.REGULAR, "?", content);
-        both.addFile(GitIdentifiers.FileMode.REGULAR, "\uD800", content);
-        assertNotEquals(Hex.encodeHexString(one.get()), Hex.encodeHexString(both.get()));
-    }
-
-    /**
      * Entries should be sorted by Git sort rule.
      *
      * <p>Git compares the names of the entries, but adds a {@code /} at the end of directory entries.</p>
@@ -282,6 +237,36 @@ class GitIdentifiersTest {
         final List<DirectoryEntry> entries = new ArrayList<>(Arrays.asList(zeta, foobar, fooDir, alpha, fooTxt));
         entries.sort(DirectoryEntry::compareTo);
         assertEquals(Arrays.asList(alpha, fooTxt, fooDir, foobar, zeta), entries);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"..", "bad\0dir", "\uD800", "\uDC00"})
+    void testRejectsInvalidDirectoryNames(final String name) {
+        final GitIdentifiers.TreeIdBuilder builder = GitIdentifiers.treeIdBuilder(DigestUtils.getSha1Digest());
+        assertThrows(IllegalArgumentException.class, () -> builder.addDirectory("parent/" + name));
+        assertThrows(IllegalArgumentException.class, () -> builder.addFile(GitIdentifiers.FileMode.REGULAR, name + "/file", HELLO_CONTENT));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"", ".", "..", "a\0b", "\uD800", "\uDC00", "a\uD800b", "\uD800\uD800", "\uDC00\uD800"})
+    void testRejectsInvalidEntryNames(final String name) {
+        assertThrows(IllegalArgumentException.class, () -> new DirectoryEntry(name, GitIdentifiers.FileMode.REGULAR, ZERO_ID));
+        final GitIdentifiers.TreeIdBuilder builder = GitIdentifiers.treeIdBuilder(DigestUtils.getSha1Digest());
+        assertThrows(IllegalArgumentException.class, () -> builder.addFile(GitIdentifiers.FileMode.REGULAR, name, HELLO_CONTENT));
+        assertThrows(IllegalArgumentException.class,
+                () -> builder.addFile(GitIdentifiers.FileMode.REGULAR, name, HELLO_CONTENT.length, new ByteArrayInputStream(HELLO_CONTENT)));
+        assertThrows(IllegalArgumentException.class, () -> builder.addSymbolicLink(name, "target"));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"?", "a\nb", "\uD83D\uDE00"})
+    void testTreeIdAcceptsValidEntryNames(final String name) throws Exception {
+        final GitIdentifiers.TreeIdBuilder builder = GitIdentifiers.treeIdBuilder(DigestUtils.getSha1Digest());
+        builder.addFile(GitIdentifiers.FileMode.REGULAR, name, HELLO_CONTENT);
+        assertEquals(20, builder.get().length);
+        final GitIdentifiers.TreeIdBuilder directory = GitIdentifiers.treeIdBuilder(DigestUtils.getSha1Digest());
+        directory.addDirectory(name).addFile(GitIdentifiers.FileMode.REGULAR, "file", HELLO_CONTENT);
+        assertEquals(20, directory.get().length);
     }
 
     @ParameterizedTest
@@ -419,5 +404,71 @@ class GitIdentifiersTest {
         // Check trees
         assertArrayEquals(mainTreeId, GitIdentifiers.treeId(md, tempDir));
         assertArrayEquals(srcTreeId, GitIdentifiers.treeId(md, src));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"x", "parent/x"})
+    void testTreeIdRejectsFileDirectoryConflicts(final String name) throws Exception {
+        final GitIdentifiers.TreeIdBuilder fileFirst = GitIdentifiers.treeIdBuilder(DigestUtils.getSha1Digest());
+        fileFirst.addFile(GitIdentifiers.FileMode.REGULAR, name, HELLO_CONTENT);
+        fileFirst.addDirectory(name);
+        assertThrows(IllegalStateException.class, fileFirst::get);
+        final GitIdentifiers.TreeIdBuilder directoryFirst = GitIdentifiers.treeIdBuilder(DigestUtils.getSha1Digest());
+        directoryFirst.addDirectory(name);
+        directoryFirst.addSymbolicLink(name, "target");
+        assertThrows(IllegalStateException.class, directoryFirst::get);
+    }
+
+    @Test
+    void testTreeIdRejectsNulSerializationCollision() throws Exception {
+        final MessageDigest md = DigestUtils.getSha1Digest();
+        final byte[] a = "2161978".getBytes(StandardCharsets.UTF_8);
+        final byte[] b = "payload".getBytes(StandardCharsets.UTF_8);
+        final byte[] blobId = GitIdentifiers.blobId(md, a);
+        assertEquals("615d6b396b134e0c1a617b0b7050632d627d154f", Hex.encodeHexString(blobId));
+        final GitIdentifiers.TreeIdBuilder legitimate = GitIdentifiers.treeIdBuilder(md);
+        legitimate.addFile(GitIdentifiers.FileMode.REGULAR, "a", a);
+        legitimate.addFile(GitIdentifiers.FileMode.REGULAR, "b", b);
+        assertEquals("cb1e930df28b6dc3ab8933ff7a8d233f1c189460", Hex.encodeHexString(legitimate.get()));
+        // Without validation this single entry serializes identically to the legitimate two-entry tree.
+        final String forgedName = "a\0" + new String(blobId, StandardCharsets.UTF_8) + "100644 b";
+        final GitIdentifiers.TreeIdBuilder forged = GitIdentifiers.treeIdBuilder(md);
+        assertThrows(IllegalArgumentException.class, () -> forged.addFile(GitIdentifiers.FileMode.REGULAR, forgedName, b));
+    }
+
+    @Test
+    void testTreeIdRejectsTrailingSlash() {
+        final GitIdentifiers.TreeIdBuilder builder = GitIdentifiers.treeIdBuilder(DigestUtils.getSha1Digest());
+        assertThrows(IllegalArgumentException.class, () -> builder.addFile(GitIdentifiers.FileMode.REGULAR, "dir/", HELLO_CONTENT));
+    }
+
+    /**
+     * Tree entry names are ordered by their UTF-8 bytes, which is not the order {@link String#compareTo(String)} gives when a supplementary character meets a
+     * Basic Multilingual Plane character from U+E000 up: U+FF21 encodes to {@code EF BC A1} and U+1F600 to {@code F0 9F 98 80}, so Git sorts U+FF21 first, while
+     * the UTF-16 code units place the surrogate pair of U+1F600 first.
+     *
+     * <p>The expected identifier is the one {@code git write-tree} produces for a tree holding the same two entries.</p>
+     */
+    @Test
+    void testTreeIdSortsSupplementaryPlaneNamesLikeGit(@TempDir final Path tempDir) throws Exception {
+        final String fullWidthA = "\uFF21";
+        final String grinningFace = "\uD83D\uDE00";
+        final byte[] content = "x".getBytes(StandardCharsets.UTF_8);
+        final String expected = "9f9c1fc3580195f51d3e71b384ef1d57740e2151";
+        final MessageDigest md = DigestUtils.getSha1Digest();
+
+        // Entries are added in the wrong order on purpose, so only the sort decides the result.
+        final GitIdentifiers.TreeIdBuilder builder = GitIdentifiers.treeIdBuilder(md);
+        builder.addFile(GitIdentifiers.FileMode.REGULAR, grinningFace, content);
+        builder.addFile(GitIdentifiers.FileMode.REGULAR, fullWidthA, content);
+        assertEquals(expected, Hex.encodeHexString(builder.get()));
+
+        try {
+            Files.write(tempDir.resolve(fullWidthA), content);
+            Files.write(tempDir.resolve(grinningFace), content);
+        } catch (final IOException e) {
+            Assumptions.abort("Filesystem cannot hold the test entry names: " + e);
+        }
+        assertEquals(expected, Hex.encodeHexString(GitIdentifiers.treeId(md, tempDir)));
     }
 }
