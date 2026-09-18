@@ -251,6 +251,22 @@ class Base45Test {
     }
 
     /**
+     * Tests that non-alphabet whitespace is rejected, including within groups and at the start and end of the input.
+     */
+    @ParameterizedTest
+    @ValueSource(strings = { "\r", "\n", "\t", "\r\n", "\u000B", "\f", "\u001C", "\u001D", "\u001E", "\u001F" })
+    void testDecodeRejectsNonAlphabetWhitespace(final String whitespace) {
+        final Base45 codec = new Base45();
+        assertThrows(IllegalArgumentException.class, () -> codec.decode(whitespace));
+        final String encoded = "QED8WEX0";
+        for (int i = 0; i <= encoded.length(); i++) {
+            final String input = encoded.substring(0, i) + whitespace + encoded.substring(i);
+            assertThrows(IllegalArgumentException.class, () -> codec.decode(input));
+            assertThrows(IllegalArgumentException.class, () -> codec.decode(input.getBytes(StandardCharsets.US_ASCII)));
+        }
+    }
+
+    /**
      * Tests the RFC 9285 Section 4.4 decoding test vectors.
      */
     @Test
@@ -279,22 +295,6 @@ class Base45Test {
     @Test
     void testDecodeSingleZero() {
         assertArrayEquals(new byte[] { 0 }, new Base45().decode("00"));
-    }
-
-    /**
-     * Tests that non-alphabet whitespace is rejected, including within groups and at the start and end of the input.
-     */
-    @ParameterizedTest
-    @ValueSource(strings = { "\r", "\n", "\t", "\r\n", "\u000B", "\f", "\u001C", "\u001D", "\u001E", "\u001F" })
-    void testDecodeRejectsNonAlphabetWhitespace(final String whitespace) {
-        final Base45 codec = new Base45();
-        assertThrows(IllegalArgumentException.class, () -> codec.decode(whitespace));
-        final String encoded = "QED8WEX0";
-        for (int i = 0; i <= encoded.length(); i++) {
-            final String input = encoded.substring(0, i) + whitespace + encoded.substring(i);
-            assertThrows(IllegalArgumentException.class, () -> codec.decode(input));
-            assertThrows(IllegalArgumentException.class, () -> codec.decode(input.getBytes(StandardCharsets.US_ASCII)));
-        }
     }
 
     /**
