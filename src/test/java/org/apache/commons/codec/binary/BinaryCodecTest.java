@@ -30,6 +30,8 @@ import org.apache.commons.codec.EncoderException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 /**
  * TestCase for BinaryCodec class.
@@ -187,6 +189,40 @@ class BinaryCodecTest {
         bits[0] = (byte) (BIT_0 | BIT_1 | BIT_2 | BIT_3 | BIT_4 | BIT_5 | BIT_6 | BIT_7);
         decoded = instance.decode("1111111111111111".getBytes(CHARSET_UTF8));
         assertEquals(new String(bits), new String(decoded));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = { "x", "x00000000", "0000000x", "00000002", "10x0zZ!1", "0000000 ", "0000000\n", "0000000\u0000",
+            "0000000\u00ff", "0000000\uff11", "0000000x00000000" })
+    void testDecodeInvalidInput(final String ascii) {
+        final byte[] bytes = ascii.getBytes(CHARSET_UTF8);
+        final char[] chars = ascii.toCharArray();
+        assertThrows(IllegalArgumentException.class, () -> BinaryCodec.fromAscii(bytes));
+        assertThrows(IllegalArgumentException.class, () -> BinaryCodec.fromAscii(chars));
+        assertThrows(IllegalArgumentException.class, () -> instance.decode(bytes));
+        assertThrows(IllegalArgumentException.class, () -> instance.decode((Object) bytes));
+        assertThrows(IllegalArgumentException.class, () -> instance.decode((Object) chars));
+        assertThrows(IllegalArgumentException.class, () -> instance.decode((Object) ascii));
+        assertThrows(IllegalArgumentException.class, () -> instance.toByteArray(ascii));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = { "1", "11", "111", "1111", "11111", "111111", "1111111" })
+    void testDecodeNonAlignedInput(final String prefix) throws DecoderException {
+        // Preserve truncation of valid leading bits, including inputs shorter than one byte.
+        assertArrayEquals(new byte[0], BinaryCodec.fromAscii(prefix.getBytes(CHARSET_UTF8)));
+        assertArrayEquals(new byte[0], BinaryCodec.fromAscii(prefix.toCharArray()));
+        final String ascii = prefix + "00000001";
+        final byte[] bytes = ascii.getBytes(CHARSET_UTF8);
+        final char[] chars = ascii.toCharArray();
+        final byte[] expected = { BIT_0 };
+        assertArrayEquals(expected, BinaryCodec.fromAscii(bytes));
+        assertArrayEquals(expected, BinaryCodec.fromAscii(chars));
+        assertArrayEquals(expected, instance.decode(bytes));
+        assertArrayEquals(expected, (byte[]) instance.decode((Object) bytes));
+        assertArrayEquals(expected, (byte[]) instance.decode((Object) chars));
+        assertArrayEquals(expected, (byte[]) instance.decode((Object) ascii));
+        assertArrayEquals(expected, instance.toByteArray(ascii));
     }
 
     /**
