@@ -101,6 +101,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
         PRINTABLE_CHARS.set('}');
         PRINTABLE_CHARS.set('~');
     }
+
     private static final byte UNDERSCORE = 95;
 
     private boolean encodeBlanks;
@@ -164,6 +165,12 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     /**
      * Decodes a quoted-printable string into its original form. Escaped characters are converted back to their original
      * representation.
+     *
+     * <p>
+     * Uses {@link QuotedPrintableCodec#decodeQuotedPrintable(byte[])} to decode the encoded text. Since 1.23.0, unescaped CR and LF bytes in malformed
+     * encoded words are preserved rather than discarded, and {@code =CR} without a following LF is rejected. This lenient handling does not make such
+     * encoded words valid under RFC 2047.
+     * </p>
      *
      * @param str
      *            quoted-printable string to convert into its original form.

@@ -17,16 +17,23 @@
 
 package org.apache.commons.codec.net;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.charset.UnsupportedCharsetException;
+import java.util.stream.Stream;
 
 import org.apache.commons.codec.CharEncoding;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
+import org.apache.commons.codec.binary.StringUtils;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -37,6 +44,18 @@ class QuotedPrintableCodecTest {
     static final int[] SWISS_GERMAN_STUFF_UNICODE = { 0x47, 0x72, 0xFC, 0x65, 0x7A, 0x69, 0x5F, 0x7A, 0xE4, 0x6D, 0xE4 };
 
     static final int[] RUSSIAN_STUFF_UNICODE = { 0x412, 0x441, 0x435, 0x43C, 0x5F, 0x43F, 0x440, 0x438, 0x432, 0x435, 0x442 };
+
+    private static Stream<Arguments> softLineBreakBoundaryCases() {
+        // @formatter:off
+        return Stream.of(
+                Arguments.of("=\r\n", ""),
+                Arguments.of("=\r\nA=\r\n", "A"),
+                Arguments.of("A=\r\n=\r\nB", "AB"),
+                Arguments.of("A=\r\n\r\nB", "A\r\nB"),
+                Arguments.of("A\r\n=\r\nB", "A\r\nB"),
+                Arguments.of("A=0D=0AB", "A\r\nB"));
+        // @formatter:on
+    }
 
     private String constructString(final int[] unicodeChars) {
         final StringBuilder buffer = new StringBuilder();
@@ -167,9 +186,40 @@ class QuotedPrintableCodecTest {
         assertEquals(expected, new QuotedPrintableCodec(true).encode(plain));
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = { "Line one\r\nLine two", "SEC\nRET", "SEC\rRET", "\r\n", "\r", "\n", "\r\nA\r\n\r\n" })
+    void testHardLineBreakDecode(final String input) throws Exception {
+        final byte[] bytes = StringUtils.getBytesUsAscii(input);
+        assertArrayEquals(bytes, QuotedPrintableCodec.decodeQuotedPrintable(bytes));
+        for (final boolean strict : new boolean[] { false, true }) {
+            assertEquals(input, new QuotedPrintableCodec(strict).decode(input));
+        }
+    }
+
     @Test
     void testInvalidEncoding() {
         assertThrows(UnsupportedCharsetException.class, () -> new QuotedPrintableCodec("NONSENSE"));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = { "foo=\rbar", "foo=\r", "foo=\nbar", "=\r", "=\n", "=\r\r\n" })
+    void testInvalidSoftLineBreakDecode(final String input) {
+        assertThrows(DecoderException.class, () -> QuotedPrintableCodec.decodeQuotedPrintable(StringUtils.getBytesUsAscii(input)));
+        for (final boolean strict : new boolean[] { false, true }) {
+            assertThrows(DecoderException.class, () -> new QuotedPrintableCodec(strict).decode(input));
+        }
+    }
+
+    @Test
+    void testPreserveNotEncodedCRLF() throws Exception {
+        final String qpdata = "CRLF in an\n encoded text should be=20=\r\n\rpreserved in the\r decoding.";
+        final String expected = "CRLF in an\n encoded text should be \rpreserved in the\r decoding.";
+
+        final QuotedPrintableCodec qpcodec = new QuotedPrintableCodec(true);
+        assertEquals(expected, qpcodec.decode(qpdata));
+
+        final String encoded = qpcodec.encode(expected);
+        assertEquals(expected, qpcodec.decode(encoded));
     }
 
     @Test
@@ -181,16 +231,13 @@ class QuotedPrintableCodecTest {
         assertEquals(plain, qpcodec.decode(encoded), "Safe chars quoted-printable decoding test");
     }
 
-    @Test
-    void testSkipNotEncodedCRLF() throws Exception {
-        final String qpdata = "CRLF in an\n encoded text should be=20=\r\n\rskipped in the\r decoding.";
-        final String expected = "CRLF in an encoded text should be skipped in the decoding.";
-
-        final QuotedPrintableCodec qpcodec = new QuotedPrintableCodec(true);
-        assertEquals(expected, qpcodec.decode(qpdata));
-
-        final String encoded = qpcodec.encode(expected);
-        assertEquals(expected, qpcodec.decode(encoded));
+    @ParameterizedTest
+    @MethodSource("softLineBreakBoundaryCases")
+    void testSoftLineBreakBoundaries(final String input, final String expected) throws Exception {
+        assertArrayEquals(StringUtils.getBytesUsAscii(expected), QuotedPrintableCodec.decodeQuotedPrintable(StringUtils.getBytesUsAscii(input)));
+        for (final boolean strict : new boolean[] { false, true }) {
+            assertEquals(expected, new QuotedPrintableCodec(strict).decode(input));
+        }
     }
 
     @Test

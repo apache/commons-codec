@@ -72,6 +72,22 @@ class QCodecTest {
     }
 
     @Test
+    void testDecodeMalformedLineBreaks() throws Exception {
+        final QCodec codec = new QCodec();
+        // Exercise both shared decoder paths, with and without underscore replacement.
+        for (final String suffix : new String[] { "", "_" }) {
+            final String decodedSuffix = suffix.isEmpty() ? "" : " ";
+            for (final String lineBreak : new String[] { "\r\n", "\r", "\n" }) {
+                assertEquals("SEC" + lineBreak + "RET" + decodedSuffix, codec.decode("=?UTF-8?Q?SEC" + lineBreak + "RET" + suffix + "?="));
+            }
+            for (final String encoded : new String[] { "foo=\rbar", "foo=\r", "foo=\nbar" }) {
+                assertThrows(DecoderException.class, () -> codec.decode("=?UTF-8?Q?" + suffix + encoded + "?="));
+            }
+            assertEquals("SEC\r\nRET" + decodedSuffix, codec.decode("=?UTF-8?Q?SEC=0D=0ARET" + suffix + "?="));
+        }
+    }
+
+    @Test
     void testDecodeObjects() throws Exception {
         final QCodec qcodec = new QCodec();
         final String decoded = "=?UTF-8?Q?1+1 =3D 2?=";

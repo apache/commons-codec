@@ -45,7 +45,7 @@ import org.apache.commons.codec.binary.StringUtils;
  * Note:
  * </p>
  * <p>
- * Depending on the selected {@code strict} parameter, this class will implement a different set of rules of the quoted-printable spec:
+ * Depending on the selected {@code strict} parameter, encoding implements a different set of rules of the quoted-printable spec:
  * </p>
  * <ul>
  * <li>{@code strict=false}: only rules #1 and #2 are implemented</li>
@@ -54,6 +54,7 @@ import org.apache.commons.codec.binary.StringUtils;
  * <p>
  * Originally, this class only supported the non-strict mode, but the codec in this partial form could already be used for certain applications that do not
  * require quoted-printable line formatting (rules #3, #4, #5), for instance Q codec. The strict mode has been added in 1.10.
+ * Decoding is independent of this parameter; see {@link #decodeQuotedPrintable(byte[])} for its behavior.
  * </p>
  * <p>
  * This class is immutable and thread-safe.
@@ -99,14 +100,26 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
     }
 
     /**
-     * Decodes an array quoted-printable characters into an array of original bytes. Escaped characters are converted back to their original representation.
+     * Decodes quoted-printable bytes.
+     *
      * <p>
-     * This function fully implements the quoted-printable encoding specification (rule #1 through rule #5) as defined in RFC 1521.
+     * Converts hexadecimal escapes to their original bytes, removes soft line breaks ({@code =CRLF}), and preserves hard CRLF line breaks.
+     * </p>
+     *
+     * <p>
+     * As a lenient extension for malformed input, unpaired CR and LF bytes are also preserved. An equals sign followed by CR without LF is rejected.
+     * This method does not perform full MIME validation: for example, it neither removes trailing whitespace nor handles transport padding after an
+     * equals sign. The {@code strict} constructor parameter affects encoding only.
+     * </p>
+     *
+     * <p>
+     * Since 1.23.0, unescaped CR and LF bytes are preserved and {@code =CR} without a following LF is rejected. Earlier versions discarded unescaped
+     * CR and LF bytes and accepted {@code =CR} as a soft line break.
      * </p>
      *
      * @param bytes array of quoted-printable characters.
-     * @return array of original bytes.
-     * @throws DecoderException Thrown if quoted-printable decoding is unsuccessful.
+     * @return array of original bytes, or {@code null} if the input is {@code null}.
+     * @throws DecoderException if an escape is incomplete or invalid, including a soft line break without the full CRLF pair.
      */
     public static final byte[] decodeQuotedPrintable(final byte[] bytes) throws DecoderException {
         if (bytes == null) {
@@ -117,8 +130,12 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
             final int b = bytes[i];
             if (b == ESCAPE_CHAR) {
                 try {
-                    // if the next octet is a CR we have found a soft line break
+                    // rule #5: a soft line break is the escape character followed by a CRLF sequence;
+                    // it is removed entirely from the decoded output
                     if (bytes[++i] == CR) {
+                        if (++i >= bytes.length || bytes[i] != LF) {
+                            throw new DecoderException("Invalid quoted-printable encoding: soft line break must be =CRLF");
+                        }
                         continue;
                     }
                     final int u = Utils.digit16(bytes[i]);
@@ -127,8 +144,8 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
                 } catch (final ArrayIndexOutOfBoundsException e) {
                     throw new DecoderException("Invalid quoted-printable encoding", e);
                 }
-            } else if (b != CR && b != LF) {
-                // every other octet is appended except for CR & LF
+            } else {
+                // Preserve hard line breaks and, leniently, unpaired CR and LF bytes.
                 buffer.write(b);
             }
         }

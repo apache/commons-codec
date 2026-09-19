@@ -64,6 +64,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Restrict Hex decoding to ASCII hexadecimal characters.</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Validate BinaryCodec input while preserving leading-bit truncation.</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Reject oversized Beider-Morse input before language guessing.</action>
+      <action type="fix" dev="ggregory" due-to="Gary Gregory">QuotedPrintableCodec decoding now preserves hard CRLF line breaks and, leniently, unpaired CR and LF bytes instead of discarding them. Soft line breaks require the full =CRLF sequence; previously accepted =CR without LF now throws DecoderException. This affects both constructor modes and QCodec, which shares the decoder.</action>
       <!-- ADD -->
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add and use PhoneticEngine.Builder and deprecate old constructors.</action>
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add BeiderMorseEncoder.Builder and deprecate old constructor.</action>
