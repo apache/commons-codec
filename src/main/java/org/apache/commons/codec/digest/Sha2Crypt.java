@@ -104,6 +104,25 @@ public class Sha2Crypt {
     }
 
     /**
+     * Gets the maximum plaintext (key) length in bytes, as configured by the {@code org.apache.commons.codec.digest.Sha2Crypt.keyMax} system property.
+     *
+     * @return the maximum plaintext (key) length in bytes.
+     */
+    private static int getMaxKeyLen() {
+        return Math.max(0, Integer.getInteger(KEY_MAX_PROPERTY, KEY_MAX_DEFAULT));
+    }
+
+    /**
+     * Gets the maximum number of rounds accepted from a caller-supplied salt string, as configured by the
+     * {@code org.apache.commons.codec.digest.Sha2Crypt.roundsMax} system property.
+     *
+     * @return the maximum number of rounds accepted from a caller-supplied salt string.
+     */
+    private static int getMaxRounds() {
+        return Math.max(ROUNDS_MIN, Math.min(ROUNDS_MAX, Integer.getInteger(ROUNDS_MAX_PROPERTY, ROUNDS_MAX_DEFAULT)));
+    }
+
+    /**
      * Generates a libc crypt() compatible "$5$" hash value with random salt.
      *
      * <p>
@@ -140,7 +159,7 @@ public class Sha2Crypt {
         if (salt == null) {
             salt = SHA256_PREFIX + B64.getRandomSalt(8);
         }
-        return sha2Crypt(keyBytes, salt, SHA256_PREFIX, SHA256_BLOCKSIZE, MessageDigestAlgorithms.SHA_256);
+        return sha2Crypt(keyBytes, salt, SHA256_PREFIX, SHA256_BLOCKSIZE, MessageDigestAlgorithms.SHA_256, getMaxKeyLen(), getMaxRounds());
     }
 
     /**
@@ -162,7 +181,7 @@ public class Sha2Crypt {
         if (salt == null) {
             salt = SHA256_PREFIX + B64.getRandomSalt(8, random);
         }
-        return sha2Crypt(keyBytes, salt, SHA256_PREFIX, SHA256_BLOCKSIZE, MessageDigestAlgorithms.SHA_256);
+        return sha2Crypt(keyBytes, salt, SHA256_PREFIX, SHA256_BLOCKSIZE, MessageDigestAlgorithms.SHA_256, getMaxKeyLen(), getMaxRounds());
     }
 
     /**
@@ -180,42 +199,38 @@ public class Sha2Crypt {
      * @param saltPrefix either {@code $5$} or {@code $6$}.
      * @param blocksize  A value that differs between {@code $5$}  and {@code $6$}.
      * @param algorithm  {@link MessageDigest} algorithm identifier string.
+     * @param maxKeyLen The maximum plaintext (key) length in bytes.
+     * @param maxRounds The maximum number of rounds accepted from a caller-supplied salt string.
      * @return The Complete hash value including prefix and salt.
      * @throws IllegalArgumentException Thrown if the given salt is {@code null} or does not match the allowed pattern.
      * @throws IllegalArgumentException Thrown if a {@link NoSuchAlgorithmException} is caught.
      * @see MessageDigestAlgorithms
      */
-    private static String sha2Crypt(final byte[] keyBytes, final String salt, final String saltPrefix,
-            final int blocksize, final String algorithm) {
-
+    private static String sha2Crypt(final byte[] keyBytes, final String salt, final String saltPrefix, final int blocksize, final String algorithm,
+            final int maxKeyLen, final int maxRounds) {
         final int keyLen = keyBytes.length;
-        final int keyMax = Math.max(0, Integer.getInteger(KEY_MAX_PROPERTY, KEY_MAX_DEFAULT));
-        if (keyLen > keyMax) {
-            throw new IllegalArgumentException("Key length " + keyLen + " exceeds the maximum of " + keyMax + " bytes; " +
+        if (keyLen > maxKeyLen) {
+            throw new IllegalArgumentException("Key length " + keyLen + " exceeds the maximum of " + maxKeyLen + " bytes; " +
                     "raise it with the " + KEY_MAX_PROPERTY + " system property if intended");
         }
-
         // Extracts effective salt and the number of rounds from the given salt.
         int rounds = ROUNDS_DEFAULT;
         boolean roundsCustom = false;
         if (salt == null) {
             throw new IllegalArgumentException("Salt must not be null");
         }
-
         final Matcher m = SALT_PATTERN.matcher(salt);
         if (!m.find()) {
             throw new IllegalArgumentException("Invalid salt value: " + salt);
         }
         if (m.group(3) != null) {
-            final int roundsMax = Math.max(ROUNDS_MIN,
-                    Math.min(ROUNDS_MAX, Integer.getInteger(ROUNDS_MAX_PROPERTY, ROUNDS_MAX_DEFAULT)));
             final String roundsString = m.group(3);
             final int firstNonZero = firstNonZeroIndex(roundsString);
             final String normalizedRounds = roundsString.substring(firstNonZero);
-            final String roundsMaxString = Integer.toString(roundsMax);
+            final String roundsMaxString = Integer.toString(maxRounds);
             if (normalizedRounds.length() > roundsMaxString.length() ||
                     normalizedRounds.length() == roundsMaxString.length() && normalizedRounds.compareTo(roundsMaxString) > 0) {
-                throw new IllegalArgumentException("Rounds value in salt exceeds the maximum of " + roundsMax + ": " + salt);
+                throw new IllegalArgumentException("Rounds value in salt exceeds the maximum of " + maxRounds + ": " + salt);
             }
             rounds = Math.max(ROUNDS_MIN, Integer.parseInt(normalizedRounds));
             roundsCustom = true;
@@ -614,7 +629,7 @@ public class Sha2Crypt {
         if (salt == null) {
             salt = SHA512_PREFIX + B64.getRandomSalt(8);
         }
-        return sha2Crypt(keyBytes, salt, SHA512_PREFIX, SHA512_BLOCKSIZE, MessageDigestAlgorithms.SHA_512);
+        return sha2Crypt(keyBytes, salt, SHA512_PREFIX, SHA512_BLOCKSIZE, MessageDigestAlgorithms.SHA_512, getMaxKeyLen(), getMaxRounds());
     }
 
     /**
@@ -636,7 +651,7 @@ public class Sha2Crypt {
         if (salt == null) {
             salt = SHA512_PREFIX + B64.getRandomSalt(8, random);
         }
-        return sha2Crypt(keyBytes, salt, SHA512_PREFIX, SHA512_BLOCKSIZE, MessageDigestAlgorithms.SHA_512);
+        return sha2Crypt(keyBytes, salt, SHA512_PREFIX, SHA512_BLOCKSIZE, MessageDigestAlgorithms.SHA_512, getMaxKeyLen(), getMaxRounds());
     }
 
     /**
