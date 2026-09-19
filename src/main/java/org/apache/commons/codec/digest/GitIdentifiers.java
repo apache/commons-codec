@@ -300,7 +300,7 @@ public class GitIdentifiers {
          * @param name The relative path of the entry in normalized form(may contain {@code '/'}).
          * @param dataSize The exact number of bytes in {@code data}.
          * @param data     The file content.
-         * @throws IOException If the stream cannot be read.
+         * @throws IOException If the stream cannot be read, or does not contain exactly {@code dataSize} bytes.
          * @throws IllegalArgumentException If the entry name is empty or {@code "."}, or any path component is {@code ".."}, contains NUL or contains unpaired
          *                                  surrogates.
          */
@@ -393,18 +393,30 @@ public class GitIdentifiers {
      * <p>When the size of the content is known in advance, this overload streams {@code data} directly through
      * the digest without buffering the full content in memory.</p>
      *
+     * <p>The stream is drained to its end. If the number of bytes read differs from {@code dataSize}, an {@link IOException} is thrown.</p>
+     *
      * <p>When the hash algorithm is SHA-1, the identifier is identical to Git blob identifier and SWHID contents identifier.</p>
      *
      * @param messageDigest The MessageDigest to use (for example SHA-1).
      * @param dataSize      The exact number of bytes in {@code data}.
      * @param data          Stream to digest.
      * @return A generalized Git blob identifier.
-     * @throws IOException On error reading the stream.
+     * @throws IOException On error reading the stream, or if the stream does not contain exactly {@code dataSize} bytes.
      */
     public static byte[] blobId(final MessageDigest messageDigest, final long dataSize, final InputStream data) throws IOException {
         messageDigest.reset();
         DigestUtils.updateDigest(messageDigest, getGitBlobPrefix(dataSize));
-        return DigestUtils.updateDigest(messageDigest, data).digest();
+        final byte[] buffer = new byte[8192];
+        long actualSize = 0;
+        int read;
+        while ((read = data.read(buffer)) != -1) {
+            messageDigest.update(buffer, 0, read);
+            actualSize += read;
+        }
+        if (actualSize != dataSize) {
+            throw new IOException("Stream contained " + actualSize + " bytes, but dataSize declared " + dataSize + " bytes");
+        }
+        return messageDigest.digest();
     }
 
     /**
@@ -419,16 +431,17 @@ public class GitIdentifiers {
      * @param messageDigest The MessageDigest to use (for example SHA-1).
      * @param data          Path to the file to digest.
      * @return A generalized Git blob identifier.
-     * @throws IOException On error accessing the file.
+     * @throws IOException On error accessing the file, or if the number of bytes read differs from its measured size.
      */
     public static byte[] blobId(final MessageDigest messageDigest, final Path data) throws IOException {
         if (Files.isSymbolicLink(data)) {
             final byte[] linkTarget = Files.readSymbolicLink(data).toString().getBytes(StandardCharsets.UTF_8);
             return blobId(messageDigest, linkTarget);
         }
-        messageDigest.reset();
-        DigestUtils.updateDigest(messageDigest, getGitBlobPrefix(Files.size(data)));
-        return DigestUtils.updateDigest(messageDigest, data).digest();
+        final long dataSize = Files.size(data);
+        try (InputStream input = Files.newInputStream(data)) {
+            return blobId(messageDigest, dataSize, input);
+        }
     }
 
     private static byte[] getGitBlobPrefix(final long dataSize) {
