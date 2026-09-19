@@ -107,7 +107,7 @@ public class PercentCodec implements BinaryEncoder, BinaryDecoder {
      * Decodes bytes encoded with Percent-Encoding based on RFC 3986. The reverse process is performed in order to
      * decode the encoded characters to Unicode.
      *
-     * @throws DecoderException if an invalid percent-encoded sequence is found.
+     * @throws DecoderException Thrown if an invalid percent-encoded sequence is found.
      */
     @Override
     public byte[] decode(final byte[] bytes) throws DecoderException {
@@ -178,7 +178,7 @@ public class PercentCodec implements BinaryEncoder, BinaryDecoder {
      * Percent-Encoding based on RFC 3986. The non US-ASCII characters are encoded, as well as the
      * US-ASCII characters that are configured to be always encoded.
      *
-     * @throws EncoderException if an encoding error occurs.
+     * @throws EncoderException Thrown if an encoding error occurs.
      */
     @Override
     public byte[] encode(final byte[] bytes) throws EncoderException {

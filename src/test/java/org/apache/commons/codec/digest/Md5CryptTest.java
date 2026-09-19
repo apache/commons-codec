@@ -49,7 +49,7 @@ class Md5CryptTest {
 
     @Test
     void testMd5CryptBytes() {
-        // An empty Bytearray equals an empty String
+        // An empty byte array equals an empty String
         assertEquals("$1$foo$9mS5ExwgIECGE5YKlD5o91", Crypt.crypt(new byte[0], "$1$foo"));
         // UTF-8 stores \u00e4 "a with dieresis" as two bytes 0xc3 0xa4.
         assertEquals("$1$./$52agTEQZs877L9jyJnCNZ1", Crypt.crypt("t\u00e4st", "$1$./$"));

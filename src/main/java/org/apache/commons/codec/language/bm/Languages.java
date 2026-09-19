@@ -216,6 +216,12 @@ public class Languages {
             return false;
         }
 
+        /**
+         * Always throws {@link NoSuchElementException} because this language set does not identify a specific language.
+         *
+         * @return Never returns normally.
+         * @throws NoSuchElementException Thrown whenever this method is invoked.
+         */
         @Override
         public String getAny() {
             throw new NoSuchElementException("Can't fetch any language from the empty language set.");
@@ -257,6 +263,12 @@ public class Languages {
             return true;
         }
 
+        /**
+         * Always throws {@link NoSuchElementException} because this language set does not identify a specific language.
+         *
+         * @return Never returns normally.
+         * @throws NoSuchElementException Thrown whenever this method is invoked.
+         */
         @Override
         public String getAny() {
             throw new NoSuchElementException("Can't fetch any language from the any language set.");

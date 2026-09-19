@@ -74,7 +74,7 @@ public class Base58 extends BaseNCodec {
         }
 
         /**
-         * Builds a new Base58 instance with the configured settings.
+         * Gets a new Base58 instance with the configured settings.
          *
          * @return A new Base58 codec.
          */
@@ -96,7 +96,7 @@ public class Base58 extends BaseNCodec {
          *
          * @param encodeTable The encode table with exactly 58 unique entries, null resets to the default.
          * @return {@code this} instance.
-         * @throws IllegalArgumentException if the encode table does not contain exactly 58 unique entries.
+         * @throws IllegalArgumentException Thrown if the encode table does not contain exactly 58 unique entries.
          */
         @Override
         public Base58.Builder setEncodeTable(final byte... encodeTable) {
@@ -112,7 +112,7 @@ public class Base58 extends BaseNCodec {
          *
          * @param lineLength The line length; must not be positive.
          * @return {@code this} instance.
-         * @throws IllegalArgumentException if lineLength is positive.
+         * @throws IllegalArgumentException Thrown if lineLength is positive.
          * @since 1.23.0
          */
         @Override
@@ -131,7 +131,7 @@ public class Base58 extends BaseNCodec {
          *
          * @param maxDecodeLength The maximum accepted encoded input length; must be positive.
          * @return {@code this} instance.
-         * @throws IllegalArgumentException if maxDecodeLength is not positive.
+         * @throws IllegalArgumentException Thrown if maxDecodeLength is not positive.
          * @since 1.23.0
          */
         public Builder setMaxDecodeLength(final int maxDecodeLength) {
@@ -150,7 +150,7 @@ public class Base58 extends BaseNCodec {
          *
          * @param maxEncodeLength The maximum accepted binary input length; must be positive.
          * @return {@code this} instance.
-         * @throws IllegalArgumentException if maxEncodeLength is not positive.
+         * @throws IllegalArgumentException Thrown if maxEncodeLength is not positive.
          * @since 1.23.0
          */
         public Builder setMaxEncodeLength(final int maxEncodeLength) {
@@ -241,7 +241,7 @@ public class Base58 extends BaseNCodec {
      *
      * @param encodeTable that is used to determine decode lookup table.
      * @return A new decode table.
-     * @throws IllegalArgumentException if the encode table does not contain exactly 58 unique entries.
+     * @throws IllegalArgumentException Thrown if the encode table does not contain exactly 58 unique entries.
      */
     private static byte[] calculateDecodeTable(final byte[] encodeTable) {
         if (encodeTable.length != ENCODING_TABLE_LENGTH) {
@@ -357,7 +357,7 @@ public class Base58 extends BaseNCodec {
      *
      * @param base58  The Base58 encoded data.
      * @param context The context for this decoding operation.
-     * @throws IllegalArgumentException if the Base58 data contains invalid characters or is longer than the configured maximum decode length.
+     * @throws IllegalArgumentException Thrown if the Base58 data contains invalid characters or is longer than the configured maximum decode length.
      */
     private void convertFromBase58(final byte[] base58, final Context context) {
         checkLength(base58.length, 0, maxDecodeLength, "decode");
@@ -485,7 +485,7 @@ public class Base58 extends BaseNCodec {
      *
      * @param array The binary input to encode.
      * @return The number of Base58 characters that encoding the array produces.
-     * @throws IllegalArgumentException if the input exceeds the configured maximum encode length.
+     * @throws IllegalArgumentException Thrown if the input exceeds the configured maximum encode length.
      * @since 1.23.0
      */
     @Override
@@ -495,7 +495,7 @@ public class Base58 extends BaseNCodec {
     }
 
     /**
-     * Builds the Base58 string representation of the given binary data.
+     * Gets the Base58 string representation of the given binary data.
      * <p>
      * Converts binary data to a BigInteger and divides by 58 repeatedly to get the Base58 digits. Handles leading zeros by counting them and appending the first
      * character in the Base58 alphabet for each leading zero byte.
@@ -527,7 +527,7 @@ public class Base58 extends BaseNCodec {
     }
 
     /**
-     * Returns whether or not the {@code octet} is in the Base58 alphabet.
+     * Tests whether the {@code octet} is in the Base58 alphabet.
      *
      * @param value The value to test.
      * @return {@code true} if the value is defined in the Base58 alphabet {@code false} otherwise.

@@ -66,7 +66,7 @@ public class Caverphone implements StringEncoder {
      * @return An object (or type {@link String}) containing the Caverphone code which corresponds to the String
      *         supplied.
      * @throws EncoderException
-     *             if the parameter supplied is not of type {@link String}.
+     *             Thrown if the parameter supplied is not of type {@link String}.
      */
     @Override
     public Object encode(final Object obj) throws EncoderException {

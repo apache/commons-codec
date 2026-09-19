@@ -39,7 +39,7 @@ class Caverphone2Test extends AbstractStringEncoderTest<Caverphone2> {
      *
      * AT11111111 words: add, aid, at, art, eat, earth, head, hit, hot, hold, hard, heart, it, out, old
      *
-     * @throws EncoderException for some failure scenarios     */
+     * @throws EncoderException Thrown for some failure scenarios     */
     @Test
     void testCaverphoneRevisitedCommonCodeAT11111111() throws EncoderException {
         // @formatter:off
@@ -65,7 +65,7 @@ class Caverphone2Test extends AbstractStringEncoderTest<Caverphone2> {
     /**
      * See https://caversham.otago.ac.nz/files/working/ctp150804.pdf
      *
-     * @throws EncoderException for some failure scenarios     */
+     * @throws EncoderException Thrown for some failure scenarios     */
     @Test
     void testCaverphoneRevisitedExamples() throws EncoderException {
         checkEncodings(new String[][] {{"Stevenson", "STFNSN1111"}, {"Peter", "PTA1111111"}});
@@ -74,7 +74,7 @@ class Caverphone2Test extends AbstractStringEncoderTest<Caverphone2> {
     /**
      * See https://caversham.otago.ac.nz/files/working/ctp150804.pdf
      *
-     * @throws EncoderException for some failure scenarios     */
+     * @throws EncoderException Thrown for some failure scenarios     */
     @Test
     void testCaverphoneRevisitedRandomNameKLN1111111() throws EncoderException {
         // @formatter:off
@@ -167,7 +167,7 @@ class Caverphone2Test extends AbstractStringEncoderTest<Caverphone2> {
     /**
      * See https://caversham.otago.ac.nz/files/working/ctp150804.pdf
      *
-     * @throws EncoderException for some failure scenarios     */
+     * @throws EncoderException Thrown for some failure scenarios     */
     @Test
     void testCaverphoneRevisitedRandomNameTN11111111() throws EncoderException {
         // @formatter:off
@@ -247,7 +247,7 @@ class Caverphone2Test extends AbstractStringEncoderTest<Caverphone2> {
     /**
      * See https://caversham.otago.ac.nz/files/working/ctp150804.pdf
      *
-     * @throws EncoderException for some failure scenarios     */
+     * @throws EncoderException Thrown for some failure scenarios     */
     @Test
     void testCaverphoneRevisitedRandomNameTTA1111111() throws EncoderException {
         // @formatter:off
@@ -326,7 +326,7 @@ class Caverphone2Test extends AbstractStringEncoderTest<Caverphone2> {
     /**
      * See https://caversham.otago.ac.nz/files/working/ctp150804.pdf
      *
-     * @throws EncoderException for some failure scenarios     */
+     * @throws EncoderException Thrown for some failure scenarios     */
     @Test
     void testCaverphoneRevisitedRandomWords() throws EncoderException {
         checkEncodingVariations("RTA1111111", "rather", "ready", "writer");

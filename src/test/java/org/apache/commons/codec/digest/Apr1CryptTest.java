@@ -35,7 +35,7 @@ class Apr1CryptTest {
         final String hash = Md5Crypt.apr1Crypt(keyBytes);
         assertEquals(hash, Md5Crypt.apr1Crypt("!bc.", hash));
 
-        // An empty Bytearray equals an empty String
+        // An empty byte array equals an empty String
         assertEquals("$apr1$foo$P27KyD1htb4EllIPEYhqi0", Md5Crypt.apr1Crypt(new byte[0], "$apr1$foo"));
         // UTF-8 stores \u00e4 "a with dieresis" as two bytes 0xc3 0xa4.
         assertEquals("$apr1$./$EeFrYzWWbmTyGdf4xULYc.", Md5Crypt.apr1Crypt("t\u00e4st", "$apr1$./$"));
@@ -51,7 +51,7 @@ class Apr1CryptTest {
         final String hash = Md5Crypt.apr1Crypt(keyBytes, threadLocalRandom);
         assertEquals(hash, Md5Crypt.apr1Crypt("!bc.", hash));
 
-        // An empty Bytearray equals an empty String
+        // An empty byte array equals an empty String
         assertEquals("$apr1$foo$P27KyD1htb4EllIPEYhqi0", Md5Crypt.apr1Crypt(new byte[0], "$apr1$foo"));
         // UTF-8 stores \u00e4 "a with dieresis" as two bytes 0xc3 0xa4.
         assertEquals("$apr1$./$EeFrYzWWbmTyGdf4xULYc.", Md5Crypt.apr1Crypt("t\u00e4st", "$apr1$./$"));

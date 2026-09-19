@@ -63,7 +63,7 @@ class Base45InputStreamTest {
     /**
      * Tests the Base45InputStream implementation against empty input.
      *
-     * @throws Exception for some failure scenarios.
+     * @throws Exception Thrown for some failure scenarios.
      */
     @Test
     void testBase45EmptyInputStreamMimeChunkSize() throws Exception {
@@ -73,7 +73,7 @@ class Base45InputStreamTest {
     /**
      * Tests the Base45InputStream implementation against empty input.
      *
-     * @throws Exception for some failure scenarios.
+     * @throws Exception Thrown for some failure scenarios.
      */
     @Test
     void testBase45EmptyInputStreamPemChunkSize() throws Exception {
@@ -127,7 +127,7 @@ class Base45InputStreamTest {
      * @param decoded   The data from above, but decoded
      * @param chunkSize chunk size (line-length) of the Base45 encoded data.
      * @param separator Line separator in the Base45 encoded data.
-     * @throws Exception Usually signifies a bug in the Base45 commons-codec implementation.
+     * @throws Exception Thrown if a bug occurs in the Base45 commons-codec implementation.
      */
     private void testByChunk(final byte[] encoded, final byte[] decoded, final int chunkSize, final byte[] separator) throws Exception {
         try (InputStream in = Base45InputStream.builder().setByteArray(decoded).setEncode(true).get()) {
@@ -165,7 +165,7 @@ class Base45InputStreamTest {
      * @param decoded   The data from above, but decoded
      * @param chunkSize chunk size (line-length) of the Base45 encoded data.
      * @param separator Line separator in the Base45 encoded data.
-     * @throws Exception Usually signifies a bug in the Base45 commons-codec implementation.
+     * @throws Exception Thrown if a bug occurs in the Base45 commons-codec implementation.
      */
     private void testByteByByte(final byte[] encoded, final byte[] decoded, final int chunkSize, final byte[] separator) throws Exception {
         InputStream in;
@@ -198,7 +198,7 @@ class Base45InputStreamTest {
     /**
      * Tests markSupported.
      *
-     * @throws Exception for some failure scenarios.
+     * @throws Exception Thrown for some failure scenarios.
      */
     @Test
     void testMarkSupported() throws Exception {
@@ -212,7 +212,7 @@ class Base45InputStreamTest {
     /**
      * Tests read returning 0
      *
-     * @throws Exception for some failure scenarios.
+     * @throws Exception Thrown for some failure scenarios.
      */
     @Test
     void testRead0() throws Exception {
@@ -228,7 +228,7 @@ class Base45InputStreamTest {
     /**
      * Tests read with null.
      *
-     * @throws Exception for some failure scenarios.
+     * @throws Exception Thrown for some failure scenarios.
      */
     @Test
     void testReadNull() throws Exception {
@@ -241,7 +241,7 @@ class Base45InputStreamTest {
     /**
      * Tests read throwing IndexOutOfBoundsException
      *
-     * @throws Exception for some failure scenarios.
+     * @throws Exception Thrown for some failure scenarios.
      */
     @Test
     void testReadOutOfBounds() throws Exception {
@@ -258,7 +258,7 @@ class Base45InputStreamTest {
     /**
      * Tests skipping number of characters larger than the internal buffer.
      *
-     * @throws Throwable for some failure scenarios.
+     * @throws Throwable Thrown for some failure scenarios.
      */
     @Test
     void testSkipBig() throws Throwable {
@@ -275,7 +275,7 @@ class Base45InputStreamTest {
     /**
      * Tests skipping as a noop
      *
-     * @throws Throwable for some failure scenarios.
+     * @throws Throwable Thrown for some failure scenarios.
      */
     @Test
     void testSkipNone() throws Throwable {
@@ -294,7 +294,7 @@ class Base45InputStreamTest {
     /**
      * Tests skipping past the end of a stream.
      *
-     * @throws Throwable for some failure scenarios.
+     * @throws Throwable Thrown for some failure scenarios.
      */
     @Test
     void testSkipPastEnd() throws Throwable {
@@ -312,7 +312,7 @@ class Base45InputStreamTest {
     /**
      * Tests skipping to the end of a stream.
      *
-     * @throws Throwable for some failure scenarios.
+     * @throws Throwable Thrown for some failure scenarios.
      */
     @Test
     void testSkipToEnd() throws Throwable {
@@ -328,7 +328,7 @@ class Base45InputStreamTest {
     /**
      * Tests if negative arguments to skip are handled correctly.
      *
-     * @throws Throwable for some failure scenarios.
+     * @throws Throwable Thrown for some failure scenarios.
      */
     @Test
     void testSkipWrongArgument() throws Throwable {

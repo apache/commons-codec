@@ -134,7 +134,7 @@ public class Sha2Crypt {
      *
      * @param keyBytes Plaintext to hash. Each array element is set to {@code 0} before returning.
      * @return The Complete hash value.
-     * @throws IllegalArgumentException if {@code keyBytes} exceeds the configured maximum length
+     * @throws IllegalArgumentException Thrown if {@code keyBytes} exceeds the configured maximum length
      * @throws IllegalArgumentException Thrown if a {@link NoSuchAlgorithmException} is caught.
      */
     public static String sha256Crypt(final byte[] keyBytes) {
@@ -151,7 +151,7 @@ public class Sha2Crypt {
      * @param salt     real salt value without prefix or "rounds=". The salt may be null, in which case a salt is generated for you using {@link SecureRandom}.
      *                 If one does not want to use {@link SecureRandom}, you can pass your own {@link Random} in {@link #sha256Crypt(byte[], String, Random)}.
      * @return The Complete hash value including salt.
-     * @throws IllegalArgumentException if {@code keyBytes} exceeds the configured maximum length
+     * @throws IllegalArgumentException Thrown if {@code keyBytes} exceeds the configured maximum length
      * @throws IllegalArgumentException Thrown if the salt does not match the allowed pattern.
      * @throws IllegalArgumentException Thrown if a {@link NoSuchAlgorithmException} is caught.
      */
@@ -172,7 +172,7 @@ public class Sha2Crypt {
      * @param salt     real salt value without prefix or "rounds=".
      * @param random   The instance of {@link Random} to use for generating the salt. Consider using {@link SecureRandom} for more secure salts.
      * @return The Complete hash value including salt.
-     * @throws IllegalArgumentException if {@code keyBytes} exceeds the configured maximum length
+     * @throws IllegalArgumentException Thrown if {@code keyBytes} exceeds the configured maximum length
      * @throws IllegalArgumentException Thrown if the salt does not match the allowed pattern.
      * @throws IllegalArgumentException Thrown if a {@link NoSuchAlgorithmException} is caught.
      * @since 1.12
@@ -602,7 +602,7 @@ public class Sha2Crypt {
      *
      * @param keyBytes Plaintext to hash. Each array element is set to {@code 0} before returning.
      * @return Complete hash value.
-     * @throws IllegalArgumentException if {@code keyBytes} exceeds the configured maximum length
+     * @throws IllegalArgumentException Thrown if {@code keyBytes} exceeds the configured maximum length
      * @throws IllegalArgumentException Thrown if a {@link NoSuchAlgorithmException} is caught.
      */
     public static String sha512Crypt(final byte[] keyBytes) {
@@ -621,7 +621,7 @@ public class Sha2Crypt {
      *                 if you want to use a {@link Random} object other than {@link SecureRandom} then we suggest you provide it using
      *                 {@link #sha512Crypt(byte[], String, Random)}.
      * @return Complete hash value including salt.
-     * @throws IllegalArgumentException if {@code keyBytes} exceeds the configured maximum length
+     * @throws IllegalArgumentException Thrown if {@code keyBytes} exceeds the configured maximum length
      * @throws IllegalArgumentException Thrown if the salt does not match the allowed pattern.
      * @throws IllegalArgumentException Thrown if a {@link NoSuchAlgorithmException} is caught.
      */
@@ -643,7 +643,7 @@ public class Sha2Crypt {
      * @param salt     Real salt value without prefix or "rounds=". The salt may be null, in which case a salt is generated for you using {@link SecureRandom}.
      * @param random   The instance of {@link Random} to use for generating the salt. Consider using {@link SecureRandom} for more secure salts.
      * @return Complete hash value including salt.
-     * @throws IllegalArgumentException if the salt does not match the allowed pattern.
+     * @throws IllegalArgumentException Thrown if the salt does not match the allowed pattern.
      * @throws IllegalArgumentException Thrown if a {@link NoSuchAlgorithmException} is caught.
      * @since 1.12
      */

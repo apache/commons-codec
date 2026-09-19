@@ -66,7 +66,7 @@ public class Base58OutputStream extends BaseNCodecOutputStream<Base58, Base58Out
         }
 
         /**
-         * Builds a new Base58OutputStream instance with the configured settings.
+         * Gets a new Base58OutputStream instance with the configured settings.
          *
          * @return A new Base58OutputStream.
          */

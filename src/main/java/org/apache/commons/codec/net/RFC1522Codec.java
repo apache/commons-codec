@@ -30,7 +30,7 @@ import org.apache.commons.codec.binary.StringUtils;
  * Implements methods common to all codecs defined in RFC 1522.
  * <p>
  * <a href="https://www.ietf.org/rfc/rfc1522.txt">RFC 1522</a> describes techniques to allow the encoding of non-ASCII text in various portions of a RFC 822 [2]
- * message header, in a manner which is unlikely to confuse existing message handling software.
+ * message header, in a manner that is unlikely to confuse existing message handling software.
  * </p>
  * <p>
  * This class is immutable and thread-safe.
@@ -135,7 +135,7 @@ abstract class RFC1522Codec {
      * @param text    A string to encode.
      * @param charset A charset to be used.
      * @return RFC 1522 compliant "encoded-word".
-     * @throws EncoderException Thrown if there is an error condition during the Encoding process.
+     * @throws EncoderException Thrown if there is an error condition during the encoding process.
      * @see Charset
      */
     protected String encodeText(final String text, final Charset charset) throws EncoderException {
@@ -163,7 +163,7 @@ abstract class RFC1522Codec {
      * @param text        A string to encode.
      * @param charsetName The charset to use.
      * @return RFC 1522 compliant "encoded-word".
-     * @throws EncoderException            Thrown if there is an error condition during the Encoding process.
+     * @throws EncoderException            Thrown if there is an error condition during the encoding process.
      * @throws UnsupportedCharsetException Thrown if charset is not available.
      * @see Charset
      */
@@ -195,7 +195,7 @@ abstract class RFC1522Codec {
     }
 
     /**
-     * Returns the codec name (referred to as encoding in the RFC 1522).
+     * Gets the codec name (referred to as encoding in the RFC 1522).
      *
      * @return name of the codec.
      */

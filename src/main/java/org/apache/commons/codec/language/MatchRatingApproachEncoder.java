@@ -76,7 +76,7 @@ public class MatchRatingApproachEncoder implements StringEncoder {
      *
      * <h2>API Usage</h2>
      * <p>
-     * Consider this method private, it is package protected for unit testing only.
+     * Consider this method private; it has package access for unit testing only.
      * </p>
      *
      * @param name
@@ -104,7 +104,7 @@ public class MatchRatingApproachEncoder implements StringEncoder {
      * @return An object (or type {@link String}) containing the Match Rating Approach code which corresponds to the
      *         String supplied.
      * @throws EncoderException
-     *             if the parameter supplied is not of type {@link String}.
+     *             Thrown if the parameter supplied is not of type {@link String}.
      */
     @Override
     public final Object encode(final Object object) throws EncoderException {
@@ -156,7 +156,7 @@ public class MatchRatingApproachEncoder implements StringEncoder {
      *
      * <h2>API Usage</h2>
      * <p>
-     * Consider this method private, it is package protected for unit testing only.
+     * Consider this method private; it has package access for unit testing only.
      * </p>
      *
      * @param name
@@ -175,12 +175,14 @@ public class MatchRatingApproachEncoder implements StringEncoder {
     }
 
     /**
-     * Obtains the min rating of the length sum of the 2 names. In essence the larger the sum length the smaller the
-     * min rating. Values strictly from documentation.
+     * Gets the minimum rating for the sum of the lengths of the two names.
+     * <p>
+     * The larger the sum of the lengths, the smaller the minimum rating. The values come directly from the documentation.
+     * </p>
      *
      * <h2>API Usage</h2>
      * <p>
-     * Consider this method private, it is package protected for unit testing only.
+     * Consider this method private; it has package access for unit testing only.
      * </p>
      *
      * @param sumLength
@@ -206,7 +208,7 @@ public class MatchRatingApproachEncoder implements StringEncoder {
     }
 
     /**
-     * Determines if two names are homophonous via Match Rating Approach (MRA) algorithm. It should be noted that the
+     * Tests if two names are homophonous via Match Rating Approach (MRA) algorithm. It should be noted that the
      * strings are cleaned in the same way as {@link #encode(String)}.
      *
      * @param name1
@@ -270,11 +272,11 @@ public class MatchRatingApproachEncoder implements StringEncoder {
     }
 
     /**
-     * Determines if a letter is a vowel.
+     * Tests if a letter is a vowel.
      *
      * <h2>API Usage</h2>
      * <p>
-     * Consider this method private, it is package protected for unit testing only.
+     * Consider this method private; it has package access for unit testing only.
      * </p>
      *
      * @param letter
@@ -292,7 +294,7 @@ public class MatchRatingApproachEncoder implements StringEncoder {
      *
      * <h2>API Usage</h2>
      * <p>
-     * Consider this method private, it is package protected for unit testing only.
+     * Consider this method private; it has package access for unit testing only.
      * </p>
      *
      * @param name1 first name.
@@ -381,7 +383,7 @@ public class MatchRatingApproachEncoder implements StringEncoder {
      *
      * <h2>API Usage</h2>
      * <p>
-     * Consider this method private, it is package protected for unit testing only.
+     * Consider this method private; it has package access for unit testing only.
      * </p>
      *
      * @param name
@@ -404,7 +406,7 @@ public class MatchRatingApproachEncoder implements StringEncoder {
      *
      * <h2>API Usage</h2>
      * <p>
-     * Consider this method private, it is package protected for unit testing only.
+     * Consider this method private; it has package access for unit testing only.
      * </p>
      *
      * @param name

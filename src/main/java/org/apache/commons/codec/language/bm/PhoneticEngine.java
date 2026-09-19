@@ -381,7 +381,7 @@ public class PhoneticEngine {
      * Creates a new, fully-configured phonetic engine.
      *
      * @param builder The builder to use for configuration.
-     * @throws IllegalArgumentException if ruleType is RULES.
+     * @throws IllegalArgumentException Thrown if ruleType is RULES.
      */
     private PhoneticEngine(final Builder builder) {
         if (builder.ruleType == RuleType.RULES) {
@@ -415,7 +415,7 @@ public class PhoneticEngine {
      * @param ruleType    the type of rules it will apply, null is treated as {@link RuleType#APPROX}.
      * @param concatenate if it will concatenate multiple encodings.
      * @param maxPhonemes the maximum number of phonemes that will be handled, less than 0 will reset to the default of {@value Builder#MAX_PHONEMES}.
-     * @throws IllegalArgumentException if ruleType is RULES.
+     * @throws IllegalArgumentException Thrown if ruleType is RULES.
      * @since 1.7
      * @deprecated Use {@link #builder()} instead.
      */
@@ -473,7 +473,7 @@ public class PhoneticEngine {
      *
      * @param input the String to encode, not null.
      * @return The encoding of the input.
-     * @throws IllegalArgumentException if the input is longer than the maximum allowed length.
+     * @throws IllegalArgumentException Thrown if the input is longer than the maximum allowed length.
      */
     public String encode(final String input) {
         // enforce the input length limit before language guessing runs over the input,
@@ -490,7 +490,7 @@ public class PhoneticEngine {
      * @param input       String to phoneticise; a String with dashes or spaces separating each word, not null.
      * @param languageSet set of possible origin languages.
      * @return A phonetic representation of the input; a String containing '-'-separated phonetic representations of the input.
-     * @throws IllegalArgumentException if the input is longer than the maximum allowed length.
+     * @throws IllegalArgumentException Thrown if the input is longer than the maximum allowed length.
      */
     public String encode(String input, final Languages.LanguageSet languageSet) {
         if (input.length() > maxInputLength) {
@@ -611,7 +611,7 @@ public class PhoneticEngine {
     }
 
     /**
-     * Gets if multiple phonetic encodings are concatenated or if just the first one is kept.
+     * Tests whether multiple phonetic encodings are concatenated or just the first one is kept.
      *
      * @return true if multiple phonetic encodings are returned, false if just the first is.
      */

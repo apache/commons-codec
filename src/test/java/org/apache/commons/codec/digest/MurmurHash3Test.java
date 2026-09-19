@@ -45,7 +45,9 @@ class MurmurHash3Test {
      * 256 integers in the range [0,255] arranged in random order.
      * This ensures all bytes are covered in a full hash of the bytes.
      *
-     * <p>To create test data using the python library mmh3 (which invokes the c++ code):</p>
+     * <p>
+     * To create test data using the Python library mmh3 (which invokes the C++ code):
+     * </p>
      *
      * <pre>
      * import mmh3
@@ -103,7 +105,9 @@ class MurmurHash3Test {
      * Assert {@link IncrementalHash32} returns the same values as
      * {@link MurmurHash3#hash32(byte[], int, int, int)}.
      *
-     * <p>The bytes are added to the incremental hash in the given blocks.</p>
+     * <p>
+     * The bytes are added to the incremental hash in the given blocks.
+     * </p>
      *
      * @param bytes The bytes
      * @param seed The seed
@@ -129,7 +133,9 @@ class MurmurHash3Test {
      * Assert {@link IncrementalHash32x86} returns the same values as
      * {@link MurmurHash3#hash32x86(byte[], int, int, int)}.
      *
-     * <p>The bytes are added to the incremental hash in the given blocks.</p>
+     * <p>
+     * The bytes are added to the incremental hash in the given blocks.
+     * </p>
      *
      * @param bytes The bytes
      * @param seed The seed
@@ -208,7 +214,9 @@ class MurmurHash3Test {
     /**
      * Test the {@link MurmurHash3#hash128(byte[])} algorithm.
      *
-     * <p>Reference data is taken from the Python library {@code mmh3}.</p>
+     * <p>
+     * Reference data is taken from the Python library {@code mmh3}.
+     * </p>
      *
      * @see <a href="https://pypi.org/project/mmh3/">mmh3</a>
      */
@@ -251,7 +259,9 @@ class MurmurHash3Test {
      * the same value as {@link MurmurHash3#hash128(byte[], int, int, int)} if the string
      * is converted to bytes using the method {@link String#getBytes()}.
      *
-     * <p>The test uses random strings created with random unicode code points.</p>
+     * <p>
+     * The test uses random strings created with random Unicode code points.
+     * </p>
      */
     @Test
     void testHash128String() {
@@ -280,9 +290,11 @@ class MurmurHash3Test {
     /**
      * Test the {@link MurmurHash3#hash128(byte[], int, int, int)} algorithm.
      *
-     * <p>Explicit test for a negative seed. The original implementation has a sign extension error
+     * <p>
+     * Explicit test for a negative seed. The original implementation has a sign extension error
      * for negative seeds. This test is here to maintain behavioral compatibility of the
      * broken deprecated method.
+     * </p>
      */
     @Test
     void testHash128WithOffsetLengthAndNegativeSeed() {
@@ -319,7 +331,9 @@ class MurmurHash3Test {
     /**
      * Test the {@link MurmurHash3#hash128(byte[], int, int, int)} algorithm.
      *
-     * <p>Reference data is taken from the Python library {@code mmh3}.</p>
+     * <p>
+     * Reference data is taken from the Python library {@code mmh3}.
+     * </p>
      *
      * @see <a href="https://pypi.org/project/mmh3/">mmh3</a>
      */
@@ -360,7 +374,9 @@ class MurmurHash3Test {
     /**
      * Test the {@link MurmurHash3#hash128x64(byte[])} algorithm.
      *
-     * <p>Reference data is taken from the Python library {@code mmh3}.</p>
+     * <p>
+     * Reference data is taken from the Python library {@code mmh3}.
+     * </p>
      *
      * @see <a href="https://pypi.org/project/mmh3/">mmh3</a>
      */
@@ -403,10 +419,14 @@ class MurmurHash3Test {
     /**
      * Test the {@link MurmurHash3#hash128x64(byte[], int, int, int)} algorithm.
      *
-     * <p>Explicit test for a negative seed. The original implementation has a sign extension error
+     * <p>
+     * Explicit test for a negative seed. The original implementation has a sign extension error
      * for negative seeds.
+     * </p>
      *
-     * <p>Reference data is taken from the Python library {@code mmh3}.</p>
+     * <p>
+     * Reference data is taken from the Python library {@code mmh3}.
+     * </p>
      *
      * @see <a href="https://pypi.org/project/mmh3/">mmh3</a>
      */
@@ -447,7 +467,9 @@ class MurmurHash3Test {
     /**
      * Test the {@link MurmurHash3#hash128x64(byte[], int, int, int)} algorithm.
      *
-     * <p>Reference data is taken from the Python library {@code mmh3}.</p>
+     * <p>
+     * Reference data is taken from the Python library {@code mmh3}.
+     * </p>
      *
      * @see <a href="https://pypi.org/project/mmh3/">mmh3</a>
      */
@@ -605,7 +627,7 @@ class MurmurHash3Test {
      * if the string is converted to bytes using the method {@link String#getBytes()}.
      *
      * <p>
-     * The test uses random strings created with random unicode code points.
+     * The test uses random strings created with random Unicode code points.
      * </p>
      */
     @Test

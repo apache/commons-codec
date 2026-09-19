@@ -59,7 +59,7 @@ public final class Crc16 implements Checksum {
         }
 
         /**
-         * Creates a new {@link Crc16} instance.
+         * Gets a new {@link Crc16} instance.
          */
         @Override
         public Crc16 get() {
@@ -344,9 +344,9 @@ public final class Crc16 implements Checksum {
     }
 
     /**
-     * Gets a copy of the CRC16-CCITT table.
+     * Gets a copy of the CRC16-ARC table.
      *
-     * @return A copy of the CCRC16-CITT table.
+     * @return A copy of the CRC16-ARC table.
      */
     public static int[] getArcTable() {
         return ARC.clone();
@@ -355,7 +355,7 @@ public final class Crc16 implements Checksum {
     /**
      * Gets a copy of the CRC16-CCITT table.
      *
-     * @return A copy of the CCRC16-CITT table.
+     * @return A copy of the CRC16-CCITT table.
      */
     public static int[] getCcittTable() {
         return CCITT.clone();
@@ -364,7 +364,7 @@ public final class Crc16 implements Checksum {
     /**
      * Gets a copy of the CRC16-DNP table.
      *
-     * @return A copy of the CCRC16-DNP table.
+     * @return A copy of the CRC16-DNP table.
      */
     public static int[] getDnpTable() {
         return DNP.clone();

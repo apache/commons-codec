@@ -83,7 +83,7 @@ public class Base16 extends BaseNCodec {
          *
          * @param encodeTable 16 unique bytes, null resets to the default upper-case table.
          * @return {@code this} instance.
-         * @throws IllegalArgumentException if {@code encodeTable} does not contain 16 unique bytes.
+         * @throws IllegalArgumentException Thrown if {@code encodeTable} does not contain 16 unique bytes.
          */
         @Override
         public Builder setEncodeTable(final byte... encodeTable) {
@@ -314,7 +314,7 @@ public class Base16 extends BaseNCodec {
     }
 
     /**
-     * Returns whether or not the {@code octet} is in the Base16 alphabet.
+     * Tests whether the {@code octet} is in the Base16 alphabet.
      *
      * @param octet The value to test.
      * @return {@code true} if the value is defined in the Base16 alphabet {@code false} otherwise.
@@ -328,7 +328,7 @@ public class Base16 extends BaseNCodec {
     /**
      * Validates whether decoding allows an entire final trailing character that cannot be used for a complete byte.
      *
-     * @throws IllegalArgumentException if strict decoding is enabled.
+     * @throws IllegalArgumentException Thrown if strict decoding is enabled.
      */
     private void validateTrailingCharacter() {
         if (isStrictDecoding()) {

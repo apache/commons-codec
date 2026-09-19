@@ -30,7 +30,9 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link DoubleMetaphone}.
  *
- * <p>Keep this file in UTF-8 encoding for proper Javadoc processing.</p>
+ * <p>
+ * Keep this file in UTF-8 encoding for proper Javadoc processing.
+ * </p>
  *
  * @see "http://www.cuj.com/documents/s=8038/cuj0006philips/"
  */

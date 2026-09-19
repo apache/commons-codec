@@ -119,7 +119,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      *
      * @param bytes array of quoted-printable characters.
      * @return array of original bytes, or {@code null} if the input is {@code null}.
-     * @throws DecoderException if an escape is incomplete or invalid, including a soft line break without the full CRLF pair.
+     * @throws DecoderException Thrown if an escape is incomplete or invalid, including a soft line break without the full CRLF pair.
      */
     public static final byte[] decodeQuotedPrintable(final byte[] bytes) throws DecoderException {
         if (bytes == null) {
@@ -279,7 +279,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
     }
 
     /**
-     * Gets the byte at position {@code index} of the byte array and make sure it is unsigned.
+     * Gets the byte at position {@code index} of the byte array and makes sure it is unsigned.
      *
      * @param index position in the array.
      * @param bytes The byte array.
@@ -294,7 +294,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
     }
 
     /**
-     * Checks whether the given byte is whitespace.
+     * Tests whether the given byte is whitespace.
      *
      * @param b byte to be checked.
      * @return {@code true} if the byte is either a space or tab character.
@@ -356,9 +356,9 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * Constructs a new instance for the selection of a default Charset.
      *
      * @param charsetName The default string Charset to use.
-     * @throws UnsupportedCharsetException If no support for the named Charset is available in this instance of the Java virtual machine.
-     * @throws IllegalArgumentException    If the given charsetName is null.
-     * @throws IllegalCharsetNameException If the given Charset name is illegal.
+     * @throws UnsupportedCharsetException Thrown if no support for the named Charset is available in this instance of the Java virtual machine.
+     * @throws IllegalArgumentException    Thrown if the given charsetName is null.
+     * @throws IllegalCharsetNameException Thrown if the given Charset name is illegal.
      *
      * @since 1.7 throws UnsupportedCharsetException if the named Charset is unavailable
      */

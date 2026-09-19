@@ -53,10 +53,10 @@ final class Utils {
     }
 
     /**
-     * Returns the upper case hexadecimal digit of the lower 4 bits of the int.
+     * Returns the uppercase hexadecimal digit of the lower 4 bits of the int.
      *
      * @param b The input int.
-     * @return The upper case hexadecimal digit of the lower 4 bits of the int.
+     * @return The uppercase hexadecimal digit of the lower 4 bits of the int.
      */
     static char hexChar(final int b) {
         return Character.toUpperCase(Character.forDigit(b & 0xF, RADIX));

@@ -27,7 +27,7 @@ public interface StringDecoder extends Decoder {
      *
      * @param source The String to decode.
      * @return The encoded String.
-     * @throws DecoderException thrown if there is an error condition during the Encoding process.
+     * @throws DecoderException Thrown if there is an error condition during the decoding process.
      */
     String decode(String source) throws DecoderException;
 }

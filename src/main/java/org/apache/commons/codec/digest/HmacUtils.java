@@ -61,7 +61,7 @@ public final class HmacUtils {
     private static final int STREAM_BUFFER_LENGTH = 1024;
 
     /**
-     * Returns an initialized {@link Mac} for the HmacMD5 algorithm.
+     * Gets an initialized {@link Mac} for the HmacMD5 algorithm.
      * <p>
      * Every implementation of the Java platform is required to support this standard Mac algorithm.
      * </p>
@@ -79,7 +79,7 @@ public final class HmacUtils {
     }
 
     /**
-     * Returns an initialized {@link Mac} for the HmacSHA1 algorithm.
+     * Gets an initialized {@link Mac} for the HmacSHA1 algorithm.
      * <p>
      * Every implementation of the Java platform is required to support this standard Mac algorithm.
      * </p>
@@ -97,7 +97,7 @@ public final class HmacUtils {
     }
 
     /**
-     * Returns an initialized {@link Mac} for the HmacSHA256 algorithm.
+     * Gets an initialized {@link Mac} for the HmacSHA256 algorithm.
      * <p>
      * Every implementation of the Java platform is required to support this standard Mac algorithm.
      * </p>
@@ -115,7 +115,7 @@ public final class HmacUtils {
     }
 
     /**
-     * Returns an initialized {@link Mac} for the HmacSHA384 algorithm.
+     * Gets an initialized {@link Mac} for the HmacSHA384 algorithm.
      * <p>
      * Every implementation of the Java platform is <em>not</em> required to support this Mac algorithm.
      * </p>
@@ -133,7 +133,7 @@ public final class HmacUtils {
     }
 
     /**
-     * Returns an initialized {@link Mac} for the HmacSHA512 algorithm.
+     * Gets an initialized {@link Mac} for the HmacSHA512 algorithm.
      * <p>
      * Every implementation of the Java platform is <em>not</em> required to support this Mac algorithm.
      * </p>
@@ -151,7 +151,7 @@ public final class HmacUtils {
     }
 
     /**
-     * Returns an initialized {@link Mac} for the given {@code algorithm}.
+     * Gets an initialized {@link Mac} for the given {@code algorithm}.
      *
      * @param algorithm The name of the algorithm requested. See
      *                  <a href= "https://docs.oracle.com/javase/8/docs/technotes/guides/security/crypto/CryptoSpec.html#AppA" >Appendix A in the Java
@@ -167,7 +167,7 @@ public final class HmacUtils {
     }
 
     /**
-     * Returns an initialized {@link Mac} for the given {@code algorithm}.
+     * Gets an initialized {@link Mac} for the given {@code algorithm}.
      *
      * @param algorithm The name of the algorithm requested. See
      *                  <a href= "https://docs.oracle.com/javase/8/docs/technotes/guides/security/crypto/CryptoSpec.html#AppA" >Appendix A in the Java
@@ -213,7 +213,7 @@ public final class HmacUtils {
      * @param valueToDigest The value (data) which should to digest.
      *                      The InputStream must not be null and will not be closed.
      * @return HmacMD5 MAC for the given key and value.
-     * @throws IOException              If an I/O error occurs.
+     * @throws IOException              Thrown if an I/O error occurs.
      * @throws IllegalArgumentException Thrown if a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      * @deprecated (1.11) Use {@code new HmacUtils(HmacAlgorithms.HMAC_MD5, byte[]).hmac(InputStream)}.
      */
@@ -301,7 +301,7 @@ public final class HmacUtils {
      * @param valueToDigest The value (data) which should to digest.
      *                      The InputStream must not be null and will not be closed.
      * @return HmacSHA1 MAC for the given key and value.
-     * @throws IOException              If an I/O error occurs.
+     * @throws IOException              Thrown if an I/O error occurs.
      * @throws IllegalArgumentException Thrown if a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      * @deprecated (1.11) Use {@code new HmacUtils(HmacAlgorithms.HMAC_SHA_1, byte[]).hmac(InputStream)}.
      */
@@ -345,7 +345,7 @@ public final class HmacUtils {
      * @param valueToDigest The value (data) which should to digest.
      *                      The InputStream must not be null and will not be closed.
      * @return HmacSHA1 MAC for the given key and value as hexadecimal string (lowercase).
-     * @throws IOException              If an I/O error occurs.
+     * @throws IOException              Thrown if an I/O error occurs.
      * @throws IllegalArgumentException Thrown if a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      * @deprecated (1.11) Use {@code new HmacUtils(HmacAlgorithms.HMAC_SHA_1, byte[]).hmacHex(InputStream)}.
      */
@@ -388,7 +388,7 @@ public final class HmacUtils {
      * @param key           The key for the keyed digest (must not be null).
      * @param valueToDigest The value (data) which should to digest. The InputStream must not be null and will not be closed.
      * @return HmacSHA256 MAC for the given key and value.
-     * @throws IOException              If an I/O error occurs.
+     * @throws IOException              Thrown if an I/O error occurs.
      * @throws IllegalArgumentException Thrown if a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      * @deprecated (1.11) Use {@code new HmacUtils(HmacAlgorithms.HMAC_SHA_256, byte[]).hmac(InputStream)}.
      */
@@ -430,11 +430,9 @@ public final class HmacUtils {
      *
      * @param key           The key for the keyed digest (must not be null).
      * @param valueToDigest The value (data) which should to digest.
-     *                      <p>
      *                      The InputStream must not be null and will not be closed.
-     *                      </p>
      * @return HmacSHA256 MAC for the given key and value as hexadecimal string (lowercase).
-     * @throws IOException              If an I/O error occurs.
+     * @throws IOException              Thrown if an I/O error occurs.
      * @throws IllegalArgumentException Thrown if a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      * @deprecated (1.11) Use {@code new HmacUtils(HmacAlgorithms.HMAC_SHA_256, byte[]).hmacHex(InputStream)}.
      */
@@ -476,11 +474,9 @@ public final class HmacUtils {
      *
      * @param key           The key for the keyed digest (must not be null).
      * @param valueToDigest The value (data) which should to digest.
-     *                      <p>
      *                      The InputStream must not be null and will not be closed.
-     *                      </p>
      * @return HmacSHA384 MAC for the given key and value.
-     * @throws IOException              If an I/O error occurs.
+     * @throws IOException              Thrown if an I/O error occurs.
      * @throws IllegalArgumentException Thrown if a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      * @deprecated (1.11) Use {@code new HmacUtils(HmacAlgorithms.HMAC_SHA_384, byte[]).hmac(InputStream)}.
      */
@@ -523,11 +519,9 @@ public final class HmacUtils {
      *
      * @param key           The key for the keyed digest (must not be null).
      * @param valueToDigest The value (data) which should to digest.
-     *                      <p>
      *                      The InputStream must not be null and will not be closed.
-     *                      </p>
      * @return HmacSHA384 MAC for the given key and value as hexadecimal string (lowercase).
-     * @throws IOException              If an I/O error occurs.
+     * @throws IOException              Thrown if an I/O error occurs.
      * @throws IllegalArgumentException Thrown if a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      * @deprecated (1.11) Use {@code new HmacUtils(HmacAlgorithms.HMAC_SHA_384, byte[]).hmacHex(InputStream)}.
      */
@@ -569,11 +563,9 @@ public final class HmacUtils {
      *
      * @param key           The key for the keyed digest (must not be null).
      * @param valueToDigest The value (data) which should to digest.
-     *                      <p>
      *                      The InputStream must not be null and will not be closed.
-     *                      </p>
      * @return HmacSHA512 MAC for the given key and value.
-     * @throws IOException              If an I/O error occurs.
+     * @throws IOException              Thrown if an I/O error occurs.
      * @throws IllegalArgumentException Thrown if a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      * @deprecated (1.11) Use {@code new HmacUtils(HmacAlgorithms.HMAC_SHA_512, byte[]).hmac(InputStream)}.
      */
@@ -616,11 +608,9 @@ public final class HmacUtils {
      *
      * @param key           The key for the keyed digest (must not be null).
      * @param valueToDigest The value (data) which should to digest.
-     *                      <p>
      *                      The InputStream must not be null and will not be closed.
-     *                      </p>
      * @return HmacSHA512 MAC for the given key and value as hexadecimal string (lowercase).
-     * @throws IOException              If an I/O error occurs.
+     * @throws IOException              Thrown if an I/O error occurs.
      * @throws IllegalArgumentException Thrown if a {@link NoSuchAlgorithmException} is caught or key is null or key is invalid.
      * @deprecated (1.11) Use {@code new HmacUtils(HmacAlgorithms.HMAC_SHA_512, byte[]).hmacHex(InputStream)}.
      */
@@ -644,7 +634,7 @@ public final class HmacUtils {
     }
 
     /**
-     * Tests whether this algorithm is available
+     * Tests whether this algorithm is available.
      *
      * @param hmacAlgorithms The HmacAlgorithms to check.
      * @return whether this algorithm is available.
@@ -655,7 +645,7 @@ public final class HmacUtils {
     }
 
     /**
-     * Tests whether this algorithm is available
+     * Tests whether this algorithm is available.
      *
      * @param name The name to check.
      * @return whether this algorithm is available.
@@ -676,7 +666,7 @@ public final class HmacUtils {
      * @param mac           The initialized {@link Mac} to update.
      * @param valueToDigest The value to update the {@link Mac} with (maybe null or empty).
      * @return The updated {@link Mac}.
-     * @throws IllegalStateException if the Mac was not initialized.
+     * @throws IllegalStateException Thrown if the Mac was not initialized.
      */
     public static Mac updateHmac(final Mac mac, final byte[] valueToDigest) {
         mac.reset();
@@ -689,12 +679,10 @@ public final class HmacUtils {
      *
      * @param mac           The initialized {@link Mac} to update.
      * @param valueToDigest The value to update the {@link Mac} with.
-     *                      <p>
      *                      The InputStream must not be null and will not be closed.
-     *                      </p>
      * @return The updated {@link Mac}.
-     * @throws IOException           If an I/O error occurs.
-     * @throws IllegalStateException If the Mac was not initialized.
+     * @throws IOException           Thrown if an I/O error occurs.
+     * @throws IllegalStateException Thrown if the Mac was not initialized.
      */
     public static Mac updateHmac(final Mac mac, final InputStream valueToDigest) throws IOException {
         mac.reset();
@@ -713,7 +701,7 @@ public final class HmacUtils {
      * @param mac           The initialized {@link Mac} to update.
      * @param valueToDigest The value to update the {@link Mac} with (maybe null or empty).
      * @return The updated {@link Mac}.
-     * @throws IllegalStateException if the Mac was not initialized.
+     * @throws IllegalStateException Thrown if the Mac was not initialized.
      */
     public static Mac updateHmac(final Mac mac, final String valueToDigest) {
         mac.reset();
@@ -813,7 +801,7 @@ public final class HmacUtils {
      *
      * @param valueToDigest The file to use.
      * @return The digest.
-     * @throws IOException If an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      * @since 1.11
      */
     public byte[] hmac(final File valueToDigest) throws IOException {
@@ -824,11 +812,9 @@ public final class HmacUtils {
      * Returns the digest for the stream.
      *
      * @param valueToDigest The data to use.
-     *                      <p>
      *                      The InputStream must not be null and will not be closed.
-     *                      </p>
      * @return The digest.
-     * @throws IOException If an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      * @since 1.11
      */
     public byte[] hmac(final InputStream valueToDigest) throws IOException {
@@ -845,7 +831,7 @@ public final class HmacUtils {
      *
      * @param valueToDigest The path to use.
      * @return The digest.
-     * @throws IOException If an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      * @since 1.19.0
      */
     public byte[] hmac(final Path valueToDigest) throws IOException {
@@ -892,7 +878,7 @@ public final class HmacUtils {
      *
      * @param valueToDigest The file to use.
      * @return The digest as a hexadecimal String.
-     * @throws IOException If an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      * @since 1.11
      */
     public String hmacHex(final File valueToDigest) throws IOException {
@@ -903,11 +889,9 @@ public final class HmacUtils {
      * Returns the digest for the stream.
      *
      * @param valueToDigest The data to use.
-     *                      <p>
      *                      The InputStream must not be null and will not be closed.
-     *                      </p>
      * @return The digest as a hexadecimal String.
-     * @throws IOException If an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      * @since 1.11
      */
     public String hmacHex(final InputStream valueToDigest) throws IOException {
@@ -919,7 +903,7 @@ public final class HmacUtils {
      *
      * @param valueToDigest The path to use.
      * @return The digest as a hexadecimal String.
-     * @throws IOException If an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      * @since 1.19.0
      */
     public String hmacHex(final Path valueToDigest) throws IOException {

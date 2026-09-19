@@ -202,8 +202,8 @@ public class Nysiis implements StringEncoder {
      *
      * @param obj Object to encode.
      * @return An object (or a {@link String}) containing the NYSIIS code which corresponds to the given String.
-     * @throws EncoderException         if the parameter supplied is not of a {@link String}.
-     * @throws IllegalArgumentException if a character is not mapped.
+     * @throws EncoderException         Thrown if the parameter supplied is not of a {@link String}.
+     * @throws IllegalArgumentException Thrown if a character is not mapped.
      */
     @Override
     public Object encode(final Object obj) throws EncoderException {
@@ -218,7 +218,7 @@ public class Nysiis implements StringEncoder {
      *
      * @param str A String object to encode.
      * @return A Nysiis code corresponding to the String supplied.
-     * @throws IllegalArgumentException if a character is not mapped.
+     * @throws IllegalArgumentException Thrown if a character is not mapped.
      */
     @Override
     public String encode(final String str) {
@@ -226,7 +226,7 @@ public class Nysiis implements StringEncoder {
     }
 
     /**
-     * Indicates the strict mode for this {@link Nysiis} encoder.
+     * Tests whether this {@link Nysiis} encoder is configured for strict mode.
      *
      * @return {@code true} if the encoder is configured for strict mode, {@code false} otherwise.
      */

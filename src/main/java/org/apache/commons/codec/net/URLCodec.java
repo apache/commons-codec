@@ -354,7 +354,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
     }
 
     /**
-     * The default charset used for string decoding and encoding.
+     * Gets the default charset used for string decoding and encoding.
      *
      * @return The default string charset.
      */
@@ -363,7 +363,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
     }
 
     /**
-     * The {@code String} encoding used for decoding and encoding.
+     * Gets the {@code String} encoding used for decoding and encoding.
      *
      * @return The encoding.
      * @deprecated Use {@link #getDefaultCharset()}, will be removed in 2.0.

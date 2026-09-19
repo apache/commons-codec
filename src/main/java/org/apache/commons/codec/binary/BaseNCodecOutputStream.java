@@ -185,8 +185,10 @@ public class BaseNCodecOutputStream<C extends BaseNCodec, T extends BaseNCodecOu
     /**
      * Tests whether decoding behavior is strict.
      *
-     * <p>Strict decoding rejects invalid trailing bits and, for Base32 and Base64, noncanonical input. Decoding errors are reported as {@link IOException}.
-     * To complete validation, call {@link #eof()} or {@link #close()}. Decoded bytes can be emitted before a later validation error.</p>
+     * <p>
+     * Strict decoding rejects invalid trailing bits and, for Base32 and Base64, noncanonical input. Decoding errors are reported as {@link IOException}.
+     * To complete validation, call {@link #eof()} or {@link #close()}. Decoded bytes can be emitted before a later validation error.
+     * </p>
      *
      * @return true if using strict decoding.
      * @since 1.15
@@ -201,9 +203,9 @@ public class BaseNCodecOutputStream<C extends BaseNCodec, T extends BaseNCodecOu
      * @param array  source byte array.
      * @param offset where to start reading the bytes.
      * @param len    maximum number of bytes to write.
-     * @throws IOException               if an I/O error occurs.
-     * @throws NullPointerException      if the byte array parameter is null.
-     * @throws IndexOutOfBoundsException if offset, len or buffer size are invalid.
+     * @throws IOException               Thrown if an I/O error occurs.
+     * @throws NullPointerException      Thrown if the byte array parameter is null.
+     * @throws IndexOutOfBoundsException Thrown if the offset, length, or buffer size is invalid.
      */
     @Override
     public void write(final byte[] array, final int offset, final int len) throws IOException {

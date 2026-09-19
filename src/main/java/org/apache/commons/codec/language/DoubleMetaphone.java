@@ -454,7 +454,7 @@ public class DoubleMetaphone implements StringEncoder {
      *
      * @param obj Object to encode (should be of type String).
      * @return An encoded Object (will be of type String).
-     * @throws EncoderException encode parameter is not of type String.
+     * @throws EncoderException Thrown if the encode parameter is not of type String.
      */
     @Override
     public Object encode(final Object obj) throws EncoderException {

@@ -38,7 +38,7 @@ class UnixCryptTest {
 
     @Test
     void testUnixCryptBytes() {
-        // An empty Bytearray equals an empty String
+        // An empty byte array equals an empty String
         assertEquals("12UFlHxel6uMM", Crypt.crypt(new byte[0], "12"));
         // UTF-8 stores \u00e4 "a with dieresis" as two bytes 0xc3 0xa4.
         assertEquals("./287bds2PjVw", Crypt.crypt("t\u00e4st", "./"));

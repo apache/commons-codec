@@ -411,11 +411,11 @@ public class ColognePhonetic implements StringEncoder {
     }
 
     /**
-     * Compares the first encoded string to the second encoded string.
+     * Tests whether the encodings of two strings are equal.
      *
      * @param text1 source text to encode before testing for equality.
      * @param text2 source text to encode before testing for equality.
-     * @return {@code true} if the encoding the first string equals the encoding of the second string, {@code false} otherwise.
+     * @return {@code true} if the encoding of the first string equals the encoding of the second string, {@code false} otherwise.
      */
     public boolean isEncodeEqual(final String text1, final String text2) {
         return colognePhonetic(text1).equals(colognePhonetic(text2));

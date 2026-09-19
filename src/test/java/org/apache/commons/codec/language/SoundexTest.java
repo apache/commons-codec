@@ -30,7 +30,9 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link Soundex}.
  *
- * <p>Keep this file in UTF-8 encoding for proper Javadoc processing.</p>
+ * <p>
+ * Keep this file in UTF-8 encoding for proper Javadoc processing.
+ * </p>
  */
 class SoundexTest extends AbstractStringEncoderTest<Soundex> {
 
@@ -198,7 +200,8 @@ class SoundexTest extends AbstractStringEncoderTest<Soundex> {
     /**
      * Test data from http://www.myatt.demon.co.uk/sxalg.htm
      *
-     * @throws EncoderException for some failure scenarios     */
+     * @throws EncoderException Thrown for some failure scenarios.
+     */
     @Test
     void testEncodeIgnoreHyphens() throws EncoderException {
         // @formatter:off
@@ -265,7 +268,8 @@ class SoundexTest extends AbstractStringEncoderTest<Soundex> {
     /**
      * Consonants from the same code group separated by W or H are treated as one.
      *
-     * @throws EncoderException for some failure scenarios     */
+     * @throws EncoderException Thrown for some failure scenarios.
+     */
     @Test
     void testHWRuleEx3() throws EncoderException {
         assertEquals("S460", getStringEncoder().encode("Sgler"));
@@ -307,7 +311,8 @@ class SoundexTest extends AbstractStringEncoderTest<Soundex> {
      * https://support.microsoft.com/default.aspx?scid=https://support.microsoft.com:80/support
      * /kb/articles/Q100/3/65.asp&NoWebContent=1
      *
-     * @throws EncoderException for some failure scenarios     */
+     * @throws EncoderException Thrown for some failure scenarios.
+     */
     @Test
     void testMsSqlServer2() throws EncoderException {
         checkEncodingVariations("E625", "Erickson", "Erickson", "Erikson", "Ericson", "Ericksen", "Ericsen");

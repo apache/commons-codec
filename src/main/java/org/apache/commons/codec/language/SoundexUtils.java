@@ -70,7 +70,7 @@ final class SoundexUtils {
      * @return The number of characters in the two Soundex encoded Strings that are the same.
      * @see #differenceEncoded(String,String)
      * @see <a href="https://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_de-dz_8co5.asp"> MS T-SQL DIFFERENCE</a>
-     * @throws EncoderException if an error occurs encoding one of the strings.
+     * @throws EncoderException Thrown if an error occurs encoding one of the strings.
      */
     static int difference(final StringEncoder encoder, final String s1, final String s2) throws EncoderException {
         return differenceEncoded(encoder.encode(s1), encoder.encode(s2));
@@ -104,9 +104,7 @@ final class SoundexUtils {
     }
 
     /**
-     * <p>
-     * Checks if a CharSequence is empty ("") or null.
-     * </p>
+     * Tests if a CharSequence is empty ("") or null.
      *
      * <pre>
      * StringUtils.isEmpty(null)      = true

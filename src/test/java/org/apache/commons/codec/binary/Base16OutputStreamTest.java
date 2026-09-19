@@ -42,7 +42,7 @@ class Base16OutputStreamTest extends AbstractBaseNOutputStreamTest {
     /**
      * Test the Base16OutputStream implementation against empty input.
      *
-     * @throws IOException for some failure scenarios.
+     * @throws IOException Thrown for some failure scenarios.
      */
     @Test
     void testBase16EmptyOutputStream() throws IOException {
@@ -55,7 +55,7 @@ class Base16OutputStreamTest extends AbstractBaseNOutputStreamTest {
     /**
      * Test the Base16OutputStream implementation
      *
-     * @throws IOException for some failure scenarios.
+     * @throws IOException Thrown for some failure scenarios.
      */
     @Test
     void testBase16OutputStreamByChunk() throws IOException {
@@ -82,7 +82,7 @@ class Base16OutputStreamTest extends AbstractBaseNOutputStreamTest {
     /**
      * Test the Base16OutputStream implementation
      *
-     * @throws IOException for some failure scenarios.
+     * @throws IOException Thrown for some failure scenarios.
      */
     @Test
     void testBase16OutputStreamByteByByte() throws IOException {
@@ -118,7 +118,7 @@ class Base16OutputStreamTest extends AbstractBaseNOutputStreamTest {
      *
      * @param encoded base16 encoded data
      * @param decoded The data from above, but decoded
-     * @throws IOException Usually signifies a bug in the Base16 commons-codec implementation.
+     * @throws IOException Thrown when a bug is encountered in the Base16 commons-codec implementation.
      */
     private void testByChunk(final byte[] encoded, final byte[] decoded) throws IOException {
         testByChunk(encoded, decoded, false);
@@ -134,7 +134,7 @@ class Base16OutputStreamTest extends AbstractBaseNOutputStreamTest {
      * @param encoded base16 encoded data
      * @param decoded The data from above, but decoded
      * @param lowerCase if {@code true} then use a lower-case Base16 alphabet
-     * @throws IOException Usually signifies a bug in the Base16 commons-codec implementation.
+     * @throws IOException Thrown when a bug is encountered in the Base16 commons-codec implementation.
      */
     private void testByChunk(final byte[] encoded, final byte[] decoded, final boolean lowerCase) throws IOException {
         // Start with encode.
@@ -171,7 +171,7 @@ class Base16OutputStreamTest extends AbstractBaseNOutputStreamTest {
      *
      * @param encoded base16 encoded data
      * @param decoded The data from above, but decoded
-     * @throws IOException Usually signifies a bug in the Base16 commons-codec implementation.
+     * @throws IOException Thrown when a bug is encountered in the Base16 commons-codec implementation.
      */
     private void testByteByByte(final byte[] encoded, final byte[] decoded) throws IOException {
         testByteByByte(encoded, decoded, false);
@@ -186,7 +186,7 @@ class Base16OutputStreamTest extends AbstractBaseNOutputStreamTest {
      *
      * @param encoded base16 encoded data
      * @param decoded The data from above, but decoded
-     * @throws IOException Usually signifies a bug in the Base16 commons-codec implementation.
+     * @throws IOException Thrown when a bug is encountered in the Base16 commons-codec implementation.
      */
     private void testByteByByte(final byte[] encoded, final byte[] decoded, final boolean lowerCase) throws IOException {
         // Start with encode.
@@ -251,7 +251,7 @@ class Base16OutputStreamTest extends AbstractBaseNOutputStreamTest {
     /**
      * Tests Base16OutputStream.write for expected IndexOutOfBoundsException conditions.
      *
-     * @throws IOException for some failure scenarios.
+     * @throws IOException Thrown for some failure scenarios.
      */
     @Test
     void testWriteOutOfBounds() throws IOException {
@@ -268,7 +268,7 @@ class Base16OutputStreamTest extends AbstractBaseNOutputStreamTest {
     /**
      * Tests Base16OutputStream.write(null).
      *
-     * @throws IOException for some failure scenarios.
+     * @throws IOException Thrown for some failure scenarios.
      */
     @Test
     void testWriteToNullCoverage() throws IOException {

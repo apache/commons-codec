@@ -45,7 +45,7 @@ class Base16InputStreamTest {
     /**
      * Tests skipping past the end of a stream.
      *
-     * @throws IOException for some failure scenarios.
+     * @throws IOException Thrown for some failure scenarios.
      */
     @Test
     void testAvailable() throws IOException {
@@ -64,7 +64,7 @@ class Base16InputStreamTest {
     /**
      * Tests the Base16InputStream implementation against empty input.
      *
-     * @throws IOException for some failure scenarios.
+     * @throws IOException Thrown for some failure scenarios.
      */
     @Test
     void testBase16EmptyInputStream() throws IOException {
@@ -77,7 +77,7 @@ class Base16InputStreamTest {
     /**
      * Tests the Base16InputStream implementation.
      *
-     * @throws IOException for some failure scenarios.
+     * @throws IOException Thrown for some failure scenarios.
      */
     @Test
     void testBase16InputStreamByChunk() throws IOException {
@@ -106,7 +106,7 @@ class Base16InputStreamTest {
     /**
      * Tests the Base16InputStream implementation.
      *
-     * @throws IOException for some failure scenarios.
+     * @throws IOException Thrown for some failure scenarios.
      */
     @Test
     void testBase16InputStreamByteByByte() throws IOException {
@@ -145,7 +145,7 @@ class Base16InputStreamTest {
      *
      * @param encoded Base16 encoded data
      * @param decoded The data from above, but decoded
-     * @throws IOException Usually signifies a bug in the Base16 commons-codec implementation.
+     * @throws IOException Thrown when a bug is encountered in the Base16 commons-codec implementation.
      */
     private void testByChunk(final byte[] encoded, final byte[] decoded) throws IOException {
         testByChunk(encoded, decoded, false);
@@ -160,7 +160,7 @@ class Base16InputStreamTest {
      * @param encoded   Base16 encoded data
      * @param decoded   The data from above, but decoded
      * @param lowerCase if {@code true} then use a lower-case Base16 alphabet
-     * @throws IOException Usually signifies a bug in the Base16 commons-codec implementation.
+     * @throws IOException Thrown when a bug is encountered in the Base16 commons-codec implementation.
      */
     private void testByChunk(final byte[] encoded, final byte[] decoded, final boolean lowerCase) throws IOException {
         // Start with encode.
@@ -196,7 +196,7 @@ class Base16InputStreamTest {
      *
      * @param encoded Base16 encoded data
      * @param decoded The data from above, but decoded
-     * @throws IOException Usually signifies a bug in the Base16 commons-codec implementation.
+     * @throws IOException Thrown when a bug is encountered in the Base16 commons-codec implementation.
      */
     private void testByteByByte(final byte[] encoded, final byte[] decoded) throws IOException {
         testByteByByte(encoded, decoded, false);
@@ -211,7 +211,7 @@ class Base16InputStreamTest {
      * @param encoded   Base16 encoded data
      * @param decoded   The data from above, but decoded
      * @param lowerCase if {@code true} then use a lower-case Base16 alphabet
-     * @throws IOException Usually signifies a bug in the Base16 commons-codec implementation.
+     * @throws IOException Thrown when a bug is encountered in the Base16 commons-codec implementation.
      */
     private void testByteByByte(final byte[] encoded, final byte[] decoded, final boolean lowerCase) throws IOException {
         // Start with encode.
@@ -263,7 +263,7 @@ class Base16InputStreamTest {
     /**
      * Tests markSupported.
      *
-     * @throws IOException for some failure scenarios.
+     * @throws IOException Thrown for some failure scenarios.
      */
     @Test
     void testMarkSupported() throws IOException {
@@ -278,7 +278,7 @@ class Base16InputStreamTest {
     /**
      * Tests read returning 0
      *
-     * @throws IOException for some failure scenarios.
+     * @throws IOException Thrown for some failure scenarios.
      */
     @Test
     void testRead0() throws IOException {
@@ -295,7 +295,7 @@ class Base16InputStreamTest {
     /**
      * Tests read with null.
      *
-     * @throws IOException for some failure scenarios.
+     * @throws IOException Thrown for some failure scenarios.
      */
     @Test
     void testReadNull() throws IOException {
@@ -309,7 +309,7 @@ class Base16InputStreamTest {
     /**
      * Tests read throwing IndexOutOfBoundsException
      *
-     * @throws IOException for some failure scenarios.
+     * @throws IOException Thrown for some failure scenarios.
      */
     @Test
     void testReadOutOfBounds() throws IOException {
@@ -327,7 +327,7 @@ class Base16InputStreamTest {
     /**
      * Tests skipping number of characters larger than the internal buffer.
      *
-     * @throws IOException for some failure scenarios.
+     * @throws IOException Thrown for some failure scenarios.
      */
     @Test
     void testSkipBig() throws IOException {
@@ -343,7 +343,7 @@ class Base16InputStreamTest {
     /**
      * Tests skipping as a noop
      *
-     * @throws IOException for some failure scenarios.
+     * @throws IOException Thrown for some failure scenarios.
      */
     @Test
     void testSkipNone() throws IOException {
@@ -361,7 +361,7 @@ class Base16InputStreamTest {
     /**
      * Tests skipping past the end of a stream.
      *
-     * @throws IOException for some failure scenarios.
+     * @throws IOException Thrown for some failure scenarios.
      */
     @Test
     void testSkipPastEnd() throws IOException {
@@ -378,7 +378,7 @@ class Base16InputStreamTest {
     /**
      * Tests skipping to the end of a stream.
      *
-     * @throws IOException for some failure scenarios.
+     * @throws IOException Thrown for some failure scenarios.
      */
     @Test
     void testSkipToEnd() throws IOException {
@@ -395,7 +395,7 @@ class Base16InputStreamTest {
     /**
      * Tests if negative arguments to skip are handled correctly.
      *
-     * @throws IOException for some failure scenarios.
+     * @throws IOException Thrown for some failure scenarios.
      */
     @Test
     void testSkipWrongArgument() throws IOException {

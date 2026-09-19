@@ -120,7 +120,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * @param charsetName
      *            the default Charset to use.
      * @throws java.nio.charset.UnsupportedCharsetException
-     *             If the named Charset is unavailable.
+     *             Thrown if the named Charset is unavailable.
      * @since 1.7 throws UnsupportedCharsetException if the named Charset is unavailable
      * @see Charset
      */
@@ -168,7 +168,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      *            Base64 string to convert into its original form.
      * @return original string.
      * @throws DecoderException
-     *             A decoder exception is thrown if a failure condition is encountered during the decode process.
+     *             Thrown if a failure condition is encountered during the decoding process.
      */
     @Override
     public String decode(final String value) throws DecoderException {
@@ -219,7 +219,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      *            object to convert to Base64 form.
      * @return Base64 object.
      * @throws EncoderException
-     *             thrown if a failure condition is encountered during the encoding process.
+     *             Thrown if a failure condition is encountered during the encoding process.
      */
     @Override
     public Object encode(final Object value) throws EncoderException {
@@ -239,7 +239,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      *            string to convert to Base64 form.
      * @return Base64 string.
      * @throws EncoderException
-     *             thrown if a failure condition is encountered during the encoding process.
+     *             Thrown if a failure condition is encountered during the encoding process.
      */
     @Override
     public String encode(final String strSource) throws EncoderException {
@@ -255,7 +255,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      *            the Charset for {@code value}.
      * @return Base64 string.
      * @throws EncoderException
-     *             thrown if a failure condition is encountered during the encoding process.
+     *             Thrown if a failure condition is encountered during the encoding process.
      * @since 1.7
      */
     public String encode(final String strSource, final Charset sourceCharset) throws EncoderException {
@@ -271,7 +271,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      *            the Charset for {@code value}.
      * @return Base64 string.
      * @throws EncoderException
-     *             thrown if a failure condition is encountered during the encoding process.
+     *             Thrown if a failure condition is encountered during the encoding process.
      */
     public String encode(final String strSource, final String sourceCharset) throws EncoderException {
         try {

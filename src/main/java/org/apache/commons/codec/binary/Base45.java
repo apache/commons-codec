@@ -118,7 +118,7 @@ public class Base45 extends BaseNCodec {
          *
          * @param decodingPolicy The decoding policy; {@code null} resets to the default ({@link CodecPolicy#STRICT}).
          * @return {@code this} instance.
-         * @throws IllegalArgumentException if the given policy is {@link CodecPolicy#LENIENT}.
+         * @throws IllegalArgumentException Thrown if the given policy is {@link CodecPolicy#LENIENT}.
          */
         @Override
         public Builder setDecodingPolicy(final CodecPolicy decodingPolicy) {
@@ -133,7 +133,7 @@ public class Base45 extends BaseNCodec {
          *
          * @param encodeTable The encode table with exactly 45 unique entries, null resets to the default.
          * @return {@code this} instance.
-         * @throws IllegalArgumentException if the encode table does not contain exactly 45 unique entries.
+         * @throws IllegalArgumentException Thrown if the encode table does not contain exactly 45 unique entries.
          */
         @Override
         public Builder setEncodeTable(final byte... encodeTable) {
@@ -142,9 +142,9 @@ public class Base45 extends BaseNCodec {
         }
 
         /**
-         * Always throws UnsupportedOperationException: Unsupported by Base45 RFC 9285.
+         * Always throws {@link UnsupportedOperationException}; unsupported by Base45 RFC 9285.
          *
-         * @throws UnsupportedOperationException Always thrown: Unsupported by Base45 RFC 9285.
+         * @throws UnsupportedOperationException Thrown because Base45 RFC 9285 does not support this operation.
          */
         @Override
         public Builder setLineLength(final int lineLength) {
@@ -152,9 +152,9 @@ public class Base45 extends BaseNCodec {
         }
 
         /**
-         * Always throws UnsupportedOperationException: Unsupported by Base45 RFC 9285.
+         * Always throws {@link UnsupportedOperationException}; unsupported by Base45 RFC 9285.
          *
-         * @throws UnsupportedOperationException Always thrown: Unsupported by Base45 RFC 9285.
+         * @throws UnsupportedOperationException Thrown because Base45 RFC 9285 does not support this operation.
          */
         @Override
         public Builder setLineSeparator(final byte... lineSeparator) {
@@ -162,9 +162,9 @@ public class Base45 extends BaseNCodec {
         }
 
         /**
-         * Always throws UnsupportedOperationException: Unsupported by Base45 RFC 9285.
+         * Always throws {@link UnsupportedOperationException}; unsupported by Base45 RFC 9285.
          *
-         * @throws UnsupportedOperationException Always thrown: Unsupported by Base45 RFC 9285.
+         * @throws UnsupportedOperationException Thrown because Base45 RFC 9285 does not support this operation.
          */
         @Override
         public Builder setPadding(final byte padding) {
@@ -241,7 +241,7 @@ public class Base45 extends BaseNCodec {
      *
      * @param encodeTable The encode table.
      * @return A new decode table.
-     * @throws IllegalArgumentException if the encode table does not contain exactly 45 unique entries.
+     * @throws IllegalArgumentException Thrown if the encode table does not contain exactly 45 unique entries.
      */
     private static byte[] calculateDecodeTable(final byte[] encodeTable) {
         if (encodeTable.length != BASE) {
@@ -304,7 +304,7 @@ public class Base45 extends BaseNCodec {
      * @param inPos   Position to start reading data from.
      * @param inAvail Number of bytes available from {@code input} for decoding, or {@code -1} to signal EOF.
      * @param context The context to be used.
-     * @throws IllegalArgumentException if the input contains an invalid character, if the encoded length modulo 3 equals 1, or if an encoded triple decodes to
+     * @throws IllegalArgumentException Thrown if the input contains an invalid character, if the encoded length modulo 3 equals 1, or if an encoded triple decodes to
      *                                  a value exceeding 65535, or if a trailing 2-character sequence decodes to a value greater than 255.
      */
     @Override

@@ -365,7 +365,7 @@ class Base64Codec13Test {
      * Tests to make sure Base64's implementation of the org.apache.commons.codec.BinaryDecoder
      * interface is behaving identical to commons-codec-1.3.jar.
      *
-     * @throws DecoderException problem
+     * @throws DecoderException Thrown if decoding fails.
      */
     @Test
     void testBinaryDecoder() throws DecoderException {
@@ -383,7 +383,7 @@ class Base64Codec13Test {
      * Tests to make sure Base64's implementation of the org.apache.commons.codec.BinaryEncoder
      * interface is behaving identical to commons-codec-1.3.jar.
      *
-     * @throws EncoderException problem
+     * @throws EncoderException Thrown if decoding fails.
      */
     @Test
     void testBinaryEncoder() throws EncoderException {
@@ -401,7 +401,7 @@ class Base64Codec13Test {
      * Tests to make sure Base64's implementation of the org.apache.commons.codec.Decoder
      * interface is behaving identical to commons-codec-1.3.jar.
      *
-     * @throws DecoderException problem
+     * @throws DecoderException Thrown if decoding fails.
      */
     @Test
     void testDecoder() throws DecoderException {
@@ -419,7 +419,7 @@ class Base64Codec13Test {
      * Tests to make sure Base64's implementation of the org.apache.commons.codec.Encoder
      * interface is behaving identical to commons-codec-1.3.jar.
      *
-     * @throws EncoderException problem
+     * @throws EncoderException Thrown if decoding fails.
      */
     @Test
     void testEncoder() throws EncoderException {

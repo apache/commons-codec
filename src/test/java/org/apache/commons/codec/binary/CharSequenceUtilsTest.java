@@ -26,10 +26,12 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link CharSequenceUtils}.
  *
- * <p>Tests copied from Apache Commons Lang 3.11. The implementation in codec is based on
+ * <p>
+ * Tests copied from Apache Commons Lang 3.11. The implementation in codec is based on
  * an earlier version of Lang and some tests fail. The CharSequenceUtils class is public but
  * the method is package private. The failing tests have been commented out and the
  * implementation left unchanged.
+ * </p>
  */
 class CharSequenceUtilsTest {
 

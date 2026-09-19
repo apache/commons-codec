@@ -95,7 +95,7 @@ class DaitchMokotoffSoundexTest extends AbstractStringEncoderTest<DaitchMokotoff
     /**
      * Test data from http://www.myatt.demon.co.uk/sxalg.htm
      *
-     * @throws EncoderException for some failure scenarios
+     * @throws EncoderException Thrown for some failure scenarios
      */
     @Test
     void testEncodeIgnoreHyphens() throws EncoderException {

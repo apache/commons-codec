@@ -27,7 +27,7 @@ public interface StringEncoder extends Encoder {
      *
      * @param source The String to encode.
      * @return The encoded String.
-     * @throws EncoderException thrown if there is an error condition during the encoding process.
+     * @throws EncoderException Thrown if there is an error condition during the encoding process.
      */
     String encode(String source) throws EncoderException;
 }

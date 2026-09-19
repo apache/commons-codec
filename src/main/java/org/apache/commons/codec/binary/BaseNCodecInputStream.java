@@ -132,7 +132,7 @@ public class BaseNCodecInputStream<C extends BaseNCodec, T extends BaseNCodecInp
      * {@inheritDoc}
      *
      * @return {@code 0} if the {@link InputStream} has reached {@code EOF}, {@code 1} otherwise.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      * @since 1.7
      */
     @Override
@@ -147,8 +147,10 @@ public class BaseNCodecInputStream<C extends BaseNCodec, T extends BaseNCodecInp
     /**
      * Tests whether decoding behavior is strict.
      *
-     * <p>Strict decoding rejects invalid trailing bits and, for Base32 and Base64, noncanonical input. Decoding errors are reported as {@link IOException}.
-     * To complete validation, consume this stream to EOF. Decoded bytes can be emitted before a later validation error.</p>
+     * <p>
+     * Strict decoding rejects invalid trailing bits and, for Base32 and Base64, noncanonical input. Decoding errors are reported as {@link IOException}.
+     * To complete validation, consume this stream to EOF. Decoded bytes can be emitted before a later validation error.
+     * </p>
      *
      * @return true if using strict decoding.
      * @since 1.15
@@ -208,9 +210,9 @@ public class BaseNCodecInputStream<C extends BaseNCodec, T extends BaseNCodecInp
      * @param offset where to start writing the bytes.
      * @param len    maximum number of bytes to read.
      * @return number of bytes read.
-     * @throws IOException               if an I/O error occurs.
-     * @throws NullPointerException      if the byte array parameter is null.
-     * @throws IndexOutOfBoundsException if offset, len or buffer size are invalid.
+     * @throws IOException               Thrown if an I/O error occurs.
+     * @throws NullPointerException      Thrown if the byte array parameter is null.
+     * @throws IndexOutOfBoundsException Thrown if the offset, length, or buffer size is invalid.
      */
     @Override
     public int read(final byte[] array, final int offset, final int len) throws IOException {
@@ -248,10 +250,7 @@ public class BaseNCodecInputStream<C extends BaseNCodec, T extends BaseNCodecInp
     }
 
     /**
-     * Repositions this stream to the position at the time the mark method was last called on this input stream.
-     * <p>
-     * The {@link #reset} method of {@link BaseNCodecInputStream} does nothing except throw an {@link IOException}.
-     * </p>
+     * Always throws {@link IOException} because this stream does not support resetting.
      *
      * @throws IOException Thrown if this method is invoked.
      * @since 1.7
@@ -264,8 +263,8 @@ public class BaseNCodecInputStream<C extends BaseNCodec, T extends BaseNCodecInp
     /**
      * {@inheritDoc}
      *
-     * @throws IllegalArgumentException if the provided skip length is negative.
-     * @throws IOException if an I/O error occurs.
+     * @throws IllegalArgumentException Thrown if the provided skip length is negative.
+     * @throws IOException Thrown if an I/O error occurs.
      * @since 1.7
      */
     @Override

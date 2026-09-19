@@ -45,7 +45,7 @@ public class Base45OutputStream extends BaseNCodecOutputStream<Base45, Base45Out
         }
 
         /**
-         * Builds a new Base45OutputStream instance with the configured settings.
+         * Gets a new Base45OutputStream instance with the configured settings.
          *
          * @return A new Base45OutputStream.
          */

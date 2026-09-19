@@ -35,7 +35,7 @@ public interface Encoder {
      *            An object to encode.
      * @return An "encoded" Object.
      * @throws EncoderException
-     *             An encoder exception is thrown if the encoder experiences a failure condition during the encoding
+     *             Thrown if the encoder experiences a failure condition during the encoding
      *             process.
      */
     Object encode(Object source) throws EncoderException;

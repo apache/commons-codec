@@ -22,21 +22,29 @@ import org.apache.commons.codec.binary.StringUtils;
 /**
  * Implements the MurmurHash2 32-bit and 64-bit hash functions.
  *
- * <p>MurmurHash is a non-cryptographic hash function suitable for general
+ * <p>
+ * MurmurHash is a non-cryptographic hash function suitable for general
  * hash-based lookup. The name comes from two basic operations, multiply (MU)
  * and rotate (R), used in its inner loop. Unlike cryptographic hash functions,
  * it is not specifically designed to be difficult to reverse by an adversary,
- * making it unsuitable for cryptographic purposes.</p>
+ * making it unsuitable for cryptographic purposes.
+ * </p>
  *
- * <p>This contains a Java port of the 32-bit hash function {@code MurmurHash2}
+ * <p>
+ * This contains a Java port of the 32-bit hash function {@code MurmurHash2}
  * and the 64-bit hash function {@code MurmurHash64A} from Austin Appleby's
- * original {@code c++} code in SMHasher.</p>
+ * original {@code c++} code in SMHasher.
+ * </p>
  *
- * <p>This is a re-implementation of the original C code plus some additional
- * features.</p>
+ * <p>
+ * This is a re-implementation of the original C code plus some additional
+ * features.
+ * </p>
  *
- * <p>This is public domain code with no copyrights. From home page of
- * <a href="https://github.com/aappleby/smhasher">SMHasher</a>:</p>
+ * <p>
+ * This is public domain code with no copyrights. From home page of
+ * <a href="https://github.com/aappleby/smhasher">SMHasher</a>:
+ * </p>
  *
  * <blockquote>
  * "All MurmurHash versions are public domain software, and the author

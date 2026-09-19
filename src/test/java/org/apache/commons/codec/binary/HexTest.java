@@ -49,10 +49,10 @@ class HexTest {
 
     /**
      * Allocate a ByteBuffer.
-     *
-     * <p>The default implementation uses {@link ByteBuffer#allocate(int)}.
-     * The method is overridden in AllocateDirectHexTest to use
+     * <p>
+     * The default implementation uses {@link ByteBuffer#allocate(int)}. The method is overridden in AllocateDirectHexTest to use
      * {@link ByteBuffer#allocateDirect(int)}
+     * </p>
      *
      * @param capacity The capacity
      * @return The byte buffer
@@ -117,9 +117,11 @@ class HexTest {
     }
 
     /**
-     * Encodes the given string into a byte buffer using the UTF-8 charset.
+     * Gets the encoding of the given string as a byte buffer using the UTF-8 charset.
      *
-     * <p>The buffer is allocated using {@link #allocate(int)}.
+     * <p>
+     * The buffer is allocated using {@link #allocate(int)}.
+     * </p>
      *
      * @param string The String to encode
      * @return The byte buffer
@@ -149,8 +151,8 @@ class HexTest {
     /**
      * @param name
      * @param parent
-     * @throws UnsupportedEncodingException
-     * @throws DecoderException
+     * @throws UnsupportedEncodingException Thrown if the named charset is unavailable.
+     * @throws DecoderException Thrown if decoding fails.
      */
     private void testCharset(final String name, final String parent) throws UnsupportedEncodingException,
             DecoderException {

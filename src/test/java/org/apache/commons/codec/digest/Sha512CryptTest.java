@@ -54,7 +54,7 @@ class Sha512CryptTest {
 
     @Test
     void testSha512CryptBytes() {
-        // An empty Bytearray equals an empty String
+        // An empty byte array equals an empty String
         assertEquals("$6$foo$Nywkte7LPWjaJhWjNeGJN.dFdY3pN1wYlGifyRLYOVlGS9EMSiZaDDe/BGSOYQ327q9.32I4UqQ5odsqvsBLX/", Crypt.crypt(new byte[0], "$6$foo"));
         // UTF-8 stores \u00e4 "a with dieresis" as two bytes 0xc3 0xa4.
         assertEquals("$6$./$fKtWqslQkwI8ZxjdWoeS.jHHrte97bZxiwB5gwCRHX6LG62fUhT6Bb5MRrjWvieh0C/gxh8ItFuTsVy80VrED1", Crypt.crypt("t\u00e4st", "$6$./$"));

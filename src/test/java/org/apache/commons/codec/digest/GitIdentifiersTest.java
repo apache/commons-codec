@@ -248,7 +248,9 @@ class GitIdentifiersTest {
     /**
      * Entries should be sorted by Git sort rule.
      *
-     * <p>Git compares the names of the entries, but adds a {@code /} at the end of directory entries.</p>
+     * <p>
+     * Git compares the names of the entries, but adds a {@code /} at the end of directory entries.
+     * </p>
      */
     @Test
     void testDirectoryEntrySortOrder() {
@@ -470,7 +472,9 @@ class GitIdentifiersTest {
      * Basic Multilingual Plane character from U+E000 up: U+FF21 encodes to {@code EF BC A1} and U+1F600 to {@code F0 9F 98 80}, so Git sorts U+FF21 first, while
      * the UTF-16 code units place the surrogate pair of U+1F600 first.
      *
-     * <p>The expected identifier is the one {@code git write-tree} produces for a tree holding the same two entries.</p>
+     * <p>
+     * The expected identifier is the one {@code git write-tree} produces for a tree holding the same two entries.
+     * </p>
      */
     @Test
     void testTreeIdSortsSupplementaryPlaneNamesLikeGit(@TempDir final Path tempDir) throws Exception {

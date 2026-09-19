@@ -31,7 +31,7 @@ class Sha256CryptTest {
 
     @Test
     void testSha256CryptBytes() {
-        // An empty Bytearray equals an empty String
+        // An empty byte array equals an empty String
         assertEquals("$5$foo$Fq9CX624QIfnCAmlGiPKLlAasdacKCRxZztPoeo7o0B", Crypt.crypt(new byte[0], "$5$foo"));
         // UTF-8 stores \u00e4 "a with dieresis" as two bytes 0xc3 0xa4.
         assertEquals("$5$./$iH66LwY5sTDTdHeOxq5nvNDVAxuoCcyH/y6Ptte82P8", Crypt.crypt("t\u00e4st", "$5$./$"));

@@ -26,7 +26,9 @@ import org.apache.commons.codec.StringEncoder;
  * This is an algorithm created by the Caversham Project at the University of Otago. It implements the Caverphone 2.0
  * algorithm:
  *
- * <p>This class is immutable and thread-safe.</p>
+ * <p>
+ * This class is immutable and thread-safe.
+ * </p>
  *
  * @see <a href="https://en.wikipedia.org/wiki/Caverphone">Wikipedia - Caverphone</a>
  * @since 1.5
@@ -49,7 +51,7 @@ public abstract class AbstractCaverphone implements StringEncoder {
      * @return An object (or type {@link String}) containing the Caverphone code which corresponds to the String
      *         supplied.
      * @throws EncoderException
-     *             if the parameter supplied is not of type {@link String}.
+     *             Thrown if the parameter supplied is not of type {@link String}.
      */
     @Override
     public Object encode(final Object source) throws EncoderException {
@@ -70,7 +72,7 @@ public abstract class AbstractCaverphone implements StringEncoder {
      *            Second of two strings to compare.
      * @return {@code true} if the encodings of these strings are identical, {@code false} otherwise.
      * @throws EncoderException
-     *             thrown if there is an error condition during the encoding process.
+     *             Thrown if there is an error condition during the encoding process.
      */
     public boolean isEncodeEqual(final String str1, final String str2) throws EncoderException {
         return this.encode(str1).equals(this.encode(str2));

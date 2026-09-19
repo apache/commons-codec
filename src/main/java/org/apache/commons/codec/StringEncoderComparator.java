@@ -50,7 +50,7 @@ public class StringEncoderComparator implements Comparator {
      * Constructs a new instance with the given algorithm.
      *
      * @param stringEncoder the StringEncoder used for comparisons.
-     * @throws NullPointerException if the StringEncoder is null.
+     * @throws NullPointerException Thrown if the StringEncoder is null.
      */
     public StringEncoderComparator(final StringEncoder stringEncoder) {
         this.stringEncoder = Objects.requireNonNull(stringEncoder, "stringEncoder");

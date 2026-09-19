@@ -55,7 +55,7 @@ class Base64InputStreamTest {
      * Tests skipping past the end of a stream.
      *
      * @throws Throwable
-     *             for some failure scenarios.
+     *             Thrown for some failure scenarios.
      */
     @Test
     void testAvailable() throws Throwable {
@@ -82,7 +82,7 @@ class Base64InputStreamTest {
      * Tests the Base64InputStream implementation against empty input.
      *
      * @throws Exception
-     *             for some failure scenarios.
+     *             Thrown for some failure scenarios.
      */
     @Test
     void testBase64EmptyInputStreamMimeChuckSize() throws Exception {
@@ -93,7 +93,7 @@ class Base64InputStreamTest {
      * Tests the Base64InputStream implementation against empty input.
      *
      * @throws Exception
-     *             for some failure scenarios.
+     *             Thrown for some failure scenarios.
      */
     @Test
     void testBase64EmptyInputStreamPemChuckSize() throws Exception {
@@ -104,7 +104,7 @@ class Base64InputStreamTest {
      * Tests the Base64InputStream implementation.
      *
      * @throws Exception
-     *             for some failure scenarios.
+     *             Thrown for some failure scenarios.
      */
     @Test
     void testBase64InputStreamByChunk() throws Exception {
@@ -143,7 +143,7 @@ class Base64InputStreamTest {
      * Tests the Base64InputStream implementation.
      *
      * @throws Exception
-     *             for some failure scenarios.
+     *             Thrown for some failure scenarios.
      */
     @Test
     void testBase64InputStreamByteByByte() throws Exception {
@@ -199,7 +199,7 @@ class Base64InputStreamTest {
      * @param separator
      *            Line separator in the base64 encoded data.
      * @throws Exception
-     *             Usually signifies a bug in the Base64 commons-codec implementation.
+     *             Thrown if a bug occurs in the Base64 commons-codec implementation.
      */
     private void testByChunk(final byte[] encoded, final byte[] decoded, final int chunkSize, final byte[] separator) throws Exception {
         // Start with encode.
@@ -250,7 +250,7 @@ class Base64InputStreamTest {
      * @param separator
      *            Line separator in the base64 encoded data.
      * @throws Exception
-     *             Usually signifies a bug in the Base64 commons-codec implementation.
+     *             Thrown if a bug occurs in the Base64 commons-codec implementation.
      */
     private void testByteByByte(final byte[] encoded, final byte[] decoded, final int chunkSize, final byte[] separator) throws Exception {
         byte[] output = new byte[encoded.length];
@@ -294,10 +294,10 @@ class Base64InputStreamTest {
     }
 
     /**
-     * Test for the CODEC-101 bug: InputStream.read(byte[]) should never return 0 because Java's builtin InputStreamReader hates that.
+     * Test for the CODEC-101 bug: InputStream.read(byte[]) should never return 0 because Java's built-in InputStreamReader hates that.
      *
      * @throws Exception
-     *             for some failure scenarios.
+     *             Thrown for some failure scenarios.
      */
     @Test
     void testCodec101() throws Exception {
@@ -350,7 +350,7 @@ class Base64InputStreamTest {
      * Test the Base64InputStream implementation against the special NPE inducing input identified in the CODEC-98 bug.
      *
      * @throws Exception
-     *             for some failure scenarios.
+     *             Thrown for some failure scenarios.
      */
     @Test
     void testCodec98NPE() throws Exception {
@@ -378,7 +378,7 @@ class Base64InputStreamTest {
      * But in commons-codec-1.5 it's fixed. :-)
      *
      * @throws Exception
-     *             for some failure scenarios.
+     *             Thrown for some failure scenarios.
      */
     @Test
     void testInputStreamReader() throws Exception {
@@ -396,7 +396,7 @@ class Base64InputStreamTest {
      * Tests markSupported.
      *
      * @throws Exception
-     *             for some failure scenarios.
+     *             Thrown for some failure scenarios.
      */
     @Test
     void testMarkSupported() throws Exception {
@@ -412,7 +412,7 @@ class Base64InputStreamTest {
      * Tests read returning 0
      *
      * @throws Exception
-     *             for some failure scenarios.
+     *             Thrown for some failure scenarios.
      */
     @Test
     void testRead0() throws Exception {
@@ -430,7 +430,7 @@ class Base64InputStreamTest {
      * Tests read using different buffer sizes
      *
      * @throws Exception
-     *             for some failure scenarios.
+     *             Thrown for some failure scenarios.
      */
     @Test
     void testReadMultipleBufferSizes() throws Exception {
@@ -454,7 +454,7 @@ class Base64InputStreamTest {
      * Tests read with null.
      *
      * @throws Exception
-     *             for some failure scenarios.
+     *             Thrown for some failure scenarios.
      */
     @Test
     void testReadNull() throws Exception {
@@ -469,7 +469,7 @@ class Base64InputStreamTest {
      * Tests read throwing IndexOutOfBoundsException
      *
      * @throws Exception
-     *             for some failure scenarios.
+     *             Thrown for some failure scenarios.
      */
     @Test
     void testReadOutOfBounds() throws Exception {
@@ -488,7 +488,7 @@ class Base64InputStreamTest {
      * Tests skipping number of characters larger than the internal buffer.
      *
      * @throws Throwable
-     *             for some failure scenarios.
+     *             Thrown for some failure scenarios.
      */
     @Test
     void testSkipBig() throws Throwable {
@@ -505,7 +505,7 @@ class Base64InputStreamTest {
      * Tests skipping as a noop
      *
      * @throws Throwable
-     *             for some failure scenarios.
+     *             Thrown for some failure scenarios.
      */
     @Test
     void testSkipNone() throws Throwable {
@@ -524,7 +524,7 @@ class Base64InputStreamTest {
      * Tests skipping past the end of a stream.
      *
      * @throws Throwable
-     *             for some failure scenarios.
+     *             Thrown for some failure scenarios.
      */
     @Test
     void testSkipPastEnd() throws Throwable {
@@ -542,7 +542,7 @@ class Base64InputStreamTest {
      * Tests skipping to the end of a stream.
      *
      * @throws Throwable
-     *             for some failure scenarios.
+     *             Thrown for some failure scenarios.
      */
     @Test
     void testSkipToEnd() throws Throwable {
@@ -560,7 +560,7 @@ class Base64InputStreamTest {
      * Tests if negative arguments to skip are handled correctly.
      *
      * @throws Throwable
-     *             for some failure scenarios.
+     *             Thrown for some failure scenarios.
      */
     @Test
     void testSkipWrongArgument() throws Throwable {
@@ -574,7 +574,7 @@ class Base64InputStreamTest {
      * Test strict decoding.
      *
      * @throws Exception
-     *             for some failure scenarios.
+     *             Thrown for some failure scenarios.
      */
     @Test
     void testStrictDecoding() throws Exception {

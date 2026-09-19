@@ -39,7 +39,7 @@ class Caverphone1Test extends AbstractStringEncoderTest<Caverphone1> {
      *
      * AT1111 words: add, aid, at, art, eat, earth, head, hit, hot, hold, hard, heart, it, out, old
      *
-     * @throws EncoderException for some failure scenarios.
+     * @throws EncoderException Thrown for some failure scenarios.
      */
     @Test
     void testCaverphoneRevisitedCommonCodeAT1111() throws EncoderException {
@@ -71,7 +71,7 @@ class Caverphone1Test extends AbstractStringEncoderTest<Caverphone1> {
     /**
      * Tests some examples from version 2.0 https://caversham.otago.ac.nz/files/working/ctp150804.pdf
      *
-     * @throws EncoderException for some failure scenarios.
+     * @throws EncoderException Thrown for some failure scenarios.
      */
     @Test
     void testIsCaverphoneEquals() throws EncoderException {
@@ -83,7 +83,7 @@ class Caverphone1Test extends AbstractStringEncoderTest<Caverphone1> {
     /**
      * Tests example from https://caversham.otago.ac.nz/files/working/ctp060902.pdf
      *
-     * @throws EncoderException for some failure scenarios.
+     * @throws EncoderException Thrown for some failure scenarios.
      */
     @Test
     void testSpecificationV1Examples() throws EncoderException {
@@ -93,7 +93,7 @@ class Caverphone1Test extends AbstractStringEncoderTest<Caverphone1> {
     /**
      * Tests examples from https://en.wikipedia.org/wiki/Caverphone
      *
-     * @throws EncoderException for some failure scenarios.
+     * @throws EncoderException Thrown for some failure scenarios.
      */
     @Test
     void testWikipediaExamples() throws EncoderException {

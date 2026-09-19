@@ -164,7 +164,7 @@ public class BeiderMorseEncoder implements StringEncoder {
     }
 
     /**
-     * Tests if multiple possible encodings are concatenated.
+     * Tests whether multiple phonetic encodings are concatenated or just the first one is kept.
      *
      * @return true if multiple encodings are concatenated, false if just the first one is returned.
      */

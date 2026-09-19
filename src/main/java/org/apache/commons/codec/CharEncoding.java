@@ -31,19 +31,37 @@ import java.nio.charset.StandardCharsets;
  * </p>
  *
  * <ul>
- * <li>{@code US-ASCII}<p>
- * Seven-bit ASCII, a.k.a. ISO646-US, a.k.a. the Basic Latin block of the Unicode character set.</p></li>
- * <li>{@code ISO-8859-1}<p>
- * ISO Latin Alphabet No. 1, a.k.a. ISO-LATIN-1.</p></li>
- * <li>{@code UTF-8}<p>
- * Eight-bit Unicode Transformation Format.</p></li>
- * <li>{@code UTF-16BE}<p>
- * Sixteen-bit Unicode Transformation Format, big-endian byte order.</p></li>
- * <li>{@code UTF-16LE}<p>
- * Sixteen-bit Unicode Transformation Format, little-endian byte order.</p></li>
- * <li>{@code UTF-16}<p>
+ * <li>{@code US-ASCII}
+ * <p>
+ * Seven-bit ASCII, a.k.a. ISO646-US, a.k.a. the Basic Latin block of the Unicode character set.
+ * </p>
+ * </li>
+ * <li>{@code ISO-8859-1}
+ * <p>
+ * ISO Latin Alphabet No. 1, a.k.a. ISO-LATIN-1.
+ * </p>
+ * </li>
+ * <li>{@code UTF-8}
+ * <p>
+ * Eight-bit Unicode Transformation Format.
+ * </p>
+ * </li>
+ * <li>{@code UTF-16BE}
+ * <p>
+ * Sixteen-bit Unicode Transformation Format, big-endian byte order.
+ * </p>
+ * </li>
+ * <li>{@code UTF-16LE}
+ * <p>
+ * Sixteen-bit Unicode Transformation Format, little-endian byte order.
+ * </p>
+ * </li>
+ * <li>{@code UTF-16}
+ * <p>
  * Sixteen-bit Unicode Transformation Format, byte order specified by a mandatory initial byte-order mark (either order
- * accepted on input, big-endian used on output.)</p></li>
+ * accepted on input, big-endian used on output.)
+ * </p>
+ * </li>
  * </ul>
  *
  * This perhaps would best belong in the [lang] project. Even if a similar interface is defined in [lang], it is not

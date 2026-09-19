@@ -185,7 +185,7 @@ public class Soundex implements StringEncoder {
      * @return The number of characters in the two encoded Strings that are the same from 0 to 4.
      * @see SoundexUtils#difference(StringEncoder,String,String)
      * @see <a href="https://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_de-dz_8co5.asp"> MS T-SQL DIFFERENCE</a>
-     * @throws EncoderException if an error occurs encoding one of the strings.
+     * @throws EncoderException Thrown if an error occurs encoding one of the strings.
      * @since 1.3
      */
     public int difference(final String s1, final String s2) throws EncoderException {
@@ -198,8 +198,8 @@ public class Soundex implements StringEncoder {
      *
      * @param obj Object to encode.
      * @return An object (or type {@link String}) containing the Soundex code which corresponds to the String supplied.
-     * @throws EncoderException         if the parameter supplied is not of type {@link String}.
-     * @throws IllegalArgumentException if a character is not mapped.
+     * @throws EncoderException         Thrown if the parameter supplied is not of type {@link String}.
+     * @throws IllegalArgumentException Thrown if a character is not mapped.
      */
     @Override
     public Object encode(final Object obj) throws EncoderException {
@@ -214,7 +214,7 @@ public class Soundex implements StringEncoder {
      *
      * @param str A String object to encode.
      * @return A Soundex code corresponding to the String supplied.
-     * @throws IllegalArgumentException if a character is not mapped.
+     * @throws IllegalArgumentException Thrown if a character is not mapped.
      */
     @Override
     public String encode(final String str) {
@@ -222,7 +222,7 @@ public class Soundex implements StringEncoder {
     }
 
     /**
-     * Returns the maxLength. Standard Soundex
+     * Gets the maximum code length.
      *
      * @return The maxLength.
      * @deprecated This feature is not needed since the encoding size must be constant. Will be removed in 2.0.
@@ -272,7 +272,7 @@ public class Soundex implements StringEncoder {
      *
      * @param str String to encode using the Soundex algorithm.
      * @return A Soundex code for the String supplied.
-     * @throws IllegalArgumentException if a character is not mapped.
+     * @throws IllegalArgumentException Thrown if a character is not mapped.
      */
     public String soundex(String str) {
         if (str == null) {

@@ -171,6 +171,8 @@ class Base64Test {
     private final Random random = new Random();
 
     /**
+     * Gets the random number generator.
+     *
      * @return The random.
      */
     Random getRandom() {
@@ -1603,7 +1605,7 @@ class Base64Test {
      * mode. This test case ends up being the "URL-SAFE" JUnit's.
      *
      * @throws DecoderException
-     *             if Hex.decode() fails - a serious problem since Hex comes
+     *             Thrown if Hex.decode() fails - a serious problem since Hex comes
      *             from our own commons-codec!
      */
     @Test

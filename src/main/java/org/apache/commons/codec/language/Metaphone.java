@@ -89,7 +89,7 @@ public class Metaphone implements StringEncoder {
      *
      * @param obj Object to encode.
      * @return An object (or type {@link String}) containing the Metaphone code which corresponds to the String supplied.
-     * @throws EncoderException if the parameter supplied is not of type {@link String}.
+     * @throws EncoderException Thrown if the parameter supplied is not of type {@link String}.
      */
     @Override
     public Object encode(final Object obj) throws EncoderException {
@@ -124,7 +124,7 @@ public class Metaphone implements StringEncoder {
     }
 
     /**
-     * Tests is the Metaphones of two strings are identical.
+     * Tests whether the Metaphones of two strings are identical.
      *
      * @param str1 First of two strings to compare.
      * @param str2 Second of two strings to compare.

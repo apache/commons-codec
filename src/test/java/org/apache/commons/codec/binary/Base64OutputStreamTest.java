@@ -62,7 +62,7 @@ class Base64OutputStreamTest extends AbstractBaseNOutputStreamTest {
      * Test the Base64OutputStream implementation against empty input.
      *
      * @throws Exception
-     *             for some failure scenarios.
+     *             Thrown for some failure scenarios.
      */
     @Test
     void testBase64EmptyOutputStreamMimeChunkSize() throws Exception {
@@ -73,7 +73,7 @@ class Base64OutputStreamTest extends AbstractBaseNOutputStreamTest {
      * Test the Base64OutputStream implementation against empty input.
      *
      * @throws Exception
-     *             for some failure scenarios.
+     *             Thrown for some failure scenarios.
      */
     @Test
     void testBase64EmptyOutputStreamPemChunkSize() throws Exception {
@@ -84,7 +84,7 @@ class Base64OutputStreamTest extends AbstractBaseNOutputStreamTest {
      * Test the Base64OutputStream implementation
      *
      * @throws Exception
-     *             for some failure scenarios.
+     *             Thrown for some failure scenarios.
      */
     @Test
     void testBase64OutputStreamByChunk() throws Exception {
@@ -123,7 +123,7 @@ class Base64OutputStreamTest extends AbstractBaseNOutputStreamTest {
      * Test the Base64OutputStream implementation
      *
      * @throws Exception
-     *             for some failure scenarios.
+     *             Thrown for some failure scenarios.
      */
     @Test
     void testBase64OutputStreamByteByByte() throws Exception {
@@ -179,7 +179,7 @@ class Base64OutputStreamTest extends AbstractBaseNOutputStreamTest {
      * @param separator
      *            Line separator in the base64 encoded data.
      * @throws Exception
-     *             Usually signifies a bug in the Base64 commons-codec implementation.
+     *             Thrown if a bug occurs in the Base64 commons-codec implementation.
      */
     private void testByChunk(final byte[] encoded, final byte[] decoded, final int chunkSize, final byte[] separator) throws Exception {
 
@@ -229,7 +229,7 @@ class Base64OutputStreamTest extends AbstractBaseNOutputStreamTest {
      * @param separator
      *            Line separator in the base64 encoded data.
      * @throws Exception
-     *             Usually signifies a bug in the Base64 commons-codec implementation.
+     *             Thrown if a bug occurs in the Base64 commons-codec implementation.
      */
     private void testByteByByte(final byte[] encoded, final byte[] decoded, final int chunkSize, final byte[] separator) throws Exception {
 
@@ -310,7 +310,7 @@ class Base64OutputStreamTest extends AbstractBaseNOutputStreamTest {
      * Test the Base64OutputStream implementation against the special NPE inducing input
      * identified in the CODEC-98 bug.
      *
-     * @throws Exception for some failure scenarios.
+     * @throws Exception Thrown for some failure scenarios.
      */
     @Test
     void testCodec98NPE() throws Exception {
@@ -331,7 +331,7 @@ class Base64OutputStreamTest extends AbstractBaseNOutputStreamTest {
      * Test strict decoding.
      *
      * @throws Exception
-     *             for some failure scenarios.
+     *             Thrown for some failure scenarios.
      */
     @Test
     void testStrictDecoding() throws Exception {
@@ -386,7 +386,7 @@ class Base64OutputStreamTest extends AbstractBaseNOutputStreamTest {
      * Tests Base64OutputStream.write for expected IndexOutOfBoundsException conditions.
      *
      * @throws Exception
-     *             for some failure scenarios.
+     *             Thrown for some failure scenarios.
      */
     @Test
     void testWriteOutOfBounds() throws Exception {
@@ -404,7 +404,7 @@ class Base64OutputStreamTest extends AbstractBaseNOutputStreamTest {
      * Tests Base64OutputStream.write(null).
      *
      * @throws Exception
-     *             for some failure scenarios.
+     *             Thrown for some failure scenarios.
      */
     @Test
     void testWriteToNullCoverage() throws Exception {

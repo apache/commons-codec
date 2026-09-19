@@ -373,9 +373,9 @@ public class DaitchMokotoffSoundex implements StringEncoder {
      * @return An object (of type {@link String}) containing the DM Soundex code, which corresponds to the String
      *         supplied.
      * @throws EncoderException
-     *             if the parameter supplied is not of type {@link String}.
+     *             Thrown if the parameter supplied is not of type {@link String}.
      * @throws IllegalArgumentException
-     *             if a character is not mapped.
+     *             Thrown if a character is not mapped.
      */
     @Override
     public Object encode(final Object obj) throws EncoderException {
@@ -393,7 +393,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
      *            A String object to encode.
      * @return A DM Soundex code corresponding to the String supplied.
      * @throws IllegalArgumentException
-     *             if a character is not mapped.
+     *             Thrown if a character is not mapped.
      */
     @Override
     public String encode(final String source) {
@@ -424,7 +424,7 @@ public class DaitchMokotoffSoundex implements StringEncoder {
      *            A String object to encode.
      * @return A string containing a set of DM Soundex codes corresponding to the String supplied.
      * @throws IllegalArgumentException
-     *             if a character is not mapped.
+     *             Thrown if a character is not mapped.
      */
     public String soundex(final String source) {
         return String.join("|", soundex(source, true));

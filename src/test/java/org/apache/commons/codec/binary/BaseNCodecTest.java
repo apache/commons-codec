@@ -91,11 +91,12 @@ class BaseNCodecTest {
     }
 
     /**
-     * Gets the presumable free memory; an estimate of the amount of memory that could be allocated.
+     * Gets the presumed free memory; an estimate of the amount of memory that could be allocated.
      *
-     * <p>This performs a garbage clean-up and the obtains the presumed amount of free memory
-     * that can be allocated in this VM. This is computed as:<p>
-     *
+     * <p>
+     * This performs a garbage clean-up and then obtains the presumed amount of free memory
+     * that can be allocated in this VM. This is computed as:
+     * </p>
      * <pre>
      * System.gc();
      * long allocatedMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
@@ -217,8 +218,10 @@ class BaseNCodecTest {
     /**
      * Test to expand to beyond the max buffer size.
      *
-     * <p>Note: If the buffer is required to expand to above the max buffer size it may not work
-     * on all VMs and may have to be annotated with @Ignore.</p>
+     * <p>
+     * Note: If the buffer is required to expand to above the max buffer size it may not work
+     * on all VMs and may have to be annotated with @Ignore.
+     * </p>
      */
     @Test
     void testEnsureBufferSizeExpandsToBeyondMaxBufferSize() {

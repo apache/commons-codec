@@ -29,7 +29,9 @@ import java.util.Locale;
  * @see <a href="https://caversham.otago.ac.nz/files/working/ctp150804.pdf">Caverphone 2.0 specification</a>
  * @since 1.5
  *
- * <p>This class is immutable and thread-safe.</p>
+ * <p>
+ * This class is immutable and thread-safe.
+ * </p>
  */
 public class Caverphone2 extends AbstractCaverphone {
 

@@ -44,6 +44,8 @@ class Base16Test {
     private final Random random = new Random();
 
     /**
+     * Gets the random number generator.
+     *
      * @return The random.
      */
     Random getRandom() {

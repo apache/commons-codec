@@ -104,7 +104,7 @@ public class Base32 extends BaseNCodec {
          *
          * @param encodeTable The encode table with exactly 32 unique entries, null resets to the default.
          * @return {@code this} instance.
-         * @throws IllegalArgumentException if the encode table does not contain exactly 32 unique entries.
+         * @throws IllegalArgumentException Thrown if the encode table does not contain exactly 32 unique entries.
          */
         @Override
         public Builder setEncodeTable(final byte... encodeTable) {
@@ -273,7 +273,7 @@ public class Base32 extends BaseNCodec {
      *
      * @param encodeTable that is used to determine decode lookup table.
      * @return A new decode table.
-     * @throws IllegalArgumentException if the encode table does not contain exactly 32 unique entries.
+     * @throws IllegalArgumentException Thrown if the encode table does not contain exactly 32 unique entries.
      */
     private static byte[] calculateDecodeTable(final byte[] encodeTable) {
         if (encodeTable.length != ENCODING_TABLE_LENGTH) {
@@ -791,7 +791,7 @@ public class Base32 extends BaseNCodec {
     }
 
     /**
-     * Returns whether or not the {@code octet} is in the Base32 alphabet.
+     * Tests whether the {@code octet} is in the Base32 alphabet.
      *
      * @param octet The value to test.
      * @return {@code true} if the value is defined in the Base32 alphabet {@code false} otherwise.
@@ -811,7 +811,7 @@ public class Base32 extends BaseNCodec {
      *
      * @param emptyBitsMask The mask of the lower bits that should be empty.
      * @param context       The context to be used.
-     * @throws IllegalArgumentException if the bits being checked contain any non-zero value.
+     * @throws IllegalArgumentException Thrown if the bits being checked contain any non-zero value.
      */
     private void validateCharacter(final long emptyBitsMask, final Context context) {
         // Use the long bit work area
@@ -824,7 +824,7 @@ public class Base32 extends BaseNCodec {
     /**
      * Validates whether decoding allows final trailing characters that cannot be created during encoding.
      *
-     * @throws IllegalArgumentException if strict decoding is enabled.
+     * @throws IllegalArgumentException Thrown if strict decoding is enabled.
      */
     private void validateTrailingCharacters() {
         if (isStrictDecoding()) {

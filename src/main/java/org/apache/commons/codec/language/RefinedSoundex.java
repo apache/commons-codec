@@ -123,7 +123,7 @@ public class RefinedSoundex implements StringEncoder {
      *          MS T-SQL DIFFERENCE</a>
      *
      * @throws EncoderException
-     *                  if an error occurs encoding one of the strings.
+     *                  Thrown if an error occurs encoding one of the strings.
      * @since 1.3
      */
     public int difference(final String s1, final String s2) throws EncoderException {
@@ -141,7 +141,7 @@ public class RefinedSoundex implements StringEncoder {
      * @return An object (or type {@link String}) containing the refined.
      *             Soundex code which corresponds to the String supplied.
      * @throws EncoderException
-     *                  if the parameter supplied is not of type {@link String}.
+     *                  Thrown if the parameter supplied is not of type {@link String}.
      */
     @Override
     public Object encode(final Object obj) throws EncoderException {
@@ -164,7 +164,7 @@ public class RefinedSoundex implements StringEncoder {
     }
 
     /**
-     * Returns the mapping code for a given character. The mapping codes are
+     * Gets the mapping code for a given character. The mapping codes are
      * maintained in an internal char array named soundexMapping, and the
      * default values of these mappings are US English.
      *
