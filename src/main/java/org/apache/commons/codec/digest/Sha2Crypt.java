@@ -49,11 +49,17 @@ public class Sha2Crypt {
     /** Maximum number of rounds. */
     private static final int ROUNDS_MAX = 999_999_999;
 
+    /** Default maximum number of rounds accepted from a caller-supplied salt string. */
+    private static final int ROUNDS_MAX_DEFAULT = 1_000_000;
+
     /** Minimum number of rounds. */
     private static final int ROUNDS_MIN = 1000;
 
     /** Prefix for optional rounds specification. */
     private static final String ROUNDS_PREFIX = "rounds=";
+
+    /** System property used to override the default maximum number of rounds. */
+    static final String ROUNDS_MAX_PROPERTY = "org.apache.commons.codec.digest.Sha2Crypt.roundsMax";
 
     /** The number of bytes the final hash value will have (SHA-256 variant). */
     private static final int SHA256_BLOCKSIZE = 32;
@@ -167,8 +173,17 @@ public class Sha2Crypt {
             throw new IllegalArgumentException("Invalid salt value: " + salt);
         }
         if (m.group(3) != null) {
-            rounds = Integer.parseInt(m.group(3));
-            rounds = Math.max(ROUNDS_MIN, Math.min(ROUNDS_MAX, rounds));
+            final int roundsMax = Math.max(ROUNDS_MIN,
+                    Math.min(ROUNDS_MAX, Integer.getInteger(ROUNDS_MAX_PROPERTY, ROUNDS_MAX_DEFAULT)));
+            final String roundsString = m.group(3);
+            final int firstNonZero = firstNonZeroIndex(roundsString);
+            final String normalizedRounds = roundsString.substring(firstNonZero);
+            final String roundsMaxString = Integer.toString(roundsMax);
+            if (normalizedRounds.length() > roundsMaxString.length()
+                    || normalizedRounds.length() == roundsMaxString.length() && normalizedRounds.compareTo(roundsMaxString) > 0) {
+                throw new IllegalArgumentException("Rounds value in salt exceeds the maximum of " + roundsMax + ": " + salt);
+            }
+            rounds = Math.max(ROUNDS_MIN, Integer.parseInt(normalizedRounds));
             roundsCustom = true;
         }
         final String saltString = m.group(4);
@@ -524,6 +539,20 @@ public class Sha2Crypt {
         Arrays.fill(saltBytes, (byte) 0);
 
         return buffer.toString();
+    }
+
+    /**
+     * Finds the first non-zero digit, retaining one zero for an all-zero value.
+     *
+     * @param value a non-empty decimal string
+     * @return the index of the first significant digit
+     */
+    private static int firstNonZeroIndex(final String value) {
+        int index = 0;
+        while (index < value.length() - 1 && value.charAt(index) == '0') {
+            index++;
+        }
+        return index;
     }
 
     /**

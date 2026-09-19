@@ -17,7 +17,9 @@
 
 package org.apache.commons.codec.digest;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 
 import java.nio.charset.StandardCharsets;
 
@@ -33,13 +35,41 @@ class Sha2CryptTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = { 100_000, 1_000_000, 5_000_000 /*, 50_000_000*/ })
+    @ValueSource(ints = { 100_000, 1_000_000 })
     void testLargeRounds(final int rounds) {
         final String salt = "$6$rounds=" + rounds + "$abcdefghijklmnop";
-        final long t = System.nanoTime();
         Crypt.crypt("anything".getBytes(StandardCharsets.UTF_8), salt);
-        Crypt.crypt("anything".getBytes(StandardCharsets.UTF_8), "$6$rounds=5000000$abcdefghijklmnop");
-        // Full effect (WARNING: ~2 min):
-        // Crypt.crypt("anything".getBytes(), "$6$rounds=999999999$abcdefghijklmnop");
+    }
+
+    @Test
+    void testRoundsAboveCeilingRejected() {
+        assertThrowsExactly(IllegalArgumentException.class,
+                () -> Sha2Crypt.sha512Crypt("secret".getBytes(StandardCharsets.UTF_8), "$6$rounds=1000001$abcdefghijklmnop"));
+        assertThrowsExactly(IllegalArgumentException.class,
+                () -> Sha2Crypt.sha512Crypt("secret".getBytes(StandardCharsets.UTF_8), "$6$rounds=999999999$abcdefghijklmnop"));
+        assertThrowsExactly(IllegalArgumentException.class,
+                () -> Sha2Crypt.sha512Crypt("secret".getBytes(StandardCharsets.UTF_8), "$6$rounds=99999999999$abcdefghijklmnop"));
+    }
+
+    @Test
+    void testRoundsLeadingZeroes() {
+        final String expected = Sha2Crypt.sha512Crypt("secret".getBytes(StandardCharsets.UTF_8), "$6$rounds=1000$abcdefghijklmnop");
+        final String actual = Sha2Crypt.sha512Crypt("secret".getBytes(StandardCharsets.UTF_8), "$6$rounds=0000001000$abcdefghijklmnop");
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void testRoundsCeilingOverride() {
+        final String previous = System.getProperty(Sha2Crypt.ROUNDS_MAX_PROPERTY);
+        System.setProperty(Sha2Crypt.ROUNDS_MAX_PROPERTY, "2000000");
+        try {
+            assertNotNull(Sha2Crypt.sha512Crypt("secret".getBytes(StandardCharsets.UTF_8), "$6$rounds=2000000$abcdefghijklmnop"));
+        } finally {
+            if (previous == null) {
+                System.clearProperty(Sha2Crypt.ROUNDS_MAX_PROPERTY);
+            } else {
+                System.setProperty(Sha2Crypt.ROUNDS_MAX_PROPERTY, previous);
+            }
+        }
     }
 }

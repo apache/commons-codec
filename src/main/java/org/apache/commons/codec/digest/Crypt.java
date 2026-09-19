@@ -122,6 +122,12 @@ public class Crypt {
      * storedPwd.equals(crypt(enteredPwd, storedPwd))
      * </pre>
      * <p>
+     * For SHA-256 and SHA-512 crypt strings, the stored value can include a {@code rounds=} work factor. Treat a complete crypt string as untrusted input when
+     * verifying passwords. {@link Sha2Crypt} limits caller-supplied work factors to 1,000,000 rounds by default. Applications that deliberately need a higher
+     * limit can set the {@code org.apache.commons.codec.digest.Sha2Crypt.roundsMax} system property, up to the crypt specification maximum, and should apply
+     * their own authentication timeouts and resource controls.
+     * </p>
+     * <p>
      * The resulting string starts with the marker string ({@code $n$}), where n is the same as the input salt. The salt is then appended, followed by a
      * {@code "$"} sign. This is followed by the actual hash value. For DES the string only contains the salt and actual hash. The total length is dependent on
      * the algorithm used:
