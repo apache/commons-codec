@@ -516,7 +516,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * The value {@link BigInteger#ZERO} maps to an empty array.
      * </p>
      *
-     * @param bigInt {@code BigInteger} to be converted.
+     * @param value {@code BigInteger} to be converted.
      * @return A byte array representation of the BigInteger parameter.
      */
     static byte[] toUnsignedBytes(final BigInteger value) {
@@ -725,7 +725,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * @param length length of the subarray.
      * @throws IllegalArgumentException Thrown when a problem is detected processing data.
      */
-    abstract void decode(byte[] array, int i, int length, Context context);
+    abstract void decode(byte[] array, int offset, int length, Context context);
 
     /**
      * Decodes an Object using the Base-N algorithm. This method is provided in order to satisfy the requirements of the Decoder interface, and will throw a
@@ -816,7 +816,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * @param length length of the subarray.
      * @throws IllegalArgumentException Thrown when a problem is detected processing data.
      */
-    abstract void encode(byte[] array, int i, int length, Context context);
+    abstract void encode(byte[] array, int offset, int length, Context context);
 
     /**
      * Encodes an Object using the Base-N algorithm. This method is provided in order to satisfy the requirements of the Encoder interface, and will throw an
