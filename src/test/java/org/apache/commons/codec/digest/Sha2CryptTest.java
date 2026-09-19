@@ -52,13 +52,6 @@ class Sha2CryptTest {
     }
 
     @Test
-    void testRoundsLeadingZeroes() {
-        final String expected = Sha2Crypt.sha512Crypt("secret".getBytes(StandardCharsets.UTF_8), "$6$rounds=1000$abcdefghijklmnop");
-        final String actual = Sha2Crypt.sha512Crypt("secret".getBytes(StandardCharsets.UTF_8), "$6$rounds=0000001000$abcdefghijklmnop");
-        assertEquals(expected, actual);
-    }
-
-    @Test
     void testRoundsCeilingOverride() {
         final String previous = System.getProperty(Sha2Crypt.ROUNDS_MAX_PROPERTY);
         System.setProperty(Sha2Crypt.ROUNDS_MAX_PROPERTY, "2000000");
@@ -71,5 +64,12 @@ class Sha2CryptTest {
                 System.setProperty(Sha2Crypt.ROUNDS_MAX_PROPERTY, previous);
             }
         }
+    }
+
+    @Test
+    void testRoundsLeadingZeroes() {
+        final String expected = Sha2Crypt.sha512Crypt("secret".getBytes(StandardCharsets.UTF_8), "$6$rounds=1000$abcdefghijklmnop");
+        final String actual = Sha2Crypt.sha512Crypt("secret".getBytes(StandardCharsets.UTF_8), "$6$rounds=0000001000$abcdefghijklmnop");
+        assertEquals(expected, actual);
     }
 }

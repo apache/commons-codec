@@ -38,10 +38,22 @@ import java.util.regex.Pattern;
  * <p>
  * This class is immutable and thread-safe.
  * </p>
+ * <p>
+ * SHA-crypt hashing has a quadratic input-length step. To bound CPU and memory consumption when plaintext is supplied by an
+ * untrusted caller, plaintext is limited to 4096 bytes by default. The limit can be changed with the
+ * {@code org.apache.commons.codec.digest.Sha2Crypt.keyMax} system property; this property is intended for trusted JVM
+ * configuration only.
+ * </p>
  *
  * @since 1.7
  */
 public class Sha2Crypt {
+
+    /** Default maximum plaintext (key) length in bytes. */
+    private static final int KEY_MAX_DEFAULT = 4096;
+
+    /** System property used to override the default maximum plaintext (key) length. */
+    static final String KEY_MAX_PROPERTY = "org.apache.commons.codec.digest.Sha2Crypt.keyMax";
 
     /** Default number of rounds if not explicitly specified. */
     private static final int ROUNDS_DEFAULT = 5000;
@@ -78,6 +90,20 @@ public class Sha2Crypt {
             .compile("^\\$([56])\\$(rounds=(\\d+)\\$)?([\\.\\/a-zA-Z0-9]{1,16}).*");
 
     /**
+     * Finds the first non-zero digit, retaining one zero for an all-zero value.
+     *
+     * @param value a non-empty decimal string
+     * @return the index of the first significant digit
+     */
+    private static int firstNonZeroIndex(final String value) {
+        int index = 0;
+        while (index < value.length() - 1 && value.charAt(index) == '0') {
+            index++;
+        }
+        return index;
+    }
+
+    /**
      * Generates a libc crypt() compatible "$5$" hash value with random salt.
      *
      * <p>
@@ -89,6 +115,7 @@ public class Sha2Crypt {
      *
      * @param keyBytes Plaintext to hash. Each array element is set to {@code 0} before returning.
      * @return The Complete hash value.
+     * @throws IllegalArgumentException if {@code keyBytes} exceeds the configured maximum length
      * @throws IllegalArgumentException Thrown if a {@link NoSuchAlgorithmException} is caught.
      */
     public static String sha256Crypt(final byte[] keyBytes) {
@@ -105,6 +132,7 @@ public class Sha2Crypt {
      * @param salt     real salt value without prefix or "rounds=". The salt may be null, in which case a salt is generated for you using {@link SecureRandom}.
      *                 If one does not want to use {@link SecureRandom}, you can pass your own {@link Random} in {@link #sha256Crypt(byte[], String, Random)}.
      * @return The Complete hash value including salt.
+     * @throws IllegalArgumentException if {@code keyBytes} exceeds the configured maximum length
      * @throws IllegalArgumentException Thrown if the salt does not match the allowed pattern.
      * @throws IllegalArgumentException Thrown if a {@link NoSuchAlgorithmException} is caught.
      */
@@ -125,6 +153,7 @@ public class Sha2Crypt {
      * @param salt     real salt value without prefix or "rounds=".
      * @param random   The instance of {@link Random} to use for generating the salt. Consider using {@link SecureRandom} for more secure salts.
      * @return The Complete hash value including salt.
+     * @throws IllegalArgumentException if {@code keyBytes} exceeds the configured maximum length
      * @throws IllegalArgumentException Thrown if the salt does not match the allowed pattern.
      * @throws IllegalArgumentException Thrown if a {@link NoSuchAlgorithmException} is caught.
      * @since 1.12
@@ -160,6 +189,11 @@ public class Sha2Crypt {
             final int blocksize, final String algorithm) {
 
         final int keyLen = keyBytes.length;
+        final int keyMax = Math.max(0, Integer.getInteger(KEY_MAX_PROPERTY, KEY_MAX_DEFAULT));
+        if (keyLen > keyMax) {
+            throw new IllegalArgumentException("Key length " + keyLen + " exceeds the maximum of " + keyMax + " bytes; " +
+                    "raise it with the " + KEY_MAX_PROPERTY + " system property if intended");
+        }
 
         // Extracts effective salt and the number of rounds from the given salt.
         int rounds = ROUNDS_DEFAULT;
@@ -179,8 +213,8 @@ public class Sha2Crypt {
             final int firstNonZero = firstNonZeroIndex(roundsString);
             final String normalizedRounds = roundsString.substring(firstNonZero);
             final String roundsMaxString = Integer.toString(roundsMax);
-            if (normalizedRounds.length() > roundsMaxString.length()
-                    || normalizedRounds.length() == roundsMaxString.length() && normalizedRounds.compareTo(roundsMaxString) > 0) {
+            if (normalizedRounds.length() > roundsMaxString.length() ||
+                    normalizedRounds.length() == roundsMaxString.length() && normalizedRounds.compareTo(roundsMaxString) > 0) {
                 throw new IllegalArgumentException("Rounds value in salt exceeds the maximum of " + roundsMax + ": " + salt);
             }
             rounds = Math.max(ROUNDS_MIN, Integer.parseInt(normalizedRounds));
@@ -542,20 +576,6 @@ public class Sha2Crypt {
     }
 
     /**
-     * Finds the first non-zero digit, retaining one zero for an all-zero value.
-     *
-     * @param value a non-empty decimal string
-     * @return the index of the first significant digit
-     */
-    private static int firstNonZeroIndex(final String value) {
-        int index = 0;
-        while (index < value.length() - 1 && value.charAt(index) == '0') {
-            index++;
-        }
-        return index;
-    }
-
-    /**
      * Generates a libc crypt() compatible "$6$" hash value with random salt.
      *
      * <p>
@@ -567,6 +587,7 @@ public class Sha2Crypt {
      *
      * @param keyBytes Plaintext to hash. Each array element is set to {@code 0} before returning.
      * @return Complete hash value.
+     * @throws IllegalArgumentException if {@code keyBytes} exceeds the configured maximum length
      * @throws IllegalArgumentException Thrown if a {@link NoSuchAlgorithmException} is caught.
      */
     public static String sha512Crypt(final byte[] keyBytes) {
@@ -585,6 +606,7 @@ public class Sha2Crypt {
      *                 if you want to use a {@link Random} object other than {@link SecureRandom} then we suggest you provide it using
      *                 {@link #sha512Crypt(byte[], String, Random)}.
      * @return Complete hash value including salt.
+     * @throws IllegalArgumentException if {@code keyBytes} exceeds the configured maximum length
      * @throws IllegalArgumentException Thrown if the salt does not match the allowed pattern.
      * @throws IllegalArgumentException Thrown if a {@link NoSuchAlgorithmException} is caught.
      */

@@ -128,6 +128,10 @@ public class Crypt {
      * their own authentication timeouts and resource controls.
      * </p>
      * <p>
+     * SHA-256 and SHA-512 plaintext is limited to 4096 bytes by default because SHA-crypt has a quadratic input-length step. Applications that deliberately need a
+     * higher limit can set the {@code org.apache.commons.codec.digest.Sha2Crypt.keyMax} system property. This property is intended for trusted JVM configuration only.
+     * </p>
+     * <p>
      * The resulting string starts with the marker string ({@code $n$}), where n is the same as the input salt. The salt is then appended, followed by a
      * {@code "$"} sign. This is followed by the actual hash value. For DES the string only contains the salt and actual hash. The total length is dependent on
      * the algorithm used:
