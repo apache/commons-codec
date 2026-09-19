@@ -1488,10 +1488,10 @@ public class DigestUtils {
      */
     public static MessageDigest updateDigest(final MessageDigest digest, final InputStream inputStream) throws IOException {
         final byte[] buffer = new byte[BUFFER_SIZE];
-        int read = inputStream.read(buffer, 0, BUFFER_SIZE);
+        int read = inputStream.read(buffer);
         while (read > -1) {
             digest.update(buffer, 0, read);
-            read = inputStream.read(buffer, 0, BUFFER_SIZE);
+            read = inputStream.read(buffer);
         }
         return digest;
     }
