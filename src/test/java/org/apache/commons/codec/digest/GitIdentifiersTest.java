@@ -165,14 +165,6 @@ class GitIdentifiersTest {
     }
 
     @ParameterizedTest
-    @MethodSource("blobIdProvider")
-    void testBlobIdInputStreamWithSize(final String resourceName, final String expectedSha1Hex) throws Exception {
-        final byte[] data = Files.readAllBytes(resourcePath(resourceName));
-        assertArrayEquals(Hex.decodeHex(expectedSha1Hex),
-                GitIdentifiers.blobId(DigestUtils.getSha1Digest(), data.length, new ByteArrayInputStream(data)));
-    }
-
-    @ParameterizedTest
     @ValueSource(ints = { 0, 1, 8191, 8192, 8193, 20000 })
     void testBlobIdInputStreamLengths(final int length) throws IOException {
         final byte[] data = new byte[length];
@@ -185,14 +177,11 @@ class GitIdentifiersTest {
     }
 
     @ParameterizedTest
-    @ValueSource(longs = { -1, 0, 5, 7 })
-    void testTreeIdBuilderRejectsWrongStreamSize(final long declaredSize) throws IOException {
-        final GitIdentifiers.TreeIdBuilder builder = GitIdentifiers.treeIdBuilder(DigestUtils.getSha1Digest());
-        builder.addFile(GitIdentifiers.FileMode.REGULAR, "hello.txt", HELLO_CONTENT);
-        final byte[] expected = builder.get();
-        assertThrows(IOException.class,
-                () -> builder.addFile(GitIdentifiers.FileMode.REGULAR, "hello.txt", declaredSize, new ByteArrayInputStream(HELLO_CONTENT)));
-        assertArrayEquals(expected, builder.get());
+    @MethodSource("blobIdProvider")
+    void testBlobIdInputStreamWithSize(final String resourceName, final String expectedSha1Hex) throws Exception {
+        final byte[] data = Files.readAllBytes(resourcePath(resourceName));
+        assertArrayEquals(Hex.decodeHex(expectedSha1Hex),
+                GitIdentifiers.blobId(DigestUtils.getSha1Digest(), data.length, new ByteArrayInputStream(data)));
     }
 
     @ParameterizedTest
@@ -387,6 +376,17 @@ class GitIdentifiersTest {
         final GitIdentifiers.TreeIdBuilder viaDirectory = GitIdentifiers.treeIdBuilder(md);
         viaDirectory.addDirectory(segment + "/subdir/" + segment).addFile(GitIdentifiers.FileMode.REGULAR, "file.txt", content);
         assertArrayEquals(expected, viaDirectory.get());
+    }
+
+    @ParameterizedTest
+    @ValueSource(longs = { -1, 0, 5, 7 })
+    void testTreeIdBuilderRejectsWrongStreamSize(final long declaredSize) throws IOException {
+        final GitIdentifiers.TreeIdBuilder builder = GitIdentifiers.treeIdBuilder(DigestUtils.getSha1Digest());
+        builder.addFile(GitIdentifiers.FileMode.REGULAR, "hello.txt", HELLO_CONTENT);
+        final byte[] expected = builder.get();
+        assertThrows(IOException.class,
+                () -> builder.addFile(GitIdentifiers.FileMode.REGULAR, "hello.txt", declaredSize, new ByteArrayInputStream(HELLO_CONTENT)));
+        assertArrayEquals(expected, builder.get());
     }
 
     @Test
