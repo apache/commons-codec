@@ -32,7 +32,7 @@ class Codec345Test {
 
     @ParameterizedTest
     @ValueSource(strings = { "/pages/1/Test+Page", "/display/TST/Caf%C3%A9" })
-    void testEncodeUrlWithCallerSuppliedSafeCharacters(final String input) {
+    void testEncodeUrlWithCallerSuppliedSafeCharacters(final String input) throws Exception {
         // RFC 2396 abs_path, as used by HtmlUnit's UrlUtils and HttpClient 3.x's URI.
         final BitSet allowed = new BitSet(256);
         for (int c = 'a'; c <= 'z'; c++) {
@@ -51,6 +51,8 @@ class Codec345Test {
         for (final char c : ":@&=+$,;/".toCharArray()) {
             allowed.set(c); // pchar
         }
-        assertEquals(input, new String(URLCodec.encodeUrl(allowed, input.getBytes(StandardCharsets.UTF_8)), StandardCharsets.US_ASCII));
+        final byte[] encoded = URLCodec.encodeUrl(allowed, input.getBytes(StandardCharsets.UTF_8));
+        assertEquals(input, new String(encoded, StandardCharsets.US_ASCII));
+        assertEquals(input, new String(URLCodec.decodeUrl(allowed, encoded), StandardCharsets.UTF_8));
     }
 }

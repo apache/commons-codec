@@ -17,6 +17,7 @@
 
 package org.apache.commons.codec.net;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -28,6 +29,8 @@ import org.apache.commons.codec.CharEncoding;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 /**
  * URL codec test cases
@@ -107,6 +110,70 @@ class URLCodecTest {
         final String test = null;
         final String result = urlCodec.decode(test, "charset");
         assertNull(result, "Result should be null");
+    }
+
+    @Test
+    void testDecodeUrlWithCustomBitSetAmbiguousEscapes() throws Exception {
+        final BitSet safe = new BitSet();
+        safe.set('%');
+        final byte[] encoded = URLCodec.encodeUrl(safe, new byte[] { '%', '/' });
+        assertEquals("%%2F", new String(encoded, StandardCharsets.US_ASCII));
+        assertArrayEquals(encoded, URLCodec.decodeUrl(safe, encoded));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = { "%", "%A", "%WW", "%0W", "%W0" })
+    void testDecodeUrlWithCustomBitSetInvalidEscapes(final String input) throws Exception {
+        final byte[] bytes = input.getBytes(StandardCharsets.US_ASCII);
+        final BitSet safe = new BitSet();
+        assertThrows(DecoderException.class, () -> URLCodec.decodeUrl(null, bytes));
+        assertThrows(DecoderException.class, () -> URLCodec.decodeUrl(safe, bytes));
+        safe.set('%');
+        assertArrayEquals(bytes, URLCodec.decodeUrl(safe, bytes));
+    }
+
+    @Test
+    void testDecodeUrlWithCustomBitSetNullAndEmpty() throws Exception {
+        assertNull(URLCodec.decodeUrl(null, null));
+        assertNull(URLCodec.decodeUrl(new BitSet(), null));
+        assertArrayEquals(new byte[0], URLCodec.decodeUrl(null, new byte[0]));
+        assertArrayEquals(new byte[0], URLCodec.decodeUrl(new BitSet(), new byte[0]));
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = { 0, 1, 2, 3 })
+    void testDecodeUrlWithCustomBitSetPlusAndSpace(final int flags) throws Exception {
+        final BitSet safe = new BitSet();
+        safe.set(' ', (flags & 1) != 0);
+        safe.set('+', (flags & 2) != 0);
+        final String expected = flags == 1 ? "  +" : "+ +";
+        assertEquals(expected, new String(URLCodec.decodeUrl(safe, "+%20%2b".getBytes(StandardCharsets.US_ASCII)), StandardCharsets.US_ASCII));
+        if (flags == 3) {
+            final byte[] encoded = URLCodec.encodeUrl(safe, " +".getBytes(StandardCharsets.US_ASCII));
+            assertEquals("++", new String(encoded, StandardCharsets.US_ASCII));
+            assertArrayEquals(encoded, URLCodec.decodeUrl(safe, encoded));
+        }
+    }
+
+    @Test
+    void testDecodeUrlWithCustomBitSetRoundTripAllBytes() throws Exception {
+        final byte[] input = new byte[256];
+        for (int i = 0; i < input.length; i++) {
+            input[i] = (byte) i;
+        }
+        final BitSet literalPlus = new BitSet(256);
+        literalPlus.set(0, 256);
+        literalPlus.clear('%');
+        literalPlus.clear(' ');
+        final BitSet spaceAsPlus = (BitSet) literalPlus.clone();
+        spaceAsPlus.clear('+');
+        spaceAsPlus.set(' ');
+        for (final BitSet safe : new BitSet[] { null, new BitSet(), literalPlus, spaceAsPlus }) {
+            final BitSet original = safe == null ? null : (BitSet) safe.clone();
+            final byte[] encoded = URLCodec.encodeUrl(safe, input);
+            assertArrayEquals(input, URLCodec.decodeUrl(safe, encoded));
+            assertEquals(original, safe, "The safe set must not be modified");
+        }
     }
 
     @Test

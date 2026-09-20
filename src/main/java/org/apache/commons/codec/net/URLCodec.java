@@ -95,6 +95,52 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
     }
 
     /**
+     * Decodes an array of bytes using the safe set supplied to {@link #encodeUrl(BitSet, byte[])}.
+     * <p>
+     * A percent sign marked safe is copied literally; otherwise it starts a two-digit hexadecimal escape. A plus sign marked safe is copied literally.
+     * Otherwise, a plus sign becomes a space only if space is marked safe. All other bytes are copied unchanged. A {@code null} bitset selects the default
+     * {@code www-form-urlencoded} safe set, giving the same behavior as {@link #decodeUrl(byte[])}.
+     * </p>
+     * <p>
+     * Not every safe set permits a round trip. If both space and plus are marked safe, the encoder maps both to plus and this method preserves that plus. If
+     * percent is marked safe, literal percent signs cannot be distinguished from generated escapes, so this method preserves all percent signs, including
+     * generated escapes. Use a safe set that excludes percent and does not mark both space and plus safe when a round trip is required.
+     * </p>
+     *
+     * @param urlsafe bitset of characters deemed URL safe during encoding, or {@code null} to use the default safe set.
+     * @param bytes   array of encoded bytes, or {@code null}.
+     * @return array of decoded bytes, or {@code null} if the input is {@code null}.
+     * @throws DecoderException if percent is not marked safe and an escape is incomplete or contains invalid hexadecimal digits.
+     * @since 1.23.0
+     */
+    public static final byte[] decodeUrl(BitSet urlsafe, final byte[] bytes) throws DecoderException {
+        if (bytes == null) {
+            return null;
+        }
+        if (urlsafe == null) {
+            urlsafe = WWW_FORM_URL_SAFE;
+        }
+        final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        for (int i = 0; i < bytes.length; i++) {
+            final int b = bytes[i];
+            if (b == PLUS_CHAR && !urlsafe.get(PLUS_CHAR) && urlsafe.get(' ')) {
+                buffer.write(' ');
+            } else if (b == ESCAPE_CHAR && !urlsafe.get(ESCAPE_CHAR)) {
+                try {
+                    final int u = Utils.digit16(bytes[++i]);
+                    final int l = Utils.digit16(bytes[++i]);
+                    buffer.write((char) ((u << 4) + l));
+                } catch (final ArrayIndexOutOfBoundsException e) {
+                    throw new DecoderException("Invalid URL encoding: ", e);
+                }
+            } else {
+                buffer.write(b);
+            }
+        }
+        return buffer.toByteArray();
+    }
+
+    /**
      * Decodes an array of URL safe 7-bit characters into an array of original bytes. Escaped characters are converted
      * back to their original representation.
      *
@@ -111,27 +157,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      *             Thrown if URL decoding is unsuccessful.
      */
     public static final byte[] decodeUrl(final byte[] bytes) throws DecoderException {
-        if (bytes == null) {
-            return null;
-        }
-        final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        for (int i = 0; i < bytes.length; i++) {
-            final int b = bytes[i];
-            if (b == PLUS_CHAR) {
-                buffer.write(' ');
-            } else if (b == ESCAPE_CHAR) {
-                try {
-                    final int u = Utils.digit16(bytes[++i]);
-                    final int l = Utils.digit16(bytes[++i]);
-                    buffer.write((char) ((u << 4) + l));
-                } catch (final ArrayIndexOutOfBoundsException e) {
-                    throw new DecoderException("Invalid URL encoding: ", e);
-                }
-            } else {
-                buffer.write(b);
-            }
-        }
-        return buffer.toByteArray();
+        return decodeUrl(null, bytes);
     }
 
     /**
@@ -144,7 +170,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      * A custom bitset can produce output that {@link #decodeUrl(byte[])} and the {@code decode} methods cannot decode back to the original input. These
      * decoders always convert {@code +} to a space and interpret {@code %} as the start of a hexadecimal escape, regardless of the bitset used for encoding. If
      * the custom bitset marks either character safe, decoding can change the original data or throw {@link DecoderException}. Callers using a custom bitset
-     * must choose decoding rules appropriate to that bitset and the URI component being encoded.
+     * can use {@link #decodeUrl(BitSet, byte[])} with the same bitset, subject to its documented limitations for ambiguous safe sets.
      * </p>
      *
      * @param urlsafe bitset of characters deemed URL safe, or {@code null} to use the default {@code www-form-urlencoded} safe set.
