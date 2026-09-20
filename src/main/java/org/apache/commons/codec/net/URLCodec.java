@@ -98,6 +98,12 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      * Decodes an array of URL safe 7-bit characters into an array of original bytes. Escaped characters are converted
      * back to their original representation.
      *
+     * <p>
+     * Decoding always follows {@code www-form-urlencoded} rules: {@code +} becomes a space and {@code %} starts a hexadecimal escape.
+     * Output from {@link #encodeUrl(BitSet, byte[])} with a custom safe set may therefore not decode back to the original input and may cause a
+     * {@link DecoderException}, depending on which characters were marked safe.
+     * </p>
+     *
      * @param bytes
      *            array of URL safe characters.
      * @return array of original bytes.
@@ -129,14 +135,20 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
     }
 
     /**
-     * Encodes an array of bytes into an array of URL safe 7-bit characters. Unsafe characters are escaped.
-     * The characters {@code %} and {@code +} are always escaped because {@link #decodeUrl(byte[])}
-     * treats them as URL-encoding syntax.
+     * Encodes an array of bytes using the given set of URL safe characters.
+     * <p>
+     * Unsafe characters are percent-escaped. Characters marked safe are copied unchanged, except that a space marked safe is converted to {@code +}. A
+     * {@code null} bitset selects the default {@code www-form-urlencoded} safe set, which escapes both {@code %} and {@code +}.
+     * </p>
+     * <p>
+     * A custom bitset can produce output that {@link #decodeUrl(byte[])} and the {@code decode} methods cannot decode back to the original input. These
+     * decoders always convert {@code +} to a space and interpret {@code %} as the start of a hexadecimal escape, regardless of the bitset used for encoding. If
+     * the custom bitset marks either character safe, decoding can change the original data or throw {@link DecoderException}. Callers using a custom bitset
+     * must choose decoding rules appropriate to that bitset and the URI component being encoded.
+     * </p>
      *
-     * @param urlsafe
-     *            bitset of characters deemed URL safe, except for {@code %} and {@code +}.
-     * @param bytes
-     *            array of bytes to convert to URL safe characters.
+     * @param urlsafe bitset of characters deemed URL safe, or {@code null} to use the default {@code www-form-urlencoded} safe set.
+     * @param bytes   array of bytes to convert to URL safe characters.
      * @return array of bytes containing URL safe characters.
      */
     public static final byte[] encodeUrl(BitSet urlsafe, final byte[] bytes) {
@@ -153,7 +165,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
             if (b < 0) {
                 b = 256 + b;
             }
-            if (urlsafe.get(b) && b != ESCAPE_CHAR && b != PLUS_CHAR) {
+            if (urlsafe.get(b)) {
                 if (b == ' ') {
                     b = PLUS_CHAR;
                 }
@@ -197,6 +209,12 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      * Decodes an array of URL safe 7-bit characters into an array of original bytes. Escaped characters are converted
      * back to their original representation.
      *
+     * <p>
+     * Decoding always follows {@code www-form-urlencoded} rules: {@code +} becomes a space and {@code %} starts a hexadecimal escape.
+     * Output from {@link #encodeUrl(BitSet, byte[])} with a custom safe set may therefore not decode back to the original input and may cause a
+     * {@link DecoderException}, depending on which characters were marked safe.
+     * </p>
+     *
      * @param bytes
      *            array of URL safe characters.
      * @return array of original bytes.
@@ -211,6 +229,12 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
     /**
      * Decodes a URL safe object into its original form. Escaped characters are converted back to their original
      * representation.
+     *
+     * <p>
+     * Decoding always follows {@code www-form-urlencoded} rules: {@code +} becomes a space and {@code %} starts a hexadecimal escape.
+     * Output from {@link #encodeUrl(BitSet, byte[])} with a custom safe set may therefore not decode back to the original input and may cause a
+     * {@link DecoderException}, depending on which characters were marked safe.
+     * </p>
      *
      * @param obj
      *            URL safe object to convert into its original form.
@@ -237,6 +261,12 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      * Decodes a URL safe string into its original form using the default string charset. Escaped characters are
      * converted back to their original representation.
      *
+     * <p>
+     * Decoding always follows {@code www-form-urlencoded} rules: {@code +} becomes a space and {@code %} starts a hexadecimal escape.
+     * Output from {@link #encodeUrl(BitSet, byte[])} with a custom safe set may therefore not decode back to the original input and may cause a
+     * {@link DecoderException}, depending on which characters were marked safe.
+     * </p>
+     *
      * @param str
      *            URL safe string to convert into its original form.
      * @return original string.
@@ -259,6 +289,12 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
     /**
      * Decodes a URL safe string into its original form using the specified encoding. Escaped characters are converted
      * back to their original representation.
+     *
+     * <p>
+     * Decoding always follows {@code www-form-urlencoded} rules: {@code +} becomes a space and {@code %} starts a hexadecimal escape.
+     * Output from {@link #encodeUrl(BitSet, byte[])} with a custom safe set may therefore not decode back to the original input and may cause a
+     * {@link DecoderException}, depending on which characters were marked safe.
+     * </p>
      *
      * @param str
      *            URL safe string to convert into its original form.

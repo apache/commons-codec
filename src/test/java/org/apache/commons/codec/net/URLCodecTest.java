@@ -174,35 +174,34 @@ class URLCodecTest {
     @Test
     void testEncodeUrlWithNullBitSet() throws Exception {
         final URLCodec urlCodec = new URLCodec();
-        final String plain = "Hello there!";
+        final String plain = "Hello there!%+";
         final String encoded = new String(URLCodec.encodeUrl(null, plain.getBytes(StandardCharsets.UTF_8)));
-        assertEquals("Hello+there%21", encoded, "Basic URL encoding test");
+        assertEquals("Hello+there%21%25%2B", encoded, "Basic URL encoding test");
         assertEquals(plain, urlCodec.decode(encoded), "Basic URL decoding test");
         validateState(urlCodec);
     }
 
     @Test
-    void testEncodeUrlWithPercentMarkedSafeEscapesPercent() throws Exception {
+    void testEncodeUrlWithPercentMarkedSafePreservesPercent() {
         final BitSet safe = new BitSet();
         safe.set('%');
         final String plain = "%";
         final byte[] encoded = URLCodec.encodeUrl(safe, plain.getBytes(StandardCharsets.US_ASCII));
         final String encodedS = new String(encoded, StandardCharsets.US_ASCII);
-        assertEquals("%25", encodedS, "URLCodec should escape percent even when marked safe");
-        final byte[] decoded = URLCodec.decodeUrl(encoded);
-        assertEquals(plain, new String(decoded, StandardCharsets.US_ASCII), "URLCodec percent decoding test");
+        assertEquals(plain, encodedS, "URLCodec should preserve percent when marked safe");
+        assertThrows(DecoderException.class, () -> URLCodec.decodeUrl(encoded));
     }
 
     @Test
-    void testEncodeUrlWithPlusMarkedSafeEscapesPlus() throws Exception {
+    void testEncodeUrlWithPlusMarkedSafePreservesPlus() throws Exception {
         final BitSet safe = new BitSet();
         safe.set('+');
         final String plain = "+";
         final byte[] encoded = URLCodec.encodeUrl(safe, plain.getBytes(StandardCharsets.US_ASCII));
         final String encodedS = new String(encoded, StandardCharsets.US_ASCII);
-        assertEquals("%2B", encodedS, "URLCodec should escape plus even when marked safe");
+        assertEquals(plain, encodedS, "URLCodec should preserve plus when marked safe");
         final byte[] decoded = URLCodec.decodeUrl(encoded);
-        assertEquals(plain, new String(decoded, StandardCharsets.US_ASCII), "URLCodec plus decoding test");
+        assertEquals(" ", new String(decoded, StandardCharsets.US_ASCII), "Default decoding interprets a literal plus as a space");
     }
 
     @Test
