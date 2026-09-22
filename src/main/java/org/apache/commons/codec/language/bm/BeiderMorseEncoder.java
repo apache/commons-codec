@@ -124,6 +124,7 @@ public class BeiderMorseEncoder implements StringEncoder {
      *
      * @deprecated Use {@link #builder()} to create a new instance.
      */
+    @Deprecated
     public BeiderMorseEncoder() {
         // empty
     }
