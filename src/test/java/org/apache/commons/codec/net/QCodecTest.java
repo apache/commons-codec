@@ -101,7 +101,6 @@ class QCodecTest {
 
     @Test
     void testDecodeSeparatorNotFoundThrowsDecoderException() {
-        // QCodec
         assertThrows(DecoderException.class, () -> new QCodec().decode("=?="));
     }
 
