@@ -25,6 +25,8 @@ import java.nio.charset.StandardCharsets;
 import org.apache.commons.codec.CharEncoding;
 import org.apache.commons.codec.DecoderException;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 /**
  * RFC 1522 compliant codec test cases
@@ -51,30 +53,35 @@ class RFC1522CodecTest {
         protected String getEncoding() {
             return "T";
         }
-
     }
 
-    private void assertExpectedDecoderException(final String s) {
-        assertThrows(DecoderException.class, () -> new RFC1522TestCodec().decodeText(s));
+    static void assertExpectedDecoderException(final String text) {
+        assertThrows(DecoderException.class, () -> new RFC1522TestCodec().decodeText(text));
     }
 
-    @Test
-    void testDecodeInvalid() throws Exception {
-        assertExpectedDecoderException("whatever");
-        assertExpectedDecoderException("=?");
-        assertExpectedDecoderException("?=");
-        assertExpectedDecoderException("==");
-        assertExpectedDecoderException("=??=");
-        assertExpectedDecoderException("=?stuff?=");
-        assertExpectedDecoderException("=?UTF-8??=");
-        assertExpectedDecoderException("=?UTF-8?stuff?=");
-        assertExpectedDecoderException("=?UTF-8?T?stuff");
-        assertExpectedDecoderException("=??T?stuff?=");
-        assertExpectedDecoderException("=?UTF-8??stuff?=");
-        assertExpectedDecoderException("=?UTF-8?W?stuff?=");
-        assertExpectedDecoderException("=?UTF-8?T?stuff?more?=");
-        assertExpectedDecoderException("=?UTF-8?T?stuff??=");
-        assertExpectedDecoderException("=?UTF-8?T???=");
+    @ParameterizedTest
+    // @formatter:off
+    @ValueSource(strings = {
+        "whatever",
+        "=?",
+        "?=",
+        "==",
+        "=?=",
+        "=??=",
+        "=?stuff?=",
+        "=?UTF-8??=",
+        "=?UTF-8?stuff?=",
+        "=?UTF-8?T?stuff",
+        "=??T?stuff?=",
+        "=?UTF-8??stuff?=",
+        "=?UTF-8?W?stuff?=",
+        "=?UTF-8?T?stuff?more?=",
+        "=?UTF-8?T?stuff??=",
+        "=?UTF-8?T???="
+    })
+    // @formatter:on
+    void testDecodeInvalid(final String text) throws Exception {
+        assertExpectedDecoderException(text);
     }
 
     @Test
@@ -83,5 +90,4 @@ class RFC1522CodecTest {
         assertNull(testCodec.decodeText(null));
         assertNull(testCodec.encodeText(null, CharEncoding.UTF_8));
     }
-
 }
