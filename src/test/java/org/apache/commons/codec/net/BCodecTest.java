@@ -25,12 +25,18 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.charset.UnsupportedCharsetException;
+import java.util.stream.Stream;
 
 import org.apache.commons.codec.CharEncoding;
 import org.apache.commons.codec.CodecPolicy;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
+import org.junit.jupiter.api.Named;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  * Quoted-printable codec test cases
@@ -51,6 +57,18 @@ class BCodecTest {
     static final int[] RUSSIAN_STUFF_UNICODE =
         { 0x412, 0x441, 0x435, 0x43C, 0x5F, 0x43F, 0x440, 0x438, 0x432, 0x435, 0x442 };
 
+    static Stream<String> base64ImpossibleSamples() {
+        return Stream.of(BASE64_IMPOSSIBLE_CASES);
+    }
+
+    static Stream<Arguments> embeddedQuestionMarks() {
+        return Stream.of("=?UTF-8?B?QUJD?REVG?=", "=?UTF-8?B?QQ==??=", "=?UTF-8?B???=")
+                .flatMap(encoded -> Stream.of(
+                        Arguments.of(Named.of("default", new BCodec()), encoded),
+                        Arguments.of(Named.of("lenient", new BCodec(StandardCharsets.UTF_8, CodecPolicy.LENIENT)), encoded),
+                        Arguments.of(Named.of("strict", new BCodec(StandardCharsets.UTF_8, CodecPolicy.STRICT)), encoded)));
+    }
+
     private String constructString(final int[] unicodeChars) {
         final StringBuilder buffer = new StringBuilder();
         if (unicodeChars != null) {
@@ -61,33 +79,28 @@ class BCodecTest {
         return buffer.toString();
     }
 
-    @Test
-    void testBase64ImpossibleSamplesDefault() throws DecoderException {
+    @ParameterizedTest(name = "{0}")
+    @MethodSource("base64ImpossibleSamples")
+    void testBase64ImpossibleSamplesDefault(final String encoded) throws DecoderException {
         final BCodec codec = new BCodec();
-        // Default encoding is lenient
         assertFalse(codec.isStrictDecoding());
-        for (final String s : BASE64_IMPOSSIBLE_CASES) {
-            codec.decode(s);
-        }
+        codec.decode(encoded);
     }
 
-    @Test
-    void testBase64ImpossibleSamplesLenient() throws DecoderException {
+    @ParameterizedTest(name = "{0}")
+    @MethodSource("base64ImpossibleSamples")
+    void testBase64ImpossibleSamplesLenient(final String encoded) throws DecoderException {
         final BCodec codec = new BCodec(StandardCharsets.UTF_8, CodecPolicy.LENIENT);
-        // Default encoding is lenient
         assertFalse(codec.isStrictDecoding());
-        for (final String s : BASE64_IMPOSSIBLE_CASES) {
-            codec.decode(s);
-        }
+        codec.decode(encoded);
     }
 
-    @Test
-    void testBase64ImpossibleSamplesStrict() {
+    @ParameterizedTest(name = "{0}")
+    @MethodSource("base64ImpossibleSamples")
+    void testBase64ImpossibleSamplesStrict(final String encoded) {
         final BCodec codec = new BCodec(StandardCharsets.UTF_8, CodecPolicy.STRICT);
         assertTrue(codec.isStrictDecoding());
-        for (final String s : BASE64_IMPOSSIBLE_CASES) {
-            assertThrows(DecoderException.class, () -> codec.decode(s));
-        }
+        assertThrows(DecoderException.class, () -> codec.decode(encoded));
     }
 
     @Test
@@ -99,22 +112,17 @@ class BCodecTest {
         assertEquals(plain, bcodec.decode(encoded), "Basic B decoding test");
     }
 
-    @Test
-    void testDecodeEmbeddedQuestionMark() {
-        for (final BCodec codec : new BCodec[] {new BCodec(), new BCodec(StandardCharsets.UTF_8, CodecPolicy.LENIENT),
-                new BCodec(StandardCharsets.UTF_8, CodecPolicy.STRICT)}) {
-            for (final String encoded : new String[] {"=?UTF-8?B?QUJD?REVG?=", "=?UTF-8?B?QQ==??=", "=?UTF-8?B???="}) {
-                assertThrows(DecoderException.class, () -> codec.decode(encoded), encoded);
-            }
-        }
+    @ParameterizedTest(name = "{0}: {1}")
+    @MethodSource("embeddedQuestionMarks")
+    void testDecodeEmbeddedQuestionMark(final BCodec codec, final String encoded) {
+        assertThrows(DecoderException.class, () -> codec.decode(encoded));
     }
 
-    @Test
-    void testDecodeEncodedQuestionMark() throws DecoderException {
-        for (final CodecPolicy policy : CodecPolicy.values()) {
-            final BCodec codec = new BCodec(StandardCharsets.UTF_8, policy);
-            assertEquals("ABC?DEF", codec.decode("=?UTF-8?B?QUJDP0RFRg==?="));
-        }
+    @ParameterizedTest
+    @EnumSource(CodecPolicy.class)
+    void testDecodeEncodedQuestionMark(final CodecPolicy policy) throws DecoderException {
+        final BCodec codec = new BCodec(StandardCharsets.UTF_8, policy);
+        assertEquals("ABC?DEF", codec.decode("=?UTF-8?B?QUJDP0RFRg==?="));
     }
 
     @Test

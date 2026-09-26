@@ -30,6 +30,7 @@ import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 /**
@@ -61,15 +62,18 @@ class URLCodecTest {
         validateState(urlCodec);
     }
 
-    @Test
-    void testDecodeInvalid() throws Exception {
+    @ParameterizedTest(name = "{0}: {1}")
+    // @formatter:off
+    @CsvSource({
+        "missing escape digits, %",
+        "missing second escape digit, %A",
+        "invalid first escape digit, %WW",
+        "invalid second escape digit, %0W"
+    })
+    // @formatter:on
+    void testDecodeInvalid(final String description, final String encoded) throws Exception {
         final URLCodec urlCodec = new URLCodec();
-        assertThrows(DecoderException.class, () -> urlCodec.decode("%"));
-        assertThrows(DecoderException.class, () -> urlCodec.decode("%A"));
-        // Bad 1st char after %
-        assertThrows(DecoderException.class, () -> urlCodec.decode("%WW"));
-        // Bad 2nd char after %
-        assertThrows(DecoderException.class, () -> urlCodec.decode("%0W"));
+        assertThrows(DecoderException.class, () -> urlCodec.decode(encoded), description);
         validateState(urlCodec);
     }
 

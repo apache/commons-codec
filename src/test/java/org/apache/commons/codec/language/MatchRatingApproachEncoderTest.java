@@ -19,11 +19,17 @@ package org.apache.commons.codec.language;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.stream.Stream;
+
 import org.apache.commons.codec.AbstractStringEncoderTest;
+import org.junit.jupiter.api.Named;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  * Series of tests for the Match Rating Approach algorithm.
@@ -35,54 +41,47 @@ import org.junit.jupiter.api.Test;
  */
 class MatchRatingApproachEncoderTest extends AbstractStringEncoderTest<MatchRatingApproachEncoder> {
 
+    static Stream<Arguments> accentRemovalCases() {
+        // @formatter:off
+        return Stream.of(
+                Arguments.of(Named.of("lowercase accents", "áéíóú"), "aeiou"),
+                Arguments.of(Named.of("comprehensive accent mix", "È,É,Ê,Ë,Û,Ù,Ï,Î,À,Â,Ô,è,é,ê,ë,û,ù,ï,î,à,â,ô,ç"),
+                        "E,E,E,E,U,U,I,I,A,A,O,e,e,e,e,u,u,i,i,a,a,o,c"),
+                Arguments.of(Named.of("German, Spanish, and French characters", "äëöüßÄËÖÜñÑà"), "aeoußAEOUnNa"),
+                Arguments.of(Named.of("preserves punctuation", "Á-e'í.,ó&ú"), "A-e'i.,o&u"),
+                Arguments.of(Named.of("empty input", ""), ""),
+                Arguments.of(Named.of("null input", null), null),
+                Arguments.of(Named.of("preserves case", "ÁeíÓuu"), "AeiOuu"),
+                Arguments.of(Named.of("preserves spaces", "áé íó  ú"), "ae io  u"),
+                Arguments.of(Named.of("unaccented input", "Colorless green ideas sleep furiously"), "Colorless green ideas sleep furiously"));
+        // @formatter:on
+    }
+
+    static Stream<Arguments> encodingCases() {
+        // @formatter:off
+        return Stream.of(
+                Arguments.of(Named.of("HARPER", "HARPER"), "HRPR"),
+                Arguments.of(Named.of("empty input", ""), ""),
+                Arguments.of(Named.of("null input", null), ""),
+                Arguments.of(Named.of("single letter", "E"), ""),
+                Arguments.of(Named.of("Smith", "Smith"), "SMTH"),
+                Arguments.of(Named.of("Smyth", "Smyth"), "SMYTH"),
+                Arguments.of(Named.of("single space", " "), ""));
+        // @formatter:on
+    }
+
+    static Stream<Arguments> vowelRemovalCases() {
+        // @formatter:off
+        return Stream.of(
+                Arguments.of(Named.of("AIDAN", "AIDAN"), "ADN"),
+                Arguments.of(Named.of("DECLAN", "DECLAN"), "DCLN"),
+                Arguments.of(Named.of("ALESSANDRA", "ALESSANDRA"), "ALSSNDR"));
+        // @formatter:on
+    }
+
     @Override
     protected MatchRatingApproachEncoder createStringEncoder() {
         return new MatchRatingApproachEncoder();
-    }
-
-    @Test
-    final void testAccentRemoval_AllLower_SuccessfullyRemoved() {
-        assertEquals("aeiou", getStringEncoder().removeAccents("áéíóú"));
-    }
-
-    @Test
-    final void testAccentRemoval_ComprehensiveAccentMix_AllSuccessfullyRemoved() {
-        assertEquals("E,E,E,E,U,U,I,I,A,A,O,e,e,e,e,u,u,i,i,a,a,o,c", getStringEncoder().removeAccents("È,É,Ê,Ë,Û,Ù,Ï,Î,À,Â,Ô,è,é,ê,ë,û,ù,ï,î,à,â,ô,ç"));
-    }
-
-    @Test
-    final void testAccentRemoval_GerSpanFrenMix_SuccessfullyRemoved() {
-        assertEquals("aeoußAEOUnNa", getStringEncoder().removeAccents("äëöüßÄËÖÜñÑà"));
-    }
-
-    @Test
-    final void testAccentRemoval_MixedWithUnusualChars_SuccessfullyRemovedAndUnusualCharactersInvariant() {
-        assertEquals("A-e'i.,o&u", getStringEncoder().removeAccents("Á-e'í.,ó&ú"));
-    }
-
-    @Test
-    final void testAccentRemoval_NINO_NoChange() {
-        assertEquals("", getStringEncoder().removeAccents(""));
-    }
-
-    @Test
-    final void testAccentRemoval_NullValue_ReturnNullSuccessfully() {
-        assertNull(getStringEncoder().removeAccents(null));
-    }
-
-    @Test
-    final void testAccentRemoval_UpperAndLower_SuccessfullyRemovedAndCaseInvariant() {
-        assertEquals("AeiOuu", getStringEncoder().removeAccents("ÁeíÓuu"));
-    }
-
-    @Test
-    final void testAccentRemoval_WithSpaces_SuccessfullyRemovedAndSpacesInvariant() {
-        assertEquals("ae io  u", getStringEncoder().removeAccents("áé íó  ú"));
-    }
-
-    @Test
-    final void testAccentRemovalNormalString_NoChange() {
-        assertEquals("Colorless green ideas sleep furiously", getStringEncoder().removeAccents("Colorless green ideas sleep furiously"));
     }
 
     @Test
@@ -318,39 +317,10 @@ class MatchRatingApproachEncoderTest extends AbstractStringEncoderTest<MatchRati
         assertTrue(getStringEncoder().isEncodeEquals("Brian", " Bryan "));
     }
 
-    @Test
-    final void testGetEncoding_HARPER_HRPR() {
-        assertEquals("HRPR", getStringEncoder().encode("HARPER"));
-    }
-
-    @Test
-    final void testGetEncoding_NoSpace_to_Nothing() {
-        assertEquals("", getStringEncoder().encode(""));
-    }
-
-    @Test
-    final void testGetEncoding_Null_to_Nothing() {
-        assertEquals("", getStringEncoder().encode(null));
-    }
-
-    @Test
-    final void testGetEncoding_One_Letter_to_Nothing() {
-        assertEquals("", getStringEncoder().encode("E"));
-    }
-
-    @Test
-    final void testGetEncoding_SMITH_to_SMTH() {
-        assertEquals("SMTH", getStringEncoder().encode("Smith"));
-    }
-
-    @Test
-    final void testGetEncoding_SMYTH_to_SMYTH() {
-        assertEquals("SMYTH", getStringEncoder().encode("Smyth"));
-    }
-
-    @Test
-    final void testGetEncoding_Space_to_Nothing() {
-        assertEquals("", getStringEncoder().encode(" "));
+    @ParameterizedTest(name = "{0}")
+    @MethodSource("encodingCases")
+    final void testEncode(final String input, final String expected) {
+        assertEquals(expected, getStringEncoder().encode(input));
     }
 
     @Test
@@ -363,62 +333,13 @@ class MatchRatingApproachEncoderTest extends AbstractStringEncoderTest<MatchRati
         assertEquals("PETE", getStringEncoder().getFirst3Last3("PETE"));
     }
 
-    @Test
-    final void testGetMinRating_1_Returns5_Successfully() {
-        assertEquals(5, getStringEncoder().getMinRating(1));
-    }
-
-    @Test
-    final void testgetMinRating_10_Returns3_Successfully() {
-        assertEquals(3, getStringEncoder().getMinRating(10));
-    }
-
-    @Test
-    final void testgetMinRating_11_Returns_3_Successfully() {
-        assertEquals(3, getStringEncoder().getMinRating(11));
-    }
-
-    @Test
-    final void testGetMinRating_13_Returns_1_Successfully() {
-        assertEquals(1, getStringEncoder().getMinRating(13));
-    }
-
-    @Test
-    final void testGetMinRating_2_Returns5_Successfully() {
-        assertEquals(5, getStringEncoder().getMinRating(2));
-    }
-
-    @Test
-    final void testgetMinRating_5_Returns4_Successfully() {
-        assertEquals(4, getStringEncoder().getMinRating(5));
-    }
-
-    @Test
-    final void testgetMinRating_5_Returns4_Successfully2() {
-        assertEquals(4, getStringEncoder().getMinRating(5));
-    }
-
-    @Test
-    final void testgetMinRating_6_Returns4_Successfully() {
-        assertEquals(4, getStringEncoder().getMinRating(6));
-    }
-
-    @Test
-    final void testGetMinRating_7_Return4_Successfully() {
-        assertEquals(4, getStringEncoder().getMinRating(7));
+    @ParameterizedTest(name = "length sum {0}: minimum rating {1}")
+    @CsvSource({ "1, 5", "2, 5", "5, 4", "6, 4", "7, 4", "8, 3", "10, 3", "11, 3", "13, 1" })
+    final void testGetMinRating(final int lengthSum, final int expected) {
+        assertEquals(expected, getStringEncoder().getMinRating(lengthSum));
     }
 
     // ***** Begin Region - Test Get Encoding - Surnames
-
-    @Test
-    final void testgetMinRating_7_Returns4_Successfully() {
-        assertEquals(4, getStringEncoder().getMinRating(7));
-    }
-
-    @Test
-    final void testgetMinRating_8_Returns3_Successfully() {
-        assertEquals(3, getStringEncoder().getMinRating(8));
-    }
 
     @Test
     final void testIsEncodeEquals_CornerCase_FirstNameJust1Letter_ReturnsFalse() {
@@ -490,6 +411,12 @@ class MatchRatingApproachEncoderTest extends AbstractStringEncoderTest<MatchRati
         assertEquals(getStringEncoder().encode(".,-"), "");
     }
 
+    @ParameterizedTest(name = "{0}")
+    @MethodSource("accentRemovalCases")
+    final void testRemoveAccents(final String input, final String expected) {
+        assertEquals(expected, getStringEncoder().removeAccents(input));
+    }
+
     @Test
     final void testRemoveDoubleConsonants_MISSISSIPPI_RemovedSuccessfully() {
         assertEquals("MISISIPI", getStringEncoder().removeDoubleConsonants("MISSISSIPPI"));
@@ -505,22 +432,13 @@ class MatchRatingApproachEncoderTest extends AbstractStringEncoderTest<MatchRati
         assertEquals("BUBLE", getStringEncoder().removeDoubleConsonants("BUBBLE"));
     }
 
-    @Test
-    final void testRemoveVowel__AIDAN_Returns_ADN() {
-        assertEquals("ADN", getStringEncoder().removeVowels("AIDAN"));
-    }
-
-    @Test
-    final void testRemoveVowel__DECLAN_Returns_DCLN() {
-        assertEquals("DCLN", getStringEncoder().removeVowels("DECLAN"));
+    @ParameterizedTest(name = "{0}")
+    @MethodSource("vowelRemovalCases")
+    final void testRemoveVowels(final String input, final String expected) {
+        assertEquals(expected, getStringEncoder().removeVowels(input));
     }
 
     // ***** END REGION - TEST GET MRA COMPARISONS
-
-    @Test
-    final void testRemoveVowel_ALESSANDRA_Returns_ALSSNDR() {
-        assertEquals("ALSSNDR", getStringEncoder().removeVowels("ALESSANDRA"));
-    }
 
     @Test
     final void testVowelAndPunctuationOnly() {
