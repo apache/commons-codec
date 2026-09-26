@@ -69,6 +69,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Bound Sha2Crypt password length to prevent quadratic CPU DoS.</action>
       <action type="fix" dev="ggregory" due-to="geonseok, Gary Gregory">Make the @param names in BaseNCodec match the parameters they document (#444).</action>
       <action type="fix" dev="ggregory" due-to="Ganesh Gautam, Gary Gregory" issue="CODEC-345">Restore URLCodec.encodeUrl(BitSet, byte[]) support for custom safe sets containing percent and plus, and document the decoding limitations.</action>
+      <action type="fix" dev="ggregory" due-to="Efe, Gary Gregory" issue="CODEC-245">Reject malformed Sha2Crypt salt syntax (#445).</action>
       <!-- ADD -->
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add and use PhoneticEngine.Builder and deprecate old constructors.</action>
       <action type="add" dev="ggregory" due-to="Gary Gregory">Add BeiderMorseEncoder.Builder and deprecate old constructor.</action>
