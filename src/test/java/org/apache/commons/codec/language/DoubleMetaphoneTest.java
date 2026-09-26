@@ -23,9 +23,14 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.util.stream.Stream;
+
 import org.apache.commons.codec.AbstractStringEncoderTest;
 import org.apache.commons.codec.EncoderException;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  * Tests {@link DoubleMetaphone}.
@@ -1006,6 +1011,22 @@ class DoubleMetaphoneTest extends AbstractStringEncoderTest<DoubleMetaphone> {
             "wundeews", "windows" }, {
             "yeild", "yield" }, };
 
+    static Stream<Arguments> matchingNames() {
+        validateFixture(MATCHES);
+        return Stream.of(MATCHES).map(pair -> Arguments.of(pair[0], pair[1]));
+    }
+
+    private static void validateFixture(final String[][] pairs) {
+        if (pairs.length == 0) {
+            fail("Test fixture is empty");
+        }
+        for (int i = 0; i < pairs.length; i++) {
+            if (pairs[i].length != 2) {
+                fail("Error in test fixture in the data array at index " + i);
+            }
+        }
+    }
+
     /**
      * Tests encoding APIs in one place.
      */
@@ -1199,18 +1220,12 @@ class DoubleMetaphoneTest extends AbstractStringEncoderTest<DoubleMetaphone> {
         }
     }
 
-    @Test
-    void testIsDoubleMetaphoneEqualWithMATCHES() {
-        validateFixture(MATCHES);
-        for (int i = 0; i < MATCHES.length; i++) {
-            final String name0 = MATCHES[i][0];
-            final String name1 = MATCHES[i][1];
-            final boolean match1 = getStringEncoder().isDoubleMetaphoneEqual(name0, name1, false);
-            final boolean match2 = getStringEncoder().isDoubleMetaphoneEqual(name0, name1, true);
-            if (!match1 && !match2) {
-                fail("Expected match [" + i + "] " + name0 + " and " + name1);
-            }
-        }
+    @ParameterizedTest(name = "[{index}] {0}, {1}")
+    @MethodSource("matchingNames")
+    void testIsDoubleMetaphoneEqualWithMATCHES(final String name0, final String name1) {
+        final boolean primaryMatch = getStringEncoder().isDoubleMetaphoneEqual(name0, name1, false);
+        final boolean alternateMatch = getStringEncoder().isDoubleMetaphoneEqual(name0, name1, true);
+        assertTrue(primaryMatch || alternateMatch, "Expected a primary or alternate match");
     }
 
     @Test
@@ -1243,16 +1258,5 @@ class DoubleMetaphoneTest extends AbstractStringEncoderTest<DoubleMetaphone> {
         assertEquals(3, doubleMetaphone.getMaxCodeLen(), "Set Max Code Length");
         assertEquals("JMP", doubleMetaphone.doubleMetaphone(value, false), "Max=3 Primary");
         assertEquals("AMP", doubleMetaphone.doubleMetaphone(value, true), "Max=3 Alternate");
-    }
-
-    private void validateFixture(final String[][] pairs) {
-        if (pairs.length == 0) {
-            fail("Test fixture is empty");
-        }
-        for (int i = 0; i < pairs.length; i++) {
-            if (pairs[i].length != 2) {
-                fail("Error in test fixture in the data array at index " + i);
-            }
-        }
     }
 }

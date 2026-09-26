@@ -19,16 +19,21 @@ package org.apache.commons.codec.binary;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.function.Function;
+import java.util.stream.Stream;
 
+import org.junit.jupiter.api.Named;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  * Tests {@link StringUtils}
@@ -44,6 +49,77 @@ class StringUtilsTest {
     private static final byte[] BYTES_FIXTURE_16LE = { 'a', 0, 'b', 0, 'c', 0 };
 
     private static final String STRING_FIXTURE = "ABC";
+
+    static Stream<Arguments> getBytesCases() {
+        return Stream.of(
+                Arguments.of(StandardCharsets.ISO_8859_1,
+                        Named.<Function<String, byte[]>>of("getBytesIso8859_1", StringUtils::getBytesIso8859_1)),
+                Arguments.of(StandardCharsets.US_ASCII,
+                        Named.<Function<String, byte[]>>of("getBytesUsAscii", StringUtils::getBytesUsAscii)),
+                Arguments.of(StandardCharsets.UTF_16,
+                        Named.<Function<String, byte[]>>of("getBytesUtf16", StringUtils::getBytesUtf16)),
+                Arguments.of(StandardCharsets.UTF_16BE,
+                        Named.<Function<String, byte[]>>of("getBytesUtf16Be", StringUtils::getBytesUtf16Be)),
+                Arguments.of(StandardCharsets.UTF_16LE,
+                        Named.<Function<String, byte[]>>of("getBytesUtf16Le", StringUtils::getBytesUtf16Le)),
+                Arguments.of(StandardCharsets.UTF_8,
+                        Named.<Function<String, byte[]>>of("getBytesUtf8", StringUtils::getBytesUtf8)));
+    }
+
+    static Stream<Arguments> mixedEqualityCases() {
+        return Stream.of(
+                Arguments.of(Named.of("String(abc)", "abc"), Named.of("StringBuilder(abc)", new StringBuilder("abc")), true),
+                Arguments.of(Named.of("StringBuilder(abc)", new StringBuilder("abc")), Named.of("String(abcd)", "abcd"), false),
+                Arguments.of(Named.of("String(abcd)", "abcd"), Named.of("StringBuilder(abc)", new StringBuilder("abc")), false),
+                Arguments.of(Named.of("StringBuilder(abc)", new StringBuilder("abc")), Named.of("String(ABC)", "ABC"), false));
+    }
+
+    static Stream<Arguments> newStringCases() {
+        return Stream.of(
+                Arguments.of(StandardCharsets.ISO_8859_1,
+                        Named.<Function<byte[], String>>of("newStringIso8859_1", StringUtils::newStringIso8859_1), BYTES_FIXTURE),
+                Arguments.of(StandardCharsets.US_ASCII,
+                        Named.<Function<byte[], String>>of("newStringUsAscii", StringUtils::newStringUsAscii), BYTES_FIXTURE),
+                Arguments.of(StandardCharsets.UTF_16,
+                        Named.<Function<byte[], String>>of("newStringUtf16", StringUtils::newStringUtf16), BYTES_FIXTURE),
+                Arguments.of(StandardCharsets.UTF_16BE,
+                        Named.<Function<byte[], String>>of("newStringUtf16Be", StringUtils::newStringUtf16Be), BYTES_FIXTURE_16BE),
+                Arguments.of(StandardCharsets.UTF_16LE,
+                        Named.<Function<byte[], String>>of("newStringUtf16Le", StringUtils::newStringUtf16Le), BYTES_FIXTURE_16LE),
+                Arguments.of(StandardCharsets.UTF_8,
+                        Named.<Function<byte[], String>>of("newStringUtf8", StringUtils::newStringUtf8), BYTES_FIXTURE));
+    }
+
+    static Stream<Named<Function<byte[], String>>> newStringFunctions() {
+        return Stream.of(
+                Named.<Function<byte[], String>>of("newStringIso8859_1", StringUtils::newStringIso8859_1),
+                Named.<Function<byte[], String>>of("newStringUsAscii", StringUtils::newStringUsAscii),
+                Named.<Function<byte[], String>>of("newStringUtf16", StringUtils::newStringUtf16),
+                Named.<Function<byte[], String>>of("newStringUtf16Be", StringUtils::newStringUtf16Be),
+                Named.<Function<byte[], String>>of("newStringUtf16Le", StringUtils::newStringUtf16Le),
+                Named.<Function<byte[], String>>of("newStringUtf8", StringUtils::newStringUtf8));
+    }
+
+    static Stream<Arguments> stringBuilderEqualityCases() {
+        return Stream.of(
+                Arguments.of(Named.of("StringBuilder(abc)", new StringBuilder("abc")), null, false),
+                Arguments.of(null, Named.of("StringBuilder(abc)", new StringBuilder("abc")), false),
+                Arguments.of(Named.of("StringBuilder(abc)", new StringBuilder("abc")), Named.of("StringBuilder(abc)", new StringBuilder("abc")), true),
+                Arguments.of(Named.of("StringBuilder(abc)", new StringBuilder("abc")), Named.of("StringBuilder(abcd)", new StringBuilder("abcd")), false),
+                Arguments.of(Named.of("StringBuilder(abcd)", new StringBuilder("abcd")), Named.of("StringBuilder(abc)", new StringBuilder("abc")), false),
+                Arguments.of(Named.of("StringBuilder(abc)", new StringBuilder("abc")), Named.of("StringBuilder(ABC)", new StringBuilder("ABC")), false));
+    }
+
+    static Stream<Arguments> stringEqualityCases() {
+        return Stream.of(
+                Arguments.of(null, null, true),
+                Arguments.of(Named.of("String(abc)", "abc"), null, false),
+                Arguments.of(null, Named.of("String(abc)", "abc"), false),
+                Arguments.of(Named.of("String(abc)", "abc"), Named.of("String(abc)", "abc"), true),
+                Arguments.of(Named.of("String(abc)", "abc"), Named.of("String(abcd)", "abcd"), false),
+                Arguments.of(Named.of("String(abcd)", "abcd"), Named.of("String(abc)", "abc"), false),
+                Arguments.of(Named.of("String(abc)", "abc"), Named.of("String(ABC)", "ABC"), false));
+    }
 
     @Test
     void testByteBufferUtf8() {
@@ -62,48 +138,31 @@ class StringUtilsTest {
         new StringUtils();
     }
 
-    @Test
-    void testEqualsCS1() {
-        assertFalse(StringUtils.equals(new StringBuilder("abc"), null));
-        assertFalse(StringUtils.equals(null, new StringBuilder("abc")));
-        assertTrue(StringUtils.equals(new StringBuilder("abc"), new StringBuilder("abc")));
-        assertFalse(StringUtils.equals(new StringBuilder("abc"), new StringBuilder("abcd")));
-        assertFalse(StringUtils.equals(new StringBuilder("abcd"), new StringBuilder("abc")));
-        assertFalse(StringUtils.equals(new StringBuilder("abc"), new StringBuilder("ABC")));
+    @ParameterizedTest(name = "{0}, {1}: {2}")
+    @MethodSource("mixedEqualityCases")
+    void testEqualsMixedCharSequences(final CharSequence left, final CharSequence right, final boolean expected) {
+        assertEquals(expected, StringUtils.equals(left, right));
     }
 
-    @Test
-    void testEqualsCS2() {
-        assertTrue(StringUtils.equals("abc", new StringBuilder("abc")));
-        assertFalse(StringUtils.equals(new StringBuilder("abc"), "abcd"));
-        assertFalse(StringUtils.equals("abcd", new StringBuilder("abc")));
-        assertFalse(StringUtils.equals(new StringBuilder("abc"), "ABC"));
+    @ParameterizedTest(name = "{0}, {1}: {2}")
+    @MethodSource("stringBuilderEqualityCases")
+    void testEqualsStringBuilders(final CharSequence left, final CharSequence right, final boolean expected) {
+        assertEquals(expected, StringUtils.equals(left, right));
     }
 
-    @Test
-    void testEqualsString() {
-        assertTrue(StringUtils.equals(null, null));
-        assertFalse(StringUtils.equals("abc", null));
-        assertFalse(StringUtils.equals(null, "abc"));
-        assertTrue(StringUtils.equals("abc", "abc"));
-        assertFalse(StringUtils.equals("abc", "abcd"));
-        assertFalse(StringUtils.equals("abcd", "abc"));
-        assertFalse(StringUtils.equals("abc", "ABC"));
+    @ParameterizedTest(name = "{0}, {1}: {2}")
+    @MethodSource("stringEqualityCases")
+    void testEqualsStrings(final CharSequence left, final CharSequence right, final boolean expected) {
+        assertEquals(expected, StringUtils.equals(left, right));
     }
 
-    @Test
-    void testGetBytesIso8859_1() throws UnsupportedEncodingException {
-        final String charsetName = StandardCharsets.ISO_8859_1.name();
-        testGetBytesUnchecked(charsetName);
+    @ParameterizedTest(name = "{0}: {1}")
+    @MethodSource("getBytesCases")
+    void testGetBytes(final Charset charset, final Function<String, byte[]> encoder) throws UnsupportedEncodingException {
+        final String charsetName = charset.name();
         final byte[] expected = STRING_FIXTURE.getBytes(charsetName);
-        final byte[] actual = StringUtils.getBytesIso8859_1(STRING_FIXTURE);
-        assertArrayEquals(expected, actual);
-    }
-
-    private void testGetBytesUnchecked(final String charsetName) throws UnsupportedEncodingException {
-        final byte[] expected = STRING_FIXTURE.getBytes(charsetName);
-        final byte[] actual = StringUtils.getBytesUnchecked(STRING_FIXTURE, charsetName);
-        assertArrayEquals(expected, actual);
+        assertArrayEquals(expected, StringUtils.getBytesUnchecked(STRING_FIXTURE, charsetName));
+        assertArrayEquals(expected, encoder.apply(STRING_FIXTURE));
     }
 
     @Test
@@ -116,55 +175,12 @@ class StringUtilsTest {
         assertNull(StringUtils.getBytesUnchecked(null, "UNKNOWN"));
     }
 
-    @Test
-    void testGetBytesUsAscii() throws UnsupportedEncodingException {
-        final String charsetName = StandardCharsets.US_ASCII.name();
-        testGetBytesUnchecked(charsetName);
-        final byte[] expected = STRING_FIXTURE.getBytes(charsetName);
-        final byte[] actual = StringUtils.getBytesUsAscii(STRING_FIXTURE);
-        assertArrayEquals(expected, actual);
-    }
-
-    @Test
-    void testGetBytesUtf16() throws UnsupportedEncodingException {
-        final String charsetName = StandardCharsets.UTF_16.name();
-        testGetBytesUnchecked(charsetName);
-        final byte[] expected = STRING_FIXTURE.getBytes(charsetName);
-        final byte[] actual = StringUtils.getBytesUtf16(STRING_FIXTURE);
-        assertArrayEquals(expected, actual);
-    }
-
-    @Test
-    void testGetBytesUtf16Be() throws UnsupportedEncodingException {
-        final String charsetName = StandardCharsets.UTF_16BE.name();
-        testGetBytesUnchecked(charsetName);
-        final byte[] expected = STRING_FIXTURE.getBytes(charsetName);
-        final byte[] actual = StringUtils.getBytesUtf16Be(STRING_FIXTURE);
-        assertArrayEquals(expected, actual);
-    }
-
-    @Test
-    void testGetBytesUtf16Le() throws UnsupportedEncodingException {
-        final String charsetName = StandardCharsets.UTF_16LE.name();
-        testGetBytesUnchecked(charsetName);
-        final byte[] expected = STRING_FIXTURE.getBytes(charsetName);
-        final byte[] actual = StringUtils.getBytesUtf16Le(STRING_FIXTURE);
-        assertArrayEquals(expected, actual);
-    }
-
-    @Test
-    void testGetBytesUtf8() throws UnsupportedEncodingException {
-        final String charsetName = StandardCharsets.UTF_8.name();
-        testGetBytesUnchecked(charsetName);
-        final byte[] expected = STRING_FIXTURE.getBytes(charsetName);
-        final byte[] actual = StringUtils.getBytesUtf8(STRING_FIXTURE);
-        assertArrayEquals(expected, actual);
-    }
-
-    private void testNewString(final String charsetName) throws UnsupportedEncodingException {
-        final String expected = new String(BYTES_FIXTURE, charsetName);
-        final String actual = StringUtils.newString(BYTES_FIXTURE, charsetName);
-        assertEquals(expected, actual);
+    @ParameterizedTest(name = "{0}: {1}")
+    @MethodSource("newStringCases")
+    void testNewString(final Charset charset, final Function<byte[], String> decoder, final byte[] input) throws UnsupportedEncodingException {
+        final String charsetName = charset.name();
+        assertEquals(new String(BYTES_FIXTURE, charsetName), StringUtils.newString(BYTES_FIXTURE, charsetName));
+        assertEquals(new String(input, charsetName), decoder.apply(input));
     }
 
     @Test
@@ -173,71 +189,13 @@ class StringUtilsTest {
     }
 
     @Test
-    void testNewStringIso8859_1() throws UnsupportedEncodingException {
-        final String charsetName = StandardCharsets.ISO_8859_1.name();
-        testNewString(charsetName);
-        final String expected = new String(BYTES_FIXTURE, charsetName);
-        final String actual = StringUtils.newStringIso8859_1(BYTES_FIXTURE);
-        assertEquals(expected, actual);
-    }
-
-    @Test
     void testNewStringNullInput() {
         assertNull(StringUtils.newString(null, "UNKNOWN"));
     }
 
-    @Test
-    void testNewStringNullInput_CODEC229() {
-        assertNull(StringUtils.newStringUtf8(null));
-        assertNull(StringUtils.newStringIso8859_1(null));
-        assertNull(StringUtils.newStringUsAscii(null));
-        assertNull(StringUtils.newStringUtf16(null));
-        assertNull(StringUtils.newStringUtf16Be(null));
-        assertNull(StringUtils.newStringUtf16Le(null));
-    }
-
-    @Test
-    void testNewStringUsAscii() throws UnsupportedEncodingException {
-        final String charsetName = StandardCharsets.US_ASCII.name();
-        testNewString(charsetName);
-        final String expected = new String(BYTES_FIXTURE, charsetName);
-        final String actual = StringUtils.newStringUsAscii(BYTES_FIXTURE);
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    void testNewStringUtf16() throws UnsupportedEncodingException {
-        final String charsetName = StandardCharsets.UTF_16.name();
-        testNewString(charsetName);
-        final String expected = new String(BYTES_FIXTURE, charsetName);
-        final String actual = StringUtils.newStringUtf16(BYTES_FIXTURE);
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    void testNewStringUtf16Be() throws UnsupportedEncodingException {
-        final String charsetName = StandardCharsets.UTF_16BE.name();
-        testNewString(charsetName);
-        final String expected = new String(BYTES_FIXTURE_16BE, charsetName);
-        final String actual = StringUtils.newStringUtf16Be(BYTES_FIXTURE_16BE);
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    void testNewStringUtf16Le() throws UnsupportedEncodingException {
-        final String charsetName = StandardCharsets.UTF_16LE.name();
-        testNewString(charsetName);
-        final String expected = new String(BYTES_FIXTURE_16LE, charsetName);
-        final String actual = StringUtils.newStringUtf16Le(BYTES_FIXTURE_16LE);
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    void testNewStringUtf8() throws UnsupportedEncodingException {
-        final String charsetName = StandardCharsets.UTF_8.name();
-        testNewString(charsetName);
-        final String expected = new String(BYTES_FIXTURE, charsetName);
-        final String actual = StringUtils.newStringUtf8(BYTES_FIXTURE);
-        assertEquals(expected, actual);
+    @ParameterizedTest(name = "{0}")
+    @MethodSource("newStringFunctions")
+    void testNewStringNullInput_CODEC229(final Function<byte[], String> decoder) {
+        assertNull(decoder.apply(null));
     }
 }

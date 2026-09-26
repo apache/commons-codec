@@ -20,246 +20,313 @@ package org.apache.commons.codec.language;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.stream.Stream;
+
 import org.apache.commons.codec.AbstractStringEncoderTest;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 /**
  * Tests {@link Nysiis}
  */
 class NysiisTest extends AbstractStringEncoderTest<Nysiis> {
 
-    private final Nysiis fullNysiis = new Nysiis(false);
-
-    /**
-     * Takes an array of String pairs where each pair's first element is the input and the second element the expected
-     * encoding.
-     *
-     * @param testValues
-     *            an array of String pairs where each pair's first element is the input and the second element the
-     *            expected encoding.
-     */
-    private void assertEncodings(final String[]... testValues) {
-        for (final String[] arr : testValues) {
-            assertEquals(arr[1], this.fullNysiis.encode(arr[0]), "Problem with " + arr[0]);
-        }
+    static Stream<Arguments> dropByCases() {
+        // Explanation of differences between this implementation and the one at dropby.com is
+        // prepended to the test string. The referenced rules refer to the outlined steps the
+        // class description for Nysiis.
+        // @formatter:off
+        return Stream.of(
+                // 1. Transcode first characters of name
+                Arguments.of("MACINTOSH", "MCANT"),
+                // violates 4j: the second N should not be added, as the first
+                //              key char is already a N
+                Arguments.of("KNUTH", "NAT"),           // Original: NNAT; modified: NATH
+                // O and E are transcoded to A because of rule 4a
+                // H also to A because of rule 4h
+                // the N gets mysteriously lost, maybe because of a wrongly implemented rule 4h
+                // that skips the next char in such a case?
+                // the remaining A is removed because of rule 7
+                Arguments.of("KOEHN", "CAN"),           // Original: C
+                // violates 4j: see also KNUTH
+                Arguments.of("PHILLIPSON", "FALAPSAN"), // Original: FFALAP[SAN]
+                // violates 4j: see also KNUTH
+                Arguments.of("PFEISTER", "FASTAR"),     // Original: FFASTA[R]
+                // violates 4j: see also KNUTH
+                Arguments.of("SCHOENHOEFT", "SANAFT"),  // Original: SSANAF[T]
+                // 2. Transcode last characters of name:
+                Arguments.of("MCKEE", "MCY"),
+                Arguments.of("MACKIE", "MCY"),
+                Arguments.of("HEITSCHMIDT", "HATSNAD"),
+                Arguments.of("BART", "BAD"),
+                Arguments.of("HURD", "HAD"),
+                Arguments.of("HUNT", "HAD"),
+                Arguments.of("WESTERLUND", "WASTARLAD"),
+                // 4. Transcode remaining characters by following these rules,
+                //    incrementing by one character each time:
+                Arguments.of("CASSTEVENS", "CASTAFAN"),
+                Arguments.of("VASQUEZ", "VASG"),
+                Arguments.of("FRAZIER", "FRASAR"),
+                Arguments.of("BOWMAN", "BANAN"),
+                Arguments.of("MCKNIGHT", "MCNAGT"),
+                Arguments.of("RICKERT", "RACAD"),
+                // violates 5: the last S is not removed
+                // when comparing to DEUTS, which is phonetically similar
+                // the result it also DAT, which is correct for DEUTSCH too imo
+                Arguments.of("DEUTSCH", "DAT"),         // Original: DATS
+                Arguments.of("WESTPHAL", "WASTFAL"),
+                // violates 4h: the H should be transcoded to S and thus ignored as
+                // the first key character is also S
+                Arguments.of("SHRIVER", "SRAVAR"),      // Original: SHRAVA[R]
+                // same as KOEHN, the L gets mysteriously lost
+                Arguments.of("KUHL", "CAL"),            // Original: C
+                Arguments.of("RAWSON", "RASAN"),
+                // If last character is S, remove it
+                Arguments.of("JILES", "JAL"),
+                // violates 6: if the last two characters are AY, remove A
+                Arguments.of("CARRAWAY", "CARY"),       // Original: CARAY
+                Arguments.of("YAMADA", "YANAD"));
+        // @formatter:on
     }
+
+    static Stream<Arguments> othersCases() {
+        // @formatter:off
+        return Stream.of(
+                Arguments.of("O'Daniel", "ODANAL"),
+                Arguments.of("O'Donnel", "ODANAL"),
+                Arguments.of("Cory", "CARY"),
+                Arguments.of("Corey", "CARY"),
+                Arguments.of("Kory", "CARY"),
+                //
+                Arguments.of("FUZZY", "FASY"));
+        // @formatter:on
+    }
+
+    static Stream<Arguments> rule1Cases() {
+        // @formatter:off
+        return Stream.of(
+                Arguments.of("MACX", "MCX"),
+                Arguments.of("KNX", "NX"),
+                Arguments.of("KX", "CX"),
+                Arguments.of("PHX", "FX"),
+                Arguments.of("PFX", "FX"),
+                Arguments.of("SCHX", "SX"));
+        // @formatter:on
+    }
+
+    static Stream<Arguments> rule2Cases() {
+        // @formatter:off
+        return Stream.of(
+                Arguments.of("XEE", "XY"),
+                Arguments.of("XIE", "XY"),
+                Arguments.of("XDT", "XD"),
+                Arguments.of("XRT", "XD"),
+                Arguments.of("XRD", "XD"),
+                Arguments.of("XNT", "XD"),
+                Arguments.of("XND", "XD"));
+        // @formatter:on
+    }
+
+    static Stream<Arguments> rule4Dot1Cases() {
+        // @formatter:off
+        return Stream.of(
+                Arguments.of("XEV", "XAF"),
+                Arguments.of("XAX", "XAX"),
+                Arguments.of("XEX", "XAX"),
+                Arguments.of("XIX", "XAX"),
+                Arguments.of("XOX", "XAX"),
+                Arguments.of("XUX", "XAX"));
+        // @formatter:on
+    }
+
+    static Stream<Arguments> rule4Dot2Cases() {
+        // @formatter:off
+        return Stream.of(
+                Arguments.of("XQ", "XG"),
+                Arguments.of("XZ", "X"),
+                Arguments.of("XM", "XN"));
+        // @formatter:on
+    }
+
+    static Stream<Arguments> rule5Cases() {
+        // @formatter:off
+        return Stream.of(
+                Arguments.of("XS", "X"),
+                Arguments.of("XSS", "X"));
+        // @formatter:on
+    }
+
+    static Stream<Arguments> rule6Cases() {
+        // @formatter:off
+        return Stream.of(
+                Arguments.of("XAY", "XY"),
+                Arguments.of("XAYS", "XY")); // Rules 5, 6
+        // @formatter:on
+    }
+
+    static Stream<Arguments> rule7Cases() {
+        // @formatter:off
+        return Stream.of(
+                Arguments.of("XA", "X"),
+                Arguments.of("XAS", "X")); // Rules 5, 7
+        // @formatter:on
+    }
+
+    private final Nysiis fullNysiis = new Nysiis(false);
 
     @Override
     protected Nysiis createStringEncoder() {
         return new Nysiis();
     }
 
-    private void encodeAll(final String[] strings, final String expectedEncoding) {
-        for (final String string : strings) {
-            assertEquals(expectedEncoding, getStringEncoder().encode(string), "Problem with " + string);
-        }
+    @ParameterizedTest(name = "{0}")
+    @ValueSource(strings = { "Brian", "Brown", "Brun" })
+    void testBran(final String input) {
+        assertEquals("BRAN", getStringEncoder().encode(input));
     }
 
-    @Test
-    void testBran() {
-        encodeAll(new String[] { "Brian", "Brown", "Brun" }, "BRAN");
-    }
-
-    @Test
-    void testCap() {
-        encodeAll(new String[] { "Capp", "Cope", "Copp", "Kipp" }, "CAP");
+    @ParameterizedTest(name = "{0}")
+    @ValueSource(strings = { "Capp", "Cope", "Copp", "Kipp" })
+    void testCap(final String input) {
+        assertEquals("CAP", getStringEncoder().encode(input));
     }
 
     @Test
     void testDad() {
         // Data Quality and Record Linkage Techniques P.121 claims this is DAN,
         // but it should be DAD, verified also with dropby.com
-        encodeAll(new String[] { "Dent" }, "DAD");
+        assertEquals("DAD", getStringEncoder().encode("Dent"));
     }
 
-    @Test
-    void testDan() {
-        encodeAll(new String[] { "Dane", "Dean", "Dionne" }, "DAN");
+    @ParameterizedTest(name = "{0}")
+    @ValueSource(strings = { "Dane", "Dean", "Dionne" })
+    void testDan(final String input) {
+        assertEquals("DAN", getStringEncoder().encode(input));
     }
 
     /**
      * Tests data gathered from around the internet.
      *
-     * @see <a href="https://www.dropby.com/NYSIISTextStrings.html">http://www.dropby.com/NYSIISTextStrings.html</a>*/
-    @Test
-    void testDropBy() {
-        // Explanation of differences between this implementation and the one at dropby.com is
-        // prepended to the test string. The referenced rules refer to the outlined steps the
-        // class description for Nysiis.
-
-        assertEncodings(
-                // 1. Transcode first characters of name
-                new String[] { "MACINTOSH", "MCANT" },
-                // violates 4j: the second N should not be added, as the first
-                //              key char is already a N
-                new String[] { "KNUTH", "NAT" },           // Original: NNAT; modified: NATH
-                // O and E are transcoded to A because of rule 4a
-                // H also to A because of rule 4h
-                // the N gets mysteriously lost, maybe because of a wrongly implemented rule 4h
-                // that skips the next char in such a case?
-                // the remaining A is removed because of rule 7
-                new String[] { "KOEHN", "CAN" },           // Original: C
-                // violates 4j: see also KNUTH
-                new String[] { "PHILLIPSON", "FALAPSAN" }, // Original: FFALAP[SAN]
-                // violates 4j: see also KNUTH
-                new String[] { "PFEISTER", "FASTAR" },     // Original: FFASTA[R]
-                // violates 4j: see also KNUTH
-                new String[] { "SCHOENHOEFT", "SANAFT" },  // Original: SSANAF[T]
-                // 2. Transcode last characters of name:
-                new String[] { "MCKEE", "MCY" },
-                new String[] { "MACKIE", "MCY" },
-                new String[] { "HEITSCHMIDT", "HATSNAD" },
-                new String[] { "BART", "BAD" },
-                new String[] { "HURD", "HAD" },
-                new String[] { "HUNT", "HAD" },
-                new String[] { "WESTERLUND", "WASTARLAD" },
-                // 4. Transcode remaining characters by following these rules,
-                //    incrementing by one character each time:
-                new String[] { "CASSTEVENS", "CASTAFAN" },
-                new String[] { "VASQUEZ", "VASG" },
-                new String[] { "FRAZIER", "FRASAR" },
-                new String[] { "BOWMAN", "BANAN" },
-                new String[] { "MCKNIGHT", "MCNAGT" },
-                new String[] { "RICKERT", "RACAD" },
-                // violates 5: the last S is not removed
-                // when comparing to DEUTS, which is phonetically similar
-                // the result it also DAT, which is correct for DEUTSCH too imo
-                new String[] { "DEUTSCH", "DAT" },         // Original: DATS
-                new String[] { "WESTPHAL", "WASTFAL" },
-                // violates 4h: the H should be transcoded to S and thus ignored as
-                // the first key character is also S
-                new String[] { "SHRIVER", "SRAVAR" },      // Original: SHRAVA[R]
-                // same as KOEHN, the L gets mysteriously lost
-                new String[] { "KUHL", "CAL" },            // Original: C
-                new String[] { "RAWSON", "RASAN" },
-                // If last character is S, remove it
-                new String[] { "JILES", "JAL" },
-                // violates 6: if the last two characters are AY, remove A
-                new String[] { "CARRAWAY", "CARY" },       // Original: CARAY
-                new String[] { "YAMADA", "YANAD" });
+     * @see <a href="https://www.dropby.com/NYSIISTextStrings.html">http://www.dropby.com/NYSIISTextStrings.html</a>
+     */
+    @ParameterizedTest(name = "{0}: {1}")
+    @MethodSource("dropByCases")
+    void testDropBy(final String input, final String expected) {
+        assertEquals(expected, fullNysiis.encode(input));
     }
 
     @Test
     void testFal() {
-        encodeAll(new String[] { "Phil" }, "FAL");
+        assertEquals("FAL", getStringEncoder().encode("Phil"));
     }
 
     /**
-     * Tests data gathered from around the internets.*/
-    @Test
-    void testOthers() {
-        assertEncodings(
-                new String[] { "O'Daniel", "ODANAL" },
-                new String[] { "O'Donnel", "ODANAL" },
-                new String[] { "Cory", "CARY" },
-                new String[] { "Corey", "CARY" },
-                new String[] { "Kory", "CARY" },
-                //
-                new String[] { "FUZZY", "FASY" });
+     * Tests data gathered from around the internets.
+     */
+    @ParameterizedTest(name = "{0}: {1}")
+    @MethodSource("othersCases")
+    void testOthers(final String input, final String expected) {
+        assertEquals(expected, fullNysiis.encode(input));
     }
 
     /**
-     * Tests rule 1: Translate first characters of name: MAC → MCC, KN → N, K → C, PH, PF → FF, SCH → SSS*/
-    @Test
-    void testRule1() {
-        assertEncodings(
-                new String[] { "MACX", "MCX" },
-                new String[] { "KNX", "NX" },
-                new String[] { "KX", "CX" },
-                new String[] { "PHX", "FX" },
-                new String[] { "PFX", "FX" },
-                new String[] { "SCHX", "SX" });
+     * Tests rule 1: Translate first characters of name: MAC → MCC, KN → N, K → C, PH, PF → FF, SCH → SSS
+     */
+    @ParameterizedTest(name = "{0}: {1}")
+    @MethodSource("rule1Cases")
+    void testRule1(final String input, final String expected) {
+        assertEquals(expected, fullNysiis.encode(input));
     }
 
     /**
-     * Tests rule 2: Translate last characters of name: EE → Y, IE → Y, DT, RT, RD, NT, ND → D*/
-    @Test
-    void testRule2() {
-        assertEncodings(
-                new String[] { "XEE", "XY" },
-                new String[] { "XIE", "XY" },
-                new String[] { "XDT", "XD" },
-                new String[] { "XRT", "XD" },
-                new String[] { "XRD", "XD" },
-                new String[] { "XNT", "XD" },
-                new String[] { "XND", "XD" });
+     * Tests rule 2: Translate last characters of name: EE → Y, IE → Y, DT, RT, RD, NT, ND → D
+     */
+    @ParameterizedTest(name = "{0}: {1}")
+    @MethodSource("rule2Cases")
+    void testRule2(final String input, final String expected) {
+        assertEquals(expected, fullNysiis.encode(input));
     }
 
     /**
-     * Tests rule 4.1: EV → AF else A, E, I, O, U → A*/
-    @Test
-    void testRule4Dot1() {
-        assertEncodings(
-                new String[] { "XEV", "XAF" },
-                new String[] { "XAX", "XAX" },
-                new String[] { "XEX", "XAX" },
-                new String[] { "XIX", "XAX" },
-                new String[] { "XOX", "XAX" },
-                new String[] { "XUX", "XAX" });
+     * Tests rule 4.1: EV → AF else A, E, I, O, U → A
+     */
+    @ParameterizedTest(name = "{0}: {1}")
+    @MethodSource("rule4Dot1Cases")
+    void testRule4Dot1(final String input, final String expected) {
+        assertEquals(expected, fullNysiis.encode(input));
     }
 
     /**
-     * Tests rule 4.2: Q → G, Z → S, M → N*/
-    @Test
-    void testRule4Dot2() {
-        assertEncodings(
-                new String[] { "XQ", "XG" },
-                new String[] { "XZ", "X" },
-                new String[] { "XM", "XN" });
+     * Tests rule 4.2: Q → G, Z → S, M → N
+     */
+    @ParameterizedTest(name = "{0}: {1}")
+    @MethodSource("rule4Dot2Cases")
+    void testRule4Dot2(final String input, final String expected) {
+        assertEquals(expected, fullNysiis.encode(input));
     }
 
     /**
-     * Tests rule 5: If last character is S, remove it.*/
-    @Test
-    void testRule5() {
-        assertEncodings(
-                new String[] { "XS", "X" },
-                new String[] { "XSS", "X" });
+     * Tests rule 5: If last character is S, remove it.
+     */
+    @ParameterizedTest(name = "{0}: {1}")
+    @MethodSource("rule5Cases")
+    void testRule5(final String input, final String expected) {
+        assertEquals(expected, fullNysiis.encode(input));
     }
 
     /**
-     * Tests rule 6: If last characters are AY, replace with Y.*/
-    @Test
-    void testRule6() {
-        assertEncodings(
-                new String[] { "XAY", "XY" },
-                new String[] { "XAYS", "XY" }); // Rules 5, 6
+     * Tests rule 6: If last characters are AY, replace with Y.
+     */
+    @ParameterizedTest(name = "{0}: {1}")
+    @MethodSource("rule6Cases")
+    void testRule6(final String input, final String expected) {
+        assertEquals(expected, fullNysiis.encode(input));
     }
 
     /**
-     * Tests rule 7: If last character is A, remove it.*/
-    @Test
-    void testRule7() {
-        assertEncodings(
-                new String[] { "XA", "X" },
-                new String[] { "XAS", "X" }); // Rules 5, 7
+     * Tests rule 7: If last character is A, remove it.
+     */
+    @ParameterizedTest(name = "{0}: {1}")
+    @MethodSource("rule7Cases")
+    void testRule7(final String input, final String expected) {
+        assertEquals(expected, fullNysiis.encode(input));
     }
+
     @Test
     void testSnad() {
         // Data Quality and Record Linkage Techniques P.121 claims this is SNAT,
         // but it should be SNAD
-        encodeAll(new String[] { "Schmidt" }, "SNAD");
+        assertEquals("SNAD", getStringEncoder().encode("Schmidt"));
     }
 
-    @Test
-    void testSnat() {
-        encodeAll(new String[] { "Smith", "Schmit" }, "SNAT");
+    @ParameterizedTest(name = "{0}")
+    @ValueSource(strings = { "Smith", "Schmit" })
+    void testSnat(final String input) {
+        assertEquals("SNAT", getStringEncoder().encode(input));
     }
 
-    @Test
-    void testSpecialBranches() {
-        encodeAll(new String[] { "Kobwick" }, "CABWAC");
-        encodeAll(new String[] { "Kocher" }, "CACAR");
-        encodeAll(new String[] { "Fesca" }, "FASC");
-        encodeAll(new String[] { "Shom" }, "SAN");
-        encodeAll(new String[] { "Ohlo" }, "OL");
-        encodeAll(new String[] { "Uhu" }, "UH");
-        encodeAll(new String[] { "Um" }, "UN");
+    @ParameterizedTest(name = "{0}: {1}")
+    @CsvSource({
+        "Kobwick, CABWAC",
+        "Kocher, CACAR",
+        "Fesca, FASC",
+        "Shom, SAN",
+        "Ohlo, OL",
+        "Uhu, UH",
+        "Um, UN"
+    })
+    void testSpecialBranches(final String input, final String expected) {
+        assertEquals(expected, getStringEncoder().encode(input));
     }
 
-    @Test
-    void testTranan() {
-        encodeAll(new String[] { "Trueman", "Truman" }, "TRANAN");
+    @ParameterizedTest(name = "{0}")
+    @ValueSource(strings = { "Trueman", "Truman" })
+    void testTranan(final String input) {
+        assertEquals("TRANAN", getStringEncoder().encode(input));
     }
 
     @Test

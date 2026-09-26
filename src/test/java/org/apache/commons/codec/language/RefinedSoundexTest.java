@@ -19,57 +19,83 @@ package org.apache.commons.codec.language;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.stream.Stream;
+
 import org.apache.commons.codec.AbstractStringEncoderTest;
 import org.apache.commons.codec.EncoderException;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 /**
  * Tests RefinedSoundex.
  */
 class RefinedSoundexTest extends AbstractStringEncoderTest<RefinedSoundex> {
 
+    static Stream<Arguments> differenceCases() {
+        // @formatter:off
+        return Stream.of(
+                // Normal cases
+                Arguments.of("Smith", "Smythe", 6),
+                Arguments.of("Ann", "Andrew", 3),
+                Arguments.of("Margaret", "Andrew", 1),
+                Arguments.of("Janet", "Margaret", 1),
+                // Examples from
+                // https://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_de-dz_8co5.asp
+                Arguments.of("Green", "Greene", 5),
+                Arguments.of("Blotchet-Halls", "Greene", 1),
+                // Examples from
+                // https://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_setu-sus_3o6w.asp
+                Arguments.of("Smith", "Smythe", 6),
+                Arguments.of("Smithers", "Smythers", 8),
+                Arguments.of("Anothers", "Brothers", 5));
+        // @formatter:on
+    }
+
     @Override
     protected RefinedSoundex createStringEncoder() {
         return new RefinedSoundex();
     }
 
-    @Test
-    void testDifference() throws EncoderException {
-        // Edge cases
-        assertEquals(0, getStringEncoder().difference(null, null));
-        assertEquals(0, getStringEncoder().difference("", ""));
-        assertEquals(0, getStringEncoder().difference(" ", " "));
-        // Normal cases
-        assertEquals(6, getStringEncoder().difference("Smith", "Smythe"));
-        assertEquals(3, getStringEncoder().difference("Ann", "Andrew"));
-        assertEquals(1, getStringEncoder().difference("Margaret", "Andrew"));
-        assertEquals(1, getStringEncoder().difference("Janet", "Margaret"));
-        // Examples from
-        // https://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_de-dz_8co5.asp
-        assertEquals(5, getStringEncoder().difference("Green", "Greene"));
-        assertEquals(1, getStringEncoder().difference("Blotchet-Halls", "Greene"));
-        // Examples from
-        // https://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_setu-sus_3o6w.asp
-        assertEquals(6, getStringEncoder().difference("Smith", "Smythe"));
-        assertEquals(8, getStringEncoder().difference("Smithers", "Smythers"));
-        assertEquals(5, getStringEncoder().difference("Anothers", "Brothers"));
+    @ParameterizedTest(name = "{0}, {1}: difference {2}")
+    @MethodSource("differenceCases")
+    void testDifference(final String left, final String right, final int expected) throws EncoderException {
+        assertEquals(expected, getStringEncoder().difference(left, right));
+    }
+
+    @ParameterizedTest
+    @NullAndEmptySource
+    @ValueSource(strings = { " " })
+    void testDifferenceEmpty(final String input) throws EncoderException {
+        assertEquals(0, getStringEncoder().difference(input, input));
+    }
+
+    @ParameterizedTest(name = "{0}: {1}")
+    // @formatter:off
+    @CsvSource({
+        "testing, T6036084",
+        "TESTING, T6036084",
+        "The, T60",
+        "quick, Q503",
+        "brown, B1908",
+        "fox, F205",
+        "jumped, J408106",
+        "over, O0209",
+        "the, T60",
+        "lazy, L7050",
+        "dogs, D6043"
+    })
+    // @formatter:on
+    void testEncode(final String input, final String expected) {
+        assertEquals(expected, getStringEncoder().encode(input));
     }
 
     @Test
-    void testEncode() {
-        assertEquals("T6036084", getStringEncoder().encode("testing"));
-        assertEquals("T6036084", getStringEncoder().encode("TESTING"));
-        assertEquals("T60", getStringEncoder().encode("The"));
-        assertEquals("Q503", getStringEncoder().encode("quick"));
-        assertEquals("B1908", getStringEncoder().encode("brown"));
-        assertEquals("F205", getStringEncoder().encode("fox"));
-        assertEquals("J408106", getStringEncoder().encode("jumped"));
-        assertEquals("O0209", getStringEncoder().encode("over"));
-        assertEquals("T60", getStringEncoder().encode("the"));
-        assertEquals("L7050", getStringEncoder().encode("lazy"));
-        assertEquals("D6043", getStringEncoder().encode("dogs"));
-
-        // Testing CODEC-56
+    void testEncodeCodec56() {
         assertEquals("D6043", RefinedSoundex.US_ENGLISH.encode("dogs"));
     }
 
