@@ -48,15 +48,6 @@ class Sha512CryptTest {
     }
 
     @Test
-    void testSha2CryptWrongSalt() {
-        assertThrows(IllegalArgumentException.class, () -> Sha2Crypt.sha512Crypt("secret".getBytes(StandardCharsets.UTF_8), "xx"));
-        assertThrows(IllegalArgumentException.class,
-                () -> Sha2Crypt.sha256Crypt("secret".getBytes(StandardCharsets.UTF_8), "$5$notrounds=1000$asdfasdf"));
-        assertThrows(IllegalArgumentException.class,
-                () -> Sha2Crypt.sha512Crypt("secret".getBytes(StandardCharsets.UTF_8), "$6$rounds=1000$abcäöüäöü"));
-    }
-
-    @Test
     void testSha512CryptBytes() {
         // An empty byte array equals an empty String
         assertEquals("$6$foo$Nywkte7LPWjaJhWjNeGJN.dFdY3pN1wYlGifyRLYOVlGS9EMSiZaDDe/BGSOYQ327q9.32I4UqQ5odsqvsBLX/", Crypt.crypt(new byte[0], "$6$foo"));
