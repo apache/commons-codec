@@ -53,7 +53,7 @@ class Sha512CryptTest {
         assertThrows(IllegalArgumentException.class,
                 () -> Sha2Crypt.sha256Crypt("secret".getBytes(StandardCharsets.UTF_8), "$5$notrounds=1000$asdfasdf"));
         assertThrows(IllegalArgumentException.class,
-                () -> Sha2Crypt.sha512Crypt("secret".getBytes(StandardCharsets.UTF_8), "$6$rounds=1000$äöüäöü"));
+                () -> Sha2Crypt.sha512Crypt("secret".getBytes(StandardCharsets.UTF_8), "$6$rounds=1000$abcäöüäöü"));
     }
 
     @Test
