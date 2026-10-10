@@ -16,6 +16,8 @@
 github:
   description: "Apache Commons Codec"
   homepage: https://commons.apache.org/codec/
+  autolink_jira:
+    - CODEC
   
   pull_requests:
     # allow auto-merge
