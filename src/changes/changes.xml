@@ -43,6 +43,11 @@ The <action> type attribute can be add,update,fix,remove.
     <author>Apache Commons Developers</author>
   </properties>
   <body>
+    <release version="1.23.1" date="YYYY-MM-DD" description="This is a feature and maintenance release. Java 8 or later is required.">
+      <!-- FIX -->
+      <!-- ADD -->
+      <!-- UPDATE -->
+    </release>
     <release version="1.23.0" date="2026-10-04" description="This is a feature and maintenance release. Java 8 or later is required.">
       <!-- FIX -->
       <action type="fix" dev="ggregory" due-to="Jeff Lenamon">GitIdentifiers orders tree entries by unsigned UTF-8 bytes, as Git does, instead of UTF-16 code units.</action>
