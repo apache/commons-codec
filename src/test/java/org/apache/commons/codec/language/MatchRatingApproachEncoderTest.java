@@ -382,6 +382,17 @@ class MatchRatingApproachEncoderTest extends AbstractStringEncoderTest<MatchRati
     }
 
     @Test
+    final void testIsEncodeEquals_CornerCase_NameEmptyAfterCleaning_ReturnsFalse() {
+        // Names that become empty after cleanName(String), consistent with encode(String) returning "".
+        assertFalse(getStringEncoder().isEncodeEquals("--", "Smith"));
+        assertFalse(getStringEncoder().isEncodeEquals("Smith", "--"));
+        assertFalse(getStringEncoder().isEncodeEquals(".,-", "Smith"));
+        assertFalse(getStringEncoder().isEncodeEquals("  ", "Smith"));
+        assertFalse(getStringEncoder().isEncodeEquals("Smith", "  "));
+        assertFalse(getStringEncoder().isEncodeEquals("--", ".,"));
+    }
+
+    @Test
     final void testIsVowel_CapitalA_ReturnsTrue() {
         assertTrue(getStringEncoder().isVowel("A"));
     }
