@@ -236,6 +236,11 @@ public class MatchRatingApproachEncoder implements StringEncoder {
         name1 = cleanName(name1);
         name2 = cleanName(name2);
 
+        // Bulletproof if a name becomes empty after cleanName(name), consistent with encode(String)
+        if (name1.isEmpty() || name2.isEmpty()) {
+            return false;
+        }
+
         // Actual MRA Algorithm
 
         // 1. Remove vowels
