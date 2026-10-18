@@ -30,6 +30,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 /**
  * Series of tests for the Match Rating Approach algorithm.
@@ -55,6 +56,16 @@ class MatchRatingApproachEncoderTest extends AbstractStringEncoderTest<MatchRati
                 Arguments.of(Named.of("preserves spaces", "áé íó  ú"), "ae io  u"),
                 Arguments.of(Named.of("unaccented input", "Colorless green ideas sleep furiously"), "Colorless green ideas sleep furiously"));
         // @formatter:on
+    }
+
+    static Stream<Arguments> emptyAfterCleaningComparisonCases() {
+        return Stream.of(
+                Arguments.of("--", "Smith"),
+                Arguments.of("Smith", "--"),
+                Arguments.of(".,-", "Smith"),
+                Arguments.of("  ", "Smith"),
+                Arguments.of("Smith", "  "),
+                Arguments.of("--", ".,"));
     }
 
     static Stream<Arguments> encodingCases() {
@@ -361,6 +372,18 @@ class MatchRatingApproachEncoderTest extends AbstractStringEncoderTest<MatchRati
         assertFalse(getStringEncoder().isEncodeEquals(null, "test"));
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = { "--", "  " })
+    final void testIsEncodeEquals_CornerCase_IdenticalNamesEmptyAfterCleaning_ReturnsTrue(final String name) {
+        assertTrue(getStringEncoder().isEncodeEquals(name, name));
+    }
+
+    @ParameterizedTest
+    @MethodSource("emptyAfterCleaningComparisonCases")
+    final void testIsEncodeEquals_CornerCase_NameEmptyAfterCleaning_ReturnsFalse(final String name1, final String name2) {
+        assertFalse(getStringEncoder().isEncodeEquals(name1, name2));
+    }
+
     @Test
     final void testIsEncodeEquals_CornerCase_SecondNameJustSpace_ReturnsFalse() {
         assertFalse(getStringEncoder().isEncodeEquals("test", " "));
@@ -379,17 +402,6 @@ class MatchRatingApproachEncoderTest extends AbstractStringEncoderTest<MatchRati
     @Test
     final void testIsEncodeEqualsSecondNameJust1Letter_ReturnsFalse() {
         assertFalse(getStringEncoder().isEncodeEquals("test", "t"));
-    }
-
-    @Test
-    final void testIsEncodeEquals_CornerCase_NameEmptyAfterCleaning_ReturnsFalse() {
-        // Names that become empty after cleanName(String), consistent with encode(String) returning "".
-        assertFalse(getStringEncoder().isEncodeEquals("--", "Smith"));
-        assertFalse(getStringEncoder().isEncodeEquals("Smith", "--"));
-        assertFalse(getStringEncoder().isEncodeEquals(".,-", "Smith"));
-        assertFalse(getStringEncoder().isEncodeEquals("  ", "Smith"));
-        assertFalse(getStringEncoder().isEncodeEquals("Smith", "  "));
-        assertFalse(getStringEncoder().isEncodeEquals("--", ".,"));
     }
 
     @Test

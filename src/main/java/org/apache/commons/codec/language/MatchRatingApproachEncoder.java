@@ -208,14 +208,19 @@ public class MatchRatingApproachEncoder implements StringEncoder {
     }
 
     /**
-     * Tests if two names are homophonous via Match Rating Approach (MRA) algorithm. It should be noted that the
-     * strings are cleaned in the same way as {@link #encode(String)}.
+     * Tests if two names are homophonous via the Match Rating Approach (MRA) algorithm.
+     * <p>
+     * The strings are cleaned in the same way as {@link #encode(String)}. A match is based on the MRA similarity rating and does not require identical
+     * encodings.
+     * </p>
+     * <p>
+     * Returns {@code false} if either input is {@code null}, empty, or a single character. Otherwise, inputs equal ignoring case return {@code true} before
+     * cleaning, even if cleaning would remove all characters. For remaining inputs, returns {@code false} if either name becomes empty after cleaning.
+     * </p>
      *
-     * @param name1
-     *            First of the 2 strings (names) to compare.
-     * @param name2
-     *            Second of the 2 names to compare.
-     * @return {@code true} if the encodings are identical {@code false} otherwise.
+     * @param name1 First of the 2 strings (names) to compare.
+     * @param name2 Second of the 2 names to compare.
+     * @return {@code true} if the names are equal ignoring case after the initial input checks or meet the MRA similarity threshold; {@code false} otherwise.
      */
     public boolean isEncodeEquals(String name1, String name2) {
         // Bulletproof for trivial input - NINO
