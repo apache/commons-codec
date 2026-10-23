@@ -24,70 +24,201 @@ import java.util.Objects;
 import org.apache.commons.codec.CodecPolicy;
 
 /**
- * Provides Base64 encoding and decoding as defined by <a href="https://www.ietf.org/rfc/rfc2045">RFC 2045 Multipurpose Internet Mail Extensions (MIME) Part
- * One: Format of Internet Message Bodies</a> and portions of <a href="https://datatracker.ietf.org/doc/html/rfc4648">RFC 4648 The Base16, Base32, and Base64
- * Data Encodings</a>
+ * Provides Base64 encoding and decoding.
  *
  * <p>
- * This class implements <a href="https://www.ietf.org/rfc/rfc2045#section-6.8">RFC 2045 6.8. Base64 Content-Transfer-Encoding</a>.
- * </p>
- * <p>
- * The class can be parameterized in the following manner with its {@link Builder}:
- * </p>
- * <ul>
- * <li>URL-safe mode: Default off.</li>
- * <li>Line length: Default 76. Line length that aren't multiples of 4 will still essentially end up being multiples of 4 in the encoded data.
- * <li>Line separator: Default is CRLF ({@code "\r\n"})</li>
- * <li>Strict or lenient decoding policy; default is {@link CodecPolicy#LENIENT}.</li>
- * <li>Custom decoding table.</li>
- * <li>Custom encoding table.</li>
- * <li>Padding; defaults is {@code '='}.</li>
- * </ul>
- * <p>
- * The URL-safe parameter selects the encoding alphabet. Lenient decoding seamlessly handles both modes; strict decoding requires the encoding alphabet. See also
- * {@code Builder#setDecodeTableFormat(DecodeTableFormat)}.
- * </p>
- * <p>
- * Since this class operates directly on byte streams, and not character streams, it is hard-coded to only encode/decode character encodings which are
- * compatible with the lower 127 ASCII chart (ISO-8859-1, Windows-1252, UTF-8, etc).
- * </p>
- * <p>
- * This class is thread-safe.
- * </p>
- * <p>
- * To configure a new instance, use a {@link Builder}. For example:
+ * Supports the standard alphabet described in <a href="https://datatracker.ietf.org/doc/html/rfc2045#section-6.8">RFC 2045 section 6.8</a> and the standard and
+ * URL-safe alphabets described in <a href="https://datatracker.ietf.org/doc/html/rfc4648">RFC 4648</a>. The decoding policy determines which input
+ * representations are accepted. Strict decoding validates this instance's encoder output format; it is not a general
+ * <a href="https://datatracker.ietf.org/doc/html/rfc2045#section-6.8">MIME</a> or <a href="https://www.w3.org/TR/xmlschema-2/#base64Binary">XML Base64</a>
+ * validator.
  * </p>
  *
+ * <p>
+ * This class is thread-safe. It operates on bytes using ASCII-compatible character encodings, such as UTF-8 and ISO-8859-1.
+ * </p>
+ *
+ * <h2>Configuration</h2>
+ * <p>
+ * Use {@link #builder()} to configure an instance. The builder defaults to the standard encoding alphabet, no line wrapping, {@code '='} padding, and
+ * {@link CodecPolicy#LENIENT}. The default decoding table accepts both standard and URL-safe alphabets. The default line separator is CRLF, used only when
+ * chunking is enabled. Positive line lengths are rounded down to a multiple of four. Some constructors and stream APIs have different wrapping defaults;
+ * specify the line length explicitly when the layout matters. Custom encoding and decoding tables and padding are also supported.
+ * </p>
+ *
+ * <h2>Lenient and strict decoding</h2>
+ * <p>
+ * {@link CodecPolicy#LENIENT} is the default, including for static decoding convenience methods. It ignores characters absent from the decoding table, stops at
+ * the first padding character, and discards unused trailing bits. Consequently, different input strings can produce the same decoded bytes. Selecting a
+ * decoding table with {@link Base64.Builder#setDecodeTableFormat(Base64.DecodeTableFormat)} does not enable strict validation: unsupported characters are still
+ * ignored rather than rejected.
+ * </p>
+ *
+ * <p>
+ * Since 1.23.0, {@link CodecPolicy#STRICT} requires the exact representation produced by this instance's encoder. Re-encoding successfully decoded input
+ * reproduces the input byte for byte. Validation covers the alphabet, padding, unused trailing bits, line length, line separator, and any final separator. The
+ * standard alphabet requires padding for partial blocks; the URL-safe alphabet requires unpadded input. Whitespace is rejected unless the encoder emits it at
+ * that position. Invalid input causes an {@link IllegalArgumentException} when decoding arrays or strings.
+ * </p>
+ *
+ * <p>
+ * This is a behavioral incompatibility with versions 1.15 through 1.22.1, whose strict decoding checked trailing bits without requiring the exact encoder
+ * layout. A strict instance with chunking enabled is unsuitable for externally supplied input whose wrapping may differ. Even input shorter than one line
+ * requires the final separator that the encoder emits. Empty input remains empty and requires no separator. Switching to lenient decoding also removes
+ * trailing-bit validation; it does not reproduce the previous strict policy.
+ * </p>
+ *
+ * <p>
+ * Exact-layout validation is a Commons Codec contract, not a universal Base64 requirement.
+ * <a href="https://datatracker.ietf.org/doc/html/rfc2045#section-6.8">RFC 2045</a> limits encoded lines to 76 characters but instructs decoders to ignore line
+ * breaks. <a href="https://datatracker.ietf.org/doc/html/rfc4648#section-3.3">RFC 4648</a> normally excludes non-alphabet characters unless the referring
+ * protocol permits them. Choose the input handling required by the surrounding protocol.
+ * <a href="https://datatracker.ietf.org/doc/html/rfc4648#section-3.5">RFC 4648</a> requires encoders to zero unused bits, but permits decoders to reject
+ * nonzero unused bits; strict decoding chooses to reject them. See {@link BaseNCodec} for the full canonical decoding contract.
+ * </p>
+ *
+ * <h2>Example: permissive decoding and <a href="https://datatracker.ietf.org/doc/html/rfc2045#section-6.8">MIME</a> encoding</h2>
+ * <p>
+ * Use lenient decoding when accepting alternate wrapping and noncanonical input is intended. The following
+ * <a href="https://datatracker.ietf.org/doc/html/rfc2045#section-6.8">MIME</a>-style encoder wraps at 76 characters using CRLF. Its decoder accepts different
+ * wrapping, but does not validate <a href="https://datatracker.ietf.org/doc/html/rfc2045#section-6.8">MIME</a> syntax, padding, or unused trailing bits.
+ * </p>
  * <pre>
- * Base64 base64 = Base64.builder()
- *   .setDecodingPolicy(CodecPolicy.LENIENT)    // default is lenient, null resets to default
- *   .setEncodeTable(customEncodeTable)         // default is built in, null resets to default
- *   .setLineLength(0)                          // default is none
- *   .setLineSeparator('\r', '\n')              // default is CR LF, null resets to default
- *   .setPadding('=')                           // default is '='
- *   .setUrlSafe(false)                         // default is false
- *   .get()
+ * Base64 mime = Base64.builder()
+ *         .setLineLength(76)
+ *         .setLineSeparator((byte) '\r', (byte) '\n')
+ *         .setDecodingPolicy(CodecPolicy.LENIENT)
+ *         .get();
+ * String encoded = mime.encodeToString(new byte[] {100}); // "ZA==\r\n"
+ * byte[] decoded = mime.decode("Z A==\n");              // {100}
+ * byte[] alsoDecoded = Base64.decodeBase64("ZE==");      // {100}, nonzero unused bits discarded
  * </pre>
  *
+ * <h2>Example: strict standard Base64</h2>
  * <p>
- * The static decoding convenience methods use {@link CodecPolicy#LENIENT}. They accept noncanonical input, so different encoded strings can decode to the
- * same bytes. Selecting a standard or URL-safe decode table does not enable strict validation. To require canonical input, configure a strict instance:
+ * Use an unchunked strict instance for standard Base64 values that must have canonical alphabet, padding, and trailing bits, with no whitespace. In particular,
+ * this rejects the nonzero unused bits in {@code "ZE=="}, while lenient decoding accepts that input.
  * </p>
- *
  * <pre>
- * Base64 standard = Base64.builder().setDecodingPolicy(CodecPolicy.STRICT).get();
- * Base64 urlSafe = Base64.builder().setUrlSafe(true).setDecodingPolicy(CodecPolicy.STRICT).get();
+ * Base64 standard = Base64.builder()
+ *         .setLineLength(0)
+ *         .setDecodingPolicy(CodecPolicy.STRICT)
+ *         .get();
+ * byte[] decoded = standard.decode("ZA=="); // {100}
+ * // Each of these throws IllegalArgumentException:
+ * // standard.decode("ZE==");       // Nonzero unused bits.
+ * // standard.decode("ZA");         // Missing padding.
+ * // standard.decode("ZA==\n");     // Unexpected whitespace.
+ * // standard.decode("ZA==suffix"); // Data after padding.
  * </pre>
  *
+ * <h2>Example: strict unpadded Base64url</h2>
  * <p>
- * These instances accept unchunked input using their respective encoding alphabets. The standard instance requires padding for partial blocks; the URL-safe
- * instance requires unpadded input. See {@link BaseNCodec} for the full canonical decoding contract and guidance on comparing encoded values.
+ * Use the URL-safe alphabet with strict decoding for unpadded Base64url values, such as the encoded components of a
+ * <a href="https://datatracker.ietf.org/doc/html/rfc7515#section-2">JSON Web Signature (JWS)</a>. This validates the Base64 representation only, not a token
+ * or signature. Protocols requiring padded Base64url need a different padding policy than this encoder offers.
+ * </p>
+ * <pre>
+ * Base64 urlSafe = Base64.builder()
+ *         .setUrlSafe(true)
+ *         .setLineLength(0)
+ *         .setDecodingPolicy(CodecPolicy.STRICT)
+ *         .get();
+ * byte[] decoded = urlSafe.decode("_w"); // {(byte) 0xff}
+ * // urlSafe.decode("/w=="); // Throws: standard alphabet and padding are not accepted.
+ * // urlSafe.decode("_w=="); // Throws: padding is not accepted.
+ * </pre>
+ *
+ * <h2>Example: validating an exact wrapped representation</h2>
+ * <p>
+ * Use a chunked strict instance only when the input must match that encoder's layout. The unchanged output round-trips, but trimming the final separator,
+ * removing line breaks, or replacing LF with CRLF does not preserve that representation.
+ * </p>
+ * <pre>
+ * Base64 wrapped = Base64.builder()
+ *         .setLineLength(76)
+ *         .setLineSeparator((byte) '\n')
+ *         .setDecodingPolicy(CodecPolicy.STRICT)
+ *         .get();
+ * String exact = wrapped.encodeToString(new byte[] {100}); // "ZA==\n"
+ * byte[] decoded = wrapped.decode(exact);                  // {100}
+ * // Each of these throws IllegalArgumentException:
+ * // wrapped.decode(exact.trim());
+ * // wrapped.decode(exact.replace("\n", ""));
+ * // wrapped.decode(exact.replace("\n", "\r\n"));
+ * </pre>
+ *
+ * <h2>Example: <a href="https://www.w3.org/TR/xmlschema-2/#base64Binary">XML Base64</a> values with variable wrapping</h2>
+ * <p>
+ * <a href="https://www.w3.org/TR/xmlschema-2/">XML Schema</a>'s
+ * <a href="https://www.w3.org/TR/xmlschema-2/#base64Binary">base64Binary</a> datatype permits
+ * <a href="https://www.w3.org/TR/xml/#NT-S">XML whitespace</a> and does not impose
+ * <a href="https://datatracker.ietf.org/doc/html/rfc2045#section-6.8">MIME</a>'s line-length limit. For such values, use separate encoding and decoding
+ * instances: remove only <a href="https://www.w3.org/TR/xml/#NT-S">XML whitespace</a> from the extracted value, then decode with an unchunked strict instance.
+ * This accepts LF, CRLF, unwrapped input, and a missing final separator while retaining trailing-bit validation. In 1.23.0 and later it also retains strict
+ * padding and alphabet validation. It does not restore every input accepted by strict decoding in earlier versions.
+ * </p>
+ * <pre>
+ * Base64 encoder = Base64.builder().setLineLength(76).setLineSeparator((byte) '\n').get();
+ * Base64 decoder = Base64.builder().setLineLength(0).setDecodingPolicy(CodecPolicy.STRICT).get();
+ * String encoded = encoder.encodeToString(new byte[] {100});
+ * String xmlValue = encoded.trim(); // An external producer might omit the final separator.
+ * String normalized = xmlValue.replaceAll("[ \\t\\r\\n]", "");
+ * byte[] decoded = decoder.decode(normalized); // {100}
+ * </pre>
+ * <p>
+ * Apply this normalization only to the extracted Base64 value at the appropriate decoding stage, not by rewriting signed XML.
+ * <a href="https://www.w3.org/TR/xmldsig-core1/#sec-Base-64">XML Signature's Base64 transform</a> separately specifies
+ * <a href="https://datatracker.ietf.org/doc/html/rfc2045#section-6.8">RFC 2045</a> decoding. Other protocols, including
+ * <a href="https://datatracker.ietf.org/doc/html/rfc2045#section-6.8">MIME</a>,
+ * <a href="https://datatracker.ietf.org/doc/html/rfc7468">PEM-style textual encodings</a>, and
+ * <a href="https://datatracker.ietf.org/doc/html/rfc7515#section-2">JWS</a>, have their own acceptance rules; this
+ * <a href="https://www.w3.org/TR/xml/#NT-S">XML whitespace</a> recipe is not a universal decoder for them.
+ * </p>
+ *
+ * <h2>Example: consistently comparing encoded identifiers</h2>
+ * <p>
+ * If encoded values serve as identifiers in a replay cache, blocklist, or deduplication system, either reject noncanonical representations with a strict
+ * decoder or consistently compare decoded bytes or normalized encodings. For an application that deliberately permits lenient input, normalize every value
+ * before storing or looking it up, using the same configuration throughout:
+ * </p>
+ * <pre>
+ * Base64 permissive = Base64.builder().setLineLength(0).get();
+ * String identifier = permissive.encodeToString(permissive.decode("ZE==")); // "ZA=="
+ * </pre>
+ * <p>
+ * Normalization does not authenticate input. Signature verification must use the representation required by the signing protocol.
+ * </p>
+ *
+ * <h2>Example: completing strict stream validation</h2>
+ * <p>
+ * Strict stream decoding validates the complete input only at EOF. Consume a decoding input stream to EOF, or finish a decoding output stream with
+ * {@link BaseNCodecOutputStream#eof()} or {@link BaseNCodecOutputStream#close()}. Streams can emit decoded bytes before a later validation failure; do not
+ * treat those bytes as a successfully validated complete value until decoding finishes. See {@link Base64InputStream} and {@link Base64OutputStream}.
+ * </p>
+ * <pre>
+ * Base64 standard = Base64.builder().setLineLength(0).setDecodingPolicy(CodecPolicy.STRICT).get();
+ * java.io.ByteArrayOutputStream result = new java.io.ByteArrayOutputStream();
+ * try (Base64InputStream stream = Base64InputStream.builder()
+ *         .setByteArray(new byte[] {'Z', 'A', '=', '='})
+ *         .setBaseNCodec(standard)
+ *         .setEncode(false)
+ *         .get()) {
+ *     byte[] buffer = new byte[1024];
+ *     for (int count; (count = stream.read(buffer)) != -1;) {
+ *         result.write(buffer, 0, count);
+ *     }
+ * }
+ * byte[] decoded = result.toByteArray(); // {100}; reached EOF without a validation error.
+ * </pre>
+ * <p>
+ * Handle or declare {@link java.io.IOException} when using streams. Buffering the complete result, as above, is suitable only for input that fits in memory.
  * </p>
  *
  * @see Base64InputStream
  * @see Base64OutputStream
- * @see <a href="https://www.ietf.org/rfc/rfc2045">RFC 2045 Multipurpose Internet Mail Extensions (MIME) Part One: Format of Internet Message Bodies</a>
- * @see <a href="https://datatracker.ietf.org/doc/html/rfc4648">RFC 4648 The Base16, Base32, and Base64 Data Encodings</a>
+ * @see <a href="https://datatracker.ietf.org/doc/html/rfc2045#section-6.8">RFC 2045 section 6.8</a>
+ * @see <a href="https://datatracker.ietf.org/doc/html/rfc4648">RFC 4648</a>
  * @since 1.0
  */
 public class Base64 extends BaseNCodec {
@@ -96,19 +227,8 @@ public class Base64 extends BaseNCodec {
      * Builds {@link Base64} instances.
      *
      * <p>
-     * To configure a new instance, use a {@link Builder}. For example:
+     * See {@link Base64} for configuration defaults, decoding policies, and usage examples.
      * </p>
-     *
-     * <pre>
-     * Base64 base64 = Base64.builder()
-     *   .setCodecPolicy(CodecPolicy.LENIENT)       // default is lenient, null resets to default
-     *   .setEncodeTable(customEncodeTable)         // default is built in, null resets to default
-     *   .setLineLength(0)                          // default is none
-     *   .setLineSeparator('\r', '\n')              // default is CR LF, null resets to default
-     *   .setPadding('=')                           // default is '='
-     *   .setUrlSafe(false)                         // default is false
-     *   .get()
-     * </pre>
      *
      * @since 1.17.0
      */
@@ -344,19 +464,8 @@ public class Base64 extends BaseNCodec {
      * Creates a new Builder.
      *
      * <p>
-     * To configure a new instance, use a {@link Builder}. For example:
+     * See {@link Base64} for configuration defaults, decoding policies, and usage examples.
      * </p>
-     *
-     * <pre>
-     * Base64 base64 = Base64.builder()
-     *   .setDecodingPolicy(CodecPolicy.LENIENT) // default is lenient, null resets to default
-     *   .setEncodeTable(customEncodeTable)         // default is built in, null resets to default
-     *   .setLineLength(0)                          // default is none
-     *   .setLineSeparator('\r', '\n')              // default is CR LF, null resets to default
-     *   .setPadding('=')                           // default is '='
-     *   .setUrlSafe(false)                         // default is false
-     *   .get()
-     * </pre>
      *
      * @return A new Builder.
      * @since 1.17.0
@@ -407,7 +516,7 @@ public class Base64 extends BaseNCodec {
      *
      * <p>
      * For canonical decoding, use {@code Base64.builder().setDecodingPolicy(CodecPolicy.STRICT).get().decode(base64Data)}.
-     * See {@link BaseNCodec} for guidance on comparing encoded values.
+     * See {@link Base64} for decoding policy examples and guidance on comparing encoded values.
      * </p>
      *
      * @param base64Data Byte array containing Base64 data.
@@ -429,7 +538,7 @@ public class Base64 extends BaseNCodec {
      *
      * <p>
      * For canonical decoding, use {@code Base64.builder().setDecodingPolicy(CodecPolicy.STRICT).get().decode(base64String)}.
-     * See {@link BaseNCodec} for guidance on comparing encoded values.
+     * See {@link Base64} for decoding policy examples and guidance on comparing encoded values.
      * </p>
      *
      * @param base64String String containing Base64 data.
@@ -451,7 +560,7 @@ public class Base64 extends BaseNCodec {
      *
      * <p>
      * For canonical decoding, use {@code Base64.builder().setDecodingPolicy(CodecPolicy.STRICT).get().decode(base64Data)}.
-     * See {@link BaseNCodec} for guidance on comparing encoded values.
+     * See {@link Base64} for decoding policy examples and guidance on comparing encoded values.
      * </p>
      *
      * @param base64Data Byte array containing Base64 data.
@@ -473,7 +582,7 @@ public class Base64 extends BaseNCodec {
      *
      * <p>
      * For canonical decoding, use {@code Base64.builder().setDecodingPolicy(CodecPolicy.STRICT).get().decode(base64String)}.
-     * See {@link BaseNCodec} for guidance on comparing encoded values.
+     * See {@link Base64} for decoding policy examples and guidance on comparing encoded values.
      * </p>
      *
      * @param base64String String containing Base64 data.
@@ -495,7 +604,7 @@ public class Base64 extends BaseNCodec {
      *
      * <p>
      * For canonical decoding, use {@code Base64.builder().setUrlSafe(true).setDecodingPolicy(CodecPolicy.STRICT).get().decode(base64Data)}.
-     * See {@link BaseNCodec} for guidance on comparing encoded values.
+     * See {@link Base64} for decoding policy examples and guidance on comparing encoded values.
      * </p>
      *
      * @param base64Data Byte array containing Base64 data.
@@ -517,7 +626,7 @@ public class Base64 extends BaseNCodec {
      *
      * <p>
      * For canonical decoding, use {@code Base64.builder().setUrlSafe(true).setDecodingPolicy(CodecPolicy.STRICT).get().decode(base64String)}.
-     * See {@link BaseNCodec} for guidance on comparing encoded values.
+     * See {@link Base64} for decoding policy examples and guidance on comparing encoded values.
      * </p>
      *
      * @param base64String String containing Base64 data.
