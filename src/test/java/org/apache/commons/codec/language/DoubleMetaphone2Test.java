@@ -512,6 +512,7 @@ class DoubleMetaphone2Test extends AbstractStringEncoderTest<DoubleMetaphone> {
         {"King", "KNK", "KNK"},
         {"Kinsey", "KNS", "KNS"},
         {"Kirk", "KRK", "KRK"},
+        {"Kirkcaldy", "KRKL", "KRKL"},
         {"Kirton", "KRTN", "KRTN"},
         {"Kistler", "KSTL", "KSTL"},
         {"Kitchen", "KXN", "KXN"},
