@@ -377,10 +377,6 @@ class DigestUtilsTest {
         return testRandomAccessFileWrapper;
     }
 
-    private boolean isJava25Plus() {
-        return SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_25);
-    }
-
     private boolean isJava9Plus() {
         return SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_9);
     }
@@ -442,13 +438,28 @@ class DigestUtilsTest {
         assertEquals("SHA-1", DigestUtils.getShaDigest().getAlgorithm());
     }
 
+    /**
+     * Tests SHAKE digest lookup according to runtime algorithm availability.
+     *
+     * <p>SHAKE128-256 and SHAKE256-512 were introduced as MessageDigest algorithms in Java 25 and added to the SUN provider in Java 21.0.13.
+     * A Java major-version check therefore cannot determine whether these algorithms are available. Each algorithm is checked independently using
+     * {@link DigestUtils#isAvailable(String)}, which also accounts for the installed security providers.</p>
+     *
+     * <p>These tests support Java 21 releases both before and after 21.0.13, as well as other Java versions. When an algorithm is available, they verify
+     * successful lookup or the expected digest values; otherwise, they verify that the digest operation throws {@link IllegalArgumentException}.</p>
+     *
+     * @see <a href="https://www.oracle.com/java/technologies/javase/21-0-13-relnotes.html">JDK 21.0.13 release notes (JDK-8354305)</a>
+     */
     @Test
-    void testGetDigestsJava25() {
-        if (isJava25Plus()) {
+    void testGetShakeDigests() {
+        if (DigestUtils.isAvailable(MessageDigestAlgorithms.SHAKE128_256)) {
             assertEquals("SHAKE128-256", DigestUtils.getShake128_256Digest().getAlgorithm());
-            assertEquals("SHAKE256-512", DigestUtils.getShake256_512Digest().getAlgorithm());
         } else {
             assertThrows(IllegalArgumentException.class, DigestUtils::getShake128_256Digest);
+        }
+        if (DigestUtils.isAvailable(MessageDigestAlgorithms.SHAKE256_512)) {
+            assertEquals("SHAKE256-512", DigestUtils.getShake256_512Digest().getAlgorithm());
+        } else {
             assertThrows(IllegalArgumentException.class, DigestUtils::getShake256_512Digest);
         }
     }
@@ -849,6 +860,17 @@ class DigestUtilsTest {
         assertEquals(DigestUtils.shaHex(testData), DigestUtils.shaHex(new ByteArrayInputStream(testData)));
     }
 
+    /**
+     * Tests SHAKE128-256 byte array and stream digests according to runtime algorithm availability.
+     *
+     * <p>Verifies expected digest values when the algorithm is available and {@link IllegalArgumentException} otherwise.
+     * See {@link #testGetShakeDigests()} for why availability is checked instead of the Java version, including support added in Java 21.0.13.</p>
+     *
+     * @param binaryInputText the binary input test vector
+     * @param inputBitSize the expected input size in bits
+     * @param hexOutputText the expected hexadecimal output test vector
+     * @throws Exception if the test cannot process a test vector or input
+     */
     @ParameterizedTest
     @MethodSource
     void testShake128_256(final String binaryInputText, final int inputBitSize, final String hexOutputText) throws Exception {
@@ -859,7 +881,7 @@ class DigestUtilsTest {
         assertEquals(inputBitSize, bytesInput.length * Byte.SIZE);
         final String resultString = clean(hexOutputText).substring(0, SHAKE128_256_BYTE_LEN * 2);
         final byte[] resultBytes = Arrays.copyOf(Hex.decodeHex(resultString), SHAKE128_256_BYTE_LEN);
-        if (isJava25Plus()) {
+        if (DigestUtils.isAvailable(MessageDigestAlgorithms.SHAKE128_256)) {
             // byte[]
             assertArrayEquals(resultBytes, DigestUtils.shake128_256(bytesInput));
             assertArrayEquals(resultBytes, DigestUtils.shake128_256(new ByteArrayInputStream(bytesInput)));
@@ -874,9 +896,17 @@ class DigestUtilsTest {
         }
     }
 
+    /**
+     * Tests SHAKE128-256 string digests according to runtime algorithm availability.
+     *
+     * <p>Verifies expected digest values when the algorithm is available and {@link IllegalArgumentException} otherwise.
+     * See {@link #testGetShakeDigests()} for why availability is checked instead of the Java version, including support added in Java 21.0.13.</p>
+     *
+     * @throws Exception if the test cannot process a test vector or input
+     */
     @Test
     void testShake128_256_String() throws Exception {
-        if (isJava25Plus()) {
+        if (DigestUtils.isAvailable(MessageDigestAlgorithms.SHAKE128_256)) {
             // String
             assertArrayEquals(new byte[] { 88, -127, 9, 45, -40, 24, -65, 92, -8, -93, -35, -73, -109, -5, -53, -89, 64, -105, -43, -59, 38, -90, -45, 95, -105,
                     -72, 51, 81, -108, 15, 44, -56 }, DigestUtils.shake128_256("abc"));
@@ -888,6 +918,17 @@ class DigestUtilsTest {
         }
     }
 
+    /**
+     * Tests SHAKE256-512 byte array and stream digests according to runtime algorithm availability.
+     *
+     * <p>Verifies expected digest values when the algorithm is available and {@link IllegalArgumentException} otherwise.
+     * See {@link #testGetShakeDigests()} for why availability is checked instead of the Java version, including support added in Java 21.0.13.</p>
+     *
+     * @param binaryInputText the binary input test vector
+     * @param inputBitSize the expected input size in bits
+     * @param hexOutputText the expected hexadecimal output test vector
+     * @throws Exception if the test cannot process a test vector or input
+     */
     @ParameterizedTest
     @MethodSource
     void testShake256_512(final String binaryInputText, final int inputBitSize, final String hexOutputText) throws Exception {
@@ -898,7 +939,7 @@ class DigestUtilsTest {
         assertEquals(inputBitSize, bytesInput.length * Byte.SIZE);
         final String resultString = clean(hexOutputText).substring(0, SHAKE128_512_BYTE_LEN * 2);
         final byte[] resultBytes = Arrays.copyOf(Hex.decodeHex(resultString), SHAKE128_512_BYTE_LEN);
-        if (isJava25Plus()) {
+        if (DigestUtils.isAvailable(MessageDigestAlgorithms.SHAKE256_512)) {
             // byte[]
             assertArrayEquals(resultBytes, DigestUtils.shake256_512(bytesInput));
             assertArrayEquals(resultBytes, DigestUtils.shake256_512(new ByteArrayInputStream(bytesInput)));
@@ -913,9 +954,17 @@ class DigestUtilsTest {
         }
     }
 
+    /**
+     * Tests SHAKE256-512 string digests according to runtime algorithm availability.
+     *
+     * <p>Verifies expected digest values when the algorithm is available and {@link IllegalArgumentException} otherwise.
+     * See {@link #testGetShakeDigests()} for why availability is checked instead of the Java version, including support added in Java 21.0.13.</p>
+     *
+     * @throws Exception if the test cannot process a test vector or input
+     */
     @Test
     void testShake256_512_String() throws Exception {
-        if (isJava25Plus()) {
+        if (DigestUtils.isAvailable(MessageDigestAlgorithms.SHAKE256_512)) {
             // String
             assertArrayEquals(new byte[] { 72, 51, 102, 96, 19, 96, -88, 119, 28, 104, 99, 8, 12, -60, 17, 77, -115, -76, 69, 48, -8, -15, -31, -18, 79, -108,
                     -22, 55, -25, -117, 87, 57, -43, -95, 91, -17, 24, 106, 83, -122, -57, 87, 68, -64, 82, 126, 31, -86, -97, -121, 38, -28, 98, -95, 42, 79,
