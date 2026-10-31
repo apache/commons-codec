@@ -31,7 +31,12 @@
       <item name="Issue Tracking" href="/issue-management.html" />
       <item name="Dependency Management" href="/dependency-info.html" />
       <item name="Sources" href="/scm.html" />
-      <item name="Security" href="/security.html" />
+      <item name="Security" href="/security.html">
+        <item name="Threat Model for Developers" href="/threat-model-short-1.23.0.html" />
+        <item name="Developer Model (Markdown)" href="https://raw.githubusercontent.com/apache/commons-codec/master/src/site/markdown/threat-model-short-1.23.0.md" />
+        <item name="Threat Model for Researchers" href="/threat-model-1.23.0.html" />
+        <item name="Researcher Model (Markdown)" href="https://raw.githubusercontent.com/apache/commons-codec/master/src/site/markdown/threat-model-1.23.0.md" />
+      </item>
       <item name="License" href="https://www.apache.org/licenses/LICENSE-2.0" />
       <item name="Code of Conduct" href="https://www.apache.org/foundation/policies/conduct.html" />
       <item name="Download" href="/download_codec.cgi" />
