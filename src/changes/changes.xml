@@ -49,7 +49,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="fix" dev="ggregory" due-to="Gary Gregory" issue="CODEC-348">Clarify Base64 STRICT and LENIENT decoding Javadoc, document the 1.23.0 behavioral incompatibility, and add examples for MIME, standard Base64, Base64url, exact wrapped input, XML whitespace normalization, identifier comparison, and streaming validation. Decoding behavior is unchanged.</action>
       <!-- ADD -->
       <!-- UPDATE -->
-      <action type="update" dev="ggregory" due-to="Gary Gregory">Bump org.apache.commons:commons-parent from 105 to 106.</action>
+      <action type="update" dev="ggregory" due-to="Gary Gregory">Bump org.apache.commons:commons-parent from 105 to 107.</action>
     </release>
     <release version="1.23.0" date="2026-10-04" description="This is a feature and maintenance release. Java 8 or later is required.">
       <!-- FIX -->
