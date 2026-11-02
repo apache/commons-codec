@@ -723,6 +723,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * @param array  A byte array containing Base-N character data.
      * @param offset initial offset of the subarray.
      * @param length length of the subarray.
+     * @param context The context to be used.
      * @throws IllegalArgumentException Thrown when a problem is detected processing data.
      */
     abstract void decode(byte[] array, int offset, int length, Context context);
@@ -814,6 +815,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * @param array  A byte array containing Base-N character data.
      * @param offset initial offset of the subarray.
      * @param length length of the subarray.
+     * @param context The context to be used.
      * @throws IllegalArgumentException Thrown when a problem is detected processing data.
      */
     abstract void encode(byte[] array, int offset, int length, Context context);
