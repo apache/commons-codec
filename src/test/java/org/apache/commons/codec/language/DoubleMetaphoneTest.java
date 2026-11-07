@@ -509,7 +509,7 @@ class DoubleMetaphoneTest extends AbstractStringEncoderTest<DoubleMetaphone> {
             "seferal", "several" }, {
             "segements", "segments" }, {
             "sence", "sense" }, {
-            "seperate", "separate" }, {
+            "separate", "separate" }, {
             "sherbert", "sherbet" }, {
             "sicolagest", "psychologist" }, {
             "sieze", "seize" }, {
