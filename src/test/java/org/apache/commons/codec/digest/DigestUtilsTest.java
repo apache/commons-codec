@@ -438,6 +438,28 @@ class DigestUtilsTest {
         assertEquals("SHA-1", DigestUtils.getShaDigest().getAlgorithm());
     }
 
+    @Test
+    void testGetDigestsJava9() {
+        if (isJava9Plus()) {
+            assertEquals("SHA3-224", DigestUtils.getSha3_224Digest().getAlgorithm());
+            assertEquals("SHA3-256", DigestUtils.getSha3_256Digest().getAlgorithm());
+            assertEquals("SHA3-384", DigestUtils.getSha3_384Digest().getAlgorithm());
+            assertEquals("SHA3-512", DigestUtils.getSha3_512Digest().getAlgorithm());
+        } else {
+            assertThrows(IllegalArgumentException.class, DigestUtils::getSha3_224Digest);
+            assertThrows(IllegalArgumentException.class, DigestUtils::getSha3_256Digest);
+            assertThrows(IllegalArgumentException.class, DigestUtils::getSha3_384Digest);
+            assertThrows(IllegalArgumentException.class, DigestUtils::getSha3_512Digest);
+        }
+    }
+
+    @Test
+    void testGetMessageDigest() {
+        final DigestUtils digestUtils = new DigestUtils(MessageDigestAlgorithms.MD5);
+        assertNotNull(digestUtils.getMessageDigest());
+        assertEquals(MessageDigestAlgorithms.MD5, digestUtils.getMessageDigest().getAlgorithm());
+    }
+
     /**
      * Tests SHAKE digest lookup according to runtime algorithm availability.
      *
@@ -462,28 +484,6 @@ class DigestUtilsTest {
         } else {
             assertThrows(IllegalArgumentException.class, DigestUtils::getShake256_512Digest);
         }
-    }
-
-    @Test
-    void testGetDigestsJava9() {
-        if (isJava9Plus()) {
-            assertEquals("SHA3-224", DigestUtils.getSha3_224Digest().getAlgorithm());
-            assertEquals("SHA3-256", DigestUtils.getSha3_256Digest().getAlgorithm());
-            assertEquals("SHA3-384", DigestUtils.getSha3_384Digest().getAlgorithm());
-            assertEquals("SHA3-512", DigestUtils.getSha3_512Digest().getAlgorithm());
-        } else {
-            assertThrows(IllegalArgumentException.class, DigestUtils::getSha3_224Digest);
-            assertThrows(IllegalArgumentException.class, DigestUtils::getSha3_256Digest);
-            assertThrows(IllegalArgumentException.class, DigestUtils::getSha3_384Digest);
-            assertThrows(IllegalArgumentException.class, DigestUtils::getSha3_512Digest);
-        }
-    }
-
-    @Test
-    void testGetMessageDigest() {
-        final DigestUtils digestUtils = new DigestUtils(MessageDigestAlgorithms.MD5);
-        assertNotNull(digestUtils.getMessageDigest());
-        assertEquals(MessageDigestAlgorithms.MD5, digestUtils.getMessageDigest().getAlgorithm());
     }
 
     @Test

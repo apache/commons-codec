@@ -23,6 +23,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.charset.UnsupportedCharsetException;
 import java.util.BitSet;
 
+import org.apache.commons.codec.Charsets;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringDecoder;
@@ -129,15 +130,14 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     /**
      * Constructs a new instance for the selection of a default Charset.
      *
-     * @param charsetName
-     *            the Charset to use.
+     * @param charsetName The charset name, or {@code null} to use {@link Charset#defaultCharset()}.
      * @throws java.nio.charset.UnsupportedCharsetException
      *             Thrown if the named Charset is unavailable.
      * @since 1.7 throws UnsupportedCharsetException if the named Charset is unavailable
      * @see Charset
      */
     public QCodec(final String charsetName) {
-        this(Charset.forName(charsetName));
+        this(Charsets.toCharset(charsetName));
     }
 
     /**
@@ -285,8 +285,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      *
      * @param sourceStr
      *            string to convert to quoted-printable form.
-     * @param sourceCharset
-     *            the Charset for sourceStr.
+     * @param sourceCharset The charset name, or {@code null} to use {@link Charset#defaultCharset()}.
      * @return quoted-printable string.
      * @throws EncoderException
      *             Thrown if a failure condition is encountered during the encoding process.

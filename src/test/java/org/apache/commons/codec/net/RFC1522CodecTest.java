@@ -17,9 +17,11 @@
 
 package org.apache.commons.codec.net;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.codec.CharEncoding;
@@ -82,6 +84,13 @@ class RFC1522CodecTest {
     // @formatter:on
     void testDecodeInvalid(final String text) throws Exception {
         assertExpectedDecoderException(text);
+    }
+
+    @Test
+    void testEncodeNullCharsetName() throws Exception {
+        final RFC1522TestCodec codec = new RFC1522TestCodec();
+        assertEquals(codec.encodeText("test", Charset.defaultCharset()), codec.encodeText("test", (String) null));
+        assertNull(codec.encodeText(null, (String) null));
     }
 
     @Test

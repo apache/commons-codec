@@ -27,6 +27,7 @@ import java.util.BitSet;
 
 import org.apache.commons.codec.BinaryDecoder;
 import org.apache.commons.codec.BinaryEncoder;
+import org.apache.commons.codec.Charsets;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringDecoder;
@@ -355,15 +356,14 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
     /**
      * Constructs a new instance for the selection of a default Charset.
      *
-     * @param charsetName The default string Charset to use.
+     * @param charsetName The charset name, or {@code null} to use {@link Charset#defaultCharset()}.
      * @throws UnsupportedCharsetException Thrown if no support for the named Charset is available in this instance of the Java virtual machine.
-     * @throws IllegalArgumentException    Thrown if the given charsetName is null.
      * @throws IllegalCharsetNameException Thrown if the given Charset name is illegal.
      *
      * @since 1.7 throws UnsupportedCharsetException if the named Charset is unavailable
      */
     public QuotedPrintableCodec(final String charsetName) throws IllegalCharsetNameException, IllegalArgumentException, UnsupportedCharsetException {
-        this(Charset.forName(charsetName), false);
+        this(Charsets.toCharset(charsetName), false);
     }
 
     /**

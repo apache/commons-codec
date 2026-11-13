@@ -23,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.charset.UnsupportedCharsetException;
 import java.util.stream.Stream;
@@ -112,6 +113,11 @@ class BCodecTest {
         assertEquals(plain, bcodec.decode(encoded), "Basic B decoding test");
     }
 
+    @Test
+    void testConstructorNullCharsetName() {
+        assertEquals(Charset.defaultCharset(), new BCodec((String) null).getCharset());
+    }
+
     @ParameterizedTest(name = "{0}: {1}")
     @MethodSource("embeddedQuestionMarks")
     void testDecodeEmbeddedQuestionMark(final BCodec codec, final String encoded) {
@@ -155,6 +161,14 @@ class BCodecTest {
         final BCodec bcodec = new BCodec();
         assertNull(bcodec.encode((String) null), "Null string B encoding test");
         assertNull(bcodec.decode((String) null), "Null string B decoding test");
+    }
+
+    @Test
+    void testEncodeNullCharsetName() throws Exception {
+        final BCodec codec = new BCodec("UTF-16BE");
+        final String text = "caf\u00e9";
+        assertEquals(codec.encode(text, Charset.defaultCharset()), codec.encode(text, (String) null));
+        assertNull(codec.encode(null, (String) null));
     }
 
     @Test

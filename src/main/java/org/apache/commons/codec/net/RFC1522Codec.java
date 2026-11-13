@@ -22,6 +22,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
 import java.util.Objects;
 
+import org.apache.commons.codec.Charsets;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.binary.StringUtils;
@@ -161,7 +162,7 @@ abstract class RFC1522Codec {
      * </p>
      *
      * @param text        A string to encode.
-     * @param charsetName The charset to use.
+     * @param charsetName The charset name, or {@code null} to use {@link Charset#defaultCharset()}.
      * @return RFC 1522 compliant "encoded-word".
      * @throws EncoderException            Thrown if there is an error condition during the encoding process.
      * @throws UnsupportedCharsetException Thrown if charset is not available.
@@ -172,7 +173,7 @@ abstract class RFC1522Codec {
             // Don't attempt charsetName conversion.
             return null;
         }
-        return encodeText(text, Charset.forName(charsetName));
+        return encodeText(text, Charsets.toCharset(charsetName));
     }
 
     /**

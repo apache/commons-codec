@@ -22,6 +22,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.charset.UnsupportedCharsetException;
 
+import org.apache.commons.codec.Charsets;
 import org.apache.commons.codec.CodecPolicy;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
@@ -117,15 +118,14 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     /**
      * Constructs a new instance for the selection of a default Charset.
      *
-     * @param charsetName
-     *            the default Charset to use.
+     * @param charsetName The charset name, or {@code null} to use {@link Charset#defaultCharset()}.
      * @throws java.nio.charset.UnsupportedCharsetException
      *             Thrown if the named Charset is unavailable.
      * @since 1.7 throws UnsupportedCharsetException if the named Charset is unavailable
      * @see Charset
      */
     public BCodec(final String charsetName) {
-        this(Charset.forName(charsetName));
+        this(Charsets.toCharset(charsetName));
     }
 
     /**
@@ -267,8 +267,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      *
      * @param strSource
      *            string to convert to Base64 form.
-     * @param sourceCharset
-     *            the Charset for {@code value}.
+     * @param sourceCharset The charset name, or {@code null} to use {@link Charset#defaultCharset()}.
      * @return Base64 string.
      * @throws EncoderException
      *             Thrown if a failure condition is encountered during the encoding process.

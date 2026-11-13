@@ -24,6 +24,7 @@ import java.nio.charset.StandardCharsets;
 import org.apache.commons.codec.BinaryDecoder;
 import org.apache.commons.codec.BinaryEncoder;
 import org.apache.commons.codec.CharEncoding;
+import org.apache.commons.codec.Charsets;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 
@@ -425,13 +426,13 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
     /**
      * Creates a new codec with the given charset name.
      *
-     * @param charsetName The charset name.
+     * @param charsetName The charset name, or {@code null} to use {@link Charset#defaultCharset()}.
      * @throws java.nio.charset.UnsupportedCharsetException Thrown if the named charset is unavailable.
      * @since 1.4
      * @since 1.7 throws UnsupportedCharsetException if the named charset is unavailable
      */
     public Hex(final String charsetName) {
-        this(Charset.forName(charsetName));
+        this(Charsets.toCharset(charsetName));
     }
 
     /**
