@@ -57,6 +57,21 @@ class QuotedPrintableCodecTest {
         // @formatter:on
     }
 
+    private static Stream<Arguments> shortInputCases() {
+        // @formatter:off
+        return Stream.of(
+                Arguments.of("", "", ""),
+                Arguments.of("a", "a", "a"),
+                Arguments.of("ab", "ab", "ab"),
+                Arguments.of(" ", "=20", " "),
+                Arguments.of("a ", "a=20", "a "),
+                Arguments.of(" a", " a", " a"),
+                Arguments.of("\t", "=09", "\t"),
+                Arguments.of("=", "=3D", "=3D"),
+                Arguments.of("\u00e9", "=C3=A9", "=C3=A9"));
+        // @formatter:on
+    }
+
     private String constructString(final int[] unicodeChars) {
         final StringBuilder buffer = new StringBuilder();
         if (unicodeChars != null) {
@@ -264,10 +279,18 @@ class QuotedPrintableCodecTest {
         assertEquals(qpdata, qpcodec.encode(decoded));
     }
 
-    @Test
-    void testTooShortByteArray() throws Exception {
-        final QuotedPrintableCodec qpcodec = new QuotedPrintableCodec(true);
-        assertNull(qpcodec.encode("AA"), "Result should be null.");
+    @ParameterizedTest
+    @MethodSource("shortInputCases")
+    void testShortInputStrictEncoding(final String plain, final String strictExpected, final String lenientExpected) throws Exception {
+        final QuotedPrintableCodec strictCodec = new QuotedPrintableCodec(true);
+        final QuotedPrintableCodec lenientCodec = new QuotedPrintableCodec(false);
+        final byte[] plainBytes = plain.getBytes(StandardCharsets.UTF_8);
+        final byte[] strictBytes = strictExpected.getBytes(StandardCharsets.US_ASCII);
+        assertEquals(strictExpected, strictCodec.encode(plain));
+        assertEquals(plain, strictCodec.decode(strictCodec.encode(plain)));
+        assertArrayEquals(strictBytes, strictCodec.encode(plainBytes));
+        assertArrayEquals(strictBytes, QuotedPrintableCodec.encodeQuotedPrintable(null, plainBytes, true));
+        assertEquals(lenientExpected, lenientCodec.encode(plain));
     }
 
     @Test
