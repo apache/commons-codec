@@ -21,6 +21,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.nio.ByteBuffer;
+import java.nio.charset.CharacterCodingException;
+import java.nio.charset.Charset;
+import java.nio.charset.CodingErrorAction;
+import java.nio.charset.IllegalCharsetNameException;
+import java.nio.charset.UnsupportedCharsetException;
 import java.util.BitSet;
 
 import org.apache.commons.codec.BinaryDecoder;
@@ -331,13 +337,51 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      *             Thrown if URL decoding is unsuccessful.
      * @throws UnsupportedEncodingException
      *             Thrown if charset is not supported.
+     * @see #decode(String, String, boolean)
      */
     public String decode(final String str, final String charsetName)
+            throws DecoderException, UnsupportedEncodingException {
+        return decode(str, charsetName, false);
+    }
+
+    /**
+     * Decodes a URL safe string using the specified character encoding.
+     * <p>
+     * When {@code strict} is {@code false}, malformed or unmappable byte sequences are handled as by
+     * {@link String#String(byte[], String)}. When it is {@code true}, they cause a {@link DecoderException}.
+     * </p>
+     *
+     * @param str URL safe string to decode, or {@code null}.
+     * @param charsetName name of the character encoding used to decode the result.
+     * @param strict whether malformed or unmappable byte sequences should be rejected.
+     * @return the decoded string, or {@code null} if {@code str} is {@code null}.
+     * @throws DecoderException if URL decoding fails or strict character decoding rejects the decoded bytes.
+     * @throws UnsupportedEncodingException if the named charset is not supported.
+     * @since 1.23.1
+     */
+    public String decode(final String str, final String charsetName, final boolean strict)
             throws DecoderException, UnsupportedEncodingException {
         if (str == null) {
             return null;
         }
-        return new String(decode(StringUtils.getBytesUsAscii(str)), charsetName);
+        final byte[] decoded = decode(StringUtils.getBytesUsAscii(str));
+        if (!strict) {
+            return new String(decoded, charsetName);
+        }
+        final Charset charset;
+        try {
+            charset = Charset.forName(charsetName);
+        } catch (final IllegalCharsetNameException | UnsupportedCharsetException e) {
+            final UnsupportedEncodingException exception = new UnsupportedEncodingException(charsetName);
+            exception.initCause(e);
+            throw exception;
+        }
+        try {
+            return charset.newDecoder().onMalformedInput(CodingErrorAction.REPORT)
+                    .onUnmappableCharacter(CodingErrorAction.REPORT).decode(ByteBuffer.wrap(decoded)).toString();
+        } catch (final CharacterCodingException e) {
+            throw new DecoderException("Invalid byte sequence for charset " + charsetName, e);
+        }
     }
 
     /**

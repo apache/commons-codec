@@ -22,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.BitSet;
 
@@ -114,6 +115,20 @@ class URLCodecTest {
         final String test = null;
         final String result = urlCodec.decode(test, "charset");
         assertNull(result, "Result should be null");
+    }
+
+    @Test
+    void testDecodeStringWithStrictCharsetValidation() throws Exception {
+        final URLCodec urlCodec = new URLCodec();
+        final String malformedUtf8 = "%AE%8A-";
+        final String utf8 = StandardCharsets.UTF_8.name();
+
+        assertEquals("\uFFFD\uFFFD-", urlCodec.decode(malformedUtf8, utf8));
+        assertThrows(DecoderException.class, () -> urlCodec.decode(malformedUtf8, utf8, true));
+        assertEquals("Grüße", urlCodec.decode("Gr%C3%BC%C3%9Fe", utf8, true));
+        assertEquals("\u00AE\u008A-", urlCodec.decode(malformedUtf8, StandardCharsets.ISO_8859_1.name(), true));
+        assertNull(urlCodec.decode(null, utf8, true));
+        assertThrows(UnsupportedEncodingException.class, () -> urlCodec.decode(malformedUtf8, "NONSENSE", true));
     }
 
     @Test
