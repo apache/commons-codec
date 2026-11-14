@@ -17,7 +17,9 @@
 package org.apache.commons.codec;
 
 import java.nio.charset.Charset;
+import java.nio.charset.IllegalCharsetNameException;
 import java.nio.charset.StandardCharsets;
+import java.nio.charset.UnsupportedCharsetException;
 
 /**
  * Charsets required of every implementation of the Java platform.
@@ -170,7 +172,8 @@ public class Charsets {
      *
      * @param charset The name of the requested charset, may be null.
      * @return A Charset for the named charset.
-     * @throws java.nio.charset.UnsupportedCharsetException Thrown if the named charset is unavailable.
+     * @throws IllegalCharsetNameException Thrown if the given charset name is illegal.
+     * @throws UnsupportedCharsetException Thrown if no support for the named charset is available in this instance of the Java virtual machine.
      */
     public static Charset toCharset(final String charset) {
         return charset == null ? Charset.defaultCharset() : Charset.forName(charset);

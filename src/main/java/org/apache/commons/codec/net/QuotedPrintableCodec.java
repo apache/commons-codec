@@ -343,7 +343,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
     /**
      * Constructs a new instance for the selection of a default Charset.
      *
-     * @param charset The default string Charset to use.
+     * @param charset The default string Charset to use, or {@code null} to use {@link Charset#defaultCharset()}.
      * @since 1.7
      */
     public QuotedPrintableCodec(final Charset charset) {
@@ -353,12 +353,12 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
     /**
      * Constructs a new instance for the selection of a default Charset and strict mode.
      *
-     * @param charset The default string Charset to use.
+     * @param charset The default string Charset to use, or {@code null} to use {@link Charset#defaultCharset()}.
      * @param strict  if {@code true}, trailing whitespace is escaped and soft line breaks are inserted as needed.
      * @since 1.10
      */
     public QuotedPrintableCodec(final Charset charset, final boolean strict) {
-        this.charset = charset;
+        this.charset = Charsets.toCharset(charset);
         this.strict = strict;
     }
 
@@ -366,12 +366,11 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * Constructs a new instance for the selection of a default Charset.
      *
      * @param charsetName The charset name, or {@code null} to use {@link Charset#defaultCharset()}.
-     * @throws UnsupportedCharsetException Thrown if no support for the named Charset is available in this instance of the Java virtual machine.
-     * @throws IllegalCharsetNameException Thrown if the given Charset name is illegal.
-     *
+     * @throws IllegalCharsetNameException Thrown if the given charset name is illegal.
+     * @throws UnsupportedCharsetException Thrown if no support for the named charset is available in this instance of the Java virtual machine.
      * @since 1.7 throws UnsupportedCharsetException if the named Charset is unavailable
      */
-    public QuotedPrintableCodec(final String charsetName) throws IllegalCharsetNameException, IllegalArgumentException, UnsupportedCharsetException {
+    public QuotedPrintableCodec(final String charsetName) throws IllegalCharsetNameException, UnsupportedCharsetException {
         this(Charsets.toCharset(charsetName), false);
     }
 
@@ -431,7 +430,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * representation.
      *
      * @param sourceStr     quoted-printable string to convert into its original form.
-     * @param sourceCharset The original string Charset.
+     * @param sourceCharset The original string Charset, or {@code null} to use {@link Charset#defaultCharset()}.
      * @return original string.
      * @throws DecoderException Thrown if quoted-printable decoding is unsuccessful.
      * @since 1.7
@@ -440,7 +439,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
         if (sourceStr == null) {
             return null;
         }
-        return new String(this.decode(StringUtils.getBytesUsAscii(sourceStr)), sourceCharset);
+        return new String(this.decode(StringUtils.getBytesUsAscii(sourceStr)), Charsets.toCharset(sourceCharset));
     }
 
     /**
@@ -448,7 +447,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * representation.
      *
      * @param sourceStr     quoted-printable string to convert into its original form.
-     * @param sourceCharset The original string Charset.
+     * @param sourceCharset The original string Charset, or {@code null} to use {@link Charset#defaultCharset()}.
      * @return original string.
      * @throws DecoderException             Thrown if quoted-printable decoding is unsuccessful.
      * @throws UnsupportedEncodingException Thrown if Charset is not supported.
@@ -457,7 +456,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
         if (sourceStr == null) {
             return null;
         }
-        return new String(decode(StringUtils.getBytesUsAscii(sourceStr)), sourceCharset);
+        return new String(decode(StringUtils.getBytesUsAscii(sourceStr)), sourceCharset == null ? Charset.defaultCharset().name() : sourceCharset);
     }
 
     /**
@@ -522,7 +521,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * </p>
      *
      * @param sourceStr     string to convert to quoted-printable form.
-     * @param sourceCharset The Charset for sourceStr.
+     * @param sourceCharset The Charset for sourceStr, or {@code null} to use {@link Charset#defaultCharset()}.
      * @return quoted-printable string.
      * @since 1.7
      */
@@ -530,7 +529,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
         if (sourceStr == null) {
             return null;
         }
-        return StringUtils.newStringUsAscii(this.encode(sourceStr.getBytes(sourceCharset)));
+        return StringUtils.newStringUsAscii(this.encode(sourceStr.getBytes(Charsets.toCharset(sourceCharset))));
     }
 
     /**
@@ -541,7 +540,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * </p>
      *
      * @param sourceStr     string to convert to quoted-printable form.
-     * @param sourceCharset The Charset for sourceStr.
+     * @param sourceCharset The Charset for sourceStr, or {@code null} to use {@link Charset#defaultCharset()}.
      * @return quoted-printable string.
      * @throws UnsupportedEncodingException Thrown if the Charset is not supported.
      */
@@ -549,7 +548,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
         if (sourceStr == null) {
             return null;
         }
-        return StringUtils.newStringUsAscii(encode(sourceStr.getBytes(sourceCharset)));
+        return StringUtils.newStringUsAscii(encode(sourceStr.getBytes(sourceCharset == null ? Charset.defaultCharset().name() : sourceCharset)));
     }
 
     /**

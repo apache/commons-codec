@@ -215,6 +215,16 @@ class QCodecTest {
     }
 
     @Test
+    void testNullCharset() throws Exception {
+        final QCodec codec = new QCodec((Charset) null);
+        assertEquals(Charset.defaultCharset(), codec.getCharset());
+        final String text = "caf\u00e9";
+        final QCodec other = new QCodec("UTF-16BE");
+        assertEquals(codec.encode(text), other.encode(text, (Charset) null));
+        assertNull(other.encode(null, (Charset) null));
+    }
+
+    @Test
     void testNullInput() throws Exception {
         final QCodec qcodec = new QCodec();
         assertNull(qcodec.doDecoding(null));

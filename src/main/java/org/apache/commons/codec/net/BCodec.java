@@ -19,6 +19,7 @@ package org.apache.commons.codec.net;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+import java.nio.charset.IllegalCharsetNameException;
 import java.nio.charset.StandardCharsets;
 import java.nio.charset.UnsupportedCharsetException;
 
@@ -87,7 +88,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * Constructs a new instance for the selection of a default Charset.
      *
      * @param charset
-     *            the default string Charset to use.
+     *            the default string Charset to use, or {@code null} to use {@link Charset#defaultCharset()}.
      *
      * @see Charset
      * @since 1.7
@@ -105,7 +106,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * </p>
      *
      * @param charset
-     *            the default string Charset to use.
+     *            the default string Charset to use, or {@code null} to use {@link Charset#defaultCharset()}.
      * @param decodingPolicy The decoding policy.
      * @see Charset
      * @since 1.15
@@ -119,8 +120,8 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * Constructs a new instance for the selection of a default Charset.
      *
      * @param charsetName The charset name, or {@code null} to use {@link Charset#defaultCharset()}.
-     * @throws java.nio.charset.UnsupportedCharsetException
-     *             Thrown if the named Charset is unavailable.
+     * @throws IllegalCharsetNameException Thrown if the given charset name is illegal.
+     * @throws UnsupportedCharsetException Thrown if no support for the named charset is available in this instance of the Java virtual machine.
      * @since 1.7 throws UnsupportedCharsetException if the named Charset is unavailable
      * @see Charset
      */
@@ -252,7 +253,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * @param strSource
      *            string to convert to Base64 form.
      * @param sourceCharset
-     *            the Charset for {@code value}.
+     *            the Charset for {@code value}, or {@code null} to use {@link Charset#defaultCharset()}.
      * @return Base64 string.
      * @throws EncoderException
      *             Thrown if a failure condition is encountered during the encoding process.

@@ -225,6 +225,15 @@ class QuotedPrintableCodecTest {
     }
 
     @Test
+    void testInvalidCharsetNamesRemainChecked() {
+        final QuotedPrintableCodec codec = new QuotedPrintableCodec();
+        for (final String name : new String[] {"NONSENSE", "!invalid!"}) {
+            assertThrows(java.io.UnsupportedEncodingException.class, () -> codec.encode("x", name));
+            assertThrows(java.io.UnsupportedEncodingException.class, () -> codec.decode("x", name));
+        }
+    }
+
+    @Test
     void testInvalidEncoding() {
         assertThrows(UnsupportedCharsetException.class, () -> new QuotedPrintableCodec("NONSENSE"));
     }
@@ -236,6 +245,28 @@ class QuotedPrintableCodecTest {
         for (final boolean strict : new boolean[] { false, true }) {
             assertThrows(DecoderException.class, () -> new QuotedPrintableCodec(strict).decode(input));
         }
+    }
+
+    @Test
+    void testNullCharsets() throws Exception {
+        final QuotedPrintableCodec codec = new QuotedPrintableCodec((Charset) null);
+        final QuotedPrintableCodec expected = new QuotedPrintableCodec(Charset.defaultCharset());
+        final String text = "caf\u00e9";
+        final String encoded = expected.encode(text);
+        assertEquals(Charset.defaultCharset(), codec.getCharset());
+        assertEquals(Charset.defaultCharset().name(), codec.getDefaultCharset());
+        assertEquals(encoded, codec.encode(text));
+        assertEquals(expected.decode(encoded), codec.decode(encoded));
+        assertEquals(encoded, codec.encode(text, (Charset) null));
+        assertEquals(encoded, codec.encode(text, (String) null));
+        assertEquals(expected.decode(encoded), codec.decode(encoded, (Charset) null));
+        assertEquals(expected.decode(encoded), codec.decode(encoded, (String) null));
+        assertEquals(new QuotedPrintableCodec(Charset.defaultCharset(), true).encode(text),
+                new QuotedPrintableCodec(null, true).encode(text));
+        assertNull(codec.encode(null, (Charset) null));
+        assertNull(codec.encode(null, (String) null));
+        assertNull(codec.decode(null, (Charset) null));
+        assertNull(codec.decode(null, (String) null));
     }
 
     @Test

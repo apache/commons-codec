@@ -22,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.BitSet;
 
@@ -276,12 +277,36 @@ class URLCodecTest {
     }
 
     @Test
+    void testInvalidCharsetNamesRemainChecked() {
+        final URLCodec codec = new URLCodec();
+        for (final String name : new String[] {"NONSENSE", "!invalid!"}) {
+            assertThrows(java.io.UnsupportedEncodingException.class, () -> codec.encode("x", name));
+            assertThrows(java.io.UnsupportedEncodingException.class, () -> codec.decode("x", name));
+        }
+    }
+
+    @Test
     void testInvalidEncoding() {
         final URLCodec urlCodec = new URLCodec("NONSENSE");
         final String plain = "Hello there!";
         assertThrows(EncoderException.class, () -> urlCodec.encode(plain), "We set the encoding to a bogus NONSENSE value");
         assertThrows(DecoderException.class, () -> urlCodec.decode(plain), "We set the encoding to a bogus NONSENSE value");
         validateState(urlCodec);
+    }
+
+    @Test
+    void testNullCharset() throws Exception {
+        final URLCodec codec = new URLCodec(null);
+        final URLCodec expected = new URLCodec(Charset.defaultCharset().name());
+        final String text = "caf\u00e9";
+        final String encoded = expected.encode(text);
+        assertEquals(Charset.defaultCharset().name(), codec.getDefaultCharset());
+        assertEquals(encoded, codec.encode(text));
+        assertEquals(encoded, codec.encode(text, null));
+        assertEquals(expected.decode(encoded), codec.decode(encoded));
+        assertEquals(expected.decode(encoded), codec.decode(encoded, null));
+        assertNull(codec.encode(null, null));
+        assertNull(codec.decode(null, null));
     }
 
     @Test

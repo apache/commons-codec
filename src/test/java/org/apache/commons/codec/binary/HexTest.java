@@ -687,6 +687,17 @@ class HexTest {
         assertEquals(StandardCharsets.UTF_8.name(), new Hex(StandardCharsets.UTF_8).getCharsetName());
     }
 
+    @Test
+    void testNullCharset() throws Exception {
+        final Hex codec = new Hex((Charset) null);
+        final Hex expected = new Hex(Charset.defaultCharset());
+        final byte[] bytes = {65, 66};
+        assertEquals(Charset.defaultCharset(), codec.getCharset());
+        assertEquals(Charset.defaultCharset().name(), codec.getCharsetName());
+        assertArrayEquals(expected.encode(bytes), codec.encode(bytes));
+        assertArrayEquals(bytes, codec.decode(expected.encode(bytes)));
+    }
+
     @ParameterizedTest
     @MethodSource("org.apache.commons.codec.CharsetsTest#getRequiredCharsets()")
     void testRequiredCharset(final Charset charset) throws UnsupportedEncodingException, DecoderException {
