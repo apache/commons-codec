@@ -22,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.charset.UnsupportedCharsetException;
 import java.util.stream.Stream;
@@ -74,6 +75,11 @@ class QuotedPrintableCodecTest {
         final String encoded = qpcodec.encode(plain);
         assertEquals("=3D Hello there =3D=0D=0A", encoded, "Basic quoted-printable encoding test");
         assertEquals(plain, qpcodec.decode(encoded), "Basic quoted-printable decoding test");
+    }
+
+    @Test
+    void testConstructorNullCharsetName() {
+        assertEquals(Charset.defaultCharset(), new QuotedPrintableCodec((String) null).getCharset());
     }
 
     @Test

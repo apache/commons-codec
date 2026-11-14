@@ -47,6 +47,11 @@ The <action> type attribute can be add,update,fix,remove.
       <!-- FIX -->
       <action type="fix" dev="ggregory" due-to="Aryan R. Ganjoo, Gary Gregory" issue="CODEC-347">Handle names emptied during Match Rating Approach cleaning (#448).</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory" issue="CODEC-348">Clarify Base64 STRICT and LENIENT decoding Javadoc, document the 1.23.0 behavioral incompatibility, and add examples for MIME, standard Base64, Base64 URL, exact wrapped input, XML whitespace normalization, identifier comparison, and streaming validation. Decoding behavior is unchanged.</action>
+      <action type="fix" dev="ggregory" due-to="Gary Gregory">Hex(String) now uses the JVM default charset when the charset name is null.</action>
+      <action type="fix" dev="ggregory" due-to="Gary Gregory">BCodec(String) now uses the JVM default charset when the charset name is null.</action>
+      <action type="fix" dev="ggregory" due-to="Gary Gregory">QCodec(String) now uses the JVM default charset when the charset name is null.</action>
+      <action type="fix" dev="ggregory" due-to="Gary Gregory">QuotedPrintableCodec(String) now uses the JVM default charset when the charset name is null.</action>
+      <action type="fix" dev="ggregory" due-to="Gary Gregory">RFC1522Codec.encodeText(String, String) now uses the JVM default charset when the charset name is null.</action>
       <!-- ADD -->
       <!-- UPDATE -->
       <action type="update" dev="ggregory" due-to="Gary Gregory">Bump org.apache.commons:commons-parent from 105 to 107.</action>

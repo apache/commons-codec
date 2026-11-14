@@ -188,6 +188,11 @@ class HexTest {
         assertEquals(sourceString, actualStringFromBytes, name);
     }
 
+    @Test
+    void testConstructorNullCharsetName() {
+        assertEquals(Charset.defaultCharset(), new Hex((String) null).getCharset());
+    }
+
     @ParameterizedTest
     @MethodSource("org.apache.commons.codec.CharsetsTest#getAvailableCharsetNames()")
     void testCustomCharset(final String name) throws UnsupportedEncodingException, DecoderException {

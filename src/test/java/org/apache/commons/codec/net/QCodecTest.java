@@ -23,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
 import java.util.stream.Stream;
 
@@ -80,6 +81,11 @@ class QCodecTest {
         final String encoded = qcodec.encode(plain);
         assertEquals("=?UTF-8?Q?=3D Hello there =3D=0D=0A?=", encoded, "Basic Q encoding test");
         assertEquals(plain, qcodec.decode(encoded), "Basic Q decoding test");
+    }
+
+    @Test
+    void testConstructorNullCharsetName() {
+        assertEquals(Charset.defaultCharset(), new QCodec((String) null).getCharset());
     }
 
     @ParameterizedTest(name = "{0}")
@@ -164,6 +170,14 @@ class QCodecTest {
         final QCodec qcodec = new QCodec();
         assertNull(qcodec.encode((String) null), "Null string Q encoding test");
         assertNull(qcodec.decode((String) null), "Null string Q decoding test");
+    }
+
+    @Test
+    void testEncodeNullCharsetName() throws Exception {
+        final QCodec codec = new QCodec("UTF-16BE");
+        final String text = "caf\u00e9";
+        assertEquals(codec.encode(text, Charset.defaultCharset()), codec.encode(text, (String) null));
+        assertNull(codec.encode(null, (String) null));
     }
 
     @Test
