@@ -24,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.nio.charset.Charset;
+import java.nio.charset.IllegalCharsetNameException;
 import java.nio.charset.StandardCharsets;
 import java.nio.charset.UnsupportedCharsetException;
 import java.util.stream.Stream;
@@ -38,6 +39,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 /**
  * Quoted-printable codec test cases
@@ -163,6 +165,15 @@ class BCodecTest {
         assertNull(bcodec.decode((String) null), "Null string B decoding test");
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = {"", "!invalid!", "UTF 8"})
+    void testEncodeIllegalCharsetName(final String charsetName) {
+        final EncoderException exception = assertThrows(EncoderException.class, () -> new BCodec().encode("test", charsetName));
+        assertEquals(IllegalCharsetNameException.class, exception.getCause().getClass());
+        assertEquals(charsetName, ((IllegalCharsetNameException) exception.getCause()).getCharsetName());
+        assertEquals(exception.getCause().getMessage(), exception.getMessage());
+    }
+
     @Test
     void testEncodeNullCharsetName() throws Exception {
         final BCodec codec = new BCodec("UTF-16BE");
@@ -192,6 +203,15 @@ class BCodecTest {
         final String test = null;
         final String result = bcodec.encode(test, "charset");
         assertNull(result, "Result should be null");
+    }
+
+    @Test
+    void testEncodeUnsupportedCharsetName() {
+        final String charsetName = "NONSENSE";
+        final EncoderException exception = assertThrows(EncoderException.class, () -> new BCodec().encode("test", charsetName));
+        assertEquals(UnsupportedCharsetException.class, exception.getCause().getClass());
+        assertEquals(charsetName, ((UnsupportedCharsetException) exception.getCause()).getCharsetName());
+        assertEquals(exception.getCause().getMessage(), exception.getMessage());
     }
 
     @Test
