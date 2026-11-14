@@ -302,6 +302,9 @@ public class BinaryCodec implements BinaryDecoder, BinaryEncoder {
      */
     @Override
     public Object encode(final Object raw) throws EncoderException {
+        if (raw == null) {
+            return EMPTY_CHAR_ARRAY;
+        }
         if (!(raw instanceof byte[])) {
             throw new EncoderException("argument not a byte array");
         }
