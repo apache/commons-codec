@@ -50,8 +50,12 @@ import org.apache.commons.codec.binary.StringUtils;
  * </p>
  * <ul>
  * <li>{@code strict=false}: only rules #1 and #2 are implemented</li>
- * <li>{@code strict=true}: all rules #1 through #5 are implemented</li>
+ * <li>{@code strict=true}: rules #1 and #2 plus trailing-whitespace escaping (rule #3) and soft line breaks (rule #5) are implemented</li>
  * </ul>
+ * <p>
+ * Both modes encode CR and LF bytes as {@code =0D} and {@code =0A}, respectively, as required for binary data. They do not preserve canonical text
+ * line breaks as required by rule #4 for MIME text bodies. Strict mode does not impose a minimum input length; empty input produces empty output.
+ * </p>
  * <p>
  * Originally, this class only supported the non-strict mode, but the codec in this partial form could already be used for certain applications that do not
  * require quoted-printable line formatting (rules #3, #4, #5), for instance Q codec. The strict mode has been added in 1.10.
@@ -187,13 +191,13 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
     /**
      * Encodes an array of bytes into an array of quoted-printable 7-bit characters. Unsafe characters are escaped.
      * <p>
-     * Depending on the selection of the {@code strict} parameter, this function either implements the full ruleset or only a subset of quoted-printable
-     * encoding specification (rule #1 and rule #2) as defined in RFC 1521 and is suitable for encoding binary data and unformatted text.
+     * Encodes binary data and unformatted text using rules #1 and #2 of RFC 1521. Strict mode additionally escapes trailing whitespace and inserts
+     * soft line breaks. CR and LF bytes are escaped in both modes; canonical text line breaks are not preserved. See the class documentation.
      * </p>
      *
      * @param printable bitset of characters deemed quoted-printable.
      * @param bytes     array of bytes to be encoded.
-     * @param strict    if {@code true} the full ruleset is used, otherwise only rule #1 and rule #2.
+     * @param strict    if {@code true}, trailing whitespace is escaped and soft line breaks are inserted as needed.
      * @return array of bytes containing quoted-printable data.
      * @since 1.10
      */
@@ -329,7 +333,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
     /**
      * Constructs a new instance for the selection of the strict mode.
      *
-     * @param strict if {@code true}, soft line breaks will be used.
+     * @param strict if {@code true}, trailing whitespace is escaped and soft line breaks are inserted as needed.
      * @since 1.10
      */
     public QuotedPrintableCodec(final boolean strict) {
@@ -350,7 +354,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * Constructs a new instance for the selection of a default Charset and strict mode.
      *
      * @param charset The default string Charset to use.
-     * @param strict  if {@code true}, soft line breaks will be used.
+     * @param strict  if {@code true}, trailing whitespace is escaped and soft line breaks are inserted as needed.
      * @since 1.10
      */
     public QuotedPrintableCodec(final Charset charset, final boolean strict) {
@@ -459,8 +463,8 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
     /**
      * Encodes an array of bytes into an array of quoted-printable 7-bit characters. Unsafe characters are escaped.
      * <p>
-     * Depending on the selection of the {@code strict} parameter, this function either implements the full ruleset or only a subset of quoted-printable
-     * encoding specification (rule #1 and rule #2) as defined in RFC 1521 and is suitable for encoding binary data and unformatted text.
+     * Encodes binary data and unformatted text using rules #1 and #2 of RFC 1521. Strict mode additionally escapes trailing whitespace and inserts
+     * soft line breaks. CR and LF bytes are escaped in both modes; canonical text line breaks are not preserved. See the class documentation.
      * </p>
      *
      * @param bytes array of bytes to be encoded.
@@ -495,8 +499,8 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
     /**
      * Encodes a string into its quoted-printable form using the default string Charset. Unsafe characters are escaped.
      * <p>
-     * Depending on the selection of the {@code strict} parameter, this function either implements the full ruleset or only a subset of quoted-printable
-     * encoding specification (rule #1 and rule #2) as defined in RFC 1521 and is suitable for encoding binary data and unformatted text.
+     * Encodes binary data and unformatted text using rules #1 and #2 of RFC 1521. Strict mode additionally escapes trailing whitespace and inserts
+     * soft line breaks. CR and LF bytes are escaped in both modes; canonical text line breaks are not preserved. See the class documentation.
      * </p>
      *
      * @param sourceStr string to convert to quoted-printable form.
@@ -513,8 +517,8 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
     /**
      * Encodes a string into its quoted-printable form using the specified Charset. Unsafe characters are escaped.
      * <p>
-     * Depending on the selection of the {@code strict} parameter, this function either implements the full ruleset or only a subset of quoted-printable
-     * encoding specification (rule #1 and rule #2) as defined in RFC 1521 and is suitable for encoding binary data and unformatted text.
+     * Encodes binary data and unformatted text using rules #1 and #2 of RFC 1521. Strict mode additionally escapes trailing whitespace and inserts
+     * soft line breaks. CR and LF bytes are escaped in both modes; canonical text line breaks are not preserved. See the class documentation.
      * </p>
      *
      * @param sourceStr     string to convert to quoted-printable form.
@@ -532,8 +536,8 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
     /**
      * Encodes a string into its quoted-printable form using the specified Charset. Unsafe characters are escaped.
      * <p>
-     * Depending on the selection of the {@code strict} parameter, this function either implements the full ruleset or only a subset of quoted-printable
-     * encoding specification (rule #1 and rule #2) as defined in RFC 1521 and is suitable for encoding binary data and unformatted text.
+     * Encodes binary data and unformatted text using rules #1 and #2 of RFC 1521. Strict mode additionally escapes trailing whitespace and inserts
+     * soft line breaks. CR and LF bytes are escaped in both modes; canonical text line breaks are not preserved. See the class documentation.
      * </p>
      *
      * @param sourceStr     string to convert to quoted-printable form.
