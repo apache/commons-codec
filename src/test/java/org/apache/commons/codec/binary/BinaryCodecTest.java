@@ -567,6 +567,7 @@ class BinaryCodecTest {
     void testEncodeObjectNull() throws Exception {
         final Object obj = new byte[0];
         assertEquals(0, ((char[]) instance.encode(obj)).length);
+        assertEquals(0, ((char[]) instance.encode((Object) null)).length);
     }
 
     /*
