@@ -276,7 +276,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     public String encode(final String strSource, final String sourceCharset) throws EncoderException {
         try {
             return encodeText(strSource, sourceCharset);
-        } catch (final UnsupportedCharsetException e) {
+        } catch (final IllegalArgumentException e) {
             throw new EncoderException(e.getMessage(), e);
         }
     }
