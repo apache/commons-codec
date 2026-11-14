@@ -78,7 +78,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
     private static final byte LF = 10;
 
     /**
-     * Minimum length required for the byte arrays used by encodeQuotedPrintable method.
+     * Minimum input length for the strict encoding path that treats the last three octets separately. Shorter input is encoded byte by byte.
      */
     private static final int MIN_BYTES = 3;
 
@@ -208,7 +208,12 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
         final int bytesLength = bytes.length;
         if (strict) {
             if (bytesLength < MIN_BYTES) {
-                return null;
+                // too short for a soft line break, only rules #1, #2 and #3 (trailing whitespace) apply
+                for (int i = 0; i < bytesLength; i++) {
+                    final int b = getUnsignedOctet(i, bytes);
+                    encodeByte(b, !printable.get(b) || i == bytesLength - 1 && isWhitespace(b), buffer);
+                }
+                return buffer.toByteArray();
             }
             int pos = 1;
             // encode up to buffer.length - 3, the last three octets will be treated
