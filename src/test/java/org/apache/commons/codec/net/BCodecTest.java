@@ -200,6 +200,17 @@ class BCodecTest {
     }
 
     @Test
+    void testNullCharset() throws Exception {
+        final BCodec codec = new BCodec((Charset) null);
+        assertEquals(Charset.defaultCharset(), codec.getCharset());
+        final String text = "caf\u00e9";
+        final BCodec other = new BCodec("UTF-16BE");
+        assertEquals(codec.encode(text), other.encode(text, (Charset) null));
+        assertNull(other.encode(null, (Charset) null));
+        assertEquals(Charset.defaultCharset(), new BCodec(null, CodecPolicy.STRICT).getCharset());
+    }
+
+    @Test
     void testNullInput() throws Exception {
         final BCodec bcodec = new BCodec();
         assertNull(bcodec.doDecoding(null));

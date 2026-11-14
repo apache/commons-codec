@@ -53,6 +53,13 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="fix" dev="ggregory" due-to="Gary Gregory">QuotedPrintableCodec(String) now uses the JVM default charset when the charset name is null.</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">RFC1522Codec.encodeText(String, String) now uses the JVM default charset when the charset name is null.</action>
       <action type="fix" dev="ggregory" due-to="Atharva Dudhe, Gary Gregory">QuotedPrintableCodec strict mode returns null for inputs shorter than 3 bytes (#455⁠).</action>
+      <action type="fix" dev="ggregory" due-to="Gary Gregory">Hex now uses the JVM default charset when its Charset constructor argument is null.</action>
+      <action type="fix" dev="ggregory" due-to="Gary Gregory">BCodec now uses the JVM default charset for null Charset arguments in constructors and encoding.</action>
+      <action type="fix" dev="ggregory" due-to="Gary Gregory">QCodec now uses the JVM default charset for null Charset arguments in its constructor and encoding.</action>
+      <action type="fix" dev="ggregory" due-to="Gary Gregory">RFC1522Codec now uses the JVM default charset for null Charset arguments in its constructor and encoding, keeping the encoded-word charset label consistent with the encoded bytes.</action>
+      <action type="fix" dev="ggregory" due-to="Gary Gregory">QuotedPrintableCodec now uses the JVM default charset for null Charset constructor arguments and null charset arguments in encoding and decoding.</action>
+      <action type="fix" dev="ggregory" due-to="Gary Gregory">URLCodec now uses the JVM default charset for null charset names in its constructor, encoding, and decoding.</action>
+      <action type="fix" dev="ggregory" due-to="Gary Gregory">StringUtils now uses the JVM default charset for null charset names in getBytesUnchecked and newString.</action>
       <!-- ADD -->
       <!-- UPDATE -->
       <action type="update" dev="ggregory" due-to="Gary Gregory">Bump org.apache.commons:commons-parent from 105 to 107.</action>

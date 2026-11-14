@@ -158,7 +158,7 @@ public class StringUtils {
      * @param string
      *            the String to encode, may be {@code null}.
      * @param charsetName
-     *            The name of a required {@link Charset}.
+     *            The name of a required {@link Charset}, or {@code null} to use {@link java.nio.charset.Charset#defaultCharset()}.
      * @return encoded bytes, or {@code null} if the input string was {@code null}.
      * @throws IllegalStateException
      *             Thrown when a {@link UnsupportedEncodingException} is caught, which should never happen for a
@@ -171,7 +171,7 @@ public class StringUtils {
             return null;
         }
         try {
-            return string.getBytes(charsetName);
+            return string.getBytes(charsetName == null ? Charset.defaultCharset().name() : charsetName);
         } catch (final UnsupportedEncodingException e) {
             throw newIllegalStateException(charsetName, e);
         }
@@ -297,7 +297,7 @@ public class StringUtils {
      * @param bytes
      *            The bytes to be decoded into characters, may be {@code null}.
      * @param charsetName
-     *            The name of a required {@link Charset}.
+     *            The name of a required {@link Charset}, or {@code null} to use {@link java.nio.charset.Charset#defaultCharset()}.
      * @return A new {@code String} decoded from the specified array of bytes using the given charset,
      *         or {@code null} if the input byte array was {@code null}.
      * @throws IllegalStateException
@@ -311,7 +311,7 @@ public class StringUtils {
             return null;
         }
         try {
-            return new String(bytes, charsetName);
+            return new String(bytes, charsetName == null ? Charset.defaultCharset().name() : charsetName);
         } catch (final UnsupportedEncodingException e) {
             throw newIllegalStateException(charsetName, e);
         }

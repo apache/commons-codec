@@ -19,8 +19,8 @@ package org.apache.commons.codec.net;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+import java.nio.charset.IllegalCharsetNameException;
 import java.nio.charset.UnsupportedCharsetException;
-import java.util.Objects;
 
 import org.apache.commons.codec.Charsets;
 import org.apache.commons.codec.DecoderException;
@@ -57,7 +57,7 @@ abstract class RFC1522Codec {
     protected final Charset charset;
 
     RFC1522Codec(final Charset charset) {
-        this.charset = Objects.requireNonNull(charset, "charset");
+        this.charset = Charsets.toCharset(charset);
     }
 
     /**
@@ -134,7 +134,7 @@ abstract class RFC1522Codec {
      * </p>
      *
      * @param text    A string to encode.
-     * @param charset A charset to be used.
+     * @param charset A charset to be used, or {@code null} to use {@link Charset#defaultCharset()}.
      * @return RFC 1522 compliant "encoded-word".
      * @throws EncoderException Thrown if there is an error condition during the encoding process.
      * @see Charset
@@ -143,13 +143,14 @@ abstract class RFC1522Codec {
         if (text == null) {
             return null;
         }
+        final Charset actualCharset = Charsets.toCharset(charset);
         final StringBuilder buffer = new StringBuilder();
         buffer.append(PREFIX);
-        buffer.append(charset);
+        buffer.append(actualCharset);
         buffer.append(SEP);
         buffer.append(getEncoding());
         buffer.append(SEP);
-        buffer.append(StringUtils.newStringUsAscii(doEncoding(text.getBytes(charset))));
+        buffer.append(StringUtils.newStringUsAscii(doEncoding(text.getBytes(actualCharset))));
         buffer.append(POSTFIX);
         return buffer.toString();
     }
@@ -165,7 +166,8 @@ abstract class RFC1522Codec {
      * @param charsetName The charset name, or {@code null} to use {@link Charset#defaultCharset()}.
      * @return RFC 1522 compliant "encoded-word".
      * @throws EncoderException            Thrown if there is an error condition during the encoding process.
-     * @throws UnsupportedCharsetException Thrown if charset is not available.
+     * @throws IllegalCharsetNameException Thrown if the given charset name is illegal.
+     * @throws UnsupportedCharsetException Thrown if no support for the named charset is available in this instance of the Java virtual machine.
      * @see Charset
      */
     protected String encodeText(final String text, final String charsetName) throws EncoderException {

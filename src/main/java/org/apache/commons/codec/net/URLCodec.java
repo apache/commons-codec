@@ -21,6 +21,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.nio.charset.Charset;
 import java.util.BitSet;
 
 import org.apache.commons.codec.BinaryDecoder;
@@ -225,10 +226,10 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
     /**
      * Constructs a new instance for the selection of a default charset.
      *
-     * @param charset The default string charset to use.
+     * @param charset The default string charset to use, or {@code null} to use {@link java.nio.charset.Charset#defaultCharset()}.
      */
     public URLCodec(final String charset) {
-        this.charset = charset;
+        this.charset = charset == null ? Charset.defaultCharset().name() : charset;
     }
 
     /**
@@ -325,7 +326,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      * @param str
      *            URL safe string to convert into its original form.
      * @param charsetName
-     *            the original string charset.
+     *            the original string charset, or {@code null} to use {@link java.nio.charset.Charset#defaultCharset()}.
      * @return original string.
      * @throws DecoderException
      *             Thrown if URL decoding is unsuccessful.
@@ -337,7 +338,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
         if (str == null) {
             return null;
         }
-        return new String(decode(StringUtils.getBytesUsAscii(str)), charsetName);
+        return new String(decode(StringUtils.getBytesUsAscii(str)), charsetName == null ? Charset.defaultCharset().name() : charsetName);
     }
 
     /**
@@ -403,7 +404,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      * @param str
      *            string to convert to a URL safe form.
      * @param charsetName
-     *            the charset for str.
+     *            the charset for str, or {@code null} to use {@link java.nio.charset.Charset#defaultCharset()}.
      * @return URL safe string.
      * @throws UnsupportedEncodingException
      *             Thrown if charset is not supported.
@@ -412,7 +413,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
         if (str == null) {
             return null;
         }
-        return StringUtils.newStringUsAscii(encode(str.getBytes(charsetName)));
+        return StringUtils.newStringUsAscii(encode(str.getBytes(charsetName == null ? Charset.defaultCharset().name() : charsetName)));
     }
 
     /**
