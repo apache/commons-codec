@@ -177,4 +177,17 @@ class PercentCodecTest {
         assertEquals(input, decodedS, "Basic PercentCodec unsafe char decoding test");
     }
 
+    @Test
+    void testDecodeMalformedPercentSequences() {
+        final PercentCodec percentCodec = new PercentCodec();
+        assertThrows(DecoderException.class,
+            () -> percentCodec.decode("%".getBytes(StandardCharsets.UTF_8)));
+        assertThrows(DecoderException.class,
+            () -> percentCodec.decode("%2".getBytes(StandardCharsets.UTF_8)));
+        assertThrows(DecoderException.class,
+            () -> percentCodec.decode("%GG".getBytes(StandardCharsets.UTF_8)));
+        assertThrows(DecoderException.class,
+            () -> percentCodec.decode("%2G".getBytes(StandardCharsets.UTF_8)));
+    }
+
 }
