@@ -99,4 +99,10 @@ class RFC1522CodecTest {
         assertNull(testCodec.decodeText(null));
         assertNull(testCodec.encodeText(null, CharEncoding.UTF_8));
     }
+
+    @Test
+    void testDecodeEmptyEncodedContent() throws Exception {
+        final RFC1522TestCodec codec = new RFC1522TestCodec();
+        assertEquals("", codec.decodeText("=?UTF-8?T??="));
+    }
 }
