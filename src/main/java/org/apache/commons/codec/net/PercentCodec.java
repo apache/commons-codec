@@ -30,8 +30,8 @@ import org.apache.commons.codec.EncoderException;
  * special US-ASCII characters can be specified in order to perform proper URI encoding for the different parts
  * of the URI.
  * <p>
- * This class is immutable. It is also thread-safe besides using BitSet which is not thread-safe, but its public
- * interface only call the access
+ * This class is immutable and thread-safe. Although it uses a BitSet, which is not thread-safe, the bit set is
+ * initialized during construction and is not modified afterward.
  * </p>
  *
  * @see <a href="https://tools.ietf.org/html/rfc3986#section-2.1">Percent-Encoding</a>
