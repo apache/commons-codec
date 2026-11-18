@@ -61,6 +61,13 @@ class RFC1522CodecTest {
         assertThrows(DecoderException.class, () -> new RFC1522TestCodec().decodeText(text));
     }
 
+    @Test
+    void testDecodeEmptyEncodedContent() throws Exception {
+        // Preserve the existing lenient handling of empty content, although RFC 1522 requires at least one encoded-text character.
+        final RFC1522TestCodec codec = new RFC1522TestCodec();
+        assertEquals("", codec.decodeText("=?UTF-8?T??="));
+    }
+
     @ParameterizedTest
     // @formatter:off
     @ValueSource(strings = {

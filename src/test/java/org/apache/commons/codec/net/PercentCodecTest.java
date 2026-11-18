@@ -24,12 +24,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 /**
  * Percent codec test cases.
@@ -68,16 +69,19 @@ class PercentCodecTest {
         assertEquals(new String(decoded, StandardCharsets.UTF_8), input, "Configurable PercentCodec decoding test");
     }
 
-    @Test
-    void testDecodeInvalidEncodedResultDecoding() throws Exception {
-        final String inputS = "\u03B1\u03B2";
+    @ParameterizedTest
+    @ValueSource(strings = { "%", "%2", "%CE%B1%CE%B" })
+    void testDecodeIncompletePercentSequences(final String input) {
         final PercentCodec percentCodec = new PercentCodec();
-        final byte[] encoded = percentCodec.encode(inputS.getBytes(StandardCharsets.UTF_8));
-        try {
-            percentCodec.decode(Arrays.copyOf(encoded, encoded.length - 1)); // exclude one byte
-        } catch (final Exception e) {
-            assertTrue(DecoderException.class.isInstance(e) && ArrayIndexOutOfBoundsException.class.isInstance(e.getCause()));
-        }
+        final DecoderException exception = assertThrows(DecoderException.class, () -> percentCodec.decode(input.getBytes(StandardCharsets.UTF_8)));
+        assertTrue(exception.getCause() instanceof ArrayIndexOutOfBoundsException);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = { "%G2", "%2G" })
+    void testDecodeInvalidPercentSequences(final String input) {
+        final PercentCodec percentCodec = new PercentCodec();
+        assertThrows(DecoderException.class, () -> percentCodec.decode(input.getBytes(StandardCharsets.UTF_8)));
     }
 
     @Test
