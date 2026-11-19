@@ -30,6 +30,13 @@
         For information about reporting or asking questions about security, please see
         <a href="https://commons.apache.org/security.html">Apache Commons Security</a>.
       </p>
+      <p>
+        The <a href="threat-model-1.23.0.html">Commons Codec Threat Model</a>
+        (<a href="https://raw.githubusercontent.com/apache/commons-codec/master/src/site/markdown/threat-model-1.23.0.md">Markdown</a>)
+        applies to version 1.23.0 and later.
+        Developers can use its <a href="threat-model-short-1.23.0.html">short summary</a>
+        (<a href="https://raw.githubusercontent.com/apache/commons-codec/master/src/site/markdown/threat-model-short-1.23.0.md">Markdown</a>).
+      </p>
       <p>This page lists all security vulnerabilities fixed in released versions of this component. 
       </p>
       <p>Please note that binary patches are never provided. If you need to apply a source code patch, use the building instructions for the component version

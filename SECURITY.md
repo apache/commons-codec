@@ -15,3 +15,8 @@
  limitations under the License.
 -->
 The Apache Commons security page is [https://commons.apache.org/security.html](https://commons.apache.org/security.html).
+
+The [Apache Commons Codec Threat Model](src/site/markdown/threat-model-1.23.0.md)
+applies to Commons Codec 1.23.0 and later. A
+[short summary for developers](src/site/markdown/threat-model-short-1.23.0.md)
+is also available.
