@@ -61,7 +61,10 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="fix" dev="ggregory" due-to="Gary Gregory">URLCodec now uses the JVM default charset for null charset names in its constructor, encoding, and decoding.</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">StringUtils now uses the JVM default charset for null charset names in getBytesUnchecked and newString.</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">BCodec.encode(String, String) now wraps illegal charset names in EncoderException, consistent with unsupported charset names.</action>
-      <action type="fix" dev="ggregory" due-to="Gary Gregory">QCodec.encode(String, String) now wraps illegal charset names in EncoderException, consistent with unsupported charset names.</action>      <!-- ADD -->
+      <action type="fix" dev="ggregory" due-to="Gary Gregory">QCodec.encode(String, String) now wraps illegal charset names in EncoderException, consistent with unsupported charset names.</action>
+      <action type="fix" dev="ggregory" due-to="Faris Basha TM, Gary Gregory">Javadoc: Fix dead Caverphone specification links.</action>      <!-- ADD -->
+      <action type="fix" dev="ggregory" due-to="Palendromas1, Gary Gregory">Improve PercentCodec malformed-input and RFC1522Codec empty-content test coverage, and clarify PercentCodec thread-safety Javadoc (#459).</action>
+      <!-- ADD -->
       <!-- UPDATE -->
       <action type="update" dev="ggregory" due-to="Gary Gregory">Bump org.apache.commons:commons-parent from 105 to 107.</action>
       <action type="update" dev="ggregory" due-to="Gary Gregory">[test] Bump org.apache.commons:commons-lang3 from 3.21.0 to 3.22.0</action>
