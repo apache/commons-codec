@@ -395,6 +395,24 @@ class GitIdentifiersTest {
                 GitIdentifiers.treeId(DigestUtils.getSha1Digest(), resourcePath("DigestUtilsTest")));
     }
 
+    /**
+     * A file must be recorded with mode {@code 100644} unless the file system reports a POSIX executable bit for it.
+     *
+     * <p>
+     * {@link Files#isExecutable(Path)} alone is not enough: Windows reports every readable file as executable, which would encode ordinary files as
+     * {@code 100755}. Git on Windows defaults to {@code core.fileMode=false} and therefore stores regular files as {@code 100644}.
+     * </p>
+     */
+    @Test
+    void testTreeIdPathRecordsFilesWithoutPosixExecutableBitAsRegular(final @TempDir Path tempDir) throws Exception {
+        final byte[] content = "x".getBytes(StandardCharsets.UTF_8);
+        Files.write(tempDir.resolve("file.txt"), content);
+        final MessageDigest md = DigestUtils.getSha1Digest();
+        final GitIdentifiers.TreeIdBuilder builder = GitIdentifiers.treeIdBuilder(md);
+        builder.addFile(GitIdentifiers.FileMode.REGULAR, "file.txt", content);
+        assertArrayEquals(builder.get(), GitIdentifiers.treeId(md, tempDir));
+    }
+
     @ParameterizedTest
     @MethodSource("virtualTreeProvider")
     void testTreeIdPathUnix(final String algorithm, final byte[] helloId, final byte[] linkId, final byte[] linkTxtId,

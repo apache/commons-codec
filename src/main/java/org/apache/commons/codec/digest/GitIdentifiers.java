@@ -23,7 +23,13 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
+import java.nio.file.LinkOption;
 import java.nio.file.Path;
+import java.nio.file.attribute.BasicFileAttributeView;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.PosixFileAttributeView;
+import java.nio.file.attribute.PosixFileAttributes;
+import java.nio.file.attribute.PosixFilePermission;
 import java.security.MessageDigest;
 import java.util.HashMap;
 import java.util.Map;
@@ -45,6 +51,12 @@ import java.util.function.Supplier;
  * Git and SWHID treat file names and symbolic link targets as opaque byte sequences with no defined encoding. The
  * identifiers produced here coincide with Git's or SWHID's own identifiers only if the original names and targets were
  * UTF-8 encoded.
+ * </p>
+ *
+ * <p>
+ * The executable bit of a file is recorded only when the file system exposes POSIX permissions. File systems without them,
+ * such as the default Windows file system, record every non-directory, non-symbolic-link entry as a regular file, matching
+ * Git's behavior with its default {@code core.fileMode=false}.
  * </p>
  *
  * <p>
@@ -211,18 +223,26 @@ public class GitIdentifiers {
          */
         SYMBOLIC_LINK(new byte[] { '1', '2', '0', '0', '0', '0' });
 
-        private static FileMode get(final Path path) {
-            // Symbolic links first
-            if (Files.isSymbolicLink(path)) {
+        private static FileMode get(final Path path) throws IOException {
+            // Read one attribute set, preferring POSIX where the file system provides it. The basic view always exists and
+            // classifies links and directories; only POSIX permissions carry the owner-execute bit that Git records. Git
+            // records the executable bit only where the file system exposes POSIX permissions; elsewhere, for example with
+            // Git for Windows and its default core.fileMode=false, regular files are stored as 100644 even though Windows
+            // reports every readable file as executable.
+            BasicFileAttributeView view = Files.getFileAttributeView(path, PosixFileAttributeView.class, LinkOption.NOFOLLOW_LINKS);
+            if (view == null) {
+                view = Files.getFileAttributeView(path, BasicFileAttributeView.class, LinkOption.NOFOLLOW_LINKS);
+            }
+            final BasicFileAttributes attributes = view.readAttributes();
+            if (attributes.isSymbolicLink()) {
                 return SYMBOLIC_LINK;
             }
-            if (Files.isDirectory(path)) {
+            if (attributes.isDirectory()) {
                 return DIRECTORY;
             }
-            if (Files.isExecutable(path)) {
-                return EXECUTABLE;
-            }
-            return REGULAR;
+            final boolean executable = attributes instanceof PosixFileAttributes &&
+                    ((PosixFileAttributes) attributes).permissions().contains(PosixFilePermission.OWNER_EXECUTE);
+            return executable ? EXECUTABLE : REGULAR;
         }
 
         /**
