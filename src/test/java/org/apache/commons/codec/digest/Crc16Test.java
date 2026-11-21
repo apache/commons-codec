@@ -22,12 +22,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Paths;
 import java.util.function.Supplier;
 import java.util.zip.Checksum;
 
 import org.apache.commons.codec.binary.StringUtils;
-import org.apache.commons.io.file.PathUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.function.Uncheck;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -38,7 +37,8 @@ import org.junit.jupiter.params.provider.MethodSource;
  */
 class Crc16Test {
 
-    private static final String BIG_TEXT = Uncheck.get(() -> PathUtils.readString(Paths.get("LICENSE.txt"), StandardCharsets.US_ASCII));
+    private static final String BIG_TEXT = Uncheck.get(() -> IOUtils.resourceToString("Crc16Test/license.txt",
+            StandardCharsets.US_ASCII, Crc16Test.class.getClassLoader()));
     private static final byte[] TEST_BYTES = "123456789".getBytes(StandardCharsets.US_ASCII);
     private static final int TEST_BYTES_LEN = TEST_BYTES.length;
 
