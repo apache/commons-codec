@@ -14,3 +14,7 @@
 #   limitations under the License.
 
 * text=auto
+
+# Preserve bytes used by fixed checksum and Git object ID test vectors.
+/src/test/resources/Crc16Test/license.txt text eol=lf
+/src/test/resources/DigestUtilsTest/**/*.txt text eol=lf

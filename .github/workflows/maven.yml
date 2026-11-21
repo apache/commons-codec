@@ -27,17 +27,26 @@ permissions:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     continue-on-error: ${{ matrix.experimental }}
     strategy:
+      fail-fast: false
       max-parallel: 20
       matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
         java: [ 8, 11, 17, 21, 25, 27 ]
         experimental: [false]
         include:
-          - java: 28-ea
+          - os: ubuntu-latest
+            java: 28-ea
             experimental: true
-        
+          - os: windows-latest
+            java: 28-ea
+            experimental: true
+          - os: macos-latest
+            java: 28-ea
+            experimental: true
+
     steps:
     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       with:
@@ -51,7 +60,7 @@ jobs:
     - name: Set up JDK ${{ matrix.java }}
       uses: actions/setup-java@d1374f8ac74474200d16ef8ecee22c7ae7a51880 # v6.3.0
       with:
-        distribution: 'temurin'
+        distribution: ${{ runner.os == 'macOS' && matrix.java == '8' && 'zulu' || 'temurin' }}
         java-version: ${{ matrix.java }}
     - name: Build with Maven
       run: mvn --errors --show-version --batch-mode --no-transfer-progress
