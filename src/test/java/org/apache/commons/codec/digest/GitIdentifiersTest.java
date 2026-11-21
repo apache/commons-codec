@@ -396,11 +396,11 @@ class GitIdentifiersTest {
     }
 
     /**
-     * A file must be recorded with mode {@code 100644} unless the file system reports a POSIX executable bit for it.
+     * A newly created file without the POSIX owner-execute bit is recorded with mode {@code 100644}.
      *
      * <p>
-     * {@link Files#isExecutable(Path)} alone is not enough: Windows reports every readable file as executable, which would encode ordinary files as
-     * {@code 100755}. Git on Windows defaults to {@code core.fileMode=false} and therefore stores regular files as {@code 100644}.
+     * On Windows, ordinary files can report execution access through {@link Files#isExecutable(Path)} without exposing POSIX permissions. Such files still
+     * use mode {@code 100644}, matching newly added files in Git with {@code core.fileMode=false}.
      * </p>
      */
     @Test
