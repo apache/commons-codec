@@ -214,6 +214,10 @@ class DigestStreamingTest {
                 .flatMap(length -> IntStream.of(1, 7, 8192).mapToObj(chunk -> Arguments.of(selector, length, chunk))));
     }
 
+    private static byte valueAt(final long position) {
+        return (byte) (position * 31 + 7);
+    }
+
     @ParameterizedTest(name = "{0}, length={1}, chunk={2}")
     @MethodSource("standardInputs")
     void testAllAlgorithmsConsumeStandardInputOnce(final String selector, final int length, final int chunkSize) throws Exception {
@@ -323,9 +327,5 @@ class DigestStreamingTest {
             assertEquals(failureAt, source.position);
             assertFalse(source.closed, "Failure must not close standard input");
         }
-    }
-
-    private static byte valueAt(final long position) {
-        return (byte) (position * 31 + 7);
     }
 }
