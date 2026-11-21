@@ -68,6 +68,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Stop BaseNCodecInputStream from reading the underlying stream after codec EOF, preventing unnecessary reads and blocking after padding in lenient Base32 and Base64 decoding.</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Compute Digest ALL and * standard-input digests in a single pass with bounded buffering, removing the mark/reset input-size limit.</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Keep BaseNCodecInputStream.available() positive after codec EOF while output remains buffered.</action>
+      <action type="fix" dev="ggregory" due-to="Gary Gregory">Make GitIdentifiers filesystem tests account for unavailable POSIX attributes, symbolic-link creation privileges, and platform-specific link target paths.</action>
       <!-- ADD -->
       <!-- UPDATE -->
       <action type="update" dev="ggregory" due-to="Gary Gregory">Bump org.apache.commons:commons-parent from 105 to 107.</action>
