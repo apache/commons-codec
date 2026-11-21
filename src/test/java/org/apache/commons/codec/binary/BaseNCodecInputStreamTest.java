@@ -42,7 +42,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 /**
- * Tests EOF handling shared by all Base-N input streams.
+ * Tests EOF handling and availability shared by all Base-N input streams.
  */
 class BaseNCodecInputStreamTest {
 
@@ -71,6 +71,11 @@ class BaseNCodecInputStreamTest {
             this.data = data;
             this.chunkSize = chunkSize;
             this.allowEof = allowEof;
+        }
+
+        @Override
+        public int available() {
+            throw new AssertionError("The codec stream must not query the source's availability");
         }
 
         @Override
@@ -106,11 +111,53 @@ class BaseNCodecInputStreamTest {
 
     private static final int[] READ_SIZES = { -64, -3, 0, 1, 3, 64 };
 
+    private static void assertAvailable(final int expected, final InputStream stream, final EofTrackingInputStream source) throws IOException {
+        final int calls = source.readCalls;
+        assertEquals(expected, stream.available());
+        assertEquals(expected, stream.available(), "Repeated availability checks must not change stream state");
+        assertEquals(calls, source.readCalls, "Availability checks must not read from the source");
+        assertFalse(source.closed, "Availability checks must not close the source");
+    }
+
+    private static void assertAvailableWhileReading(final byte[] expected, final InputStream stream, final EofTrackingInputStream source,
+            final int readSize) throws IOException {
+        assertAvailable(1, stream, source);
+        int position = 0;
+        while (position < expected.length) {
+            assertAvailable(1, stream, source);
+            assertEquals(0, stream.read(new byte[0]));
+            assertEquals(0, stream.skip(0));
+            assertAvailable(1, stream, source);
+            if (readSize == 0) {
+                assertEquals(expected[position++] & 0xff, stream.read());
+            } else {
+                final int capacity = Math.abs(readSize);
+                final int offset = readSize < 0 ? 0 : 1;
+                final byte[] buffer = new byte[capacity + 2 * offset];
+                Arrays.fill(buffer, (byte) 0x5a);
+                final int count = readSize < 0 ? stream.read(buffer) : stream.read(buffer, offset, capacity);
+                assertEquals(Math.min(capacity, expected.length - position), count);
+                assertArrayEquals(Arrays.copyOfRange(expected, position, position + count), Arrays.copyOfRange(buffer, offset, offset + count));
+                if (offset != 0) {
+                    assertEquals(0x5a, buffer[0]);
+                    assertEquals(0x5a, buffer[buffer.length - 1]);
+                }
+                position += count;
+            }
+        }
+        if (source.eofReturns != 0) {
+            assertAvailable(0, stream, source);
+        }
+        assertEquals(-1, stream.read());
+        assertFinished(stream, source);
+    }
+
     /**
      * EOF must be stable for all read and skip overloads, while zero-length reads and argument validation retain their normal behavior.
      */
     private static void assertFinished(final InputStream stream, final EofTrackingInputStream source) throws IOException {
         final int calls = source.readCalls;
+        assertAvailable(0, stream, source);
         assertEquals(-1, stream.read());
         assertEquals(-1, stream.read());
         assertEquals(-1, stream.read(new byte[4]));
@@ -122,6 +169,7 @@ class BaseNCodecInputStreamTest {
         assertThrows(NullPointerException.class, () -> stream.read(null, 0, 0));
         assertThrows(IndexOutOfBoundsException.class, () -> stream.read(new byte[1], 2, 0));
         assertThrows(IllegalArgumentException.class, () -> stream.skip(-1));
+        assertAvailable(0, stream, source);
         assertEquals(calls, source.readCalls, "EOF operations must not read from the source");
         assertFalse(source.closed, "Reaching EOF must not close the source");
     }
@@ -145,6 +193,18 @@ class BaseNCodecInputStreamTest {
             arguments.add(Arguments.of("Base64 chunked " + policy, Base64.builder().setLineLength(8).setDecodingPolicy(policy).get()));
         }
         return arguments.stream();
+    }
+
+    static Stream<Arguments> largeCodecs() {
+        return codecs().map(arguments -> {
+            final BaseNCodec codec = (BaseNCodec) arguments.get()[1];
+            if (codec instanceof Base58) {
+                // Raise the Base58 input limits so these tests can cross the stream's 4096- and 8192-byte buffer boundaries.
+                return Arguments.of(arguments.get()[0], Base58.builder().setMaxEncodeLength(16384).setMaxDecodeLength(16384)
+                        .setDecodingPolicy(codec.isStrictDecoding() ? CodecPolicy.STRICT : CodecPolicy.LENIENT).get());
+            }
+            return arguments;
+        });
     }
 
     private static InputStream newStream(final InputStream source, final BaseNCodec codec, final boolean encode) {
@@ -228,6 +288,110 @@ class BaseNCodecInputStreamTest {
     }
 
     @ParameterizedTest(name = "{0}")
+    @MethodSource("largeCodecs")
+    void testAvailableAcrossInternalBufferBoundaries(final String name, final BaseNCodec codec) throws IOException {
+        for (final int length : new int[] { 4095, 4096, 4097, 8191, 8192, 8193 }) {
+            final byte[] decoded = payload(length);
+            final byte[] encoded = codec.encode(decoded);
+            for (final boolean encode : new boolean[] { false, true }) {
+                for (final int chunkSize : new int[] { 257, 8192 }) {
+                    final EofTrackingInputStream source = new EofTrackingInputStream(encode ? decoded : encoded, chunkSize, true);
+                    try (InputStream stream = newStream(source, codec, encode)) {
+                        assertAvailableWhileReading(encode ? encoded : decoded, stream, source, 333);
+                    }
+                }
+            }
+        }
+    }
+
+    @ParameterizedTest(name = "{0}")
+    @MethodSource("strictStreamingCodecs")
+    void testAvailableDoesNotHidePendingStrictValidation(final String name, final BaseNCodec codec) throws IOException {
+        final byte[] decoded = payload(15);
+        final byte[] encoded = codec.encode(decoded);
+        final EofTrackingInputStream source = new EofTrackingInputStream(encoded, encoded.length, false);
+        try (InputStream stream = newStream(source, codec, false)) {
+            final byte[] output = new byte[decoded.length];
+            assertEquals(output.length, stream.read(output));
+            assertArrayEquals(decoded, output);
+            assertAvailable(1, stream, source);
+            assertEquals(0, source.eofReturns);
+            assertSame(source.unexpectedRead, assertThrows(IOException.class, stream::read));
+        }
+    }
+
+    @ParameterizedTest(name = "{0}")
+    @MethodSource("paddedCodecs")
+    void testAvailableDrainsPaddingOutputWithoutReadingTheNextChunk(final String name, final BaseNCodec codec) throws IOException {
+        final byte[] decoded = payload(7);
+        final byte[] encoded = codec.encode(decoded);
+        final byte[] input = Arrays.copyOf(encoded, encoded.length + 1);
+        input[encoded.length] = '!';
+        final EofTrackingInputStream source = new EofTrackingInputStream(input, encoded.length, false);
+        try (InputStream stream = newStream(source, codec, false)) {
+            for (int i = 0; i < decoded.length; i++) {
+                assertAvailable(1, stream, source);
+                if (i % 2 == 0) {
+                    assertEquals(decoded[i] & 0xff, stream.read());
+                } else {
+                    assertEquals(1, stream.skip(1));
+                }
+            }
+            assertAvailable(0, stream, source);
+            assertFinished(stream, source);
+            assertEquals(encoded.length, source.position);
+            assertEquals(0, source.eofReturns);
+            assertEquals('!', source.read());
+        }
+    }
+
+    @ParameterizedTest(name = "{0}")
+    @MethodSource("codecs")
+    void testAvailableWhileReading(final String name, final BaseNCodec codec) throws IOException {
+        for (final boolean encode : new boolean[] { false, true }) {
+            for (int length = 0; length <= 11; length++) {
+                final byte[] decoded = payload(length);
+                final byte[] encoded = codec.encode(decoded);
+                for (final int chunkSize : new int[] { 1, 7, 8192 }) {
+                    for (final int readSize : READ_SIZES) {
+                        final EofTrackingInputStream source = new EofTrackingInputStream(encode ? decoded : encoded, chunkSize, true);
+                        try (InputStream stream = newStream(source, codec, encode)) {
+                            assertAvailableWhileReading(encode ? encoded : decoded, stream, source, readSize);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @ParameterizedTest(name = "{0}")
+    @MethodSource("codecs")
+    void testAvailableWhileSkipping(final String name, final BaseNCodec codec) throws IOException {
+        for (final boolean encode : new boolean[] { false, true }) {
+            for (int length = 0; length <= 11; length++) {
+                final byte[] decoded = payload(length);
+                final byte[] encoded = codec.encode(decoded);
+                final byte[] expected = encode ? encoded : decoded;
+                for (final int chunkSize : new int[] { 1, 8192 }) {
+                    final EofTrackingInputStream source = new EofTrackingInputStream(encode ? decoded : encoded, chunkSize, true);
+                    try (InputStream stream = newStream(source, codec, encode)) {
+                        assertAvailable(1, stream, source);
+                        for (int i = 0; i < expected.length; i++) {
+                            assertAvailable(1, stream, source);
+                            assertEquals(1, stream.skip(1));
+                        }
+                        if (source.eofReturns != 0) {
+                            assertAvailable(0, stream, source);
+                        }
+                        assertEquals(0, stream.skip(Long.MAX_VALUE));
+                        assertFinished(stream, source);
+                    }
+                }
+            }
+        }
+    }
+
+    @ParameterizedTest(name = "{0}")
     @MethodSource("paddedCodecs")
     void testLenientPaddingCanFinishWithoutOutput(final String name, final BaseNCodec codec) throws IOException {
         for (final byte[] input : new byte[][] { { codec.pad }, { ' ', '\n', codec.pad } }) {
@@ -268,7 +432,11 @@ class BaseNCodecInputStreamTest {
             writer.flush();
             // Keep the writer open until the decoder has returned all its output and EOF.
             assertTimeoutPreemptively(Duration.ofSeconds(5), () -> {
-                assertArrayEquals(decoded, readAll(stream, 64));
+                for (final byte value : decoded) {
+                    assertEquals(1, stream.available());
+                    assertEquals(value & 0xff, stream.read());
+                }
+                assertEquals(0, stream.available());
                 assertEquals(-1, stream.read());
             });
         }

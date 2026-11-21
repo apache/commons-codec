@@ -131,17 +131,19 @@ public class BaseNCodecInputStream<C extends BaseNCodec, T extends BaseNCodecInp
     /**
      * {@inheritDoc}
      *
-     * @return {@code 0} if the {@link InputStream} has reached {@code EOF}, {@code 1} otherwise.
+     * <p>
+     * Returns an availability indicator rather than the number of buffered bytes. Buffered output remains available after the codec reaches EOF until it
+     * has been consumed. This method does not read from or query the underlying stream.
+     * </p>
+     *
+     * @return {@code 0} if the codec has reached EOF and no buffered output remains, {@code 1} otherwise.
      * @throws IOException Thrown if an I/O error occurs.
      * @since 1.7
      */
     @Override
     public int available() throws IOException {
-        // Note: The logic is similar to the InflaterInputStream:
-        // as long as we have not reached EOF, indicate that there is more
-        // data available. As we do not know for sure how much data is left,
-        // just return 1 as a safe guess.
-        return context.eof ? 0 : 1;
+        // Report EOF only after all buffered output has been consumed.
+        return context.eof && !baseNCodec.hasData(context) ? 0 : 1;
     }
 
     /**
