@@ -230,23 +230,19 @@ public class GitIdentifiers {
             // Git for Windows and its default core.fileMode=false, regular files are stored as 100644 even though Windows
             // reports every readable file as executable.
             BasicFileAttributeView view = Files.getFileAttributeView(path, PosixFileAttributeView.class, LinkOption.NOFOLLOW_LINKS);
-            final BasicFileAttributes attributes;
             if (view == null) {
                 view = Files.getFileAttributeView(path, BasicFileAttributeView.class, LinkOption.NOFOLLOW_LINKS);
-                attributes = view.readAttributes();
-                if (attributes.isSymbolicLink()) {
-                    return SYMBOLIC_LINK;
-                }
-                return attributes.isDirectory() ? DIRECTORY : REGULAR;
             }
-            attributes = view.readAttributes();
+            final BasicFileAttributes attributes = view.readAttributes();
             if (attributes.isSymbolicLink()) {
                 return SYMBOLIC_LINK;
             }
             if (attributes.isDirectory()) {
                 return DIRECTORY;
             }
-            return ((PosixFileAttributes) attributes).permissions().contains(PosixFilePermission.OWNER_EXECUTE) ? EXECUTABLE : REGULAR;
+            final boolean executable = attributes instanceof PosixFileAttributes &&
+                    ((PosixFileAttributes) attributes).permissions().contains(PosixFilePermission.OWNER_EXECUTE);
+            return executable ? EXECUTABLE : REGULAR;
         }
 
         /**
