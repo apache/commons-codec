@@ -206,10 +206,15 @@ public class BaseNCodecInputStream<C extends BaseNCodec, T extends BaseNCodecInp
     /**
      * Attempts to read {@code len} bytes into the specified {@code b} array starting at {@code offset} from this InputStream.
      *
+     * <p>
+     * Buffered output remains readable after the codec reaches EOF. Once that output is drained, further nonempty reads return {@code -1} without reading
+     * the underlying stream again.
+     * </p>
+     *
      * @param array  destination byte array.
      * @param offset where to start writing the bytes.
      * @param len    maximum number of bytes to read.
-     * @return number of bytes read.
+     * @return The number of bytes read, or {@code -1} if EOF has been reached.
      * @throws IOException               Thrown if an I/O error occurs.
      * @throws NullPointerException      Thrown if the byte array parameter is null.
      * @throws IndexOutOfBoundsException Thrown if the offset, length, or buffer size is invalid.
@@ -234,8 +239,8 @@ public class BaseNCodecInputStream<C extends BaseNCodec, T extends BaseNCodecInp
          */
         // Attempt to read the request length
         while (readLen < len) {
-            if (!baseNCodec.hasData(context)) {
-                // Obtain more data.
+            if (!context.eof && !baseNCodec.hasData(context)) {
+                // Obtain more data only until the codec has reached EOF; buffered output is still drained below.
                 // buf is reused across calls to read to avoid repeated allocations
                 BaseNCodec.code(doEncode, baseNCodec, buf, 0, in.read(buf), context);
             }

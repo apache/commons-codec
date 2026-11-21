@@ -65,6 +65,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="fix" dev="ggregory" due-to="Faris Basha TM, Gary Gregory">Javadoc: Fix dead Caverphone specification links.</action>      <!-- ADD -->
       <action type="fix" dev="ggregory" due-to="Palendromas1, Gary Gregory">Improve PercentCodec malformed-input and RFC1522Codec empty-content test coverage, and clarify PercentCodec thread-safety Javadoc (#459).</action>
       <action type="fix" dev="ggregory" due-to="simpleqt, Gary Gregory, Piotr P. Karwasz">GitIdentifiers: record files as regular without POSIX permissions (#458).</action>
+      <action type="fix" dev="ggregory" due-to="Gary Gregory">Stop BaseNCodecInputStream from reading the underlying stream after codec EOF, preventing unnecessary reads and blocking after padding in lenient Base32 and Base64 decoding.</action>
       <!-- ADD -->
       <!-- UPDATE -->
       <action type="update" dev="ggregory" due-to="Gary Gregory">Bump org.apache.commons:commons-parent from 105 to 107.</action>
