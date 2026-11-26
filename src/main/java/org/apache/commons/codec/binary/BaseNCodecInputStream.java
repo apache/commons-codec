@@ -131,17 +131,19 @@ public class BaseNCodecInputStream<C extends BaseNCodec, T extends BaseNCodecInp
     /**
      * {@inheritDoc}
      *
-     * @return {@code 0} if the {@link InputStream} has reached {@code EOF}, {@code 1} otherwise.
+     * <p>
+     * Returns an availability indicator rather than the number of buffered bytes. Buffered output remains available after the codec reaches EOF until it
+     * has been consumed. This method does not read from or query the underlying stream.
+     * </p>
+     *
+     * @return {@code 0} if the codec has reached EOF and no buffered output remains, {@code 1} otherwise.
      * @throws IOException Thrown if an I/O error occurs.
      * @since 1.7
      */
     @Override
     public int available() throws IOException {
-        // Note: The logic is similar to the InflaterInputStream:
-        // as long as we have not reached EOF, indicate that there is more
-        // data available. As we do not know for sure how much data is left,
-        // just return 1 as a safe guess.
-        return context.eof ? 0 : 1;
+        // Report EOF only after all buffered output has been consumed.
+        return context.eof && !baseNCodec.hasData(context) ? 0 : 1;
     }
 
     /**
@@ -206,10 +208,15 @@ public class BaseNCodecInputStream<C extends BaseNCodec, T extends BaseNCodecInp
     /**
      * Attempts to read {@code len} bytes into the specified {@code b} array starting at {@code offset} from this InputStream.
      *
+     * <p>
+     * Buffered output remains readable after the codec reaches EOF. Once that output is drained, further nonempty reads return {@code -1} without reading
+     * the underlying stream again.
+     * </p>
+     *
      * @param array  destination byte array.
      * @param offset where to start writing the bytes.
      * @param len    maximum number of bytes to read.
-     * @return number of bytes read.
+     * @return The number of bytes read, or {@code -1} if EOF has been reached.
      * @throws IOException               Thrown if an I/O error occurs.
      * @throws NullPointerException      Thrown if the byte array parameter is null.
      * @throws IndexOutOfBoundsException Thrown if the offset, length, or buffer size is invalid.
@@ -234,8 +241,8 @@ public class BaseNCodecInputStream<C extends BaseNCodec, T extends BaseNCodecInp
          */
         // Attempt to read the request length
         while (readLen < len) {
-            if (!baseNCodec.hasData(context)) {
-                // Obtain more data.
+            if (!context.eof && !baseNCodec.hasData(context)) {
+                // Obtain more data only until the codec has reached EOF; buffered output is still drained below.
                 // buf is reused across calls to read to avoid repeated allocations
                 BaseNCodec.code(doEncode, baseNCodec, buf, 0, in.read(buf), context);
             }

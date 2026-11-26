@@ -19,9 +19,11 @@ package org.apache.commons.codec.net;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+import java.nio.charset.IllegalCharsetNameException;
 import java.nio.charset.StandardCharsets;
 import java.nio.charset.UnsupportedCharsetException;
 
+import org.apache.commons.codec.Charsets;
 import org.apache.commons.codec.CodecPolicy;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
@@ -86,7 +88,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * Constructs a new instance for the selection of a default Charset.
      *
      * @param charset
-     *            the default string Charset to use.
+     *            the default string Charset to use, or {@code null} to use {@link Charset#defaultCharset()}.
      *
      * @see Charset
      * @since 1.7
@@ -104,7 +106,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * </p>
      *
      * @param charset
-     *            the default string Charset to use.
+     *            the default string Charset to use, or {@code null} to use {@link Charset#defaultCharset()}.
      * @param decodingPolicy The decoding policy.
      * @see Charset
      * @since 1.15
@@ -117,15 +119,14 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     /**
      * Constructs a new instance for the selection of a default Charset.
      *
-     * @param charsetName
-     *            the default Charset to use.
-     * @throws java.nio.charset.UnsupportedCharsetException
-     *             Thrown if the named Charset is unavailable.
+     * @param charsetName The charset name, or {@code null} to use {@link Charset#defaultCharset()}.
+     * @throws IllegalCharsetNameException Thrown if the given charset name is illegal.
+     * @throws UnsupportedCharsetException Thrown if no support for the named charset is available in this instance of the Java virtual machine.
      * @since 1.7 throws UnsupportedCharsetException if the named Charset is unavailable
      * @see Charset
      */
     public BCodec(final String charsetName) {
-        this(Charset.forName(charsetName));
+        this(Charsets.toCharset(charsetName));
     }
 
     /**
@@ -252,7 +253,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * @param strSource
      *            string to convert to Base64 form.
      * @param sourceCharset
-     *            the Charset for {@code value}.
+     *            the Charset for {@code value}, or {@code null} to use {@link Charset#defaultCharset()}.
      * @return Base64 string.
      * @throws EncoderException
      *             Thrown if a failure condition is encountered during the encoding process.
@@ -267,8 +268,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      *
      * @param strSource
      *            string to convert to Base64 form.
-     * @param sourceCharset
-     *            the Charset for {@code value}.
+     * @param sourceCharset The charset name, or {@code null} to use {@link Charset#defaultCharset()}.
      * @return Base64 string.
      * @throws EncoderException
      *             Thrown if a failure condition is encountered during the encoding process.
@@ -276,7 +276,7 @@ public class BCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     public String encode(final String strSource, final String sourceCharset) throws EncoderException {
         try {
             return encodeText(strSource, sourceCharset);
-        } catch (final UnsupportedCharsetException e) {
+        } catch (final IllegalArgumentException e) {
             throw new EncoderException(e.getMessage(), e);
         }
     }

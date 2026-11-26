@@ -27,6 +27,7 @@ import java.util.BitSet;
 
 import org.apache.commons.codec.BinaryDecoder;
 import org.apache.commons.codec.BinaryEncoder;
+import org.apache.commons.codec.Charsets;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringDecoder;
@@ -49,8 +50,12 @@ import org.apache.commons.codec.binary.StringUtils;
  * </p>
  * <ul>
  * <li>{@code strict=false}: only rules #1 and #2 are implemented</li>
- * <li>{@code strict=true}: all rules #1 through #5 are implemented</li>
+ * <li>{@code strict=true}: rules #1 and #2 plus trailing-whitespace escaping (rule #3) and soft line breaks (rule #5) are implemented</li>
  * </ul>
+ * <p>
+ * Both modes encode CR and LF bytes as {@code =0D} and {@code =0A}, respectively, as required for binary data. They do not preserve canonical text
+ * line breaks as required by rule #4 for MIME text bodies. Strict mode does not impose a minimum input length; empty input produces empty output.
+ * </p>
  * <p>
  * Originally, this class only supported the non-strict mode, but the codec in this partial form could already be used for certain applications that do not
  * require quoted-printable line formatting (rules #3, #4, #5), for instance Q codec. The strict mode has been added in 1.10.
@@ -77,7 +82,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
     private static final byte LF = 10;
 
     /**
-     * Minimum length required for the byte arrays used by encodeQuotedPrintable method.
+     * Minimum input length for the strict encoding path that treats the last three octets separately. Shorter input is encoded byte by byte.
      */
     private static final int MIN_BYTES = 3;
 
@@ -186,13 +191,13 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
     /**
      * Encodes an array of bytes into an array of quoted-printable 7-bit characters. Unsafe characters are escaped.
      * <p>
-     * Depending on the selection of the {@code strict} parameter, this function either implements the full ruleset or only a subset of quoted-printable
-     * encoding specification (rule #1 and rule #2) as defined in RFC 1521 and is suitable for encoding binary data and unformatted text.
+     * Encodes binary data and unformatted text using rules #1 and #2 of RFC 1521. Strict mode additionally escapes trailing whitespace and inserts
+     * soft line breaks. CR and LF bytes are escaped in both modes; canonical text line breaks are not preserved. See the class documentation.
      * </p>
      *
      * @param printable bitset of characters deemed quoted-printable.
      * @param bytes     array of bytes to be encoded.
-     * @param strict    if {@code true} the full ruleset is used, otherwise only rule #1 and rule #2.
+     * @param strict    if {@code true}, trailing whitespace is escaped and soft line breaks are inserted as needed.
      * @return array of bytes containing quoted-printable data.
      * @since 1.10
      */
@@ -207,7 +212,12 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
         final int bytesLength = bytes.length;
         if (strict) {
             if (bytesLength < MIN_BYTES) {
-                return null;
+                // too short for a soft line break, only rules #1, #2 and #3 (trailing whitespace) apply
+                for (int i = 0; i < bytesLength; i++) {
+                    final int b = getUnsignedOctet(i, bytes);
+                    encodeByte(b, !printable.get(b) || i == bytesLength - 1 && isWhitespace(b), buffer);
+                }
+                return buffer.toByteArray();
             }
             int pos = 1;
             // encode up to buffer.length - 3, the last three octets will be treated
@@ -323,7 +333,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
     /**
      * Constructs a new instance for the selection of the strict mode.
      *
-     * @param strict if {@code true}, soft line breaks will be used.
+     * @param strict if {@code true}, trailing whitespace is escaped and soft line breaks are inserted as needed.
      * @since 1.10
      */
     public QuotedPrintableCodec(final boolean strict) {
@@ -333,7 +343,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
     /**
      * Constructs a new instance for the selection of a default Charset.
      *
-     * @param charset The default string Charset to use.
+     * @param charset The default string Charset to use, or {@code null} to use {@link Charset#defaultCharset()}.
      * @since 1.7
      */
     public QuotedPrintableCodec(final Charset charset) {
@@ -343,27 +353,25 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
     /**
      * Constructs a new instance for the selection of a default Charset and strict mode.
      *
-     * @param charset The default string Charset to use.
-     * @param strict  if {@code true}, soft line breaks will be used.
+     * @param charset The default string Charset to use, or {@code null} to use {@link Charset#defaultCharset()}.
+     * @param strict  if {@code true}, trailing whitespace is escaped and soft line breaks are inserted as needed.
      * @since 1.10
      */
     public QuotedPrintableCodec(final Charset charset, final boolean strict) {
-        this.charset = charset;
+        this.charset = Charsets.toCharset(charset);
         this.strict = strict;
     }
 
     /**
      * Constructs a new instance for the selection of a default Charset.
      *
-     * @param charsetName The default string Charset to use.
-     * @throws UnsupportedCharsetException Thrown if no support for the named Charset is available in this instance of the Java virtual machine.
-     * @throws IllegalArgumentException    Thrown if the given charsetName is null.
-     * @throws IllegalCharsetNameException Thrown if the given Charset name is illegal.
-     *
+     * @param charsetName The charset name, or {@code null} to use {@link Charset#defaultCharset()}.
+     * @throws IllegalCharsetNameException Thrown if the given charset name is illegal.
+     * @throws UnsupportedCharsetException Thrown if no support for the named charset is available in this instance of the Java virtual machine.
      * @since 1.7 throws UnsupportedCharsetException if the named Charset is unavailable
      */
-    public QuotedPrintableCodec(final String charsetName) throws IllegalCharsetNameException, IllegalArgumentException, UnsupportedCharsetException {
-        this(Charset.forName(charsetName), false);
+    public QuotedPrintableCodec(final String charsetName) throws IllegalCharsetNameException, UnsupportedCharsetException {
+        this(Charsets.toCharset(charsetName), false);
     }
 
     /**
@@ -422,7 +430,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * representation.
      *
      * @param sourceStr     quoted-printable string to convert into its original form.
-     * @param sourceCharset The original string Charset.
+     * @param sourceCharset The original string Charset, or {@code null} to use {@link Charset#defaultCharset()}.
      * @return original string.
      * @throws DecoderException Thrown if quoted-printable decoding is unsuccessful.
      * @since 1.7
@@ -431,7 +439,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
         if (sourceStr == null) {
             return null;
         }
-        return new String(this.decode(StringUtils.getBytesUsAscii(sourceStr)), sourceCharset);
+        return new String(this.decode(StringUtils.getBytesUsAscii(sourceStr)), Charsets.toCharset(sourceCharset));
     }
 
     /**
@@ -439,7 +447,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
      * representation.
      *
      * @param sourceStr     quoted-printable string to convert into its original form.
-     * @param sourceCharset The original string Charset.
+     * @param sourceCharset The original string Charset, or {@code null} to use {@link Charset#defaultCharset()}.
      * @return original string.
      * @throws DecoderException             Thrown if quoted-printable decoding is unsuccessful.
      * @throws UnsupportedEncodingException Thrown if Charset is not supported.
@@ -448,14 +456,14 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
         if (sourceStr == null) {
             return null;
         }
-        return new String(decode(StringUtils.getBytesUsAscii(sourceStr)), sourceCharset);
+        return new String(decode(StringUtils.getBytesUsAscii(sourceStr)), sourceCharset == null ? Charset.defaultCharset().name() : sourceCharset);
     }
 
     /**
      * Encodes an array of bytes into an array of quoted-printable 7-bit characters. Unsafe characters are escaped.
      * <p>
-     * Depending on the selection of the {@code strict} parameter, this function either implements the full ruleset or only a subset of quoted-printable
-     * encoding specification (rule #1 and rule #2) as defined in RFC 1521 and is suitable for encoding binary data and unformatted text.
+     * Encodes binary data and unformatted text using rules #1 and #2 of RFC 1521. Strict mode additionally escapes trailing whitespace and inserts
+     * soft line breaks. CR and LF bytes are escaped in both modes; canonical text line breaks are not preserved. See the class documentation.
      * </p>
      *
      * @param bytes array of bytes to be encoded.
@@ -490,8 +498,8 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
     /**
      * Encodes a string into its quoted-printable form using the default string Charset. Unsafe characters are escaped.
      * <p>
-     * Depending on the selection of the {@code strict} parameter, this function either implements the full ruleset or only a subset of quoted-printable
-     * encoding specification (rule #1 and rule #2) as defined in RFC 1521 and is suitable for encoding binary data and unformatted text.
+     * Encodes binary data and unformatted text using rules #1 and #2 of RFC 1521. Strict mode additionally escapes trailing whitespace and inserts
+     * soft line breaks. CR and LF bytes are escaped in both modes; canonical text line breaks are not preserved. See the class documentation.
      * </p>
      *
      * @param sourceStr string to convert to quoted-printable form.
@@ -508,12 +516,12 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
     /**
      * Encodes a string into its quoted-printable form using the specified Charset. Unsafe characters are escaped.
      * <p>
-     * Depending on the selection of the {@code strict} parameter, this function either implements the full ruleset or only a subset of quoted-printable
-     * encoding specification (rule #1 and rule #2) as defined in RFC 1521 and is suitable for encoding binary data and unformatted text.
+     * Encodes binary data and unformatted text using rules #1 and #2 of RFC 1521. Strict mode additionally escapes trailing whitespace and inserts
+     * soft line breaks. CR and LF bytes are escaped in both modes; canonical text line breaks are not preserved. See the class documentation.
      * </p>
      *
      * @param sourceStr     string to convert to quoted-printable form.
-     * @param sourceCharset The Charset for sourceStr.
+     * @param sourceCharset The Charset for sourceStr, or {@code null} to use {@link Charset#defaultCharset()}.
      * @return quoted-printable string.
      * @since 1.7
      */
@@ -521,18 +529,18 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
         if (sourceStr == null) {
             return null;
         }
-        return StringUtils.newStringUsAscii(this.encode(sourceStr.getBytes(sourceCharset)));
+        return StringUtils.newStringUsAscii(this.encode(sourceStr.getBytes(Charsets.toCharset(sourceCharset))));
     }
 
     /**
      * Encodes a string into its quoted-printable form using the specified Charset. Unsafe characters are escaped.
      * <p>
-     * Depending on the selection of the {@code strict} parameter, this function either implements the full ruleset or only a subset of quoted-printable
-     * encoding specification (rule #1 and rule #2) as defined in RFC 1521 and is suitable for encoding binary data and unformatted text.
+     * Encodes binary data and unformatted text using rules #1 and #2 of RFC 1521. Strict mode additionally escapes trailing whitespace and inserts
+     * soft line breaks. CR and LF bytes are escaped in both modes; canonical text line breaks are not preserved. See the class documentation.
      * </p>
      *
      * @param sourceStr     string to convert to quoted-printable form.
-     * @param sourceCharset The Charset for sourceStr.
+     * @param sourceCharset The Charset for sourceStr, or {@code null} to use {@link Charset#defaultCharset()}.
      * @return quoted-printable string.
      * @throws UnsupportedEncodingException Thrown if the Charset is not supported.
      */
@@ -540,7 +548,7 @@ public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, Strin
         if (sourceStr == null) {
             return null;
         }
-        return StringUtils.newStringUsAscii(encode(sourceStr.getBytes(sourceCharset)));
+        return StringUtils.newStringUsAscii(encode(sourceStr.getBytes(sourceCharset == null ? Charset.defaultCharset().name() : sourceCharset)));
     }
 
     /**

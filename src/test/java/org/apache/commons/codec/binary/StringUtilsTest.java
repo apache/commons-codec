@@ -175,6 +175,14 @@ class StringUtilsTest {
         assertNull(StringUtils.getBytesUnchecked(null, "UNKNOWN"));
     }
 
+    @Test
+    void testInvalidCharsetNamesRemainWrapped() {
+        for (final String name : new String[] {"NONSENSE", "!invalid!"}) {
+            assertThrows(IllegalStateException.class, () -> StringUtils.getBytesUnchecked("x", name));
+            assertThrows(IllegalStateException.class, () -> StringUtils.newString(new byte[] {65}, name));
+        }
+    }
+
     @ParameterizedTest(name = "{0}: {1}")
     @MethodSource("newStringCases")
     void testNewString(final Charset charset, final Function<byte[], String> decoder, final byte[] input) throws UnsupportedEncodingException {
@@ -197,5 +205,15 @@ class StringUtilsTest {
     @MethodSource("newStringFunctions")
     void testNewStringNullInput_CODEC229(final Function<byte[], String> decoder) {
         assertNull(decoder.apply(null));
+    }
+
+    @Test
+    void testNullCharsetNames() {
+        final String text = "caf\u00e9";
+        final byte[] bytes = text.getBytes(Charset.defaultCharset());
+        assertArrayEquals(bytes, StringUtils.getBytesUnchecked(text, null));
+        assertEquals(new String(bytes, Charset.defaultCharset()), StringUtils.newString(bytes, null));
+        assertNull(StringUtils.getBytesUnchecked(null, null));
+        assertNull(StringUtils.newString(null, null));
     }
 }

@@ -43,9 +43,7 @@ import java.util.stream.Stream;
 
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.io.RandomAccessFileMode;
-import org.apache.commons.lang3.JavaVersion;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.SystemUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -377,10 +375,6 @@ class DigestUtilsTest {
         return testRandomAccessFileWrapper;
     }
 
-    private boolean isJava9Plus() {
-        return SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_9);
-    }
-
     @BeforeEach
     void setUp() throws Exception {
         new Random().nextBytes(testData);
@@ -438,6 +432,37 @@ class DigestUtilsTest {
         assertEquals("SHA-1", DigestUtils.getShaDigest().getAlgorithm());
     }
 
+    @Test
+    void testGetMessageDigest() {
+        final DigestUtils digestUtils = new DigestUtils(MessageDigestAlgorithms.MD5);
+        assertNotNull(digestUtils.getMessageDigest());
+        assertEquals(MessageDigestAlgorithms.MD5, digestUtils.getMessageDigest().getAlgorithm());
+    }
+
+    @Test
+    void testGetSha3Digests() {
+        if (DigestUtils.isAvailable(MessageDigestAlgorithms.SHA3_224)) {
+            assertEquals("SHA3-224", DigestUtils.getSha3_224Digest().getAlgorithm());
+        } else {
+            assertThrows(IllegalArgumentException.class, DigestUtils::getSha3_224Digest);
+        }
+        if (DigestUtils.isAvailable(MessageDigestAlgorithms.SHA3_256)) {
+            assertEquals("SHA3-256", DigestUtils.getSha3_256Digest().getAlgorithm());
+        } else {
+            assertThrows(IllegalArgumentException.class, DigestUtils::getSha3_256Digest);
+        }
+        if (DigestUtils.isAvailable(MessageDigestAlgorithms.SHA3_384)) {
+            assertEquals("SHA3-384", DigestUtils.getSha3_384Digest().getAlgorithm());
+        } else {
+            assertThrows(IllegalArgumentException.class, DigestUtils::getSha3_384Digest);
+        }
+        if (DigestUtils.isAvailable(MessageDigestAlgorithms.SHA3_512)) {
+            assertEquals("SHA3-512", DigestUtils.getSha3_512Digest().getAlgorithm());
+        } else {
+            assertThrows(IllegalArgumentException.class, DigestUtils::getSha3_512Digest);
+        }
+    }
+
     /**
      * Tests SHAKE digest lookup according to runtime algorithm availability.
      *
@@ -462,28 +487,6 @@ class DigestUtilsTest {
         } else {
             assertThrows(IllegalArgumentException.class, DigestUtils::getShake256_512Digest);
         }
-    }
-
-    @Test
-    void testGetDigestsJava9() {
-        if (isJava9Plus()) {
-            assertEquals("SHA3-224", DigestUtils.getSha3_224Digest().getAlgorithm());
-            assertEquals("SHA3-256", DigestUtils.getSha3_256Digest().getAlgorithm());
-            assertEquals("SHA3-384", DigestUtils.getSha3_384Digest().getAlgorithm());
-            assertEquals("SHA3-512", DigestUtils.getSha3_512Digest().getAlgorithm());
-        } else {
-            assertThrows(IllegalArgumentException.class, DigestUtils::getSha3_224Digest);
-            assertThrows(IllegalArgumentException.class, DigestUtils::getSha3_256Digest);
-            assertThrows(IllegalArgumentException.class, DigestUtils::getSha3_384Digest);
-            assertThrows(IllegalArgumentException.class, DigestUtils::getSha3_512Digest);
-        }
-    }
-
-    @Test
-    void testGetMessageDigest() {
-        final DigestUtils digestUtils = new DigestUtils(MessageDigestAlgorithms.MD5);
-        assertNotNull(digestUtils.getMessageDigest());
-        assertEquals(MessageDigestAlgorithms.MD5, digestUtils.getMessageDigest().getAlgorithm());
     }
 
     @Test
@@ -694,7 +697,7 @@ class DigestUtilsTest {
 
     @Test
     void testSha3_224() {
-        if (isJava9Plus()) {
+        if (DigestUtils.isAvailable(MessageDigestAlgorithms.SHA3_224)) {
             // Examples from https://csrc.nist.gov/projects/cryptographic-standards-and-guidelines/example-values
             //
             // https://csrc.nist.gov/CSRC/media/Projects/Cryptographic-Standards-and-Guidelines/documents/examples/SHA3-224_Msg0.pdf
@@ -706,7 +709,7 @@ class DigestUtilsTest {
 
     @Test
     void testSha3_224HexInputStream() throws IOException {
-        if (isJava9Plus()) {
+        if (DigestUtils.isAvailable(MessageDigestAlgorithms.SHA3_224)) {
             assertEquals(DigestUtils.sha3_224Hex(testData), DigestUtils.sha3_224Hex(new ByteArrayInputStream(testData)));
         } else {
             assertThrows(IllegalArgumentException.class, () -> DigestUtils.sha3_224Hex(new ByteArrayInputStream(testData)));
@@ -715,7 +718,7 @@ class DigestUtilsTest {
 
     @Test
     void testSha3_256() {
-        if (isJava9Plus()) {
+        if (DigestUtils.isAvailable(MessageDigestAlgorithms.SHA3_256)) {
             // Examples from https://csrc.nist.gov/projects/cryptographic-standards-and-guidelines/example-values
             //
             // https://csrc.nist.gov/CSRC/media/Projects/Cryptographic-Standards-and-Guidelines/documents/examples/SHA3-256_Msg0.pdf
@@ -727,7 +730,7 @@ class DigestUtilsTest {
 
     @Test
     void testSha3_256HexInputStream() throws IOException {
-        if (isJava9Plus()) {
+        if (DigestUtils.isAvailable(MessageDigestAlgorithms.SHA3_256)) {
             assertEquals(DigestUtils.sha3_256Hex(testData), DigestUtils.sha3_256Hex(new ByteArrayInputStream(testData)));
         } else {
             assertThrows(IllegalArgumentException.class, () -> DigestUtils.sha3_256Hex(new ByteArrayInputStream(testData)));
@@ -736,7 +739,7 @@ class DigestUtilsTest {
 
     @Test
     void testSha3_384() {
-        if (isJava9Plus()) {
+        if (DigestUtils.isAvailable(MessageDigestAlgorithms.SHA3_384)) {
             // Examples from https://csrc.nist.gov/projects/cryptographic-standards-and-guidelines/example-values
             //
             // https://csrc.nist.gov/CSRC/media/Projects/Cryptographic-Standards-and-Guidelines/documents/examples/SHA3-384_Msg0.pdf
@@ -749,7 +752,7 @@ class DigestUtilsTest {
 
     @Test
     void testSha3_384HexInputStream() throws IOException {
-        if (isJava9Plus()) {
+        if (DigestUtils.isAvailable(MessageDigestAlgorithms.SHA3_384)) {
             assertEquals(DigestUtils.sha3_384Hex(testData), DigestUtils.sha3_384Hex(new ByteArrayInputStream(testData)));
         } else {
             assertThrows(IllegalArgumentException.class, () -> DigestUtils.sha3_384Hex(new ByteArrayInputStream(testData)));
@@ -758,7 +761,7 @@ class DigestUtilsTest {
 
     @Test
     void testSha3_512() {
-        if (isJava9Plus()) {
+        if (DigestUtils.isAvailable(MessageDigestAlgorithms.SHA3_512)) {
             // Examples from https://csrc.nist.gov/projects/cryptographic-standards-and-guidelines/example-values
             //
             // https://csrc.nist.gov/CSRC/media/Projects/Cryptographic-Standards-and-Guidelines/documents/examples/SHA3-512_Msg0.pdf
@@ -771,7 +774,7 @@ class DigestUtilsTest {
 
     @Test
     void testSha3_512HexInputStream() throws IOException {
-        if (isJava9Plus()) {
+        if (DigestUtils.isAvailable(MessageDigestAlgorithms.SHA3_512)) {
             assertEquals(DigestUtils.sha3_512Hex(testData), DigestUtils.sha3_512Hex(new ByteArrayInputStream(testData)));
         } else {
             assertThrows(IllegalArgumentException.class, () -> DigestUtils.sha3_512Hex(new ByteArrayInputStream(testData)));

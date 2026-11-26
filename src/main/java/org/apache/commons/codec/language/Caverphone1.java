@@ -26,7 +26,7 @@ import java.util.Locale;
  * algorithm:
  *
  * @see <a href="https://en.wikipedia.org/wiki/Caverphone">Wikipedia - Caverphone</a>
- * @see <a href="https://caversham.otago.ac.nz/files/working/ctp060902.pdf">Caverphone 1.0 specification</a>
+ * @see <a href="https://web.archive.org/web/20231002034901/https://caversham.otago.ac.nz/files/working/ctp060902.pdf">Caverphone 1.0 specification</a>
  * @since 1.5
  *
  * <p>

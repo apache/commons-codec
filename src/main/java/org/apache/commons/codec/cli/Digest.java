@@ -23,7 +23,9 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 import org.apache.commons.codec.binary.Hex;
@@ -44,7 +46,8 @@ public class Digest {
      * Runs the digest algorithm in {@code args[0]} on the file in {@code args[1]}. If there is no {@code args[1]}, use standard input.
      *
      * <p>
-     * The algorithm can also be {@code ALL} or {@code *} to output one line for each known algorithm.
+     * The algorithm can also be {@code ALL} or {@code *} to output one line for each available algorithm listed in {@link MessageDigestAlgorithms}.
+     * When using standard input, all digests are updated in a single pass without retaining the complete input.
      * </p>
      *
      * @param args {@code args[0]} is one of {@link MessageDigestAlgorithms} name, {@link MessageDigest} name, {@code ALL}, or {@code *}. {@code args[1+]} is a
@@ -119,21 +122,29 @@ public class Digest {
         }
     }
 
-    private void run(final BufferedInputStream systemIn, final String prefix, final String messageDigestAlgorithm) throws IOException {
-        run(systemIn, prefix, DigestUtils.getDigest(messageDigestAlgorithm));
-    }
-
     private void run(final BufferedInputStream systemIn, final String[] digestAlgorithms) throws IOException {
+        final Map<String, MessageDigest> digests = new LinkedHashMap<>();
         for (final String messageDigestAlgorithm : digestAlgorithms) {
-            if (DigestUtils.isAvailable(messageDigestAlgorithm)) {
-                if (systemIn != null) {
-                    // 1 GB arbitrary default.
-                    systemIn.mark(Integer.getInteger(getClass().getName() + ".markReadLimit", 1_073_741_824));
+            final MessageDigest messageDigest = DigestUtils.getDigest(messageDigestAlgorithm, null);
+            if (messageDigest != null) {
+                digests.put(messageDigestAlgorithm, messageDigest);
+            }
+        }
+        if (systemIn != null && !digests.isEmpty()) {
+            // Standard input cannot be replayed; update every digest from the same bounded buffer.
+            final byte[] buffer = new byte[8192];
+            int read;
+            while ((read = systemIn.read(buffer)) != -1) {
+                for (final MessageDigest messageDigest : digests.values()) {
+                    messageDigest.update(buffer, 0, read);
                 }
-                run(systemIn, messageDigestAlgorithm + " ", messageDigestAlgorithm);
-                if (systemIn != null) {
-                    systemIn.reset();
-                }
+            }
+            for (final Map.Entry<String, MessageDigest> entry : digests.entrySet()) {
+                println(entry.getKey() + " ", entry.getValue().digest());
+            }
+        } else {
+            for (final Map.Entry<String, MessageDigest> entry : digests.entrySet()) {
+                run(systemIn, entry.getKey() + " ", entry.getValue());
             }
         }
     }

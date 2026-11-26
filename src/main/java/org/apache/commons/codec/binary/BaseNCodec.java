@@ -105,6 +105,13 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         /** Padding byte. */
         private byte padding = PAD_DEFAULT;
 
+        /**
+         * Constructs a new builder for a codec subclass.
+         *
+         * @param defaultEncodeTable The alphabet indexed by the values to encode, used initially and as the default by this class's encode-table setters.
+         *                           May be null if the subclass supplies an encode table before building the codec. A non-null array is retained without
+         *                           copying and must not be modified after it is passed to this constructor.
+         */
         AbstractBuilder(final byte[] defaultEncodeTable) {
             this.defaultEncodeTable = defaultEncodeTable;
             this.encodeTable = defaultEncodeTable;
@@ -419,6 +426,17 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      */
     static final byte[] EMPTY_BYTE_ARRAY = {};
 
+    /**
+     * Encodes or decodes input for {@link BaseNCodecInputStream} and {@link BaseNCodecOutputStream}, wrapping codec failures as I/O exceptions.
+     *
+     * @param doEncode   {@code true} to encode binary data, {@code false} to decode Base-N character data.
+     * @param baseNCodec The codec configured for the stream's alphabet, padding, chunking, and decoding policy.
+     * @param buf        The input array containing the bytes to process; no bytes are read when {@code len} is {@link #EOF}.
+     * @param offset     The zero-based index of the first input byte to process.
+     * @param len        The number of input bytes to process, or {@link #EOF} to finish the operation and process any buffered input.
+     * @param context    The stream's mutable codec state and buffer; reuse it for successive calls on the same stream, including the final EOF call.
+     * @throws IOException Thrown if the codec rejects the input with an {@link IllegalArgumentException}.
+     */
     static void code(final boolean doEncode, final BaseNCodec baseNCodec, final byte[] buf, final int offset, final int len, final Context context)
             throws IOException {
         try {
@@ -467,6 +485,13 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
         return CHUNK_SEPARATOR.clone();
     }
 
+    /**
+     * Validates a nonnegative block size for codec builders and the builder-based codec constructor.
+     *
+     * @param value The encoded or unencoded block size to validate, in bytes; zero is allowed.
+     * @return The validated value, unchanged.
+     * @throws IllegalArgumentException Thrown if {@code value} is negative.
+     */
     private static int gte0(final int value) {
         if (value < 0) {
             throw new IllegalArgumentException("value must be greater than or equal to 0.");
@@ -720,9 +745,11 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
      * This method is package protected for access from I/O streams.
      * </p>
      *
-     * @param array  A byte array containing Base-N character data.
-     * @param offset initial offset of the subarray.
-     * @param length length of the subarray.
+     * @param array   A byte array containing Base-N character data.
+     * @param offset  The zero-based index of the first input byte to decode.
+     * @param length  The number of input bytes to decode, or {@link #EOF} to finish decoding and process any buffered input.
+     * @param context The mutable decoding state and output buffer used by the byte-array methods and I/O streams. Use a new context for each operation,
+     *                reuse it across input chunks and the final EOF call, and retrieve buffered output with {@link #readResults(byte[], int, int, Context)}.
      * @throws IllegalArgumentException Thrown when a problem is detected processing data.
      */
     abstract void decode(byte[] array, int offset, int length, Context context);
@@ -806,14 +833,16 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     }
 
     /**
-     * Encodes a byte[] containing characters in the Base-N alphabet into a temporary context buffer.
+     * Encodes a byte[] containing binary data into a temporary context buffer containing characters in the Base-N alphabet.
      * <p>
      * This method is package protected for access from I/O streams.
      * </p>
      *
-     * @param array  A byte array containing Base-N character data.
-     * @param offset initial offset of the subarray.
-     * @param length length of the subarray.
+     * @param array   A byte array containing binary data.
+     * @param offset  The zero-based index of the first input byte to encode.
+     * @param length  The number of input bytes to encode, or {@link #EOF} to finish encoding and process any buffered input.
+     * @param context The mutable encoding state and output buffer used by the byte-array methods and I/O streams. Use a new context for each operation,
+     *                reuse it across input chunks and the final EOF call, and retrieve buffered output with {@link #readResults(byte[], int, int, Context)}.
      * @throws IllegalArgumentException Thrown when a problem is detected processing data.
      */
     abstract void encode(byte[] array, int offset, int length, Context context);

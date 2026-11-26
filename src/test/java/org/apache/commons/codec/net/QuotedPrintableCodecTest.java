@@ -22,8 +22,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.charset.UnsupportedCharsetException;
+import java.util.BitSet;
 import java.util.stream.Stream;
 
 import org.apache.commons.codec.CharEncoding;
@@ -44,6 +46,27 @@ class QuotedPrintableCodecTest {
     static final int[] SWISS_GERMAN_STUFF_UNICODE = { 0x47, 0x72, 0xFC, 0x65, 0x7A, 0x69, 0x5F, 0x7A, 0xE4, 0x6D, 0xE4 };
 
     static final int[] RUSSIAN_STUFF_UNICODE = { 0x412, 0x441, 0x435, 0x43C, 0x5F, 0x43F, 0x440, 0x438, 0x432, 0x435, 0x442 };
+
+    private static Stream<Arguments> shortInputBoundaryCases() {
+        // @formatter:off
+        return Stream.of(
+                Arguments.of("", "", ""),
+                Arguments.of("a", "a", "a"),
+                Arguments.of("ab", "ab", "ab"),
+                Arguments.of("abc", "abc", "abc"),
+                Arguments.of("ab ", "ab=20", "ab "),
+                Arguments.of("  ", " =20", "  "),
+                Arguments.of("\t\t", "\t=09", "\t\t"),
+                Arguments.of("\r\n", "=0D=0A", "=0D=0A"),
+                Arguments.of("\0", "=00", "=00"),
+                Arguments.of(" ", "=20", " "),
+                Arguments.of("a ", "a=20", "a "),
+                Arguments.of(" a", " a", " a"),
+                Arguments.of("\t", "=09", "\t"),
+                Arguments.of("=", "=3D", "=3D"),
+                Arguments.of("\u00e9", "=C3=A9", "=C3=A9"));
+        // @formatter:on
+    }
 
     private static Stream<Arguments> softLineBreakBoundaryCases() {
         // @formatter:off
@@ -74,6 +97,11 @@ class QuotedPrintableCodecTest {
         final String encoded = qpcodec.encode(plain);
         assertEquals("=3D Hello there =3D=0D=0A", encoded, "Basic quoted-printable encoding test");
         assertEquals(plain, qpcodec.decode(encoded), "Basic quoted-printable decoding test");
+    }
+
+    @Test
+    void testConstructorNullCharsetName() {
+        assertEquals(Charset.defaultCharset(), new QuotedPrintableCodec((String) null).getCharset());
     }
 
     @Test
@@ -197,6 +225,15 @@ class QuotedPrintableCodecTest {
     }
 
     @Test
+    void testInvalidCharsetNamesRemainChecked() {
+        final QuotedPrintableCodec codec = new QuotedPrintableCodec();
+        for (final String name : new String[] {"NONSENSE", "!invalid!"}) {
+            assertThrows(java.io.UnsupportedEncodingException.class, () -> codec.encode("x", name));
+            assertThrows(java.io.UnsupportedEncodingException.class, () -> codec.decode("x", name));
+        }
+    }
+
+    @Test
     void testInvalidEncoding() {
         assertThrows(UnsupportedCharsetException.class, () -> new QuotedPrintableCodec("NONSENSE"));
     }
@@ -208,6 +245,28 @@ class QuotedPrintableCodecTest {
         for (final boolean strict : new boolean[] { false, true }) {
             assertThrows(DecoderException.class, () -> new QuotedPrintableCodec(strict).decode(input));
         }
+    }
+
+    @Test
+    void testNullCharsets() throws Exception {
+        final QuotedPrintableCodec codec = new QuotedPrintableCodec((Charset) null);
+        final QuotedPrintableCodec expected = new QuotedPrintableCodec(Charset.defaultCharset());
+        final String text = "caf\u00e9";
+        final String encoded = expected.encode(text);
+        assertEquals(Charset.defaultCharset(), codec.getCharset());
+        assertEquals(Charset.defaultCharset().name(), codec.getDefaultCharset());
+        assertEquals(encoded, codec.encode(text));
+        assertEquals(expected.decode(encoded), codec.decode(encoded));
+        assertEquals(encoded, codec.encode(text, (Charset) null));
+        assertEquals(encoded, codec.encode(text, (String) null));
+        assertEquals(expected.decode(encoded), codec.decode(encoded, (Charset) null));
+        assertEquals(expected.decode(encoded), codec.decode(encoded, (String) null));
+        assertEquals(new QuotedPrintableCodec(Charset.defaultCharset(), true).encode(text),
+                new QuotedPrintableCodec(null, true).encode(text));
+        assertNull(codec.encode(null, (Charset) null));
+        assertNull(codec.encode(null, (String) null));
+        assertNull(codec.decode(null, (Charset) null));
+        assertNull(codec.decode(null, (String) null));
     }
 
     @Test
@@ -229,6 +288,34 @@ class QuotedPrintableCodecTest {
         final String encoded = qpcodec.encode(plain);
         assertEquals(plain, encoded, "Safe chars quoted-printable encoding test");
         assertEquals(plain, qpcodec.decode(encoded), "Safe chars quoted-printable decoding test");
+    }
+
+    @ParameterizedTest
+    @MethodSource("shortInputBoundaryCases")
+    void testShortInputBoundaryStrictEncoding(final String plain, final String strictExpected, final String lenientExpected) throws Exception {
+        final QuotedPrintableCodec strictCodec = new QuotedPrintableCodec(true);
+        final QuotedPrintableCodec lenientCodec = new QuotedPrintableCodec(false);
+        final byte[] plainBytes = plain.getBytes(StandardCharsets.UTF_8);
+        final byte[] strictBytes = strictExpected.getBytes(StandardCharsets.US_ASCII);
+        assertEquals(strictExpected, strictCodec.encode(plain));
+        assertEquals(plain, strictCodec.decode(strictCodec.encode(plain)));
+        assertArrayEquals(strictBytes, strictCodec.encode(plainBytes));
+        assertArrayEquals(strictBytes, QuotedPrintableCodec.encodeQuotedPrintable(null, plainBytes, true));
+        assertEquals(lenientExpected, lenientCodec.encode(plain));
+    }
+
+    @Test
+    void testShortInputStrictEncodingWithCustomPrintable() {
+        final BitSet printable = new BitSet();
+        printable.set('b');
+        printable.set(' ');
+        printable.set('\t');
+        assertArrayEquals(StringUtils.getBytesUsAscii("=61b"),
+                QuotedPrintableCodec.encodeQuotedPrintable(printable, StringUtils.getBytesUsAscii("ab"), true));
+        assertArrayEquals(StringUtils.getBytesUsAscii("b=20"),
+                QuotedPrintableCodec.encodeQuotedPrintable(printable, StringUtils.getBytesUsAscii("b "), true));
+        assertArrayEquals(StringUtils.getBytesUsAscii("b=09"),
+                QuotedPrintableCodec.encodeQuotedPrintable(printable, StringUtils.getBytesUsAscii("b\t"), true));
     }
 
     @ParameterizedTest
@@ -265,9 +352,11 @@ class QuotedPrintableCodecTest {
     }
 
     @Test
-    void testTooShortByteArray() throws Exception {
-        final QuotedPrintableCodec qpcodec = new QuotedPrintableCodec(true);
-        assertNull(qpcodec.encode("AA"), "Result should be null.");
+    void testStrictEncodeNull() throws Exception {
+        final QuotedPrintableCodec codec = new QuotedPrintableCodec(true);
+        assertNull(codec.encode((String) null));
+        assertNull(codec.encode((byte[]) null));
+        assertNull(QuotedPrintableCodec.encodeQuotedPrintable(null, null, true));
     }
 
     @Test

@@ -23,6 +23,8 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.nio.charset.Charset;
+import java.nio.charset.IllegalCharsetNameException;
 import java.nio.charset.UnsupportedCharsetException;
 import java.util.stream.Stream;
 
@@ -80,6 +82,11 @@ class QCodecTest {
         final String encoded = qcodec.encode(plain);
         assertEquals("=?UTF-8?Q?=3D Hello there =3D=0D=0A?=", encoded, "Basic Q encoding test");
         assertEquals(plain, qcodec.decode(encoded), "Basic Q decoding test");
+    }
+
+    @Test
+    void testConstructorNullCharsetName() {
+        assertEquals(Charset.defaultCharset(), new QCodec((String) null).getCharset());
     }
 
     @ParameterizedTest(name = "{0}")
@@ -166,6 +173,23 @@ class QCodecTest {
         assertNull(qcodec.decode((String) null), "Null string Q decoding test");
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = {"", "!invalid!", "UTF 8"})
+    void testEncodeIllegalCharsetName(final String charsetName) {
+        final EncoderException exception = assertThrows(EncoderException.class, () -> new QCodec().encode("test", charsetName));
+        assertEquals(IllegalCharsetNameException.class, exception.getCause().getClass());
+        assertEquals(charsetName, ((IllegalCharsetNameException) exception.getCause()).getCharsetName());
+        assertEquals(exception.getCause().getMessage(), exception.getMessage());
+    }
+
+    @Test
+    void testEncodeNullCharsetName() throws Exception {
+        final QCodec codec = new QCodec("UTF-16BE");
+        final String text = "caf\u00e9";
+        assertEquals(codec.encode(text, Charset.defaultCharset()), codec.encode(text, (String) null));
+        assertNull(codec.encode(null, (String) null));
+    }
+
     @Test
     void testEncodeObjects() throws Exception {
         final QCodec qcodec = new QCodec();
@@ -187,6 +211,15 @@ class QCodecTest {
     }
 
     @Test
+    void testEncodeUnsupportedCharsetName() {
+        final String charsetName = "NONSENSE";
+        final EncoderException exception = assertThrows(EncoderException.class, () -> new QCodec().encode("test", charsetName));
+        assertEquals(UnsupportedCharsetException.class, exception.getCause().getClass());
+        assertEquals(charsetName, ((UnsupportedCharsetException) exception.getCause()).getCharsetName());
+        assertEquals(exception.getCause().getMessage(), exception.getMessage());
+    }
+
+    @Test
     void testInvalidEncoding() {
         assertThrows(UnsupportedCharsetException.class, () -> new QCodec("NONSENSE"));
     }
@@ -198,6 +231,16 @@ class QCodecTest {
         assertTrue(qcodec.isEncodeBlanks());
         qcodec.setEncodeBlanks(false);
         assertFalse(qcodec.isEncodeBlanks());
+    }
+
+    @Test
+    void testNullCharset() throws Exception {
+        final QCodec codec = new QCodec((Charset) null);
+        assertEquals(Charset.defaultCharset(), codec.getCharset());
+        final String text = "caf\u00e9";
+        final QCodec other = new QCodec("UTF-16BE");
+        assertEquals(codec.encode(text), other.encode(text, (Charset) null));
+        assertNull(other.encode(null, (Charset) null));
     }
 
     @Test

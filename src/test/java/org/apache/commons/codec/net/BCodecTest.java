@@ -23,6 +23,8 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.nio.charset.Charset;
+import java.nio.charset.IllegalCharsetNameException;
 import java.nio.charset.StandardCharsets;
 import java.nio.charset.UnsupportedCharsetException;
 import java.util.stream.Stream;
@@ -37,6 +39,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 /**
  * Quoted-printable codec test cases
@@ -112,6 +115,11 @@ class BCodecTest {
         assertEquals(plain, bcodec.decode(encoded), "Basic B decoding test");
     }
 
+    @Test
+    void testConstructorNullCharsetName() {
+        assertEquals(Charset.defaultCharset(), new BCodec((String) null).getCharset());
+    }
+
     @ParameterizedTest(name = "{0}: {1}")
     @MethodSource("embeddedQuestionMarks")
     void testDecodeEmbeddedQuestionMark(final BCodec codec, final String encoded) {
@@ -157,6 +165,23 @@ class BCodecTest {
         assertNull(bcodec.decode((String) null), "Null string B decoding test");
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = {"", "!invalid!", "UTF 8"})
+    void testEncodeIllegalCharsetName(final String charsetName) {
+        final EncoderException exception = assertThrows(EncoderException.class, () -> new BCodec().encode("test", charsetName));
+        assertEquals(IllegalCharsetNameException.class, exception.getCause().getClass());
+        assertEquals(charsetName, ((IllegalCharsetNameException) exception.getCause()).getCharsetName());
+        assertEquals(exception.getCause().getMessage(), exception.getMessage());
+    }
+
+    @Test
+    void testEncodeNullCharsetName() throws Exception {
+        final BCodec codec = new BCodec("UTF-16BE");
+        final String text = "caf\u00e9";
+        assertEquals(codec.encode(text, Charset.defaultCharset()), codec.encode(text, (String) null));
+        assertNull(codec.encode(null, (String) null));
+    }
+
     @Test
     void testEncodeObjects() throws Exception {
         final BCodec bcodec = new BCodec();
@@ -181,8 +206,28 @@ class BCodecTest {
     }
 
     @Test
+    void testEncodeUnsupportedCharsetName() {
+        final String charsetName = "NONSENSE";
+        final EncoderException exception = assertThrows(EncoderException.class, () -> new BCodec().encode("test", charsetName));
+        assertEquals(UnsupportedCharsetException.class, exception.getCause().getClass());
+        assertEquals(charsetName, ((UnsupportedCharsetException) exception.getCause()).getCharsetName());
+        assertEquals(exception.getCause().getMessage(), exception.getMessage());
+    }
+
+    @Test
     void testInvalidEncoding() {
         assertThrows(UnsupportedCharsetException.class, () -> new BCodec("NONSENSE"));
+    }
+
+    @Test
+    void testNullCharset() throws Exception {
+        final BCodec codec = new BCodec((Charset) null);
+        assertEquals(Charset.defaultCharset(), codec.getCharset());
+        final String text = "caf\u00e9";
+        final BCodec other = new BCodec("UTF-16BE");
+        assertEquals(codec.encode(text), other.encode(text, (Charset) null));
+        assertNull(other.encode(null, (Charset) null));
+        assertEquals(Charset.defaultCharset(), new BCodec(null, CodecPolicy.STRICT).getCharset());
     }
 
     @Test

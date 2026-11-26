@@ -231,10 +231,10 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
     /**
      * Constructs a new instance for the selection of a default charset.
      *
-     * @param charset The default string charset to use.
+     * @param charset The default string charset to use, or {@code null} to use {@link java.nio.charset.Charset#defaultCharset()}.
      */
     public URLCodec(final String charset) {
-        this.charset = charset;
+        this.charset = charset == null ? Charset.defaultCharset().name() : charset;
     }
 
     /**
@@ -331,7 +331,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      * @param str
      *            URL safe string to convert into its original form.
      * @param charsetName
-     *            the original string charset.
+     *            the original string charset, or {@code null} to use {@link java.nio.charset.Charset#defaultCharset()}.
      * @return original string.
      * @throws DecoderException
      *             Thrown if URL decoding is unsuccessful.
@@ -364,15 +364,16 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
         if (str == null) {
             return null;
         }
+        final String effectiveCharsetName = charsetName == null ? Charset.defaultCharset().name() : charsetName;
         final byte[] decoded = decode(StringUtils.getBytesUsAscii(str));
         if (!strict) {
-            return new String(decoded, charsetName);
+            return new String(decoded, effectiveCharsetName);
         }
         final Charset charset;
         try {
-            charset = Charset.forName(charsetName);
+            charset = Charset.forName(effectiveCharsetName);
         } catch (final IllegalCharsetNameException | UnsupportedCharsetException e) {
-            final UnsupportedEncodingException exception = new UnsupportedEncodingException(charsetName);
+            final UnsupportedEncodingException exception = new UnsupportedEncodingException(effectiveCharsetName);
             exception.initCause(e);
             throw exception;
         }
@@ -380,7 +381,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
             return charset.newDecoder().onMalformedInput(CodingErrorAction.REPORT)
                     .onUnmappableCharacter(CodingErrorAction.REPORT).decode(ByteBuffer.wrap(decoded)).toString();
         } catch (final CharacterCodingException e) {
-            throw new DecoderException("Invalid byte sequence for charset " + charsetName, e);
+            throw new DecoderException("Invalid byte sequence for charset " + effectiveCharsetName, e);
         }
     }
 
@@ -447,7 +448,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
      * @param str
      *            string to convert to a URL safe form.
      * @param charsetName
-     *            the charset for str.
+     *            the charset for str, or {@code null} to use {@link java.nio.charset.Charset#defaultCharset()}.
      * @return URL safe string.
      * @throws UnsupportedEncodingException
      *             Thrown if charset is not supported.
@@ -456,7 +457,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
         if (str == null) {
             return null;
         }
-        return StringUtils.newStringUsAscii(encode(str.getBytes(charsetName)));
+        return StringUtils.newStringUsAscii(encode(str.getBytes(charsetName == null ? Charset.defaultCharset().name() : charsetName)));
     }
 
     /**

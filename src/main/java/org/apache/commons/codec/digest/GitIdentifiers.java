@@ -23,7 +23,13 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
+import java.nio.file.LinkOption;
 import java.nio.file.Path;
+import java.nio.file.attribute.BasicFileAttributeView;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.PosixFileAttributeView;
+import java.nio.file.attribute.PosixFileAttributes;
+import java.nio.file.attribute.PosixFilePermission;
 import java.security.MessageDigest;
 import java.util.HashMap;
 import java.util.Map;
@@ -45,6 +51,11 @@ import java.util.function.Supplier;
  * Git and SWHID treat file names and symbolic link targets as opaque byte sequences with no defined encoding. The
  * identifiers produced here coincide with Git's or SWHID's own identifiers only if the original names and targets were
  * UTF-8 encoded.
+ * </p>
+ *
+ * <p>
+ * {@link #treeId(MessageDigest, Path)} derives file modes from file system attributes without consulting Git's index or configuration. See that method for
+ * details. {@link TreeIdBuilder} uses the file modes supplied by the caller, independently of the file system.
  * </p>
  *
  * <p>
@@ -211,18 +222,23 @@ public class GitIdentifiers {
          */
         SYMBOLIC_LINK(new byte[] { '1', '2', '0', '0', '0', '0' });
 
-        private static FileMode get(final Path path) {
-            // Symbolic links first
-            if (Files.isSymbolicLink(path)) {
+        private static FileMode get(final Path path) throws IOException {
+            // Prefer POSIX attributes to read the owner-execute bit Git records. Files.isExecutable tests the current process's access instead.
+            // Without POSIX permissions, use the basic attributes and default files to REGULAR. No Git index or configuration is consulted.
+            BasicFileAttributeView view = Files.getFileAttributeView(path, PosixFileAttributeView.class, LinkOption.NOFOLLOW_LINKS);
+            if (view == null) {
+                view = Files.getFileAttributeView(path, BasicFileAttributeView.class, LinkOption.NOFOLLOW_LINKS);
+            }
+            final BasicFileAttributes attributes = view.readAttributes();
+            if (attributes.isSymbolicLink()) {
                 return SYMBOLIC_LINK;
             }
-            if (Files.isDirectory(path)) {
+            if (attributes.isDirectory()) {
                 return DIRECTORY;
             }
-            if (Files.isExecutable(path)) {
-                return EXECUTABLE;
-            }
-            return REGULAR;
+            final boolean executable = attributes instanceof PosixFileAttributes &&
+                    ((PosixFileAttributes) attributes).permissions().contains(PosixFilePermission.OWNER_EXECUTE);
+            return executable ? EXECUTABLE : REGULAR;
         }
 
         /**
@@ -503,6 +519,18 @@ public class GitIdentifiers {
      *
      * <p>
      * When the hash algorithm is SHA-1, the identifier is identical to Git tree identifier and SWHID directory identifier.
+     * </p>
+     *
+     * <p>
+     * Symbolic links and directories are classified without following links. Other entries use mode {@code 100755} only when POSIX permissions are available
+     * and {@link PosixFilePermission#OWNER_EXECUTE} is set; otherwise they use mode {@code 100644}. Execution access granted or denied to the current process,
+     * for example through an access control list, does not determine the recorded mode.
+     * </p>
+     *
+     * <p>
+     * Git's index and configuration are not consulted. On file systems without POSIX permissions, the regular-file fallback matches Git's treatment of newly
+     * added files with {@code core.fileMode=false}. Git can preserve executable modes already stored in its index, so this method may produce a different
+     * identifier from Git for an existing checkout. Use {@link TreeIdBuilder} to supply modes explicitly when the file system does not retain them.
      * </p>
      *
      * @param messageDigest The MessageDigest to use (for example SHA-1).

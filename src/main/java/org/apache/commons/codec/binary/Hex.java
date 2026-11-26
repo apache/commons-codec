@@ -19,11 +19,14 @@ package org.apache.commons.codec.binary;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
+import java.nio.charset.IllegalCharsetNameException;
 import java.nio.charset.StandardCharsets;
+import java.nio.charset.UnsupportedCharsetException;
 
 import org.apache.commons.codec.BinaryDecoder;
 import org.apache.commons.codec.BinaryEncoder;
 import org.apache.commons.codec.CharEncoding;
+import org.apache.commons.codec.Charsets;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 
@@ -415,23 +418,24 @@ public class Hex implements BinaryEncoder, BinaryDecoder {
     /**
      * Creates a new codec with the given Charset.
      *
-     * @param charset The charset.
+     * @param charset The charset, or {@code null} to use {@link Charset#defaultCharset()}.
      * @since 1.7
      */
     public Hex(final Charset charset) {
-        this.charset = charset;
+        this.charset = Charsets.toCharset(charset);
     }
 
     /**
      * Creates a new codec with the given charset name.
      *
-     * @param charsetName The charset name.
-     * @throws java.nio.charset.UnsupportedCharsetException Thrown if the named charset is unavailable.
+     * @param charsetName The charset name, or {@code null} to use {@link Charset#defaultCharset()}.
+     * @throws IllegalCharsetNameException Thrown if the given charset name is illegal.
+     * @throws UnsupportedCharsetException Thrown if no support for the named charset is available in this instance of the Java virtual machine.
      * @since 1.4
      * @since 1.7 throws UnsupportedCharsetException if the named charset is unavailable
      */
     public Hex(final String charsetName) {
-        this(Charset.forName(charsetName));
+        this(Charsets.toCharset(charsetName));
     }
 
     /**

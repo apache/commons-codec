@@ -26,9 +26,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.NotDirectoryException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.attribute.PosixFileAttributeView;
 import java.nio.file.attribute.PosixFilePermissions;
 import java.security.MessageDigest;
 import java.util.ArrayList;
@@ -130,6 +134,25 @@ class GitIdentifiersTest {
      */
     private static final byte[] MAIN_TREE_ID_SHA256 = hex("58e9a59940e4d2ae7e374b63fedf3b7bba8cfdc60308f64abd066db137300bcd");
 
+    static void assumePosixAttributes(final Path directory) {
+        Assumptions.assumeTrue(Files.getFileAttributeView(directory, PosixFileAttributeView.class) != null,
+                "POSIX file attributes are not supported on this filesystem");
+    }
+
+    static void assumeSymbolicLinks(final Path directory) throws IOException {
+        final Path probe = directory.resolve("symlink-capability-probe");
+        final Path target = directory.getFileSystem().getPath("symlink-capability-target");
+        try {
+            Files.createSymbolicLink(probe, target);
+        } catch (final FileAlreadyExistsException | NoSuchFileException | NotDirectoryException e) {
+            throw e;
+        } catch (final IOException | UnsupportedOperationException | SecurityException e) {
+            Assumptions.abort("Symbolic link creation is unavailable: " + e);
+        }
+        // A cleanup failure is a test failure, not evidence that symbolic links are unsupported.
+        Files.delete(probe);
+    }
+
     static Stream<Arguments> blobIdProvider() {
         return Stream.of(Arguments.of("DigestUtilsTest/hello.txt", "5f4a83288e67f1be2d6fcdad84165a86c6a970d7"),
                 Arguments.of("DigestUtilsTest/greetings.txt", "6cf4f797455661e61d1ee6913fc29344f5897243"),
@@ -147,6 +170,12 @@ class GitIdentifiersTest {
 
     private static Path resourcePath(final String resourceName) throws Exception {
         return Paths.get(GitIdentifiersTest.class.getClassLoader().getResource(resourceName).toURI());
+    }
+
+    static Stream<Arguments> symlinkProvider() {
+        return Stream.of(MessageDigestAlgorithms.SHA_1, MessageDigestAlgorithms.SHA_256).flatMap(algorithm ->
+                Stream.of("subdir", "subdir/file.txt", "subdir/missing.txt").flatMap(target ->
+                        Stream.of(false, true).map(absolute -> Arguments.of(algorithm, target, absolute))));
     }
 
     static Stream<Arguments> virtualTreeProvider() {
@@ -190,19 +219,19 @@ class GitIdentifiersTest {
         assertArrayEquals(Hex.decodeHex(expectedSha1Hex), GitIdentifiers.blobId(DigestUtils.getSha1Digest(), resourcePath(resourceName)));
     }
 
-    @Test
-    void testBlobIdSymlink(@TempDir final Path tempDir) throws Exception {
+    @ParameterizedTest
+    @MethodSource("symlinkProvider")
+    void testBlobIdSymlink(final String algorithm, final String targetName, final boolean absolute, @TempDir final Path tempDir) throws Exception {
+        assumeSymbolicLinks(tempDir);
         final Path subDir = Files.createDirectory(tempDir.resolve("subdir"));
         Files.write(subDir.resolve("file.txt"), "hello".getBytes(StandardCharsets.UTF_8));
-        try {
-            final Path linkToDir = Files.createSymbolicLink(tempDir.resolve("link-to-dir"), Paths.get("subdir"));
-            final Path linkToFile = Files.createSymbolicLink(tempDir.resolve("link-to-file"), Paths.get("subdir/file.txt"));
-            final MessageDigest sha1 = DigestUtils.getSha1Digest();
-            assertArrayEquals(Hex.decodeHex("8bbe8a53790056316b23b7c270f10ab6bf6bb1b4"), GitIdentifiers.blobId(sha1, linkToDir));
-            assertArrayEquals(Hex.decodeHex("dfe6ef8392ae13a11ff85419b4fd906d997b6cb7"), GitIdentifiers.blobId(sha1, linkToFile));
-        } catch (final UnsupportedOperationException e) {
-            Assumptions.abort("Symbolic links not supported on this filesystem");
-        }
+        final Path relativeTarget = tempDir.getFileSystem().getPath(targetName);
+        final Path target = absolute ? tempDir.resolve(relativeTarget) : relativeTarget;
+        final Path link = Files.createSymbolicLink(tempDir.resolve("link"), target);
+        final MessageDigest digest = DigestUtils.getDigest(algorithm);
+        // Path.toString() uses the filesystem's separators, including backslashes on Windows.
+        assertEquals(target.toString(), Files.readSymbolicLink(link).toString());
+        assertArrayEquals(GitIdentifiers.blobId(digest, target.toString().getBytes(StandardCharsets.UTF_8)), GitIdentifiers.blobId(digest, link));
     }
 
     @Test
@@ -395,10 +424,30 @@ class GitIdentifiersTest {
                 GitIdentifiers.treeId(DigestUtils.getSha1Digest(), resourcePath("DigestUtilsTest")));
     }
 
+    /**
+     * A newly created file without the POSIX owner-execute bit is recorded with mode {@code 100644}.
+     *
+     * <p>
+     * On Windows, ordinary files can report execution access through {@link Files#isExecutable(Path)} without exposing POSIX permissions. Such files still
+     * use mode {@code 100644}, matching newly added files in Git with {@code core.fileMode=false}.
+     * </p>
+     */
+    @Test
+    void testTreeIdPathRecordsFilesWithoutPosixExecutableBitAsRegular(final @TempDir Path tempDir) throws Exception {
+        final byte[] content = "x".getBytes(StandardCharsets.UTF_8);
+        Files.write(tempDir.resolve("file.txt"), content);
+        final MessageDigest md = DigestUtils.getSha1Digest();
+        final GitIdentifiers.TreeIdBuilder builder = GitIdentifiers.treeIdBuilder(md);
+        builder.addFile(GitIdentifiers.FileMode.REGULAR, "file.txt", content);
+        assertArrayEquals(builder.get(), GitIdentifiers.treeId(md, tempDir));
+    }
+
     @ParameterizedTest
     @MethodSource("virtualTreeProvider")
     void testTreeIdPathUnix(final String algorithm, final byte[] helloId, final byte[] linkId, final byte[] linkTxtId,
             final byte[] runId, final byte[] srcTreeId, final byte[] mainTreeId, final @TempDir Path tempDir) throws Exception {
+        assumePosixAttributes(tempDir);
+        assumeSymbolicLinks(tempDir);
         final MessageDigest md = DigestUtils.getDigest(algorithm);
 
         // Files
@@ -408,17 +457,14 @@ class GitIdentifiersTest {
         final Path hello = src.resolve("hello.txt");
         final Path run = src.resolve("run.sh");
 
-        // Create the same structure as the virtual tree.
-        try {
-            Files.createSymbolicLink(link, Paths.get(LINK_CONTENT));
-            Files.createSymbolicLink(linkTxt, Paths.get(LINK_TXT_CONTENT));
-        } catch (final UnsupportedOperationException e) {
-            Assumptions.abort("Symbolic links not supported on this filesystem");
-        }
+        // Create the same structure as the virtual tree after checking the required capabilities.
         Files.createDirectory(src);
         Files.write(hello, HELLO_CONTENT);
         Files.write(run, RUN_CONTENT);
+        Files.setPosixFilePermissions(hello, PosixFilePermissions.fromString("rw-r--r--"));
         Files.setPosixFilePermissions(run, PosixFilePermissions.fromString("rwxr-xr-x"));
+        Files.createSymbolicLink(link, tempDir.getFileSystem().getPath(LINK_CONTENT));
+        Files.createSymbolicLink(linkTxt, tempDir.getFileSystem().getPath(LINK_TXT_CONTENT));
 
         // Verify individual blob IDs against pre-computed constants.
         assertArrayEquals(helloId, GitIdentifiers.blobId(md, hello));

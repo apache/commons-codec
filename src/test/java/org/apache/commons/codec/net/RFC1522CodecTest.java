@@ -17,9 +17,11 @@
 
 package org.apache.commons.codec.net;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.codec.CharEncoding;
@@ -59,6 +61,13 @@ class RFC1522CodecTest {
         assertThrows(DecoderException.class, () -> new RFC1522TestCodec().decodeText(text));
     }
 
+    @Test
+    void testDecodeEmptyEncodedContent() throws Exception {
+        // Preserve the existing lenient handling of empty content, although RFC 1522 requires at least one encoded-text character.
+        final RFC1522TestCodec codec = new RFC1522TestCodec();
+        assertEquals("", codec.decodeText("=?UTF-8?T??="));
+    }
+
     @ParameterizedTest
     // @formatter:off
     @ValueSource(strings = {
@@ -82,6 +91,13 @@ class RFC1522CodecTest {
     // @formatter:on
     void testDecodeInvalid(final String text) throws Exception {
         assertExpectedDecoderException(text);
+    }
+
+    @Test
+    void testEncodeNullCharsetName() throws Exception {
+        final RFC1522TestCodec codec = new RFC1522TestCodec();
+        assertEquals(codec.encodeText("test", Charset.defaultCharset()), codec.encodeText("test", (String) null));
+        assertNull(codec.encodeText(null, (String) null));
     }
 
     @Test

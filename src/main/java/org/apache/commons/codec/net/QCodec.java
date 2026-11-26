@@ -19,10 +19,12 @@ package org.apache.commons.codec.net;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+import java.nio.charset.IllegalCharsetNameException;
 import java.nio.charset.StandardCharsets;
 import java.nio.charset.UnsupportedCharsetException;
 import java.util.BitSet;
 
+import org.apache.commons.codec.Charsets;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringDecoder;
@@ -117,7 +119,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * Constructs a new instance for the selection of a default Charset.
      *
      * @param charset
-     *            the default string Charset to use.
+     *            the default string Charset to use, or {@code null} to use {@link Charset#defaultCharset()}.
      *
      * @see Charset
      * @since 1.7
@@ -129,15 +131,14 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     /**
      * Constructs a new instance for the selection of a default Charset.
      *
-     * @param charsetName
-     *            the Charset to use.
-     * @throws java.nio.charset.UnsupportedCharsetException
-     *             Thrown if the named Charset is unavailable.
+     * @param charsetName The charset name, or {@code null} to use {@link Charset#defaultCharset()}.
+     * @throws IllegalCharsetNameException Thrown if the given charset name is illegal.
+     * @throws UnsupportedCharsetException Thrown if no support for the named charset is available in this instance of the Java virtual machine.
      * @since 1.7 throws UnsupportedCharsetException if the named Charset is unavailable
      * @see Charset
      */
     public QCodec(final String charsetName) {
-        this(Charset.forName(charsetName));
+        this(Charsets.toCharset(charsetName));
     }
 
     /**
@@ -270,7 +271,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      * @param sourceStr
      *            string to convert to quoted-printable form.
      * @param sourceCharset
-     *            the Charset for sourceStr.
+     *            the Charset for sourceStr, or {@code null} to use {@link Charset#defaultCharset()}.
      * @return quoted-printable string.
      * @throws EncoderException
      *             Thrown if a failure condition is encountered during the encoding process.
@@ -285,8 +286,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
      *
      * @param sourceStr
      *            string to convert to quoted-printable form.
-     * @param sourceCharset
-     *            the Charset for sourceStr.
+     * @param sourceCharset The charset name, or {@code null} to use {@link Charset#defaultCharset()}.
      * @return quoted-printable string.
      * @throws EncoderException
      *             Thrown if a failure condition is encountered during the encoding process.
@@ -294,7 +294,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     public String encode(final String sourceStr, final String sourceCharset) throws EncoderException {
         try {
             return encodeText(sourceStr, sourceCharset);
-        } catch (final UnsupportedCharsetException e) {
+        } catch (final IllegalArgumentException e) {
             throw new EncoderException(e.getMessage(), e);
         }
     }
