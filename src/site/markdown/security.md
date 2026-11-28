@@ -41,7 +41,66 @@ the descriptions here are incomplete, please report them privately to the Apache
 
 # Security Vulnerabilities
 
-None.
+## Security Vulnerabilities Fixed in 1.23.0
+
+### CVE-2026-124077
+
+- CVE-2026-124077: Apache Commons Codec: NUL bytes in tree entry names cause Git/SWHID identifier collisions (GitIdentifiers class)
+- Severity: low 
+
+#### Affected versions:
+
+- Apache Commons Codec 1.22.0 before 1.23.0
+- Apache Commons Codec 387120c901f4a75c3112dfdf8877dcdec7ae685d before 87f6aa2818836998528ff4b0d1ea35545a800ee5
+
+#### Description:
+
+The GitIdentifiers class in Apache Commons Codec did not reject NUL bytes in tree entry names. Because Git uses a NUL byte to mark the end of each entry name in a tree object, a crafted name could make one tree serialize to the same bytes as a different tree. Two different directory trees could then receive the same Git tree identifier or SWHID.
+
+
+The impact is limited: common file systems do not allow NUL bytes in file names, so trees built by walking a file system are not affected. Only applications that build trees from names supplied by other sources, such as entries of archive formats that permit NUL bytes in names (e.g. ZIP) or names passed directly to the API, are exposed.
+
+This issue affects Apache Commons Codec: from 1.22.0 before 1.23.0.
+
+Users are recommended to upgrade to version 1.23.0, which fixes the issue.
+
+#### Credit:
+
+- Claude Security (tool)
+- Gary D. Gregory (remediation developer)
+
+#### References:
+
+- https://github.com/apache/commons-codec/commit/87f6aa2818836998528ff4b0d1ea35545a800ee5.patch
+- https://commons.apache.org/
+- https://www.cve.org/CVERecord?id=CVE-2026-124077
+
+### CVE-2026-119078
+
+- CVE-2026-119078: Apache Commons Codec: Blake3 doFinalize is stateless; the documented KDF example derives identical keys
+- Severity: important 
+
+#### Affected versions:
+
+- Apache Commons Codec 1.16.0 before 1.23.0
+
+#### Description:
+
+Apache Commons Codec's Blake3 class documented the output of its doFinalize methods as depending on any previously finalized bytes, so that consecutive calls would return different output. In fact, doFinalize does not change the hash state: calling it again without supplying more input returns the same bytes. The key-derivation example in the class Javadoc, shipped since 1.16.0, derives two keys with two consecutive doFinalize calls. Code that follows it gets identical keys, so the separation between the derived keys is lost. The same applies to any application that calls doFinalize more than once on one instance and expects new output each time.
+
+This issue affects Apache Commons Codec from 1.16.0 before 1.23.0.
+
+Version 1.23.0 corrects the documentation, but the behavior of doFinalize is unchanged. Upgrading alone does not fix affected code. Users should check their applications for repeated doFinalize calls on the same Blake3 instance and derive multiple keys by requesting the combined length in one call and splitting the output, as the updated Javadoc shows.
+
+#### Credit:
+
+- Claude Security (tool)
+- Gary D. Gregory (remediation developer)
+
+#### References:
+
+https://commons.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-119078
 
 # Safe Deserialization
 
